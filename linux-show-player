@@ -1,0 +1,5 @@
+#!/usr/bin/env python3
+
+from lisp.main import main
+
+main()

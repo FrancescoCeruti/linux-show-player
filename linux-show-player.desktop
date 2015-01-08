@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=0.3
+Name=Linux Show Player
+Comment=Audio player for theatral shows
+Exec=linux-show-player
+Icon=linux_show_player.png
+StartupNotify=true
+Terminal=false
+Type=Application
+Categories=AudioVideo;Audio;Player;
+MimeType=application/x-linuxshowplayer

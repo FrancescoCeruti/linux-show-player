@@ -1,0 +1,23 @@
+[Icon Theme]
+Name=lisp
+Directories=16, 22, 24, scalable
+
+[16]
+Size=16
+Context=Actions
+Type=fixed
+
+[22]
+Size=22
+Context=Actions
+Type=fixed
+
+[24]
+Size=24
+Context=Actions
+Type=fixed
+
+[scalable]
+Size=96
+Context=Actions
+Type=scalable
