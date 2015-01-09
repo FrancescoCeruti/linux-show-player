@@ -28,4 +28,4 @@ No special hardware requirements are required to run LiSP, but some processing o
   
 Download the source archive and extract the files into "linux-show-player", then run:
 
-    easy_install setup.py linux-show-player
+    easy_install linux-show-player
