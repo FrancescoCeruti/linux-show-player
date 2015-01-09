@@ -94,15 +94,14 @@ class MediaItem(QTreeWidgetItem):
         self.setText(1, self.cue['name'])
 
     def update_time(self, time):
-        if not self.timeProgress.visibleRegion().isEmpty():
-            # If the given value is the duration or < 0 set the time to 0
-            if time == self.cue.media['duration'] or time < 0:
-                time = 0
-            # Set the progress-bar value
-            self.timeProgress.setValue(time)
-            # Show the time in the widget
-            self.timeProgress.setFormat(strtime(time,
-                                                accurate=self._accurate_time))
+        # If the given value is the duration or < 0 set the time to 0
+        if time == self.cue.media['duration'] or time < 0:
+            time = 0
+        # Set the progress-bar value
+        self.timeProgress.setValue(time)
+        # Show the time in the widget
+        self.timeProgress.setFormat(strtime(time,
+                                            accurate=self._accurate_time))
 
     def on_play(self):
         self.status.setPixmap(self.PLAY.pixmap(16, 16))
