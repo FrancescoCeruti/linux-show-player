@@ -322,6 +322,7 @@ class CartLayout(QTabWidget, CueLayout):
 
     def move_widget(self, widget, index):
         widget.cue.widget = widget
+        index = (self.currentIndex(), ) + index[1:]
         self.move_cue(widget.cue, self.to_1d_index(index))
 
     def __move_cue__(self, cue, index):
@@ -332,6 +333,7 @@ class CartLayout(QTabWidget, CueLayout):
         self._grids[new[0]].addItem(cue.widget, new[1], new[2])
 
         cue['index'] = index
+        del cue.widget
 
     def __remove_cue__(self, cue):
         cue.finalize()
