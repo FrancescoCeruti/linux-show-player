@@ -132,6 +132,7 @@ class ListLayout(QWidget, CueLayout):
         self.hLayout = QHBoxLayout(self)
         self.hLayout.setContentsMargins(5, 5, 5, 5)
 
+        # On the left (cue list)
         self.listView = ListWidget(self)
         self.listView.context_event.connect(self.context_event)
         self.listView.key_event.connect(self.onKeyPressEvent)
@@ -147,21 +148,21 @@ class ListLayout(QWidget, CueLayout):
         self.vLayout.setContentsMargins(0, 0, 0, 0)
         self.vLayout.setSpacing(2)
 
+        # On the right (playing media-cues)
         self.label = QLabel('Playing', self)
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setStyleSheet('font-size: 17pt; font-weight: bold;')
         self.vLayout.addWidget(self.label)
 
         self.playView = QListWidget(self)
+        self.playView.setMinimumWidth(300)
+        self.playView.setMaximumWidth(300)
         self.playView.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
         self.playView.setFocusPolicy(QtCore.Qt.NoFocus)
         self.playView.setSelectionMode(QAbstractItemView.NoSelection)
         self.vLayout.addWidget(self.playView)
 
         self.hLayout.addLayout(self.vLayout)
-
-        self.hLayout.setStretch(0, 7)
-        self.hLayout.setStretch(1, 2)
 
         # Add cue preferences widgets
         self.add_settings_section(MediaCueGeneral, MediaCue)

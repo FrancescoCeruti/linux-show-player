@@ -33,7 +33,7 @@ class ControllerSettings(SettingsSection):
         self.key.setValidator(QRegExpValidator(regex))
         self.horizontalLayout.addWidget(self.key)
 
-        self.keyLabel = QLabel('Insert the key', self.keyGroup)
+        self.keyLabel = QLabel('Insert key(s)', self.keyGroup)
         self.keyLabel.setAlignment(Qt.AlignCenter)
         self.horizontalLayout.addWidget(self.keyLabel)
 

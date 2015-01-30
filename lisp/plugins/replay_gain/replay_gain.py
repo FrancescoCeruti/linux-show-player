@@ -33,25 +33,23 @@ class GainAction(Action):
         self._oldVolumes = []
 
     def add_media(self, media, new_volume):
-        volumes = media.elements('Volume')
-        if len(volumes) > 0:
-            volume = volumes[0]
-
+        volume = media.element('Volume')
+        if volume is not None:
             self._mediaList.append(media)
             self._newVolumes.append(new_volume)
             self._oldVolumes.append(volume.properties()['normal_volume'])
 
     def do(self):
         for n, media in enumerate(self._mediaList):
-            volumes = media.elements('Volume')
-            if len(volumes) > 0:
-                volumes[0].set_property('normal_volume', self._newVolumes[n])
+            volume = media.element('Volume')
+            if volume is not None:
+                volume.set_property('normal_volume', self._newVolumes[n])
 
     def undo(self):
         for n, media in enumerate(self._mediaList):
-            volumes = media.elements('Volume')
-            if len(volumes) > 0:
-                volumes[0].set_property('normal_volume', self._oldVolumes[n])
+            volume = media.element('Volume')
+            if volume is not None:
+                volume.set_property('normal_volume', self._oldVolumes[n])
 
     def redo(self):
         self.do()

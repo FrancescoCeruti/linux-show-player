@@ -4,6 +4,9 @@
 # This file is part of LiSP (Linux Show Player).
 ##########################################
 
+import os
+
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import *  # @UnusedWildImport
 import mido
 
@@ -43,6 +46,13 @@ class MIDISettings(SettingsSection):
         self.backendCombo = QComboBox(self.backendGroup)
         self.backendCombo.addItems(self.Backends.keys())
         self.backendGroup.layout().addWidget(self.backendCombo)
+
+        self.warning = QLabel(self)
+        self.warning.setGeometry(0, 180, self.width(), 40)
+        self.warning.setText("Backends could be unavailable." + os.linesep +
+                             "Any change requires application restart.")
+        self.warning.setAlignment(Qt.AlignCenter)
+        self.warning.setStyleSheet("color: red; font-weight: bold")
 
     def get_configuration(self):
         conf = {}

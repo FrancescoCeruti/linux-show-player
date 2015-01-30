@@ -5,7 +5,7 @@ Linux Show Player (LiSP) - Sound player designed for stage productions
 
 Every component on which LiSP relies (python3, GStreamer and Qt5) is multi platform, but the program is currently tested and developed only for **GNU/Linux**.
 
-No special hardware requirements are required to run LiSP, but some processing operations would surely take benefit from a recent CPU.
+No special hardware is required to run LiSP, but some processing operations would surely take benefit from a recent CPU.
 
 ### Dependencies
 
