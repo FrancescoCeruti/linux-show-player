@@ -14,13 +14,15 @@ from xmlrpc.server import SimpleXMLRPCServer
 from lisp.utils.configuration import config
 
 from lisp.application import Application
+from lisp.core.singleton import Singleton
 from lisp.cues.cue import Cue
 from lisp.cues.media_cue import MediaCue
-from lisp.core.singleton import Singleton
+from lisp.modules.remote.discovery import Announcer
 
 
 def initialize():
-    ip = config['Remote']['BindIp']
+    # Using 'localhost' or similar make the server unreachable from outside
+    ip = socket.gethostbyname(socket.gethostname())
     port = int(config['Remote']['BindPort'])
 
     RemoteController(ip=ip, port=port)
@@ -102,24 +104,31 @@ class RemoteController(Thread, metaclass=Singleton):
         self.server.register_introspection_functions()
         self.server.register_instance(RemoteDispatcher())
 
+        self._announcer = Announcer()
+
+    def start(self):
+        self._announcer.start()
+        Thread.start(self)
+
     def run(self):
         logging.info('REMOTE: Session started at ' +
                      str(self.server.server_address))
 
         self.server.serve_forever()
 
-        logging.info('REMOTE: Session ended at ' +
-                     str(self.server.server_address))
+        logging.info('REMOTE: Session ended')
 
     def stop(self):
         self.server.shutdown()
+        self._announcer.stop()
 
     @staticmethod
     def connect_to(uri):
         proxy = ServerProxy(uri, transport=TimeoutTransport())
 
         try:
-            proxy._()   # Call a fictive method.
+            # Call a fictive method.
+            proxy._()
         except Fault:
             # Connected, the method doesn't exist, which is expected.
             pass

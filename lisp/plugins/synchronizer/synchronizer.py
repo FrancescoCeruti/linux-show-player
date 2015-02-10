@@ -4,11 +4,12 @@
 # This file is part of LiSP (Linux Show Player).
 ##########################################
 
+import logging
 import os
 import socket
+import traceback
 
 from PyQt5.QtWidgets import QMenu, QAction, QMessageBox
-from lisp import modules
 from lisp.core.plugin import Plugin
 
 from lisp.application import Application
@@ -22,9 +23,6 @@ class Synchronizer(Plugin):
     Name = 'Synchronizer'
 
     def __init__(self):
-        if not modules.check_module('remote'):
-            raise Exception('The "remote" module is not running')
-
         self.app = Application()
         self.syncMenu = QMenu('Synchronization')
         self.menu_action = self.app.mainWindow.menuTools.addMenu(self.syncMenu)
@@ -65,7 +63,7 @@ class Synchronizer(Plugin):
         self.app.mainWindow.menuTools.removeAction(self.menu_action)
 
     def _connect_cue(self, cue):
-        cue.executed.connect(self.remote_trigger)
+        cue.executed.connect(self.remote_exec)
 
         if isinstance(cue, MediaCue):
             self.cue_media[cue.media] = cue
@@ -76,7 +74,7 @@ class Synchronizer(Plugin):
             cue.media.sought.connect(self.remote_seek)
 
     def _disconnect_cue(self, cue):
-        cue.executed.disconnect(self.remote_trigger)
+        cue.executed.disconnect(self.remote_exec)
 
         if isinstance(cue, MediaCue):
             self.cue_media.pop(cue.media)
@@ -87,36 +85,29 @@ class Synchronizer(Plugin):
             cue.media.sought.disconnect(self.remote_seek)
 
     def remote_play(self, media):
-        for peer in self.peers:
-            try:
-                peer['proxy'].play(self.cue_media[media]['index'])
-            except Exception:
-                self.peers.remove(peer)
+        index = self.cue_media[media]['index']
+        self.call_remote(lambda proxy: proxy.play(index))
 
     def remote_pause(self, media):
-        for peer in self.peers:
-            try:
-                peer['proxy'].pause(self.cue_media[media]['index'])
-            except Exception:
-                self.peers.remove(peer)
+        index = self.cue_media[media]['index']
+        self.call_remote(lambda proxy: proxy.pause(index))
 
     def remote_stop(self, media):
-        for peer in self.peers:
-            try:
-                peer['proxy'].stop(self.cue_media[media]['index'])
-            except Exception:
-                self.peers.remove(peer)
+        index = self.cue_media[media]['index']
+        self.call_remote(lambda proxy: proxy.stop(index))
 
     def remote_seek(self, media, position):
-        for peer in self.peers:
-            try:
-                peer['proxy'].seek(self.cue_media[media]['index'], position)
-            except Exception:
-                self.peers.remove(peer)
+        index = self.cue_media[media]['index']
+        self.call_remote(lambda proxy: proxy.seek(index, position))
 
-    def remote_trigger(self, cue):
+    def remote_exec(self, cue):
+        self.call_remote(lambda proxy: proxy.execute(cue['index']))
+
+    def call_remote(self, function):
+        ''' Generic remote call. '''
         for peer in self.peers:
             try:
-                peer.execute(cue['index'])
+                function(peer['proxy'])
             except Exception:
-                self.peers.remove(peer)
+                logging.error('REMOTE: controlling failed')
+                logging.debug('REMOTE: ' + traceback.format_exc())

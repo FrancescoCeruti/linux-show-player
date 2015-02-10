@@ -4,22 +4,16 @@
 # This file is part of LiSP (Linux Show Player).
 ##########################################
 
-import os
-
-from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import *  # @UnusedWildImport
-import mido
 
 from lisp.modules import check_module
+from lisp.modules.midi.midi import InputMidiHandler
 from lisp.ui.settings.section import SettingsSection
 
 
 class MIDISettings(SettingsSection):
 
     NAME = 'MIDI preferences'
-
-    Backends = {'RtMidi': 'mido.backends.rtmidi',
-                'PortMidi': 'mido.backends.portmidi'}
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -32,33 +26,18 @@ class MIDISettings(SettingsSection):
 
         self.inputCombo = QComboBox(self.inputGroup)
         if check_module('midi'):
-            self.inputCombo.addItems(mido.get_input_names() + ['default'])
+            self.inputCombo.addItem('default')
+            self.inputCombo.addItems(InputMidiHandler().get_input_names())
         else:
             self.inputCombo.setEnabled(False)
         self.inputGroup.layout().addWidget(self.inputCombo)
-
-        # MIDI Backend
-        self.backendGroup = QGroupBox(self)
-        self.backendGroup.setTitle('MIDI backend')
-        self.backendGroup.setLayout(QVBoxLayout())
-        self.backendGroup.setGeometry(0, 85, self.width(), 80)
-
-        self.backendCombo = QComboBox(self.backendGroup)
-        self.backendCombo.addItems(self.Backends.keys())
-        self.backendGroup.layout().addWidget(self.backendCombo)
-
-        self.warning = QLabel(self)
-        self.warning.setGeometry(0, 180, self.width(), 40)
-        self.warning.setText("Backends could be unavailable." + os.linesep +
-                             "Any change requires application restart.")
-        self.warning.setAlignment(Qt.AlignCenter)
-        self.warning.setStyleSheet("color: red; font-weight: bold")
 
     def get_configuration(self):
         conf = {}
         if self.inputCombo.isEnabled():
             conf['inputdevice'] = self.inputCombo.currentText()
-        conf['backend'] = self.Backends[self.backendCombo.currentText()]
+            InputMidiHandler().change_port(conf['inputdevice'])
+
         return {'MIDI': conf}
 
     def set_configuration(self, conf):
@@ -66,8 +45,3 @@ class MIDISettings(SettingsSection):
             self.inputCombo.setCurrentText('default')
             # If the device is not found remains 'default'
             self.inputCombo.setCurrentText(conf['MIDI']['inputdevice'])
-        if 'backend' in conf['MIDI']:
-            for name, bk in self.Backends.items():
-                if conf['MIDI']['backend'] == bk:
-                    self.backendCombo.setCurrentText(name)
-                    break
