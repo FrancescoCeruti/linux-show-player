@@ -53,8 +53,8 @@ def main():
     appFont.setWeight(QFont.Light)
     app.setFont(appFont)
     # Add icons set
-    QIcon.setThemeSearchPaths(styles.QLiSPIconsThemePaths)
-    QIcon.setThemeName(styles.QLiSPIconsThemeName)
+    QIcon.setThemeSearchPaths(styles.IconsThemePaths)
+    QIcon.setThemeName(styles.IconsThemeName)
     # Load the theme
     styles.apply_style(config['Theme']['current'])
 

@@ -19,8 +19,8 @@ gi.require_version('Gst', '1.0')
 from gi.repository import Gst
 from lisp.core.plugin import Plugin
 
-from lisp.actions.action import Action
-from lisp.actions.actions_handler import ActionsHandler
+from lisp.core.action import Action
+from lisp.core.actions_handler import ActionsHandler
 from lisp.application import Application
 from lisp.cues.media_cue import MediaCue
 
@@ -149,7 +149,7 @@ class ReplayGain(QtCore.QObject, Plugin):
         action = GainAction()
         for cue in cues:
             action.add_media(cue.media, 1.0)
-        ActionsHandler().do_action(action)
+        Application().actions_handler.do_action(action)
 
     def _calc_gain(self):
         self.progress.setLabelText('Analysis ...')
@@ -179,7 +179,7 @@ class ReplayGain(QtCore.QObject, Plugin):
                     break
 
         if not self._stopped:
-            ActionsHandler().do_action(self._action)
+            Application().actions_handler.do_action(self._action)
         else:
             logging.info('REPLY-GAIN:: Stopped by user')
 

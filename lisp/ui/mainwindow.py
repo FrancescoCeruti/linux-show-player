@@ -11,7 +11,7 @@ from PyQt5.QtWidgets import *  # @UnusedWildImport
 from lisp.ui import about
 from lisp.utils import configuration
 
-from lisp.actions.actions_handler import ActionsHandler
+from lisp.core.actions_handler import ActionsHandler
 from lisp.cues.cue_factory import CueFactory
 from lisp.ui.settings.app_settings import AppSettings
 from lisp.core.singleton import QSingleton
@@ -39,7 +39,9 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         # Status Bar
         self.statusBar = QStatusBar(self)
         self.setStatusBar(self.statusBar)
-        ActionsHandler().logging.connect(self.statusBar.showMessage)
+        ActionsHandler().action_done.connect(self._action_done)
+        ActionsHandler().action_undone.connect(self._action_undone)
+        ActionsHandler().action_redone.connect(self._action_redone)
 
         # Menubar
         self.menubar = QMenuBar(self)
@@ -207,17 +209,18 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
             configuration.update_config_from_dict(prefUi.get_configuraton())
 
     def exit(self):
-        qApp.quit()
+        confirm = QMessageBox.Yes
+        if not ActionsHandler().is_saved():
+            confirm = QMessageBox.question(self, 'Exit',
+                                           'The current session is not saved. '
+                                           'Exit anyway?')
 
-    def closeEvent(self, e):
+        if confirm == QMessageBox.Yes:
+            qApp.quit()
+
+    def closeEvent(self, event):
         self.exit()
-
-    def _new_session_confirm(self):
-        confirm = QMessageBox.question(self, 'New session',
-                                       'The current session will be lost. '
-                                       'Continue?')
-
-        return confirm == QMessageBox.Yes
+        event.ignore()
 
     def register_cue_options_ui(self, name, options_ui, category='',
                                 shortcut=''):
@@ -246,6 +249,25 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         else:
             self.menuEdit.insertAction(self.cueSeparator, action)
 
+    def update_window_title(self):
+        saved = ActionsHandler().is_saved()
+        if not saved and not self.windowTitle()[0] == '*':
+            self.setWindowTitle('*' + self.windowTitle())
+        elif saved and self.windowTitle()[0] == '*':
+            self.setWindowTitle(self.windowTitle()[1:])
+
+    def _action_done(self, action):
+        self.statusBar.showMessage(action.log())
+        self.update_window_title()
+
+    def _action_undone(self, action):
+        self.statusBar.showMessage('Undone' + action.log())
+        self.update_window_title()
+
+    def _action_redone(self, action):
+        self.statusBar.showMessage('Redone' + action.log())
+        self.update_window_title()
+
     def _add_cues(self, options_list):
         for options in options_list:
             try:
@@ -254,10 +276,6 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
             except Exception as e:
                 message = ' '.join([str(i) for i in e.args])
                 QMessageBox.critical(None, 'Error', message)
-
-    def _startup(self):
-        if self._new_session_confirm():
-            self.new_session.emit()
 
     def _load_from_file(self):
         if self._new_session_confirm():
@@ -270,6 +288,17 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
                 return True
 
         return False
+
+    def _new_session_confirm(self):
+        confirm = QMessageBox.question(self, 'New session',
+                                       'The current session will be lost. '
+                                       'Continue?')
+
+        return confirm == QMessageBox.Yes
+
+    def _startup(self):
+        if self._new_session_confirm():
+            self.new_session.emit()
 
     def _fullscreen(self, enable):
         if enable:

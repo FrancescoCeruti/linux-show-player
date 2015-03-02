@@ -7,9 +7,6 @@
 
 class Action():
 
-    def properties(self):
-        return {}
-
     def do(self):
         pass
 
@@ -19,11 +16,14 @@ class Action():
     def redo(self):
         pass
 
+    def properties(self):
+        return {}
+
+    def update_properties(self, properties):
+        self.properties().update(properties)
+
     def log(self):
         return ''
-
-    def update_properties(self, props):
-        self.properties().update(props)
 
     def __getitem__(self, key):
         return self.properties()[key]

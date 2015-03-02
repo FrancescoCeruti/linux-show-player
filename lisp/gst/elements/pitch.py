@@ -19,7 +19,7 @@ class Pitch(GstMediaElement):
     def __init__(self, pipe):
         super().__init__()
 
-        self._properties = {"pitch": 0}
+        self._properties = {"pitch": 1}
 
         self._pitch = Gst.ElementFactory.make("pitch", None)
         pipe.add(self._pitch)

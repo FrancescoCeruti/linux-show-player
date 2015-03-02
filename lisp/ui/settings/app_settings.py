@@ -12,7 +12,7 @@ from lisp.utils.util import deep_update
 
 class AppSettings(QDialog):
 
-    __SettingsWidget = []
+    SettingsWidgets = []
 
     def __init__(self, conf, **kwargs):
         super().__init__(**kwargs)
@@ -31,7 +31,7 @@ class AppSettings(QDialog):
         self.sections = QStackedWidget(self)
         self.sections.setGeometry(QtCore.QRect(200, 10, 430, 470))
 
-        for widget in self.__SettingsWidget:
+        for widget in self.SettingsWidgets:
             widget = widget(QtCore.QSize(430, 465), self)
             widget.set_configuration(self.conf)
 
@@ -52,19 +52,21 @@ class AppSettings(QDialog):
         conf = {}
 
         for n in range(self.sections.count()):
-            deep_update(conf, self.sections.widget(n).get_configuration())
+            widget = self.sections.widget(n)
+            newconf = widget.get_configuration()
+            deep_update(conf, newconf)
 
         return conf
 
     @classmethod
     def register_settings_widget(cls, widget):
-        if widget not in cls.__SettingsWidget:
-            cls.__SettingsWidget.append(widget)
+        if widget not in cls.SettingsWidgets:
+            cls.SettingsWidgets.append(widget)
 
     @classmethod
     def unregister_settings_widget(cls, widget):
-        if widget not in cls.__SettingsWidget:
-            cls.__SettingsWidget.remove(widget)
+        if widget not in cls.SettingsWidgets:
+            cls.SettingsWidgets.remove(widget)
 
     def _change_page(self, current, previous):
         if not current:

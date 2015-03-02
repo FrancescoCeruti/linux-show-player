@@ -12,13 +12,12 @@ from PyQt5.QtWidgets import QStyleFactory, qApp
 from lisp.ui.style import style  # @UnusedImport
 
 
-absPath = path.abspath(path.join(path.dirname(__file__))) + '/'
-
-QLiSPIconsThemePaths = [absPath + 'icons']
-QLiSPIconsThemeName = 'lisp'
+StylePath = path.abspath(path.join(path.dirname(__file__))) + '/'
+IconsThemePaths = [StylePath + 'icons']
+IconsThemeName = 'lisp'
 
 QLiSPTheme = ''
-with open(absPath + 'style/style.qss', mode='r', encoding='utf-8') as f:
+with open(StylePath + 'style/style.qss', mode='r', encoding='utf-8') as f:
     QLiSPTheme = f.read()
 
 

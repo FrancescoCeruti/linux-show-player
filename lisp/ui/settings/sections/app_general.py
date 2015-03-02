@@ -51,7 +51,7 @@ class General(SettingsSection):
         if self.startupDialogCheck.isChecked():
             conf['Layout']['default'] = 'NoDefault'
         else:
-            conf['Layout']['default'] = self.layoutGroup.currentText()
+            conf['Layout']['default'] = self.layoutCombo.currentText()
 
         conf['Theme']['current'] = self.themeCombo.currentText()
         styles.apply_style(self.themeCombo.currentText())

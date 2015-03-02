@@ -25,6 +25,8 @@ class AudioPan(GstMediaElement):
         self._convert = Gst.ElementFactory.make("audioconvert", None)
         pipe.add(self._convert)
 
+        self._panorama.link(self._convert)
+
     def properties(self):
         return self._properties
 

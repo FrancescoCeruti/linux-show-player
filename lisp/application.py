@@ -17,7 +17,7 @@ from lisp.ui.layoutselect import LayoutSelect
 from lisp.ui.mainwindow import MainWindow
 from lisp.utils import configuration as cfg
 
-from lisp.actions.actions_handler import ActionsHandler
+from lisp.core.actions_handler import ActionsHandler
 from lisp.cues.cue_factory import CueFactory
 from lisp.ui.qmessagebox import QDetailedMessageBox
 from lisp.ui.settings.app_settings import AppSettings
@@ -75,7 +75,7 @@ class Application(metaclass=Singleton):
             Init plugins.
         '''
 
-        ActionsHandler().clear_session()
+        ActionsHandler().clear()
         plugins.reset_plugins()
 
         if self.layout is not None:
@@ -116,7 +116,8 @@ class Application(metaclass=Singleton):
         self.app_conf = {}
 
         if first and cfg.config['Layout']['Default'].lower() != 'nodefault':
-            self._create_layout(cfg.config['Layout']['Default'])
+            layout = layouts.get_layout(cfg.config['Layout']['Default'])
+            self._create_layout(layout)
         else:
             self._layout_dialog()
 
@@ -144,6 +145,9 @@ class Application(metaclass=Singleton):
         with open(filepath, mode='w', encoding='utf-8') as file:
             file.write(json.dumps(program, sort_keys=True, indent=4))
 
+        ActionsHandler().set_saved()
+        self.mainWindow.update_window_title()
+
     def _load_from_file(self, filepath):
         ''' Loads a saved program from "filepath" '''
         try:
@@ -162,6 +166,9 @@ class Application(metaclass=Singleton):
                 cue = CueFactory.create_cue(cue_conf)
                 if cue is not None:
                     self.layout.add_cue(cue, cue['index'])
+
+            ActionsHandler().set_saved()
+            self.mainWindow.update_window_title()
 
             # Load plugins settings
             self._load_plugins_settings(program['plugins'])

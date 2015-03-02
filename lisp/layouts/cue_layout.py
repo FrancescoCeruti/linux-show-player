@@ -10,7 +10,7 @@ from PyQt5.QtCore import QObject, pyqtSignal
 from PyQt5.QtWidgets import *  # @UnusedWildImport
 from lisp.ui.mainwindow import MainWindow
 
-from lisp.actions.actions_handler import ActionsHandler
+from lisp.core.actions_handler import ActionsHandler
 from lisp.cues.cue import Cue
 from lisp.layouts.cue_layout_actions import AddAction, ConfigureAction, \
     MultiConfigureAction, MoveAction, RemoveAction

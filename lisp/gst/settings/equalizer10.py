@@ -43,8 +43,7 @@ class Equalizer10Settings(SettingsSection):
             self.gridLayout.addWidget(label, 0, n)
 
             slider = QSlider(self.groupBox)
-            slider.setMinimum(-24)
-            slider.setMaximum(12)
+            slider.setRange(-24, 12)
             slider.setPageStep(1)
             slider.setValue(0)
             slider.setOrientation(QtCore.Qt.Vertical)
@@ -77,8 +76,7 @@ class Equalizer10Settings(SettingsSection):
         return conf
 
     def set_configuration(self, conf):
-        if(conf is not None):
-            if(self.id in conf):
-                for band in self.sliders:
-                    if(band in conf[self.id]):
-                        self.sliders[band].setValue(conf[self.id][band])
+        if conf is not None and self.id in conf:
+            for band in self.sliders:
+                if band in conf[self.id]:
+                    self.sliders[band].setValue(conf[self.id][band])

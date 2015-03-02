@@ -6,7 +6,7 @@
 
 from copy import deepcopy
 
-from lisp.actions.action import Action
+from lisp.core.action import Action
 from lisp.cues.cue_factory import CueFactory
 
 
@@ -64,10 +64,10 @@ class ConfigureAction(Action):
         self._old = deepcopy(cue.properties())
 
     def do(self):
-        self._cue.update_properties(self._new)
+        self._cue.update_properties(deepcopy(self._new))
 
     def undo(self):
-        self._cue.update_properties(self._old)
+        self._cue.update_properties(deepcopy(self._old))
 
     def redo(self):
         self.do()
@@ -89,7 +89,7 @@ class MultiConfigureAction(Action):
 
     def undo(self):
         for cue, old in zip(self._cues, self._old):
-            cue.update_properties(old)
+            cue.update_properties(deepcopy(old))
 
     def redo(self):
         self.do()
