@@ -179,7 +179,7 @@ class ReplayGain(QtCore.QObject, Plugin):
                     break
 
         if not self._stopped:
-            Application().actions_handler.do_action(self._action)
+            ActionsHandler().do_action(self._action)
         else:
             logging.info('REPLY-GAIN:: Stopped by user')
 
