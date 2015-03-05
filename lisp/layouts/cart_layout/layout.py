@@ -143,18 +143,12 @@ class CartLayout(QTabWidget, CueLayout):
         self.add_page()
 
     def retranslateUi(self):
-        self.new_page_action.setShortcut('ALT+P')
         self.new_page_action.setText("Add page")
         self.new_pages_action.setText("Add pages")
-        self.new_pages_action.setShortcut('ALT+SHIFT+P')
         self.rm_current_page_action.setText('Remove current page')
-        self.countdown_mode.setShortcut('ALT+C')
         self.countdown_mode.setText('Countdown mode')
-        self.show_sliders_action.setShortcut('ALT+S')
         self.show_sliders_action.setText('Show seek bars')
-        self.show_vumeter_action.setShortcut('ALT+M')
         self.show_vumeter_action.setText('Show dB-meters')
-        self.show_accurate_action.setShortcut('ALT+T')
         self.show_accurate_action.setText('Accurate time')
 
         self.edit_action.setText('Edit option')

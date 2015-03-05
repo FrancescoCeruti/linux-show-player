@@ -21,9 +21,9 @@ class About(QDialog):
 
         self.setWindowModality(QtCore.Qt.ApplicationModal)
         self.setWindowTitle('About Linux Show Player')
-        self.setMaximumSize(500, 410)
-        self.setMinimumSize(500, 410)
-        self.resize(500, 410)
+        self.setMaximumSize(500, 420)
+        self.setMinimumSize(500, 420)
+        self.resize(500, 420)
 
         self.setLayout(QGridLayout())
 
@@ -77,9 +77,6 @@ class About(QDialog):
 
     LICENSE = '''
 <center>
-    <b>Linux Show Player</b><br />
-    Copyright © 2012-2014 Francesco Ceruti<br />
-    <br />
     Linux Show Player is free software: you can redistribute it and/or
     modify it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or

@@ -10,6 +10,7 @@ from PyQt5.QtWidgets import *  # @UnusedWildImport
 from lisp.application import Application
 from lisp.ui.cuelistdialog import CueListDialog
 from lisp.ui.settings.section import SettingsSection
+from lisp.ui.timedit import TimeEdit
 
 
 class TriggersSettings(SettingsSection):
@@ -101,7 +102,8 @@ class TriggerWidget(QWidget):
         self.setLayout(QHBoxLayout(self))
         self.layout().setContentsMargins(2, 1, 2, 1)
 
-        self.timeEdit = QTimeEdit(self)
+        self.timeEdit = TimeEdit(self)
+        self.timeEdit.setSectionStep(TimeEdit.MSecSection, 100)
         self.timeEdit.timeChanged.connect(self._time_changed)
         self.timeEdit.setDisplayFormat('HH.mm.ss.zzz')
         self.layout().addWidget(self.timeEdit)
