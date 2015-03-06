@@ -43,12 +43,12 @@ class TriggersSettings(SettingsSection):
 
         self.duration = -1
 
-    def _add_new_trigger(self, cue_id, time, name):
+    def _add_new_trigger(self, cue_id, action, name):
         item = QListWidgetItem()
         item.setSizeHint(QSize(200, 30))
         widget = TriggerWidget(item)
         widget.timeEdit.editingFinished.connect(self.list.sortItems)
-        widget.load_trigger(cue_id, time, self.duration, name)
+        widget.load_trigger(cue_id, action, self.duration, name)
 
         self.list.addItem(item)
         self.list.setItemWidget(item, widget)
@@ -56,7 +56,7 @@ class TriggersSettings(SettingsSection):
     def _add_trigger_dialog(self):
         cue = self.cue_select_dialog()
         if cue is not None:
-            self._add_new_trigger(cue['id'], 0, cue['name'])
+            self._add_new_trigger(cue['id'], 'play', cue['name'])
 
     def _remove_trigger(self):
         widget = self.list.itemWidget(self.list.item(self.list.currentRow()))
@@ -73,24 +73,23 @@ class TriggersSettings(SettingsSection):
             self.duration = conf.get('media', {}).get('duration', -1)
 
             if 'triggers' in conf:
-                for position, ids in conf['triggers'].items():
+                for action, ids in conf['triggers'].items():
                     for cue_id in ids:
                         cue = Application().layout.get_cue_by_id(cue_id)
                         if cue is not None:
-                            self._add_new_trigger(cue_id, position,
-                                                  cue['name'])
+                            self._add_new_trigger(cue_id, action, cue['name'])
 
     def get_configuration(self):
         triggers = {}
 
         for n in range(self.list.count()):
             trigger = self.list.itemWidget(self.list.item(n))
-            position, target = trigger.get_trigger()
+            action, target = trigger.get_trigger()
 
-            if position not in triggers:
-                triggers[position] = [target]
+            if action not in triggers:
+                triggers[action] = [target]
             else:
-                triggers[position].append(target)
+                triggers[action].append(target)
 
         return {'triggers': triggers}
 
@@ -102,7 +101,14 @@ class TriggerWidget(QWidget):
         self.setLayout(QHBoxLayout(self))
         self.layout().setContentsMargins(2, 1, 2, 1)
 
+        self.triggerType = QComboBox(self)
+        self.triggerType.addItems(['Play', 'Stopped', 'Time'])
+        self.triggerType.currentTextChanged.connect(self._type_changed)
+        self.layout().addWidget(self.triggerType)
+
         self.timeEdit = TimeEdit(self)
+        # Not enabled, the default type is "Play"
+        self.timeEdit.setEnabled(False)
         self.timeEdit.setSectionStep(TimeEdit.MSecSection, 100)
         self.timeEdit.timeChanged.connect(self._time_changed)
         self.timeEdit.setDisplayFormat('HH.mm.ss.zzz')
@@ -118,8 +124,9 @@ class TriggerWidget(QWidget):
         self.layout().addWidget(self.selectButton)
 
         self.layout().setStretch(0, 1)
-        self.layout().setStretch(1, 2)
-        self.layout().setStretch(2, 1)
+        self.layout().setStretch(1, 1)
+        self.layout().setStretch(2, 2)
+        self.layout().setStretch(3, 1)
 
         self.retranslateUi()
 
@@ -130,24 +137,32 @@ class TriggerWidget(QWidget):
         self.timeEdit.setToolTip('Minimum step is 100 milliseconds')
         self.selectButton.setText('Select target')
 
-    def load_trigger(self, cue_id, time, duration, name):
+    def load_trigger(self, cue_id, action, duration, name):
         self.cue_id = cue_id
         self.nameLabel.setText(name)
-        self.timeEdit.setTime(self._to_qtime(time))
+        if action.isdigit():
+            self.triggerType.setCurrentText('Time')
+            self.timeEdit.setTime(self._to_qtime(int(action)))
+        else:
+            self.triggerType.setCurrentText(action)
 
         if duration > 0:
             self.timeEdit.setMaximumTime(self._to_qtime(duration // 100))
 
     def get_trigger(self):
-        return (self._from_qtime(self.timeEdit.time()), self.cue_id)
+        action = self.triggerType.currentText()
+        if action == 'Time':
+            action = str(self._from_qtime(self.timeEdit.time()))
+
+        return (action, self.cue_id)
 
     def _select_cue(self):
         cue = TriggersSettings.cue_select_dialog()
+        self.cue_id = cue['id']
+        self.nameLabel.setText(cue['name'])
 
-        if cue is not None:
-            self.load_trigger(cue['id'],
-                              self._from_qtime(self.timeEdit.time()), -1,
-                              cue['name'])
+    def _type_changed(self, ttype):
+        self.timeEdit.setEnabled(ttype == 'Time')
 
     def _time_changed(self):
         rounded = self._to_qtime(self._from_qtime(self.timeEdit.time()))

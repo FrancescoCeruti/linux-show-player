@@ -84,10 +84,11 @@ class MediaItem(QTreeWidgetItem):
 
     def set_accurate_time(self, enable):
         self._accurate_time = enable
-        self.update_time(self.media.current_time())
+        self.update_duration()
 
     def update_duration(self):
-        self.setText(2, strtime(self.media['duration']))
+        self.setText(2, strtime(self.media['duration'],
+                                accurate=self._accurate_time))
         self.timeProgress.setMaximum(self.media['duration'])
 
     def update_item(self):

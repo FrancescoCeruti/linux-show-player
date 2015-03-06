@@ -12,6 +12,9 @@ class TriggersHandler:
 
     def __init__(self, media):
         self._media = media
+        self._media.on_play.connect(self._on_play)
+        self._media.stopped.connect(self._stopped)
+
         self._media_time = MediaTime(media)
         self._media_time.notify.connect(self._on_notify)
 
@@ -33,15 +36,21 @@ class TriggersHandler:
         self._media_time.notify.disconnect(self._on_notify)
         self.reset_triggers()
 
-    def _on_notify(self, time):
-        time //= 100
-        triggers = self._triggers.get(time, [])
+    def _on_play(self):
+        self._execute('Play')
 
-        for n, trigger in enumerate(triggers):
+    def _on_notify(self, time):
+        self._execute(str(time // 100))
+
+    def _stopped(self):
+        self._execute('Stopped')
+
+    def _execute(self, action):
+        for n, trigger in enumerate(self._triggers.get(action, [])):
             cue, cue_id = trigger
             if cue is None or cue.is_finalized():
                 cue = Application().layout.get_cue_by_id(cue_id)
-                self._triggers[time][n] = (cue, cue_id)
+                self._triggers[action][n] = (cue, cue_id)
 
             if cue is not None:
                 cue.execute()

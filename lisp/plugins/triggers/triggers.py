@@ -48,16 +48,9 @@ class Triggers(Plugin):
     def update_handler(self, cue):
         if 'triggers' in cue.properties():
             if len(cue['triggers']) > 0:
-                self._ensure_int_keys(cue['triggers'])
                 if cue not in self.handlers:
                     self.handlers[cue] = TriggersHandler(cue.media)
                 self.handlers[cue].reset_triggers()
                 self.handlers[cue].load_triggers(cue['triggers'])
             else:
                 self.handlers.pop(cue, None)
-
-    def _ensure_int_keys(self, triggers):
-        for key in triggers:
-            if isinstance(key, str):
-                value = triggers.pop(key)
-                triggers[int(key)] = value

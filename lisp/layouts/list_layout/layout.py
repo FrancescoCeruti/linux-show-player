@@ -25,6 +25,7 @@ from lisp.layouts.list_layout.preferences import ListLayoutPreferences
 from lisp.ui.settings.app_settings import AppSettings
 from lisp.ui.settings.sections.cue_apparence import Appearance
 from lisp.ui.settings.sections.media_cue_general import MediaCueGeneral
+from lisp.cues.cue_factory import CueFactory
 
 
 AppSettings.register_settings_widget(ListLayoutPreferences)
@@ -62,7 +63,7 @@ class ListLayout(QWidget, CueLayout):
 
         self._show_dbmeter = config['ListLayout']['ShowDbMeters'] == 'True'
         self._show_seek = config['ListLayout']['ShowSeek'] == 'True'
-        self._acurate_time = config['ListLayout']['ShowAccurate'] == 'True'
+        self._accurate_time = config['ListLayout']['ShowAccurate'] == 'True'
         self._auto_next = config['ListLayout']['AutoNext'] == 'True'
 
         # Add layout-specific menus
@@ -78,7 +79,7 @@ class ListLayout(QWidget, CueLayout):
 
         self.accurateTimingAction = QAction(self)
         self.accurateTimingAction.setCheckable(True)
-        self.accurateTimingAction.setChecked(self._acurate_time)
+        self.accurateTimingAction.setChecked(self._accurate_time)
         self.accurateTimingAction.triggered.connect(self.set_accurate_time)
 
         self.autoNextAction = QAction(self)
@@ -136,7 +137,8 @@ class ListLayout(QWidget, CueLayout):
         self.listView = ListWidget(self)
         self.listView.context_event.connect(self.context_event)
         self.listView.key_event.connect(self.onKeyPressEvent)
-        self.listView.drop_event.connect(self.move_cue_at)
+        self.listView.drop_move_event.connect(self.move_cue_at)
+        self.listView.drop_copy_event.connect(self._copy_cue_at)
         self.listView.setHeaderLabels(self.HEADER)
         self.listView.header().setSectionResizeMode(QHeaderView.Fixed)
         self.listView.header().setSectionResizeMode(self.HEADER.index('Cue'),
@@ -255,7 +257,7 @@ class ListLayout(QWidget, CueLayout):
         self.cue_added.emit(cue)
 
     def set_accurate_time(self, enable):
-        self._acurate_time = enable
+        self._accurate_time = enable
 
         for i in range(self.playView.count()):
             widget = self.playView.itemWidget(self.playView.item(i))
@@ -286,7 +288,7 @@ class ListLayout(QWidget, CueLayout):
             widget = PlayingMediaWidget(cue, media_time, self.playView)
             widget.set_dbmeter_visible(self._show_dbmeter)
             widget.set_seek_visible(self._show_seek)
-            widget.set_accurate_time(self._acurate_time)
+            widget.set_accurate_time(self._accurate_time)
 
             list_item = QListWidgetItem()
             list_item.setSizeHint(widget.size())
@@ -396,6 +398,10 @@ class ListLayout(QWidget, CueLayout):
 
     def move_cue_at(self, old_index, index):
         self.move_cue(self._cue_items[old_index].cue, index)
+
+    def _copy_cue_at(self, old_index, index):
+        newcue = CueFactory.clone_cue(self._cue_items[old_index].cue)
+        self.add_cue(newcue, index)
 
     def __move_cue__(self, cue, index):
         item = self._cue_items.pop(cue['index'])

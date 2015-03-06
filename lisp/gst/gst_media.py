@@ -166,8 +166,8 @@ class GstMedia(Media):
         for element in self._elements:
             element.interrupt()
 
+        self._gst_pipe.set_state(Gst.State.NULL)
         if dispose:
-            self._gst_pipe.set_state(Gst.State.NULL)
             self.state = Media.NONE
         else:
             self._gst_pipe.set_state(Gst.State.READY)

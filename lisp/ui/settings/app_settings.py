@@ -38,6 +38,9 @@ class AppSettings(QDialog):
             self.listWidget.addItem(widget.NAME)
             self.sections.addWidget(widget)
 
+        if len(self.SettingsWidgets) > 0:
+            self.listWidget.setCurrentRow(0)
+
         self.listWidget.currentItemChanged.connect(self._change_page)
 
         self.dialogButtons = QDialogButtonBox(self)

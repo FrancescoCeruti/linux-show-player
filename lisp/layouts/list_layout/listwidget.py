@@ -7,14 +7,15 @@
 from PyQt5 import QtCore
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtGui import QKeyEvent, QContextMenuEvent
-from PyQt5.QtWidgets import QTreeWidget
+from PyQt5.QtWidgets import QTreeWidget, qApp
 
 
 class ListWidget(QTreeWidget):
 
     key_event = pyqtSignal(QKeyEvent)
     context_event = pyqtSignal(QContextMenuEvent)
-    drop_event = QtCore.pyqtSignal(int, int)
+    drop_move_event = QtCore.pyqtSignal(int, int)
+    drop_copy_event = QtCore.pyqtSignal(int, int)
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -37,11 +38,19 @@ class ListWidget(QTreeWidget):
         super().keyPressEvent(event)
 
     def dropEvent(self, event):
-        super().dropEvent(event)
-        self.drop_event.emit(self.startPosition,
-                             self.indexFromItem(self.draggingItem).row())
+        if(qApp.keyboardModifiers() == QtCore.Qt.ShiftModifier):
+            event.setDropAction(QtCore.Qt.CopyAction)
+            self.drop_copy_event.emit(self.drag_start,
+                                      self.indexFromItem(self.drag_item).row())
+        else:
+            event.setDropAction(QtCore.Qt.MoveAction)
+            super().dropEvent(event)
+            self.drop_move_event.emit(self.drag_start,
+                                      self.indexFromItem(self.drag_item).row())
+
+        event.accept()
 
     def mousePressEvent(self, event):
-        self.draggingItem = self.itemAt(event.pos())
-        self.startPosition = self.indexFromItem(self.draggingItem).row()
+        self.drag_item = self.itemAt(event.pos())
+        self.drag_start = self.indexFromItem(self.drag_item).row()
         super().mousePressEvent(event)
