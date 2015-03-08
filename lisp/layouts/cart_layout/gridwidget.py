@@ -9,7 +9,7 @@ from mimetypes import guess_type
 
 from PyQt5 import QtCore
 from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import *  # @UnusedWildImport
+from PyQt5.QtWidgets import QWidget, QLabel, qApp
 
 
 class GridFullException(Exception):

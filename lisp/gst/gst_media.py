@@ -11,9 +11,7 @@ from os.path import getmtime
 from re import match
 from threading import Lock
 
-import gi
-gi.require_version('Gst', '1.0')
-from gi.repository import Gst
+from lisp.repository import Gst
 from lisp.core.media import Media
 from lisp.gst import elements
 from lisp.utils import audio_utils

@@ -7,7 +7,8 @@
 import os
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import *  # @UnusedWildImport
+from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QComboBox, \
+    QPushButton, QFrame, QTextBrowser, QFileDialog
 from lisp import layouts
 
 

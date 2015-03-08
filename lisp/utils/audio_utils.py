@@ -8,9 +8,7 @@ import math
 from urllib.request import quote, unquote
 import wave
 
-import gi
-gi.require_version('Gst', '1.0')
-from gi.repository import Gst, GstPbutils
+from lisp.repository import Gst, GstPbutils
 
 
 # Linear value for -100dB
@@ -43,7 +41,7 @@ def uri_duration(uri):
     duration = -1
     try:
         protocol, path = uri.split("://")
-        # If a WAVE local file, then use the python wave module
+        # If a WAVE local file, then use the python wave module (faster)
         if protocol == "file":
             if path.lower().endswith(".wav") or path.lower().endswith(".wave"):
                 duration = wave_duration(unquote(path))

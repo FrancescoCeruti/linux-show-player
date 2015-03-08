@@ -7,7 +7,8 @@
 import os.path
 
 from PyQt5.QtCore import QStandardPaths, Qt
-from PyQt5.QtWidgets import *  # @UnusedWildImport
+from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QPushButton, QLineEdit, \
+    QGridLayout, QCheckBox, QSpinBox, QLabel, QFileDialog
 from lisp.ui.mainwindow import MainWindow
 from lisp.utils.configuration import config
 

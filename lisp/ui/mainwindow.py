@@ -7,14 +7,16 @@
 import os
 
 from PyQt5 import QtCore
-from PyQt5.QtWidgets import *  # @UnusedWildImport
+from PyQt5.QtWidgets import QMainWindow, QWidget, QGridLayout, QStatusBar, \
+    QMenuBar, QMenu, QAction, qApp, QSizePolicy, QFileDialog, QDialog, \
+    QMessageBox
 from lisp.ui import about
 from lisp.utils import configuration
 
 from lisp.core.actions_handler import ActionsHandler
+from lisp.core.singleton import QSingleton
 from lisp.cues.cue_factory import CueFactory
 from lisp.ui.settings.app_settings import AppSettings
-from lisp.core.singleton import QSingleton
 
 
 class MainWindow(QMainWindow, metaclass=QSingleton):

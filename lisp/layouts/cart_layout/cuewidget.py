@@ -6,7 +6,7 @@
 
 from PyQt5.QtCore import pyqtSignal, QPoint, Qt, QMimeData
 from PyQt5.QtGui import QDrag
-from PyQt5.QtWidgets import *  # @UnusedWildImport
+from PyQt5.QtWidgets import QWidget
 from lisp.ui.qclicklabel import QClickLabel
 from lisp.utils.configuration import config
 

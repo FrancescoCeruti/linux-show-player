@@ -5,7 +5,8 @@
 ##########################################
 
 from PyQt5 import QtCore
-from PyQt5.QtWidgets import *  # @UnusedWildImport
+from PyQt5.QtWidgets import QDialog, QListWidget, QStackedWidget, \
+    QDialogButtonBox
 
 from lisp.utils.util import deep_update
 

@@ -9,7 +9,7 @@ from itertools import chain
 from os import listdir, path
 from os.path import isdir, exists, join
 
-from gi.repository import Gst
+from lisp.repository import Gst
 
 
 def deep_update(d, u):

@@ -8,7 +8,9 @@ import os
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import *  # @UnusedWildImport
+from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QLineEdit, \
+    QPushButton, QGridLayout, QLabel, QListWidget, QDialogButtonBox, QFileDialog, \
+    QMessageBox
 
 from .session import Session
 
@@ -125,7 +127,8 @@ class UriChangerDialog(QDialog):
             self.session = Session(file)
             self.session_analyze()
         elif file.strip() != '':
-            QMessageBox.critical(self, 'Error', 'Session file "' + file + '" not found')
+            QMessageBox.critical(self, 'Error',
+                                 'Session file "' + file + '" not found')
 
     def session_replace(self):
         self.session.replace(self.prefixList.currentItem().text(),

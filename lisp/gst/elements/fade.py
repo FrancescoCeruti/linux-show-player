@@ -8,13 +8,12 @@ from threading import Lock
 from time import sleep
 
 from PyQt5 import QtCore
-import gi
-gi.require_version('Gst', '1.0')
-from gi.repository import Gst
 
 from lisp.gst.gst_element import GstMediaElement
+from lisp.repository import Gst
 from lisp.utils.decorators import async
-from lisp.utils.fade_functor import *
+from lisp.utils.fade_functor import fade_linear, fadein_quad, fade_inout_quad, \
+    fadeout_quad, ntime
 
 
 class Fade(QtCore.QObject, GstMediaElement):

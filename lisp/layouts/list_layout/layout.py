@@ -9,12 +9,14 @@ import weakref
 from PyQt5 import QtCore
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import *  # @UnusedWildImport
+from PyQt5.QtWidgets import QWidget, QAction, QToolBar, QHBoxLayout, QHeaderView, \
+    QVBoxLayout, QLabel, QListWidget, QAbstractItemView, QListWidgetItem, qApp
 from lisp.core.media import Media
 from lisp.utils.configuration import config
 
 from lisp.cues.action_cue import ActionCue
 from lisp.cues.cue import Cue
+from lisp.cues.cue_factory import CueFactory
 from lisp.cues.media_cue import MediaCue
 from lisp.layouts.cue_layout import CueLayout
 from lisp.layouts.list_layout.actionitem import ActionItem
@@ -25,7 +27,6 @@ from lisp.layouts.list_layout.preferences import ListLayoutPreferences
 from lisp.ui.settings.app_settings import AppSettings
 from lisp.ui.settings.sections.cue_apparence import Appearance
 from lisp.ui.settings.sections.media_cue_general import MediaCueGeneral
-from lisp.cues.cue_factory import CueFactory
 
 
 AppSettings.register_settings_widget(ListLayoutPreferences)

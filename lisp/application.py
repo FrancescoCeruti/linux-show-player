@@ -18,11 +18,11 @@ from lisp.ui.mainwindow import MainWindow
 from lisp.utils import configuration as cfg
 
 from lisp.core.actions_handler import ActionsHandler
+from lisp.core.singleton import Singleton
 from lisp.cues.cue_factory import CueFactory
 from lisp.ui.qmessagebox import QDetailedMessageBox
 from lisp.ui.settings.app_settings import AppSettings
 from lisp.ui.settings.sections.app_general import General
-from lisp.core.singleton import Singleton
 
 
 class Application(metaclass=Singleton):

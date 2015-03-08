@@ -6,8 +6,9 @@
 
 import math
 
-from PyQt5.QtWidgets import *  # @UnusedWildImport
 from PyQt5 import QtCore
+from PyQt5.QtWidgets import QGroupBox, QGridLayout, QComboBox, QDoubleSpinBox, \
+    QLabel
 
 from lisp.gst.elements.audiodynamic import Audiodynamic
 from lisp.ui.settings.section import SettingsSection

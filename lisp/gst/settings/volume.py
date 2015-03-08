@@ -5,7 +5,7 @@
 ##########################################
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import *  # @UnusedWildImport
+from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QSlider, QLabel, QCheckBox
 from lisp.utils.audio_utils import db_to_linear, linear_to_db
 
 from lisp.gst.elements.volume import Volume

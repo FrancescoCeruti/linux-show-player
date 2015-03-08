@@ -4,8 +4,8 @@
 # This file is part of LiSP (Linux Show Player).
 ##########################################
 
-from threading import Thread, Lock, RLock
 from functools import wraps, partial
+from threading import Thread, Lock, RLock
 
 
 _synchronized_meta_lock = Lock()

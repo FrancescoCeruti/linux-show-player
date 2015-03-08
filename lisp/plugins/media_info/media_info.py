@@ -7,7 +7,8 @@
 from urllib.request import unquote
 
 from PyQt5 import QtCore
-from PyQt5.QtWidgets import *  # @UnusedWildImport
+from PyQt5.QtWidgets import QAction, QMessageBox, QDialog, QVBoxLayout, \
+    QTreeWidget, QAbstractItemView, QDialogButtonBox, QTreeWidgetItem
 from lisp.core.plugin import Plugin
 from lisp.utils.audio_utils import uri_metadata, parse_gst_tag_list
 

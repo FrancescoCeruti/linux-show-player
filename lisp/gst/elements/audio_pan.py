@@ -4,9 +4,9 @@
 # This file is part of LiSP (Linux Show Player).
 ##########################################
 
-from gi.repository import Gst
 
 from lisp.gst.gst_element import GstMediaElement
+from lisp.repository import Gst
 
 
 class AudioPan(GstMediaElement):

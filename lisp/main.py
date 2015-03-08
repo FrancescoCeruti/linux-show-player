@@ -4,15 +4,15 @@
 # This file is part of LiSP (Linux Show Player).
 ##########################################
 
-import sys
-import logging
 import argparse
+import logging
+import sys
 
 from PyQt5.QtGui import QFont, QIcon
 from PyQt5.QtWidgets import QApplication
-
 from lisp.ui import styles
 from lisp.utils.configuration import config
+
 from lisp.application import Application
 
 

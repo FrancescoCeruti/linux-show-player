@@ -11,7 +11,7 @@ __SECTIONS = set()
 
 def load():
     for name, section in load_classes(os.path.dirname(__file__),
-                                         suffixes=['Settings']):
+                                      suffixes=['Settings']):
 
         if hasattr(section, 'initialize'):
             try:

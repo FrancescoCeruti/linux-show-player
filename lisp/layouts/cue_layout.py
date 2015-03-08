@@ -7,7 +7,7 @@
 from abc import abstractmethod
 
 from PyQt5.QtCore import QObject, pyqtSignal
-from PyQt5.QtWidgets import *  # @UnusedWildImport
+from PyQt5.QtWidgets import QAction, QMenu, qApp
 from lisp.ui.mainwindow import MainWindow
 
 from lisp.core.actions_handler import ActionsHandler

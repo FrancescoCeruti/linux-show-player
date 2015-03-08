@@ -9,7 +9,9 @@ from operator import itemgetter
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import *  # @UnusedWildImport
+from PyQt5.QtWidgets import QDialog, QVBoxLayout, QDialogButtonBox, QWidget, \
+    QGridLayout, QLabel, QPushButton, QSlider, QGroupBox, QListWidget, \
+    QInputDialog, QListWidgetItem
 from lisp.gst import elements
 from lisp.utils.audio_utils import db_to_linear, linear_to_db
 

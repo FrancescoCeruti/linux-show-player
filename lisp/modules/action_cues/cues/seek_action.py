@@ -6,7 +6,8 @@
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import QTime
-from PyQt5.QtWidgets import *  # @UnusedWildImport
+from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QPushButton, QLabel, \
+    QHBoxLayout, QTimeEdit
 from lisp.ui.mainwindow import MainWindow
 
 from lisp.application import Application

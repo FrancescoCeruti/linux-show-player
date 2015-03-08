@@ -4,7 +4,7 @@
 # This file is part of LiSP (Linux Show Player).
 ##########################################
 
-from PyQt5.QtWidgets import *  # @UnusedWildImport
+from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QHBoxLayout, QCheckBox
 from lisp.ui.mainwindow import MainWindow
 
 from lisp.application import Application
@@ -75,7 +75,7 @@ class StopAllSettings(SettingsSection):
 
 CueFactory.register_factory('StopAll', ActionCueFactory)
 MainWindow().register_cue_options_ui(StopAll.Name,
-                                     lambda:  [{'name': StopAll.Name,
-                                                'type': 'StopAll'}],
+                                     lambda: [{'name': StopAll.Name,
+                                               'type': 'StopAll'}],
                                      category='Action cues')
 CueLayout.add_settings_section(StopAllSettings, StopAll)

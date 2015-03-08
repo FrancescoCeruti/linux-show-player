@@ -6,7 +6,8 @@
 
 from PyQt5 import QtCore
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import *  # @UnusedWildImport
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QGroupBox, QGridLayout, \
+    QDoubleSpinBox, QLabel, QComboBox, QStyledItemDelegate
 
 from lisp.gst.elements.fade import Fade
 from lisp.ui.settings.section import SettingsSection

@@ -6,7 +6,8 @@
 
 from copy import deepcopy
 
-from PyQt5.QtWidgets import *  # @UnusedWildImport
+from PyQt5.QtWidgets import QGridLayout, QListWidget, QPushButton, \
+    QStackedWidget, QListWidgetItem
 
 from lisp.gst.gst_pipe_edit import GstPipeEdit
 from lisp.gst.settings import sections_by_element_name

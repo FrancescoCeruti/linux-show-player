@@ -5,10 +5,12 @@
 ##########################################
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import *  # @UnusedWildImport
+from PyQt5.QtWidgets import QDialog, QHBoxLayout, QListWidget, QVBoxLayout, \
+    QPushButton, QDialogButtonBox, QInputDialog, QMessageBox
 from lisp.utils.configuration import config
 
 from lisp.modules.remote.remote import RemoteController, compose_uri
+
 from .peers_discovery_dialog import PeersDiscoveryDialog
 
 

@@ -5,7 +5,7 @@
 ##########################################
 
 from PyQt5 import QtCore
-from PyQt5.QtWidgets import *  # @UnusedWildImport
+from PyQt5.QtWidgets import QGroupBox, QGridLayout, QSpinBox, QLabel
 
 from lisp.gst.elements.dbmeter import Dbmeter
 from lisp.ui.settings.section import SettingsSection

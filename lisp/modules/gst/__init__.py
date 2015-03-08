@@ -4,8 +4,7 @@
 # This file is part of LiSP (Linux Show Player).
 ##########################################
 
-import gi
-from gi.repository import GObject, Gst
+from lisp.repository import Gst, GObject
 from lisp.gst import elements
 from lisp.gst import settings
 from lisp.utils.configuration import config
@@ -16,9 +15,6 @@ from lisp.gst.gst_media_settings import GstMediaSettings
 from lisp.gst.gst_preferences import GstPreferences
 from lisp.layouts.cue_layout import CueLayout
 from lisp.ui.settings.app_settings import AppSettings
-
-
-gi.require_version('Gst', '1.0')
 
 
 def initialize():

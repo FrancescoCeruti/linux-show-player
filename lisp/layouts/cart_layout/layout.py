@@ -7,7 +7,8 @@
 from itertools import chain
 
 from PyQt5 import QtCore
-from PyQt5.QtWidgets import *  # @UnusedWildImport
+from PyQt5.QtWidgets import QTabWidget, QAction, QInputDialog, QWidget, \
+    QApplication, QMessageBox
 from lisp.utils.configuration import config
 
 from lisp.cues.action_cue import ActionCue

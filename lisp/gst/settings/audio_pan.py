@@ -5,7 +5,7 @@
 ##########################################
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import *  # @UnusedWildImport
+from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QSlider, QLabel
 
 from lisp.gst.elements.audio_pan import AudioPan
 from lisp.ui.settings.section import SettingsSection

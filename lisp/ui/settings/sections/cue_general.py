@@ -6,7 +6,8 @@
 
 from PyQt5 import QtCore
 from PyQt5.QtGui import QRegExpValidator
-from PyQt5.QtWidgets import *  # @UnusedWildImport
+from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QHBoxLayout, QLineEdit, \
+    QSizePolicy, QLabel
 
 from lisp.ui.settings.section import SettingsSection
 

@@ -8,7 +8,8 @@ import re
 
 from PyQt5 import QtCore
 from PyQt5.QtGui import QColor
-from PyQt5.QtWidgets import *  # @UnusedWildImport
+from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QHBoxLayout, QTextEdit, \
+    QSpinBox, QPushButton, QLabel, QColorDialog
 
 from lisp.ui.settings.section import SettingsSection
 

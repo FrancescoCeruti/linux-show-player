@@ -5,7 +5,9 @@
 ##########################################
 
 from PyQt5.QtCore import QTime, QSize
-from PyQt5.QtWidgets import *  # @UnusedWildImport
+from PyQt5.QtWidgets import QVBoxLayout, QListWidget, QDialogButtonBox, \
+    QSizePolicy, QListWidgetItem, QDialog, QWidget, QHBoxLayout, QComboBox, \
+    QLabel, QPushButton
 
 from lisp.application import Application
 from lisp.ui.cuelistdialog import CueListDialog

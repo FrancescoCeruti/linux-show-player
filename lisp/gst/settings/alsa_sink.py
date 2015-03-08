@@ -6,7 +6,7 @@
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import QSize
-from PyQt5.QtWidgets import *  # @UnusedWildImport
+from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QComboBox, QLabel
 
 from lisp.gst.elements.alsa_sink import AlsaSink
 from lisp.ui.settings.section import SettingsSection

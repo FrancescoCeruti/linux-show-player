@@ -4,11 +4,8 @@
 # This file is part of LiSP (Linux Show Player).
 ##########################################
 
-import gi
-gi.require_version("Gst", "1.0")
-from gi.repository import Gst
-
 from lisp.gst.gst_element import GstMediaElement
+from lisp.repository import Gst
 
 
 class UriInput(GstMediaElement):

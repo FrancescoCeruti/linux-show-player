@@ -6,7 +6,8 @@
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon, QColor
-from PyQt5.QtWidgets import *  # @UnusedWildImport
+from PyQt5.QtWidgets import QWidget, QGridLayout, QLabel, QSizePolicy, \
+    QPushButton, QLCDNumber
 from lisp.ui.qclickslider import QClickSlider
 
 from lisp.ui.qdbmeter import QDbMeter

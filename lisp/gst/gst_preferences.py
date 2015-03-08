@@ -4,11 +4,10 @@
 # This file is part of LiSP (Linux Show Player).
 ##########################################
 
-from PyQt5.QtWidgets import *  # @UnusedWildImport
+from PyQt5.QtWidgets import QVBoxLayout, QPushButton
 
-from lisp.ui.settings.section import SettingsSection
 from lisp.gst.gst_pipe_edit import GstPipeEdit
-from lisp.utils.configuration import config
+from lisp.ui.settings.section import SettingsSection
 
 
 class GstPreferences(SettingsSection):

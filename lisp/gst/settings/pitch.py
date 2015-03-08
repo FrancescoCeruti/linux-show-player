@@ -7,7 +7,7 @@
 import math
 
 from PyQt5 import QtCore
-from PyQt5.QtWidgets import *  # @UnusedWildImport
+from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QSlider, QLabel
 
 from lisp.gst.elements.pitch import Pitch
 from lisp.ui.settings.section import SettingsSection

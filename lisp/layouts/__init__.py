@@ -1,6 +1,7 @@
 from lisp.layouts.cart_layout.layout import CartLayout
 from lisp.layouts.list_layout.layout import ListLayout
 
+
 __LAYOUTS__ = [CartLayout, ListLayout]
 
 

@@ -6,7 +6,9 @@
 
 from PyQt5.QtCore import QRegExp, Qt
 from PyQt5.QtGui import QRegExpValidator
-from PyQt5.QtWidgets import *  # @UnusedWildImport
+from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QHBoxLayout, QLineEdit, \
+    QLabel, QGridLayout, QCheckBox, QSpinBox, QPushButton, QComboBox, \
+    QMessageBox
 import mido
 
 from lisp.modules import check_module

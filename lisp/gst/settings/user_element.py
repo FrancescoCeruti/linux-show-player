@@ -5,7 +5,7 @@
 ##########################################
 
 from PyQt5 import QtCore
-from PyQt5.QtWidgets import *  # @UnusedWildImport
+from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QPlainTextEdit, QLabel
 
 from lisp.gst.elements.user_element import UserElement
 from lisp.ui.settings.section import SettingsSection

@@ -6,7 +6,8 @@
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import QTime
-from PyQt5.QtWidgets import *  # @UnusedWildImport
+from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QTimeEdit, QLabel, QSpinBox, \
+    QCheckBox
 
 from lisp.ui.settings.sections.cue_general import CueGeneral
 

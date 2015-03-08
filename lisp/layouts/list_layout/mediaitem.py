@@ -6,7 +6,7 @@
 
 from PyQt5 import QtCore
 from PyQt5.QtGui import QIcon, QPixmap
-from PyQt5.QtWidgets import *  # @UnusedWildImport
+from PyQt5.QtWidgets import QTreeWidgetItem, QLabel, QProgressBar
 
 from lisp.core.media_time import MediaTime
 from lisp.ui.qmessagebox import QDetailedMessageBox

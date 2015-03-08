@@ -4,7 +4,7 @@
 # This file is part of LiSP (Linux Show Player).
 ##########################################
 
-from PyQt5.QtWidgets import *  # @UnusedWildImport
+from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QComboBox
 
 from lisp.modules import check_module
 from lisp.modules.midi.midi import InputMidiHandler

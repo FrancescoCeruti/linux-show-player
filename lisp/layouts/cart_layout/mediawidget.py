@@ -6,7 +6,7 @@
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon, QColor
-from PyQt5.QtWidgets import *  # @UnusedWildImport
+from PyQt5.QtWidgets import QProgressBar, QLCDNumber, QLabel
 from lisp.core.media import Media
 from lisp.ui.qclickslider import QClickSlider
 

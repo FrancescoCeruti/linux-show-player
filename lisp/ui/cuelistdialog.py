@@ -5,7 +5,8 @@
 ##########################################
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import *  # @UnusedWildImport
+from PyQt5.QtWidgets import QDialog, QTreeWidget, QHeaderView, QVBoxLayout, \
+    QDialogButtonBox, QTreeWidgetItem
 
 
 class CueListDialog(QDialog):

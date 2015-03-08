@@ -13,15 +13,15 @@ from threading import Thread, Lock
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import *  # @UnusedWildImport
-import gi
-gi.require_version('Gst', '1.0')
-from gi.repository import Gst
+from PyQt5.QtWidgets import QMenu, QAction, QDialog, QProgressDialog, QWidget, \
+    QVBoxLayout, QHBoxLayout, QRadioButton, QSpinBox, QCheckBox, QFrame, QLabel, \
+    QPushButton, QButtonGroup
+from lisp.repository import Gst
 from lisp.core.plugin import Plugin
 
+from lisp.application import Application
 from lisp.core.action import Action
 from lisp.core.actions_handler import ActionsHandler
-from lisp.application import Application
 from lisp.cues.media_cue import MediaCue
 
 

@@ -11,7 +11,7 @@ from PyQt5.QtCore import pyqtSignal, QObject
 from lisp.core.qmeta import QABCMeta
 
 
-class Media(QObject,  metaclass=QABCMeta):
+class Media(QObject, metaclass=QABCMeta):
     '''
         An unique interface for all the media in the application.
 
@@ -19,20 +19,18 @@ class Media(QObject,  metaclass=QABCMeta):
         when a signal should be emitted.
     '''
 
-    '''
-        Media status: describe the current media state.
-        NOTE: Can be different from current real playback state.
-    '''
+    # Media status: describe the current media state.
+    # NOTE: Can be different from current real playback state.
+
     PLAYING = 3  # Media in play
     PAUSED = 2   # Media in pause
     STOPPED = 1  # Media ready for playback
     NONE = 0     # Media not configured
 
-    '''
-        Notification signals, emitted when the media state will be changed
-        or when it is  changed, the first (emitted) parameter will be the
-        media reference.
-    '''
+    # Notification signals, emitted when the media state will be changed
+    # or when it is  changed, the first (emitted) parameter will be the
+    # media reference.
+
     paused = pyqtSignal(object)         # After pause
     played = pyqtSignal(object)         # After play
     sought = pyqtSignal(object, int)    # After seek
