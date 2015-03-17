@@ -21,7 +21,7 @@ from lisp.layouts.cart_layout.mediawidget import MediaCueWidget
 from lisp.layouts.cart_layout.preferences import CartLayoutPreferences
 from lisp.layouts.cue_layout import CueLayout
 from lisp.ui.settings.app_settings import AppSettings
-from lisp.ui.settings.sections.cue_apparence import Appearance
+from lisp.ui.settings.sections.cue_appearance import Appearance
 from lisp.ui.settings.sections.media_cue_general import MediaCueGeneral
 
 

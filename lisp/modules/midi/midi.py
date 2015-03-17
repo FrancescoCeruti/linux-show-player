@@ -22,31 +22,37 @@ class InputMidiHandler(QObject, metaclass=QSingleton):
         super().__init__()
 
         self.alternate_mode = False
-        self.backend_name = backend_name
-        self.port_name = port_name
-        self.backend = None
-        self.port = None
+        self.__backend_name = backend_name
+        self.__port_name = port_name
+        self.__backend = None
+        self.__port = None
 
     def start(self):
-        if self.backend is None:
+        if self.__backend is None:
             try:
-                self.backend = mido.Backend(self.backend_name, load=True)
+                self.__backend = mido.Backend(self.__backend_name, load=True)
                 self.__open_port()
             except Exception:
                 raise RuntimeError('Backend loading failed: ' +
-                                   self.backend_name)
+                                   self.__backend_name)
 
     def stop(self):
         self.__close_port()
+        self.__backend = None
+
+    def change_backend(self, backand_name):
+        self.stop()
+        self.__backend_name = backand_name
+        self.start()
 
     def change_port(self, port_name):
-        self.port_name = port_name
+        self.__port_name = port_name
         self.__close_port()
         self.__open_port()
 
     def get_input_names(self):
-        if self.backend is not None:
-            return self.backend.get_input_names()
+        if self.__backend is not None:
+            return self.__backend.get_input_names()
 
         return []
 
@@ -57,15 +63,15 @@ class InputMidiHandler(QObject, metaclass=QSingleton):
             self.new_message_alt.emit(message)
 
     def __open_port(self):
-        # I'dont expect to find a port named "default", if so, I assume
-        # this port is the default one.
-        if self.port_name in self.get_input_names():
-            self.port = self.backend.open_input(self.port_name,
-                                                callback=self._new_message)
+        # I'dont expect to find a __port named "default", if so, I assume
+        # this __port is the default one.
+        if self.__port_name in self.get_input_names():
+            self.__port = self.__backend.open_input(self.__port_name,
+                                                    callback=self._new_message)
         else:
-            # If the port isn't available use the default one
-            self.port = self.backend.open_input(callback=self._new_message)
+            # If the __port isn't available use the default one
+            self.__port = self.__backend.open_input(callback=self._new_message)
 
     def __close_port(self):
-        if self.port is not None:
-            self.port.close()
+        if self.__port is not None:
+            self.__port.close()
