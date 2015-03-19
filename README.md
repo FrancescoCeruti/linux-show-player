@@ -37,11 +37,11 @@ Download the source archive from GitHub
 
 #####2. Install
 
-	# pip install <archive-name>
+	# pip install --pre <archive-name>
 
 for example:
 	
-	# pip install master.zip
+	# pip install --pre master.zip
 
 ### Usage
 

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+pip uninstall -y python-rtmidi
+pip uninstall -y mido
+
+exit 0
