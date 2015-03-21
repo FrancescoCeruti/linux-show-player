@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 appdir="./usr/share/applications"
 mimedir="./usr/share/mime/packages"

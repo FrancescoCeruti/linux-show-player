@@ -4,8 +4,6 @@ Version: 0.3
 Architecture: all
 Section: multimedia
 Priority: extra
-Pre-Depends: python3-dev (>= 3.4), python3-pip, build-essential, libasound-dev,
-             libjack-jackd2-dev
 Depends: python3 (>= 3.4), python3-gi, python3-pyqt5, python3-pyqt5.qtsvg,
          gstreamer1.0-plugins-base, gstreamer1.0-plugins-good, gstreamer1.0-plugins-ugly,
          gstreamer1.0-plugins-bad, gstreamer1.0-alsa, gstreamer1.0-pulseaudio,
