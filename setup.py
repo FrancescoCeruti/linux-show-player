@@ -4,11 +4,11 @@ import lisp
 from setuptools import find_packages, setup
 
 
-setup(name='linuxshowplayer',
+setup(name='linux-show-player',
       version=lisp.__version__,
       author='Francesco Ceruti',
       author_email='ceppofrancy@gmail.com',
-      url='https://code.google.com/p/linux-show-player/',
+      url='http://linux-show-player.sourceforge.net/',
       description='Cue player for live shows',
       license='GPL+3',
       install_requires=['mido >= 1.1.13', 'python-rtmidi >= 0.5b1'],
@@ -17,7 +17,7 @@ setup(name='linuxshowplayer',
                     'lisp.ui': ['icons/lisp/16/*',
                                 'icons/lisp/22/*',
                                 'icons/lisp/24/*',
-                                'icons/lisp/scalable/*'
+                                'icons/lisp/scalable/*',
                                 'icons/lisp/index.theme',
                                 'icons/lisp/LICENSE.txt',
                                 'style/style.qss',
