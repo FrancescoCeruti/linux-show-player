@@ -1,16 +1,30 @@
-##########################################
-# Copyright 2012-2014 Ceruti Francesco & contributors
+# -*- coding: utf-8 -*-
 #
-# This file is part of LiSP (Linux Show Player).
-##########################################
+# This file is part of Linux Show Player
+#
+# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+#
+# Linux Show Player is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Linux Show Player is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon, QColor
 from PyQt5.QtWidgets import QProgressBar, QLCDNumber, QLabel
-from lisp.core.media import Media
-from lisp.ui.qclickslider import QClickSlider
 
-from lisp.core.media_time import MediaTime
+from lisp.backends.base.media import MediaState
+from lisp.core.signal import Connection
+from lisp.ui.qclickslider import QClickSlider
+from lisp.backends.base.media_time import MediaTime
 from lisp.layouts.cart_layout.cuewidget import CueWidget
 from lisp.ui.qdbmeter import QDbMeter
 from lisp.ui.qmessagebox import QDetailedMessageBox
@@ -18,14 +32,13 @@ from lisp.utils.util import strtime
 
 
 class MediaCueWidget(CueWidget):
-
     STOPPED = QIcon.fromTheme("led_off")
     PAUSED = QIcon.fromTheme("led_yellow")
     PLAYING = QIcon.fromTheme("led_green")
     ERROR = QIcon.fromTheme("led_red")
 
-    def __init__(self, **kwds):
-        super().__init__(**kwds)
+    def __init__(self, **kwarg):
+        super().__init__(**kwarg)
 
         self.fade = None
 
@@ -61,29 +74,31 @@ class MediaCueWidget(CueWidget):
     def set_cue(self, cue):
         super().set_cue(cue)
 
+        queued = Connection.QtQueued
+
         # Media status changed
-        self.cue.media.interrupted.connect(self._status_stopped)
-        self.cue.media.interrupted.connect(self.dbmeter.reset)
-        self.cue.media.stopped.connect(self._status_stopped)
-        self.cue.media.stopped.connect(self.dbmeter.reset)
-        self.cue.media.played.connect(self._status_playing)
-        self.cue.media.paused.connect(self._status_paused)
-        self.cue.media.error.connect(self._status_error)
-        self.cue.media.waiting.connect(self._status_paused)
-        self.cue.media.eos.connect(self._status_stopped)
-        self.cue.media.eos.connect(self.dbmeter.reset)
-        self.cue.media.error.connect(self._on_error)
-        self.cue.media.error.connect(self.dbmeter.reset)
+        self.cue.media.interrupted.connect(self._status_stopped, mode=queued)
+        self.cue.media.interrupted.connect(self.dbmeter.reset, mode=queued)
+        self.cue.media.stopped.connect(self._status_stopped, mode=queued)
+        self.cue.media.stopped.connect(self.dbmeter.reset, mode=queued)
+        self.cue.media.played.connect(self._status_playing, mode=queued)
+        self.cue.media.paused.connect(self._status_paused, mode=queued)
+        self.cue.media.error.connect(self._status_error, mode=queued)
+        # self.cue.media.waiting.connect(self._status_paused)
+        self.cue.media.eos.connect(self._status_stopped, mode=queued)
+        self.cue.media.eos.connect(self.dbmeter.reset, mode=queued)
+        self.cue.media.error.connect(self._on_error, mode=queued)
+        self.cue.media.error.connect(self.dbmeter.reset, mode=queued)
+        self.cue.media.property_changed.connect(self._media_changed,
+                                                mode=queued)
 
         self.media_time = MediaTime(self.cue.media)
         self.media_time.notify.connect(self._on_time_update)
 
-        self.cue.media.duration.connect(self._on_duration)
-
         self.seekSlider.sliderMoved.connect(self.cue.media.seek)
         self.seekSlider.sliderJumped.connect(self.cue.media.seek)
 
-        self._on_duration()
+        self._update_duration(self.cue.media.duration)
 
     def select(self):
         self.selected = not self.selected
@@ -98,17 +113,17 @@ class MediaCueWidget(CueWidget):
         if self.cue.media.current_time() != -1:
             self._on_time_update(self.cue.media.current_time(), True)
         else:
-            self._on_time_update(self.cue.media['duration'], True)
+            self._on_time_update(self.cue.media.duration, True)
 
     def show_dbmeters(self, visible):
         if self._dbmeter_element is not None:
-            self._dbmeter_element.levelReady.disconnect(self.dbmeter.plot)
+            self._dbmeter_element.level_ready.disconnect(self.dbmeter.plot)
             self._dbmeter_element = None
 
         if visible:
             self._dbmeter_element = self.cue.media.element("DbMeter")
             if self._dbmeter_element is not None:
-                self._dbmeter_element.levelReady.connect(self.dbmeter.plot)
+                self._dbmeter_element.level_ready.connect(self.dbmeter.plot)
 
         self._show_dbmeter = visible
         self.dbmeter.setVisible(visible)
@@ -133,6 +148,10 @@ class MediaCueWidget(CueWidget):
                 self.fade.exit_fadein.connect(self._exit_fade)
                 self.fade.exit_fadeout.connect(self._exit_fade)
 
+    def _media_changed(self, pname, value):
+        if pname == 'duration':
+            self._update_duration(value)
+
     def _on_error(self, media, error, details):
         QDetailedMessageBox.dcritical(self.cue["name"], error, details)
 
@@ -149,19 +168,6 @@ class MediaCueWidget(CueWidget):
     def _exit_fade(self):
         self.timeDisplay.setPalette(self.timeBar.palette())
 
-    def _on_duration(self):
-        # Update the maximum values of seek-slider and time progress-bar
-        self.seekSlider.setMaximum(self.cue.media['duration'])
-        if self.cue.media['duration'] > 0:
-            self.timeBar.setMaximum(self.cue.media['duration'])
-        else:
-            self.timeBar.setMaximum(1)
-            self.timeBar.setValue(1)
-
-        # If not in playing or paused update the widget showed time
-        if(Media.PLAYING != self.cue.media.state != Media.PAUSED):
-            self._on_time_update(self.cue.media['duration'], True)
-
     def _status_stopped(self):
         self.status_icon.setPixmap(self.STOPPED.pixmap(12, 12))
 
@@ -174,10 +180,24 @@ class MediaCueWidget(CueWidget):
     def _status_error(self):
         self.status_icon.setPixmap(self.ERROR.pixmap(12, 12))
 
+    def _update_duration(self, duration):
+        # Update the maximum values of seek-slider and time progress-bar
+        self.seekSlider.setMaximum(duration)
+        if duration > 0:
+            self.timeBar.setMaximum(duration)
+        else:
+            self.timeBar.setMaximum(1)
+            self.timeBar.setValue(1)
+
+        # If not in playing or paused update the widget showed time
+        state = self.cue.media.state
+        if state != MediaState.Playing or state != MediaState.Paused:
+            self._on_time_update(duration, True)
+
     def _on_time_update(self, time, ignore_visibility=False):
         if ignore_visibility or not self.visibleRegion().isEmpty():
             # If the given value is the duration or < 0 set the time to 0
-            if time == self.cue.media['duration'] or time < 0:
+            if time == self.cue.media.duration or time < 0:
                 time = 0
 
             # Set the value the seek slider
@@ -185,10 +205,10 @@ class MediaCueWidget(CueWidget):
 
             # If in count-down mode the widget will show the remaining time
             if self._countdown_mode:
-                time = self.cue.media['duration'] - time
+                time = self.cue.media.duration - time
 
             # Set the value of the timer progress-bar
-            if self.cue.media['duration'] > 0:
+            if self.cue.media.duration > 0:
                 self.timeBar.setValue(time)
 
             # Show the time in the widget

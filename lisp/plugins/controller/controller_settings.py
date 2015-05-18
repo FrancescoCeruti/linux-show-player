@@ -1,8 +1,21 @@
-##########################################
-# Copyright 2012-2014 Ceruti Francesco & contributors
+# -*- coding: utf-8 -*-
 #
-# This file is part of LiSP (Linux Show Player).
-##########################################
+# This file is part of Linux Show Player
+#
+# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+#
+# Linux Show Player is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Linux Show Player is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import QRegExp, Qt
 from PyQt5.QtGui import QRegExpValidator
@@ -12,7 +25,7 @@ from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QHBoxLayout, QLineEdit, \
 import mido
 
 from lisp.modules import check_module
-from lisp.modules.midi.midi import InputMidiHandler
+from lisp.modules.midi.input_handler import MIDIInputHandler
 from lisp.ui.settings.section import SettingsSection
 
 
@@ -133,7 +146,7 @@ class ControllerSettings(SettingsSection):
             self.midiGroup.setEnabled(False)
 
     def capture_message(self):
-        handler = InputMidiHandler()
+        handler = MIDIInputHandler()
         handler.alternate_mode = True
         handler.new_message_alt.connect(self.on_new_message)
 

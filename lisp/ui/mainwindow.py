@@ -1,18 +1,33 @@
-##########################################
-# Copyright 2012-2014 Ceruti Francesco & contributors
+# -*- coding: utf-8 -*-
 #
-# This file is part of LiSP (Linux Show Player).
-##########################################
+# This file is part of Linux Show Player
+#
+# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+#
+# Linux Show Player is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Linux Show Player is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
+import traceback
 
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QMainWindow, QWidget, QGridLayout, QStatusBar, \
     QMenuBar, QMenu, QAction, qApp, QSizePolicy, QFileDialog, QDialog, \
     QMessageBox
+
 from lisp.ui import about
 from lisp.utils import configuration
-
+from lisp.utils import logging
 from lisp.core.actions_handler import ActionsHandler
 from lisp.core.singleton import QSingleton
 from lisp.cues.cue_factory import CueFactory
@@ -20,7 +35,6 @@ from lisp.ui.settings.app_settings import AppSettings
 
 
 class MainWindow(QMainWindow, metaclass=QSingleton):
-
     new_session = QtCore.pyqtSignal()
     save_session = QtCore.pyqtSignal(str)
     open_session = QtCore.pyqtSignal(str)
@@ -29,7 +43,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         super().__init__()
         self.setMinimumSize(400, 300)
 
-        self._cue_add_menus = {}
+        self._cue_add_menu = {}
         self.layout = None
 
         # Define the layout and the main gui's elements
@@ -207,7 +221,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         prefUi = AppSettings(configuration.config_to_dict(), parent=self)
         prefUi.exec_()
 
-        if(prefUi.result() == QDialog.Accepted):
+        if (prefUi.result() == QDialog.Accepted):
             configuration.update_config_from_dict(prefUi.get_configuraton())
 
     def exit(self):
@@ -224,30 +238,31 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         self.exit()
         event.ignore()
 
-    def register_cue_options_ui(self, name, options_ui, category='',
-                                shortcut=''):
-        '''
-            Register a new-cue choice for the edit-menu
+    def register_cue_builder(self, builder):
+        # TODO: implementation
+        pass
 
-            @param name: The name for the MenuAction
-            @param options_ui: A method that provide the options for the new
-                               cue(s) (e.g. show a file-dialog)
-            @param category: The optional menu where insert the MenuAction
-            @param shortcut: An optional shortcut for the MenuAction
-        '''
+    def register_cue_menu_action(self, name, function, category='', shortcut=''):
+        """Register a new-cue choice for the edit-menu
+
+        param name: The name for the MenuAction
+        param function: The function that add the new cue(s)
+        param category: The optional menu where insert the MenuAction
+        param shortcut: An optional shortcut for the MenuAction
+        """
         action = QAction(self)
         action.setText(name)
-        action.triggered.connect(lambda: self._add_cues(options_ui()))
+        action.triggered.connect(function)
         if shortcut != '':
             action.setShortcut(shortcut)
 
         if category != '':
-            if category not in self._cue_add_menus:
+            if category not in self._cue_add_menu:
                 menu = QMenu(category, self)
-                self._cue_add_menus[category] = menu
+                self._cue_add_menu[category] = menu
                 self.menuEdit.insertMenu(self.cueSeparator, menu)
 
-            self._cue_add_menus[category].addAction(action)
+            self._cue_add_menu[category].addAction(action)
         else:
             self.menuEdit.insertAction(self.cueSeparator, action)
 
@@ -269,15 +284,6 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
     def _action_redone(self, action):
         self.statusBar.showMessage('Redone' + action.log())
         self.update_window_title()
-
-    def _add_cues(self, options_list):
-        for options in options_list:
-            try:
-                cue = CueFactory.create_cue(options)
-                self.layout.add_cue(cue)
-            except Exception as e:
-                message = ' '.join([str(i) for i in e.args])
-                QMessageBox.critical(None, 'Error', message)
 
     def _load_from_file(self):
         if self._new_session_confirm():

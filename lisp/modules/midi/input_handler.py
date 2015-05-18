@@ -1,0 +1,53 @@
+# -*- coding: utf-8 -*-
+#
+# This file is part of Linux Show Player
+#
+# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+#
+# Linux Show Player is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Linux Show Player is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
+
+from PyQt5.QtCore import pyqtSignal, QObject
+import mido
+
+from lisp.core.singleton import QSingleton
+from lisp.modules.midi.midi_common import MIDICommon
+
+
+class MIDIInputHandler(QObject, MIDICommon):
+
+    # Only when not in alternate-mode
+    new_message = pyqtSignal(mido.messages.BaseMessage)
+    # Only when in alternate-mode
+    new_message_alt = pyqtSignal(mido.messages.BaseMessage)
+
+    def __init__(self, port_name='default', backend_name=None):
+        super().__init__()
+
+        self.alternate_mode = False
+
+    def __new_message(self, message):
+        if not self.alternate_mode:
+            self.new_message.emit(message)
+        else:
+            self.new_message_alt.emit(message)
+
+    def __open_port(self):
+        # I don't expect to find a __port named "default", if so, I assume
+        # this __port is the default one.
+        if self.__port_name in self.get_input_names():
+            self.__port = self.__backend.open_input(self.__port_name,
+                                                    callback=self._new_message)
+        else:
+            # If the __port isn't available use the default one
+            self.__port = self.__backend.open_input(callback=self._new_message)

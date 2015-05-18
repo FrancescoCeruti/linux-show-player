@@ -1,8 +1,21 @@
-##########################################
-# Copyright 2012-2014 Ceruti Francesco & contributors
+# -*- coding: utf-8 -*-
 #
-# This file is part of LiSP (Linux Show Player).
-##########################################
+# This file is part of Linux Show Player
+#
+# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+#
+# Linux Show Player is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Linux Show Player is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import logging
 import os
@@ -10,11 +23,10 @@ import socket
 import traceback
 
 from PyQt5.QtWidgets import QMenu, QAction, QMessageBox
-from lisp.core.plugin import Plugin
 
+from lisp.core.plugin import Plugin
 from lisp.application import Application
 from lisp.cues.media_cue import MediaCue
-
 from .peers_dialog import PeersDialog
 
 
@@ -66,7 +78,7 @@ class Synchronizer(Plugin):
         cue.executed.connect(self.remote_exec)
 
         if isinstance(cue, MediaCue):
-            self.cue_media[cue.media] = cue
+            self.cue_media[id(cue.media)] = cue
 
             cue.media.on_play.connect(self.remote_play)
             cue.media.on_stop.connect(self.remote_stop)
@@ -77,7 +89,7 @@ class Synchronizer(Plugin):
         cue.executed.disconnect(self.remote_exec)
 
         if isinstance(cue, MediaCue):
-            self.cue_media.pop(cue.media)
+            self.cue_media.pop(id(cue.media))
 
             cue.media.on_play.disconnect(self.remote_play)
             cue.media.on_stop.disconnect(self.remote_stop)
@@ -85,26 +97,26 @@ class Synchronizer(Plugin):
             cue.media.sought.disconnect(self.remote_seek)
 
     def remote_play(self, media):
-        index = self.cue_media[media]['index']
+        index = self.cue_media[id(media)].index
         self.call_remote(lambda proxy: proxy.play(index))
 
     def remote_pause(self, media):
-        index = self.cue_media[media]['index']
+        index = self.cue_media[id(media)].index
         self.call_remote(lambda proxy: proxy.pause(index))
 
     def remote_stop(self, media):
-        index = self.cue_media[media]['index']
+        index = self.cue_media[id(media)].index
         self.call_remote(lambda proxy: proxy.stop(index))
 
     def remote_seek(self, media, position):
-        index = self.cue_media[media]['index']
-        self.call_remote(lambda proxy: proxy.seek(index, position))
+        index = self.cue_media[id(media)].index
+        self.call_remote(lambda proxy: proxy.seek(index))
 
-    def remote_exec(self, cue):
-        self.call_remote(lambda proxy: proxy.execute(cue['index']))
+    def remote_exec(self, cue, action):
+        self.call_remote(lambda proxy: proxy.execute(cue.index))
 
     def call_remote(self, function):
-        ''' Generic remote call. '''
+        """ Generic remote call. """
         for peer in self.peers:
             try:
                 function(peer['proxy'])

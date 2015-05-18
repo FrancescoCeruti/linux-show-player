@@ -1,8 +1,21 @@
-##########################################
-# Copyright 2012-2014 Ceruti Francesco & contributors
+# -*- coding: utf-8 -*-
 #
-# This file is part of LiSP (Linux Show Player).
-##########################################
+# This file is part of Linux Show Player
+#
+# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+#
+# Linux Show Player is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Linux Show Player is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from concurrent.futures import ThreadPoolExecutor
 from concurrent.futures import as_completed as futures_completed
@@ -16,9 +29,9 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QMenu, QAction, QDialog, QProgressDialog, QWidget, \
     QVBoxLayout, QHBoxLayout, QRadioButton, QSpinBox, QCheckBox, QFrame, QLabel, \
     QPushButton, QButtonGroup
-from lisp.repository import Gst
-from lisp.core.plugin import Plugin
 
+from lisp.core.plugin import Plugin
+from lisp.backends.gst.gi_repository import Gst
 from lisp.application import Application
 from lisp.core.action import Action
 from lisp.core.actions_handler import ActionsHandler
@@ -104,9 +117,9 @@ class ReplayGain(QtCore.QObject, Plugin):
 
         self._file_to_gain.clear()
         if gainUi.result() == QDialog.Accepted:
-            self.gainSelctedMode = gainUi.checkBox.isChecked()
+            gainSelectedMode = gainUi.checkBox.isChecked()
 
-            if(self.gainSelctedMode):
+            if gainSelectedMode:
                 cues = self.app.mainWindow.layout.get_selected_cues(MediaCue)
             else:
                 cues = self.app.mainWindow.layout.get_cues(MediaCue)
@@ -187,13 +200,13 @@ class ReplayGain(QtCore.QObject, Plugin):
 
     def _apply_gain(self, gained, gain, peak, uri):
         if gained:
-            if(gain > ReplayGain.MAX_GAIN):
+            if gain > ReplayGain.MAX_GAIN:
                 gain = ReplayGain.MAX_GAIN
 
             if self._gain_mode == 0:
-                volume = min(1 / peak, pow(10, (gain) / 20))
+                volume = min(1 / peak, pow(10, gain / 20))
             elif self._gain_mode == 1:
-                volume = 1 / peak * pow(10, (self._norm_level) / 20)
+                volume = 1 / peak * pow(10, self._norm_level / 20)
 
             for media in self._file_to_gain[uri]:
                 self._action.add_media(media, volume)

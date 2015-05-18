@@ -1,40 +1,57 @@
-##########################################
-# Copyright 2012-2014 Ceruti Francesco & contributors
+# -*- coding: utf-8 -*-
 #
-# This file is part of LiSP (Linux Show Player).
-##########################################
+# This file is part of Linux Show Player
+#
+# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+#
+# Linux Show Player is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Linux Show Player is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QHBoxLayout, QCheckBox
-from lisp.ui.mainwindow import MainWindow
 
 from lisp.application import Application
-from lisp.cues.action_cue import ActionCue
-from lisp.cues.cue_factory import CueFactory
+from lisp.core.decorators import async
 from lisp.cues.media_cue import MediaCue
 from lisp.layouts.cue_layout import CueLayout
-from lisp.modules.action_cues.action_cues_factory import ActionCueFactory
 from lisp.ui.settings.section import SettingsSection
-from lisp.utils.decorators import async
+from lisp.cues.cue import Cue
 
 
-class StopAll(ActionCue):
+class StopAll(Cue):
+
+    _properties_ = ['pause_mode']
+    _properties_.extend(Cue._properties_)
 
     Name = 'Stop-all'
 
-    def __init__(self, **kwds):
-        super().__init__(**kwds)
-        self.update_properties({'pause_mode': False})
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.pause_mode = False
 
     @async
-    def execute(self, emit=True):
-        super().execute(emit)
+    def execute(self, action=Cue.CueAction.Default):
+        self.on_execute.emit(self, action)
+
+        if self.pause_mode:
+            cue_action = MediaCue.CueAction.Pause
+        else:
+            cue_action = MediaCue.CueAction.Stop
 
         layout = Application().layout
         for cue in layout.get_cues(cue_class=MediaCue):
-            if self['pause_mode']:
-                cue.media.pause()
-            else:
-                cue.media.stop()
+            cue.execute(action=cue_action)
+
+        self.executed.emit(self, action)
 
 
 class StopAllSettings(SettingsSection):
@@ -73,9 +90,4 @@ class StopAllSettings(SettingsSection):
         if 'pause_mode' in conf:
             self.pauseMode.setChecked(conf['pause_mode'])
 
-CueFactory.register_factory('StopAll', ActionCueFactory)
-MainWindow().register_cue_options_ui(StopAll.Name,
-                                     lambda: [{'name': StopAll.Name,
-                                               'type': 'StopAll'}],
-                                     category='Action cues')
 CueLayout.add_settings_section(StopAllSettings, StopAll)

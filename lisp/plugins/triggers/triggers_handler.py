@@ -1,11 +1,24 @@
-##########################################
-# Copyright 2012-2014 Ceruti Francesco & contributors
+# -*- coding: utf-8 -*-
 #
-# This file is part of LiSP (Linux Show Player).
-##########################################
+# This file is part of Linux Show Player
+#
+# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+#
+# Linux Show Player is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Linux Show Player is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from lisp.application import Application
-from lisp.core.media_time import MediaTime
+from lisp.backends.base.media_time import MediaTime
 
 
 class TriggersHandler:
@@ -48,7 +61,7 @@ class TriggersHandler:
     def _execute(self, action):
         for n, trigger in enumerate(self._triggers.get(action, [])):
             cue, cue_id = trigger
-            if cue is None or cue.is_finalized():
+            if cue is None or cue.finalized():
                 cue = Application().layout.get_cue_by_id(cue_id)
                 self._triggers[action][n] = (cue, cue_id)
 

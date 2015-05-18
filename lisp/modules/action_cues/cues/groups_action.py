@@ -1,62 +1,70 @@
-##########################################
-# Copyright 2012-2014 Ceruti Francesco & contributors
+# -*- coding: utf-8 -*-
 #
-# This file is part of LiSP (Linux Show Player).
-##########################################
+# This file is part of Linux Show Player
+#
+# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+#
+# Linux Show Player is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Linux Show Player is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 
 from PyQt5 import QtCore
 from PyQt5.QtGui import QRegExpValidator
 from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QHBoxLayout, QLineEdit, \
     QSizePolicy, QLabel, QComboBox
-from lisp.ui.mainwindow import MainWindow
 
 from lisp.application import Application
-from lisp.cues.action_cue import ActionCue
-from lisp.cues.cue_factory import CueFactory
+from lisp.core.decorators import async
+from lisp.cues.cue import Cue
 from lisp.cues.media_cue import MediaCue
 from lisp.layouts.cue_layout import CueLayout
-from lisp.modules.action_cues.action_cues_factory import ActionCueFactory
 from lisp.ui.settings.section import SettingsSection
-from lisp.utils.decorators import async
 
 
-class GroupsAction(ActionCue):
+class GroupsAction(Cue):
 
-    ACTION_PLAY = 'Play'
-    ACTION_PAUSE = 'Pause'
-    ACTION_STOP = 'Stop'
-    ACTION_AUTO = 'Auto'
+    _properties_ = ['groups', 'action']
+    _properties_.extend(Cue._properties_)
 
     Name = 'Groups action'
+    Actions = {action.name: action for action in MediaCue.CueAction}
 
-    def __init__(self, **kwds):
-        super().__init__(**kwds)
-
-        self.update_properties({'groups': [], 'action': None})
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.groups = []
+        if 'Default' in GroupsAction.Actions:
+            self.action = 'Default'
+        else:
+            self.action = GroupsAction.Actions.keys()[0]
 
     @async
-    def execute(self, emit=True):
-        super().execute(emit)
+    def execute(self, action=Cue.CueAction.Default):
+        self.on_execute.emit(self, action)
 
+        cue_action = GroupsAction.Actions.get(self.action,
+                                              MediaCue.CueAction.Default)
         layout = Application().layout
         for cue in layout.get_cues(cue_class=MediaCue):
-            if not set(cue['groups']).isdisjoint(self['groups']):
-                if self['action'] == self.ACTION_PLAY:
-                    cue.media.play()
-                elif self['action'] == self.ACTION_PAUSE:
-                    cue.media.pause()
-                elif self['action'] == self.ACTION_STOP:
-                    cue.media.stop()
-                elif self['action'] == self.ACTION_AUTO:
-                    cue.execute()
+            if not set(cue['groups']).isdisjoint(self.groups):
+                cue.execute(action=cue_action)
+
+        self.executed.emit(self, action)
 
 
 class GroupsActionSettings(SettingsSection):
 
     Name = 'Cue Settings'
-
-    ACTIONS = ['Play', 'Pause', 'Stop', 'Auto']
+    Actions = [action.name for action in MediaCue.CueAction].sort()
 
     def __init__(self, size, cue=None, parent=None):
         super().__init__(size, cue=cue, parent=parent)
@@ -88,7 +96,7 @@ class GroupsActionSettings(SettingsSection):
         self.gaHLayout = QHBoxLayout(self.groupAction)
 
         self.actionsBox = QComboBox(self.groupAction)
-        self.actionsBox.addItems(self.ACTIONS)
+        self.actionsBox.addItems(self.Actions)
         self.gaHLayout.addWidget(self.actionsBox)
 
         self.layout().addWidget(self.groupAction)
@@ -107,7 +115,7 @@ class GroupsActionSettings(SettingsSection):
                 conf['groups'] = []
             conf['groups'] += [int(g) for g in groups_str[:-1]]
         if not (checkable and not self.groupAction.isChecked()):
-            conf['action'] = self.actionsBox.currentText()
+            conf['action'] = self.actionsBox.currentText().lower()
 
         return conf
 
@@ -121,13 +129,9 @@ class GroupsActionSettings(SettingsSection):
     def set_configuration(self, conf):
         if 'groups' in conf:
             self.editGroups.setText(str(conf['groups'])[1:-1])
-        if 'action' in conf and conf['action'] in self.ACTIONS:
-            self.actionsBox.setCurrentIndex(self.ACTIONS.index(conf['action']))
+        if 'action' in conf and conf['action'] in self.Actions:
+            index = self.Actions.index(conf['action'].title())
+            self.actionsBox.setCurrentIndex(index)
 
 
-CueFactory.register_factory('GroupsAction', ActionCueFactory)
-MainWindow().register_cue_options_ui(GroupsAction.Name,
-                                     lambda: [{'name': GroupsAction.Name,
-                                               'type': 'GroupsAction'}],
-                                     category='Action cues')
 CueLayout.add_settings_section(GroupsActionSettings, GroupsAction)

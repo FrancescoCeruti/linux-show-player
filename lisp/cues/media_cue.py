@@ -1,36 +1,68 @@
-##########################################
-# Copyright 2012-2014 Ceruti Francesco & contributors
+# -*- coding: utf-8 -*-
 #
-# This file is part of LiSP (Linux Show Player).
-##########################################
+# This file is part of Linux Show Player
+#
+# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+#
+# Linux Show Player is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Linux Show Player is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+from enum import Enum, unique
 
-from lisp.core.media import Media
-
+from lisp.backends.base.media import MediaState
 from lisp.cues.cue import Cue
-from lisp.utils.decorators import synchronized
+from lisp.core.decorators import synchronized, async
 
 
 class MediaCue(Cue):
+    @unique
+    class CueAction(Enum):
+        Default = 0
+        Play = 1
+        Pause = 2
+        Stop = 3
+
+    _properties_ = ['pause']
+    _properties_.extend(Cue._properties_)
 
     def __init__(self, media, cue_id=None):
         super().__init__(cue_id)
 
         self.media = media
-        self.update_properties({'pause': False})
+        self.pause = False
 
         self.__finalized = False
 
-    @synchronized
-    def execute(self, emit=True):
-        super().execute(emit=emit)
+    @async
+    @synchronized(blocking=False)
+    def execute(self, action=CueAction.Default):
+        self.on_execute.emit(self, action)
 
-        if self.media.state != Media.PLAYING:
+        if action == MediaCue.CueAction.Default:
+            if self.media.state != MediaState.Playing:
+                self.media.play()
+            elif self.pause:
+                self.media.pause()
+            else:
+                self.media.stop()
+        elif action == MediaCue.CueAction.Play:
             self.media.play()
-        elif self['pause']:
+        elif action == MediaCue.CueAction.Pause:
             self.media.pause()
-        else:
+        elif action == MediaCue.CueAction.Stop:
             self.media.stop()
+
+        self.executed.emit(self, action)
 
     def properties(self):
         properties = super().properties().copy()
@@ -47,7 +79,7 @@ class MediaCue(Cue):
     def finalize(self):
         if not self.__finalized:
             self.__finalized = True
-            self.media.dispose()
+            self.media.finalize()
 
-    def is_finalized(self):
+    def finalized(self):
         return self.__finalized

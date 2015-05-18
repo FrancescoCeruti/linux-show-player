@@ -1,33 +1,42 @@
-##########################################
-# Copyright 2012-2014 Ceruti Francesco & contributors
+# -*- coding: utf-8 -*-
 #
-# This file is part of LiSP (Linux Show Player).
-##########################################
-
-from threading import Lock
+# This file is part of Linux Show Player
+#
+# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+#
+# Linux Show Player is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Linux Show Player is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import QTimer
 
 from lisp.core.singleton import QSingleton
-from lisp.utils.decorators import synchronized
+from lisp.core.decorators import synchronized
 
 
 class Clock(QTimer, metaclass=QSingleton):
-    '''
+    """
         Clock based on Qt.QTimer class.
 
         The class provide two functions for add and remove
-        callback, in this way the clock is running only when
-        there's one, or more, callback.
-    '''
+        callbacks, in this way the clock is running only when
+        there's one, or more, callbacks.
+    """
 
     def __init__(self, timeout=100):
         super().__init__()
-
-        self.__lock = Lock()
-        self.__clients = 0
-
         self.setInterval(timeout)
+
+        self.__clients = 0
 
     @synchronized
     def add_callback(self, callback):

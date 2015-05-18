@@ -1,8 +1,21 @@
-##########################################
-# Copyright 2012-2014 Ceruti Francesco & contributors
+# -*- coding: utf-8 -*-
 #
-# This file is part of LiSP (Linux Show Player).
-##########################################
+# This file is part of Linux Show Player
+#
+# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+#
+# Linux Show Player is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Linux Show Player is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from itertools import chain
 
@@ -11,7 +24,6 @@ from PyQt5.QtWidgets import QTabWidget, QAction, QInputDialog, QWidget, \
     QApplication, QMessageBox
 from lisp.utils.configuration import config
 
-from lisp.cues.action_cue import ActionCue
 from lisp.cues.cue import Cue
 from lisp.cues.cue_factory import CueFactory
 from lisp.cues.media_cue import MediaCue
@@ -171,11 +183,11 @@ class CartLayout(QTabWidget, CueLayout):
             widget.set_countdown_mode(self._coundown_mode)
 
             widget.seekSlider.setVisible(self._show_seek)
-        elif isinstance(cue, ActionCue):
+        elif isinstance(cue, Cue):
             widget = CueWidget(parent=self)
             widget.set_cue(cue)
         else:
-            raise Exception('Cue type not supported')
+            raise ValueError('Not a cue')
 
         if index is None:
             while self._auto_add_page and self.current_grid().isFull():
@@ -190,7 +202,7 @@ class CartLayout(QTabWidget, CueLayout):
 
         # Add the widget
         index = self._grids[index3d[0]].addItem(widget, index3d[1], index3d[2])
-        cue['index'] = self.to_1d_index((index3d[0],) + index)
+        cue.index = self.to_1d_index((index3d[0],) + index)
 
         # widget.focus_changed.connect(self.focus_changed.emit)
         widget.context_menu_request.connect(self._on_context_menu)
@@ -295,7 +307,7 @@ class CartLayout(QTabWidget, CueLayout):
 
     def get_cue_by_id(self, cue_id):
         for widget in chain(*chain(*self._grids)):
-            if widget is not None and widget.cue.cue_id() == cue_id:
+            if widget is not None and widget.cue.id == cue_id:
                 return widget.cue
 
     def get_selected_cues(self, cue_class=Cue):
@@ -321,19 +333,19 @@ class CartLayout(QTabWidget, CueLayout):
         self.move_cue(widget.cue, self.to_1d_index(index))
 
     def __move_cue__(self, cue, index):
-        current = self.to_3d_index(cue['index'])
+        current = self.to_3d_index(cue.index)
         new = self.to_3d_index(index)
 
         self._grids[current[0]].removeItemAt(current[1], current[2])
         self._grids[new[0]].addItem(cue.widget, new[1], new[2])
 
-        cue['index'] = index
+        cue.index = index
         del cue.widget
 
     def __remove_cue__(self, cue):
         cue.finalize()
 
-        index = self.to_3d_index(cue['index'])
+        index = self.to_3d_index(cue.index)
         self._grids[index[0]].removeItemAt(index[1], index[2])
 
         self.cue_removed.emit(cue)
@@ -368,7 +380,7 @@ class CartLayout(QTabWidget, CueLayout):
                 # Update the indexes
                 for widget in chain(*self._grids[page]):
                     if widget is not None:
-                        widget.cue['index'] -= self._page_size
+                        widget.cue.index -= self._page_size
         else:
             QMessageBox.critical(None, 'Error Message', 'No page ' + str(page))
 

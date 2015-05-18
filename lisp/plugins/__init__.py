@@ -1,14 +1,27 @@
-##########################################
-# Copyright 2012-2014 Ceruti Francesco & contributors
+# -*- coding: utf-8 -*-
 #
-# This file is part of LiSP (Linux Show Player).
-##########################################
+# This file is part of Linux Show Player
+#
+# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+#
+# Linux Show Player is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Linux Show Player is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from importlib import import_module
-import logging
 from os.path import dirname
 import traceback
 
+from lisp.utils import logging
 from lisp.utils.dyamic_loader import class_name_from_module
 from lisp.utils.util import find_packages
 
@@ -17,8 +30,6 @@ __PLUGINS = {}
 
 
 def init_plugins():
-    failed = []
-
     for pkg in find_packages(path=dirname(__file__)):
         try:
             class_name = class_name_from_module(pkg)
@@ -26,20 +37,17 @@ def init_plugins():
 
             __PLUGINS[pkg] = getattr(module, class_name)()
             logging.debug('PLUGINS: Loaded "' + pkg + '"')
-        except Exception as e:
+        except Exception:
             logging.error('PLUGINS: Failed "' + pkg + '" load')
             logging.debug('PLUGINS: ' + traceback.format_exc())
-            failed.append((pkg, e))
-
-    return failed
 
 
 def reset_plugins():
-    ''' Resets and removes all the plugins '''
+    """ Resets and removes all the plugins """
     for plugin in __PLUGINS:
         try:
             __PLUGINS[plugin].reset()
-            logging.debug('PLUGINS: Reseted "' + plugin + '"')
+            logging.debug('PLUGINS: Reset "' + plugin + '"')
         except Exception:
             logging.error('PLUGINS: Failed "' + plugin + '" reset')
             logging.debug('PLUGINS: ' + traceback.format_exc())
@@ -69,7 +77,7 @@ def get_plugin_settings():
 
     for plugin in __PLUGINS.values():
         try:
-            settings = plugin.get_settings()
+            settings = plugin.settings()
             if settings is not None:
                 settings[plugin.Name] = settings
         except Exception as e:

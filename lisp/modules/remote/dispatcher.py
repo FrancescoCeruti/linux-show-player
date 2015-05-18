@@ -1,0 +1,65 @@
+# -*- coding: utf-8 -*-
+#
+# This file is part of Linux Show Player
+#
+# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+#
+# Linux Show Player is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Linux Show Player is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
+
+from lisp.application import Application
+from lisp.cues.cue import Cue
+from lisp.cues.media_cue import MediaCue
+
+
+class RemoteDispatcher:
+    # Layout functions
+
+    def get_cue_at(self, index):
+        cue = Application().layout.get_cue_at(index)
+        if cue is not None:
+            return cue.properties()
+        return {}
+
+    def get_cues(self, cue_class=Cue):
+        cues = Application().layout.get_cues(cue_class)
+        return [cue.properties() for cue in cues]
+
+    # Cue function
+
+    def execute(self, index):
+        cue = Application().layout.get_cue_at(index)
+        if cue is not None:
+            cue.execute(emit=False)
+
+    # MediaCue functions
+
+    def play(self, index):
+        cue = Application().layout.get_cue_at(index)
+        if isinstance(cue, MediaCue):
+            cue.media.play()
+
+    def pause(self, index):
+        cue = Application().layout.get_cue_at(index)
+        if isinstance(cue, MediaCue):
+            cue.media.pause()
+
+    def stop(self, index):
+        cue = Application().layout.get_cue_at(index)
+        if isinstance(cue, MediaCue):
+            cue.media.stop()
+
+    def seek(self, index, position):
+        cue = Application().layout.get_cue_at(index)
+        if isinstance(cue, MediaCue):
+            cue.media.seek(position)

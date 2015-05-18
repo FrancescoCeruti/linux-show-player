@@ -1,77 +1,37 @@
-##########################################
-# Copyright 2012-2014 Ceruti Francesco & contributors
-#
-# This file is part of LiSP (Linux Show Player).
-##########################################
+from lisp.core.module import Module
+from lisp.modules.midi.output_provider import MIDIOutputProvider
+from lisp.utils.configuration import config
 
-from PyQt5.QtCore import pyqtSignal, QObject
-import mido
-
-from lisp.core.singleton import QSingleton
+from lisp.modules.midi.input_handler import MIDIInputHandler
+from lisp.modules.midi.midi_settings import MIDISettings
+from lisp.ui.settings.app_settings import AppSettings
 
 
-# TODO: should be extended for future usage (e.g. multiple ports)
-class InputMidiHandler(QObject, metaclass=QSingleton):
+class Midi(Module):
+    """
+        Provide MIDI I/O functionality
+    """
 
-    # Only when not in alternate-mode
-    new_message = pyqtSignal(mido.messages.BaseMessage)
-    # Only when in alternate-mode
-    new_message_alt = pyqtSignal(mido.messages.BaseMessage)
-
-    def __init__(self, port_name='default', backend_name=None):
+    def __init__(self):
         super().__init__()
 
-        self.alternate_mode = False
-        self.__backend_name = backend_name
-        self.__port_name = port_name
-        self.__backend = None
-        self.__port = None
+        # Register the settings widget
+        AppSettings.register_settings_widget(MIDISettings)
 
-    def start(self):
-        if self.__backend is None:
-            try:
-                self.__backend = mido.Backend(self.__backend_name, load=True)
-                self.__open_port()
-            except Exception:
-                raise RuntimeError('Backend loading failed: ' +
-                                   self.__backend_name)
+        port_name = config['MIDI']['InputDevice']
+        backend_name = config['MIDI']['Backend']
 
-    def stop(self):
-        self.__close_port()
-        self.__backend = None
+        MIDIInputHandler(port_name=port_name, backend_name=backend_name)
+        MIDIInputHandler().start()
 
-    def change_backend(self, backand_name):
-        self.stop()
-        self.__backend_name = backand_name
-        self.start()
+        try:
+            MIDIOutputProvider(port_name=port_name, backend_name=backend_name)
+            MIDIOutputProvider().start()
+        except Exception as e:
+            MIDIInputHandler().stop()
+            raise e
 
-    def change_port(self, port_name):
-        self.__port_name = port_name
-        self.__close_port()
-        self.__open_port()
-
-    def get_input_names(self):
-        if self.__backend is not None:
-            return self.__backend.get_input_names()
-
-        return []
-
-    def _new_message(self, message):
-        if not self.alternate_mode:
-            self.new_message.emit(message)
-        else:
-            self.new_message_alt.emit(message)
-
-    def __open_port(self):
-        # I'dont expect to find a __port named "default", if so, I assume
-        # this __port is the default one.
-        if self.__port_name in self.get_input_names():
-            self.__port = self.__backend.open_input(self.__port_name,
-                                                    callback=self._new_message)
-        else:
-            # If the __port isn't available use the default one
-            self.__port = self.__backend.open_input(callback=self._new_message)
-
-    def __close_port(self):
-        if self.__port is not None:
-            self.__port.close()
+    def terminate(self):
+        # Stop the MIDI-event Handler
+        MIDIInputHandler().stop()
+        MIDIOutputProvider().stop()

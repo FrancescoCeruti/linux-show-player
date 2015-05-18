@@ -1,45 +1,53 @@
-##########################################
-# Copyright 2012-2014 Ceruti Francesco & contributors
+# -*- coding: utf-8 -*-
 #
-# This file is part of LiSP (Linux Show Player).
-##########################################
+# This file is part of Linux Show Player
+#
+# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+#
+# Linux Show Player is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Linux Show Player is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import json
 from os.path import exists
-import sys
 import traceback
 
-from PyQt5.QtWidgets import QDialog, QMessageBox, qApp
+from PyQt5.QtWidgets import QDialog, qApp
+
 from lisp import layouts
 from lisp import modules
 from lisp import plugins
 from lisp.ui.layoutselect import LayoutSelect
 from lisp.ui.mainwindow import MainWindow
 from lisp.utils import configuration as cfg
-
+from lisp.utils import logging
 from lisp.core.actions_handler import ActionsHandler
 from lisp.core.singleton import Singleton
 from lisp.cues.cue_factory import CueFactory
-from lisp.ui.qmessagebox import QDetailedMessageBox
 from lisp.ui.settings.app_settings import AppSettings
 from lisp.ui.settings.sections.app_general import General
 
 
 class Application(metaclass=Singleton):
-
     def __init__(self):
         # Create the mainWindow
         self.mainWindow = MainWindow()
         # Create a layout 'reference' and set to None
-        self.layout = None
+        self._layout = None
         # Create an empty configuration
         self.app_conf = {}
 
         # Initialize modules
-        failed = modules.init_modules()
-        for err in failed:
-            msg = 'Module "' + err[0] + '" loading failed'
-            QDetailedMessageBox.dcritical('Module error', msg, str(err[1]))
+        modules.init_modules()
 
         # Connect mainWindow actions
         self.mainWindow.new_session.connect(self._startup)
@@ -52,6 +60,11 @@ class Application(metaclass=Singleton):
         # Show the mainWindow maximized
         self.mainWindow.showMaximized()
 
+    @property
+    def layout(self):
+        """:rtype: lisp.layouts.cue_layout.CueLayout"""
+        return self._layout
+
     def start(self, filepath=''):
         if exists(filepath):
             # Load the file
@@ -62,42 +75,41 @@ class Application(metaclass=Singleton):
             self._startup(first=True)
 
     def finalize(self):
-        self.layout.destroy_layout()
+        self._layout.destroy_layout()
 
         # Terminate the loaded modules
         modules.terminate_modules()
 
     def _create_layout(self, layout):
-        '''
+        """
             Clear ActionHandler session;
             Reset plugins;
             Creates a new layout;
             Init plugins.
-        '''
+        """
 
         ActionsHandler().clear()
         plugins.reset_plugins()
 
-        if self.layout is not None:
-            self.layout.destroy_layout()
-            self.layout = None
+        if self._layout is not None:
+            self._layout.destroy_layout()
+            self._layout = None
 
         try:
-            self.layout = layout(self)
-            self.mainWindow.set_layout(self.layout)
+            self._layout = layout(self)
+            self.mainWindow.set_layout(self._layout)
             self.app_conf['layout'] = layout.NAME
             self._init_plugins()
         except Exception:
-            QMessageBox.critical(None, 'Error', 'Layout init failed')
-            print(traceback.format_exc(), file=sys.stderr)
+            logging.error('Layout init failed', details=traceback.format_exc())
 
     def _layout_dialog(self):
-        ''' Show the layout-selection dialog '''
+        """ Show the layout-selection dialog """
         try:
             select = LayoutSelect()
             select.exec_()
         except Exception as e:
-            QMessageBox.critical(None, 'Fatal error', str(e))
+            logging.error('Fatal error', details=traceback.format_exc())
             qApp.quit()
             exit(-1)
 
@@ -111,7 +123,7 @@ class Application(metaclass=Singleton):
             self._create_layout(select.slected())
 
     def _startup(self, first=False):
-        ''' Initializes the basic components '''
+        """ Initializes the basic components """
         self.mainWindow.file = ''
         self.app_conf = {}
 
@@ -122,21 +134,18 @@ class Application(metaclass=Singleton):
             self._layout_dialog()
 
     def _save_to_file(self, filepath):
-        ''' Save the current program into "filepath" '''
+        """ Save the current program into "filepath" """
 
         # Empty structure
         program = {"cues": [], "plugins": {}, "application": []}
 
         # Add the cues
-        for cue in self.layout.get_cues():
+        for cue in self._layout.get_cues():
             if cue is not None:
                 program['cues'].append(cue.properties())
 
         # Add the plugins
-        failed = program['plugins'] = plugins.get_plugin_settings()
-        for err in failed:
-            msg = 'Plugin "' + err[0] + '" saving failed'
-            QDetailedMessageBox.dcritical('Plugin error', msg, str(err[1]))
+        program['plugins'] = plugins.get_plugin_settings()
 
         # Add the app settings
         program['application'] = self.app_conf
@@ -149,7 +158,7 @@ class Application(metaclass=Singleton):
         self.mainWindow.update_window_title()
 
     def _load_from_file(self, filepath):
-        ''' Loads a saved program from "filepath" '''
+        """ Loads a saved program from "filepath" """
         try:
             # Read the file
             with open(filepath, mode='r', encoding='utf-8') as file:
@@ -165,7 +174,7 @@ class Application(metaclass=Singleton):
             for cue_conf in program['cues']:
                 cue = CueFactory.create_cue(cue_conf)
                 if cue is not None:
-                    self.layout.add_cue(cue, cue['index'])
+                    self._layout.add_cue(cue, cue['index'])
 
             ActionsHandler().set_saved()
             self.mainWindow.update_window_title()
@@ -176,25 +185,16 @@ class Application(metaclass=Singleton):
             # Update the main-window
             self.mainWindow.file = filepath
             self.mainWindow.update()
-        except Exception:
-            QMessageBox.critical(None, 'Error', 'Error during file reading')
-            print(traceback.format_exc(), file=sys.stderr)
+        except Exception as e:
+            logging.error('Error during file reading',
+                          details=traceback.format_exc())
 
             self._startup()
 
     def _init_plugins(self):
-        ''' Initialize all the plugins '''
-        failed = plugins.init_plugins()
-
-        for err in failed:
-            msg = 'Plugin "' + err[0] + '" initialization failed'
-            QDetailedMessageBox.dcritical('Plugin error', msg, str(err[1]))
+        """ Initialize all the plugins """
+        plugins.init_plugins()
 
     def _load_plugins_settings(self, settings):
-        ''' Loads all the plugins settings '''
-
-        failed = plugins.set_plugins_settings(settings)
-
-        for err in failed:
-            msg = 'Plugin "' + err[0] + '" loading failed'
-            QDetailedMessageBox.dcritical('Plugin error', msg, str(err[1]))
+        """ Loads all the plugins settings """
+        plugins.set_plugins_settings(settings)

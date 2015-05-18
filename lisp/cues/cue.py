@@ -1,54 +1,83 @@
-##########################################
-# Copyright 2012-2014 Ceruti Francesco & contributors
+# -*- coding: utf-8 -*-
 #
-# This file is part of LiSP (Linux Show Player).
-##########################################
+# This file is part of Linux Show Player
+#
+# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+#
+# Linux Show Player is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Linux Show Player is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+from abc import abstractmethod
+from enum import Enum
 from uuid import uuid4
 
-from PyQt5.QtCore import QObject, pyqtSignal
+from lisp.core.has_properties import HasProperties
+from lisp.core.signal import Signal
 
 
-class Cue(QObject):
+class Cue(HasProperties):
+    """Cue(s) are the base component for implement any kind of live-controllable
+    element (live = during a show).
 
-    executed = pyqtSignal(object)
-    updated = pyqtSignal(object)
+    A cue implement his behavior(s) via the execute method, a cue can be
+    executed trying to force a specific behavior. Any cue must provide the
+    available "actions" via an enumeration named "CueAction".
 
-    def __init__(self, cue_id=None, **kwds):
-        super().__init__(**kwds)
+    .. note::
+        The execute implementation is can ignore the specified action if
+        some condition is not matched (e.g. trying to pause a stopped track).
 
-        self.__finalized = False
-        self._properties = {'id': str(uuid4()) if cue_id is None else cue_id,
-                            'index': -1,
-                            'groups': [],
-                            'name': 'Untitled'}
+    Cue provide **(and any subclass should do the same)** properties via
+    HasProperties/Property interfaces specifications.
+    """
 
-    def cue_id(self):
-        return self._properties['id']
+    class CueAction(Enum):
+        """Actions supported by the cue.
 
-    def __do__(self):
-        pass
+        A subclass should override this, if implements more then one action.
+        """
+        Default = 0
 
-    def execute(self, emit=True):
-        if emit:
-            self.executed.emit(self)
+    _properties_ = ['id', 'index', 'groups', 'name']
 
-    def properties(self):
-        return self._properties
+    def __init__(self, id_=None):
+        super().__init__()
 
-    def update_properties(self, properties):
-        self._properties.update(properties)
-        self.updated.emit(self)
+        #: Emitted before execution (object, action)
+        self.on_execute = Signal()
+        #: Emitted after execution (object, action)
+        self.executed = Signal()
 
+        self.id = str(uuid4()) if id_ is None else id_
+        self.index = -1
+        self.groups = []
+        self.name = 'Untitled'
+
+    @abstractmethod
+    def execute(self, action=CueAction.Default):
+        """Execute the specified action, if possible.
+
+        :param action: the action to be performed
+        """
+
+    # TODO: are finalize/finalized really needed ??
+    @abstractmethod
     def finalize(self):
-        '''Finalize the cue.'''
-        self.__finalized = True
+        """Finalize the cue"""
 
-    def is_finalized(self):
-        return self.__finalized
-
-    def __getitem__(self, key):
-        return self.properties()[key]
-
-    def __setitem__(self, key, value):
-        self._properties[key] = value
+    @abstractmethod
+    def finalized(self):
+        """
+        :return: True if the cue is finalized, False otherwise
+        :rtype: bool
+        """

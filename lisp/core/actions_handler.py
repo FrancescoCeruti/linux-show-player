@@ -1,30 +1,45 @@
-##########################################
-# Copyright 2012-2014 Ceruti Francesco & contributors
+# -*- coding: utf-8 -*-
 #
-# This file is part of LiSP (Linux Show Player).
-##########################################
+# This file is part of Linux Show Player
+#
+# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+#
+# Linux Show Player is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Linux Show Player is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 
 from collections import deque
 import logging
 
-from PyQt5.QtCore import pyqtSignal, QObject
+from lisp.core.signal import Signal
 from lisp.utils import configuration as cfg
-
-from lisp.core.action import Action
-from lisp.core.singleton import QSingleton
+from lisp.core.singleton import Singleton
 
 
-class ActionsHandler(QObject, metaclass=QSingleton):
+class ActionsHandler(metaclass=Singleton):
+    """Do/Undo/Redo actions and store the in stacks.
 
+    Provide methods for using actions, an storing them in stacks, allowing
+    to undo and redo actions.
+    """
     MaxStackSize = int(cfg.config['Actions']['MaxStackSize'])
-
-    action_done = pyqtSignal(Action)
-    action_undone = pyqtSignal(Action)
-    action_redone = pyqtSignal(Action)
 
     def __init__(self):
         super().__init__()
+
+        self.action_done = Signal()
+        self.action_undone = Signal()
+        self.action_redone = Signal()
 
         self._undo = deque()
         self._redo = deque()
@@ -84,9 +99,9 @@ class ActionsHandler(QObject, metaclass=QSingleton):
         else:
             return True
 
-    def _logging(self, action, pre,):
+    def _logging(self, action, pre, ):
         message = action.log()
         if message.strip() == '':
-            message = action.__class__.__name__
+            message = type(action).__name__
 
         logging.info(pre + message)
