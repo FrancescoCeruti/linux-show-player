@@ -23,6 +23,7 @@ import aifc
 import sunau
 import urllib.parse
 
+
 #: Linear value for -100dB
 MIN_dB = 0.000000312
 

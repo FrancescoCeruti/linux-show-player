@@ -153,7 +153,7 @@ class MediaCueWidget(CueWidget):
             self._update_duration(value)
 
     def _on_error(self, media, error, details):
-        QDetailedMessageBox.dcritical(self.cue["name"], error, details)
+        QDetailedMessageBox.dcritical(self.cue.name, error, details)
 
     def _enter_fadein(self):
         p = self.timeDisplay.palette()

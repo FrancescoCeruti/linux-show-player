@@ -246,7 +246,7 @@ class GstMedia(Media):
             self._elements[index - 1].link(self._elements[index + 1])
             self._elements[index].unlink(self._elements[index])
 
-        self._elements.pop(index).finalize()
+        self._elements.pop(index).dispose()
 
     def __build_pipeline(self):
         # Set to NULL the pipeline

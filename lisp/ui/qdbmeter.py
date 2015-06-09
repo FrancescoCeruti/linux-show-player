@@ -48,14 +48,9 @@ class QDbMeter(QWidget):
 
     @QtCore.pyqtSlot(list, list, list)
     def plot(self, peaks, rms, decPeak):
-        if(len(peaks) == 1):
-            self.peaks = peaks * 2
-            self.rmss = rms * 2
-            self.decPeak = decPeak * 2
-        else:
-            self.peaks = peaks
-            self.rmss = rms
-            self.decPeak = decPeak
+        self.peaks = peaks
+        self.rmss = rms
+        self.decPeak = decPeak
 
         self.repaint()
 
@@ -108,10 +103,7 @@ class QDbMeter(QWidget):
                 decPeak = decPeaks[n]
 
                 # Maximum "peak-rect" size
-                maxRect = QtCore.QRect(xpos,
-                                       self.height() - 2,
-                                       xdim - 2,
-                                       2 - self.height())
+                maxRect = QtCore.QRect(xpos, self.height() - 2, xdim - 2, 2 - self.height())
 
                 # Set QLinearGradient start and final-stop position
                 self.grad.setStart(maxRect.topLeft())

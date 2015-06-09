@@ -25,6 +25,7 @@ No special hardware is required to run LiSP, but some processing operations woul
 * portmidi				(optional, for portmidi support)
 * mido					(installed via pip)
 * python-rtmidi			(installed via pip)
+* JACK-Client			(installed via pip)
 * libasound-dev			(if installing in debian/ubuntu)
 * libjack-jackd2-dev	(if installing in debian/ubuntu)
 </pre>

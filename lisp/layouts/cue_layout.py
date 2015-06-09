@@ -189,7 +189,7 @@ class CueLayout(QObject):
         '''Move the given cue at the given index'''
 
     def remove_cue(self, cue):
-        action = RemoveAction(self, cue, cue['index'])
+        action = RemoveAction(self, cue, cue.index)
         ActionsHandler().do_action(action)
 
     def remove_cue_at(self, index):
