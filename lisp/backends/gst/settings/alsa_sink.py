@@ -53,9 +53,6 @@ class AlsaSinkSettings(SettingsSection):
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.group.layout().addWidget(self.label)
 
-    def sizeHint(self):
-        return QSize(450, 100)
-
     def enable_check(self, enable):
         self.group.setCheckable(enable)
         self.group.setChecked(False)

@@ -41,11 +41,13 @@ class GroupsAction(Cue):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
         self.groups = []
+
         if 'Default' in GroupsAction.Actions:
             self.action = 'Default'
         else:
-            self.action = GroupsAction.Actions.keys()[0]
+            self.action = list(GroupsAction.Actions.keys())[0]
 
     @async
     def execute(self, action=Cue.CueAction.Default):
@@ -55,7 +57,7 @@ class GroupsAction(Cue):
                                               MediaCue.CueAction.Default)
         layout = Application().layout
         for cue in layout.get_cues(cue_class=MediaCue):
-            if not set(cue['groups']).isdisjoint(self.groups):
+            if not set(cue.groups).isdisjoint(self.groups):
                 cue.execute(action=cue_action)
 
         self.executed.emit(self, action)
@@ -64,7 +66,8 @@ class GroupsAction(Cue):
 class GroupsActionSettings(SettingsSection):
 
     Name = 'Cue Settings'
-    Actions = [action.name for action in MediaCue.CueAction].sort()
+    Actions = [action.name for action in MediaCue.CueAction]
+    Actions.sort()
 
     def __init__(self, size, cue=None, parent=None):
         super().__init__(size, cue=cue, parent=parent)

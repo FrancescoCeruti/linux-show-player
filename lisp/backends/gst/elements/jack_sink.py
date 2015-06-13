@@ -58,15 +58,7 @@ class JackSink(GstMediaElement):
         self._resample.link(self._sink)
 
         self.server = None
-        self.connections = [[] for _ in range(8)]
-
-        # Search for default input ports
-        input_ports = JackSink._ControlClient.get_ports(name_pattern='^system:', is_audio=True, is_input=True)
-        for n, port in enumerate(input_ports):
-            if n < len(self.connections):
-                self.connections[n].append(port.name)
-            else:
-                break
+        self.connections = self.get_default_connections(JackSink._ControlClient)
 
         self._state = None
         self._bus = pipe.get_bus()
@@ -85,6 +77,21 @@ class JackSink(GstMediaElement):
         if len(self._clients) == 0:
             JackSink._ControlClient.close()
             JackSink._ControlClient = None
+
+    @classmethod
+    def get_default_connections(cls, client):
+        # Up to 8 channels
+        connections = [[] for _ in range(8)]
+
+        # Search for default input ports
+        input_ports = client.get_ports(name_pattern='^system:', is_audio=True, is_input=True)
+        for n, port in enumerate(input_ports):
+            if n < len(connections):
+                connections[n].append(port.name)
+            else:
+                break
+
+        return connections
 
     @classmethod
     @synchronized

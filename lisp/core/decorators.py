@@ -155,7 +155,7 @@ def typechecked(target):
     return wrapped
 
 
-def check_state(*states, not_in=False):
+def state(*states, not_in=False):
     """Decorator to check the state of the object that own the target function.
 
     The target is called only if the object state is successfully checked.
@@ -165,7 +165,7 @@ def check_state(*states, not_in=False):
         attribute.
 
     :param states: The states to check
-    :param not_in: When True, check that the object is not in on of the states
+    :param not_in: When True, check that the object is not in one of the states
     """
 
     def decorator(target):

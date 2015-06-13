@@ -54,7 +54,6 @@ class LoadBackend(Module):
 
         if ok:
             for file in files:
-                cue = CueFactory.create_cue('MediaCue', media_type='URIAudio')
-                cue.media.element('URIInput').uri = 'file://' + file
+                cue = CueFactory.create_cue('URIAudioCue', uri='file://' + file)
                 cue.name = file.split(os.sep)[-1]
                 Application().layout.add_cue(cue)

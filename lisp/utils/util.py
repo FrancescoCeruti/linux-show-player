@@ -161,7 +161,7 @@ def strtime(time, accurate=False):
         return '%02d:%02d' % time[1:3] + ':00'
 
 
-def type_check(value, type_):
+def check_type(value, type_):
     """Check if the a value is an instance of a type.
 
     :param value: The value

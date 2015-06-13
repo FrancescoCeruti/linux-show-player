@@ -172,9 +172,13 @@ class Application(metaclass=Singleton):
 
             # Load cues
             for cue_conf in program['cues']:
-                cue = CueFactory.create_cue(cue_conf)
-                if cue is not None:
-                    self._layout.add_cue(cue, cue['index'])
+                cue_type = cue_conf.pop('_type_', 'Undefined')
+                try:
+                    cue = CueFactory.create_cue(cue_type)
+                    cue.update_properties(cue_conf)
+                    self._layout.add_cue(cue, cue.index)
+                except Exception as e:
+                    logging.exception('Unable to create the cue', e)
 
             ActionsHandler().set_saved()
             self.mainWindow.update_window_title()
@@ -186,8 +190,7 @@ class Application(metaclass=Singleton):
             self.mainWindow.file = filepath
             self.mainWindow.update()
         except Exception as e:
-            logging.error('Error during file reading',
-                          details=traceback.format_exc())
+            logging.error('Error during file reading', e)
 
             self._startup()
 

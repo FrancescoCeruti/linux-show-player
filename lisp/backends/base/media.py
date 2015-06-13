@@ -21,7 +21,7 @@ from abc import abstractmethod, ABCMeta
 from enum import Enum
 from functools import wraps
 from operator import xor
-from lisp.core.decorators import check_state
+from lisp.core.decorators import state
 
 from lisp.core.has_properties import HasProperties
 from lisp.core.signal import Signal
@@ -106,7 +106,6 @@ class Media(HasProperties, metaclass=ABCMeta):
 
     def finalize(self):
         """Finalize the media object"""
-        # TODO: we need this?
 
     @abstractmethod
     def input_uri(self):
@@ -155,23 +154,3 @@ class Media(HasProperties, metaclass=ABCMeta):
         :param settings: Media-elements settings
         :type settings: dict
         """
-
-
-def when_playing(target):
-    return check_state(MediaState.Playing)(target)
-
-
-def when_paused(target):
-    return check_state(MediaState.Paused)(target)
-
-
-def when_stopped(target):
-    return check_state(MediaState.Stopped)(target)
-
-
-def when_null(target):
-    return check_state(MediaState.Null)(target)
-
-
-def when_not_null(target):
-    return check_state(MediaState.Null, not_in=True)(target)

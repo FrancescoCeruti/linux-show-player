@@ -52,7 +52,7 @@ class GstPipeEdit(QDialog):
         self.init_current_plugins(pipe)
 
         # Add/Remove plugins buttons
-        self.pluginsLayout = QVBoxLayout(self)
+        self.pluginsLayout = QVBoxLayout()
         self.layout().addLayout(self.pluginsLayout, 2, 1)
 
         self.addButton = QPushButton(self)

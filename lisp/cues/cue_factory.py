@@ -17,41 +17,77 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+from copy import deepcopy
+
 
 class CueFactory:
-    """Provide a generic-factory for build different cues types.
+    """Provide a factory for build different cues types.
 
-    Any cue must register his factory.
+    Any cue must be register, via register_factory function.
     """
 
-    __REGISTRY = {}
+    _REGISTRY_ = {}
 
     # Register methods
 
     @classmethod
     def register_factory(cls, cue_type, factory):
-        cls.__REGISTRY[cue_type] = factory
+        """
+        Register a new cue-type in the factory.
+
+        :param cue_type: The cue class name
+        :type cue_type: str
+        :param factory: The cue class or a factory function
+
+        """
+        cls._REGISTRY_[cue_type] = factory
 
     @classmethod
     def remove_factory(cls, cue_type):
-        cls.__REGISTRY.pop(cue_type)
+        """
+        Remove the registered cue from the factory
+
+        :param cue_type: the cue class name (the same used for registration)
+        """
+        cls._REGISTRY_.pop(cue_type)
 
     # Create methods
 
     @classmethod
     def create_cue(cls, cue_type, **kwargs):
-        factory = cls.__REGISTRY.get(cue_type, None)
+        """
+        Return a new cue of the specified type.
 
-        if factory is None:
-            raise Exception('Cue not available: ' + str(cue_type))
+        ..note:
+            Some factory can take keyword-arguments (e.g. URIAudio)
 
-        return factory.create_cue(**kwargs)
+        :param cue_type: The cue type
+        """
+        factory = cls._REGISTRY_.get(cue_type, None)
+
+        if not callable(factory):
+            raise Exception('Cue not available or badly registered: ' + str(cue_type))
+
+        return factory(**kwargs)
 
     @classmethod
     def clone_cue(cls, cue, same_id=False):
+        """
+        Return a copy of the given cue.
+
+        ..warning:
+            Using the same id can cause a lot of problems, use it only if the copied cue will be destroyed
+            after the copy (e.g. a finalized cue).
+
+        :param cue: the cue to be copied
+        :param same_id: if True the new cue is created with the same id
+        """
+        properties = deepcopy(cue.properties())
+        cue = cls.create_cue(cue.__class__.__name__)
+
         if not same_id:
-            properties = cue.properties().copy()
             properties.pop('id')
-            return cls.create_cue(properties)
-        else:
-            return cls.create_cue(cue.properties())
+
+        cue.update_properties(properties)
+
+        return cue

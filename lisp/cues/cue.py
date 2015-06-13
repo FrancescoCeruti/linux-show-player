@@ -48,7 +48,7 @@ class Cue(HasProperties):
         """
         Default = 0
 
-    _properties_ = ['id', 'index', 'groups', 'name']
+    _properties_ = ['id', 'index', 'groups', 'name', '_type_']
 
     def __init__(self, id_=None):
         super().__init__()
@@ -62,6 +62,8 @@ class Cue(HasProperties):
         self.index = -1
         self.groups = []
         self.name = 'Untitled'
+
+        self._type_ = self.__class__.__name__
 
     @abstractmethod
     def execute(self, action=CueAction.Default):

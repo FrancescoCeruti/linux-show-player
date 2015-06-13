@@ -59,7 +59,12 @@ class JackSinkSettings(SettingsSection):
         self.connectionsEdit.clicked.connect(self.__edit_connections)
         self.connectionsGroup.layout().addWidget(self.connectionsEdit)
 
-        self.connections = []
+        self.__jack_client = jack.Client('LinuxShowPlayer_SettingsControl')
+        self.connections = JackSink.get_default_connections(self.__jack_client)
+
+    def closeEvent(self, event):
+        self.__jack_client.close()
+        super().closeEvent(event)
 
     def get_configuration(self):
         conf = {}
@@ -82,7 +87,7 @@ class JackSinkSettings(SettingsSection):
         self.serverGroup.setChecked(False)
 
     def __edit_connections(self):
-        dialog = JackConnectionsDialog(self)
+        dialog = JackConnectionsDialog(self.__jack_client, parent=self)
         dialog.set_connections(self.connections.copy())
         dialog.exec_()
 
@@ -189,7 +194,7 @@ class ConnectionsWidget(QWidget):
 
 
 class JackConnectionsDialog(QDialog):
-    def __init__(self, parent=None, **kwargs):
+    def __init__(self, jack_client, parent=None, **kwargs):
         super().__init__(parent)
 
         self.resize(600, 400)
@@ -230,13 +235,12 @@ class JackConnectionsDialog(QDialog):
         self.dialogButtons.rejected.connect(self.reject)
         self.layout().addWidget(self.dialogButtons, 2, 0, 1, 3)
 
-        self.client_name = None
-        self._jack_client = jack.Client('LinuxShowPlayer_SettingsControl')
-
-        self.update_graph()
-
+        self.__jack_client = jack_client
         self.__selected_in = None
         self.__selected_out = None
+
+        self.connections = []
+        self.update_graph()
 
     def set_connections(self, connections):
         self.connections = connections
@@ -244,7 +248,7 @@ class JackConnectionsDialog(QDialog):
         self.connections_widget.update()
 
     def update_graph(self):
-        input_ports = self._jack_client.get_ports(is_audio=True, is_input=True)
+        input_ports = self.__jack_client.get_ports(is_audio=True, is_input=True)
 
         self.output_widget.clear()
         for port in range(8):
@@ -262,11 +266,19 @@ class JackConnectionsDialog(QDialog):
             clients[client_name].add_port(port.name)
 
     def __input_selection_changed(self):
-        self.__selected_in = self.input_widget.selectedItems()[0]
+        if len(self.input_widget.selectedItems()) > 0:
+            self.__selected_in = self.input_widget.selectedItems()[0]
+        else:
+            self.__selected_in = None
+
         self.__check_selection()
 
     def __output_selection_changed(self):
-        self.__selected_out = self.output_widget.selectedItems()[0]
+        if len(self.output_widget.selectedItems()) > 0:
+            self.__selected_out = self.output_widget.selectedItems()[0]
+        else:
+            self.__selected_out = None
+
         self.__check_selection()
 
     def __check_selection(self):

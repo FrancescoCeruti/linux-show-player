@@ -23,6 +23,7 @@
 """
 
 import logging
+import traceback
 from lisp.ui.qmessagebox import QDetailedMessageBox
 
 
@@ -48,6 +49,12 @@ def error(msg, details='', dialog=True):
     logging.error(_log_msg(msg, details))
     if dialog:
         _dialog('Error', msg, details, QDetailedMessageBox.Critical)
+
+
+def exception(msg, exception, dialog=True):
+    logging.error(_log_msg(msg, traceback.format_exc()))
+    if dialog:
+        _dialog('Error', msg, str(exception), QDetailedMessageBox.Critical)
 
 
 def _log_msg(msg, details):

@@ -22,12 +22,12 @@ from concurrent.futures import ThreadPoolExecutor
 from os import path, cpu_count as _cpu_count
 from re import match
 
-from lisp.backends.base.media import Media, MediaState, when_playing
+from lisp.backends.base.media import Media, MediaState
 from lisp.backends.gst.gi_repository import Gst
 from lisp.backends.gst import elements
 from lisp.backends.gst.gst_utils import gst_uri_duration
-from lisp.core.decorators import async_in_pool, check_state
-from lisp.utils.util import type_check
+from lisp.core.decorators import async_in_pool, state
+from lisp.utils.util import check_type
 
 
 def cpu_count():
@@ -42,6 +42,7 @@ def gst_pipe_regex():
 
 class GstMedia(Media):
     """Media implementation based on the GStreamer framework."""
+
     _properties_ = ['duration', 'start_at', 'loop', 'pipe', '_mtime']
     _properties_.extend(Media._properties_)
 
@@ -71,7 +72,7 @@ class GstMedia(Media):
 
     @loop.setter
     def loop(self, value):
-        type_check(value, int)
+        check_type(value, int)
 
         self.__loop = value if value >= -1 else -1
         self._loop_count = self.__loop
@@ -104,7 +105,7 @@ class GstMedia(Media):
                     Gst.MSECOND)
         return -1
 
-    @check_state(MediaState.Stopped, MediaState.Paused)
+    @state(MediaState.Stopped, MediaState.Paused)
     def play(self):
         self.on_play.emit(self)
 
@@ -114,7 +115,7 @@ class GstMedia(Media):
 
         self.played.emit(self)
 
-    @when_playing
+    @state(MediaState.Playing)
     def pause(self):
         self.on_pause.emit(self)
 
@@ -127,7 +128,7 @@ class GstMedia(Media):
 
         self.paused.emit(self)
 
-    @check_state(MediaState.Playing, MediaState.Paused)
+    @state(MediaState.Playing, MediaState.Paused)
     def stop(self):
         self.on_stop.emit(self)
 
@@ -137,7 +138,7 @@ class GstMedia(Media):
         self.interrupt(emit=False)
         self.stopped.emit(self)
 
-    @check_state(MediaState.Playing, MediaState.Paused)
+    @state(MediaState.Playing, MediaState.Paused)
     def seek(self, position):
         if position < self.duration:
             # Query segment info for the playback rate

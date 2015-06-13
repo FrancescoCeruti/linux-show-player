@@ -20,8 +20,7 @@
 import os
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QComboBox, \
-    QPushButton, QFrame, QTextBrowser, QFileDialog
+from PyQt5.QtWidgets import QDialog, QComboBox, QPushButton, QFrame, QTextBrowser, QFileDialog, QGridLayout
 from lisp import layouts
 
 
@@ -39,34 +38,31 @@ class LayoutSelect(QDialog):
         self.setMinimumSize(675, 300)
         self.resize(675, 300)
 
-        self.vLayout = QVBoxLayout(self)
-        self.vLayout.setContentsMargins(5, 5, 5, 5)
-
-        self.hLayout = QHBoxLayout(self)
-        self.vLayout.addLayout(self.hLayout)
+        self.setLayout(QGridLayout(self))
+        self.layout().setContentsMargins(5, 5, 5, 5)
 
         self.layoutBox = QComboBox(self)
-        self.hLayout.addWidget(self.layoutBox)
+        self.layout().addWidget(self.layoutBox, 0, 0)
 
         self.layButton = QPushButton(self)
         self.layButton.setText('Select layout')
-        self.hLayout.addWidget(self.layButton)
+        self.layout().addWidget(self.layButton, 0, 1)
 
         self.fileButton = QPushButton(self)
         self.fileButton.setText('Open file')
-        self.hLayout.addWidget(self.fileButton)
+        self.layout().addWidget(self.fileButton, 0, 2)
 
-        self.hLayout.setStretch(0, 3)
-        self.hLayout.setStretch(1, 2)
-        self.hLayout.setStretch(2, 1)
+        self.layout().setColumnStretch(0, 3)
+        self.layout().setColumnStretch(1, 2)
+        self.layout().setColumnStretch(2, 1)
 
         line = QFrame(self)
         line.setFrameShape(QFrame.HLine)
         line.setFrameShadow(QFrame.Sunken)
-        self.vLayout.addWidget(line)
+        self.layout().addWidget(line, 1, 0, 1, 3)
 
         self.description = QTextBrowser(self)
-        self.vLayout.addWidget(self.description)
+        self.layout().addWidget(self.description, 2, 0, 1, 3)
 
         for layout_class in layouts.get_layouts():
             self.layoutBox.addItem(layout_class.NAME)

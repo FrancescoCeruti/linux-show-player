@@ -29,13 +29,6 @@ class Backend(metaclass=Singleton):
     """
 
     @abstractmethod
-    def media_cue_factory(self):
-        """Return the backend media-factory
-
-        :rtype: lisp.backends.base.media_factory.MediaFactory
-        """
-
-    @abstractmethod
     def uri_duration(self, uri):
         """Return the file duration in milliseconds.
 

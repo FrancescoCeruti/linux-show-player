@@ -17,25 +17,38 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from lisp.backends.base.media_cue_factory import MediaCueFactory
 from lisp.backends.gst.gst_media import GstMedia
+from lisp.cues.cue_factory import CueFactory
 from lisp.cues.media_cue import MediaCue
 from lisp.utils.configuration import config
 
-__all__ = ['GstMediaFactory']
+
+def gst_media(pipeline=None):
+    media = GstMedia()
+
+    if pipeline is not None:
+        media.pipe = pipeline
+
+    return MediaCue(media)
 
 
-class GstMediaCueFactory(MediaCueFactory):
-    MEDIA_TYPES = dict(config['GstMediaTypes'])
+def uri_audio(uri=None):
+    cue = gst_media(pipeline=_pipeline('URIInput'))
 
-    @classmethod
-    def create_cue(cls, media_type=None):
-        pipe = GstMediaCueFactory.MEDIA_TYPES.get(media_type.lower(), None)
+    if uri is not None:
+        cue.media.element('URIInput').uri = uri
 
-        if pipe is None:
-            raise ValueError('Unsupported media type: {0}'.format(media_type))
+    return cue
 
-        media = GstMedia()
-        media.pipe = pipe
+def capture_audio():
+    return gst_media(pipeline=_pipeline('AutoSrc'))
 
-        return MediaCue(media)
+
+def _pipeline(input_element):
+    return input_element + ' ! ' + config['Gst']['Pipeline']
+
+
+def register_factories():
+    CueFactory.register_factory('MediaCue', gst_media)
+    CueFactory.register_factory('URIAudioCue', uri_audio)
+    CueFactory.register_factory('CaptureAudioCue', capture_audio)
