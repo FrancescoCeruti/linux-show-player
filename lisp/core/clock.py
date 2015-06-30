@@ -23,11 +23,10 @@ class Clock(QTimer, metaclass=QSingleton):
 
     def __init__(self, timeout=100):
         super().__init__()
+        self.setInterval(timeout)
 
-        self.__lock = Lock()
         self.__clients = 0
 
-        self.setInterval(timeout)
 
     @synchronized
     def add_callback(self, callback):

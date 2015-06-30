@@ -20,6 +20,8 @@ class ListWidget(QTreeWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
 
+        self.setSelectionMode(self.SingleSelection)
+
         self.setDragDropMode(self.InternalMove)
         self.setAlternatingRowColors(True)
         self.setAllColumnsShowFocus(True)
@@ -35,22 +37,29 @@ class ListWidget(QTreeWidget):
 
     def keyPressEvent(self, event):
         self.key_event.emit(event)
-        super().keyPressEvent(event)
+
+        # CTRL+Space change the item selection, this is a bad way to prevent
+        # the behavior ( TODO: change in next version )
+        if(not (event.key() == QtCore.Qt.Key_Space and
+           qApp.keyboardModifiers() == QtCore.Qt.ControlModifier)):
+            super().keyPressEvent(event)
 
     def dropEvent(self, event):
-        if(qApp.keyboardModifiers() == QtCore.Qt.ShiftModifier):
+        if qApp.keyboardModifiers() == QtCore.Qt.ControlModifier:
             event.setDropAction(QtCore.Qt.CopyAction)
             self.drop_copy_event.emit(self.drag_start,
-                                      self.indexFromItem(self.drag_item).row())
+                                      self.indexAt(event.pos()).row())
         else:
             event.setDropAction(QtCore.Qt.MoveAction)
             super().dropEvent(event)
             self.drop_move_event.emit(self.drag_start,
-                                      self.indexFromItem(self.drag_item).row())
+                                      self.indexAt(event.pos()).row())
 
         event.accept()
 
     def mousePressEvent(self, event):
         self.drag_item = self.itemAt(event.pos())
         self.drag_start = self.indexFromItem(self.drag_item).row()
-        super().mousePressEvent(event)
+
+        if qApp.keyboardModifiers() != QtCore.Qt.ControlModifier:
+            super().mousePressEvent(event)

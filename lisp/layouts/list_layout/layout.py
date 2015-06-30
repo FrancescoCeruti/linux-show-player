@@ -9,8 +9,9 @@ import weakref
 from PyQt5 import QtCore
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QWidget, QAction, QToolBar, QHBoxLayout, QHeaderView, \
-    QVBoxLayout, QLabel, QListWidget, QAbstractItemView, QListWidgetItem, qApp
+from PyQt5.QtWidgets import QWidget, QAction, QToolBar, QHBoxLayout,\
+    QHeaderView, QVBoxLayout, QLabel, QListWidget, QAbstractItemView,\
+    QListWidgetItem, qApp
 from lisp.core.media import Media
 from lisp.utils.configuration import config
 
@@ -205,13 +206,9 @@ class ListLayout(QWidget, CueLayout):
         self.select_action.setText('Select')
 
     def current_cue(self):
-        item = self.current_item()
+        item = self.listView.currentItem()
         if item is not None:
             return item.cue
-
-    def current_item(self):
-        if len(self._cue_items) > 0:
-            return self._cue_items[self.listView.currentIndex().row()]
 
     def select_context_cue(self):
         self._context_item.select()
@@ -316,7 +313,7 @@ class ListLayout(QWidget, CueLayout):
                 if cue is not None:
                     self.edit_cue(cue)
             elif qApp.keyboardModifiers() == Qt.ControlModifier:
-                item = self.current_item()
+                item = self.listView.currentItem()
                 if item is not None:
                     item.select()
             else:
@@ -403,6 +400,8 @@ class ListLayout(QWidget, CueLayout):
     def _copy_cue_at(self, old_index, index):
         newcue = CueFactory.clone_cue(self._cue_items[old_index].cue)
         self.add_cue(newcue, index)
+
+        self.listView.setCurrentItem(self.listView.topLevelItem(index))
 
     def __move_cue__(self, cue, index):
         item = self._cue_items.pop(cue['index'])
