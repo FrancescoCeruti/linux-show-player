@@ -42,7 +42,7 @@ No special hardware is required to run LiSP, but some processing operations woul
 
 #####2.1 Get the source
 
-Download the source archive from GitHub, the one from the releases is raccomaned.
+Download the source archive from GitHub, the one from the releases is raccomanded.
 
 #####2.1 Install
 
