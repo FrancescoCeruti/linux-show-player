@@ -42,7 +42,7 @@ No special hardware is required to run LiSP, but some processing operations woul
 
 #####2.1 Get the source
 
-Download the source archive from GitHub, the one from the releases is raccomanded.
+Download the source archive from GitHub, the one from the releases is recommended.
 
 #####2.1 Install
 
@@ -56,6 +56,6 @@ for example:
 
 Use the installed launcher from the menu (for the package installation), or
 
-	$ linux-show-player								# Launch the program
-	$ linux-show-player -l [debug/warning/info]		# Launch with different log options
-	$ linux-show-plater -f <file/path> 				# Open a saved session
+	$ linux-show-player                                  # Launch the program
+	$ linux-show-player -l [debug/warning/info]          # Launch with different log options
+	$ linux-show-plater -f <file/path>                   # Open a saved session
