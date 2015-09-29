@@ -19,7 +19,7 @@
 
 from lisp.backends.base.media_element import ElementType, MediaType
 
-from lisp.backends.gst.gst_element import GstMediaElement
+from lisp.backends.gst.gst_element import GstMediaElement, GstProperty
 from lisp.backends.gst.gi_repository import Gst
 
 
@@ -28,30 +28,13 @@ class AlsaSink(GstMediaElement):
     MediaType = MediaType.Audio
     Name = 'AlsaSink'
 
-    _properties_ = ('device', 'volume', 'mute')
+    device = GstProperty('alsa_sink', default='')
 
     def __init__(self, pipe):
         super().__init__()
 
-        self._volume = Gst.ElementFactory.make('volume', None)
-        self._sink = Gst.ElementFactory.make('alsasink', 'sink')
-
-        pipe.add(self._volume)
-        pipe.add(self._sink)
-
-        self._volume.link(self._sink)
-
-        self.device = ''
-        self.volume = 1.0
-        self.mute = False
-
-        self.property_changed.connect(self.__property_changed)
+        self.alsa_sink = Gst.ElementFactory.make('alsasink', 'sink')
+        pipe.add(self.alsa_sink)
 
     def sink(self):
-        return self._volume
-
-    def __property_changed(self, name, value):
-        if name == 'device':
-            self._sink.set_property(name, value)
-        else:
-            self._volume.set_property(name, value)
+        return self.alsa_sink

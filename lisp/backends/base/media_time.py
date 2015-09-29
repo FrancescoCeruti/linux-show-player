@@ -17,41 +17,40 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import pyqtSignal, QObject
-
 from lisp.backends.base.media import MediaState
 from lisp.core.clock import Clock
-from lisp.core.signal import Connection
+from lisp.core.signal import Connection, Signal
 
 
-class MediaTime(QObject):
-    notify = pyqtSignal(int)
+class MediaTime():
 
     def __init__(self, media):
         super().__init__()
+
+        self.notify = Signal() # (int)
 
         self._media = media
         self._clock = Clock()
 
         # Media "status" signals
-        self._media.on_play.connect(self._on_play, mode=Connection.QtQueued)
+        self._media.on_play.connect(self._start, mode=Connection.QtQueued)
         self._media.paused.connect(self._disable, mode=Connection.QtQueued)
-        self._media.stopped.connect(self._on_stop, mode=Connection.QtQueued)
-        self._media.interrupted.connect(self._on_stop, mode=Connection.QtQueued)
-        self._media.error.connect(self._on_stop, mode=Connection.QtQueued)
-        self._media.eos.connect(self._on_stop, mode=Connection.QtQueued)
+        self._media.stopped.connect(self._stop, mode=Connection.QtQueued)
+        self._media.interrupted.connect(self._stop, mode=Connection.QtQueued)
+        self._media.error.connect(self._stop, mode=Connection.QtQueued)
+        self._media.eos.connect(self._stop, mode=Connection.QtQueued)
 
         if self._media.state == MediaState.Playing:
-            self._on_play()
+            self._start()
 
     def _notify(self):
         """Notify the current media time"""
         self.notify.emit(self._media.current_time())
 
-    def _on_play(self):
+    def _start(self):
         self._clock.add_callback(self._notify)
 
-    def _on_stop(self):
+    def _stop(self):
         self._disable()
         self.notify.emit(0)
 

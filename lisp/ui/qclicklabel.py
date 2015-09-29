@@ -18,7 +18,8 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import pyqtSignal, QEvent
-from PyQt5.QtWidgets import QLabel
+from PyQt5.QtGui import QPainter
+from PyQt5.QtWidgets import QLabel, QStyleOption, QStyle
 
 
 class QClickLabel(QLabel):

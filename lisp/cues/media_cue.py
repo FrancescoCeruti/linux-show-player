@@ -17,45 +17,44 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from enum import Enum, unique
+from enum import Enum
 
 from lisp.backends.base.media import MediaState
+from lisp.core.has_properties import Property
 from lisp.cues.cue import Cue
-from lisp.core.decorators import synchronized, async
+from lisp.core.decorators import synchronized_method, async
 
 
 class MediaCue(Cue):
-    @unique
+
     class CueAction(Enum):
         Default = 0
         Play = 1
         Pause = 2
         Stop = 3
 
-    _properties_ = ['pause']
-    _properties_.extend(Cue._properties_)
+    pause = Property(default=False)
 
     def __init__(self, media, cue_id=None):
         super().__init__(cue_id)
 
         self.media = media
-        self.pause = False
 
-        self.__finalized = False
-
-    @async
-    @synchronized(blocking=False)
+    @synchronized_method(blocking=False)
     def execute(self, action=CueAction.Default):
-        self.on_execute.emit(self, action)
+        # If "default", decide the action to execute
 
         if action == MediaCue.CueAction.Default:
             if self.media.state != MediaState.Playing:
-                self.media.play()
+                action = MediaCue.CueAction.Play
             elif self.pause:
-                self.media.pause()
+                action = MediaCue.CueAction.Pause
             else:
-                self.media.stop()
-        elif action == MediaCue.CueAction.Play:
+                action = MediaCue.CueAction.Stop
+
+        self.on_execute.emit(self, action)
+
+        if action == MediaCue.CueAction.Play:
             self.media.play()
         elif action == MediaCue.CueAction.Pause:
             self.media.pause()
@@ -75,11 +74,3 @@ class MediaCue(Cue):
             self.media.update_properties(media_props)
 
         super().update_properties(properties)
-
-    def finalize(self):
-        if not self.__finalized:
-            self.__finalized = True
-            self.media.finalize()
-
-    def finalized(self):
-        return self.__finalized

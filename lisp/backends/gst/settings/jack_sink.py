@@ -19,8 +19,9 @@
 
 from PyQt5 import QtCore
 from PyQt5.QtGui import QPainter, QPolygon, QPainterPath
-from PyQt5.QtWidgets import QGroupBox, QLineEdit, QLabel, QWidget, QHBoxLayout, QTreeWidget, QTreeWidgetItem, \
-    QGridLayout, QDialog, QDialogButtonBox, QPushButton
+from PyQt5.QtWidgets import QGroupBox, QLineEdit, QLabel, QWidget, \
+    QHBoxLayout, QTreeWidget, QTreeWidgetItem, QGridLayout, QDialog, \
+    QDialogButtonBox, QPushButton
 import jack
 
 from lisp.backends.gst.elements.jack_sink import JackSink
@@ -60,7 +61,7 @@ class JackSinkSettings(SettingsSection):
         self.connectionsGroup.layout().addWidget(self.connectionsEdit)
 
         self.__jack_client = jack.Client('LinuxShowPlayer_SettingsControl')
-        self.connections = JackSink.get_default_connections(self.__jack_client)
+        self.connections = JackSink.default_connections(self.__jack_client)
 
     def closeEvent(self, event):
         self.__jack_client.close()
@@ -68,7 +69,8 @@ class JackSinkSettings(SettingsSection):
 
     def get_configuration(self):
         conf = {}
-        if not (self.serverGroup.isCheckable() and not self.serverGroup.isChecked()):
+        if not (
+                    self.serverGroup.isCheckable() and not self.serverGroup.isChecked()):
             server = self.serverLineEdit.text()
             conf['server'] = server if server.lower() != 'default' else None
             conf['connections'] = self.connections
@@ -79,7 +81,8 @@ class JackSinkSettings(SettingsSection):
         if self.id in conf:
             conf = conf[self.id]
 
-            self.serverLineEdit.setText('default' if conf['server'] is None else conf['server'])
+            self.serverLineEdit.setText(
+                'default' if conf['server'] is None else conf['server'])
             self.connections = conf['connections'].copy()
 
     def enable_check(self, enable):
@@ -168,7 +171,8 @@ class ConnectionsWidget(QWidget):
         painter.setRenderHint(QPainter.Antialiasing)
 
         for output, out_conn in enumerate(self.connections):
-            y1 = int(self.item_y(self._output_widget.topLevelItem(output)) + (yo - yc))
+            y1 = int(self.item_y(self._output_widget.topLevelItem(output)) + (
+                yo - yc))
 
             for client in range(self._input_widget.topLevelItemCount()):
                 client = self._input_widget.topLevelItem(client)
@@ -176,7 +180,8 @@ class ConnectionsWidget(QWidget):
                 for port in client.ports:
                     if port in self.connections[output]:
                         y2 = int(self.item_y(client.ports[port]) + (yi - yc))
-                        self.draw_connection_line(painter, x1, y1, x2, y2, h1, h2)
+                        self.draw_connection_line(painter, x1, y1, x2, y2, h1,
+                                                  h2)
 
         painter.end()
 
@@ -208,14 +213,18 @@ class JackConnectionsDialog(QDialog):
         self.input_widget = QTreeWidget(self)
         self.input_widget.setHeaderLabels(['Input ports'])
 
-        self.connections_widget = ConnectionsWidget(self.output_widget, self.input_widget, parent=self)
+        self.connections_widget = ConnectionsWidget(self.output_widget,
+                                                    self.input_widget,
+                                                    parent=self)
         self.output_widget.itemExpanded.connect(self.connections_widget.update)
         self.output_widget.itemCollapsed.connect(self.connections_widget.update)
         self.input_widget.itemExpanded.connect(self.connections_widget.update)
         self.input_widget.itemCollapsed.connect(self.connections_widget.update)
 
-        self.input_widget.itemSelectionChanged.connect(self.__input_selection_changed)
-        self.output_widget.itemSelectionChanged.connect(self.__output_selection_changed)
+        self.input_widget.itemSelectionChanged.connect(
+            self.__input_selection_changed)
+        self.output_widget.itemSelectionChanged.connect(
+            self.__output_selection_changed)
 
         self.layout().addWidget(self.output_widget, 0, 0)
         self.layout().addWidget(self.connections_widget, 0, 1)
@@ -230,7 +239,8 @@ class JackConnectionsDialog(QDialog):
         self.connectButton.setEnabled(False)
         self.layout().addWidget(self.connectButton, 1, 1)
 
-        self.dialogButtons = QDialogButtonBox(QDialogButtonBox.Cancel | QDialogButtonBox.Ok)
+        self.dialogButtons = QDialogButtonBox(
+            QDialogButtonBox.Cancel | QDialogButtonBox.Ok)
         self.dialogButtons.accepted.connect(self.accept)
         self.dialogButtons.rejected.connect(self.reject)
         self.layout().addWidget(self.dialogButtons, 2, 0, 1, 3)
@@ -252,7 +262,8 @@ class JackConnectionsDialog(QDialog):
 
         self.output_widget.clear()
         for port in range(8):
-            self.output_widget.addTopLevelItem(QTreeWidgetItem(['output_' + str(port)]))
+            self.output_widget.addTopLevelItem(
+                QTreeWidgetItem(['output_' + str(port)]))
 
         self.input_widget.clear()
         clients = {}

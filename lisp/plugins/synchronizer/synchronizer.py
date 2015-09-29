@@ -78,7 +78,7 @@ class Synchronizer(Plugin):
         cue.executed.connect(self.remote_exec)
 
         if isinstance(cue, MediaCue):
-            self.cue_media[id(cue.media)] = cue
+            self.cue_media[cue.media] = cue
 
             cue.media.on_play.connect(self.remote_play)
             cue.media.on_stop.connect(self.remote_stop)
@@ -89,7 +89,7 @@ class Synchronizer(Plugin):
         cue.executed.disconnect(self.remote_exec)
 
         if isinstance(cue, MediaCue):
-            self.cue_media.pop(id(cue.media))
+            self.cue_media.pop(cue.media)
 
             cue.media.on_play.disconnect(self.remote_play)
             cue.media.on_stop.disconnect(self.remote_stop)
@@ -97,19 +97,19 @@ class Synchronizer(Plugin):
             cue.media.sought.disconnect(self.remote_seek)
 
     def remote_play(self, media):
-        index = self.cue_media[id(media)].index
+        index = self.cue_media[media].index
         self.call_remote(lambda proxy: proxy.play(index))
 
     def remote_pause(self, media):
-        index = self.cue_media[id(media)].index
+        index = self.cue_media[media].index
         self.call_remote(lambda proxy: proxy.pause(index))
 
     def remote_stop(self, media):
-        index = self.cue_media[id(media)].index
+        index = self.cue_media[media].index
         self.call_remote(lambda proxy: proxy.stop(index))
 
     def remote_seek(self, media, position):
-        index = self.cue_media[id(media)].index
+        index = self.cue_media[media].index
         self.call_remote(lambda proxy: proxy.seek(index))
 
     def remote_exec(self, cue, action):

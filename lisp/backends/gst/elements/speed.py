@@ -20,6 +20,7 @@
 from lisp.backends.base.media_element import ElementType, MediaType
 from lisp.backends.gst.gst_element import GstMediaElement
 from lisp.backends.gst.gi_repository import Gst
+from lisp.core.has_properties import Property
 
 
 class Speed(GstMediaElement):
@@ -27,61 +28,55 @@ class Speed(GstMediaElement):
     MediaType = MediaType.Audio
     Name = "Speed"
 
-    _properties_ = ('speed', )
+    speed = Property(default=1.0)
 
-    def __init__(self, pipe):
+    def __init__(self, pipeline):
         super().__init__()
 
-        self._scaletempo = Gst.ElementFactory.make("scaletempo", None)
-        self._convert = Gst.ElementFactory.make("audioconvert", None)
+        self.pipeline = pipeline
+        self.scale_tempo = Gst.ElementFactory.make("scaletempo", None)
+        self.audio_convert = Gst.ElementFactory.make("audioconvert", None)
 
-        pipe.add(self._scaletempo)
-        pipe.add(self._convert)
+        self.pipeline.add(self.scale_tempo)
+        self.pipeline.add(self.audio_convert)
 
-        self._scaletempo.link(self._convert)
+        self.scale_tempo.link(self.audio_convert)
 
-        self.__speed = 1.0
+        bus = self.pipeline.get_bus()
+        bus.add_signal_watch()
+        self._handler = bus.connect("message", self.__on_message)
 
-        self.__bus = pipe.get_bus()
-        self.__bus.add_signal_watch()
-        self.__handler = self.__bus.connect("message", self.__on_message)
+        self._old_speed = self.speed
+        self.changed('speed').connect(self.__prepare_speed)
 
-        self._state = None
+    def __prepare_speed(self, value):
+        if self._old_speed != value:
+            self._old_speed = value
 
-    @property
-    def speed(self):
-        return self.__speed
-
-    @speed.setter
-    def speed(self, value):
-        if value != self.__speed:
-            self.__speed = value
-
-            if self._state == Gst.State.PLAYING:
-                self.__changeSpeed()
+            if self.pipeline.current_state == Gst.State.PLAYING:
+                self.__change_speed()
 
     def sink(self):
-        return self._scaletempo
+        return self.scale_tempo
 
     def src(self):
-        return self._convert
+        return self.audio_convert
 
     def dispose(self):
-        self.__bus.remove_signal_watch()
-        self.__bus.disconnect(self.__handler)
+        bus = self.pipeline.get_bus()
+        bus.remove_signal_watch()
+        bus.disconnect(self._handler)
 
     def __on_message(self, bus, message):
-        if message.type == Gst.MessageType.STATE_CHANGED:
-            if message.src == self._scaletempo:
-                self._state = message.parse_state_changed()[1]
+        if (message.type == Gst.MessageType.STATE_CHANGED and
+                    message.src == self.scale_tempo and
+                    message.parse_state_changed()[1] == Gst.State.PLAYING):
+            self.__change_speed()
 
-                if self._state == Gst.State.PLAYING:
-                    self.__changeSpeed()
+    def __change_speed(self):
+        current_position = self.scale_tempo.query_position(Gst.Format.TIME)[1]
 
-    def __changeSpeed(self):
-        current_position = self._scaletempo.query_position(Gst.Format.TIME)[1]
-
-        self._scaletempo.seek(self.speed,
+        self.scale_tempo.seek(self.speed,
                               Gst.Format.TIME,
                               Gst.SeekFlags.FLUSH | Gst.SeekFlags.ACCURATE,
                               Gst.SeekType.SET,

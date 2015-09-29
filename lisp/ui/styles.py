@@ -19,28 +19,52 @@
 
 from os import path
 
+from PyQt5.QtCore import QFileSystemWatcher
 from PyQt5.QtGui import QPalette, QColor
 from PyQt5.QtWidgets import QStyleFactory, qApp
 
 from lisp.ui.style import style  # @UnusedImport
 
+# TODO: maybe a class ? (StyleManager)
 
-StylePath = path.abspath(path.join(path.dirname(__file__))) + '/'
-IconsThemePaths = [StylePath + 'icons']
+__ThemeFileWatcher = None
+
+StylePath = path.abspath(path.join(path.dirname(__file__)))
+IconsThemePaths = [path.join(StylePath, 'icons')]
 IconsThemeName = 'lisp'
 
-QLiSPTheme = ''
-with open(StylePath + 'style/style.qss', mode='r', encoding='utf-8') as f:
-    QLiSPTheme = f.read()
+LiSPThemeFile = path.join(StylePath, 'style/style.qss')
 
 
-def get_styles():
-    return QStyleFactory.keys() + ['LiSP']
+def __load_qss_theme(qss_file, update=False):
+    with open(qss_file, mode='r', encoding='utf-8') as f:
+        style = f.read()
+
+    qApp.setStyleSheet(style)
+
+    if not update:
+        watched_files = __ThemeFileWatcher.files()
+        if len(watched_files) > 0:
+            __ThemeFileWatcher.removePaths(watched_files)
+
+        __ThemeFileWatcher.addPath(qss_file)
+
+
+def __update_style():
+    watched_files = __ThemeFileWatcher.files()
+
+    if len(watched_files) > 0:
+        __load_qss_theme(watched_files[0], update=True)
 
 
 def apply_style(style_name):
+    global __ThemeFileWatcher
+    if __ThemeFileWatcher is None:
+        __ThemeFileWatcher = QFileSystemWatcher()
+        __ThemeFileWatcher.fileChanged.connect(__update_style)
+
     if style_name == 'LiSP':
-        qApp.setStyleSheet(QLiSPTheme)
+        __load_qss_theme(LiSPThemeFile)
 
         # Change link color
         palette = qApp.palette()
@@ -50,3 +74,7 @@ def apply_style(style_name):
     else:
         qApp.setStyleSheet('')
         qApp.setStyle(QStyleFactory.create(style_name))
+
+
+def get_styles():
+    return QStyleFactory.keys() + ['LiSP']

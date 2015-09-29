@@ -26,24 +26,20 @@ from lisp.core.qmeta import QABCMeta
 
 class Singleton(type):
 
-    __instance = None
-
     def __call__(cls, *args, **kwargs):
-        if cls.__instance is not None:
+        try:
             return cls.__instance
-        else:
+        except AttributeError:
             cls.__instance = super(Singleton, cls).__call__(*args, **kwargs)
             return cls.__instance
 
 
 class ABCSingleton(ABCMeta):
 
-    __instance = None
-
     def __call__(cls, *args, **kwargs):
-        if cls.__instance is not None:
+        try:
             return cls.__instance
-        else:
+        except AttributeError:
             cls.__instance = super(ABCSingleton, cls).__call__(*args, **kwargs)
             return cls.__instance
 
@@ -60,12 +56,9 @@ class QSingleton(pyqtWrapperType):
 
 class QABCSingleton(QABCMeta):
 
-    __instance = None
-
     def __call__(cls, *args, **kwargs):
-        if cls.__instance is not None:
+        try:
             return cls.__instance
-        else:
-            cls.__instance = super(QABCSingleton, cls).__call__(*args,
-                                                                **kwargs)
+        except AttributeError:
+            cls.__instance = super(QABCSingleton, cls).__call__(*args, **kwargs)
             return cls.__instance

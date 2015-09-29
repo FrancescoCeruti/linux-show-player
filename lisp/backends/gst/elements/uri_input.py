@@ -18,7 +18,7 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from lisp.backends.base.media_element import ElementType, MediaType
-from lisp.backends.gst.gst_element import GstMediaElement
+from lisp.backends.gst.gst_element import GstMediaElement, GstProperty
 from lisp.backends.gst.gi_repository import Gst
 
 
@@ -27,37 +27,30 @@ class UriInput(GstMediaElement):
     MediaType = MediaType.Audio
     Name = "URIInput"
 
-    _properties_ = ('uri', 'download', 'buffer_size', 'use_buffering')
+    uri = GstProperty('decoder', default='')
+    download = GstProperty('decoder', default=False)
+    buffer_size = GstProperty('decoder', default=-1, gst_name='buffer-size')
+    use_buffering = GstProperty('decoder', default=False,
+                                gst_name='use-buffering')
 
     def __init__(self, pipe):
         super().__init__()
 
-        self._decoder = Gst.ElementFactory.make("uridecodebin", None)
-        self._convert = Gst.ElementFactory.make("audioconvert", None)
-        self._handler = self._decoder.connect("pad-added", self.__on_pad_added)
+        self.decoder = Gst.ElementFactory.make("uridecodebin", None)
+        self.audio_convert = Gst.ElementFactory.make("audioconvert", None)
+        self._handler = self.decoder.connect("pad-added", self.__on_pad_added)
 
-        pipe.add(self._decoder)
-        pipe.add(self._convert)
-
-        self.uri = ""
-        self.download = False
-        self.buffer_size = -1
-        self.use_buffering = False
-
-        self.property_changed.connect(self.__property_changed)
+        pipe.add(self.decoder)
+        pipe.add(self.audio_convert)
 
     def input_uri(self):
         return self.uri
 
     def dispose(self):
-        self._decoder.disconnect(self._handler)
+        self.decoder.disconnect(self._handler)
 
     def src(self):
-        return self._convert
+        return self.audio_convert
 
     def __on_pad_added(self, *args):
-        self._decoder.link(self._convert)
-
-    def __property_changed(self, name, value):
-        name.replace('_', '-')
-        self._decoder.set_property(name, value)
+        self.decoder.link(self.audio_convert)

@@ -17,12 +17,11 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from enum import Enum, unique
+from enum import Enum
 
 from lisp.core.has_properties import HasProperties
 
 
-@unique
 class ElementType(Enum):
     """The type  of the media-element"""
     Input = 0
@@ -30,7 +29,6 @@ class ElementType(Enum):
     Plugin = 2
 
 
-@unique
 class MediaType(Enum):
     """The media-type that the element handle (Audio/Video)"""
     Audio = 0
@@ -41,9 +39,33 @@ class MediaType(Enum):
 class MediaElement(HasProperties):
     """Base media-element class
 
-    Media-elements control specific media's parameters (e.g. volume)
+    A MediaElement object control specific media's parameters (e.g. volume).
+    Every MediaElement provides two kind of properties:
+     1) The one defined via class:`HasProperties`;
+     2) and runtime only properties, those are reset to the previous value at
+        playback end.
+
+    Runtime properties are declared in the __runtime__ class attribute.
+
+    ..note:
+        All the runtime properties should be "normal" properties, but not all
+        "normal" properties must be runtime, an element may have no runtime
+        properties at all.
+
     """
+
+    __runtime__ = ()
+
     ElementType = ElementType.Input
     MediaType = None
-
     Name = 'Undefined'
+
+    def set_current_value(self, pname, value):
+        """Change the runtime value of a property (if defined as runtime)
+
+        :param pname: The property name
+        :param value: The new value
+        """
+
+    def get_current_value(self, pname):
+        """Return the current value of a property or None"""

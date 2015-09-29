@@ -19,20 +19,34 @@
 
 from enum import Enum
 import inspect
+from threading import Lock
 import traceback
 import weakref
-from types import MethodType
+from types import MethodType, BuiltinMethodType
 
 from PyQt5.QtCore import QEvent, QObject
 from PyQt5.QtWidgets import QApplication
 
-from lisp.core.decorators import synchronized, async
+from lisp.core.decorators import async
 
 
 __all__ = ['Signal', 'Connection']
 
 
-# TODO: check for memory leaks
+def slot_id(slot):
+    """Return the id of the given slot.
+
+    This function is able to produce unique id(s) even for bounded methods, and
+    builtin-methods using a combination of the function id and the object id.
+    """
+    if isinstance(slot, MethodType):
+        return id(slot.__func__), id(slot.__self__)
+    elif isinstance(slot, BuiltinMethodType):
+        return id(slot), id(slot.__self__)
+    else:
+        return id(slot)
+
+
 class Slot:
     """Synchronous slot."""
 
@@ -47,7 +61,7 @@ class Slot:
             raise TypeError('slot must be callable')
 
         self._callback = callback
-        self._slot_id = id(slot)
+        self._slot_id = slot_id(slot)
 
     def call(self, *args, **kwargs):
         """Call the callable object within the given parameters."""
@@ -65,7 +79,7 @@ class Slot:
 
 
 class AsyncSlot(Slot):
-    """Asynchronous slot."""
+    """Asynchronous slot, NOT queued, any call is performed in a new thread."""
 
     @async
     def call(self, *args, **kwargs):
@@ -95,10 +109,11 @@ class QtSlot(Slot):
 
 
 class QtQueuedSlot(QtSlot):
-    """Qt-safe asynchronous slot, execute the call inside the qt-event-loop."""
+    """Qt-safe queued slot, execute the call inside the qt-event-loop."""
 
     def call(self, *args, **kwargs):
-        QApplication.postEvent(self._invoker, self._event(*args, **kwargs))
+        QApplication.instance().postEvent(self._invoker,
+                                          self._event(*args, **kwargs))
 
 
 class QSlotEvent(QEvent):
@@ -127,7 +142,7 @@ class Signal:
 
     A signal object can be connected/disconnected to a callable object (slot),
     the connection can have different modes, any mode define the way a slot
-    is called, those are defined in :class:`ConnectionMode`.
+    is called, those are defined in :class:`Connection`.
 
     .. note::
         * Any object can be connected only once to a specific signal,
@@ -137,15 +152,16 @@ class Signal:
         * Signals with "arguments" can be connected to slot without arguments
 
     .. warning::
-        Because of weakrefs connecting like the following can't work:
+        Because of weakrefs, connecting like the following can't work:
 
-        signal.connect(lambda: print('Hello')))
-        signal.connect(MyObject().my_method)
+        signal.connect(lambda: some_operation))
+        signal.connect(NewObject().my_method)     # Unless using some tricks
         signal.connect(something_not_referenced)
     """
 
     def __init__(self):
         self.__slots = {}
+        self.__lock = Lock()
 
     def connect(self, slot, mode=Connection.Direct):
         """Connect the given slot, if not already connected.
@@ -153,33 +169,35 @@ class Signal:
         :param slot: The slot to be connected
         :param mode: Connection mode
         :type mode: Connection
-        :raise ValueError: if mode not in ConnectionMode enum
+        :raise ValueError: if mode not in Connection enum
         """
         if mode not in Connection:
             raise ValueError('invalid mode value: {0}'.format(mode))
 
-        # Create a new Slot object, and use the object id as a key
-        self.__slots[id(slot)] = mode.new_slot(slot, self._remove_slot)
+        with self.__lock:
+            # Create a new Slot object
+            self.__slots[slot_id(slot)] = mode.new_slot(slot, self.__remove_slot)
 
     def disconnect(self, slot=None):
-        """Disconnect the given slot, or all the slots if no slot is given.
+        """Disconnect the given slot, or all if no slot is specified.
 
-        :param slot: The slot to be disconnected
+        :param slot: The slot to be disconnected or None
         """
         if slot is not None:
-            self._remove_slot(id(slot))
+            self.__remove_slot(slot_id(slot))
         else:
-            self.__slots.clear()
+            with self.__lock:
+                self.__slots.clear()
 
-    @synchronized
     def emit(self, *args, **kwargs):
         """Emit the signal within the given arguments"""
-        for slot in self.__slots.values():
-            try:
-                slot.call(*args, **kwargs)
-            except Exception:
-                # TODO: Here we want the function reference in the stack
-                traceback.print_exc()
+        with self.__lock:
+            for slot in self.__slots.values():
+                try:
+                    slot.call(*args, **kwargs)
+                except Exception:
+                    traceback.print_exc()
 
-    def _remove_slot(self, slot_id):
-        self.__slots.pop(slot_id, None)
+    def __remove_slot(self, id_):
+        with self.__lock:
+            self.__slots.pop(id_, None)

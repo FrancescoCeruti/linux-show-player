@@ -23,6 +23,7 @@ from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QPushButton, QLabel, \
     QHBoxLayout, QTimeEdit
 
 from lisp.application import Application
+from lisp.core.has_properties import Property
 from lisp.cues.cue import Cue
 from lisp.cues.media_cue import MediaCue
 from lisp.layouts.cue_layout import CueLayout
@@ -33,16 +34,14 @@ from lisp.core.decorators import async
 
 class SeekAction(Cue):
 
-    _properties_ = ['target_id', 'time']
-    _properties_.extend(Cue._properties_)
-
     Name = 'Seek action'
+
+    target_id = Property()
+    time = Property(default=-1)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-
-        self.target_id = -1
-        self.time = -1
+        self.name = self.Name
 
     @async
     def execute(self, action=Cue.CueAction.Default):

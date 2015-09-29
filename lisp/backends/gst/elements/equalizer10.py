@@ -18,7 +18,7 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from lisp.backends.base.media_element import ElementType, MediaType
-from lisp.backends.gst.gst_element import GstMediaElement
+from lisp.backends.gst.gst_element import GstMediaElement, GstProperty
 from lisp.backends.gst.gi_repository import Gst
 
 
@@ -27,27 +27,30 @@ class Equalizer10(GstMediaElement):
     MediaType = MediaType.Audio
     Name = "Equalizer-10bands"
 
+    band0 = GstProperty('equalizer', default=0)
+    band1 = GstProperty('equalizer', default=0)
+    band2 = GstProperty('equalizer', default=0)
+    band3 = GstProperty('equalizer', default=0)
+    band4 = GstProperty('equalizer', default=0)
+    band5 = GstProperty('equalizer', default=0)
+    band6 = GstProperty('equalizer', default=0)
+    band7 = GstProperty('equalizer', default=0)
+    band8 = GstProperty('equalizer', default=0)
+    band9 = GstProperty('equalizer', default=0)
+
     def __init__(self, pipe):
         super().__init__()
 
-        self._equalizer = Gst.ElementFactory.make("equalizer-10bands", None)
-        self._converter = Gst.ElementFactory.make("audioconvert", None)
+        self.equalizer = Gst.ElementFactory.make("equalizer-10bands", None)
+        self.audio_converter = Gst.ElementFactory.make("audioconvert", None)
 
-        pipe.add(self._equalizer)
-        pipe.add(self._converter)
+        pipe.add(self.equalizer)
+        pipe.add(self.audio_converter)
 
-        self._equalizer.link(self._converter)
-
-        for n in range(10):
-            setattr(self, 'band' + str(n), 0)
-
-        self.property_changed.connect(self.__property_changed)
+        self.equalizer.link(self.audio_converter)
 
     def sink(self):
-        return self._equalizer
+        return self.equalizer
 
     def src(self):
-        return self._converter
-
-    def __property_changed(self, name, value):
-        self._equalizer.set_property(name, value)
+        return self.audio_converter

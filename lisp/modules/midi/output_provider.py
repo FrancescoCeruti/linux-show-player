@@ -20,7 +20,6 @@
 from PyQt5.QtCore import pyqtSignal, QObject
 import mido
 
-from lisp.core.singleton import QSingleton
 from lisp.modules.midi.midi_common import MIDICommon
 
 

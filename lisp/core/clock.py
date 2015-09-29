@@ -17,10 +17,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+from threading import Lock
 from PyQt5.QtCore import QTimer
-
 from lisp.core.singleton import QSingleton
-from lisp.core.decorators import synchronized
 
 
 class Clock(QTimer, metaclass=QSingleton):
@@ -36,20 +35,21 @@ class Clock(QTimer, metaclass=QSingleton):
         super().__init__()
         self.setInterval(timeout)
 
+        self.__lock = Lock()
         self.__clients = 0
 
-    @synchronized
     def add_callback(self, callback):
-        self.timeout.connect(callback)
+        with self.__lock:
+            self.timeout.connect(callback)
 
-        self.__clients += 1
-        if self.__clients == 1:
-            self.start()
+            self.__clients += 1
+            if self.__clients == 1:
+                self.start()
 
-    @synchronized
     def remove_callback(self, callback):
-        self.timeout.disconnect(callback)
+        with self.__lock:
+            self.timeout.disconnect(callback)
 
-        self.__clients -= 1
-        if self.__clients == 0:
-            self.stop()
+            self.__clients -= 1
+            if self.__clients == 0:
+                self.stop()

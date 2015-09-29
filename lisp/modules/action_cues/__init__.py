@@ -18,10 +18,11 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import logging
+from os import path
 
 from lisp.core.module import Module
+from lisp.cues.cue import Cue
 from lisp.utils.dyamic_loader import load_classes
-from lisp.utils.util import file_path
 from lisp.application import Application
 from lisp.ui.mainwindow import MainWindow
 from lisp.cues.cue_factory import CueFactory
@@ -32,7 +33,7 @@ class ActionCues(Module):
     def __init__(self):
         super().__init__()
 
-        for cue_name, cue_class in load_classes(file_path(__file__, 'cues')):
+        for cue_name, cue_class in load_classes(path.dirname(__file__)):
             # Register the action-cue in the cue-factory
             CueFactory.register_factory(cue_class.__name__, cue_class)
             # Register the menu action for adding the action-cue
@@ -45,7 +46,6 @@ class ActionCues(Module):
     def create_add_action_cue_method(cue_class):
         def method():
             cue = CueFactory.create_cue(cue_class.__name__)
-            cue.name = cue_class.Name
             Application().layout.add_cue(cue)
 
         return method

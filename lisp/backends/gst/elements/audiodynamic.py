@@ -20,7 +20,7 @@
 from enum import Enum
 
 from lisp.backends.base.media_element import ElementType, MediaType
-from lisp.backends.gst.gst_element import GstMediaElement
+from lisp.backends.gst.gst_element import GstMediaElement, GstProperty
 from lisp.backends.gst.gi_repository import Gst
 
 
@@ -28,8 +28,6 @@ class Audiodynamic(GstMediaElement):
     ElementType = ElementType.Plugin
     MediaType = MediaType.Audio
     Name = 'AudioDynamic'
-
-    _properties_ = ('mode', 'characteristic', 'ratio', 'threshold')
 
     class Mode(Enum):
         Compressor = 'compressor'
@@ -40,34 +38,27 @@ class Audiodynamic(GstMediaElement):
         HardKnee = 'hard-knee'
         SoftKnee = 'soft-knee'
 
+    mode = GstProperty('audio_dynamic', default=Mode.Compressor.value)
+    characteristic = GstProperty('audio_dynamic',
+                                 default=Characteristics.HardKnee.value)
+    ratio = GstProperty('audio_dynamic', default=1)
+    threshold = GstProperty('audio_dynamic', default=0)
+
     def __init__(self, pipe):
         super().__init__()
 
-        self._dynamic = Gst.ElementFactory.make('audiodynamic', None)
-        self._converter = Gst.ElementFactory.make('audioconvert', None)
+        self.audio_dynamic = Gst.ElementFactory.make('audiodynamic', None)
+        self.audio_converter = Gst.ElementFactory.make('audioconvert', None)
 
-        pipe.add(self._dynamic)
-        pipe.add(self._converter)
+        pipe.add(self.audio_dynamic)
+        pipe.add(self.audio_converter)
 
-        self._dynamic.link(self._converter)
+        self.audio_dynamic.link(self.audio_converter)
 
-        self.mode = self.Mode.Compressor
-        self.characteristic = self.Characteristics.HardKnee
-        self.ratio = 1
-        self.threshold = 0
-
-        self.property_changed.connect(self.__property_changed)
+        self.update_properties(self.properties())
 
     def sink(self):
-        return self._dynamic
+        return self.audio_dynamic
 
     def src(self):
-        return self._converter
-
-    def __property_changed(self, name, value):
-        if ((name == 'mode' and value in Audiodynamic.Mode) or
-                (name == 'characteristic' and
-                 value in Audiodynamic.Characteristics)):
-            self._dynamic.set_property(name, value.value)
-        else:
-            self._dynamic.set_property(name, value)
+        return self.audio_converter

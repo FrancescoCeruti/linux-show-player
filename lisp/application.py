@@ -108,22 +108,23 @@ class Application(metaclass=Singleton):
         try:
             select = LayoutSelect()
             select.exec_()
-        except Exception as e:
-            logging.error('Fatal error', details=traceback.format_exc())
+
+            if select.result() != QDialog.Accepted:
+                qApp.quit()
+                exit()
+
+            if exists(select.filepath):
+                self._load_from_file(select.filepath)
+            else:
+                self._create_layout(select.slected())
+
+        except Exception:
+            logging.error('Startup error', details=traceback.format_exc())
             qApp.quit()
             exit(-1)
 
-        if select.result() != QDialog.Accepted:
-            qApp.quit()
-            exit()
-
-        if exists(select.filepath):
-            self._load_from_file(select.filepath)
-        else:
-            self._create_layout(select.slected())
-
     def _startup(self, first=False):
-        """ Initializes the basic components """
+        """ Initialize the basic components """
         self.mainWindow.file = ''
         self.app_conf = {}
 

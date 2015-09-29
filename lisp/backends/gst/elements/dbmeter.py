@@ -19,7 +19,7 @@
 
 from lisp.core.signal import Signal
 from lisp.backends.base.media_element import ElementType, MediaType
-from lisp.backends.gst.gst_element import GstMediaElement
+from lisp.backends.gst.gst_element import GstMediaElement, GstProperty
 from lisp.backends.gst.gi_repository import Gst
 
 
@@ -28,52 +28,45 @@ class Dbmeter(GstMediaElement):
     MediaType = MediaType.Audio
     Name = "DbMeter"
 
-    _properties_ = ('interval', 'peak_ttl', 'peak_falloff')
+    interval = GstProperty('level', default=50 * Gst.MSECOND)
+    peak_ttl = GstProperty('level', default=Gst.SECOND, gst_name='peak-ttl')
+    peak_falloff = GstProperty('level', default=20, gst_name='peak-falloff')
 
-    def __init__(self, pipe):
+    def __init__(self, pipeline):
         super().__init__()
 
         self.level_ready = Signal()
 
-        self._level = Gst.ElementFactory.make("level", None)
-        self._level.set_property('post-messages', True)
-        self._level.set_property('interval', 50 * Gst.MSECOND)
-        self._level.set_property('peak-ttl', Gst.SECOND)
-        self._level.set_property('peak-falloff', 20)
-        self._convert = Gst.ElementFactory.make("audioconvert", None)
+        self.pipeline = pipeline
+        self.level = Gst.ElementFactory.make('level', None)
+        self.level.set_property('post-messages', True)
+        self.level.set_property('interval', 50 * Gst.MSECOND)
+        self.level.set_property('peak-ttl', Gst.SECOND)
+        self.level.set_property('peak-falloff', 20)
+        self.audio_convert = Gst.ElementFactory.make('audioconvert', None)
 
-        pipe.add(self._level)
-        pipe.add(self._convert)
+        self.pipeline.add(self.level)
+        self.pipeline.add(self.audio_convert)
 
-        self._level.link(self._convert)
+        self.level.link(self.audio_convert)
 
-        self.interval = 50 * Gst.MSECOND
-        self.peak_ttl = Gst.SECOND
-        self.peak_falloff = 20
-
-        self.property_changed.connect(self.__property_changed)
-
-        self.__bus = pipe.get_bus()
-        self.__bus.add_signal_watch()
-        self.__handler = self.__bus.connect("message::element",
-                                            self.__on_message)
+        bus = self.pipeline.get_bus()
+        bus.add_signal_watch()
+        self._handler = bus.connect('message::element', self.__on_message)
 
     def dispose(self):
-        self.__bus.remove_signal_watch()
-        self.__bus.disconnect(self.__handler)
+        bus = self.pipeline.get_bus()
+        bus.remove_signal_watch()
+        bus.disconnect(self._handler)
 
     def sink(self):
-        return self._level
+        return self.level
 
     def src(self):
-        return self._convert
-
-    def __property_changed(self, name, value):
-        name = name.replace('_', '-')
-        self._level.set_property(name, value)
+        return self.audio_convert
 
     def __on_message(self, bus, message):
-        if message.src == self._level:
+        if message.src == self.level:
             structure = message.get_structure()
             if structure is not None and structure.has_name('level'):
                 self.level_ready.emit(structure.get_value('peak'),

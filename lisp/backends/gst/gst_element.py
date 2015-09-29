@@ -18,10 +18,52 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from lisp.backends.base.media_element import MediaElement
+from lisp.core.has_properties import Property
+
+
+class GstProperty(Property):
+
+    def __init__(self, element_name, default=None, name=None, gst_name=None,
+                 adapter=None):
+        super().__init__(default=default, name=name)
+
+        self.element_name = element_name
+        self.gst_name = gst_name
+        self.adapter = adapter
+
+    def __set__(self, instance, value):
+        super().__set__(instance, value)
+
+        if self.adapter is not None:
+            value = self.adapter(value)
+
+        name = self.gst_name if self.gst_name is not None else self.name
+        getattr(instance, self.element_name).set_property(name, value)
+
+
+class GstRuntimeProperty:
+
+    def __init__(self, element_name, property_name, adapter=None):
+        self.element_name = element_name
+        self.property_name = property_name
+        self.adapter = adapter
+
+    def __get__(self, instance, cls):
+        if instance is None:
+            return self
+        else:
+            element = getattr(instance, self.element_name)
+            return element.get_property(self.property_name)
+
+    def __set__(self, instance, value):
+        if self.adapter is not None:
+            value = self.adapter(value)
+        getattr(instance, self.element_name).set_property(self.property_name,
+                                                          value)
 
 
 class GstMediaElement(MediaElement):
-    """All the subclass must take the pipeline as __init__ argument"""
+    """All the subclass must take the pipeline as first __init__ argument"""
 
     def interrupt(self):
         """Called before Media interrupt"""
@@ -31,6 +73,9 @@ class GstMediaElement(MediaElement):
 
     def pause(self):
         """Called before Media pause"""
+
+    def play(self):
+        """Called before Media play"""
 
     def dispose(self):
         """Clean up the element"""

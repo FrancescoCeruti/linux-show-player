@@ -18,7 +18,8 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from lisp.backends.base.media_element import ElementType, MediaType
-from lisp.backends.gst.gst_element import GstMediaElement
+from lisp.backends.gst.gst_element import GstMediaElement, GstProperty, \
+    GstRuntimeProperty
 from lisp.backends.gst.gi_repository import Gst
 
 
@@ -27,36 +28,34 @@ class Volume(GstMediaElement):
     MediaType = MediaType.Audio
     Name = "Volume"
 
-    _properties_ = ('mute', 'volume', 'normal_volume')
+    mute = GstProperty('gst_volume', default=False)
+    volume = GstProperty('gst_volume', default=1.0)
+    normal_volume = GstProperty('gst_normal_volume', default=1.0,
+                                gst_name='volume')
+
+    current_mute = GstRuntimeProperty('gst_volume', 'mute')
+    current_volume = GstRuntimeProperty('gst_volume', 'volume')
 
     def __init__(self, pipe):
         super().__init__()
 
-        self._volume = Gst.ElementFactory.make("volume", None)
-        self._normal = Gst.ElementFactory.make("volume", None)
-        self._convert = Gst.ElementFactory.make("audioconvert", None)
+        self.gst_volume = Gst.ElementFactory.make("volume", None)
+        self.gst_normal_volume = Gst.ElementFactory.make("volume", None)
+        self.audio_convert = Gst.ElementFactory.make("audioconvert", None)
 
-        pipe.add(self._normal)
-        pipe.add(self._volume)
-        pipe.add(self._convert)
+        pipe.add(self.gst_normal_volume)
+        pipe.add(self.gst_volume)
+        pipe.add(self.audio_convert)
 
-        self._volume.link(self._normal)
-        self._normal.link(self._convert)
-
-        self.mute = False
-        self.volume = 1.0
-        self.normal_volume = 1.0
-
-        self.property_changed.connect(self.__property_changed)
+        self.gst_volume.link(self.gst_normal_volume)
+        self.gst_normal_volume.link(self.audio_convert)
 
     def sink(self):
-        return self._volume
+        return self.gst_volume
 
     def src(self):
-        return self._convert
+        return self.audio_convert
 
-    def __property_changed(self, name, value):
-        if name == "normal_volume":
-            self._normal.set_property("volume", value)
-        else:
-            self._volume.set_property(name, value)
+    def play(self):
+        self.update_properties(self.properties())
+

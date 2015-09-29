@@ -31,9 +31,6 @@ class AddAction(Action):
         self._index = index
 
     def do(self):
-        if self._cue.finalized():
-            self._cue = CueFactory.clone_cue(self._cue, same_id=True)
-
         self._layout.__add_cue__(self._cue, self._index)
 
     def undo(self):
@@ -57,9 +54,6 @@ class RemoveAction(Action):
         self._layout.__remove_cue__(self._cue)
 
     def undo(self):
-        if self._cue.finalized():
-            self._cue = CueFactory.clone_cue(self._cue, same_id=True)
-
         self._layout.__add_cue__(self._cue, self._index)
 
     def redo(self):
@@ -117,7 +111,7 @@ class MoveAction(Action):
         self._cue = cue
         self._layout = layout
         self._to_index = to_index
-        self._from_index = cue['index']
+        self._from_index = cue.index
 
     def do(self):
         self._layout.__move_cue__(self._cue, self._to_index)

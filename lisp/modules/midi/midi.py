@@ -8,9 +8,7 @@ from lisp.ui.settings.app_settings import AppSettings
 
 
 class Midi(Module):
-    """
-        Provide MIDI I/O functionality
-    """
+    """Provide MIDI I/O functionality"""
 
     def __init__(self):
         super().__init__()

@@ -82,7 +82,7 @@ class CueLayout(QObject):
 
     @abstractmethod
     def __add_cue__(self, cue, index=None):
-        '''Add the cue to the layout'''
+        """Add the cue to the layout"""
 
     @classmethod
     def add_settings_section(cls, section, cue_class=Cue):
@@ -94,15 +94,15 @@ class CueLayout(QObject):
 
     @abstractmethod
     def clear_layout(self):
-        '''Reset the layout elements'''
+        """Reset the layout elements"""
 
     @abstractmethod
     def deselect_all(self):
-        '''Deselect all the cues'''
+        """Deselect all the cues"""
 
     @abstractmethod
     def destroy_layout(self):
-        '''Destroy all the layout elements'''
+        """Destroy all the layout elements"""
 
     def edit_cue(self, cue):
         widgets = []
@@ -153,32 +153,32 @@ class CueLayout(QObject):
 
     @abstractmethod
     def get_context_cue(self):
-        '''Return the last cue in the context-menu scope, or None'''
+        """Return the last cue in the context-menu scope, or None"""
         return None
 
     @abstractmethod
     def get_cue_at(self, index):
-        '''Return the cue at the given index, or None'''
+        """Return the cue at the given index, or None"""
         return None
 
     @abstractmethod
     def get_cue_by_id(self, cue_id):
-        '''Return the cue with the given id, or None'''
+        """Return the cue with the given id, or None"""
         return None
 
     @abstractmethod
     def get_cues(self, cue_class=Cue):
-        '''Get all the cues as 1d-list'''
+        """Get all the cues as 1d-list"""
         return []
 
     @abstractmethod
     def get_selected_cues(self, cue_class=Cue):
-        '''Return an "ordered" list of all selected cues'''
+        """Return an "ordered" list of all selected cues"""
         return []
 
     @abstractmethod
     def invert_selection(self):
-        '''Invert selection'''
+        """Invert selection"""
 
     def move_cue(self, cue, index):
         action = MoveAction(self, cue, index)
@@ -186,7 +186,7 @@ class CueLayout(QObject):
 
     @abstractmethod
     def __move_cue__(self, cue, index):
-        '''Move the given cue at the given index'''
+        """Move the given cue at the given index"""
 
     def remove_cue(self, cue):
         action = RemoveAction(self, cue, cue.index)
@@ -198,20 +198,17 @@ class CueLayout(QObject):
 
     @abstractmethod
     def __remove_cue__(self, cue):
-        '''Remove the given cue'''
+        """Remove the given cue"""
 
     @classmethod
     def remove_context_item(cls, item):
         for key in cls._context_items:
-            cls._context_items[key] = [i for i in cls._context_items[key]
-                                       if i != item]
+            cls._context_items[key] = [i for i in cls._context_items[key] if i != item]
 
     @classmethod
     def remove_settings_section(cls, section):
         for key in cls._settings_sections:
-            cls._settings_sections[key] = [s for s in
-                                           cls._settings_sections[key]
-                                           if s != section]
+            cls._settings_sections[key] = [s for s in cls._settings_sections[key] if s != section]
 
     '''
     @classmethod
@@ -229,7 +226,7 @@ class CueLayout(QObject):
 
     @abstractmethod
     def select_all(self):
-        '''Select all the cues'''
+        """Select all the cues"""
 
     def show_context_menu(self, position):
         items = []

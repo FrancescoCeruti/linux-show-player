@@ -83,9 +83,9 @@ class UriInputSettings(SettingsSection):
         if not (checkable and not self.groupFile.isChecked()):
             conf[self.id]['uri'] = self.filePath.text()
         if not (checkable and not self.groupBuffering.isChecked()):
-            conf[self.id]['use-buffing'] = self.useBuffering.isChecked()
+            conf[self.id]['use_buffing'] = self.useBuffering.isChecked()
             conf[self.id]['download'] = self.download.isChecked()
-            conf[self.id]['buffer-size'] = self.bufferSize.value()
+            conf[self.id]['buffer_size'] = self.bufferSize.value()
 
         return conf
 

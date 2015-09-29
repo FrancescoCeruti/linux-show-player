@@ -100,16 +100,16 @@ class MediaItem(QTreeWidgetItem):
         self.update_duration()
 
     def update_duration(self):
-        self.setText(2, strtime(self.media['duration'],
+        self.setText(2, strtime(self.media.duration,
                                 accurate=self._accurate_time))
-        self.timeProgress.setMaximum(self.media['duration'])
+        self.timeProgress.setMaximum(self.media.duration)
 
     def update_item(self):
-        self.setText(1, self.cue['name'])
+        self.setText(1, self.cue.name)
 
     def update_time(self, time):
         # If the given value is the duration or < 0 set the time to 0
-        if time == self.cue.media['duration'] or time < 0:
+        if time == self.cue.media.duration or time < 0:
             time = 0
         # Set the progress-bar value
         self.timeProgress.setValue(time)
@@ -125,7 +125,7 @@ class MediaItem(QTreeWidgetItem):
 
     def on_error(self, media, error, details):
         self.status.setPixmap(self.ERROR.pixmap(16, 16))
-        QDetailedMessageBox.dcritical(self.cue["name"], error, details)
+        QDetailedMessageBox.dcritical(self.cue.name, error, details)
 
     def reset_status(self):
         self.status.setPixmap(QPixmap())

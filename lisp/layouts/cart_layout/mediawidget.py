@@ -19,7 +19,8 @@
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon, QColor
-from PyQt5.QtWidgets import QProgressBar, QLCDNumber, QLabel
+from PyQt5.QtWidgets import QProgressBar, QLCDNumber, QLabel, QHBoxLayout, \
+    QSizePolicy
 
 from lisp.backends.base.media import MediaState
 from lisp.core.signal import Connection
@@ -57,18 +58,17 @@ class MediaCueWidget(CueWidget):
 
         self.timeBar = QProgressBar(self)
         self.timeBar.setTextVisible(False)
+        self.timeBar.setLayout(QHBoxLayout())
+        self.timeBar.layout().setContentsMargins(0, 0, 0, 0)
         self.timeDisplay = QLCDNumber(self.timeBar)
+        self.timeDisplay.setStyleSheet('background-color: transparent')
         self.timeDisplay.setSegmentStyle(QLCDNumber.Flat)
         self.timeDisplay.setDigitCount(8)
         self.timeDisplay.display('00:00:00')
-        self.timeDisplay.enterEvent = self.enterEvent
-
-        def countbar_resize(event):
-            self.timeDisplay.resize(event.size())
-
-        self.timeBar.resizeEvent = countbar_resize
+        self.timeBar.layout().addWidget(self.timeDisplay)
 
         self.status_icon = QLabel(self)
+        self.status_icon.setStyleSheet('background-color: transparent')
         self.status_icon.setPixmap(self.STOPPED.pixmap(12, 12))
 
     def set_cue(self, cue):
@@ -83,6 +83,7 @@ class MediaCueWidget(CueWidget):
         self.cue.media.stopped.connect(self.dbmeter.reset, mode=queued)
         self.cue.media.played.connect(self._status_playing, mode=queued)
         self.cue.media.paused.connect(self._status_paused, mode=queued)
+        self.cue.media.paused.connect(self.dbmeter.reset, mode=queued)
         self.cue.media.error.connect(self._status_error, mode=queued)
         # self.cue.media.waiting.connect(self._status_paused)
         self.cue.media.eos.connect(self._status_stopped, mode=queued)
@@ -99,10 +100,6 @@ class MediaCueWidget(CueWidget):
         self.seekSlider.sliderJumped.connect(self.cue.media.seek)
 
         self._update_duration(self.cue.media.duration)
-
-    def select(self):
-        self.selected = not self.selected
-        self.update_style()
 
     def set_countdown_mode(self, mode):
         self._countdown_mode = mode

@@ -17,6 +17,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+from ast import literal_eval
+
 from lisp.backends.gst.gst_media import GstMedia
 from lisp.cues.cue_factory import CueFactory
 from lisp.cues.media_cue import MediaCue
@@ -33,19 +35,21 @@ def gst_media(pipeline=None):
 
 
 def uri_audio(uri=None):
-    cue = gst_media(pipeline=_pipeline('URIInput'))
+    cue = gst_media(pipeline=compose_pipeline('URIInput'))
 
     if uri is not None:
         cue.media.element('URIInput').uri = uri
 
     return cue
 
+
 def capture_audio():
-    return gst_media(pipeline=_pipeline('AutoSrc'))
+    return gst_media(pipeline=compose_pipeline('AutoSrc'))
 
 
-def _pipeline(input_element):
-    return input_element + ' ! ' + config['Gst']['Pipeline']
+def compose_pipeline(input_element):
+    return (input_element,) +\
+           tuple(config['Gst']['Pipeline'].replace(' ', '').split(','))
 
 
 def register_factories():

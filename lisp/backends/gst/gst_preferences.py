@@ -44,7 +44,7 @@ class GstPreferences(SettingsSection):
             self._pipe = edit.get_pipe()
 
     def get_configuration(self):
-        return {'Gst': {'pipeline': self._pipe}}
+        return {'Gst': {'pipeline': ', '.join(self._pipe)}}
 
     def set_configuration(self, conf):
-        self._pipe = conf['Gst']['pipeline'].replace(' ', '')
+        self._pipe = tuple(conf['Gst']['pipeline'].replace(' ', '').split(','))

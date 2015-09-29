@@ -142,7 +142,7 @@ class ControllerSettings(SettingsSection):
         else:
             self.midiResetCheck.setChecked(True)
 
-        if not check_module('midi'):
+        if not check_module('Midi'):
             self.midiGroup.setEnabled(False)
 
     def capture_message(self):

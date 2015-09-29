@@ -73,17 +73,15 @@ def set_plugins_settings(settings):
 
 def get_plugin_settings():
     settings = {}
-    failed = []
 
     for plugin in __PLUGINS.values():
         try:
-            settings = plugin.settings()
-            if settings is not None:
-                settings[plugin.Name] = settings
-        except Exception as e:
+            p_settings = plugin.settings()
+            if p_settings is not None and len(p_settings) > 0:
+                settings[plugin.Name] = p_settings
+        except Exception:
             logging.error('PLUGINS: Failed "' + plugin.Name + '" '
                           'settings retrieve')
             logging.debug('PLUGINS: ' + traceback.format_exc())
-            failed.append((plugin.Name, e))
 
-    return failed
+    return settings

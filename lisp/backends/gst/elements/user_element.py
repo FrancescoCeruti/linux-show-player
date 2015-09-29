@@ -20,6 +20,7 @@
 from lisp.backends.base.media_element import ElementType, MediaType
 from lisp.backends.gst.gst_element import GstMediaElement
 from lisp.backends.gst.gi_repository import Gst
+from lisp.core.has_properties import Property
 
 
 class UserElement(GstMediaElement):
@@ -27,83 +28,62 @@ class UserElement(GstMediaElement):
     MediaType = MediaType.Audio
     Name = "Personalized"
 
-    _properties_ = ('bin', )
+    gst_bin = Property(default='')
 
-    def __init__(self, pipe):
+    def __init__(self, pipeline):
         super().__init__()
 
-        self._pipe = pipe
-
-        self._sink = Gst.ElementFactory.make("audioconvert", None)
+        self.pipeline = pipeline
+        self.audio_convert_sink = Gst.ElementFactory.make("audioconvert", None)
         # A default assignment for the bin
-        self._bin = Gst.ElementFactory.make("identity", None)
-        self._bin.set_property("signal-handoffs", False)
-        self._src = Gst.ElementFactory.make("audioconvert", None)
+        self.gst_bin = Gst.ElementFactory.make("identity", None)
+        self.gst_bin.set_property("signal-handoffs", False)
+        self.audio_convert_src = Gst.ElementFactory.make("audioconvert", None)
 
-        pipe.add(self._sink)
-        pipe.add(self._bin)
-        pipe.add(self._src)
+        pipeline.add(self.audio_convert_sink)
+        pipeline.add(self.gst_bin)
+        pipeline.add(self.audio_convert_src)
 
-        self._sink.link(self._bin)
-        self._bin.link(self._src)
+        self.audio_convert_sink.link(self.gst_bin)
+        self.gst_bin.link(self.audio_convert_src)
 
-        self.__bin = ''
+        self._old_bin = self.gst_bin
+        self.changed('bin').connect(self.__prepare_bin)
 
-        # Connect the pipeline bus for getting state-changes
-        self.__bus = pipe.get_bus()
-        self.__bus.add_signal_watch()
-        self.__handler = self.__bus.connect("message", self.__on_message)
+    def sink(self):
+        return self.audio_convert_sink
 
-        self._state = None
+    def src(self):
+        return self.audio_convert_src
 
-    @property
-    def bin(self):
-        return self.__bin
-
-    @bin.setter
-    def bin(self, value):
-        if value != "" and value != self.__bin:
-            self.__bin = value
+    def __prepare_bin(self, value):
+        if value != '' and value != self._old_bin:
+            self._old_bin = value
 
             # If in playing we need to restart the pipeline after unblocking
-            playing = self._state == Gst.State.PLAYING
+            playing = self.gst_bin.current_state == Gst.State.PLAYING
             # Block the stream
-            pad = self._sink.sinkpads[0]
+            pad = self.audio_convert_sink.sinkpads[0]
             probe = pad.add_probe(Gst.PadProbeType.BLOCK, lambda *a: 0, "")
 
             # Unlink the components
-            self._sink.unlink(self._bin)
-            self._bin.unlink(self._src)
-            self._pipe.remove(self._bin)
+            self.audio_convert_sink.unlink(self.gst_bin)
+            self.gst_bin.unlink(self.audio_convert_src)
+            self.pipeline.remove(self.gst_bin)
 
             # Create the bin, when fail use a do-nothing element
             try:
-                self._bin = Gst.parse_bin_from_description(value, True)
+                self.gst_bin = Gst.parse_bin_from_description(value, True)
             except Exception:
-                self._bin = Gst.ElementFactory.make("identity", None)
-                self._bin.set_property("signal-handoffs", False)
+                self.gst_bin = Gst.ElementFactory.make("identity", None)
+                self.gst_bin.set_property("signal-handoffs", False)
 
             # Link the components
-            self._pipe.add(self._bin)
-            self._sink.link(self._bin)
-            self._bin.link(self._src)
+            self.pipeline.add(self.gst_bin)
+            self.audio_convert_sink.link(self.gst_bin)
+            self.gst_bin.link(self.audio_convert_src)
 
             # Unblock the stream
             pad.remove_probe(probe)
             if playing:
-                self._pipe.set_state(Gst.State.PLAYING)
-
-    def sink(self):
-        return self._sink
-
-    def src(self):
-        return self._src
-
-    def dispose(self):
-        self.__bus.remove_signal_watch()
-        self.__bus.disconnect(self.__handler)
-
-    def __on_message(self, bus, message):
-        if (message.type == Gst.MessageType.STATE_CHANGED and
-                    message.src == self._bin):
-            self._state = message.parse_state_changed()[1]
+                self.pipeline.set_state(Gst.State.PLAYING)

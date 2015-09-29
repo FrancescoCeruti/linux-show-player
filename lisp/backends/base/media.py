@@ -19,9 +19,6 @@
 
 from abc import abstractmethod, ABCMeta
 from enum import Enum
-from functools import wraps
-from operator import xor
-from lisp.core.decorators import state
 
 from lisp.core.has_properties import HasProperties
 from lisp.core.signal import Signal
@@ -41,8 +38,6 @@ class Media(HasProperties, metaclass=ABCMeta):
     """Media(s) provides control over some kind of multimedia object
 
     """
-
-    _properties_ = ('type', )
 
     def __init__(self):
         super().__init__()
@@ -76,7 +71,7 @@ class Media(HasProperties, metaclass=ABCMeta):
     @abstractmethod
     def current_time(self):
         """
-        :return: the current playback time or -1 if not available
+        :return: the current playback time in milliseconds or -1
         :rtype: int
         """
 
@@ -103,9 +98,6 @@ class Media(HasProperties, metaclass=ABCMeta):
         :return: Elements configuration
         :rtype: dict
         """
-
-    def finalize(self):
-        """Finalize the media object"""
 
     @abstractmethod
     def input_uri(self):

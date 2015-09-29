@@ -21,39 +21,47 @@ from collections import OrderedDict
 from concurrent.futures import ThreadPoolExecutor
 from os import path, cpu_count as _cpu_count
 from re import match
+import weakref
 
 from lisp.backends.base.media import Media, MediaState
 from lisp.backends.gst.gi_repository import Gst
 from lisp.backends.gst import elements
 from lisp.backends.gst.gst_utils import gst_uri_duration
-from lisp.core.decorators import async_in_pool, state
-from lisp.utils.util import check_type
+from lisp.core.decorators import async_in_pool, async
+from lisp.core.has_properties import Property
 
 
 def cpu_count():
     return _cpu_count() if _cpu_count() is not None else 1
 
 
-def gst_pipe_regex():
-    return ('^(' + '!|'.join(elements.inputs().keys()) + '!)' +
-            '(' + '!|'.join(elements.plugins().keys()) + '!)*' +
-            '(' + '|'.join(elements.outputs().keys()) + ')$')
+def validate_pipeline(pipe):
+    # The first must be an input element
+    if pipe[0] not in elements.inputs().keys():
+        return False
+
+    # The middle ones must be plugins elements
+    if len(set(pipe[1:-1]) - set(elements.plugins().keys())) != 0:
+        return False
+
+    # The last must be an output element
+    if pipe[-1] not in elements.outputs().keys():
+        return False
+
+    return True
 
 
 class GstMedia(Media):
     """Media implementation based on the GStreamer framework."""
 
-    _properties_ = ['duration', 'start_at', 'loop', 'pipe', '_mtime']
-    _properties_.extend(Media._properties_)
+    duration = Property(default=0)
+    start_time = Property(default=0)
+    loop = Property(default=0)
+    pipe = Property(default=())
+    _mtime = Property(default=-1)
 
     def __init__(self):
         super().__init__()
-
-        self.duration = 0
-        self.start_at = 0
-        self._mtime = -1
-        self.__pipe = ''
-        self.__loop = 0
 
         self._elements = []
         self._old_pipe = ''
@@ -61,101 +69,100 @@ class GstMedia(Media):
 
         self._gst_pipe = Gst.Pipeline()
         self._gst_state = Gst.State.NULL
+        self._time_query = Gst.Query.new_position(Gst.Format.TIME)
 
-        self.__bus = self._gst_pipe.get_bus()
-        self.__bus.add_signal_watch()
-        self.__bus.connect('message', self.__on_message)
+        bus = self._gst_pipe.get_bus()
+        bus.add_signal_watch()
 
-    @property
-    def loop(self):
-        return self.__loop
+        # Use a weakref instead of the method or the object will not be
+        # garbage-collected
+        on_message = weakref.WeakMethod(self.__on_message)
+        handler = bus.connect('message', lambda *args: on_message()(*args))
 
-    @loop.setter
-    def loop(self, value):
-        check_type(value, int)
+        weakref.finalize(self, self.__finalizer, self._gst_pipe, handler,
+                         self._elements)
 
-        self.__loop = value if value >= -1 else -1
-        self._loop_count = self.__loop
+        self.changed('loop').connect(self.__prepare_loops)
+        self.changed('pipe').connect(self.__prepare_pipe)
 
-    @property
-    def pipe(self):
-        return self.__pipe
+    def __prepare_loops(self, loops):
+        self._loop_count = loops
 
-    @pipe.setter
-    def pipe(self, pipe):
-        if pipe != self.__pipe:
-            # Remove whitespace
-            pipe = pipe.replace(' ', '')
-            # If the syntax is invalid raise an error
-            if match(gst_pipe_regex(), pipe) is None:
-                raise ValueError('invalid pipeline syntax: {0}'.format(pipe))
-            # TODO: I don't like this
-            # Remove duplicated elements and set the value
-            self.__pipe = '!'.join(OrderedDict.fromkeys(pipe.split('!')))
+    def __prepare_pipe(self, pipe):
+        if pipe != self._old_pipe:
+            self._old_pipe = pipe
+
+            # If the pipeline is invalid raise an error
+            if not validate_pipeline(pipe):
+                raise ValueError('Invalid pipeline "{0}"'.format(pipe))
 
             # Build the pipeline
             self.__build_pipeline()
 
-            if 'uri' in self._elements[0]._properties_:
+            if 'uri' in self._elements[0].__properties__:
                 self._elements[0].changed('uri').connect(self.__uri_changed)
 
     def current_time(self):
-        if self._gst_state in (Gst.State.PLAYING, Gst.State.PAUSED):
-            return (self._gst_pipe.query_position(Gst.Format.TIME)[1] //
-                    Gst.MSECOND)
-        return -1
+        ok, position = self._gst_pipe.query_position(Gst.Format.TIME)
+        return position // Gst.MSECOND if ok else -1
 
-    @state(MediaState.Stopped, MediaState.Paused)
+    @async
     def play(self):
-        self.on_play.emit(self)
+        if self.state == MediaState.Stopped or self.state == MediaState.Paused:
+            self.on_play.emit(self)
 
-        self.state = MediaState.Playing
-        self._gst_pipe.set_state(Gst.State.PLAYING)
-        self._gst_pipe.get_state(Gst.SECOND)
+            for element in self._elements:
+                element.play()
 
-        self.played.emit(self)
+            self.state = MediaState.Playing
+            self._gst_pipe.set_state(Gst.State.PLAYING)
+            self._gst_pipe.get_state(Gst.SECOND)
 
-    @state(MediaState.Playing)
+            self.played.emit(self)
+
+    @async
     def pause(self):
-        self.on_pause.emit(self)
+        if self.state == MediaState.Playing:
+            self.on_pause.emit(self)
 
-        for element in self._elements:
-            element.pause()
+            for element in self._elements:
+                element.pause()
 
-        self.state = MediaState.Paused
-        self._gst_pipe.set_state(Gst.State.PAUSED)
-        self._gst_pipe.get_state(Gst.SECOND)
+            self.state = MediaState.Paused
+            self._gst_pipe.set_state(Gst.State.PAUSED)
+            self._gst_pipe.get_state(Gst.SECOND)
 
-        self.paused.emit(self)
+            self.paused.emit(self)
 
-    @state(MediaState.Playing, MediaState.Paused)
+    @async
     def stop(self):
-        self.on_stop.emit(self)
+        if self.state == MediaState.Playing or self.state == MediaState.Paused:
+            self.on_stop.emit(self)
 
-        for element in self._elements:
-            element.stop()
+            for element in self._elements:
+                element.stop()
 
-        self.interrupt(emit=False)
-        self.stopped.emit(self)
+            self.interrupt(emit=False)
+            self.stopped.emit(self)
 
-    @state(MediaState.Playing, MediaState.Paused)
     def seek(self, position):
-        if position < self.duration:
-            # Query segment info for the playback rate
-            query = Gst.Query.new_segment(Gst.Format.TIME)
-            self._gst_pipe.query(query)
-            rate = Gst.Query.parse_segment(query)[0]
+        if self.state in [MediaState.Playing, MediaState.Paused]:
+            if position < self.duration:
+                # Query segment info for the playback rate
+                query = Gst.Query.new_segment(Gst.Format.TIME)
+                self._gst_pipe.query(query)
+                rate = Gst.Query.parse_segment(query)[0]
 
-            # Seek the pipeline
-            self._gst_pipe.seek(rate if rate > 0 else 1,
-                                Gst.Format.TIME,
-                                Gst.SeekFlags.FLUSH,
-                                Gst.SeekType.SET,
-                                position * Gst.MSECOND,
-                                Gst.SeekType.NONE,
-                                -1)
+                # Seek the pipeline
+                self._gst_pipe.seek(rate if rate > 0 else 1,
+                                    Gst.Format.TIME,
+                                    Gst.SeekFlags.FLUSH,
+                                    Gst.SeekType.SET,
+                                    position * Gst.MSECOND,
+                                    Gst.SeekType.NONE,
+                                    -1)
 
-            self.sought.emit(self, position)
+                self.sought.emit(self, position)
 
     def element(self, name):
         for element in self._elements:
@@ -167,13 +174,6 @@ class GstMedia(Media):
 
     def elements_properties(self):
         return {e.Name: e.properties() for e in self._elements}
-
-    def finalize(self):
-        self.interrupt(dispose=True)
-        self.__bus.disconnect_by_func(self.__on_message)
-
-        for element in self._elements:
-            element.dispose()
 
     def input_uri(self):
         try:
@@ -192,7 +192,7 @@ class GstMedia(Media):
             self._gst_pipe.set_state(Gst.State.READY)
             self.state = MediaState.Stopped
 
-        self._loop_count = self.__loop
+        self._loop_count = self.loop
 
         if emit:
             self.interrupted.emit(self)
@@ -216,7 +216,8 @@ class GstMedia(Media):
         if self.state == MediaState.Null or self.state == MediaState.Error:
             self.state = MediaState.Stopped
 
-    def _pipe_elements(self):
+    @staticmethod
+    def _pipe_elements():
         tmp = {}
         tmp.update(elements.inputs())
         tmp.update(elements.outputs())
@@ -229,6 +230,8 @@ class GstMedia(Media):
         # If the uri is a file, then update the current mtime
         if value.split('://')[0] == 'file':
             self._mtime = path.getmtime(value.split('//')[1])
+        else:
+            mtime = None
 
         # If something is changed or the duration is invalid
         if mtime != self._mtime or self.duration < 0:
@@ -261,9 +264,9 @@ class GstMedia(Media):
             self.__remove_element(len(self._elements) - 1)
 
         # Create all the new elements
-        elements = self._pipe_elements()
-        for element in self.pipe.split('!'):
-            self.__append_element(elements[element](self._gst_pipe))
+        pipe_elements = self._pipe_elements()
+        for element in self.pipe:
+            self.__append_element(pipe_elements[element](self._gst_pipe))
 
         # Set to Stopped/READY the pipeline
         self.state = MediaState.Stopped
@@ -281,6 +284,7 @@ class GstMedia(Media):
 
         if message.type == Gst.MessageType.ERROR:
             err, debug = message.parse_error()
+            self.state = MediaState.Error
             self.interrupt(dispose=True, emit=False)
             self.error.emit(self, str(err), str(debug))
 
@@ -288,14 +292,26 @@ class GstMedia(Media):
         self.state = MediaState.Stopped
         self.eos.emit(self)
 
-        if self._loop_count > 0 or self.loop == -1:
+        if self._loop_count != 0:
             self._gst_pipe.set_state(Gst.State.READY)
 
             self._loop_count -= 1
             self.play()
         else:
-            self.interrupt()
+            self.interrupt(emit=False)
 
     @async_in_pool(pool=ThreadPoolExecutor(cpu_count()))
     def __duration(self):
         self.duration = gst_uri_duration(self.input_uri())
+
+    @staticmethod
+    def __finalizer(pipeline, connection_handler, media_elements):
+        # Allow pipeline resources to be released
+        pipeline.set_state(Gst.State.NULL)
+
+        bus = pipeline.get_bus()
+        bus.remove_signal_watch()
+        bus.disconnect(connection_handler)
+
+        for element in media_elements:
+            element.dispose()

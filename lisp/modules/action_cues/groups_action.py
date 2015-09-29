@@ -25,6 +25,7 @@ from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QHBoxLayout, QLineEdit, \
 
 from lisp.application import Application
 from lisp.core.decorators import async
+from lisp.core.has_properties import Property
 from lisp.cues.cue import Cue
 from lisp.cues.media_cue import MediaCue
 from lisp.layouts.cue_layout import CueLayout
@@ -33,28 +34,20 @@ from lisp.ui.settings.section import SettingsSection
 
 class GroupsAction(Cue):
 
-    _properties_ = ['groups', 'action']
-    _properties_.extend(Cue._properties_)
-
     Name = 'Groups action'
-    Actions = {action.name: action for action in MediaCue.CueAction}
+
+    groups = Property(default=[])
+    action = Property(default=MediaCue.CueAction.Default.value)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-
-        self.groups = []
-
-        if 'Default' in GroupsAction.Actions:
-            self.action = 'Default'
-        else:
-            self.action = list(GroupsAction.Actions.keys())[0]
+        self.name = self.Name
 
     @async
     def execute(self, action=Cue.CueAction.Default):
         self.on_execute.emit(self, action)
 
-        cue_action = GroupsAction.Actions.get(self.action,
-                                              MediaCue.CueAction.Default)
+        cue_action = MediaCue.CueAction(self.action)
         layout = Application().layout
         for cue in layout.get_cues(cue_class=MediaCue):
             if not set(cue.groups).isdisjoint(self.groups):
@@ -66,8 +59,7 @@ class GroupsAction(Cue):
 class GroupsActionSettings(SettingsSection):
 
     Name = 'Cue Settings'
-    Actions = [action.name for action in MediaCue.CueAction]
-    Actions.sort()
+    Actions = {action.name: action.value for action in MediaCue.CueAction}
 
     def __init__(self, size, cue=None, parent=None):
         super().__init__(size, cue=cue, parent=parent)
@@ -99,7 +91,7 @@ class GroupsActionSettings(SettingsSection):
         self.gaHLayout = QHBoxLayout(self.groupAction)
 
         self.actionsBox = QComboBox(self.groupAction)
-        self.actionsBox.addItems(self.Actions)
+        self.actionsBox.addItems(sorted(self.Actions.keys()))
         self.gaHLayout.addWidget(self.actionsBox)
 
         self.layout().addWidget(self.groupAction)
@@ -118,7 +110,7 @@ class GroupsActionSettings(SettingsSection):
                 conf['groups'] = []
             conf['groups'] += [int(g) for g in groups_str[:-1]]
         if not (checkable and not self.groupAction.isChecked()):
-            conf['action'] = self.actionsBox.currentText().lower()
+            conf['action'] = self.Actions[self.actionsBox.currentText()]
 
         return conf
 
@@ -133,8 +125,7 @@ class GroupsActionSettings(SettingsSection):
         if 'groups' in conf:
             self.editGroups.setText(str(conf['groups'])[1:-1])
         if 'action' in conf and conf['action'] in self.Actions:
-            index = self.Actions.index(conf['action'].title())
-            self.actionsBox.setCurrentIndex(index)
+            self.actionsBox.setCurrentText(MediaCue.CueAction(conf['action']).name)
 
 
 CueLayout.add_settings_section(GroupsActionSettings, GroupsAction)

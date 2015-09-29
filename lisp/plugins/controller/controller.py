@@ -89,9 +89,9 @@ class Controller(QObject, Plugin):
             cue.execute()
 
     def on_cue_added(self, cue):
-        cue.updated.connect(self.update_map)
+        #cue.updated.connect(self.update_map)
         self.update_map(cue)
 
     def on_cue_removed(self, cue):
-        cue.updated.disconnect(self.update_map)
+        #cue.updated.disconnect(self.update_map)
         self.delete_from_map(cue)

@@ -127,12 +127,10 @@ class FadeSettings(SettingsSection):
             conf = conf[self.id]
 
             self.fadeInSpin.setValue(conf["fadein"])
-            i = sorted(self.FadeIn.keys()).index(conf["fadein_type"])
-            self.fadeInCombo.setCurrentIndex(i)
+            self.fadeInCombo.setCurrentText(conf["fadein_type"])
 
             self.fadeOutSpin.setValue(conf["fadeout"])
-            i = sorted(self.FadeOut.keys()).index(conf["fadeout_type"])
-            self.fadeOutCombo.setCurrentIndex(i)
+            self.fadeOutCombo.setCurrentText(conf["fadeout_type"])
 
     def enable_check(self, enable):
         self.groupFadeIn.setCheckable(enable)

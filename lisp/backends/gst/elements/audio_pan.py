@@ -18,7 +18,7 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from lisp.backends.base.media_element import ElementType, MediaType
-from lisp.backends.gst.gst_element import GstMediaElement
+from lisp.backends.gst.gst_element import GstMediaElement, GstProperty
 from lisp.backends.gst.gi_repository import Gst
 
 
@@ -27,28 +27,21 @@ class AudioPan(GstMediaElement):
     MediaType = MediaType.Audio
     Name = "AudioPan"
 
-    _properties_ = ('pan')
+    pan = GstProperty('panorama', default=.0)
 
     def __init__(self, pipe):
         super().__init__()
 
-        self._panorama = Gst.ElementFactory.make("audiopanorama", None)
-        self._convert = Gst.ElementFactory.make("audioconvert", None)
+        self.panorama = Gst.ElementFactory.make("audiopanorama", None)
+        self.audio_convert = Gst.ElementFactory.make("audioconvert", None)
 
-        pipe.add(self._panorama)
-        pipe.add(self._convert)
+        pipe.add(self.panorama)
+        pipe.add(self.audio_convert)
 
-        self._panorama.link(self._convert)
-
-        self.pan = .0
-
-        self.property_changed.connect(self.__property_changed)
+        self.panorama.link(self.audio_convert)
 
     def sink(self):
-        return self._panorama
+        return self.panorama
 
     def src(self):
-        return self._convert
-
-    def __property_changed(self, name, value):
-        self._panorama.set_property(name, value)
+        return self.audio_convert

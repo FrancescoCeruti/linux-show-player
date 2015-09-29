@@ -27,26 +27,11 @@ class AutoSink(GstMediaElement):
     MediaType = MediaType.Audio
     Name = 'AutoSink'
 
-    _properties_ = ('volume', 'mute')
-
     def __init__(self, pipe):
         super().__init__()
 
-        self._volume = Gst.ElementFactory.make('volume', None)
-        pipe.add(self._volume)
-
-        self._sink = Gst.ElementFactory.make('autoaudiosink', 'sink')
-        pipe.add(self._sink)
-
-        self._volume.link(self._sink)
-
-        self.volume = 1.0
-        self.mute = False
-
-        self.property_changed.connect(self.__property_changed)
+        self.auto_sink = Gst.ElementFactory.make('autoaudiosink', 'sink')
+        pipe.add(self.auto_sink)
 
     def sink(self):
-        return self._volume
-
-    def __property_changed(self, name, value):
-        self._volume.set_property(name, value)
+        return self.auto_sink

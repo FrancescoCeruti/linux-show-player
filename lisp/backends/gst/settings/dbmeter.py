@@ -20,6 +20,7 @@
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QGroupBox, QGridLayout, QSpinBox, QLabel
 
+from lisp.backends.gst.gi_repository import Gst
 from lisp.backends.gst.elements.dbmeter import Dbmeter
 from lisp.ui.settings.section import SettingsSection
 
@@ -80,17 +81,17 @@ class DbmeterSettings(SettingsSection):
         self.falloffLabel.setText("Peak falloff (unit per time)")
 
     def set_configuration(self, conf):
-        if(self.id in conf):
-            self.intervalSpin.setValue(conf[self.id]["interval"] / 1000000)
-            self.ttlSpin.setValue(conf[self.id]["peak_ttl"] / 1000000)
+        if self.id in conf:
+            self.intervalSpin.setValue(conf[self.id]["interval"] / Gst.MSECOND)
+            self.ttlSpin.setValue(conf[self.id]["peak_ttl"] / Gst.MSECOND)
             self.falloffSpin.setValue(conf[self.id]["peak_falloff"])
 
     def get_configuration(self):
         conf = {self.id: {}}
 
         if not (self.groupBox.isCheckable() and not self.groupBox.isChecked()):
-            conf[self.id]["interval"] = self.intervalSpin.value() * 1000000
-            conf[self.id]["peak_ttl"] = self.ttlSpin.value() * 1000000
+            conf[self.id]["interval"] = self.intervalSpin.value() * Gst.MSECOND
+            conf[self.id]["peak_ttl"] = self.ttlSpin.value() * Gst.MSECOND
             conf[self.id]["peak_falloff"] = self.falloffSpin.value()
 
         return conf

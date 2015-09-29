@@ -18,7 +18,7 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from lisp.backends.base.media_element import ElementType, MediaType
-from lisp.backends.gst.gst_element import GstMediaElement
+from lisp.backends.gst.gst_element import GstMediaElement, GstProperty
 from lisp.backends.gst.gi_repository import Gst
 
 
@@ -27,28 +27,21 @@ class Pitch(GstMediaElement):
     MediaType = MediaType.Audio
     Name = "Pitch"
 
-    _properties_ = ('pitch', )
+    pitch = GstProperty('pitch', default=1.0)
 
     def __init__(self, pipe):
         super().__init__()
 
-        self._pitch = Gst.ElementFactory.make("pitch", None)
-        self._converter = Gst.ElementFactory.make("audioconvert", None)
+        self.pitch = Gst.ElementFactory.make("pitch", None)
+        self.audio_converter = Gst.ElementFactory.make("audioconvert", None)
 
-        pipe.add(self._pitch)
-        pipe.add(self._converter)
+        pipe.add(self.pitch)
+        pipe.add(self.audio_converter)
 
-        self._pitch.link(self._converter)
-
-        self.pitch = 1.0
-
-        self.property_changed.connect(self.__property_changed)
+        self.pitch.link(self.audio_converter)
 
     def sink(self):
-        return self._pitch
+        return self.pitch
 
     def src(self):
-        return self._converter
-
-    def __property_changed(self, name, value):
-        self._pitch.set_property(name, value)
+        return self.audio_converter

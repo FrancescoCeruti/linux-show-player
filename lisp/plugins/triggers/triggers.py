@@ -21,49 +21,66 @@ from lisp.core.plugin import Plugin
 
 from lisp.application import Application
 from lisp.cues.media_cue import MediaCue
-from lisp.plugins.triggers.triggers_handler import TriggersHandler
+from lisp.plugins.triggers.triggers_handler import MediaHandler
 from lisp.plugins.triggers.triggers_settings import TriggersSettings
 
 
 class Triggers(Plugin):
 
+    Name = 'Triggers'
+
     def __init__(self):
         super().__init__()
 
-        self.app = Application()
+        TriggersSettings.PluginInstance = self
+        Application().layout.add_settings_section(TriggersSettings, MediaCue)
+        Application().layout.cue_added.connect(self._cue_added)
+        Application().layout.cue_removed.connect(self._cue_removed)
+
+        self.triggers = {}
         self.handlers = {}
 
-        self.app.layout.cue_added.connect(self.on_cue_added)
-        self.app.layout.cue_removed.connect(self.on_cue_removed)
-        self.app.layout.add_settings_section(TriggersSettings,
-                                             cue_class=MediaCue)
+    def update_handler(self, cue, triggers):
+        self.triggers[cue.id] = triggers
+
+        if cue in self.handlers:
+            self.handlers[cue.id].triggers = triggers
+        else:
+            self._cue_added(cue)
+
+    def load_settings(self, settings):
+        self.triggers = settings
+
+        for cue_id in self.triggers:
+            cue = Application().layout.get_cue_by_id(cue_id)
+            if cue is not None:
+                self._cue_added(cue)
+
+    def settings(self):
+        settings = {}
+
+        for cue_id, cue_triggers in self.triggers.items():
+            if Application().layout.get_cue_by_id(cue_id) is not None:
+                settings[cue_id] = cue_triggers
+
+        return settings
 
     def reset(self):
-        self.app.layout.cue_added.disconnect(self.on_cue_added)
-        self.app.layout.cue_removed.disconnect(self.on_cue_removed)
-        self.app.layout.remove_settings_section(TriggersSettings)
-
         for handler in self.handlers.values():
             handler.finalize()
 
         self.handlers.clear()
+        self.triggers.clear()
 
-    def on_cue_added(self, cue):
-        if isinstance(cue, MediaCue):
-            self.update_handler(cue)
-            cue.updated.connect(self.update_handler)
+        Application().layout.remove_settings_section(TriggersSettings)
+        TriggersSettings.PluginInstance = None
 
-    def on_cue_removed(self, cue):
-        if isinstance(cue, MediaCue):
-            self.handlers.pop(cue, None)
-            cue.updated.disconnect(self.update_handler)
+    def _cue_added(self, cue):
+        if isinstance(cue, MediaCue) and cue.id in self.triggers:
+            self.handlers[cue.id] = MediaHandler(cue.media,
+                                                 self.triggers[cue.id])
 
-    def update_handler(self, cue):
-        if 'triggers' in cue.properties():
-            if len(cue['triggers']) > 0:
-                if cue not in self.handlers:
-                    self.handlers[cue] = TriggersHandler(cue.media)
-                self.handlers[cue].reset_triggers()
-                self.handlers[cue].load_triggers(cue['triggers'])
-            else:
-                self.handlers.pop(cue, None)
+    def _cue_removed(self, cue):
+        handler = self.handlers.pop(cue.id, None)
+        if handler is not None:
+            handler.finalize()

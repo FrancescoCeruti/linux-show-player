@@ -343,8 +343,6 @@ class CartLayout(QTabWidget, CueLayout):
         del cue.widget
 
     def __remove_cue__(self, cue):
-        cue.finalize()
-
         index = self.to_3d_index(cue.index)
         self._grids[index[0]].removeItemAt(index[1], index[2])
 

@@ -33,7 +33,7 @@ class GstMediaSettings(SettingsSection):
 
     def __init__(self, size, cue=None, parent=None):
         super().__init__(size, cue=cue, parent=parent)
-        self._pipe = ''
+        self._pipe = ()
         self._conf = {}
         self._check = False
 
@@ -67,7 +67,7 @@ class GstMediaSettings(SettingsSection):
 
             # Create the widgets
             sections = sections_by_element_name()
-            for element in conf.get('pipe', '').split('!'):
+            for element in conf.get('pipe', ()):
                 widget = sections.get(element)
 
                 if widget is not None:
@@ -110,7 +110,7 @@ class GstMediaSettings(SettingsSection):
         self._conf.update(self.get_configuration()['media'])
 
         # Show the dialog
-        dialog = GstPipeEdit(self._conf.get('pipe', ''), parent=self)
+        dialog = GstPipeEdit(self._conf.get('pipe', ()), parent=self)
 
         if dialog.exec_() == dialog.Accepted:
             # Reset the view

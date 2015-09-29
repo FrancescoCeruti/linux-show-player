@@ -46,7 +46,6 @@ class QDbMeter(QWidget):
         self.clipping = {}
         self.repaint()
 
-    @QtCore.pyqtSlot(list, list, list)
     def plot(self, peaks, rms, decPeak):
         self.peaks = peaks
         self.rmss = rms

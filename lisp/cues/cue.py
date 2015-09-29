@@ -21,7 +21,7 @@ from abc import abstractmethod
 from enum import Enum
 from uuid import uuid4
 
-from lisp.core.has_properties import HasProperties
+from lisp.core.has_properties import HasProperties, Property
 from lisp.core.signal import Signal
 
 
@@ -48,9 +48,14 @@ class Cue(HasProperties):
         """
         Default = 0
 
-    _properties_ = ['id', 'index', 'groups', 'name', '_type_']
+    id = Property()
+    index = Property(default=-1)
+    groups = Property(default=())
+    name = Property(default='Untitled')
+    stylesheet = Property(default='')
+    _type_ = Property()
 
-    def __init__(self, id_=None):
+    def __init__(self, id=None):
         super().__init__()
 
         #: Emitted before execution (object, action)
@@ -58,28 +63,16 @@ class Cue(HasProperties):
         #: Emitted after execution (object, action)
         self.executed = Signal()
 
-        self.id = str(uuid4()) if id_ is None else id_
-        self.index = -1
-        self.groups = []
-        self.name = 'Untitled'
-
+        self.id = str(uuid4()) if id is None else id
         self._type_ = self.__class__.__name__
 
     @abstractmethod
     def execute(self, action=CueAction.Default):
         """Execute the specified action, if possible.
 
+        This function should emit on_execute (at the begin) and executed (at the
+        end) signals, the parameters must be (first) the cue and (second) the
+        action executed (can be different from the one passed as argument).
+
         :param action: the action to be performed
-        """
-
-    # TODO: are finalize/finalized really needed ??
-    @abstractmethod
-    def finalize(self):
-        """Finalize the cue"""
-
-    @abstractmethod
-    def finalized(self):
-        """
-        :return: True if the cue is finalized, False otherwise
-        :rtype: bool
         """

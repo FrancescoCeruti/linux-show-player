@@ -93,25 +93,24 @@ class GstPipeEdit(QDialog):
             inputs = sorted(elements.inputs())
             self.inputBox.addItems(inputs)
             self.inputBox.setEnabled(len(inputs) > 1)
-            if pipe != '':
-                self.inputBox.setCurrentIndex(inputs.index(pipe.split('!')[0]))
+            if len(pipe) > 0:
+                self.inputBox.setCurrentIndex(inputs.index(pipe[0]))
 
     def init_outputs(self, pipe):
         outputs = sorted(elements.outputs())
         self.outputBox.addItems(outputs)
         self.outputBox.setEnabled(len(outputs) > 1)
-        if pipe != '':
-            self.outputBox.setCurrentIndex(outputs.index(pipe.split('!')[-1]))
+        if len(pipe) > 0:
+            self.outputBox.setCurrentIndex(outputs.index(pipe[-1]))
 
     def init_current_plugins(self, pipe):
         start = 0 if self._preferences_mode else 1
-        for plugin in pipe.split('!')[start:-1]:
+        for plugin in pipe[start:-1]:
             self.currentList.addItem(plugin)
 
     def init_available_plugins(self, pipe):
-        currents = pipe.split('!')
         for plugin in elements.plugins().values():
-            if plugin.Name not in currents:
+            if plugin.Name not in pipe:
                 self.availableList.addItem(plugin.Name)
 
     def get_pipe(self):
@@ -120,7 +119,7 @@ class GstPipeEdit(QDialog):
             pipe.append(self.currentList.item(n).text())
         pipe.append(self.outputBox.currentText())
 
-        return '!'.join(pipe)
+        return tuple(pipe)
 
     def __add_plugin(self):
         item = self.availableList.takeItem(self.availableList.currentRow())

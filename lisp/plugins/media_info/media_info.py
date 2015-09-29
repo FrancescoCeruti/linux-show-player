@@ -87,7 +87,7 @@ class MediaInfo(Plugin):
 
             # Show the dialog
             dialog = InfoDialog(self.app.mainWindow, info,
-                                self.app.layout.get_context_cue()['name'])
+                                self.app.layout.get_context_cue().name)
             dialog.exec_()
 
 
@@ -111,7 +111,7 @@ class InfoDialog(QDialog):
         self.infoTree.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.vLayout.addWidget(self.infoTree)
 
-        self.__generate_widgets(info)
+        self.__generate_items(info)
         self.infoTree.setColumnWidth(0, 150)
 
         self.buttonBox = QDialogButtonBox(self)
@@ -120,15 +120,15 @@ class InfoDialog(QDialog):
 
         self.buttonBox.rejected.connect(self.close)
 
-    def __generate_widgets(self, info, parent=None):
+    def __generate_items(self, info, parent=None):
         for key in sorted(info.keys()):
-            if(isinstance(info[key], dict)):
+            if isinstance(info[key], dict):
                 widget = QTreeWidgetItem([key])
-                self.__generate_widgets(info[key], widget)
+                self.__generate_items(info[key], widget)
             else:
                 widget = QTreeWidgetItem([key, info[key]])
 
-            if(parent):
+            if parent is not None:
                 parent.addChild(widget)
             else:
                 self.infoTree.addTopLevelItem(widget)

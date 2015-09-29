@@ -27,26 +27,13 @@ class PulseSink(GstMediaElement):
     MediaType = MediaType.Audio
     Name = 'PulseAudioSink'
 
-    _properties_ = ('server', 'device', 'client_name', 'volume', 'mute')
-
     def __init__(self, pipe):
         super().__init__()
 
-        self._sink = Gst.ElementFactory.make('pulsesink', 'sink')
-        self._sink.set_property('client-name', 'Linux Show Player')
-        pipe.add(self._sink)
+        self.pulse_sink = Gst.ElementFactory.make('pulsesink', 'sink')
+        self.pulse_sink.set_property('client-name', 'Linux Show Player')
 
-        self.server = None
-        self.device = None
-        self.client_name = 'Linux Show Player'
-        self.volume = 1.0
-        self.mute = False
-
-        self.property_changed.connect(self.__property_changed)
+        pipe.add(self.pulse_sink)
 
     def sink(self):
-        return self._sink
-
-    def __property_changed(self, name, value):
-        name.replace('_', '-')
-        self._sink.set_property(name, value)
+        return self.pulse_sink

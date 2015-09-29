@@ -30,8 +30,8 @@ class AutoSrc(GstMediaElement):
     def __init__(self, pipe):
         super().__init__()
 
-        self._src = Gst.ElementFactory.make("autoaudiosrc", "src")
-        pipe.add(self._src)
+        self.auto_src = Gst.ElementFactory.make("autoaudiosrc", "src")
+        pipe.add(self.auto_src)
 
     def src(self):
-        return self._src
+        return self.auto_src

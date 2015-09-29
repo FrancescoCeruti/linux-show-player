@@ -18,10 +18,8 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from functools import wraps, partial
-from operator import xor
 from threading import Thread, Lock, RLock
 
-# TODO: test for memory leaks
 _synchronized_meta_lock = Lock()
 
 
@@ -42,17 +40,15 @@ def async_in_pool(pool):
     """A decorator for make a function asynchronous in a specified pool.
 
     The decorated function is executed in the specified threads-pool.
-    Can be used if you have a method that you want to be non blocking but you
-    want to specify a concurrency "limit".
 
-    Usage::
+    .. Usage::
 
         class MyClass:
             __MyPool = ThreadPoolExecutor(10)
 
             @async_in_pool(__MyPool)
-            def do_some_heavy_task(self)
-                # Do some async stuff
+            def do_some_task(self):
+                pass
 
     """
 
@@ -66,63 +62,84 @@ def async_in_pool(pool):
     return decorator
 
 
-def synchronized_on(lock, blocking=True, timeout=-1):
-    """A decorator for make a function synchronized using a specified lock.
+def synchronized_function(target=None, *, blocking=True, timeout=-1):
+    """A decorator to make a *function* synchronized.
 
-    Only one thread at time can access the decorated function, but the same
-    thread can reenter the function.
+    Only one thread at time can enter the decorated function, but the same
+    thread can reenter.
     """
 
-    def decorator(target):
-        @wraps(target)
-        def wrapped(*args, **kwargs):
+    if target is None:
+        return partial(synchronized_function, blocking=blocking,
+                       timeout=timeout)
+
+    target.__lock__ = RLock()
+
+    @wraps(target)
+    def synchronized(*args, **kwargs):
+        try:
+            if target.__lock__.acquire(blocking=blocking, timeout=timeout):
+                return target(*args, **kwargs)
+            else:
+                return
+        finally:
             try:
-                if lock.acquire(blocking=blocking, timeout=timeout):
-                    return target(*args, **kwargs)
-            finally:
-                try:
-                    lock.release()
-                except RuntimeError:
-                    pass
-
-        return wrapped
-
-    return decorator
-
-
-@synchronized_on(_synchronized_meta_lock)
-def synchronized(target=None, *, blocking=True, timeout=-1):
-    """A decorator for make a function synchronized.
-
-    Only one thread at time can access the decorated function, but the same
-    thread can reenter the function.
-
-    .. Usage::
-
-        class MyClass:
-            @synchronized
-            def sync():
+                target.__lock__.release()
+            except RuntimeError:
                 pass
 
-            @synchronized(timeout=5)
-            def sync_timeout():
-                pass
+    return synchronized
 
-            @synchronized(blocking=False)
-            def sync_no_block():
-                pass
+
+def synchronized_method(target=None, *, lock_name=None, blocking=True,
+                        timeout=-1):
+    """A decorator for make a *method* synchronized.
+
+    Only one thread at time can access the decorated method, but the same
+    thread can reenter.
+
+    If in the same object more the one method is decorated with the same
+    lock_name, those will share the same lock.
+    If no lock_name is specified one will be generated based on the method name.
+
+    ..note:
+        The lock is created automatically by the method, but, if needed, can
+        be "manually" created by the user as an object attribute named as same
+        as lock_name.
 
     """
 
     # If called with (keywords) arguments
     if target is None:
-        return partial(synchronized, blocking=blocking, timeout=timeout)
+        return partial(synchronized_method, lock_name=lock_name,
+                       blocking=blocking, timeout=timeout)
 
-    # If the lock is not defined, then define it
-    if not hasattr(target, '_sync_lock'):
-        target._sync_lock = RLock()
+    if not isinstance(lock_name, str):
+        # generate a lock_name like "__method_name_lock__"
+        lock_name = '__' + target.__name__ + '_lock__'
 
-    return synchronized_on(target._sync_lock, blocking, timeout)(target)
+    @wraps(target)
+    def wrapped(self, *args, **kwargs):
+        with _synchronized_meta_lock:
+            lock = getattr(self, lock_name, None)
+
+            # If the lock is not defined, then define it
+            if lock is None:
+                lock = RLock()
+                setattr(self, lock_name, lock)
+
+        try:
+            if lock.acquire(blocking=blocking, timeout=timeout):
+                return target(self, *args, **kwargs)
+            else:
+                return
+        finally:
+            try:
+                lock.release()
+            except RuntimeError:
+                pass
+
+    return wrapped
 
 
 def typechecked(target):
@@ -137,7 +154,7 @@ def typechecked(target):
     def wrapped(*args, **kwargs):
         for index, name in enumerate(target.__code__.co_varnames):
             annotation = target.__annotations__.get(name)
-            # Only check if annotation exists and it is as a type
+            # Only check if annotation exists and a type
             if isinstance(annotation, type):
                 # First len(args) are positional, after that keywords
                 if index < len(args):
@@ -153,27 +170,3 @@ def typechecked(target):
         return target(*args, **kwargs)
 
     return wrapped
-
-
-def state(*states, not_in=False):
-    """Decorator to check the state of the object that own the target function.
-
-    The target is called only if the object state is successfully checked.
-
-    .. warning::
-        Can be used only on bounded-methods, of objects with a "state"
-        attribute.
-
-    :param states: The states to check
-    :param not_in: When True, check that the object is not in one of the states
-    """
-
-    def decorator(target):
-        @wraps(target)
-        def wrapped(self, *args, **kwargs):
-            if xor(self.state in states, not_in):
-                return target(self, *args, **kwargs)
-
-        return wrapped
-
-    return decorator

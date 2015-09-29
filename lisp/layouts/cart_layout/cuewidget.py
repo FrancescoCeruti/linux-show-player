@@ -18,12 +18,10 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import pyqtSignal, QPoint, Qt, QMimeData
-from PyQt5.QtGui import QDrag
-from PyQt5.QtWidgets import QWidget
+from PyQt5.QtGui import QDrag, QPainter, QBrush, QPalette, QColor
+from PyQt5.QtWidgets import QWidget, QStyle, QStyleOption
 
-from lisp.core.signal import Connection
 from lisp.ui.qclicklabel import QClickLabel
-from lisp.utils.configuration import config
 
 
 class CueWidget(QWidget):
@@ -32,23 +30,16 @@ class CueWidget(QWidget):
     context_menu_request = pyqtSignal(object, QPoint)
     edit_request = pyqtSignal(object)
 
-    def __init__(self, **kwds):
-        super().__init__(**kwds)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
 
         self.cue = None
         self.selected = False
 
-        if config['Theme']['current'] == 'LiSP':
-            self.bg = 'rgba(70,70,70,255)'
-            self.fg = 'rgba(177,177,177,255)'
-        else:
-            pal = QWidget().palette()
-            self.bg = 'rgb' + str(pal.color(pal.Background).getRgb())
-            self.fg = 'rgb' + str(pal.color(pal.Foreground).getRgb())
-
-        self.setStyleSheet('background: rgba(0,0,0,0)')
+        self.setAttribute(Qt.WA_TranslucentBackground)
 
         self.nameButton = QClickLabel(self)
+        self.nameButton.setObjectName('ButtonCueWidget')
         self.nameButton.setWordWrap(True)
         self.nameButton.setAlignment(Qt.AlignCenter)
         self.nameButton.setFocusPolicy(Qt.NoFocus)
@@ -77,30 +68,21 @@ class CueWidget(QWidget):
 
     def select(self):
         self.selected = not self.selected
-        self.update_style()
+        self.update_style(self.cue.stylesheet)
 
     def set_cue(self, cue):
         if self.cue is not None:
             raise Exception('Media already assigned')
 
         self.cue = cue
+        self.cue.changed('stylesheet').connect(self.update_style)
+        self.cue.changed('name').connect(self.update_name)
 
-        # TODO: not properties
-        if not hasattr(cue, 'background'):
-            cue.background = self.bg
-        if not hasattr(cue, 'color'):
-            cue.color = self.fg
-        if not hasattr(cue, 'font_size'):
-            cue.font_size = 11
+        self.update_name(cue.name)
+        self.update_style(cue.stylesheet)
 
-        self.cue_updated()
-
-        # Cue updated
-        #self.cue.updated.connect(self.cue_updated, Connection.QtQueued)
-
-    def cue_updated(self):
-        self.nameButton.setText(self.cue.name)
-        self.update_style()
+    def update_name(self, name):
+        self.nameButton.setText(name)
 
     def on_click(self, e):
         if e.button() != Qt.RightButton:
@@ -111,36 +93,13 @@ class CueWidget(QWidget):
             else:
                 self.cue.execute()
 
-    def update_style(self, style={}):
-        stylesheet = 'background: '
-        if 'background' in style:
-            stylesheet += style['background'] + ';'
-        else:
-            stylesheet += self.cue.background + ';'
-
-        stylesheet += 'color: '
-        if 'color' in style:
-            stylesheet += style['color'] + ';'
-        else:
-            stylesheet += self.cue.color + ';'
-
-        stylesheet += 'font-size: '
-        if 'font-size' in style:
-            stylesheet += style['font-size'] + ';'
-        else:
-            stylesheet += str(self.cue.font_size) + 'pt;'
-
-        stylesheet += 'border: 1 solid rgb(0,0,0);'
-        stylesheet += 'border-radius: 6px;'
-
-        if self.selected:
-            stylesheet += 'text-decoration: underline;'
-
+    def update_style(self, stylesheet):
+        stylesheet += 'text-decoration: underline;' if self.selected else ''
         self.nameButton.setStyleSheet(stylesheet)
-        self.update()
 
     def resizeEvent(self, *args, **kwargs):
         self.update()
 
     def update(self):
+        super().update()
         self.nameButton.setGeometry(self.rect())
