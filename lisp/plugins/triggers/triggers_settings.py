@@ -52,8 +52,6 @@ class TriggersSettings(SettingsSection):
         self.delButton = self.dialogButtons.addButton('Remove', QDialogButtonBox.ActionRole)
         self.delButton.clicked.connect(self._remove_trigger)
 
-        self.cue = cue
-
         if self.cue is None:
             self.setEnabled(False)
         else:
@@ -109,15 +107,13 @@ class TriggersSettings(SettingsSection):
 
 class TriggerWidget(QWidget):
 
-    def __init__(self, cue, tr_action, target, ta_action, cue_dialog,
-                 time_mode=False, **kwargs):
+    def __init__(self, cue, tr_action, target, ta_action, cue_dialog, **kwargs):
         super().__init__(**kwargs)
 
         self.cue = cue
         self.target = target
         self.cue_dialog = cue_dialog
         self.target_actions = {m.name: m.value for m in target.CueAction}
-        self._time_mode = time_mode
 
         self.setLayout(QHBoxLayout(self))
         self.layout().setContentsMargins(2, 1, 2, 1)
@@ -155,3 +151,4 @@ class TriggerWidget(QWidget):
         if self.cue_dialog.exec_() == QDialog.Accepted:
             self.target = self.cue_dialog.selected_cues()[0]
             self.selectButton.setText(self.target.name)
+            self.selectButton.setToolTip(self.target.name)

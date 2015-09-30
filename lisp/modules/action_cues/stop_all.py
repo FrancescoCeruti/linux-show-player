@@ -30,7 +30,7 @@ from lisp.cues.cue import Cue
 
 class StopAll(Cue):
 
-    Name = 'Stop-all'
+    Name = 'Stop-All'
 
     pause_mode = Property(default=False)
 

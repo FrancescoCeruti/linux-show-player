@@ -19,12 +19,16 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>
 
-"""Functor arguments normalization.
-
-    t = (x - x0) / (x1 - x0)   where 'x' is the time  (x0 initial, x1 final)
-    a = y1 - y0                where 'y' is the value (y0 initial, y1 final)
-    b = y0
 """
+Functor arguments normalization:
+
+t = (x - x0) / (x1 - x0)   where 'x' is the time  (x0 initial, x1 final)
+a = y1 - y0                where 'y' is the value (y0 initial, y1 final)
+b = y0
+"""
+from collections import namedtuple
+
+from enum import Enum
 
 
 def fade_linear(t, a, b):
@@ -57,3 +61,17 @@ def fade_inout_quad(t, a, b):
 def ntime(time, begin, duration):
     """ Return normalized time """
     return (time - begin) / (duration - begin)
+
+
+FadeIn = {
+    'Linear': fade_linear,
+    'Quadratic': fadein_quad,
+    'Quadratic2': fade_inout_quad
+}
+
+
+FadeOut = {
+    'Linear': fade_linear,
+    'Quadratic': fadeout_quad,
+    'Quadratic2': fade_inout_quad
+}

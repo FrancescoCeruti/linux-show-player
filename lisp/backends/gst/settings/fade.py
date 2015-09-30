@@ -24,20 +24,24 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout, QGroupBox, QGridLayout, \
 
 from lisp.backends.gst.elements.fade import Fade
 from lisp.ui.settings.section import SettingsSection
+from lisp.utils.fade_functor import FadeOut, FadeIn
 
 
 class FadeSettings(SettingsSection):
-
     NAME = "Fade"
     ELEMENT = Fade
 
-    FadeOut = {'Linear': QIcon.fromTheme('fadeout_linear'),
-               'Quadratic': QIcon.fromTheme('fadeout_quadratic'),
-               'Quadratic2': QIcon.fromTheme('fadeout_quadratic2')}
+    FadeOutIcons = {
+        'Linear': QIcon.fromTheme('fadeout_linear'),
+        'Quadratic': QIcon.fromTheme('fadeout_quadratic'),
+        'Quadratic2': QIcon.fromTheme('fadeout_quadratic2')
+    }
 
-    FadeIn = {'Linear': QIcon.fromTheme('fadein_linear'),
-              'Quadratic': QIcon.fromTheme('fadein_quadratic'),
-              'Quadratic2': QIcon.fromTheme('fadein_quadratic2')}
+    FadeInIcons = {
+        'Linear': QIcon.fromTheme('fadein_linear'),
+        'Quadratic': QIcon.fromTheme('fadein_quadratic'),
+        'Quadratic2': QIcon.fromTheme('fadein_quadratic2')
+    }
 
     def __init__(self, size, Id, parent=None):
         super().__init__(size, parent)
@@ -64,8 +68,8 @@ class FadeSettings(SettingsSection):
 
         self.fadeInCombo = QComboBox(self.groupFadeIn)
         self.fadeInCombo.setItemDelegate(QStyledItemDelegate())
-        for key in sorted(self.FadeIn.keys()):
-            self.fadeInCombo.addItem(self.FadeIn[key], key)
+        for key in sorted(self.FadeInIcons.keys()):
+            self.fadeInCombo.addItem(self.FadeInIcons[key], key)
         self.fadeInLayout.addWidget(self.fadeInCombo, 1, 0)
 
         self.fadeInExpLabel = QLabel(self.groupFadeIn)
@@ -88,8 +92,8 @@ class FadeSettings(SettingsSection):
 
         self.fadeOutCombo = QComboBox(self.groupFadeOut)
         self.fadeOutCombo.setItemDelegate(QStyledItemDelegate())
-        for key in sorted(self.FadeOut.keys()):
-            self.fadeOutCombo.addItem(self.FadeOut[key], key)
+        for key in sorted(self.FadeOutIcons.keys()):
+            self.fadeOutCombo.addItem(self.FadeOutIcons[key], key)
         self.fadeOutLayout.addWidget(self.fadeOutCombo, 1, 0)
 
         self.fadeOutExpLabel = QLabel(self.groupFadeOut)

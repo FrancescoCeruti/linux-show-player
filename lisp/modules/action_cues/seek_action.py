@@ -34,7 +34,7 @@ from lisp.core.decorators import async
 
 class SeekAction(Cue):
 
-    Name = 'Seek action'
+    Name = 'Seek Action'
 
     target_id = Property()
     time = Property(default=-1)

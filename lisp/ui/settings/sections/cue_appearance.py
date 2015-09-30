@@ -23,6 +23,7 @@ from PyQt5 import QtCore
 from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QHBoxLayout, QTextEdit, \
     QSpinBox, QPushButton, QLabel, QColorDialog, QSizePolicy
+from lisp.ui.qcolorbutton import QColorButton
 
 from lisp.ui.settings.section import SettingsSection
 
@@ -37,7 +38,6 @@ class Appearance(SettingsSection):
         self.setLayout(QVBoxLayout())
 
         # Name
-
         self.textEditGroup = QGroupBox(self)
         self.textEditGroup.setLayout(QHBoxLayout())
         self.layout().addWidget(self.textEditGroup)
@@ -46,73 +46,39 @@ class Appearance(SettingsSection):
         self.textEditGroup.layout().addWidget(self.textEdit)
 
         # Font
-
         self.fontSizeGroup = QGroupBox(self)
         self.fontSizeGroup.setLayout(QHBoxLayout())
         self.layout().addWidget(self.fontSizeGroup)
 
         self.fontSizeSpin = QSpinBox(self.fontSizeGroup)
+        self.fontSizeSpin.setValue(QLabel().fontInfo().pointSize())
         self.fontSizeGroup.layout().addWidget(self.fontSizeSpin)
 
         # Color
-
         self.colorGroup = QGroupBox(self)
         self.colorGroup.setLayout(QHBoxLayout())
         self.layout().addWidget(self.colorGroup)
 
-        self.colorBButton = QPushButton(self.colorGroup)
-        self.colorFButton = QPushButton(self.colorGroup)
+        self.colorBButton = QColorButton(self.colorGroup)
+        self.colorFButton = QColorButton(self.colorGroup)
 
         self.colorGroup.layout().addWidget(self.colorBButton)
         self.colorGroup.layout().addWidget(self.colorFButton)
 
-        # Preview
-
-        self.previewGroup = QGroupBox(self)
-        self.previewGroup.setLayout(QHBoxLayout(self.previewGroup))
-        self.layout().addWidget(self.previewGroup)
-
-        self.beforeLabel = QLabel(self.previewGroup)
-        self.beforeLabel.setObjectName('ButtonCueWidget')
-        self.beforeLabel.setAlignment(QtCore.Qt.AlignCenter)
-
-        self.nowLabel = QLabel(self.previewGroup)
-        self.nowLabel.setObjectName('ButtonCueWidget')
-        self.nowLabel.setAlignment(QtCore.Qt.AlignCenter)
-
-        self.previewGroup.layout().addWidget(self.beforeLabel)
-        self.previewGroup.layout().addWidget(self.nowLabel)
-        self.previewGroup.layout().setStretch(0, 1)
-        self.previewGroup.layout().setStretch(1, 1)
-
         # Warning
-
         self.warning = QLabel(self)
-        self.warning.setText("The real appearance depends on the layout")
+        self.warning.setText("The appearance depends on the layout")
         self.warning.setAlignment(QtCore.Qt.AlignCenter)
-        self.warning.setStyleSheet("color: red; font-weight: bold")
+        self.warning.setStyleSheet("color: yellow; font-weight: bold")
         self.layout().addWidget(self.warning)
 
         # Set stretch
-
         self.layout().setStretch(0, 3)
         self.layout().setStretch(1, 1)
         self.layout().setStretch(2, 1)
-        self.layout().setStretch(3, 2)
-        self.layout().setStretch(4, 1)
-
-        # Connect
-
-        self.textEdit.textChanged.connect(self.changeText)
-        self.fontSizeSpin.valueChanged.connect(self.updatePreview)
-        self.colorBButton.clicked.connect(self.changeBColor)
-        self.colorFButton.clicked.connect(self.changeFColor)
+        self.layout().setStretch(3, 1)
 
         self.retranslateUi()
-
-        self.bColor = ''
-        self.fColor = ''
-        self.fontSizeSpin.setValue(self.beforeLabel.fontInfo().pointSize())
 
     def retranslateUi(self):
         self.textEditGroup.setTitle("Shown Text")
@@ -121,9 +87,6 @@ class Appearance(SettingsSection):
         self.colorGroup.setTitle("Color")
         self.colorBButton.setText("Select background color")
         self.colorFButton.setText("Select font color")
-        self.previewGroup.setTitle("Preview")
-        self.beforeLabel.setText("Before")
-        self.nowLabel.setText("After")
 
     def enable_check(self, enable):
         self.textEditGroup.setCheckable(enable)
@@ -138,16 +101,15 @@ class Appearance(SettingsSection):
     def get_configuration(self):
         conf = {}
         style = {}
-
         checked = self.textEditGroup.isCheckable()
 
         if not (checked and not self.textEditGroup.isChecked()):
             conf['name'] = self.textEdit.toPlainText()
         if not (checked and not self.colorGroup.isChecked()):
-            if self.bColor != '':
-                style['background'] = self.bColor
-            if self.fColor != '':
-                style['color'] = self.fColor
+            if self.colorBButton.color() is not None:
+                style['background'] = self.colorBButton.color()
+            if self.colorFButton.color() is not None:
+                style['color'] = self.colorFButton.color()
         if not (checked and not self.fontSizeGroup.isChecked()):
             style['font-size'] = str(self.fontSizeSpin.value()) + 'pt'
 
@@ -157,52 +119,17 @@ class Appearance(SettingsSection):
         return conf
 
     def set_configuration(self, conf):
-        if conf is not None:
-            if 'name' in conf:
-                self.textEdit.setText(conf['name'])
-                self.nowLabel.setText(conf['name'])
-            if 'stylesheet' in conf:
-                conf = css_to_dict(conf['stylesheet'])
-                if 'background' in conf:
-                    self.bColor = conf['background']
-                if 'color' in conf:
-                    self.fColor = conf['color']
-                if 'font-size' in conf:
-                    # [:-2] for removing "pt"
-                    self.fontSizeSpin.setValue(int(conf['font-size'][:-2]))
-
-            self.updatePreview()
-            self.beforeLabel.setStyleSheet(self.nowLabel.styleSheet())
-
-    def updatePreview(self):
-        stylesheet = ''
-        if self.bColor != '':
-            stylesheet += 'background:' + self.bColor + ';'
-        if self.fColor != '':
-            stylesheet += 'color:' + self.fColor + ';'
-
-        stylesheet +='font-size: ' + str(self.fontSizeSpin.value()) + 'pt;'
-
-        self.nowLabel.setStyleSheet(stylesheet)
-
-    def changeBColor(self):
-        initial = QColor(*map(int, re.findall('\d{1,3}', self.bColor)))
-        color = QColorDialog.getColor(initial, parent=self)
-
-        if(color.isValid()):
-            self.bColor = 'rgb' + str(color.getRgb())
-            self.updatePreview()
-
-    def changeFColor(self):
-        initial = QColor(*map(int, re.findall('\d{1,3}', self.fColor)))
-        color = QColorDialog.getColor(initial, parent=self)
-
-        if(color.isValid()):
-            self.fColor = 'rgb' + str(color.getRgb())
-            self.updatePreview()
-
-    def changeText(self):
-        self.nowLabel.setText(self.textEdit.toPlainText())
+        if 'name' in conf:
+            self.textEdit.setText(conf['name'])
+        if 'stylesheet' in conf:
+            conf = css_to_dict(conf['stylesheet'])
+            if 'background' in conf:
+                self.colorBButton.setColor(conf['background'])
+            if 'color' in conf:
+                self.colorFButton.setColor(conf['color'])
+            if 'font-size' in conf:
+                # [:-2] for removing "pt"
+                self.fontSizeSpin.setValue(int(conf['font-size'][:-2]))
 
 
 def css_to_dict(css):
@@ -217,6 +144,7 @@ def css_to_dict(css):
             pass
 
     return dict
+
 
 def dict_to_css(css_dict):
     css = ''

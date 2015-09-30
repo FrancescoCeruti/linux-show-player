@@ -33,17 +33,11 @@ from lisp.cues.media_cue import MediaCue
 from lisp.layouts.cue_layout import CueLayout
 from lisp.ui.cuelistdialog import CueListDialog
 from lisp.ui.settings.section import SettingsSection
-from lisp.utils.fade_functor import ntime, fade_linear, fadein_quad, \
-    fade_inout_quad, fadeout_quad
+from lisp.utils.fade_functor import ntime, FadeIn, FadeOut
 
 
 class VolumeControl(Cue):
     Name = 'Volume Control'
-
-    FadeIn = {'Linear': fade_linear, 'Quadratic': fadein_quad,
-              'Quadratic2': fade_inout_quad}
-    FadeOut = {'Linear': fade_linear, 'Quadratic': fadeout_quad,
-               'Quadratic2': fade_inout_quad}
 
     target_id = Property()
     fade_type = Property(default='Linear')
@@ -74,7 +68,7 @@ class VolumeControl(Cue):
     @async
     @synchronized_method(lock_name='__fade_lock', blocking=False)
     def _fadein(self, volume, media):
-        functor = VolumeControl.FadeIn[self.fade_type]
+        functor = FadeIn[self.fade_type]
         duration = self.fade * 100
         base_volume = volume.current_volume
         volume_diff = self.volume - base_volume
@@ -89,7 +83,7 @@ class VolumeControl(Cue):
     @async
     @synchronized_method(lock_name='__fade_lock', blocking=False)
     def _fadeout(self, volume, media):
-        functor = VolumeControl.FadeOut[self.fade_type]
+        functor = FadeOut[self.fade_type]
         duration = self.fade * 100
         base_volume = volume.current_volume
         volume_diff = self.volume - base_volume
@@ -105,9 +99,11 @@ class VolumeControl(Cue):
 class VolumeSettings(SettingsSection):
     Name = 'Volume Settings'
 
-    FadeIcons = {'Linear': QIcon.fromTheme('fadein_linear'),
-                'Quadratic': QIcon.fromTheme('fadein_quadratic'),
-                'Quadratic2': QIcon.fromTheme('fadein_quadratic2')}
+    FadeIcons = {
+        'Linear': QIcon.fromTheme('fadein_linear'),
+        'Quadratic': QIcon.fromTheme('fadein_quadratic'),
+        'Quadratic2': QIcon.fromTheme('fadein_quadratic2')
+    }
 
     def __init__(self, size, cue=None, parent=None):
         super().__init__(size, cue=cue, parent=parent)
@@ -166,6 +162,8 @@ class VolumeSettings(SettingsSection):
         self.fadeCurveLabel.setAlignment(QtCore.Qt.AlignCenter)
         self.fadeGroup.layout().addWidget(self.fadeCurveLabel, 1, 1)
 
+        self.layout().addSpacing(50)
+
         self.retranslateUi()
 
     def retranslateUi(self):
@@ -192,11 +190,22 @@ class VolumeSettings(SettingsSection):
         self.volumeGroup.setCheckable(enable)
         self.volumeGroup.setChecked(False)
 
+        self.fadeGroup.setCheckable(enable)
+        self.volumeGroup.setChecked(False)
+
     def get_configuration(self):
-        return {'target_id': self.cue_id,
-                'volume': self.volumeEdit.value(),
-                'fade': self.fadeSpin.value(),
-                'fade_type': self.fadeCurveCombo.currentText()}
+        conf = {}
+        checkable = self.cueGroup.isCheckable()
+
+        if not (checkable and not self.cueGroup.isChecked()):
+            conf['target_id'] = self.cue_id
+        if not (checkable and not self.volumeGroup.isCheckable()):
+            conf['volume'] = self.volumeEdit.value()
+        if not (checkable and not self.fadeGroup.isCheckable()):
+            conf['fade'] = self.fadeSpin.value()
+            conf['fade_type'] = self.fadeCurveCombo.currentText()
+
+        return conf
 
     def set_configuration(self, conf):
         if conf is not None:

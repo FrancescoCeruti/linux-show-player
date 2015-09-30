@@ -39,7 +39,7 @@ from lisp.layouts.list_layout.mediawidget_play import PlayingMediaWidget
 from lisp.layouts.list_layout.preferences import ListLayoutPreferences
 from lisp.ui.settings.app_settings import AppSettings
 from lisp.ui.settings.sections.cue_appearance import Appearance
-from lisp.ui.settings.sections.media_cue_general import MediaCueGeneral
+from lisp.ui.settings.sections.media_cue_settings import MediaCueSettings
 
 
 AppSettings.register_settings_widget(ListLayoutPreferences)
@@ -181,7 +181,7 @@ class ListLayout(QWidget, CueLayout):
         self.hLayout.addLayout(self.vLayout)
 
         # Add cue preferences widgets
-        self.add_settings_section(MediaCueGeneral, MediaCue)
+        self.add_settings_section(MediaCueSettings, MediaCue)
         self.add_settings_section(Appearance)
 
         # Context menu actions
@@ -466,7 +466,7 @@ class ListLayout(QWidget, CueLayout):
 
         # Remove settings-sections
         self.remove_settings_section(Appearance)
-        self.remove_settings_section(MediaCueGeneral)
+        self.remove_settings_section(MediaCueSettings)
 
         # !! Delete the layout references !!
         self.deleteLater()

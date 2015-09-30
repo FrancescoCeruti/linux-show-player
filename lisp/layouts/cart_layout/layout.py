@@ -34,7 +34,7 @@ from lisp.layouts.cart_layout.preferences import CartLayoutPreferences
 from lisp.layouts.cue_layout import CueLayout
 from lisp.ui.settings.app_settings import AppSettings
 from lisp.ui.settings.sections.cue_appearance import Appearance
-from lisp.ui.settings.sections.media_cue_general import MediaCueGeneral
+from lisp.ui.settings.sections.media_cue_settings import MediaCueSettings
 
 
 AppSettings.register_settings_widget(CartLayoutPreferences)
@@ -117,7 +117,7 @@ class CartLayout(QTabWidget, CueLayout):
         self.menuLayout.addAction(self.show_accurate_action)
 
         # Add cue preferences widgets
-        self.add_settings_section(MediaCueGeneral, MediaCue)
+        self.add_settings_section(MediaCueSettings, MediaCue)
         self.add_settings_section(Appearance)
 
         # Context menu actions
@@ -265,7 +265,7 @@ class CartLayout(QTabWidget, CueLayout):
 
         # Remove settings-sections
         self.remove_settings_section(Appearance)
-        self.remove_settings_section(MediaCueGeneral)
+        self.remove_settings_section(MediaCueSettings)
 
         # !! Delete the layout references !!
         self.deleteLater()
@@ -305,6 +305,7 @@ class CartLayout(QTabWidget, CueLayout):
         if widget is not None:
             return widget.cue
 
+    # FIXME: need to be O(1)
     def get_cue_by_id(self, cue_id):
         for widget in chain(*chain(*self._grids)):
             if widget is not None and widget.cue.id == cue_id:

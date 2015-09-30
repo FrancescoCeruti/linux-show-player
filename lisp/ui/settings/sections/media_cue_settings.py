@@ -19,18 +19,17 @@
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import QTime
-from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QTimeEdit, QLabel, QSpinBox, \
-    QCheckBox
+from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QTimeEdit, QLabel, \
+    QSpinBox, QCheckBox, QVBoxLayout
+from lisp.ui.settings.section import SettingsSection
 
-from lisp.ui.settings.sections.cue_general import CueGeneral
 
-
-class MediaCueGeneral(CueGeneral):
-
+class MediaCueSettings(SettingsSection):
     Name = 'Cue Settings'
 
     def __init__(self, size, cue=None, parent=None):
         super().__init__(size, cue=cue, parent=parent)
+        self.setLayout(QVBoxLayout(self))
 
         # Start at
         self.startGroup = QGroupBox(self)
@@ -74,9 +73,7 @@ class MediaCueGeneral(CueGeneral):
         self.checkPause.setText("Enable Pause")
 
     def get_configuration(self):
-        conf = super().get_configuration()
-        conf['media'] = {}
-
+        conf = {'media': {}}
         checkable = self.startGroup.isCheckable()
 
         if not (checkable and not self.startGroup.isChecked()):
@@ -90,8 +87,6 @@ class MediaCueGeneral(CueGeneral):
         return conf
 
     def enable_check(self, enable):
-        super().enable_check(enable)
-
         self.startGroup.setCheckable(enable)
         self.startGroup.setChecked(False)
 
@@ -103,8 +98,6 @@ class MediaCueGeneral(CueGeneral):
             self.checkPause.setCheckState(QtCore.Qt.PartiallyChecked)
 
     def set_configuration(self, conf):
-        super().set_configuration(conf)
-
         if 'pause' in conf:
             self.checkPause.setChecked(conf['pause'])
         if 'media' in conf:

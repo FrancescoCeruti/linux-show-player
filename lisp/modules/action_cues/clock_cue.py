@@ -5,7 +5,7 @@ from lisp.cues.cue import Cue
 
 class ClockCue(Cue):
 
-    Name = 'Clock cue'
+    Name = 'Clock Cue'
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

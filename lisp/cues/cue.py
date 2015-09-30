@@ -50,7 +50,6 @@ class Cue(HasProperties):
 
     id = Property()
     index = Property(default=-1)
-    groups = Property(default=())
     name = Property(default='Untitled')
     stylesheet = Property(default='')
     _type_ = Property()

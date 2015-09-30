@@ -32,8 +32,8 @@ class CueListDialog(QDialog):
         self._cues = []
 
         self.list = QTreeWidget(self)
-        self.list.setSelectionMode(self.list.SingleSelection)
-        self.list.setSelectionBehavior(self.list.SelectRows)
+        self.list.setSelectionMode(QTreeWidget.SingleSelection)
+        self.list.setSelectionBehavior(QTreeWidget.SelectRows)
         self.list.setAlternatingRowColors(True)
         self.list.setIndentation(0)
         self.list.setHeaderLabels(['Index', 'Name'])

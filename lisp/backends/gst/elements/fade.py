@@ -27,19 +27,13 @@ from lisp.backends.gst.gst_element import GstMediaElement
 from lisp.backends.gst.gi_repository import Gst
 from lisp.core.decorators import async
 from lisp.utils.fade_functor import fade_linear, fadein_quad, fade_inout_quad, \
-    fadeout_quad, ntime
+    fadeout_quad, ntime, FadeOut, FadeIn
 
 
 class Fade(GstMediaElement):
     ElementType = ElementType.Plugin
     MediaType = MediaType.Audio
     Name = 'Fade'
-
-    # TODO: maybe we can use two Enum
-    FadeIn = {'Linear': fade_linear, 'Quadratic': fadein_quad,
-              'Quadratic2': fade_inout_quad}
-    FadeOut = {'Linear': fade_linear, 'Quadratic': fadeout_quad,
-               'Quadratic2': fade_inout_quad}
 
     fadein = Property(default=0)
     fadein_type = Property(default='Linear')
@@ -104,7 +98,7 @@ class Fade(GstMediaElement):
         try:
             self.enter_fadein.emit()
 
-            functor = Fade.FadeIn[self.fadein_type]
+            functor = FadeIn[self.fadein_type]
             duration = self.fadein * 100
             volume = self.volume.get_property('volume')
             time = 0
@@ -128,7 +122,7 @@ class Fade(GstMediaElement):
         try:
             self.enter_fadeout.emit()
 
-            functor = Fade.FadeOut[self.fadeout_type]
+            functor = FadeOut[self.fadeout_type]
             duration = self.fadeout * 100
             volume = self.volume.get_property('volume')
             time = 0
