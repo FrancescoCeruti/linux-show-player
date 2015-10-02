@@ -19,39 +19,34 @@
 
 from abc import abstractmethod
 
-from PyQt5.QtCore import QObject, pyqtSignal
 from PyQt5.QtWidgets import QAction, QMenu, qApp
-from lisp.ui.mainwindow import MainWindow
 
+from lisp.core.signal import Signal
 from lisp.core.actions_handler import ActionsHandler
 from lisp.cues.cue import Cue
 from lisp.layouts.cue_layout_actions import AddAction, ConfigureAction, \
     MultiConfigureAction, MoveAction, RemoveAction
+from lisp.ui.mainwindow import MainWindow
 from lisp.ui.settings.cue_settings import CueSettings
 from lisp.ui.settings.section import SettingsSection
 
 
-class CueLayout(QObject):
+class CueLayout():
 
     # Layout name
     NAME = 'Base'
     # Layout info (html)
     DESCRIPTION = '<p>No description</p>'
 
-    # Media added to the layout
-    cue_added = pyqtSignal(Cue)
-    # Media removed from the layout
-    cue_removed = pyqtSignal(Cue)
-    # Media focused
-    focus_changed = pyqtSignal(Cue)
-    # A key is pressed
-    key_pressed = pyqtSignal(object)
-
     _settings_sections = {}
     _context_items = {}
 
-    def __init__(self, **kwds):
-        super().__init__(**kwds)
+    def __init__(self):
+        self.cue_added = Signal()       # After a cue is added
+        self.cue_removed = Signal()     # After a cue is removed
+        self.cue_execute = Signal()     # Before a cue is executed by the layout
+        self.focus_changed = Signal()   # After the focused cue is changed
+        self.key_pressed = Signal()     # After a key is pressed
 
     @classmethod
     def add_context_item(cls, item, cue_class=Cue):

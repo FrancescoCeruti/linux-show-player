@@ -40,8 +40,6 @@ class StopAll(Cue):
 
     @async
     def execute(self, action=Cue.CueAction.Default):
-        self.on_execute.emit(self, action)
-
         if self.pause_mode:
             cue_action = MediaCue.CueAction.Pause
         else:
@@ -50,8 +48,6 @@ class StopAll(Cue):
         layout = Application().layout
         for cue in layout.get_cues(cue_class=MediaCue):
             cue.execute(action=cue_action)
-
-        self.executed.emit(self, action)
 
 
 class StopAllSettings(SettingsSection):
@@ -89,5 +85,6 @@ class StopAllSettings(SettingsSection):
     def set_configuration(self, conf):
         if 'pause_mode' in conf:
             self.pauseMode.setChecked(conf['pause_mode'])
+
 
 CueLayout.add_settings_section(StopAllSettings, StopAll)

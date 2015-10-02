@@ -32,9 +32,12 @@ class Remote(Module):
     def __init__(self):
         super().__init__()
 
-        # Using 'localhost' or similar make the server unreachable from outside
-        ip = socket.gethostbyname(socket.gethostname())
+        ip = config['Remote']['BindIp']
         port = int(config['Remote']['BindPort'])
+
+        # Using 'localhost' or similar make the server unreachable from outside
+        if ip == 'localhost' or ip.startswith('127.'):
+            ip = socket.gethostbyname(socket.gethostname())
 
         RemoteController(ip=ip, port=port)
         RemoteController().start()

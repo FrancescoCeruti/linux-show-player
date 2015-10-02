@@ -116,7 +116,7 @@ class About(QDialog):
 <center>
     <b>Author:</b><br />
     Francesco Ceruti - <a href="mailto:ceppofrancy@gmail.com">ceppofrancy@gmail.com</a><br \><br />
-    <b>Contributors:</b><br />
-    Marco Asa
+    <b>Packaging:</b><br />
+    <i>Arch Linux:</i> Marco Asa
 </center>
 '''

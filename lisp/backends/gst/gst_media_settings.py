@@ -57,7 +57,7 @@ class GstMediaSettings(SettingsSection):
     def set_configuration(self, conf):
         # Get the media section of the cue configuration
         if conf is not None:
-            conf = conf.get('media', {})
+            conf = conf.get('_media_', {})
 
             # Activate the layout, so we can get the right widgets size
             self.glayout.activate()
@@ -91,7 +91,7 @@ class GstMediaSettings(SettingsSection):
         if not self._check:
             conf['pipe'] = self._conf['pipe']
 
-        return {'media': conf}
+        return {'_media_': conf}
 
     def enable_check(self, enable):
         self._check = enable
@@ -107,7 +107,7 @@ class GstMediaSettings(SettingsSection):
 
     def __edit_pipe(self):
         # Backup the settings
-        self._conf.update(self.get_configuration()['media'])
+        self._conf.update(self.get_configuration()['_media_'])
 
         # Show the dialog
         dialog = GstPipeEdit(self._conf.get('pipe', ()), parent=self)
@@ -121,5 +121,5 @@ class GstMediaSettings(SettingsSection):
             # Reload with the new pipeline
             self._conf['pipe'] = dialog.get_pipe()
 
-            self.set_configuration({'media': self._conf})
+            self.set_configuration({'_media_': self._conf})
             self.enable_check(self._check)

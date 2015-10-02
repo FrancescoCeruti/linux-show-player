@@ -26,15 +26,17 @@ class Property:
     """Descriptor to be used in HasProperties subclasses to define properties
 
     .. warning::
-        If extended any subclass *must* call the base implementation of __get__
-        and __set__ method.
+        If extended any subclass *MUST*:
+        1) if the __get__ method receive a None instance return self;
+        2) if the value is not setted return the default value (self.default);
+        3) After the value is changed call the __changed__ method.
     """
 
     def __init__(self, default=None, name=None):
         self.name = name
         self.default = default
 
-    def __get__(self, instance, cls=None):
+    def __get__(self, instance, owner=None):
         if instance is None:
             return self
         else:
@@ -43,12 +45,47 @@ class Property:
     def __set__(self, instance, value):
         if instance is not None:
             instance.__dict__[self.name] = value
+            self.__changed__(instance, value)
 
-            instance.property_changed.emit(self.name, value)
-            # Get the related signal
-            property_signal = instance.changed_signals.get(self.name, None)
-            if property_signal is not None:
-                property_signal.emit(value)
+    def __changed__(self, instance, value):
+        instance.property_changed.emit(self.name, value)
+        # Get the related signal
+        property_signal = instance.changed_signals.get(self.name, None)
+        if property_signal is not None:
+            property_signal.emit(value)
+
+
+class NestedProperty(Property):
+    """Simplify retrieving the properties of nested HasProperties objects.
+
+    The goal is to avoid useless reimplementation of HasProperties.properties()
+    and HasProperties.update_properties().
+
+    ..note::
+        When need to get or set a single property of the nested object is better
+        to access it directly instead that using a nested-property.
+    """
+
+    def __init__(self, provider_name, **kwargs):
+        super().__init__(**kwargs)
+        self.provider_name = provider_name
+
+    def __get__(self, instance, owner=None):
+        if instance is None:
+            return self
+        else:
+            provider = instance.__dict__.get(self.provider_name, None)
+            if isinstance(provider, HasProperties):
+                return provider.properties()
+            else:
+                return self.default
+
+    def __set__(self, instance, value):
+        if instance is not None:
+            provider = instance.__dict__.get(self.provider_name, None)
+            if isinstance(provider, HasProperties):
+                provider.update_properties(value)
+                self.__changed__(instance, value)
 
 
 class HasPropertiesMeta(ABCMeta):
@@ -95,7 +132,7 @@ class HasProperties(metaclass=HasPropertiesMeta):
 
     ..warning::
         Adding properties outside the class declaration will not update the
-        subclasses properties registry.
+        subclasses properties registry (__properties__).
 
     .. Usage::
 
@@ -138,6 +175,14 @@ class HasProperties(metaclass=HasPropertiesMeta):
         :rtype: dict
         """
         return {name: getattr(self, name) for name in self.__properties__}
+
+    @classmethod
+    def properties_defaults(cls):
+        """
+        :return: The default properties as a dictionary {name: default_value}
+        :rtype: dict
+        """
+        return {name: getattr(cls, name).default for name in cls.__properties__}
 
     def update_properties(self, properties):
         """Set the given properties.

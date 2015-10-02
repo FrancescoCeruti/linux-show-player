@@ -20,11 +20,9 @@
 from copy import deepcopy
 
 from lisp.core.action import Action
-from lisp.cues.cue_factory import CueFactory
 
 
 class AddAction(Action):
-
     def __init__(self, layout, cue, index):
         self._layout = layout
         self._cue = cue
@@ -44,7 +42,6 @@ class AddAction(Action):
 
 
 class RemoveAction(Action):
-
     def __init__(self, layout, cue, index):
         self._layout = layout
         self._cue = cue
@@ -64,7 +61,6 @@ class RemoveAction(Action):
 
 
 class ConfigureAction(Action):
-
     def __init__(self, properties, cue):
         self._cue = cue
         self._new = properties
@@ -84,7 +80,6 @@ class ConfigureAction(Action):
 
 
 class MultiConfigureAction(Action):
-
     def __init__(self, properties, cues):
         self._cues = cues
         self._new = properties
@@ -106,7 +101,6 @@ class MultiConfigureAction(Action):
 
 
 class MoveAction(Action):
-
     def __init__(self, layout, cue, to_index):
         self._cue = cue
         self._layout = layout

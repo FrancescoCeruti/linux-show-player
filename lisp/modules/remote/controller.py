@@ -48,6 +48,7 @@ class RemoteController(metaclass=Singleton):
         try:
             self.server = SimpleXMLRPCServer((ip, port), allow_none=True,
                                              logRequests=False)
+            self._announcer = Announcer()
         except OSError as error:
             # If address already in use
             if error.errno == 98:
@@ -58,8 +59,6 @@ class RemoteController(metaclass=Singleton):
 
         self.server.register_introspection_functions()
         self.server.register_instance(RemoteDispatcher())
-
-        self._announcer = Announcer()
 
     @async
     def start(self):

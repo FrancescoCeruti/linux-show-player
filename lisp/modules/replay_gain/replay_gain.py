@@ -23,18 +23,17 @@ import logging
 from math import pow
 from threading import Thread, Lock
 
-from PyQt5 import QtCore
-from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QMenu, QAction, QDialog
+from lisp.core.module import Module
 
-from lisp.core.plugin import Plugin
 from lisp.backends.gst.gi_repository import Gst
 from lisp.application import Application
 from lisp.core.action import Action
 from lisp.core.actions_handler import ActionsHandler
 from lisp.core.signal import Signal, Connection
 from lisp.cues.media_cue import MediaCue
-from lisp.plugins.replay_gain.gain_ui import GainUi, GainProgressDialog
+from .gain_ui import GainUi, GainProgressDialog
+from lisp.ui.mainwindow import MainWindow
 
 
 class GainAction(Action):
@@ -141,45 +140,43 @@ class GainMainThread(Thread):
         self.on_progress.emit(1)
 
 
-class ReplayGain(QtCore.QObject, Plugin):
+class ReplayGain(Module):
     Name = 'ReplayGain'
 
     def __init__(self):
         super().__init__()
-        self.app = Application()
-
         self._gain_thread = None
 
         # Voice in mainWindow menu
         self.menu = QMenu("ReplayGain / Normalization")
-        self.menu_action = self.app.mainWindow.menuTools.addMenu(self.menu)
+        self.menu_action = MainWindow().menuTools.addMenu(self.menu)
 
-        self.actionGain = QAction(self.app.mainWindow)
+        self.actionGain = QAction(MainWindow())
         self.actionGain.triggered.connect(self.gain)
         self.actionGain.setText("Calculate")
         self.menu.addAction(self.actionGain)
 
-        self.actionReset = QAction(self.app.mainWindow)
+        self.actionReset = QAction(MainWindow())
         self.actionReset.triggered.connect(self._reset_all)
         self.actionReset.setText("Reset all")
         self.menu.addAction(self.actionReset)
 
-        self.actionResetSelected = QAction(self.app.mainWindow)
+        self.actionResetSelected = QAction(MainWindow())
         self.actionResetSelected.triggered.connect(self._reset_selected)
         self.actionResetSelected.setText("Reset selected")
         self.menu.addAction(self.actionResetSelected)
 
     def gain(self):
-        gainUi = GainUi(self.app.mainWindow)
+        gainUi = GainUi(MainWindow())
         gainUi.exec_()
 
         if gainUi.result() == QDialog.Accepted:
 
             files = {}
             if gainUi.only_selected():
-                cues = self.app.mainWindow.layout.get_selected_cues(MediaCue)
+                cues = MainWindow().layout.get_selected_cues(MediaCue)
             else:
-                cues = self.app.mainWindow.layout.get_cues(MediaCue)
+                cues = MainWindow().layout.get_cues(MediaCue)
 
             for cue in cues:
                 media = cue.media
@@ -210,15 +207,15 @@ class ReplayGain(QtCore.QObject, Plugin):
         if self._gain_thread is not None:
             self._gain_thread.stop()
 
-    def reset(self):
+    def terminate(self):
         self.stop()
-        self.app.mainWindow.menuTools.removeAction(self.menu_action)
+        MainWindow().menuTools.removeAction(self.menu_action)
 
     def _reset_all(self):
-        self._reset(self.app.layout.get_cues(MediaCue))
+        self._reset(Application().layout.get_cues(MediaCue))
 
     def _reset_selected(self):
-        self._reset(self.app.layout.get_selected_cues(MediaCue))
+        self._reset(Application().layout.get_selected_cues(MediaCue))
 
     def _reset(self, cues):
         action = GainAction()

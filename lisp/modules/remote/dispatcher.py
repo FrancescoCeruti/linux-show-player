@@ -40,26 +40,4 @@ class RemoteDispatcher:
     def execute(self, index):
         cue = Application().layout.get_cue_at(index)
         if cue is not None:
-            cue.execute(emit=False)
-
-    # MediaCue functions
-
-    def play(self, index):
-        cue = Application().layout.get_cue_at(index)
-        if isinstance(cue, MediaCue):
-            cue.media.play()
-
-    def pause(self, index):
-        cue = Application().layout.get_cue_at(index)
-        if isinstance(cue, MediaCue):
-            cue.media.pause()
-
-    def stop(self, index):
-        cue = Application().layout.get_cue_at(index)
-        if isinstance(cue, MediaCue):
-            cue.media.stop()
-
-    def seek(self, index, position):
-        cue = Application().layout.get_cue_at(index)
-        if isinstance(cue, MediaCue):
-            cue.media.seek(position)
+            cue.execute()

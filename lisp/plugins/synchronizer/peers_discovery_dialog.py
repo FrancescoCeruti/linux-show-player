@@ -53,13 +53,13 @@ class PeersDiscoveryDialog(QDialog):
     def retranslateUi(self):
         self.setWindowTitle("Discovering peers ...")
 
-    def accept(self, *args, **kwargs):
+    def accept(self):
         self._discoverer.stop()
-        return QDialog.accept(self, *args, **kwargs)
+        return super().accept()
 
-    def exec_(self, *args, **kwargs):
+    def exec_(self):
         self._discoverer.start()
-        return QDialog.exec_(self, *args, **kwargs)
+        return super().exec_()
 
     def get_peers(self):
         return [item.adders for item in self.listWidget.selectedItems()]

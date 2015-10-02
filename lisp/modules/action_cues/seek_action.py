@@ -33,7 +33,6 @@ from lisp.core.decorators import async
 
 
 class SeekAction(Cue):
-
     Name = 'Seek Action'
 
     target_id = Property()
@@ -43,23 +42,16 @@ class SeekAction(Cue):
         super().__init__(**kwargs)
         self.name = self.Name
 
-    @async
     def execute(self, action=Cue.CueAction.Default):
-        self.on_execute.emit(self, action)
-
-        # Get the cue every time because the reference may change
         cue = Application().layout.get_cue_by_id(self.target_id)
         if isinstance(cue, MediaCue) and self.time >= 0:
             cue.media.seek(self.time)
-
-        self.executed.emit(self, action)
 
     def update_properties(self, properties):
         super().update_properties(properties)
 
 
 class SeekSettings(SettingsSection):
-
     Name = 'Seek Settings'
 
     def __init__(self, size, cue=None, parent=None):
@@ -69,8 +61,8 @@ class SeekSettings(SettingsSection):
         self.setLayout(QVBoxLayout(self))
 
         self.app_layout = Application().layout
-        self.cueDialog = CueListDialog(parent=self)
-        self.cueDialog.add_cues(self.app_layout.get_cues(cue_class=MediaCue))
+        self.cueDialog = CueListDialog(
+            cues=self.app_layout.get_cues(cue_class=MediaCue), parent=self)
 
         self.cueGroup = QGroupBox(self)
         self.cueGroup.setLayout(QVBoxLayout())

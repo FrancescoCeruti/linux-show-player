@@ -201,6 +201,18 @@ QHeaderView {
     qproperty-defaultAlignment: AlignCenter;
 }
 
+QHeaderView:up-arrow {
+    image: url(:/assets/up-arrow.png);
+    width: 24px;
+    height: 24px;
+}
+
+QHeaderView:down-arrow {
+    image: url(:/assets/down-arrow.png);
+    width: 24px;
+    height: 24px;
+}
+
 QHeaderView:section {
     border: none;
     border-right: 1px solid #3A3A3A;
@@ -587,10 +599,6 @@ QRadioButton:indicator:checked:disabled {
 
 /* CUSTOM WIDGETS */
 
-/* 
- * Use a generic widget with a property "class" so the actual widget can
- * be anything.
- */
 #ButtonCueWidget {
     background-color: #464646;
     color: #AAAAAA;

@@ -34,7 +34,7 @@ def init_modules():
             logging.debug('MODULES: Loaded "{0}'.format(module_name))
         except Exception as e:
             logging.error('Failed "{0}" loading'.format(module_name),
-                          details='\n'.join(e.args))
+                          details=str(e))
             logging.debug(traceback.format_exc())
 
 
@@ -47,7 +47,7 @@ def terminate_modules():
         except Exception as e:
             logging.error(
                 'MODULES: Module "{0}" termination failed'.format(module_name),
-                details='\n'.join(e.args))
+                details=str(e))
             logging.debug(traceback.format_exc())
 
 

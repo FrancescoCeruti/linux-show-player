@@ -34,7 +34,7 @@ from lisp.ui.settings.section import SettingsSection
 class CollectionCue(Cue):
     Name = 'Collection Cue'
 
-    targets = Property(default={})
+    targets = Property(default=[])
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -42,18 +42,14 @@ class CollectionCue(Cue):
 
     @async
     def execute(self, action=Cue.CueAction.Default):
-        self.on_execute.emit(self, action)
-
-        for target_id, action in self.targets.items():
+        for target_id, action in self.targets:
             cue = Application().layout.get_cue_by_id(target_id)
-            if cue is not None:
+            if cue is not None and cue is not self:
                 cue.execute(action=cue.CueAction[action])
-
-        self.executed.emit(self, action)
 
 
 class CollectionCueSettings(SettingsSection):
-    Name = 'Cue Settings'
+    Name = 'Edit Collection'
 
     def __init__(self, size, cue=None, parent=None):
         super().__init__(size, cue=cue, parent=parent)
@@ -76,23 +72,21 @@ class CollectionCueSettings(SettingsSection):
         self.delButton = self.dialogButtons.addButton('Remove', QDialogButtonBox.ActionRole)
         self.delButton.clicked.connect(self._remove_selected)
 
-        self.cue_dialog = CueListDialog()
-        self.cue_dialog.list.setSelectionMode(
-            QAbstractItemView.ExtendedSelection)
-        self.cue_dialog.add_cues(Application().layout.get_cues())
+        self.cue_dialog = CueListDialog(cues=Application().layout.get_cues())
+        self.cue_dialog.list.setSelectionMode(QAbstractItemView.ExtendedSelection)
 
     def set_configuration(self, conf):
-        for target_id, action in conf.get('targets', {}).items():
+        for target_id, action in conf.get('targets', []):
             target = Application().layout.get_cue_by_id(target_id)
             if target is not None:
                 self._add_cue(target, action)
 
     def get_configuration(self):
-        targets = {}
+        targets = []
         for n in range(self.cuesWidget.count()):
             widget = self.cuesWidget.itemWidget(self.cuesWidget.item(n))
             target_id, action = widget.get_target()
-            targets[target_id] = action
+            targets.append((target_id, action))
 
         return {'targets': targets}
 
@@ -104,6 +98,7 @@ class CollectionCueSettings(SettingsSection):
 
         self.cuesWidget.addItem(item)
         self.cuesWidget.setItemWidget(item, widget)
+        self.cue_dialog.remove_cue(cue)
 
     def _add_dialog(self):
         if self.cue_dialog.exec_() == QDialog.Accepted:
@@ -111,7 +106,10 @@ class CollectionCueSettings(SettingsSection):
                 self._add_cue(target, tuple(target.CueAction)[0].name)
 
     def _remove_selected(self):
+        cue = self.cuesWidget.itemWidget(self.cuesWidget.currentItem()).target
+
         self.cuesWidget.takeItem(self.cuesWidget.currentRow())
+        self.cue_dialog.add_cue(cue)
 
 
 class CueItemWidget(QWidget):

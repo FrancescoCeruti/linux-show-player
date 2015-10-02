@@ -24,6 +24,7 @@ from PyQt5.QtCore import QThread, pyqtSignal
 from lisp.utils.configuration import config
 
 
+IP = config['Remote']['BindIp']
 PORT = int(config['Remote']['DiscoverPort'])
 # To avoid conflicts with other applications
 MAGIC = config['Remote']['DiscoverMagic']
@@ -36,7 +37,7 @@ class Announcer(Thread):
         # Create UDP socket
         self._socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self._socket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, True)
-        self._socket.bind(('0.0.0.0', PORT))
+        self._socket.bind((IP, PORT))
 
         self._running = True
 

@@ -57,21 +57,12 @@ class Cue(HasProperties):
     def __init__(self, id=None):
         super().__init__()
 
-        #: Emitted before execution (object, action)
-        self.on_execute = Signal()
-        #: Emitted after execution (object, action)
-        self.executed = Signal()
-
         self.id = str(uuid4()) if id is None else id
         self._type_ = self.__class__.__name__
 
     @abstractmethod
     def execute(self, action=CueAction.Default):
         """Execute the specified action, if possible.
-
-        This function should emit on_execute (at the begin) and executed (at the
-        end) signals, the parameters must be (first) the cue and (second) the
-        action executed (can be different from the one passed as argument).
 
         :param action: the action to be performed
         """

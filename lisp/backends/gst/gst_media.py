@@ -146,7 +146,7 @@ class GstMedia(Media):
             self.stopped.emit(self)
 
     def seek(self, position):
-        if self.state in [MediaState.Playing, MediaState.Paused]:
+        if self.state == MediaState.Playing or self.state == MediaState.Paused:
             if position < self.duration:
                 # Query segment info for the playback rate
                 query = Gst.Query.new_segment(Gst.Format.TIME)

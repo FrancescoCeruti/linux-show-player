@@ -19,25 +19,24 @@
 
 from PyQt5.QtWidgets import QAction
 
-from lisp.core.plugin import Plugin
-from lisp.application import Application
+from lisp.core.module import Module
+from lisp.ui.mainwindow import MainWindow
 from .uri_changer_dialog import UriChangerDialog
 
 
-class UriChanger(Plugin):
-
+class UriChanger(Module):
     Name = 'URI Changer'
 
     def __init__(self):
-        self.main_window = Application().mainWindow
+        super().__init__()
 
-        self.menuAction = QAction('Session URI change', self.main_window)
+        self.menuAction = QAction('Session URI change', MainWindow())
         self.menuAction.triggered.connect(self.show_dialog)
-        self.main_window.menuTools.addAction(self.menuAction)
+        MainWindow().menuTools.addAction(self.menuAction)
 
     def show_dialog(self):
-        dialog = UriChangerDialog(parent=self.main_window)
+        dialog = UriChangerDialog(parent=MainWindow())
         dialog.exec_()
 
-    def reset(self):
-        self.main_window.menuTools.removeAction(self.menuAction)
+    def terminate(self):
+        MainWindow().menuTools.removeAction(self.menuAction)

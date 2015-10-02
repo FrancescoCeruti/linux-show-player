@@ -73,14 +73,14 @@ class MediaCueSettings(SettingsSection):
         self.checkPause.setText("Enable Pause")
 
     def get_configuration(self):
-        conf = {'media': {}}
+        conf = {'_media_': {}}
         checkable = self.startGroup.isCheckable()
 
         if not (checkable and not self.startGroup.isChecked()):
             time = self.startEdit.time().msecsSinceStartOfDay()
-            conf['media']['start_at'] = time
+            conf['_media_']['start_at'] = time
         if not (checkable and not self.loopGroup.isChecked()):
-            conf['media']['loop'] = self.spinLoop.value()
+            conf['_media_']['loop'] = self.spinLoop.value()
         if self.checkPause.checkState() != QtCore.Qt.PartiallyChecked:
             conf['pause'] = self.checkPause.isChecked()
 
@@ -100,12 +100,15 @@ class MediaCueSettings(SettingsSection):
     def set_configuration(self, conf):
         if 'pause' in conf:
             self.checkPause.setChecked(conf['pause'])
-        if 'media' in conf:
-            if 'loop' in conf['media']:
-                self.spinLoop.setValue(conf['media']['loop'])
-            if 'duration' in conf['media'] and conf['media']['duration'] > 0:
-                t = QTime().fromMSecsSinceStartOfDay(conf['media']['duration'])
+        if '_media_' in conf:
+            if 'loop' in conf['_media_']:
+                self.spinLoop.setValue(conf['_media_']['loop'])
+            if conf['_media_'].get('duration', 0) > 0:
+                t = self._to_qtime(conf['_media_']['duration'])
                 self.startEdit.setMaximumTime(t)
-            if 'start_at' in conf['media']:
-                t = QTime().fromMSecsSinceStartOfDay(conf['media']['start_at'])
+            if 'start_at' in conf['_media_']:
+                t = self._to_qtime(conf['_media_']['start_at'])
                 self.startEdit.setTime(t)
+
+    def _to_qtime(self, m_seconds):
+        return QTime.fromMSecsSinceStartOfDay(m_seconds)

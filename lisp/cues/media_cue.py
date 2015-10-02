@@ -19,8 +19,8 @@
 
 from enum import Enum
 
-from lisp.backends.base.media import MediaState
-from lisp.core.has_properties import Property
+from lisp.backends.base.media import MediaState, Media
+from lisp.core.has_properties import Property, NestedProperty
 from lisp.cues.cue import Cue
 from lisp.core.decorators import synchronized_method, async
 
@@ -34,16 +34,14 @@ class MediaCue(Cue):
         Stop = 3
 
     pause = Property(default=False)
+    _media_ = NestedProperty('media', default={})
 
     def __init__(self, media, cue_id=None):
         super().__init__(cue_id)
-
         self.media = media
 
-    @synchronized_method(blocking=False)
     def execute(self, action=CueAction.Default):
         # If "default", decide the action to execute
-
         if action == MediaCue.CueAction.Default:
             if self.media.state != MediaState.Playing:
                 action = MediaCue.CueAction.Play
@@ -52,25 +50,9 @@ class MediaCue(Cue):
             else:
                 action = MediaCue.CueAction.Stop
 
-        self.on_execute.emit(self, action)
-
         if action == MediaCue.CueAction.Play:
             self.media.play()
         elif action == MediaCue.CueAction.Pause:
             self.media.pause()
         elif action == MediaCue.CueAction.Stop:
             self.media.stop()
-
-        self.executed.emit(self, action)
-
-    def properties(self):
-        properties = super().properties().copy()
-        properties['media'] = self.media.properties()
-        return properties
-
-    def update_properties(self, properties):
-        if 'media' in properties:
-            media_props = properties.pop('media')
-            self.media.update_properties(media_props)
-
-        super().update_properties(properties)

@@ -26,9 +26,10 @@ from lisp.ui.qclicklabel import QClickLabel
 
 class CueWidget(QWidget):
 
-    focus_changed = pyqtSignal(object)
     context_menu_request = pyqtSignal(object, QPoint)
+    focus_changed = pyqtSignal(object)
     edit_request = pyqtSignal(object)
+    cue_execute = pyqtSignal(object)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -91,6 +92,7 @@ class CueWidget(QWidget):
             elif e.modifiers() == Qt.ControlModifier:
                 self.select()
             else:
+                self.cue_execute.emit(self.cue)
                 self.cue.execute()
 
     def update_style(self, stylesheet):

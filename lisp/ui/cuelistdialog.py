@@ -20,15 +20,16 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog, QTreeWidget, QHeaderView, QVBoxLayout, \
     QDialogButtonBox, QTreeWidgetItem
+from lisp.utils import logging
 
 
 class CueListDialog(QDialog):
-
-    def __init__(self, **kwargs):
+    def __init__(self, cues=None, properties=('index', 'name'), **kwargs):
         super().__init__(**kwargs)
 
-        self.setMinimumSize(400, 300)
+        self.setMinimumSize(600, 400)
 
+        self._properties = properties
         self._cues = []
 
         self.list = QTreeWidget(self)
@@ -36,10 +37,14 @@ class CueListDialog(QDialog):
         self.list.setSelectionBehavior(QTreeWidget.SelectRows)
         self.list.setAlternatingRowColors(True)
         self.list.setIndentation(0)
-        self.list.setHeaderLabels(['Index', 'Name'])
+        self.list.setHeaderLabels([prop.title() for prop in properties])
         self.list.header().setSectionResizeMode(QHeaderView.Fixed)
         self.list.header().setSectionResizeMode(1, QHeaderView.Stretch)
         self.list.header().setStretchLastSection(False)
+        self.list.sortByColumn(0, Qt.AscendingOrder)
+        if cues is not None:
+            self.add_cues(cues)
+        self.list.setSortingEnabled(True)
 
         self.setLayout(QVBoxLayout())
         self.layout().addWidget(self.list)
@@ -53,23 +58,28 @@ class CueListDialog(QDialog):
         self.buttons.rejected.connect(self.reject)
 
     def add_cue(self, cue):
-        try:
-            item = QTreeWidgetItem()
-            item.setTextAlignment(0, Qt.AlignCenter)
+        item = QTreeWidgetItem()
+        item.setTextAlignment(0, Qt.AlignCenter)
 
-            for n, prop in enumerate(['index', 'name']):
-                item.setText(n, str(cue.properties().get(prop, 'Undefined')))
+        for n, prop in enumerate(self._properties):
+            try:
+                item.setData(n, Qt.DisplayRole, getattr(cue, prop, 'Undefined'))
+            except Exception as e:
+                logging.exception('Cannot display {0} property'.format(prop), e,
+                                  dialog=False)
 
-            self._cues.append(cue)
-            self.list.addTopLevelItem(item)
-        except Exception:
-            pass
+        self._cues.append(cue)
+        self.list.addTopLevelItem(item)
 
     def add_cues(self, cues):
         for cue in cues:
             self.add_cue(cue)
 
-    def remove_cue(self, index):
+    def remove_cue(self, cue):
+        index = self._cues.index(cue)
+        self.remove_cue_by_index(index)
+
+    def remove_cue_by_index(self, index):
         self.list.takeTopLevelItem(index)
         return self._cues.pop(index)
 

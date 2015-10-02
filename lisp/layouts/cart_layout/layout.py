@@ -53,14 +53,8 @@ class CartLayout(QTabWidget, CueLayout):
                         <li>Cues can be moved from a page to another;
                     </ul> '''
 
-    # I need to redefine those from CueLayout
-    key_pressed = CueLayout.key_pressed
-    cue_added = CueLayout.cue_added
-    cue_removed = CueLayout.cue_removed
-    focus_changed = CueLayout.focus_changed
-
-    def __init__(self, app, **kwds):
-        super().__init__(**kwds)
+    def __init__(self, app, **kwargs):
+        super().__init__(**kwargs)
 
         self.menuLayout = app.mainWindow.menuLayout
 
@@ -207,6 +201,7 @@ class CartLayout(QTabWidget, CueLayout):
         # widget.focus_changed.connect(self.focus_changed.emit)
         widget.context_menu_request.connect(self._on_context_menu)
         widget.edit_request.connect(self.edit_cue)
+        widget.cue_execute.connect(self.cue_execute.emit)
 
         self.cue_added.emit(cue)
 

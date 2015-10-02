@@ -55,8 +55,7 @@ class TriggersSettings(SettingsSection):
         if self.cue is None:
             self.setEnabled(False)
         else:
-            self.cue_dialog = CueListDialog()
-            self.cue_dialog.add_cues(Application().layout.get_cues())
+            self.cue_dialog = CueListDialog(cues=Application().layout.get_cues())
 
     def _add_new_trigger(self, tr_action, target, ta_action):
         item = QListWidgetItem()

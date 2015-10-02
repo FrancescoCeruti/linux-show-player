@@ -49,8 +49,6 @@ class VolumeControl(Cue):
         self.name = self.Name
 
     def execute(self, action=Cue.CueAction.Default):
-        self.on_execute.emit(self, action)
-
         cue = Application().layout.get_cue_by_id(self.target_id)
         if isinstance(cue, MediaCue):
             volume = cue.media.element('Volume')
@@ -62,8 +60,6 @@ class VolumeControl(Cue):
                         self._fadein(volume, cue.media)
                 else:
                     volume.current_volume = self.volume
-
-        self.executed.emit(self, action)
 
     @async
     @synchronized_method(lock_name='__fade_lock', blocking=False)
@@ -112,8 +108,8 @@ class VolumeSettings(SettingsSection):
         self.setLayout(QVBoxLayout(self))
 
         self.app_layout = Application().layout
-        self.cueDialog = CueListDialog(parent=self)
-        self.cueDialog.add_cues(self.app_layout.get_cues(cue_class=MediaCue))
+        self.cueDialog = CueListDialog(
+            cues=self.app_layout.get_cues(cue_class=MediaCue), parent=self)
 
         self.cueGroup = QGroupBox(self)
         self.cueGroup.setLayout(QVBoxLayout())
