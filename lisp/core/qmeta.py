@@ -22,5 +22,9 @@ from abc import ABCMeta
 from PyQt5.QtCore import pyqtWrapperType
 
 
+class QMeta(pyqtWrapperType, type):
+    pass
+
+
 class QABCMeta(pyqtWrapperType, ABCMeta):
     pass

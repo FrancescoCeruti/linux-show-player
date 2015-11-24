@@ -23,12 +23,12 @@ from abc import abstractmethod
 class Action:
     """Base class for actions.
 
-    Action provides the ability to revert the changes done, calling "do" method,
-    via "undo" method, and do them again via the "redo" method.
+    Action provides the ability to revert the changes done in the "do" method,
+    via "undo" method, and redo them via the "redo" method.
     An action could provide, via the "log" function, a simple log message.
 
     .. warning::
-        Action shouldn't retains external object (e.g. cue(s), media(s))
+        Actions shouldn't retains external object (e.g. cue(s), media(s))
         references. Use weak-references instead.
     """
 

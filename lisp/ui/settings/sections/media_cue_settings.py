@@ -25,7 +25,7 @@ from lisp.ui.settings.section import SettingsSection
 
 
 class MediaCueSettings(SettingsSection):
-    Name = 'Cue Settings'
+    Name = 'Media Settings'
 
     def __init__(self, size, cue=None, parent=None):
         super().__init__(size, cue=cue, parent=parent)

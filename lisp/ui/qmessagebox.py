@@ -22,10 +22,7 @@ from PyQt5.QtWidgets import QMessageBox
 
 
 class QDetailedMessageBox(QMessageBox):
-    """
-        Simple extension of QMessageBox providing statics methods for
-        detailed message-boxes
-    """
+    """QMessageBox providing statics methods to show detailed-text"""
 
     @staticmethod
     def dcritical(title, text, detailed_text, parent=None):

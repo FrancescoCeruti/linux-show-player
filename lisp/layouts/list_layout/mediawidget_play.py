@@ -21,6 +21,9 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon, QColor
 from PyQt5.QtWidgets import QWidget, QGridLayout, QLabel, QSizePolicy, \
     QPushButton, QLCDNumber
+
+from lisp.core.signal import Connection
+from lisp.cues.cue_time import CueTime
 from lisp.ui.qclickslider import QClickSlider
 
 from lisp.ui.qdbmeter import QDbMeter
@@ -29,11 +32,12 @@ from lisp.utils.util import strtime
 
 class PlayingMediaWidget(QWidget):
 
-    def __init__(self, cue, media_time, parent=None):
-        super().__init__(parent)
+    def __init__(self, cue, **kwargs):
+        super().__init__(**kwargs)
 
         self.cue = cue
-        self.media_time = media_time
+        self.cue_time = CueTime(cue)
+        self.cue_time.notify.connect(self._time_updated, mode=Connection.QtQueued)
 
         self._dbmeter_element = None
         self._accurate_time = False
@@ -49,8 +53,8 @@ class PlayingMediaWidget(QWidget):
 
         self.nameLabel = QLabel(self.gridLayoutWidget)
         self.nameLabel.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
-        self.nameLabel.setText(cue['name'])
-        self.nameLabel.setToolTip(cue['name'])
+        self.nameLabel.setText(cue.name)
+        self.nameLabel.setToolTip(cue.name)
         self.gridLayout.addWidget(self.nameLabel, 0, 0, 1, 3)
 
         self.playPauseButton = QPushButton(self.gridLayoutWidget)
@@ -58,28 +62,29 @@ class PlayingMediaWidget(QWidget):
                                            QSizePolicy.Ignored)
         self.playPauseButton.setIcon(QIcon.fromTheme("media-playback-pause"))
         self.playPauseButton.setFocusPolicy(Qt.NoFocus)
-        self.playPauseButton.clicked.connect(lambda: self.cue.media.pause())
+        self.playPauseButton.clicked.connect(self._pause)
         self.gridLayout.addWidget(self.playPauseButton, 1, 0)
 
         self.stopButton = QPushButton(self.gridLayoutWidget)
         self.stopButton.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
         self.stopButton.setIcon(QIcon.fromTheme("media-playback-stop"))
         self.stopButton.setFocusPolicy(Qt.NoFocus)
-        self.stopButton.clicked.connect(lambda m: cue.media.stop())
+        self.stopButton.clicked.connect(self._stop)
         self.gridLayout.addWidget(self.stopButton, 1, 1)
 
         self.timeDisplay = QLCDNumber(self.gridLayoutWidget)
+        self.timeDisplay.setStyleSheet('background-color: transparent')
         self.timeDisplay.setSegmentStyle(QLCDNumber.Flat)
         self.timeDisplay.setDigitCount(8)
-        self.timeDisplay.display(strtime(cue.media['duration']))
+        self.timeDisplay.display(strtime(cue.media.duration))
         self.gridLayout.addWidget(self.timeDisplay, 1, 2)
 
         self.seekSlider = QClickSlider(self.gridLayoutWidget)
         self.seekSlider.setOrientation(Qt.Horizontal)
-        self.seekSlider.setRange(0, cue.media['duration'])
+        self.seekSlider.setRange(0, cue.media.duration)
         self.seekSlider.setFocusPolicy(Qt.NoFocus)
-        self.seekSlider.sliderMoved.connect(cue.media.seek)
-        self.seekSlider.sliderJumped.connect(cue.media.seek)
+        self.seekSlider.sliderMoved.connect(self._seek)
+        self.seekSlider.sliderJumped.connect(self._seek)
         self.seekSlider.setVisible(False)
 
         self.dbmeter = QDbMeter(self.gridLayoutWidget)
@@ -91,10 +96,8 @@ class PlayingMediaWidget(QWidget):
         self.gridLayout.setColumnStretch(1, 3)
         self.gridLayout.setColumnStretch(2, 5)
 
-        self.media_time.notify.connect(self.on_time_updated)
-
-        cue.updated.connect(self.on_cue_updated)
-        cue.media.duration.connect(self.update_duration)
+        cue.changed('name').connect(self.name_changed)
+        cue.media.changed('duration').connect(self.update_duration)
         cue.media.played.connect(self._pause_to_play)
         cue.media.paused.connect(self._play_to_pause)
 
@@ -118,9 +121,9 @@ class PlayingMediaWidget(QWidget):
     def exit_fade(self):
         self.timeDisplay.setPalette(self.palette())
 
-    def on_cue_updated(self, cue):
-        self.nameLabel.setText(cue['name'])
-        self.nameLabel.setToolTip(cue['name'])
+    def name_changed(self, name):
+        self.nameLabel.setText(name)
+        self.nameLabel.setToolTip(name)
 
     def set_accurate_time(self, enable):
         self._accurate_time = enable
@@ -137,13 +140,13 @@ class PlayingMediaWidget(QWidget):
 
     def set_dbmeter_visible(self, visible):
         if self._dbmeter_element is not None:
-            self._dbmeter_element.levelReady.disconnect(self.dbmeter.plot)
+            self._dbmeter_element.level_ready.disconnect(self.dbmeter.plot)
             self._dbmeter_element = None
 
         if visible:
             self._dbmeter_element = self.cue.media.element("DbMeter")
             if self._dbmeter_element is not None:
-                self._dbmeter_element.levelReady.connect(self.dbmeter.plot)
+                self._dbmeter_element.level_ready.connect(self.dbmeter.plot)
 
         # Add/Remove the QDbMeter in the layout
         if visible and not self.dbmeter.isVisible():
@@ -155,45 +158,40 @@ class PlayingMediaWidget(QWidget):
 
         self.dbmeter.setVisible(visible)
 
-    def on_time_updated(self, time):
+    def _time_updated(self, time):
         if not self.visibleRegion().isEmpty():
             # If the given value is the duration or < 0 set the time to 0
-            if time == self.cue.media['duration'] or time < 0:
+            if time == self.cue.media.duration or time < 0:
                 time = 0
 
             # Set the value the seek slider
             self.seekSlider.setValue(time)
 
-            # If in count-down mode the widget will show the remaining time
-            time = self.cue.media['duration'] - time
-
             # Show the time in the widget
-            self.timeDisplay.display(strtime(time,
+            self.timeDisplay.display(strtime(self.cue.media.duration - time,
                                              accurate=self._accurate_time))
 
     def update_duration(self, media, duration):
         self.seekSlider.setMaximum(duration)
 
+    def _stop(self, *args):
+        self.cue.media.stop()
+
+    def _play(self, *args):
+        self.cue.media.play()
+
+    def _pause(self, *args):
+        self.cue.media.pause()
+
+    def _seek(self, position):
+        self.cue.media.seek(position)
+
     def _play_to_pause(self):
         self.playPauseButton.clicked.disconnect()
-        self.playPauseButton.clicked.connect(lambda: self.cue.media.play())
+        self.playPauseButton.clicked.connect(self._play)
         self.playPauseButton.setIcon(QIcon.fromTheme("media-playback-start"))
 
     def _pause_to_play(self):
         self.playPauseButton.clicked.disconnect()
-        self.playPauseButton.clicked.connect(lambda: self.cue.media.pause())
+        self.playPauseButton.clicked.connect(self._pause)
         self.playPauseButton.setIcon(QIcon.fromTheme("media-playback-pause"))
-
-    def destroy_widget(self):
-        self.hide()
-        self.set_dbmeter_visible(False)
-        self.media_time.notify.disconnect(self.on_time_updated)
-
-        if self.fade is not None:
-            self.fade.enter_fadein.disconnect(self.enter_fadein)
-            self.fade.enter_fadeout.disconnect(self.enter_fadeout)
-            self.fade.exit_fadein.disconnect(self.exit_fade)
-            self.fade.exit_fadeout.disconnect(self.exit_fade)
-
-        self.cue.media.duration.disconnect(self.update_duration)
-        self.cue.updated.disconnect(self.on_cue_updated)

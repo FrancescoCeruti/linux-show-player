@@ -20,6 +20,7 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog, QTreeWidget, QHeaderView, QVBoxLayout, \
     QDialogButtonBox, QTreeWidgetItem
+
 from lisp.utils import logging
 
 
@@ -29,7 +30,7 @@ class CueListDialog(QDialog):
 
         self.setMinimumSize(600, 400)
 
-        self._properties = properties
+        self._properties = list(properties)
         self._cues = []
 
         self.list = QTreeWidget(self)
@@ -42,9 +43,10 @@ class CueListDialog(QDialog):
         self.list.header().setSectionResizeMode(1, QHeaderView.Stretch)
         self.list.header().setStretchLastSection(False)
         self.list.sortByColumn(0, Qt.AscendingOrder)
+        self.list.setSortingEnabled(True)
+
         if cues is not None:
             self.add_cues(cues)
-        self.list.setSortingEnabled(True)
 
         self.setLayout(QVBoxLayout())
         self.layout().addWidget(self.list)
@@ -69,11 +71,14 @@ class CueListDialog(QDialog):
                                   dialog=False)
 
         self._cues.append(cue)
+        item.setData(0, Qt.UserRole, len(self._cues) - 1)
         self.list.addTopLevelItem(item)
 
     def add_cues(self, cues):
+        self.list.setSortingEnabled(False)
         for cue in cues:
             self.add_cue(cue)
+        self.list.setSortingEnabled(True)
 
     def remove_cue(self, cue):
         index = self._cues.index(cue)
@@ -90,6 +95,6 @@ class CueListDialog(QDialog):
     def selected_cues(self):
         cues = []
         for item in self.list.selectedItems():
-            index = self.list.indexOfTopLevelItem(item)
+            index = item.data(0, Qt.UserRole)
             cues.append(self._cues[index])
         return cues

@@ -156,9 +156,9 @@ def strtime(time, accurate=False):
         return '%02d:%02d:%02d' % time[:-1]
     elif accurate:
         time = time[1:3] + (time[3] // 100,)
-        return '%02d:%02d:%01d' % time + '0'
+        return '%02d:%02d.%01d' % time + '0'
     else:
-        return '%02d:%02d' % time[1:3] + ':00'
+        return '%02d:%02d' % time[1:3] + '.00'
 
 
 def check_type(value, type_):

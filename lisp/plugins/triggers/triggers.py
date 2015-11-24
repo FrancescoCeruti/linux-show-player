@@ -20,8 +20,7 @@
 from lisp.core.plugin import Plugin
 
 from lisp.application import Application
-from lisp.cues.media_cue import MediaCue
-from lisp.plugins.triggers.triggers_handler import MediaHandler
+from lisp.plugins.triggers.triggers_handler import CueHandler
 from lisp.plugins.triggers.triggers_settings import TriggersSettings
 
 
@@ -33,9 +32,9 @@ class Triggers(Plugin):
         super().__init__()
 
         TriggersSettings.PluginInstance = self
-        Application().layout.add_settings_section(TriggersSettings, MediaCue)
-        Application().layout.cue_added.connect(self._cue_added)
-        Application().layout.cue_removed.connect(self._cue_removed)
+        Application().layout.add_settings_section(TriggersSettings)
+        Application().cue_model.item_added.connect(self._cue_added)
+        Application().cue_model.item_added.connect(self._cue_removed)
 
         self.triggers = {}
         self.handlers = {}
@@ -52,7 +51,7 @@ class Triggers(Plugin):
         self.triggers = settings
 
         for cue_id in self.triggers:
-            cue = Application().layout.get_cue_by_id(cue_id)
+            cue = Application().cue_model.get(cue_id)
             if cue is not None:
                 self._cue_added(cue)
 
@@ -60,7 +59,7 @@ class Triggers(Plugin):
         settings = {}
 
         for cue_id, cue_triggers in self.triggers.items():
-            if Application().layout.get_cue_by_id(cue_id) is not None:
+            if Application().cue_model.get(cue_id) is not None:
                 settings[cue_id] = cue_triggers
 
         return settings
@@ -76,9 +75,8 @@ class Triggers(Plugin):
         TriggersSettings.PluginInstance = None
 
     def _cue_added(self, cue):
-        if isinstance(cue, MediaCue) and cue.id in self.triggers:
-            self.handlers[cue.id] = MediaHandler(cue.media,
-                                                 self.triggers[cue.id])
+        if cue.id in self.triggers:
+            self.handlers[cue.id] = CueHandler(cue, self.triggers[cue.id])
 
     def _cue_removed(self, cue):
         handler = self.handlers.pop(cue.id, None)

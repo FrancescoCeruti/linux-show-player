@@ -22,10 +22,10 @@ from abc import abstractmethod
 from PyQt5.QtWidgets import QAction, QMenu, qApp
 
 from lisp.core.signal import Signal
-from lisp.core.actions_handler import ActionsHandler
+from lisp.core.actions_handler import MainActionsHandler
 from lisp.cues.cue import Cue
-from lisp.layouts.cue_layout_actions import AddAction, ConfigureAction, \
-    MultiConfigureAction, MoveAction, RemoveAction
+from lisp.layouts.cue_layout_actions import ConfigureAction, \
+    MultiConfigureAction
 from lisp.ui.mainwindow import MainWindow
 from lisp.ui.settings.cue_settings import CueSettings
 from lisp.ui.settings.section import SettingsSection
@@ -41,12 +41,23 @@ class CueLayout():
     _settings_sections = {}
     _context_items = {}
 
-    def __init__(self):
-        self.cue_added = Signal()       # After a cue is added
-        self.cue_removed = Signal()     # After a cue is removed
-        self.cue_execute = Signal()     # Before a cue is executed by the layout
+    def __init__(self, cue_model):
+        self._cue_model = cue_model
+        self._model_adapter = None
+
+        self.cue_execute = Signal()     # Before a cue is executed
         self.focus_changed = Signal()   # After the focused cue is changed
         self.key_pressed = Signal()     # After a key is pressed
+
+    @property
+    def cue_model(self):
+        """:rtype: lisp.model_view.cue_model.CueModel"""
+        return self._cue_model
+
+    @property
+    def model_adapter(self):
+        """:rtype: lisp.model_view.model_adapter.ModelAdapter"""
+        return self._model_adapter
 
     @classmethod
     def add_context_item(cls, item, cue_class=Cue):
@@ -67,18 +78,6 @@ class CueLayout():
 
         return separator
 
-    def add_cue(self, cue, index=None):
-        action = AddAction(self, cue, index)
-        ActionsHandler().do_action(action)
-
-    def add_cues(self, cues):
-        for cue in filter(lambda c: c is not None, cues):
-            self.add_cue(cue)
-
-    @abstractmethod
-    def __add_cue__(self, cue, index=None):
-        """Add the cue to the layout"""
-
     @classmethod
     def add_settings_section(cls, section, cue_class=Cue):
         if issubclass(section, SettingsSection):
@@ -88,15 +87,11 @@ class CueLayout():
                 cls._settings_sections[cue_class].append(section)
 
     @abstractmethod
-    def clear_layout(self):
-        """Reset the layout elements"""
-
-    @abstractmethod
     def deselect_all(self):
         """Deselect all the cues"""
 
     @abstractmethod
-    def destroy_layout(self):
+    def finalize(self):
         """Destroy all the layout elements"""
 
     def edit_cue(self, cue):
@@ -112,7 +107,7 @@ class CueLayout():
 
             def on_apply(settings):
                 action = ConfigureAction(settings, cue)
-                ActionsHandler().do_action(action)
+                MainActionsHandler().do_action(action)
 
             edit_ui.on_apply.connect(on_apply)
             edit_ui.exec_()
@@ -141,7 +136,7 @@ class CueLayout():
 
             def on_apply(settings):
                 action = MultiConfigureAction(settings, cues)
-                ActionsHandler().do_action(action)
+                MainActionsHandler().do_action(action)
 
             edit_ui.on_apply.connect(on_apply)
             edit_ui.exec_()
@@ -152,21 +147,6 @@ class CueLayout():
         return None
 
     @abstractmethod
-    def get_cue_at(self, index):
-        """Return the cue at the given index, or None"""
-        return None
-
-    @abstractmethod
-    def get_cue_by_id(self, cue_id):
-        """Return the cue with the given id, or None"""
-        return None
-
-    @abstractmethod
-    def get_cues(self, cue_class=Cue):
-        """Get all the cues as 1d-list"""
-        return []
-
-    @abstractmethod
     def get_selected_cues(self, cue_class=Cue):
         """Return an "ordered" list of all selected cues"""
         return []
@@ -174,26 +154,6 @@ class CueLayout():
     @abstractmethod
     def invert_selection(self):
         """Invert selection"""
-
-    def move_cue(self, cue, index):
-        action = MoveAction(self, cue, index)
-        ActionsHandler().do_action(action)
-
-    @abstractmethod
-    def __move_cue__(self, cue, index):
-        """Move the given cue at the given index"""
-
-    def remove_cue(self, cue):
-        action = RemoveAction(self, cue, cue.index)
-        ActionsHandler().do_action(action)
-
-    def remove_cue_at(self, index):
-        action = RemoveAction(self, self.get_cue_at(index), index)
-        ActionsHandler().do_action(action)
-
-    @abstractmethod
-    def __remove_cue__(self, cue):
-        """Remove the given cue"""
 
     @classmethod
     def remove_context_item(cls, item):
@@ -205,28 +165,15 @@ class CueLayout():
         for key in cls._settings_sections:
             cls._settings_sections[key] = [s for s in cls._settings_sections[key] if s != section]
 
-    '''
-    @classmethod
-    def reset_context_items(cls, cue_class=Cue):
-        for cclass in list(cls._context_items):
-            if issubclass(cclass, cue_class):
-                cls._context_items.pop(cclass, None)
-
-    @classmethod
-    def reset_settings_sections(cls, cue_class=Cue):
-        for cclass in list(cls._settings_sections):
-            if issubclass(cclass, cue_class):
-                cls._settings_sections.pop(cclass, None)
-    '''
-
     @abstractmethod
     def select_all(self):
         """Select all the cues"""
 
     def show_context_menu(self, position):
         items = []
+        cue = self.get_context_cue()
         for class_ in sorted(self._context_items.keys(), key=lambda i: str(i)):
-            if isinstance(self.get_context_cue(), class_):
+            if isinstance(cue, class_):
                 items.extend(self._context_items[class_])
 
         if len(items) > 0:

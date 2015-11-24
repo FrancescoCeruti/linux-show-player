@@ -42,9 +42,6 @@ class Media(HasProperties, metaclass=ABCMeta):
     def __init__(self):
         super().__init__()
 
-        #: Current state
-        self.state = MediaState.Null
-
         #: Emitted when paused (self)
         self.paused = Signal()
         #: Emitted when played (self)
@@ -68,10 +65,18 @@ class Media(HasProperties, metaclass=ABCMeta):
         #: Emitted when an error occurs (self, error, details)
         self.error = Signal()
 
+    @property
+    @abstractmethod
+    def state(self):
+        """
+        :return: the media current state
+        :rtype: MediaState
+        """
+
     @abstractmethod
     def current_time(self):
         """
-        :return: the current playback time in milliseconds or -1
+        :return: the current playback time in milliseconds or 0
         :rtype: int
         """
 

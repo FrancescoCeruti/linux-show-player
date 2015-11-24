@@ -32,7 +32,10 @@ class ListLayoutPreferences(SettingsSection):
         self.behaviorsGroup = QGroupBox(self)
         self.behaviorsGroup.setTitle('Default behaviors')
         self.behaviorsGroup.setLayout(QVBoxLayout())
-        self.behaviorsGroup.setGeometry(0, 0, self.width(), 120)
+        self.behaviorsGroup.setGeometry(0, 0, self.width(), 140)
+
+        self.showPlaying = QCheckBox(self.behaviorsGroup)
+        self.behaviorsGroup.layout().addWidget(self.showPlaying)
 
         self.showDbMeters = QCheckBox(self.behaviorsGroup)
         self.behaviorsGroup.layout().addWidget(self.showDbMeters)
@@ -50,6 +53,7 @@ class ListLayoutPreferences(SettingsSection):
 
     def retranslateUi(self):
         self.behaviorsGroup.setTitle('Default behaviors')
+        self.showPlaying.setText('Show playing-sidebar')
         self.showDbMeters.setText('Show db-meters')
         self.showAccurate.setText('Show accurate time')
         self.showSeek.setText('Show seek sliders')
@@ -58,6 +62,7 @@ class ListLayoutPreferences(SettingsSection):
     def get_configuration(self):
         conf = {}
 
+        conf['showplaying'] = str(self.showPlaying.isChecked())
         conf['showdbmeters'] = str(self.showDbMeters.isChecked())
         conf['showseek'] = str(self.showSeek.isChecked())
         conf['showaccurate'] = str(self.showAccurate.isChecked())
@@ -68,6 +73,7 @@ class ListLayoutPreferences(SettingsSection):
     def set_configuration(self, conf):
         settings = conf.get('ListLayout', {})
 
+        self.showPlaying.setChecked(settings.get('showplaying') == 'True')
         self.showDbMeters.setChecked(settings.get('showdbmeters') == 'True')
         self.showAccurate.setChecked(settings.get('showaccurate') == 'True')
         self.showSeek.setChecked(settings.get('showseek') == 'True')

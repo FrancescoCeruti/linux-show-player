@@ -22,44 +22,6 @@ from copy import deepcopy
 from lisp.core.action import Action
 
 
-class AddAction(Action):
-    def __init__(self, layout, cue, index):
-        self._layout = layout
-        self._cue = cue
-        self._index = index
-
-    def do(self):
-        self._layout.__add_cue__(self._cue, self._index)
-
-    def undo(self):
-        self._layout.__remove_cue__(self._cue)
-
-    def redo(self):
-        self.do()
-
-    def log(self):
-        return 'Cue added'
-
-
-class RemoveAction(Action):
-    def __init__(self, layout, cue, index):
-        self._layout = layout
-        self._cue = cue
-        self._index = index
-
-    def do(self):
-        self._layout.__remove_cue__(self._cue)
-
-    def undo(self):
-        self._layout.__add_cue__(self._cue, self._index)
-
-    def redo(self):
-        self.do()
-
-    def log(self):
-        return 'Cue removed'
-
-
 class ConfigureAction(Action):
     def __init__(self, properties, cue):
         self._cue = cue
@@ -98,23 +60,3 @@ class MultiConfigureAction(Action):
 
     def log(self):
         return 'Cues configuration changed'
-
-
-class MoveAction(Action):
-    def __init__(self, layout, cue, to_index):
-        self._cue = cue
-        self._layout = layout
-        self._to_index = to_index
-        self._from_index = cue.index
-
-    def do(self):
-        self._layout.__move_cue__(self._cue, self._to_index)
-
-    def undo(self):
-        self._layout.__move_cue__(self._cue, self._from_index)
-
-    def redo(self):
-        self.do()
-
-    def log(self):
-        return 'Cue moved'

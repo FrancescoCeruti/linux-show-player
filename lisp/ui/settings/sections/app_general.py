@@ -66,7 +66,7 @@ class General(SettingsSection):
         else:
             conf['Layout']['default'] = self.layoutCombo.currentText()
 
-        conf['Theme']['current'] = self.themeCombo.currentText()
+        conf['Theme']['theme'] = self.themeCombo.currentText()
         styles.apply_style(self.themeCombo.currentText())
 
         return conf
@@ -78,5 +78,5 @@ class General(SettingsSection):
                 self.layoutCombo.setEnabled(False)
             else:
                 self.layoutCombo.setCurrentText(conf['Layout']['default'])
-        if 'current' in conf['Theme']:
-            self.themeCombo.setCurrentText(conf['Theme']['current'])
+        if 'theme' in conf['Theme']:
+            self.themeCombo.setCurrentText(conf['Theme']['theme'])

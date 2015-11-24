@@ -115,8 +115,6 @@ class About(QDialog):
     CONTRIBUTORS = '''
 <center>
     <b>Author:</b><br />
-    Francesco Ceruti - <a href="mailto:ceppofrancy@gmail.com">ceppofrancy@gmail.com</a><br \><br />
-    <b>Packaging:</b><br />
-    <i>Arch Linux:</i> Marco Asa
+    Francesco Ceruti - <a href="mailto:ceppofrancy@gmail.com">ceppofrancy@gmail.com</a><br \>
 </center>
 '''

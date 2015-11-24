@@ -28,7 +28,7 @@ from lisp.application import Application
 from lisp.backends.base.media import MediaState
 from lisp.core.decorators import async, synchronized_method
 from lisp.core.has_properties import Property
-from lisp.cues.cue import Cue
+from lisp.cues.cue import Cue, CueState
 from lisp.cues.media_cue import MediaCue
 from lisp.layouts.cue_layout import CueLayout
 from lisp.ui.cuelistdialog import CueListDialog
@@ -36,24 +36,30 @@ from lisp.ui.settings.section import SettingsSection
 from lisp.utils.fade_functor import ntime, FadeIn, FadeOut
 
 
+# TODO: _fadein and _fadeout can be reduced to a single function
 class VolumeControl(Cue):
     Name = 'Volume Control'
 
     target_id = Property()
     fade_type = Property(default='Linear')
-    fade = Property(default=.0)
     volume = Property(default=.0)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.name = self.Name
 
-    def execute(self, action=Cue.CueAction.Default):
-        cue = Application().layout.get_cue_by_id(self.target_id)
+        self.__state = CueState.Stop
+        self.__time = 0
+
+    @async
+    def __execute__(self, action=Cue.CueAction.Default):
+        self.start.emit(self)
+
+        cue = Application().cue_model.get(self.target_id)
         if isinstance(cue, MediaCue):
             volume = cue.media.element('Volume')
             if volume is not None:
-                if self.fade > 0:
+                if self.duration > 0:
                     if volume.current_volume > self.volume:
                         self._fadeout(volume, cue.media)
                     elif volume.current_volume < self.volume:
@@ -61,35 +67,61 @@ class VolumeControl(Cue):
                 else:
                     volume.current_volume = self.volume
 
-    @async
+        self.end.emit(self)
+
     @synchronized_method(lock_name='__fade_lock', blocking=False)
     def _fadein(self, volume, media):
-        functor = FadeIn[self.fade_type]
-        duration = self.fade * 100
-        base_volume = volume.current_volume
-        volume_diff = self.volume - base_volume
-        time = 0
+        try:
+            self.__state = CueState.Running
 
-        while time <= duration and media.state == MediaState.Playing:
-            volume.current_volume = functor(ntime(time, 0, duration),
-                                            volume_diff, base_volume)
-            time += 1
-            sleep(0.01)
+            functor = FadeIn[self.fade_type]
+            duration = self.duration // 10
+            base_volume = volume.current_volume
+            volume_diff = self.volume - base_volume
+            self.__time = 0
 
-    @async
+            while self.__time <= duration and media.state == MediaState.Playing:
+                volume.current_volume = functor(ntime(self.__time, 0, duration),
+                                                volume_diff, base_volume)
+                self.__time += 1
+                sleep(0.01)
+        except Exception as e:
+            self.__state = CueState.Error
+            self.error.emit(self, 'Error during cue execution', str(e))
+            raise e
+        finally:
+            self.__time = 0
+            self.__state = CueState.Stop
+
     @synchronized_method(lock_name='__fade_lock', blocking=False)
     def _fadeout(self, volume, media):
-        functor = FadeOut[self.fade_type]
-        duration = self.fade * 100
-        base_volume = volume.current_volume
-        volume_diff = self.volume - base_volume
-        time = 0
+        try:
+            self.__state = CueState.Running
 
-        while time <= duration and media.state == MediaState.Playing:
-            volume.current_volume = functor(ntime(time, 0, duration),
-                                            volume_diff, base_volume)
-            time += 1
-            sleep(0.01)
+            functor = FadeOut[self.fade_type]
+            duration = self.duration // 10
+            base_volume = volume.current_volume
+            volume_diff = self.volume - base_volume
+
+            while self.__time <= duration and media.state == MediaState.Playing:
+                volume.current_volume = functor(ntime(self.__time, 0, duration),
+                                                volume_diff, base_volume)
+                self.__time += 1
+                sleep(0.01)
+        except Exception as e:
+            self.__state = CueState.Error
+            self.error.emit(self, 'Error during cue execution', str(e))
+            raise e
+        finally:
+            self.__time = 0
+            self.__state = CueState.Stop
+
+    def current_time(self):
+        return self.__time * 10
+
+    @Cue.state.getter
+    def state(self):
+        return self.__state
 
 
 class VolumeSettings(SettingsSection):
@@ -107,9 +139,8 @@ class VolumeSettings(SettingsSection):
         self.cue_id = -1
         self.setLayout(QVBoxLayout(self))
 
-        self.app_layout = Application().layout
-        self.cueDialog = CueListDialog(
-            cues=self.app_layout.get_cues(cue_class=MediaCue), parent=self)
+        cues = Application().cue_model.filter(MediaCue)
+        self.cueDialog = CueListDialog(cues=cues, parent=self)
 
         self.cueGroup = QGroupBox(self)
         self.cueGroup.setLayout(QVBoxLayout())
@@ -198,20 +229,20 @@ class VolumeSettings(SettingsSection):
         if not (checkable and not self.volumeGroup.isCheckable()):
             conf['volume'] = self.volumeEdit.value()
         if not (checkable and not self.fadeGroup.isCheckable()):
-            conf['fade'] = self.fadeSpin.value()
+            conf['duration'] = self.fadeSpin.value() * 1000
             conf['fade_type'] = self.fadeCurveCombo.currentText()
 
         return conf
 
     def set_configuration(self, conf):
         if conf is not None:
-            cue = self.app_layout.get_cue_by_id(conf['target_id'])
+            cue = Application().cue_model.get(conf['target_id'])
             if cue is not None:
                 self.cue_id = conf['target_id']
                 self.cueLabel.setText(cue.name)
 
             self.volumeEdit.setValue(conf['volume'])
-            self.fadeSpin.setValue(conf['fade'])
+            self.fadeSpin.setValue(conf['duration'] // 1000)
             self.fadeCurveCombo.setCurrentText(conf['fade_type'])
 
 

@@ -28,7 +28,7 @@ from PyQt5.QtCore import QEvent, QObject
 from PyQt5.QtWidgets import QApplication
 
 from lisp.core.decorators import async
-
+from lisp.utils import logging
 
 __all__ = ['Signal', 'Connection']
 
@@ -53,23 +53,25 @@ class Slot:
     def __init__(self, slot, callback=None):
         if isinstance(slot, MethodType):
             self._reference = weakref.WeakMethod(slot, self._expired)
-            self._no_args = len(inspect.getfullargspec(slot).args) == 1
         elif callable(slot):
             self._reference = weakref.ref(slot, self._expired)
-            self._no_args = len(inspect.getfullargspec(slot).args) == 0
         else:
             raise TypeError('slot must be callable')
 
         self._callback = callback
         self._slot_id = slot_id(slot)
+        self._no_args = len(inspect.signature(slot).parameters) == 0
 
     def call(self, *args, **kwargs):
         """Call the callable object within the given parameters."""
-        if self.is_alive():
-            if self._no_args:
-                self._reference()()
-            else:
-                self._reference()(*args, **kwargs)
+        try:
+            if self.is_alive():
+                if self._no_args:
+                    self._reference()()
+                else:
+                    self._reference()(*args, **kwargs)
+        except Exception as e:
+            logging.exception('', e, dialog=False)
 
     def is_alive(self):
         return self._reference() is not None
@@ -138,24 +140,24 @@ class Connection(Enum):
 
 
 class Signal:
-    """Quite simple (qt-compatible) signal/slot implementation.
+    """Signal/slot implementation.
 
     A signal object can be connected/disconnected to a callable object (slot),
     the connection can have different modes, any mode define the way a slot
     is called, those are defined in :class:`Connection`.
 
     .. note::
-        * Any object can be connected only once to a specific signal,
+        * Any slot can be connected only once to a specific signal,
           if reconnected, the previous connection is overridden.
         * Internally weak-references are used, so disconnection is not needed
-          before delete objects.
+          before delete a slot-owner object.
         * Signals with "arguments" can be connected to slot without arguments
 
     .. warning::
         Because of weakrefs, connecting like the following can't work:
 
         signal.connect(lambda: some_operation))
-        signal.connect(NewObject().my_method)     # Unless using some tricks
+        signal.connect(NewObject().my_method)     # Unless some case
         signal.connect(something_not_referenced)
     """
 

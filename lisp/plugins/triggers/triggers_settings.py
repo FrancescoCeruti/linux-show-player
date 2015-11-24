@@ -23,7 +23,7 @@ from PyQt5.QtWidgets import QVBoxLayout, QListWidget, QDialogButtonBox, \
     QPushButton
 
 from lisp.application import Application
-from lisp.plugins.triggers.triggers_handler import MediaTriggers
+from lisp.plugins.triggers.triggers_handler import CueTriggers
 from lisp.ui.cuelistdialog import CueListDialog
 from lisp.ui.settings.section import SettingsSection
 
@@ -34,7 +34,7 @@ class TriggersSettings(SettingsSection):
     PluginInstance = None
 
     def __init__(self, size, cue=None, **kwargs):
-        super().__init__(size, cue=None, **kwargs)
+        super().__init__(size, cue=cue, **kwargs)
         self.setLayout(QVBoxLayout(self))
 
         self.triggersWidget = QListWidget(self)
@@ -55,7 +55,7 @@ class TriggersSettings(SettingsSection):
         if self.cue is None:
             self.setEnabled(False)
         else:
-            self.cue_dialog = CueListDialog(cues=Application().layout.get_cues())
+            self.cue_dialog = CueListDialog(cues=Application().cue_model)
 
     def _add_new_trigger(self, tr_action, target, ta_action):
         item = QListWidgetItem()
@@ -70,7 +70,7 @@ class TriggersSettings(SettingsSection):
     def _add_trigger_dialog(self):
         if self.cue_dialog.exec_() == QDialog.Accepted:
             target = self.cue_dialog.selected_cues()[0]
-            self._add_new_trigger(tuple(MediaTriggers)[0].value, target,
+            self._add_new_trigger(tuple(CueTriggers)[0].value, target,
                                   tuple(target.CueAction)[0].value)
 
     def _remove_trigger(self):
@@ -82,7 +82,7 @@ class TriggersSettings(SettingsSection):
 
             for trigger_action, targets in triggers.items():
                 for target, target_action in targets:
-                    target = Application().layout.get_cue_by_id(target)
+                    target = Application().cue_model.get(target)
                     if target is not None:
                         self._add_new_trigger(trigger_action, target, target_action)
 
@@ -119,7 +119,7 @@ class TriggerWidget(QWidget):
 
         self.triggerActions = QComboBox(self)
         # MediaTriggers members names and values are equals
-        self.triggerActions.addItems([m.value for m in MediaTriggers])
+        self.triggerActions.addItems([m.value for m in CueTriggers])
         self.triggerActions.setCurrentText(tr_action)
         self.layout().addWidget(self.triggerActions)
 

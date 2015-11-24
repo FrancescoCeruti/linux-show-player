@@ -18,8 +18,10 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
-from PyQt5.QtCore import QStandardPaths
-from PyQt5.QtWidgets import QFileDialog
+
+from PyQt5.QtCore import QStandardPaths, Qt
+from PyQt5.QtGui import QCursor
+from PyQt5.QtWidgets import QFileDialog, QApplication
 
 from lisp import backends
 from lisp.application import Application
@@ -49,11 +51,14 @@ class LoadBackend(Module):
 
         extensions = backends.backend().file_extensions()
         filters = qfile_filters(extensions, anyfile=False)
-        files, ok = QFileDialog.getOpenFileNames(MainWindow(), 'Choose files',
-                                                 path, filters)
+        files, _ = QFileDialog.getOpenFileNames(MainWindow(), 'Choose files',
+                                                path, filters)
 
-        if ok:
-            for file in files:
-                cue = CueFactory.create_cue('URIAudioCue', uri='file://' + file)
-                cue.name = file.split(os.sep)[-1]
-                Application().layout.add_cue(cue)
+        QApplication.setOverrideCursor(QCursor(Qt.WaitCursor))
+
+        for file in files:
+            cue = CueFactory.create_cue('URIAudioCue', uri='file://' + file)
+            cue.name = file.split(os.sep)[-1]
+            Application().cue_model.add(cue)
+
+        QApplication.restoreOverrideCursor()

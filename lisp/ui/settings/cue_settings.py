@@ -18,23 +18,22 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from copy import deepcopy
-
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QDialog, QTabWidget, QDialogButtonBox
 
+from lisp.ui.settings.sections.cue_general import CueGeneralSettings
 from lisp.utils.util import deep_update
 
 
 class CueSettings(QDialog):
-
     on_apply = QtCore.pyqtSignal(dict)
 
-    def __init__(self, widgets=[], cue=None, check=False, **kwargs):
+    def __init__(self, widgets=(), cue=None, check=False, **kwargs):
         super().__init__(**kwargs)
 
         conf = {}
 
-        if(cue is not None):
+        if cue is not None:
             conf = deepcopy(cue.properties())
             self.setWindowTitle(conf['name'])
 

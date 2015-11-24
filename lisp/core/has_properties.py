@@ -28,7 +28,7 @@ class Property:
     .. warning::
         If extended any subclass *MUST*:
         1) if the __get__ method receive a None instance return self;
-        2) if the value is not setted return the default value (self.default);
+        2) if the value is not set return the default value (self.default);
         3) After the value is changed call the __changed__ method.
     """
 
@@ -44,21 +44,23 @@ class Property:
 
     def __set__(self, instance, value):
         if instance is not None:
-            instance.__dict__[self.name] = value
-            self.__changed__(instance, value)
+            # Only change the value if different
+            if value != instance.__dict__.get(self.name, self.default):
+                instance.__dict__[self.name] = value
+                self.__changed__(instance, value)
 
     def __changed__(self, instance, value):
-        instance.property_changed.emit(self.name, value)
+        instance.property_changed.emit(instance, self.name, value)
         # Get the related signal
         property_signal = instance.changed_signals.get(self.name, None)
         if property_signal is not None:
             property_signal.emit(value)
 
 
-class NestedProperty(Property):
+class NestedProperties(Property):
     """Simplify retrieving the properties of nested HasProperties objects.
 
-    The goal is to avoid useless reimplementation of HasProperties.properties()
+    The goal is to avoid the reimplementation of HasProperties.properties()
     and HasProperties.update_properties().
 
     ..note::

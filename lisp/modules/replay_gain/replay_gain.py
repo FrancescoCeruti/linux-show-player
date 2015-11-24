@@ -17,23 +17,23 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+import logging
 from concurrent.futures import ThreadPoolExecutor
 from concurrent.futures import as_completed as futures_completed
-import logging
 from math import pow
 from threading import Thread, Lock
 
 from PyQt5.QtWidgets import QMenu, QAction, QDialog
-from lisp.core.module import Module
 
-from lisp.backends.gst.gi_repository import Gst
 from lisp.application import Application
+from lisp.backends.gst.gi_repository import Gst
 from lisp.core.action import Action
-from lisp.core.actions_handler import ActionsHandler
+from lisp.core.actions_handler import MainActionsHandler
+from lisp.core.module import Module
 from lisp.core.signal import Signal, Connection
 from lisp.cues.media_cue import MediaCue
-from .gain_ui import GainUi, GainProgressDialog
 from lisp.ui.mainwindow import MainWindow
+from .gain_ui import GainUi, GainProgressDialog
 
 
 class GainAction(Action):
@@ -113,7 +113,7 @@ class GainMainThread(Thread):
                     break
 
         if self._running:
-            ActionsHandler().do_action(self._action)
+            MainActionsHandler().do_action(self._action)
         else:
             logging.info('REPLY-GAIN:: Stopped by user')
 
@@ -174,9 +174,9 @@ class ReplayGain(Module):
 
             files = {}
             if gainUi.only_selected():
-                cues = MainWindow().layout.get_selected_cues(MediaCue)
+                cues = Application().layout.get_selected_cues(MediaCue)
             else:
-                cues = MainWindow().layout.get_cues(MediaCue)
+                cues = Application().cue_model.filter(MediaCue)
 
             for cue in cues:
                 media = cue.media
@@ -188,14 +188,12 @@ class ReplayGain(Module):
                         files[uri].append(media)
 
             # Gain (main) thread
-
             self._gain_thread = GainMainThread(files, gainUi.threads(),
                                                gainUi.mode(),
                                                gainUi.ref_level(),
                                                gainUi.norm_level())
 
             # Progress dialog
-
             self._progress = GainProgressDialog(len(files))
             self._gain_thread.on_progress.connect(self._progress.on_progress,
                                                   mode=Connection.QtQueued)
@@ -212,16 +210,16 @@ class ReplayGain(Module):
         MainWindow().menuTools.removeAction(self.menu_action)
 
     def _reset_all(self):
-        self._reset(Application().layout.get_cues(MediaCue))
+        self._reset(Application().cue_model.filter(MediaCue))
 
     def _reset_selected(self):
-        self._reset(Application().layout.get_selected_cues(MediaCue))
+        self._reset(Application().cue_model.filter(MediaCue))
 
     def _reset(self, cues):
         action = GainAction()
         for cue in cues:
             action.add_media(cue.media, 1.0)
-        Application().actions_handler.do_action(action)
+        MainActionsHandler().do_action(action)
 
 
 class GstGain:
@@ -233,7 +231,7 @@ class GstGain:
         self.result = (False, 0, 0, uri)
         self.gain_pipe = None
 
-    # Create a pipeline with a fake audio output and get, the gain levels
+    # Create a pipeline with a fake audio output and get the gain levels
     def gain(self):
         pipe = 'uridecodebin uri="{0}" ! audioconvert ! rganalysis \
                 reference-level={1} ! fakesink'.format(self.uri, self.ref_level)

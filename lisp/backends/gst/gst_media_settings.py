@@ -55,7 +55,6 @@ class GstMediaSettings(SettingsSection):
         self.pipeButton.clicked.connect(self.__edit_pipe)
 
     def set_configuration(self, conf):
-        # Get the media section of the cue configuration
         if conf is not None:
             conf = conf.get('_media_', {})
 

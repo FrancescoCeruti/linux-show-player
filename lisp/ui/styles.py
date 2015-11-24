@@ -21,48 +21,33 @@ from os import path
 
 from PyQt5.QtCore import QFileSystemWatcher
 from PyQt5.QtGui import QPalette, QColor
-from PyQt5.QtWidgets import QStyleFactory, qApp
+from PyQt5.QtWidgets import QStyleFactory, qApp, QProxyStyle, QStyle
 
-from lisp.ui.style import style  # @UnusedImport
+from lisp.ui.style import style
 
 # TODO: maybe a class ? (StyleManager)
 
-__ThemeFileWatcher = None
-
 StylePath = path.abspath(path.join(path.dirname(__file__)))
 IconsThemePaths = [path.join(StylePath, 'icons')]
-IconsThemeName = 'lisp'
 
 LiSPThemeFile = path.join(StylePath, 'style/style.qss')
 
 
-def __load_qss_theme(qss_file, update=False):
+class NoFocusRectProxyStyle(QProxyStyle):
+    def drawPrimitive(self, element, option, painter, widget):
+        # do not draw focus rectangles - this permits modern styling
+        if element != QStyle.PE_FrameFocusRect:
+            super().drawPrimitive(element, option, painter, widget)
+
+
+def __load_qss_theme(qss_file):
     with open(qss_file, mode='r', encoding='utf-8') as f:
         style = f.read()
 
     qApp.setStyleSheet(style)
 
-    if not update:
-        watched_files = __ThemeFileWatcher.files()
-        if len(watched_files) > 0:
-            __ThemeFileWatcher.removePaths(watched_files)
-
-        __ThemeFileWatcher.addPath(qss_file)
-
-
-def __update_style():
-    watched_files = __ThemeFileWatcher.files()
-
-    if len(watched_files) > 0:
-        __load_qss_theme(watched_files[0], update=True)
-
 
 def apply_style(style_name):
-    global __ThemeFileWatcher
-    if __ThemeFileWatcher is None:
-        __ThemeFileWatcher = QFileSystemWatcher()
-        __ThemeFileWatcher.fileChanged.connect(__update_style)
-
     if style_name == 'LiSP':
         __load_qss_theme(LiSPThemeFile)
 

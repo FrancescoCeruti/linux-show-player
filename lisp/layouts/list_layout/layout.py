@@ -17,30 +17,30 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-import weakref
-
-from PyQt5 import QtCore
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QWidget, QAction, QToolBar, QHBoxLayout, \
-    QHeaderView, QVBoxLayout, QLabel, QListWidget, QAbstractItemView, \
-    QListWidgetItem, qApp
+    QVBoxLayout, QLabel, qApp
 
 from lisp.backends.base.media import MediaState
-from lisp.utils.configuration import config
+from lisp.core.memento_model import AdapterMementoModel
+from lisp.core.signal import Connection
 from lisp.cues.cue import Cue
-from lisp.cues.cue_factory import CueFactory
 from lisp.cues.media_cue import MediaCue
 from lisp.layouts.cue_layout import CueLayout
-from lisp.layouts.list_layout.actionitem import ActionItem
-from lisp.layouts.list_layout.listwidget import ListWidget
-from lisp.layouts.list_layout.mediaitem import MediaItem
-from lisp.layouts.list_layout.mediawidget_play import PlayingMediaWidget
+from lisp.layouts.list_layout.cue_list_model import CueListModel, \
+    PlayingMediaCueModel
+from lisp.layouts.list_layout.cue_list_view import CueListView
+from lisp.layouts.list_layout.listwidgets import CueStatusIcon, PreWaitWidget, PostWaitWidget, \
+    CueTimeWidget, NextActionIcon
+from lisp.layouts.list_layout.playing_listwidget import PlayingListWidget
 from lisp.layouts.list_layout.preferences import ListLayoutPreferences
+from lisp.ui.mainwindow import MainWindow
 from lisp.ui.settings.app_settings import AppSettings
 from lisp.ui.settings.sections.cue_appearance import Appearance
+from lisp.ui.settings.sections.cue_general import CueGeneralSettings
 from lisp.ui.settings.sections.media_cue_settings import MediaCueSettings
-
+from lisp.utils.configuration import config
 
 AppSettings.register_settings_widget(ListLayoutPreferences)
 
@@ -51,30 +51,38 @@ class ListLayout(QWidget, CueLayout):
     DESCRIPTION = '''
                     This layout organize the cues in a list:
                     <ul>
-                        <li>Unlimited cues;
                         <li>Side panel with playing media-cues;
                         <li>Cues can be moved in the list;
-                        <li>Keyboard control;
+                        <li>Space to play, CTRL+Space to select, SHIFT+Space to edit;
                     </ul>'''
 
-    HEADER = ['', 'Cue', 'Duration', 'Progress']
+    H_NAMES = ['', 'Cue', 'Pre wait', 'Action', 'Post wait', '']
+    H_WIDGETS = [CueStatusIcon, 'name', PreWaitWidget, CueTimeWidget,
+                 PostWaitWidget, NextActionIcon]
 
-    def __init__(self, app, **kwargs):
-        super().__init__(**kwargs)
+    def __init__(self, cue_model, **kwargs):
+        super().__init__(cue_model=cue_model, **kwargs)
 
-        self.mainWindow = app.mainWindow
-        self.menuLayout = self.mainWindow.menuLayout
+        self._model_adapter = CueListModel(self._cue_model)
+        self._model_adapter.item_added.connect(self.__cue_added)
+        self._model_adapter.item_removed.connect(self.__cue_removed)
+        self._memento_model = AdapterMementoModel(self._model_adapter)
 
-        self._cue_items = []
-        self._playing_widgets = {}
+        self._playing_model = PlayingMediaCueModel(self._cue_model)
         self._context_item = None
 
         self._show_dbmeter = config['ListLayout']['ShowDbMeters'] == 'True'
-        self._show_seek = config['ListLayout']['ShowSeek'] == 'True'
+        self._seek_visible = config['ListLayout']['ShowSeek'] == 'True'
         self._accurate_time = config['ListLayout']['ShowAccurate'] == 'True'
         self._auto_next = config['ListLayout']['AutoNext'] == 'True'
+        self._show_playing = config['ListLayout']['ShowPlaying'] == 'True'
 
         # Add layout-specific menus
+        self.showPlayingAction = QAction(self)
+        self.showPlayingAction.setCheckable(True)
+        self.showPlayingAction.setChecked(self._show_playing)
+        self.showPlayingAction.triggered.connect(self.set_playing_visible)
+
         self.showDbMeterAction = QAction(self)
         self.showDbMeterAction.setCheckable(True)
         self.showDbMeterAction.setChecked(self._show_dbmeter)
@@ -82,7 +90,7 @@ class ListLayout(QWidget, CueLayout):
 
         self.showSeekAction = QAction(self)
         self.showSeekAction.setCheckable(True)
-        self.showSeekAction.setChecked(self._show_seek)
+        self.showSeekAction.setChecked(self._seek_visible)
         self.showSeekAction.triggered.connect(self.set_seek_visible)
 
         self.accurateTimingAction = QAction(self)
@@ -95,14 +103,15 @@ class ListLayout(QWidget, CueLayout):
         self.autoNextAction.setChecked(self._auto_next)
         self.autoNextAction.triggered.connect(self.set_auto_next)
 
-        self.menuLayout.addAction(self.showDbMeterAction)
-        self.menuLayout.addAction(self.showSeekAction)
-        self.menuLayout.addAction(self.accurateTimingAction)
-        self.menuLayout.addAction(self.autoNextAction)
+        MainWindow().menuLayout.addAction(self.showPlayingAction)
+        MainWindow().menuLayout.addAction(self.showDbMeterAction)
+        MainWindow().menuLayout.addAction(self.showSeekAction)
+        MainWindow().menuLayout.addAction(self.accurateTimingAction)
+        MainWindow().menuLayout.addAction(self.autoNextAction)
 
         # Add a toolbar to MainWindow
-        self.toolBar = QToolBar(self.mainWindow)
-        self.toolBar.setContextMenuPolicy(QtCore.Qt.PreventContextMenu)
+        self.toolBar = QToolBar(MainWindow())
+        self.toolBar.setContextMenuPolicy(Qt.PreventContextMenu)
 
         self.playAction = QAction(self)
         self.playAction.setIcon(QIcon.fromTheme("media-playback-start"))
@@ -136,45 +145,40 @@ class ListLayout(QWidget, CueLayout):
         self.toolBar.addAction(self.pauseAllAction)
         self.toolBar.addAction(self.restartAllAction)
 
-        self.mainWindow.addToolBar(self.toolBar)
+        MainWindow().addToolBar(self.toolBar)
 
         self.hLayout = QHBoxLayout(self)
         self.hLayout.setContentsMargins(5, 5, 5, 5)
 
         # On the left (cue list)
-        self.listView = ListWidget(self)
+        self.listView = CueListView(self._model_adapter, self)
         self.listView.context_event.connect(self.context_event)
         self.listView.key_event.connect(self.onKeyPressEvent)
-        self.listView.drop_move_event.connect(self.move_cue_at)
-        self.listView.drop_copy_event.connect(self._copy_cue_at)
-        self.listView.setHeaderLabels(self.HEADER)
-        self.listView.header().setSectionResizeMode(QHeaderView.Fixed)
-        self.listView.header().setSectionResizeMode(self.HEADER.index('Cue'),
-                                                    QHeaderView.Stretch)
-        self.listView.setColumnWidth(0, 40)
         self.hLayout.addWidget(self.listView)
 
-        self.vLayout = QVBoxLayout()
-        self.vLayout.setContentsMargins(0, 0, 0, 0)
-        self.vLayout.setSpacing(2)
+        self.playingLayout = QVBoxLayout()
+        self.playingLayout.setContentsMargins(0, 0, 0, 0)
+        self.playingLayout.setSpacing(2)
 
         # On the right (playing media-cues)
-        self.label = QLabel('Playing', self)
-        self.label.setAlignment(QtCore.Qt.AlignCenter)
-        self.label.setStyleSheet('font-size: 17pt; font-weight: bold;')
-        self.vLayout.addWidget(self.label)
+        self.playViewLabel = QLabel('Playing', self)
+        self.playViewLabel.setAlignment(Qt.AlignCenter)
+        self.playViewLabel.setStyleSheet('font-size: 17pt; font-weight: bold;')
+        self.playingLayout.addWidget(self.playViewLabel)
 
-        self.playView = QListWidget(self)
+        self.playView = PlayingListWidget(self._playing_model, parent=self)
+        self.playView.dbmeter_visible = self._show_dbmeter
+        self.playView.accurate_time = self._accurate_time
+        self.playView.seek_visible = self._seek_visible
         self.playView.setMinimumWidth(300)
         self.playView.setMaximumWidth(300)
-        self.playView.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
-        self.playView.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.playView.setSelectionMode(QAbstractItemView.NoSelection)
-        self.vLayout.addWidget(self.playView)
+        self.playingLayout.addWidget(self.playView)
 
-        self.hLayout.addLayout(self.vLayout)
+        self.set_playing_visible(self._show_playing)
+        self.hLayout.addLayout(self.playingLayout)
 
         # Add cue preferences widgets
+        self.add_settings_section(CueGeneralSettings, Cue)
         self.add_settings_section(MediaCueSettings, MediaCue)
         self.add_settings_section(Appearance)
 
@@ -196,6 +200,7 @@ class ListLayout(QWidget, CueLayout):
         self.retranslateUi()
 
     def retranslateUi(self):
+        self.showPlayingAction.setText("Show playing")
         self.showDbMeterAction.setText("Show Db-meters")
         self.showSeekAction.setText("Show seek bars")
         self.accurateTimingAction.setText('Accurate timing')
@@ -212,112 +217,38 @@ class ListLayout(QWidget, CueLayout):
         self.select_action.setText('Select')
 
     def current_cue(self):
-        item = self.current_item()
-        if item is not None:
-            return item.cue
+        if len(self._model_adapter) > 0:
+            return self._model_adapter.item(self.listView.currentIndex().row())
 
     def current_item(self):
-        if len(self._cue_items) > 0:
-            return self._cue_items[self.listView.currentIndex().row()]
+        if len(self._model_adapter) > 0:
+            return self.listView.currentItem()
 
     def select_context_cue(self):
-        self._context_item.select()
+        self._context_item.selected = not self._context_item.selected
 
-    def __add_cue__(self, cue, index):
-        if isinstance(cue, MediaCue):
-            item = MediaItem(cue, self.listView)
-
-            # Use weak-references for avoid cyclic-references with lambda(s)
-            wself = weakref.ref(self)
-            wcue = weakref.ref(cue)
-
-            cue.media.on_play.connect(lambda: wself().show_playing(wcue()))
-            cue.media.interrupted.connect(lambda: wself().hide_playing(wcue()))
-            cue.media.stopped.connect(lambda: wself().hide_playing(wcue()))
-            cue.media.error.connect(lambda: wself().hide_playing(wcue()))
-            cue.media.eos.connect(lambda: wself().hide_playing(wcue()))
-        elif isinstance(cue, Cue):
-            item = ActionItem(cue)
-            item.cue = cue
-        else:
-            raise ValueError('not a cue')
-
-        item.setFlags(item.flags() & ~QtCore.Qt.ItemIsDropEnabled)
-
-        if index is None or (index < 0 or index >= len(self._cue_items)):
-            cue['index'] = len(self._cue_items)
-            self.listView.addTopLevelItem(item)
-            self._cue_items.append(item)
-        else:
-            self.listView.insertTopLevelItem(index, item)
-            self._cue_items.insert(index, item)
-            for n in range(index, len(self._cue_items)):
-                self._cue_items[n].cue['index'] = n
-
-        if isinstance(item, MediaItem):
-            item.init()
-
-        if len(self._cue_items) == 1:
-            self.listView.setCurrentItem(item)
-            self.listView.setFocus()
-            self.listView.resizeColumnToContents(1)
-
-        self.cue_added.emit(cue)
-
-    def set_accurate_time(self, enable):
-        self._accurate_time = enable
-
-        for i in range(self.playView.count()):
-            widget = self.playView.itemWidget(self.playView.item(i))
-            widget.set_accurate_time(enable)
-
-        for item in self._cue_items:
-            if isinstance(item, MediaItem):
-                item.set_accurate_time(enable)
+    def set_accurate_time(self, accurate):
+        self._accurate_time = accurate
+        self.playView.accurate_time = accurate
 
     def set_auto_next(self, enable):
         self._auto_next = enable
 
     def set_seek_visible(self, visible):
-        self._show_seek = visible
-        for i in range(self.playView.count()):
-            widget = self.playView.itemWidget(self.playView.item(i))
-            widget.set_seek_visible(visible)
+        self._seek_visible = visible
+        self.playView.seek_visible = visible
 
     def set_dbmeter_visible(self, visible):
         self._show_dbmeter = visible
-        for i in range(self.playView.count()):
-            widget = self.playView.itemWidget(self.playView.item(i))
-            widget.set_dbmeter_visible(visible)
+        self.playView.dbmeter_visible = visible
 
-    def show_playing(self, cue):
-        if cue not in self._playing_widgets:
-            media_time = self._cue_items[cue['index']].media_time
-            widget = PlayingMediaWidget(cue, media_time, self.playView)
-            widget.set_dbmeter_visible(self._show_dbmeter)
-            widget.set_seek_visible(self._show_seek)
-            widget.set_accurate_time(self._accurate_time)
-
-            list_item = QListWidgetItem()
-            list_item.setSizeHint(widget.size())
-
-            self.playView.addItem(list_item)
-            self.playView.setItemWidget(list_item, widget)
-            self._playing_widgets[cue] = list_item
-
-    def hide_playing(self, cue):
-        if cue in self._playing_widgets:
-            list_item = self._playing_widgets.pop(cue)
-            widget = self.playView.itemWidget(list_item)
-            row = self.playView.indexFromItem(list_item).row()
-
-            self.playView.removeItemWidget(list_item)
-            self.playView.takeItem(row)
-
-            widget.destroy_widget()
+    def set_playing_visible(self, visible):
+        self._show_playing = visible
+        self.playView.setVisible(visible)
+        self.playViewLabel.setVisible(visible)
 
     def onKeyPressEvent(self, e):
-        if e.key() == QtCore.Qt.Key_Space:
+        if not e.isAutoRepeat() and e.key() == Qt.Key_Space:
             if qApp.keyboardModifiers() == Qt.ShiftModifier:
                 cue = self.current_cue()
                 if cue is not None:
@@ -325,7 +256,8 @@ class ListLayout(QWidget, CueLayout):
             elif qApp.keyboardModifiers() == Qt.ControlModifier:
                 item = self.current_item()
                 if item is not None:
-                    item.select()
+                    item.selected = not item.selected
+                    return True
             else:
                 cue = self.current_cue()
                 if cue is not None:
@@ -358,98 +290,45 @@ class ListLayout(QWidget, CueLayout):
             cue.media.stop()
 
     def context_event(self, event):
-        item = self.listView.itemAt(event.pos())
-        if item is not None:
-            index = self.listView.indexOfTopLevelItem(item)
-            self._context_item = self._cue_items[index]
+        self._context_item = self.listView.itemAt(event.pos())
+        if self._context_item is not None:
             self.show_context_menu(event.globalPos())
+
         event.accept()
 
     def remove_context_cue(self):
-        self.remove_cue(self.get_context_cue())
+        self._model_adapter.remove(self.get_context_cue())
 
     def edit_context_cue(self):
         self.edit_cue(self.get_context_cue())
 
     def stop_all(self):
-        for item in self._cue_items:
-            if isinstance(item.cue, MediaCue):
-                item.cue.media.stop()
+        for cue in self._model_adapter:
+            if isinstance(cue, MediaCue):
+                cue.media.stop()
 
     def pause_all(self):
-        for item in self._cue_items:
-            if isinstance(item.cue, MediaCue):
-                item.cue.media.pause()
+        for cue in self._model_adapter:
+            if isinstance(cue, MediaCue):
+                cue.media.pause()
 
     def restart_all(self):
-        for item in self._cue_items:
-            if isinstance(item.cue, MediaCue):
-                if item.cue.media.state == MediaState.Paused:
-                    item.cue.media.play()
-
-    def __remove_cue__(self, cue):
-        index = cue['index']
-        self.listView.takeTopLevelItem(index)
-        self._cue_items.pop(index)
-
-        if isinstance(cue, MediaCue):
-            cue.media.interrupt()
-            if cue in self._playing_widgets:
-                self.hide_playing(self._playing_widgets[cue])
-
-        for item in self._cue_items[index:]:
-            item.cue['index'] = item.cue['index'] - 1
-
-        cue.finalize()
-
-        self.cue_removed.emit(cue)
-
-    def move_cue_at(self, old_index, index):
-        self.move_cue(self._cue_items[old_index].cue, index)
-
-    def _copy_cue_at(self, old_index, index):
-        newcue = CueFactory.clone_cue(self._cue_items[old_index].cue)
-        self.add_cue(newcue, index)
-
-    def __move_cue__(self, cue, index):
-        item = self._cue_items.pop(cue['index'])
-        self._cue_items.insert(index, item)
-        self.listView.setCurrentItem(item)
-
-        if isinstance(item, MediaItem):
-            item.init()
-
-        for n, item in enumerate(self._cue_items):
-            item.cue['index'] = n
-
-    def get_cues(self, cue_class=Cue):
-        # i -> item
-        return [i.cue for i in self._cue_items if isinstance(i.cue, cue_class)]
-
-    def get_cue_at(self, index):
-        if index < len(self._cue_items):
-            return self._cue_items[index].cue
-
-    def get_cue_by_id(self, cue_id):
-        for item in self._cue_items:
-            if item.cue.cue_id() == cue_id:
-                return item.cue
+        for cue in self._model_adapter:
+            if isinstance(cue, MediaCue):
+                if cue.media.state == MediaState.Paused:
+                    cue.media.play()
 
     def get_selected_cues(self, cue_class=Cue):
         cues = []
-        for item in self._cue_items:
+        for index in range(self.listView.topLevelItemCount()):
+            item = self.listView.topLevelItem(index)
             if item.selected and isinstance(item.cue, cue_class):
                 cues.append(item.cue)
         return cues
 
-    def clear_layout(self):
-        while len(self._cue_items) > 0:
-            self.__remove_cue__(self._cue_items[-1].cue)
-
-    def destroy_layout(self):
-        self.clear_layout()
-        self.menuLayout.clear()
-        self.mainWindow.removeToolBar(self.toolBar)
+    def finalize(self):
+        MainWindow().menuLayout.clear()
+        MainWindow().removeToolBar(self.toolBar)
         self.toolBar.deleteLater()
 
         # Remove context-items
@@ -469,15 +348,28 @@ class ListLayout(QWidget, CueLayout):
         return self._context_item.cue
 
     def select_all(self):
-        for item in self._cue_items:
-            if not item.selected:
-                item.select()
+        for index in range(self.listView.topLevelItemCount()):
+            self.listView.topLevelItem(index).selected = True
 
     def deselect_all(self):
-        for item in self._cue_items:
-            if item.selected:
-                item.select()
+        for index in range(self.listView.topLevelItemCount()):
+            self.listView.topLevelItem(index).selected = False
 
     def invert_selection(self):
-        for item in self._cue_items:
-            item.select()
+        for index in range(self.listView.topLevelItemCount()):
+            item = self.listView.topLevelItem(index)
+            item.selected = not item.selected
+
+    def __cue_added(self, cue):
+        cue.next.connect(self.__execute_next, mode=Connection.QtQueued)
+
+    def __cue_removed(self, cue):
+        if isinstance(cue, MediaCue):
+            cue.media.interrupt()
+
+    def __execute_next(self, cue):
+        try:
+            next_cue = self._model_adapter.item(cue.index + 1)
+            next_cue.execute()
+        except(IndexError, KeyError):
+            pass

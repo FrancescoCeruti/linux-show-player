@@ -17,10 +17,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from collections import OrderedDict
 from concurrent.futures import ThreadPoolExecutor
 from os import path, cpu_count as _cpu_count
-from re import match
 import weakref
 
 from lisp.backends.base.media import Media, MediaState
@@ -63,6 +61,7 @@ class GstMedia(Media):
     def __init__(self):
         super().__init__()
 
+        self._state = MediaState.Null
         self._elements = []
         self._old_pipe = ''
         self._loop_count = 0
@@ -78,12 +77,15 @@ class GstMedia(Media):
         # garbage-collected
         on_message = weakref.WeakMethod(self.__on_message)
         handler = bus.connect('message', lambda *args: on_message()(*args))
-
         weakref.finalize(self, self.__finalizer, self._gst_pipe, handler,
                          self._elements)
 
         self.changed('loop').connect(self.__prepare_loops)
         self.changed('pipe').connect(self.__prepare_pipe)
+
+    @Media.state.getter
+    def state(self):
+        return self._state
 
     def __prepare_loops(self, loops):
         self._loop_count = loops
@@ -104,7 +106,7 @@ class GstMedia(Media):
 
     def current_time(self):
         ok, position = self._gst_pipe.query_position(Gst.Format.TIME)
-        return position // Gst.MSECOND if ok else -1
+        return position // Gst.MSECOND if ok else 0
 
     @async
     def play(self):
@@ -114,7 +116,7 @@ class GstMedia(Media):
             for element in self._elements:
                 element.play()
 
-            self.state = MediaState.Playing
+            self._state = MediaState.Playing
             self._gst_pipe.set_state(Gst.State.PLAYING)
             self._gst_pipe.get_state(Gst.SECOND)
 
@@ -128,7 +130,7 @@ class GstMedia(Media):
             for element in self._elements:
                 element.pause()
 
-            self.state = MediaState.Paused
+            self._state = MediaState.Paused
             self._gst_pipe.set_state(Gst.State.PAUSED)
             self._gst_pipe.get_state(Gst.SECOND)
 
@@ -182,19 +184,21 @@ class GstMedia(Media):
             pass
 
     def interrupt(self, dispose=False, emit=True):
+        state = self._state
         for element in self._elements:
             element.interrupt()
 
         self._gst_pipe.set_state(Gst.State.NULL)
         if dispose:
-            self.state = MediaState.Null
+            self._state = MediaState.Null
         else:
             self._gst_pipe.set_state(Gst.State.READY)
-            self.state = MediaState.Stopped
+            self._state = MediaState.Stopped
 
         self._loop_count = self.loop
 
-        if emit:
+        if emit and (self._state == MediaState.Playing or
+                     self._state == MediaState.Paused):
             self.interrupted.emit(self)
 
     def properties(self):
@@ -214,7 +218,7 @@ class GstMedia(Media):
         self.update_elements(elements_properties)
 
         if self.state == MediaState.Null or self.state == MediaState.Error:
-            self.state = MediaState.Stopped
+            self._state = MediaState.Stopped
 
     @staticmethod
     def _pipe_elements():
@@ -229,7 +233,8 @@ class GstMedia(Media):
         mtime = self._mtime
         # If the uri is a file, then update the current mtime
         if value.split('://')[0] == 'file':
-            self._mtime = path.getmtime(value.split('//')[1])
+            if path.exists(value.split('//')[1]):
+                self._mtime = path.getmtime(value.split('//')[1])
         else:
             mtime = None
 
@@ -269,7 +274,7 @@ class GstMedia(Media):
             self.__append_element(pipe_elements[element](self._gst_pipe))
 
         # Set to Stopped/READY the pipeline
-        self.state = MediaState.Stopped
+        self._state = MediaState.Stopped
         self._gst_pipe.set_state(Gst.State.READY)
 
     def __on_message(self, bus, message):
@@ -284,12 +289,12 @@ class GstMedia(Media):
 
         if message.type == Gst.MessageType.ERROR:
             err, debug = message.parse_error()
-            self.state = MediaState.Error
+            self._state = MediaState.Error
             self.interrupt(dispose=True, emit=False)
             self.error.emit(self, str(err), str(debug))
 
     def __on_eos(self):
-        self.state = MediaState.Stopped
+        self._state = MediaState.Stopped
         self.eos.emit(self)
 
         if self._loop_count != 0:

@@ -60,7 +60,7 @@ QProgressBar:horizontal {
 
 QProgressBar:chunk:horizontal {
     border-radius: 2px;
-    background-color: QLinearGradient(spread:reflect, x1:1, y1:0.545, x2:1, y2:0, stop:0 rgba(30, 65, 150, 255), stop:1 rgba(40, 90, 150, 255));
+    background-color: rgba(40, 90, 150, 255);
 }
 
 QStatusBar {
@@ -605,4 +605,49 @@ QRadioButton:indicator:checked:disabled {
     border: 1 solid black;
     border-radius: 6px;
     font-size: 11pt;
+}
+
+#ListTimeWidget {
+    height: 25px;
+    border-radius: 0px;
+    margin: 1px;
+    background-color: transparent;
+}
+
+#ListTimeWidget:horizontal {
+    text-align: center;
+    border: none;
+    background: transparent;
+}
+
+#ListTimeWidget:chunk:horizontal {
+    border-radius: 0px;
+    background-color: transparent;
+}
+
+/* running */
+#ListTimeWidget:horizontal[state="running"] {
+    border: 1px solid #00FF00;
+}
+
+#ListTimeWidget:chunk:horizontal[state="running"] {
+    background-color: #00A222;
+}
+
+/* pause */
+#ListTimeWidget:horizontal[state="pause"] {
+    border: 1px solid #FFAA00;
+}
+
+#ListTimeWidget:chunk:horizontal[state="pause"] {
+    background-color: #FF8800;
+}
+
+/* error */
+#ListTimeWidget:horizontal[state="error"] {
+    border: 1px solid #FF0000;
+}
+
+#ListTimeWidget:chunk:horizontal[state="error"] {
+    background-color: #CC0000;
 }

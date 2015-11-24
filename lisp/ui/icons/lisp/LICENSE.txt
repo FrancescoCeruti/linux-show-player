@@ -1,5 +1,0 @@
-Icons in this folder are part of:
-    - Fade functions icons from Qtractor (GPL) http://qtractor.sourceforge.net/qtractor-index.html
-    - Led icons are part of Linux Show Player (GPL)
-    - "Faience" icons (GPL) http://tiheum.deviantart.com/art/Faience-icon-theme-255099649
-    - "Numix" icons (GPL) https://numixproject.org/

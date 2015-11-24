@@ -46,6 +46,6 @@ class ActionCues(Module):
     def create_add_action_cue_method(cue_class):
         def method():
             cue = CueFactory.create_cue(cue_class.__name__)
-            Application().layout.add_cue(cue)
+            Application().cue_model.add(cue)
 
         return method

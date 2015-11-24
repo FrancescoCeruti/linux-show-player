@@ -26,7 +26,7 @@ from lisp.utils import configuration as cfg
 from lisp.core.singleton import Singleton
 
 
-class ActionsHandler(metaclass=Singleton):
+class ActionsHandler:
     """Do/Undo/Redo actions and store the in stacks.
 
     Provide methods for using actions, an storing them in stacks, allowing
@@ -105,3 +105,7 @@ class ActionsHandler(metaclass=Singleton):
             message = type(action).__name__
 
         logging.info(pre + message)
+
+
+class MainActionsHandler(ActionsHandler, metaclass=Singleton):
+    pass

@@ -61,19 +61,18 @@ def main():
     app.setApplicationName('Linux Show Player')
     app.setQuitOnLastWindowClosed(True)
 
-    # Force light font, for environment with bad QT support.
+    # Force light font, for environment with "bad" QT support.
     appFont = app.font()
     appFont.setWeight(QFont.Light)
     app.setFont(appFont)
-    # Add icons set
+    # Set icons and theme from the application configuration
     QIcon.setThemeSearchPaths(styles.IconsThemePaths)
-    QIcon.setThemeName(styles.IconsThemeName)
-    # Load the theme
-    styles.apply_style(config['Theme']['current'])
+    QIcon.setThemeName(config['Theme']['icons'])
+    styles.apply_style(config['Theme']['theme'])
 
     # Create the application
-    LiSP_app = Application()  # @UnusedVariable
-    LiSP_app.start(filepath=args.file)
+    LiSP_app = Application()
+    LiSP_app.start(session_file=args.file)
 
     # Start the application
     sys.exit(_exec(app, LiSP_app))

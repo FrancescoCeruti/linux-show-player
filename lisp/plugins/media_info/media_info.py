@@ -86,7 +86,7 @@ class MediaInfo(Plugin):
                 info.pop("Tags")
 
             # Show the dialog
-            dialog = InfoDialog(self.app.mainWindow, info,
+            dialog = InfoDialog(self.app._mainWindow, info,
                                 self.app.layout.get_context_cue().name)
             dialog.exec_()
 

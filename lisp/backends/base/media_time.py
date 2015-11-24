@@ -22,7 +22,7 @@ from lisp.core.clock import Clock
 from lisp.core.signal import Connection, Signal
 
 
-class MediaTime():
+class MediaTime:
 
     def __init__(self, media):
         super().__init__()
@@ -34,7 +34,7 @@ class MediaTime():
 
         # Media "status" signals
         self._media.on_play.connect(self._start, mode=Connection.QtQueued)
-        self._media.paused.connect(self._disable, mode=Connection.QtQueued)
+        self._media.paused.connect(self._stop, mode=Connection.QtQueued)
         self._media.stopped.connect(self._stop, mode=Connection.QtQueued)
         self._media.interrupted.connect(self._stop, mode=Connection.QtQueued)
         self._media.error.connect(self._stop, mode=Connection.QtQueued)
@@ -51,10 +51,6 @@ class MediaTime():
         self._clock.add_callback(self._notify)
 
     def _stop(self):
-        self._disable()
-        self.notify.emit(0)
-
-    def _disable(self):
         try:
             self._clock.remove_callback(self._notify)
         except Exception:
