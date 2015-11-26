@@ -18,21 +18,18 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
-import traceback
 
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QMainWindow, QWidget, QGridLayout, QStatusBar, \
     QMenuBar, QMenu, QAction, qApp, QSizePolicy, QFileDialog, QDialog, \
     QMessageBox
 
-from lisp.core.signal import Signal
-from lisp.ui import about
-from lisp.utils import configuration
-from lisp.utils import logging
 from lisp.core.actions_handler import MainActionsHandler
+from lisp.core.signal import Signal
 from lisp.core.singleton import QSingleton
-from lisp.cues.cue_factory import CueFactory
+from lisp.ui import about
 from lisp.ui.settings.app_settings import AppSettings
+from lisp.utils import configuration
 
 
 class MainWindow(QMainWindow, metaclass=QSingleton):
@@ -295,6 +292,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
     def _check_saved(self):
         if not MainActionsHandler().is_saved():
             msgBox = QMessageBox(self)
+            msgBox.setIcon(QMessageBox.Warning)
             msgBox.setWindowTitle('Close session')
             msgBox.setText('The current session is not saved.')
             msgBox.setInformativeText('Discard the changes?')

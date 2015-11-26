@@ -18,9 +18,9 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QCheckBox, QComboBox
+
 from lisp import layouts
 from lisp.ui import styles
-
 from lisp.ui.settings.section import SettingsSection
 
 

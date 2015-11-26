@@ -17,12 +17,12 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+import jack
 from PyQt5 import QtCore
 from PyQt5.QtGui import QPainter, QPolygon, QPainterPath
 from PyQt5.QtWidgets import QGroupBox, QLineEdit, QLabel, QWidget, \
     QHBoxLayout, QTreeWidget, QTreeWidgetItem, QGridLayout, QDialog, \
     QDialogButtonBox, QPushButton
-import jack
 
 from lisp.backends.gst.elements.jack_sink import JackSink
 from lisp.ui.settings.section import SettingsSection
@@ -277,7 +277,7 @@ class JackConnectionsDialog(QDialog):
             clients[client_name].add_port(port.name)
 
     def __input_selection_changed(self):
-        if len(self.input_widget.selectedItems()) > 0:
+        if self.input_widget.selectedItems():
             self.__selected_in = self.input_widget.selectedItems()[0]
         else:
             self.__selected_in = None
@@ -285,7 +285,7 @@ class JackConnectionsDialog(QDialog):
         self.__check_selection()
 
     def __output_selection_changed(self):
-        if len(self.output_widget.selectedItems()) > 0:
+        if self.output_widget.selectedItems():
             self.__selected_out = self.output_widget.selectedItems()[0]
         else:
             self.__selected_out = None

@@ -20,8 +20,8 @@
 
 from PyQt5.QtCore import QObject
 
-from lisp.core.plugin import Plugin
 from lisp.application import Application
+from lisp.core.plugin import Plugin
 from lisp.modules import check_module
 from lisp.modules.midi.input_handler import MIDIInputHandler
 from .controller_settings import ControllerSettings
@@ -38,8 +38,8 @@ class Controller(QObject, Plugin):
 
         self.app = Application()
         self.app.layout.key_pressed.connect(self.on_key_pressed)
-        self.app.layout.cue_added.connect(self.on_cue_added)
-        self.app.layout.cue_removed.connect(self.on_cue_removed)
+        self.app.cue_model.item_added.connect(self.on_cue_added)
+        self.app.cue_model.item_removed.connect(self.on_cue_removed)
         self.app.layout.add_settings_section(ControllerSettings)
 
         if check_module('midi'):
@@ -47,8 +47,8 @@ class Controller(QObject, Plugin):
 
     def reset(self):
         self.app.layout.key_pressed.disconnect(self.on_key_pressed)
-        self.app.layout.cue_added.disconnect(self.on_cue_added)
-        self.app.layout.cue_removed.disconnect(self.on_cue_removed)
+        self.app.cue_model.item_added.disconnect(self.on_cue_added)
+        self.app.cue_model.item_removed.disconnect(self.on_cue_removed)
         self.app.layout.remove_settings_section(ControllerSettings)
 
         self.__map = {}
@@ -57,7 +57,7 @@ class Controller(QObject, Plugin):
         self.delete_from_map(cue)
 
         if 'hotkeys' in cue.properties():
-            if len(cue['hotkeys']) > 0:
+            if cue['hotkeys']:
                 for key in cue['hotkeys']:
                     if key not in self.__map:
                         self.__map[key] = [cue]

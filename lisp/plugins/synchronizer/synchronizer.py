@@ -23,12 +23,11 @@ import socket
 import traceback
 
 from PyQt5.QtWidgets import QMenu, QAction, QMessageBox
+
+from lisp.application import Application
+from lisp.core.plugin import Plugin
 from lisp.core.signal import Connection
 from lisp.ui.mainwindow import MainWindow
-
-from lisp.core.plugin import Plugin
-from lisp.application import Application
-from lisp.cues.media_cue import MediaCue
 from .peers_dialog import PeersDialog
 
 

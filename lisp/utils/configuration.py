@@ -17,12 +17,11 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from configparser import ConfigParser
 import os
+from configparser import ConfigParser
 from shutil import copyfile
 
 from lisp.utils import util
-
 
 DEFAULT_CFG_PATH = util.file_path(__file__, '../default.cfg')
 CFG_DIR = os.path.expanduser("~") + '/.linux_show_player'
@@ -41,7 +40,7 @@ def check_user_conf():
         current = ConfigParser()
         current.read(CFG_PATH)
 
-        current_version = current['Version'].get('Number', None)
+        current_version = current['Version'].get('Number')
         update = current_version != default['Version']['Number']
 
         if update:

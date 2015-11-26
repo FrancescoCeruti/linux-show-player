@@ -22,14 +22,13 @@ import pkgutil
 import traceback
 
 
-class load_classes:
-    """
-        Generator for iterating over classes in a package.
+class ClassesLoader:
+    """Generator for iterating over classes in a package.
 
-        The class name must be the same as the module name, optionally
-        suffixes and prefixes lists can be provided.
+    The class name must be the same as the module name, optionally
+    suffixes and prefixes lists can be provided.
 
-        Example:
+    .. Example:
 
         elements_package
         |__element1.py
@@ -41,12 +40,12 @@ class load_classes:
     def __init__(self, package_path, prefixes=None, suffixes=None,
                  excluded=None):
         """
-            :param package_path: location of the classes (package)
-            :type package_path: str
-            :param prefixes: list of prefixes (symmetrical with suffixes)
-            :type prefixes: list
-            :param suffixes: list of suffixes (symmetrical with prefixes)
-            :type suffixes: list
+        :param package_path: location of the classes (package)
+        :type package_path: str
+        :param prefixes: list of prefixes (symmetrical with suffixes)
+        :type prefixes: list
+        :param suffixes: list of suffixes (symmetrical with prefixes)
+        :type suffixes: list
         """
         self._package_path = package_path
         self._prefixes = prefixes if prefixes is not None else ['']
@@ -76,26 +75,27 @@ class load_classes:
                     partial.append((name, cls))
                 except Exception:
                     logging.warning(
-                        'Failed dynamic-loading module: ' + mod_name)
+                        'Failed loading module: ' + mod_name)
                     logging.debug(traceback.format_exc())
 
             # Yield the class name and the class-object
             if len(partial) == 1:
                 yield partial[0]
-            elif len(partial) > 0:
+            elif partial:
                 yield partial
 
 
 def class_name_from_module(mod_name, pre='', suf=''):
-    """
-        Return the class name for a dynamic loaded module
-        If the name is module_name, the result will be ModuleName
+    """Return the class name for a dynamic loaded module
 
-        :param pre: prefix for the class name (default '')
-        :param suf: suffix for the class name (default '')
+    If the name is like "module_name", the result will be "ModuleName"
+
+    :param mod_name: the module name
+    :param pre: prefix for the class name (default '')
+    :param suf: suffix for the class name (default '')
     """
 
     # Capitalize the first letter of each word
-    base_name = ''.join([word.title() for word in mod_name.split('_')])
+    base_name = ''.join(word.title() for word in mod_name.split('_'))
     # Add prefix and suffix to the base name
     return pre + base_name + suf

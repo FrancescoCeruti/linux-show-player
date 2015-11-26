@@ -18,10 +18,9 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import jack
-
 from lisp.backends.base.media_element import ElementType, MediaType
-from lisp.backends.gst.gst_element import GstMediaElement, GstProperty
 from lisp.backends.gst.gi_repository import Gst
+from lisp.backends.gst.gst_element import GstMediaElement, GstProperty
 from lisp.core.has_properties import Property
 
 
@@ -49,7 +48,7 @@ class JackSink(GstMediaElement):
         self.audio_resample = Gst.ElementFactory.make('audioresample')
         self.jack_sink = Gst.ElementFactory.make('jackaudiosink', 'sink')
 
-        self._client_id = self.__register_client_id()
+        self._client_id = JackSink.__register_client_id()
         self._client_name = JackSink.CLIENT_NAME + '-' + str(self._client_id)
         self.jack_sink.set_property('client-name', self._client_name)
         self.jack_sink.set_property('connect', JackSink.CONNECT_MODE)
@@ -70,12 +69,13 @@ class JackSink(GstMediaElement):
         return self.audio_resample
 
     def dispose(self):
-        self.pipeline.get_bus().disconnect(self._handler)
-        JackSink._clients.remove(self._client_id)
-
-        if len(JackSink._clients) == 0:
-            JackSink._ControlClient.close()
-            JackSink._ControlClient = None
+        try:
+            self.pipeline.get_bus().disconnect(self._handler)
+            JackSink._clients.remove(self._client_id)
+        finally:
+            if not JackSink._clients:
+                JackSink._ControlClient.close()
+                JackSink._ControlClient = None
 
     @classmethod
     def default_connections(cls, client):

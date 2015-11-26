@@ -19,13 +19,32 @@
 
 import time
 from enum import IntEnum
+from weakref import WeakValueDictionary
 
 from lisp.core.clock import Clock
+from lisp.core.decorators import synchronized_method
 from lisp.core.signal import Connection, Signal
 from lisp.cues.cue import CueState
 
 
-class CueTime:
+class MetaCueTime(type):
+    """Allow "caching" of CueTime(s) objects"""
+
+    __Instances = WeakValueDictionary()
+
+    @synchronized_method
+    def __call__(cls, cue):
+        instance = cls.__Instances.get(cue.id)
+        if instance is None:
+            instance = super().__call__(cue)
+            cls.__Instances[cue.id] = instance
+
+        return instance
+
+
+class CueTime(metaclass=MetaCueTime):
+    """Provide timing for a cue"""
+
     def __init__(self, cue):
         self.notify = Signal()
 
@@ -74,7 +93,6 @@ class CueTime:
 
 
 class CueWaitTime:
-
     class Mode(IntEnum):
         Pre = 0
         Post = 1
@@ -89,11 +107,14 @@ class CueWaitTime:
         self._mode = mode
 
         if self._mode == CueWaitTime.Mode.Pre:
-            self._cue.pre_wait_enter.connect(self.start, mode=Connection.QtQueued)
+            self._cue.pre_wait_enter.connect(self.start,
+                                             mode=Connection.QtQueued)
             self._cue.pre_wait_exit.connect(self.stop, mode=Connection.QtQueued)
         elif self._mode == CueWaitTime.Mode.Post:
-            self._cue.post_wait_enter.connect(self.start, mode=Connection.QtQueued)
-            self._cue.post_wait_exit.connect(self.stop, mode=Connection.QtQueued)
+            self._cue.post_wait_enter.connect(self.start,
+                                              mode=Connection.QtQueued)
+            self._cue.post_wait_exit.connect(self.stop,
+                                             mode=Connection.QtQueued)
 
     def __notify(self):
         self._last = time.perf_counter() - self._start_time
@@ -107,7 +128,7 @@ class CueWaitTime:
         try:
             self._clock.remove_callback(self.__notify)
 
-            #TODO: BLEAH
+            # TODO: ugly workaround
             if self._mode == CueWaitTime.Mode.Post:
                 if self._last < self._cue.post_wait:
                     self.notify.emit(self._cue.post_wait * 1000)

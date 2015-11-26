@@ -1,7 +1,7 @@
 import os
 
 from lisp.backends.base.media_element import ElementType
-from lisp.utils.dyamic_loader import load_classes
+from lisp.utils.dyamic_loader import ClassesLoader
 
 
 __INPUTS = {}
@@ -10,7 +10,7 @@ __PLUGINS = {}
 
 
 def load():
-    for _, element in load_classes(os.path.dirname(__file__)):
+    for _, element in ClassesLoader(os.path.dirname(__file__)):
         if element.ElementType == ElementType.Input:
             __INPUTS[element.Name] = element
         elif element.ElementType == ElementType.Output:

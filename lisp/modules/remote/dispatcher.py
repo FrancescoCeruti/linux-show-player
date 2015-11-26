@@ -19,7 +19,6 @@
 
 from lisp.application import Application
 from lisp.cues.cue import Cue
-from lisp.cues.media_cue import MediaCue
 
 
 class RemoteDispatcher:

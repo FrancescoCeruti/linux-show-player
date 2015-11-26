@@ -17,12 +17,11 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-import math
-import wave
 import aifc
+import math
 import sunau
 import urllib.parse
-
+import wave
 
 #: Linear value for -100dB
 MIN_dB = 0.000000312

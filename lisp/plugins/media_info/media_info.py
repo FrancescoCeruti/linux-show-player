@@ -23,10 +23,11 @@ from PyQt5 import QtCore
 from PyQt5.QtWidgets import QAction, QMessageBox, QDialog, QVBoxLayout, \
     QTreeWidget, QAbstractItemView, QDialogButtonBox, QTreeWidgetItem
 
-from lisp.core.plugin import Plugin
-from lisp.backends.gst.gst_utils import gst_uri_metadata, gst_parse_tag_list
 from lisp.application import Application
+from lisp.backends.gst.gst_utils import gst_uri_metadata, gst_parse_tag_list
+from lisp.core.plugin import Plugin
 from lisp.cues.media_cue import MediaCue
+from lisp.ui.mainwindow import MainWindow
 
 
 class MediaInfo(Plugin):
@@ -34,20 +35,19 @@ class MediaInfo(Plugin):
     Name = 'MediaInfo'
 
     def __init__(self):
-        self.app = Application()
-
-        self.actionMediaInfo = QAction(None, triggered=self.showInfo)
+        self.actionMediaInfo = QAction(None)
+        self.actionMediaInfo.triggered.connect(self.showInfo)
         self.actionMediaInfo.setText("Media Info")
 
-        self.separator = self.app.layout.add_context_separator(MediaCue)
-        self.app.layout.add_context_item(self.actionMediaInfo, MediaCue)
+        self.separator = Application().layout.add_context_separator(MediaCue)
+        Application().layout.add_context_item(self.actionMediaInfo, MediaCue)
 
     def reset(self):
-        self.app.layout.remove_context_item(self.actionMediaInfo)
-        self.app.layout.remove_context_item(self.separator)
+        Application().layout.remove_context_item(self.actionMediaInfo)
+        Application().layout.remove_context_item(self.separator)
 
     def showInfo(self, clicked):
-        media_uri = self.app.layout.get_context_cue().media.input_uri()
+        media_uri = Application().layout.get_context_cue().media.input_uri()
         if not media_uri:
             QMessageBox.critical(None, 'Error Message', 'Invalid Media!')
         else:
@@ -82,12 +82,12 @@ class MediaInfo(Plugin):
                 if(not str(tags[tag_name]).startswith("<Gst")):
                     info["Tags"][tag_name.capitalize()] = str(tags[tag_name])
 
-            if len(info["Tags"]) == 0:
+            if not info["Tags"]:
                 info.pop("Tags")
 
             # Show the dialog
-            dialog = InfoDialog(self.app._mainWindow, info,
-                                self.app.layout.get_context_cue().name)
+            dialog = InfoDialog(MainWindow(), info,
+                                Application().layout.get_context_cue().name)
             dialog.exec_()
 
 

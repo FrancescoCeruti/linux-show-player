@@ -17,14 +17,11 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-import re
-
 from PyQt5 import QtCore
-from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QHBoxLayout, QTextEdit, \
-    QSpinBox, QPushButton, QLabel, QColorDialog, QSizePolicy
-from lisp.ui.qcolorbutton import QColorButton
+    QSpinBox, QLabel
 
+from lisp.ui.qcolorbutton import QColorButton
 from lisp.ui.settings.section import SettingsSection
 
 
@@ -113,7 +110,7 @@ class Appearance(SettingsSection):
         if not (checked and not self.fontSizeGroup.isChecked()):
             style['font-size'] = str(self.fontSizeSpin.value()) + 'pt'
 
-        if len(style) > 0:
+        if style:
             conf['stylesheet'] = dict_to_css(style)
 
         return conf

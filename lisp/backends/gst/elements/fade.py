@@ -21,13 +21,12 @@ from threading import Lock
 from time import sleep
 
 from lisp.backends.base.media_element import ElementType, MediaType
+from lisp.backends.gst.gi_repository import Gst
+from lisp.backends.gst.gst_element import GstMediaElement
+from lisp.core.decorators import async
 from lisp.core.has_properties import Property
 from lisp.core.signal import Signal
-from lisp.backends.gst.gst_element import GstMediaElement
-from lisp.backends.gst.gi_repository import Gst
-from lisp.core.decorators import async
-from lisp.utils.fade_functor import fade_linear, fadein_quad, fade_inout_quad, \
-    fadeout_quad, ntime, FadeOut, FadeIn
+from lisp.utils.fade_functor import ntime, FadeOut, FadeIn
 
 
 class Fade(GstMediaElement):

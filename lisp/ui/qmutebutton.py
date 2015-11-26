@@ -16,14 +16,14 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
+
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QPushButton
 
 
 class QMuteButton(QPushButton):
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(self, *args):
+        super().__init__(*args)
 
         # Use the button-check behaviors as mute-unmute
         self.setCheckable(True)

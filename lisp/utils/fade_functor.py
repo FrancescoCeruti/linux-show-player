@@ -26,9 +26,6 @@ t = (x - x0) / (x1 - x0)   where 'x' is the time  (x0 initial, x1 final)
 a = y1 - y0                where 'y' is the value (y0 initial, y1 final)
 b = y0
 """
-from collections import namedtuple
-
-from enum import Enum
 
 
 def fade_linear(t, a, b):

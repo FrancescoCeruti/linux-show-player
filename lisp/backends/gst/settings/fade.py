@@ -24,7 +24,6 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout, QGroupBox, QGridLayout, \
 
 from lisp.backends.gst.elements.fade import Fade
 from lisp.ui.settings.section import SettingsSection
-from lisp.utils.fade_functor import FadeOut, FadeIn
 
 
 class FadeSettings(SettingsSection):

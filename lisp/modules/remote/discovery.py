@@ -21,8 +21,8 @@ import socket
 from threading import Thread
 
 from PyQt5.QtCore import QThread, pyqtSignal
-from lisp.utils.configuration import config
 
+from lisp.utils.configuration import config
 
 IP = config['Remote']['BindIp']
 PORT = int(config['Remote']['DiscoverPort'])

@@ -18,8 +18,8 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import pyqtSignal, QPoint, Qt, QMimeData
-from PyQt5.QtGui import QDrag, QPainter, QBrush, QPalette, QColor
-from PyQt5.QtWidgets import QWidget, QStyle, QStyleOption
+from PyQt5.QtGui import QDrag
+from PyQt5.QtWidgets import QWidget
 
 from lisp.ui.qclicklabel import QClickLabel
 
@@ -33,11 +33,10 @@ class CueWidget(QWidget):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.setAttribute(Qt.WA_TranslucentBackground)
 
         self.cue = None
         self.selected = False
-
-        self.setAttribute(Qt.WA_TranslucentBackground)
 
         self.nameButton = QClickLabel(self)
         self.nameButton.setObjectName('ButtonCueWidget')
@@ -66,10 +65,6 @@ class CueWidget(QWidget):
                 drag.exec_(Qt.CopyAction)
         else:
             e.ignore()
-
-    def select(self):
-        self.selected = not self.selected
-        self.update_style(self.cue.stylesheet)
 
     def set_cue(self, cue):
         if self.cue is not None:

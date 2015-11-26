@@ -24,6 +24,7 @@
 
 import logging
 import traceback
+
 from lisp.ui.qmessagebox import QDetailedMessageBox
 
 

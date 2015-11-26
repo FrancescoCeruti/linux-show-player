@@ -18,12 +18,12 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from collections import deque
 import logging
+from collections import deque
 
 from lisp.core.signal import Signal
-from lisp.utils import configuration as cfg
 from lisp.core.singleton import Singleton
+from lisp.utils import configuration as cfg
 
 
 class ActionsHandler:
@@ -67,7 +67,7 @@ class ActionsHandler:
         self.action_done.emit(action)
 
     def undo_action(self):
-        if len(self._undo) > 0:
+        if self._undo:
             action = self._undo.pop()
             action.undo()
 
@@ -78,7 +78,7 @@ class ActionsHandler:
             self.action_undone.emit(action)
 
     def redo_action(self):
-        if len(self._redo) > 0:
+        if self._redo:
             action = self._redo.pop()
             action.redo()
 
@@ -90,11 +90,11 @@ class ActionsHandler:
 
     def set_saved(self):
         self._saved = True
-        if len(self._undo) > 0:
+        if self._undo:
             self._saved_action = self._undo[-1]
 
     def is_saved(self):
-        if len(self._undo) > 0:
+        if self._undo:
             return self._saved or self._undo[-1] is self._saved_action
         else:
             return True

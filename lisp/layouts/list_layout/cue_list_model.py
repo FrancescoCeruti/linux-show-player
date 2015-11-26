@@ -17,8 +17,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from lisp.core.proxy_model import ReadOnlyProxyModel
 from lisp.core.model_adapter import ModelAdapter
+from lisp.core.proxy_model import ReadOnlyProxyModel
 from lisp.core.signal import Connection
 from lisp.cues.media_cue import MediaCue
 
@@ -37,7 +37,9 @@ class CueListModel(ModelAdapter):
         self.add(item)
 
     def pop(self, index):
-        self.model.remove(self.__cues[index])
+        cue = self.__cues[index]
+        self.model.remove(cue)
+        return cue
 
     def move(self, old_index, new_index):
         if old_index != new_index:
@@ -53,9 +55,6 @@ class CueListModel(ModelAdapter):
 
             self._update_indices(min_index, max_index + 1)
             self.item_moved.emit(old_index, new_index)
-
-    def reset(self):
-        self.model.reset()
 
     def _model_reset(self):
         self.__cues.clear()

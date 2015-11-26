@@ -1,10 +1,9 @@
 from lisp.core.module import Module
-from lisp.modules.midi.output_provider import MIDIOutputProvider
-from lisp.utils.configuration import config
-
 from lisp.modules.midi.input_handler import MIDIInputHandler
 from lisp.modules.midi.midi_settings import MIDISettings
+from lisp.modules.midi.output_provider import MIDIOutputProvider
 from lisp.ui.settings.app_settings import AppSettings
+from lisp.utils.configuration import config
 
 
 class Midi(Module):

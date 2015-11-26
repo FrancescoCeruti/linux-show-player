@@ -93,14 +93,14 @@ class GstPipeEdit(QDialog):
             inputs = sorted(elements.inputs())
             self.inputBox.addItems(inputs)
             self.inputBox.setEnabled(len(inputs) > 1)
-            if len(pipe) > 0:
+            if pipe:
                 self.inputBox.setCurrentIndex(inputs.index(pipe[0]))
 
     def init_outputs(self, pipe):
         outputs = sorted(elements.outputs())
         self.outputBox.addItems(outputs)
         self.outputBox.setEnabled(len(outputs) > 1)
-        if len(pipe) > 0:
+        if pipe:
             self.outputBox.setCurrentIndex(outputs.index(pipe[-1]))
 
     def init_current_plugins(self, pipe):

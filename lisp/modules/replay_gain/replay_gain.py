@@ -37,29 +37,32 @@ from .gain_ui import GainUi, GainProgressDialog
 
 
 class GainAction(Action):
+
+    __slots__ = ('__media_list', '__new_volumes', '__old_volumes')
+
     def __init__(self):
-        self._mediaList = []
-        self._newVolumes = []
-        self._oldVolumes = []
+        self.__media_list = []
+        self.__new_volumes = []
+        self.__old_volumes = []
 
     def add_media(self, media, new_volume):
         volume = media.element('Volume')
         if volume is not None:
-            self._mediaList.append(media)
-            self._newVolumes.append(new_volume)
-            self._oldVolumes.append(volume.normal_volume)
+            self.__media_list.append(media)
+            self.__new_volumes.append(new_volume)
+            self.__old_volumes.append(volume.normal_volume)
 
     def do(self):
-        for n, media in enumerate(self._mediaList):
+        for n, media in enumerate(self.__media_list):
             volume = media.element('Volume')
             if volume is not None:
-                volume.normal_volume = self._newVolumes[n]
+                volume.normal_volume = self.__new_volumes[n]
 
     def undo(self):
-        for n, media in enumerate(self._mediaList):
+        for n, media in enumerate(self.__media_list):
             volume = media.element('Volume')
             if volume is not None:
-                volume.normal_volume = self._oldVolumes[n]
+                volume.normal_volume = self.__old_volumes[n]
 
     def redo(self):
         self.do()

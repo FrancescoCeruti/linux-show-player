@@ -17,8 +17,6 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from ast import literal_eval
-
 from lisp.backends.gst.gst_media import GstMedia
 from lisp.cues.cue_factory import CueFactory
 from lisp.cues.media_cue import MediaCue

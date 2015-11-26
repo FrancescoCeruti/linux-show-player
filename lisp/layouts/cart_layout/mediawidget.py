@@ -19,14 +19,13 @@
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon, QColor
-from PyQt5.QtWidgets import QProgressBar, QLCDNumber, QLabel, QHBoxLayout, \
-    QSizePolicy
+from PyQt5.QtWidgets import QProgressBar, QLCDNumber, QLabel, QHBoxLayout
 
 from lisp.backends.base.media import MediaState
-from lisp.core.signal import Connection
-from lisp.ui.qclickslider import QClickSlider
 from lisp.backends.base.media_time import MediaTime
+from lisp.core.signal import Connection
 from lisp.layouts.cart_layout.cuewidget import CueWidget
+from lisp.ui.qclickslider import QClickSlider
 from lisp.ui.qdbmeter import QDbMeter
 from lisp.ui.qmessagebox import QDetailedMessageBox
 from lisp.utils.util import strtime
@@ -85,13 +84,12 @@ class MediaCueWidget(CueWidget):
         self.cue.media.paused.connect(self._status_paused, mode=queued)
         self.cue.media.paused.connect(self.dbmeter.reset, mode=queued)
         self.cue.media.error.connect(self._status_error, mode=queued)
-        # self.cue.media.waiting.connect(self._status_paused)
         self.cue.media.eos.connect(self._status_stopped, mode=queued)
         self.cue.media.eos.connect(self.dbmeter.reset, mode=queued)
         self.cue.media.error.connect(self._on_error, mode=queued)
         self.cue.media.error.connect(self.dbmeter.reset, mode=queued)
-        self.cue.media.property_changed.connect(self._media_changed,
-                                                mode=queued)
+        self.cue.media.changed('duration').connect(self._duration_changed,
+                                                   mode=queued)
 
         self.media_time = MediaTime(self.cue.media)
         self.media_time.notify.connect(self._on_time_update)
@@ -145,9 +143,8 @@ class MediaCueWidget(CueWidget):
                 self.fade.exit_fadein.connect(self._exit_fade)
                 self.fade.exit_fadeout.connect(self._exit_fade)
 
-    def _media_changed(self, pname, value):
-        if pname == 'duration':
-            self._update_duration(value)
+    def _duration_changed(self, duration):
+            self._update_duration(duration)
 
     def _on_error(self, media, error, details):
         QDetailedMessageBox.dcritical(self.cue.name, error, details)

@@ -29,7 +29,6 @@ from lisp.cues.media_cue import MediaCue
 from lisp.layouts.cue_layout import CueLayout
 from lisp.ui.cuelistdialog import CueListDialog
 from lisp.ui.settings.section import SettingsSection
-from lisp.core.decorators import async
 
 
 class SeekAction(Cue):

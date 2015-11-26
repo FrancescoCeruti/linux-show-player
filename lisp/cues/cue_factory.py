@@ -63,7 +63,7 @@ class CueFactory:
 
         :param cue_type: The cue type
         """
-        factory = cls._REGISTRY_.get(cue_type, None)
+        factory = cls._REGISTRY_.get(cue_type)
 
         if not callable(factory):
             raise Exception('Cue not available or badly registered: ' + str(cue_type))

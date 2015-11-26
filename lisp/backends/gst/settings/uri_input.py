@@ -17,17 +17,12 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-import os.path
-
 from PyQt5.QtCore import QStandardPaths, Qt
 from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QPushButton, QLineEdit, \
     QGridLayout, QCheckBox, QSpinBox, QLabel, QFileDialog
 
-from lisp.ui.mainwindow import MainWindow
-from lisp.utils.configuration import config
 from lisp.backends.gst.elements.uri_input import UriInput
 from lisp.ui.settings.section import SettingsSection
-from lisp.utils.util import qfile_filters
 
 
 class UriInputSettings(SettingsSection):

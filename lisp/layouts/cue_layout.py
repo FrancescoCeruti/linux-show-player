@@ -21,8 +21,8 @@ from abc import abstractmethod
 
 from PyQt5.QtWidgets import QAction, QMenu, qApp
 
-from lisp.core.signal import Signal
 from lisp.core.actions_handler import MainActionsHandler
+from lisp.core.signal import Signal
 from lisp.cues.cue import Cue
 from lisp.layouts.cue_layout_actions import ConfigureAction, \
     MultiConfigureAction
@@ -100,7 +100,7 @@ class CueLayout():
             if issubclass(cue.__class__, cue_class):
                 widgets.extend(self._settings_sections[cue_class])
 
-        if len(widgets) > 0:
+        if widgets:
             widgets.sort(key=lambda w: w.Name)
 
             edit_ui = CueSettings(widgets, cue, parent=MainWindow())
@@ -115,7 +115,7 @@ class CueLayout():
     def edit_selected_cues(self):
         cues = self.get_selected_cues()
 
-        if len(cues) > 0:
+        if cues:
             # Obtains the most generic class between the selected cues
             generic = cues[0].__class__
             for cue in cues:
@@ -176,7 +176,7 @@ class CueLayout():
             if isinstance(cue, class_):
                 items.extend(self._context_items[class_])
 
-        if len(items) > 0:
+        if items:
             menu = QMenu(self)
 
             for item in items:

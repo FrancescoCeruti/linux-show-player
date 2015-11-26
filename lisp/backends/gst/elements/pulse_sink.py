@@ -18,8 +18,8 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from lisp.backends.base.media_element import ElementType, MediaType
-from lisp.backends.gst.gst_element import GstMediaElement
 from lisp.backends.gst.gi_repository import Gst
+from lisp.backends.gst.gst_element import GstMediaElement
 
 
 class PulseSink(GstMediaElement):

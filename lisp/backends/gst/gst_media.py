@@ -17,13 +17,13 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+import weakref
 from concurrent.futures import ThreadPoolExecutor
 from os import path, cpu_count as _cpu_count
-import weakref
 
 from lisp.backends.base.media import Media, MediaState
-from lisp.backends.gst.gi_repository import Gst
 from lisp.backends.gst import elements
+from lisp.backends.gst.gi_repository import Gst
 from lisp.backends.gst.gst_utils import gst_uri_duration
 from lisp.core.decorators import async_in_pool, async
 from lisp.core.has_properties import Property
@@ -243,7 +243,7 @@ class GstMedia(Media):
             self.__duration()
 
     def __append_element(self, element):
-        if len(self._elements) > 0:
+        if self._elements:
             self._elements[-1].link(element)
 
         self._elements.append(element)

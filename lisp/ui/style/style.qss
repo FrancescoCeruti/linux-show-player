@@ -414,7 +414,7 @@ QTabBar::tab:last {
 }
 
 QTabBar::tab:first:!selected {
-     margin-left: 0px;
+    margin-left: 0px;
     border-top-left-radius: 3px;
 }
 
@@ -598,6 +598,45 @@ QRadioButton:indicator:checked:disabled {
 
 
 /* CUSTOM WIDGETS */
+
+#CartTabBar::tab {
+    height: 35px;
+    width: 100px;
+    border: 1px solid #444;
+    border-bottom-style: none;
+    background-color: #333;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 3px;
+    padding-bottom: 2px;
+    margin-right: -1px;
+    font-size: 13pt;
+    font-weight: bold;
+    color: white;
+}
+
+#CartTabBar::tab:only-one,
+#CartTabBar::tab:last {
+    margin-right: 0px;
+    border-top-right-radius: 3px;
+}
+
+#CartTabBar::tab:first:!selected {
+    border-top-left-radius: 3px;
+}
+
+#CartTabBar::tab:!selected {
+    margin-top: 3px;
+    border-bottom-style: solid;
+    background-color: QLinearGradient(x1:0, y1:0, x2:0, y2:1, stop:1 #212121, stop:.4 #343434);
+}
+
+#CartTabBar::tab:selected {
+    height: 40px;
+    margin-bottom: -5px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
 
 #ButtonCueWidget {
     background-color: #464646;

@@ -36,23 +36,23 @@ class ProxyModel(Model):
     def __init__(self, model):
         super().__init__()
 
-        if isinstance(model, Model):
-            self.__model = model
-            self.__model.item_added.connect(self._item_added)
-            self.__model.item_removed.connect(self._item_removed)
-            self.__model.model_reset.connect(self._model_reset)
-
-            for item in model:
-                self._item_added(item)
-        else:
+        if not isinstance(model, Model):
             raise TypeError('ProxyModel model must be a Model object, not {0}'
                             .format(model.__class__.__name__))
+
+        self.__model = model
+        self.__model.item_added.connect(self._item_added)
+        self.__model.item_removed.connect(self._item_removed)
+        self.__model.model_reset.connect(self._model_reset)
 
     def add(self, item):
         self.__model.add(item)
 
     def remove(self, item):
         self.__model.remove(item)
+
+    def reset(self):
+        self.__model.reset()
 
     @property
     def model(self):

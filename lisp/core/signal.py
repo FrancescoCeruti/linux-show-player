@@ -17,11 +17,11 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from enum import Enum
 import inspect
-from threading import Lock
 import traceback
 import weakref
+from enum import Enum
+from threading import Lock
 from types import MethodType, BuiltinMethodType
 
 from PyQt5.QtCore import QEvent, QObject

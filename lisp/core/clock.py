@@ -18,7 +18,9 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from threading import Lock
+
 from PyQt5.QtCore import QTimer
+
 from lisp.core.singleton import QSingleton
 
 

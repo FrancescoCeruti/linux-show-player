@@ -19,10 +19,10 @@
 
 from os import path
 
-from PyQt5.QtCore import QFileSystemWatcher
 from PyQt5.QtGui import QPalette, QColor
 from PyQt5.QtWidgets import QStyleFactory, qApp, QProxyStyle, QStyle
 
+# NEEDED to load assets
 from lisp.ui.style import style
 
 # TODO: maybe a class ? (StyleManager)

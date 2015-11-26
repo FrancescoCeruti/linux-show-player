@@ -58,7 +58,8 @@ class LoadBackend(Module):
 
         for file in files:
             cue = CueFactory.create_cue('URIAudioCue', uri='file://' + file)
-            cue.name = file.split(os.sep)[-1]
+            # Use the filename without extension as cue name
+            cue.name = os.path.splitext(os.path.basename(file))[0]
             Application().cue_model.add(cue)
 
         QApplication.restoreOverrideCursor()

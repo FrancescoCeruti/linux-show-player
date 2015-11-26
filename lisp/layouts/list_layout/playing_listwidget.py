@@ -19,8 +19,8 @@
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QListWidget, QListWidgetItem
-from lisp.backends.base.media_time import MediaTime
-from lisp.layouts.list_layout.mediawidget_play import PlayingMediaWidget
+
+from lisp.layouts.list_layout.playing_mediawidget import PlayingMediaWidget
 
 
 class PlayingListWidget(QListWidget):

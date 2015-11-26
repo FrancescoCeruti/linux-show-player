@@ -48,7 +48,7 @@ def json_deep_search(iterable, field):
             if key == field:
                 fields_found.append(value)
 
-            elif isinstance(value, dict) or isinstance(value, list):
+            elif isinstance(value, (dict, list)):
                 fields_found.extend(json_deep_search(value, field))
 
     elif isinstance(iterable, list):
@@ -67,7 +67,7 @@ def json_deep_replace(iterable, field, replace_function):
             if key == field:
                 iterable[key] = replace_function(value)
 
-            elif isinstance(value, dict) or isinstance(value, list):
+            elif isinstance(value, (dict, list)):
                 json_deep_replace(value, field, replace_function)
 
     elif isinstance(iterable, list):

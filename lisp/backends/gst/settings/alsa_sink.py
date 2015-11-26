@@ -18,7 +18,6 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5 import QtCore
-from PyQt5.QtCore import QSize
 from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QComboBox, QLabel
 
 from lisp.backends.gst.elements.alsa_sink import AlsaSink

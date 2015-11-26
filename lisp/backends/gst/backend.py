@@ -18,14 +18,14 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from lisp.backends.base.backend import Backend as BaseBackend
-from lisp.backends.gst.gi_repository import Gst, GObject
 from lisp.backends.gst import elements, settings
+from lisp.backends.gst.gi_repository import Gst, GObject
+from lisp.backends.gst.gst_cue_factories import register_factories
 from lisp.backends.gst.gst_media_settings import GstMediaSettings
 from lisp.backends.gst.gst_preferences import GstPreferences
+from lisp.backends.gst.gst_utils import gst_parse_tag_list
 from lisp.backends.gst.gst_utils import gst_uri_metadata, gst_mime_types, \
     gst_uri_duration
-from lisp.backends.gst.gst_cue_factories import register_factories
-from lisp.backends.gst.gst_utils import gst_parse_tag_list
 from lisp.cues.media_cue import MediaCue
 from lisp.layouts.cue_layout import CueLayout
 from lisp.ui.settings.app_settings import AppSettings

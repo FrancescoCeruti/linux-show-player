@@ -28,9 +28,10 @@ class Action:
     An action could provide, via the "log" function, a simple log message.
 
     .. warning::
-        Actions shouldn't retains external object (e.g. cue(s), media(s))
-        references. Use weak-references instead.
+        Actions may reference external objects, preventing gc.
     """
+
+    __slots__ = ()
 
     @abstractmethod
     def do(self):

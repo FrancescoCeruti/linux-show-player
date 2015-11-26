@@ -18,8 +18,8 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>
 
 from urllib.parse import unquote, quote
-from lisp.backends.base.audio_utils import uri_duration
 
+from lisp.backends.base.audio_utils import uri_duration
 from lisp.backends.gst.gi_repository import Gst, GstPbutils
 
 

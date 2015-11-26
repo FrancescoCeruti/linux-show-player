@@ -25,8 +25,6 @@ from lisp.core.signal import Connection, Signal
 class MediaTime:
 
     def __init__(self, media):
-        super().__init__()
-
         self.notify = Signal() # (int)
 
         self._media = media

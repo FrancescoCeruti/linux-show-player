@@ -20,8 +20,8 @@
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QGroupBox, QGridLayout, QSpinBox, QLabel
 
-from lisp.backends.gst.gi_repository import Gst
 from lisp.backends.gst.elements.dbmeter import Dbmeter
+from lisp.backends.gst.gi_repository import Gst
 from lisp.ui.settings.section import SettingsSection
 
 

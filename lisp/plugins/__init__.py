@@ -17,14 +17,13 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+import traceback
 from importlib import import_module
 from os.path import dirname
-import traceback
 
 from lisp.utils import logging
 from lisp.utils.dyamic_loader import class_name_from_module
 from lisp.utils.util import find_packages
-
 
 __PLUGINS = {}
 

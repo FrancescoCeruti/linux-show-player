@@ -23,16 +23,19 @@ from lisp.core.action import Action
 
 
 class ConfigureAction(Action):
+
+    __slots__ = ('__cue', '__new', '__old')
+
     def __init__(self, properties, cue):
-        self._cue = cue
-        self._new = properties
-        self._old = deepcopy(cue.properties())
+        self.__cue = cue
+        self.__new = properties
+        self.__old = deepcopy(cue.properties())
 
     def do(self):
-        self._cue.update_properties(deepcopy(self._new))
+        self.__cue.update_properties(deepcopy(self.__new))
 
     def undo(self):
-        self._cue.update_properties(deepcopy(self._old))
+        self.__cue.update_properties(deepcopy(self.__old))
 
     def redo(self):
         self.do()
@@ -42,17 +45,20 @@ class ConfigureAction(Action):
 
 
 class MultiConfigureAction(Action):
+
+    __slots__ = ('__cues', '__new', '__old')
+
     def __init__(self, properties, cues):
-        self._cues = cues
-        self._new = properties
-        self._old = [deepcopy(cue.properties()) for cue in cues]
+        self.__cues = cues
+        self.__new = properties
+        self.__old = [deepcopy(cue.properties()) for cue in cues]
 
     def do(self):
-        for cue in self._cues:
-            cue.update_properties(deepcopy(self._new))
+        for cue in self.__cues:
+            cue.update_properties(deepcopy(self.__new))
 
     def undo(self):
-        for cue, old in zip(self._cues, self._old):
+        for cue, old in zip(self.__cues, self.__old):
             cue.update_properties(deepcopy(old))
 
     def redo(self):

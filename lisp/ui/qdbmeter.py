@@ -20,11 +20,11 @@
 from PyQt5 import QtCore
 from PyQt5.QtGui import QLinearGradient, QColor, QPainter
 from PyQt5.QtWidgets import QWidget
+
 from lisp.utils.configuration import config
 
 
 class QDbMeter(QWidget):
-
     DB_MIN = int(config["DbMeter"]["dbMin"])
     DB_MAX = int(config["DbMeter"]["dbMax"])
     DB_CLIP = int(config["DbMeter"]["dbClip"])
@@ -80,14 +80,14 @@ class QDbMeter(QWidget):
 
                 rmss.append(round((rms - self.DB_MIN) * mul))
 
-            decPeaks = []
-            for decPeak in self.decPeak:
-                if decPeak < self.DB_MIN:
-                    decPeak = self.DB_MIN
-                elif decPeak > self.DB_MAX:
-                    decPeak = self.DB_MAX
+            dPeaks = []
+            for dPeak in self.decPeak:
+                if dPeak < self.DB_MIN:
+                    dPeak = self.DB_MIN
+                elif dPeak > self.DB_MAX:
+                    dPeak = self.DB_MAX
 
-                decPeaks.append(round((decPeak - self.DB_MIN) * mul))
+                dPeaks.append(round((dPeak - self.DB_MIN) * mul))
 
             qp = QPainter()
             qp.begin(self)
@@ -96,13 +96,10 @@ class QDbMeter(QWidget):
             xpos = 0
             xdim = self.width() / len(peaks)
 
-            for n in range(len(peaks)):
-                peak = peaks[n]
-                rms = rmss[n]
-                decPeak = decPeaks[n]
-
+            for n, (peak, rms, dPeak) in enumerate(zip(peaks, rmss, dPeaks)):
                 # Maximum "peak-rect" size
-                maxRect = QtCore.QRect(xpos, self.height() - 2, xdim - 2, 2 - self.height())
+                maxRect = QtCore.QRect(xpos, self.height() - 2, xdim - 2,
+                                       2 - self.height())
 
                 # Set QLinearGradient start and final-stop position
                 self.grad.setStart(maxRect.topLeft())
@@ -119,7 +116,7 @@ class QDbMeter(QWidget):
                 qp.fillRect(rect, self.grad)
 
                 # Draw decay peak
-                decRect = QtCore.QRect(xpos, (self.height() - 3) - decPeak,
+                decRect = QtCore.QRect(xpos, (self.height() - 3) - dPeak,
                                        xdim - 2, 2)
                 qp.fillRect(decRect, self.grad)
 

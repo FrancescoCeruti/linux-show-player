@@ -18,8 +18,8 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from enum import Enum
-from lisp.application import Application
 
+from lisp.application import Application
 from lisp.core.signal import Connection
 
 

@@ -20,12 +20,11 @@
 import logging
 from os import path
 
-from lisp.core.module import Module
-from lisp.cues.cue import Cue
-from lisp.utils.dyamic_loader import load_classes
 from lisp.application import Application
-from lisp.ui.mainwindow import MainWindow
+from lisp.core.module import Module
 from lisp.cues.cue_factory import CueFactory
+from lisp.ui.mainwindow import MainWindow
+from lisp.utils.dyamic_loader import ClassesLoader
 
 
 class ActionCues(Module):
@@ -33,7 +32,7 @@ class ActionCues(Module):
     def __init__(self):
         super().__init__()
 
-        for cue_name, cue_class in load_classes(path.dirname(__file__)):
+        for cue_name, cue_class in ClassesLoader(path.dirname(__file__)):
             # Register the action-cue in the cue-factory
             CueFactory.register_factory(cue_class.__name__, cue_class)
             # Register the menu action for adding the action-cue

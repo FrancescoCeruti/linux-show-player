@@ -19,9 +19,10 @@
 
 from abc import abstractmethod
 from enum import Enum
-from threading import Event, Lock
+from threading import Event
 from uuid import uuid4
-from lisp.core.decorators import async, synchronized_method
+
+from lisp.core.decorators import async
 from lisp.core.has_properties import HasProperties, Property
 from lisp.core.signal import Signal
 

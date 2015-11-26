@@ -17,10 +17,10 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from lisp.core.signal import Signal
 from lisp.backends.base.media_element import ElementType, MediaType
-from lisp.backends.gst.gst_element import GstMediaElement, GstProperty
 from lisp.backends.gst.gi_repository import Gst
+from lisp.backends.gst.gst_element import GstMediaElement, GstProperty
+from lisp.core.signal import Signal
 
 
 class Dbmeter(GstMediaElement):

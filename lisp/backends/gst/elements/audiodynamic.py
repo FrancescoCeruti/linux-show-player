@@ -20,8 +20,8 @@
 from enum import Enum
 
 from lisp.backends.base.media_element import ElementType, MediaType
-from lisp.backends.gst.gst_element import GstMediaElement, GstProperty
 from lisp.backends.gst.gi_repository import Gst
+from lisp.backends.gst.gst_element import GstMediaElement, GstProperty
 
 
 class Audiodynamic(GstMediaElement):

@@ -22,10 +22,10 @@ from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QHBoxLayout, QCheckBox
 from lisp.application import Application
 from lisp.core.decorators import async
 from lisp.core.has_properties import Property
+from lisp.cues.cue import Cue
 from lisp.cues.media_cue import MediaCue
 from lisp.layouts.cue_layout import CueLayout
 from lisp.ui.settings.section import SettingsSection
-from lisp.cues.cue import Cue
 
 
 class StopAll(Cue):

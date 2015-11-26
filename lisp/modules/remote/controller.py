@@ -17,16 +17,16 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from http.client import HTTPConnection
 import logging
 import socket
+from http.client import HTTPConnection
 from xmlrpc.client import ServerProxy, Fault, Transport
 from xmlrpc.server import SimpleXMLRPCServer
 
+from lisp.core.decorators import async
 from lisp.core.singleton import Singleton
 from lisp.modules.remote.discovery import Announcer
 from lisp.modules.remote.dispatcher import RemoteDispatcher
-from lisp.core.decorators import async
 
 
 class TimeoutTransport(Transport):

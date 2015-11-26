@@ -17,12 +17,12 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+import mido
 from PyQt5.QtCore import QRegExp, Qt
 from PyQt5.QtGui import QRegExpValidator
 from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QHBoxLayout, QLineEdit, \
     QLabel, QGridLayout, QCheckBox, QSpinBox, QPushButton, QComboBox, \
     QMessageBox
-import mido
 
 from lisp.modules import check_module
 from lisp.modules.midi.input_handler import MIDIInputHandler

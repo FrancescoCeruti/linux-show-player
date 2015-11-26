@@ -18,10 +18,10 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from copy import deepcopy
+
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QDialog, QTabWidget, QDialogButtonBox
 
-from lisp.ui.settings.sections.cue_general import CueGeneralSettings
 from lisp.utils.util import deep_update
 
 

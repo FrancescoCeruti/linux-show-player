@@ -17,18 +17,17 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from os.path import dirname
 import traceback
+from os.path import dirname
 
 from lisp.utils import logging
-from lisp.utils.dyamic_loader import load_classes
-
+from lisp.utils.dyamic_loader import ClassesLoader
 
 __MODULES = {}
 
 
 def init_modules():
-    for module_name, module in load_classes(dirname(__file__)):
+    for module_name, module in ClassesLoader(dirname(__file__)):
         try:
             __MODULES[module_name] = module()
             logging.debug('MODULES: Loaded "{0}'.format(module_name))

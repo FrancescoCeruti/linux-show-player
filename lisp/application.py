@@ -26,6 +26,7 @@ from lisp import layouts
 from lisp import modules
 from lisp import plugins
 from lisp.core.actions_handler import MainActionsHandler
+from lisp.core.memento_model import AdapterMementoModel
 from lisp.core.singleton import Singleton
 from lisp.cues.cue_factory import CueFactory
 from lisp.cues.cue_model import CueModel
@@ -42,6 +43,7 @@ class Application(metaclass=Singleton):
         self._mainWindow = MainWindow()
         self._app_conf = {}
         self._layout = None
+        self._memento_model = None
         self._cue_model = CueModel()
 
         # Initialize modules
@@ -107,6 +109,7 @@ class Application(metaclass=Singleton):
         self._delete_session()
 
         self._layout = layout(self._cue_model)
+        self._memento_model = AdapterMementoModel(self.layout.model_adapter)
         self._mainWindow.set_layout(self._layout)
         self._app_conf['layout'] = layout.NAME
 
@@ -122,6 +125,7 @@ class Application(metaclass=Singleton):
         if self._layout is not None:
             self._layout.finalize()
             self._layout = None
+            self._memento_model = None
 
     def finalize(self):
         self._delete_session()

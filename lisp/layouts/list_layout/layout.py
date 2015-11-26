@@ -23,7 +23,6 @@ from PyQt5.QtWidgets import QWidget, QAction, QToolBar, QHBoxLayout, \
     QVBoxLayout, QLabel, qApp
 
 from lisp.backends.base.media import MediaState
-from lisp.core.memento_model import AdapterMementoModel
 from lisp.core.signal import Connection
 from lisp.cues.cue import Cue
 from lisp.cues.media_cue import MediaCue
@@ -66,7 +65,6 @@ class ListLayout(QWidget, CueLayout):
         self._model_adapter = CueListModel(self._cue_model)
         self._model_adapter.item_added.connect(self.__cue_added)
         self._model_adapter.item_removed.connect(self.__cue_removed)
-        self._memento_model = AdapterMementoModel(self._model_adapter)
 
         self._playing_model = PlayingMediaCueModel(self._cue_model)
         self._context_item = None
@@ -217,11 +215,11 @@ class ListLayout(QWidget, CueLayout):
         self.select_action.setText('Select')
 
     def current_cue(self):
-        if len(self._model_adapter) > 0:
+        if self._model_adapter:
             return self._model_adapter.item(self.listView.currentIndex().row())
 
     def current_item(self):
-        if len(self._model_adapter) > 0:
+        if self._model_adapter:
             return self.listView.currentItem()
 
     def select_context_cue(self):

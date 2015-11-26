@@ -20,6 +20,7 @@
 from PyQt5.QtCore import QSize
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QLabel, QProgressBar
+
 from lisp.core.signal import Connection
 from lisp.cues.cue import CueNextAction, CueState
 from lisp.cues.cue_time import CueTime, CueWaitTime

@@ -25,7 +25,6 @@ from PyQt5.QtWidgets import QWidget, QGridLayout, QLabel, QSizePolicy, \
 from lisp.core.signal import Connection
 from lisp.cues.cue_time import CueTime
 from lisp.ui.qclickslider import QClickSlider
-
 from lisp.ui.qdbmeter import QDbMeter
 from lisp.utils.util import strtime
 

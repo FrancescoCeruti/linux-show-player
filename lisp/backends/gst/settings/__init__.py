@@ -2,16 +2,15 @@ import logging
 import os
 import traceback
 
-from lisp.utils.dyamic_loader import load_classes
-
+from lisp.utils.dyamic_loader import ClassesLoader
 
 # Use a set() for avoiding duplication
 __SECTIONS = set()
 
 
 def load():
-    for name, section in load_classes(os.path.dirname(__file__),
-                                      suffixes=['Settings']):
+    for name, section in ClassesLoader(os.path.dirname(__file__),
+                                       suffixes=['Settings']):
 
         if hasattr(section, 'initialize'):
             try:
@@ -30,4 +29,4 @@ def sections():
 
 
 def sections_by_element_name():
-    return dict([(s.ELEMENT.Name, s) for s in __SECTIONS])
+    return {s.ELEMENT.Name: s for s in __SECTIONS}
