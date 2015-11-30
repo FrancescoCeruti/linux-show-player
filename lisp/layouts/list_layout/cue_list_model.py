@@ -98,10 +98,10 @@ class PlayingMediaCueModel(ReadOnlyProxyModel):
         if isinstance(item, MediaCue):
             self.__cues[item.media] = item
 
-            item.media.on_play.connect(self._add, mode=Connection.QtQueued)
-            item.media.stopped.connect(self._remove, mode=Connection.QtQueued)
-            item.media.eos.connect(self._remove, mode=Connection.QtQueued)
-            item.media.interrupted.connect(self._remove, mode=Connection.QtQueued)
+            item.media.on_play.connect(self._add, Connection.QtQueued)
+            item.media.stopped.connect(self._remove, Connection.QtQueued)
+            item.media.eos.connect(self._remove, Connection.QtQueued)
+            item.media.interrupted.connect(self._remove, Connection.QtQueued)
 
     def _item_removed(self, item):
         if isinstance(item, MediaCue):

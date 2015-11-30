@@ -36,7 +36,7 @@ class PlayingMediaWidget(QWidget):
 
         self.cue = cue
         self.cue_time = CueTime(cue)
-        self.cue_time.notify.connect(self._time_updated, mode=Connection.QtQueued)
+        self.cue_time.notify.connect(self._time_updated, Connection.QtQueued)
 
         self._dbmeter_element = None
         self._accurate_time = False
@@ -59,14 +59,14 @@ class PlayingMediaWidget(QWidget):
         self.playPauseButton = QPushButton(self.gridLayoutWidget)
         self.playPauseButton.setSizePolicy(QSizePolicy.Ignored,
                                            QSizePolicy.Ignored)
-        self.playPauseButton.setIcon(QIcon.fromTheme("media-playback-pause"))
+        self.playPauseButton.setIcon(QIcon.fromTheme('media-playback-pause'))
         self.playPauseButton.setFocusPolicy(Qt.NoFocus)
         self.playPauseButton.clicked.connect(self._pause)
         self.gridLayout.addWidget(self.playPauseButton, 1, 0)
 
         self.stopButton = QPushButton(self.gridLayoutWidget)
         self.stopButton.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
-        self.stopButton.setIcon(QIcon.fromTheme("media-playback-stop"))
+        self.stopButton.setIcon(QIcon.fromTheme('media-playback-stop'))
         self.stopButton.setFocusPolicy(Qt.NoFocus)
         self.stopButton.clicked.connect(self._stop)
         self.gridLayout.addWidget(self.stopButton, 1, 1)
@@ -100,7 +100,7 @@ class PlayingMediaWidget(QWidget):
         cue.media.played.connect(self._pause_to_play)
         cue.media.paused.connect(self._play_to_pause)
 
-        self.fade = self.cue.media.element("Fade")
+        self.fade = self.cue.media.element('Fade')
         if self.fade is not None:
             self.fade.enter_fadein.connect(self.enter_fadein)
             self.fade.enter_fadeout.connect(self.enter_fadeout)
@@ -143,7 +143,7 @@ class PlayingMediaWidget(QWidget):
             self._dbmeter_element = None
 
         if visible:
-            self._dbmeter_element = self.cue.media.element("DbMeter")
+            self._dbmeter_element = self.cue.media.element('DbMeter')
             if self._dbmeter_element is not None:
                 self._dbmeter_element.level_ready.connect(self.dbmeter.plot)
 
@@ -188,9 +188,9 @@ class PlayingMediaWidget(QWidget):
     def _play_to_pause(self):
         self.playPauseButton.clicked.disconnect()
         self.playPauseButton.clicked.connect(self._play)
-        self.playPauseButton.setIcon(QIcon.fromTheme("media-playback-start"))
+        self.playPauseButton.setIcon(QIcon.fromTheme('media-playback-start'))
 
     def _pause_to_play(self):
         self.playPauseButton.clicked.disconnect()
         self.playPauseButton.clicked.connect(self._pause)
-        self.playPauseButton.setIcon(QIcon.fromTheme("media-playback-pause"))
+        self.playPauseButton.setIcon(QIcon.fromTheme('media-playback-pause'))

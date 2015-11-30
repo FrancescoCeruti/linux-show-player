@@ -17,47 +17,49 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import pyqtSignal, QPoint
-from PyQt5.QtWidgets import QWidget, QLabel, QGridLayout, QSpacerItem, \
-    QSizePolicy
+import math
+
+from PyQt5.QtCore import pyqtSignal, Qt
+from PyQt5.QtWidgets import QWidget, QGridLayout, QSizePolicy, qApp
 from sortedcontainers import SortedDict
 
 
 class PageWidget(QWidget):
-    context_menu = pyqtSignal(QWidget, QPoint)
-    move_drop_event = pyqtSignal(object, tuple)
-    copy_drop_event = pyqtSignal(object, tuple)
+    move_drop_event = pyqtSignal(object, int, int)
+    copy_drop_event = pyqtSignal(object, int, int)
 
     DRAG_MAGIC = 'LiSP_Drag&Drop'
 
     def __init__(self, rows, columns, *args):
         super().__init__(*args)
+        self.setAcceptDrops(True)
+
         self.__rows = rows
         self.__columns = columns
         self.__widgets = SortedDict()
 
         self.setLayout(QGridLayout())
-        self.layout().setContentsMargins(2, 2, 2, 2)
+        self.layout().setContentsMargins(4, 4, 4, 4)
         self.init_layout()
 
-        self.drag_indicator = QLabel(self)
-        self.drag_indicator.hide()
-
     def init_layout(self):
-        for row in range(1, self.__rows + 1):
-            item = QSpacerItem(0, 0, QSizePolicy.Minimum, QSizePolicy.Expanding)
-            self.layout().addItem(item, row, 0)
+        for row in range(0, self.__rows):
+            self.layout().setRowStretch(row, 1)
+            # item = QSpacerItem(0, 0, QSizePolicy.Minimum, QSizePolicy.Expanding)
+            # self.layout().addItem(item, row, 0)
 
-        for column in range(1, self.__columns + 1):
-            item = QSpacerItem(0, 0, QSizePolicy.Expanding, QSizePolicy.Minimum)
-            self.layout().addItem(item, 0, column)
+        for column in range(0, self.__columns):
+            self.layout().setColumnStretch(column, 1)
+            # item = QSpacerItem(0, 0, QSizePolicy.Expanding, QSizePolicy.Minimum)
+            # self.layout().addItem(item, 0, column)
 
     def add_widget(self, widget, row, column):
         self._check_index(row, column)
         if (row, column) not in self.__widgets:
             widget.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
             self.__widgets[(row, column)] = widget
-            self.layout().addWidget(widget, row + 1, column + 1)
+            self.layout().addWidget(widget, row, column)
+            widget.show()
         else:
             raise IndexError('cell {} already used'.format((row, column)))
 
@@ -66,6 +68,7 @@ class PageWidget(QWidget):
         if (row, column) in self.__widgets:
             widget = self.__widgets.pop((row, column))
             widget.hide()
+            self.layout().removeWidget(widget)
             return widget
         else:
             raise IndexError('cell {} is empty'.format((row, column)))
@@ -99,44 +102,48 @@ class PageWidget(QWidget):
         if not 0 <= row < self.__rows or not 0 <= column < self.__columns:
             raise IndexError('index out of bound {}'.format((row, column)))
 
-    '''def dragEnterEvent(self, event):
+    def dragEnterEvent(self, event):
         if event.mimeData().hasText():
-            if event.mimeData().text() == GridWidget.DRAG_MAGIC:
+            if event.mimeData().text() == PageWidget.DRAG_MAGIC:
+                event.accept()
+            else:
+                event.ignore()
+        else:
+            event.ignore()
+
+    def dragLeaveEvent(self, event):
+        event.ignore()
+
+    def dropEvent(self, event):
+        row, column = self._event_index(event)
+        if self.layout().itemAtPosition(row, column) is None:
+            if qApp.keyboardModifiers() == Qt.ControlModifier:
+                event.setDropAction(Qt.MoveAction)
+                event.accept()
+                self.move_drop_event.emit(event.source(), row, column)
+            elif qApp.keyboardModifiers() == Qt.ShiftModifier:
+                event.setDropAction(Qt.CopyAction)
+                self.copy_drop_event.emit(event.source(), row, column)
                 event.accept()
 
-    def dragLeaveEvent(self, e):
-        self.posIndicator.hide()
-        e.ignore()
+        event.ignore()
 
-    def dropEvent(self, e):
-        row = math.ceil(e.pos().y() / (self.ydim + self.margin)) - 1
-        column = math.ceil(e.pos().x() / (self.xdim + self.margin)) - 1
+    def dragMoveEvent(self, event):
+        row, column = self._event_index(event)
+        if self.layout().itemAtPosition(row, column) is None:
+            event.accept()
+        else:
+            event.ignore()
 
-        if self.itemAt(row, column) is None:
-            if qApp.keyboardModifiers() == Qt.ControlModifier:
-                e.setDropAction(Qt.MoveAction)
-                self.move_drop_event.emit(e.source(), (-1, row, column))
-            elif qApp.keyboardModifiers() == Qt.ShiftModifier:
-                e.setDropAction(Qt.CopyAction)
-                self.copy_drop_event.emit(e.source(), (-1, row, column))
+    def _event_index(self, event):
+        # Margins and spacings are equals
+        space = self.layout().horizontalSpacing()
+        margin = self.layout().contentsMargins().right()
 
-        self.posIndicator.hide()
+        r_size = (self.height() + margin * 2) // self.__rows + space
+        c_size = (self.width() + margin * 2) // self.__columns + space
 
-        e.accept()'''
+        row = math.ceil(event.pos().y() / r_size) - 1
+        column = math.ceil(event.pos().x() / c_size) - 1
 
-    '''def dragMoveEvent(self, e):
-        row = math.ceil(e.pos().y() / (self.ydim + self.margin)) - 1
-        column = math.ceil(e.pos().x() / (self.xdim + self.margin)) - 1
-        if row < self.rows and column < self.columns and row >= 0 and column >= 0:
-            self.posIndicator.setGeometry(self.calcItemGeometry(row, column))
-            if self.itemAt(row, column) is not None:
-                self.posIndicator.setPixmap(QPixmap())
-                self.posIndicator.setStyleSheet('background-color: rgba(255,0,0,100)')
-            else:
-                self.posIndicator.setStyleSheet('background-color: rgba(0,0,255,100)')
-
-            self.posIndicator.raise_()
-            self.posIndicator.show()
-
-            e.setDropAction(Qt.MoveAction)
-            e.accept()'''
+        return row, column

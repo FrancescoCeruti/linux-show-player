@@ -43,7 +43,6 @@ class CueLayout():
 
     def __init__(self, cue_model):
         self._cue_model = cue_model
-        self._model_adapter = None
 
         self.cue_execute = Signal()     # Before a cue is executed
         self.focus_changed = Signal()   # After the focused cue is changed
@@ -55,9 +54,9 @@ class CueLayout():
         return self._cue_model
 
     @property
+    @abstractmethod
     def model_adapter(self):
         """:rtype: lisp.model_view.model_adapter.ModelAdapter"""
-        return self._model_adapter
 
     @classmethod
     def add_context_item(cls, item, cue_class=Cue):

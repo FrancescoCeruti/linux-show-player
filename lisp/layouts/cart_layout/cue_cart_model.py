@@ -78,6 +78,7 @@ class CueCartModel(ModelAdapter):
 
         if new_index not in self.__cues:
             self.__cues[new_index] = self.__cues.pop(old_index)
+            self.__cues[new_index].index = new_index
             self.item_moved.emit(old_index, new_index)
         else:
             raise ModelException('index already used {}'.format(new_index))

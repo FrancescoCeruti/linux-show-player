@@ -214,6 +214,10 @@ class ListLayout(QWidget, CueLayout):
         self.remove_action.setText('Remove')
         self.select_action.setText('Select')
 
+    @CueLayout.model_adapter.getter
+    def model_adapter(self):
+        return self._model_adapter
+
     def current_cue(self):
         if self._model_adapter:
             return self._model_adapter.item(self.listView.currentIndex().row())
@@ -260,6 +264,7 @@ class ListLayout(QWidget, CueLayout):
                 cue = self.current_cue()
                 if cue is not None:
                     cue.execute()
+                    self.cue_execute.emit(cue)
                 if self._auto_next:
                     nextitem = self.listView.currentIndex().row() + 1
                     if nextitem < self.listView.topLevelItemCount():
@@ -359,7 +364,7 @@ class ListLayout(QWidget, CueLayout):
             item.selected = not item.selected
 
     def __cue_added(self, cue):
-        cue.next.connect(self.__execute_next, mode=Connection.QtQueued)
+        cue.next.connect(self.__execute_next, Connection.QtQueued)
 
     def __cue_removed(self, cue):
         if isinstance(cue, MediaCue):

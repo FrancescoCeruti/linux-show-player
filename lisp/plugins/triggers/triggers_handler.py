@@ -37,13 +37,13 @@ class CueHandler:
         self.triggers = triggers
         self.cue = cue
 
-        self.cue.start.connect(self._play, mode=Connection.Async)
-        self.cue.pause.connect(self._pause, mode=Connection.Async)
-        self.cue.stop.connect(self._stop, mode=Connection.Async)
-        self.cue.end.connect(self._end, mode=Connection.Async)
+        self.cue.start.connect(self._play, Connection.Async)
+        self.cue.pause.connect(self._pause, Connection.Async)
+        self.cue.stop.connect(self._stop, Connection.Async)
+        self.cue.end.connect(self._end, Connection.Async)
 
         #self.cue_time = CueTime(cue)
-        #self.cue_time.notify.connect(self._time, mode=Connection.Async)
+        #self.cue_time.notify.connect(self._time, Connection.Async)
 
     def finalize(self):
         self.triggers.clear()

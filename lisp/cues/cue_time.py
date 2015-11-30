@@ -58,11 +58,11 @@ class CueTime(metaclass=MetaCueTime):
     def __init(self, *args):
         if self._cue.duration > 0 and not self._active:
             # Cue "status" signals
-            self._cue.start.connect(self.start, mode=Connection.QtQueued)
-            self._cue.pause.connect(self.stop, mode=Connection.QtQueued)
-            self._cue.stop.connect(self.stop, mode=Connection.QtQueued)
-            self._cue.end.connect(self.stop, mode=Connection.QtQueued)
-            self._cue.error.connect(self.stop, mode=Connection.QtQueued)
+            self._cue.start.connect(self.start, Connection.QtQueued)
+            self._cue.pause.connect(self.stop, Connection.QtQueued)
+            self._cue.stop.connect(self.stop, Connection.QtQueued)
+            self._cue.end.connect(self.stop, Connection.QtQueued)
+            self._cue.error.connect(self.stop, Connection.QtQueued)
 
             if self._cue.state == CueState.Running:
                 self.start()
@@ -109,7 +109,7 @@ class CueWaitTime:
         if self._mode == CueWaitTime.Mode.Pre:
             self._cue.pre_wait_enter.connect(self.start,
                                              mode=Connection.QtQueued)
-            self._cue.pre_wait_exit.connect(self.stop, mode=Connection.QtQueued)
+            self._cue.pre_wait_exit.connect(self.stop, Connection.QtQueued)
         elif self._mode == CueWaitTime.Mode.Post:
             self._cue.post_wait_enter.connect(self.start,
                                               mode=Connection.QtQueued)

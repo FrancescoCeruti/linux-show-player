@@ -46,9 +46,11 @@ class CueListView(QTreeWidget):
         """
         super().__init__(parent)
         self._model = cue_model
-        self._model.item_added.connect(self.__cue_added, mode=Connection.QtDirect)
-        self._model.item_moved.connect(self.__cue_moved, mode=Connection.QtDirect)
-        self._model.item_removed.connect(self.__cue_removed, mode=Connection.QtDirect)
+        self._model.item_added.connect(self.__cue_added, Connection.QtDirect)
+        self._model.item_moved.connect(self.__cue_moved, Connection.QtDirect)
+        self._model.item_removed.connect(self.__cue_removed, Connection.QtDirect)
+        self._drag_item = None
+        self._drag_start = None
         self.__item_moving = False
 
         self.setHeaderLabels(CueListView.H_NAMES)
@@ -75,22 +77,17 @@ class CueListView(QTreeWidget):
         super().keyPressEvent(event)
 
     def dropEvent(self, event):
-        if qApp.keyboardModifiers() == QtCore.Qt.ShiftModifier:
-            event.setDropAction(QtCore.Qt.CopyAction)
-            self.drop_copy_event.emit(self.drag_start,
-                                      self.indexFromItem(self.drag_item).row())
-        else:
-            event.setDropAction(QtCore.Qt.MoveAction)
-            super().dropEvent(event)
-            self.__item_moving = True
-            self._model.move(self.drag_start,
-                             self.indexFromItem(self.drag_item).row())
+        event.setDropAction(QtCore.Qt.MoveAction)
+        super().dropEvent(event)
+        self.__item_moving = True
+        self._model.move(self._drag_start,
+                         self.indexFromItem(self._drag_item).row())
 
         event.accept()
 
     def mousePressEvent(self, event):
-        self.drag_item = self.itemAt(event.pos())
-        self.drag_start = self.indexFromItem(self.drag_item).row()
+        self._drag_item = self.itemAt(event.pos())
+        self._drag_start = self.indexFromItem(self._drag_item).row()
         super().mousePressEvent(event)
 
     def __cue_added(self, cue):

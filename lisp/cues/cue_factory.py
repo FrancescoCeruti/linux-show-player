@@ -71,23 +71,15 @@ class CueFactory:
         return factory(**kwargs)
 
     @classmethod
-    def clone_cue(cls, cue, same_id=False):
-        """
-        Return a copy of the given cue.
-
-        ..warning:
-            Using the same id can cause a lot of problems, use it only if the copied cue will be destroyed
-            after the copy (e.g. a finalized cue).
+    def clone_cue(cls, cue):
+        """Return a copy of the given cue. The id is not copied.
 
         :param cue: the cue to be copied
-        :param same_id: if True the new cue is created with the same id
         """
         properties = deepcopy(cue.properties())
+        properties.pop('id')
+
         cue = cls.create_cue(cue.__class__.__name__)
-
-        if not same_id:
-            properties.pop('id')
-
         cue.update_properties(properties)
 
         return cue

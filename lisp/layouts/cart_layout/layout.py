@@ -18,13 +18,14 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QTabWidget, QAction, QInputDialog, QApplication, \
+from PyQt5.QtWidgets import QTabWidget, QAction, QInputDialog, qApp, \
     QMessageBox
 
 from lisp.cues.cue import Cue
+from lisp.cues.cue_factory import CueFactory
 from lisp.cues.media_cue import MediaCue
 from lisp.layouts.cart_layout.cue_cart_model import CueCartModel
-from lisp.layouts.cart_layout.mediawidget import MediaCueWidget
+from lisp.layouts.cart_layout.cue_widget import CueWidget
 from lisp.layouts.cart_layout.page_widget import PageWidget
 from lisp.layouts.cart_layout.preferences import CartLayoutPreferences
 from lisp.layouts.cue_layout import CueLayout
@@ -162,6 +163,10 @@ class CartLayout(QTabWidget, CueLayout):
         self.pause_action.setText('Pause')
         self.stop_action.setText('Stop')
 
+    @CueLayout.model_adapter.getter
+    def model_adapter(self):
+        return self._model_adapter
+
     def add_pages(self):
         pages, accepted = QInputDialog.getInt(self, 'Input', 'Number of Pages:',
                                               value=1, min=1, max=10)
@@ -171,6 +176,9 @@ class CartLayout(QTabWidget, CueLayout):
 
     def add_page(self):
         page = PageWidget(self.__rows, self.__columns, self)
+        page.move_drop_event.connect(self._move_widget)
+        page.copy_drop_event.connect(self._copy_widget)
+
         self.addTab(page, 'Page ' + str(self.count() + 1))
         self.__pages.append(page)
 
@@ -190,10 +198,10 @@ class CartLayout(QTabWidget, CueLayout):
             widget.selected = not widget.selected
 
     def dragEnterEvent(self, event):
-        if QApplication.keyboardModifiers() == Qt.ControlModifier:
+        if qApp.keyboardModifiers() == Qt.ControlModifier:
             event.setDropAction(Qt.MoveAction)
             event.accept()
-        elif QApplication.keyboardModifiers() == Qt.ShiftModifier:
+        elif qApp.keyboardModifiers() == Qt.ShiftModifier:
             event.setDropAction(Qt.MoveAction)
             event.accept()
         else:
@@ -203,8 +211,6 @@ class CartLayout(QTabWidget, CueLayout):
         if self.tabBar().contentsRect().contains(event.pos()):
             self.setCurrentIndex(self.tabBar().tabAt(event.pos()))
             event.accept()
-        else:
-            event.ignore()
 
     def dropEvent(self, e):
         e.ignore()
@@ -245,7 +251,9 @@ class CartLayout(QTabWidget, CueLayout):
 
             self.removeTab(page)
             self.tabRemoved(page)
-            self.__pages.pop(page)
+            page_widget = self.__pages.pop(page)
+            page_widget.move_drop_event.disconnect()
+            page_widget.copy_drop_event.disconnect()
 
             # Rename every successive tab accordingly
             for n in range(page, self.count()):
@@ -314,6 +322,16 @@ class CartLayout(QTabWidget, CueLayout):
         # Delete the layout
         self.deleteLater()
 
+    def _move_widget(self, widget, to_row, to_column):
+        new_index = self.to_1d_index((self.currentIndex(), to_row, to_column))
+        self._model_adapter.move(widget.cue.index, new_index)
+
+    def _copy_widget(self, widget, to_row, to_column):
+        new_index = self.to_1d_index((self.currentIndex(), to_row, to_column))
+        new_cue = CueFactory.clone_cue(widget.cue)
+
+        self._model_adapter.insert(new_cue, new_index)
+
     def _play_context_cue(self):
         self.get_context_cue().media.play()
 
@@ -338,18 +356,18 @@ class CartLayout(QTabWidget, CueLayout):
         index = self._model_adapter.first_empty() if cue.index == -1 else cue.index
         page, row, column = self.to_3d_index(index)
 
-        # TODO: generalized widget
-        if isinstance(cue, MediaCue):
-            widget = MediaCueWidget()
-            widget.context_menu_request.connect(self._on_context_menu)
-            widget.edit_request.connect(self.edit_cue)
-            widget.set_cue(cue)
+        widget = CueWidget(cue)
+        widget.context_menu_request.connect(self._on_context_menu)
+        widget.edit_request.connect(self.edit_cue)
+        widget.set_accurate_timing(self._accurate_timing)
+        widget.set_countdown_mode(self._countdown_mode)
+        widget.show_dbmeters(self._show_dbmeter)
+        widget.seekSlider.setVisible(self._show_seek)
 
-            if page >= len(self.__pages):
-                self.add_page()
+        if page >= len(self.__pages):
+            self.add_page()
 
-            self.__pages[page].add_widget(widget, row, column)
-
+        self.__pages[page].add_widget(widget, row, column)
         self.setCurrentIndex(page)
 
     def __cue_removed(self, cue):
@@ -362,7 +380,7 @@ class CartLayout(QTabWidget, CueLayout):
         n_page, n_row, n_column = self.to_3d_index(new_index)
 
         if o_page == n_page:
-            self.__pages[n_page].move(o_row, o_column, n_row, n_column)
+            self.__pages[n_page].move_widget(o_row, o_column, n_row, n_column)
         else:
-            widget = self.__pages[o_page].take_widget()
+            widget = self.__pages[o_page].take_widget(o_row, o_column)
             self.__pages[n_page].add_widget(widget, n_row, n_column)
