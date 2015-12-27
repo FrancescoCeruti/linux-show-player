@@ -49,7 +49,7 @@ class LoadBackend(Module):
     def add_uri_audio_media_cue():
         path = QStandardPaths.writableLocation(QStandardPaths.MusicLocation)
 
-        extensions = backends.backend().file_extensions()
+        extensions = backends.backend().supported_extensions()
         filters = qfile_filters(extensions, anyfile=False)
         files, _ = QFileDialog.getOpenFileNames(MainWindow(), 'Choose files',
                                                 path, filters)

@@ -20,7 +20,7 @@
 from PyQt5 import QtCore
 from PyQt5.QtCore import pyqtSignal, Qt
 from PyQt5.QtGui import QKeyEvent, QContextMenuEvent
-from PyQt5.QtWidgets import QTreeWidget, qApp, QHeaderView
+from PyQt5.QtWidgets import QTreeWidget, QHeaderView
 
 from lisp.core.signal import Connection
 from lisp.layouts.list_layout.cue_list_item import CueListItem
@@ -99,7 +99,7 @@ class CueListView(QTreeWidget):
 
         if len(self._model) == 1:
             self.setCurrentItem(item)
-            self.setFocus()
+            #self.setFocus()
 
     def __cue_moved(self, start, end):
         if not self.__item_moving:

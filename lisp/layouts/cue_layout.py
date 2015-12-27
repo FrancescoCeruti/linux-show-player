@@ -44,7 +44,7 @@ class CueLayout():
     def __init__(self, cue_model):
         self._cue_model = cue_model
 
-        self.cue_execute = Signal()     # Before a cue is executed
+        self.cue_executed = Signal()    # After a cue is executed
         self.focus_changed = Signal()   # After the focused cue is changed
         self.key_pressed = Signal()     # After a key is pressed
 

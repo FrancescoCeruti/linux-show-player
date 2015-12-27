@@ -357,6 +357,7 @@ class CartLayout(QTabWidget, CueLayout):
         page, row, column = self.to_3d_index(index)
 
         widget = CueWidget(cue)
+        widget.cue_executed.connect(self.cue_executed.emit)
         widget.context_menu_request.connect(self._on_context_menu)
         widget.edit_request.connect(self.edit_cue)
         widget.set_accurate_timing(self._accurate_timing)
@@ -371,8 +372,18 @@ class CartLayout(QTabWidget, CueLayout):
         self.setCurrentIndex(page)
 
     def __cue_removed(self, cue):
+        if isinstance(cue, MediaCue):
+            cue.media.interrupt()
+        else:
+            cue.stop()
+
         page, row, column = self.to_3d_index(cue.index)
         widget = self.__pages[page].take_widget(row, column)
+
+        widget.cue_executed.disconnect()
+        widget.context_menu_request.disconnect()
+        widget.edit_request.disconnect()
+
         widget.deleteLater()
 
     def __cue_moved(self, old_index, new_index):

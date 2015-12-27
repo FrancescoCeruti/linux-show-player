@@ -174,13 +174,13 @@ class PlayingMediaWidget(QWidget):
         self.seekSlider.setMaximum(duration)
 
     def _stop(self, *args):
-        self.cue.media.stop()
+        self.cue.stop()
 
     def _play(self, *args):
-        self.cue.media.play()
+        self.cue.play()
 
     def _pause(self, *args):
-        self.cue.media.pause()
+        self.cue.pause()
 
     def _seek(self, position):
         self.cue.media.seek(position)

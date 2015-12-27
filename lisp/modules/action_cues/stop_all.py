@@ -22,14 +22,12 @@ from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QHBoxLayout, QCheckBox
 from lisp.application import Application
 from lisp.core.decorators import async
 from lisp.core.has_properties import Property
-from lisp.cues.cue import Cue
-from lisp.cues.media_cue import MediaCue
+from lisp.cues.cue import Cue, CueState, CueAction
 from lisp.layouts.cue_layout import CueLayout
 from lisp.ui.settings.section import SettingsSection
 
 
 class StopAll(Cue):
-
     Name = 'Stop-All'
 
     pause_mode = Property(default=False)
@@ -38,20 +36,18 @@ class StopAll(Cue):
         super().__init__(**kwargs)
         self.name = self.Name
 
-    @async
-    def execute(self, action=Cue.CueAction.Default):
-        if self.pause_mode:
-            cue_action = MediaCue.CueAction.Pause
-        else:
-            cue_action = MediaCue.CueAction.Stop
+    @Cue.state.getter
+    def state(self):
+        return CueState.Stop
 
-        layout = Application().layout
-        for cue in layout.get_cues(cue_class=MediaCue):
+    def __start__(self):
+        cue_action = CueAction.Pause if self.pause_mode else CueAction.Stop
+
+        for cue in Application().cue_model:
             cue.execute(action=cue_action)
 
 
 class StopAllSettings(SettingsSection):
-
     Name = 'Cue Settings'
 
     def __init__(self, size, cue=None, parent=None):

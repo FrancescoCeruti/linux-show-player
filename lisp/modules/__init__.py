@@ -30,7 +30,7 @@ def init_modules():
     for module_name, module in ClassesLoader(dirname(__file__)):
         try:
             __MODULES[module_name] = module()
-            logging.debug('MODULES: Loaded "{0}'.format(module_name))
+            logging.debug('MODULES: Loaded "{0}"'.format(module_name))
         except Exception as e:
             logging.error('Failed "{0}" loading'.format(module_name),
                           details=str(e))

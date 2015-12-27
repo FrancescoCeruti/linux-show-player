@@ -31,7 +31,7 @@ class CueListDialog(QDialog):
         self.setMinimumSize(600, 400)
 
         self._properties = list(properties)
-        self._cues = []
+        self._cues = {}
 
         self.list = QTreeWidget(self)
         self.list.setSelectionMode(QTreeWidget.SingleSelection)
@@ -70,8 +70,8 @@ class CueListDialog(QDialog):
                 logging.exception('Cannot display {0} property'.format(prop), e,
                                   dialog=False)
 
-        self._cues.append(cue)
-        item.setData(0, Qt.UserRole, len(self._cues) - 1)
+        self._cues[cue] = item
+        item.setData(0, Qt.UserRole, cue)
         self.list.addTopLevelItem(item)
 
     def add_cues(self, cues):
@@ -81,12 +81,8 @@ class CueListDialog(QDialog):
         self.list.setSortingEnabled(True)
 
     def remove_cue(self, cue):
-        index = self._cues.index(cue)
-        self.remove_cue_by_index(index)
-
-    def remove_cue_by_index(self, index):
+        index = self.list.indexOfTopLevelItem(self._cues.pop(cue))
         self.list.takeTopLevelItem(index)
-        return self._cues.pop(index)
 
     def reset(self):
         self.list.clear()
@@ -95,6 +91,5 @@ class CueListDialog(QDialog):
     def selected_cues(self):
         cues = []
         for item in self.list.selectedItems():
-            index = item.data(0, Qt.UserRole)
-            cues.append(self._cues[index])
+            cues.append(item.data(0, Qt.UserRole))
         return cues

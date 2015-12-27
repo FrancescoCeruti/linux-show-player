@@ -20,12 +20,12 @@
 from abc import abstractmethod, ABCMeta
 from enum import Enum
 
-from lisp.core.has_properties import HasProperties
+from lisp.core.has_properties import HasProperties, Property
 from lisp.core.signal import Signal
 
 
 class MediaState(Enum):
-    """Media status: identify the current media state"""
+    """Identify the current media state"""
     Error = -1
     Null = 0
     Playing = 1
@@ -33,37 +33,45 @@ class MediaState(Enum):
     Stopped = 3
 
 
-# TODO: detailed Media docs
-class Media(HasProperties, metaclass=ABCMeta):
-    """Media(s) provides control over some kind of multimedia object
+class Media(HasProperties):
+    """Interface for Media objects.
 
+    Media(s) provides control over multimedia contents.
+    To control various parameter of the media, MediaElement(s) should be used.
+
+    .. note::
+        The play/stop/pause functions must be non-blocking functions.
     """
+
+    loop = Property(default=0)
+    duration = Property(default=0)
+    start_time = Property(default=0)
 
     def __init__(self):
         super().__init__()
 
-        #: Emitted when paused (self)
         self.paused = Signal()
-        #: Emitted when played (self)
+        """Emitted when paused (self)"""
         self.played = Signal()
-        #: Emitted when stopped (self)
+        """Emitted when played (self)"""
         self.stopped = Signal()
-        #: Emitted after interruption (self)
+        """Emitted when stopped (self)"""
         self.interrupted = Signal()
-        #: End-of-Stream (self)
+        """Emitted after interruption (self)"""
         self.eos = Signal()
+        """End-of-Stream (self)"""
 
-        #: Emitted before play (self)
         self.on_play = Signal()
-        #: Emitted before stop (self)
+        """Emitted before play (self)"""
         self.on_stop = Signal()
-        #: Emitted before pause (self)
+        """Emitted before stop (self)"""
         self.on_pause = Signal()
+        """Emitted before pause (self)"""
 
-        #: Emitted after a seek (self, position)
         self.sought = Signal()
-        #: Emitted when an error occurs (self, error, details)
+        """Emitted after a seek (self, position)"""
         self.error = Signal()
+        """Emitted when an error occurs (self, error, details)"""
 
     @property
     @abstractmethod
@@ -100,7 +108,7 @@ class Media(HasProperties, metaclass=ABCMeta):
     @abstractmethod
     def elements_properties(self):
         """
-        :return: Elements configuration
+        :return: Media elements configurations
         :rtype: dict
         """
 
@@ -113,40 +121,31 @@ class Media(HasProperties, metaclass=ABCMeta):
 
     @abstractmethod
     def interrupt(self):
-        """Stop the playback without effects, go in STOPPED state and emit
-        the interrupted signal
-        """
+        """Interrupt the playback (no fade) and go in STOPPED state."""
 
     @abstractmethod
     def pause(self):
-        """The media go in PAUSED state and pause the playback
-
-        """
+        """The media go in PAUSED state and pause the playback."""
 
     @abstractmethod
     def play(self):
-        """The media go in PLAYING state and starts the playback
-
-        """
+        """The media go in PLAYING state and starts the playback."""
 
     @abstractmethod
     def seek(self, position):
-        """Seek to the specified point
+        """Seek to the specified point.
 
-        :param position: The position to be reached
+        :param position: The position to be reached in milliseconds
         :type position: int
-
         """
 
     @abstractmethod
     def stop(self):
-        """The media go in STOPPED state and stop the playback
-
-        """
+        """The media go in STOPPED state and stop the playback."""
 
     @abstractmethod
     def update_elements(self, settings):
-        """Update the elements configuration
+        """Update the elements configuration.
 
         :param settings: Media-elements settings
         :type settings: dict

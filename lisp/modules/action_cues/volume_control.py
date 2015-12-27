@@ -28,7 +28,7 @@ from lisp.application import Application
 from lisp.backends.base.media import MediaState
 from lisp.core.decorators import async, synchronized_method
 from lisp.core.has_properties import Property
-from lisp.cues.cue import Cue, CueState
+from lisp.cues.cue import Cue, CueState, CueAction
 from lisp.cues.media_cue import MediaCue
 from lisp.layouts.cue_layout import CueLayout
 from lisp.ui.cuelistdialog import CueListDialog
@@ -36,7 +36,6 @@ from lisp.ui.settings.section import SettingsSection
 from lisp.utils.fade_functor import ntime, FadeIn, FadeOut
 
 
-# TODO: _fadein and _fadeout can be reduced to a single function
 class VolumeControl(Cue):
     Name = 'Volume Control'
 
@@ -44,77 +43,66 @@ class VolumeControl(Cue):
     fade_type = Property(default='Linear')
     volume = Property(default=.0)
 
+    CueActions = (CueAction.Start, CueAction.Stop, CueAction.Default)
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.name = self.Name
 
         self.__state = CueState.Stop
         self.__time = 0
+        self.__stop = False
 
     @async
-    def __execute__(self, action=Cue.CueAction.Default):
-        self.start.emit(self)
-
+    def __start__(self):
         cue = Application().cue_model.get(self.target_id)
         if isinstance(cue, MediaCue):
             volume = cue.media.element('Volume')
             if volume is not None:
                 if self.duration > 0:
                     if volume.current_volume > self.volume:
-                        self._fadeout(volume, cue.media)
+                        self._fade(FadeOut[self.fade_type], volume, cue.media)
                     elif volume.current_volume < self.volume:
-                        self._fadein(volume, cue.media)
+                        self._fade(FadeIn[self.fade_type], volume, cue.media)
                 else:
+                    self.__state = CueState.Running
+                    self.started.emit(self)
                     volume.current_volume = self.volume
+                    self.__state = CueState.Stop
+                    self.end.emit(self)
 
-        self.end.emit(self)
+    def __stop__(self):
+        if self.__state == CueState.Running:
+            self.__stop = True
 
-    @synchronized_method(lock_name='__fade_lock', blocking=False)
-    def _fadein(self, volume, media):
+    @synchronized_method(blocking=False)
+    def _fade(self, functor, volume, media):
         try:
+            self.started.emit(self)
             self.__state = CueState.Running
 
-            functor = FadeIn[self.fade_type]
-            duration = self.duration // 10
-            base_volume = volume.current_volume
-            volume_diff = self.volume - base_volume
-            self.__time = 0
-
-            while self.__time <= duration and media.state == MediaState.Playing:
-                volume.current_volume = functor(ntime(self.__time, 0, duration),
-                                                volume_diff, base_volume)
-                self.__time += 1
-                sleep(0.01)
-        except Exception as e:
-            self.__state = CueState.Error
-            self.error.emit(self, 'Error during cue execution', str(e))
-            raise e
-        finally:
-            self.__time = 0
-            self.__state = CueState.Stop
-
-    @synchronized_method(lock_name='__fade_lock', blocking=False)
-    def _fadeout(self, volume, media):
-        try:
-            self.__state = CueState.Running
-
-            functor = FadeOut[self.fade_type]
             duration = self.duration // 10
             base_volume = volume.current_volume
             volume_diff = self.volume - base_volume
 
-            while self.__time <= duration and media.state == MediaState.Playing:
+            while (not self.__stop and self.__time <= duration and
+                   media.state == MediaState.Playing):
                 volume.current_volume = functor(ntime(self.__time, 0, duration),
                                                 volume_diff, base_volume)
                 self.__time += 1
                 sleep(0.01)
+
+            if self.__stop:
+                self.stopped.emit(self)
+            else:
+                self.end.emit(self)
         except Exception as e:
             self.__state = CueState.Error
             self.error.emit(self, 'Error during cue execution', str(e))
-            raise e
         finally:
-            self.__time = 0
             self.__state = CueState.Stop
+            self.__stop = False
+            self.__time = 0
 
     def current_time(self):
         return self.__time * 10

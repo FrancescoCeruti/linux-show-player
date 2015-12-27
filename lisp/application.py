@@ -180,7 +180,7 @@ class Application(metaclass=Singleton):
             plugins.set_plugins_settings(session['plugins'])
 
             # Update the main-window
-            self._mainWindow.file = session_file
+            self._mainWindow.filename = session_file
             self._mainWindow.update()
         except Exception as e:
             logging.exception('Error during file reading', e)

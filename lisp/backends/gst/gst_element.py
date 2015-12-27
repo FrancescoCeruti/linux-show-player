@@ -34,11 +34,12 @@ class GstProperty(Property):
     def __set__(self, instance, value):
         super().__set__(instance, value)
 
-        if self.adapter is not None:
-            value = self.adapter(value)
+        if instance is not None:
+            if self.adapter is not None:
+                value = self.adapter(value)
 
-        name = self.gst_name if self.gst_name is not None else self.name
-        getattr(instance, self.element_name).set_property(name, value)
+            name = self.gst_name if self.gst_name is not None else self.name
+            getattr(instance, self.element_name).set_property(name, value)
 
 
 class GstRuntimeProperty:

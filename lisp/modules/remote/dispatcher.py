@@ -25,18 +25,18 @@ class RemoteDispatcher:
     # Layout functions
 
     def get_cue_at(self, index):
-        cue = Application().layout.get_cue_at(index)
+        cue = Application().layout.model_adapter.item(index)
         if cue is not None:
             return cue.properties()
         return {}
 
     def get_cues(self, cue_class=Cue):
-        cues = Application().layout.get_cues(cue_class)
+        cues = Application().cue_model.filter(cue_class)
         return [cue.properties() for cue in cues]
 
     # Cue function
 
     def execute(self, index):
-        cue = Application().layout.get_cue_at(index)
+        cue = Application().layout.model_adapter.item(index)
         if cue is not None:
             cue.execute()

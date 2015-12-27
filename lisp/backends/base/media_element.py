@@ -23,7 +23,7 @@ from lisp.core.has_properties import HasProperties
 
 
 class ElementType(Enum):
-    """The type  of the media-element"""
+    """The type of the media-element"""
     Input = 0
     Output = 1
     Plugin = 2
@@ -42,30 +42,13 @@ class MediaElement(HasProperties):
     A MediaElement object control specific media's parameters (e.g. volume).
     Every MediaElement provides two kind of properties:
      1) The one defined via class:`HasProperties`;
-     2) and runtime only properties, those are reset to the previous value at
+     2) runtime only properties, those are reset to the previous value at
         playback end.
 
-    Runtime properties are declared in the __runtime__ class attribute.
-
-    ..note:
-        All the runtime properties should be "normal" properties, but not all
-        "normal" properties must be runtime, an element may have no runtime
-        properties at all.
-
+    Runtime properties are defined using the following naming convention:
+    runtime_<property_name>.
     """
 
-    __runtime__ = ()
-
-    ElementType = ElementType.Input
+    ElementType = None
     MediaType = None
     Name = 'Undefined'
-
-    def set_current_value(self, pname, value):
-        """Change the runtime value of a property (if defined as runtime)
-
-        :param pname: The property name
-        :param value: The new value
-        """
-
-    def get_current_value(self, pname):
-        """Return the current value of a property or None"""

@@ -24,7 +24,7 @@ from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QPushButton, QLabel, \
 
 from lisp.application import Application
 from lisp.core.has_properties import Property
-from lisp.cues.cue import Cue
+from lisp.cues.cue import Cue, CueState
 from lisp.cues.media_cue import MediaCue
 from lisp.layouts.cue_layout import CueLayout
 from lisp.ui.cuelistdialog import CueListDialog
@@ -41,13 +41,14 @@ class SeekAction(Cue):
         super().__init__(**kwargs)
         self.name = self.Name
 
-    def execute(self, action=Cue.CueAction.Default):
-        cue = Application().layout.get_cue_by_id(self.target_id)
+    @Cue.state.getter
+    def state(self):
+        return CueState.Stop
+
+    def __start__(self):
+        cue = Application().cue_model.get(self.target_id)
         if isinstance(cue, MediaCue) and self.time >= 0:
             cue.media.seek(self.time)
-
-    def update_properties(self, properties):
-        super().update_properties(properties)
 
 
 class SeekSettings(SettingsSection):
@@ -59,9 +60,8 @@ class SeekSettings(SettingsSection):
         self.cue_id = -1
         self.setLayout(QVBoxLayout(self))
 
-        self.app_layout = Application().layout
         self.cueDialog = CueListDialog(
-            cues=self.app_layout.get_cues(cue_class=MediaCue), parent=self)
+            cues=Application().cue_model.filter(MediaCue), parent=self)
 
         self.cueGroup = QGroupBox(self)
         self.cueGroup.setLayout(QVBoxLayout())
@@ -120,7 +120,7 @@ class SeekSettings(SettingsSection):
 
     def set_configuration(self, conf):
         if conf is not None:
-            cue = self.app_layout.get_cue_by_id(conf['target_id'])
+            cue = Application().cue_model.get(conf['target_id'])
             if cue is not None:
                 self.cue_id = conf['target_id']
                 self.seekEdit.setTime(

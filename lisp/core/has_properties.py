@@ -23,7 +23,7 @@ from lisp.core.signal import Signal
 
 
 class Property:
-    """Descriptor to be used in HasProperties subclasses to define properties
+    """Descriptor to be used in HasProperties subclasses to define properties.
 
     .. warning::
         If extended any subclass *MUST*:
@@ -104,7 +104,17 @@ class HasPropertiesMeta(ABCMeta):
 
     def __init__(cls, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        cls.update_properties_registry(cls)
 
+    def __setattr__(cls, name, value):
+        super().__setattr__(name, value)
+
+        if isinstance(value, Property):
+            cls.__properties__.add(name)
+            value.name = name
+
+    @staticmethod
+    def update_properties_registry(cls):
         # Use a set for avoiding repetitions
         cls.__properties__ = set()
 
@@ -117,13 +127,6 @@ class HasPropertiesMeta(ABCMeta):
         for base in cls.__bases__:
             cls.__properties__.update(getattr(base, '__properties__', ()))
 
-    def __setattr__(cls, name, value):
-        super().__setattr__(name, value)
-
-        if isinstance(value, Property):
-            cls.__properties__.add(name)
-            value.name = name
-
 
 class HasProperties(metaclass=HasPropertiesMeta):
     """Base class providing a simple way to mange object properties.
@@ -131,10 +134,6 @@ class HasProperties(metaclass=HasPropertiesMeta):
     Using the Property descriptor, subclasses can specify a set of
     properties, those can be easily retrieved and updated via :func:`properties`
     and :func:`update_properties`.
-
-    ..warning::
-        Adding properties outside the class declaration will not update the
-        subclasses properties registry (__properties__).
 
     .. Usage::
 
@@ -153,6 +152,29 @@ class HasProperties(metaclass=HasPropertiesMeta):
         """Contains signals that are emitted after the associated property is
         changed, the signal are create only when requested the first time.
         """
+
+    @classmethod
+    def register_property(cls, name, prop):
+        """Register a new property with the given name.
+
+        :param str name: Property name
+        :param BaseProperty prop: The property
+        """
+        if name not in cls.__properties__:
+            setattr(cls, name, prop)
+            HasPropertiesMeta.update_properties_registry(cls)
+
+    @classmethod
+    def register_properties(cls, properties):
+        """Register multiple properties with the given names.
+
+        :param dict properties: Properties to add {name:property, ...}
+        """
+        for name, prop in properties.items():
+            if name not in cls.__properties__:
+                setattr(cls, name, prop)
+
+        HasPropertiesMeta.update_properties_registry(cls)
 
     def changed(self, property_name):
         """

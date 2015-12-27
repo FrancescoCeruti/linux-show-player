@@ -55,7 +55,7 @@ class Backend(BaseBackend):
     def uri_tags(self, uri):
         return gst_parse_tag_list(gst_uri_metadata(uri).get_tags())
 
-    def file_extensions(self):
+    def supported_extensions(self):
         # TODO: cache
         extensions = {'audio': [], 'video': []}
 

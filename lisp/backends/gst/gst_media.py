@@ -38,7 +38,7 @@ def validate_pipeline(pipe):
     if pipe[0] not in elements.inputs().keys():
         return False
 
-    # The middle ones must be plugins elements
+    # The middle elements must be plugins elements
     if len(set(pipe[1:-1]) - set(elements.plugins().keys())) != 0:
         return False
 
@@ -52,9 +52,7 @@ def validate_pipeline(pipe):
 class GstMedia(Media):
     """Media implementation based on the GStreamer framework."""
 
-    duration = Property(default=0)
-    start_time = Property(default=0)
-    loop = Property(default=0)
+
     pipe = Property(default=())
     _mtime = Property(default=-1)
 

@@ -19,7 +19,9 @@
 
 import os
 
+import time
 from PyQt5 import QtCore
+from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtWidgets import QMainWindow, QWidget, QGridLayout, QStatusBar, \
     QMenuBar, QMenu, QAction, qApp, QSizePolicy, QFileDialog, QDialog, \
     QMessageBox
@@ -33,13 +35,14 @@ from lisp.utils import configuration
 
 
 class MainWindow(QMainWindow, metaclass=QSingleton):
+
+    new_session = pyqtSignal()
+    save_session = pyqtSignal(str)
+    open_session = pyqtSignal(str)
+
     def __init__(self):
         super().__init__()
         self.setMinimumSize(400, 300)
-
-        self.new_session = Signal()
-        self.save_session = Signal()
-        self.open_session = Signal()
 
         self._cue_add_menu = {}
         self.layout = None
@@ -138,7 +141,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         # Set component text
         self.retranslateUi()
         # The save file name
-        self.file = ''
+        self.filename = ''
 
     def retranslateUi(self):
         self.setWindowTitle('Linux Show Player')
@@ -252,38 +255,36 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         self.update_window_title()
 
     def _save(self):
-        if self.file == '':
+        if self.filename == '':
             self._save_with_name()
         else:
-            self.save_session.emit(self.file)
+            self.save_session.emit(self.filename)
 
     def _save_with_name(self):
-        self.file, _ = QFileDialog.getSaveFileName(parent=self,
-                                                   filter='*.lsp',
-                                                   directory=os.getenv('HOME'))
-        if self.file != '':
-            if not self.file.endswith('.lsp'):
-                self.file += '.lsp'
+        filename, _ = QFileDialog.getSaveFileName(parent=self,
+                                                  filter='*.lsp',
+                                                  directory=os.getenv('HOME'))
+        if filename != '':
+            if not filename.endswith('.lsp'):
+                filename += '.lsp'
+            self.filename = filename
             self._save()
 
     def _show_preferences(self):
         prefUi = AppSettings(configuration.config_to_dict(), parent=self)
         prefUi.exec_()
 
-        if (prefUi.result() == QDialog.Accepted):
+        if prefUi.result() == QDialog.Accepted:
             configuration.update_config_from_dict(prefUi.get_configuraton())
 
     def _load_from_file(self):
         if self._check_saved():
-            path, _ = QFileDialog.getOpenFileName(parent=self, filter='*.lsp',
+            path, _ = QFileDialog.getOpenFileName(filter='*.lsp',
                                                   directory=os.getenv('HOME'))
 
             if os.path.exists(path):
                 self.open_session.emit(path)
-                self.file = path
-                return True
-
-        return False
+                self.filename = path
 
     def _new_session(self):
         if self._check_saved():

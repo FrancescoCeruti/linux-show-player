@@ -23,6 +23,7 @@ from PyQt5.QtWidgets import QVBoxLayout, QListWidget, QDialogButtonBox, \
     QPushButton
 
 from lisp.application import Application
+from lisp.cues.cue import CueAction
 from lisp.plugins.triggers.triggers_handler import CueTriggers
 from lisp.ui.cuelistdialog import CueListDialog
 from lisp.ui.settings.section import SettingsSection
@@ -70,8 +71,8 @@ class TriggersSettings(SettingsSection):
     def _add_trigger_dialog(self):
         if self.cue_dialog.exec_() == QDialog.Accepted:
             target = self.cue_dialog.selected_cues()[0]
-            self._add_new_trigger(tuple(CueTriggers)[0].value, target,
-                                  tuple(target.CueAction)[0].value)
+            self._add_new_trigger(CueTriggers.Ended.value, target,
+                                  CueAction.Start.value)
 
     def _remove_trigger(self):
         self.triggersWidget.takeItem(self.triggersWidget.currentRow())
@@ -112,7 +113,7 @@ class TriggerWidget(QWidget):
         self.cue = cue
         self.target = target
         self.cue_dialog = cue_dialog
-        self.target_actions = {m.name: m.value for m in target.CueAction}
+        self.target_actions = {m.name: m.value for m in target.CueActions}
 
         self.setLayout(QHBoxLayout(self))
         self.layout().setContentsMargins(2, 1, 2, 1)
@@ -132,7 +133,7 @@ class TriggerWidget(QWidget):
 
         self.targetActionCombo = QComboBox(self)
         self.targetActionCombo.addItems(self.target_actions.keys())
-        self.targetActionCombo.setCurrentText(target.CueAction(ta_action).name)
+        self.targetActionCombo.setCurrentText(CueAction(ta_action).name)
         self.layout().addWidget(self.targetActionCombo)
 
         self.layout().setStretch(0, 1)

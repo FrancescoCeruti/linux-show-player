@@ -19,10 +19,10 @@
 
 from abc import abstractmethod
 
-from lisp.core.singleton import Singleton
+from lisp.core.singleton import ABCSingleton
 
 
-class Backend(metaclass=Singleton):
+class Backend(metaclass=ABCSingleton):
     """Common interface that any backend must provide.
 
     An __init__() method can be defined if the backend require initialization.
@@ -49,7 +49,7 @@ class Backend(metaclass=Singleton):
         """
 
     @abstractmethod
-    def file_extensions(self):
+    def supported_extensions(self):
         """Return file extensions supported by the backend.
 
         Extensions will be categorized in 'audio' and 'video', optionally the

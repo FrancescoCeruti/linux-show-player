@@ -25,7 +25,7 @@ from PyQt5.QtWidgets import QVBoxLayout, QSizePolicy, QListWidget, \
 from lisp.application import Application
 from lisp.core.decorators import async
 from lisp.core.has_properties import Property
-from lisp.cues.cue import Cue
+from lisp.cues.cue import Cue, CueState, CueAction
 from lisp.layouts.cue_layout import CueLayout
 from lisp.ui.cuelistdialog import CueListDialog
 from lisp.ui.settings.section import SettingsSection
@@ -40,12 +40,15 @@ class CollectionCue(Cue):
         super().__init__(**kwargs)
         self.name = self.Name
 
-    @async
-    def execute(self, action=Cue.CueAction.Default):
+    @Cue.state.setter
+    def state(self):
+        return CueState.Stop
+
+    def __start__(self):
         for target_id, action in self.targets:
-            cue = Application().layout.get_cue_by_id(target_id)
+            cue = Application().cue_model.get(target_id)
             if cue is not None and cue is not self:
-                cue.execute(action=cue.CueAction[action])
+                cue.execute(action=CueAction[action])
 
 
 class CollectionCueSettings(SettingsSection):
@@ -72,12 +75,12 @@ class CollectionCueSettings(SettingsSection):
         self.delButton = self.dialogButtons.addButton('Remove', QDialogButtonBox.ActionRole)
         self.delButton.clicked.connect(self._remove_selected)
 
-        self.cue_dialog = CueListDialog(cues=Application().layout.get_cues())
+        self.cue_dialog = CueListDialog(cues=Application().cue_model)
         self.cue_dialog.list.setSelectionMode(QAbstractItemView.ExtendedSelection)
 
     def set_configuration(self, conf):
         for target_id, action in conf.get('targets', []):
-            target = Application().layout.get_cue_by_id(target_id)
+            target = Application().cue_model.get(target_id)
             if target is not None:
                 self._add_cue(target, action)
 
@@ -130,8 +133,8 @@ class CueItemWidget(QWidget):
         self.layout().addWidget(self.selectButton)
 
         self.targetActionsCombo = QComboBox(self)
-        self.targetActionsCombo.addItems([a.name for a in target.CueAction])
-        self.targetActionsCombo.setCurrentText(target.CueAction[action].name)
+        self.targetActionsCombo.addItems([a.name for a in CueAction])
+        self.targetActionsCombo.setCurrentText(CueAction[action].name)
         self.layout().addWidget(self.targetActionsCombo)
 
         self.layout().setStretch(0, 3)

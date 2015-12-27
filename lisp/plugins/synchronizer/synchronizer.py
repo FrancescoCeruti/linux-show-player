@@ -49,8 +49,8 @@ class Synchronizer(Plugin):
         self.peers = []
         self.cue_media = {}
 
-        Application().layout.cue_execute.connect(self.remote_execute,
-                                                 mode=Connection.Async)
+        Application().layout.cue_executed.connect(self.remote_execute,
+                                                  mode=Connection.Async)
 
     def manage_peers(self):
         manager = PeersDialog(self.peers)
@@ -59,7 +59,7 @@ class Synchronizer(Plugin):
     def show_ip(self):
         ip = 'Your IP is:' + os.linesep
         ip += socket.gethostbyname(socket.gethostname())
-        QMessageBox.information(None, 'Your IP', ip)
+        QMessageBox.information(MainWindow(), 'Your IP', ip)
 
     def reset(self):
         self.peers = []

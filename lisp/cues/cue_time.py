@@ -20,7 +20,6 @@
 import time
 from enum import IntEnum
 from weakref import WeakValueDictionary
-
 from lisp.core.clock import Clock
 from lisp.core.decorators import synchronized_method
 from lisp.core.signal import Connection, Signal
@@ -28,7 +27,7 @@ from lisp.cues.cue import CueState
 
 
 class MetaCueTime(type):
-    """Allow "caching" of CueTime(s) objects"""
+    """Allow "caching" of CueTime(s) objects."""
 
     __Instances = WeakValueDictionary()
 
@@ -43,7 +42,15 @@ class MetaCueTime(type):
 
 
 class CueTime(metaclass=MetaCueTime):
-    """Provide timing for a cue"""
+    """Provide timing for a Cue.
+
+    Once created the notify signal provide timing for the given cue.
+    The current time is queried using :meth:`lisp.cue.Cue.current_time method`,
+    the interval between notification depends on :class:`lisp.core.clock.Clock`.
+
+    .. note::
+        The notify signal is emitted only when the cue is running.
+    """
 
     def __init__(self, cue):
         self.notify = Signal()
@@ -58,9 +65,9 @@ class CueTime(metaclass=MetaCueTime):
     def __init(self, *args):
         if self._cue.duration > 0 and not self._active:
             # Cue "status" signals
-            self._cue.start.connect(self.start, Connection.QtQueued)
-            self._cue.pause.connect(self.stop, Connection.QtQueued)
-            self._cue.stop.connect(self.stop, Connection.QtQueued)
+            self._cue.started.connect(self.start, Connection.QtQueued)
+            self._cue.paused.connect(self.stop, Connection.QtQueued)
+            self._cue.stopped.connect(self.stop, Connection.QtQueued)
             self._cue.end.connect(self.stop, Connection.QtQueued)
             self._cue.error.connect(self.stop, Connection.QtQueued)
 
@@ -68,9 +75,9 @@ class CueTime(metaclass=MetaCueTime):
                 self.start()
             self._active = True
         elif self._cue.duration < 0 and self._active:
-            self._cue.start.disconnect(self.start)
-            self._cue.pause.disconnect(self.stop)
-            self._cue.stop.disconnect(self.stop)
+            self._cue.started.disconnect(self.start)
+            self._cue.paused.disconnect(self.stop)
+            self._cue.stopped.disconnect(self.stop)
             self._cue.end.disconnect(self.stop)
             self._cue.error.disconnect(self.stop)
 
@@ -93,6 +100,14 @@ class CueTime(metaclass=MetaCueTime):
 
 
 class CueWaitTime:
+    """Provide timing for Cue pre/post waits.
+
+    Once created the notify signal provide timing for the specified wait for the
+    given cue.
+    The time since the wait start is calculated internally using the :mod:`time`
+    module functions.
+    """
+
     class Mode(IntEnum):
         Pre = 0
         Post = 1
@@ -107,14 +122,11 @@ class CueWaitTime:
         self._mode = mode
 
         if self._mode == CueWaitTime.Mode.Pre:
-            self._cue.pre_wait_enter.connect(self.start,
-                                             mode=Connection.QtQueued)
+            self._cue.pre_wait_enter.connect(self.start, Connection.QtQueued)
             self._cue.pre_wait_exit.connect(self.stop, Connection.QtQueued)
         elif self._mode == CueWaitTime.Mode.Post:
-            self._cue.post_wait_enter.connect(self.start,
-                                              mode=Connection.QtQueued)
-            self._cue.post_wait_exit.connect(self.stop,
-                                             mode=Connection.QtQueued)
+            self._cue.post_wait_enter.connect(self.start, Connection.QtQueued)
+            self._cue.post_wait_exit.connect(self.stop, Connection.QtQueued)
 
     def __notify(self):
         self._last = time.perf_counter() - self._start_time

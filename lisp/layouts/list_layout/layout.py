@@ -48,12 +48,12 @@ class ListLayout(QWidget, CueLayout):
 
     NAME = 'List Layout'
     DESCRIPTION = '''
-                    This layout organize the cues in a list:
-                    <ul>
-                        <li>Side panel with playing media-cues;
-                        <li>Cues can be moved in the list;
-                        <li>Space to play, CTRL+Space to select, SHIFT+Space to edit;
-                    </ul>'''
+        This layout organize the cues in a list:
+        <ul>
+            <li>Side panel with playing media-cues;
+            <li>Cues can be moved in the list;
+            <li>Space to play, CTRL+Space to select, SHIFT+Space to edit;
+        </ul>'''
 
     H_NAMES = ['', 'Cue', 'Pre wait', 'Action', 'Post wait', '']
     H_WIDGETS = [CueStatusIcon, 'name', PreWaitWidget, CueTimeWidget,
@@ -151,6 +151,7 @@ class ListLayout(QWidget, CueLayout):
         # On the left (cue list)
         self.listView = CueListView(self._model_adapter, self)
         self.listView.context_event.connect(self.context_event)
+        self.listView.itemDoubleClicked.connect(self.double_clicked)
         self.listView.key_event.connect(self.onKeyPressEvent)
         self.hLayout.addWidget(self.listView)
 
@@ -264,7 +265,7 @@ class ListLayout(QWidget, CueLayout):
                 cue = self.current_cue()
                 if cue is not None:
                     cue.execute()
-                    self.cue_execute.emit(cue)
+                    self.cue_executed.emit(cue)
                 if self._auto_next:
                     nextitem = self.listView.currentIndex().row() + 1
                     if nextitem < self.listView.topLevelItemCount():
@@ -291,6 +292,11 @@ class ListLayout(QWidget, CueLayout):
         cue = self.current_cue()
         if isinstance(cue, MediaCue):
             cue.media.stop()
+
+    def double_clicked(self, event):
+        cue = self.current_cue()
+        if cue is not None:
+            self.edit_cue(cue)
 
     def context_event(self, event):
         self._context_item = self.listView.itemAt(event.pos())
@@ -369,6 +375,8 @@ class ListLayout(QWidget, CueLayout):
     def __cue_removed(self, cue):
         if isinstance(cue, MediaCue):
             cue.media.interrupt()
+        else:
+            cue.stop()
 
     def __execute_next(self, cue):
         try:

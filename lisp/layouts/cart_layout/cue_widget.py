@@ -44,9 +44,8 @@ class CueWidget(QWidget):
     ICON_SIZE = 14
 
     context_menu_request = pyqtSignal(object, QPoint)
-    focus_changed = pyqtSignal(object)
     edit_request = pyqtSignal(object)
-    cue_execute = pyqtSignal(object)
+    cue_executed = pyqtSignal(object)
 
     def __init__(self, cue, **kwargs):
         super().__init__(**kwargs)
@@ -180,8 +179,8 @@ class CueWidget(QWidget):
         if isinstance(cue, MediaCue):
             self.cue.media.changed('pipe').connect(self._media_updated)
 
-            self.cue.pause.connect(self.dbMeter.reset, Connection.QtQueued)
-            self.cue.stop.connect(self.dbMeter.reset, Connection.QtQueued)
+            self.cue.paused.connect(self.dbMeter.reset, Connection.QtQueued)
+            self.cue.stopped.connect(self.dbMeter.reset, Connection.QtQueued)
             self.cue.end.connect(self.dbMeter.reset, Connection.QtQueued)
             self.cue.error.connect(self.dbMeter.reset, Connection.QtQueued)
 
@@ -189,9 +188,9 @@ class CueWidget(QWidget):
             self.seekSlider.sliderJumped.connect(self.cue.media.seek)
 
         # Cue status changed
-        self.cue.start.connect(self._status_playing, Connection.QtQueued)
-        self.cue.stop.connect(self._status_stopped, Connection.QtQueued)
-        self.cue.pause.connect(self._status_paused, Connection.QtQueued)
+        self.cue.started.connect(self._status_playing, Connection.QtQueued)
+        self.cue.stopped.connect(self._status_stopped, Connection.QtQueued)
+        self.cue.paused.connect(self._status_paused, Connection.QtQueued)
         self.cue.error.connect(self._status_error, Connection.QtQueued)
         self.cue.end.connect(self._status_stopped, Connection.QtQueued)
 
@@ -230,7 +229,7 @@ class CueWidget(QWidget):
             elif event.modifiers() == Qt.ControlModifier:
                 self.selected = not self.selected
             else:
-                self.cue_execute.emit(self.cue)
+                self.cue_executed.emit(self.cue)
                 self.cue.execute()
 
     def _update_style(self, stylesheet):

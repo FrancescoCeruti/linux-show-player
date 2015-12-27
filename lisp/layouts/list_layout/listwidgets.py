@@ -44,9 +44,9 @@ class CueStatusIcon(QLabel):
         self.setStyleSheet(CueStatusIcon.STYLESHEET)
 
         self.cue = cue
-        self.cue.start.connect(self._start, Connection.QtQueued)
-        self.cue.stop.connect(self._stop, Connection.QtQueued)
-        self.cue.pause.connect(self._pause, Connection.QtQueued)
+        self.cue.started.connect(self._start, Connection.QtQueued)
+        self.cue.stopped.connect(self._stop, Connection.QtQueued)
+        self.cue.paused.connect(self._pause, Connection.QtQueued)
         self.cue.error.connect(self._error, Connection.QtQueued)
         self.cue.end.connect(self._stop, Connection.QtQueued)
 
@@ -116,10 +116,12 @@ class TimeWidget(QProgressBar):
 
     def _update_time(self, time):
         self.setValue(time)
-        self.setFormat(strtime(time, accurate=self.maximum() - time < 60000))
+        self.setFormat(strtime(time, accurate=self.accurate_time))
 
     def _update_duration(self, duration):
         if duration > 0 or self.show_zero_duration:
+            # Display as disabled if duration < 0
+            self.setEnabled(duration > 0)
             self.setTextVisible(True)
             self.setFormat(strtime(duration, accurate=self.accurate_time))
             # Avoid settings min and max to 0, or the the bar go in busy state
@@ -154,9 +156,9 @@ class CueTimeWidget(TimeWidget):
     def __init__(self, cue, *args):
         super().__init__(cue, *args)
 
-        self.cue.start.connect(self._running, Connection.QtQueued)
-        self.cue.stop.connect(self._stop, Connection.QtQueued)
-        self.cue.pause.connect(self._pause, Connection.QtQueued)
+        self.cue.started.connect(self._running, Connection.QtQueued)
+        self.cue.stopped.connect(self._stop, Connection.QtQueued)
+        self.cue.paused.connect(self._pause, Connection.QtQueued)
         self.cue.error.connect(self._error, Connection.QtQueued)
         self.cue.end.connect(self._stop, Connection.QtQueued)
         self.cue.changed('duration').connect(self._update_duration,
@@ -187,8 +189,7 @@ class PreWaitWidget(TimeWidget):
         self.show_zero_duration = True
 
         self.cue.pre_wait_enter.connect(self._running, Connection.QtQueued)
-        self.cue.end.connect(self._stop, Connection.QtQueued)
-        self.cue.stop.connect(self._stop, Connection.QtQueued)
+        self.cue.pre_wait_exit.connect(self._stop, Connection.QtQueued)
         self.cue.changed('pre_wait').connect(self._update_duration, Connection.QtQueued)
 
         self._update_duration(self.cue.pre_wait)
@@ -211,9 +212,9 @@ class PostWaitWidget(TimeWidget):
         super().__init__(cue, *args)
         self.show_zero_duration = True
 
-        self.cue.post_wait_exit.connect(self._wait_exit, Connection.QtQueued)
+        self.cue.post_wait_exit.connect(self._stop, Connection.QtQueued)
         self.cue.end.connect(self._cue_stop, Connection.QtQueued)
-        self.cue.stop.connect(self._cue_stop, Connection.QtQueued)
+        self.cue.stopped.connect(self._cue_stop, Connection.QtQueued)
         self.cue.error.connect(self._cue_stop, Connection.QtQueued)
         self.cue.changed('next_action').connect(self._next_action_changed, Connection.QtQueued)
 
@@ -230,7 +231,7 @@ class PostWaitWidget(TimeWidget):
         super()._update_duration(duration)
 
     def _next_action_changed(self, next_action):
-        self.cue.start.disconnect(self._running)
+        self.cue.started.disconnect(self._running)
         self.cue.post_wait_enter.disconnect(self._running)
         self.cue_time.notify.disconnect(self._update_time)
         self.wait_time.notify.disconnect(self._update_time)
@@ -238,7 +239,7 @@ class PostWaitWidget(TimeWidget):
         self.cue.changed('duration').disconnect(self._update_duration)
 
         if next_action == CueNextAction.AutoFollow.value:
-            self.cue.start.connect(self._running, Connection.QtQueued)
+            self.cue.started.connect(self._running, Connection.QtQueued)
             self.cue_time.notify.connect(self._update_time, Connection.QtQueued)
             self.cue.changed('duration').connect(self._update_duration, Connection.QtQueued)
             self._update_duration(self.cue.duration)
@@ -249,11 +250,7 @@ class PostWaitWidget(TimeWidget):
             self._update_duration(self.cue.post_wait)
 
     def _cue_stop(self):
-        if not self.cue.is_waiting() or self.cue.next_action == CueNextAction.AutoFollow.value:
-            self._stop()
-
-    def _wait_exit(self):
-        if self.cue.state == CueState.Stop or self.cue.state == CueState.Error:
+        if self.cue.next_action == CueNextAction.AutoFollow.value:
             self._stop()
 
     def _stop(self):

@@ -55,11 +55,9 @@ def uri_duration(uri):
     path = urllib.parse.unquote(path)
 
     if protocol == 'file':
-        if path.lower().endswith(('.wav', '.wave')):
-            return python_duration(path, wave)
-        if path.lower().endswith(('.au', '.snd')):
-            return python_duration(path, sunau)
-        if path.lower().endswith(('.aiff', '.aif', '.aifc')):
-            return python_duration(path, aifc)
+        for mod in [wave, aifc, sunau]:
+            duration = python_duration(path, mod)
+            if duration > 0:
+                return duration
 
     return 0
