@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,15 +22,15 @@ from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QHBoxLayout, QTextEdit, \
     QSpinBox, QLabel
 
 from lisp.ui.qcolorbutton import QColorButton
-from lisp.ui.settings.section import SettingsSection
+from lisp.ui.settings.settings_page import SettingsPage
 
 
-class Appearance(SettingsSection):
+class Appearance(SettingsPage):
 
     Name = 'Appearance'
 
-    def __init__(self, size, parent=None):
-        super().__init__(size, parent)
+    def __init__(self, **kwargs):
+        super().__init__()
 
         self.setLayout(QVBoxLayout())
 
@@ -66,7 +66,7 @@ class Appearance(SettingsSection):
         self.warning = QLabel(self)
         self.warning.setText("The appearance depends on the layout")
         self.warning.setAlignment(QtCore.Qt.AlignCenter)
-        self.warning.setStyleSheet("color: yellow; font-weight: bold")
+        self.warning.setStyleSheet("color: #FFA500; font-weight: bold")
         self.layout().addWidget(self.warning)
 
         # Set stretch
@@ -95,7 +95,7 @@ class Appearance(SettingsSection):
         self.colorGroup.setCheckable(enable)
         self.colorGroup.setChecked(False)
 
-    def get_configuration(self):
+    def get_settings(self):
         conf = {}
         style = {}
         checked = self.textEditGroup.isCheckable()
@@ -115,18 +115,18 @@ class Appearance(SettingsSection):
 
         return conf
 
-    def set_configuration(self, conf):
-        if 'name' in conf:
-            self.textEdit.setText(conf['name'])
-        if 'stylesheet' in conf:
-            conf = css_to_dict(conf['stylesheet'])
-            if 'background' in conf:
-                self.colorBButton.setColor(conf['background'])
-            if 'color' in conf:
-                self.colorFButton.setColor(conf['color'])
-            if 'font-size' in conf:
+    def load_settings(self, settings):
+        if 'name' in settings:
+            self.textEdit.setText(settings['name'])
+        if 'stylesheet' in settings:
+            settings = css_to_dict(settings['stylesheet'])
+            if 'background' in settings:
+                self.colorBButton.setColor(settings['background'])
+            if 'color' in settings:
+                self.colorFButton.setColor(settings['color'])
+            if 'font-size' in settings:
                 # [:-2] for removing "pt"
-                self.fontSizeSpin.setValue(int(conf['font-size'][:-2]))
+                self.fontSizeSpin.setValue(int(settings['font-size'][:-2]))
 
 
 def css_to_dict(css):

@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,28 +18,30 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QSlider, QLabel, QCheckBox
+from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QSlider, QLabel, QCheckBox, \
+    QVBoxLayout
 
 from lisp.backends.base.audio_utils import db_to_linear, linear_to_db
 from lisp.backends.gst.elements.volume import Volume
 from lisp.ui.qmutebutton import QMuteButton
-from lisp.ui.settings.section import SettingsSection
+from lisp.backends.gst.settings.settings_page import GstElementSettingsPage
 
 
-class VolumeSettings(SettingsSection):
+class VolumeSettings(GstElementSettingsPage):
 
     NAME = "Volume"
     ELEMENT = Volume
 
-    def __init__(self, size, Id, parent=None):
-        super().__init__(size, parent)
+    def __init__(self, element_id, **kwargs):
+        super().__init__(element_id)
+        self.setLayout(QVBoxLayout())
+        self.layout().setAlignment(Qt.AlignTop)
 
-        self.id = Id
         self.normal = 1
 
         self.volumeBox = QGroupBox(self)
-        self.volumeBox.setGeometry(0, 0, self.width(), 80)
         self.volumeBox.setLayout(QHBoxLayout())
+        self.layout().addWidget(self.volumeBox)
 
         self.muteButton = QMuteButton(self.volumeBox)
         self.volumeBox.layout().addWidget(self.muteButton)
@@ -60,8 +62,8 @@ class VolumeSettings(SettingsSection):
         self.volumeBox.layout().setStretch(2, 1)
 
         self.normalBox = QGroupBox(self)
-        self.normalBox.setGeometry(0, 90, self.width(), 60)
         self.normalBox.setLayout(QHBoxLayout())
+        self.layout().addWidget(self.normalBox)
 
         self.normalLabel = QLabel(self.normalBox)
         self.normalLabel.setAlignment(Qt.AlignCenter)
@@ -85,7 +87,7 @@ class VolumeSettings(SettingsSection):
             box.setCheckable(enable)
             box.setChecked(False)
 
-    def get_configuration(self):
+    def get_settings(self):
         conf = {}
         checkable = self.volumeBox.isCheckable()
 
@@ -100,11 +102,11 @@ class VolumeSettings(SettingsSection):
 
         return {self.id: conf}
 
-    def set_configuration(self, conf):
-        if conf is not None and self.id in conf:
-            self.volume.setValue(linear_to_db(conf[self.id]["volume"]) * 10)
-            self.muteButton.setMute(conf[self.id]["mute"])
-            self.normal = conf[self.id]["normal_volume"]
+    def load_settings(self, settings):
+        if settings is not None and self.id in settings:
+            self.volume.setValue(linear_to_db(settings[self.id]["volume"]) * 10)
+            self.muteButton.setMute(settings[self.id]["mute"])
+            self.normal = settings[self.id]["normal_volume"]
             self.normalLabel.setText(str(round(linear_to_db(self.normal), 3))
                                      + " dB")
 

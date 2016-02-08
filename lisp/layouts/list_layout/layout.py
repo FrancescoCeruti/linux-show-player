@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -33,15 +33,16 @@ from lisp.layouts.list_layout.cue_list_view import CueListView
 from lisp.layouts.list_layout.listwidgets import CueStatusIcon, PreWaitWidget, PostWaitWidget, \
     CueTimeWidget, NextActionIcon
 from lisp.layouts.list_layout.playing_listwidget import PlayingListWidget
-from lisp.layouts.list_layout.preferences import ListLayoutPreferences
+from lisp.layouts.list_layout.list_layout_settings import ListLayoutSettings
 from lisp.ui.mainwindow import MainWindow
 from lisp.ui.settings.app_settings import AppSettings
-from lisp.ui.settings.sections.cue_appearance import Appearance
-from lisp.ui.settings.sections.cue_general import CueGeneralSettings
-from lisp.ui.settings.sections.media_cue_settings import MediaCueSettings
+from lisp.ui.settings.cue_settings import CueSettingsRegistry
+from lisp.ui.settings.pages.cue_appearance import Appearance
+from lisp.ui.settings.pages.cue_general import CueGeneralSettings
+from lisp.ui.settings.pages.media_cue_settings import MediaCueSettings
 from lisp.utils.configuration import config
 
-AppSettings.register_settings_widget(ListLayoutPreferences)
+AppSettings.register_settings_widget(ListLayoutSettings)
 
 
 class ListLayout(QWidget, CueLayout):
@@ -176,10 +177,11 @@ class ListLayout(QWidget, CueLayout):
         self.set_playing_visible(self._show_playing)
         self.hLayout.addLayout(self.playingLayout)
 
+        # TODO: maybe can be moved outside the layout
         # Add cue preferences widgets
-        self.add_settings_section(CueGeneralSettings, Cue)
-        self.add_settings_section(MediaCueSettings, MediaCue)
-        self.add_settings_section(Appearance)
+        CueSettingsRegistry().add_item(CueGeneralSettings, Cue)
+        CueSettingsRegistry().add_item(MediaCueSettings, MediaCue)
+        CueSettingsRegistry().add_item(Appearance)
 
         # Context menu actions
         self.edit_action = QAction(self)
@@ -191,10 +193,10 @@ class ListLayout(QWidget, CueLayout):
         self.select_action = QAction(self)
         self.select_action.triggered.connect(self.select_context_cue)
 
-        self.add_context_item(self.edit_action)
-        self.sep1 = self.add_context_separator()
-        self.add_context_item(self.remove_action)
-        self.add_context_item(self.select_action)
+        self.cm_registry.add_item(self.edit_action)
+        self.sep1 = self.cm_registry.add_separator()
+        self.cm_registry.add_item(self.remove_action)
+        self.cm_registry.add_item(self.select_action)
 
         self.retranslateUi()
 
@@ -340,15 +342,11 @@ class ListLayout(QWidget, CueLayout):
         MainWindow().removeToolBar(self.toolBar)
         self.toolBar.deleteLater()
 
-        # Remove context-items
-        self.remove_context_item(self.edit_action)
-        self.remove_context_item(self.sep1)
-        self.remove_context_item(self.remove_action)
-        self.remove_context_item(self.select_action)
+        self.edit_action.triggered.disconnect()
+        self.remove_action.triggered.disconnect()
 
-        # Remove settings-sections
-        self.remove_settings_section(Appearance)
-        self.remove_settings_section(MediaCueSettings)
+        # Remove context-items
+        self.cm_registry.clear()
 
         # !! Delete the layout references !!
         self.deleteLater()

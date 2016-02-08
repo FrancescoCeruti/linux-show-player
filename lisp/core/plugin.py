@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,25 +19,30 @@
 
 
 class Plugin:
-    """Interface for plugins."""
+    """Interface for plugins.
+
+    The "init" and "reset" functions are called respectively after the session
+    layout is created (init) and before (reset).
+    """
 
     Name = 'Plugin'
 
+    def init(self):
+        """Initialize the session-related components of the plugin."""
+
     def reset(self):
-        """Reset the plugin"""
+        """Reset the session-related components of plugin."""
 
     def settings(self):
-        """Returns the plugin settings (e.g {'trigger': 'play', 'action':
-        callable})
+        """Return the plugin settings.
 
         :rtype: dict
         """
         return {}
 
     def load_settings(self, settings):
-        """
-            Load the plugin settings
+        """Load the plugin settings.
 
-            :param settings: the settings to be loaded
-            :type settings: dict
+        :param settings: the settings to be loaded
+        :type settings: dict
         """

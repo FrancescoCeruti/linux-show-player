@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@ from lisp.application import Application
 from lisp.core.plugin import Plugin
 from lisp.plugins.triggers.triggers_handler import CueHandler
 from lisp.plugins.triggers.triggers_settings import TriggersSettings
+from lisp.ui.settings.cue_settings import CueSettingsRegistry
 
 
 class Triggers(Plugin):
@@ -31,7 +32,7 @@ class Triggers(Plugin):
         super().__init__()
 
         TriggersSettings.PluginInstance = self
-        Application().layout.add_settings_section(TriggersSettings)
+        CueSettingsRegistry().add_item(TriggersSettings)
         Application().cue_model.item_added.connect(self._cue_added)
         Application().cue_model.item_added.connect(self._cue_removed)
 
@@ -69,9 +70,6 @@ class Triggers(Plugin):
 
         self.handlers.clear()
         self.triggers.clear()
-
-        Application().layout.remove_settings_section(TriggersSettings)
-        TriggersSettings.PluginInstance = None
 
     def _cue_added(self, cue):
         if cue.id in self.triggers:

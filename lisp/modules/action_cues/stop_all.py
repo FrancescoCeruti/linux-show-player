@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,7 +24,8 @@ from lisp.core.decorators import async
 from lisp.core.has_properties import Property
 from lisp.cues.cue import Cue, CueState, CueAction
 from lisp.layouts.cue_layout import CueLayout
-from lisp.ui.settings.section import SettingsSection
+from lisp.ui.settings.cue_settings import CueSettingsRegistry
+from lisp.ui.settings.settings_page import SettingsPage
 
 
 class StopAll(Cue):
@@ -47,11 +48,11 @@ class StopAll(Cue):
             cue.execute(action=cue_action)
 
 
-class StopAllSettings(SettingsSection):
+class StopAllSettings(SettingsPage):
     Name = 'Cue Settings'
 
-    def __init__(self, size, cue=None, parent=None):
-        super().__init__(size, cue=cue, parent=parent)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
 
         self.setLayout(QVBoxLayout(self))
 
@@ -66,11 +67,11 @@ class StopAllSettings(SettingsSection):
         self.layout().addWidget(self.group)
         self.layout().addSpacing(self.height() - 100)
 
-    def enable_check(self, enable):
-        self.group.setCheckable(enable)
+    def enable_check(self, enabled):
+        self.group.setCheckable(enabled)
         self.group.setChecked(False)
 
-    def get_configuration(self):
+    def get_settings(self):
         conf = {}
 
         if not (self.group.isCheckable() and not self.group.isChecked()):
@@ -78,9 +79,9 @@ class StopAllSettings(SettingsSection):
 
         return conf
 
-    def set_configuration(self, conf):
-        if 'pause_mode' in conf:
-            self.pauseMode.setChecked(conf['pause_mode'])
+    def load_settings(self, settings):
+        if 'pause_mode' in settings:
+            self.pauseMode.setChecked(settings['pause_mode'])
 
 
-CueLayout.add_settings_section(StopAllSettings, StopAll)
+CueSettingsRegistry().add_item(StopAllSettings, StopAll)

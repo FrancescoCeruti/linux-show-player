@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,26 +18,26 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5 import QtCore
-from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QSlider, QLabel
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QSlider, QLabel, QVBoxLayout
 
 from lisp.backends.gst.elements.speed import Speed
-from lisp.ui.settings.section import SettingsSection
+from lisp.backends.gst.settings.settings_page import GstElementSettingsPage
 
 
-class SpeedSettings(SettingsSection):
+class SpeedSettings(GstElementSettingsPage):
 
     NAME = 'Speed'
     ELEMENT = Speed
 
-    def __init__(self, size, Id, parent=None):
-        super().__init__(size, parent)
-
-        self.id = Id
+    def __init__(self, element_id, **kwargs):
+        super().__init__(element_id)
+        self.setLayout(QVBoxLayout())
+        self.layout().setAlignment(Qt.AlignTop)
 
         self.groupBox = QGroupBox(self)
-        self.groupBox.setGeometry(0, 0, self.width(), 80)
-
-        self.layout = QHBoxLayout(self.groupBox)
+        self.groupBox.setLayout(QHBoxLayout())
+        self.layout().addWidget(self.groupBox)
 
         self.speedSlider = QSlider(self.groupBox)
         self.speedSlider.setMinimum(1)
@@ -47,14 +47,14 @@ class SpeedSettings(SettingsSection):
         self.speedSlider.setOrientation(QtCore.Qt.Horizontal)
         self.speedSlider.setTickPosition(QSlider.TicksAbove)
         self.speedSlider.setTickInterval(10)
-        self.layout.addWidget(self.speedSlider)
+        self.groupBox.layout().addWidget(self.speedSlider)
 
         self.speedLabel = QLabel(self.groupBox)
         self.speedLabel.setAlignment(QtCore.Qt.AlignCenter)
-        self.layout.addWidget(self.speedLabel)
+        self.groupBox.layout().addWidget(self.speedLabel)
 
-        self.layout.setStretch(0, 3)
-        self.layout.setStretch(1, 1)
+        self.groupBox.layout().setStretch(0, 3)
+        self.groupBox.layout().setStretch(1, 1)
 
         self.speedSlider.valueChanged.connect(self.speedChanged)
 
@@ -68,7 +68,7 @@ class SpeedSettings(SettingsSection):
         self.groupBox.setCheckable(enable)
         self.groupBox.setChecked(False)
 
-    def get_configuration(self):
+    def get_settings(self):
         conf = {}
 
         if not (self.groupBox.isCheckable() and not self.groupBox.isChecked()):
@@ -76,9 +76,9 @@ class SpeedSettings(SettingsSection):
 
         return conf
 
-    def set_configuration(self, conf):
-        if conf is not None and self.id in conf:
-            self.speedSlider.setValue(conf[self.id]['speed'] * 100)
+    def load_settings(self, settings):
+        if settings is not None and self.id in settings:
+            self.speedSlider.setValue(settings[self.id]['speed'] * 100)
 
     def speedChanged(self, value):
         self.speedLabel.setText(str(value / 100.0))

@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@ def python_duration(path, sound_module):
         with sound_module.open(path, 'r') as file:
             frames = file.getnframes()
             rate = file.getframerate()
-            duration = (frames // float(rate)) * 1000
+            duration = int(frames / rate * 1000)
     finally:
         return duration
 

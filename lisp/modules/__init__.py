@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ from lisp.utils.dyamic_loader import ClassesLoader
 __MODULES = {}
 
 
-def init_modules():
+def load_modules():
     for module_name, module in ClassesLoader(dirname(__file__)):
         try:
             __MODULES[module_name] = module()
@@ -51,4 +51,4 @@ def terminate_modules():
 
 
 def check_module(modname):
-    return modname in __MODULES
+    return modname.lower() in [mod.lower() for mod in __MODULES]

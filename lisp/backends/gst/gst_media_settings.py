@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,105 +20,106 @@
 from copy import deepcopy
 
 from PyQt5.QtWidgets import QGridLayout, QListWidget, QPushButton, \
-    QStackedWidget, QListWidgetItem
+    QListWidgetItem
 
-from lisp.backends.gst.gst_pipe_edit import GstPipeEdit
-from lisp.backends.gst.settings import sections_by_element_name
-from lisp.ui.settings.section import SettingsSection
+from lisp.backends.gst.gst_pipe_edit import GstPipeEditDialog
+from lisp.backends.gst.settings import pages_by_element_name
+from lisp.ui.settings.settings_page import SettingsPage
 
 
-class GstMediaSettings(SettingsSection):
+class GstMediaSettings(SettingsPage):
 
     Name = 'Media Settings'
 
-    def __init__(self, size, cue=None, parent=None):
-        super().__init__(size, cue=cue, parent=parent)
-        self._pipe = ()
-        self._conf = {}
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.setLayout(QGridLayout())
+
+        self._pages = []
+        self._current_page = None
+        self._settings = {}
         self._check = False
 
-        self.glayout = QGridLayout(self)
-
         self.listWidget = QListWidget(self)
-        self.glayout.addWidget(self.listWidget, 0, 0)
+        self.layout().addWidget(self.listWidget, 0, 0)
 
         self.pipeButton = QPushButton('Change Pipe', self)
-        self.glayout.addWidget(self.pipeButton, 1, 0)
+        self.layout().addWidget(self.pipeButton, 1, 0)
 
-        self.elements = QStackedWidget(self)
-        self.glayout.addWidget(self.elements, 0, 1, 2, 1)
-
-        self.glayout.setColumnStretch(0, 2)
-        self.glayout.setColumnStretch(1, 5)
+        self.layout().setColumnStretch(0, 2)
+        self.layout().setColumnStretch(1, 5)
 
         self.listWidget.currentItemChanged.connect(self.__change_page)
         self.pipeButton.clicked.connect(self.__edit_pipe)
 
-    def set_configuration(self, conf):
-        if conf is not None:
-            conf = conf.get('_media_', {})
+    def load_settings(self, settings):
+        settings = settings.get('_media_', {})
+        # Create a local copy of the configuration
+        self._settings = deepcopy(settings)
 
-            # Activate the layout, so we can get the right widgets size
-            self.glayout.activate()
+        # Create the widgets
+        pages = pages_by_element_name()
+        for element in settings.get('pipe', ()):
+            page = pages.get(element)
 
-            # Create a local copy of the configuration
-            self._conf = deepcopy(conf)
+            if page is not None:
+                page = page(element, parent=self)
+                page.load_settings(settings.get('elements', {}))
+                self._pages.append(page)
 
-            # Create the widgets
-            sections = sections_by_element_name()
-            for element in conf.get('pipe', ()):
-                widget = sections.get(element)
-
-                if widget is not None:
-                    widget = widget(self.elements.size(), element, self)
-                    widget.set_configuration(self._conf['elements'])
-                    self.elements.addWidget(widget)
-
-                    item = QListWidgetItem(widget.NAME)
-                    self.listWidget.addItem(item)
+                item = QListWidgetItem(page.NAME)
+                self.listWidget.addItem(item)
 
             self.listWidget.setCurrentRow(0)
 
-    def get_configuration(self):
-        conf = {'elements': {}}
+    def get_settings(self):
+        settings = {'elements': {}}
 
-        for el in self.elements.children():
-            if isinstance(el, SettingsSection):
-                conf['elements'].update(el.get_configuration())
+        for page in self._pages:
+            settings['elements'].update(page.get_settings())
 
-        # If in check mode the pipeline is not returned
+        # The pipeline is returned only if check is disabled
         if not self._check:
-            conf['pipe'] = self._conf['pipe']
+            settings['pipe'] = self._settings['pipe']
 
-        return {'_media_': conf}
+        return {'_media_': settings}
 
-    def enable_check(self, enable):
-        self._check = enable
-        for element in self.elements.children():
-            if isinstance(element, SettingsSection):
-                element.enable_check(enable)
+    def enable_check(self, enabled):
+        self._check = enabled
+        for page in self._pages:
+            if isinstance(page, SettingsPage):
+                page.enable_check(enabled)
 
     def __change_page(self, current, previous):
-        if not current:
+        if current is None:
             current = previous
 
-        self.elements.setCurrentIndex(self.listWidget.row(current))
+        if self._current_page is not None:
+            self.layout().removeWidget(self._current_page)
+            self._current_page.hide()
+
+        self._current_page = self._pages[self.listWidget.row(current)]
+        self._current_page.show()
+        self.layout().addWidget(self._current_page, 0, 1, 2, 1)
 
     def __edit_pipe(self):
         # Backup the settings
-        self._conf.update(self.get_configuration()['_media_'])
+        self._settings.update(self.get_settings()['_media_'])
 
         # Show the dialog
-        dialog = GstPipeEdit(self._conf.get('pipe', ()), parent=self)
+        dialog = GstPipeEditDialog(self._settings.get('pipe', ()), parent=self)
 
         if dialog.exec_() == dialog.Accepted:
             # Reset the view
-            for _ in range(self.elements.count()):
-                self.elements.removeWidget(self.elements.widget(0))
             self.listWidget.clear()
+            if self._current_page is not None:
+                self.layout().removeWidget(self._current_page)
+                self._current_page.hide()
+            self._current_page = None
+            self._pages.clear()
 
             # Reload with the new pipeline
-            self._conf['pipe'] = dialog.get_pipe()
+            self._settings['pipe'] = dialog.get_pipe()
 
-            self.set_configuration({'_media_': self._conf})
+            self.load_settings({'_media_': self._settings})
             self.enable_check(self._check)

@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,55 +18,59 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5 import QtCore
-from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QComboBox, QLabel
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QComboBox, QLabel, \
+    QVBoxLayout
 
 from lisp.backends.gst.elements.alsa_sink import AlsaSink
-from lisp.ui.settings.section import SettingsSection
+from lisp.backends.gst.settings.settings_page import GstElementSettingsPage
 
 
-class AlsaSinkSettings(SettingsSection):
+class AlsaSinkSettings(GstElementSettingsPage):
 
     NAME = "ALSA Sink"
     ELEMENT = AlsaSink
 
-    def __init__(self, size, Id, parent=None):
-        super().__init__(size, parent)
+    def __init__(self, element_id, **kwargs):
+        super().__init__(element_id)
+        self.setLayout(QVBoxLayout())
+        self.layout().setAlignment(Qt.AlignTop)
 
-        self.id = Id
-        self.devs = self._discover_pcm_devices()
-        self.devs['default'] = 'default'
+        self.devices = self._discover_pcm_devices()
+        self.devices['default'] = 'default'
 
-        self.group = QGroupBox(self)
-        self.group.setTitle('ALSA device')
-        self.group.setGeometry(0, 0, self.width(), 100)
-        self.group.setLayout(QHBoxLayout())
+        self.deviceGroup = QGroupBox(self)
+        self.deviceGroup.setTitle('ALSA device')
+        self.deviceGroup.setGeometry(0, 0, self.width(), 100)
+        self.deviceGroup.setLayout(QHBoxLayout())
+        self.layout().addWidget(self.deviceGroup)
 
-        self.device = QComboBox(self.group)
-        self.device.addItems(self.devs.keys())
+        self.device = QComboBox(self.deviceGroup)
+        self.device.addItems(self.devices.keys())
         self.device.setCurrentText('default')
         self.device.setToolTip('ALSA device, as defined in an asound '
                                'configuration file')
-        self.group.layout().addWidget(self.device)
+        self.deviceGroup.layout().addWidget(self.device)
 
-        self.label = QLabel('ALSA device', self.group)
+        self.label = QLabel('ALSA device', self.deviceGroup)
         self.label.setAlignment(QtCore.Qt.AlignCenter)
-        self.group.layout().addWidget(self.label)
+        self.deviceGroup.layout().addWidget(self.label)
 
     def enable_check(self, enable):
-        self.group.setCheckable(enable)
-        self.group.setChecked(False)
+        self.deviceGroup.setCheckable(enable)
+        self.deviceGroup.setChecked(False)
 
-    def set_configuration(self, conf):
-        if self.id in conf:
-            device = conf[self.id].get('device', 'default')
-            for name in self.devs:
-                if device == self.devs[name]:
+    def load_settings(self, settings):
+        if self.id in settings:
+            device = settings[self.id].get('device', 'default')
+            for name in self.devices:
+                if device == self.devices[name]:
                     self.device.setCurrentText(name)
                     break
 
-    def get_configuration(self):
-        if not (self.group.isCheckable() and not self.group.isChecked()):
-            return {self.id: {'device': self.devs[self.device.currentText()]}}
+    def get_settings(self):
+        if not (self.deviceGroup.isCheckable() and not self.deviceGroup.isChecked()):
+            return {self.id: {'device': self.devices[self.device.currentText()]}}
         else:
             return {}
 

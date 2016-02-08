@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,14 +22,14 @@ from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QLabel, \
     QVBoxLayout, QDoubleSpinBox, QComboBox
 
 from lisp.cues.cue import CueNextAction
-from lisp.ui.settings.section import SettingsSection
+from lisp.ui.settings.settings_page import SettingsPage
 
 
-class CueGeneralSettings(SettingsSection):
+class CueGeneralSettings(SettingsPage):
     Name = 'Cue'
 
-    def __init__(self, size, cue=None, parent=None):
-        super().__init__(size, cue=cue, parent=parent)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
 
         # Pre wait
@@ -76,13 +76,13 @@ class CueGeneralSettings(SettingsSection):
         self.postWaitLabel.setText('Wait after cue execution')
         self.nextActionGroup.setTitle('Next action')
 
-    def set_configuration(self, conf):
-        if 'pre_wait' in conf:
-            self.preWaitSpin.setValue(conf['pre_wait'])
-        if 'post_wait' in conf:
-            self.postWaitSpin.setValue(conf['post_wait'])
-        if 'next_action' in conf:
-            self.nextActionCombo.setCurrentText(conf['next_action'])
+    def load_settings(self, settings):
+        if 'pre_wait' in settings:
+            self.preWaitSpin.setValue(settings['pre_wait'])
+        if 'post_wait' in settings:
+            self.postWaitSpin.setValue(settings['post_wait'])
+        if 'next_action' in settings:
+            self.nextActionCombo.setCurrentText(settings['next_action'])
 
     def enable_check(self, enable):
         self.preWaitGroup.setCheckable(enable)
@@ -94,7 +94,7 @@ class CueGeneralSettings(SettingsSection):
         self.nextActionGroup.setCheckable(enable)
         self.nextActionGroup.setChecked(False)
 
-    def get_configuration(self):
+    def get_settings(self):
         conf = {}
         checkable = self.preWaitGroup.isCheckable()
 

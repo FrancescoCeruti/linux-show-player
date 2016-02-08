@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ from lisp.cues.cue_model import CueModel
 from lisp.ui.layoutselect import LayoutSelect
 from lisp.ui.mainwindow import MainWindow
 from lisp.ui.settings.app_settings import AppSettings
-from lisp.ui.settings.sections.app_general import General
+from lisp.ui.settings.pages.app_general import General
 from lisp.utils import configuration as cfg
 from lisp.utils import logging
 
@@ -45,9 +45,6 @@ class Application(metaclass=Singleton):
         self._layout = None
         self._memento_model = None
         self._cue_model = CueModel()
-
-        # Initialize modules
-        modules.init_modules()
 
         # Connect mainWindow actions
         self._mainWindow.new_session.connect(self.new_session_dialog)
@@ -85,7 +82,7 @@ class Application(metaclass=Singleton):
             # Prompt the user for a new layout
             dialog = LayoutSelect()
             if dialog.exec_() != QDialog.Accepted:
-                if self.layout is None:
+                if self._layout is None:
                     # If the user close the dialog, and no layout exists
                     # the application is closed
                     self.finalize()
@@ -116,13 +113,13 @@ class Application(metaclass=Singleton):
         plugins.init_plugins()
 
     def _delete_session(self):
-        MainActionsHandler().clear()
-        plugins.reset_plugins()
-
-        self._app_conf.clear()
-        self._cue_model.reset()
-
         if self._layout is not None:
+            MainActionsHandler().clear()
+            plugins.reset_plugins()
+
+            self._app_conf.clear()
+            self._cue_model.reset()
+
             self._layout.finalize()
             self._layout = None
             self._memento_model = None

@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -46,8 +46,9 @@ class AppSettings(QDialog):
         self.sections.setGeometry(QtCore.QRect(200, 10, 430, 470))
 
         for widget in self.SettingsWidgets:
-            widget = widget(QtCore.QSize(430, 465), self)
-            widget.set_configuration(self.conf)
+            widget = widget(parent=self)
+            widget.resize(430, 465)
+            widget.load_settings(self.conf)
 
             self.listWidget.addItem(widget.NAME)
             self.sections.addWidget(widget)
@@ -70,7 +71,7 @@ class AppSettings(QDialog):
 
         for n in range(self.sections.count()):
             widget = self.sections.widget(n)
-            newconf = widget.get_configuration()
+            newconf = widget.get_settings()
             deep_update(conf, newconf)
 
         return conf

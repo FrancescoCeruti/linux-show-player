@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,18 +24,51 @@ from PyQt5.QtWidgets import QDialog, QTabWidget, QDialogButtonBox
 
 from lisp.utils.util import deep_update
 
+from lisp.core.class_based_registry import ClassBasedRegistry
+from lisp.core.singleton import Singleton
+from lisp.cues.cue import Cue
+from lisp.ui.settings.settings_page import SettingsPage
+
+
+class CueSettingsRegistry(ClassBasedRegistry, metaclass=Singleton):
+
+    def add_item(self, item, ref_class=Cue):
+        if not issubclass(item, SettingsPage):
+            raise TypeError('item must be a CueSettingPage subclass, '
+                            'not {0}'.format(item.__name__))
+        if not issubclass(ref_class, Cue):
+            raise TypeError('ref_class must be Cue or a subclass, not {0}'
+                            .format(ref_class.__name__))
+
+        return super().add_item(item, ref_class)
+
+    def filter(self, ref_class=Cue):
+        return super().filter(ref_class)
+
+    def clear_class(self, ref_class=Cue):
+        return super().filter(ref_class)
+
 
 class CueSettings(QDialog):
+
     on_apply = QtCore.pyqtSignal(dict)
 
-    def __init__(self, widgets=(), cue=None, check=False, **kwargs):
+    def __init__(self, cue=None, cue_class=None, **kwargs):
+        """
+
+        :param cue: Target cue, or None for multi-editing
+        :param cue_class: If cue is None, can be used to specify the reference class
+        """
         super().__init__(**kwargs)
 
-        conf = {}
-
         if cue is not None:
-            conf = deepcopy(cue.properties())
-            self.setWindowTitle(conf['name'])
+            cue_class = cue.__class__
+            cue_properties = deepcopy(cue.properties())
+            self.setWindowTitle(cue_properties['name'])
+        else:
+            cue_properties = {}
+            if cue_class is None:
+                cue_class = Cue
 
         self.setWindowModality(QtCore.Qt.ApplicationModal)
         self.setMaximumSize(635, 530)
@@ -45,13 +78,11 @@ class CueSettings(QDialog):
         self.sections = QTabWidget(self)
         self.sections.setGeometry(QtCore.QRect(5, 10, 625, 470))
 
-        wsize = QtCore.QSize(625, 470 - self.sections.tabBar().height())
-
-        for widget in widgets:
-            widget = widget(wsize, cue)
-            widget.set_configuration(conf)
-            widget.enable_check(check)
-            self.sections.addTab(widget, widget.Name)
+        for widget in sorted(CueSettingsRegistry().filter(cue_class), key=lambda w: w.Name):
+            settings_widget = widget()
+            settings_widget.load_settings(cue_properties)
+            settings_widget.enable_check(cue is None)
+            self.sections.addTab(settings_widget, settings_widget.Name)
 
         self.dialogButtons = QDialogButtonBox(self)
         self.dialogButtons.setGeometry(10, 490, 615, 30)
@@ -69,9 +100,9 @@ class CueSettings(QDialog):
         super().accept()
 
     def apply(self):
-        new_conf = {}
+        settings = {}
 
         for n in range(self.sections.count()):
-            deep_update(new_conf, self.sections.widget(n).get_configuration())
+            deep_update(settings, self.sections.widget(n).get_settings())
 
-        self.on_apply.emit(new_conf)
+        self.on_apply.emit(settings)

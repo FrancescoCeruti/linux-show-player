@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -28,30 +28,41 @@ from lisp.utils.util import find_packages
 __PLUGINS = {}
 
 
-def init_plugins():
+def load_plugins():
+    """Load available plugins."""
     for pkg in find_packages(path=dirname(__file__)):
         try:
             class_name = class_name_from_module(pkg)
             module = import_module('lisp.plugins.' + pkg + '.' + pkg)
 
             __PLUGINS[pkg] = getattr(module, class_name)()
-            logging.debug('PLUGINS: Loaded "' + pkg + '"')
+            logging.debug('PLUGINS: Loaded "{0}"'.format(pkg))
         except Exception:
-            logging.error('PLUGINS: Failed "' + pkg + '" load')
-            logging.debug('PLUGINS: ' + traceback.format_exc())
+            logging.error('PLUGINS: Failed "{0}" load'.format(pkg))
+            logging.debug('PLUGINS: {0}'.format(traceback.format_exc()))
+
+
+def init_plugins():
+    """Initialize all the plugins."""
+    for plugin in __PLUGINS:
+        try:
+            __PLUGINS[plugin].init()
+            logging.debug('PLUGINS: Initialized "{0}"'.format(plugin))
+        except Exception:
+            __PLUGINS.pop(plugin)
+            logging.error('PLUGINS: Failed "{0}" init'.format(plugin))
+            logging.debug('PLUGINS: {0}'.format(traceback.format_exc()))
 
 
 def reset_plugins():
-    """ Resets and removes all the plugins """
+    """Resets all the plugins."""
     for plugin in __PLUGINS:
         try:
             __PLUGINS[plugin].reset()
-            logging.debug('PLUGINS: Reset "' + plugin + '"')
+            logging.debug('PLUGINS: Reset "{0}"'.format(plugin))
         except Exception:
-            logging.error('PLUGINS: Failed "' + plugin + '" reset')
-            logging.debug('PLUGINS: ' + traceback.format_exc())
-
-    __PLUGINS.clear()
+            logging.error('PLUGINS: Failed "{0}" reset'.format(plugin))
+            logging.debug('PLUGINS: {0}'.format(traceback.format_exc()))
 
 
 def set_plugins_settings(settings):
@@ -62,25 +73,25 @@ def set_plugins_settings(settings):
             try:
                 plugin.load_settings(settings[plugin.Name])
             except Exception as e:
-                logging.error('PLUGINS: Failed "' + plugin.Name + '" '
-                              'settings load')
-                logging.debug('PLUGINS: ' + traceback.format_exc())
+                logging.error('PLUGINS: Failed "{0}" settings load'
+                              .format(plugin.Name))
+                logging.debug('PLUGINS: {0}'.format(traceback.format_exc()))
                 failed.append((plugin.Name, e))
 
     return failed
 
 
 def get_plugin_settings():
-    settings = {}
+    plugins_settings = {}
 
     for plugin in __PLUGINS.values():
         try:
-            p_settings = plugin.settings()
-            if p_settings is not None and len(p_settings) > 0:
-                settings[plugin.Name] = p_settings
+            settings = plugin.settings()
+            if settings is not None and len(settings) > 0:
+                plugins_settings[plugin.Name] = settings
         except Exception:
-            logging.error('PLUGINS: Failed "' + plugin.Name + '" '
-                          'settings retrieve')
-            logging.debug('PLUGINS: ' + traceback.format_exc())
+            logging.error('PLUGINS: Failed "{0}" settings retrieve'
+                          .format(plugin.Name))
+            logging.debug('PLUGINS: {0}'.format(traceback.format_exc()))
 
-    return settings
+    return plugins_settings

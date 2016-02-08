@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@ from PyQt5 import QtCore
 from PyQt5.QtGui import QLinearGradient, QColor, QPainter
 from PyQt5.QtWidgets import QWidget
 
+from lisp.core.decorators import suppress_exceptions
 from lisp.utils.configuration import config
 
 
@@ -53,6 +54,7 @@ class QDbMeter(QWidget):
 
         self.repaint()
 
+    @suppress_exceptions
     def paintEvent(self, e):
         if not self.visibleRegion().isEmpty():
             # Stretch factor

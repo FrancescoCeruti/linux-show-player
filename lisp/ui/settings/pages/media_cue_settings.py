@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,48 +17,58 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5 import QtCore
-from PyQt5.QtCore import QTime
+from PyQt5.QtCore import QTime, Qt
 from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QTimeEdit, QLabel, \
     QSpinBox, QCheckBox, QVBoxLayout
 
-from lisp.ui.settings.section import SettingsSection
+from lisp.ui.settings.settings_page import SettingsPage
 
 
-class MediaCueSettings(SettingsSection):
+class MediaCueSettings(SettingsPage):
     Name = 'Media-Cue'
 
-    def __init__(self, size, cue=None, parent=None):
-        super().__init__(size, cue=cue, parent=parent)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.setLayout(QVBoxLayout(self))
 
-        # Start at
+        # Start time
         self.startGroup = QGroupBox(self)
         self.startGroup.setLayout(QHBoxLayout())
+        self.layout().addWidget(self.startGroup)
 
         self.startEdit = QTimeEdit(self.startGroup)
         self.startEdit.setDisplayFormat('HH.mm.ss.zzz')
         self.startGroup.layout().addWidget(self.startEdit)
 
         self.startLabel = QLabel(self.startGroup)
-        self.startLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.startLabel.setAlignment(Qt.AlignCenter)
         self.startGroup.layout().addWidget(self.startLabel)
 
-        self.layout().addWidget(self.startGroup)
+        # Stop time
+        self.stopGroup = QGroupBox(self)
+        self.stopGroup.setLayout(QHBoxLayout())
+        self.layout().addWidget(self.stopGroup)
+
+        self.stopEdit = QTimeEdit(self.stopGroup)
+        self.stopEdit.setDisplayFormat('HH.mm.ss.zzz')
+        self.stopGroup.layout().addWidget(self.stopEdit)
+
+        self.stopLabel = QLabel(self.stopGroup)
+        self.stopLabel.setAlignment(Qt.AlignCenter)
+        self.stopGroup.layout().addWidget(self.stopLabel)
 
         # Loop
         self.loopGroup = QGroupBox(self)
         self.loopGroup.setLayout(QHBoxLayout())
+        self.layout().addWidget(self.loopGroup)
 
         self.spinLoop = QSpinBox(self.loopGroup)
         self.spinLoop.setRange(-1, 1000000)
         self.loopGroup.layout().addWidget(self.spinLoop)
 
         self.loopLabel = QLabel(self.loopGroup)
-        self.loopLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.loopLabel.setAlignment(Qt.AlignCenter)
         self.loopGroup.layout().addWidget(self.loopLabel)
-
-        self.layout().addWidget(self.loopGroup)
 
         # Checks
         self.checkPause = QCheckBox(self)
@@ -68,21 +78,26 @@ class MediaCueSettings(SettingsSection):
 
     def retranslateUi(self):
         self.startGroup.setTitle('Start time')
-        self.startLabel.setText('Amount of skip time')
-        self.loopGroup.setTitle("Loop")
-        self.loopLabel.setText("Repetition after first play (-1 = infinite)")
-        self.checkPause.setText("Enable Pause")
+        self.stopLabel.setText('Stop position of the media')
+        self.stopGroup.setTitle('Stop time')
+        self.startLabel.setText('Start position of the media')
+        self.loopGroup.setTitle('Loop')
+        self.loopLabel.setText('Repetition after first play (-1 = infinite)')
+        self.checkPause.setText('Enable Pause')
 
-    def get_configuration(self):
+    def get_settings(self):
         conf = {'_media_': {}}
         checkable = self.startGroup.isCheckable()
 
         if not (checkable and not self.startGroup.isChecked()):
             time = self.startEdit.time().msecsSinceStartOfDay()
-            conf['_media_']['start_at'] = time
+            conf['_media_']['start_time'] = time
+        if not (checkable and not self.stopGroup.isChecked()):
+            time = self.stopEdit.time().msecsSinceStartOfDay()
+            conf['_media_']['stop_time'] = time
         if not (checkable and not self.loopGroup.isChecked()):
             conf['_media_']['loop'] = self.spinLoop.value()
-        if self.checkPause.checkState() != QtCore.Qt.PartiallyChecked:
+        if self.checkPause.checkState() != Qt.PartiallyChecked:
             conf['pause'] = self.checkPause.isChecked()
 
         return conf
@@ -91,25 +106,32 @@ class MediaCueSettings(SettingsSection):
         self.startGroup.setCheckable(enable)
         self.startGroup.setChecked(False)
 
+        self.stopGroup.setCheckable(enable)
+        self.stopGroup.setChecked(False)
+
         self.loopGroup.setCheckable(enable)
         self.loopGroup.setChecked(False)
 
         self.checkPause.setTristate(enable)
         if enable:
-            self.checkPause.setCheckState(QtCore.Qt.PartiallyChecked)
+            self.checkPause.setCheckState(Qt.PartiallyChecked)
 
-    def set_configuration(self, conf):
-        if 'pause' in conf:
-            self.checkPause.setChecked(conf['pause'])
-        if '_media_' in conf:
-            if 'loop' in conf['_media_']:
-                self.spinLoop.setValue(conf['_media_']['loop'])
-            if conf['_media_'].get('duration', 0) > 0:
-                t = self._to_qtime(conf['_media_']['duration'])
-                self.startEdit.setMaximumTime(t)
-            if 'start_at' in conf['_media_']:
-                t = self._to_qtime(conf['_media_']['start_at'])
+    def load_settings(self, settings):
+        if 'pause' in settings:
+            self.checkPause.setChecked(settings['pause'])
+        if '_media_' in settings:
+            if 'loop' in settings['_media_']:
+                self.spinLoop.setValue(settings['_media_']['loop'])
+            if 'start_time' in settings['_media_']:
+                t = self._to_qtime(settings['_media_']['start_time'])
                 self.startEdit.setTime(t)
+            if 'stop_time' in settings['_media_']:
+                t = self._to_qtime(settings['_media_']['stop_time'])
+                self.stopEdit.setTime(t)
+
+            t = self._to_qtime(settings['_media_'].get('duration', 0))
+            self.startEdit.setMaximumTime(t)
+            self.stopEdit.setMaximumTime(t)
 
     def _to_qtime(self, m_seconds):
         return QTime.fromMSecsSinceStartOfDay(m_seconds)

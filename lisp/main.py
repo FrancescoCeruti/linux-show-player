@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,6 +24,8 @@ import sys
 from PyQt5.QtGui import QFont, QIcon
 from PyQt5.QtWidgets import QApplication
 
+from lisp import modules
+from lisp import plugins
 from lisp.application import Application
 from lisp.ui import styles
 from lisp.utils.configuration import config
@@ -72,6 +74,10 @@ def main():
 
     # Create the application
     LiSP_app = Application()
+    # Load modules and plugins
+    modules.load_modules()
+    plugins.load_plugins()
+    # Start the application
     LiSP_app.start(session_file=args.file)
 
     # Start the application

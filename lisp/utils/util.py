@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -174,5 +174,18 @@ def check_type(value, type_):
 
 
 def compose_http_url(url, port, directory='/'):
-    """Compose an http URL"""
+    """Compose an http URL."""
     return 'http://' + url + ':' + str(port) + directory
+
+
+def greatest_common_superclass(instances):
+    classes = [type(x).mro() for x in instances]
+    for x in classes[0]:
+        if all(x in mro for mro in classes):
+            return x
+
+
+def subclasses(cls):
+    for subclass in cls.__subclasses__():
+        yield from subclasses(subclass)
+        yield subclass

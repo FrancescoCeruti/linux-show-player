@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -46,6 +46,7 @@ class Media(HasProperties):
     loop = Property(default=0)
     duration = Property(default=0)
     start_time = Property(default=0)
+    stop_time = Property(default=0)
 
     def __init__(self):
         super().__init__()

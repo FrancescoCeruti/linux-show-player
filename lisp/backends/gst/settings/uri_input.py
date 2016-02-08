@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,78 +19,76 @@
 
 from PyQt5.QtCore import QStandardPaths, Qt
 from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QPushButton, QLineEdit, \
-    QGridLayout, QCheckBox, QSpinBox, QLabel, QFileDialog
+    QGridLayout, QCheckBox, QSpinBox, QLabel, QFileDialog, QVBoxLayout
 
 from lisp.backends.gst.elements.uri_input import UriInput
-from lisp.ui.settings.section import SettingsSection
+from lisp.backends.gst.settings.settings_page import GstElementSettingsPage
 
 
-class UriInputSettings(SettingsSection):
+class UriInputSettings(GstElementSettingsPage):
     NAME = 'URI Input'
     ELEMENT = UriInput
 
-    def __init__(self, size, Id, parent=None):
-        super().__init__(size, parent)
+    def __init__(self, element_id, **kwargs):
+        super().__init__(element_id)
+        self.setLayout(QVBoxLayout())
+        self.layout().setAlignment(Qt.AlignTop)
 
-        self.id = Id
+        self.fileGroup = QGroupBox('Source', self)
+        self.fileGroup.setLayout(QHBoxLayout())
+        self.layout().addWidget(self.fileGroup)
 
-        self.groupFile = QGroupBox('Source', self)
-        self.groupFile.setGeometry(0, 0, self.width(), 80)
-
-        self.horizontalLayout = QHBoxLayout(self.groupFile)
-
-        self.buttonFindFile = QPushButton(self.groupFile)
+        self.buttonFindFile = QPushButton(self.fileGroup)
         self.buttonFindFile.setText('Find file')
-        self.horizontalLayout.addWidget(self.buttonFindFile)
+        self.fileGroup.layout().addWidget(self.buttonFindFile)
 
-        self.filePath = QLineEdit('file://', self.groupFile)
-        self.horizontalLayout.addWidget(self.filePath)
+        self.filePath = QLineEdit('file://', self.fileGroup)
+        self.fileGroup.layout().addWidget(self.filePath)
 
-        self.groupBuffering = QGroupBox('Buffering', self)
-        self.groupBuffering.setGeometry(0, 90, self.width(), 120)
+        self.bufferingGroup = QGroupBox('Buffering', self)
+        self.bufferingGroup.setLayout(QGridLayout())
+        self.layout().addWidget(self.bufferingGroup)
 
-        self.bufferingLayout = QGridLayout(self.groupBuffering)
+        self.useBuffering = QCheckBox('Use buffering', self.bufferingGroup)
+        self.bufferingGroup.layout().addWidget(self.useBuffering, 0, 0, 1, 2)
 
-        self.useBuffering = QCheckBox('Use buffering', self.groupBuffering)
-        self.bufferingLayout.addWidget(self.useBuffering, 0, 0, 1, 2)
-
-        self.download = QCheckBox(self.groupBuffering)
+        self.download = QCheckBox(self.bufferingGroup)
         self.download.setText('Attempt download on network streams')
-        self.bufferingLayout.addWidget(self.download, 1, 0, 1, 2)
+        self.bufferingGroup.layout().addWidget(self.download, 1, 0, 1, 2)
 
-        self.bufferSize = QSpinBox(self.groupBuffering)
+        self.bufferSize = QSpinBox(self.bufferingGroup)
         self.bufferSize.setRange(-1, 2147483647)
         self.bufferSize.setValue(-1)
-        self.bufferingLayout.addWidget(self.bufferSize, 2, 0)
+        self.bufferingGroup.layout().addWidget(self.bufferSize, 2, 0)
 
-        self.bufferSizeLabel = QLabel(self.groupBuffering)
+        self.bufferSizeLabel = QLabel(self.bufferingGroup)
         self.bufferSizeLabel.setText('Buffer size (-1 default value)')
         self.bufferSizeLabel.setAlignment(Qt.AlignCenter)
-        self.bufferingLayout.addWidget(self.bufferSizeLabel, 2, 1)
+        self.bufferingGroup.layout().addWidget(self.bufferSizeLabel, 2, 1)
 
         self.buttonFindFile.clicked.connect(self.select_file)
 
-    def get_configuration(self):
+    def get_settings(self):
         conf = {self.id: {}}
 
-        checkable = self.groupFile.isCheckable()
+        checkable = self.fileGroup.isCheckable()
 
-        if not (checkable and not self.groupFile.isChecked()):
+        if not (checkable and not self.fileGroup.isChecked()):
             conf[self.id]['uri'] = self.filePath.text()
-        if not (checkable and not self.groupBuffering.isChecked()):
+        if not (checkable and not self.bufferingGroup.isChecked()):
             conf[self.id]['use_buffing'] = self.useBuffering.isChecked()
             conf[self.id]['download'] = self.download.isChecked()
             conf[self.id]['buffer_size'] = self.bufferSize.value()
 
         return conf
 
-    def set_configuration(self, conf):
-        if conf is not None and self.id in conf:
-            self.filePath.setText(conf[self.id]['uri'])
+    def load_settings(self, settings):
+        if settings is not None and self.id in settings:
+            self.filePath.setText(settings[self.id]['uri'])
 
     def enable_check(self, enable):
-        self.groupFile.setCheckable(enable)
-        self.groupFile.setChecked(False)
+        self.fileGroup.setCheckable(enable)
+        self.fileGroup.setChecked(False)
 
     def select_file(self):
         path = QStandardPaths.writableLocation(QStandardPaths.MusicLocation)

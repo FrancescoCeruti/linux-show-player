@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,25 +17,28 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QCheckBox, QComboBox
 
 from lisp import layouts
 from lisp.ui import styles
-from lisp.ui.settings.section import SettingsSection
+from lisp.ui.settings.settings_page import SettingsPage
 
 
-class General(SettingsSection):
+class General(SettingsPage):
 
     NAME = 'General'
 
-    def __init__(self, size, parent=None):
-        super().__init__(size, parent)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.setLayout(QVBoxLayout())
+        self.layout().setAlignment(Qt.AlignTop)
 
         # Startup layout
         self.layoutGroup = QGroupBox(self)
         self.layoutGroup.setTitle('Startup layout')
         self.layoutGroup.setLayout(QVBoxLayout())
-        self.layoutGroup.setGeometry(0, 0, self.width(), 120)
+        self.layout().addWidget(self.layoutGroup)
 
         self.startupDialogCheck = QCheckBox(self.layoutGroup)
         self.startupDialogCheck.setText('Use startup dialog')
@@ -52,13 +55,13 @@ class General(SettingsSection):
         self.themeGroup = QGroupBox(self)
         self.themeGroup.setTitle('Application theme')
         self.themeGroup.setLayout(QVBoxLayout())
-        self.themeGroup.setGeometry(0, 125, self.width(), 80)
+        self.layout().addWidget(self.themeGroup)
 
         self.themeCombo = QComboBox(self.themeGroup)
         self.themeCombo.addItems(styles.get_styles())
         self.themeGroup.layout().addWidget(self.themeCombo)
 
-    def get_configuration(self):
+    def get_settings(self):
         conf = {'Layout': {}, 'Theme': {}}
 
         if self.startupDialogCheck.isChecked():
@@ -71,12 +74,12 @@ class General(SettingsSection):
 
         return conf
 
-    def set_configuration(self, conf):
-        if 'default' in conf['Layout']:
-            if conf['Layout']['default'].lower() == 'nodefault':
+    def load_settings(self, settings):
+        if 'default' in settings['Layout']:
+            if settings['Layout']['default'].lower() == 'nodefault':
                 self.startupDialogCheck.setChecked(True)
                 self.layoutCombo.setEnabled(False)
             else:
-                self.layoutCombo.setCurrentText(conf['Layout']['default'])
-        if 'theme' in conf['Theme']:
-            self.themeCombo.setCurrentText(conf['Theme']['theme'])
+                self.layoutCombo.setCurrentText(settings['Layout']['default'])
+        if 'theme' in settings['Theme']:
+            self.themeCombo.setCurrentText(settings['Theme']['theme'])

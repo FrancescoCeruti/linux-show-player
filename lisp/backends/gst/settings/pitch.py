@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,26 +20,26 @@
 import math
 
 from PyQt5 import QtCore
-from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QSlider, QLabel
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QSlider, QLabel, QVBoxLayout
 
 from lisp.backends.gst.elements.pitch import Pitch
-from lisp.ui.settings.section import SettingsSection
+from lisp.backends.gst.settings.settings_page import GstElementSettingsPage
 
 
-class PitchSettings(SettingsSection):
+class PitchSettings(GstElementSettingsPage):
 
     NAME = 'Pitch'
     ELEMENT = Pitch
 
-    def __init__(self, size, Id, parent=None):
-        super().__init__(size, parent)
-
-        self.id = Id
+    def __init__(self, element_id, **kwargs):
+        super().__init__(element_id)
+        self.setLayout(QVBoxLayout())
+        self.layout().setAlignment(Qt.AlignTop)
 
         self.groupBox = QGroupBox(self)
-        self.groupBox.setGeometry(0, 0, self.width(), 80)
-
-        self.layout = QHBoxLayout(self.groupBox)
+        self.groupBox.setLayout(QHBoxLayout())
+        self.layout().addWidget(self.groupBox)
 
         self.pitchSlider = QSlider(self.groupBox)
         self.pitchSlider.setMinimum(-12)
@@ -49,14 +49,14 @@ class PitchSettings(SettingsSection):
         self.pitchSlider.setOrientation(QtCore.Qt.Horizontal)
         self.pitchSlider.setTickPosition(QSlider.TicksAbove)
         self.pitchSlider.setTickInterval(1)
-        self.layout.addWidget(self.pitchSlider)
+        self.groupBox.layout().addWidget(self.pitchSlider)
 
         self.pitchLabel = QLabel(self.groupBox)
         self.pitchLabel.setAlignment(QtCore.Qt.AlignCenter)
-        self.layout.addWidget(self.pitchLabel)
+        self.groupBox.layout().addWidget(self.pitchLabel)
 
-        self.layout.setStretch(0, 3)
-        self.layout.setStretch(1, 1)
+        self.groupBox.layout().setStretch(0, 3)
+        self.groupBox.layout().setStretch(1, 1)
 
         self.pitchSlider.valueChanged.connect(self.pitch_changed)
 
@@ -70,7 +70,7 @@ class PitchSettings(SettingsSection):
         self.groupBox.setCheckable(enable)
         self.groupBox.setChecked(False)
 
-    def get_configuration(self):
+    def get_settings(self):
         conf = {}
 
         if not (self.groupBox.isCheckable() and not self.groupBox.isChecked()):
@@ -79,10 +79,10 @@ class PitchSettings(SettingsSection):
 
         return conf
 
-    def set_configuration(self, conf):
-        if conf is not None and self.id in conf:
+    def load_settings(self, settings):
+        if settings is not None and self.id in settings:
             self.pitchSlider.setValue(
-                round(12 * math.log(conf[self.id]['pitch'], 2)))
+                round(12 * math.log(settings[self.id]['pitch'], 2)))
 
     def pitch_changed(self, value):
         if value < 0:

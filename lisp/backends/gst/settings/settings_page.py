@@ -17,21 +17,11 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from lisp.backends.base.media_element import ElementType, MediaType
-from lisp.backends.gst.gi_repository import Gst
-from lisp.backends.gst.gst_element import GstMediaElement
+from lisp.ui.settings.settings_page import SettingsPage
 
 
-class AutoSink(GstMediaElement):
-    ElementType = ElementType.Output
-    MediaType = MediaType.Audio
-    Name = 'AutoSink'
-
-    def __init__(self, pipe):
-        super().__init__()
-
-        self.auto_sink = Gst.ElementFactory.make('autoaudiosink', 'sink')
-        pipe.add(self.auto_sink)
-
-    def sink(self):
-        return self.auto_sink
+# TODO: remove the id from all the Elements SettingsPages and remove this class.
+class GstElementSettingsPage(SettingsPage):
+    def __init__(self, element_id, **kwargs):
+        super().__init__(**kwargs)
+        self.id = element_id

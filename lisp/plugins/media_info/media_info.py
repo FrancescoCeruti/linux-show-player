@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,26 +27,23 @@ from lisp.application import Application
 from lisp.backends.gst.gst_utils import gst_uri_metadata, gst_parse_tag_list
 from lisp.core.plugin import Plugin
 from lisp.cues.media_cue import MediaCue
+from lisp.layouts.cue_menu_registry import CueMenuRegistry
 from lisp.ui.mainwindow import MainWindow
 
 
 class MediaInfo(Plugin):
-
     Name = 'MediaInfo'
 
     def __init__(self):
-        self.actionMediaInfo = QAction(None)
-        self.actionMediaInfo.triggered.connect(self.showInfo)
-        self.actionMediaInfo.setText("Media Info")
+        self.menuAction = QAction(None)
+        self.menuAction.triggered.connect(self.show_info)
+        self.menuAction.setText("Media Info")
 
-        self.separator = Application().layout.add_context_separator(MediaCue)
-        Application().layout.add_context_item(self.actionMediaInfo, MediaCue)
+    def init(self):
+        Application().layout.cm_registry.add_separator(MediaCue)
+        Application().layout.cm_registry.add_item(self.menuAction, MediaCue)
 
-    def reset(self):
-        Application().layout.remove_context_item(self.actionMediaInfo)
-        Application().layout.remove_context_item(self.separator)
-
-    def showInfo(self, clicked):
+    def show_info(self, clicked):
         media_uri = Application().layout.get_context_cue().media.input_uri()
         if not media_uri:
             QMessageBox.critical(None, 'Error Message', 'Invalid Media!')
@@ -58,10 +55,10 @@ class MediaInfo(Plugin):
             for stream in gst_info.get_audio_streams():
                 name = stream.get_stream_type_nick().capitalize()
                 info[name] = {"Bitrate": str(stream.get_bitrate() // 1000) +
-                              " Kb/s",
+                                         " Kb/s",
                               "Channels": str(stream.get_channels()),
                               "Sample rate": str(stream.get_sample_rate()) +
-                              " Hz",
+                                             " Hz",
                               "Sample size": str(stream.get_depth()) + " bit"
                               }
 
@@ -79,7 +76,7 @@ class MediaInfo(Plugin):
             info["Tags"] = {}
             tags = gst_parse_tag_list(gst_info.get_tags())
             for tag_name in tags:
-                if(not str(tags[tag_name]).startswith("<Gst")):
+                if (not str(tags[tag_name]).startswith("<Gst")):
                     info["Tags"][tag_name.capitalize()] = str(tags[tag_name])
 
             if not info["Tags"]:
@@ -92,7 +89,6 @@ class MediaInfo(Plugin):
 
 
 class InfoDialog(QDialog):
-
     def __init__(self, parent, info, title):
         super().__init__(parent)
 

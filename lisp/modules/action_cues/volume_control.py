@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -32,7 +32,8 @@ from lisp.cues.cue import Cue, CueState, CueAction
 from lisp.cues.media_cue import MediaCue
 from lisp.layouts.cue_layout import CueLayout
 from lisp.ui.cuelistdialog import CueListDialog
-from lisp.ui.settings.section import SettingsSection
+from lisp.ui.settings.cue_settings import CueSettingsRegistry
+from lisp.ui.settings.settings_page import SettingsPage
 from lisp.utils.fade_functor import ntime, FadeIn, FadeOut
 
 
@@ -112,7 +113,7 @@ class VolumeControl(Cue):
         return self.__state
 
 
-class VolumeSettings(SettingsSection):
+class VolumeSettings(SettingsPage):
     Name = 'Volume Settings'
 
     FadeIcons = {
@@ -121,8 +122,8 @@ class VolumeSettings(SettingsSection):
         'Quadratic2': QIcon.fromTheme('fadein_quadratic2')
     }
 
-    def __init__(self, size, cue=None, parent=None):
-        super().__init__(size, cue=cue, parent=parent)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
 
         self.cue_id = -1
         self.setLayout(QVBoxLayout(self))
@@ -198,17 +199,17 @@ class VolumeSettings(SettingsSection):
             self.cue_id = cue.id
             self.cueLabel.setText(cue.name)
 
-    def enable_check(self, enable):
-        self.cueGroup.setCheckable(enable)
+    def enable_check(self, enabled):
+        self.cueGroup.setCheckable(enabled)
         self.cueGroup.setChecked(False)
 
-        self.volumeGroup.setCheckable(enable)
+        self.volumeGroup.setCheckable(enabled)
         self.volumeGroup.setChecked(False)
 
-        self.fadeGroup.setCheckable(enable)
+        self.fadeGroup.setCheckable(enabled)
         self.volumeGroup.setChecked(False)
 
-    def get_configuration(self):
+    def get_settings(self):
         conf = {}
         checkable = self.cueGroup.isCheckable()
 
@@ -222,16 +223,16 @@ class VolumeSettings(SettingsSection):
 
         return conf
 
-    def set_configuration(self, conf):
-        if conf is not None:
-            cue = Application().cue_model.get(conf['target_id'])
+    def load_settings(self, settings):
+        if settings is not None:
+            cue = Application().cue_model.get(settings['target_id'])
             if cue is not None:
-                self.cue_id = conf['target_id']
+                self.cue_id = settings['target_id']
                 self.cueLabel.setText(cue.name)
 
-            self.volumeEdit.setValue(conf['volume'])
-            self.fadeSpin.setValue(conf['duration'] // 1000)
-            self.fadeCurveCombo.setCurrentText(conf['fade_type'])
+            self.volumeEdit.setValue(settings['volume'])
+            self.fadeSpin.setValue(settings['duration'] // 1000)
+            self.fadeCurveCombo.setCurrentText(settings['fade_type'])
 
 
-CueLayout.add_settings_section(VolumeSettings, VolumeControl)
+CueSettingsRegistry().add_item(VolumeSettings, VolumeControl)

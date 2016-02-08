@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -51,7 +51,6 @@ def validate_pipeline(pipe):
 
 class GstMedia(Media):
     """Media implementation based on the GStreamer framework."""
-
 
     pipe = Property(default=())
     _mtime = Property(default=-1)
@@ -118,6 +117,9 @@ class GstMedia(Media):
             self._gst_pipe.set_state(Gst.State.PLAYING)
             self._gst_pipe.get_state(Gst.SECOND)
 
+            if self.start_time > 0 or self.stop_time > 0:
+                self.seek(self.start_time)
+
             self.played.emit(self)
 
     @async
@@ -145,13 +147,23 @@ class GstMedia(Media):
             self.interrupt(emit=False)
             self.stopped.emit(self)
 
-    def seek(self, position):
+    def __seek(self, position):
         if self.state == MediaState.Playing or self.state == MediaState.Paused:
-            if position < self.duration:
+
+            max_position = self.duration
+            if 0 < self.stop_time < self.duration:
+                max_position = self.stop_time
+
+            if position < max_position:
                 # Query segment info for the playback rate
                 query = Gst.Query.new_segment(Gst.Format.TIME)
                 self._gst_pipe.query(query)
                 rate = Gst.Query.parse_segment(query)[0]
+
+                # Check stop_position value
+                stop_type = Gst.SeekType.NONE
+                if self.stop_time > 0:
+                    stop_type = Gst.SeekType.SET
 
                 # Seek the pipeline
                 self._gst_pipe.seek(rate if rate > 0 else 1,
@@ -159,10 +171,14 @@ class GstMedia(Media):
                                     Gst.SeekFlags.FLUSH,
                                     Gst.SeekType.SET,
                                     position * Gst.MSECOND,
-                                    Gst.SeekType.NONE,
-                                    -1)
+                                    stop_type,
+                                    self.stop_time * Gst.MSECOND)
 
-                self.sought.emit(self, position)
+                return True
+
+    def seek(self, position):
+        if self.__seek(position):
+            self.sought.emit(self, position)
 
     def element(self, name):
         for element in self._elements:
@@ -182,7 +198,6 @@ class GstMedia(Media):
             pass
 
     def interrupt(self, dispose=False, emit=True):
-        state = self._state
         for element in self._elements:
             element.interrupt()
 
@@ -292,15 +307,12 @@ class GstMedia(Media):
             self.error.emit(self, str(err), str(debug))
 
     def __on_eos(self):
-        self._state = MediaState.Stopped
-        self.eos.emit(self)
-
-        if self._loop_count != 0:
-            self._gst_pipe.set_state(Gst.State.READY)
-
+        if self._loop_count > 0:
             self._loop_count -= 1
-            self.play()
+            self.seek(0)
         else:
+            self._state = MediaState.Stopped
+            self.eos.emit(self)
             self.interrupt(emit=False)
 
     @async_in_pool(pool=ThreadPoolExecutor(cpu_count()))

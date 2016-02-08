@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,9 +23,9 @@ from lisp.core.has_properties import Property
 
 class GstProperty(Property):
 
-    def __init__(self, element_name, default=None, name=None, gst_name=None,
+    def __init__(self, element_name, default=None, gst_name=None,
                  adapter=None):
-        super().__init__(default=default, name=name)
+        super().__init__(default=default)
 
         self.element_name = element_name
         self.gst_name = gst_name

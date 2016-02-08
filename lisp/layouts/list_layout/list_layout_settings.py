@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,22 +17,25 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QCheckBox
 
-from lisp.ui.settings.section import SettingsSection
+from lisp.ui.settings.settings_page import SettingsPage
 
 
-class ListLayoutPreferences(SettingsSection):
+class ListLayoutSettings(SettingsPage):
 
     NAME = 'List Layout'
 
-    def __init__(self, size, parent=None):
-        super().__init__(size, parent)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.setLayout(QVBoxLayout())
+        self.layout().setAlignment(Qt.AlignTop)
 
         self.behaviorsGroup = QGroupBox(self)
         self.behaviorsGroup.setTitle('Default behaviors')
         self.behaviorsGroup.setLayout(QVBoxLayout())
-        self.behaviorsGroup.setGeometry(0, 0, self.width(), 140)
+        self.layout().addWidget(self.behaviorsGroup)
 
         self.showPlaying = QCheckBox(self.behaviorsGroup)
         self.behaviorsGroup.layout().addWidget(self.showPlaying)
@@ -59,7 +62,7 @@ class ListLayoutPreferences(SettingsSection):
         self.showSeek.setText('Show seek sliders')
         self.autoNext.setText('Automatically select the next cue')
 
-    def get_configuration(self):
+    def get_settings(self):
         conf = {}
 
         conf['showplaying'] = str(self.showPlaying.isChecked())
@@ -70,8 +73,8 @@ class ListLayoutPreferences(SettingsSection):
 
         return {'ListLayout': conf}
 
-    def set_configuration(self, conf):
-        settings = conf.get('ListLayout', {})
+    def load_settings(self, settings):
+        settings = settings.get('ListLayout', {})
 
         self.showPlaying.setChecked(settings.get('showplaying') == 'True')
         self.showDbMeters.setChecked(settings.get('showdbmeters') == 'True')

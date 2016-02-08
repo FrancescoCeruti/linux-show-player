@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -41,11 +41,9 @@ class ClassesLoader:
                  excluded=None):
         """
         :param package_path: location of the classes (package)
-        :type package_path: str
-        :param prefixes: list of prefixes (symmetrical with suffixes)
-        :type prefixes: list
-        :param suffixes: list of suffixes (symmetrical with prefixes)
-        :type suffixes: list
+        :param prefixes: iterable of prefixes (symmetrical with suffixes)
+        :param suffixes: iterable suffixes (symmetrical with prefixes)
+        :param excluded: iterable of excluded modules names3
         """
         self._package_path = package_path
         self._prefixes = prefixes if prefixes is not None else ['']

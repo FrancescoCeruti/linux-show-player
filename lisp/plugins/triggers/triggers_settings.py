@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,16 +26,17 @@ from lisp.application import Application
 from lisp.cues.cue import CueAction
 from lisp.plugins.triggers.triggers_handler import CueTriggers
 from lisp.ui.cuelistdialog import CueListDialog
-from lisp.ui.settings.section import SettingsSection
+from lisp.ui.settings.settings_page import SettingsPage
 
 
-class TriggersSettings(SettingsSection):
+# TODO: standalone settings dialog, accessible from context menu
+class TriggersSettings(SettingsPage):
 
     Name = 'Triggers'
     PluginInstance = None
 
-    def __init__(self, size, cue=None, **kwargs):
-        super().__init__(size, cue=cue, **kwargs)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.setLayout(QVBoxLayout(self))
 
         self.triggersWidget = QListWidget(self)
@@ -53,16 +54,13 @@ class TriggersSettings(SettingsSection):
         self.delButton = self.dialogButtons.addButton('Remove', QDialogButtonBox.ActionRole)
         self.delButton.clicked.connect(self._remove_trigger)
 
-        if self.cue is None:
-            self.setEnabled(False)
-        else:
-            self.cue_dialog = CueListDialog(cues=Application().cue_model)
+        self._cue = None
 
     def _add_new_trigger(self, tr_action, target, ta_action):
         item = QListWidgetItem()
         item.setSizeHint(QSize(200, 30))
 
-        widget = TriggerWidget(self.cue, tr_action, target, ta_action,
+        widget = TriggerWidget(self._cue, tr_action, target, ta_action,
                                self.cue_dialog)
 
         self.triggersWidget.addItem(item)
@@ -77,9 +75,15 @@ class TriggersSettings(SettingsSection):
     def _remove_trigger(self):
         self.triggersWidget.takeItem(self.triggersWidget.currentRow())
 
-    def set_configuration(self, conf):
-        if self.PluginInstance is not None and self.cue is not None:
-            triggers = self.PluginInstance.triggers.get(self.cue.id, {})
+    def load_settings(self, settings):
+        self._cue = Application().cue_model.get(settings.get('id'), None)
+        if self._cue is None:
+            self.setEnabled(False)
+        else:
+            self.cue_dialog = CueListDialog(cues=Application().cue_model)
+
+        if self.PluginInstance is not None and self._cue is not None:
+            triggers = self.PluginInstance.triggers.get(self._cue.id, {})
 
             for trigger_action, targets in triggers.items():
                 for target, target_action in targets:
@@ -87,8 +91,8 @@ class TriggersSettings(SettingsSection):
                     if target is not None:
                         self._add_new_trigger(trigger_action, target, target_action)
 
-    def get_configuration(self):
-        if self.PluginInstance is not None and self.cue is not None:
+    def get_settings(self):
+        if self.PluginInstance is not None and self._cue is not None:
             triggers = {}
 
             for n in range(self.triggersWidget.count()):
@@ -100,7 +104,7 @@ class TriggersSettings(SettingsSection):
                 else:
                     triggers[tr_action] = [(target, ta_action)]
 
-            self.PluginInstance.update_handler(self.cue, triggers)
+            self.PluginInstance.update_handler(self._cue, triggers)
 
         return {}
 

@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 from abc import ABCMeta
 
 from lisp.core.signal import Signal
+from lisp.utils.util import subclasses
 
 
 class Property:
@@ -32,8 +33,8 @@ class Property:
         3) After the value is changed call the __changed__ method.
     """
 
-    def __init__(self, default=None, name=None):
-        self.name = name
+    def __init__(self, default=None):
+        self.name = 'unnamed_property'
         self.default = default
 
     def __get__(self, instance, owner=None):
@@ -65,11 +66,11 @@ class NestedProperties(Property):
 
     ..note::
         When need to get or set a single property of the nested object is better
-        to access it directly instead that using a nested-property.
+        to access it directly instead that using the nested-property.
     """
 
-    def __init__(self, provider_name, **kwargs):
-        super().__init__(**kwargs)
+    def __init__(self, provider_name, default=None):
+        super().__init__(default=default)
         self.provider_name = provider_name
 
     def __get__(self, instance, owner=None):
@@ -104,17 +105,7 @@ class HasPropertiesMeta(ABCMeta):
 
     def __init__(cls, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        cls.update_properties_registry(cls)
 
-    def __setattr__(cls, name, value):
-        super().__setattr__(name, value)
-
-        if isinstance(value, Property):
-            cls.__properties__.add(name)
-            value.name = name
-
-    @staticmethod
-    def update_properties_registry(cls):
         # Use a set for avoiding repetitions
         cls.__properties__ = set()
 
@@ -146,7 +137,7 @@ class HasProperties(metaclass=HasPropertiesMeta):
 
     def __init__(self):
         self.property_changed = Signal()
-        #: Emitted after property change (name, value)
+        #: Emitted after property change (self, name, value)
 
         self.changed_signals = {}
         """Contains signals that are emitted after the associated property is
@@ -161,20 +152,12 @@ class HasProperties(metaclass=HasPropertiesMeta):
         :param BaseProperty prop: The property
         """
         if name not in cls.__properties__:
+            prop.name = name
             setattr(cls, name, prop)
-            HasPropertiesMeta.update_properties_registry(cls)
+            cls.__properties__.add(name)
 
-    @classmethod
-    def register_properties(cls, properties):
-        """Register multiple properties with the given names.
-
-        :param dict properties: Properties to add {name:property, ...}
-        """
-        for name, prop in properties.items():
-            if name not in cls.__properties__:
-                setattr(cls, name, prop)
-
-        HasPropertiesMeta.update_properties_registry(cls)
+            for subclass in subclasses(cls):
+                subclass.__properties__.add(name)
 
     def changed(self, property_name):
         """
@@ -182,7 +165,7 @@ class HasProperties(metaclass=HasPropertiesMeta):
         :return: The property change-signal
         :rtype: Signal
         """
-        if property_name not in self.__properties__:
+        if property_name not in self.__class__.__properties__:
             raise ValueError('no property "{0}" found'.format(property_name))
 
         signal = self.changed_signals.get(property_name, None)

@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,22 +22,15 @@ from os import path
 from PyQt5.QtGui import QPalette, QColor
 from PyQt5.QtWidgets import QStyleFactory, qApp, QProxyStyle, QStyle
 
-# NEEDED to load assets
-from lisp.ui.style import style
+# noinspection PyUnresolvedReferences
+from lisp.ui.style import style  # NEEDED to load assets
 
-# TODO: maybe a class ? (StyleManager)
+# TODO: maybe a class (StyleManager)? and custom themes support?
 
 StylePath = path.abspath(path.join(path.dirname(__file__)))
 IconsThemePaths = [path.join(StylePath, 'icons')]
 
 LiSPThemeFile = path.join(StylePath, 'style/style.qss')
-
-
-class NoFocusRectProxyStyle(QProxyStyle):
-    def drawPrimitive(self, element, option, painter, widget):
-        # do not draw focus rectangles - this permits modern styling
-        if element != QStyle.PE_FrameFocusRect:
-            super().drawPrimitive(element, option, painter, widget)
 
 
 def __load_qss_theme(qss_file):

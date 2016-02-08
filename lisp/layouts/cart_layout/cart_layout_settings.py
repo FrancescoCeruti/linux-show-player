@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,22 +17,25 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QCheckBox, QGridLayout, \
     QSpinBox, QLabel
 
-from lisp.ui.settings.section import SettingsSection
+from lisp.ui.settings.settings_page import SettingsPage
 
 
-class CartLayoutPreferences(SettingsSection):
+class CartLayoutSettings(SettingsPage):
 
     NAME = 'Cart Layout'
 
-    def __init__(self, size, parent=None):
-        super().__init__(size, parent)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.setLayout(QVBoxLayout())
+        self.layout().setAlignment(Qt.AlignTop)
 
         self.behaviorsGroup = QGroupBox(self)
         self.behaviorsGroup.setLayout(QVBoxLayout())
-        self.behaviorsGroup.setGeometry(0, 0, self.width(), 140)
+        self.layout().addWidget(self.behaviorsGroup)
 
         self.countdownMode = QCheckBox(self.behaviorsGroup)
         self.behaviorsGroup.layout().addWidget(self.countdownMode)
@@ -52,7 +55,7 @@ class CartLayoutPreferences(SettingsSection):
         self.gridSizeGroup = QGroupBox(self)
         self.gridSizeGroup.setTitle('Grid size')
         self.gridSizeGroup.setLayout(QGridLayout())
-        self.gridSizeGroup.setGeometry(0, 145, self.width(), 120)
+        self.layout().addWidget(self.gridSizeGroup)
 
         self.columnsSpin = QSpinBox(self.gridSizeGroup)
         self.columnsSpin.setRange(1, 16)
@@ -83,7 +86,7 @@ class CartLayoutPreferences(SettingsSection):
         self.columnsLabel.setText('Number of columns')
         self.rowsLabel.setText('Number of rows')
 
-    def get_configuration(self):
+    def get_settings(self):
         conf = {}
 
         conf['gridcolumns'] = str(self.columnsSpin.value())
@@ -96,20 +99,20 @@ class CartLayoutPreferences(SettingsSection):
 
         return {'CartLayout': conf}
 
-    def set_configuration(self, conf):
-        if 'CartLayout' in conf:
-            conf = conf['CartLayout']
-            if 'gridcolumns' in conf:
-                self.columnsSpin.setValue(int(conf['gridcolumns']))
-            if 'gridrows' in conf:
-                self.rowsSpin.setValue(int(conf['gridrows']))
-            if 'showsseek' in conf:
-                self.showSeek.setChecked(conf['showseek'] == 'True')
-            if 'showdbmeter' in conf:
-                self.showDbMeters.setChecked(conf['showdbmeters'] == 'True')
-            if 'showaccurate' in conf:
-                self.showAccurate.setChecked(conf['showaccurate'] == 'True')
-            if 'countdown' in conf:
-                self.countdownMode.setChecked(conf['countdown'] == 'True')
-            if 'autoaddpage' in conf:
-                self.autoAddPage.setChecked(conf['autoaddpage'] == 'True')
+    def load_settings(self, settings):
+        if 'CartLayout' in settings:
+            settings = settings['CartLayout']
+            if 'gridcolumns' in settings:
+                self.columnsSpin.setValue(int(settings['gridcolumns']))
+            if 'gridrows' in settings:
+                self.rowsSpin.setValue(int(settings['gridrows']))
+            if 'showsseek' in settings:
+                self.showSeek.setChecked(settings['showseek'] == 'True')
+            if 'showdbmeter' in settings:
+                self.showDbMeters.setChecked(settings['showdbmeters'] == 'True')
+            if 'showaccurate' in settings:
+                self.showAccurate.setChecked(settings['showaccurate'] == 'True')
+            if 'countdown' in settings:
+                self.countdownMode.setChecked(settings['countdown'] == 'True')
+            if 'autoaddpage' in settings:
+                self.autoAddPage.setChecked(settings['autoaddpage'] == 'True')

@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -63,7 +63,7 @@ class MementoModel(ReadOnlyProxyModel):
 
 
 class AdapterMementoModel(MementoModel):
-    """Extension of the MementoModel that use a ModelAdapter as a base model"""
+    """Extension of the MementoModel that use a ModelAdapter as a base-model"""
 
     def __init__(self, model_adapter, handler=None):
         super().__init__(model_adapter, handler)

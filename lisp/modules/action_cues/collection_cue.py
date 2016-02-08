@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,12 +23,11 @@ from PyQt5.QtWidgets import QVBoxLayout, QSizePolicy, QListWidget, \
     QPushButton, QComboBox, QListWidgetItem
 
 from lisp.application import Application
-from lisp.core.decorators import async
 from lisp.core.has_properties import Property
 from lisp.cues.cue import Cue, CueState, CueAction
-from lisp.layouts.cue_layout import CueLayout
 from lisp.ui.cuelistdialog import CueListDialog
-from lisp.ui.settings.section import SettingsSection
+from lisp.ui.settings.cue_settings import CueSettingsRegistry
+from lisp.ui.settings.settings_page import SettingsPage
 
 
 class CollectionCue(Cue):
@@ -40,7 +39,7 @@ class CollectionCue(Cue):
         super().__init__(**kwargs)
         self.name = self.Name
 
-    @Cue.state.setter
+    @Cue.state.getter
     def state(self):
         return CueState.Stop
 
@@ -51,11 +50,11 @@ class CollectionCue(Cue):
                 cue.execute(action=CueAction[action])
 
 
-class CollectionCueSettings(SettingsSection):
+class CollectionCueSettings(SettingsPage):
     Name = 'Edit Collection'
 
-    def __init__(self, size, cue=None, parent=None):
-        super().__init__(size, cue=cue, parent=parent)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
 
         self.setLayout(QVBoxLayout(self))
 
@@ -78,13 +77,13 @@ class CollectionCueSettings(SettingsSection):
         self.cue_dialog = CueListDialog(cues=Application().cue_model)
         self.cue_dialog.list.setSelectionMode(QAbstractItemView.ExtendedSelection)
 
-    def set_configuration(self, conf):
-        for target_id, action in conf.get('targets', []):
+    def load_settings(self, settings):
+        for target_id, action in settings.get('targets', []):
             target = Application().cue_model.get(target_id)
             if target is not None:
                 self._add_cue(target, action)
 
-    def get_configuration(self):
+    def get_settings(self):
         targets = []
         for n in range(self.cuesWidget.count()):
             widget = self.cuesWidget.itemWidget(self.cuesWidget.item(n))
@@ -150,4 +149,4 @@ class CueItemWidget(QWidget):
             self.selectButton.setToolTip(self.target.name)
 
 
-CueLayout.add_settings_section(CollectionCueSettings, CollectionCue)
+CueSettingsRegistry().add_item(CollectionCueSettings, CollectionCue)

@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,28 +19,29 @@
 
 import jack
 from PyQt5 import QtCore
+from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPainter, QPolygon, QPainterPath
 from PyQt5.QtWidgets import QGroupBox, QLineEdit, QLabel, QWidget, \
     QHBoxLayout, QTreeWidget, QTreeWidgetItem, QGridLayout, QDialog, \
-    QDialogButtonBox, QPushButton
+    QDialogButtonBox, QPushButton, QVBoxLayout
 
 from lisp.backends.gst.elements.jack_sink import JackSink
-from lisp.ui.settings.section import SettingsSection
+from lisp.backends.gst.settings.settings_page import GstElementSettingsPage
 
 
-class JackSinkSettings(SettingsSection):
+class JackSinkSettings(GstElementSettingsPage):
     NAME = "Jack Sink"
     ELEMENT = JackSink
 
-    def __init__(self, size, Id, parent=None):
-        super().__init__(size, parent)
-
-        self.id = Id
+    def __init__(self, element_id, **kwargs):
+        super().__init__(element_id)
+        self.setLayout(QVBoxLayout())
+        self.layout().setAlignment(Qt.AlignTop)
 
         self.serverGroup = QGroupBox(self)
         self.serverGroup.setTitle('Jack')
-        self.serverGroup.setGeometry(0, 0, self.width(), 100)
         self.serverGroup.setLayout(QHBoxLayout())
+        self.layout().addWidget(self.serverGroup)
 
         self.serverLineEdit = QLineEdit(self.serverGroup)
         self.serverLineEdit.setToolTip('Name of the server to connect with')
@@ -53,8 +54,8 @@ class JackSinkSettings(SettingsSection):
 
         self.connectionsGroup = QGroupBox(self)
         self.connectionsGroup.setTitle('Connections')
-        self.connectionsGroup.setGeometry(0, 120, self.width(), 80)
         self.connectionsGroup.setLayout(QHBoxLayout())
+        self.layout().addWidget(self.connectionsGroup)
 
         self.connectionsEdit = QPushButton('Edit connections', self)
         self.connectionsEdit.clicked.connect(self.__edit_connections)
@@ -67,7 +68,7 @@ class JackSinkSettings(SettingsSection):
         self.__jack_client.close()
         super().closeEvent(event)
 
-    def get_configuration(self):
+    def get_settings(self):
         conf = {}
         if not (
                     self.serverGroup.isCheckable() and not self.serverGroup.isChecked()):
@@ -77,13 +78,13 @@ class JackSinkSettings(SettingsSection):
 
         return {self.id: conf}
 
-    def set_configuration(self, conf):
-        if self.id in conf:
-            conf = conf[self.id]
+    def load_settings(self, settings):
+        if self.id in settings:
+            settings = settings[self.id]
 
             self.serverLineEdit.setText(
-                'default' if conf['server'] is None else conf['server'])
-            self.connections = conf['connections'].copy()
+                'default' if settings['server'] is None else settings['server'])
+            self.connections = settings['connections'].copy()
 
     def enable_check(self, enable):
         self.serverGroup.setCheckable(enable)

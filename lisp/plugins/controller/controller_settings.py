@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,15 +26,15 @@ from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QHBoxLayout, QLineEdit, \
 
 from lisp.modules import check_module
 from lisp.modules.midi.input_handler import MIDIInputHandler
-from lisp.ui.settings.section import SettingsSection
+from lisp.ui.settings.settings_page import SettingsPage
 
 
-class ControllerSettings(SettingsSection):
+class ControllerSettings(SettingsPage):
 
     Name = 'MIDI and Hot-Key'
 
-    def __init__(self, size, cue=None, **kwargs):
-        super().__init__(size, cue=None, **kwargs)
+    def __init__(self, **kwargs):
+        super().__init__()
 
         self.verticalLayout = QVBoxLayout(self)
 
@@ -100,14 +100,14 @@ class ControllerSettings(SettingsSection):
 
         self.msg_type = 'note_on'
 
-    def enable_check(self, enable):
-        self.keyGroup.setCheckable(enable)
+    def enable_check(self, enabled):
+        self.keyGroup.setCheckable(enabled)
         self.keyGroup.setChecked(False)
 
-        self.midiGroup.setCheckable(enable)
+        self.midiGroup.setCheckable(enabled)
         self.midiGroup.setChecked(False)
 
-    def get_configuration(self):
+    def get_settings(self):
         conf = {}
         checked = self.keyGroup.isCheckable()
 
@@ -128,13 +128,15 @@ class ControllerSettings(SettingsSection):
                                    velocity=self.midiVelocity.value())
                 conf['midi'] = str(msg)
 
-        return conf
+        return {'controller': conf}
 
-    def set_configuration(self, conf):
-        if 'hotkeys' in conf:
-            self.key.setText(','.join(conf['hotkeys']))
-        if 'midi' in conf and conf['midi'] != '':
-            msg = mido.messages.parse_string(conf['midi'])
+    def load_settings(self, settings):
+        settings = settings.get('controller', {})
+
+        if 'hotkeys' in settings:
+            self.key.setText(','.join(settings['hotkeys']))
+        if 'midi' in settings and settings['midi'] != '':
+            msg = mido.messages.parse_string(settings['midi'])
             self.msg_type = msg.type
             self.midiChannels.setValue(msg.channel)
             self.midiNote.setValue(msg.note)

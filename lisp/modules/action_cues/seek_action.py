@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -28,7 +28,8 @@ from lisp.cues.cue import Cue, CueState
 from lisp.cues.media_cue import MediaCue
 from lisp.layouts.cue_layout import CueLayout
 from lisp.ui.cuelistdialog import CueListDialog
-from lisp.ui.settings.section import SettingsSection
+from lisp.ui.settings.cue_settings import CueSettingsRegistry
+from lisp.ui.settings.settings_page import SettingsPage
 
 
 class SeekAction(Cue):
@@ -51,11 +52,11 @@ class SeekAction(Cue):
             cue.media.seek(self.time)
 
 
-class SeekSettings(SettingsSection):
+class SeekSettings(SettingsPage):
     Name = 'Seek Settings'
 
-    def __init__(self, size, cue=None, parent=None):
-        super().__init__(size, cue=cue, parent=parent)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
 
         self.cue_id = -1
         self.setLayout(QVBoxLayout(self))
@@ -107,27 +108,27 @@ class SeekSettings(SettingsSection):
                 QTime.fromMSecsSinceStartOfDay(cue.media.duration))
             self.cueLabel.setText(cue.name)
 
-    def enable_check(self, enable):
-        self.cueGroup.setCheckable(enable)
+    def enable_check(self, enabled):
+        self.cueGroup.setCheckable(enabled)
         self.cueGroup.setChecked(False)
 
-        self.seekGroup.setCheckable(enable)
+        self.seekGroup.setCheckable(enabled)
         self.seekGroup.setChecked(False)
 
-    def get_configuration(self):
+    def get_settings(self):
         return {'target_id': self.cue_id,
                 'time': self.seekEdit.time().msecsSinceStartOfDay()}
 
-    def set_configuration(self, conf):
-        if conf is not None:
-            cue = Application().cue_model.get(conf['target_id'])
+    def load_settings(self, settings):
+        if settings is not None:
+            cue = Application().cue_model.get(settings['target_id'])
             if cue is not None:
-                self.cue_id = conf['target_id']
+                self.cue_id = settings['target_id']
                 self.seekEdit.setTime(
-                    QTime.fromMSecsSinceStartOfDay(conf['time']))
+                    QTime.fromMSecsSinceStartOfDay(settings['time']))
                 self.seekEdit.setMaximumTime(
                     QTime.fromMSecsSinceStartOfDay(cue.media.duration))
                 self.cueLabel.setText(cue.name)
 
 
-CueLayout.add_settings_section(SeekSettings, SeekAction)
+CueSettingsRegistry().add_item(SeekSettings, SeekAction)

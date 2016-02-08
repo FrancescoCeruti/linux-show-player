@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,15 +27,17 @@ from lisp.cues.media_cue import MediaCue
 from lisp.layouts.cart_layout.cue_cart_model import CueCartModel
 from lisp.layouts.cart_layout.cue_widget import CueWidget
 from lisp.layouts.cart_layout.page_widget import PageWidget
-from lisp.layouts.cart_layout.preferences import CartLayoutPreferences
+from lisp.layouts.cart_layout.cart_layout_settings import CartLayoutSettings
 from lisp.layouts.cue_layout import CueLayout
 from lisp.ui.mainwindow import MainWindow
 from lisp.ui.settings.app_settings import AppSettings
-from lisp.ui.settings.sections.cue_appearance import Appearance
-from lisp.ui.settings.sections.media_cue_settings import MediaCueSettings
+from lisp.ui.settings.cue_settings import CueSettingsRegistry
+from lisp.ui.settings.pages.cue_appearance import Appearance
+from lisp.ui.settings.pages.cue_general import CueGeneralSettings
+from lisp.ui.settings.pages.media_cue_settings import MediaCueSettings
 from lisp.utils.configuration import config
 
-AppSettings.register_settings_widget(CartLayoutPreferences)
+AppSettings.register_settings_widget(CartLayoutSettings)
 
 
 class CartLayout(QTabWidget, CueLayout):
@@ -108,39 +110,41 @@ class CartLayout(QTabWidget, CueLayout):
         layoutMenu.addAction(self.show_vumeter_action)
         layoutMenu.addAction(self.show_accurate_action)
 
+        # TODO: maybe can be moved outside the layout
         # Add cue preferences widgets
-        self.add_settings_section(MediaCueSettings, MediaCue)
-        self.add_settings_section(Appearance)
+        CueSettingsRegistry().add_item(CueGeneralSettings, Cue)
+        CueSettingsRegistry().add_item(MediaCueSettings, MediaCue)
+        CueSettingsRegistry().add_item(Appearance)
 
-        # Context menu actions
+        # Cue(s) context-menu actions
         self.edit_action = QAction(self)
         self.edit_action.triggered.connect(self._edit_cue_action)
+        self.cm_registry.add_item(self.edit_action)
+
+        self.sep1 = self.cm_registry.add_separator()
 
         self.remove_action = QAction(self)
         self.remove_action.triggered.connect(self._remove_cue_action)
+        self.cm_registry.add_item(self.remove_action)
 
         self.select_action = QAction(self)
         self.select_action.triggered.connect(self.select_context_cue)
+        self.cm_registry.add_item(self.select_action)
 
-        # MediaCue(s) context action
+        self.sep2 = self.cm_registry.add_separator(MediaCue)
+
+        # MediaCue(s) context-menu actions
         self.play_action = QAction(self)
         self.play_action.triggered.connect(self._play_context_cue)
+        self.cm_registry.add_item(self.play_action, MediaCue)
 
         self.pause_action = QAction(self)
         self.pause_action.triggered.connect(self._pause_context_cue)
+        self.cm_registry.add_item(self.pause_action, MediaCue)
 
         self.stop_action = QAction(self)
         self.stop_action.triggered.connect(self._stop_context_cue)
-
-        # Register context items
-        self.add_context_item(self.edit_action)
-        self.sep1 = self.add_context_separator()
-        self.add_context_item(self.remove_action)
-        self.add_context_item(self.select_action)
-        self.sep2 = self.add_context_separator(MediaCue)
-        self.add_context_item(self.play_action, MediaCue)
-        self.add_context_item(self.pause_action, MediaCue)
-        self.add_context_item(self.stop_action, MediaCue)
+        self.cm_registry.add_item(self.stop_action, MediaCue)
 
         self.setAcceptDrops(True)
         self.retranslateUi()
@@ -305,19 +309,15 @@ class CartLayout(QTabWidget, CueLayout):
     def finalize(self):
         MainWindow().menuLayout.clear()
 
-        # Remove context-items
-        self.remove_context_item(self.edit_action)
-        self.remove_context_item(self.sep1)
-        self.remove_context_item(self.remove_action)
-        self.remove_context_item(self.select_action)
-        self.remove_context_item(self.sep2)
-        self.remove_context_item(self.play_action)
-        self.remove_context_item(self.pause_action)
-        self.remove_context_item(self.stop_action)
+        self.edit_action.triggered.disconnect()
+        self.remove_action.triggered.disconnect()
+        self.select_action.triggered.disconnect()
+        self.play_action.triggered.disconnect()
+        self.pause_action.triggered.disconnect()
+        self.stop_action.triggered.disconnect()
 
-        # Remove settings-sections
-        self.remove_settings_section(Appearance)
-        self.remove_settings_section(MediaCueSettings)
+        # Remove context-items
+        self.cm_registry.clear()
 
         # Delete the layout
         self.deleteLater()

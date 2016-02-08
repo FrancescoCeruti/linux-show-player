@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,7 +26,6 @@ from lisp.core.signal import Connection
 from lisp.layouts.list_layout.cue_list_item import CueListItem
 from lisp.layouts.list_layout.listwidgets import CueStatusIcon, PreWaitWidget, \
     CueTimeWidget, NextActionIcon, PostWaitWidget
-from lisp.ui.styles import NoFocusRectProxyStyle
 
 
 class CueListView(QTreeWidget):
@@ -63,9 +62,7 @@ class CueListView(QTreeWidget):
         self.setColumnWidth(len(CueListView.H_NAMES) - 1, 18)
         self.setDragDropMode(self.InternalMove)
         self.setAlternatingRowColors(True)
-        self.setAllColumnsShowFocus(True)
         self.setVerticalScrollMode(self.ScrollPerItem)
-        self.setStyle(NoFocusRectProxyStyle())
 
         self.setIndentation(0)
 
@@ -99,7 +96,7 @@ class CueListView(QTreeWidget):
 
         if len(self._model) == 1:
             self.setCurrentItem(item)
-            #self.setFocus()
+            self.setFocus()
 
     def __cue_moved(self, start, end):
         if not self.__item_moving:

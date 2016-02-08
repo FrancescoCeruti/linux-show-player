@@ -5,28 +5,29 @@ import traceback
 from lisp.utils.dyamic_loader import ClassesLoader
 
 # Use a set() for avoiding duplication
-__SECTIONS = set()
+__PAGES = set()
 
 
 def load():
-    for name, section in ClassesLoader(os.path.dirname(__file__),
-                                       suffixes=['Settings']):
+    for name, page in ClassesLoader(os.path.dirname(__file__),
+                                       suffixes=('Settings', ),
+                                       excluded=('settings_page', )):
 
-        if hasattr(section, 'initialize'):
+        if hasattr(page, 'initialize'):
             try:
-                section.initialize()
+                page.initialize()
             except Exception:
                 logging.error('Error during ' + name + ' initialization')
                 logging.debug(traceback.format_exc())
                 continue
 
-        # Add the new section in the global set
-        __SECTIONS.add(section)
+        # Add the new page in the global set
+        __PAGES.add(page)
 
 
-def sections():
-    return list(__SECTIONS)
+def pages():
+    return list(__PAGES)
 
 
-def sections_by_element_name():
-    return {s.ELEMENT.Name: s for s in __SECTIONS}
+def pages_by_element_name():
+    return {s.ELEMENT.Name: s for s in __PAGES}

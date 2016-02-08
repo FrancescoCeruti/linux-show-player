@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
-
+import traceback
 from functools import wraps, partial
 from threading import Thread, Lock, RLock
 
@@ -138,6 +138,26 @@ def synchronized_method(target=None, *, lock_name=None, blocking=True,
                 lock.release()
             except RuntimeError:
                 pass
+
+    return wrapped
+
+
+def suppress_exceptions(target=None, *, print_exc=True):
+    """Suppress all the exception in the decorated function.
+
+    :param print_exc: If True (the default) the exceptions are printed.
+    """
+
+    if target is None:
+        return partial(suppress_exceptions, print_exc=print_exc)
+
+    @wraps(target)
+    def wrapped(*args, **kwargs):
+        try:
+            return target(*args, **kwargs)
+        except Exception as exception:
+            if print_exc:
+                traceback.print_tb(exception.__traceback__)
 
     return wrapped
 

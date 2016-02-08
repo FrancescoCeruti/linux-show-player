@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2015 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,27 +17,32 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QComboBox, QMessageBox
+from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QCursor
+from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QComboBox, QApplication
 
 from lisp.modules import check_module
 from lisp.modules.midi.input_handler import MIDIInputHandler
-from lisp.ui.settings.section import SettingsSection
+from lisp.ui.settings.settings_page import SettingsPage
+from lisp.utils import logging
 
 
-class MIDISettings(SettingsSection):
+class MIDISettings(SettingsPage):
 
-    NAME = 'MIDI preferences'
+    NAME = 'MIDI settings'
     BACKENDS = {'RtMidi': 'mido.backends.rtmidi',
                 'PortMidi': 'mido.backends.portmidi'}
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.setLayout(QVBoxLayout())
+        self.layout().setAlignment(Qt.AlignTop)
 
         # MIDI Input
         self.inputGroup = QGroupBox(self)
-        self.inputGroup.setTitle('Input MIDI device')
+        self.inputGroup.setTitle('MIDI input device')
         self.inputGroup.setLayout(QVBoxLayout())
-        self.inputGroup.setGeometry(0, 0, self.width(), 120)
+        self.layout().addWidget(self.inputGroup)
 
         self.backendCombo = QComboBox(self.inputGroup)
         self.backendCombo.addItems(self.BACKENDS)
@@ -49,7 +54,7 @@ class MIDISettings(SettingsSection):
 
         self._load_devices()
 
-    def get_configuration(self):
+    def get_settings(self):
         conf = {}
 
         if self.backendCombo.isEnabled():
@@ -60,19 +65,19 @@ class MIDISettings(SettingsSection):
 
         return {'MIDI': conf}
 
-    def set_configuration(self, conf):
-        if 'backend' in conf['MIDI']:
+    def load_settings(self, settings):
+        if 'backend' in settings['MIDI']:
             for backend in self.BACKENDS:
-                if conf['MIDI']['backend'] == self.BACKENDS[backend]:
+                if settings['MIDI']['backend'] == self.BACKENDS[backend]:
                     self.backendCombo.setCurrentText(backend)
                     break
-        if 'inputdevice' in conf['MIDI']:
+        if 'inputdevice' in settings['MIDI']:
             self.deviceCombo.setCurrentText('default')
             # If the device is not found remains 'default'
-            self.deviceCombo.setCurrentText(conf['MIDI']['inputdevice'])
+            self.deviceCombo.setCurrentText(settings['MIDI']['inputdevice'])
 
     def _load_devices(self):
-        if check_module('midi'):
+        if check_module('Midi'):
             self.deviceCombo.clear()
             self.deviceCombo.addItem('default')
             self.deviceCombo.addItems(MIDIInputHandler().get_input_names())
@@ -80,11 +85,14 @@ class MIDISettings(SettingsSection):
             self.deviceCombo.setEnabled(False)
 
     def _change_backend(self, current):
+        QApplication.setOverrideCursor(QCursor(Qt.WaitCursor))
         self.setEnabled(False)
+
         try:
             MIDIInputHandler().change_backend(self.BACKENDS[current])
             self._load_devices()
         except RuntimeError as e:
-            QMessageBox.critical(self, 'Error', str(e))
+            logging.exception('Failed to load the backend', e, dialog=True)
         finally:
+            QApplication.restoreOverrideCursor()
             self.setEnabled(True)
