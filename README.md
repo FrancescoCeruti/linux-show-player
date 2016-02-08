@@ -15,7 +15,8 @@ For bugs/requests an issue can be open on the GitHub issues-tracker, any other q
 
 ####1. Package installation
 
-**For Ubuntu/Debian users:** Download the ".deb" package in the releases page on GitHub (only tested on *Ubuntu systems).
+**For Ubuntu/Debian users:** Download the ".deb" package in the releases page on GitHub (only tested on Ubuntu).
+
 **For ArchLinux users:** there is an AUR Package.
 
 ####2. Manual Installation
