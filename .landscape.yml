@@ -1,1 +1,2 @@
-python-targets: 3
+python-targets:
+    - 3
