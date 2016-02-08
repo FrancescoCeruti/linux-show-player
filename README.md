@@ -7,7 +7,24 @@ Every component on which LiSP relies (python3, GStreamer and Qt5) is multi-platf
 
 No special hardware is required to run LiSP, but some processing operations would surely take benefit from a recent CPU.
 
-### Dependencies
+For bugs/requests an issue can be open on the GitHub issues-tracker, any other question can be asked on the [user-group](https://groups.google.com/forum/#!forum/linux-show-player---users).
+
+---
+
+### Installation
+
+####1. Package installation
+
+**For Ubuntu/Debian users:** Download the ".deb" package in the releases page on GitHub (only tested on *Ubuntu systems).
+**For ArchLinux users:** there is an AUR Package.
+
+####2. Manual Installation
+
+#####2.1 Get the source
+
+Download the archive from the release page on GitHub.
+
+#####2.2 Install dependencies
 
 *The following names are based on "Arch Linux" packages.*
 <pre>
@@ -23,28 +40,28 @@ No special hardware is required to run LiSP, but some processing operations woul
 * gst-plugins-bad
 * gst-libav				(optional, for larger format support)
 * portmidi				(optional, for portmidi support)
-* mido					(installed via pip)
-* python-rtmidi			(installed via pip)
-* JACK-Client			(installed via pip)
+* mido					(auto-installed via pip)
+* python-rtmidi			(auto-installed via pip)
+* JACK-Client			(auto-installed via pip)
+* sortedcontainers      (auto-installed via pip)
 * libasound-dev			(if installing in debian/ubuntu)
 * libjack-jackd2-dev	(if installing in debian/ubuntu)
 </pre>
 
-### Install
-  
-#####1. Get the source
+#####2.3 Install LiSP
 
-Download the source archive from GitHub
-
-#####2. Install
-
-	# pip install --pre <archive-name>
+	# pip(3) install --pre <archive-name>
 
 for example:
 	
-	# pip install --pre master.zip
+	# pip(3) install --pre linux-show-player-0.3.1.zip
 
 ### Usage
 
-Run "linux-show-player"
-		
+Use the installed launcher from the menu (for the package installation), or
+
+	$ linux-show-player                                  # Launch the program
+	$ linux-show-player -l [debug/warning/info]          # Launch with different log options
+	$ linux-show-player -f <file/path>                   # Open a saved session
+
+*Currently no user documentation is available.*
