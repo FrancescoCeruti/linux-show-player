@@ -1,0 +1,16 @@
+* Fade functions icons from Qtractor - http://qtractor.sourceforge.net/qtractor-index.html
+    * icons/lisp/16/fadein_linear.png
+    * icons/lisp/16/fadein_quadratic.png
+    * icons/lisp/16/fadein_quadratic2.png
+    * icons/lisp/16/fadeout_linear.png
+    * icons/lisp/16/fadeout_quadratic.png
+    * icons/lisp/16/fadeout_quadratic2.png
+
+* Numix Project icons - https://numixproject.org - https://github.com/numixproject
+    * /icons/numix/
+
+* Based on Numix Project icons:
+    * /icons/lisp/scalable/auto-follow.svg
+    * /icons/lisp/scalable/auto-next.svg
+
+* All the not previously specified icons are part of Linux Show Player

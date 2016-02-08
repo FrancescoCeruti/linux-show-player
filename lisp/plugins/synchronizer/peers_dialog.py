@@ -1,16 +1,29 @@
-##########################################
-# Copyright 2012-2014 Ceruti Francesco & contributors
+# -*- coding: utf-8 -*-
 #
-# This file is part of LiSP (Linux Show Player).
-##########################################
+# This file is part of Linux Show Player
+#
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+#
+# Linux Show Player is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Linux Show Player is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog, QHBoxLayout, QListWidget, QVBoxLayout, \
     QPushButton, QDialogButtonBox, QInputDialog, QMessageBox
+
+from lisp.modules.remote.remote import RemoteController
 from lisp.utils.configuration import config
-
-from lisp.modules.remote.remote import RemoteController, compose_uri
-
+from lisp.utils.util import compose_http_url
 from .peers_discovery_dialog import PeersDiscoveryDialog
 
 
@@ -78,7 +91,7 @@ class PeersDialog(QDialog):
 
     def _add_peer(self, ip):
         port = config['Remote']['BindPort']
-        uri = compose_uri(ip, port)
+        uri = compose_http_url(ip, port)
 
         for peer in self.peers:
             if peer['uri'] == uri:

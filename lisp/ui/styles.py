@@ -1,33 +1,48 @@
-##########################################
-# Copyright 2012-2014 Ceruti Francesco & contributors
+# -*- coding: utf-8 -*-
 #
-# This file is part of LiSP (Linux Show Player).
-##########################################
+# This file is part of Linux Show Player
+#
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+#
+# Linux Show Player is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Linux Show Player is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from os import path
 
 from PyQt5.QtGui import QPalette, QColor
-from PyQt5.QtWidgets import QStyleFactory, qApp
+from PyQt5.QtWidgets import QStyleFactory, qApp, QProxyStyle, QStyle
 
-from lisp.ui.style import style  # @UnusedImport
+# noinspection PyUnresolvedReferences
+from lisp.ui.style import style  # NEEDED to load assets
+
+# TODO: maybe a class (StyleManager)? and custom themes support?
+
+StylePath = path.abspath(path.join(path.dirname(__file__)))
+IconsThemePaths = [path.join(StylePath, 'icons')]
+
+LiSPThemeFile = path.join(StylePath, 'style/style.qss')
 
 
-StylePath = path.abspath(path.join(path.dirname(__file__))) + '/'
-IconsThemePaths = [StylePath + 'icons']
-IconsThemeName = 'lisp'
+def __load_qss_theme(qss_file):
+    with open(qss_file, mode='r', encoding='utf-8') as f:
+        style = f.read()
 
-QLiSPTheme = ''
-with open(StylePath + 'style/style.qss', mode='r', encoding='utf-8') as f:
-    QLiSPTheme = f.read()
-
-
-def get_styles():
-    return QStyleFactory.keys() + ['LiSP']
+    qApp.setStyleSheet(style)
 
 
 def apply_style(style_name):
     if style_name == 'LiSP':
-        qApp.setStyleSheet(QLiSPTheme)
+        __load_qss_theme(LiSPThemeFile)
 
         # Change link color
         palette = qApp.palette()
@@ -37,3 +52,7 @@ def apply_style(style_name):
     else:
         qApp.setStyleSheet('')
         qApp.setStyle(QStyleFactory.create(style_name))
+
+
+def get_styles():
+    return QStyleFactory.keys() + ['LiSP']

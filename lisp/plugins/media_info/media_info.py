@@ -1,54 +1,64 @@
-##########################################
-# Copyright 2012-2014 Ceruti Francesco & contributors
+# -*- coding: utf-8 -*-
 #
-# This file is part of LiSP (Linux Show Player).
-##########################################
+# This file is part of Linux Show Player
+#
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+#
+# Linux Show Player is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Linux Show Player is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from urllib.request import unquote
 
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QAction, QMessageBox, QDialog, QVBoxLayout, \
     QTreeWidget, QAbstractItemView, QDialogButtonBox, QTreeWidgetItem
-from lisp.core.plugin import Plugin
-from lisp.utils.audio_utils import uri_metadata, parse_gst_tag_list
 
 from lisp.application import Application
+from lisp.backends.gst.gst_utils import gst_uri_metadata, gst_parse_tag_list
+from lisp.core.plugin import Plugin
 from lisp.cues.media_cue import MediaCue
+from lisp.layouts.cue_menu_registry import CueMenuRegistry
+from lisp.ui.mainwindow import MainWindow
 
 
 class MediaInfo(Plugin):
-
     Name = 'MediaInfo'
 
     def __init__(self):
-        self.app = Application()
+        self.menuAction = QAction(None)
+        self.menuAction.triggered.connect(self.show_info)
+        self.menuAction.setText("Media Info")
 
-        self.actionMediaInfo = QAction(None, triggered=self.showInfo)
-        self.actionMediaInfo.setText("Media Info")
+    def init(self):
+        Application().layout.cm_registry.add_separator(MediaCue)
+        Application().layout.cm_registry.add_item(self.menuAction, MediaCue)
 
-        self.separator = self.app.layout.add_context_separator(MediaCue)
-        self.app.layout.add_context_item(self.actionMediaInfo, MediaCue)
-
-    def reset(self):
-        self.app.layout.remove_context_item(self.actionMediaInfo)
-        self.app.layout.remove_context_item(self.separator)
-
-    def showInfo(self, clicked):
-        media_uri = self.app.layout.get_context_cue().media.input_uri()
+    def show_info(self, clicked):
+        media_uri = Application().layout.get_context_cue().media.input_uri()
         if not media_uri:
             QMessageBox.critical(None, 'Error Message', 'Invalid Media!')
         else:
-            gst_info = uri_metadata(media_uri)
+            gst_info = gst_uri_metadata(media_uri)
             info = {"Uri": unquote(gst_info.get_uri())}
 
             # Audio streams info
             for stream in gst_info.get_audio_streams():
                 name = stream.get_stream_type_nick().capitalize()
                 info[name] = {"Bitrate": str(stream.get_bitrate() // 1000) +
-                              " Kb/s",
+                                         " Kb/s",
                               "Channels": str(stream.get_channels()),
                               "Sample rate": str(stream.get_sample_rate()) +
-                              " Hz",
+                                             " Hz",
                               "Sample size": str(stream.get_depth()) + " bit"
                               }
 
@@ -64,22 +74,21 @@ class MediaInfo(Plugin):
 
             # Media tags
             info["Tags"] = {}
-            tags = parse_gst_tag_list(gst_info.get_tags())
+            tags = gst_parse_tag_list(gst_info.get_tags())
             for tag_name in tags:
-                if(not str(tags[tag_name]).startswith("<Gst")):
+                if (not str(tags[tag_name]).startswith("<Gst")):
                     info["Tags"][tag_name.capitalize()] = str(tags[tag_name])
 
-            if len(info["Tags"]) == 0:
+            if not info["Tags"]:
                 info.pop("Tags")
 
             # Show the dialog
-            dialog = InfoDialog(self.app.mainWindow, info,
-                                self.app.layout.get_context_cue()['name'])
+            dialog = InfoDialog(MainWindow(), info,
+                                Application().layout.get_context_cue().name)
             dialog.exec_()
 
 
 class InfoDialog(QDialog):
-
     def __init__(self, parent, info, title):
         super().__init__(parent)
 
@@ -98,7 +107,7 @@ class InfoDialog(QDialog):
         self.infoTree.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.vLayout.addWidget(self.infoTree)
 
-        self.__generate_widgets(info)
+        self.__generate_items(info)
         self.infoTree.setColumnWidth(0, 150)
 
         self.buttonBox = QDialogButtonBox(self)
@@ -107,15 +116,15 @@ class InfoDialog(QDialog):
 
         self.buttonBox.rejected.connect(self.close)
 
-    def __generate_widgets(self, info, parent=None):
+    def __generate_items(self, info, parent=None):
         for key in sorted(info.keys()):
-            if(isinstance(info[key], dict)):
+            if isinstance(info[key], dict):
                 widget = QTreeWidgetItem([key])
-                self.__generate_widgets(info[key], widget)
+                self.__generate_items(info[key], widget)
             else:
                 widget = QTreeWidgetItem([key, info[key]])
 
-            if(parent):
+            if parent is not None:
                 parent.addChild(widget)
             else:
                 self.infoTree.addTopLevelItem(widget)

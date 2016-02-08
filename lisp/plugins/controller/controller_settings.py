@@ -1,27 +1,40 @@
-##########################################
-# Copyright 2012-2014 Ceruti Francesco & contributors
+# -*- coding: utf-8 -*-
 #
-# This file is part of LiSP (Linux Show Player).
-##########################################
+# This file is part of Linux Show Player
+#
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+#
+# Linux Show Player is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Linux Show Player is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+import mido
 from PyQt5.QtCore import QRegExp, Qt
 from PyQt5.QtGui import QRegExpValidator
 from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QHBoxLayout, QLineEdit, \
     QLabel, QGridLayout, QCheckBox, QSpinBox, QPushButton, QComboBox, \
     QMessageBox
-import mido
 
 from lisp.modules import check_module
-from lisp.modules.midi.midi import InputMidiHandler
-from lisp.ui.settings.section import SettingsSection
+from lisp.modules.midi.input_handler import MIDIInputHandler
+from lisp.ui.settings.settings_page import SettingsPage
 
 
-class ControllerSettings(SettingsSection):
+class ControllerSettings(SettingsPage):
 
     Name = 'MIDI and Hot-Key'
 
-    def __init__(self, size, cue=None, **kwargs):
-        super().__init__(size, cue=None, **kwargs)
+    def __init__(self, **kwargs):
+        super().__init__()
 
         self.verticalLayout = QVBoxLayout(self)
 
@@ -87,14 +100,14 @@ class ControllerSettings(SettingsSection):
 
         self.msg_type = 'note_on'
 
-    def enable_check(self, enable):
-        self.keyGroup.setCheckable(enable)
+    def enable_check(self, enabled):
+        self.keyGroup.setCheckable(enabled)
         self.keyGroup.setChecked(False)
 
-        self.midiGroup.setCheckable(enable)
+        self.midiGroup.setCheckable(enabled)
         self.midiGroup.setChecked(False)
 
-    def get_configuration(self):
+    def get_settings(self):
         conf = {}
         checked = self.keyGroup.isCheckable()
 
@@ -115,13 +128,15 @@ class ControllerSettings(SettingsSection):
                                    velocity=self.midiVelocity.value())
                 conf['midi'] = str(msg)
 
-        return conf
+        return {'controller': conf}
 
-    def set_configuration(self, conf):
-        if 'hotkeys' in conf:
-            self.key.setText(','.join(conf['hotkeys']))
-        if 'midi' in conf and conf['midi'] != '':
-            msg = mido.messages.parse_string(conf['midi'])
+    def load_settings(self, settings):
+        settings = settings.get('controller', {})
+
+        if 'hotkeys' in settings:
+            self.key.setText(','.join(settings['hotkeys']))
+        if 'midi' in settings and settings['midi'] != '':
+            msg = mido.messages.parse_string(settings['midi'])
             self.msg_type = msg.type
             self.midiChannels.setValue(msg.channel)
             self.midiNote.setValue(msg.note)
@@ -129,11 +144,11 @@ class ControllerSettings(SettingsSection):
         else:
             self.midiResetCheck.setChecked(True)
 
-        if not check_module('midi'):
+        if not check_module('Midi'):
             self.midiGroup.setEnabled(False)
 
     def capture_message(self):
-        handler = InputMidiHandler()
+        handler = MIDIInputHandler()
         handler.alternate_mode = True
         handler.new_message_alt.connect(self.on_new_message)
 

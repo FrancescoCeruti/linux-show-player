@@ -1,0 +1,39 @@
+# -*- coding: utf-8 -*-
+#
+# This file is part of Linux Show Player
+#
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+#
+# Linux Show Player is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Linux Show Player is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
+
+from lisp.backends.base.media_element import ElementType, MediaType
+from lisp.backends.gst.gi_repository import Gst
+from lisp.backends.gst.gst_element import GstMediaElement
+
+
+class PulseSink(GstMediaElement):
+    ElementType = ElementType.Output
+    MediaType = MediaType.Audio
+    Name = 'PulseAudioSink'
+
+    def __init__(self, pipe):
+        super().__init__()
+
+        self.pulse_sink = Gst.ElementFactory.make('pulsesink', 'sink')
+        self.pulse_sink.set_property('client-name', 'Linux Show Player')
+
+        pipe.add(self.pulse_sink)
+
+    def sink(self):
+        return self.pulse_sink

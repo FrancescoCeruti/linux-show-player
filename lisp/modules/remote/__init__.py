@@ -1,1 +1,1 @@
-from .remote import initialize, terminate  # @UnusedImport
+from .remote import Remote

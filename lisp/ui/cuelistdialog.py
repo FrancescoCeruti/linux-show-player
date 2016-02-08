@@ -1,32 +1,52 @@
-##########################################
-# Copyright 2012-2014 Ceruti Francesco & contributors
+# -*- coding: utf-8 -*-
 #
-# This file is part of LiSP (Linux Show Player).
-##########################################
+# This file is part of Linux Show Player
+#
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+#
+# Linux Show Player is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Linux Show Player is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog, QTreeWidget, QHeaderView, QVBoxLayout, \
     QDialogButtonBox, QTreeWidgetItem
 
+from lisp.utils import logging
+
 
 class CueListDialog(QDialog):
-
-    def __init__(self, **kwargs):
+    def __init__(self, cues=None, properties=('index', 'name'), **kwargs):
         super().__init__(**kwargs)
 
-        self.setMinimumSize(400, 300)
+        self.setMinimumSize(600, 400)
 
-        self._cues = []
+        self._properties = list(properties)
+        self._cues = {}
 
         self.list = QTreeWidget(self)
-        self.list.setSelectionMode(self.list.SingleSelection)
-        self.list.setSelectionBehavior(self.list.SelectRows)
+        self.list.setSelectionMode(QTreeWidget.SingleSelection)
+        self.list.setSelectionBehavior(QTreeWidget.SelectRows)
         self.list.setAlternatingRowColors(True)
         self.list.setIndentation(0)
-        self.list.setHeaderLabels(['Index', 'Name'])
+        self.list.setHeaderLabels([prop.title() for prop in properties])
         self.list.header().setSectionResizeMode(QHeaderView.Fixed)
         self.list.header().setSectionResizeMode(1, QHeaderView.Stretch)
         self.list.header().setStretchLastSection(False)
+        self.list.sortByColumn(0, Qt.AscendingOrder)
+        self.list.setSortingEnabled(True)
+
+        if cues is not None:
+            self.add_cues(cues)
 
         self.setLayout(QVBoxLayout())
         self.layout().addWidget(self.list)
@@ -40,25 +60,29 @@ class CueListDialog(QDialog):
         self.buttons.rejected.connect(self.reject)
 
     def add_cue(self, cue):
-        try:
-            item = QTreeWidgetItem()
-            item.setTextAlignment(0, Qt.AlignCenter)
+        item = QTreeWidgetItem()
+        item.setTextAlignment(0, Qt.AlignCenter)
 
-            for n, prop in enumerate(['index', 'name']):
-                item.setText(n, str(cue.properties().get(prop, 'Undefined')))
+        for n, prop in enumerate(self._properties):
+            try:
+                item.setData(n, Qt.DisplayRole, getattr(cue, prop, 'Undefined'))
+            except Exception as e:
+                logging.exception('Cannot display {0} property'.format(prop), e,
+                                  dialog=False)
 
-            self._cues.append(cue)
-            self.list.addTopLevelItem(item)
-        except Exception:
-            pass
+        self._cues[cue] = item
+        item.setData(0, Qt.UserRole, cue)
+        self.list.addTopLevelItem(item)
 
     def add_cues(self, cues):
+        self.list.setSortingEnabled(False)
         for cue in cues:
             self.add_cue(cue)
+        self.list.setSortingEnabled(True)
 
-    def remove_cue(self, index):
+    def remove_cue(self, cue):
+        index = self.list.indexOfTopLevelItem(self._cues.pop(cue))
         self.list.takeTopLevelItem(index)
-        return self._cues.pop(index)
 
     def reset(self):
         self.list.clear()
@@ -67,6 +91,5 @@ class CueListDialog(QDialog):
     def selected_cues(self):
         cues = []
         for item in self.list.selectedItems():
-            index = self.list.indexOfTopLevelItem(item)
-            cues.append(self._cues[index])
+            cues.append(item.data(0, Qt.UserRole))
         return cues

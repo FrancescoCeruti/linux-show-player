@@ -1,45 +1,68 @@
-##########################################
-# Copyright 2012-2014 Ceruti Francesco & contributors
+# -*- coding: utf-8 -*-
 #
-# This file is part of LiSP (Linux Show Player).
-##########################################
+# This file is part of Linux Show Player
+#
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+#
+# Linux Show Player is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Linux Show Player is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import logging
 import pkgutil
 import traceback
 
 
-class load_classes:
-    '''
-        Generator for iterating over classes in package.
+class ClassesLoader:
+    """Generator for iterating over classes in a package.
 
-        The class name must be the same as the module name, optionally
-        suffixes and prefixes lists can be provided.
+    The class name must be the same as the module name, optionally
+    suffixes and prefixes lists can be provided.
 
-        Example:
+    .. Example:
 
         elements_package
         |__element1.py
         |  |__Element1
         |__element_extra.py
            |__ElementExtra
-    '''
+    """
 
-    def __init__(self, package_path, prefixes=[''], suffixes=['']):
+    def __init__(self, package_path, prefixes=None, suffixes=None,
+                 excluded=None):
+        """
+        :param package_path: location of the classes (package)
+        :param prefixes: iterable of prefixes (symmetrical with suffixes)
+        :param suffixes: iterable suffixes (symmetrical with prefixes)
+        :param excluded: iterable of excluded modules names3
+        """
         self._package_path = package_path
-        self._prefixes = prefixes
-        self._suffixes = suffixes
+        self._prefixes = prefixes if prefixes is not None else ['']
+        self._suffixes = suffixes if suffixes is not None else ['']
+        self._excluded = excluded if excluded is not None else []
 
     def __iter__(self):
         return self.load()
 
     def load(self):
-        ''' Generate lists of tuples (class-name, class-object) '''
-        modules = pkgutil.iter_modules(path=[self._package_path])
+        """ Generate lists of tuples (class-name, class-object) """
+        modules = pkgutil.iter_modules(path=(self._package_path, ))
 
         for loader, mod_name, _ in modules:
+            if mod_name in self._excluded:
+                continue
+
             # Import module
-            module = loader.find_module(mod_name).load_module(mod_name)
+            module = loader.find_module(mod_name).load_module()
 
             # Load class from imported module
             partial = []
@@ -49,26 +72,28 @@ class load_classes:
                     cls = getattr(module, name)
                     partial.append((name, cls))
                 except Exception:
-                    logging.error('Error during module loading: ' + mod_name)
+                    logging.warning(
+                        'Failed loading module: ' + mod_name)
                     logging.debug(traceback.format_exc())
 
             # Yield the class name and the class-object
             if len(partial) == 1:
                 yield partial[0]
-            elif len(partial) > 0:
+            elif partial:
                 yield partial
 
 
 def class_name_from_module(mod_name, pre='', suf=''):
-    '''
-        Return the class name for a dynamic loaded module
-        If the name is module_name, the result will be ModuleName
+    """Return the class name for a dynamic loaded module
 
-        :param pre: prefix for the class name (default '')
-        :param suf: suffix for the class name (default '')
-    '''
+    If the name is like "module_name", the result will be "ModuleName"
+
+    :param mod_name: the module name
+    :param pre: prefix for the class name (default '')
+    :param suf: suffix for the class name (default '')
+    """
 
     # Capitalize the first letter of each word
-    base_name = ''.join([word.title() for word in mod_name.split('_')])
+    base_name = ''.join(word.title() for word in mod_name.split('_'))
     # Add prefix and suffix to the base name
     return pre + base_name + suf

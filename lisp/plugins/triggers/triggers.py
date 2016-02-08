@@ -1,56 +1,81 @@
-##########################################
-# Copyright 2012-2014 Ceruti Francesco & contributors
+# -*- coding: utf-8 -*-
 #
-# This file is part of LiSP (Linux Show Player).
-##########################################
-
-from lisp.core.plugin import Plugin
+# This file is part of Linux Show Player
+#
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+#
+# Linux Show Player is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Linux Show Player is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from lisp.application import Application
-from lisp.cues.media_cue import MediaCue
-from lisp.plugins.triggers.triggers_handler import TriggersHandler
+from lisp.core.plugin import Plugin
+from lisp.plugins.triggers.triggers_handler import CueHandler
 from lisp.plugins.triggers.triggers_settings import TriggersSettings
+from lisp.ui.settings.cue_settings import CueSettingsRegistry
 
 
 class Triggers(Plugin):
 
+    Name = 'Triggers'
+
     def __init__(self):
         super().__init__()
 
-        self.app = Application()
+        TriggersSettings.PluginInstance = self
+        CueSettingsRegistry().add_item(TriggersSettings)
+        Application().cue_model.item_added.connect(self._cue_added)
+        Application().cue_model.item_added.connect(self._cue_removed)
+
+        self.triggers = {}
         self.handlers = {}
 
-        self.app.layout.cue_added.connect(self.on_cue_added)
-        self.app.layout.cue_removed.connect(self.on_cue_removed)
-        self.app.layout.add_settings_section(TriggersSettings,
-                                             cue_class=MediaCue)
+    def update_handler(self, cue, triggers):
+        self.triggers[cue.id] = triggers
+
+        if cue in self.handlers:
+            self.handlers[cue.id].triggers = triggers
+        else:
+            self._cue_added(cue)
+
+    def load_settings(self, settings):
+        self.triggers = settings
+
+        for cue_id in self.triggers:
+            cue = Application().cue_model.get(cue_id)
+            if cue is not None:
+                self._cue_added(cue)
+
+    def settings(self):
+        settings = {}
+
+        for cue_id, cue_triggers in self.triggers.items():
+            if Application().cue_model.get(cue_id) is not None:
+                settings[cue_id] = cue_triggers
+
+        return settings
 
     def reset(self):
-        self.app.layout.cue_added.disconnect(self.on_cue_added)
-        self.app.layout.cue_removed.disconnect(self.on_cue_removed)
-        self.app.layout.remove_settings_section(TriggersSettings)
-
         for handler in self.handlers.values():
             handler.finalize()
 
         self.handlers.clear()
+        self.triggers.clear()
 
-    def on_cue_added(self, cue):
-        if isinstance(cue, MediaCue):
-            self.update_handler(cue)
-            cue.updated.connect(self.update_handler)
+    def _cue_added(self, cue):
+        if cue.id in self.triggers:
+            self.handlers[cue.id] = CueHandler(cue, self.triggers[cue.id])
 
-    def on_cue_removed(self, cue):
-        if isinstance(cue, MediaCue):
-            self.handlers.pop(cue, None)
-            cue.updated.disconnect(self.update_handler)
-
-    def update_handler(self, cue):
-        if 'triggers' in cue.properties():
-            if len(cue['triggers']) > 0:
-                if cue not in self.handlers:
-                    self.handlers[cue] = TriggersHandler(cue.media)
-                self.handlers[cue].reset_triggers()
-                self.handlers[cue].load_triggers(cue['triggers'])
-            else:
-                self.handlers.pop(cue, None)
+    def _cue_removed(self, cue):
+        handler = self.handlers.pop(cue.id, None)
+        if handler is not None:
+            handler.finalize()

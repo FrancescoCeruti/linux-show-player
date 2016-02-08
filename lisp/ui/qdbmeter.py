@@ -1,17 +1,31 @@
-##########################################
-# Copyright 2012-2014 Ceruti Francesco & contributors
+# -*- coding: utf-8 -*-
 #
-# This file is part of LiSP (Linux Show Player).
-##########################################
+# This file is part of Linux Show Player
+#
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+#
+# Linux Show Player is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Linux Show Player is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5 import QtCore
 from PyQt5.QtGui import QLinearGradient, QColor, QPainter
 from PyQt5.QtWidgets import QWidget
+
+from lisp.core.decorators import suppress_exceptions
 from lisp.utils.configuration import config
 
 
 class QDbMeter(QWidget):
-
     DB_MIN = int(config["DbMeter"]["dbMin"])
     DB_MAX = int(config["DbMeter"]["dbMax"])
     DB_CLIP = int(config["DbMeter"]["dbClip"])
@@ -33,19 +47,14 @@ class QDbMeter(QWidget):
         self.clipping = {}
         self.repaint()
 
-    @QtCore.pyqtSlot(list, list, list)
     def plot(self, peaks, rms, decPeak):
-        if(len(peaks) == 1):
-            self.peaks = peaks * 2
-            self.rmss = rms * 2
-            self.decPeak = decPeak * 2
-        else:
-            self.peaks = peaks
-            self.rmss = rms
-            self.decPeak = decPeak
+        self.peaks = peaks
+        self.rmss = rms
+        self.decPeak = decPeak
 
         self.repaint()
 
+    @suppress_exceptions
     def paintEvent(self, e):
         if not self.visibleRegion().isEmpty():
             # Stretch factor
@@ -73,14 +82,14 @@ class QDbMeter(QWidget):
 
                 rmss.append(round((rms - self.DB_MIN) * mul))
 
-            decPeaks = []
-            for decPeak in self.decPeak:
-                if decPeak < self.DB_MIN:
-                    decPeak = self.DB_MIN
-                elif decPeak > self.DB_MAX:
-                    decPeak = self.DB_MAX
+            dPeaks = []
+            for dPeak in self.decPeak:
+                if dPeak < self.DB_MIN:
+                    dPeak = self.DB_MIN
+                elif dPeak > self.DB_MAX:
+                    dPeak = self.DB_MAX
 
-                decPeaks.append(round((decPeak - self.DB_MIN) * mul))
+                dPeaks.append(round((dPeak - self.DB_MIN) * mul))
 
             qp = QPainter()
             qp.begin(self)
@@ -89,15 +98,9 @@ class QDbMeter(QWidget):
             xpos = 0
             xdim = self.width() / len(peaks)
 
-            for n in range(len(peaks)):
-                peak = peaks[n]
-                rms = rmss[n]
-                decPeak = decPeaks[n]
-
+            for n, (peak, rms, dPeak) in enumerate(zip(peaks, rmss, dPeaks)):
                 # Maximum "peak-rect" size
-                maxRect = QtCore.QRect(xpos,
-                                       self.height() - 2,
-                                       xdim - 2,
+                maxRect = QtCore.QRect(xpos, self.height() - 2, xdim - 2,
                                        2 - self.height())
 
                 # Set QLinearGradient start and final-stop position
@@ -115,7 +118,7 @@ class QDbMeter(QWidget):
                 qp.fillRect(rect, self.grad)
 
                 # Draw decay peak
-                decRect = QtCore.QRect(xpos, (self.height() - 3) - decPeak,
+                decRect = QtCore.QRect(xpos, (self.height() - 3) - dPeak,
                                        xdim - 2, 2)
                 qp.fillRect(decRect, self.grad)
 
