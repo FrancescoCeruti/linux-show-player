@@ -38,14 +38,14 @@ class CueLayout:
     # Layout info (html)
     DESCRIPTION = '<p>No description</p>'
 
+    cm_registry = CueMenuRegistry()
+
     def __init__(self, cue_model):
         self._cue_model = cue_model
 
-        self.cm_registry = CueMenuRegistry()
-
-        self.cue_executed = Signal()  # After a cue is executed
-        self.focus_changed = Signal()  # After the focused cue is changed
-        self.key_pressed = Signal()  # After a key is pressed
+        self.cue_executed = Signal()    # After a cue is executed
+        self.focus_changed = Signal()   # After the focused cue is changed
+        self.key_pressed = Signal()     # After a key is pressed
 
     @property
     def cue_model(self):

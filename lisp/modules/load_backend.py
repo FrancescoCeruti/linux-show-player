@@ -36,7 +36,6 @@ class LoadBackend(Module):
     """Load the default backend."""
 
     def __init__(self):
-        super().__init__()
         backends.set_backend(config['Backend']['Default'])
 
         MainWindow().register_cue_menu_action('Media cue (from file)',

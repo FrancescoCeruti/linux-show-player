@@ -23,10 +23,5 @@ from lisp.core.singleton import Singleton
 class Module(metaclass=Singleton):
     """Interface for modules."""
 
-    def __init__(self):
-        """Initialize the module. If the initialization fails, an exception
-        should be raised.
-        """
-
     def terminate(self):
         """Finalize the module (e.g. free resources)."""

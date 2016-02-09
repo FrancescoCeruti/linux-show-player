@@ -10,8 +10,6 @@ class Midi(Module):
     """Provide MIDI I/O functionality"""
 
     def __init__(self):
-        super().__init__()
-
         # Register the settings widget
         AppSettings.register_settings_widget(MIDISettings)
 

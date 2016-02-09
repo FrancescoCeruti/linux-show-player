@@ -19,7 +19,7 @@
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QLabel, \
-    QVBoxLayout, QDoubleSpinBox, QComboBox
+    QVBoxLayout, QDoubleSpinBox, QComboBox, QCheckBox
 
 from lisp.cues.cue import CueNextAction
 from lisp.ui.settings.settings_page import SettingsPage
@@ -67,6 +67,10 @@ class CueGeneralSettings(SettingsPage):
         self.nextActionCombo.addItems([e.value for e in CueNextAction])
         self.nextActionGroup.layout().addWidget(self.nextActionCombo)
 
+        # Checks
+        self.stopPauseCheck = QCheckBox(self)
+        self.layout().addWidget(self.stopPauseCheck)
+
         self.retranslateUi()
 
     def retranslateUi(self):
@@ -75,6 +79,7 @@ class CueGeneralSettings(SettingsPage):
         self.postWaitGroup.setTitle('Post wait')
         self.postWaitLabel.setText('Wait after cue execution')
         self.nextActionGroup.setTitle('Next action')
+        self.stopPauseCheck.setText('Pause instead of stop (if supported)')
 
     def load_settings(self, settings):
         if 'pre_wait' in settings:
@@ -83,6 +88,8 @@ class CueGeneralSettings(SettingsPage):
             self.postWaitSpin.setValue(settings['post_wait'])
         if 'next_action' in settings:
             self.nextActionCombo.setCurrentText(settings['next_action'])
+        if 'stop_pause' in settings:
+            self.stopPauseCheck.setChecked(settings['stop_pause'])
 
     def enable_check(self, enable):
         self.preWaitGroup.setCheckable(enable)
@@ -94,6 +101,10 @@ class CueGeneralSettings(SettingsPage):
         self.nextActionGroup.setCheckable(enable)
         self.nextActionGroup.setChecked(False)
 
+        self.stopPauseCheck.setTristate(enable)
+        if enable:
+            self.stopPauseCheck.setCheckState(Qt.PartiallyChecked)
+
     def get_settings(self):
         conf = {}
         checkable = self.preWaitGroup.isCheckable()
@@ -104,5 +115,7 @@ class CueGeneralSettings(SettingsPage):
             conf['post_wait'] = self.postWaitSpin.value()
         if not (checkable and not self.nextActionGroup.isChecked()):
             conf['next_action'] = self.nextActionCombo.currentText()
+        if self.stopPauseCheck.checkState() != Qt.PartiallyChecked:
+            conf['stop_pause'] = self.stopPauseCheck.isChecked()
 
         return conf

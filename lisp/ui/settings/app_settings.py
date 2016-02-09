@@ -83,7 +83,7 @@ class AppSettings(QDialog):
 
     @classmethod
     def unregister_settings_widget(cls, widget):
-        if widget not in cls.SettingsWidgets:
+        if widget in cls.SettingsWidgets:
             cls.SettingsWidgets.remove(widget)
 
     def _change_page(self, current, previous):

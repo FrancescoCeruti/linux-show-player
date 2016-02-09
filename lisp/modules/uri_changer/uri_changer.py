@@ -28,8 +28,6 @@ class UriChanger(Module):
     Name = 'URI Changer'
 
     def __init__(self):
-        super().__init__()
-
         self.menuAction = QAction('Session URI change', MainWindow())
         self.menuAction.triggered.connect(self.show_dialog)
         MainWindow().menuTools.addAction(self.menuAction)

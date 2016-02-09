@@ -342,13 +342,18 @@ class ListLayout(QWidget, CueLayout):
         MainWindow().removeToolBar(self.toolBar)
         self.toolBar.deleteLater()
 
+        # Disconnect menu-actions signals
         self.edit_action.triggered.disconnect()
         self.remove_action.triggered.disconnect()
+        self.select_action.triggered.disconnect()
 
         # Remove context-items
-        self.cm_registry.clear()
+        self.cm_registry.remove_item(self.edit_action)
+        self.cm_registry.remove_item(self.sep1)
+        self.cm_registry.remove_item(self.remove_action)
+        self.cm_registry.remove_item(self.select_action)
 
-        # !! Delete the layout references !!
+        # Delete the layout
         self.deleteLater()
 
     def get_context_cue(self):

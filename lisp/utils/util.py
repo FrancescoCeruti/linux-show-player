@@ -23,56 +23,42 @@ from os import listdir, path
 from os.path import isdir, exists, join
 
 
-def deep_update(d, u):
-    """Recursively update d with u
-
-    :type d: dict
-    :type u: Mapping
-    """
-    for k in u:
-        if isinstance(u[k], Mapping):
-            d[k] = deep_update(d.get(k, {}), u[k])
+def deep_update(d1, d2):
+    """Recursively update d1 with d2"""
+    for key in d2:
+        if key not in d1:
+            d1[key] = d2[key]
+        elif isinstance(d2[key], Mapping) and isinstance(d1[key], Mapping):
+            d1[key] = deep_update(d1[key], d2[key])
         else:
-            d[k] = u[k]
-    return d
+            d1[key] = d2[key]
+
+    return d1
 
 
-def json_deep_search(iterable, field):
-    """Takes a JSON like data-structure and search for the occurrences
-    of the given field/key.
+def dict_diff(d1, d2):
+    """Generate the difference (in key and values) of two dictionary.
+
+    The operation is recursively applied for nested dictionaries.
+
+    .. Example:
+        >>> d1 = {'a':1, 'b':2, 'c':3, 'z': {'w': 6, 'k': 3}}
+        >>> d2 = {'a':2, 'b':2, 'd': 5, 'z': {'w': 6, 'k': 4}}
+        >>> dict(dict_diff(d1, d2))
+        ... {'z': {'k': 4}, 'd': 5, 'a': 2}
+        >>> dict(dict_diff(d2, d1))
+        ... {'z': {'k': 3}, 'a': 1, 'c': 3}
+
     """
-    fields_found = []
-
-    if isinstance(iterable, dict):
-        for key, value in iterable.items():
-            if key == field:
-                fields_found.append(value)
-
-            elif isinstance(value, (dict, list)):
-                fields_found.extend(json_deep_search(value, field))
-
-    elif isinstance(iterable, list):
-        for item in iterable:
-            fields_found.extend(json_deep_search(item, field))
-
-    return fields_found
-
-
-def json_deep_replace(iterable, field, replace_function):
-    """Takes a JSON like data-structure and replace the value for all the
-    occurrences of the given field/key with the given replace-function.
-    """
-    if isinstance(iterable, dict):
-        for key, value in iterable.items():
-            if key == field:
-                iterable[key] = replace_function(value)
-
-            elif isinstance(value, (dict, list)):
-                json_deep_replace(value, field, replace_function)
-
-    elif isinstance(iterable, list):
-        for item in iterable:
-            json_deep_replace(item, field, replace_function)
+    for key, value in d2.items():
+        if key not in d1:
+            yield key, value
+        elif isinstance(d2[key], Mapping) and isinstance(d1[key], Mapping):
+            diff = dict(dict_diff(d1[key], value))
+            if diff != {}:
+                yield key, diff
+        elif d1[key] != d2[key]:
+            yield key, value
 
 
 def qfile_filters(extensions, allexts=True, anyfile=True):
@@ -83,14 +69,11 @@ def qfile_filters(extensions, allexts=True, anyfile=True):
 
     :param extensions: The extensions as a dictionary {group: [extensions]}
     :type extensions: dict
-
     :param allexts: Add a group composed by all the given groups
     :type allexts: bool
-
     :param anyfile: Add the "Any File" group
     :type anyfile: bool
-
-    :return: A QFileChooser filter-string
+    :return: A QFileDialog filter-string
     :rtype: str
     """
     filters = []
@@ -159,18 +142,6 @@ def strtime(time, accurate=False):
         return '%02d:%02d.%01d' % time + '0'
     else:
         return '%02d:%02d' % time[1:3] + '.00'
-
-
-def check_type(value, type_):
-    """Check if the a value is an instance of a type.
-
-    :param value: The value
-    :param type_: The type
-    :type type_: type
-    """
-    if not isinstance(value, type_):
-        raise TypeError('{0} expected got {1}'.format(type_.__name__,
-                                                      type(value).__name__))
 
 
 def compose_http_url(url, port, directory='/'):

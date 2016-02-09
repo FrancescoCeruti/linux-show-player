@@ -21,6 +21,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QTabWidget, QAction, QInputDialog, qApp, \
     QMessageBox
 
+from lisp.core.signal import Connection
 from lisp.cues.cue import Cue
 from lisp.cues.cue_factory import CueFactory
 from lisp.cues.media_cue import MediaCue
@@ -66,11 +67,10 @@ class CartLayout(QTabWidget, CueLayout):
         self._countdown_mode = config['CartLayout']['countDown'] == 'True'
         self._auto_add_page = config['CartLayout']['autoAddPage'] == 'True'
 
-        self._model_adapter = CueCartModel(cue_model, self.__rows,
-                                           self.__columns)
-        self._model_adapter.item_added.connect(self.__cue_added)
-        self._model_adapter.item_removed.connect(self.__cue_removed)
-        self._model_adapter.item_moved.connect(self.__cue_moved)
+        self._model_adapter = CueCartModel(cue_model, self.__rows, self.__columns)
+        self._model_adapter.item_added.connect(self.__cue_added,Connection.QtQueued)
+        self._model_adapter.item_removed.connect(self.__cue_removed, Connection.QtQueued)
+        self._model_adapter.item_moved.connect(self.__cue_moved, Connection.QtQueued)
 
         # Add layout-specific menus
         self.new_page_action = QAction(self)
@@ -281,7 +281,7 @@ class CartLayout(QTabWidget, CueLayout):
     def set_seek_visible(self, visible):
         self._show_seek = visible
         for widget in self.widgets():
-            widget.seekSlider.setVisible(visible)
+            widget.show_seek_slider(visible)
 
     def set_dbmeter_visible(self, visible):
         self._show_dbmeter = visible
@@ -309,6 +309,7 @@ class CartLayout(QTabWidget, CueLayout):
     def finalize(self):
         MainWindow().menuLayout.clear()
 
+        # Disconnect menu-actions signals
         self.edit_action.triggered.disconnect()
         self.remove_action.triggered.disconnect()
         self.select_action.triggered.disconnect()
@@ -317,7 +318,14 @@ class CartLayout(QTabWidget, CueLayout):
         self.stop_action.triggered.disconnect()
 
         # Remove context-items
-        self.cm_registry.clear()
+        self.cm_registry.remove_item(self.edit_action)
+        self.cm_registry.remove_item(self.sep1)
+        self.cm_registry.remove_item(self.remove_action)
+        self.cm_registry.remove_item(self.select_action)
+        self.cm_registry.remove_item(self.sep2)
+        self.cm_registry.remove_item(self.play_action)
+        self.cm_registry.remove_item(self.pause_action)
+        self.cm_registry.remove_item(self.stop_action)
 
         # Delete the layout
         self.deleteLater()
@@ -363,7 +371,7 @@ class CartLayout(QTabWidget, CueLayout):
         widget.set_accurate_timing(self._accurate_timing)
         widget.set_countdown_mode(self._countdown_mode)
         widget.show_dbmeters(self._show_dbmeter)
-        widget.seekSlider.setVisible(self._show_seek)
+        widget.show_seek_slider(self._show_seek)
 
         if page >= len(self.__pages):
             self.add_page()

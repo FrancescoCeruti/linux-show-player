@@ -76,7 +76,7 @@ class UriInputSettings(GstElementSettingsPage):
         if not (checkable and not self.fileGroup.isChecked()):
             conf[self.id]['uri'] = self.filePath.text()
         if not (checkable and not self.bufferingGroup.isChecked()):
-            conf[self.id]['use_buffing'] = self.useBuffering.isChecked()
+            conf[self.id]['use_buffering'] = self.useBuffering.isChecked()
             conf[self.id]['download'] = self.download.isChecked()
             conf[self.id]['buffer_size'] = self.bufferSize.value()
 

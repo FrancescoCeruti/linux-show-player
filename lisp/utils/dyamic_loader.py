@@ -37,18 +37,24 @@ class ClassesLoader:
            |__ElementExtra
     """
 
-    def __init__(self, package_path, prefixes=None, suffixes=None,
-                 excluded=None):
+    def __init__(self, package_path, prefixes=('', ), suffixes=('', ),
+                 excluded=()):
         """
         :param package_path: location of the classes (package)
-        :param prefixes: iterable of prefixes (symmetrical with suffixes)
-        :param suffixes: iterable suffixes (symmetrical with prefixes)
-        :param excluded: iterable of excluded modules names3
+        :param prefixes: iterable of prefixes
+        :param suffixes: iterable suffixes
+        :param excluded: iterable of excluded modules names
+
+        If some of the classes to load have no prefix/suffix an empty one should
+        be used (the default).
+        prefixes and suffixes iterable must have the same length to work
+        correctly.
+
         """
         self._package_path = package_path
-        self._prefixes = prefixes if prefixes is not None else ['']
-        self._suffixes = suffixes if suffixes is not None else ['']
-        self._excluded = excluded if excluded is not None else []
+        self._prefixes = prefixes
+        self._suffixes = suffixes
+        self._excluded = excluded
 
     def __iter__(self):
         return self.load()
@@ -61,27 +67,23 @@ class ClassesLoader:
             if mod_name in self._excluded:
                 continue
 
-            # Import module
-            module = loader.find_module(mod_name).load_module()
+            try:
+                # Import module
+                module = loader.find_module(mod_name).load_module()
 
-            # Load class from imported module
-            partial = []
-            for prefix, suffix in zip(self._prefixes, self._suffixes):
-                try:
+                # Load class from imported module
+                classes = []
+                for prefix, suffix in zip(self._prefixes, self._suffixes):
                     name = class_name_from_module(mod_name, prefix, suffix)
-                    cls = getattr(module, name)
-                    partial.append((name, cls))
-                except Exception:
-                    logging.warning(
-                        'Failed loading module: ' + mod_name)
-                    logging.debug(traceback.format_exc())
+                    if hasattr(module, name):
+                        cls = getattr(module, name)
+                        classes.append((name, cls))
 
-            # Yield the class name and the class-object
-            if len(partial) == 1:
-                yield partial[0]
-            elif partial:
-                yield partial
+                yield from classes
 
+            except Exception:
+                logging.warning('Cannot load module: {0}'.format(mod_name))
+                logging.debug(traceback.format_exc())
 
 def class_name_from_module(mod_name, pre='', suf=''):
     """Return the class name for a dynamic loaded module

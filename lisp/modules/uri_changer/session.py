@@ -19,7 +19,8 @@
 
 import json
 
-from lisp.utils.util import json_deep_search, json_deep_replace
+from lisp.modules.uri_changer.json_utils import json_deep_search, \
+    json_deep_replace
 
 
 class Session:

@@ -30,8 +30,6 @@ from lisp.utils.dyamic_loader import ClassesLoader
 class ActionCues(Module):
 
     def __init__(self):
-        super().__init__()
-
         for cue_name, cue_class in ClassesLoader(path.dirname(__file__)):
             # Register the action-cue in the cue-factory
             CueFactory.register_factory(cue_class.__name__, cue_class)

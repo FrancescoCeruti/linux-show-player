@@ -20,6 +20,7 @@
 from copy import deepcopy
 
 from lisp.core.action import Action
+from lisp.utils.util import dict_diff
 
 
 class ConfigureAction(Action):
@@ -28,8 +29,10 @@ class ConfigureAction(Action):
 
     def __init__(self, properties, cue):
         self.__cue = cue
-        self.__new = properties
-        self.__old = deepcopy(cue.properties())
+
+        cue_properties = deepcopy(cue.properties())
+        self.__new = dict(dict_diff(cue_properties, properties))
+        self.__old = dict(dict_diff(properties, cue_properties))
 
     def do(self):
         self.__cue.update_properties(deepcopy(self.__new))
@@ -50,12 +53,17 @@ class MultiConfigureAction(Action):
 
     def __init__(self, properties, cues):
         self.__cues = cues
-        self.__new = properties
-        self.__old = [deepcopy(cue.properties()) for cue in cues]
+        self.__new = []
+        self.__old = []
+
+        for cue in cues:
+            cue_properties = deepcopy(cue.properties())
+            self.__new.append(dict(dict_diff(cue_properties, properties)))
+            self.__old.append(dict(dict_diff(properties, cue_properties)))
 
     def do(self):
-        for cue in self.__cues:
-            cue.update_properties(deepcopy(self.__new))
+        for cue, new in zip(self.__cues, self.__new):
+            cue.update_properties(deepcopy(new))
 
     def undo(self):
         for cue, old in zip(self.__cues, self.__old):

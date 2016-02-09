@@ -247,11 +247,11 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         self.update_window_title()
 
     def _action_undone(self, action):
-        self.statusBar.showMessage('Undone' + action.log())
+        self.statusBar.showMessage('Undone: ' + action.log())
         self.update_window_title()
 
     def _action_redone(self, action):
-        self.statusBar.showMessage('Redone' + action.log())
+        self.statusBar.showMessage('Redone: ' + action.log())
         self.update_window_title()
 
     def _save(self):

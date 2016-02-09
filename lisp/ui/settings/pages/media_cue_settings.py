@@ -70,10 +70,6 @@ class MediaCueSettings(SettingsPage):
         self.loopLabel.setAlignment(Qt.AlignCenter)
         self.loopGroup.layout().addWidget(self.loopLabel)
 
-        # Checks
-        self.checkPause = QCheckBox(self)
-        self.layout().addWidget(self.checkPause)
-
         self.retranslateUi()
 
     def retranslateUi(self):
@@ -83,7 +79,6 @@ class MediaCueSettings(SettingsPage):
         self.startLabel.setText('Start position of the media')
         self.loopGroup.setTitle('Loop')
         self.loopLabel.setText('Repetition after first play (-1 = infinite)')
-        self.checkPause.setText('Enable Pause')
 
     def get_settings(self):
         conf = {'_media_': {}}
@@ -97,8 +92,6 @@ class MediaCueSettings(SettingsPage):
             conf['_media_']['stop_time'] = time
         if not (checkable and not self.loopGroup.isChecked()):
             conf['_media_']['loop'] = self.spinLoop.value()
-        if self.checkPause.checkState() != Qt.PartiallyChecked:
-            conf['pause'] = self.checkPause.isChecked()
 
         return conf
 
@@ -112,13 +105,7 @@ class MediaCueSettings(SettingsPage):
         self.loopGroup.setCheckable(enable)
         self.loopGroup.setChecked(False)
 
-        self.checkPause.setTristate(enable)
-        if enable:
-            self.checkPause.setCheckState(Qt.PartiallyChecked)
-
     def load_settings(self, settings):
-        if 'pause' in settings:
-            self.checkPause.setChecked(settings['pause'])
         if '_media_' in settings:
             if 'loop' in settings['_media_']:
                 self.spinLoop.setValue(settings['_media_']['loop'])

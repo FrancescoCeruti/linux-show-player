@@ -18,27 +18,22 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import traceback
-from importlib import import_module
 from os.path import dirname
 
 from lisp.utils import logging
-from lisp.utils.dyamic_loader import class_name_from_module
-from lisp.utils.util import find_packages
+from lisp.utils.dyamic_loader import ClassesLoader
 
 __PLUGINS = {}
 
 
 def load_plugins():
     """Load available plugins."""
-    for pkg in find_packages(path=dirname(__file__)):
+    for plugin_name, plugin in ClassesLoader(dirname(__file__)):
         try:
-            class_name = class_name_from_module(pkg)
-            module = import_module('lisp.plugins.' + pkg + '.' + pkg)
-
-            __PLUGINS[pkg] = getattr(module, class_name)()
-            logging.debug('PLUGINS: Loaded "{0}"'.format(pkg))
+            __PLUGINS[plugin_name] = plugin()
+            logging.debug('PLUGINS: Loaded "{0}"'.format(plugin_name))
         except Exception:
-            logging.error('PLUGINS: Failed "{0}" load'.format(pkg))
+            logging.error('PLUGINS: Failed "{0}" load'.format(plugin_name))
             logging.debug('PLUGINS: {0}'.format(traceback.format_exc()))
 
 

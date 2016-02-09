@@ -25,13 +25,9 @@ from lisp.utils.configuration import config
 
 
 class Remote(Module):
-    """
-        Provide remote control over cues via RPCs calls.
-    """
+    """Provide remote control over cues via RPCs calls."""
 
     def __init__(self):
-        super().__init__()
-
         ip = config['Remote']['BindIp']
         port = int(config['Remote']['BindPort'])
 

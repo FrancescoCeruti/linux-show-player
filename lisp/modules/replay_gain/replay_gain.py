@@ -147,7 +147,6 @@ class ReplayGain(Module):
     Name = 'ReplayGain'
 
     def __init__(self):
-        super().__init__()
         self._gain_thread = None
 
         # Voice in mainWindow menu

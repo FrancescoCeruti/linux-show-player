@@ -148,6 +148,10 @@ class CueWidget(QWidget):
         elif self.cue.state != CueState.Running:
             self._update_duration(self.cue.duration)
 
+    def show_seek_slider(self, visible):
+        self.seekSlider.setVisible(visible)
+        self.update()
+
     def show_dbmeters(self, visible):
         if isinstance(self.cue, MediaCue):
             self._show_dbmeter = visible
@@ -309,6 +313,7 @@ class CueWidget(QWidget):
 
     def update(self):
         super().update()
+        self.layout().activate()
 
         xdim = self.nameButton.width()
         ydim = self.nameButton.height() / 5

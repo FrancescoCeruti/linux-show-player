@@ -25,13 +25,13 @@ from PyQt5.QtWidgets import QAction, QMessageBox, QDialog, QVBoxLayout, \
 
 from lisp.application import Application
 from lisp.backends.gst.gst_utils import gst_uri_metadata, gst_parse_tag_list
-from lisp.core.plugin import Plugin
+from lisp.core.module import Module
 from lisp.cues.media_cue import MediaCue
-from lisp.layouts.cue_menu_registry import CueMenuRegistry
+from lisp.layouts.cue_layout import CueLayout
 from lisp.ui.mainwindow import MainWindow
 
 
-class MediaInfo(Plugin):
+class MediaInfo(Module):
     Name = 'MediaInfo'
 
     def __init__(self):
@@ -39,9 +39,8 @@ class MediaInfo(Plugin):
         self.menuAction.triggered.connect(self.show_info)
         self.menuAction.setText("Media Info")
 
-    def init(self):
-        Application().layout.cm_registry.add_separator(MediaCue)
-        Application().layout.cm_registry.add_item(self.menuAction, MediaCue)
+        CueLayout.cm_registry.add_separator(MediaCue)
+        CueLayout.cm_registry.add_item(self.menuAction, MediaCue)
 
     def show_info(self, clicked):
         media_uri = Application().layout.get_context_cue().media.input_uri()
