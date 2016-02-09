@@ -1,4 +1,4 @@
-# Linux Show Player
+# Linux Show Player [![GitHub version](https://badge.fury.io/gh/FrancescoCeruti%2Flinux-show-player.svg)](https://badge.fury.io/gh/FrancescoCeruti%2Flinux-show-player) [![Code Health](https://landscape.io/github/FrancescoCeruti/linux-show-player/master/landscape.svg?style=flat)](https://landscape.io/github/FrancescoCeruti/linux-show-player/master)
 Linux Show Player (LiSP) - Sound player designed for stage productions
 
 ---
