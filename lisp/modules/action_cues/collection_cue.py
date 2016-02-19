@@ -105,7 +105,7 @@ class CollectionCueSettings(SettingsPage):
     def _add_dialog(self):
         if self.cue_dialog.exec_() == QDialog.Accepted:
             for target in self.cue_dialog.selected_cues():
-                self._add_cue(target, tuple(target.CueAction)[0].name)
+                self._add_cue(target, tuple(target.CueActions)[0].name)
 
     def _remove_selected(self):
         cue = self.cuesWidget.itemWidget(self.cuesWidget.currentItem()).target

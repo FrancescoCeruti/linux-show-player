@@ -20,33 +20,31 @@
 import mido
 from PyQt5.QtCore import pyqtSignal, QObject
 
+from lisp.core.signal import Signal
 from lisp.modules.midi.midi_common import MIDICommon
 
 
-class MIDIInputHandler(QObject, MIDICommon):
-
-    # Only when not in alternate-mode
-    new_message = pyqtSignal(mido.messages.BaseMessage)
-    # Only when in alternate-mode
-    new_message_alt = pyqtSignal(mido.messages.BaseMessage)
+class MIDIInputHandler(MIDICommon):
 
     def __init__(self, port_name='default', backend_name=None):
         super().__init__()
 
         self.alternate_mode = False
+        self.new_message = Signal()
+        self.new_message_alt = Signal()
 
     def __new_message(self, message):
-        if not self.alternate_mode:
-            self.new_message.emit(message)
-        else:
+        if self.alternate_mode:
             self.new_message_alt.emit(message)
-
-    def __open_port(self):
-        # I don't expect to find a __port named "default", if so, I assume
-        # this __port is the default one.
-        if self.__port_name in self.get_input_names():
-            self.__port = self.__backend.open_input(self.__port_name,
-                                                    callback=self._new_message)
         else:
-            # If the __port isn't available use the default one
-            self.__port = self.__backend.open_input(callback=self._new_message)
+            self.new_message.emit(message)
+
+    def _open_port(self):
+        # We don't expect to find a port named "default", if so, we assume
+        # this port is the default one.
+        if self._port_name in self.get_input_names():
+            self._port = self._backend.open_input(self._port_name,
+                                                  callback=self.__new_message)
+        else:
+            # If the port isn't available use the default one
+            self._port = self._backend.open_input(callback=self.__new_message)

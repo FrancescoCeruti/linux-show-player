@@ -149,7 +149,7 @@ class Signal:
     .. note::
         * Any slot can be connected only once to a specific signal,
           if reconnected, the previous connection is overridden.
-        * Internally weak-references are used, so disconnection is not needed
+        * Internally, weak-references are used, so disconnection is not needed
           before delete a slot-owner object.
         * Signals with "arguments" can be connected to slot without arguments
 
@@ -157,7 +157,7 @@ class Signal:
         Because of weakrefs, connecting like the following can't work:
 
         signal.connect(lambda: some_operation))
-        signal.connect(NewObject().my_method)     # Unless some case
+        signal.connect(NewObject().my_method)
         signal.connect(something_not_referenced)
     """
 

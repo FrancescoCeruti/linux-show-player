@@ -155,9 +155,9 @@ def suppress_exceptions(target=None, *, print_exc=True):
     def wrapped(*args, **kwargs):
         try:
             return target(*args, **kwargs)
-        except Exception as exception:
+        except Exception:
             if print_exc:
-                traceback.print_tb(exception.__traceback__)
+                traceback.print_exc()
 
     return wrapped
 

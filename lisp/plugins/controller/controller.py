@@ -17,16 +17,15 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-
-from PyQt5.QtCore import QObject
+from os import path
 
 from lisp.application import Application
 from lisp.core.has_properties import Property
 from lisp.core.plugin import Plugin
-from lisp.cues.cue import Cue
-from lisp.modules import check_module
-from lisp.modules.midi.input_handler import MIDIInputHandler
+from lisp.cues.cue import Cue, CueAction
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
+from lisp.ui.settings.settings_page import SettingsPage
+from lisp.utils.dyamic_loader import ClassesLoader
 from .controller_settings import ControllerSettings
 
 
@@ -37,65 +36,70 @@ class Controller(Plugin):
     def __init__(self):
         super().__init__()
         self.__map = {}
+        self.__actions_map = {}
+        self.__protocols = {}
 
         # Register a new Cue property to store settings
         Cue.register_property('controller', Property(default={}))
 
         # Listen cue_model changes
-        Application().cue_model.item_added.connect(self.on_cue_added)
-        Application().cue_model.item_removed.connect(self.on_cue_removed)
+        Application().cue_model.item_added.connect(self.__cue_added)
+        Application().cue_model.item_removed.connect(self.__cue_removed)
 
         # Register settings-page
         CueSettingsRegistry().add_item(ControllerSettings)
-
-        # Connect to MIDI module
-        if check_module('midi'):
-            MIDIInputHandler().new_message.connect(self.on_new_message)
+        # Load available protocols
+        self.__load_protocols()
 
     def init(self):
-        Application().layout.key_pressed.connect(self.on_key_pressed)
+        for protocol in self.__protocols.values():
+            protocol.init()
 
     def reset(self):
         self.__map.clear()
-        Application().layout.key_pressed.disconnect(self.on_key_pressed)
+        self.__actions_map.clear()
+
+        for protocol in self.__protocols.values():
+            protocol.reset()
 
     def cue_changed(self, cue, property_name, value):
         if property_name == 'controller':
             self.delete_from_map(cue)
 
-            for key in value.get('hotkeys', []):
-                if key not in self.__map:
-                    self.__map[key] = [cue]
-                else:
-                    self.__map[key].append(cue)
+            for protocol in self.__protocols:
+                for key, action in value.get(protocol, []):
+                    if key not in self.__map:
+                        self.__map[key] = set()
 
-            if value.get('midi', '') != '':
-                if not value['midi'] in self.__map:
-                    self.__map[value['midi']] = [cue]
-                else:
-                    self.__map[value['midi']].append(cue)
+                    self.__map[key].add(cue)
+                    self.__actions_map[(key, cue)] = CueAction(action)
 
     def delete_from_map(self, cue):
         for key in self.__map:
-            try:
-                self.__map[key].remove(cue)
-            except ValueError:
-                pass
-
-    def on_key_pressed(self, keyEvent):
-        self.perform_action(keyEvent.text())
-
-    def on_new_message(self, message):
-        self.perform_action(str(message))
+            self.__map[key].discard(cue)
+            self.__actions_map.pop((key, cue), None)
 
     def perform_action(self, key):
         for cue in self.__map.get(key, []):
-            cue.execute()
+            cue.execute(self.__actions_map[(key, cue)])
 
-    def on_cue_added(self, cue):
+    def __cue_added(self, cue):
         cue.property_changed.connect(self.cue_changed)
-        #self.update_map(cue)
+        self.cue_changed(cue, 'controller', cue.controller)
 
-    def on_cue_removed(self, cue):
+    def __cue_removed(self, cue):
         cue.property_changed.disconnect(self.cue_changed)
         self.delete_from_map(cue)
+
+    def __load_protocols(self):
+        find_path = path.join(path.dirname(__file__), 'protocols')
+
+        for cls_name, cls in ClassesLoader(find_path, excluded=('protocol',),
+                                           prefixes=('', ''),
+                                           suffixes=('', 'Settings', )):
+            if issubclass(cls, SettingsPage):
+                ControllerSettings.SettingsPages.append(cls)
+            else:
+                protocol = cls()
+                protocol.protocol_event.connect(self.perform_action)
+                self.__protocols[cls_name.lower()] = protocol

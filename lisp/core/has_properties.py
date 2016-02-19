@@ -18,6 +18,7 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from abc import ABCMeta
+from copy import deepcopy
 
 from lisp.core.signal import Signal
 from lisp.utils.util import subclasses
@@ -27,9 +28,14 @@ class Property:
     """Descriptor to be used in HasProperties subclasses to define properties.
 
     .. warning::
+        To be able to save properties into a session, the stored value
+        MUST be JSON-serializable.
+
+    .. warning::
         If extended any subclass *MUST*:
         1) if the __get__ method receive a None instance return self;
-        2) if the value is not set return the default value (self.default);
+        2) if the __get__ is called while the value is not set, set it with a
+           safe copy of 'default' and return it.
         3) After the value is changed call the __changed__ method.
     """
 
@@ -40,8 +46,10 @@ class Property:
     def __get__(self, instance, owner=None):
         if instance is None:
             return self
-        else:
-            return instance.__dict__.get(self.name, self.default)
+        elif self.name not in instance.__dict__:
+            instance.__dict__[self.name] = deepcopy(self.default)
+
+        return instance.__dict__.get(self.name)
 
     def __set__(self, instance, value):
         if instance is not None:
@@ -80,8 +88,6 @@ class NestedProperties(Property):
             provider = instance.__dict__.get(self.provider_name, None)
             if isinstance(provider, HasProperties):
                 return provider.properties()
-            else:
-                return self.default
 
     def __set__(self, instance, value):
         if instance is not None:
@@ -122,8 +128,8 @@ class HasPropertiesMeta(ABCMeta):
 class HasProperties(metaclass=HasPropertiesMeta):
     """Base class providing a simple way to mange object properties.
 
-    Using the Property descriptor, subclasses can specify a set of
-    properties, those can be easily retrieved and updated via :func:`properties`
+    Using the Property descriptor, subclasses, can specify a set of
+    properties, that can be easily retrieved and updated via :func:`properties`
     and :func:`update_properties`.
 
     .. Usage::

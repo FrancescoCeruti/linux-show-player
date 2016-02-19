@@ -23,8 +23,7 @@ from lisp.core.has_properties import Property
 
 class GstProperty(Property):
 
-    def __init__(self, element_name, default=None, gst_name=None,
-                 adapter=None):
+    def __init__(self, element_name, default=None, gst_name=None, adapter=None):
         super().__init__(default=default)
 
         self.element_name = element_name

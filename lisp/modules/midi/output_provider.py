@@ -18,28 +18,23 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import mido
-from PyQt5.QtCore import pyqtSignal, QObject
 
 from lisp.modules.midi.midi_common import MIDICommon
 
 
-class MIDIOutputProvider(QObject, MIDICommon):
-    # Only when not in alternate-mode
-    new_message = pyqtSignal(mido.messages.BaseMessage)
-    # Only when in alternate-mode
-    new_message_alt = pyqtSignal(mido.messages.BaseMessage)
+class MIDIOutputProvider(MIDICommon):
 
     def __init__(self, port_name='default', backend_name=None):
-        super().__init__()
+        super().__init__(port_name=port_name, backend_name=backend_name)
 
     def send(self, type_, **kwargs):
-        self.__port.send(mido.Message(type_, **kwargs))
+        self._port.send(mido.Message(type_, **kwargs))
 
-    def __open_port(self):
-        # I don't expect to find a __port named "default", if so, I assume
-        # this __port is the default one.
-        if self.__port_name in self.get_input_names():
-            self.__port = self.__backend.open_output(self.__port_name)
+    def _open_port(self):
+        # I don't expect to find a port named "default", if so, I assume
+        # this port is the default one.
+        if self._port_name in self.get_input_names():
+            self._port = self._backend.open_output(self._port_name)
         else:
-            # If the __port isn't available use the default one
-            self.__port = self.__backend.open_output()
+            # If the port isn't available use the default one
+            self._port = self._backend.open_output()

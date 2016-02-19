@@ -27,7 +27,7 @@ from lisp.utils.util import deep_update
 from lisp.core.class_based_registry import ClassBasedRegistry
 from lisp.core.singleton import Singleton
 from lisp.cues.cue import Cue
-from lisp.ui.settings.settings_page import SettingsPage
+from lisp.ui.settings.settings_page import SettingsPage, CueSettingsPage
 
 
 class CueSettingsRegistry(ClassBasedRegistry, metaclass=Singleton):
@@ -57,7 +57,7 @@ class CueSettings(QDialog):
         """
 
         :param cue: Target cue, or None for multi-editing
-        :param cue_class: If cue is None, can be used to specify the reference class
+        :param cue_class: when cue is None, used to specify the reference class
         """
         super().__init__(**kwargs)
 
@@ -79,7 +79,11 @@ class CueSettings(QDialog):
         self.sections.setGeometry(QtCore.QRect(5, 10, 625, 470))
 
         for widget in sorted(CueSettingsRegistry().filter(cue_class), key=lambda w: w.Name):
-            settings_widget = widget()
+            if issubclass(widget, CueSettingsPage):
+                settings_widget = widget(cue_class)
+            else:
+                settings_widget = widget()
+
             settings_widget.load_settings(cue_properties)
             settings_widget.enable_check(cue is None)
             self.sections.addTab(settings_widget, settings_widget.Name)

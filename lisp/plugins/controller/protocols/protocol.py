@@ -17,27 +17,29 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtWidgets import QWidget
+from lisp.core.signal import Signal
 
 
-class SettingsPage(QWidget):
-    Name = 'Page'
+class Protocol:
+    """Base interface for protocols.
 
-    def enable_check(self, enabled):
-        """Enable option check"""
+    The init() and reset() functions are called when the respective functions
+    of the main-plugin are called.
 
-    def get_settings(self):
-        """Return the current settings."""
-        return {}
+    When an event that can trigger a cue is "detected", the protocol_event
+    signal should be emitted with the event representation.
 
-    def load_settings(self, settings):
-        """Load the settings."""
+    To be loaded correctly the class should follow the ClassesLoader
+    specification.
+    To define the settings, only define a class with same name plus 'Settings'
+    as suffix (e.g. Protocol -> ProtocolSettings), in the same file.
+    """
 
+    def __init__(self):
+        self.protocol_event = Signal()
 
-class CueSettingsPage(SettingsPage):
-    Name = 'Cue page'
+    def init(self):
+        pass
 
-    def __init__(self, cue_class, **kwargs):
-        super().__init__(**kwargs)
-
-        self._cue_class = cue_class
+    def reset(self):
+        pass
