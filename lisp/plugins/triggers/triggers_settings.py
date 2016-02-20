@@ -29,7 +29,6 @@ from lisp.ui.cuelistdialog import CueListDialog
 from lisp.ui.settings.settings_page import SettingsPage
 
 
-# TODO: standalone settings dialog, accessible from context menu
 class TriggersSettings(SettingsPage):
 
     Name = 'Triggers'
@@ -54,14 +53,13 @@ class TriggersSettings(SettingsPage):
         self.delButton = self.dialogButtons.addButton('Remove', QDialogButtonBox.ActionRole)
         self.delButton.clicked.connect(self._remove_trigger)
 
-        self._cue = None
+        self.cue_dialog = CueListDialog(cues=Application().cue_model)
 
     def _add_new_trigger(self, tr_action, target, ta_action):
         item = QListWidgetItem()
         item.setSizeHint(QSize(200, 30))
 
-        widget = TriggerWidget(self._cue, tr_action, target, ta_action,
-                               self.cue_dialog)
+        widget = TriggerWidget(tr_action, target, ta_action, self.cue_dialog)
 
         self.triggersWidget.addItem(item)
         self.triggersWidget.setItemWidget(item, widget)
@@ -76,55 +74,46 @@ class TriggersSettings(SettingsPage):
         self.triggersWidget.takeItem(self.triggersWidget.currentRow())
 
     def load_settings(self, settings):
-        self._cue = Application().cue_model.get(settings.get('id'), None)
-        if self._cue is None:
-            self.setEnabled(False)
-        else:
-            self.cue_dialog = CueListDialog(cues=Application().cue_model)
+        settings = settings.get('triggers', {})
 
-        if self.PluginInstance is not None and self._cue is not None:
-            triggers = self.PluginInstance.triggers.get(self._cue.id, {})
-
-            for trigger_action, targets in triggers.items():
-                for target, target_action in targets:
-                    target = Application().cue_model.get(target)
-                    if target is not None:
-                        self._add_new_trigger(trigger_action, target, target_action)
+        for trigger_action, targets in settings.items():
+            for target, target_action in targets:
+                target = Application().cue_model.get(target)
+                if target is not None:
+                    self._add_new_trigger(trigger_action, target, target_action)
 
     def get_settings(self):
-        if self.PluginInstance is not None and self._cue is not None:
-            triggers = {}
+        triggers = {}
 
-            for n in range(self.triggersWidget.count()):
-                trigger = self.triggersWidget.itemWidget(self.triggersWidget.item(n))
-                tr_action, target, ta_action = trigger.get_trigger()
+        for n in range(self.triggersWidget.count()):
+            widget = self.triggersWidget.itemWidget(self.triggersWidget.item(n))
+            tr_action, target, ta_action = widget.get_trigger()
 
-                if tr_action in triggers:
-                    triggers[tr_action].append((target, ta_action))
-                else:
-                    triggers[tr_action] = [(target, ta_action)]
+            if tr_action not in triggers:
+                triggers[tr_action] = []
 
-            self.PluginInstance.update_handler(self._cue, triggers)
+            # Avoid duplicate
+            if (target, ta_action) not in triggers[tr_action]:
+                triggers[tr_action].append((target, ta_action))
 
-        return {}
+        return {'triggers': triggers}
 
 
 class TriggerWidget(QWidget):
 
-    def __init__(self, cue, tr_action, target, ta_action, cue_dialog, **kwargs):
+    def __init__(self, tr_action, target, ta_action, cue_dialog, **kwargs):
         super().__init__(**kwargs)
 
-        self.cue = cue
         self.target = target
         self.cue_dialog = cue_dialog
-        self.target_actions = {m.name: m.value for m in target.CueActions}
+        self.target_actions = {a.name: a.value for a in target.CueActions}
 
         self.setLayout(QHBoxLayout(self))
         self.layout().setContentsMargins(2, 1, 2, 1)
 
         self.triggerActions = QComboBox(self)
         # MediaTriggers members names and values are equals
-        self.triggerActions.addItems([m.value for m in CueTriggers])
+        self.triggerActions.addItems([a.value for a in CueTriggers])
         self.triggerActions.setCurrentText(tr_action)
         self.layout().addWidget(self.triggerActions)
 

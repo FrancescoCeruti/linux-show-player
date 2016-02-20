@@ -18,7 +18,9 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from lisp.application import Application
+from lisp.core.has_properties import Property
 from lisp.core.plugin import Plugin
+from lisp.cues.cue import Cue
 from lisp.plugins.triggers.triggers_handler import CueHandler
 from lisp.plugins.triggers.triggers_settings import TriggersSettings
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
@@ -30,52 +32,32 @@ class Triggers(Plugin):
 
     def __init__(self):
         super().__init__()
+        self.__handlers = {}
 
-        TriggersSettings.PluginInstance = self
+        # Register a Cue property to store settings
+        Cue.register_property('triggers', Property({}))
+        # Cue.triggers -> {trigger_action: [(target_id, target_action), ...]}
+
+        # Register SettingsPage
         CueSettingsRegistry().add_item(TriggersSettings)
-        Application().cue_model.item_added.connect(self._cue_added)
-        Application().cue_model.item_added.connect(self._cue_removed)
 
-        self.triggers = {}
-        self.handlers = {}
-
-    def update_handler(self, cue, triggers):
-        self.triggers[cue.id] = triggers
-
-        if cue in self.handlers:
-            self.handlers[cue.id].triggers = triggers
-        else:
-            self._cue_added(cue)
-
-    def load_settings(self, settings):
-        self.triggers = settings
-
-        for cue_id in self.triggers:
-            cue = Application().cue_model.get(cue_id)
-            if cue is not None:
-                self._cue_added(cue)
-
-    def settings(self):
-        settings = {}
-
-        for cue_id, cue_triggers in self.triggers.items():
-            if Application().cue_model.get(cue_id) is not None:
-                settings[cue_id] = cue_triggers
-
-        return settings
+        Application().cue_model.item_added.connect(self.__cue_added)
+        Application().cue_model.item_removed.connect(self.__cue_removed)
 
     def reset(self):
-        for handler in self.handlers.values():
-            handler.finalize()
+        self.__handlers.clear()
 
-        self.handlers.clear()
-        self.triggers.clear()
+    def __cue_changed(self, cue, property_name, value):
+        if property_name == 'triggers':
+            if cue.id in self.__handlers:
+                self.__handlers[cue.id].triggers = cue.triggers
+            else:
+                self.__handlers[cue.id] = CueHandler(cue, cue.triggers)
 
-    def _cue_added(self, cue):
-        if cue.id in self.triggers:
-            self.handlers[cue.id] = CueHandler(cue, self.triggers[cue.id])
+    def __cue_added(self, cue):
+        cue.property_changed.connect(self.__cue_changed)
+        self.__cue_changed(cue, 'triggers', cue.triggers)
 
-    def _cue_removed(self, cue):
-        handler = self.handlers.pop(cue.id, None)
-        if handler is not None:
-            handler.finalize()
+    def __cue_removed(self, cue):
+        cue.property_changed.disconnect(self.__cue_changed)
+        self.__handlers.pop(cue.id, None)

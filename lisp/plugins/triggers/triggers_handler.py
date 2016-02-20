@@ -25,8 +25,8 @@ from lisp.cues.cue import CueAction
 
 
 class CueTriggers(Enum):
+    Started = 'Started'
     Paused = 'Paused'
-    Played = 'Played'
     Stopped = 'Stopped'
     Ended = 'Ended'
 
@@ -34,33 +34,29 @@ class CueTriggers(Enum):
 class CueHandler:
 
     def __init__(self, cue, triggers):
-        # {trigger_action: [(target_id, target_action), ...]}
         self.triggers = triggers
         self.cue = cue
 
-        self.cue.started.connect(self._play, Connection.Async)
-        self.cue.paused.connect(self._pause, Connection.Async)
-        self.cue.stopped.connect(self._stop, Connection.Async)
-        self.cue.end.connect(self._end, Connection.Async)
+        self.cue.started.connect(self.__started, Connection.Async)
+        self.cue.paused.connect(self.__paused, Connection.Async)
+        self.cue.stopped.connect(self.__stopped, Connection.Async)
+        self.cue.end.connect(self.__ended, Connection.Async)
 
-    def finalize(self):
-        self.triggers.clear()
+    def __paused(self):
+        self.__execute(CueTriggers.Paused.value)
 
-    def _pause(self, *args):
-        self._execute(CueTriggers.Paused.value)
+    def __started(self):
+        self.__execute(CueTriggers.Started.value)
 
-    def _play(self, *args):
-        self._execute(CueTriggers.Played.value)
+    def __stopped(self):
+        self.__execute(CueTriggers.Stopped.value)
 
-    def _stop(self, *args):
-        self._execute(CueTriggers.Stopped.value)
+    def __ended(self):
+        self.__execute(CueTriggers.Ended.value)
 
-    def _end(self, *args):
-        self._execute(CueTriggers.Ended.value)
-
-    def _execute(self, trigger):
-        for target, target_action in self.triggers.get(trigger, []):
-            target = Application().cue_model.get(target)
+    def __execute(self, trigger):
+        for target_id, target_action in self.triggers.get(trigger, []):
+            target = Application().cue_model.get(target_id)
 
             if target is not None:
                 target.execute(CueAction(target_action))
