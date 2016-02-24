@@ -35,17 +35,18 @@ Download the archive from the release page on GitHub.
 * python(3)-setuptools
 * qt5-svg
 * gstreamer 1.x
-* gst-plugins-base
-* gst-plugins-good
-* gst-plugins-ugly
-* gst-plugins-bad
+* gst-plugins-base     (gstreamer1.0-plugins-base in debian)
+* gst-plugins-good     (gstreamer1.0-plugins-good in debian)
+* gst-plugins-ugly     (gstreamer1.0-plugins-ugly in debian)
+* gst-plugins-bad      (gstreamer1.0-plugins-bad in debian)
+* libffi-dev           (if installing in debian/ubuntu)
 * gst-libav				(optional, for larger format support)
 * portmidi				(optional, for portmidi support)
 * mido					(auto-installed via pip)
 * python-rtmidi			(auto-installed via pip)
 * JACK-Client			(auto-installed via pip)
 * sortedcontainers      (auto-installed via pip)
-* libasound-dev			(if installing in debian/ubuntu)
+* libasound2-dev			(if installing in debian/ubuntu)
 * libjack-jackd2-dev	(if installing in debian/ubuntu)
 </pre>
 
@@ -53,9 +54,16 @@ Download the archive from the release page on GitHub.
 
 	# pip(3) install --pre <archive-name>
 
-for example:
+for example, to install the latest release from the downloaded zip file:
 	
 	# pip(3) install --pre linux-show-player-0.3.1.zip
+
+or
+
+        # git clone https://github.com/FrancescoCeruti/linux-show-player
+        # pip install --pre linux-show-player/
+
+to install the latest development version from git.
 
 ### Usage
 
