@@ -39,6 +39,7 @@ Download the archive from the release page on GitHub.
 * gst-plugins-good
 * gst-plugins-ugly
 * gst-plugins-bad
+* libffi-dev           (if installing in debian/ubuntu)
 * gst-libav				(optional, for larger format support)
 * portmidi				(optional, for portmidi support)
 * mido					(auto-installed via pip)
@@ -53,9 +54,16 @@ Download the archive from the release page on GitHub.
 
 	# pip(3) install --pre <archive-name>
 
-for example:
+for example, to install the latest release from the downloaded zip file:
 	
 	# pip(3) install --pre linux-show-player-0.3.1.zip
+
+or
+
+        # git clone https://github.com/FrancescoCeruti/linux-show-player
+        # pip install --pre linux-show-player/
+
+to install the latest development version from git.
 
 ### Usage
 
