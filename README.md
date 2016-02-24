@@ -35,10 +35,10 @@ Download the archive from the release page on GitHub.
 * python(3)-setuptools
 * qt5-svg
 * gstreamer 1.x
-* gst-plugins-base
-* gst-plugins-good
-* gst-plugins-ugly
-* gst-plugins-bad
+* gst-plugins-base     (gstreamer1.0-plugins-base in debian)
+* gst-plugins-good     (gstreamer1.0-plugins-good in debian)
+* gst-plugins-ugly     (gstreamer1.0-plugins-ugly in debian)
+* gst-plugins-bad      (gstreamer1.0-plugins-bad in debian)
 * libffi-dev           (if installing in debian/ubuntu)
 * gst-libav				(optional, for larger format support)
 * portmidi				(optional, for portmidi support)
@@ -46,7 +46,7 @@ Download the archive from the release page on GitHub.
 * python-rtmidi			(auto-installed via pip)
 * JACK-Client			(auto-installed via pip)
 * sortedcontainers      (auto-installed via pip)
-* libasound-dev			(if installing in debian/ubuntu)
+* libasound2-dev			(if installing in debian/ubuntu)
 * libjack-jackd2-dev	(if installing in debian/ubuntu)
 </pre>
 
