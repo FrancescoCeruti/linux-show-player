@@ -30,7 +30,6 @@ from lisp.core.decorators import async, synchronized_method
 from lisp.core.has_properties import Property
 from lisp.cues.cue import Cue, CueState, CueAction
 from lisp.cues.media_cue import MediaCue
-from lisp.layouts.cue_layout import CueLayout
 from lisp.ui.cuelistdialog import CueListDialog
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
 from lisp.ui.settings.settings_page import SettingsPage
@@ -44,7 +43,8 @@ class VolumeControl(Cue):
     fade_type = Property(default='Linear')
     volume = Property(default=.0)
 
-    CueActions = (CueAction.Start, CueAction.Stop, CueAction.Default)
+    CueActions = (CueAction.Start, CueAction.Stop, CueAction.Pause,
+                  CueAction.Default)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -53,6 +53,7 @@ class VolumeControl(Cue):
         self.__state = CueState.Stop
         self.__time = 0
         self.__stop = False
+        self.__pause = False
 
     @async
     def __start__(self):
@@ -76,34 +77,48 @@ class VolumeControl(Cue):
         if self.__state == CueState.Running:
             self.__stop = True
 
+    def __pause__(self):
+        if self.__state == CueState.Running:
+            self.__pause = True
+
     @synchronized_method(blocking=False)
     def _fade(self, functor, volume, media):
         try:
             self.started.emit(self)
             self.__state = CueState.Running
 
-            duration = self.duration // 10
+            begin = self.__time
+            duration = (self.duration // 10)
             base_volume = volume.current_volume
             volume_diff = self.volume - base_volume
 
-            while (not self.__stop and self.__time <= duration and
+            while (not (self.__stop or self.__pause ) and
+                   self.__time <= duration and
                    media.state == MediaState.Playing):
-                volume.current_volume = functor(ntime(self.__time, 0, duration),
-                                                volume_diff, base_volume)
+                time = ntime(self.__time, begin, duration)
+                volume.current_volume = functor(time, volume_diff, base_volume)
+
                 self.__time += 1
                 sleep(0.01)
 
             if self.__stop:
                 self.stopped.emit(self)
+            elif self.__pause:
+                self.paused.emit(self)
             else:
                 self.end.emit(self)
         except Exception as e:
             self.__state = CueState.Error
             self.error.emit(self, 'Error during cue execution', str(e))
         finally:
-            self.__state = CueState.Stop
+            if not self.__pause:
+                self.__state = CueState.Stop
+                self.__time = 0
+            else:
+                self.__state = CueState.Pause
+
             self.__stop = False
-            self.__time = 0
+            self.__pause = False
 
     def current_time(self):
         return self.__time * 10

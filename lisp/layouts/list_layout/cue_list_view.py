@@ -35,8 +35,8 @@ class CueListView(QTreeWidget):
     drop_move_event = QtCore.pyqtSignal(int, int)
     drop_copy_event = QtCore.pyqtSignal(int, int)
 
-    H_NAMES = ['', 'Cue', 'Pre wait', 'Action', 'Post wait', '']
-    H_WIDGETS = [CueStatusIcon, None, PreWaitWidget, CueTimeWidget,
+    H_NAMES = ['', '#', 'Cue', 'Pre wait', 'Action', 'Post wait', '']
+    H_WIDGETS = [CueStatusIcon, None, None, PreWaitWidget, CueTimeWidget,
                  PostWaitWidget, NextActionIcon]
 
     def __init__(self, cue_model, parent=None):
@@ -56,7 +56,8 @@ class CueListView(QTreeWidget):
         self.header().setDragEnabled(False)
         self.header().setStretchLastSection(False)
         self.header().setSectionResizeMode(QHeaderView.Fixed)
-        self.header().setSectionResizeMode(1, QHeaderView.Stretch)
+        self.header().setSectionResizeMode(1, QHeaderView.ResizeToContents)
+        self.header().setSectionResizeMode(2, QHeaderView.Stretch)
 
         self.setColumnWidth(0, 40)
         self.setColumnWidth(len(CueListView.H_NAMES) - 1, 18)

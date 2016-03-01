@@ -20,8 +20,7 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QDialog, QGridLayout, QComboBox, QListWidget, \
-    QAbstractItemView, QVBoxLayout, QPushButton, QDialogButtonBox, QWidget, \
-    QLabel, QHBoxLayout
+    QAbstractItemView, QVBoxLayout, QPushButton, QDialogButtonBox, QWidget
 
 from lisp.backends.gst import elements
 

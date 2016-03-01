@@ -19,7 +19,7 @@
 
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QHBoxLayout, QTextEdit, \
-    QSpinBox, QLabel
+    QSpinBox, QLabel, QLineEdit
 
 from lisp.ui.qcolorbutton import QColorButton
 from lisp.ui.settings.settings_page import SettingsPage
@@ -31,16 +31,23 @@ class Appearance(SettingsPage):
 
     def __init__(self, **kwargs):
         super().__init__()
-
         self.setLayout(QVBoxLayout())
 
         # Name
-        self.textEditGroup = QGroupBox(self)
-        self.textEditGroup.setLayout(QHBoxLayout())
-        self.layout().addWidget(self.textEditGroup)
+        self.cueNameGroup = QGroupBox(self)
+        self.cueNameGroup.setLayout(QHBoxLayout())
+        self.layout().addWidget(self.cueNameGroup)
 
-        self.textEdit = QTextEdit(self.textEditGroup)
-        self.textEditGroup.layout().addWidget(self.textEdit)
+        self.cueNameEdit = QLineEdit(self.cueNameGroup)
+        self.cueNameGroup.layout().addWidget(self.cueNameEdit)
+
+        # Description
+        self.cueDescriptionGroup = QGroupBox(self)
+        self.cueDescriptionGroup.setLayout(QHBoxLayout())
+        self.layout().addWidget(self.cueDescriptionGroup)
+
+        self.cueDescriptionEdit = QTextEdit(self.cueNameGroup)
+        self.cueDescriptionGroup.layout().addWidget(self.cueDescriptionEdit)
 
         # Font
         self.fontSizeGroup = QGroupBox(self)
@@ -69,25 +76,23 @@ class Appearance(SettingsPage):
         self.warning.setStyleSheet("color: #FFA500; font-weight: bold")
         self.layout().addWidget(self.warning)
 
-        # Set stretch
-        self.layout().setStretch(0, 3)
-        self.layout().setStretch(1, 1)
-        self.layout().setStretch(2, 1)
-        self.layout().setStretch(3, 1)
-
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.textEditGroup.setTitle("Shown Text")
-        self.textEdit.setText("Empty")
+        self.cueNameGroup.setTitle("Cue name")
+        self.cueNameEdit.setText("Empty")
+        self.cueDescriptionGroup.setTitle('Description/Note')
         self.fontSizeGroup.setTitle("Set Font Size")
         self.colorGroup.setTitle("Color")
         self.colorBButton.setText("Select background color")
         self.colorFButton.setText("Select font color")
 
     def enable_check(self, enable):
-        self.textEditGroup.setCheckable(enable)
-        self.textEditGroup.setChecked(False)
+        self.cueNameGroup.setCheckable(enable)
+        self.cueNameGroup.setChecked(False)
+
+        self.cueDescriptionGroup.setChecked(enable)
+        self.cueDescriptionGroup.setChecked(False)
 
         self.fontSizeGroup.setCheckable(enable)
         self.fontSizeGroup.setChecked(False)
@@ -98,16 +103,18 @@ class Appearance(SettingsPage):
     def get_settings(self):
         conf = {}
         style = {}
-        checked = self.textEditGroup.isCheckable()
+        checkable = self.cueNameGroup.isCheckable()
 
-        if not (checked and not self.textEditGroup.isChecked()):
-            conf['name'] = self.textEdit.toPlainText()
-        if not (checked and not self.colorGroup.isChecked()):
+        if not (checkable and not self.cueNameGroup.isChecked()):
+            conf['name'] = self.cueNameEdit.text()
+        if not  (checkable and not self.cueDescriptionGroup.isChecked()):
+            conf['description'] = self.cueDescriptionEdit.toPlainText()
+        if not (checkable and not self.colorGroup.isChecked()):
             if self.colorBButton.color() is not None:
                 style['background'] = self.colorBButton.color()
             if self.colorFButton.color() is not None:
                 style['color'] = self.colorFButton.color()
-        if not (checked and not self.fontSizeGroup.isChecked()):
+        if not (checkable and not self.fontSizeGroup.isChecked()):
             style['font-size'] = str(self.fontSizeSpin.value()) + 'pt'
 
         if style:
@@ -117,7 +124,9 @@ class Appearance(SettingsPage):
 
     def load_settings(self, settings):
         if 'name' in settings:
-            self.textEdit.setText(settings['name'])
+            self.cueNameEdit.setText(settings['name'])
+        if 'description' in settings:
+            self.cueDescriptionEdit.setText(settings['description'])
         if 'stylesheet' in settings:
             settings = css_to_dict(settings['stylesheet'])
             if 'background' in settings:

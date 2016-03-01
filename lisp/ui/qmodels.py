@@ -25,7 +25,7 @@ class SimpleTableModel(QAbstractTableModel):
 
     .. warning::
         Currently this is a partial implementation of a complete R/W Qt model
-        indented for a simple and straightforward usage.
+        intended for a simple and straightforward usage.
     """
 
     def __init__(self, columns, values=None):

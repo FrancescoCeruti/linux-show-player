@@ -19,7 +19,7 @@
 
 from PyQt5.QtCore import QTime, Qt
 from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QTimeEdit, QLabel, \
-    QSpinBox, QCheckBox, QVBoxLayout
+    QSpinBox, QVBoxLayout
 
 from lisp.ui.settings.settings_page import SettingsPage
 

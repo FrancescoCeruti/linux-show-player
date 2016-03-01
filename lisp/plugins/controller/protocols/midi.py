@@ -17,8 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-import mido
-from PyQt5.QtCore import Qt, QAbstractTableModel, QModelIndex
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QGroupBox, QPushButton, QComboBox, \
     QVBoxLayout, QMessageBox, QTableView, QTableWidget, QHeaderView, QGridLayout
 
@@ -27,7 +26,7 @@ from lisp.modules.midi.input_handler import MIDIInputHandler
 from lisp.plugins.controller.protocols.protocol import Protocol
 from lisp.ui.qdelegates import ComboBoxDelegate, SpinBoxDelegate
 from lisp.ui.qmodels import SimpleTableModel
-from lisp.ui.settings.settings_page import SettingsPage, CueSettingsPage
+from lisp.ui.settings.settings_page import CueSettingsPage
 
 
 class Midi(Protocol):

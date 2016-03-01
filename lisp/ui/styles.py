@@ -20,7 +20,7 @@
 from os import path
 
 from PyQt5.QtGui import QPalette, QColor
-from PyQt5.QtWidgets import QStyleFactory, qApp, QProxyStyle, QStyle
+from PyQt5.QtWidgets import QStyleFactory, qApp
 
 # noinspection PyUnresolvedReferences
 from lisp.ui.style import style  # NEEDED to load assets

@@ -20,6 +20,7 @@
 import time
 from enum import IntEnum
 from weakref import WeakValueDictionary
+
 from lisp.core.clock import Clock
 from lisp.core.decorators import synchronized_method
 from lisp.core.signal import Connection, Signal

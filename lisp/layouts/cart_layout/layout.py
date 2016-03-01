@@ -25,10 +25,10 @@ from lisp.core.signal import Connection
 from lisp.cues.cue import Cue
 from lisp.cues.cue_factory import CueFactory
 from lisp.cues.media_cue import MediaCue
+from lisp.layouts.cart_layout.cart_layout_settings import CartLayoutSettings
 from lisp.layouts.cart_layout.cue_cart_model import CueCartModel
 from lisp.layouts.cart_layout.cue_widget import CueWidget
 from lisp.layouts.cart_layout.page_widget import PageWidget
-from lisp.layouts.cart_layout.cart_layout_settings import CartLayoutSettings
 from lisp.layouts.cue_layout import CueLayout
 from lisp.ui.mainwindow import MainWindow
 from lisp.ui.settings.app_settings import AppSettings
@@ -187,7 +187,7 @@ class CartLayout(QTabWidget, CueLayout):
         self.__pages.append(page)
 
     def select_context_cue(self):
-        self.__context_widget.selected = True
+        self.__context_widget.selected = not self.__context_widget.selected
 
     def select_all(self):
         for widget in self.widgets():

@@ -17,7 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from abc import abstractmethod, ABCMeta
+from abc import abstractmethod
 from enum import Enum
 
 from lisp.core.has_properties import HasProperties, Property

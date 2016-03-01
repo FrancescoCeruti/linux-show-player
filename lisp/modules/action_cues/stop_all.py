@@ -20,10 +20,8 @@
 from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QHBoxLayout, QCheckBox
 
 from lisp.application import Application
-from lisp.core.decorators import async
 from lisp.core.has_properties import Property
 from lisp.cues.cue import Cue, CueState, CueAction
-from lisp.layouts.cue_layout import CueLayout
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
 from lisp.ui.settings.settings_page import SettingsPage
 

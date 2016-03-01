@@ -177,7 +177,7 @@ class PlayingMediaWidget(QWidget):
         self.cue.stop()
 
     def _play(self, *args):
-        self.cue.play()
+        self.cue.start()
 
     def _pause(self, *args):
         self.cue.pause()

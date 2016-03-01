@@ -179,6 +179,7 @@ class CueWidget(QWidget):
         self.cue.changed('name').connect(self._update_name, Connection.QtQueued)
         self.cue.changed('stylesheet').connect(self._update_style, Connection.QtQueued)
         self.cue.changed('duration').connect(self._update_duration, Connection.QtQueued)
+        self.cue.changed('description').connect(self._update_description, Connection.QtQueued)
 
         if isinstance(cue, MediaCue):
             self.cue.media.changed('pipe').connect(self._media_updated)
@@ -225,6 +226,9 @@ class CueWidget(QWidget):
 
     def _update_name(self, name):
         self.nameButton.setText(name)
+
+    def _update_description(self, description):
+        self.nameButton.setToolTip(description)
 
     def _clicked(self, event):
         if event.button() != Qt.RightButton:

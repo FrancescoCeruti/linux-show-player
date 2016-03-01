@@ -16,6 +16,8 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
+
+from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QTreeWidgetItem
 
@@ -28,11 +30,18 @@ class CueListItem(QTreeWidgetItem):
         super().__init__()
 
         self.cue = cue
-        self.cue.changed('name').connect(self._update_name)
-        self.name_column = 1
+        self.num_column = 1
+        self.name_column = 2
 
         self._selected = False
+
+        self.cue.changed('name').connect(self._update_name)
+        self.cue.changed('index').connect(self._update_index)
+
         self._update_name(self.cue.name)
+        self._update_index(self.cue.index)
+
+        self.setTextAlignment(self.num_column, Qt.AlignCenter)
 
     @property
     def selected(self):
@@ -42,6 +51,9 @@ class CueListItem(QTreeWidgetItem):
     def selected(self, value):
         self._selected = value
         self.setIcon(0, self.SELECTED if value else QIcon())
+
+    def _update_index(self, index):
+        self.setText(self.num_column, str(index))
 
     def _update_name(self, name):
         self.setText(self.name_column, name)

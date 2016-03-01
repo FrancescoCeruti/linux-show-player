@@ -23,7 +23,6 @@ from PyQt5.QtGui import QFontMetrics
 from PyQt5.QtWidgets import QGroupBox, QGridLayout, QLabel, QSlider, QVBoxLayout
 
 from lisp.backends.gst.elements.equalizer10 import Equalizer10
-from lisp.ui.qvertiacallabel import QVerticalLabel
 from lisp.backends.gst.settings.settings_page import GstElementSettingsPage
 
 

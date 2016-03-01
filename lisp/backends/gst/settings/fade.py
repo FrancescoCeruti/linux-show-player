@@ -20,7 +20,7 @@
 from PyQt5 import QtCore
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QGroupBox, QGridLayout, \
+from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QGridLayout, \
     QDoubleSpinBox, QLabel, QComboBox, QStyledItemDelegate
 
 from lisp.backends.gst.elements.fade import Fade

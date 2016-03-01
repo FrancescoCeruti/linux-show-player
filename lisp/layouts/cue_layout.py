@@ -23,7 +23,7 @@ from PyQt5.QtWidgets import QAction, QMenu, qApp
 
 from lisp.core.actions_handler import MainActionsHandler
 from lisp.core.signal import Signal
-from lisp.cues.cue import Cue
+from lisp.cues.cue import Cue, CueAction
 from lisp.layouts.cue_layout_actions import ConfigureAction, \
     MultiConfigureAction
 from lisp.layouts.cue_menu_registry import CueMenuRegistry
@@ -49,13 +49,46 @@ class CueLayout:
 
     @property
     def cue_model(self):
-        """:rtype: lisp.model_view.cue_model.CueModel"""
+        """:rtype: lisp.core.cue_model.CueModel"""
         return self._cue_model
 
     @property
     @abstractmethod
     def model_adapter(self):
-        """:rtype: lisp.model_view.model_adapter.ModelAdapter"""
+        """:rtype: lisp.core.model_adapter.ModelAdapter"""
+
+    def current_cue(self):
+        """Return the current cue, or None.
+
+        :rtype: lisp.cues.cue.Cue
+        """
+        if self.model_adapter:
+            try:
+                return self.model_adapter.item(self.current_index())
+            except IndexError:
+                pass
+
+    def current_index(self):
+        """Return the current index, or -1."""
+        return -1
+
+    def set_current_cue(self, cue):
+        """Set the current cue."""
+        self.set_current_index(cue.index)
+
+    def set_current_index(self, index):
+        """Set the current cue by index"""
+
+    def go(self, action=CueAction.Default, advance=1):
+        """Execute the current cue and go ahead.
+
+        .. Note::
+            The advance value can be ignored by the layout.
+
+        :param action: the action the cue should execute
+        :param advance: number of index to advance (with negative will go back)
+        :rtype: lisp.cues.cue.Cue
+        """
 
     @abstractmethod
     def deselect_all(self):

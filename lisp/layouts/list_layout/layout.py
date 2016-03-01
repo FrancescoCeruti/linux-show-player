@@ -16,24 +16,22 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
+from enum import Enum
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QWidget, QAction, QToolBar, QHBoxLayout, \
     QVBoxLayout, QLabel, qApp
 
-from lisp.backends.base.media import MediaState
 from lisp.core.signal import Connection
-from lisp.cues.cue import Cue
+from lisp.cues.cue import Cue, CueState, CueAction
 from lisp.cues.media_cue import MediaCue
 from lisp.layouts.cue_layout import CueLayout
 from lisp.layouts.list_layout.cue_list_model import CueListModel, \
     PlayingMediaCueModel
 from lisp.layouts.list_layout.cue_list_view import CueListView
-from lisp.layouts.list_layout.listwidgets import CueStatusIcon, PreWaitWidget, PostWaitWidget, \
-    CueTimeWidget, NextActionIcon
-from lisp.layouts.list_layout.playing_listwidget import PlayingListWidget
 from lisp.layouts.list_layout.list_layout_settings import ListLayoutSettings
+from lisp.layouts.list_layout.playing_listwidget import PlayingListWidget
 from lisp.ui.mainwindow import MainWindow
 from lisp.ui.settings.app_settings import AppSettings
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
@@ -43,6 +41,11 @@ from lisp.ui.settings.pages.media_cue_settings import MediaCueSettings
 from lisp.utils.configuration import config
 
 AppSettings.register_settings_widget(ListLayoutSettings)
+
+
+class EndListBehavior(Enum):
+    Stop = 'Stop'
+    Restart = 'Restart'
 
 
 class ListLayout(QWidget, CueLayout):
@@ -56,10 +59,6 @@ class ListLayout(QWidget, CueLayout):
             <li>Space to play, CTRL+Space to select, SHIFT+Space or Double-Click to edit;
         </ul>'''
 
-    H_NAMES = ['', 'Cue', 'Pre wait', 'Action', 'Post wait', '']
-    H_WIDGETS = [CueStatusIcon, 'name', PreWaitWidget, CueTimeWidget,
-                 PostWaitWidget, NextActionIcon]
-
     def __init__(self, cue_model, **kwargs):
         super().__init__(cue_model=cue_model, **kwargs)
 
@@ -69,12 +68,18 @@ class ListLayout(QWidget, CueLayout):
 
         self._playing_model = PlayingMediaCueModel(self._cue_model)
         self._context_item = None
+        self._next_cue_index = 0
 
         self._show_dbmeter = config['ListLayout']['ShowDbMeters'] == 'True'
         self._seek_visible = config['ListLayout']['ShowSeek'] == 'True'
         self._accurate_time = config['ListLayout']['ShowAccurate'] == 'True'
-        self._auto_next = config['ListLayout']['AutoNext'] == 'True'
+        self._auto_continue = config['ListLayout']['AutoContinue'] == 'True'
         self._show_playing = config['ListLayout']['ShowPlaying'] == 'True'
+
+        try:
+            self._end_list = EndListBehavior(config['ListLayout']['EndList'])
+        except ValueError:
+            self._end_list = EndListBehavior.Stop
 
         # Add layout-specific menus
         self.showPlayingAction = QAction(self)
@@ -99,7 +104,7 @@ class ListLayout(QWidget, CueLayout):
 
         self.autoNextAction = QAction(self)
         self.autoNextAction.setCheckable(True)
-        self.autoNextAction.setChecked(self._auto_next)
+        self.autoNextAction.setChecked(self._auto_continue)
         self.autoNextAction.triggered.connect(self.set_auto_next)
 
         MainWindow().menuLayout.addAction(self.showPlayingAction)
@@ -112,9 +117,9 @@ class ListLayout(QWidget, CueLayout):
         self.toolBar = QToolBar(MainWindow())
         self.toolBar.setContextMenuPolicy(Qt.PreventContextMenu)
 
-        self.playAction = QAction(self)
-        self.playAction.setIcon(QIcon.fromTheme("media-playback-start"))
-        self.playAction.triggered.connect(self.play_current)
+        self.startAction = QAction(self)
+        self.startAction.setIcon(QIcon.fromTheme("media-playback-start"))
+        self.startAction.triggered.connect(self.start_current)
 
         self.pauseAction = QAction(self)
         self.pauseAction.setIcon(QIcon.fromTheme("media-playback-pause"))
@@ -136,7 +141,7 @@ class ListLayout(QWidget, CueLayout):
         self.restartAllAction.font().setBold(True)
         self.restartAllAction.triggered.connect(self.restart_all)
 
-        self.toolBar.addAction(self.playAction)
+        self.toolBar.addAction(self.startAction)
         self.toolBar.addAction(self.pauseAction)
         self.toolBar.addAction(self.stopAction)
         self.toolBar.addSeparator()
@@ -205,10 +210,10 @@ class ListLayout(QWidget, CueLayout):
         self.showDbMeterAction.setText("Show Db-meters")
         self.showSeekAction.setText("Show seek bars")
         self.accurateTimingAction.setText('Accurate timing')
-        self.autoNextAction.setText('Auto select next cue')
-        self.playAction.setText("Go")
-        self.pauseAction.setText("Pause")
-        self.stopAction.setText("Stop")
+        self.autoNextAction.setText('Auto-change current cue')
+        self.startAction.setText("Start current cue")
+        self.pauseAction.setText("Pause current cue")
+        self.stopAction.setText("Stop current cue")
         self.stopAllAction.setText("Stop All")
         self.pauseAllAction.setText("Pause All")
         self.restartAllAction.setText("Restart All")
@@ -221,9 +226,24 @@ class ListLayout(QWidget, CueLayout):
     def model_adapter(self):
         return self._model_adapter
 
-    def current_cue(self):
-        if self._model_adapter:
-            return self._model_adapter.item(self.listView.currentIndex().row())
+    def current_index(self):
+        return self.listView.currentIndex().row()
+
+    def set_current_index(self, index):
+        if self._end_list == EndListBehavior.Restart:
+            index %= len(self.model_adapter)
+        elif 0 <= index < self.listView.topLevelItemCount():
+            next_item = self.listView.topLevelItem(index)
+            self.listView.setCurrentItem(next_item)
+
+    def go(self, action=CueAction.Default, advance=1):
+        current_cue = self.current_cue()
+        if current_cue is not None:
+            current_cue.execute(action)
+            self.cue_executed.emit(current_cue)
+
+        if self._auto_continue:
+            self.set_current_index(self.current_index() + advance)
 
     def current_item(self):
         if self._model_adapter:
@@ -237,7 +257,7 @@ class ListLayout(QWidget, CueLayout):
         self.playView.accurate_time = accurate
 
     def set_auto_next(self, enable):
-        self._auto_next = enable
+        self._auto_continue = enable
 
     def set_seek_visible(self, visible):
         self._seek_visible = visible
@@ -264,36 +284,26 @@ class ListLayout(QWidget, CueLayout):
                     item.selected = not item.selected
                     return True
             else:
-                cue = self.current_cue()
-                if cue is not None:
-                    cue.execute()
-                    self.cue_executed.emit(cue)
-                if self._auto_next:
-                    nextitem = self.listView.currentIndex().row() + 1
-                    if nextitem < self.listView.topLevelItemCount():
-                        nextitem = self.listView.topLevelItem(nextitem)
-                        self.listView.setCurrentItem(nextitem)
+                self.go()
         else:
             self.key_pressed.emit(e)
 
         e.accept()
 
-    def play_current(self):
+    def start_current(self):
         cue = self.current_cue()
-        if isinstance(cue, MediaCue):
-            cue.media.play()
-        else:
-            cue.execute()
+        if cue is not None:
+            cue.start()
 
     def pause_current(self):
         cue = self.current_cue()
-        if isinstance(cue, MediaCue):
-            cue.media.pause()
+        if cue is not None:
+            cue.pause()
 
     def stop_current(self):
         cue = self.current_cue()
-        if isinstance(cue, MediaCue):
-            cue.media.stop()
+        if cue is not None:
+            cue.stop()
 
     def double_clicked(self, event):
         cue = self.current_cue()
@@ -315,19 +325,16 @@ class ListLayout(QWidget, CueLayout):
 
     def stop_all(self):
         for cue in self._model_adapter:
-            if isinstance(cue, MediaCue):
-                cue.media.stop()
+            cue.stop()
 
     def pause_all(self):
         for cue in self._model_adapter:
-            if isinstance(cue, MediaCue):
-                cue.media.pause()
+            cue.pause()
 
     def restart_all(self):
         for cue in self._model_adapter:
-            if isinstance(cue, MediaCue):
-                if cue.media.state == MediaState.Paused:
-                    cue.media.play()
+            if cue.state == CueState.Pause:
+                cue.start()
 
     def get_selected_cues(self, cue_class=Cue):
         cues = []
@@ -373,7 +380,7 @@ class ListLayout(QWidget, CueLayout):
             item.selected = not item.selected
 
     def __cue_added(self, cue):
-        cue.next.connect(self.__execute_next, Connection.QtQueued)
+        cue.next.connect(self.__cue_next, Connection.QtQueued)
 
     def __cue_removed(self, cue):
         if isinstance(cue, MediaCue):
@@ -381,9 +388,14 @@ class ListLayout(QWidget, CueLayout):
         else:
             cue.stop()
 
-    def __execute_next(self, cue):
+    def __cue_next(self, cue):
         try:
-            next_cue = self._model_adapter.item(cue.index + 1)
-            next_cue.execute()
+            next_index = cue.index + 1
+            if next_index < len(self._model_adapter):
+                next_cue = self._model_adapter.item(next_index)
+                next_cue.execute()
+
+                if self._auto_continue and next_cue == self.current_cue():
+                    self.set_current_index(next_index + 1)
         except(IndexError, KeyError):
             pass

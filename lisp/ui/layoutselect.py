@@ -72,13 +72,14 @@ class LayoutSelect(QDialog):
 
         if self.layoutBox.count() == 0:
             raise Exception('No layout installed!')
+
         self.show_description(self.layoutBox.currentText())
 
         self.layoutBox.currentTextChanged.connect(self.show_description)
         self.layButton.clicked.connect(self.accept)
         self.fileButton.clicked.connect(self.open_file)
 
-    def slected(self):
+    def selected(self):
         return self.layouts[self.layoutBox.currentText()][0]
 
     def show_description(self, layout_name):

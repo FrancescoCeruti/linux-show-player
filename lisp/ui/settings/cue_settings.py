@@ -22,12 +22,11 @@ from copy import deepcopy
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QDialog, QTabWidget, QDialogButtonBox
 
-from lisp.utils.util import deep_update
-
 from lisp.core.class_based_registry import ClassBasedRegistry
 from lisp.core.singleton import Singleton
 from lisp.cues.cue import Cue
 from lisp.ui.settings.settings_page import SettingsPage, CueSettingsPage
+from lisp.utils.util import deep_update
 
 
 class CueSettingsRegistry(ClassBasedRegistry, metaclass=Singleton):

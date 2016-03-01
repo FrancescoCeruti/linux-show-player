@@ -67,15 +67,17 @@ class Cue(HasProperties):
     :ivar id: Identify the cue uniquely. Should NEVER change after init.
     :ivar index: Cue position in the view.
     :ivar name: Cue visualized name.
+    :ivar description: Cue text description.
     :ivar stylesheet: Cue style, used by the view.
     :ivar duration: The cue duration in milliseconds. (0 means no duration)
     :ivar stop_pause: If True, by default the cue is paused instead of stopped.
     :ivar pre_wait: Cue pre-wait in seconds.
     :ivar post_wait: Cue post-wait in seconds (see note).
     :ivar next_action: What do after post_wait (see note).
-    :cvar CueActions: actions supported by the cue, by default any cue MUST
-                      support at least CueAction.Start. A cue can support
-                      CueAction.Default only if providing CueAction.Stop.
+    :cvar CueActions: actions supported by the cue (default: CueAction.Start)
+
+    A cue should declare CueAction.Default as supported only if CueAction.Stop
+    is also supported.
 
     .. Note::
         If 'next_action' is set to CueNextAction.AutoFollow value, then the
@@ -87,6 +89,7 @@ class Cue(HasProperties):
     id = Property()
     name = Property(default='Untitled')
     index = Property(default=-1)
+    description = Property(default='')
     stylesheet = Property(default='')
     duration = Property(default=0)
     stop_pause = Property(default=False)
@@ -121,6 +124,11 @@ class Cue(HasProperties):
 
     def execute(self, action=CueAction.Default):
         """Execute the specified action, if supported.
+
+        .. Note::
+            Even if not specified in Cue.CueActions, when CueAction.Default
+            is given, a "default" action is selected depending on the current
+            cue state, if this action is not supported nothing will be done.
 
         :param action: the action to be performed
         """

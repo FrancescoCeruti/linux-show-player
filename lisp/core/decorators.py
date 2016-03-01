@@ -16,6 +16,8 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
+
+import logging
 import traceback
 from functools import wraps, partial
 from threading import Thread, Lock, RLock
@@ -142,22 +144,21 @@ def synchronized_method(target=None, *, lock_name=None, blocking=True,
     return wrapped
 
 
-def suppress_exceptions(target=None, *, print_exc=True):
+def suppress_exceptions(target=None, *, log=True):
     """Suppress all the exception in the decorated function.
 
-    :param print_exc: If True (the default) the exceptions are printed.
+    :param log: If True (the default) exceptions are logged as warnings.
     """
 
     if target is None:
-        return partial(suppress_exceptions, print_exc=print_exc)
+        return partial(suppress_exceptions, print_exc=log)
 
     @wraps(target)
     def wrapped(*args, **kwargs):
         try:
             return target(*args, **kwargs)
         except Exception:
-            if print_exc:
-                traceback.print_exc()
+            logging.warning('Exception suppressed:\n' + traceback.format_exc())
 
     return wrapped
 

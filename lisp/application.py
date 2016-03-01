@@ -95,7 +95,7 @@ class Application(metaclass=Singleton):
             if exists(dialog.filepath):
                 self._load_from_file(dialog.filepath)
             else:
-                self._new_session(dialog.slected())
+                self._new_session(dialog.selected())
 
         except Exception as e:
             logging.exception('Startup error', e)

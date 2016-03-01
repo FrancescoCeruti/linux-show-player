@@ -19,7 +19,6 @@
 
 import os
 
-import time
 from PyQt5 import QtCore
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtWidgets import QMainWindow, QWidget, QGridLayout, QStatusBar, \
@@ -27,7 +26,6 @@ from PyQt5.QtWidgets import QMainWindow, QWidget, QGridLayout, QStatusBar, \
     QMessageBox
 
 from lisp.core.actions_handler import MainActionsHandler
-from lisp.core.signal import Signal
 from lisp.core.singleton import QSingleton
 from lisp.ui import about
 from lisp.ui.settings.app_settings import AppSettings
