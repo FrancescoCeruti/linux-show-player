@@ -16,6 +16,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
+
 from enum import Enum
 
 from PyQt5.QtCore import Qt
@@ -315,7 +316,9 @@ class ListLayout(QWidget, CueLayout):
         if self._context_item is not None:
             self.show_context_menu(event.globalPos())
 
-        event.accept()
+    def contextMenuEvent(self, event):
+        if self.listView.geometry().contains(event.pos()):
+            super().contextMenuEvent(event)
 
     def remove_context_cue(self):
         self._model_adapter.remove(self.get_context_cue())

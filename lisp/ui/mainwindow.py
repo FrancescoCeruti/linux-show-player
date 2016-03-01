@@ -20,7 +20,7 @@
 import os
 
 from PyQt5 import QtCore
-from PyQt5.QtCore import pyqtSignal
+from PyQt5.QtCore import pyqtSignal, Qt
 from PyQt5.QtWidgets import QMainWindow, QWidget, QGridLayout, QStatusBar, \
     QMenuBar, QMenu, QAction, qApp, QSizePolicy, QFileDialog, QDialog, \
     QMessageBox
@@ -44,11 +44,6 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
 
         self._cue_add_menu = {}
         self.layout = None
-
-        # Define the layout and the main gui's elements
-        self.setCentralWidget(QWidget(self))
-        self.gridLayout = QGridLayout(self.centralWidget())
-        self.gridLayout.setContentsMargins(2, 5, 2, 0)
 
         # Status Bar
         self.statusBar = QStatusBar(self)
@@ -184,8 +179,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
 
     def set_layout(self, layout):
         if self.layout is not None:
-            self.layout.hide()
-            self.gridLayout.removeWidget(self.layout)
+            self.takeCentralWidget().hide()
 
             self.multiEdit.triggered.disconnect()
             self.selectAll.triggered.disconnect()
@@ -193,17 +187,29 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
             self.invertSelection.triggered.disconnect()
 
         self.layout = layout
+        self.setCentralWidget(self.layout)
+        self.layout.show()
 
         self.multiEdit.triggered.connect(self.layout.edit_selected_cues)
         self.selectAll.triggered.connect(self.layout.select_all)
         self.deselectAll.triggered.connect(self.layout.deselect_all)
         self.invertSelection.triggered.connect(self.layout.invert_selection)
 
-        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
-        self.layout.setSizePolicy(sizePolicy)
-        self.gridLayout.addWidget(self.layout, 0, 0)
+    def contextMenuEvent(self, event):
+        if self.layout.geometry().contains(event.pos()):
+            self.menuEdit.move(event.globalPos())
+            self.menuEdit.show()
 
-        self.layout.show()
+            # Adjust the menu position
+            desktop = qApp.desktop().availableGeometry()
+            menu_rect = self.menuEdit.geometry()
+    
+            if menu_rect.bottom() > desktop.bottom():
+                self.menuEdit.move(self.menuEdit.x(),
+                                   self.menuEdit.y() - self.menuEdit.height())
+            if menu_rect.right() > desktop.right():
+                self.menuEdit.move(self.menuEdit.x() - self.menuEdit.width(),
+                                   self.menuEdit.y())
 
     def closeEvent(self, event):
         self._exit()

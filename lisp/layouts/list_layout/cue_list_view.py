@@ -68,7 +68,10 @@ class CueListView(QTreeWidget):
         self.setIndentation(0)
 
     def contextMenuEvent(self, event):
-        self.context_event.emit(event)
+        if self.itemAt(event.pos()) is not None:
+            self.context_event.emit(event)
+        else:
+            super().contextMenuEvent(event)
 
     def keyPressEvent(self, event):
         self.key_event.emit(event)
