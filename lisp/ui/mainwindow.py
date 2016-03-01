@@ -20,9 +20,9 @@
 import os
 
 from PyQt5 import QtCore
-from PyQt5.QtCore import pyqtSignal, Qt
-from PyQt5.QtWidgets import QMainWindow, QWidget, QGridLayout, QStatusBar, \
-    QMenuBar, QMenu, QAction, qApp, QSizePolicy, QFileDialog, QDialog, \
+from PyQt5.QtCore import pyqtSignal
+from PyQt5.QtWidgets import QMainWindow, QStatusBar, \
+    QMenuBar, QMenu, QAction, qApp, QFileDialog, QDialog, \
     QMessageBox
 
 from lisp.core.actions_handler import MainActionsHandler

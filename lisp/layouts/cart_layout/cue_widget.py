@@ -231,14 +231,15 @@ class CueWidget(QWidget):
         self.nameButton.setToolTip(description)
 
     def _clicked(self, event):
-        if event.button() != Qt.RightButton:
-            if event.modifiers() == Qt.ShiftModifier:
-                self.edit_request.emit(self.cue)
-            elif event.modifiers() == Qt.ControlModifier:
-                self.selected = not self.selected
-            else:
-                self.cue_executed.emit(self.cue)
-                self.cue.execute()
+        if not self.seekSlider.geometry().contains(event.pos()):
+            if event.button() != Qt.RightButton:
+                if event.modifiers() == Qt.ShiftModifier:
+                    self.edit_request.emit(self.cue)
+                elif event.modifiers() == Qt.ControlModifier:
+                    self.selected = not self.selected
+                else:
+                    self.cue_executed.emit(self.cue)
+                    self.cue.execute()
 
     def _update_style(self, stylesheet):
         stylesheet += 'text-decoration: underline;' if self.selected else ''
@@ -277,13 +278,13 @@ class CueWidget(QWidget):
 
     def _update_duration(self, duration):
         # Update the maximum values of seek-slider and time progress-bar
-        self.seekSlider.setMaximum(duration)
         if duration > 0:
             if not self.timeBar.isVisible():
                 self.layout().addWidget(self.timeBar, 1, 0, 1, 2)
                 self.layout().setRowStretch(1, 1)
                 self.timeBar.show()
             self.timeBar.setMaximum(duration)
+            self.seekSlider.setMaximum(duration)
         else:
             self.timeBar.hide()
             self.layout().setRowStretch(1, 0)
