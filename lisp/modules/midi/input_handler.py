@@ -24,7 +24,7 @@ from lisp.modules.midi.midi_common import MIDICommon
 class MIDIInputHandler(MIDICommon):
 
     def __init__(self, port_name='default', backend_name=None):
-        super().__init__()
+        super().__init__(port_name=port_name, backend_name=backend_name)
 
         self.alternate_mode = False
         self.new_message = Signal()

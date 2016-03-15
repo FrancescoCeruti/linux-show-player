@@ -40,7 +40,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
 
     def __init__(self):
         super().__init__()
-        self.setMinimumSize(400, 300)
+        self.setMinimumSize(500, 400)
 
         self._cue_add_menu = {}
         self.layout = None

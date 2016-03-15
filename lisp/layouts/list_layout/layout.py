@@ -20,19 +20,20 @@
 from enum import Enum
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QWidget, QAction, QToolBar, QHBoxLayout, \
-    QVBoxLayout, QLabel, qApp
+from PyQt5.QtWidgets import QWidget, QAction, qApp, QGridLayout, \
+    QPushButton, QSizePolicy
 
 from lisp.core.signal import Connection
 from lisp.cues.cue import Cue, CueState, CueAction
 from lisp.cues.media_cue import MediaCue
 from lisp.layouts.cue_layout import CueLayout
+from lisp.layouts.list_layout.control_buttons import ControlButtons
 from lisp.layouts.list_layout.cue_list_model import CueListModel, \
     PlayingMediaCueModel
 from lisp.layouts.list_layout.cue_list_view import CueListView
+from lisp.layouts.list_layout.info_panel import InfoPanel
 from lisp.layouts.list_layout.list_layout_settings import ListLayoutSettings
-from lisp.layouts.list_layout.playing_listwidget import PlayingListWidget
+from lisp.layouts.list_layout.playing_list_widget import PlayingListWidget
 from lisp.ui.mainwindow import MainWindow
 from lisp.ui.settings.app_settings import AppSettings
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
@@ -50,7 +51,6 @@ class EndListBehavior(Enum):
 
 
 class ListLayout(QWidget, CueLayout):
-
     NAME = 'List Layout'
     DESCRIPTION = '''
         This layout organize the cues in a list:
@@ -114,74 +114,50 @@ class ListLayout(QWidget, CueLayout):
         MainWindow().menuLayout.addAction(self.accurateTimingAction)
         MainWindow().menuLayout.addAction(self.autoNextAction)
 
-        # Add a toolbar to MainWindow
-        self.toolBar = QToolBar(MainWindow())
-        self.toolBar.setContextMenuPolicy(Qt.PreventContextMenu)
+        self.setLayout(QGridLayout())
+        self.layout().setContentsMargins(5, 5, 5, 5)
 
-        self.startAction = QAction(self)
-        self.startAction.setIcon(QIcon.fromTheme("media-playback-start"))
-        self.startAction.triggered.connect(self.start_current)
+        # GO-BUTTON (top-left)
+        self.goButton = QPushButton('GO', self)
+        self.goButton.setFocusPolicy(Qt.NoFocus)
+        self.goButton.setFixedWidth(120)
+        self.goButton.setFixedHeight(100)
+        self.goButton.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
+        self.goButton.setStyleSheet('font-size: 48pt;')
+        self.goButton.clicked.connect(self.__go_slot)
+        self.layout().addWidget(self.goButton, 0, 0)
 
-        self.pauseAction = QAction(self)
-        self.pauseAction.setIcon(QIcon.fromTheme("media-playback-pause"))
-        self.pauseAction.triggered.connect(self.pause_current)
+        # INFO PANEL (top center)
+        self.infoPanel = InfoPanel()
+        self.infoPanel.setFixedHeight(100)
+        self.layout().addWidget(self.infoPanel, 0, 1)
 
-        self.stopAction = QAction(self)
-        self.stopAction.setIcon(QIcon.fromTheme("media-playback-stop"))
-        self.stopAction.triggered.connect(self.stop_current)
+        # CONTROL-BUTTONS (top-right)
+        self.controlButtons = ControlButtons(parent=self)
+        self.controlButtons.setFixedHeight(100)
+        self.controlButtons.stopButton.clicked.connect(self.stop_all)
+        self.controlButtons.pauseButton.clicked.connect(self.pause_all)
+        self.controlButtons.restartButton.clicked.connect(self.restart_all)
+        self.layout().addWidget(self.controlButtons, 0, 2)
 
-        self.stopAllAction = QAction(self)
-        self.stopAllAction.font().setBold(True)
-        self.stopAllAction.triggered.connect(self.stop_all)
-
-        self.pauseAllAction = QAction(self)
-        self.pauseAllAction.font().setBold(True)
-        self.pauseAllAction.triggered.connect(self.pause_all)
-
-        self.restartAllAction = QAction(self)
-        self.restartAllAction.font().setBold(True)
-        self.restartAllAction.triggered.connect(self.restart_all)
-
-        self.toolBar.addAction(self.startAction)
-        self.toolBar.addAction(self.pauseAction)
-        self.toolBar.addAction(self.stopAction)
-        self.toolBar.addSeparator()
-        self.toolBar.addAction(self.stopAllAction)
-        self.toolBar.addAction(self.pauseAllAction)
-        self.toolBar.addAction(self.restartAllAction)
-
-        MainWindow().addToolBar(self.toolBar)
-
-        self.hLayout = QHBoxLayout(self)
-        self.hLayout.setContentsMargins(5, 5, 5, 5)
-
-        # On the left (cue list)
+        # CUE VIEW (center left)
         self.listView = CueListView(self._model_adapter, self)
-        self.listView.context_event.connect(self.context_event)
         self.listView.itemDoubleClicked.connect(self.double_clicked)
+        self.listView.currentChanged = self.__current_changed
+        self.listView.context_event.connect(self.context_event)
         self.listView.key_event.connect(self.onKeyPressEvent)
-        self.hLayout.addWidget(self.listView)
+        self.layout().addWidget(self.listView, 1, 0, 1, 2)
 
-        self.playingLayout = QVBoxLayout()
-        self.playingLayout.setContentsMargins(0, 0, 0, 0)
-        self.playingLayout.setSpacing(2)
-
-        # On the right (playing media-cues)
-        self.playViewLabel = QLabel('Playing', self)
-        self.playViewLabel.setAlignment(Qt.AlignCenter)
-        self.playViewLabel.setStyleSheet('font-size: 17pt; font-weight: bold;')
-        self.playingLayout.addWidget(self.playViewLabel)
-
+        # PLAYING VIEW (center right)
         self.playView = PlayingListWidget(self._playing_model, parent=self)
         self.playView.dbmeter_visible = self._show_dbmeter
         self.playView.accurate_time = self._accurate_time
         self.playView.seek_visible = self._seek_visible
         self.playView.setMinimumWidth(300)
         self.playView.setMaximumWidth(300)
-        self.playingLayout.addWidget(self.playView)
+        self.layout().addWidget(self.playView, 1, 2)
 
         self.set_playing_visible(self._show_playing)
-        self.hLayout.addLayout(self.playingLayout)
 
         # TODO: maybe can be moved outside the layout
         # Add cue preferences widgets
@@ -212,12 +188,6 @@ class ListLayout(QWidget, CueLayout):
         self.showSeekAction.setText("Show seek bars")
         self.accurateTimingAction.setText('Accurate timing')
         self.autoNextAction.setText('Auto-change current cue')
-        self.startAction.setText("Start current cue")
-        self.pauseAction.setText("Pause current cue")
-        self.stopAction.setText("Stop current cue")
-        self.stopAllAction.setText("Stop All")
-        self.pauseAllAction.setText("Pause All")
-        self.restartAllAction.setText("Restart All")
 
         self.edit_action.setText('Edit option')
         self.remove_action.setText('Remove')
@@ -243,8 +213,8 @@ class ListLayout(QWidget, CueLayout):
             current_cue.execute(action)
             self.cue_executed.emit(current_cue)
 
-        if self._auto_continue:
-            self.set_current_index(self.current_index() + advance)
+            if self._auto_continue:
+                self.set_current_index(self.current_index() + advance)
 
     def current_item(self):
         if self._model_adapter:
@@ -271,7 +241,7 @@ class ListLayout(QWidget, CueLayout):
     def set_playing_visible(self, visible):
         self._show_playing = visible
         self.playView.setVisible(visible)
-        self.playViewLabel.setVisible(visible)
+        self.controlButtons.setVisible(visible)
 
     def onKeyPressEvent(self, e):
         if not e.isAutoRepeat() and e.key() == Qt.Key_Space:
@@ -349,8 +319,6 @@ class ListLayout(QWidget, CueLayout):
 
     def finalize(self):
         MainWindow().menuLayout.clear()
-        MainWindow().removeToolBar(self.toolBar)
-        self.toolBar.deleteLater()
 
         # Disconnect menu-actions signals
         self.edit_action.triggered.disconnect()
@@ -381,6 +349,16 @@ class ListLayout(QWidget, CueLayout):
         for index in range(self.listView.topLevelItemCount()):
             item = self.listView.topLevelItem(index)
             item.selected = not item.selected
+
+    def __go_slot(self):
+        self.go()
+
+    def __current_changed(self, index_new, index_old):
+        try:
+            cue = self.model_adapter.item(index_new.row())
+            self.infoPanel.cue_changed(cue)
+        except IndexError:
+            self.infoPanel.cue_changed(None)
 
     def __cue_added(self, cue):
         cue.next.connect(self.__cue_next, Connection.QtQueued)

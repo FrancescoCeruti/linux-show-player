@@ -17,7 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QSize
 from PyQt5.QtGui import QIcon, QColor
 from PyQt5.QtWidgets import QWidget, QGridLayout, QLabel, QSizePolicy, \
     QPushButton, QLCDNumber
@@ -60,6 +60,7 @@ class PlayingMediaWidget(QWidget):
         self.playPauseButton.setSizePolicy(QSizePolicy.Ignored,
                                            QSizePolicy.Ignored)
         self.playPauseButton.setIcon(QIcon.fromTheme('media-playback-pause'))
+        self.playPauseButton.setIconSize(QSize(24, 24))
         self.playPauseButton.setFocusPolicy(Qt.NoFocus)
         self.playPauseButton.clicked.connect(self._pause)
         self.gridLayout.addWidget(self.playPauseButton, 1, 0)
@@ -67,6 +68,7 @@ class PlayingMediaWidget(QWidget):
         self.stopButton = QPushButton(self.gridLayoutWidget)
         self.stopButton.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
         self.stopButton.setIcon(QIcon.fromTheme('media-playback-stop'))
+        self.stopButton.setIconSize(QSize(24, 24))
         self.stopButton.setFocusPolicy(Qt.NoFocus)
         self.stopButton.clicked.connect(self._stop)
         self.gridLayout.addWidget(self.stopButton, 1, 1)

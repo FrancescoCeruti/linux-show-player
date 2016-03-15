@@ -114,8 +114,12 @@ class CueListView(QTreeWidget):
         self.__init_item(item, self._model.item(end))
 
     def __cue_removed(self, cue):
+        self.takeTopLevelItem(cue.index)
+
         index = cue.index
-        self.takeTopLevelItem(index)
+        if index > 0:
+            index -= 1
+        self.setCurrentIndex(self.model().index(index, 0))
 
     def __init_item(self, item, cue):
         item.name_column = CueListView.H_NAMES.index('Cue')

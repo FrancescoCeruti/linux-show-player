@@ -124,7 +124,6 @@ QTabWidget:focus, QCheckBox:focus, QRadioButton:focus {
 QLineEdit {
     background-color: #202020;
     padding: 2px;
-    border-style: solid;
     border: 1px solid #3A3A3A;
     border-radius: 3px;
     color: white;
@@ -597,7 +596,11 @@ QRadioButton:indicator:checked:disabled {
 }
 
 
-/* CUSTOM WIDGETS */
+/*
+ ******************
+ * CUSTOM WIDGETS *
+ ******************
+*/
 
 #CartTabBar::tab {
     height: 35px;
@@ -689,4 +692,8 @@ QRadioButton:indicator:checked:disabled {
 
 #ListTimeWidget:chunk:horizontal[state="error"] {
     background-color: #CC0000;
+}
+
+#InfoPanelDescription[readOnly="true"] {
+    border: 1px solid #3A3A3A;
 }
