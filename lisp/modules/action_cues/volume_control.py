@@ -246,7 +246,7 @@ class VolumeSettings(SettingsPage):
                 self.cueLabel.setText(cue.name)
 
             self.volumeEdit.setValue(settings['volume'])
-            self.fadeSpin.setValue(settings['duration'] // 1000)
+            self.fadeSpin.setValue(settings['duration'] / 1000)
             self.fadeCurveCombo.setCurrentText(settings['fade_type'])
 
 
