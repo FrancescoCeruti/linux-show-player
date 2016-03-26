@@ -96,7 +96,9 @@ class GstMedia(Media):
                 raise ValueError('Invalid pipeline "{0}"'.format(pipe))
 
             # Build the pipeline
+            elements_properties = self.elements_properties()
             self.__build_pipeline()
+            self.update_elements(elements_properties)
 
             if 'uri' in self._elements[0].__properties__:
                 self._elements[0].changed('uri').connect(self.__uri_changed)
