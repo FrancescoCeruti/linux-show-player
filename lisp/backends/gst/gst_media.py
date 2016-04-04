@@ -274,8 +274,7 @@ class GstMedia(Media):
 
     def __build_pipeline(self):
         # Set to NULL the pipeline
-        if self._gst_pipe is not None:
-            self.interrupt(dispose=True)
+        self.interrupt(dispose=True)
         # Remove all pipeline children
         for __ in range(self._gst_pipe.get_children_count()):
             self._gst_pipe.remove(self._gst_pipe.get_child_by_index(0))

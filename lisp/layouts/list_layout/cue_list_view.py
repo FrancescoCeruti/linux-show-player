@@ -67,6 +67,8 @@ class CueListView(QTreeWidget):
 
         self.setIndentation(0)
 
+        self.currentItemChanged.connect(self.__current_changed)
+
     def contextMenuEvent(self, event):
         if self.itemAt(event.pos()) is not None:
             self.context_event.emit(event)
@@ -90,6 +92,9 @@ class CueListView(QTreeWidget):
         self._drag_item = self.itemAt(event.pos())
         self._drag_start = self.indexFromItem(self._drag_item).row()
         super().mousePressEvent(event)
+
+    def __current_changed(self, current_item, previous_item):
+        self.scrollToItem(current_item)
 
     def __cue_added(self, cue):
         item = CueListItem(cue)

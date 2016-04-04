@@ -25,11 +25,11 @@ from lisp.core.action import Action
 class MementoAction(Action):
     """Actions created by the MementoModel to register model changes."""
 
-    __slots__ = ('_memento', '_model')
+    __slots__ = ('_m_model', '_model')
 
-    def __init__(self, memento, model):
+    def __init__(self, m_model, model):
         super().__init__()
-        self._memento = memento
+        self._m_model = m_model
         self._model = model
 
     def do(self):
@@ -37,17 +37,17 @@ class MementoAction(Action):
 
     def undo(self):
         try:
-            self._memento.lock()
+            self._m_model.lock()
             self.__undo__()
         finally:
-            self._memento.unlock()
+            self._m_model.unlock()
 
     def redo(self):
         try:
-            self._memento.lock()
+            self._m_model.lock()
             self.__redo__()
         finally:
-            self._memento.unlock()
+            self._m_model.unlock()
 
     @abstractmethod
     def __undo__(self):
@@ -62,8 +62,8 @@ class AddItemAction(MementoAction):
 
     __slots__ = '__item'
 
-    def __init__(self, memento, model, item):
-        super().__init__(memento, model)
+    def __init__(self, m_model, model, item):
+        super().__init__(m_model, model)
         self.__item = item
 
     def __undo__(self):
@@ -77,8 +77,8 @@ class RemoveItemAction(MementoAction):
 
     __slots__ = '__item'
 
-    def __init__(self, memento, model, item):
-        super().__init__(memento, model)
+    def __init__(self, m_model, model, item):
+        super().__init__(m_model, model)
         self.__item = item
 
     def __undo__(self):
@@ -92,8 +92,8 @@ class MoveItemAction(MementoAction):
 
     __slots__ = ('__old_index', '__new_index')
 
-    def __init__(self, memento, model_adapter, old_index, new_index):
-        super().__init__(memento, model_adapter)
+    def __init__(self, m_model, model_adapter, old_index, new_index):
+        super().__init__(m_model, model_adapter)
         self.__old_index = old_index
         self.__new_index = new_index
 

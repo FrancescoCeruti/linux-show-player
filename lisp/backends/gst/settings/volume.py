@@ -47,7 +47,7 @@ class VolumeSettings(GstElementSettingsPage):
         self.volumeBox.layout().addWidget(self.muteButton)
 
         self.volume = QSlider(self.volumeBox)
-        self.volume.setRange(-1000, 100)
+        self.volume.setRange(-1000, 60)
         self.volume.setPageStep(1)
         self.volume.setOrientation(Qt.Horizontal)
         self.volume.valueChanged.connect(self.volume_changed)
@@ -97,6 +97,8 @@ class VolumeSettings(GstElementSettingsPage):
         if not (checkable and not self.normalBox.isChecked()):
             if self.normalReset.isChecked():
                 conf["normal_volume"] = 1
+                # If the apply button is pressed, show the correct value
+                self.normalLabel.setText('0 dB')
             else:
                 conf["normal_volume"] = self.normal
 
@@ -107,16 +109,8 @@ class VolumeSettings(GstElementSettingsPage):
             self.volume.setValue(linear_to_db(settings[self.id]["volume"]) * 10)
             self.muteButton.setMute(settings[self.id]["mute"])
             self.normal = settings[self.id]["normal_volume"]
-            self.normalLabel.setText(str(round(linear_to_db(self.normal), 3))
-                                     + " dB")
+            self.normalLabel.setText(str(round(linear_to_db(self.normal), 3)) +
+                                     " dB")
 
     def volume_changed(self, value):
         self.volumeLabel.setText(str(value / 10.0) + " dB")
-
-    def pan_changed(self, value):
-        if value < 0:
-            self.panLabel.setText("Left")
-        elif value > 0:
-            self.panLabel.setText("Right")
-        else:
-            self.panLabel.setText("Center")

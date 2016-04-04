@@ -24,8 +24,8 @@ from PyQt5.QtWidgets import QAction, QMenu, qApp
 from lisp.core.actions_handler import MainActionsHandler
 from lisp.core.signal import Signal
 from lisp.cues.cue import Cue, CueAction
-from lisp.layouts.cue_layout_actions import ConfigureAction, \
-    MultiConfigureAction
+from lisp.layouts.cue_layout_actions import CueUpdateAction, \
+    CuesUpdateAction
 from lisp.layouts.cue_menu_registry import CueMenuRegistry
 from lisp.ui.mainwindow import MainWindow
 from lisp.ui.settings.cue_settings import CueSettings
@@ -102,7 +102,7 @@ class CueLayout:
         edit_ui = CueSettings(cue, parent=MainWindow())
 
         def on_apply(settings):
-            action = ConfigureAction(settings, cue)
+            action = CueUpdateAction(settings, cue)
             MainActionsHandler().do_action(action)
 
         edit_ui.on_apply.connect(on_apply)
@@ -116,7 +116,7 @@ class CueLayout:
             edit_ui = CueSettings(cue_class=greatest_common_superclass(cues))
 
             def on_apply(settings):
-                action = MultiConfigureAction(settings, cues)
+                action = CuesUpdateAction(settings, cues)
                 MainActionsHandler().do_action(action)
 
             edit_ui.on_apply.connect(on_apply)

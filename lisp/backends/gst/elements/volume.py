@@ -57,5 +57,5 @@ class Volume(GstMediaElement):
         return self.audio_convert
 
     def play(self):
-        self.update_properties(self.properties())
-
+        self.current_mute = self.mute
+        self.current_volume = self.volume

@@ -54,10 +54,12 @@ class CueWidget(QWidget):
         self._selected = False
         self._accurate_timing = False
         self._show_dbmeter = False
+        self._show_volume = False
         self._countdown_mode = True
 
         self._dbmeter_element = None
         self._fade_element = None
+        self._volume_element = None
 
         self.setAttribute(Qt.WA_TranslucentBackground)
         self.setLayout(QGridLayout())
@@ -85,6 +87,15 @@ class CueWidget(QWidget):
         self.seekSlider.setOrientation(Qt.Horizontal)
         self.seekSlider.setFocusPolicy(Qt.NoFocus)
         self.seekSlider.setVisible(False)
+
+        # Volume percentage slider (0%-200%)
+        self.volumeSlider = QClickSlider(self.nameButton)
+        self.volumeSlider.setOrientation(Qt.Vertical)
+        self.volumeSlider.setFocusPolicy(Qt.NoFocus)
+        self.volumeSlider.setRange(0, 200)
+        self.volumeSlider.sliderMoved.connect(self._change_volume, Qt.DirectConnection)
+        self.volumeSlider.sliderJumped.connect(self._change_volume, Qt.DirectConnection)
+        self.volumeSlider.setVisible(False)
 
         self.dbMeter = QDbMeter(self)
         self.dbMeter.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
@@ -165,12 +176,39 @@ class CueWidget(QWidget):
                 if self._dbmeter_element is not None:
                     self._dbmeter_element.level_ready.connect(self.dbMeter.plot)
 
-                self.layout().addWidget(self.dbMeter, 0, 1)
-                self.layout().setColumnStretch(1, 1)
+                self.layout().addWidget(self.dbMeter, 0, 2)
+                self.layout().setColumnStretch(2, 1)
                 self.dbMeter.show()
             else:
+                self.layout().removeWidget(self.dbMeter)
+                self.layout().setColumnStretch(2, 0)
                 self.dbMeter.hide()
+
+            self.update()
+
+    def show_volume_slider(self, visible):
+        if isinstance(self.cue, MediaCue):
+            self._show_volume = visible
+
+            if self._volume_element is not None:
+                self._volume_element.changed('volume').disconnect(self._reset_volume)
+                self._volume_element = None
+
+            if visible:
+                self.volumeSlider.setEnabled(self.cue.state == CueState.Running)
+                self._volume_element = self.cue.media.element('Volume')
+                if self._volume_element is not None:
+                    self._reset_volume()
+                    self._volume_element.changed('volume').connect(self._reset_volume,
+                                                                   Connection.QtQueued)
+
+                self.layout().addWidget(self.volumeSlider, 0, 1)
+                self.layout().setColumnStretch(1, 1)
+                self.volumeSlider.show()
+            else:
+                self.layout().removeWidget(self.volumeSlider)
                 self.layout().setColumnStretch(1, 0)
+                self.volumeSlider.hide()
 
             self.update()
 
@@ -208,6 +246,7 @@ class CueWidget(QWidget):
 
     def _media_updated(self):
         self.show_dbmeters(self._show_dbmeter)
+        self.show_volume_slider(self._show_volume)
 
         new_fade = self.cue.media.element('Fade')
         if new_fade is not self._fade_element:
@@ -230,8 +269,16 @@ class CueWidget(QWidget):
     def _update_description(self, description):
         self.nameButton.setToolTip(description)
 
+    def _reset_volume(self):
+        if self._volume_element is not None:
+            self.volumeSlider.setValue(self._volume_element.volume * 100)
+
+    def _change_volume(self, new_volume):
+        self._volume_element.current_volume = new_volume / 100
+
     def _clicked(self, event):
-        if not self.seekSlider.geometry().contains(event.pos()):
+        if not (self.seekSlider.geometry().contains(event.pos()) and
+                self.seekSlider.isVisible()):
             if event.button() != Qt.RightButton:
                 if event.modifiers() == Qt.ShiftModifier:
                     self.edit_request.emit(self.cue)
@@ -261,26 +308,33 @@ class CueWidget(QWidget):
     def _status_stopped(self):
         self.statusIcon.setPixmap(CueWidget.STOP.pixmap(CueWidget.ICON_SIZE,
                                                         CueWidget.ICON_SIZE))
+        self.volumeSlider.setEnabled(False)
         self._update_time(0, True)
+        self._reset_volume()
 
     def _status_playing(self):
         self.statusIcon.setPixmap(CueWidget.START.pixmap(CueWidget.ICON_SIZE,
                                                          CueWidget.ICON_SIZE))
+        self.volumeSlider.setEnabled(True)
 
     def _status_paused(self):
         self.statusIcon.setPixmap(CueWidget.PAUSE.pixmap(CueWidget.ICON_SIZE,
                                                          CueWidget.ICON_SIZE))
+        self.volumeSlider.setEnabled(False)
 
     def _status_error(self, cue, error, details):
         self.statusIcon.setPixmap(CueWidget.ERROR.pixmap(CueWidget.ICON_SIZE,
                                                          CueWidget.ICON_SIZE))
+        self.volumeSlider.setEnabled(False)
+        self._reset_volume()
+
         QDetailedMessageBox.dcritical(self.cue.name, error, details)
 
     def _update_duration(self, duration):
         # Update the maximum values of seek-slider and time progress-bar
         if duration > 0:
             if not self.timeBar.isVisible():
-                self.layout().addWidget(self.timeBar, 1, 0, 1, 2)
+                self.layout().addWidget(self.timeBar, 1, 0, 1, 3)
                 self.layout().setRowStretch(1, 1)
                 self.timeBar.show()
             self.timeBar.setMaximum(duration)
@@ -311,7 +365,8 @@ class CueWidget(QWidget):
                 self.timeBar.setValue(time)
 
             # Show the time in the widget
-            self.timeDisplay.display(strtime(time, accurate=self._accurate_timing))
+            self.timeDisplay.display(strtime(time,
+                                             accurate=self._accurate_timing))
 
     def resizeEvent(self, event):
         self.update()
@@ -320,10 +375,10 @@ class CueWidget(QWidget):
         super().update()
         self.layout().activate()
 
-        xdim = self.nameButton.width()
-        ydim = self.nameButton.height() / 5
-        ypos = self.nameButton.height() - ydim
+        s_width = self.nameButton.width()
+        s_height = self.seekSlider.height()
+        s_ypos = self.nameButton.height() - s_height
 
-        self.seekSlider.setGeometry(0, ypos, xdim, ydim)
+        self.seekSlider.setGeometry(0, s_ypos, s_width, s_height)
         self.statusIcon.setGeometry(4, 4, CueWidget.ICON_SIZE,
                                     CueWidget.ICON_SIZE)

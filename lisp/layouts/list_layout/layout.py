@@ -203,7 +203,8 @@ class ListLayout(QWidget, CueLayout):
     def set_current_index(self, index):
         if self._end_list == EndListBehavior.Restart:
             index %= len(self.model_adapter)
-        elif 0 <= index < self.listView.topLevelItemCount():
+
+        if 0 <= index < self.listView.topLevelItemCount():
             next_item = self.listView.topLevelItem(index)
             self.listView.setCurrentItem(next_item)
 

@@ -109,14 +109,11 @@ class CueCartModel(ModelAdapter):
             yield self.__cues[index]
 
     def _item_added(self, item):
-        if item.index == -1:
+        if item.index == -1 or item.index in self.__cues:
             item.index = self.first_empty()
 
-        if item.index not in self.__cues:
-            self.__cues[item.index] = item
-            self.item_added.emit(item)
-        else:
-            raise ModelException('index already used {}'.format(item.index))
+        self.__cues[item.index] = item
+        self.item_added.emit(item)
 
     def _item_removed(self, item):
         self.__cues.pop(item.index)

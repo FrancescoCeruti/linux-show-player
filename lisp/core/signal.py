@@ -21,7 +21,7 @@ import inspect
 import traceback
 import weakref
 from enum import Enum
-from threading import Lock
+from threading import RLock
 from types import MethodType, BuiltinMethodType
 
 from PyQt5.QtCore import QEvent, QObject
@@ -163,7 +163,7 @@ class Signal:
 
     def __init__(self):
         self.__slots = {}
-        self.__lock = Lock()
+        self.__lock = RLock()
 
     def connect(self, slot, mode=Connection.Direct):
         """Connect the given slot, if not already connected.

@@ -36,31 +36,6 @@ def deep_update(d1, d2):
     return d1
 
 
-def dict_diff(d1, d2):
-    """Generate the difference (in key and values) of two dictionary.
-
-    The operation is recursively applied for nested dictionaries.
-
-    .. Example:
-        >>> d1 = {'a':1, 'b':2, 'c':3, 'z': {'w': 6, 'k': 3}}
-        >>> d2 = {'a':2, 'b':2, 'd': 5, 'z': {'w': 6, 'k': 4}}
-        >>> dict(dict_diff(d1, d2))
-        ... {'z': {'k': 4}, 'd': 5, 'a': 2}
-        >>> dict(dict_diff(d2, d1))
-        ... {'z': {'k': 3}, 'a': 1, 'c': 3}
-
-    """
-    for key, value in d2.items():
-        if key not in d1:
-            yield key, value
-        elif isinstance(d2[key], Mapping) and isinstance(d1[key], Mapping):
-            diff = dict(dict_diff(d1[key], value))
-            if diff != {}:
-                yield key, diff
-        elif d1[key] != d2[key]:
-            yield key, value
-
-
 def qfile_filters(extensions, allexts=True, anyfile=True):
     """Create a filter-string for a FileChooser.
 

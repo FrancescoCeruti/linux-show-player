@@ -33,10 +33,14 @@ class QDbMeter(QWidget):
     def __init__(self, parent):
         super().__init__(parent)
 
+        db_range = abs(self.DB_MIN - self.DB_MAX)
+        yellow = abs(self.DB_MIN + 20) / db_range  # -20 db
+        red = abs(self.DB_MIN) / db_range          # 0 db
+
         self.grad = QLinearGradient()
-        self.grad.setColorAt(0, QColor(0, 255, 0))         # Green
-        self.grad.setColorAt(0.5, QColor(255, 255, 0))     # Yellow
-        self.grad.setColorAt(1, QColor(255, 0, 0))         # Red
+        self.grad.setColorAt(0, QColor(0, 255, 0))            # Green
+        self.grad.setColorAt(yellow, QColor(255, 255, 0))     # Yellow
+        self.grad.setColorAt(red, QColor(255, 0, 0))          # Red
 
         self.reset()
 

@@ -63,14 +63,15 @@ class CartLayout(QTabWidget, CueLayout):
 
         self._show_seek = config['CartLayout']['ShowSeek'] == 'True'
         self._show_dbmeter = config['CartLayout']['ShowDbMeters'] == 'True'
+        self._show_volume = config['CartLayout']['ShowVolume'] == 'True'
         self._accurate_timing = config['CartLayout']['ShowAccurate'] == 'True'
         self._countdown_mode = config['CartLayout']['countDown'] == 'True'
         self._auto_add_page = config['CartLayout']['autoAddPage'] == 'True'
 
         self._model_adapter = CueCartModel(cue_model, self.__rows, self.__columns)
-        self._model_adapter.item_added.connect(self.__cue_added,Connection.QtQueued)
-        self._model_adapter.item_removed.connect(self.__cue_removed, Connection.QtQueued)
-        self._model_adapter.item_moved.connect(self.__cue_moved, Connection.QtQueued)
+        self._model_adapter.item_added.connect(self.__cue_added, Connection.QtDirect)
+        self._model_adapter.item_removed.connect(self.__cue_removed, Connection.QtDirect)
+        self._model_adapter.item_moved.connect(self.__cue_moved, Connection.QtDirect)
 
         # Add layout-specific menus
         self.new_page_action = QAction(self)
@@ -85,15 +86,20 @@ class CartLayout(QTabWidget, CueLayout):
         self.countdown_mode.setChecked(self._countdown_mode)
         self.countdown_mode.triggered.connect(self.set_countdown_mode)
 
-        self.show_sliders_action = QAction(self)
-        self.show_sliders_action.setCheckable(True)
-        self.show_sliders_action.setChecked(self._show_seek)
-        self.show_sliders_action.triggered.connect(self.set_seek_visible)
+        self.show_seek_action = QAction(self)
+        self.show_seek_action.setCheckable(True)
+        self.show_seek_action.setChecked(self._show_seek)
+        self.show_seek_action.triggered.connect(self.set_seek_visible)
 
-        self.show_vumeter_action = QAction(self)
-        self.show_vumeter_action.setCheckable(True)
-        self.show_vumeter_action.setChecked(self._show_dbmeter)
-        self.show_vumeter_action.triggered.connect(self.set_dbmeter_visible)
+        self.show_dbmeter_action = QAction(self)
+        self.show_dbmeter_action.setCheckable(True)
+        self.show_dbmeter_action.setChecked(self._show_dbmeter)
+        self.show_dbmeter_action.triggered.connect(self.set_dbmeter_visible)
+
+        self.show_volume_action = QAction(self)
+        self.show_volume_action.setCheckable(True)
+        self.show_volume_action.setChecked(self._show_volume)
+        self.show_volume_action.triggered.connect(self.set_volume_visible)
 
         self.show_accurate_action = QAction(self)
         self.show_accurate_action.setCheckable(True)
@@ -106,8 +112,9 @@ class CartLayout(QTabWidget, CueLayout):
         layoutMenu.addAction(self.rm_current_page_action)
         layoutMenu.addSeparator()
         layoutMenu.addAction(self.countdown_mode)
-        layoutMenu.addAction(self.show_sliders_action)
-        layoutMenu.addAction(self.show_vumeter_action)
+        layoutMenu.addAction(self.show_seek_action)
+        layoutMenu.addAction(self.show_dbmeter_action)
+        layoutMenu.addAction(self.show_volume_action)
         layoutMenu.addAction(self.show_accurate_action)
 
         # TODO: maybe can be moved outside the layout
@@ -156,8 +163,9 @@ class CartLayout(QTabWidget, CueLayout):
         self.new_pages_action.setText("Add pages")
         self.rm_current_page_action.setText('Remove current page')
         self.countdown_mode.setText('Countdown mode')
-        self.show_sliders_action.setText('Show seek bars')
-        self.show_vumeter_action.setText('Show dB-meters')
+        self.show_seek_action.setText('Show seek bars')
+        self.show_dbmeter_action.setText('Show dB-meters')
+        self.show_volume_action.setText('Show volume')
         self.show_accurate_action.setText('Accurate time')
 
         self.edit_action.setText('Edit option')
@@ -288,6 +296,11 @@ class CartLayout(QTabWidget, CueLayout):
         for widget in self.widgets():
             widget.show_dbmeters(visible)
 
+    def set_volume_visible(self, visible):
+        self._show_volume = visible
+        for widget in self.widgets():
+            widget.show_volume_slider(visible)
+
     def to_3d_index(self, index):
         page_size = self.__rows * self.__columns
 
@@ -361,8 +374,7 @@ class CartLayout(QTabWidget, CueLayout):
         self.__context_widget = None
 
     def __cue_added(self, cue):
-        index = self._model_adapter.first_empty() if cue.index == -1 else cue.index
-        page, row, column = self.to_3d_index(index)
+        page, row, column = self.to_3d_index(cue.index)
 
         widget = CueWidget(cue)
         widget.cue_executed.connect(self.cue_executed.emit)
@@ -372,6 +384,7 @@ class CartLayout(QTabWidget, CueLayout):
         widget.set_countdown_mode(self._countdown_mode)
         widget.show_dbmeters(self._show_dbmeter)
         widget.show_seek_slider(self._show_seek)
+        widget.show_volume_slider(self._show_volume)
 
         if page >= len(self.__pages):
             self.add_page()

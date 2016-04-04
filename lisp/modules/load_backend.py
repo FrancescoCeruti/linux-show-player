@@ -50,7 +50,8 @@ class LoadBackend(Module):
 
         extensions = backends.backend().supported_extensions()
         filters = qfile_filters(extensions, anyfile=False)
-        files, _ = QFileDialog.getOpenFileNames(MainWindow(), 'Choose files',
+        files, _ = QFileDialog.getOpenFileNames(MainWindow(),
+                                                'Select media files',
                                                 path, filters)
 
         QApplication.setOverrideCursor(QCursor(Qt.WaitCursor))
