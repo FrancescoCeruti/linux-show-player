@@ -26,7 +26,7 @@ _synchronized_meta_lock = Lock()
 
 
 def async(target):
-    """A decorator for make a function asynchronous.
+    """Decorator. Make a function asynchronous.
 
     The decorated function is executed in a differed thread.
     """
@@ -39,7 +39,7 @@ def async(target):
 
 
 def async_in_pool(pool):
-    """A decorator for make a function asynchronous in a specified pool.
+    """Decorator. Make a function asynchronous in a specified pool.
 
     The decorated function is executed in the specified threads-pool.
 
@@ -65,7 +65,7 @@ def async_in_pool(pool):
 
 
 def synchronized_function(target=None, *, blocking=True, timeout=-1):
-    """A decorator to make a *function* synchronized.
+    """Decorator. Make a *function* synchronized.
 
     Only one thread at time can enter the decorated function, but the same
     thread can reenter.
@@ -95,7 +95,7 @@ def synchronized_function(target=None, *, blocking=True, timeout=-1):
 
 def synchronized_method(target=None, *, lock_name=None, blocking=True,
                         timeout=-1):
-    """A decorator for make a *method* synchronized.
+    """Decorator. Make a *method* synchronized.
 
     Only one thread at time can access the decorated method, but the same
     thread can reenter.
@@ -145,7 +145,7 @@ def synchronized_method(target=None, *, lock_name=None, blocking=True,
 
 
 def suppress_exceptions(target=None, *, log=True):
-    """Suppress all the exception in the decorated function.
+    """Decorator. Suppress all the exception in the decorated function.
 
     :param log: If True (the default) exceptions are logged as warnings.
     """
@@ -163,8 +163,26 @@ def suppress_exceptions(target=None, *, log=True):
     return wrapped
 
 
+def memoize(obj):
+    """Decorator. Caches a function's return value each time it is called.
+
+    If called later with the same arguments, the cached value is returned
+    (not reevaluated).
+    """
+    cache = obj.cache = {}
+
+    @wraps(obj)
+    def memoizer(*args, **kwargs):
+        key = str(args) + str(kwargs)
+        if key not in cache:
+            cache[key] = obj(*args, **kwargs)
+        return cache[key]
+
+    return memoizer
+
+
 def typechecked(target):
-    """A decorator to make a function check its arguments types at runtime.
+    """Decorator. Check a function arguments types at runtime.
 
     Annotations are used for checking the type (e.g. def fun(a: int, b: str)),
     this decorator should be used only if really needed, duck typing is the

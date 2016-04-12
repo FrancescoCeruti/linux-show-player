@@ -19,29 +19,24 @@
 
 from lisp.core.signal import Signal
 from lisp.modules.midi.midi_common import MIDICommon
+from lisp.modules.midi.midi_utils import mido_backend, mido_port_name
 
 
-class MIDIInputHandler(MIDICommon):
-
-    def __init__(self, port_name='default', backend_name=None):
-        super().__init__(port_name=port_name, backend_name=backend_name)
+class MIDIInput(MIDICommon):
+    def __init__(self, port_name='AppDefault'):
+        super().__init__(port_name=port_name)
 
         self.alternate_mode = False
         self.new_message = Signal()
         self.new_message_alt = Signal()
+
+    def open(self):
+        port_name = mido_port_name(self._port_name, 'I')
+        self._port = mido_backend().open_input(name=port_name,
+                                               callback=self.__new_message)
 
     def __new_message(self, message):
         if self.alternate_mode:
             self.new_message_alt.emit(message)
         else:
             self.new_message.emit(message)
-
-    def _open_port(self):
-        # We don't expect to find a port named "default", if so, we assume
-        # this port is the default one.
-        if self._port_name in self.get_input_names():
-            self._port = self._backend.open_input(self._port_name,
-                                                  callback=self.__new_message)
-        else:
-            # If the port isn't available use the default one
-            self._port = self._backend.open_input(callback=self.__new_message)

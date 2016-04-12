@@ -17,10 +17,10 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+import mido
+
 from lisp.core.module import Module
-from lisp.modules.midi.input_handler import MIDIInputHandler
 from lisp.modules.midi.midi_settings import MIDISettings
-from lisp.modules.midi.output_provider import MIDIOutputProvider
 from lisp.ui.settings.app_settings import AppSettings
 from lisp.utils.configuration import config
 
@@ -32,20 +32,9 @@ class Midi(Module):
         # Register the settings widget
         AppSettings.register_settings_widget(MIDISettings)
 
-        port_name = config['MIDI']['InputDevice']
-        backend_name = config['MIDI']['Backend']
-
-        MIDIInputHandler(port_name=port_name, backend_name=backend_name)
-        MIDIInputHandler().start()
-
+        bk_name = config['MIDI']['Backend']
         try:
-            MIDIOutputProvider(port_name=port_name, backend_name=backend_name)
-            MIDIOutputProvider().start()
-        except Exception as e:
-            MIDIInputHandler().stop()
-            raise e
-
-    def terminate(self):
-        # Stop the MIDI-event Handler
-        MIDIInputHandler().stop()
-        MIDIOutputProvider().stop()
+            # Load the backend and set as current mido backend
+            mido.set_backend(mido.Backend(bk_name, load=True))
+        except Exception:
+            raise RuntimeError('Backend loading failed: {0}'.format(bk_name))

@@ -19,55 +19,40 @@
 
 from abc import abstractmethod
 
-import mido
-
-from lisp.core.singleton import Singleton
+from lisp.core.singleton import ABCSingleton
 
 
-class MIDICommon(metaclass=Singleton):
-    def __init__(self, port_name='default', backend_name=None):
-        super().__init__()
+class MIDICommon(metaclass=ABCSingleton):
 
-        self._backend_name = backend_name
+    def __init__(self, port_name='AppDefault'):
+        """
+        :param port_name: the port name
+
+        The port name can be:
+            * SysDefault  - the system default port
+            * AppDefault  - the app default port defined in the config file
+            * <port_name> - the port name
+        """
+        self._bakend = None
         self._port_name = port_name
-        self._backend = None
         self._port = None
-
-    def start(self):
-        if self._backend is None:
-            try:
-                self._backend = mido.Backend(self._backend_name, load=True)
-                self._open_port()
-            except Exception:
-                raise RuntimeError(
-                    'Backend loading failed: ' + self._backend_name)
-
-    def stop(self):
-        self._close_port()
-        self._backend = None
-
-    def change_backend(self, backend_name):
-        self.stop()
-        self._backend_name = backend_name
-        self.start()
 
     def change_port(self, port_name):
         self._port_name = port_name
-        self._close_port()
-        self._open_port()
-
-    def get_input_names(self):
-        if self._backend is not None:
-            return self._backend.get_input_names()
-
-        return []
+        self.close()
+        self.open()
 
     @abstractmethod
-    def _open_port(self):
-        """
-            Open the port
-        """
+    def open(self):
+        """Open the port"""
 
-    def _close_port(self):
+    def close(self):
+        """Close the port"""
         if self._port is not None:
             self._port.close()
+
+    def is_open(self):
+        if self._port is not None:
+            return not self._port.closed
+
+        return False

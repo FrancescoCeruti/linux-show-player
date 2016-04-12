@@ -20,21 +20,19 @@
 import mido
 
 from lisp.modules.midi.midi_common import MIDICommon
+from lisp.modules.midi.midi_utils import mido_backend, mido_port_name
 
 
-class MIDIOutputProvider(MIDICommon):
+class MIDIOutput(MIDICommon):
+    def __init__(self, port_name='AppDefault'):
+        super().__init__(port_name=port_name)
 
-    def __init__(self, port_name='default', backend_name=None):
-        super().__init__(port_name=port_name, backend_name=backend_name)
+    def send_from_str(self, str_message):
+        self.send(mido.parse_string(str_message))
 
-    def send(self, type_, **kwargs):
-        self._port.send(mido.Message(type_, **kwargs))
+    def send(self, message):
+        self._port.send(message)
 
-    def _open_port(self):
-        # I don't expect to find a port named "default", if so, I assume
-        # this port is the default one.
-        if self._port_name in self.get_input_names():
-            self._port = self._backend.open_output(self._port_name)
-        else:
-            # If the port isn't available use the default one
-            self._port = self._backend.open_output()
+    def open(self):
+        port_name = mido_port_name(self._port_name, 'O')
+        self._port = mido_backend().open_output(port_name)

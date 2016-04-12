@@ -61,12 +61,12 @@ class CartLayout(QTabWidget, CueLayout):
         self.__pages = []
         self.__context_widget = None
 
-        self._show_seek = config['CartLayout']['ShowSeek'] == 'True'
-        self._show_dbmeter = config['CartLayout']['ShowDbMeters'] == 'True'
-        self._show_volume = config['CartLayout']['ShowVolume'] == 'True'
-        self._accurate_timing = config['CartLayout']['ShowAccurate'] == 'True'
-        self._countdown_mode = config['CartLayout']['countDown'] == 'True'
-        self._auto_add_page = config['CartLayout']['autoAddPage'] == 'True'
+        self._show_seek = config['CartLayout'].getboolean('ShowSeek')
+        self._show_dbmeter = config['CartLayout'].getboolean('ShowDbMeters')
+        self._show_volume = config['CartLayout'].getboolean('ShowVolume')
+        self._accurate_timing = config['CartLayout'].getboolean('ShowAccurate')
+        self._countdown_mode = config['CartLayout'].getboolean('CountDown')
+        self._auto_add_page = config['CartLayout'].getboolean('AutoAddPage')
 
         self._model_adapter = CueCartModel(cue_model, self.__rows, self.__columns)
         self._model_adapter.item_added.connect(self.__cue_added, Connection.QtDirect)

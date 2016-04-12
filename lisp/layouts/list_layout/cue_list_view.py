@@ -45,9 +45,9 @@ class CueListView(QTreeWidget):
         """
         super().__init__(parent)
         self._model = cue_model
-        self._model.item_added.connect(self.__cue_added, Connection.QtDirect)
-        self._model.item_moved.connect(self.__cue_moved, Connection.QtDirect)
-        self._model.item_removed.connect(self.__cue_removed, Connection.QtDirect)
+        self._model.item_added.connect(self.__cue_added, Connection.QtQueued)
+        self._model.item_moved.connect(self.__cue_moved, Connection.QtQueued)
+        self._model.item_removed.connect(self.__cue_removed, Connection.QtQueued)
         self._drag_item = None
         self._drag_start = None
         self.__item_moving = False

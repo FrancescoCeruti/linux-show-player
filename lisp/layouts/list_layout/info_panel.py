@@ -22,8 +22,6 @@ from PyQt5.QtWidgets import QWidget, QTextEdit, QLineEdit, QVBoxLayout
 
 
 class InfoPanel(QWidget):
-    # TODO: auto-update cue 'name' and 'description' if changed
-
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())

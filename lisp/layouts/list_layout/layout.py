@@ -71,11 +71,11 @@ class ListLayout(QWidget, CueLayout):
         self._context_item = None
         self._next_cue_index = 0
 
-        self._show_dbmeter = config['ListLayout']['ShowDbMeters'] == 'True'
-        self._seek_visible = config['ListLayout']['ShowSeek'] == 'True'
-        self._accurate_time = config['ListLayout']['ShowAccurate'] == 'True'
-        self._auto_continue = config['ListLayout']['AutoContinue'] == 'True'
-        self._show_playing = config['ListLayout']['ShowPlaying'] == 'True'
+        self._show_dbmeter = config['ListLayout'].getboolean('ShowDbMeters')
+        self._seek_visible = config['ListLayout'].getboolean('ShowSeek')
+        self._accurate_time = config['ListLayout'].getboolean('ShowAccurate')
+        self._auto_continue = config['ListLayout'].getboolean('AutoContinue')
+        self._show_playing = config['ListLayout'].getboolean('ShowPlaying')
 
         try:
             self._end_list = EndListBehavior(config['ListLayout']['EndList'])
@@ -143,7 +143,7 @@ class ListLayout(QWidget, CueLayout):
         # CUE VIEW (center left)
         self.listView = CueListView(self._model_adapter, self)
         self.listView.itemDoubleClicked.connect(self.double_clicked)
-        self.listView.currentChanged = self.__current_changed
+        self.listView.currentItemChanged.connect(self.__current_changed)
         self.listView.context_event.connect(self.context_event)
         self.listView.key_event.connect(self.onKeyPressEvent)
         self.layout().addWidget(self.listView, 1, 0, 1, 2)
@@ -354,9 +354,10 @@ class ListLayout(QWidget, CueLayout):
     def __go_slot(self):
         self.go()
 
-    def __current_changed(self, index_new, index_old):
+    def __current_changed(self, new_item, current_item):
         try:
-            cue = self.model_adapter.item(index_new.row())
+            index = self.listView.indexOfTopLevelItem(new_item)
+            cue = self.model_adapter.item(index)
             self.infoPanel.cue_changed(cue)
         except IndexError:
             self.infoPanel.cue_changed(None)

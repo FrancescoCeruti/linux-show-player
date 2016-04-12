@@ -141,7 +141,7 @@ class CueWaitTime:
         try:
             self._clock.remove_callback(self.__notify)
 
-            # TODO: ugly workaround
+            # FIXME: ugly workaround
             if self._mode == CueWaitTime.Mode.Post:
                 if self._last < self._cue.post_wait:
                     self.notify.emit(self._cue.post_wait * 1000)

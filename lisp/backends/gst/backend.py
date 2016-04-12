@@ -26,6 +26,7 @@ from lisp.backends.gst.gst_settings import GstSettings
 from lisp.backends.gst.gst_utils import gst_parse_tag_list
 from lisp.backends.gst.gst_utils import gst_uri_metadata, gst_mime_types, \
     gst_uri_duration
+from lisp.core.decorators import memoize
 from lisp.cues.media_cue import MediaCue
 from lisp.ui.settings.app_settings import AppSettings
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
@@ -55,8 +56,8 @@ class Backend(BaseBackend):
     def uri_tags(self, uri):
         return gst_parse_tag_list(gst_uri_metadata(uri).get_tags())
 
+    @memoize
     def supported_extensions(self):
-        # TODO: cache
         extensions = {'audio': [], 'video': []}
 
         for gst_mime, gst_extensions in gst_mime_types():

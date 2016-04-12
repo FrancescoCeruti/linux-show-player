@@ -19,80 +19,76 @@
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QCursor
-from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QComboBox, QApplication
+from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QComboBox, QApplication, \
+    QGridLayout, QLabel
 
 from lisp.modules import check_module
-from lisp.modules.midi.input_handler import MIDIInputHandler
+from lisp.modules.midi.midi_utils import mido_backend
+from lisp.modules.midi.midi_input import MIDIInput
+from lisp.modules.midi.midi_output import MIDIOutput
 from lisp.ui.settings.settings_page import SettingsPage
 from lisp.utils import logging
 
 
 class MIDISettings(SettingsPage):
-
     NAME = 'MIDI settings'
-    BACKENDS = {'RtMidi': 'mido.backends.rtmidi',
-                'PortMidi': 'mido.backends.portmidi'}
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
-        # MIDI Input
-        self.inputGroup = QGroupBox(self)
-        self.inputGroup.setTitle('MIDI input device')
-        self.inputGroup.setLayout(QVBoxLayout())
-        self.layout().addWidget(self.inputGroup)
+        self.midiGroup = QGroupBox(self)
+        self.midiGroup.setTitle('MIDI default devices')
+        self.midiGroup.setLayout(QGridLayout())
+        self.layout().addWidget(self.midiGroup)
 
-        self.backendCombo = QComboBox(self.inputGroup)
-        self.backendCombo.addItems(self.BACKENDS)
-        self.backendCombo.currentTextChanged.connect(self._change_backend)
-        self.inputGroup.layout().addWidget(self.backendCombo)
+        self.inputLabel = QLabel('Input', self.midiGroup)
+        self.midiGroup.layout().addWidget(self.inputLabel, 0, 0)
+        self.inputCombo = QComboBox(self.midiGroup)
+        self.midiGroup.layout().addWidget(self.inputCombo, 0, 1)
 
-        self.deviceCombo = QComboBox(self.inputGroup)
-        self.inputGroup.layout().addWidget(self.deviceCombo)
+        self.outputLabel = QLabel('Output', self.midiGroup)
+        self.midiGroup.layout().addWidget(self.outputLabel, 1, 0)
+        self.outputCombo = QComboBox(self.midiGroup)
+        self.midiGroup.layout().addWidget(self.outputCombo, 1, 1)
 
-        self._load_devices()
+        self.midiGroup.layout().setColumnStretch(0, 2)
+        self.midiGroup.layout().setColumnStretch(1, 3)
+
+        if check_module('Midi'):
+            self._load_devices()
+        else:
+            self.setEnabled(False)
 
     def get_settings(self):
         conf = {}
 
-        if self.backendCombo.isEnabled():
-            conf['backend'] = self.BACKENDS[self.backendCombo.currentText()]
-        if self.deviceCombo.isEnabled():
-            conf['inputdevice'] = self.deviceCombo.currentText()
-            MIDIInputHandler().change_port(conf['inputdevice'])
+        if self.isEnabled():
+            conf['inputdevice'] = self.inputCombo.currentText()
+            MIDIInput().change_port(conf['inputdevice'])
+        if self.isEnabled():
+            conf['outputdevice'] = self.outputCombo.currentText()
+            MIDIOutput().change_port(conf['outputdevice'])
 
         return {'MIDI': conf}
 
     def load_settings(self, settings):
-        if 'backend' in settings['MIDI']:
-            for backend in self.BACKENDS:
-                if settings['MIDI']['backend'] == self.BACKENDS[backend]:
-                    self.backendCombo.setCurrentText(backend)
-                    break
         if 'inputdevice' in settings['MIDI']:
-            self.deviceCombo.setCurrentText('default')
-            # If the device is not found remains 'default'
-            self.deviceCombo.setCurrentText(settings['MIDI']['inputdevice'])
+            self.inputCombo.setCurrentText('AppDefault')
+            self.inputCombo.setCurrentText(settings['MIDI']['inputdevice'])
+
+        if 'outputdevice' in settings['MIDI']:
+            self.outputCombo.setCurrentText('AppDefaut')
+            self.outputCombo.setCurrentText(settings['MIDI']['outputdevice'])
 
     def _load_devices(self):
-        if check_module('Midi'):
-            self.deviceCombo.clear()
-            self.deviceCombo.addItem('default')
-            self.deviceCombo.addItems(MIDIInputHandler().get_input_names())
-        else:
-            self.deviceCombo.setEnabled(False)
+        backend = mido_backend()
 
-    def _change_backend(self, current):
-        QApplication.setOverrideCursor(QCursor(Qt.WaitCursor))
-        self.setEnabled(False)
+        self.inputCombo.clear()
+        self.inputCombo.addItems(['AppDefault', 'SysDefault'])
+        self.inputCombo.addItems(backend.get_input_names())
 
-        try:
-            MIDIInputHandler().change_backend(self.BACKENDS[current])
-            self._load_devices()
-        except RuntimeError as e:
-            logging.exception('Failed to load the backend', e, dialog=True)
-        finally:
-            QApplication.restoreOverrideCursor()
-            self.setEnabled(True)
+        self.outputCombo.clear()
+        self.outputCombo.addItems(['AppDefault', 'SysDefault'])
+        self.outputCombo.addItems(backend.get_output_names())

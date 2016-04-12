@@ -22,7 +22,7 @@ from PyQt5.QtWidgets import QGroupBox, QPushButton, QComboBox, \
     QVBoxLayout, QMessageBox, QTableView, QTableWidget, QHeaderView, QGridLayout
 
 from lisp.modules import check_module
-from lisp.modules.midi.input_handler import MIDIInputHandler
+from lisp.modules.midi.midi_input import MIDIInput
 from lisp.plugins.controller.protocols.protocol import Protocol
 from lisp.ui.qdelegates import ComboBoxDelegate, SpinBoxDelegate
 from lisp.ui.qmodels import SimpleTableModel
@@ -35,7 +35,10 @@ class Midi(Protocol):
         super().__init__()
 
         if check_module('midi'):
-            MIDIInputHandler().new_message.connect(self.__new_message)
+            midi_input = MIDIInput()
+            if not midi_input.is_open():
+                midi_input.open()
+            MIDIInput().new_message.connect(self.__new_message)
 
     def __new_message(self, message):
         if message.type == 'note_on' or message.type == 'note_off':
@@ -124,7 +127,7 @@ class MidiSettings(CueSettingsPage):
                 self.midiModel.append_row(m_type, channel, note, options[1])
 
     def capture_message(self):
-        handler = MIDIInputHandler()
+        handler = MIDIInput()
         handler.alternate_mode = True
         handler.new_message_alt.connect(self.__add_message)
 

@@ -77,7 +77,7 @@ class DbmeterSettings(GstElementSettingsPage):
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.groupBox.setTitle("VUMeter settings")
+        self.groupBox.setTitle("DbMeter settings")
         self.intervalLabel.setText("Time between levels (ms)")
         self.ttlLabel.setText("Peak ttl (ms)")
         self.falloffLabel.setText("Peak falloff (unit per time)")

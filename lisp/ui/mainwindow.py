@@ -203,7 +203,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
             # Adjust the menu position
             desktop = qApp.desktop().availableGeometry()
             menu_rect = self.menuEdit.geometry()
-    
+
             if menu_rect.bottom() > desktop.bottom():
                 self.menuEdit.move(self.menuEdit.x(),
                                    self.menuEdit.y() - self.menuEdit.height())

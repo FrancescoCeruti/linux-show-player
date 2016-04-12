@@ -32,7 +32,7 @@ def load_modules():
             __MODULES[module_name] = module()
             logging.debug('MODULES: Loaded "{0}"'.format(module_name))
         except Exception as e:
-            logging.error('Failed "{0}" loading'.format(module_name),
+            logging.error('Failed "{0}" lading'.format(module_name),
                           details=str(e))
             logging.debug(traceback.format_exc())
 
@@ -41,12 +41,10 @@ def terminate_modules():
     for module_name in __MODULES:
         try:
             __MODULES[module_name].terminate()
-            logging.debug(
-                'MODULES: Module "{0}" terminated'.format(module_name))
+            logging.debug('MODULES: Terminated "{0}"'.format(module_name))
         except Exception as e:
-            logging.error(
-                'MODULES: Module "{0}" termination failed'.format(module_name),
-                details=str(e))
+            logging.error('Failed "{0}" termination'.format(module_name),
+                          details=str(e))
             logging.debug(traceback.format_exc())
 
 
