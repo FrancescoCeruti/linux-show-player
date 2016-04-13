@@ -189,7 +189,7 @@ class ListLayout(QWidget, CueLayout):
         self.accurateTimingAction.setText('Accurate timing')
         self.autoNextAction.setText('Auto-change current cue')
 
-        self.edit_action.setText('Edit option')
+        self.edit_action.setText('Edit cue')
         self.remove_action.setText('Remove')
         self.select_action.setText('Select')
 

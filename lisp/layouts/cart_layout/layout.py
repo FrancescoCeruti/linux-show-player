@@ -168,7 +168,7 @@ class CartLayout(QTabWidget, CueLayout):
         self.show_volume_action.setText('Show volume')
         self.show_accurate_action.setText('Accurate time')
 
-        self.edit_action.setText('Edit option')
+        self.edit_action.setText('Edit cue')
         self.remove_action.setText('Remove')
         self.select_action.setText('Select')
         self.play_action.setText('Play')
