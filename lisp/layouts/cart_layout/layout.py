@@ -69,9 +69,9 @@ class CartLayout(QTabWidget, CueLayout):
         self._auto_add_page = config['CartLayout'].getboolean('AutoAddPage')
 
         self._model_adapter = CueCartModel(cue_model, self.__rows, self.__columns)
-        self._model_adapter.item_added.connect(self.__cue_added, Connection.QtDirect)
-        self._model_adapter.item_removed.connect(self.__cue_removed, Connection.QtDirect)
-        self._model_adapter.item_moved.connect(self.__cue_moved, Connection.QtDirect)
+        self._model_adapter.item_added.connect(self.__cue_added, Connection.QtQueued)
+        self._model_adapter.item_removed.connect(self.__cue_removed, Connection.QtQueued)
+        self._model_adapter.item_moved.connect(self.__cue_moved, Connection.QtQueued)
 
         # Add layout-specific menus
         self.new_page_action = QAction(self)

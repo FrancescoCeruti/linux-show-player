@@ -21,9 +21,8 @@ import os
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import pyqtSignal
-from PyQt5.QtWidgets import QMainWindow, QStatusBar, \
-    QMenuBar, QMenu, QAction, qApp, QFileDialog, QDialog, \
-    QMessageBox
+from PyQt5.QtWidgets import QMainWindow, QStatusBar, QMenuBar, QMenu, QAction,\
+    qApp, QFileDialog, QDialog, QMessageBox, QVBoxLayout, QWidget
 
 from lisp.core.actions_handler import MainActionsHandler
 from lisp.core.singleton import QSingleton
@@ -41,6 +40,9 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
     def __init__(self):
         super().__init__()
         self.setMinimumSize(500, 400)
+        self.setCentralWidget(QWidget())
+        self.centralWidget().setLayout(QVBoxLayout())
+        self.centralWidget().layout().setContentsMargins(5, 5, 5, 5)
 
         self._cue_add_menu = {}
         self.layout = None
@@ -179,7 +181,8 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
 
     def set_layout(self, layout):
         if self.layout is not None:
-            self.takeCentralWidget().hide()
+            self.layout.hide()
+            self.centralWidget().layout().removeWidget(self.layout)
 
             self.multiEdit.triggered.disconnect()
             self.selectAll.triggered.disconnect()
@@ -187,7 +190,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
             self.invertSelection.triggered.disconnect()
 
         self.layout = layout
-        self.setCentralWidget(self.layout)
+        self.centralWidget().layout().addWidget(self.layout)
         self.layout.show()
 
         self.multiEdit.triggered.connect(self.layout.edit_selected_cues)

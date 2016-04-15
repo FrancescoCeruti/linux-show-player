@@ -59,7 +59,6 @@ class PageWidget(QWidget):
             widget.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
             self.__widgets[(row, column)] = widget
             self.layout().addWidget(widget, row, column)
-            widget.show()
         else:
             raise IndexError('cell {} already used'.format((row, column)))
 

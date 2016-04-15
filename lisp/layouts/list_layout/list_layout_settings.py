@@ -69,7 +69,7 @@ class ListLayoutSettings(SettingsPage):
         conf['showdbmeters'] = str(self.showDbMeters.isChecked())
         conf['showseek'] = str(self.showSeek.isChecked())
         conf['showaccurate'] = str(self.showAccurate.isChecked())
-        conf['autonext'] = str(self.autoNext.isChecked())
+        conf['autocontiune'] = str(self.autoNext.isChecked())
 
         return {'ListLayout': conf}
 
@@ -80,4 +80,4 @@ class ListLayoutSettings(SettingsPage):
         self.showDbMeters.setChecked(settings.get('showdbmeters') == 'True')
         self.showAccurate.setChecked(settings.get('showaccurate') == 'True')
         self.showSeek.setChecked(settings.get('showseek') == 'True')
-        self.autoNext.setChecked(settings.get('autonext') == 'True')
+        self.autoNext.setChecked(settings.get('autocontinue') == 'True')

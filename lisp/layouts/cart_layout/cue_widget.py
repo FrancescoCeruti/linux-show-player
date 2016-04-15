@@ -160,8 +160,9 @@ class CueWidget(QWidget):
             self._update_duration(self.cue.duration)
 
     def show_seek_slider(self, visible):
-        self.seekSlider.setVisible(visible)
-        self.update()
+        if isinstance(self.cue, MediaCue):
+            self.seekSlider.setVisible(visible)
+            self.update()
 
     def show_dbmeters(self, visible):
         if isinstance(self.cue, MediaCue):

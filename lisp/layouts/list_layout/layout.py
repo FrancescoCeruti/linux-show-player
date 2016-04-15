@@ -62,6 +62,8 @@ class ListLayout(QWidget, CueLayout):
 
     def __init__(self, cue_model, **kwargs):
         super().__init__(cue_model=cue_model, **kwargs)
+        self.setLayout(QGridLayout())
+        self.layout().setContentsMargins(0, 0, 0, 0)
 
         self._model_adapter = CueListModel(self._cue_model)
         self._model_adapter.item_added.connect(self.__cue_added)
@@ -113,9 +115,6 @@ class ListLayout(QWidget, CueLayout):
         MainWindow().menuLayout.addAction(self.showSeekAction)
         MainWindow().menuLayout.addAction(self.accurateTimingAction)
         MainWindow().menuLayout.addAction(self.autoNextAction)
-
-        self.setLayout(QGridLayout())
-        self.layout().setContentsMargins(5, 5, 5, 5)
 
         # GO-BUTTON (top-left)
         self.goButton = QPushButton('GO', self)

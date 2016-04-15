@@ -72,5 +72,5 @@ class Synchronizer(Plugin):
             try:
                 peer['proxy'].execute(cue.index)
             except Exception:
-                logging.error('REMOTE: controlling failed')
+                logging.error('REMOTE: remote control failed')
                 logging.debug('REMOTE: ' + traceback.format_exc())
