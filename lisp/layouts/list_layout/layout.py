@@ -55,9 +55,10 @@ class ListLayout(QWidget, CueLayout):
     DESCRIPTION = '''
         This layout organize the cues in a list:
         <ul>
-            <li>Side panel with playing media-cues;
-            <li>Cues can be moved in the list;
-            <li>Space to play, CTRL+Space to select, SHIFT+Space or Double-Click to edit;
+            <li>Space to execute cues
+            <li>SHIFT+Space or Double-Click to open edit dialog
+            <li>Drag&Drop to move cues
+            <li>CTRL+Drag&Drop to copy cues
         </ul>'''
 
     def __init__(self, cue_model, **kwargs):

@@ -135,3 +135,7 @@ def subclasses(cls):
     for subclass in cls.__subclasses__():
         yield from subclasses(subclass)
         yield subclass
+
+
+def weak_call_proxy(weakref):
+    return lambda *args, **kwargs: weakref()(*args, **kwargs)

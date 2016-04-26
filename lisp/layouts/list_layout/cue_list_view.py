@@ -20,9 +20,10 @@
 from PyQt5 import QtCore
 from PyQt5.QtCore import pyqtSignal, Qt
 from PyQt5.QtGui import QKeyEvent, QContextMenuEvent
-from PyQt5.QtWidgets import QTreeWidget, QHeaderView
+from PyQt5.QtWidgets import QTreeWidget, QHeaderView, qApp
 
 from lisp.core.signal import Connection
+from lisp.cues.cue_factory import CueFactory
 from lisp.layouts.list_layout.cue_list_item import CueListItem
 from lisp.layouts.list_layout.listwidgets import CueStatusIcon, PreWaitWidget, \
     CueTimeWidget, NextActionIcon, PostWaitWidget
@@ -61,6 +62,7 @@ class CueListView(QTreeWidget):
 
         self.setColumnWidth(0, 40)
         self.setColumnWidth(len(CueListView.H_NAMES) - 1, 18)
+        self.setSelectionMode(self.SingleSelection)
         self.setDragDropMode(self.InternalMove)
         self.setAlternatingRowColors(True)
         self.setVerticalScrollMode(self.ScrollPerItem)
@@ -80,18 +82,33 @@ class CueListView(QTreeWidget):
         super().keyPressEvent(event)
 
     def dropEvent(self, event):
-        event.setDropAction(QtCore.Qt.MoveAction)
-        super().dropEvent(event)
-        self.__item_moving = True
-        self._model.move(self._drag_start,
-                         self.indexFromItem(self._drag_item).row())
+        if qApp.keyboardModifiers() == Qt.ControlModifier:
+            cue = self._model.item(self._drag_start)
+            new_cue = CueFactory.clone_cue(cue)
+            new_index = self.indexAt(event.pos()).row()
+
+            self._model.insert(new_cue, new_index)
+        else:
+            super().dropEvent(event)
+            self.__item_moving = True
+            self._model.move(self._drag_start,
+                             self.indexFromItem(self._drag_item).row())
 
         event.accept()
 
     def mousePressEvent(self, event):
+        if qApp.keyboardModifiers() == Qt.ControlModifier:
+            # Prevent items to be deselected
+            event.ignore()
+        else:
+            super().mousePressEvent(event)
+
+
+    def dragEnterEvent(self, event):
+        super().dragEnterEvent(event)
+
         self._drag_item = self.itemAt(event.pos())
         self._drag_start = self.indexFromItem(self._drag_item).row()
-        super().mousePressEvent(event)
 
     def __current_changed(self, current_item, previous_item):
         self.scrollToItem(current_item)

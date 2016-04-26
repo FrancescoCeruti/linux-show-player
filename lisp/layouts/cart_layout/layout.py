@@ -44,12 +44,13 @@ AppSettings.register_settings_widget(CartLayoutSettings)
 class CartLayout(QTabWidget, CueLayout):
     NAME = 'Cart Layout'
     DESCRIPTION = '''
-                    This layout organize the cues in multiple grids like a
-                     cart player:
+                    This layout organize the cues in multiple grid-like pages:
                     <ul>
-                        <li>Cues are displayed as buttons;
-                        <li>Cues can be moved in the grid;
-                        <li>Cues can be moved between pages;
+                        <li>Cues are displayed as buttons
+                        <li>Clik to execute cues
+                        <li>SHIFT+Clik open edit dialog
+                        <li>CTRL+Drag&Drop to move cues
+                        <li>SHIFT+Drag&Drop to copy cues
                     </ul> '''
 
     def __init__(self, cue_model, **kwargs):

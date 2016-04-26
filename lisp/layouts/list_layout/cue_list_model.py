@@ -19,7 +19,6 @@
 
 from lisp.core.model_adapter import ModelAdapter
 from lisp.core.proxy_model import ReadOnlyProxyModel
-from lisp.core.signal import Connection
 from lisp.cues.media_cue import MediaCue
 
 

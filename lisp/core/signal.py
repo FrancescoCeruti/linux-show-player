@@ -29,38 +29,39 @@ from PyQt5.QtWidgets import QApplication
 
 from lisp.core.decorators import async
 from lisp.utils import logging
+from lisp.utils.util import weak_call_proxy
 
 __all__ = ['Signal', 'Connection']
 
 
-def slot_id(slot):
-    """Return the id of the given slot.
+def slot_id(slot_callable):
+    """Return the id of the given slot_callable.
 
     This function is able to produce unique id(s) even for bounded methods, and
     builtin-methods using a combination of the function id and the object id.
     """
-    if isinstance(slot, MethodType):
-        return id(slot.__func__), id(slot.__self__)
-    elif isinstance(slot, BuiltinMethodType):
-        return id(slot), id(slot.__self__)
+    if isinstance(slot_callable, MethodType):
+        return id(slot_callable.__func__), id(slot_callable.__self__)
+    elif isinstance(slot_callable, BuiltinMethodType):
+        return id(slot_callable), id(slot_callable.__self__)
     else:
-        return id(slot)
+        return id(slot_callable)
 
 
 class Slot:
     """Synchronous slot."""
 
-    def __init__(self, slot, callback=None):
-        if isinstance(slot, MethodType):
-            self._reference = weakref.WeakMethod(slot, self._expired)
-        elif callable(slot):
-            self._reference = weakref.ref(slot, self._expired)
+    def __init__(self, slot_callable, callback=None):
+        if isinstance(slot_callable, MethodType):
+            self._reference = weakref.WeakMethod(slot_callable, self._expired)
+        elif callable(slot_callable):
+            self._reference = weakref.ref(slot_callable, self._expired)
         else:
             raise TypeError('slot must be callable')
 
         self._callback = callback
-        self._slot_id = slot_id(slot)
-        self._no_args = len(inspect.signature(slot).parameters) == 0
+        self._slot_id = slot_id(slot_callable)
+        self._no_args = len(inspect.signature(slot_callable).parameters) == 0
 
     def call(self, *args, **kwargs):
         """Call the callable object within the given parameters."""
@@ -135,8 +136,8 @@ class Connection(Enum):
     QtDirect = QtSlot
     QtQueued = QtQueuedSlot
 
-    def new_slot(self, slot, callback=None):
-        return self.value(slot, callback)
+    def new_slot(self, slot_callable, callback=None):
+        return self.value(slot_callable, callback)
 
 
 class Signal:
@@ -165,10 +166,10 @@ class Signal:
         self.__slots = {}
         self.__lock = RLock()
 
-    def connect(self, slot, mode=Connection.Direct):
+    def connect(self, slot_callable, mode=Connection.Direct):
         """Connect the given slot, if not already connected.
 
-        :param slot: The slot to be connected
+        :param slot_callable: The slot (a python callable) to be connected
         :param mode: Connection mode
         :type mode: Connection
         :raise ValueError: if mode not in Connection enum
@@ -179,8 +180,9 @@ class Signal:
         with self.__lock:
             # Create a new Slot object, use a weakref for the callback
             # to avoid cyclic references.
-            callback = weakref.WeakMethod(self.__remove_slot)
-            self.__slots[slot_id(slot)] = mode.new_slot(slot, lambda id_: callback()(id_))
+            callback = weak_call_proxy(weakref.WeakMethod(self.__remove_slot))
+            self.__slots[slot_id(slot_callable)] = mode.new_slot(slot_callable,
+                                                                 callback)
 
     def disconnect(self, slot=None):
         """Disconnect the given slot, or all if no slot is specified.
