@@ -55,7 +55,6 @@ class CollectionCueSettings(SettingsPage):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-
         self.setLayout(QVBoxLayout(self))
 
         self.cuesWidget = QListWidget(self)

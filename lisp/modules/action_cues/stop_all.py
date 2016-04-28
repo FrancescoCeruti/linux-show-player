@@ -16,7 +16,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
-
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QHBoxLayout, QCheckBox
 
 from lisp.application import Application
@@ -51,19 +51,17 @@ class StopAllSettings(SettingsPage):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-
-        self.setLayout(QVBoxLayout(self))
+        self.setLayout(QVBoxLayout())
+        self.layout().setAlignment(Qt.AlignTop)
 
         self.group = QGroupBox(self)
         self.group.setTitle('Mode')
         self.group.setLayout(QHBoxLayout(self.group))
+        self.layout().addWidget(self.group)
 
         self.pauseMode = QCheckBox(self.group)
         self.pauseMode.setText('Pause mode')
         self.group.layout().addWidget(self.pauseMode)
-
-        self.layout().addWidget(self.group)
-        self.layout().addSpacing(self.height() - 100)
 
     def enable_check(self, enabled):
         self.group.setCheckable(enabled)

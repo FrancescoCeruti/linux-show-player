@@ -56,9 +56,10 @@ class SeekSettings(SettingsPage):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.setLayout(QVBoxLayout())
+        self.layout().setAlignment(QtCore.Qt.AlignTop)
 
         self.cue_id = -1
-        self.setLayout(QVBoxLayout(self))
 
         self.cueDialog = CueListDialog(
             cues=Application().cue_model.filter(MediaCue), parent=self)
@@ -86,8 +87,6 @@ class SeekSettings(SettingsPage):
         self.seekLabel = QLabel(self.seekGroup)
         self.seekLabel.setAlignment(QtCore.Qt.AlignCenter)
         self.seekGroup.layout().addWidget(self.seekLabel)
-
-        self.layout().addSpacing(200)
 
         self.retranslateUi()
 

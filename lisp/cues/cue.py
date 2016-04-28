@@ -76,8 +76,8 @@ class Cue(HasProperties):
     :ivar next_action: What do after post_wait (see note).
     :cvar CueActions: actions supported by the cue (default: CueAction.Start)
 
-    A cue should declare CueAction.Default as supported only if CueAction.Stop
-    is also supported.
+    A cue should declare CueAction.Default as supported only if CueAction.Start
+    and CueAction.Stop are both supported.
 
     .. Note::
         If 'next_action' is set to CueNextAction.AutoFollow value, then the
@@ -108,16 +108,16 @@ class Cue(HasProperties):
         self._type_ = self.__class__.__name__
 
         self.pre_wait_enter = Signal()
-        self.pre_wait_exit = Signal()
+        self.pre_wait_exit = Signal()       # True if not interrupted
         self.post_wait_enter = Signal()
-        self.post_wait_exit = Signal()
+        self.post_wait_exit = Signal()      # True if not interrupted
 
-        self.started = Signal()
-        self.stopped = Signal()
-        self.paused = Signal()
-        self.error = Signal()
-        self.next = Signal()
-        self.end = Signal()
+        self.started = Signal()     # self
+        self.stopped = Signal()     # self
+        self.paused = Signal()      # self
+        self.error = Signal()       # self, error, details
+        self.next = Signal()        # self
+        self.end = Signal()         # self
 
         self.stopped.connect(self._waiting.set)
         self.changed('next_action').connect(self.__next_action_changed)

@@ -20,6 +20,7 @@
 from time import sleep
 
 from PyQt5 import QtCore
+from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QVBoxLayout, QLabel, QHBoxLayout, QGroupBox, \
     QPushButton, QDoubleSpinBox, QGridLayout, QComboBox, QStyledItemDelegate
@@ -139,9 +140,10 @@ class VolumeSettings(SettingsPage):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.setLayout(QVBoxLayout())
+        self.layout().setAlignment(Qt.AlignTop)
 
         self.cue_id = -1
-        self.setLayout(QVBoxLayout(self))
 
         cues = Application().cue_model.filter(MediaCue)
         self.cueDialog = CueListDialog(cues=cues, parent=self)
@@ -192,8 +194,6 @@ class VolumeSettings(SettingsPage):
         self.fadeCurveLabel = QLabel(self.fadeGroup)
         self.fadeCurveLabel.setAlignment(QtCore.Qt.AlignCenter)
         self.fadeGroup.layout().addWidget(self.fadeCurveLabel, 1, 1)
-
-        self.layout().addSpacing(50)
 
         self.retranslateUi()
 
