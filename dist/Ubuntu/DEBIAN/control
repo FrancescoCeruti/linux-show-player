@@ -1,6 +1,6 @@
 Package: linux-show-player
 Maintainer: Francesco Ceruti <ceppofrancy@gmail.com>
-Version: 0.4dev
+Version: 0.4
 Architecture: all
 Section: multimedia
 Priority: extra

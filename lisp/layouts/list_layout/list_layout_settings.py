@@ -18,13 +18,13 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QCheckBox
+from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QCheckBox, QComboBox, \
+    QHBoxLayout, QLabel
 
 from lisp.ui.settings.settings_page import SettingsPage
 
 
 class ListLayoutSettings(SettingsPage):
-
     NAME = 'List Layout'
 
     def __init__(self, **kwargs):
@@ -52,6 +52,16 @@ class ListLayoutSettings(SettingsPage):
         self.autoNext = QCheckBox(self.behaviorsGroup)
         self.behaviorsGroup.layout().addWidget(self.autoNext)
 
+        self.endListLayout = QHBoxLayout()
+        self.behaviorsGroup.layout().addLayout(self.endListLayout)
+
+        self.endListLabel = QLabel(self.behaviorsGroup)
+        self.endListLayout.addWidget(self.endListLabel)
+
+        self.endListBehavior = QComboBox(self.behaviorsGroup)
+        self.endListBehavior.addItems(['Stop', 'Restart'])
+        self.endListLayout.addWidget(self.endListBehavior)
+
         self.retranslateUi()
 
     def retranslateUi(self):
@@ -61,6 +71,7 @@ class ListLayoutSettings(SettingsPage):
         self.showAccurate.setText('Show accurate time')
         self.showSeek.setText('Show seek sliders')
         self.autoNext.setText('Automatically select the next cue')
+        self.endListLabel.setText('At list end:')
 
     def get_settings(self):
         conf = {}
@@ -69,7 +80,8 @@ class ListLayoutSettings(SettingsPage):
         conf['showdbmeters'] = str(self.showDbMeters.isChecked())
         conf['showseek'] = str(self.showSeek.isChecked())
         conf['showaccurate'] = str(self.showAccurate.isChecked())
-        conf['autocontiune'] = str(self.autoNext.isChecked())
+        conf['autocontinue'] = str(self.autoNext.isChecked())
+        conf['endlist'] = str(self.endListBehavior.currentText())
 
         return {'ListLayout': conf}
 
@@ -81,3 +93,4 @@ class ListLayoutSettings(SettingsPage):
         self.showAccurate.setChecked(settings.get('showaccurate') == 'True')
         self.showSeek.setChecked(settings.get('showseek') == 'True')
         self.autoNext.setChecked(settings.get('autocontinue') == 'True')
+        self.endListBehavior.setCurrentText(settings.get('endlist'))

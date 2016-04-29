@@ -1,5 +1,5 @@
 [Desktop Entry]
-Version=0.4dev
+Version=0.4
 Name=Linux Show Player
 Comment=Audio player for theatral shows
 Exec=linux-show-player

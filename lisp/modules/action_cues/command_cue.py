@@ -130,4 +130,5 @@ class CommandCueSettings(SettingsPage):
 
         return settings
 
+
 CueSettingsRegistry().add_item(CommandCueSettings, CommandCue)
