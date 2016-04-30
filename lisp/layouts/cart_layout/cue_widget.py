@@ -35,7 +35,6 @@ from lisp.utils.util import strtime
 
 
 class CueWidget(QWidget):
-
     STOP = QIcon.fromTheme('led-off')
     START = QIcon.fromTheme('led-running')
     PAUSE = QIcon.fromTheme('led-pause')
@@ -90,11 +89,14 @@ class CueWidget(QWidget):
 
         # Volume percentage slider (0%-200%)
         self.volumeSlider = QClickSlider(self.nameButton)
+        self.volumeSlider.setTickPosition(QClickSlider.TicksBothSides)
         self.volumeSlider.setOrientation(Qt.Vertical)
         self.volumeSlider.setFocusPolicy(Qt.NoFocus)
         self.volumeSlider.setRange(0, 200)
-        self.volumeSlider.sliderMoved.connect(self._change_volume, Qt.DirectConnection)
-        self.volumeSlider.sliderJumped.connect(self._change_volume, Qt.DirectConnection)
+        self.volumeSlider.setTickInterval(50)  # 0%, 50%, 100%, 150%, 200%
+        self.volumeSlider.setTracking(True)
+        self.volumeSlider.valueChanged.connect(self._change_volume,
+                                               Qt.DirectConnection)
         self.volumeSlider.setVisible(False)
 
         self.dbMeter = QDbMeter(self)
@@ -131,7 +133,7 @@ class CueWidget(QWidget):
     def mouseMoveEvent(self, event):
         if (event.buttons() == Qt.LeftButton and
                 (event.modifiers() == Qt.ControlModifier or
-                 event.modifiers() == Qt.ShiftModifier)):
+                         event.modifiers() == Qt.ShiftModifier)):
             mime_data = QMimeData()
             mime_data.setText(PageWidget.DRAG_MAGIC)
 
@@ -192,7 +194,8 @@ class CueWidget(QWidget):
             self._show_volume = visible
 
             if self._volume_element is not None:
-                self._volume_element.changed('volume').disconnect(self._reset_volume)
+                self._volume_element.changed('volume').disconnect(
+                    self._reset_volume)
                 self._volume_element = None
 
             if visible:
@@ -200,8 +203,9 @@ class CueWidget(QWidget):
                 self._volume_element = self.cue.media.element('Volume')
                 if self._volume_element is not None:
                     self._reset_volume()
-                    self._volume_element.changed('volume').connect(self._reset_volume,
-                                                                   Connection.QtQueued)
+                    self._volume_element.changed('volume').connect(
+                        self._reset_volume,
+                        Connection.QtQueued)
 
                 self.layout().addWidget(self.volumeSlider, 0, 1)
                 self.layout().setColumnStretch(1, 1)
@@ -216,9 +220,12 @@ class CueWidget(QWidget):
     def _set_cue(self, cue):
         self.cue = cue
         self.cue.changed('name').connect(self._update_name, Connection.QtQueued)
-        self.cue.changed('stylesheet').connect(self._update_style, Connection.QtQueued)
-        self.cue.changed('duration').connect(self._update_duration, Connection.QtQueued)
-        self.cue.changed('description').connect(self._update_description, Connection.QtQueued)
+        self.cue.changed('stylesheet').connect(self._update_style,
+                                               Connection.QtQueued)
+        self.cue.changed('duration').connect(self._update_duration,
+                                             Connection.QtQueued)
+        self.cue.changed('description').connect(self._update_description,
+                                                Connection.QtQueued)
 
         if isinstance(cue, MediaCue):
             self.cue.media.changed('pipe').connect(self._media_updated)
@@ -279,7 +286,7 @@ class CueWidget(QWidget):
 
     def _clicked(self, event):
         if not (self.seekSlider.geometry().contains(event.pos()) and
-                self.seekSlider.isVisible()):
+                    self.seekSlider.isVisible()):
             if event.button() != Qt.RightButton:
                 if event.modifiers() == Qt.ShiftModifier:
                     self.edit_request.emit(self.cue)

@@ -20,8 +20,10 @@
 from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtWidgets import QStyle, QSlider, QStyleOptionSlider
 
+from lisp.ui.qstyledslider import QStyledSlider
 
-class QClickSlider(QSlider):
+
+class QClickSlider(QStyledSlider):
 
     sliderJumped = pyqtSignal(int)
 
