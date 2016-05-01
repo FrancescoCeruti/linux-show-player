@@ -25,51 +25,56 @@ For bugs/requests an issue can be open on the GitHub issues-tracker, any other q
 
 Download the archive from the release page on GitHub.
 
-#####2.2 Install dependencies
+#####2.2 Install (and build) dependencies
 
-*The following names are based on "Arch Linux" packages.*
+**PyPI packages, auto-installed via pip:**
 
 <pre>
-* python(3) >= 3.4
-* python(3)-pyqt5
-* python(3)-gobject
-* python(3)-setuptools
+* mido
+* python-rtmidi
+* JACK-Client
+* sortedcontainers
+</pre>
+
+**Arch-Linux required packages:**
+
+<pre>
+* python3
+* python3-pyqt5
+* python3-gobject
+* python3-setuptools
 * qt5-svg
 * gstreamer 1.x
 * gst-plugins-base
 * gst-plugins-good
 * gst-plugins-ugly
 * gst-plugins-bad
-* gst-libav				(optional, for larger format support)
-* portmidi				(optional, for portmidi support)
-* mido					(auto-installed via pip)
-* python-rtmidi			(auto-installed via pip)
-* JACK-Client			(auto-installed via pip)
-* sortedcontainers      (auto-installed via pip)
+* gst-libav			(optional, for larger format support)
+* portmidi			(optional, for portmidi support)
 </pre>
 
-*On Debian-based distributions, required packages are the following:*
+**Debian-based distributions required packages:**
 
 <pre>
-python3
-python3-dev
-python3-pyqt5
-python3-gi
-python3-setuptools
-python3-pip
-python3-wheel
-libqt5svg5
-libqt5svg5-dev
-gstreamer1.0-plugins-base
-gstreamer1.0-plugins-bad
-gstreamer1.0-plugins-good
-gstreamer1.0-plugins-ugly
-gstreamer1.0-libav
-libffi-dev
-python3-cffi
-libportmidi-dev
-libasound2-dev
-libjack-jackd2-dev
+* python3
+* python3-dev
+* python3-pyqt5
+* python3-gi
+* python3-setuptools
+* python3-pip
+* python3-wheel
+* libqt5svg5
+* libqt5svg5-dev
+* gstreamer1.0-plugins-base
+* gstreamer1.0-plugins-bad
+* gstreamer1.0-plugins-good
+* gstreamer1.0-plugins-ugly
+* gstreamer1.0-libav
+* libffi-dev
+* python3-cffi
+* libportmidi-dev
+* libasound2-dev
+* libjack-jackd2-dev
 </pre>
 
 #####2.3 Install LiSP
