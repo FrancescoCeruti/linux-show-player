@@ -28,7 +28,6 @@ from lisp.ui.settings.settings_page import SettingsPage
 
 
 class GstMediaSettings(SettingsPage):
-
     Name = 'Media Settings'
 
     def __init__(self, **kwargs):
@@ -62,9 +61,10 @@ class GstMediaSettings(SettingsPage):
         for element in settings.get('pipe', ()):
             page = pages.get(element)
 
-            if page is not None:
-                page = page(element, parent=self)
-                page.load_settings(settings.get('elements', {}))
+            if page is not None and issubclass(page, SettingsPage):
+                page = page(parent=self)
+                page.load_settings(
+                    settings.get('elements', {}).get(element, {}))
                 self._pages.append(page)
 
                 item = QListWidgetItem(page.NAME)
@@ -76,7 +76,10 @@ class GstMediaSettings(SettingsPage):
         settings = {'elements': {}}
 
         for page in self._pages:
-            settings['elements'].update(page.get_settings())
+            page_settings = page.get_settings()
+
+            if page_settings:
+                settings['elements'][page.ELEMENT.__name__] = page_settings
 
         # The pipeline is returned only if check is disabled
         if not self._check:
@@ -87,8 +90,7 @@ class GstMediaSettings(SettingsPage):
     def enable_check(self, enabled):
         self._check = enabled
         for page in self._pages:
-            if isinstance(page, SettingsPage):
-                page.enable_check(enabled)
+            page.enable_check(enabled)
 
     def __change_page(self, current, previous):
         if current is None:

@@ -22,20 +22,20 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QPlainTextEdit, QLabel
 
 from lisp.backends.gst.elements.user_element import UserElement
-from lisp.backends.gst.settings.settings_page import GstElementSettingsPage
+from lisp.ui.settings.settings_page import SettingsPage
 
 
-class UserElementSettings(GstElementSettingsPage):
+class UserElementSettings(SettingsPage):
 
-    NAME = "Personalized"
+    NAME = 'Personalized'
     ELEMENT = UserElement
 
-    def __init__(self, element_id, **kwargs):
-        super().__init__(element_id)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
-        self.groupBox = QGroupBox("User defined elements", self)
+        self.groupBox = QGroupBox('User defined elements', self)
         self.groupBox.setGeometry(self.geometry())
         self.groupBox.setLayout(QVBoxLayout())
         self.layout().addWidget(self.groupBox)
@@ -44,9 +44,9 @@ class UserElementSettings(GstElementSettingsPage):
         self.groupBox.layout().addWidget(self.textEdit)
 
         self.warning = QLabel(self.groupBox)
-        self.warning.setText("Only for advanced user.")
+        self.warning.setText('Only for advanced user.')
         self.warning.setAlignment(QtCore.Qt.AlignCenter)
-        self.warning.setStyleSheet("color: #FF2222; font-weight: bold")
+        self.warning.setStyleSheet('color: #FF2222; font-weight: bold')
         self.groupBox.layout().addWidget(self.warning)
 
     def enable_check(self, enable):
@@ -54,13 +54,10 @@ class UserElementSettings(GstElementSettingsPage):
         self.groupBox.setChecked(False)
 
     def load_settings(self, settings):
-        if settings is not None and self.id in settings:
-            self.textEdit.setPlainText(settings[self.id]["bin"])
+        self.textEdit.setPlainText(settings.get('bin', ''))
 
     def get_settings(self):
-        conf = {}
-
         if not (self.groupBox.isCheckable() and not self.groupBox.isChecked()):
-            conf[self.id] = {"bin": self.textEdit.toPlainText().strip()}
+            return {'bin': self.textEdit.toPlainText().strip()}
 
-        return conf
+        return {}

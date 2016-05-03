@@ -24,11 +24,11 @@ from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QGridLayout, \
     QDoubleSpinBox, QLabel, QComboBox, QStyledItemDelegate
 
 from lisp.backends.gst.elements.fade import Fade
-from lisp.backends.gst.settings.settings_page import GstElementSettingsPage
+from lisp.ui.settings.settings_page import SettingsPage
 
 
-class FadeSettings(GstElementSettingsPage):
-    NAME = "Fade"
+class FadeSettings(SettingsPage):
+    NAME = 'Fade'
     ELEMENT = Fade
 
     FadeOutIcons = {
@@ -43,8 +43,8 @@ class FadeSettings(GstElementSettingsPage):
         'Quadratic2': QIcon.fromTheme('fadein_quadratic2')
     }
 
-    def __init__(self, element_id, **kwargs):
-        super().__init__(element_id)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
@@ -97,36 +97,33 @@ class FadeSettings(GstElementSettingsPage):
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.fadeInGroup.setTitle("Fade In")
-        self.fadeInLabel.setText("Time (sec)")
-        self.fadeInExpLabel.setText("Exponent")
-        self.fadeOutGroup.setTitle("Fade Out")
-        self.fadeOutLabel.setText("Time (sec)")
-        self.fadeOutExpLabel.setText("Exponent")
+        self.fadeInGroup.setTitle('Fade In')
+        self.fadeInLabel.setText('Time (sec)')
+        self.fadeInExpLabel.setText('Exponent')
+        self.fadeOutGroup.setTitle('Fade Out')
+        self.fadeOutLabel.setText('Time (sec)')
+        self.fadeOutExpLabel.setText('Exponent')
 
     def get_settings(self):
-        conf = {self.id: {}}
+        settings = {}
 
         checkable = self.fadeInGroup.isCheckable()
 
         if not (checkable and not self.fadeInGroup.isChecked()):
-            conf[self.id]["fadein"] = self.fadeInSpin.value()
-            conf[self.id]["fadein_type"] = self.fadeInCombo.currentText()
+            settings['fadein'] = self.fadeInSpin.value()
+            settings['fadein_type'] = self.fadeInCombo.currentText()
         if not (checkable and not self.fadeOutGroup.isChecked()):
-            conf[self.id]["fadeout"] = self.fadeOutSpin.value()
-            conf[self.id]["fadeout_type"] = self.fadeOutCombo.currentText()
+            settings['fadeout'] = self.fadeOutSpin.value()
+            settings['fadeout_type'] = self.fadeOutCombo.currentText()
 
-        return conf
+        return settings
 
     def load_settings(self, settings):
-        if self.id in settings:
-            settings = settings[self.id]
+        self.fadeInSpin.setValue(settings.get('fadein', 0))
+        self.fadeInCombo.setCurrentText(settings.get('fadein_type', ''))
 
-            self.fadeInSpin.setValue(settings["fadein"])
-            self.fadeInCombo.setCurrentText(settings["fadein_type"])
-
-            self.fadeOutSpin.setValue(settings["fadeout"])
-            self.fadeOutCombo.setCurrentText(settings["fadeout_type"])
+        self.fadeOutSpin.setValue(settings.get('fadeout', 0))
+        self.fadeOutCombo.setCurrentText(settings.get('fadeout_type', ''))
 
     def enable_check(self, enable):
         self.fadeInGroup.setCheckable(enable)

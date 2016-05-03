@@ -21,16 +21,16 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QSlider, QLabel, QVBoxLayout
 
 from lisp.backends.gst.elements.audio_pan import AudioPan
-from lisp.backends.gst.settings.settings_page import GstElementSettingsPage
+from lisp.ui.settings.settings_page import SettingsPage
 
 
-class AudioPanSettings(GstElementSettingsPage):
+class AudioPanSettings(SettingsPage):
 
     NAME = 'Pan'
     ELEMENT = AudioPan
 
-    def __init__(self, element_id, **kwargs):
-        super().__init__(element_id)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
@@ -64,16 +64,13 @@ class AudioPanSettings(GstElementSettingsPage):
         self.panBox.setChecked(False)
 
     def get_settings(self):
-        conf = {}
-
         if not (self.panBox.isCheckable() and not self.panBox.isChecked()):
-            conf['pan'] = self.panSlider.value() / 10
+            return {'pan': self.panSlider.value() / 10}
 
-        return {self.id: conf}
+        return {}
 
     def load_settings(self, settings):
-        if settings is not None and self.id in settings:
-            self.panSlider.setValue(settings[self.id]['pan'] * 10)
+        self.panSlider.setValue(settings.get('pan', 0.5) * 10)
 
     def pan_changed(self, value):
         position = 'Left' if value < 0 else 'Right' if value > 0 else 'Center'

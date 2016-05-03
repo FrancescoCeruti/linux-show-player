@@ -25,19 +25,19 @@ from PyQt5.QtWidgets import QGroupBox, QGridLayout, QComboBox, QDoubleSpinBox, \
     QLabel, QVBoxLayout
 
 from lisp.backends.gst.elements.audiodynamic import Audiodynamic
-from lisp.backends.gst.settings.settings_page import GstElementSettingsPage
+from lisp.ui.settings.settings_page import SettingsPage
 
 
 MIN_dB = 0.000000312  # -100dB
 
 
-class AudiodynamicSettings(GstElementSettingsPage):
+class AudiodynamicSettings(SettingsPage):
 
-    NAME = "Compressor/Expander"
+    NAME = 'Compressor/Expander'
     ELEMENT = Audiodynamic
 
-    def __init__(self, element_id, **kwargs):
-        super().__init__(element_id)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
@@ -47,13 +47,13 @@ class AudiodynamicSettings(GstElementSettingsPage):
         self.layout().addWidget(self.groupBox)
 
         self.comboMode = QComboBox(self.groupBox)
-        self.comboMode.addItem("Compressor")
-        self.comboMode.addItem("Expander")
+        self.comboMode.addItem('Compressor')
+        self.comboMode.addItem('Expander')
         self.groupBox.layout().addWidget(self.comboMode, 0, 0, 1, 1)
 
         self.comboCh = QComboBox(self.groupBox)
-        self.comboCh.addItem("Soft Knee")
-        self.comboCh.addItem("Hard Knee")
+        self.comboCh.addItem('Soft Knee')
+        self.comboCh.addItem('Hard Knee')
         self.groupBox.layout().addWidget(self.comboCh, 1, 0, 1, 1)
 
         self.spinRatio = QDoubleSpinBox(self.groupBox)
@@ -84,54 +84,49 @@ class AudiodynamicSettings(GstElementSettingsPage):
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.groupBox.setTitle("Audio Dynamic - Compressor/Expander")
-        self.labelMode.setText("Type")
-        self.labelCh.setText("Curve Shape")
-        self.labelRatio.setText("Ratio")
-        self.labelThreshold.setText("Threshold (dB)")
+        self.groupBox.setTitle('Audio Dynamic - Compressor/Expander')
+        self.labelMode.setText('Type')
+        self.labelCh.setText('Curve Shape')
+        self.labelRatio.setText('Ratio')
+        self.labelThreshold.setText('Threshold (dB)')
 
     def enable_check(self, enable):
         self.groupBox.setCheckable(enable)
         self.groupBox.setChecked(False)
 
     def get_settings(self):
-        conf = {}
+        settings = {}
 
-        if(not (self.groupBox.isCheckable() and
-                not self.groupBox.isChecked())):
-            conf = {"ratio": self.spinRatio.value(),
-                    "threshold": math.pow(10, self.spinThreshold.value() / 20)}
+        if not (self.groupBox.isCheckable() and not self.groupBox.isChecked()):
+            settings['ratio'] = self.spinRatio.value(),
+            settings['threshold'] = math.pow(10,
+                                             self.spinThreshold.value() / 20)
 
-            if(self.comboMode.currentIndex() == 0):
-                conf["mode"] = "compressor"
+            if self.comboMode.currentIndex() == 0:
+                settings['mode'] = 'compressor'
             else:
-                conf["mode"] = "expander"
+                settings['mode'] = 'expander'
 
-            if(self.comboCh.currentIndex() == 0):
-                conf["characteristics"] = "soft-knee"
+            if self.comboCh.currentIndex() == 0:
+                settings['characteristics'] = 'soft-knee'
             else:
-                conf["characteristics"] = "hard-knee"
+                settings['characteristics'] = 'hard-knee'
 
-            conf = {self.id: conf}
-
-        return conf
+        return settings
 
     def load_settings(self, settings):
-        if(settings is not None):
-            if(self.id in settings):
-                if(settings[self.id]["mode"] == "compressor"):
-                    self.comboMode.setCurrentIndex(0)
-                else:
-                    self.comboMode.setCurrentIndex(1)
+        if settings.get('mode', 'compressor') == 'compressor':
+            self.comboMode.setCurrentIndex(0)
+        else:
+            self.comboMode.setCurrentIndex(1)
 
-                if(settings[self.id]["characteristics"] == "soft-knee"):
-                    self.comboCh.setCurrentIndex(0)
-                else:
-                    self.comboCh.setCurrentIndex(1)
+        if settings.get('characteristics', 'soft-knee') == 'soft-knee':
+            self.comboCh.setCurrentIndex(0)
+        else:
+            self.comboCh.setCurrentIndex(1)
 
-                if (settings[self.id]["threshold"] == 0):
-                    settings[self.id]["threshold"] = MIN_dB
+        if settings.get('threshold', 0) == 0:
+            settings['threshold'] = MIN_dB
 
-                self.spinThreshold.setValue(
-                    20 * math.log10(settings[self.id]["threshold"]))
-                self.spinRatio.setValue(settings[self.id]["ratio"])
+        self.spinThreshold.setValue(20 * math.log10(settings['threshold']))
+        self.spinRatio.setValue(settings.get('ratio', 1))

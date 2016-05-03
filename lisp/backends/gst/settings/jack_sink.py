@@ -26,31 +26,31 @@ from PyQt5.QtWidgets import QGroupBox, QLineEdit, QLabel, QWidget, \
     QDialogButtonBox, QPushButton, QVBoxLayout
 
 from lisp.backends.gst.elements.jack_sink import JackSink
-from lisp.backends.gst.settings.settings_page import GstElementSettingsPage
+from lisp.ui.settings.settings_page import SettingsPage
 
 
-class JackSinkSettings(GstElementSettingsPage):
+class JackSinkSettings(SettingsPage):
     NAME = "Jack Sink"
     ELEMENT = JackSink
 
-    def __init__(self, element_id, **kwargs):
-        super().__init__(element_id)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
-        self.serverGroup = QGroupBox(self)
-        self.serverGroup.setTitle('Jack')
-        self.serverGroup.setLayout(QHBoxLayout())
-        self.layout().addWidget(self.serverGroup)
+        self.jackGroup = QGroupBox(self)
+        self.jackGroup.setTitle('Jack')
+        self.jackGroup.setLayout(QHBoxLayout())
+        self.layout().addWidget(self.jackGroup)
 
-        self.serverLineEdit = QLineEdit(self.serverGroup)
+        self.serverLineEdit = QLineEdit(self.jackGroup)
         self.serverLineEdit.setToolTip('Name of the server to connect with')
         self.serverLineEdit.setText('default')
-        self.serverGroup.layout().addWidget(self.serverLineEdit)
+        self.jackGroup.layout().addWidget(self.serverLineEdit)
 
-        self.serverLineEditLabel = QLabel('Sever name', self.serverGroup)
+        self.serverLineEditLabel = QLabel('Sever name', self.jackGroup)
         self.serverLineEditLabel.setAlignment(QtCore.Qt.AlignCenter)
-        self.serverGroup.layout().addWidget(self.serverLineEditLabel)
+        self.jackGroup.layout().addWidget(self.serverLineEditLabel)
 
         self.connectionsGroup = QGroupBox(self)
         self.connectionsGroup.setTitle('Connections')
@@ -69,26 +69,26 @@ class JackSinkSettings(GstElementSettingsPage):
         super().closeEvent(event)
 
     def get_settings(self):
-        conf = {}
-        if not (
-                    self.serverGroup.isCheckable() and not self.serverGroup.isChecked()):
-            server = self.serverLineEdit.text()
-            conf['server'] = server if server.lower() != 'default' else None
-            conf['connections'] = self.connections
+        settings = {}
 
-        return {self.id: conf}
+        if not (self.jackGroup.isCheckable() and not self.jackGroup.isChecked()):
+            server = self.serverLineEdit.text()
+            settings['server'] = server if server.lower() != 'default' else None
+            settings['connections'] = self.connections
+
+        return settings
 
     def load_settings(self, settings):
-        if self.id in settings:
-            settings = settings[self.id]
+        if settings.get('server') is None:
+            self.serverLineEdit.setText('default')
+        else:
+            self.serverLineEdit.setText(settings['server'])
 
-            self.serverLineEdit.setText(
-                'default' if settings['server'] is None else settings['server'])
-            self.connections = settings['connections'].copy()
+        self.connections = settings.get('connections', []).copy()
 
     def enable_check(self, enable):
-        self.serverGroup.setCheckable(enable)
-        self.serverGroup.setChecked(False)
+        self.jackGroup.setCheckable(enable)
+        self.jackGroup.setChecked(False)
 
     def __edit_connections(self):
         dialog = JackConnectionsDialog(self.__jack_client, parent=self)
@@ -121,7 +121,7 @@ class PortItem(QTreeWidgetItem):
 
 
 class ConnectionsWidget(QWidget):
-    """ Code ported from QjackCtl (http://qjackctl.sourceforge.net) """
+    """Code ported from QJackCtl (http://qjackctl.sourceforge.net)"""
 
     def __init__(self, output_widget, input_widget, parent=None, **kwargs):
         super().__init__(parent)

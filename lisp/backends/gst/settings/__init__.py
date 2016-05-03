@@ -10,8 +10,7 @@ __PAGES = set()
 
 def load():
     for name, page in ClassesLoader(os.path.dirname(__file__),
-                                    suffixes=('Settings', ),
-                                    excluded=('settings_page', )):
+                                    suffixes=('Settings', )):
 
         if hasattr(page, 'initialize'):
             try:

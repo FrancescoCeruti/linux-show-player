@@ -23,16 +23,16 @@ from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QComboBox, QLabel, \
     QVBoxLayout
 
 from lisp.backends.gst.elements.alsa_sink import AlsaSink
-from lisp.backends.gst.settings.settings_page import GstElementSettingsPage
+from lisp.ui.settings.settings_page import SettingsPage
 
 
-class AlsaSinkSettings(GstElementSettingsPage):
+class AlsaSinkSettings(SettingsPage):
 
     NAME = "ALSA Sink"
     ELEMENT = AlsaSink
 
-    def __init__(self, element_id, **kwargs):
-        super().__init__(element_id)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
@@ -61,18 +61,18 @@ class AlsaSinkSettings(GstElementSettingsPage):
         self.deviceGroup.setChecked(False)
 
     def load_settings(self, settings):
-        if self.id in settings:
-            device = settings[self.id].get('device', 'default')
-            for name in self.devices:
-                if device == self.devices[name]:
-                    self.device.setCurrentText(name)
-                    break
+        device = settings.get('device', 'default')
+
+        for name, dev_name in self.devices.items():
+            if device == dev_name:
+                self.device.setCurrentText(name)
+                break
 
     def get_settings(self):
         if not (self.deviceGroup.isCheckable() and not self.deviceGroup.isChecked()):
-            return {self.id: {'device': self.devices[self.device.currentText()]}}
-        else:
-            return {}
+            return {'device': self.devices[self.device.currentText()]}
+
+        return {}
 
     def _discover_pcm_devices(self):
         devices = {}

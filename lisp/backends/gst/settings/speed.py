@@ -22,16 +22,16 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QSlider, QLabel, QVBoxLayout
 
 from lisp.backends.gst.elements.speed import Speed
-from lisp.backends.gst.settings.settings_page import GstElementSettingsPage
+from lisp.ui.settings.settings_page import SettingsPage
 
 
-class SpeedSettings(GstElementSettingsPage):
+class SpeedSettings(SettingsPage):
 
     NAME = 'Speed'
     ELEMENT = Speed
 
-    def __init__(self, element_id, **kwargs):
-        super().__init__(element_id)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
@@ -61,24 +61,21 @@ class SpeedSettings(GstElementSettingsPage):
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.groupBox.setTitle("Speed")
-        self.speedLabel.setText("1.0")
+        self.groupBox.setTitle('Speed')
+        self.speedLabel.setText('1.0')
 
     def enable_check(self, enable):
         self.groupBox.setCheckable(enable)
         self.groupBox.setChecked(False)
 
     def get_settings(self):
-        conf = {}
-
         if not (self.groupBox.isCheckable() and not self.groupBox.isChecked()):
-            conf[self.id] = {'speed': self.speedSlider.value() / 100}
+            return {'speed': self.speedSlider.value() / 100}
 
-        return conf
+        return {}
 
     def load_settings(self, settings):
-        if settings is not None and self.id in settings:
-            self.speedSlider.setValue(settings[self.id]['speed'] * 100)
+        self.speedSlider.setValue(settings.get('speed', 1) * 100)
 
     def speedChanged(self, value):
         self.speedLabel.setText(str(value / 100.0))

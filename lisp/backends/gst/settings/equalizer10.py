@@ -23,10 +23,10 @@ from PyQt5.QtGui import QFontMetrics
 from PyQt5.QtWidgets import QGroupBox, QGridLayout, QLabel, QSlider, QVBoxLayout
 
 from lisp.backends.gst.elements.equalizer10 import Equalizer10
-from lisp.backends.gst.settings.settings_page import GstElementSettingsPage
+from lisp.ui.settings.settings_page import SettingsPage
 
 
-class Equalizer10Settings(GstElementSettingsPage):
+class Equalizer10Settings(SettingsPage):
 
     NAME = "Equalizer"
     ELEMENT = Equalizer10
@@ -34,8 +34,8 @@ class Equalizer10Settings(GstElementSettingsPage):
     FREQ = ["30Hz", "60Hz", "120Hz", "240Hz", "475Hz", "950Hz", "1900Hz",
             "3800Hz", "7525Hz", "15KHz"]
 
-    def __init__(self, element_id, **kwargs):
-        super().__init__(element_id)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
@@ -76,17 +76,14 @@ class Equalizer10Settings(GstElementSettingsPage):
         self.groupBox.setChecked(False)
 
     def get_settings(self):
-        conf = {}
+        settings = {}
 
         if not (self.groupBox.isCheckable() and not self.groupBox.isChecked()):
-            conf[self.id] = {}
             for band in self.sliders:
-                conf[self.id][band] = self.sliders[band].value()
+                settings[band] = self.sliders[band].value()
 
-        return conf
+        return settings
 
     def load_settings(self, settings):
-        if settings is not None and self.id in settings:
-            for band in self.sliders:
-                if band in settings[self.id]:
-                    self.sliders[band].setValue(settings[self.id][band])
+        for band in self.sliders:
+            self.sliders[band].setValue(settings.get(band, 0))

@@ -168,6 +168,10 @@ def memoize(obj):
 
     If called later with the same arguments, the cached value is returned
     (not reevaluated).
+
+    .. Note::
+        This works for any callable object.
+        The arguments are cached (as strings) in object.cache.
     """
     cache = obj.cache = {}
 

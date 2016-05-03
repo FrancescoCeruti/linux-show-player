@@ -22,15 +22,15 @@ from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QPushButton, QLineEdit, \
     QGridLayout, QCheckBox, QSpinBox, QLabel, QFileDialog, QVBoxLayout
 
 from lisp.backends.gst.elements.uri_input import UriInput
-from lisp.backends.gst.settings.settings_page import GstElementSettingsPage
+from lisp.ui.settings.settings_page import SettingsPage
 
 
-class UriInputSettings(GstElementSettingsPage):
+class UriInputSettings(SettingsPage):
     NAME = 'URI Input'
     ELEMENT = UriInput
 
-    def __init__(self, element_id, **kwargs):
-        super().__init__(element_id)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
@@ -69,22 +69,21 @@ class UriInputSettings(GstElementSettingsPage):
         self.buttonFindFile.clicked.connect(self.select_file)
 
     def get_settings(self):
-        conf = {self.id: {}}
+        settings = {}
 
         checkable = self.fileGroup.isCheckable()
 
         if not (checkable and not self.fileGroup.isChecked()):
-            conf[self.id]['uri'] = self.filePath.text()
+            settings['uri'] = self.filePath.text()
         if not (checkable and not self.bufferingGroup.isChecked()):
-            conf[self.id]['use_buffering'] = self.useBuffering.isChecked()
-            conf[self.id]['download'] = self.download.isChecked()
-            conf[self.id]['buffer_size'] = self.bufferSize.value()
+            settings['use_buffering'] = self.useBuffering.isChecked()
+            settings['download'] = self.download.isChecked()
+            settings['buffer_size'] = self.bufferSize.value()
 
-        return conf
+        return settings
 
     def load_settings(self, settings):
-        if settings is not None and self.id in settings:
-            self.filePath.setText(settings[self.id]['uri'])
+        self.filePath.setText(settings.get('uri', ''))
 
     def enable_check(self, enable):
         self.fileGroup.setCheckable(enable)

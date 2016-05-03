@@ -24,16 +24,15 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QSlider, QLabel, QVBoxLayout
 
 from lisp.backends.gst.elements.pitch import Pitch
-from lisp.backends.gst.settings.settings_page import GstElementSettingsPage
+from lisp.ui.settings.settings_page import SettingsPage
 
 
-class PitchSettings(GstElementSettingsPage):
-
+class PitchSettings(SettingsPage):
     NAME = 'Pitch'
     ELEMENT = Pitch
 
-    def __init__(self, element_id, **kwargs):
-        super().__init__(element_id)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
@@ -71,18 +70,14 @@ class PitchSettings(GstElementSettingsPage):
         self.groupBox.setChecked(False)
 
     def get_settings(self):
-        conf = {}
-
         if not (self.groupBox.isCheckable() and not self.groupBox.isChecked()):
-            pitch = math.pow(2, self.pitchSlider.value() / 12)
-            conf[self.id] = {'pitch': pitch}
+            return {'pitch': math.pow(2, self.pitchSlider.value() / 12)}
 
-        return conf
+        return {}
 
     def load_settings(self, settings):
-        if settings is not None and self.id in settings:
-            self.pitchSlider.setValue(
-                round(12 * math.log(settings[self.id]['pitch'], 2)))
+        self.pitchSlider.setValue(
+            round(12 * math.log(settings.get('pitch', 1), 2)))
 
     def pitch_changed(self, value):
         if value < 0:
