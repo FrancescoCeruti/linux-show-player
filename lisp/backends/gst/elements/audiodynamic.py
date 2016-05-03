@@ -39,7 +39,7 @@ class Audiodynamic(GstMediaElement):
         SoftKnee = 'soft-knee'
 
     mode = GstProperty('audio_dynamic', default=Mode.Compressor.value)
-    characteristic = GstProperty('audio_dynamic',
+    characteristics = GstProperty('audio_dynamic',
                                  default=Characteristics.HardKnee.value)
     ratio = GstProperty('audio_dynamic', default=1)
     threshold = GstProperty('audio_dynamic', default=0)

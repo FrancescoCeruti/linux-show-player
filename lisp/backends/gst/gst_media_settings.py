@@ -64,7 +64,9 @@ class GstMediaSettings(SettingsPage):
             if page is not None and issubclass(page, SettingsPage):
                 page = page(parent=self)
                 page.load_settings(
-                    settings.get('elements', {}).get(element, {}))
+                    settings.get('elements', {})
+                    .get(element, page.ELEMENT.properties_defaults()))
+                page.setVisible(False)
                 self._pages.append(page)
 
                 item = QListWidgetItem(page.NAME)
@@ -79,7 +81,7 @@ class GstMediaSettings(SettingsPage):
             page_settings = page.get_settings()
 
             if page_settings:
-                settings['elements'][page.ELEMENT.__name__] = page_settings
+                settings['elements'][page.ELEMENT.Name] = page_settings
 
         # The pipeline is returned only if check is disabled
         if not self._check:
@@ -106,7 +108,7 @@ class GstMediaSettings(SettingsPage):
 
     def __edit_pipe(self):
         # Backup the settings
-        self._settings.update(self.get_settings()['_media_'])
+        self._settings = self.get_settings()['_media_']
 
         # Show the dialog
         dialog = GstPipeEditDialog(self._settings.get('pipe', ()), parent=self)

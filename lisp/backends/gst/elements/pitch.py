@@ -25,23 +25,23 @@ from lisp.backends.gst.gst_element import GstMediaElement, GstProperty
 class Pitch(GstMediaElement):
     ElementType = ElementType.Plugin
     MediaType = MediaType.Audio
-    Name = "Pitch"
+    Name = 'Pitch'
 
-    pitch = GstProperty('pitch', default=1.0)
+    pitch = GstProperty('gst_pitch', gst_name='pitch', default=1.0)
 
     def __init__(self, pipe):
         super().__init__()
 
-        self.pitch = Gst.ElementFactory.make("pitch", None)
-        self.audio_converter = Gst.ElementFactory.make("audioconvert", None)
+        self.gst_pitch = Gst.ElementFactory.make('pitch', None)
+        self.audio_converter = Gst.ElementFactory.make('audioconvert', None)
 
-        pipe.add(self.pitch)
+        pipe.add(self.gst_pitch)
         pipe.add(self.audio_converter)
 
-        self.pitch.link(self.audio_converter)
+        self.gst_pitch.link(self.audio_converter)
 
     def sink(self):
-        return self.pitch
+        return self.gst_pitch
 
     def src(self):
         return self.audio_converter

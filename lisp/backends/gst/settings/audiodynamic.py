@@ -98,7 +98,7 @@ class AudiodynamicSettings(SettingsPage):
         settings = {}
 
         if not (self.groupBox.isCheckable() and not self.groupBox.isChecked()):
-            settings['ratio'] = self.spinRatio.value(),
+            settings['ratio'] = self.spinRatio.value()
             settings['threshold'] = math.pow(10,
                                              self.spinThreshold.value() / 20)
 

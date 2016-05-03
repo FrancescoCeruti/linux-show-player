@@ -28,7 +28,7 @@ class UserElement(GstMediaElement):
     MediaType = MediaType.Audio
     Name = "Personalized"
 
-    gst_bin = Property(default='')
+    bin = Property(default='')
 
     def __init__(self, pipeline):
         super().__init__()

@@ -22,6 +22,7 @@ from PyQt5.QtGui import QIcon, QColor, QDrag
 from PyQt5.QtWidgets import QProgressBar, QLCDNumber, QLabel, QHBoxLayout, \
     QWidget, QGridLayout, QSizePolicy
 
+from lisp.backends.base.audio_utils import linear_to_db, db_to_linear
 from lisp.core.signal import Connection
 from lisp.cues.cue import CueState
 from lisp.cues.cue_time import CueTime
@@ -89,11 +90,11 @@ class CueWidget(QWidget):
 
         # Volume percentage slider (0%-200%)
         self.volumeSlider = QClickSlider(self.nameButton)
-        self.volumeSlider.setTickPosition(QClickSlider.TicksBothSides)
+        #self.volumeSlider.setTickPosition(QClickSlider.TicksBothSides)
         self.volumeSlider.setOrientation(Qt.Vertical)
         self.volumeSlider.setFocusPolicy(Qt.NoFocus)
-        self.volumeSlider.setRange(0, 200)
-        self.volumeSlider.setTickInterval(50)  # 0%, 50%, 100%, 150%, 200%
+        self.volumeSlider.setRange(-500, 0)
+        #self.volumeSlider.setTickInterval(50)  # 0%, 50%, 100%, 150%, 200%
         self.volumeSlider.setTracking(True)
         self.volumeSlider.valueChanged.connect(self._change_volume,
                                                Qt.DirectConnection)
@@ -279,10 +280,10 @@ class CueWidget(QWidget):
 
     def _reset_volume(self):
         if self._volume_element is not None:
-            self.volumeSlider.setValue(self._volume_element.volume * 100)
+            self.volumeSlider.setValue(linear_to_db(self._volume_element.volume) * 5)
 
     def _change_volume(self, new_volume):
-        self._volume_element.current_volume = new_volume / 100
+        self._volume_element.current_volume = db_to_linear(new_volume / 5)
 
     def _clicked(self, event):
         if not (self.seekSlider.geometry().contains(event.pos()) and
