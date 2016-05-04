@@ -39,10 +39,10 @@ Download the archive from the release page on GitHub.
 **Arch-Linux required packages:**
 
 <pre>
-* python3
-* python3-pyqt5
-* python3-gobject
-* python3-setuptools
+* python
+* python-pyqt5
+* python-gobject
+* python-setuptools
 * qt5-svg
 * gstreamer 1.x
 * gst-plugins-base
