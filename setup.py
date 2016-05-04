@@ -1,8 +1,22 @@
 #!/usr/bin/env python3
 
-import lisp
+import os
+
 from setuptools import find_packages, setup
 
+import lisp
+
+
+def package_files(directory):
+    paths = []
+    for (path, directories, filenames) in os.walk(directory):
+        for filename in filenames:
+            paths.append(os.path.join(path, filename))
+    return paths
+
+
+lisp_icon_path = os.path.join(os.path.dirname(__file__), 'lisp/ui/icons')
+lisp_ui_data = package_files(lisp_icon_path) + ['style/style.qss', 'icon.png']
 
 setup(name='linux-show-player',
       author=lisp.__author__,
@@ -11,16 +25,15 @@ setup(name='linux-show-player',
       license=lisp.__license__,
       url=lisp.__email__,
       description='Cue player for live shows',
-      install_requires=['sortedcontainers', 'mido', 'python-rtmidi',
-                        'JACK-Client',],
+      install_requires=[
+          'sortedcontainers',
+          'mido',
+          'python-rtmidi',
+          'JACK-Client'
+      ],
       packages=find_packages(),
-      package_data={'lisp': ['default.cfg'],
-                    'lisp.ui': ['icons/lisp/16/*',
-                                'icons/lisp/22/*',
-                                'icons/lisp/24/*',
-                                'icons/lisp/scalable/*',
-                                'icons/lisp/index.theme',
-                                'icons/lisp/LICENSE.txt',
-                                'style/style.qss',
-                                'icon.png']},
+      package_data={
+          'lisp': ['default.cfg'],
+          'lisp.ui': lisp_ui_data
+      },
       scripts=['linux-show-player'])
