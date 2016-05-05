@@ -18,8 +18,9 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QKeySequence
 from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QCheckBox, QComboBox, \
-    QHBoxLayout, QLabel
+    QHBoxLayout, QLabel, QKeySequenceEdit
 
 from lisp.ui.settings.settings_page import SettingsPage
 
@@ -54,13 +55,22 @@ class ListLayoutSettings(SettingsPage):
 
         self.endListLayout = QHBoxLayout()
         self.behaviorsGroup.layout().addLayout(self.endListLayout)
-
         self.endListLabel = QLabel(self.behaviorsGroup)
         self.endListLayout.addWidget(self.endListLabel)
-
         self.endListBehavior = QComboBox(self.behaviorsGroup)
         self.endListBehavior.addItems(['Stop', 'Restart'])
         self.endListLayout.addWidget(self.endListBehavior)
+        self.endListLayout.setStretch(0, 2)
+        self.endListLayout.setStretch(1, 5)
+
+        self.goKeyLayout = QHBoxLayout()
+        self.behaviorsGroup.layout().addLayout(self.goKeyLayout)
+        self.goKeyLabel = QLabel(self.behaviorsGroup)
+        self.goKeyLayout.addWidget(self.goKeyLabel)
+        self.goKeyEdit = QKeySequenceEdit(self.behaviorsGroup)
+        self.goKeyLayout.addWidget(self.goKeyEdit)
+        self.goKeyLayout.setStretch(0, 2)
+        self.goKeyLayout.setStretch(1, 5)
 
         self.retranslateUi()
 
@@ -72,18 +82,20 @@ class ListLayoutSettings(SettingsPage):
         self.showSeek.setText('Show seek sliders')
         self.autoNext.setText('Automatically select the next cue')
         self.endListLabel.setText('At list end:')
+        self.goKeyLabel.setText('Go shortcuts:')
 
     def get_settings(self):
-        conf = {}
+        settings = {
+            'showplaying': str(self.showPlaying.isChecked()),
+            'showdbmeters': str(self.showDbMeters.isChecked()),
+            'showseek': str(self.showSeek.isChecked()),
+            'showaccurate': str(self.showAccurate.isChecked()),
+            'autocontinue': str(self.autoNext.isChecked()),
+            'endlist': str(self.endListBehavior.currentText()),
+            'gokey': self.goKeyEdit.keySequence().toString(
+                QKeySequence.NativeText)}
 
-        conf['showplaying'] = str(self.showPlaying.isChecked())
-        conf['showdbmeters'] = str(self.showDbMeters.isChecked())
-        conf['showseek'] = str(self.showSeek.isChecked())
-        conf['showaccurate'] = str(self.showAccurate.isChecked())
-        conf['autocontinue'] = str(self.autoNext.isChecked())
-        conf['endlist'] = str(self.endListBehavior.currentText())
-
-        return {'ListLayout': conf}
+        return {'ListLayout': settings}
 
     def load_settings(self, settings):
         settings = settings.get('ListLayout', {})
@@ -94,3 +106,6 @@ class ListLayoutSettings(SettingsPage):
         self.showSeek.setChecked(settings.get('showseek') == 'True')
         self.autoNext.setChecked(settings.get('autocontinue') == 'True')
         self.endListBehavior.setCurrentText(settings.get('endlist'))
+        self.goKeyEdit.setKeySequence(
+            QKeySequence(settings.get('gokey', 'Space'),
+                         QKeySequence.NativeText))

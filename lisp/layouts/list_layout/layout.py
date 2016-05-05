@@ -20,6 +20,7 @@
 from enum import Enum
 
 from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QKeySequence
 from PyQt5.QtWidgets import QWidget, QAction, qApp, QGridLayout, \
     QPushButton, QSizePolicy
 
@@ -79,6 +80,9 @@ class ListLayout(QWidget, CueLayout):
         self._accurate_time = config['ListLayout'].getboolean('ShowAccurate')
         self._auto_continue = config['ListLayout'].getboolean('AutoContinue')
         self._show_playing = config['ListLayout'].getboolean('ShowPlaying')
+        self._go_key = config['ListLayout']['GoKey']
+        self._go_key_sequence = QKeySequence(self._go_key,
+                                             QKeySequence.NativeText)
 
         try:
             self._end_list = EndListBehavior(config['ListLayout']['EndList'])
@@ -245,20 +249,33 @@ class ListLayout(QWidget, CueLayout):
         self.controlButtons.setVisible(visible)
 
     def onKeyPressEvent(self, e):
-        if not e.isAutoRepeat() and e.key() == Qt.Key_Space:
-            if qApp.keyboardModifiers() == Qt.ShiftModifier:
-                cue = self.current_cue()
-                if cue is not None:
-                    self.edit_cue(cue)
-            elif qApp.keyboardModifiers() == Qt.ControlModifier:
-                item = self.current_item()
-                if item is not None:
-                    item.selected = not item.selected
-                    return True
-            else:
+        if not e.isAutoRepeat():
+
+            keys = e.key()
+            modifiers = e.modifiers()
+
+            if modifiers & Qt.ShiftModifier:
+                keys += Qt.SHIFT
+            if modifiers & Qt.ControlModifier:
+                keys += Qt.CTRL
+            if modifiers & Qt.AltModifier:
+                keys += Qt.ALT
+            if modifiers & Qt.MetaModifier:
+                keys += Qt.META
+
+            if QKeySequence(keys) in self._go_key_sequence:
                 self.go()
-        else:
-            self.key_pressed.emit(e)
+            elif e.key() == Qt.Key_Space:
+                if qApp.keyboardModifiers() == Qt.ShiftModifier:
+                    cue = self.current_cue()
+                    if cue is not None:
+                        self.edit_cue(cue)
+                elif qApp.keyboardModifiers() == Qt.ControlModifier:
+                    item = self.current_item()
+                    if item is not None:
+                        item.selected = not item.selected
+            else:
+                self.key_pressed.emit(e)
 
         e.accept()
 

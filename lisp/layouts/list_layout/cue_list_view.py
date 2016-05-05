@@ -79,7 +79,12 @@ class CueListView(QTreeWidget):
 
     def keyPressEvent(self, event):
         self.key_event.emit(event)
-        super().keyPressEvent(event)
+
+        if qApp.keyboardModifiers() == Qt.ControlModifier:
+            # Prevent items to be deselected
+            event.ignore()
+        else:
+            super().keyPressEvent(event)
 
     def dropEvent(self, event):
         if qApp.keyboardModifiers() == Qt.ControlModifier:
@@ -120,7 +125,7 @@ class CueListView(QTreeWidget):
         self.insertTopLevelItem(cue.index, item)
         self.__init_item(item, cue)
 
-        if len(self._model) == 1:
+        if cue.index == 0:
             self.setCurrentItem(item)
             self.setFocus()
 
