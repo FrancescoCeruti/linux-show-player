@@ -20,8 +20,7 @@
 import socket
 from threading import Thread
 
-from PyQt5.QtCore import QThread, pyqtSignal
-
+from lisp.core.signal import Signal
 from lisp.utils.configuration import config
 
 IP = config['Remote']['BindIp']
@@ -60,12 +59,12 @@ class Announcer(Thread):
         self.join()
 
 
-class Discoverer(QThread):
-
-    discovered = pyqtSignal(tuple)
+class Discoverer(Thread):
 
     def __init__(self):
         super().__init__()
+        self.discovered = Signal()
+
         # Create UDP socket
         self._socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self._socket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, True)
@@ -98,7 +97,7 @@ class Discoverer(QThread):
         except Exception:
             pass
         self._socket.close()
-        self.wait()
+        self.join()
 
     def get_discovered(self):
         return self._cache.copy()

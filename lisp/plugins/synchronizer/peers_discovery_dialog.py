@@ -21,6 +21,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QListWidget, QDialogButtonBox, \
     QListWidgetItem
 
+from lisp.core.signal import Connection
 from lisp.modules.remote.discovery import Discoverer
 
 
@@ -48,7 +49,7 @@ class PeersDiscoveryDialog(QDialog):
         self.retranslateUi()
 
         self._discoverer = Discoverer()
-        self._discoverer.discovered.connect(self._new_peer)
+        self._discoverer.discovered.connect(self._new_peer, Connection.QtQueued)
 
     def retranslateUi(self):
         self.setWindowTitle("Discovering peers ...")
