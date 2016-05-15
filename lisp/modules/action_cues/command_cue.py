@@ -40,6 +40,7 @@ class CommandCue(Cue):
 
     command = Property(default='')
     no_output = Property(default=True)
+    kill = Property(default=False)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -61,25 +62,29 @@ class CommandCue(Cue):
             self.__state = CueState.Running
             self.started.emit(self)
 
-            # If no_output is True "suppress" all the outputs
+            # If no_output is True, "suppress" all the outputs
             std = subprocess.DEVNULL if self.no_output else None
-            # Launch the command
+            # Execute the command
             self.__process = subprocess.Popen(self.command, shell=True,
                                               stdout=std, stderr=std)
-            self.__process.wait()
+            rcode = self.__process.wait()
 
-            if self.__process.returncode == 0:
+            if rcode == 0 or rcode == -9:
+                # If terminate normally or killed, set the cue as ended
                 self.__state = CueState.Stop
                 self.end.emit(self)
             else:
                 self.__state = CueState.Error
                 self.error.emit(self, 'Process exited with an error status',
-                                'Exit code: {}'.format(
-                                    self.__process.returncode))
+                                'Exit code: {}'.format(rcode))
 
     def __stop__(self):
         if self.__state == CueState.Running:
-            self.__process.terminate()
+            if self.kill:
+                self.__process.kill()
+            else:
+                self.__process.terminate()
+
             self.__state = CueState.Stop
             self.stopped.emit(self)
 
@@ -106,6 +111,10 @@ class CommandCueSettings(SettingsPage):
         self.noOutputCheckBox.setText('Discard command output')
         self.layout().addWidget(self.noOutputCheckBox)
 
+        self.killCheckBox = QCheckBox(self)
+        self.killCheckBox.setText('Kill instead of terminate')
+        self.layout().addWidget(self.killCheckBox)
+
     def enable_check(self, enabled):
         self.group.setCheckable(enabled)
         self.group.setChecked(False)
@@ -114,19 +123,25 @@ class CommandCueSettings(SettingsPage):
         if enabled:
             self.noOutputCheckBox.setCheckState(Qt.PartiallyChecked)
 
+        self.killCheckBox.setTristate(enabled)
+        if enabled:
+            self.killCheckBox.setCheckState(Qt.PartiallyChecked)
+
     def load_settings(self, settings):
-        if 'command' in settings:
-            self.commandLineEdit.setText(settings['command'])
-        if 'no_output' in settings:
-            self.noOutputCheckBox.setChecked(settings['no_output'])
+        self.commandLineEdit.setText(settings.get('command', ''))
+        self.noOutputCheckBox.setChecked(settings.get('no_output', True))
+        self.killCheckBox.setChecked(settings.get('kill', False))
 
     def get_settings(self):
         settings = {}
 
-        if self.commandLineEdit.text().strip():
-            settings['command'] = self.commandLineEdit.text()
+        if not (self.group.isCheckable() and not self.group.isChecked()):
+            if self.commandLineEdit.text().strip():
+                settings['command'] = self.commandLineEdit.text()
         if self.noOutputCheckBox.checkState() != Qt.PartiallyChecked:
             settings['no_output'] = self.noOutputCheckBox.isChecked()
+        if self.killCheckBox.checkState() != Qt.PartiallyChecked:
+            settings['kill'] = self.killCheckBox.isChecked()
 
         return settings
 
