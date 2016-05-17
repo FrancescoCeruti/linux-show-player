@@ -95,6 +95,7 @@ class CueListView(QTreeWidget):
             self._model.insert(new_cue, new_index)
         else:
             super().dropEvent(event)
+
             self.__item_moving = True
             self._model.move(self._drag_start,
                              self.indexFromItem(self._drag_item).row())
@@ -107,7 +108,6 @@ class CueListView(QTreeWidget):
             event.ignore()
         else:
             super().mousePressEvent(event)
-
 
     def dragEnterEvent(self, event):
         super().dragEnterEvent(event)

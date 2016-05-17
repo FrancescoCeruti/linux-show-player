@@ -53,7 +53,8 @@ class CueListModel(ModelAdapter):
                 max_index = old_index
 
             self._update_indices(min_index, max_index + 1)
-            self.item_moved.emit(old_index, new_index)
+
+        self.item_moved.emit(old_index, new_index)
 
     def _model_reset(self):
         self.__cues.clear()
