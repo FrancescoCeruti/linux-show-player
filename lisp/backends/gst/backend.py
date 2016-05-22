@@ -19,7 +19,7 @@
 
 from lisp.backends.base.backend import Backend as BaseBackend
 from lisp.backends.gst import elements, settings
-from lisp.backends.gst.gi_repository import Gst, GObject
+from lisp.backends.gst.gi_repository import Gst
 from lisp.backends.gst.gst_cue_factories import register_factories
 from lisp.backends.gst.gst_media_settings import GstMediaSettings
 from lisp.backends.gst.gst_settings import GstSettings
@@ -34,10 +34,7 @@ from lisp.ui.settings.cue_settings import CueSettingsRegistry
 
 class Backend(BaseBackend):
     def __init__(self):
-        """Startup GStreamer and GObject."""
-
-        # Initialize GStreamer and GObject
-        GObject.threads_init()
+        # Initialize GStreamer
         Gst.init(None)
 
         # Register GStreamer settings widgets

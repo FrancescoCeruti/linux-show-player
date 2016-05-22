@@ -49,6 +49,7 @@ class CueListView(QTreeWidget):
         self._model.item_added.connect(self.__cue_added, Connection.QtQueued)
         self._model.item_moved.connect(self.__cue_moved, Connection.QtQueued)
         self._model.item_removed.connect(self.__cue_removed, Connection.QtQueued)
+        self._model.model_reset.connect(self.__model_reset)
         self._drag_item = None
         self._drag_start = None
         self.__item_moving = False
@@ -147,6 +148,10 @@ class CueListView(QTreeWidget):
         if index > 0:
             index -= 1
         self.setCurrentIndex(self.model().index(index, 0))
+
+    def __model_reset(self):
+        self.reset()
+        self.clear()
 
     def __init_item(self, item, cue):
         item.name_column = CueListView.H_NAMES.index('Cue')

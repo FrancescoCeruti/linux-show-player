@@ -88,13 +88,10 @@ class CueWidget(QWidget):
         self.seekSlider.setFocusPolicy(Qt.NoFocus)
         self.seekSlider.setVisible(False)
 
-        # Volume percentage slider (0%-200%)
         self.volumeSlider = QClickSlider(self.nameButton)
-        #self.volumeSlider.setTickPosition(QClickSlider.TicksBothSides)
         self.volumeSlider.setOrientation(Qt.Vertical)
         self.volumeSlider.setFocusPolicy(Qt.NoFocus)
         self.volumeSlider.setRange(-500, 0)
-        #self.volumeSlider.setTickInterval(50)  # 0%, 50%, 100%, 150%, 200%
         self.volumeSlider.setTracking(True)
         self.volumeSlider.valueChanged.connect(self._change_volume,
                                                Qt.DirectConnection)
@@ -229,7 +226,8 @@ class CueWidget(QWidget):
                                                 Connection.QtQueued)
 
         if isinstance(cue, MediaCue):
-            self.cue.media.changed('pipe').connect(self._media_updated)
+            self.cue.media.changed('pipe').connect(self._media_updated,
+                                                   Connection.QtQueued)
 
             self.cue.paused.connect(self.dbMeter.reset, Connection.QtQueued)
             self.cue.stopped.connect(self.dbMeter.reset, Connection.QtQueued)
@@ -247,7 +245,7 @@ class CueWidget(QWidget):
         self.cue.end.connect(self._status_stopped, Connection.QtQueued)
 
         self._cue_time = CueTime(self.cue)
-        self._cue_time.notify.connect(self._update_time)
+        self._cue_time.notify.connect(self._update_time, Connection.QtQueued)
 
         self._update_name(cue.name)
         self._update_style(cue.stylesheet)

@@ -73,6 +73,7 @@ class CartLayout(QTabWidget, CueLayout):
         self._model_adapter.item_added.connect(self.__cue_added, Connection.QtQueued)
         self._model_adapter.item_removed.connect(self.__cue_removed, Connection.QtQueued)
         self._model_adapter.item_moved.connect(self.__cue_moved, Connection.QtQueued)
+        self._model_adapter.model_reset.connect(self.__model_reset)
 
         # Add layout-specific menus
         self.new_page_action = QAction(self)
@@ -417,3 +418,8 @@ class CartLayout(QTabWidget, CueLayout):
         else:
             widget = self.__pages[o_page].take_widget(o_row, o_column)
             self.__pages[n_page].add_widget(widget, n_row, n_column)
+
+    def __model_reset(self):
+        self.__context_widget = None
+        for page in self.__pages:
+            page.reset()

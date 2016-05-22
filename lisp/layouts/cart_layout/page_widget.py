@@ -91,16 +91,8 @@ class PageWidget(QWidget):
     def widgets(self):
         return iter(self.__widgets.values())
 
-    def _check_index(self, row, column):
-        if not isinstance(row, int):
-            raise TypeError('rows index must be integers, not {}'
-                            .format(row.__class__.__name__))
-        if not isinstance(column, int):
-            raise TypeError('columns index must be integers, not {}'
-                            .format(column.__class__.__name__))
-
-        if not 0 <= row < self.__rows or not 0 <= column < self.__columns:
-            raise IndexError('index out of bound {}'.format((row, column)))
+    def reset(self):
+        self.__widgets.clear()
 
     def dragEnterEvent(self, event):
         if event.mimeData().hasText():
@@ -134,6 +126,17 @@ class PageWidget(QWidget):
             event.accept()
         else:
             event.ignore()
+
+    def _check_index(self, row, column):
+        if not isinstance(row, int):
+            raise TypeError('rows index must be integers, not {}'
+                            .format(row.__class__.__name__))
+        if not isinstance(column, int):
+            raise TypeError('columns index must be integers, not {}'
+                            .format(column.__class__.__name__))
+
+        if not 0 <= row < self.__rows or not 0 <= column < self.__columns:
+            raise IndexError('index out of bound {}'.format((row, column)))
 
     def _event_index(self, event):
         # Margins and spacings are equals
