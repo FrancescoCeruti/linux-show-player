@@ -19,7 +19,7 @@
 
 import weakref
 from concurrent.futures import ThreadPoolExecutor
-from os import path, cpu_count as _cpu_count
+from os import path
 
 from lisp.backends.base.media import Media, MediaState
 from lisp.backends.gst import elements
@@ -27,10 +27,6 @@ from lisp.backends.gst.gi_repository import Gst
 from lisp.backends.gst.gst_utils import gst_uri_duration
 from lisp.core.decorators import async_in_pool, async
 from lisp.core.has_properties import Property
-
-
-def cpu_count():
-    return _cpu_count() if _cpu_count() is not None else 1
 
 
 def validate_pipeline(pipe):
@@ -316,7 +312,7 @@ class GstMedia(Media):
             self.eos.emit(self)
             self.interrupt(emit=False)
 
-    @async_in_pool(pool=ThreadPoolExecutor(cpu_count()))
+    @async_in_pool(pool=ThreadPoolExecutor(1))
     def __duration(self):
         self.duration = gst_uri_duration(self.input_uri())
 
