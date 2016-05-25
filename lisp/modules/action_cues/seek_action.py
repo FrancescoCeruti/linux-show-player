@@ -99,12 +99,13 @@ class SeekSettings(SettingsPage):
 
     def select_cue(self):
         if self.cueDialog.exec_() == self.cueDialog.Accepted:
-            cue = self.cueDialog.selected_cues()[0]
+            cue = self.cueDialog.selected_cue()
 
-            self.cue_id = cue.id
-            self.seekEdit.setMaximumTime(
-                QTime.fromMSecsSinceStartOfDay(cue.media.duration))
-            self.cueLabel.setText(cue.name)
+            if cue is not None:
+                self.cue_id = cue.id
+                self.seekEdit.setMaximumTime(
+                    QTime.fromMSecsSinceStartOfDay(cue.media.duration))
+                self.cueLabel.setText(cue.name)
 
     def enable_check(self, enabled):
         self.cueGroup.setCheckable(enabled)

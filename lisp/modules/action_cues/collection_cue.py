@@ -73,8 +73,8 @@ class CollectionCueSettings(SettingsPage):
         self.delButton = self.dialogButtons.addButton('Remove', QDialogButtonBox.ActionRole)
         self.delButton.clicked.connect(self._remove_selected)
 
-        self.cue_dialog = CueListDialog(cues=Application().cue_model)
-        self.cue_dialog.list.setSelectionMode(QAbstractItemView.ExtendedSelection)
+        self.cue_dialog = CueListDialog(cues=Application().cue_model,
+                                        selection_mode=QAbstractItemView.ExtendedSelection)
 
     def load_settings(self, settings):
         for target_id, action in settings.get('targets', []):

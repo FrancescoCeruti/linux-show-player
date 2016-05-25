@@ -66,14 +66,20 @@ class TriggersSettings(SettingsPage):
 
     def _add_trigger_dialog(self):
         if self.cue_dialog.exec_() == QDialog.Accepted:
-            target = self.cue_dialog.selected_cues()[0]
-            self._add_new_trigger(CueTriggers.Ended.value, target,
-                                  CueAction.Start.value)
+            target = self.cue_dialog.selected_cue()
+            if target is not None:
+                self._add_new_trigger(CueTriggers.Ended.value, target,
+                                      CueAction.Start.value)
 
     def _remove_trigger(self):
         self.triggersWidget.takeItem(self.triggersWidget.currentRow())
 
     def load_settings(self, settings):
+        # Remove the edited cue from the list of possible targets
+        self_cue = Application().cue_model.get(settings.get('id'))
+        if self_cue:
+            self.cue_dialog.remove_cue(self_cue)
+
         settings = settings.get('triggers', {})
 
         for trigger_action, targets in settings.items():
@@ -142,6 +148,8 @@ class TriggerWidget(QWidget):
 
     def select_target(self):
         if self.cue_dialog.exec_() == QDialog.Accepted:
-            self.target = self.cue_dialog.selected_cues()[0]
-            self.selectButton.setText(self.target.name)
-            self.selectButton.setToolTip(self.target.name)
+            target = self.cue_dialog.selected_cue()
+            if target is not None:
+                self.target = target
+                self.selectButton.setText(self.target.name)
+                self.selectButton.setToolTip(self.target.name)

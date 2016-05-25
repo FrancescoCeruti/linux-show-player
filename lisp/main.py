@@ -32,14 +32,6 @@ from lisp.ui import styles
 from lisp.utils.configuration import config
 
 
-def _exec(qt_app, LiSP_app):
-    # Start PyQt main loop
-    qt_app.exec_()
-
-    # Finalize the application
-    LiSP_app.finalize()
-
-
 def main():
     # Create and parse the command-line arguments
     parser = argparse.ArgumentParser(description='Linux Show Player')
@@ -61,14 +53,14 @@ def main():
     logging.basicConfig(format='%(levelname)s:: %(message)s', level=log)
 
     # Create the QApplication
-    app = QApplication(sys.argv)
-    app.setApplicationName('Linux Show Player')
-    app.setQuitOnLastWindowClosed(True)
+    qt_app = QApplication(sys.argv)
+    qt_app.setApplicationName('Linux Show Player')
+    qt_app.setQuitOnLastWindowClosed(True)
 
     # Force light font, for environment with "bad" QT support.
-    appFont = app.font()
+    appFont = qt_app.font()
     appFont.setWeight(QFont.Light)
-    app.setFont(appFont)
+    qt_app.setFont(appFont)
     # Set icons and theme from the application configuration
     QIcon.setThemeSearchPaths(styles.IconsThemePaths)
     QIcon.setThemeName(config['Theme']['icons'])
@@ -81,18 +73,23 @@ def main():
     # Load translation file
     translator = QTranslator()
     translator.load('i18n/lisp_' + locale)
-    app.installTranslator(translator)
+    qt_app.installTranslator(translator)
 
     # Create the application
-    LiSP_app = Application()
+    lisp_app = Application()
     # Load modules and plugins
     modules.load_modules()
     plugins.load_plugins()
-    # Start the application
-    LiSP_app.start(session_file=args.file)
 
-    # Start the application
-    sys.exit(_exec(app, LiSP_app))
+    # Start/Initialize LiSP Application
+    lisp_app.start(session_file=args.file)
+    # Start Qt Application (block until exit)
+    exit_code = qt_app.exec_()
+
+    # Finalize the application
+    lisp_app.finalize()
+    # Exit
+    sys.exit(exit_code)
 
 
 if __name__ == '__main__':

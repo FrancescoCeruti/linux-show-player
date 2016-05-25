@@ -25,7 +25,8 @@ from lisp.utils import logging
 
 
 class CueListDialog(QDialog):
-    def __init__(self, cues=None, properties=('index', 'name'), **kwargs):
+    def __init__(self, cues=None, properties=('index', 'name'),
+                 selection_mode=QTreeWidget.SingleSelection, **kwargs):
         super().__init__(**kwargs)
 
         self.setMinimumSize(600, 400)
@@ -34,7 +35,7 @@ class CueListDialog(QDialog):
         self._cues = {}
 
         self.list = QTreeWidget(self)
-        self.list.setSelectionMode(QTreeWidget.SingleSelection)
+        self.list.setSelectionMode(selection_mode)
         self.list.setSelectionBehavior(QTreeWidget.SelectRows)
         self.list.setAlternatingRowColors(True)
         self.list.setIndentation(0)
@@ -93,3 +94,8 @@ class CueListDialog(QDialog):
         for item in self.list.selectedItems():
             cues.append(item.data(0, Qt.UserRole))
         return cues
+
+    def selected_cue(self):
+        items = self.list.selectedItems()
+        if items:
+            return items[0].data(0, Qt.UserRole)

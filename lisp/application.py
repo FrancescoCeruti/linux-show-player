@@ -64,7 +64,7 @@ class Application(metaclass=Singleton):
 
     @property
     def cue_model(self):
-        """:rtype: lisp.model_view.cue_model.CueModel"""
+        """:rtype: lisp.cues.cue_model.CueModel"""
         return self._cue_model
 
     def start(self, session_file=''):
@@ -123,10 +123,13 @@ class Application(metaclass=Singleton):
             self._layout.finalize()
             self._layout = None
             self._memento_model = None
+            self._cue_model.reset()
 
     def finalize(self):
-        self._delete_session()
         modules.terminate_modules()
+
+        self._delete_session()
+        self._mainWindow.deleteLater()
 
     def _save_to_file(self, session_file):
         """ Save the current session into a file """
