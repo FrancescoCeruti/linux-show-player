@@ -24,7 +24,7 @@ from PyQt5.QtWidgets import QAction, QMessageBox, QDialog, QVBoxLayout, \
     QTreeWidget, QAbstractItemView, QDialogButtonBox, QTreeWidgetItem
 
 from lisp.application import Application
-from lisp.backends.gst.gst_utils import gst_uri_metadata, gst_parse_tag_list
+from lisp.modules.gst_backend.gst_utils import gst_uri_metadata, gst_parse_tag_list
 from lisp.core.module import Module
 from lisp.cues.media_cue import MediaCue
 from lisp.layouts.cue_layout import CueLayout
@@ -45,7 +45,7 @@ class MediaInfo(Module):
     def show_info(self, clicked):
         media_uri = Application().layout.get_context_cue().media.input_uri()
         if not media_uri:
-            QMessageBox.critical(None, 'Error Message', 'Invalid Media!')
+            QMessageBox.critical(None, 'Error Message', 'No info to display')
         else:
             gst_info = gst_uri_metadata(media_uri)
             info = {"Uri": unquote(gst_info.get_uri())}

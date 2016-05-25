@@ -22,7 +22,7 @@ from PyQt5.QtGui import QIcon, QColor, QDrag
 from PyQt5.QtWidgets import QProgressBar, QLCDNumber, QLabel, QHBoxLayout, \
     QWidget, QGridLayout, QSizePolicy
 
-from lisp.backends.base.audio_utils import linear_to_db, db_to_linear
+from lisp.backend.audio_utils import linear_to_db, db_to_linear
 from lisp.core.signal import Connection
 from lisp.cues.cue import CueState
 from lisp.cues.cue_time import CueTime
@@ -218,12 +218,9 @@ class CueWidget(QWidget):
     def _set_cue(self, cue):
         self.cue = cue
         self.cue.changed('name').connect(self._update_name, Connection.QtQueued)
-        self.cue.changed('stylesheet').connect(self._update_style,
-                                               Connection.QtQueued)
-        self.cue.changed('duration').connect(self._update_duration,
-                                             Connection.QtQueued)
-        self.cue.changed('description').connect(self._update_description,
-                                                Connection.QtQueued)
+        self.cue.changed('stylesheet').connect(self._update_style, Connection.QtQueued)
+        self.cue.changed('duration').connect(self._update_duration, Connection.QtQueued)
+        self.cue.changed('description').connect(self._update_description, Connection.QtQueued)
 
         if isinstance(cue, MediaCue):
             self.cue.media.changed('pipe').connect(self._media_updated,

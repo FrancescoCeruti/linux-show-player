@@ -14,3 +14,6 @@ eggs/
 # Eclipse project
 /.project
 /.pydevproject
+
+# QT project files, generated only for pylupdate (qt i18n)
+*.pro

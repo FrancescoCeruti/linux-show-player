@@ -21,7 +21,8 @@ import os
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import pyqtSignal
-from PyQt5.QtWidgets import QMainWindow, QStatusBar, QMenuBar, QMenu, QAction,\
+from PyQt5.QtGui import QKeySequence
+from PyQt5.QtWidgets import QMainWindow, QStatusBar, QMenuBar, QMenu, QAction, \
     qApp, QFileDialog, QDialog, QMessageBox, QVBoxLayout, QWidget
 
 from lisp.core.actions_handler import MainActionsHandler
@@ -29,10 +30,10 @@ from lisp.core.singleton import QSingleton
 from lisp.ui import about
 from lisp.ui.settings.app_settings import AppSettings
 from lisp.utils import configuration
+from lisp.utils.util import translate
 
 
 class MainWindow(QMainWindow, metaclass=QSingleton):
-
     new_session = pyqtSignal()
     save_session = pyqtSignal(str)
     open_session = pyqtSignal(str)
@@ -141,43 +142,44 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
     def retranslateUi(self):
         self.setWindowTitle('Linux Show Player')
         # menuFile
-        self.menuFile.setTitle("&File")
-        self.newSessionAction.setText("New session")
-        self.newSessionAction.setShortcut("CTRL+N")
-        self.openSessionAction.setText("Open")
-        self.openSessionAction.setShortcut("CTRL+O")
-        self.saveSessionAction.setText("Save session")
-        self.saveSessionAction.setShortcut("CTRL+S")
-        self.editPreferences.setText("Preferences")
-        self.editPreferences.setShortcut("CTRL+P")
-        self.saveSessionWithName.setText("Save with name")
-        self.saveSessionWithName.setShortcut('CTRL+SHIFT+S')
-        self.fullScreenAction.setText('Toggle fullscreen')
-        self.fullScreenAction.setShortcut('F11')
-        self.exitAction.setText("Exit")
+        self.menuFile.setTitle(translate('MainWindow', '&File'))
+        self.newSessionAction.setText(translate('MainWindow', 'New session'))
+        self.newSessionAction.setShortcut(QKeySequence.New)
+        self.openSessionAction.setText(translate('MainWindow', 'Open'))
+        self.openSessionAction.setShortcut(QKeySequence.Open)
+        self.saveSessionAction.setText(translate('MainWindow', 'Save session'))
+        self.saveSessionAction.setShortcut(QKeySequence.Save)
+        self.editPreferences.setText(translate('MainWindow', 'Preferences'))
+        self.editPreferences.setShortcut(QKeySequence.Preferences)
+        self.saveSessionWithName.setText(translate('MainWindow', 'Save as'))
+        self.saveSessionWithName.setShortcut(QKeySequence.SaveAs)
+        self.fullScreenAction.setText(translate('MainWindow', 'Full Screen'))
+        self.fullScreenAction.setShortcut(QKeySequence.FullScreen)
+        self.exitAction.setText(translate('MainWindow', 'Exit'))
         # menuEdit
-        self.menuEdit.setTitle("&Edit")
-        self.actionUndo.setText('Undo')
-        self.actionUndo.setShortcut('CTRL+Z')
-        self.actionRedo.setText('Redo')
-        self.actionRedo.setShortcut('CTRL+Y')
-        self.selectAll.setText("Select all")
-        self.selectAll.setShortcut("CTRL+A")
-        self.deselectAll.setText("Deselect all")
-        self.deselectAll.setShortcut("CTRL+SHIFT+A")
-        self.invertSelection.setText("Invert selection")
-        self.invertSelection.setShortcut("CTRL+I")
-        self.multiEdit.setText("Edit selected media")
-        self.multiEdit.setShortcut("CTRL+SHIFT+E")
+        self.menuEdit.setTitle(translate('MainWindow', '&Edit'))
+        self.actionUndo.setText(translate('MainWindow', 'Undo'))
+        self.actionUndo.setShortcut(QKeySequence.Undo)
+        self.actionRedo.setText(translate('MainWindow', 'Redo'))
+        self.actionRedo.setShortcut(QKeySequence.Redo)
+        self.selectAll.setText(translate('MainWindow', 'Select all'))
+        self.selectAll.setShortcut(QKeySequence.SelectAll)
+        self.deselectAll.setText(translate('MainWindow', 'Deselect all'))
+        self.deselectAll.setShortcut(translate('MainWindow', 'CTRL+SHIFT+A'))
+        self.invertSelection.setText(
+            translate('MainWindow', 'Invert selection'))
+        self.invertSelection.setShortcut(translate('MainWindow', 'CTRL+I'))
+        self.multiEdit.setText(translate('MainWindow', 'Edit selected'))
+        self.multiEdit.setShortcut(translate('MainWindow', 'CTRL+SHIFT+E'))
         # menuLayout
-        self.menuLayout.setTitle("&Layout")
+        self.menuLayout.setTitle(translate('MainWindow', '&Layout'))
         # menuTools
-        self.menuTools.setTitle("&Tools")
-        self.multiEdit.setText("Edit selected media")
+        self.menuTools.setTitle(translate('MainWindow', '&Tools'))
+        self.multiEdit.setText(translate('MainWindow', 'Edit selection'))
         # menuAbout
-        self.menuAbout.setTitle("&About")
-        self.actionAbout.setText("About")
-        self.actionAbout_Qt.setText("About Qt")
+        self.menuAbout.setTitle(translate('MainWindow', '&About'))
+        self.actionAbout.setText(translate('MainWindow', 'About'))
+        self.actionAbout_Qt.setText(translate('MainWindow', 'About Qt'))
 
     def set_layout(self, layout):
         if self.layout is not None:
@@ -218,19 +220,20 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         self._exit()
         event.ignore()
 
-    def register_cue_menu_action(self, name, function, category='', shortcut=''):
-        """Register a new-cue choice for the edit-menu
+    def register_cue_menu_action(self, name, function, category='',
+                                 shortcut=''):
+        '''Register a new-cue choice for the edit-menu
 
         param name: The name for the MenuAction
         param function: The function that add the new cue(s)
         param category: The optional menu where insert the MenuAction
         param shortcut: An optional shortcut for the MenuAction
-        """
+        '''
         action = QAction(self)
-        action.setText(name)
+        action.setText(translate('MainWindow', name))
         action.triggered.connect(function)
         if shortcut != '':
-            action.setShortcut(shortcut)
+            action.setShortcut(translate('MainWindow', shortcut))
 
         if category != '':
             if category not in self._cue_add_menu:
@@ -254,11 +257,13 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         self.update_window_title()
 
     def _action_undone(self, action):
-        self.statusBar.showMessage('Undone: ' + action.log())
+        self.statusBar.showMessage(
+            translate('MainWindow', 'Undone: ') + action.log())
         self.update_window_title()
 
     def _action_redone(self, action):
-        self.statusBar.showMessage('Redone: ' + action.log())
+        self.statusBar.showMessage(
+            translate('MainWindow', 'Redone: ') + action.log())
         self.update_window_title()
 
     def _save(self):
@@ -301,11 +306,13 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         if not MainActionsHandler().is_saved():
             msgBox = QMessageBox(self)
             msgBox.setIcon(QMessageBox.Warning)
-            msgBox.setWindowTitle('Close session')
-            msgBox.setText('The current session is not saved.')
-            msgBox.setInformativeText('Discard the changes?')
+            msgBox.setWindowTitle(translate('MainWindow', 'Close session'))
+            msgBox.setText(
+                translate('MainWindow', 'The current session is not saved.'))
+            msgBox.setInformativeText(
+                translate('MainWindow', 'Discard the changes?'))
             msgBox.setStandardButtons(QMessageBox.Save | QMessageBox.Discard |
-                                       QMessageBox.Cancel)
+                                      QMessageBox.Cancel)
             msgBox.setDefaultButton(QMessageBox.Save)
 
             result = msgBox.exec_()

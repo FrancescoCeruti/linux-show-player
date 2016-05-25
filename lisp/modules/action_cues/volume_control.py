@@ -26,7 +26,7 @@ from PyQt5.QtWidgets import QVBoxLayout, QLabel, QHBoxLayout, QGroupBox, \
     QPushButton, QDoubleSpinBox, QGridLayout, QComboBox, QStyledItemDelegate
 
 from lisp.application import Application
-from lisp.backends.base.media import MediaState
+from lisp.backend.media import MediaState
 from lisp.core.decorators import async, synchronized_method
 from lisp.core.has_properties import Property
 from lisp.cues.cue import Cue, CueState, CueAction

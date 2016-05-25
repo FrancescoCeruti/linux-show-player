@@ -90,7 +90,7 @@ class AsyncSlot(Slot):
 
 
 class QtSlot(Slot):
-    """Qt-safe synchronous slot, execute the call inside the qt-event-loop."""
+    """Qt direct slot, execute the call inside the qt-event-loop."""
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -112,7 +112,7 @@ class QtSlot(Slot):
 
 
 class QtQueuedSlot(QtSlot):
-    """Qt-safe queued slot, execute the call inside the qt-event-loop."""
+    """Qt queued (safe) slot, execute the call inside the qt-event-loop."""
 
     def call(self, *args, **kwargs):
         QApplication.instance().postEvent(self._invoker,

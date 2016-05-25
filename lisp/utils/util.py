@@ -22,6 +22,8 @@ from itertools import chain
 from os import listdir, path
 from os.path import isdir, exists, join
 
+from PyQt5.QtWidgets import QApplication
+
 
 def deep_update(d1, d2):
     """Recursively update d1 with d2"""
@@ -138,4 +140,12 @@ def subclasses(cls):
 
 
 def weak_call_proxy(weakref):
-    return lambda *args, **kwargs: weakref()(*args, **kwargs)
+    def proxy(*args, **kwargs):
+        if weakref() is not None:
+            weakref()(*args, **kwargs)
+
+    return proxy
+
+
+def translate(context, text, disambiguation=None, n=-1):
+    return QApplication.translate(context, text, disambiguation, n)

@@ -21,6 +21,8 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QTreeWidgetItem
 
+from lisp.core.signal import Connection
+
 
 class CueListItem(QTreeWidgetItem):
 
@@ -35,8 +37,8 @@ class CueListItem(QTreeWidgetItem):
 
         self._selected = False
 
-        self.cue.changed('name').connect(self._update_name)
-        self.cue.changed('index').connect(self._update_index)
+        self.cue.changed('name').connect(self._update_name, Connection.QtQueued)
+        self.cue.changed('index').connect(self._update_index, Connection.QtQueued)
 
         self._update_name(self.cue.name)
         self._update_index(self.cue.index)

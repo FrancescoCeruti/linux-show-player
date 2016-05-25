@@ -161,12 +161,10 @@ class CueTimeWidget(TimeWidget):
         self.cue.paused.connect(self._pause, Connection.QtQueued)
         self.cue.error.connect(self._error, Connection.QtQueued)
         self.cue.end.connect(self._stop, Connection.QtQueued)
-        self.cue.changed('duration').connect(self._update_duration,
-                                             mode=Connection.QtQueued)
+        self.cue.changed('duration').connect(self._update_duration, Connection.QtQueued)
 
         self.cue_time = CueTime(self.cue)
-        self.cue_time.notify.connect(self._update_time,
-                                     mode=Connection.QtQueued)
+        self.cue_time.notify.connect(self._update_time, Connection.QtQueued)
 
         if cue.state == CueState.Running:
             self._running()

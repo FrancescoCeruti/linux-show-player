@@ -23,10 +23,12 @@ from concurrent.futures import as_completed as futures_completed
 from math import pow
 from threading import Thread, Lock
 
+import gi
+gi.require_version('Gst', '1.0')
+from gi.repository import Gst
 from PyQt5.QtWidgets import QMenu, QAction, QDialog
 
 from lisp.application import Application
-from lisp.backends.gst.gi_repository import Gst
 from lisp.core.action import Action
 from lisp.core.actions_handler import MainActionsHandler
 from lisp.core.module import Module
@@ -37,7 +39,6 @@ from .gain_ui import GainUi, GainProgressDialog
 
 
 class GainAction(Action):
-
     __slots__ = ('__media_list', '__new_volumes', '__old_volumes')
 
     def __init__(self):

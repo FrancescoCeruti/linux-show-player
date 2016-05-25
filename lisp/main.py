@@ -23,6 +23,7 @@ import sys
 
 from PyQt5.QtGui import QFont, QIcon
 from PyQt5.QtWidgets import QApplication
+from PyQt5.QtCore import QTranslator, QLocale
 
 from lisp import modules
 from lisp import plugins
@@ -42,9 +43,10 @@ def _exec(qt_app, LiSP_app):
 def main():
     # Create and parse the command-line arguments
     parser = argparse.ArgumentParser(description='Linux Show Player')
-    parser.add_argument('-f', '--file', default='', help="Session file path")
+    parser.add_argument('-f', '--file', default='', help='Session file path')
     parser.add_argument('-l', '--log', choices=['debug', 'info', 'warning'],
                         default='warning', help='Log level')
+    parser.add_argument('--locale', default='', help='Force specified locale')
 
     args = parser.parse_args()
 
@@ -72,6 +74,15 @@ def main():
     QIcon.setThemeName(config['Theme']['icons'])
     styles.apply_style(config['Theme']['theme'])
 
+    # Get the locale
+    locale = args.locale
+    if not locale:
+        locale = QLocale().system().name()
+    # Load translation file
+    translator = QTranslator()
+    translator.load('i18n/lisp_' + locale)
+    app.installTranslator(translator)
+
     # Create the application
     LiSP_app = Application()
     # Load modules and plugins
@@ -84,5 +95,5 @@ def main():
     sys.exit(_exec(app, LiSP_app))
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
