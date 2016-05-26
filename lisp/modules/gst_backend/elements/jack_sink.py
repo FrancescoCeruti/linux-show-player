@@ -18,11 +18,11 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import jack
-from lisp.modules.gst_backend.gi_repository import Gst
-from lisp.modules.gst_backend.gst_element import GstMediaElement, GstProperty
 
 from lisp.backend.media_element import ElementType, MediaType
 from lisp.core.has_properties import Property
+from lisp.modules.gst_backend.gi_repository import Gst
+from lisp.modules.gst_backend.gst_element import GstMediaElement, GstProperty
 
 
 class JackSink(GstMediaElement):

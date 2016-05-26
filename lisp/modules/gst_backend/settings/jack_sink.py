@@ -84,8 +84,7 @@ class JackSinkSettings(SettingsPage):
         else:
             self.serverLineEdit.setText(settings['server'])
 
-        self.connections = settings.get('connections',
-                                        [[] for _ in range(8)]).copy()
+        self.connections = settings.get('connections', self.connections).copy()
 
     def enable_check(self, enable):
         self.jackGroup.setCheckable(enable)

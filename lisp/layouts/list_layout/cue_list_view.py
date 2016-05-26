@@ -18,7 +18,7 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5 import QtCore
-from PyQt5.QtCore import pyqtSignal, Qt
+from PyQt5.QtCore import pyqtSignal, Qt, QDataStream, QIODevice
 from PyQt5.QtGui import QKeyEvent, QContextMenuEvent
 from PyQt5.QtWidgets import QTreeWidget, QHeaderView, qApp
 
@@ -29,6 +29,7 @@ from lisp.layouts.list_layout.listwidgets import CueStatusIcon, PreWaitWidget, \
     CueTimeWidget, NextActionIcon, PostWaitWidget
 
 
+# TODO: here we should build a custom qt model/view
 class CueListView(QTreeWidget):
 
     key_event = pyqtSignal(QKeyEvent)
@@ -50,8 +51,6 @@ class CueListView(QTreeWidget):
         self._model.item_moved.connect(self.__cue_moved, Connection.QtQueued)
         self._model.item_removed.connect(self.__cue_removed, Connection.QtQueued)
         self._model.model_reset.connect(self.__model_reset)
-        self._drag_item = None
-        self._drag_start = None
         self.__item_moving = False
 
         self.setHeaderLabels(CueListView.H_NAMES)
@@ -72,6 +71,26 @@ class CueListView(QTreeWidget):
 
         self.currentItemChanged.connect(self.__current_changed)
 
+    def dropEvent(self, event):
+        # Decode mimedata information about the drag&drop event, since only
+        # internal movement are allowed we assume the data format is correct
+        data = event.mimeData().data('application/x-qabstractitemmodeldatalist')
+        stream = QDataStream(data, QIODevice.ReadOnly)
+
+        # Get the starting-item row
+        start_index = stream.readInt()
+        new_index = self.indexAt(event.pos()).row()
+        if new_index < 0 or new_index >= len(self._model):
+            new_index = len(self._model) - 1
+
+        if qApp.keyboardModifiers() == Qt.ControlModifier:
+            cue = self._model.item(start_index)
+            new_cue = CueFactory.clone_cue(cue)
+
+            self._model.insert(new_cue, new_index)
+        else:
+            self._model.move(start_index, new_index)
+
     def contextMenuEvent(self, event):
         if self.itemAt(event.pos()) is not None:
             self.context_event.emit(event)
@@ -87,22 +106,6 @@ class CueListView(QTreeWidget):
         else:
             super().keyPressEvent(event)
 
-    def dropEvent(self, event):
-        if qApp.keyboardModifiers() == Qt.ControlModifier:
-            cue = self._model.item(self._drag_start)
-            new_cue = CueFactory.clone_cue(cue)
-            new_index = self.indexAt(event.pos()).row()
-
-            self._model.insert(new_cue, new_index)
-        else:
-            super().dropEvent(event)
-
-            self.__item_moving = True
-            self._model.move(self._drag_start,
-                             self.indexFromItem(self._drag_item).row())
-
-        event.accept()
-
     def mousePressEvent(self, event):
         if qApp.keyboardModifiers() == Qt.ControlModifier:
             # Prevent items to be deselected
@@ -110,11 +113,13 @@ class CueListView(QTreeWidget):
         else:
             super().mousePressEvent(event)
 
-    def dragEnterEvent(self, event):
-        super().dragEnterEvent(event)
-
-        self._drag_item = self.itemAt(event.pos())
-        self._drag_start = self.indexFromItem(self._drag_item).row()
+    def mouseMoveEvent(self, event):
+        super().mouseMoveEvent(event)
+        if qApp.keyboardModifiers() == Qt.ControlModifier:
+            # Prevent items to be deselected
+            if self.state() == self.DragSelectingState:
+                item = self.itemAt(event.pos())
+                self.setCurrentItem(item)
 
     def __current_changed(self, current_item, previous_item):
         self.scrollToItem(current_item)
@@ -131,14 +136,10 @@ class CueListView(QTreeWidget):
             self.setFocus()
 
     def __cue_moved(self, start, end):
-        if not self.__item_moving:
-            item = self.takeTopLevelItem(start)
-            self.insertTopLevelItem(end, item)
-        else:
-            item = self.topLevelItem(end)
+        item = self.takeTopLevelItem(start)
 
+        self.insertTopLevelItem(end, item)
         self.setCurrentItem(item)
-        self.__item_moving = False
         self.__init_item(item, self._model.item(end))
 
     def __cue_removed(self, cue):
