@@ -46,7 +46,7 @@ class VolumeSettings(SettingsPage):
         self.volumeBox.layout().addWidget(self.muteButton)
 
         self.volume = QSlider(self.volumeBox)
-        self.volume.setRange(-1000, 60)
+        self.volume.setRange(-1000, 100)
         self.volume.setPageStep(1)
         self.volume.setOrientation(Qt.Horizontal)
         self.volume.valueChanged.connect(self.volume_changed)

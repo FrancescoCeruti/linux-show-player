@@ -22,20 +22,45 @@ import math
 import sunau
 import urllib.parse
 import wave
-from enum import Enum
-
-#: Linear value for -100dB
-MIN_dB = 0.000000312
 
 
 def db_to_linear(value):
     """dB value to linear value conversion."""
-    return math.pow(10, value / 20)
+    return 10 ** (value / 20)
 
 
 def linear_to_db(value):
     """Linear value to dB value conversion."""
-    return 20 * math.log10(value) if value > MIN_dB else -100
+    return 20 * math.log10(value) if value > 6.30957344480193e-08 else -144
+
+
+def fader_to_slider(value):
+    """Inverse function of `slider_to_fader`.
+
+    Note::
+        If converting back to an integer scale use `round()` instead of `int()`
+    """
+    return (value / 3.16227766) ** (1 / 3.7)
+
+
+def slider_to_fader(value):
+    """Convert a slider linear value to a fader-like scale.
+
+    The formula used is the following:
+        (10db) * (x ^ 3.7)
+
+    Where 10db = 3.16227766
+    And 0.0 <= x <= 1.0
+
+    :param value: The value to scale [0-1]
+    :type value: float
+    """
+    if value > 1.0:
+        value = 1.0
+    elif value < 0.0:
+        value = 0
+
+    return 3.16227766 * (value ** 3.7)
 
 
 def python_duration(path, sound_module):

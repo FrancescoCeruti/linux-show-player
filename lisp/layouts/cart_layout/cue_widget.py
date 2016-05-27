@@ -22,7 +22,9 @@ from PyQt5.QtGui import QIcon, QColor, QDrag
 from PyQt5.QtWidgets import QProgressBar, QLCDNumber, QLabel, QHBoxLayout, \
     QWidget, QGridLayout, QSizePolicy
 
-from lisp.backend.audio_utils import linear_to_db, db_to_linear
+from lisp.backend.audio_utils import linear_to_db, db_to_linear, \
+    slider_to_fader, \
+    fader_to_slider
 from lisp.core.signal import Connection
 from lisp.cues.cue import CueState
 from lisp.cues.cue_time import CueTime
@@ -42,6 +44,7 @@ class CueWidget(QWidget):
     ERROR = QIcon.fromTheme('led-error')
 
     ICON_SIZE = 14
+    SLIDER_RANGE = 1000
 
     context_menu_request = pyqtSignal(object, QPoint)
     edit_request = pyqtSignal(object)
@@ -91,7 +94,8 @@ class CueWidget(QWidget):
         self.volumeSlider = QClickSlider(self.nameButton)
         self.volumeSlider.setOrientation(Qt.Vertical)
         self.volumeSlider.setFocusPolicy(Qt.NoFocus)
-        self.volumeSlider.setRange(-500, 0)
+        self.volumeSlider.setRange(0, CueWidget.SLIDER_RANGE)
+        self.volumeSlider.setPageStep(10)
         self.volumeSlider.setTracking(True)
         self.volumeSlider.valueChanged.connect(self._change_volume,
                                                Qt.DirectConnection)
@@ -218,9 +222,12 @@ class CueWidget(QWidget):
     def _set_cue(self, cue):
         self.cue = cue
         self.cue.changed('name').connect(self._update_name, Connection.QtQueued)
-        self.cue.changed('stylesheet').connect(self._update_style, Connection.QtQueued)
-        self.cue.changed('duration').connect(self._update_duration, Connection.QtQueued)
-        self.cue.changed('description').connect(self._update_description, Connection.QtQueued)
+        self.cue.changed('stylesheet').connect(self._update_style,
+                                               Connection.QtQueued)
+        self.cue.changed('duration').connect(self._update_duration,
+                                             Connection.QtQueued)
+        self.cue.changed('description').connect(self._update_description,
+                                                Connection.QtQueued)
 
         if isinstance(cue, MediaCue):
             self.cue.media.changed('pipe').connect(self._media_updated,
@@ -275,10 +282,12 @@ class CueWidget(QWidget):
 
     def _reset_volume(self):
         if self._volume_element is not None:
-            self.volumeSlider.setValue(linear_to_db(self._volume_element.volume) * 5)
+            self.volumeSlider.setValue(round(fader_to_slider(
+                self._volume_element.volume) * CueWidget.SLIDER_RANGE))
 
     def _change_volume(self, new_volume):
-        self._volume_element.current_volume = db_to_linear(new_volume / 5)
+        self._volume_element.current_volume = slider_to_fader(
+            new_volume / CueWidget.SLIDER_RANGE)
 
     def _clicked(self, event):
         if not (self.seekSlider.geometry().contains(event.pos()) and
