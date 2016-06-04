@@ -20,11 +20,11 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QSlider, QLabel, QCheckBox, \
     QVBoxLayout
-from lisp.modules.gst_backend.elements.volume import Volume
 
 from lisp.backend.audio_utils import db_to_linear, linear_to_db
-from lisp.ui.qmutebutton import QMuteButton
+from lisp.modules.gst_backend.elements.volume import Volume
 from lisp.ui.settings.settings_page import SettingsPage
+from lisp.ui.widgets.qmutebutton import QMuteButton
 
 
 class VolumeSettings(SettingsPage):

@@ -80,7 +80,7 @@ class DbmeterSettings(SettingsPage):
         self.groupBox.setTitle('DbMeter settings')
         self.intervalLabel.setText('Time between levels (ms)')
         self.ttlLabel.setText('Peak ttl (ms)')
-        self.falloffLabel.setText('Peak falloff (unit per time)')
+        self.falloffLabel.setText('Peak falloff (dB/sec)')
 
     def load_settings(self, settings):
         self.intervalSpin.setValue(settings.get('interval', 50) / Gst.MSECOND)

@@ -21,8 +21,8 @@ from PyQt5 import QtCore
 from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QHBoxLayout, QTextEdit, \
     QSpinBox, QLabel, QLineEdit
 
-from lisp.ui.qcolorbutton import QColorButton
 from lisp.ui.settings.settings_page import SettingsPage
+from lisp.ui.widgets.qcolorbutton import QColorButton
 
 
 class Appearance(SettingsPage):

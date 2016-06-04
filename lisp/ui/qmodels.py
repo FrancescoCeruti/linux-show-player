@@ -34,7 +34,7 @@ class SimpleTableModel(QAbstractTableModel):
         self.columns = columns
         self.rows = values if values is not None else []
 
-    def append_row(self, *values):
+    def appendRow(self, *values):
         row = len(self.rows) - 1
 
         self.beginInsertRows(QModelIndex(), row, row)

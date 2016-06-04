@@ -20,13 +20,12 @@
 from PyQt5.QtWidgets import QTimeEdit
 
 
-class TimeEdit(QTimeEdit):
+class QStepTimeEdit(QTimeEdit):
 
     def __init__(self, parent=None, **kwargs):
         super().__init__(parent, **kwargs)
 
         self._sections_steps = {}
-        self._msec_rounded = False
 
     def setSectionStep(self, section, step):
         if not isinstance(section, QTimeEdit.Section):
@@ -37,8 +36,10 @@ class TimeEdit(QTimeEdit):
         self._sections_steps[section] = step
 
     def stepBy(self, value):
-        if abs(value) != self._sections_steps.get(self.currentSection(), 1):
+        step = self._sections_steps.get(self.currentSection(), 1)
+
+        if abs(value) != step:
             sign = 1 if value >= 0 else -1
-            value = sign * self._sections_steps.get(self.currentSection(), 1)
+            value = sign * step
 
         super().stepBy(value)

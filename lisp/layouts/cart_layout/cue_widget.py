@@ -22,18 +22,16 @@ from PyQt5.QtGui import QIcon, QColor, QDrag
 from PyQt5.QtWidgets import QProgressBar, QLCDNumber, QLabel, QHBoxLayout, \
     QWidget, QGridLayout, QSizePolicy
 
-from lisp.backend.audio_utils import linear_to_db, db_to_linear, \
-    slider_to_fader, \
-    fader_to_slider
+from lisp.backend.audio_utils import slider_to_fader, fader_to_slider
 from lisp.core.signal import Connection
 from lisp.cues.cue import CueState
 from lisp.cues.cue_time import CueTime
 from lisp.cues.media_cue import MediaCue
 from lisp.layouts.cart_layout.page_widget import PageWidget
-from lisp.ui.qclicklabel import QClickLabel
-from lisp.ui.qclickslider import QClickSlider
-from lisp.ui.qdbmeter import QDbMeter
-from lisp.ui.qmessagebox import QDetailedMessageBox
+from lisp.ui.widgets.qdbmeter import QDbMeter
+from lisp.ui.widgets.qclicklabel import QClickLabel
+from lisp.ui.widgets.qclickslider import QClickSlider
+from lisp.ui.widgets.qmessagebox import QDetailedMessageBox
 from lisp.utils.util import strtime
 
 
@@ -94,7 +92,7 @@ class CueWidget(QWidget):
         self.volumeSlider = QClickSlider(self.nameButton)
         self.volumeSlider.setOrientation(Qt.Vertical)
         self.volumeSlider.setFocusPolicy(Qt.NoFocus)
-        self.volumeSlider.setRange(0, CueWidget.SLIDER_RANGE)
+        self.volumeSlider.setRange(CueWidget.SLIDER_RANGE, 0)
         self.volumeSlider.setPageStep(10)
         self.volumeSlider.setTracking(True)
         self.volumeSlider.valueChanged.connect(self._change_volume,

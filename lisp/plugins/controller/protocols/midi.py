@@ -124,7 +124,7 @@ class MidiSettings(CueSettingsPage):
         if 'midi' in settings:
             for options in settings['midi']:
                 m_type, channel, note = Midi.from_string(options[0])
-                self.midiModel.append_row(m_type, channel, note, options[1])
+                self.midiModel.appendRow(m_type, channel, note, options[1])
 
     def capture_message(self):
         handler = MIDIInput()
@@ -138,12 +138,12 @@ class MidiSettings(CueSettingsPage):
 
     def __add_message(self, msg):
         if self.msgTypeCombo.currentData(Qt.UserRole) == msg.type:
-            self.midiModel.append_row(msg.type, msg.channel, msg.note,
-                                      self._default_action)
+            self.midiModel.appendRow(msg.type, msg.channel, msg.note,
+                                     self._default_action)
 
     def __new_message(self):
         message_type = self.msgTypeCombo.currentData(Qt.UserRole)
-        self.midiModel.append_row(message_type, 0, 0, self._default_action)
+        self.midiModel.appendRow(message_type, 0, 0, self._default_action)
 
     def __remove_message(self):
         self.midiModel.removeRow(self.midiView.currentIndex().row())

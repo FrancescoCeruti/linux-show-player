@@ -18,9 +18,9 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import Qt, pyqtSignal
-from PyQt5.QtWidgets import QStyle, QSlider, QStyleOptionSlider
+from PyQt5.QtWidgets import QStyle, QStyleOptionSlider
 
-from lisp.ui.qstyledslider import QStyledSlider
+from lisp.ui.widgets.qstyledslider import QStyledSlider
 
 
 class QClickSlider(QStyledSlider):

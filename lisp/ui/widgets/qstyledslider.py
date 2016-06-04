@@ -23,6 +23,8 @@ from PyQt5.QtWidgets import QSlider, QStylePainter, QStyleOptionSlider, QStyle
 
 
 class QStyledSlider(QSlider):
+    """QSlider able to paint ticks when using stylesheets."""
+
     def paintEvent(self, event):
         super().paintEvent(event)
 

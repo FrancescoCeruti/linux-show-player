@@ -98,11 +98,11 @@ class FadeSettings(SettingsPage):
 
     def retranslateUi(self):
         self.fadeInGroup.setTitle('Fade In')
-        self.fadeInLabel.setText('Time (sec)')
-        self.fadeInExpLabel.setText('Exponent')
+        self.fadeInLabel.setText('Duration (sec)')
+        self.fadeInExpLabel.setText('Curve')
         self.fadeOutGroup.setTitle('Fade Out')
-        self.fadeOutLabel.setText('Time (sec)')
-        self.fadeOutExpLabel.setText('Exponent')
+        self.fadeOutLabel.setText('Duration (sec)')
+        self.fadeOutExpLabel.setText('Cure')
 
     def get_settings(self):
         settings = {}
