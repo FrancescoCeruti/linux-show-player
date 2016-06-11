@@ -21,6 +21,8 @@ from PyQt5.QtCore import pyqtSignal, Qt
 from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import QPushButton, QColorDialog
 
+from lisp.utils.util import translate
+
 
 class QColorButton(QPushButton):
     """Custom Qt Widget to show a chosen color.
@@ -35,7 +37,7 @@ class QColorButton(QPushButton):
         super().__init__(*args)
         self._color = None
 
-        self.setToolTip('Right click to reset')
+        self.setToolTip(translate('QColorButton', 'Right click to reset'))
         self.pressed.connect(self.onColorPicker)
 
     def setColor(self, color):

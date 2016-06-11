@@ -26,7 +26,7 @@ from lisp.ui.settings.settings_page import SettingsPage
 
 class GstSettings(SettingsPage):
 
-    NAME = 'GStreamer settings'
+    Name = 'GStreamer settings'
 
     def __init__(self, **kwargs):
         super().__init__()

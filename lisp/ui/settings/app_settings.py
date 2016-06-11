@@ -21,7 +21,7 @@ from PyQt5 import QtCore
 from PyQt5.QtWidgets import QDialog, QListWidget, QStackedWidget, \
     QDialogButtonBox
 
-from lisp.utils.util import deep_update
+from lisp.utils.util import deep_update, translate
 
 
 class AppSettings(QDialog):
@@ -32,7 +32,7 @@ class AppSettings(QDialog):
         super().__init__(**kwargs)
 
         self.conf = conf
-        self.setWindowTitle('LiSP preferences')
+        self.setWindowTitle(translate('AppSettings', 'LiSP preferences'))
 
         self.setWindowModality(QtCore.Qt.ApplicationModal)
         self.setMaximumSize(635, 530)
@@ -50,7 +50,7 @@ class AppSettings(QDialog):
             widget.resize(430, 465)
             widget.load_settings(self.conf)
 
-            self.listWidget.addItem(widget.NAME)
+            self.listWidget.addItem(widget.Name)
             self.sections.addWidget(widget)
 
         if self.SettingsWidgets:

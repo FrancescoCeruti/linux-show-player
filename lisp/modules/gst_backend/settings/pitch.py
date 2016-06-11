@@ -28,7 +28,7 @@ from lisp.ui.settings.settings_page import SettingsPage
 
 
 class PitchSettings(SettingsPage):
-    NAME = 'Pitch'
+    Name = 'Pitch'
     ELEMENT = Pitch
 
     def __init__(self, **kwargs):

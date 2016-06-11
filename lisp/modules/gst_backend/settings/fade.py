@@ -28,7 +28,7 @@ from lisp.ui.settings.settings_page import SettingsPage
 
 
 class FadeSettings(SettingsPage):
-    NAME = 'Fade'
+    Name = 'Fade'
     ELEMENT = Fade
 
     FadeOutIcons = {

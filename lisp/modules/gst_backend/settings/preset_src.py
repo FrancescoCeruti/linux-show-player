@@ -25,7 +25,7 @@ from lisp.ui.settings.settings_page import SettingsPage
 
 
 class PresetSrcSettings(SettingsPage):
-    NAME = 'Preset Source'
+    Name = 'Preset Source'
     ELEMENT = PresetSrc
 
     def __init__(self, **kwargs):

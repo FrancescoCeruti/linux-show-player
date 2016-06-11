@@ -29,7 +29,7 @@ from lisp.ui.settings.settings_page import SettingsPage
 
 class DbmeterSettings(SettingsPage):
 
-    NAME = 'DbMeter'
+    Name = 'DbMeter'
     ELEMENT = Dbmeter
 
     def __init__(self, **kwargs):

@@ -23,11 +23,11 @@ from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QHBoxLayout, QTextEdit, \
 
 from lisp.ui.settings.settings_page import SettingsPage
 from lisp.ui.widgets.qcolorbutton import QColorButton
+from lisp.utils.util import translate
 
 
 class Appearance(SettingsPage):
-
-    Name = 'Appearance'
+    Name = translate('CueAppearanceSettings', 'Appearance')
 
     def __init__(self, **kwargs):
         super().__init__()
@@ -71,7 +71,8 @@ class Appearance(SettingsPage):
 
         # Warning
         self.warning = QLabel(self)
-        self.warning.setText("The appearance depends on the layout")
+        self.warning.setText(translate('CueAppearanceSettings',
+                                       'The appearance depends on the layout'))
         self.warning.setAlignment(QtCore.Qt.AlignCenter)
         self.warning.setStyleSheet("color: #FFA500; font-weight: bold")
         self.layout().addWidget(self.warning)
@@ -79,13 +80,18 @@ class Appearance(SettingsPage):
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.cueNameGroup.setTitle("Cue name")
-        self.cueNameEdit.setText("Empty")
-        self.cueDescriptionGroup.setTitle('Description/Note')
-        self.fontSizeGroup.setTitle("Set Font Size")
-        self.colorGroup.setTitle("Color")
-        self.colorBButton.setText("Select background color")
-        self.colorFButton.setText("Select font color")
+        self.cueNameGroup.setTitle(
+            translate('CueAppearanceSettings', 'Cue name'))
+        self.cueNameEdit.setText(translate('CueAppearanceSettings', 'Empty'))
+        self.cueDescriptionGroup.setTitle(
+            translate('CueAppearanceSettings', 'Description/Note'))
+        self.fontSizeGroup.setTitle(
+            translate('CueAppearanceSettings', 'Set Font Size'))
+        self.colorGroup.setTitle(translate('CueAppearanceSettings', 'Color'))
+        self.colorBButton.setText(
+            translate('CueAppearanceSettings', 'Select background color'))
+        self.colorFButton.setText(
+            translate('CueAppearanceSettings', 'Select font color'))
 
     def enable_check(self, enable):
         self.cueNameGroup.setCheckable(enable)
@@ -107,7 +113,7 @@ class Appearance(SettingsPage):
 
         if not (checkable and not self.cueNameGroup.isChecked()):
             conf['name'] = self.cueNameEdit.text()
-        if not  (checkable and not self.cueDescriptionGroup.isChecked()):
+        if not (checkable and not self.cueDescriptionGroup.isChecked()):
             conf['description'] = self.cueDescriptionEdit.toPlainText()
         if not (checkable and not self.colorGroup.isChecked()):
             if self.colorBButton.color() is not None:

@@ -1,62 +1,63 @@
 #!/bin/sh
 
+# Locales of which generate translation files
+LOCALES=("it_IT")
+
 # Cleanup python cache
-echo "Cleanup python cache"
+echo ">>> CLEAN PYTHON CACHE"
 find . -name "__pycache__" -exec rm -rf {} \;
 
-# Generate the needed .pro files
-echo "Generate qt project file for lisp ..."
-./generate_qt_pro.py \
-    -r lisp \
-    -e lisp/modules/ lisp/plugins/ \
-    -x py \
-    -o linux-show-player.pro \
-    -s lisp/plugins lisp/modules \
-    -t lisp/i18n \
-    -l lisp_it_IT.ts
-
-echo "Generate qt project file for modules ..."
-MODULES=$(find ./lisp/modules/ -mindepth 1 -maxdepth 1 -type d)
-
-./generate_qt_pro.py \
-    -r lisp/modules \
-    -e lisp/modules \
-    -x py \
-    -o lisp/modules/modules.pro \
-    -s $MODULES \
-
-for plug in $MODULES
+echo "UPDATE TRANSLATIONS FOR APPLICATION"
+# Main application .ts files (one for locale)
+TS_FILES=()
+for locale in ${LOCALES[@]}
 do
-    echo "  > $(basename $plug)"
-    ./generate_qt_pro.py \
-        -r $plug \
-        -x py \
-        -o $plug"/"$(basename $plug)".pro" \
-        -t $plug"/i18n" \
-        -l $(basename $plug)"_it_IT.ts"
+    TS_FILES+=("lisp/i18n/lisp_"$locale".ts")
 done
 
-echo "Generate qt project file for plugins ..."
-PLUGINS=$(find ./lisp/plugins/ -mindepth 1 -maxdepth 1 -type d)
+pylupdate5 -verbose -noobsolete \
+    $(./search_source_files.py -r lisp -e lisp/modules lisp/plugins -x py) \
+    -ts ${TS_FILES[@]}
 
-./generate_qt_pro.py \
-    -r lisp/plugins \
-    -e lisp/plugins \
-    -x py \
-    -o lisp/plugins/plugins.pro \
-    -s $PLUGINS \
+echo "#########################################"
+echo ">>> UPDATE TRANSLATIONS FOR MODULES"
+MODULES=$(find lisp/modules/ -mindepth 1 -maxdepth 1 -type d)
 
-for plug in $PLUGINS
+for module in $MODULES
 do
-    echo "  > $(basename $plug)"
-    ./generate_qt_pro.py \
-        -r $plug \
-        -x py \
-        -o $plug"/"$(basename $plug)".pro" \
-        -t $plug"/i18n" \
-        -l $(basename $plug)"_it_IT.ts"
+    # Module .ts files (one for locale)
+    TS_FILES=()
+    for locale in ${LOCALES[@]}
+    do
+        TS_FILES+=($module"/i18n/"$(basename $module)"_"$locale".ts")
+    done
+
+    if [ -a $module"/i18n/" ];
+    then
+        pylupdate5 -verbose -noobsolete \
+            $(./search_source_files.py -r $module -x py) \
+            -ts ${TS_FILES[@]}
+    fi
 done
 
+echo "#########################################"
+echo ">>> UPDATE TRANSLATIONS FOR PLUGINS"
+PLUGINS=$(find lisp/plugins/ -mindepth 1 -maxdepth 1 -type d)
 
-# Update translation files
-pylupdate5 -verbose -noobsolete linux-show-player.pro
+for plugin in $PLUGINS
+do
+    # Plugin .ts files (one for locale)
+    TS_FILES=()
+    for locale in ${LOCALES[@]}
+    do
+        TS_FILES+=($plugin"/i18n/"$(basename $plugin)"_"$locale".ts")
+    done
+
+    if [ -a  $plugin"/i18n/" ];
+    then
+        pylupdate5 -verbose -noobsolete \
+            $(./search_source_files.py -r $plugin -x py) \
+            -ts ${TS_FILES[@]}
+    fi
+done
+

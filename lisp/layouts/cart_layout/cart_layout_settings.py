@@ -26,7 +26,7 @@ from lisp.ui.settings.settings_page import SettingsPage
 
 class CartLayoutSettings(SettingsPage):
 
-    NAME = 'Cart Layout'
+    Name = 'Cart Layout'
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

@@ -28,17 +28,18 @@ from lisp.application import Application
 from lisp.core.module import Module
 from lisp.cues.cue_factory import CueFactory
 from lisp.ui.mainwindow import MainWindow
-from lisp.utils.util import qfile_filters
+from lisp.utils.util import qfile_filters, translate
 
 
 class MediaCueMenus(Module):
     """Register menus to add MediaCue to layouts"""
 
     def __init__(self):
-        MainWindow().register_cue_menu_action('Audio cue (from file)',
-                                              self.add_uri_audio_media_cue,
-                                              category='Media cues',
-                                              shortcut='CTRL+M')
+        MainWindow().register_cue_menu_action(
+            translate('MediaCueMenus', 'Audio cue (from file)'),
+            self.add_uri_audio_media_cue,
+            category='Media cues',
+            shortcut='CTRL+M')
 
     @staticmethod
     def add_uri_audio_media_cue():
@@ -52,7 +53,8 @@ class MediaCueMenus(Module):
         filters = qfile_filters(extensions, anyfile=False)
         # Display a file-dialog for the user to choose the media-files
         files, _ = QFileDialog.getOpenFileNames(MainWindow(),
-                                                'Select media files',
+                                                translate('MediaCueMenus',
+                                                          'Select media files'),
                                                 path, filters)
 
         QApplication.setOverrideCursor(QCursor(Qt.WaitCursor))

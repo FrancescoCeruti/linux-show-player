@@ -30,7 +30,7 @@ from lisp.ui.settings.settings_page import SettingsPage
 
 
 class JackSinkSettings(SettingsPage):
-    NAME = "Jack Sink"
+    Name = "Jack Sink"
     ELEMENT = JackSink
 
     def __init__(self, **kwargs):

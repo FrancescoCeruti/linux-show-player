@@ -20,6 +20,7 @@
 import argparse
 import logging
 import sys
+from itertools import chain
 
 from PyQt5.QtGui import QFont, QIcon
 from PyQt5.QtWidgets import QApplication
@@ -70,10 +71,21 @@ def main():
     locale = args.locale
     if not locale:
         locale = QLocale().system().name()
-    # Load translation file
+
+    # Install translations
     translator = QTranslator()
-    translator.load('i18n/lisp_' + locale)
+    translator.load('i18n/lisp_' + locale + '.qm')
     qt_app.installTranslator(translator)
+
+    ui_translators = [translator]
+
+    for tr_file in chain(modules.translations(locale),
+                         plugins.translations(locale)):
+        translator = QTranslator()
+        translator.load(tr_file)
+        qt_app.installTranslator(translator)
+
+        ui_translators.append(translator)
 
     # Create the application
     lisp_app = Application()

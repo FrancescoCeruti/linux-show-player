@@ -20,6 +20,7 @@
 from lisp import backend
 from lisp.backend.backend import Backend as BaseBackend
 from lisp.core.decorators import memoize
+from lisp.core.module import Module
 from lisp.cues.media_cue import MediaCue
 from lisp.modules.gst_backend.gst_utils import gst_parse_tag_list
 from lisp.modules.gst_backend.gst_utils import gst_uri_metadata, gst_mime_types, \
@@ -33,7 +34,7 @@ from lisp.modules.gst_backend.gst_media_settings import GstMediaSettings
 from lisp.modules.gst_backend.gst_settings import GstSettings
 
 
-class GstBackend(BaseBackend):
+class GstBackend(Module, BaseBackend):
     def __init__(self):
         # Initialize GStreamer
         Gst.init(None)
@@ -66,6 +67,3 @@ class GstBackend(BaseBackend):
                     extensions[mime].extend(gst_extensions)
 
         return extensions
-
-    def terminate(self):
-        pass

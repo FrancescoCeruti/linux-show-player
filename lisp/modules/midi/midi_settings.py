@@ -31,7 +31,7 @@ from lisp.utils import logging
 
 
 class MIDISettings(SettingsPage):
-    NAME = 'MIDI settings'
+    Name = 'MIDI settings'
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

@@ -22,14 +22,14 @@ import os
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QLineEdit, \
-    QPushButton, QGridLayout, QLabel, QListWidget, QDialogButtonBox, QFileDialog, \
-    QMessageBox
+    QPushButton, QGridLayout, QLabel, QListWidget, QDialogButtonBox, \
+    QFileDialog, QMessageBox
 
+from lisp.utils.util import translate
 from .session import Session
 
 
 class UriChangerDialog(QDialog):
-
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
@@ -55,15 +55,14 @@ class UriChangerDialog(QDialog):
         self.sessionLayout.addWidget(self.sessionReload)
 
         # REPLACE
-
         self.replaceLayout = QGridLayout()
         self.layout().addLayout(self.replaceLayout)
 
-        self.currenLabel = QLabel('Current')
-        self.currenLabel.setAlignment(Qt.AlignCenter)
-        self.replaceLayout.addWidget(self.currenLabel, 0, 0)
+        self.currentLabel = QLabel(self)
+        self.currentLabel.setAlignment(Qt.AlignCenter)
+        self.replaceLayout.addWidget(self.currentLabel, 0, 0)
 
-        self.replaceLabel = QLabel('Replace')
+        self.replaceLabel = QLabel(self)
         self.replaceLabel.setAlignment(Qt.AlignCenter)
         self.replaceLayout.addWidget(self.replaceLabel, 0, 1)
 
@@ -96,9 +95,11 @@ class UriChangerDialog(QDialog):
         self.session = None
 
     def retranslateUi(self):
-        self.sessionFileSelect.setText('Session file')
-        self.sessionReload.setToolTip('Reload')
-        self.replaceApply.setText('Replace')
+        self.currentLabel.setText(translate('UriChanger', 'Current'))
+        self.replaceLabel.setText(translate('UriChanger', 'Replace'))
+        self.sessionFileSelect.setText(translate('UriChanger', 'Session file'))
+        self.sessionReload.setToolTip(translate('UriChanger', 'Reload'))
+        self.replaceApply.setText(translate('UriChanger', 'Replace'))
 
     def prefix_changed(self, prefix):
         if self.prefixEdit.text() == '':
@@ -140,8 +141,10 @@ class UriChangerDialog(QDialog):
             self.session = Session(file)
             self.session_analyze()
         elif file.strip() != '':
-            QMessageBox.critical(self, 'Error',
-                                 'Session file "' + file + '" not found')
+            QMessageBox.critical(self, translate('UriChanger', 'Error'),
+                                 translate('UriChanger',
+                                           'Session file "{}" not found'.format(
+                                               file)))
 
     def session_replace(self):
         self.session.replace(self.prefixList.currentItem().text(),

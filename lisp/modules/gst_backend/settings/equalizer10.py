@@ -28,7 +28,7 @@ from lisp.ui.settings.settings_page import SettingsPage
 
 class Equalizer10Settings(SettingsPage):
 
-    NAME = "Equalizer"
+    Name = "Equalizer"
     ELEMENT = Equalizer10
 
     FREQ = ["30Hz", "60Hz", "120Hz", "240Hz", "475Hz", "950Hz", "1900Hz",

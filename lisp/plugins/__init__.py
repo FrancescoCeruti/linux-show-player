@@ -17,6 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+import os
 import traceback
 from os.path import dirname
 
@@ -35,6 +36,16 @@ def load_plugins():
         except Exception:
             logging.error('PLUGINS: Failed "{0}" load'.format(plugin_name))
             logging.debug('PLUGINS: {0}'.format(traceback.format_exc()))
+
+
+def translations(locale):
+    base_path = dirname(__file__)
+    for plugin in next(os.walk(base_path))[1]:
+        tr_file = os.path.join(base_path, plugin)
+        tr_file = os.path.join(tr_file, 'i18n')
+        tr_file = os.path.join(tr_file, plugin + '_' + locale)
+
+        yield tr_file
 
 
 def init_plugins():

@@ -23,6 +23,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog, QComboBox, QPushButton, QFrame, QTextBrowser, QFileDialog, QGridLayout
 
 from lisp import layouts
+from lisp.utils.util import translate
 
 
 class LayoutSelect(QDialog):
@@ -34,7 +35,7 @@ class LayoutSelect(QDialog):
         self.layouts = {}
 
         self.setWindowModality(Qt.ApplicationModal)
-        self.setWindowTitle('Layout selection')
+        self.setWindowTitle(translate('LayoutSelect', 'Layout selection'))
         self.setMaximumSize(675, 300)
         self.setMinimumSize(675, 300)
         self.resize(675, 300)
@@ -46,11 +47,11 @@ class LayoutSelect(QDialog):
         self.layout().addWidget(self.layoutBox, 0, 0)
 
         self.layButton = QPushButton(self)
-        self.layButton.setText('Select layout')
+        self.layButton.setText(translate('LayoutSelect', 'Select layout'))
         self.layout().addWidget(self.layButton, 0, 1)
 
         self.fileButton = QPushButton(self)
-        self.fileButton.setText('Open file')
+        self.fileButton.setText(translate('LayoutSelect', 'Open file'))
         self.layout().addWidget(self.fileButton, 0, 2)
 
         self.layout().setColumnStretch(0, 3)

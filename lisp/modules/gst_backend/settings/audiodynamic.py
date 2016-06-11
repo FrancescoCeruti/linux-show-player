@@ -33,7 +33,7 @@ MIN_dB = 0.000000312  # -100dB
 
 class AudiodynamicSettings(SettingsPage):
 
-    NAME = 'Compressor/Expander'
+    Name = 'Compressor/Expander'
     ELEMENT = Audiodynamic
 
     def __init__(self, **kwargs):

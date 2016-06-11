@@ -17,10 +17,10 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from lisp.core.singleton import Singleton
+from lisp.core.singleton import ABCSingleton
 
 
-class Module(metaclass=Singleton):
+class Module(metaclass=ABCSingleton):
     """Interface for modules."""
 
     def terminate(self):

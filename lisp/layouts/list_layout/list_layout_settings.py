@@ -26,7 +26,7 @@ from lisp.ui.settings.settings_page import SettingsPage
 
 
 class ListLayoutSettings(SettingsPage):
-    NAME = 'List Layout'
+    Name = 'List Layout'
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

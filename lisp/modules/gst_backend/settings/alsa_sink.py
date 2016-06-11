@@ -28,7 +28,7 @@ from lisp.ui.settings.settings_page import SettingsPage
 
 class AlsaSinkSettings(SettingsPage):
 
-    NAME = "ALSA Sink"
+    Name = "ALSA Sink"
     ELEMENT = AlsaSink
 
     def __init__(self, **kwargs):

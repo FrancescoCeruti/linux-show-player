@@ -28,7 +28,7 @@ from lisp.ui.widgets.qmutebutton import QMuteButton
 
 
 class VolumeSettings(SettingsPage):
-    NAME = 'Volume'
+    Name = 'Volume'
     ELEMENT = Volume
 
     def __init__(self, **kwargs):

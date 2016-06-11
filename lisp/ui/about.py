@@ -24,12 +24,11 @@ from PyQt5.QtWidgets import QDialog, QGridLayout, QLabel, QWidget, QTabWidget, \
     QTextBrowser, QDialogButtonBox
 
 import lisp
-from lisp.utils import util
+from lisp.utils.util import translate, file_path
 
 
 class About(QDialog):
-
-    ICON = util.file_path(__file__, "icon.png")
+    ICON = file_path(__file__, "icon.png")
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -42,38 +41,40 @@ class About(QDialog):
 
         self.setLayout(QGridLayout())
 
-        self.icon = QLabel(self)
-        self.icon.setPixmap(QPixmap(self.ICON).scaled(100, 100,
-                            transformMode=Qt.SmoothTransformation))
-        self.layout().addWidget(self.icon, 0, 0)
+        self.iconLabel = QLabel(self)
+        self.iconLabel.setPixmap(
+            QPixmap(self.ICON).scaled(100, 100,
+                                      transformMode=Qt.SmoothTransformation))
+        self.layout().addWidget(self.iconLabel, 0, 0)
 
         self.shortInfo = QLabel(self)
         self.shortInfo.setAlignment(Qt.AlignCenter)
-        self.shortInfo.setText('<h2>Linux Show Player   ' +
-                               str(lisp.__version__) + '</h2>'
-                               'Copyright © Francesco Ceruti')
+        self.shortInfo.setText('<h2>Linux Show Player   {0}</h2>'
+                               'Copyright © Francesco Ceruti'
+                               .format(str(lisp.__version__)))
         self.layout().addWidget(self.shortInfo, 0, 1)
 
         self.layout().addWidget(QWidget(), 1, 0, 1, 2)
 
-        # Informations tabs
+        # Information tabs
         self.tabWidget = QTabWidget(self)
         self.layout().addWidget(self.tabWidget, 2, 0, 1, 2)
 
         self.info = QTextBrowser(self)
         self.info.setOpenExternalLinks(True)
         self.info.setHtml(self.INFO)
-        self.tabWidget.addTab(self.info, 'Info')
+        self.tabWidget.addTab(self.info, translate('AboutDialog', 'Info'))
 
         self.license = QTextBrowser(self)
         self.license.setOpenExternalLinks(True)
         self.license.setHtml(self.LICENSE)
-        self.tabWidget.addTab(self.license, 'License')
+        self.tabWidget.addTab(self.license, translate('AboutDialog', 'License'))
 
         self.contributors = QTextBrowser(self)
         self.contributors.setOpenExternalLinks(True)
         self.contributors.setHtml(self.CONTRIBUTORS)
-        self.tabWidget.addTab(self.contributors, 'Contributors')
+        self.tabWidget.addTab(self.contributors,
+                              translate('AboutDialog', 'Contributors'))
 
         # Ok button
         self.buttons = QDialogButtonBox(QDialogButtonBox.Ok)
@@ -91,31 +92,31 @@ class About(QDialog):
         self.buttons.setFocus()
 
     LICENSE = '''
-<center>
+<center>''' + translate('AboutDialog', '''
     Linux Show Player is free software: you can redistribute it and/or
     modify it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.<br />
-    <br />
+    (at your option) any later version.''') + '''<br />
+    <br />''' + translate('AboutDialog', '''
     Linux Show Player is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+    GNU General Public License for more details.''') + '''
 </center>'''
 
     INFO = '''
-<center><br />
-    Linux Show Player is a cue-player designed for stage productions.<br \>
+<center><br /> ''' + translate('AboutDialog', '''
+    Linux Show Player is a cue-player designed for stage productions.''') + '''<br \>
 </center>
-<center><br />
-    Web site: <a href="http://linux-show-player.sourceforge.net">linux-show-player.sourceforge.net</a><br \>
-    User group: <a href="http://groups.google.com/group/linux-show-player---users">groups.google.com</a><br \>
-    Source code: <a href="https://github.com/FrancescoCeruti/linux-show-player">GitHub</a>
+<center><br />''' + \
+translate('AboutDialog', 'Web site:') + '<a href="http://linux-show-player.sourceforge.net">linux-show-player.sourceforge.net</a><br \>' + \
+translate('AboutDialog', 'User group:') + '<a href="http://groups.google.com/group/linux-show-player---users">groups.google.com</a><br \>' + \
+translate('AboutDialog', 'Source code:') + '''<a href="https://github.com/FrancescoCeruti/linux-show-player">GitHub</a>
 </center>'''
 
     CONTRIBUTORS = '''
 <center>
-    <b>Author:</b><br />
+    <b>''' + translate('AboutDialog', 'Author:') + '''</b><br />
     Francesco Ceruti - <a href="mailto:ceppofrancy@gmail.com">ceppofrancy@gmail.com</a><br \>
 </center>
 '''

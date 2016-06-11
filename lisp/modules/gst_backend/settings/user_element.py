@@ -27,7 +27,7 @@ from lisp.ui.settings.settings_page import SettingsPage
 
 class UserElementSettings(SettingsPage):
 
-    NAME = 'Personalized'
+    Name = 'Personalized'
     ELEMENT = UserElement
 
     def __init__(self, **kwargs):

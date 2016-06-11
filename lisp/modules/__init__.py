@@ -17,6 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+import os
 import traceback
 from os.path import dirname
 
@@ -35,6 +36,16 @@ def load_modules():
             logging.error('Failed "{0}" lading'.format(module_name),
                           details=str(e))
             logging.debug(traceback.format_exc())
+
+
+def translations(locale):
+    base_path = dirname(__file__)
+    for module in next(os.walk(base_path))[1]:
+        tr_file = os.path.join(base_path, module)
+        tr_file = os.path.join(tr_file, 'i18n')
+        tr_file = os.path.join(tr_file, module + '_' + locale)
+
+        yield tr_file
 
 
 def terminate_modules():

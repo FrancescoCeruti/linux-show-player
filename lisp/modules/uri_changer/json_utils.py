@@ -17,6 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+
 def json_deep_search(iterable, field):
     """Takes a JSON like data-structure and search for the occurrences
     of the given field/key.

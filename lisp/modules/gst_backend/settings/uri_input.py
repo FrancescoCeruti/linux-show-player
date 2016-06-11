@@ -26,7 +26,7 @@ from lisp.ui.settings.settings_page import SettingsPage
 
 
 class UriInputSettings(SettingsPage):
-    NAME = 'URI Input'
+    Name = 'URI Input'
     ELEMENT = UriInput
 
     def __init__(self, **kwargs):

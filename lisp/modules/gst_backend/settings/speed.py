@@ -27,7 +27,7 @@ from lisp.ui.settings.settings_page import SettingsPage
 
 class SpeedSettings(SettingsPage):
 
-    NAME = 'Speed'
+    Name = 'Speed'
     ELEMENT = Speed
 
     def __init__(self, **kwargs):

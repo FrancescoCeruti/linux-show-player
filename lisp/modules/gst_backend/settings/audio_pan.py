@@ -26,7 +26,7 @@ from lisp.ui.settings.settings_page import SettingsPage
 
 class AudioPanSettings(SettingsPage):
 
-    NAME = 'Pan'
+    Name = 'Pan'
     ELEMENT = AudioPan
 
     def __init__(self, **kwargs):

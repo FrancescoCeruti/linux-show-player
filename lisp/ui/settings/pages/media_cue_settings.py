@@ -22,6 +22,7 @@ from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QTimeEdit, QLabel, \
     QSpinBox, QVBoxLayout
 
 from lisp.ui.settings.settings_page import SettingsPage
+from lisp.utils.util import translate
 
 
 class MediaCueSettings(SettingsPage):
@@ -73,12 +74,16 @@ class MediaCueSettings(SettingsPage):
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.startGroup.setTitle('Start time')
-        self.stopLabel.setText('Stop position of the media')
-        self.stopGroup.setTitle('Stop time')
-        self.startLabel.setText('Start position of the media')
-        self.loopGroup.setTitle('Loop')
-        self.loopLabel.setText('Repetition after first play (-1 = infinite)')
+        self.startGroup.setTitle(translate('MediaCueSettings', 'Start time'))
+        self.stopLabel.setText(
+            translate('MediaCueSettings', 'Stop position of the media'))
+        self.stopGroup.setTitle(translate('MediaCueSettings', 'Stop time'))
+        self.startLabel.setText(
+            translate('MediaCueSettings', 'Start position of the media'))
+        self.loopGroup.setTitle(translate('MediaCueSettings', 'Loop'))
+        self.loopLabel.setText(
+            translate('MediaCueSettings', 'Repetition after first play '
+                                          '(-1 = infinite)'))
 
     def get_settings(self):
         conf = {'_media_': {}}

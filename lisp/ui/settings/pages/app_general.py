@@ -23,11 +23,11 @@ from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QCheckBox, QComboBox
 from lisp import layouts
 from lisp.ui import styles
 from lisp.ui.settings.settings_page import SettingsPage
+from lisp.utils.util import translate
 
 
 class General(SettingsPage):
-
-    NAME = 'General'
+    Name = translate('AppGeneralSettings', 'General')
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -36,12 +36,14 @@ class General(SettingsPage):
 
         # Startup layout
         self.layoutGroup = QGroupBox(self)
-        self.layoutGroup.setTitle('Startup layout')
+        self.layoutGroup.setTitle(
+            translate('AppGeneralSettings', 'Startup layout'))
         self.layoutGroup.setLayout(QVBoxLayout())
         self.layout().addWidget(self.layoutGroup)
 
         self.startupDialogCheck = QCheckBox(self.layoutGroup)
-        self.startupDialogCheck.setText('Use startup dialog')
+        self.startupDialogCheck.setText(
+            translate('AppGeneralSettings', 'Use startup dialog'))
         self.layoutGroup.layout().addWidget(self.startupDialogCheck)
 
         self.layoutCombo = QComboBox(self.layoutGroup)
@@ -53,7 +55,8 @@ class General(SettingsPage):
 
         # Application style
         self.themeGroup = QGroupBox(self)
-        self.themeGroup.setTitle('Application theme')
+        self.themeGroup.setTitle(
+            translate('AppGeneralSettings', 'Application theme'))
         self.themeGroup.setLayout(QVBoxLayout())
         self.layout().addWidget(self.themeGroup)
 

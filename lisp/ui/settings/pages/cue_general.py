@@ -23,6 +23,7 @@ from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QLabel, \
 
 from lisp.cues.cue import CueNextAction
 from lisp.ui.settings.settings_page import SettingsPage
+from lisp.utils.util import translate
 
 
 class CueGeneralSettings(SettingsPage):
@@ -74,12 +75,16 @@ class CueGeneralSettings(SettingsPage):
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.preWaitGroup.setTitle('Pre wait')
-        self.preWaitLabel.setText('Wait before cue execution')
-        self.postWaitGroup.setTitle('Post wait')
-        self.postWaitLabel.setText('Wait after cue execution')
-        self.nextActionGroup.setTitle('Next action')
-        self.stopPauseCheck.setText('Pause instead of stop (if supported)')
+        self.preWaitGroup.setTitle(translate('CueSettings', 'Pre wait'))
+        self.preWaitLabel.setText(translate('CueSettings',
+                                            'Wait before cue execution'))
+        self.postWaitGroup.setTitle(translate('CueSettings', 'Post wait'))
+        self.postWaitLabel.setText(translate('CueSettings',
+                                             'Wait after cue execution'))
+        self.nextActionGroup.setTitle(translate('CueSettings', 'Next action'))
+        self.stopPauseCheck.setText(translate('CueSettings',
+                                              'Pause instead of stop'
+                                              '(if supported)'))
 
     def load_settings(self, settings):
         if 'pre_wait' in settings:
