@@ -44,6 +44,7 @@ Download the archive from the release page on GitHub.
 * python-gobject
 * python-setuptools
 * qt5-svg
+* qt5-translations
 * gstreamer 1.x
 * gst-plugins-base
 * gst-plugins-good
@@ -65,6 +66,7 @@ Download the archive from the release page on GitHub.
 * python3-wheel
 * libqt5svg5
 * libqt5svg5-dev
+* qttranslations5-l10n
 * gstreamer1.0-plugins-base
 * gstreamer1.0-plugins-bad
 * gstreamer1.0-plugins-good

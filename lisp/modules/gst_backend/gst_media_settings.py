@@ -69,7 +69,7 @@ class GstMediaSettings(SettingsPage):
                 page.setVisible(False)
                 self._pages.append(page)
 
-                item = QListWidgetItem(page.NAME)
+                item = QListWidgetItem(page.Name)
                 self.listWidget.addItem(item)
 
             self.listWidget.setCurrentRow(0)

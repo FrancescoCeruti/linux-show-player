@@ -24,6 +24,9 @@ from math import pow
 from threading import Thread, Lock
 
 import gi
+
+from lisp.utils.util import translate
+
 gi.require_version('Gst', '1.0')
 from gi.repository import Gst
 from PyQt5.QtWidgets import QMenu, QAction, QDialog
@@ -83,7 +86,7 @@ class GainMainThread(Thread):
         self._running = False
         self._action = GainAction()
 
-        # file -> media {"filename1": [media1, media2], "filename2": [media3]}
+        # file -> media {'filename1': [media1, media2], 'filename2': [media3]}
         self.files = files
         self.threads = threads
         self.mode = mode
@@ -151,22 +154,24 @@ class ReplayGain(Module):
         self._gain_thread = None
 
         # Voice in mainWindow menu
-        self.menu = QMenu("ReplayGain / Normalization")
+        self.menu = QMenu(translate('ReplayGain',
+                                    'ReplayGain / Normalization'))
         self.menu_action = MainWindow().menuTools.addMenu(self.menu)
 
         self.actionGain = QAction(MainWindow())
         self.actionGain.triggered.connect(self.gain)
-        self.actionGain.setText("Calculate")
+        self.actionGain.setText(translate('ReplayGain', 'Calculate'))
         self.menu.addAction(self.actionGain)
 
         self.actionReset = QAction(MainWindow())
         self.actionReset.triggered.connect(self._reset_all)
-        self.actionReset.setText("Reset all")
+        self.actionReset.setText(translate('ReplayGain', 'Reset all'))
         self.menu.addAction(self.actionReset)
 
         self.actionResetSelected = QAction(MainWindow())
         self.actionResetSelected.triggered.connect(self._reset_selected)
-        self.actionResetSelected.setText("Reset selected")
+        self.actionResetSelected.setText(translate('ReplayGain',
+                                                   'Reset selected'))
         self.menu.addAction(self.actionResetSelected)
 
     def gain(self):
@@ -242,7 +247,7 @@ class GstGain:
 
         gain_bus = self.gain_pipe.get_bus()
         gain_bus.add_signal_watch()
-        gain_bus.connect("message", self._on_message)
+        gain_bus.connect('message', self._on_message)
 
         logging.info('REPLY-GAIN:: started ' + str(self.uri))
         self.gain_pipe.set_state(Gst.State.PLAYING)

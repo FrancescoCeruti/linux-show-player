@@ -24,7 +24,7 @@ from itertools import chain
 
 from PyQt5.QtGui import QFont, QIcon
 from PyQt5.QtWidgets import QApplication
-from PyQt5.QtCore import QTranslator, QLocale
+from PyQt5.QtCore import QTranslator, QLocale, QLibraryInfo
 
 from lisp import modules
 from lisp import plugins
@@ -72,13 +72,22 @@ def main():
     if not locale:
         locale = QLocale().system().name()
 
-    # Install translations
+    # Main app translations
     translator = QTranslator()
     translator.load('i18n/lisp_' + locale + '.qm')
     qt_app.installTranslator(translator)
 
     ui_translators = [translator]
 
+    # Qt platform translation
+    translator = QTranslator()
+    translator.load("qt_" + locale,
+                    QLibraryInfo.location(QLibraryInfo.TranslationsPath))
+    qt_app.installTranslator(translator)
+
+    ui_translators.append(translator)
+
+    # Modules and plugins translations
     for tr_file in chain(modules.translations(locale),
                          plugins.translations(locale)):
         translator = QTranslator()

@@ -37,7 +37,6 @@ class UriChangerDialog(QDialog):
         self.setLayout(QVBoxLayout())
 
         # FILE SELECT
-
         self.sessionLayout = QHBoxLayout()
         self.layout().addLayout(self.sessionLayout)
 

@@ -18,42 +18,47 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="about.py" line="94"/>
-        <source>&apos;
-&lt;center&gt;
+        <location filename="about.py" line="95"/>
+        <source>
     Linux Show Player is free software: you can redistribute it and/or
     modify it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.&lt;br /&gt;
-    &lt;br /&gt;
+    (at your option) any later version.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="about.py" line="100"/>
+        <source>
     Linux Show Player is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-&lt;/center&gt;</source>
+    GNU General Public License for more details.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="about.py" line="107"/>
-        <source>&apos;
-&lt;center&gt;&lt;br /&gt;
-    Linux Show Player is a cue-player designed for stage productions.&lt;br &gt;
-&lt;/center&gt;
-&lt;center&gt;&lt;br /&gt;
-    Web site: &lt;a href=&quot;http://linux-show-player.sourceforge.net&quot;&gt;linux-show-player.sourceforge.net&lt;/a&gt;&lt;br &gt;
-    User group: &lt;a href=&quot;http://groups.google.com/group/linux-show-player---users&quot;&gt;groups.google.com&lt;/a&gt;&lt;br &gt;
-    Source code: &lt;a href=&quot;https://github.com/FrancescoCeruti/linux-show-player&quot;&gt;GitHub&lt;/a&gt;
-&lt;/center&gt;</source>
+        <location filename="about.py" line="108"/>
+        <source>
+    Linux Show Player is a cue-player designed for stage productions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="about.py" line="117"/>
-        <source>&apos;
-&lt;center&gt;
-    &lt;b&gt;Author:&lt;/b&gt;&lt;br /&gt;
-    Francesco Ceruti - &lt;a href=&quot;mailto:ceppofrancy@gmail.com&quot;&gt;ceppofrancy@gmail.com&lt;/a&gt;&lt;br &gt;
-&lt;/center&gt;
-</source>
+        <location filename="about.py" line="112"/>
+        <source>Web site:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="about.py" line="113"/>
+        <source>User group:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="about.py" line="114"/>
+        <source>Source code:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="about.py" line="119"/>
+        <source>Author:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
