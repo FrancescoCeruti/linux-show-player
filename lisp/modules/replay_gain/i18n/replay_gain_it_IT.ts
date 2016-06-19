@@ -6,47 +6,47 @@
     <message>
         <location filename="gain_ui.py" line="101"/>
         <source>ReplayGain / Normalization</source>
-        <translation type="unfinished"></translation>
+        <translation>ReplayGain / Normalizzazione</translation>
     </message>
     <message>
         <location filename="replay_gain.py" line="163"/>
         <source>Calculate</source>
-        <translation type="unfinished"></translation>
+        <translation>Calcola</translation>
     </message>
     <message>
         <location filename="replay_gain.py" line="168"/>
         <source>Reset all</source>
-        <translation type="unfinished"></translation>
+        <translation>Resetta tutto</translation>
     </message>
     <message>
         <location filename="replay_gain.py" line="173"/>
         <source>Reset selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Resetta selezionati</translation>
     </message>
     <message>
         <location filename="gain_ui.py" line="103"/>
         <source>Threads number</source>
-        <translation type="unfinished"></translation>
+        <translation>Numero di processi</translation>
     </message>
     <message>
         <location filename="gain_ui.py" line="104"/>
         <source>Apply only to selected media</source>
-        <translation type="unfinished"></translation>
+        <translation>Applica solo alle traccie selezionate</translation>
     </message>
     <message>
         <location filename="gain_ui.py" line="106"/>
         <source>ReplayGain to (dB SPL)</source>
-        <translation type="unfinished"></translation>
+        <translation>ReplayGain a (dB SPL)</translation>
     </message>
     <message>
         <location filename="gain_ui.py" line="108"/>
         <source>Normalize to (dB)</source>
-        <translation type="unfinished"></translation>
+        <translation>Normalizza a (dB)</translation>
     </message>
     <message>
         <location filename="gain_ui.py" line="132"/>
         <source>Processing files ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Processando ...</translation>
     </message>
 </context>
 </TS>

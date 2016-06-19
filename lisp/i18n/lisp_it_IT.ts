@@ -1,65 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="it_IT" sourcelanguage="en">
+<!DOCTYPE TS>
+<TS version="2.0" language="it_IT" sourcelanguage="en">
 <context>
     <name>AboutDialog</name>
     <message>
         <location filename="about.py" line="66"/>
         <source>Info</source>
-        <translation type="unfinished"></translation>
+        <translation>Informazioni</translation>
     </message>
     <message>
         <location filename="about.py" line="71"/>
         <source>License</source>
-        <translation type="unfinished"></translation>
+        <translation>Licenza</translation>
     </message>
     <message>
         <location filename="about.py" line="76"/>
         <source>Contributors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="about.py" line="95"/>
-        <source>
-    Linux Show Player is free software: you can redistribute it and/or
-    modify it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="about.py" line="100"/>
-        <source>
-    Linux Show Player is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="about.py" line="108"/>
-        <source>
-    Linux Show Player is a cue-player designed for stage productions.</source>
-        <translation type="unfinished"></translation>
+        <translation>Contributori</translation>
     </message>
     <message>
         <location filename="about.py" line="112"/>
         <source>Web site:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="about.py" line="113"/>
-        <source>User group:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sito web:</translation>
     </message>
     <message>
         <location filename="about.py" line="114"/>
         <source>Source code:</source>
-        <translation type="unfinished"></translation>
+        <translation>Codice sorgente:</translation>
     </message>
     <message>
         <location filename="about.py" line="119"/>
         <source>Author:</source>
-        <translation type="unfinished"></translation>
+        <translation>Autore:</translation>
+    </message>
+    <message>
+        <location filename="about.py" line="108"/>
+        <source>    Linux Show Player is a cue-player designed for stage productions.</source>
+        <translation>Linux Show Player è un cue-player pensato per produzioni teatrali.</translation>
+    </message>
+    <message>
+        <location filename="about.py" line="113"/>
+        <source>Users  group:</source>
+        <translation>Gruppo di discussione:</translation>
     </message>
 </context>
 <context>
@@ -67,22 +49,22 @@
     <message>
         <location filename="app_general.py" line="30"/>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>Generale</translation>
     </message>
     <message>
         <location filename="app_general.py" line="39"/>
         <source>Startup layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Layout iniziale</translation>
     </message>
     <message>
         <location filename="app_general.py" line="45"/>
         <source>Use startup dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Usa layout iniziale</translation>
     </message>
     <message>
         <location filename="app_general.py" line="58"/>
         <source>Application theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Stile applicazione</translation>
     </message>
 </context>
 <context>
@@ -90,7 +72,7 @@
     <message>
         <location filename="app_settings.py" line="35"/>
         <source>LiSP preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Preferenze di LiSP</translation>
     </message>
 </context>
 <context>
@@ -98,47 +80,47 @@
     <message>
         <location filename="cue_appearance.py" line="30"/>
         <source>Appearance</source>
-        <translation type="unfinished"></translation>
+        <translation>Aspetto</translation>
     </message>
     <message>
         <location filename="cue_appearance.py" line="74"/>
         <source>The appearance depends on the layout</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;aspetto dipende dal layout</translation>
     </message>
     <message>
         <location filename="cue_appearance.py" line="83"/>
         <source>Cue name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome della cue</translation>
     </message>
     <message>
-        <location filename="cue_appearance.py" line="85"/>
-        <source>Empty</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="cue_appearance.py" line="86"/>
+        <location filename="cue_appearance.py" line="87"/>
         <source>Description/Note</source>
-        <translation type="unfinished"></translation>
+        <translation>Descrizione/Note</translation>
     </message>
     <message>
-        <location filename="cue_appearance.py" line="88"/>
+        <location filename="cue_appearance.py" line="89"/>
         <source>Set Font Size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="cue_appearance.py" line="90"/>
-        <source>Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Dimensione carattere</translation>
     </message>
     <message>
         <location filename="cue_appearance.py" line="91"/>
-        <source>Select background color</source>
-        <translation type="unfinished"></translation>
+        <source>Color</source>
+        <translation>Colore</translation>
     </message>
     <message>
-        <location filename="cue_appearance.py" line="93"/>
+        <location filename="cue_appearance.py" line="92"/>
+        <source>Select background color</source>
+        <translation>Selezione colore di sfondo</translation>
+    </message>
+    <message>
+        <location filename="cue_appearance.py" line="94"/>
         <source>Select font color</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleziona colore del carattere</translation>
+    </message>
+    <message>
+        <location filename="cue_appearance.py" line="85"/>
+        <source>NoName</source>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -146,32 +128,32 @@
     <message>
         <location filename="cue_general.py" line="78"/>
         <source>Pre wait</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="cue_general.py" line="79"/>
         <source>Wait before cue execution</source>
-        <translation type="unfinished"></translation>
+        <translation>Attesa prima dell&apos;esecuzione della cue</translation>
     </message>
     <message>
         <location filename="cue_general.py" line="81"/>
         <source>Post wait</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="cue_general.py" line="82"/>
         <source>Wait after cue execution</source>
-        <translation type="unfinished"></translation>
+        <translation>Attesa dopo l&apos;esecuzione della cue</translation>
     </message>
     <message>
         <location filename="cue_general.py" line="84"/>
         <source>Next action</source>
-        <translation type="unfinished"></translation>
+        <translation>Azione successiva</translation>
     </message>
     <message>
         <location filename="cue_general.py" line="85"/>
         <source>Pause instead of stop(if supported)</source>
-        <translation type="unfinished"></translation>
+        <translation>Metti in pausa invece di stoppare (se supportato)</translation>
     </message>
 </context>
 <context>
@@ -179,17 +161,17 @@
     <message>
         <location filename="layoutselect.py" line="39"/>
         <source>Layout selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Selezione del layout</translation>
     </message>
     <message>
         <location filename="layoutselect.py" line="51"/>
         <source>Select layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleziona layout</translation>
     </message>
     <message>
         <location filename="layoutselect.py" line="55"/>
         <source>Open file</source>
-        <translation type="unfinished"></translation>
+        <translation>Apri file</translation>
     </message>
 </context>
 <context>
@@ -345,32 +327,32 @@
     <message>
         <location filename="media_cue_settings.py" line="77"/>
         <source>Start time</source>
-        <translation type="unfinished"></translation>
+        <translation>Posizione iniziale</translation>
     </message>
     <message>
         <location filename="media_cue_settings.py" line="78"/>
         <source>Stop position of the media</source>
-        <translation type="unfinished"></translation>
+        <translation>Posizione in cui la traccia si deve fermare</translation>
     </message>
     <message>
         <location filename="media_cue_settings.py" line="80"/>
         <source>Stop time</source>
-        <translation type="unfinished"></translation>
+        <translation>Posizione finale</translation>
     </message>
     <message>
         <location filename="media_cue_settings.py" line="81"/>
         <source>Start position of the media</source>
-        <translation type="unfinished"></translation>
+        <translation>Posizione da cui la traccia deve partire</translation>
     </message>
     <message>
         <location filename="media_cue_settings.py" line="83"/>
         <source>Loop</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="media_cue_settings.py" line="84"/>
         <source>Repetition after first play (-1 = infinite)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ripetizioni dopo la prima riproduzione (-1 = infinite)</translation>
     </message>
 </context>
 <context>
@@ -378,7 +360,7 @@
     <message>
         <location filename="qcolorbutton.py" line="40"/>
         <source>Right click to reset</source>
-        <translation type="unfinished"></translation>
+        <translation>Clicca con il pulsante destro per resettare</translation>
     </message>
 </context>
 </TS>

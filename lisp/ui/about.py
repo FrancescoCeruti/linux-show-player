@@ -92,25 +92,25 @@ class About(QDialog):
         self.buttons.setFocus()
 
     LICENSE = '''
-<center>''' + translate('AboutDialog', '''
+<center>
     Linux Show Player is free software: you can redistribute it and/or
     modify it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.''') + '''<br />
-    <br />''' + translate('AboutDialog', '''
+    (at your option) any later version.<br />
+    <br />
     Linux Show Player is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.''') + '''
+    GNU General Public License for more details.
 </center>'''
 
     INFO = '''
-<center><br /> ''' + translate('AboutDialog', '''
+<center><br /> ''' + translate('AboutDialog', '''\
     Linux Show Player is a cue-player designed for stage productions.''') + '''<br \>
 </center>
 <center><br />''' + \
 translate('AboutDialog', 'Web site:') + '<a href="http://linux-show-player.sourceforge.net">linux-show-player.sourceforge.net</a><br \>' + \
-translate('AboutDialog', 'User group:') + '<a href="http://groups.google.com/group/linux-show-player---users">groups.google.com</a><br \>' + \
+translate('AboutDialog', 'Users  group:') + '<a href="http://groups.google.com/group/linux-show-player---users">groups.google.com</a><br \>' + \
 translate('AboutDialog', 'Source code:') + '''<a href="https://github.com/FrancescoCeruti/linux-show-player">GitHub</a>
 </center>'''
 

@@ -32,7 +32,6 @@ from lisp.ui.settings.settings_page import SettingsPage
 class TriggersSettings(SettingsPage):
 
     Name = 'Triggers'
-    PluginInstance = None
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
