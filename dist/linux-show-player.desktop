@@ -1,7 +1,7 @@
 [Desktop Entry]
 Version=0.4
 Name=Linux Show Player
-Comment=Cue player for theatre shows
+Comment=Audio player for theatral shows
 Exec=linux-show-player -f %u
 Icon=linux_show_player.png
 StartupNotify=true
