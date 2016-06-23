@@ -15,5 +15,8 @@ eggs/
 /.project
 /.pydevproject
 
+# Pycharm IDE
+.idea/*
+
 # QT project files, generated only for pylupdate (qt i18n)
 *.pro
