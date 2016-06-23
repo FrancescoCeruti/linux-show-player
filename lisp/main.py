@@ -36,7 +36,8 @@ from lisp.utils.configuration import config
 def main():
     # Create and parse the command-line arguments
     parser = argparse.ArgumentParser(description='Linux Show Player')
-    parser.add_argument('-f', '--file', default='', help='Session file path')
+    parser.add_argument('-f', '--file', default='', nargs='?', const='',
+                        help='Session file path')
     parser.add_argument('-l', '--log', choices=['debug', 'info', 'warning'],
                         default='warning', help='Log level')
     parser.add_argument('--locale', default='', help='Force specified locale')

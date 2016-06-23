@@ -1,0 +1,23 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE=1
+export PYBUILD_NAME=linux-show-player
+export PYBUILD_SYSTEM=distutils
+
+%:
+	dh $@ --with python3 --buildsystem=pybuild
+
+override_dh_auto_install:
+	dh_auto_install
+	mkdir -p $(CURDIR)/debian/linux-show-player/usr/share/pixmaps/
+	cp $(CURDIR)/dist/linux_show_player.png \
+	   $(CURDIR)/debian/linux-show-player/usr/share/pixmaps/
+	mkdir -p $(CURDIR)/debian/linux-show-player/usr/share/mime/packages/
+	cp $(CURDIR)/dist/linux-show-player.xml \
+	   $(CURDIR)/debian/linux-show-player/usr/share/mime/packages/
+	mkdir -p $(CURDIR)/debian/linux-show-player/usr/share/icons/hicolor/512x512/mimetypes/
+	cp $(CURDIR)/dist/application-x-linuxshowplayer.png \
+	   $(CURDIR)/debian/linux-show-player/usr/share/icons/hicolor/512x512/mimetypes/
+	mkdir -p $(CURDIR)/debian/linux-show-player/usr/share/applications/
+	cp $(CURDIR)/dist/linux-show-player.desktop \
+	   $(CURDIR)/debian/linux-show-player/usr/share/applications/

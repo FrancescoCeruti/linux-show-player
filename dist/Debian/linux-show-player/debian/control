@@ -1,0 +1,45 @@
+Source: linux-show-player
+Maintainer: Francesco Ceruti <ceppofrancy@gmail.com>
+Section: contrib/sound
+Priority: optional
+XS-Autobuild: no
+Build-Depends: debhelper (>= 9),
+               dh-python,
+               python3-all,
+               python3-setuptools
+Standards-Version: 3.9.6
+X-Python3-Version: >= 3.4
+
+Package: linux-show-player
+Architecture: all
+Section: contrib/sound
+Priority: optional
+Depends: ${python3:Depends},
+         ${misc:Depends},
+         python3 (>= 3.4),
+         python3-gi,
+         python3-pyqt5,
+         python3-pyqt5.qtsvg,
+   	     python3-sortedcontainers,
+         gstreamer1.0-plugins-base,
+         gstreamer1.0-plugins-good,
+         gstreamer1.0-plugins-ugly,
+         gstreamer1.0-plugins-bad,
+         gstreamer1.0-alsa,
+         gstreamer1.0-pulseaudio,
+         gstreamer1.0-libav,
+         gstreamer1.0-fluendo-mp3,
+         gir1.2-gstreamer-1.0,
+         gir1.2-gst-plugins-base-1.0,
+         alsa-utils,
+         jackd2,
+         libasound2,
+         python3-jackclient,
+         python3-rtmidi,
+         python3-mido
+Description: Cue player designed for stage productions
+ Linux Show Player (or LiSP for short) is a free cue player designed for
+ sound-playback in stage production. The goal of the project is to
+ provide a complete playback software for musical plays, theater shows
+ and similar.
+Homepage: http://linux-show-player.sourceforge.net
