@@ -7,16 +7,19 @@ from setuptools import find_packages, setup
 import lisp
 
 
-def package_files(directory):
+def package_files(directory, prefix=''):
     paths = []
     for (path, directories, filenames) in os.walk(directory):
+        if path.startswith(prefix):
+            path = path[len(prefix):]
         for filename in filenames:
             paths.append(os.path.join(path, filename))
     return paths
 
 
 lisp_icon_path = os.path.join(os.path.dirname(__file__), 'lisp/ui/icons')
-lisp_ui_data = package_files(lisp_icon_path) + ['style/style.qss', 'icon.png']
+lisp_ui_data = package_files(lisp_icon_path, 'lisp/ui/') + ['style/style.qss',
+                                                            'icon.png']
 
 setup(name='linux-show-player',
       author=lisp.__author__,

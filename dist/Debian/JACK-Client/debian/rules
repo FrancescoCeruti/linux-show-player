@@ -1,0 +1,10 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE=1
+export DEB_BUILD_OPTIONS=nocheck
+export PYBUILD_NAME=JACK-Client
+
+%:
+	dh $@ --with python3 --buildsystem=pybuild
+
+
