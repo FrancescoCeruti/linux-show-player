@@ -15,11 +15,13 @@ For bugs/requests an issue can be open on the GitHub issues-tracker, any other q
 
 ####1. Package installation
 
-**For Ubuntu/Debian users:** Download the ".deb" package in the releases page on GitHub (only tested on Ubuntu).
+**For Ubuntu/Debian users:** Follow the instructions on the [releases page](https://github.com/FrancescoCeruti/linux-show-player/releases) on GitHub.
 
-**For ArchLinux users:** there is an AUR Package.
+**For ArchLinux users:** there is an AUR package, serch for _linux-show-player_.
 
 ####2. Manual Installation
+
+On Debain/Ubuntu and derivates you can build the ".deb" packages, the needed file can be found in _dist/Debian/_
 
 #####2.1 Get the source
 
@@ -27,7 +29,7 @@ Download the archive from the release page on GitHub.
 
 #####2.2 Install (and build) dependencies
 
-**PyPI packages, auto-installed via pip:**
+**PyPI packages (auto-installed when using pip):**
 
 <pre>
 * mido
@@ -58,7 +60,7 @@ Download the archive from the release page on GitHub.
 
 <pre>
 * python3
-* python3-dev
+* python3-dev				(build)
 * python3-pyqt5
 * python3-gi
 * python3-setuptools
@@ -72,11 +74,14 @@ Download the archive from the release page on GitHub.
 * gstreamer1.0-plugins-good
 * gstreamer1.0-plugins-ugly
 * gstreamer1.0-libav
-* libffi-dev
+* libffi-dev				(build)(? not sure if needed ?)
 * python3-cffi
-* libportmidi-dev
-* libasound2-dev
-* libjack-jackd2-dev
+* libportmidi-dev			(build)
+* libportmidi0
+* libasound2-dev			(build)
+* asound2
+* libjack-jackd2-dev			(build)
+* jackd2
 </pre>
 
 #####2.3 Install LiSP
@@ -94,6 +99,8 @@ or
 
 to install the latest development version from git.
 
+**Notice that the git version may be unstable and/or contains unfished features.**
+
 ### Usage
 
 Use the installed launcher from the menu (for the package installation), or
@@ -102,4 +109,4 @@ Use the installed launcher from the menu (for the package installation), or
     $ linux-show-player -l [debug/warning/info]          # Launch with different log options
     $ linux-show-player -f <file/path>                   # Open a saved session
 
-*Currently no user documentation is available.*
+*User documentation (in progress) can be found [here](https://github.com/FrancescoCeruti/linux-show-player/wiki)*
