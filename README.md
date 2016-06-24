@@ -74,13 +74,13 @@ Download the archive from the release page on GitHub.
 * gstreamer1.0-plugins-good
 * gstreamer1.0-plugins-ugly
 * gstreamer1.0-libav
-* libffi-dev				(build)(? not sure if needed ?)
 * python3-cffi
+* libffi-dev				(build)
 * libportmidi-dev			(build)
 * libportmidi0
 * libasound2-dev			(build)
 * asound2
-* libjack-jackd2-dev			(build)
+* libjack-jackd2-dev		(build)
 * jackd2
 </pre>
 
