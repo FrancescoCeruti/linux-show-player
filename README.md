@@ -97,9 +97,7 @@ or
     # git clone https://github.com/FrancescoCeruti/linux-show-player
     # pip install --pre linux-show-player/
 
-to install the latest development version from git.
-
-**Notice that the git version may be unstable and/or contains unfished features.**
+to install the latest development version from git **(May be unstable and/or contains unfished features)**.
 
 ### Usage
 
