@@ -16,7 +16,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QHBoxLayout, QCheckBox
 
 from lisp.application import Application
@@ -24,16 +24,17 @@ from lisp.core.has_properties import Property
 from lisp.cues.cue import Cue, CueState, CueAction
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
 from lisp.ui.settings.settings_page import SettingsPage
+from lisp.utils.util import translate
 
 
 class StopAll(Cue):
-    Name = 'Stop-All'
+    Name = QT_TRANSLATE_NOOP('CueName', 'Stop-All')
 
     pause_mode = Property(default=False)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.name = self.Name
+        self.name = translate('CueName', self.Name)
 
     @Cue.state.getter
     def state(self):
@@ -47,7 +48,7 @@ class StopAll(Cue):
 
 
 class StopAllSettings(SettingsPage):
-    Name = 'Cue Settings'
+    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Cue Settings')
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -55,13 +56,17 @@ class StopAllSettings(SettingsPage):
         self.layout().setAlignment(Qt.AlignTop)
 
         self.group = QGroupBox(self)
-        self.group.setTitle('Mode')
         self.group.setLayout(QHBoxLayout(self.group))
         self.layout().addWidget(self.group)
 
         self.pauseMode = QCheckBox(self.group)
-        self.pauseMode.setText('Pause mode')
         self.group.layout().addWidget(self.pauseMode)
+
+        self.retranslateUi()
+
+    def retranslateUi(self):
+        self.group.setTitle(translate('StopAll', 'Mode'))
+        self.pauseMode.setText(translate('StopAll', 'Pause mode'))
 
     def enable_check(self, enabled):
         self.group.setCheckable(enabled)

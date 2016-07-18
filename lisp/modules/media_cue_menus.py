@@ -21,7 +21,7 @@ import os
 
 from PyQt5.QtCore import QStandardPaths, Qt
 from PyQt5.QtGui import QCursor
-from PyQt5.QtWidgets import QFileDialog, QApplication
+from PyQt5.QtWidgets import QFileDialog, QApplication, QMessageBox
 
 from lisp.backend import get_backend
 from lisp.application import Application
@@ -44,6 +44,10 @@ class MediaCueMenus(Module):
     @staticmethod
     def add_uri_audio_media_cue():
         """Add audio MediaCue(s) form user-selected files"""
+
+        if get_backend() is None:
+            QMessageBox.critical(MainWindow(), 'Error', 'Backend not loaded')
+            return
 
         # Default path to system "music" folder
         path = QStandardPaths.writableLocation(QStandardPaths.MusicLocation)

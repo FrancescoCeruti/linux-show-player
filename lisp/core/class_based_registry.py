@@ -58,7 +58,7 @@ class ClassBasedRegistry:
 
         The items are sorted by ref_class name.
         """
-        for class_ in sorted(self._registry.keys(), key=lambda c: str(c)):
+        for class_ in sorted(self._registry.keys(), key=str):
             if issubclass(ref_class, class_):
                 yield from self._registry[class_]
 

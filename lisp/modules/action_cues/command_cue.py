@@ -19,7 +19,7 @@
 
 import subprocess
 
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QLineEdit, QCheckBox
 
 from lisp.core.decorators import async
@@ -27,6 +27,7 @@ from lisp.core.has_properties import Property
 from lisp.cues.cue import Cue, CueState, CueAction
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
 from lisp.ui.settings.settings_page import SettingsPage
+from lisp.utils.util import translate
 
 
 class CommandCue(Cue):
@@ -35,16 +36,17 @@ class CommandCue(Cue):
     Implemented using :class:`subprocess.Popen` with *shell=True*
     """
 
-    Name = 'Command Cue'
-    CueActions = (CueAction.Start, CueAction.Stop, CueAction.Default)
+    Name = QT_TRANSLATE_NOOP('CueName', 'Command Cue')
+    CueActions = (CueAction.Default, CueAction.Start, CueAction.Stop)
 
     command = Property(default='')
     no_output = Property(default=True)
+    no_error = Property(default=True)
     kill = Property(default=False)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.name = self.Name
+        self.name = translate('CueName', self.Name)
 
         self.__state = CueState.Stop
         self.__process = None
@@ -73,10 +75,12 @@ class CommandCue(Cue):
                 # If terminate normally or killed, set the cue as ended
                 self.__state = CueState.Stop
                 self.end.emit(self)
-            else:
+            elif not self.no_error:
                 self.__state = CueState.Error
-                self.error.emit(self, 'Process exited with an error status',
-                                'Exit code: {}'.format(rcode))
+                self.error.emit(self,
+                    translate('CommandCue',
+                              'Process ended with an error status.'),
+                    translate('CommandCue', 'Exit code: ') + str(rcode))
 
     def __stop__(self):
         if self.__state == CueState.Running:
@@ -90,7 +94,7 @@ class CommandCue(Cue):
 
 
 class CommandCueSettings(SettingsPage):
-    Name = 'Command Cue'
+    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Command')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -98,22 +102,33 @@ class CommandCueSettings(SettingsPage):
         self.layout().setAlignment(Qt.AlignTop)
 
         self.group = QGroupBox(self)
-        self.group.setTitle('Command')
         self.group.setLayout(QVBoxLayout(self.group))
         self.layout().addWidget(self.group)
 
         self.commandLineEdit = QLineEdit(self.group)
-        self.commandLineEdit.setPlaceholderText(
-            'Command to execute as in a shell')
         self.group.layout().addWidget(self.commandLineEdit)
 
         self.noOutputCheckBox = QCheckBox(self)
-        self.noOutputCheckBox.setText('Discard command output')
         self.layout().addWidget(self.noOutputCheckBox)
 
+        self.noErrorCheckBox = QCheckBox(self)
+        self.layout().addWidget(self.noErrorCheckBox)
+
         self.killCheckBox = QCheckBox(self)
-        self.killCheckBox.setText('Kill instead of terminate')
         self.layout().addWidget(self.killCheckBox)
+
+        self.retranslateUi()
+
+    def retranslateUi(self):
+        self.group.setTitle(translate('CommandCue', 'Command'))
+        self.commandLineEdit.setPlaceholderText(
+            translate('CommandCue', 'Command to execute, as in a shell'))
+        self.noOutputCheckBox.setText(
+            translate('CommandCue', 'Discard command output'))
+        self.noErrorCheckBox.setText(
+            translate('CommandCue', 'Ignore command errors'))
+        self.killCheckBox.setText(
+            translate('CommandCue', 'Kill instead of terminate'))
 
     def enable_check(self, enabled):
         self.group.setCheckable(enabled)
@@ -123,6 +138,10 @@ class CommandCueSettings(SettingsPage):
         if enabled:
             self.noOutputCheckBox.setCheckState(Qt.PartiallyChecked)
 
+        self.noErrorCheckBox.setTristate(enabled)
+        if enabled:
+            self.killCheckBox.setCheckState(Qt.PartiallyChecked)
+
         self.killCheckBox.setTristate(enabled)
         if enabled:
             self.killCheckBox.setCheckState(Qt.PartiallyChecked)
@@ -130,6 +149,7 @@ class CommandCueSettings(SettingsPage):
     def load_settings(self, settings):
         self.commandLineEdit.setText(settings.get('command', ''))
         self.noOutputCheckBox.setChecked(settings.get('no_output', True))
+        self.noErrorCheckBox.setChecked(settings.get('no_error', True))
         self.killCheckBox.setChecked(settings.get('kill', False))
 
     def get_settings(self):
@@ -140,6 +160,8 @@ class CommandCueSettings(SettingsPage):
                 settings['command'] = self.commandLineEdit.text()
         if self.noOutputCheckBox.checkState() != Qt.PartiallyChecked:
             settings['no_output'] = self.noOutputCheckBox.isChecked()
+        if self.noErrorCheckBox.checkState() != Qt.PartiallyChecked:
+            settings['no_error'] = self.noErrorCheckBox.isChecked()
         if self.killCheckBox.checkState() != Qt.PartiallyChecked:
             settings['kill'] = self.killCheckBox.isChecked()
 

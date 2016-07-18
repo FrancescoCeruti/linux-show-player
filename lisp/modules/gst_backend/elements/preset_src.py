@@ -16,7 +16,10 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
+
 import math
+
+from PyQt5.QtCore import QT_TRANSLATE_NOOP
 
 from lisp.backend.media_element import MediaType
 from lisp.core.has_properties import Property
@@ -26,7 +29,7 @@ from lisp.modules.gst_backend.gst_element import GstSrcElement
 
 class PresetSrc(GstSrcElement):
     MediaType = MediaType.Audio
-    Name = 'PresetSrc'
+    Name = QT_TRANSLATE_NOOP('GstElementName', 'Preset Input')
 
     FREQ = 8000
     SILENCE = lambda t: 0

@@ -19,16 +19,17 @@
 
 from enum import Enum
 
+from PyQt5.QtCore import QT_TRANSLATE_NOOP
+
+from lisp.backend.media_element import ElementType, MediaType
 from lisp.modules.gst_backend.gi_repository import Gst
 from lisp.modules.gst_backend.gst_element import GstMediaElement, GstProperty
 
-from lisp.backend.media_element import ElementType, MediaType
 
-
-class Audiodynamic(GstMediaElement):
+class AudioDynamic(GstMediaElement):
     ElementType = ElementType.Plugin
     MediaType = MediaType.Audio
-    Name = 'AudioDynamic'
+    Name = QT_TRANSLATE_NOOP('GstElementName', 'Compressor/Expander')
 
     class Mode(Enum):
         Compressor = 'compressor'

@@ -17,17 +17,18 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from lisp.modules.gst_backend.gi_repository import Gst
-from lisp.modules.gst_backend.gst_element import GstMediaElement, GstProperty
+from PyQt5.QtCore import QT_TRANSLATE_NOOP
 
 from lisp.backend.media_element import ElementType, MediaType
 from lisp.core.signal import Signal
+from lisp.modules.gst_backend.gi_repository import Gst
+from lisp.modules.gst_backend.gst_element import GstMediaElement, GstProperty
 
 
-class Dbmeter(GstMediaElement):
+class DbMeter(GstMediaElement):
     ElementType = ElementType.Plugin
     MediaType = MediaType.Audio
-    Name = "DbMeter"
+    Name = QT_TRANSLATE_NOOP('GstElementName', 'dB Meter')
 
     interval = GstProperty('level', default=50 * Gst.MSECOND)
     peak_ttl = GstProperty('level', default=Gst.SECOND, gst_name='peak-ttl')

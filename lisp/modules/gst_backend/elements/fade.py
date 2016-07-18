@@ -20,20 +20,21 @@
 from threading import Lock
 from time import sleep
 
-from lisp.modules.gst_backend.gi_repository import Gst
-from lisp.modules.gst_backend.gst_element import GstMediaElement
+from PyQt5.QtCore import QT_TRANSLATE_NOOP
 
 from lisp.backend.media_element import ElementType, MediaType
 from lisp.core.decorators import async
 from lisp.core.has_properties import Property
 from lisp.core.signal import Signal
+from lisp.modules.gst_backend.gi_repository import Gst
+from lisp.modules.gst_backend.gst_element import GstMediaElement
 from lisp.utils.fade_functor import ntime, FadeOut, FadeIn
 
 
 class Fade(GstMediaElement):
     ElementType = ElementType.Plugin
     MediaType = MediaType.Audio
-    Name = 'Fade'
+    Name = QT_TRANSLATE_NOOP('GstElementName', 'Fade')
 
     fadein = Property(default=0)
     fadein_type = Property(default='Linear')

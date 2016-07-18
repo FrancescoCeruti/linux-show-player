@@ -26,11 +26,10 @@ from lisp.core.class_based_registry import ClassBasedRegistry
 from lisp.core.singleton import Singleton
 from lisp.cues.cue import Cue
 from lisp.ui.settings.settings_page import SettingsPage, CueSettingsPage
-from lisp.utils.util import deep_update
+from lisp.utils.util import deep_update, translate
 
 
 class CueSettingsRegistry(ClassBasedRegistry, metaclass=Singleton):
-
     def add_item(self, item, ref_class=Cue):
         if not issubclass(item, SettingsPage):
             raise TypeError('item must be a CueSettingPage subclass, '
@@ -49,7 +48,6 @@ class CueSettingsRegistry(ClassBasedRegistry, metaclass=Singleton):
 
 
 class CueSettings(QDialog):
-
     on_apply = QtCore.pyqtSignal(dict)
 
     def __init__(self, cue=None, cue_class=None, **kwargs):
@@ -77,7 +75,11 @@ class CueSettings(QDialog):
         self.sections = QTabWidget(self)
         self.sections.setGeometry(QtCore.QRect(5, 10, 625, 470))
 
-        for widget in sorted(CueSettingsRegistry().filter(cue_class), key=lambda w: w.Name):
+        def sk(widget):
+            # Sort-Key function
+            return translate('SettingsPageName', widget.Name)
+
+        for widget in sorted(CueSettingsRegistry().filter(cue_class), key=sk):
             if issubclass(widget, CueSettingsPage):
                 settings_widget = widget(cue_class)
             else:
@@ -85,18 +87,20 @@ class CueSettings(QDialog):
 
             settings_widget.load_settings(cue_properties)
             settings_widget.enable_check(cue is None)
-            self.sections.addTab(settings_widget, settings_widget.Name)
+            self.sections.addTab(settings_widget,
+                                 translate('SettingsPageName',
+                                           settings_widget.Name))
 
-        self.dialogButtons = QDialogButtonBox(self)
-        self.dialogButtons.setGeometry(10, 490, 615, 30)
-        self.dialogButtons.setStandardButtons(QDialogButtonBox.Cancel |
-                                              QDialogButtonBox.Ok |
-                                              QDialogButtonBox.Apply)
+            self.dialogButtons = QDialogButtonBox(self)
+            self.dialogButtons.setGeometry(10, 490, 615, 30)
+            self.dialogButtons.setStandardButtons(QDialogButtonBox.Cancel |
+                                                  QDialogButtonBox.Ok |
+                                                  QDialogButtonBox.Apply)
 
-        self.dialogButtons.rejected.connect(self.reject)
-        self.dialogButtons.accepted.connect(self.accept)
-        apply = self.dialogButtons.button(QDialogButtonBox.Apply)
-        apply.clicked.connect(self.apply)
+            self.dialogButtons.rejected.connect(self.reject)
+            self.dialogButtons.accepted.connect(self.accept)
+            apply = self.dialogButtons.button(QDialogButtonBox.Apply)
+            apply.clicked.connect(self.apply)
 
     def accept(self):
         self.apply()

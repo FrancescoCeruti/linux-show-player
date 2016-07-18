@@ -22,12 +22,13 @@ from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QSlider, QLabel, QVBoxLayout
 
 from lisp.modules.gst_backend.elements.audio_pan import AudioPan
 from lisp.ui.settings.settings_page import SettingsPage
+from lisp.utils.util import translate
 
 
 class AudioPanSettings(SettingsPage):
 
-    Name = 'Pan'
     ELEMENT = AudioPan
+    Name = ELEMENT.Name
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -56,8 +57,8 @@ class AudioPanSettings(SettingsPage):
         self.retransaleUi()
 
     def retransaleUi(self):
-        self.panBox.setTitle('Audio Pan')
-        self.panLabel.setText('Center')
+        self.panBox.setTitle(translate('AudioPanSettings', 'Audio Pan'))
+        self.panLabel.setText(translate('AudioPanSettings', 'Center'))
 
     def enable_check(self, enable):
         self.panBox.setCheckable(enable)
@@ -73,5 +74,11 @@ class AudioPanSettings(SettingsPage):
         self.panSlider.setValue(settings.get('pan', 0.5) * 10)
 
     def pan_changed(self, value):
-        position = 'Left' if value < 0 else 'Right' if value > 0 else 'Center'
+        if value < 0:
+            position = translate('AudioPanSettings', 'Left')
+        elif value > 0:
+            position = translate('AudioPanSettings', 'Right')
+        else:
+            position = translate('AudioPanSettings', 'Center')
+
         self.panLabel.setText('{0} - {1}'.format(value, position))

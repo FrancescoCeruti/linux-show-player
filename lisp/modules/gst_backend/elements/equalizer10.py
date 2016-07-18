@@ -17,16 +17,17 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from lisp.modules.gst_backend.gi_repository import Gst
-from lisp.modules.gst_backend.gst_element import GstMediaElement, GstProperty
+from PyQt5.QtCore import QT_TRANSLATE_NOOP
 
 from lisp.backend.media_element import ElementType, MediaType
+from lisp.modules.gst_backend.gi_repository import Gst
+from lisp.modules.gst_backend.gst_element import GstMediaElement, GstProperty
 
 
 class Equalizer10(GstMediaElement):
     ElementType = ElementType.Plugin
     MediaType = MediaType.Audio
-    Name = "Equalizer-10bands"
+    Name = QT_TRANSLATE_NOOP('GstElementName', 'Equalizer-10bands')
 
     band0 = GstProperty('equalizer', default=0)
     band1 = GstProperty('equalizer', default=0)

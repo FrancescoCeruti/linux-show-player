@@ -149,3 +149,22 @@ def weak_call_proxy(weakref):
 
 def translate(context, text, disambiguation=None, n=-1):
     return QApplication.translate(context, text, disambiguation, n)
+
+
+def translate_many(context, texts):
+    """Return a translate iterator."""
+    for item in texts:
+        yield QApplication.translate(context, item, None)
+
+
+def tr_sorted(context, iterable, key=None, reverse=False):
+    """Return a new sorted list from the items in iterable.
+
+    The sorting is done using translated versions of the iterable values.
+    """
+    if key is not None:
+        tr_key = lambda item: translate(context, key(item))
+    else:
+        tr_key = lambda item: translate(context, item)
+
+    return sorted(iterable, key=tr_key, reverse=reverse)

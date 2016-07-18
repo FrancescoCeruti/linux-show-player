@@ -174,16 +174,16 @@ class GstMedia(Media):
         if self.__seek(position):
             self.sought.emit(self, position)
 
-    def element(self, name):
+    def element(self, class_name):
         for element in self._elements:
-            if element.Name == name:
+            if type(element).__name__ == class_name:
                 return element
 
     def elements(self):
         return self._elements.copy()
 
     def elements_properties(self):
-        return {e.Name: e.properties() for e in self._elements}
+        return {type(e).__name__: e.properties() for e in self._elements}
 
     def input_uri(self):
         try:
@@ -215,8 +215,8 @@ class GstMedia(Media):
 
     def update_elements(self, properties):
         for element in self._elements:
-            if element.Name in properties:
-                element.update_properties(properties[element.Name])
+            if type(element).__name__ in properties:
+                element.update_properties(properties[type(element).__name__])
 
     def update_properties(self, properties):
         elements_properties = properties.pop('elements', {})

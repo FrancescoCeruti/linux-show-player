@@ -17,16 +17,16 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import QVBoxLayout, QGroupBox
 
 from lisp.modules.gst_backend.gst_pipe_edit import GstPipeEdit
 from lisp.ui.settings.settings_page import SettingsPage
+from lisp.utils.util import translate
 
 
 class GstSettings(SettingsPage):
-
-    Name = 'GStreamer settings'
+    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'GStreamer settings')
 
     def __init__(self, **kwargs):
         super().__init__()
@@ -43,7 +43,7 @@ class GstSettings(SettingsPage):
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.pipeGroup.setTitle('Pipeline')
+        self.pipeGroup.setTitle(translate('GstSettings', 'Pipeline'))
 
     def get_settings(self):
         return {'Gst': {'pipeline': ', '.join(self.pipeEdit.get_pipe())}}

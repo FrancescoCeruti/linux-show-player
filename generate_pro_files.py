@@ -24,34 +24,33 @@ import re
 
 parser = argparse.ArgumentParser(description='Search for source files')
 parser.add_argument('-r', '--root', help='Root directory', required=True)
-parser.add_argument('--relative', help='Relative (to the root) sources paths',
-                    default=False)
 parser.add_argument('-e', '--exclude', nargs='*',
                     help='Paths to be ignored. A directory path with final "/" '
                          'will ignore only subdirectories, not files')
-parser.add_argument('-x', '--exts', nargs='*', help='Source file extensions',
+parser.add_argument('-x', '--exts', nargs='*', help='Source file EXTENSIONS',
                     required=True)
+parser.add_argument('-l', '--locales', nargs='*', help='Locales of witch '
+                                                       'generate translations')
+parser.add_argument('--print', help='Just print the values', default=False)
 
 args = parser.parse_args()
 
 ROOT = args.root
-RELATIVE = args.relative
 EXCLUDE = args.exclude
 EXTENSIONS = args.exts
+LOCALES = args.locales
+PRINT = args.print
 
 
-def search_files(root, excluded=(), extensions=()):
-    exc_regex = '^(' + '|'.join(excluded) + ').*' if excluded else '$^'
-    ext_regex = '.*\.(' + '|'.join(extensions) + ')$' if extensions else '.*'
+def search_files():
+    exc_regex = '^(' + '|'.join(EXCLUDE) + ').*' if EXCLUDE else '$^'
+    ext_regex = '.*\.(' + '|'.join(EXTENSIONS) + ')$' if EXTENSIONS else '.*'
 
-    for path, directories, filenames in os.walk(root):
+    for path, directories, filenames in os.walk(ROOT):
         if re.match(exc_regex, path):
             continue
 
-        if RELATIVE:
-            path = path[len(ROOT):]
-            if path.startswith(os.path.sep):
-                path = path[len(os.path.sep):]
+        path = os.path.relpath(path, ROOT)
 
         for filename in filenames:
             if re.match(ext_regex, filename):
@@ -60,4 +59,23 @@ def search_files(root, excluded=(), extensions=()):
                 yield filename
 
 
-print(' '.join(search_files(ROOT, EXCLUDE, EXTENSIONS)))
+def create_pro_file():
+    base_name = os.path.basename(os.path.normpath(ROOT))
+    translations = 'TRANSLATIONS = '
+    for local in LOCALES:
+        translations += os.path.join('i18n', base_name + '_' + local + '.ts ')
+
+    global RELATIVE
+    RELATIVE = True
+    files = 'SOURCES = ' + ' '.join(search_files())
+
+    with open(os.path.join(ROOT, base_name + '.pro'), mode='w') as pro_file:
+        pro_file.write(translations)
+        pro_file.write(os.linesep)
+        pro_file.write(files)
+
+
+if not PRINT:
+    create_pro_file()
+else:
+    print(' '.join(search_files()))

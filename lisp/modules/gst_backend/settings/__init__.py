@@ -20,7 +20,6 @@ def load():
                 logging.debug(traceback.format_exc())
                 continue
 
-        # Add the new page in the global set
         __PAGES.add(page)
 
 
@@ -28,5 +27,5 @@ def pages():
     return list(__PAGES)
 
 
-def pages_by_element_name():
-    return {s.ELEMENT.Name: s for s in __PAGES}
+def pages_by_element():
+    return {s.ELEMENT.__name__: s for s in __PAGES}

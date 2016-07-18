@@ -34,7 +34,7 @@ from lisp.utils.configuration import config
 
 
 def main():
-    # Create and parse the command-line arguments
+    # Parse the command-line arguments
     parser = argparse.ArgumentParser(description='Linux Show Player')
     parser.add_argument('-f', '--file', default='', nargs='?', const='',
                         help='Session file path')

@@ -20,6 +20,8 @@
 from concurrent.futures import ThreadPoolExecutor
 from os import path
 
+from PyQt5.QtCore import QT_TRANSLATE_NOOP
+
 from lisp.backend.media_element import MediaType
 from lisp.core.decorators import async_in_pool
 from lisp.core.has_properties import Property
@@ -31,7 +33,7 @@ from lisp.modules.gst_backend.gst_utils import gst_uri_duration
 
 class UriInput(GstSrcElement):
     MediaType = MediaType.Audio
-    Name = "URIInput"
+    Name = QT_TRANSLATE_NOOP('GstElementName', 'URI Input')
 
     uri = GstProperty('decoder', default='')
     download = GstProperty('decoder', default=False)

@@ -17,21 +17,19 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QCursor
-from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QComboBox, QApplication, \
-    QGridLayout, QLabel
+from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
+from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QComboBox, QGridLayout, QLabel
 
 from lisp.modules import check_module
-from lisp.modules.midi.midi_utils import mido_backend
 from lisp.modules.midi.midi_input import MIDIInput
 from lisp.modules.midi.midi_output import MIDIOutput
+from lisp.modules.midi.midi_utils import mido_backend
 from lisp.ui.settings.settings_page import SettingsPage
-from lisp.utils import logging
+from lisp.utils.util import translate
 
 
 class MIDISettings(SettingsPage):
-    Name = 'MIDI settings'
+    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'MIDI settings')
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -39,16 +37,19 @@ class MIDISettings(SettingsPage):
         self.layout().setAlignment(Qt.AlignTop)
 
         self.midiGroup = QGroupBox(self)
-        self.midiGroup.setTitle('MIDI default devices')
+        self.midiGroup.setTitle(
+            translate('MIDISettings', 'MIDI default devices'))
         self.midiGroup.setLayout(QGridLayout())
         self.layout().addWidget(self.midiGroup)
 
-        self.inputLabel = QLabel('Input', self.midiGroup)
+        self.inputLabel = QLabel(translate('MIDISettings', 'Input'),
+                                 self.midiGroup)
         self.midiGroup.layout().addWidget(self.inputLabel, 0, 0)
         self.inputCombo = QComboBox(self.midiGroup)
         self.midiGroup.layout().addWidget(self.inputCombo, 0, 1)
 
-        self.outputLabel = QLabel('Output', self.midiGroup)
+        self.outputLabel = QLabel(translate('MIDISettings', 'Output'),
+                                  self.midiGroup)
         self.midiGroup.layout().addWidget(self.outputLabel, 1, 0)
         self.outputCombo = QComboBox(self.midiGroup)
         self.midiGroup.layout().addWidget(self.outputCombo, 1, 1)

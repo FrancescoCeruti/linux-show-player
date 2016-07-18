@@ -17,6 +17,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+from PyQt5.QtCore import QT_TRANSLATE_NOOP
+
 from lisp.backend.media_element import MediaType
 from lisp.modules.gst_backend.gi_repository import Gst
 from lisp.modules.gst_backend.gst_element import GstSrcElement
@@ -24,7 +26,7 @@ from lisp.modules.gst_backend.gst_element import GstSrcElement
 
 class AutoSrc(GstSrcElement):
     MediaType = MediaType.Audio
-    Name = "AutoSrc"
+    Name = QT_TRANSLATE_NOOP('GstElementName', 'System Input')
 
     def __init__(self, pipe):
         super().__init__()

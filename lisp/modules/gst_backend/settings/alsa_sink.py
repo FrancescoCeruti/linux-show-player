@@ -24,12 +24,12 @@ from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QComboBox, QLabel, \
 
 from lisp.modules.gst_backend.elements.alsa_sink import AlsaSink
 from lisp.ui.settings.settings_page import SettingsPage
+from lisp.utils.util import translate
 
 
 class AlsaSinkSettings(SettingsPage):
-
-    Name = "ALSA Sink"
     ELEMENT = AlsaSink
+    Name = ELEMENT.Name
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -40,7 +40,7 @@ class AlsaSinkSettings(SettingsPage):
         self.devices['default'] = 'default'
 
         self.deviceGroup = QGroupBox(self)
-        self.deviceGroup.setTitle('ALSA device')
+        self.deviceGroup.setTitle(translate('AlsaSinkSettings', 'ALSA device'))
         self.deviceGroup.setGeometry(0, 0, self.width(), 100)
         self.deviceGroup.setLayout(QHBoxLayout())
         self.layout().addWidget(self.deviceGroup)
@@ -48,11 +48,13 @@ class AlsaSinkSettings(SettingsPage):
         self.device = QComboBox(self.deviceGroup)
         self.device.addItems(self.devices.keys())
         self.device.setCurrentText('default')
-        self.device.setToolTip('ALSA device, as defined in an asound '
-                               'configuration file')
+        self.device.setToolTip(
+            translate('AlsaSinkSettings', 'ALSA devices, as defined in an '
+                                          'asound configuration file'))
         self.deviceGroup.layout().addWidget(self.device)
 
-        self.label = QLabel('ALSA device', self.deviceGroup)
+        self.label = QLabel(translate('AlsaSinkSettings', 'ALSA device'),
+                            self.deviceGroup)
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.deviceGroup.layout().addWidget(self.label)
 
@@ -69,7 +71,8 @@ class AlsaSinkSettings(SettingsPage):
                 break
 
     def get_settings(self):
-        if not (self.deviceGroup.isCheckable() and not self.deviceGroup.isChecked()):
+        if not (
+            self.deviceGroup.isCheckable() and not self.deviceGroup.isChecked()):
             return {'device': self.devices[self.device.currentText()]}
 
         return {}

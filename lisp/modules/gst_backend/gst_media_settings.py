@@ -19,16 +19,18 @@
 
 from copy import deepcopy
 
+from PyQt5.QtCore import QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import QGridLayout, QListWidget, QPushButton, \
     QListWidgetItem
 
 from lisp.modules.gst_backend.gst_pipe_edit import GstPipeEditDialog
-from lisp.modules.gst_backend.settings import pages_by_element_name
+from lisp.modules.gst_backend.settings import pages_by_element
 from lisp.ui.settings.settings_page import SettingsPage
+from lisp.utils.util import translate
 
 
 class GstMediaSettings(SettingsPage):
-    Name = 'Media Settings'
+    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Media Settings')
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -42,7 +44,8 @@ class GstMediaSettings(SettingsPage):
         self.listWidget = QListWidget(self)
         self.layout().addWidget(self.listWidget, 0, 0)
 
-        self.pipeButton = QPushButton('Change Pipe', self)
+        self.pipeButton = QPushButton(
+            translate('GstMediaSettings', 'Change Pipeline'), self)
         self.layout().addWidget(self.pipeButton, 1, 0)
 
         self.layout().setColumnStretch(0, 2)
@@ -57,19 +60,20 @@ class GstMediaSettings(SettingsPage):
         self._settings = deepcopy(settings)
 
         # Create the widgets
-        pages = pages_by_element_name()
+        pages = pages_by_element()
         for element in settings.get('pipe', ()):
             page = pages.get(element)
 
             if page is not None and issubclass(page, SettingsPage):
                 page = page(parent=self)
+                print(settings.get('elements', {}).get(element, element))
                 page.load_settings(
                     settings.get('elements', {})
-                    .get(element, page.ELEMENT.properties_defaults()))
+                        .get(element, page.ELEMENT.properties_defaults()))
                 page.setVisible(False)
                 self._pages.append(page)
 
-                item = QListWidgetItem(page.Name)
+                item = QListWidgetItem(translate('SettingsPageName', page.Name))
                 self.listWidget.addItem(item)
 
             self.listWidget.setCurrentRow(0)
@@ -81,7 +85,7 @@ class GstMediaSettings(SettingsPage):
             page_settings = page.get_settings()
 
             if page_settings:
-                settings['elements'][page.ELEMENT.Name] = page_settings
+                settings['elements'][page.ELEMENT.__name__] = page_settings
 
         # The pipeline is returned only if check is disabled
         if not self._check:

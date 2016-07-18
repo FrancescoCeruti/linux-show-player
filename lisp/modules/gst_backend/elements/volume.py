@@ -17,17 +17,18 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+from PyQt5.QtCore import QT_TRANSLATE_NOOP
+
+from lisp.backend.media_element import ElementType, MediaType
 from lisp.modules.gst_backend.gi_repository import Gst
 from lisp.modules.gst_backend.gst_element import GstMediaElement, GstProperty, \
     GstRuntimeProperty
-
-from lisp.backend.media_element import ElementType, MediaType
 
 
 class Volume(GstMediaElement):
     ElementType = ElementType.Plugin
     MediaType = MediaType.Audio
-    Name = "Volume"
+    Name = QT_TRANSLATE_NOOP('GstElementName', 'Volume')
 
     mute = GstProperty('gst_volume', default=False)
     volume = GstProperty('gst_volume', default=1.0)

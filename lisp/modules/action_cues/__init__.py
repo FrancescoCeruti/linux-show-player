@@ -25,6 +25,7 @@ from lisp.core.module import Module
 from lisp.cues.cue_factory import CueFactory
 from lisp.ui.mainwindow import MainWindow
 from lisp.utils.dyamic_loader import ClassesLoader
+from lisp.utils.util import translate
 
 
 class ActionCues(Module):
@@ -35,7 +36,10 @@ class ActionCues(Module):
             CueFactory.register_factory(cue_class.__name__, cue_class)
             # Register the menu action for adding the action-cue
             add_function = ActionCues.create_add_action_cue_method(cue_class)
-            MainWindow().register_cue_menu_action(cue_class.Name, add_function, 'Action cues')
+            MainWindow().register_cue_menu_action(
+                translate('CueName', cue_class.Name),
+                add_function,
+                'Action cues')
 
             logging.debug('ACTION-CUES: Loaded "' + cue_name + '"')
 

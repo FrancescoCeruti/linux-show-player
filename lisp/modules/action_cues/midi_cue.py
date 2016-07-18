@@ -17,7 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QGridLayout, QLabel, \
     QComboBox, QSpinBox, QFrame
 
@@ -27,16 +27,17 @@ from lisp.modules.midi.midi_output import MIDIOutput
 from lisp.modules.midi.midi_utils import str_msg_to_dict, dict_msg_to_str
 from lisp.ui.settings.settings_page import SettingsPage
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
+from lisp.utils.util import translate
 
 
 class MidiCue(Cue):
-    Name = 'MIDI Cue'
+    Name = QT_TRANSLATE_NOOP('CueName', 'MIDI Cue')
 
     message = Property(default='')
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.name = self.Name
+        self.name = translate('CueName', self.Name)
 
         midi_out = MIDIOutput()
         if not midi_out.is_open():
@@ -52,7 +53,7 @@ class MidiCue(Cue):
 
 
 class MidiCueSettings(SettingsPage):
-    Name = 'MIDI Cue'
+    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'MIDI Settings')
 
     MSGS_ATTRIBUTES = {
         'note_on': ['channel', 'note', 'velocity'],
@@ -81,12 +82,12 @@ class MidiCueSettings(SettingsPage):
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
-        self.msgGroup = QGroupBox('MIDI Message', self)
+        self.msgGroup = QGroupBox(self)
         self.msgGroup.setLayout(QGridLayout())
         self.layout().addWidget(self.msgGroup)
 
         # Message type
-        self.msgTypeLabel = QLabel('Message type', self.msgGroup)
+        self.msgTypeLabel = QLabel(self.msgGroup)
         self.msgGroup.layout().addWidget(self.msgTypeLabel, 0, 0)
         self.msgTypeCombo = QComboBox(self.msgGroup)
         self.msgTypeCombo.addItems(sorted(self.MSGS_ATTRIBUTES.keys()))
@@ -110,6 +111,12 @@ class MidiCueSettings(SettingsPage):
             self._data_widgets.append((dataLabel, dataSpin))
 
         self.__type_changed(self.msgTypeCombo.currentText())
+
+        self.retranslateUi()
+
+    def retranslateUi(self):
+        self.msgGroup.setTitle(translate('MIDICue', 'MIDI Message'))
+        self.msgTypeLabel.setText(translate('MIDICue', 'Message type'))
 
     def __type_changed(self, msg_type):
         for (label, spin), attr_name in zip(self._data_widgets,

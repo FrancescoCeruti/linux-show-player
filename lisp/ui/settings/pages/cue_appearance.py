@@ -17,7 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5 import QtCore
+from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QHBoxLayout, QTextEdit, \
     QSpinBox, QLabel, QLineEdit
 
@@ -27,7 +27,7 @@ from lisp.utils.util import translate
 
 
 class Appearance(SettingsPage):
-    Name = translate('CueAppearanceSettings', 'Appearance')
+    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Appearance')
 
     def __init__(self, **kwargs):
         super().__init__()
@@ -73,7 +73,7 @@ class Appearance(SettingsPage):
         self.warning = QLabel(self)
         self.warning.setText(translate('CueAppearanceSettings',
                                        'The appearance depends on the layout'))
-        self.warning.setAlignment(QtCore.Qt.AlignCenter)
+        self.warning.setAlignment(Qt.AlignCenter)
         self.warning.setStyleSheet("color: #FFA500; font-weight: bold")
         self.layout().addWidget(self.warning)
 

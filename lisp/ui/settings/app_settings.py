@@ -50,7 +50,7 @@ class AppSettings(QDialog):
             widget.resize(430, 465)
             widget.load_settings(self.conf)
 
-            self.listWidget.addItem(widget.Name)
+            self.listWidget.addItem(translate('SettingsPageName', widget.Name))
             self.sections.addWidget(widget)
 
         if self.SettingsWidgets:

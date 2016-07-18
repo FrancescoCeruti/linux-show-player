@@ -18,6 +18,7 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import jack
+from PyQt5.QtCore import QT_TRANSLATE_NOOP
 
 from lisp.backend.media_element import ElementType, MediaType
 from lisp.core.has_properties import Property
@@ -28,7 +29,7 @@ from lisp.modules.gst_backend.gst_element import GstMediaElement, GstProperty
 class JackSink(GstMediaElement):
     ElementType = ElementType.Output
     MediaType = MediaType.Audio
-    Name = 'JackSink'
+    Name = QT_TRANSLATE_NOOP('GstElementName', 'JACK Out')
 
     CLIENT_NAME = 'linux-show-player'
     CONNECT_MODE = 'none'

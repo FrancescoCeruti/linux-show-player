@@ -18,7 +18,7 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5 import QtCore
-from PyQt5.QtCore import QTime
+from PyQt5.QtCore import QTime, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QPushButton, QLabel, \
     QHBoxLayout, QTimeEdit
 
@@ -29,17 +29,18 @@ from lisp.cues.media_cue import MediaCue
 from lisp.ui.cuelistdialog import CueListDialog
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
 from lisp.ui.settings.settings_page import SettingsPage
+from lisp.utils.util import translate
 
 
-class SeekAction(Cue):
-    Name = 'Seek Action'
+class SeekCue(Cue):
+    Name = QT_TRANSLATE_NOOP('CueName', 'Seek Cue')
 
     target_id = Property()
     time = Property(default=-1)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.name = self.Name
+        self.name = translate('CueName', self.Name)
 
     @Cue.state.getter
     def state(self):
@@ -51,8 +52,8 @@ class SeekAction(Cue):
             cue.media.seek(self.time)
 
 
-class SeekSettings(SettingsPage):
-    Name = 'Seek Settings'
+class SeekCueSettings(SettingsPage):
+    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Seek Settings')
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -91,11 +92,11 @@ class SeekSettings(SettingsPage):
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.cueGroup.setTitle('Cue')
-        self.cueButton.setText('Click to select')
-        self.cueLabel.setText('Not selected')
-        self.seekGroup.setTitle('Seek')
-        self.seekLabel.setText('Time to reach')
+        self.cueGroup.setTitle(translate('SeekCue', 'Cue'))
+        self.cueButton.setText(translate('SeekCue', 'Click to select'))
+        self.cueLabel.setText(translate('SeekCue', 'Not selected'))
+        self.seekGroup.setTitle(translate('SeekCue', 'Seek'))
+        self.seekLabel.setText(translate('SeekCue', 'Time to reach'))
 
     def select_cue(self):
         if self.cueDialog.exec_() == self.cueDialog.Accepted:
@@ -130,4 +131,4 @@ class SeekSettings(SettingsPage):
                 self.cueLabel.setText(cue.name)
 
 
-CueSettingsRegistry().add_item(SeekSettings, SeekAction)
+CueSettingsRegistry().add_item(SeekCueSettings, SeekCue)

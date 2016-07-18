@@ -33,10 +33,10 @@ def gst_media(pipeline=None):
 
 
 def uri_audio(uri=None):
-    cue = gst_media(pipeline=compose_pipeline('URIInput'))
+    cue = gst_media(pipeline=compose_pipeline('UriInput'))
 
     if uri is not None:
-        cue.media.element('URIInput').uri = uri
+        cue.media.element('UriInput').uri = uri
 
     return cue
 

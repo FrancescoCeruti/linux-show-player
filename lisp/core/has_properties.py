@@ -73,7 +73,7 @@ class NestedProperties(Property):
     and HasProperties.update_properties().
 
     ..note::
-        When need to get or set a single property of the nested object is better
+        When getting or setting a single property of the nested object is better
         to access it directly instead that using the nested-property.
     """
 
@@ -102,7 +102,7 @@ class HasPropertiesMeta(ABCMeta):
 
     This metaclass manage the 'propagation' of the properties in all subclasses,
     this process involves overwriting __properties__ with a set containing all
-    the properties.
+    the properties names.
 
     ..note::
         This metaclass is derived form :class:`abc.ABCMeta`, so abstract

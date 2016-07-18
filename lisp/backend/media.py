@@ -90,12 +90,12 @@ class Media(HasProperties):
         """
 
     @abstractmethod
-    def element(self, name):
+    def element(self, class_name):
         """
-        :param name: The element name
+        :param name: The element class-name
         :type name: str
 
-        :return: The element with the specified name or None
+        :return: The element with the specified class-name or None
         :rtype: lisp.core.base.media_element.MediaElement
         """
 

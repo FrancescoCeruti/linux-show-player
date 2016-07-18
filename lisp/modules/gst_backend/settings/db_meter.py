@@ -22,15 +22,16 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QGroupBox, QGridLayout, QSpinBox, QLabel, \
     QVBoxLayout
 
-from lisp.modules.gst_backend.elements.dbmeter import Dbmeter
+from lisp.modules.gst_backend.elements.db_meter import DbMeter
 from lisp.modules.gst_backend.gi_repository import Gst
 from lisp.ui.settings.settings_page import SettingsPage
+from lisp.utils.util import translate
 
 
-class DbmeterSettings(SettingsPage):
+class DbMeterSettings(SettingsPage):
 
-    Name = 'DbMeter'
-    ELEMENT = Dbmeter
+    ELEMENT = DbMeter
+    Name = ELEMENT.Name
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -77,10 +78,12 @@ class DbmeterSettings(SettingsPage):
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.groupBox.setTitle('DbMeter settings')
-        self.intervalLabel.setText('Time between levels (ms)')
-        self.ttlLabel.setText('Peak ttl (ms)')
-        self.falloffLabel.setText('Peak falloff (dB/sec)')
+        self.groupBox.setTitle(translate('DbMeterSettings', 'DbMeter settings'))
+        self.intervalLabel.setText(
+            translate('DbMeterSettings', 'Time between levels (ms)'))
+        self.ttlLabel.setText(translate('DbMeterSettings', 'Peak ttl (ms)'))
+        self.falloffLabel.setText(
+            translate('DbMeterSettings', 'Peak falloff (dB/sec)'))
 
     def load_settings(self, settings):
         self.intervalSpin.setValue(settings.get('interval', 50) / Gst.MSECOND)

@@ -17,7 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import QSize
+from PyQt5.QtCore import QSize, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import QVBoxLayout, QSizePolicy, QListWidget, \
     QDialogButtonBox, QDialog, QAbstractItemView, QWidget, QHBoxLayout, \
     QPushButton, QComboBox, QListWidgetItem
@@ -28,16 +28,17 @@ from lisp.cues.cue import Cue, CueState, CueAction
 from lisp.ui.cuelistdialog import CueListDialog
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
 from lisp.ui.settings.settings_page import SettingsPage
+from lisp.utils.util import translate
 
 
 class CollectionCue(Cue):
-    Name = 'Collection Cue'
+    Name = QT_TRANSLATE_NOOP('CueName', 'Collection Cue')
 
     targets = Property(default=[])
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.name = self.Name
+        self.name = translate('CueName', self.Name)
 
     @Cue.state.getter
     def state(self):
@@ -51,7 +52,7 @@ class CollectionCue(Cue):
 
 
 class CollectionCueSettings(SettingsPage):
-    Name = 'Edit Collection'
+    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Edit Collection')
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -67,10 +68,12 @@ class CollectionCueSettings(SettingsPage):
                                          QSizePolicy.Minimum)
         self.layout().addWidget(self.dialogButtons)
 
-        self.addButton = self.dialogButtons.addButton('Add', QDialogButtonBox.ActionRole)
+        self.addButton = self.dialogButtons.addButton(
+            translate('CollectionCue', 'Add'), QDialogButtonBox.ActionRole)
         self.addButton.clicked.connect(self._add_dialog)
 
-        self.delButton = self.dialogButtons.addButton('Remove', QDialogButtonBox.ActionRole)
+        self.delButton = self.dialogButtons.addButton(
+            translate('CollectionCue', 'Remove'), QDialogButtonBox.ActionRole)
         self.delButton.clicked.connect(self._remove_selected)
 
         self.cue_dialog = CueListDialog(cues=Application().cue_model,
