@@ -29,7 +29,7 @@ from lisp.modules.gst_backend.gst_element import GstMediaElement, GstProperty
 class AudioDynamic(GstMediaElement):
     ElementType = ElementType.Plugin
     MediaType = MediaType.Audio
-    Name = QT_TRANSLATE_NOOP('GstElementName', 'Compressor/Expander')
+    Name = QT_TRANSLATE_NOOP('MediaElementName', 'Compressor/Expander')
 
     class Mode(Enum):
         Compressor = 'compressor'

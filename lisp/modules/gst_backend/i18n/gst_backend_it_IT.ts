@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="it" sourcelanguage="en">
+<!DOCTYPE TS><TS version="2.0" language="it" sourcelanguage="en">
 <context>
     <name>AlsaSinkSettings</name>
     <message>
@@ -15,30 +14,7 @@
     </message>
 </context>
 <context>
-    <name>AudioPanSettings</name>
-    <message>
-        <location filename="../settings/audio_pan.py" line="60"/>
-        <source>Audio Pan</source>
-        <translation>Bilanciamento</translation>
-    </message>
-    <message>
-        <location filename="../settings/audio_pan.py" line="82"/>
-        <source>Center</source>
-        <translation>Centro</translation>
-    </message>
-    <message>
-        <location filename="../settings/audio_pan.py" line="78"/>
-        <source>Left</source>
-        <translation>Sinistra</translation>
-    </message>
-    <message>
-        <location filename="../settings/audio_pan.py" line="80"/>
-        <source>Right</source>
-        <translation>Destra</translation>
-    </message>
-</context>
-<context>
-    <name>AudiodynamicSettings</name>
+    <name>AudioDynamicSettings</name>
     <message>
         <location filename="../settings/audio_dynamic.py" line="50"/>
         <source>Compressor</source>
@@ -86,6 +62,29 @@
     </message>
 </context>
 <context>
+    <name>AudioPanSettings</name>
+    <message>
+        <location filename="../settings/audio_pan.py" line="60"/>
+        <source>Audio Pan</source>
+        <translation>Bilanciamento</translation>
+    </message>
+    <message>
+        <location filename="../settings/audio_pan.py" line="82"/>
+        <source>Center</source>
+        <translation>Centro</translation>
+    </message>
+    <message>
+        <location filename="../settings/audio_pan.py" line="78"/>
+        <source>Left</source>
+        <translation>Sinistra</translation>
+    </message>
+    <message>
+        <location filename="../settings/audio_pan.py" line="80"/>
+        <source>Right</source>
+        <translation>Destra</translation>
+    </message>
+</context>
+<context>
     <name>DbMeterSettings</name>
     <message>
         <location filename="../settings/db_meter.py" line="81"/>
@@ -109,7 +108,120 @@
     </message>
 </context>
 <context>
-    <name>GstElementName</name>
+    <name>Equalizer10Settings</name>
+    <message>
+        <location filename="../settings/equalizer10.py" line="44"/>
+        <source>10 Bands Equalizer (IIR)</source>
+        <translation>Equalizzatore 10 bande (IIR)</translation>
+    </message>
+</context>
+<context>
+    <name>FadeSettings</name>
+    <message>
+        <location filename="../settings/fade.py" line="35"/>
+        <source>Linear</source>
+        <translation>Lineare</translation>
+    </message>
+    <message>
+        <location filename="../settings/fade.py" line="37"/>
+        <source>Quadratic</source>
+        <translation>Quadratico</translation>
+    </message>
+    <message>
+        <location filename="../settings/fade.py" line="39"/>
+        <source>Quadratic2</source>
+        <translation>Quadratico 2</translation>
+    </message>
+    <message>
+        <location filename="../settings/fade.py" line="107"/>
+        <source>Fade In</source>
+        <translation>Dissolvenza Ingresso</translation>
+    </message>
+    <message>
+        <location filename="../settings/fade.py" line="111"/>
+        <source>Duration (sec)</source>
+        <translation>Durata (sec)</translation>
+    </message>
+    <message>
+        <location filename="../settings/fade.py" line="112"/>
+        <source>Curve</source>
+        <translation>Curva</translation>
+    </message>
+    <message>
+        <location filename="../settings/fade.py" line="110"/>
+        <source>Fade Out</source>
+        <translation>Dissolvenza Uscita</translation>
+    </message>
+</context>
+<context>
+    <name>GstMediaSettings</name>
+    <message>
+        <location filename="../gst_media_settings.py" line="47"/>
+        <source>Change Pipeline</source>
+        <translation>Modifica Pipeline</translation>
+    </message>
+</context>
+<context>
+    <name>GstPipelineEdit</name>
+    <message>
+        <location filename="../gst_pipe_edit.py" line="155"/>
+        <source>Edit Pipeline</source>
+        <translation>Modifica Pipeline</translation>
+    </message>
+</context>
+<context>
+    <name>GstSettings</name>
+    <message>
+        <location filename="../gst_settings.py" line="46"/>
+        <source>Pipeline</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
+    <name>JackSinkSettings</name>
+    <message>
+        <location filename="../settings/jack_sink.py" line="68"/>
+        <source>Name of the server to connect with</source>
+        <translation>Nome del server con cui connettersi</translation>
+    </message>
+    <message>
+        <location filename="../settings/jack_sink.py" line="71"/>
+        <source>Connections</source>
+        <translation>Connessioni</translation>
+    </message>
+    <message>
+        <location filename="../settings/jack_sink.py" line="73"/>
+        <source>Edit connections</source>
+        <translation>Modifica connessioni</translation>
+    </message>
+    <message>
+        <location filename="../settings/jack_sink.py" line="267"/>
+        <source>Output ports</source>
+        <translation>Uscite</translation>
+    </message>
+    <message>
+        <location filename="../settings/jack_sink.py" line="269"/>
+        <source>Input ports</source>
+        <translation>Ingressi</translation>
+    </message>
+    <message>
+        <location filename="../settings/jack_sink.py" line="325"/>
+        <source>Connect</source>
+        <translation>Connetti</translation>
+    </message>
+    <message>
+        <location filename="../settings/jack_sink.py" line="321"/>
+        <source>Disconnect</source>
+        <translation>Disconnetti</translation>
+    </message>
+    <message>
+        <location filename="../settings/jack_sink.py" line="70"/>
+        <source>Server name</source>
+        <translation>Nome server</translation>
+    </message>
+</context>
+<context>
+    <name>MediaElementName</name>
     <message>
         <location filename="../elements/audio_pan.py" line="30"/>
         <source>Audio Pan</source>
@@ -144,11 +256,6 @@
         <location filename="../elements/uri_input.py" line="36"/>
         <source>URI Input</source>
         <translation>Ingresso URI</translation>
-    </message>
-    <message>
-        <location filename="../elements/equalizer10.py" line="30"/>
-        <source>Equalizer-10bands</source>
-        <translation>Equalizzatore-10bande</translation>
     </message>
     <message>
         <location filename="../elements/fade.py" line="37"/>
@@ -190,29 +297,31 @@
         <source>dB Meter</source>
         <translation>Indicatore dB</translation>
     </message>
-</context>
-<context>
-    <name>GstMediaSettings</name>
     <message>
-        <location filename="../gst_media_settings.py" line="47"/>
-        <source>Change Pipeline</source>
-        <translation>Modifica Pipeline</translation>
+        <location filename="../elements/equalizer10.py" line="30"/>
+        <source>10 Bands Equalizer</source>
+        <translation>Equalizzatore 10 bande</translation>
     </message>
 </context>
 <context>
-    <name>GstPipelineEdit</name>
+    <name>PitchSettings</name>
     <message>
-        <location filename="../gst_pipe_edit.py" line="155"/>
-        <source>Edit Pipeline</source>
-        <translation>Modifica Pipeline</translation>
+        <location filename="../settings/pitch.py" line="66"/>
+        <source>Pitch</source>
+        <translation>Tonalità</translation>
+    </message>
+    <message>
+        <location filename="../settings/pitch.py" line="84"/>
+        <source>{0:+} semitones</source>
+        <translation>{0:+} semitoni</translation>
     </message>
 </context>
 <context>
-    <name>GstSettings</name>
+    <name>PresetSrcSettings</name>
     <message>
-        <location filename="../gst_settings.py" line="46"/>
-        <source>Pipeline</source>
-        <translation></translation>
+        <location filename="../settings/preset_src.py" line="38"/>
+        <source>Presets</source>
+        <translation>Preset</translation>
     </message>
 </context>
 <context>
@@ -226,6 +335,88 @@
         <location filename="../gst_media_settings.py" line="33"/>
         <source>Media Settings</source>
         <translation>Impostazioni Media</translation>
+    </message>
+</context>
+<context>
+    <name>SpeedSettings</name>
+    <message>
+        <location filename="../settings/speed.py" line="64"/>
+        <source>Speed</source>
+        <translation>Velocità</translation>
+    </message>
+</context>
+<context>
+    <name>UriInputSettings</name>
+    <message>
+        <location filename="../settings/uri_input.py" line="72"/>
+        <source>Source</source>
+        <translation>Sorgente</translation>
+    </message>
+    <message>
+        <location filename="../settings/uri_input.py" line="74"/>
+        <source>Buffering</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../settings/uri_input.py" line="75"/>
+        <source>Use Buffering</source>
+        <translation>Usare buffering</translation>
+    </message>
+    <message>
+        <location filename="../settings/uri_input.py" line="77"/>
+        <source>Attempt download on network streams</source>
+        <translation>Prova a scaricare con flussi di rete</translation>
+    </message>
+    <message>
+        <location filename="../settings/uri_input.py" line="79"/>
+        <source>Buffer size (-1 default value)</source>
+        <translation>Dimensione buffer (-1 valore predefinito)</translation>
+    </message>
+    <message>
+        <location filename="../settings/uri_input.py" line="105"/>
+        <source>Choose file</source>
+        <translation>Seleziona file</translation>
+    </message>
+    <message>
+        <location filename="../settings/uri_input.py" line="105"/>
+        <source>All files</source>
+        <translation>Tutti i file</translation>
+    </message>
+    <message>
+        <location filename="../settings/uri_input.py" line="73"/>
+        <source>Find File</source>
+        <translation>Seleziona file</translation>
+    </message>
+</context>
+<context>
+    <name>UserElementSettings</name>
+    <message>
+        <location filename="../settings/user_element.py" line="54"/>
+        <source>User defined elements</source>
+        <translation>Elementi definiti dall&apos;utente</translation>
+    </message>
+    <message>
+        <location filename="../settings/user_element.py" line="56"/>
+        <source>Only for advanced user!</source>
+        <translation>Solo per utenti avanzati!</translation>
+    </message>
+</context>
+<context>
+    <name>VolumeSettings</name>
+    <message>
+        <location filename="../settings/volume.py" line="79"/>
+        <source>Volume</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../settings/volume.py" line="81"/>
+        <source>Normalized volume</source>
+        <translation>Volume normalizzato</translation>
+    </message>
+    <message>
+        <location filename="../settings/volume.py" line="84"/>
+        <source>Reset</source>
+        <translation>Azzera</translation>
     </message>
 </context>
 </TS>

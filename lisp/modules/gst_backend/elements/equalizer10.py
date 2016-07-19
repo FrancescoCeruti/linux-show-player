@@ -27,7 +27,7 @@ from lisp.modules.gst_backend.gst_element import GstMediaElement, GstProperty
 class Equalizer10(GstMediaElement):
     ElementType = ElementType.Plugin
     MediaType = MediaType.Audio
-    Name = QT_TRANSLATE_NOOP('GstElementName', 'Equalizer-10bands')
+    Name = QT_TRANSLATE_NOOP('MediaElementName', '10 Bands Equalizer')
 
     band0 = GstProperty('equalizer', default=0)
     band1 = GstProperty('equalizer', default=0)

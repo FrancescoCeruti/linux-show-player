@@ -23,19 +23,19 @@ from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QPlainTextEdit, QLabel
 
 from lisp.modules.gst_backend.elements.user_element import UserElement
 from lisp.ui.settings.settings_page import SettingsPage
+from lisp.utils.util import translate
 
 
 class UserElementSettings(SettingsPage):
-
-    Name = 'Personalized'
     ELEMENT = UserElement
+    Name = ELEMENT.Name
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
-        self.groupBox = QGroupBox('User defined elements', self)
+        self.groupBox = QGroupBox(self)
         self.groupBox.setGeometry(self.geometry())
         self.groupBox.setLayout(QVBoxLayout())
         self.layout().addWidget(self.groupBox)
@@ -44,10 +44,17 @@ class UserElementSettings(SettingsPage):
         self.groupBox.layout().addWidget(self.textEdit)
 
         self.warning = QLabel(self.groupBox)
-        self.warning.setText('Only for advanced user.')
         self.warning.setAlignment(QtCore.Qt.AlignCenter)
         self.warning.setStyleSheet('color: #FF2222; font-weight: bold')
         self.groupBox.layout().addWidget(self.warning)
+
+        self.retranslateUi()
+
+    def retranslateUi(self):
+        self.groupBox.setTitle(
+            translate('UserElementSettings', 'User defined elements'))
+        self.warning.setText(
+            translate('UserElementSettings', 'Only for advanced user!'))
 
     def enable_check(self, enable):
         self.groupBox.setCheckable(enable)

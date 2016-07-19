@@ -28,7 +28,7 @@ from lisp.modules.gst_backend.gst_element import GstMediaElement, GstProperty, \
 class Volume(GstMediaElement):
     ElementType = ElementType.Plugin
     MediaType = MediaType.Audio
-    Name = QT_TRANSLATE_NOOP('GstElementName', 'Volume')
+    Name = QT_TRANSLATE_NOOP('MediaElementName', 'Volume')
 
     mute = GstProperty('gst_volume', default=False)
     volume = GstProperty('gst_volume', default=1.0)

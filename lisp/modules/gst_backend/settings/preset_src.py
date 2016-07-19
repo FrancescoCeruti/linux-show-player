@@ -22,11 +22,12 @@ from PyQt5.QtWidgets import QGroupBox, QComboBox, QVBoxLayout, QTimeEdit
 
 from lisp.modules.gst_backend.elements.preset_src import PresetSrc
 from lisp.ui.settings.settings_page import SettingsPage
+from lisp.utils.util import translate
 
 
 class PresetSrcSettings(SettingsPage):
-    Name = 'Preset Source'
     ELEMENT = PresetSrc
+    Name = ELEMENT.Name
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -34,7 +35,7 @@ class PresetSrcSettings(SettingsPage):
         self.layout().setAlignment(Qt.AlignTop)
 
         self.functionGroup = QGroupBox(self)
-        self.functionGroup.setTitle('Presets')
+        self.functionGroup.setTitle(translate('PresetSrcSettings', 'Presets'))
         self.functionGroup.setLayout(QVBoxLayout())
         self.layout().addWidget(self.functionGroup)
 

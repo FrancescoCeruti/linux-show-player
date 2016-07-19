@@ -26,7 +26,7 @@ from lisp.modules.gst_backend.gst_element import GstSrcElement
 
 class AutoSrc(GstSrcElement):
     MediaType = MediaType.Audio
-    Name = QT_TRANSLATE_NOOP('GstElementName', 'System Input')
+    Name = QT_TRANSLATE_NOOP('MediaElementName', 'System Input')
 
     def __init__(self, pipe):
         super().__init__()

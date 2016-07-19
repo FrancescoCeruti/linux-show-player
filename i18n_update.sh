@@ -1,7 +1,6 @@
 #!/bin/sh
 
 # Locales of which generate translation files
-# TODO: commandline options
 LOCALES=("it_IT")
 
 echo "UPDATE TRANSLATIONS FOR APPLICATION"

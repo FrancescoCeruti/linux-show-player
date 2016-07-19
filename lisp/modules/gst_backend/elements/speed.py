@@ -28,7 +28,7 @@ from lisp.modules.gst_backend.gst_element import GstMediaElement
 class Speed(GstMediaElement):
     ElementType = ElementType.Plugin
     MediaType = MediaType.Audio
-    Name = QT_TRANSLATE_NOOP('GstElementName', 'Speed')
+    Name = QT_TRANSLATE_NOOP('MediaElementName', 'Speed')
 
     speed = Property(default=1.0)
 

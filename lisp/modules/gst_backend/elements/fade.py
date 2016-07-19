@@ -34,7 +34,7 @@ from lisp.utils.fade_functor import ntime, FadeOut, FadeIn
 class Fade(GstMediaElement):
     ElementType = ElementType.Plugin
     MediaType = MediaType.Audio
-    Name = QT_TRANSLATE_NOOP('GstElementName', 'Fade')
+    Name = QT_TRANSLATE_NOOP('MediaElementName', 'Fade')
 
     fadein = Property(default=0)
     fadein_type = Property(default='Linear')

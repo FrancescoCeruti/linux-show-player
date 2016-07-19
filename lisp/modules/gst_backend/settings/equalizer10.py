@@ -24,15 +24,15 @@ from PyQt5.QtWidgets import QGroupBox, QGridLayout, QLabel, QSlider, QVBoxLayout
 
 from lisp.modules.gst_backend.elements.equalizer10 import Equalizer10
 from lisp.ui.settings.settings_page import SettingsPage
+from lisp.utils.util import translate
 
 
 class Equalizer10Settings(SettingsPage):
-
-    Name = "Equalizer"
     ELEMENT = Equalizer10
+    Name = ELEMENT.Name
 
-    FREQ = ["30Hz", "60Hz", "120Hz", "240Hz", "475Hz", "950Hz", "1900Hz",
-            "3800Hz", "7525Hz", "15KHz"]
+    FREQ = ['30Hz', '60Hz', '120Hz', '240Hz', '475Hz', '950Hz', '1900Hz',
+            '3800Hz', '7525Hz', '15KHz']
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -41,7 +41,8 @@ class Equalizer10Settings(SettingsPage):
 
         self.groupBox = QGroupBox(self)
         self.groupBox.resize(self.size())
-        self.groupBox.setTitle("10 Bands Equalizer (IIR)")
+        self.groupBox.setTitle(
+            translate('Equalizer10Settings', '10 Bands Equalizer (IIR)'))
         self.groupBox.setLayout(QGridLayout())
         self.groupBox.layout().setVerticalSpacing(0)
         self.layout().addWidget(self.groupBox)
@@ -63,7 +64,7 @@ class Equalizer10Settings(SettingsPage):
             slider.valueChanged.connect(label.setNum)
             self.groupBox.layout().addWidget(slider, 1, n)
             self.groupBox.layout().setAlignment(slider, QtCore.Qt.AlignHCenter)
-            self.sliders["band" + str(n)] = slider
+            self.sliders['band' + str(n)] = slider
 
             fLabel = QLabel(self.groupBox)
             fLabel.setStyleSheet('font-size: 8pt;')

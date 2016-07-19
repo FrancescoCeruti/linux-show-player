@@ -29,7 +29,7 @@ from lisp.modules.gst_backend.gst_element import GstMediaElement, GstProperty
 class JackSink(GstMediaElement):
     ElementType = ElementType.Output
     MediaType = MediaType.Audio
-    Name = QT_TRANSLATE_NOOP('GstElementName', 'JACK Out')
+    Name = QT_TRANSLATE_NOOP('MediaElementName', 'JACK Out')
 
     CLIENT_NAME = 'linux-show-player'
     CONNECT_MODE = 'none'

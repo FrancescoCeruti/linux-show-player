@@ -27,7 +27,7 @@ from lisp.modules.gst_backend.gst_element import GstMediaElement, GstProperty
 class AlsaSink(GstMediaElement):
     ElementType = ElementType.Output
     MediaType = MediaType.Audio
-    Name = QT_TRANSLATE_NOOP('GstElementName', 'ALSA Out')
+    Name = QT_TRANSLATE_NOOP('MediaElementName', 'ALSA Out')
 
     device = GstProperty('alsa_sink', default='')
 

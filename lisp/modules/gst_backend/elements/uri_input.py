@@ -33,7 +33,7 @@ from lisp.modules.gst_backend.gst_utils import gst_uri_duration
 
 class UriInput(GstSrcElement):
     MediaType = MediaType.Audio
-    Name = QT_TRANSLATE_NOOP('GstElementName', 'URI Input')
+    Name = QT_TRANSLATE_NOOP('MediaElementName', 'URI Input')
 
     uri = GstProperty('decoder', default='')
     download = GstProperty('decoder', default=False)

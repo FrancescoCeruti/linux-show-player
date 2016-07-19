@@ -28,7 +28,7 @@ from lisp.modules.gst_backend.gst_element import GstMediaElement
 class UserElement(GstMediaElement):
     ElementType = ElementType.Plugin
     MediaType = MediaType.Audio
-    Name = QT_TRANSLATE_NOOP('GstElementName', 'Custom Element')
+    Name = QT_TRANSLATE_NOOP('MediaElementName', 'Custom Element')
 
     bin = Property(default='')
 

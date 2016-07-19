@@ -27,7 +27,7 @@ from lisp.modules.gst_backend.gst_element import GstMediaElement, GstProperty
 class Pitch(GstMediaElement):
     ElementType = ElementType.Plugin
     MediaType = MediaType.Audio
-    Name = QT_TRANSLATE_NOOP('GstElementName', 'Pitch')
+    Name = QT_TRANSLATE_NOOP('MediaElementName', 'Pitch')
 
     pitch = GstProperty('gst_pitch', gst_name='pitch', default=1.0)
 

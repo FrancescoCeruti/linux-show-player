@@ -29,7 +29,7 @@ from lisp.modules.gst_backend.gst_element import GstSrcElement
 
 class PresetSrc(GstSrcElement):
     MediaType = MediaType.Audio
-    Name = QT_TRANSLATE_NOOP('GstElementName', 'Preset Input')
+    Name = QT_TRANSLATE_NOOP('MediaElementName', 'Preset Input')
 
     FREQ = 8000
     SILENCE = lambda t: 0
@@ -53,19 +53,19 @@ class PresetSrc(GstSrcElement):
         self.caps = 'audio/x-raw,format=U8,channels=1,layout=interleaved,' \
                     'rate=' + str(PresetSrc.FREQ)
 
-        self.troll_src = Gst.ElementFactory.make('appsrc', 'appsrc')
-        self.troll_src.set_property('stream-type', GstApp.AppStreamType.SEEKABLE)
-        self.troll_src.set_property('format', Gst.Format.TIME)
-        self.troll_src.set_property('caps', Gst.Caps.from_string(self.caps))
-        self.troll_src.connect('need-data', self.generate_samples)
-        self.troll_src.connect('seek-data', self.seek)
+        self.app_src = Gst.ElementFactory.make('appsrc', 'appsrc')
+        self.app_src.set_property('stream-type', GstApp.AppStreamType.SEEKABLE)
+        self.app_src.set_property('format', Gst.Format.TIME)
+        self.app_src.set_property('caps', Gst.Caps.from_string(self.caps))
+        self.app_src.connect('need-data', self.generate_samples)
+        self.app_src.connect('seek-data', self.seek)
 
         self.audio_converter = Gst.ElementFactory.make('audioconvert', None)
 
-        pipe.add(self.troll_src)
+        pipe.add(self.app_src)
         pipe.add(self.audio_converter)
 
-        self.troll_src.link(self.audio_converter)
+        self.app_src.link(self.audio_converter)
 
     def stop(self):
         self.n_sample = 0

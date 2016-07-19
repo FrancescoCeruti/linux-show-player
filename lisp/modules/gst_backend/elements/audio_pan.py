@@ -27,7 +27,7 @@ from lisp.modules.gst_backend.gst_element import GstMediaElement, GstProperty
 class AudioPan(GstMediaElement):
     ElementType = ElementType.Plugin
     MediaType = MediaType.Audio
-    Name = QT_TRANSLATE_NOOP('GstElementName', 'Audio Pan')
+    Name = QT_TRANSLATE_NOOP('MediaElementName', 'Audio Pan')
 
     pan = GstProperty('panorama', default=.0, gst_name='panorama')
 

@@ -48,9 +48,9 @@ class AudioDynamicSettings(SettingsPage):
         # AudioDynamic mode
         self.modeComboBox = QComboBox(self.groupBox)
         self.modeComboBox.addItem(
-            translate('AudiodynamicSettings', 'Compressor'), 'compressor')
+            translate('AudioDynamicSettings', 'Compressor'), 'compressor')
         self.modeComboBox.addItem(
-            translate('AudiodynamicSettings', 'Expander'), 'expander')
+            translate('AudioDynamicSettings', 'Expander'), 'expander')
         self.groupBox.layout().addWidget(self.modeComboBox, 0, 0, 1, 1)
 
         self.modeLabel = QLabel(self.groupBox)
@@ -60,9 +60,9 @@ class AudioDynamicSettings(SettingsPage):
         # AudioDynamic characteristic
         self.chComboBox = QComboBox(self.groupBox)
         self.chComboBox.addItem(
-            translate('AudiodynamicSettings', 'Soft Knee'), 'soft-knee')
+            translate('AudioDynamicSettings', 'Soft Knee'), 'soft-knee')
         self.chComboBox.addItem(
-            translate('AudiodynamicSettings', 'Hard Knee'), 'hard-knee')
+            translate('AudioDynamicSettings', 'Hard Knee'), 'hard-knee')
         self.groupBox.layout().addWidget(self.chComboBox, 1, 0, 1, 1)
 
         self.chLabel = QLabel(self.groupBox)
@@ -92,12 +92,12 @@ class AudioDynamicSettings(SettingsPage):
 
     def retranslateUi(self):
         self.groupBox.setTitle(
-            translate('AudiodynamicSettings', 'Compressor/Expander'))
-        self.modeLabel.setText(translate('AudiodynamicSettings', 'Type'))
-        self.chLabel.setText(translate('AudiodynamicSettings', 'Curve Shape'))
-        self.ratioLabel.setText(translate('AudiodynamicSettings', 'Ratio'))
+            translate('AudioDynamicSettings', 'Compressor/Expander'))
+        self.modeLabel.setText(translate('AudioDynamicSettings', 'Type'))
+        self.chLabel.setText(translate('AudioDynamicSettings', 'Curve Shape'))
+        self.ratioLabel.setText(translate('AudioDynamicSettings', 'Ratio'))
         self.thresholdLabel.setText(
-            translate('AudiodynamicSettings', 'Threshold (dB)'))
+            translate('AudioDynamicSettings', 'Threshold (dB)'))
 
     def enable_check(self, enable):
         self.groupBox.setCheckable(enable)
@@ -118,10 +118,10 @@ class AudioDynamicSettings(SettingsPage):
 
     def load_settings(self, settings):
         self.modeComboBox.setCurrentText(
-            translate('AudiodynamicSettings',
+            translate('AudioDynamicSettings',
                       settings.get('mode', 'compressor')))
         self.chComboBox.setCurrentText(
-            translate('AudiodynamicSettings',
+            translate('AudioDynamicSettings',
                       settings.get('characteristics', 'soft-knee')))
 
         if settings.get('threshold', 0) == 0:

@@ -23,37 +23,36 @@ from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QPushButton, QLineEdit, \
 
 from lisp.modules.gst_backend.elements.uri_input import UriInput
 from lisp.ui.settings.settings_page import SettingsPage
+from lisp.utils.util import translate
 
 
 class UriInputSettings(SettingsPage):
-    Name = 'URI Input'
     ELEMENT = UriInput
+    Name = ELEMENT.Name
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
-        self.fileGroup = QGroupBox('Source', self)
+        self.fileGroup = QGroupBox(self)
         self.fileGroup.setLayout(QHBoxLayout())
         self.layout().addWidget(self.fileGroup)
 
         self.buttonFindFile = QPushButton(self.fileGroup)
-        self.buttonFindFile.setText('Find file')
         self.fileGroup.layout().addWidget(self.buttonFindFile)
 
         self.filePath = QLineEdit('file://', self.fileGroup)
         self.fileGroup.layout().addWidget(self.filePath)
 
-        self.bufferingGroup = QGroupBox('Buffering', self)
+        self.bufferingGroup = QGroupBox(self)
         self.bufferingGroup.setLayout(QGridLayout())
         self.layout().addWidget(self.bufferingGroup)
 
-        self.useBuffering = QCheckBox('Use buffering', self.bufferingGroup)
+        self.useBuffering = QCheckBox(self.bufferingGroup)
         self.bufferingGroup.layout().addWidget(self.useBuffering, 0, 0, 1, 2)
 
         self.download = QCheckBox(self.bufferingGroup)
-        self.download.setText('Attempt download on network streams')
         self.bufferingGroup.layout().addWidget(self.download, 1, 0, 1, 2)
 
         self.bufferSize = QSpinBox(self.bufferingGroup)
@@ -62,11 +61,23 @@ class UriInputSettings(SettingsPage):
         self.bufferingGroup.layout().addWidget(self.bufferSize, 2, 0)
 
         self.bufferSizeLabel = QLabel(self.bufferingGroup)
-        self.bufferSizeLabel.setText('Buffer size (-1 default value)')
         self.bufferSizeLabel.setAlignment(Qt.AlignCenter)
         self.bufferingGroup.layout().addWidget(self.bufferSizeLabel, 2, 1)
 
         self.buttonFindFile.clicked.connect(self.select_file)
+
+        self.retranslateUi()
+
+    def retranslateUi(self):
+        self.fileGroup.setTitle(translate('UriInputSettings', 'Source'))
+        self.buttonFindFile.setText(translate('UriInputSettings', 'Find File'))
+        self.bufferingGroup.setTitle(translate('UriInputSettings', 'Buffering'))
+        self.useBuffering.setText(
+            translate('UriInputSettings', 'Use Buffering'))
+        self.download.setText(translate('UriInputSettings',
+                                        'Attempt download on network streams'))
+        self.bufferSizeLabel.setText(
+            translate('UriInputSettings', 'Buffer size (-1 default value)'))
 
     def get_settings(self):
         settings = {}
@@ -91,8 +102,12 @@ class UriInputSettings(SettingsPage):
 
     def select_file(self):
         path = QStandardPaths.writableLocation(QStandardPaths.MusicLocation)
-        file, ok = QFileDialog.getOpenFileName(self, 'Choose file', path,
-                                               'All files (*)')
+        file, ok = QFileDialog.getOpenFileName(self,
+                                               translate('UriInputSettings',
+                                                         'Choose file'),
+                                               path,
+                                               translate('UriInputSettings',
+                                                         'All files') + ' (*)')
 
         if ok:
             self.filePath.setText('file://' + file)

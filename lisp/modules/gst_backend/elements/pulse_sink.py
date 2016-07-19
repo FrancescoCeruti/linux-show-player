@@ -27,7 +27,7 @@ from lisp.modules.gst_backend.gst_element import GstMediaElement
 class PulseSink(GstMediaElement):
     ElementType = ElementType.Output
     MediaType = MediaType.Audio
-    Name = QT_TRANSLATE_NOOP('GstElementName', 'PulseAudio Out')
+    Name = QT_TRANSLATE_NOOP('MediaElementName', 'PulseAudio Out')
 
     def __init__(self, pipe):
         super().__init__()

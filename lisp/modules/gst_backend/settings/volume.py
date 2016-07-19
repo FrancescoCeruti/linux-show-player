@@ -25,11 +25,12 @@ from lisp.backend.audio_utils import db_to_linear, linear_to_db
 from lisp.modules.gst_backend.elements.volume import Volume
 from lisp.ui.settings.settings_page import SettingsPage
 from lisp.ui.widgets.qmutebutton import QMuteButton
+from lisp.utils.util import translate
 
 
 class VolumeSettings(SettingsPage):
-    Name = 'Volume'
     ELEMENT = Volume
+    Name = ELEMENT.Name
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -75,11 +76,12 @@ class VolumeSettings(SettingsPage):
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.volumeBox.setTitle('Volume')
+        self.volumeBox.setTitle(translate('VolumeSettings', 'Volume'))
         self.volumeLabel.setText('0.0 dB')
-        self.normalBox.setTitle('Normalized volume')
+        self.normalBox.setTitle(
+            translate('VolumeSettings', 'Normalized volume'))
         self.normalLabel.setText('0.0 dB')
-        self.normalReset.setText('Reset')
+        self.normalReset.setText(translate('VolumeSettings', 'Reset'))
 
     def enable_check(self, enable):
         for box in [self.normalBox, self.volumeBox]:

@@ -23,12 +23,12 @@ from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QSlider, QLabel, QVBoxLayout
 
 from lisp.modules.gst_backend.elements.speed import Speed
 from lisp.ui.settings.settings_page import SettingsPage
+from lisp.utils.util import translate
 
 
 class SpeedSettings(SettingsPage):
-
-    Name = 'Speed'
     ELEMENT = Speed
+    Name = ELEMENT.Name
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -61,7 +61,7 @@ class SpeedSettings(SettingsPage):
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.groupBox.setTitle('Speed')
+        self.groupBox.setTitle(translate('SpeedSettings', 'Speed'))
         self.speedLabel.setText('1.0')
 
     def enable_check(self, enable):

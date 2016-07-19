@@ -66,14 +66,13 @@ class GstMediaSettings(SettingsPage):
 
             if page is not None and issubclass(page, SettingsPage):
                 page = page(parent=self)
-                print(settings.get('elements', {}).get(element, element))
                 page.load_settings(
                     settings.get('elements', {})
                         .get(element, page.ELEMENT.properties_defaults()))
                 page.setVisible(False)
                 self._pages.append(page)
 
-                item = QListWidgetItem(translate('SettingsPageName', page.Name))
+                item = QListWidgetItem(translate('MediaElementName', page.Name))
                 self.listWidget.addItem(item)
 
             self.listWidget.setCurrentRow(0)

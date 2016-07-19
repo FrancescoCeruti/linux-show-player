@@ -154,7 +154,7 @@ def translate(context, text, disambiguation=None, n=-1):
 def translate_many(context, texts):
     """Return a translate iterator."""
     for item in texts:
-        yield QApplication.translate(context, item, None)
+        yield translate(context, item)
 
 
 def tr_sorted(context, iterable, key=None, reverse=False):

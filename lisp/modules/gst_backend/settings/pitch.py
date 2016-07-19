@@ -25,11 +25,12 @@ from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QSlider, QLabel, QVBoxLayout
 
 from lisp.modules.gst_backend.elements.pitch import Pitch
 from lisp.ui.settings.settings_page import SettingsPage
+from lisp.utils.util import translate
 
 
 class PitchSettings(SettingsPage):
-    Name = 'Pitch'
     ELEMENT = Pitch
+    Name = ELEMENT.Name
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -62,8 +63,8 @@ class PitchSettings(SettingsPage):
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.groupBox.setTitle("Pitch")
-        self.pitchLabel.setText("+0 semitones")
+        self.groupBox.setTitle(translate('PitchSettings', 'Pitch'))
+        self.pitch_changed(0)
 
     def enable_check(self, enable):
         self.groupBox.setCheckable(enable)
@@ -80,7 +81,5 @@ class PitchSettings(SettingsPage):
             round(12 * math.log(settings.get('pitch', 1), 2)))
 
     def pitch_changed(self, value):
-        if value < 0:
-            self.pitchLabel.setText(str(value) + ' semitones')
-        else:
-            self.pitchLabel.setText('+' + str(value) + ' semitones')
+        self.pitchLabel.setText(
+            translate('PitchSettings', '{0:+} semitones').format(value))

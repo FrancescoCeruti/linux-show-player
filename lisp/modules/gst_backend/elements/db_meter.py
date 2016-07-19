@@ -28,7 +28,7 @@ from lisp.modules.gst_backend.gst_element import GstMediaElement, GstProperty
 class DbMeter(GstMediaElement):
     ElementType = ElementType.Plugin
     MediaType = MediaType.Audio
-    Name = QT_TRANSLATE_NOOP('GstElementName', 'dB Meter')
+    Name = QT_TRANSLATE_NOOP('MediaElementName', 'dB Meter')
 
     interval = GstProperty('level', default=50 * Gst.MSECOND)
     peak_ttl = GstProperty('level', default=Gst.SECOND, gst_name='peak-ttl')

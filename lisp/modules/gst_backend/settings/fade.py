@@ -17,24 +17,27 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5 import QtCore
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QGridLayout, \
-    QDoubleSpinBox, QLabel, QComboBox, QStyledItemDelegate
+from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QGridLayout, QLabel, \
+    QDoubleSpinBox, QComboBox, QStyledItemDelegate
 
 from lisp.modules.gst_backend.elements.fade import Fade
 from lisp.ui.settings.settings_page import SettingsPage
+from lisp.utils.util import translate
 
 
 class FadeSettings(SettingsPage):
-    Name = 'Fade'
     ELEMENT = Fade
+    Name = ELEMENT.Name
 
     FadeOutIcons = {
-        'Linear': QIcon.fromTheme('fadeout_linear'),
-        'Quadratic': QIcon.fromTheme('fadeout_quadratic'),
-        'Quadratic2': QIcon.fromTheme('fadeout_quadratic2')
+        QT_TRANSLATE_NOOP('FadeSettings', 'Linear'):
+            QIcon.fromTheme('fadeout_linear'),
+        QT_TRANSLATE_NOOP('FadeSettings', 'Quadratic'):
+            QIcon.fromTheme('fadeout_quadratic'),
+        QT_TRANSLATE_NOOP('FadeSettings', 'Quadratic2'):
+            QIcon.fromTheme('fadeout_quadratic2')
     }
 
     FadeInIcons = {
@@ -58,17 +61,19 @@ class FadeSettings(SettingsPage):
         self.fadeInGroup.layout().addWidget(self.fadeInSpin, 0, 0)
 
         self.fadeInLabel = QLabel(self.fadeInGroup)
-        self.fadeInLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.fadeInLabel.setAlignment(Qt.AlignCenter)
         self.fadeInGroup.layout().addWidget(self.fadeInLabel, 0, 1)
 
         self.fadeInCombo = QComboBox(self.fadeInGroup)
         self.fadeInCombo.setItemDelegate(QStyledItemDelegate())
         for key in sorted(self.FadeInIcons.keys()):
-            self.fadeInCombo.addItem(self.FadeInIcons[key], key)
+            self.fadeInCombo.addItem(self.FadeInIcons[key],
+                                     translate('FadeSettings', key),
+                                     key)
         self.fadeInGroup.layout().addWidget(self.fadeInCombo, 1, 0)
 
         self.fadeInExpLabel = QLabel(self.fadeInGroup)
-        self.fadeInExpLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.fadeInExpLabel.setAlignment(Qt.AlignCenter)
         self.fadeInGroup.layout().addWidget(self.fadeInExpLabel, 1, 1)
 
         # FadeOut
@@ -81,28 +86,30 @@ class FadeSettings(SettingsPage):
         self.fadeOutGroup.layout().addWidget(self.fadeOutSpin, 0, 0)
 
         self.fadeOutLabel = QLabel(self.fadeOutGroup)
-        self.fadeOutLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.fadeOutLabel.setAlignment(Qt.AlignCenter)
         self.fadeOutGroup.layout().addWidget(self.fadeOutLabel, 0, 1)
 
         self.fadeOutCombo = QComboBox(self.fadeOutGroup)
         self.fadeOutCombo.setItemDelegate(QStyledItemDelegate())
         for key in sorted(self.FadeOutIcons.keys()):
-            self.fadeOutCombo.addItem(self.FadeOutIcons[key], key)
+            self.fadeOutCombo.addItem(self.FadeOutIcons[key],
+                                      translate('FadeSettings', key),
+                                      key)
         self.fadeOutGroup.layout().addWidget(self.fadeOutCombo, 1, 0)
 
         self.fadeOutExpLabel = QLabel(self.fadeOutGroup)
-        self.fadeOutExpLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.fadeOutExpLabel.setAlignment(Qt.AlignCenter)
         self.fadeOutGroup.layout().addWidget(self.fadeOutExpLabel, 1, 1)
 
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.fadeInGroup.setTitle('Fade In')
-        self.fadeInLabel.setText('Duration (sec)')
-        self.fadeInExpLabel.setText('Curve')
-        self.fadeOutGroup.setTitle('Fade Out')
-        self.fadeOutLabel.setText('Duration (sec)')
-        self.fadeOutExpLabel.setText('Cure')
+        self.fadeInGroup.setTitle(translate('FadeSettings', 'Fade In'))
+        self.fadeInLabel.setText(translate('FadeSettings', 'Duration (sec)'))
+        self.fadeInExpLabel.setText(translate('FadeSettings', 'Curve'))
+        self.fadeOutGroup.setTitle(translate('FadeSettings', 'Fade Out'))
+        self.fadeOutLabel.setText(translate('FadeSettings', 'Duration (sec)'))
+        self.fadeOutExpLabel.setText(translate('FadeSettings', 'Curve'))
 
     def get_settings(self):
         settings = {}
@@ -111,19 +118,21 @@ class FadeSettings(SettingsPage):
 
         if not (checkable and not self.fadeInGroup.isChecked()):
             settings['fadein'] = self.fadeInSpin.value()
-            settings['fadein_type'] = self.fadeInCombo.currentText()
+            settings['fadein_type'] = self.fadeInCombo.currentData()
         if not (checkable and not self.fadeOutGroup.isChecked()):
             settings['fadeout'] = self.fadeOutSpin.value()
-            settings['fadeout_type'] = self.fadeOutCombo.currentText()
+            settings['fadeout_type'] = self.fadeOutCombo.currentData()
 
         return settings
 
     def load_settings(self, settings):
         self.fadeInSpin.setValue(settings.get('fadein', 0))
-        self.fadeInCombo.setCurrentText(settings.get('fadein_type', ''))
+        self.fadeInCombo.setCurrentText(
+            translate('FadeSettings', settings.get('fadein_type', '')))
 
         self.fadeOutSpin.setValue(settings.get('fadeout', 0))
-        self.fadeOutCombo.setCurrentText(settings.get('fadeout_type', ''))
+        self.fadeOutCombo.setCurrentText(
+            translate('FadeSettings', settings.get('fadeout_type', '')))
 
     def enable_check(self, enable):
         self.fadeInGroup.setCheckable(enable)

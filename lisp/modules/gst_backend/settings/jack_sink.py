@@ -18,7 +18,6 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import jack
-from PyQt5 import QtCore
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPainter, QPolygon, QPainterPath
 from PyQt5.QtWidgets import QGroupBox, QLineEdit, QLabel, QWidget, \
@@ -27,11 +26,12 @@ from PyQt5.QtWidgets import QGroupBox, QLineEdit, QLabel, QWidget, \
 
 from lisp.modules.gst_backend.elements.jack_sink import JackSink
 from lisp.ui.settings.settings_page import SettingsPage
+from lisp.utils.util import translate
 
 
 class JackSinkSettings(SettingsPage):
-    Name = "Jack Sink"
     ELEMENT = JackSink
+    Name = ELEMENT.Name
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -39,30 +39,39 @@ class JackSinkSettings(SettingsPage):
         self.layout().setAlignment(Qt.AlignTop)
 
         self.jackGroup = QGroupBox(self)
-        self.jackGroup.setTitle('Jack')
         self.jackGroup.setLayout(QHBoxLayout())
         self.layout().addWidget(self.jackGroup)
 
         self.serverLineEdit = QLineEdit(self.jackGroup)
-        self.serverLineEdit.setToolTip('Name of the server to connect with')
         self.serverLineEdit.setText('default')
         self.jackGroup.layout().addWidget(self.serverLineEdit)
 
-        self.serverLineEditLabel = QLabel('Sever name', self.jackGroup)
-        self.serverLineEditLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.serverLineEditLabel = QLabel(self.jackGroup)
+        self.serverLineEditLabel.setAlignment(Qt.AlignCenter)
         self.jackGroup.layout().addWidget(self.serverLineEditLabel)
 
         self.connectionsGroup = QGroupBox(self)
-        self.connectionsGroup.setTitle('Connections')
         self.connectionsGroup.setLayout(QHBoxLayout())
         self.layout().addWidget(self.connectionsGroup)
 
-        self.connectionsEdit = QPushButton('Edit connections', self)
+        self.connectionsEdit = QPushButton(self)
         self.connectionsEdit.clicked.connect(self.__edit_connections)
         self.connectionsGroup.layout().addWidget(self.connectionsEdit)
 
         self.__jack_client = jack.Client('LinuxShowPlayer_SettingsControl')
         self.connections = JackSink.default_connections(self.__jack_client)
+
+        self.retranlsateUi()
+
+    def retranlsateUi(self):
+        self.jackGroup.setTitle('JACK')
+        self.serverLineEdit.setToolTip(
+            translate('JackSinkSettings', 'Name of the server to connect with'))
+        self.serverLineEdit.setText(translate('JackSinkSettings', 'Server name'))
+        self.connectionsGroup.setTitle(
+            translate('JackSinkSettings', 'Connections'))
+        self.connectionsEdit.setText(
+            translate('JackSinkSettings', 'Edit connections'))
 
     def closeEvent(self, event):
         self.__jack_client.close()
@@ -71,7 +80,8 @@ class JackSinkSettings(SettingsPage):
     def get_settings(self):
         settings = {}
 
-        if not (self.jackGroup.isCheckable() and not self.jackGroup.isChecked()):
+        if not (
+                    self.jackGroup.isCheckable() and not self.jackGroup.isChecked()):
             server = self.serverLineEdit.text()
             settings['server'] = server if server.lower() != 'default' else None
             settings['connections'] = self.connections
@@ -130,34 +140,6 @@ class ConnectionsWidget(QWidget):
         self._input_widget = input_widget
         self.connections = []
 
-    def draw_connection_line(self, painter, x1, y1, x2, y2, h1, h2):
-        # Account for list view headers.
-        y1 += h1
-        y2 += h2
-
-        # Invisible output ports don't get a connecting dot.
-        if y1 > h1:
-            painter.drawLine(x1, y1, x1 + 4, y1)
-
-        # Setup control points
-        spline = QPolygon(4)
-        cp = int((x2 - x1 - 8) * 0.4)
-        spline.setPoints(x1 + 4, y1,
-                         x1 + 4 + cp, y1,
-                         x2 - 4 - cp, y2,
-                         x2 - 4, y2)
-        # The connection line
-        path = QPainterPath()
-        path.moveTo(spline.at(0))
-        path.cubicTo(spline.at(1), spline.at(2), spline.at(3))
-        painter.strokePath(path, painter.pen())
-
-        # painter.drawLine(x1 + 4, y1, x2 - 4, y2)
-
-        # Invisible input ports don't get a connecting dot.
-        if y2 > h2:
-            painter.drawLine(x2 - 4, y2, x2, y2)
-
     def paintEvent(self, QPaintEvent):
         yc = self.y()
         yo = self._output_widget.y()
@@ -187,6 +169,35 @@ class ConnectionsWidget(QWidget):
         painter.end()
 
     @staticmethod
+    def draw_connection_line(painter, x1, y1, x2, y2, h1, h2):
+        # Account for list view headers.
+        y1 += h1
+        y2 += h2
+
+        # Invisible output ports don't get a connecting dot.
+        if y1 > h1:
+            painter.drawLine(x1, y1, x1 + 4, y1)
+
+        # Setup control points
+        spline = QPolygon(4)
+        cp = int((x2 - x1 - 8) * 0.4)
+        spline.setPoints(x1 + 4, y1,
+                         x1 + 4 + cp, y1,
+                         x2 - 4 - cp, y2,
+                         x2 - 4, y2)
+        # The connection line
+        path = QPainterPath()
+        path.moveTo(spline.at(0))
+        path.cubicTo(spline.at(1), spline.at(2), spline.at(3))
+        painter.strokePath(path, painter.pen())
+
+        # painter.drawLine(x1 + 4, y1, x2 - 4, y2)
+
+        # Invisible input ports don't get a connecting dot.
+        if y2 > h2:
+            painter.drawLine(x2 - 4, y2, x2, y2)
+
+    @staticmethod
     def item_y(item):
         tree_widget = item.treeWidget()
         parent = item.parent()
@@ -209,10 +220,7 @@ class JackConnectionsDialog(QDialog):
         # self.layout().setContentsMargins(0, 0, 0, 0)
 
         self.output_widget = QTreeWidget(self)
-        self.output_widget.setHeaderLabels(['Output ports'])
-
         self.input_widget = QTreeWidget(self)
-        self.input_widget.setHeaderLabels(['Input ports'])
 
         self.connections_widget = ConnectionsWidget(self.output_widget,
                                                     self.input_widget,
@@ -235,7 +243,7 @@ class JackConnectionsDialog(QDialog):
         self.layout().setColumnStretch(1, 1)
         self.layout().setColumnStretch(2, 2)
 
-        self.connectButton = QPushButton('Connect', self)
+        self.connectButton = QPushButton(self)
         self.connectButton.clicked.connect(self.__disconnect_selected)
         self.connectButton.setEnabled(False)
         self.layout().addWidget(self.connectButton, 1, 1)
@@ -246,12 +254,21 @@ class JackConnectionsDialog(QDialog):
         self.dialogButtons.rejected.connect(self.reject)
         self.layout().addWidget(self.dialogButtons, 2, 0, 1, 3)
 
+        self.retranslateUi()
+
         self.__jack_client = jack_client
         self.__selected_in = None
         self.__selected_out = None
 
         self.connections = []
         self.update_graph()
+
+    def retranslateUi(self):
+        self.output_widget.setHeaderLabels(
+            [translate('JackSinkSettings', 'Output ports')])
+        self.input_widget.setHeaderLabels(
+            [translate('JackSinkSettings', 'Input ports')])
+        self.connectButton.setText(translate('JackSinkSettings', 'Connect'))
 
     def set_connections(self, connections):
         self.connections = connections
@@ -301,10 +318,12 @@ class JackConnectionsDialog(QDialog):
             self.connectButton.setEnabled(True)
 
             if self.__selected_in.name in self.connections[output]:
-                self.connectButton.setText('Disconnect')
+                self.connectButton.setText(
+                    translate('JackSinkSettings', 'Disconnect'))
                 self.connectButton.clicked.connect(self.__disconnect_selected)
             else:
-                self.connectButton.setText('Connect')
+                self.connectButton.setText(
+                    translate('JackSinkSettings', 'Connect'))
                 self.connectButton.clicked.connect(self.__connect_selected)
         else:
             self.connectButton.setEnabled(False)

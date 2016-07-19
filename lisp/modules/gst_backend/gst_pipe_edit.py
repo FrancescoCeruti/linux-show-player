@@ -79,10 +79,10 @@ class GstPipeEdit(QWidget):
         if pipe:
             if not self._app_mode:
                 self.inputBox.setCurrentText(
-                    translate('GstElementName', elements.input_name(pipe[0])))
+                    translate('MediaElementName', elements.input_name(pipe[0])))
 
             self.outputBox.setCurrentText(
-                translate('GstElementName', elements.output_name(pipe[-1])))
+                translate('MediaElementName', elements.output_name(pipe[-1])))
 
         self.__init_current_plugins(pipe)
         self.__init_available_plugins(pipe)
@@ -101,7 +101,7 @@ class GstPipeEdit(QWidget):
         else:
             inputs_by_name = {}
             for key, input in elements.inputs().items():
-                inputs_by_name[translate('GstElementName', input.Name)] = key
+                inputs_by_name[translate('MediaElementName', input.Name)] = key
 
             for name in sorted(inputs_by_name):
                 self.inputBox.addItem(name, inputs_by_name[name])
@@ -111,7 +111,7 @@ class GstPipeEdit(QWidget):
     def __init_outputs(self):
         outputs_by_name = {}
         for key, output in elements.outputs().items():
-            outputs_by_name[translate('GstElementName', output.Name)] = key
+            outputs_by_name[translate('MediaElementName', output.Name)] = key
 
         for name in sorted(outputs_by_name):
             self.outputBox.addItem(name, outputs_by_name[name])
@@ -126,7 +126,7 @@ class GstPipeEdit(QWidget):
         start = 0 if self._app_mode else 1
         for plugin in pipe[start:-1]:
             item = QListWidgetItem(
-                translate('GstElementName', elements.plugin_name(plugin)))
+                translate('MediaElementName', elements.plugin_name(plugin)))
             item.setData(Qt.UserRole, plugin)
             self.currentList.addItem(item)
 
@@ -136,7 +136,7 @@ class GstPipeEdit(QWidget):
         for plugin in elements.plugins():
             if plugin not in pipe:
                 item = QListWidgetItem(
-                    translate('GstElementName', elements.plugin_name(plugin)))
+                    translate('MediaElementName', elements.plugin_name(plugin)))
                 item.setData(Qt.UserRole, plugin)
                 self.availableList.addItem(item)
 
