@@ -27,7 +27,6 @@ from lisp.ui.settings.cue_settings import CueSettingsRegistry
 
 
 class Triggers(Plugin):
-
     Name = 'Triggers'
 
     def __init__(self):
@@ -36,7 +35,7 @@ class Triggers(Plugin):
 
         # Register a Cue property to store settings
         Cue.register_property('triggers', Property({}))
-        # Cue.triggers -> {trigger_action: [(target_id, target_action), ...]}
+        # Cue.triggers -> {trigger: [(target_id, action), ...]}
 
         # Register SettingsPage
         CueSettingsRegistry().add_item(TriggersSettings)

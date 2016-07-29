@@ -18,24 +18,15 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import QSize
-from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QLabel, QProgressBar
 
 from lisp.core.signal import Connection
 from lisp.cues.cue import CueNextAction, CueState
 from lisp.cues.cue_time import CueTime, CueWaitTime
-from lisp.utils.util import strtime
+from lisp.utils.util import strtime, pixmap_from_icon
 
 
 class CueStatusIcon(QLabel):
-    EMPTY = QIcon()
-
-    START = QIcon.fromTheme('media-playback-start')
-    PAUSE = QIcon.fromTheme('media-playback-pause')
-    ERROR = QIcon.fromTheme('dialog-error')
-
-    SELECT = QIcon.fromTheme('mark-location')
-
     STYLESHEET = 'background: transparent; padding-left: 20px;'
     SIZE = 16
 
@@ -51,26 +42,22 @@ class CueStatusIcon(QLabel):
         self.cue.end.connect(self._stop, Connection.QtQueued)
 
     def _start(self):
-        self.setPixmap(self.START .pixmap(self.SIZE, self.SIZE))
+        self.setPixmap(pixmap_from_icon('media-playback-start', self.SIZE))
 
     def _pause(self):
-        self.setPixmap(self.PAUSE.pixmap(self.SIZE, self.SIZE))
+        self.setPixmap(pixmap_from_icon('media-playback-pause', self.SIZE))
 
     def _error(self, *args):
-        self.setPixmap(self.ERROR.pixmap(self.SIZE, self.SIZE))
+        self.setPixmap(pixmap_from_icon('dialog-error', self.SIZE))
 
     def _stop(self):
-        self.setPixmap(self.EMPTY.pixmap(self.SIZE, self.SIZE))
+        self.setPixmap(pixmap_from_icon('', self.SIZE))
 
     def sizeHint(self):
         return QSize(self.SIZE, self.SIZE)
 
 
 class NextActionIcon(QLabel):
-    DO_NOTHING = QIcon()
-    AUTO_NEXT = QIcon.fromTheme('auto-next')
-    AUTO_FOLLOW = QIcon.fromTheme('auto-follow')
-
     STYLESHEET = 'background: transparent; padding-left: 1px'
     SIZE = 16
 
@@ -85,13 +72,13 @@ class NextActionIcon(QLabel):
 
     def _update_icon(self, next_action):
         next_action = CueNextAction(next_action)
-        pixmap = self.DO_NOTHING.pixmap(self.SIZE, self.SIZE)
+        pixmap = pixmap_from_icon('', self.SIZE)
 
         if next_action == CueNextAction.AutoNext:
-            pixmap = self.AUTO_NEXT.pixmap(self.SIZE, self.SIZE)
+            pixmap = pixmap_from_icon('auto-next', self.SIZE)
             self.setToolTip(CueNextAction.AutoNext.value)
         elif next_action == CueNextAction.AutoFollow:
-            pixmap = self.AUTO_FOLLOW.pixmap(self.SIZE, self.SIZE)
+            pixmap = pixmap_from_icon('auto-follow', self.SIZE)
             self.setToolTip(CueNextAction.AutoFollow.value)
         else:
             self.setToolTip('')

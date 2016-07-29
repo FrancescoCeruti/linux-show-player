@@ -22,7 +22,10 @@ from itertools import chain
 from os import listdir, path
 from os.path import isdir, exists, join
 
+from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QApplication
+
+from lisp.core.decorators import memoize
 
 
 def deep_update(d1, d2):
@@ -168,3 +171,27 @@ def tr_sorted(context, iterable, key=None, reverse=False):
         tr_key = lambda item: translate(context, item)
 
     return sorted(iterable, key=tr_key, reverse=reverse)
+
+
+@memoize
+def load_icon(icon_name):
+    """Return a QIcon from the icon theme.
+
+    The loaded icons are cached.
+
+    .. warning:
+        QIcons should be loaded only from the QT main loop.
+    """
+    return QIcon.fromTheme(icon_name)
+
+
+@memoize
+def pixmap_from_icon(icon_name, size):
+    """Return a QPixmap of "size x size" pixels from the icon theme.
+
+    The returned pixmaps are cached.
+
+    .. warning:
+        QPixmap should be created only from the QT main loop.
+    """
+    return load_icon(icon_name).pixmap(size, size)

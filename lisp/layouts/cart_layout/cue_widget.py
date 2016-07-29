@@ -18,7 +18,7 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import Qt, QMimeData, pyqtSignal, QPoint
-from PyQt5.QtGui import QIcon, QColor, QDrag
+from PyQt5.QtGui import QColor, QDrag
 from PyQt5.QtWidgets import QProgressBar, QLCDNumber, QLabel, QHBoxLayout, \
     QWidget, QGridLayout, QSizePolicy
 
@@ -28,19 +28,14 @@ from lisp.cues.cue import CueState
 from lisp.cues.cue_time import CueTime
 from lisp.cues.media_cue import MediaCue
 from lisp.layouts.cart_layout.page_widget import PageWidget
-from lisp.ui.widgets.qdbmeter import QDbMeter
 from lisp.ui.widgets.qclicklabel import QClickLabel
 from lisp.ui.widgets.qclickslider import QClickSlider
+from lisp.ui.widgets.qdbmeter import QDbMeter
 from lisp.ui.widgets.qmessagebox import QDetailedMessageBox
-from lisp.utils.util import strtime
+from lisp.utils.util import strtime, pixmap_from_icon
 
 
 class CueWidget(QWidget):
-    STOP = QIcon.fromTheme('led-off')
-    START = QIcon.fromTheme('led-running')
-    PAUSE = QIcon.fromTheme('led-pause')
-    ERROR = QIcon.fromTheme('led-error')
-
     ICON_SIZE = 14
     SLIDER_RANGE = 1000
 
@@ -81,8 +76,8 @@ class CueWidget(QWidget):
 
         self.statusIcon = QLabel(self.nameButton)
         self.statusIcon.setStyleSheet('background-color: transparent')
-        self.statusIcon.setPixmap(CueWidget.STOP.pixmap(CueWidget.ICON_SIZE,
-                                                        CueWidget.ICON_SIZE))
+        self.statusIcon.setPixmap(
+            pixmap_from_icon('led-off', CueWidget.ICON_SIZE))
 
         self.seekSlider = QClickSlider(self.nameButton)
         self.seekSlider.setOrientation(Qt.Horizontal)
@@ -317,25 +312,25 @@ class CueWidget(QWidget):
         self.timeDisplay.setPalette(self.timeBar.palette())
 
     def _status_stopped(self):
-        self.statusIcon.setPixmap(CueWidget.STOP.pixmap(CueWidget.ICON_SIZE,
-                                                        CueWidget.ICON_SIZE))
+        self.statusIcon.setPixmap(
+            pixmap_from_icon('led-off', CueWidget.ICON_SIZE))
         self.volumeSlider.setEnabled(False)
         self._update_time(0, True)
         self._reset_volume()
 
     def _status_playing(self):
-        self.statusIcon.setPixmap(CueWidget.START.pixmap(CueWidget.ICON_SIZE,
-                                                         CueWidget.ICON_SIZE))
+        self.statusIcon.setPixmap(
+            pixmap_from_icon('led-running', CueWidget.ICON_SIZE))
         self.volumeSlider.setEnabled(True)
 
     def _status_paused(self):
-        self.statusIcon.setPixmap(CueWidget.PAUSE.pixmap(CueWidget.ICON_SIZE,
-                                                         CueWidget.ICON_SIZE))
+        self.statusIcon.setPixmap(
+            pixmap_from_icon('led-pause', CueWidget.ICON_SIZE))
         self.volumeSlider.setEnabled(False)
 
     def _status_error(self, cue, error, details):
-        self.statusIcon.setPixmap(CueWidget.ERROR.pixmap(CueWidget.ICON_SIZE,
-                                                         CueWidget.ICON_SIZE))
+        self.statusIcon.setPixmap(
+            pixmap_from_icon('led-error', CueWidget.ICON_SIZE))
         self.volumeSlider.setEnabled(False)
         self._reset_volume()
 

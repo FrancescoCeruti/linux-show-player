@@ -19,7 +19,7 @@
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QGroupBox, QGridLayout, QTableView, QHeaderView, \
-    QTableWidget, QPushButton, QVBoxLayout
+    QPushButton, QVBoxLayout
 
 from lisp.application import Application
 from lisp.plugins.controller.protocols.protocol import Protocol
@@ -96,7 +96,7 @@ class KeyboardView(QTableView):
     def __init__(self, cue_class, **kwargs):
         super().__init__(**kwargs)
 
-        self.setSelectionBehavior(QTableWidget.SelectRows)
+        self.setSelectionBehavior(QTableView.SelectRows)
         self.setSelectionMode(QTableView.SingleSelection)
 
         self.setShowGrid(False)

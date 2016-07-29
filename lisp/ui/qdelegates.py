@@ -20,6 +20,8 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QStyledItemDelegate, QComboBox, QSpinBox, QLineEdit
 
+from lisp.ui.qmodels import CueClassRole
+
 
 class ComboBoxDelegate(QStyledItemDelegate):
     def __init__(self, options=(), **kwargs):
@@ -96,6 +98,28 @@ class LineEditDelegate(QStyledItemDelegate):
 
     def setModelData(self, lineEdit, model, index):
         model.setData(index, lineEdit.text(), Qt.EditRole)
+
+    def updateEditorGeometry(self, editor, option, index):
+        editor.setGeometry(option.rect)
+
+
+class CueActionDelegate(QStyledItemDelegate):
+
+    def createEditor(self, parent, option, index):
+        cue = index.data(CueClassRole)
+        if cue is not None:
+            editor = QComboBox(parent)
+            editor.setFrame(False)
+            editor.addItems([action.value for action in cue.CueActions])
+
+            return editor
+
+    def setEditorData(self, comboBox, index):
+        value = index.model().data(index, Qt.EditRole)
+        comboBox.setCurrentText(value)
+
+    def setModelData(self, comboBox, model, index):
+        model.setData(index, comboBox.currentText(), Qt.EditRole)
 
     def updateEditorGeometry(self, editor, option, index):
         editor.setGeometry(option.rect)

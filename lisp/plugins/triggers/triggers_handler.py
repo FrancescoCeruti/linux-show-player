@@ -32,7 +32,6 @@ class CueTriggers(Enum):
 
 
 class CueHandler:
-
     def __init__(self, cue, triggers):
         self.triggers = triggers
         self.cue = cue
@@ -55,8 +54,8 @@ class CueHandler:
         self.__execute(CueTriggers.Ended.value)
 
     def __execute(self, trigger):
-        for target_id, target_action in self.triggers.get(trigger, []):
+        for target_id, action in self.triggers.get(trigger, []):
             target = Application().cue_model.get(target_id)
 
             if target is not None:
-                target.execute(CueAction(target_action))
+                target.execute(CueAction(action))

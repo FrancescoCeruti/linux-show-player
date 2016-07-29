@@ -18,15 +18,13 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QTreeWidgetItem
 
 from lisp.core.signal import Connection
+from lisp.utils.util import load_icon
 
 
 class CueListItem(QTreeWidgetItem):
-
-    SELECTED = QIcon.fromTheme("mark-location")
 
     def __init__(self, cue):
         super().__init__()
@@ -52,7 +50,7 @@ class CueListItem(QTreeWidgetItem):
     @selected.setter
     def selected(self, value):
         self._selected = value
-        self.setIcon(0, self.SELECTED if value else QIcon())
+        self.setIcon(0, load_icon('mark-location' if value else ''))
 
     def _update_index(self, index):
         self.setText(self.num_column, str(index))

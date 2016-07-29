@@ -54,7 +54,7 @@ class Cue(HasProperties):
 
     A cue implement his behavior(s) reimplementing the __start__, __stop__ and
     __pause__ methods.
-    Can be triggered calling the execute() method, providing tha action to
+    Can be triggered calling the execute() method, providing the action to
     be executed, or calling directly start()/stop() or pause().
 
     .. note:

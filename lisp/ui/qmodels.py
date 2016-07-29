@@ -19,6 +19,9 @@
 
 from PyQt5.QtCore import QAbstractTableModel, QModelIndex, Qt
 
+# Application defended data-roles
+CueClassRole = Qt.UserRole + 1
+
 
 class SimpleTableModel(QAbstractTableModel):
     """ Simple implementation of a QAbstractTableModel
