@@ -17,14 +17,15 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+from PyQt5.QtCore import QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import QHBoxLayout, QTabWidget
 
 from lisp.ui.settings.settings_page import CueSettingsPage
+from lisp.utils.util import translate
 
 
 class ControllerSettings(CueSettingsPage):
-
-    Name = 'Controller'
+    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Cue Control')
     SettingsPages = []
 
     def __init__(self, cue_class, **kwargs):
@@ -39,7 +40,8 @@ class ControllerSettings(CueSettingsPage):
         for page in ControllerSettings.SettingsPages:
             page_widget = page(cue_class, parent=self)
 
-            self.tabWidget.addTab(page_widget, page.Name)
+            self.tabWidget.addTab(page_widget,
+                                  translate('SettingsPageName', page.Name))
             self._pages.append(page_widget)
 
         self.tabWidget.setCurrentIndex(0)

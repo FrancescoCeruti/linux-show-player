@@ -26,40 +26,49 @@ import logging
 import traceback
 
 from lisp.ui.widgets.qmessagebox import QDetailedMessageBox
+from lisp.utils.util import translate
 
 
 def info(msg, details='', dialog=False):
     logging.info(_log_msg(msg, details))
     if dialog:
-        _dialog('Information', msg, details, QDetailedMessageBox.Information)
+        _dialog(translate('Logging', 'Information'), msg, details,
+                QDetailedMessageBox.Information)
 
 
 def debug(msg, details='', dialog=False):
     logging.debug(_log_msg(msg, details))
     if dialog:
-        _dialog('Debug', msg, details, QDetailedMessageBox.Information)
+        _dialog(translate('Logging', 'Debug'), msg, details,
+                QDetailedMessageBox.Information)
 
 
 def warning(msg, details='', dialog=True):
     logging.warning(_log_msg(msg, details))
     if dialog:
-        _dialog('Warning', msg, details, QDetailedMessageBox.Warning)
+        _dialog(translate('Logging', 'Warning'), msg, details,
+                QDetailedMessageBox.Warning)
 
 
 def error(msg, details='', dialog=True):
     logging.error(_log_msg(msg, details))
     if dialog:
-        _dialog('Error', msg, details, QDetailedMessageBox.Critical)
+        _dialog(translate('Logging', 'Error'), msg, details,
+                QDetailedMessageBox.Critical)
 
 
 def exception(msg, exception, dialog=True):
     logging.error(_log_msg(msg, traceback.format_exc()))
     if dialog:
-        _dialog('Error', msg, str(exception), QDetailedMessageBox.Critical)
+        _dialog(translate('Logging', 'Error'), msg, str(exception),
+                QDetailedMessageBox.Critical)
 
 
 def _log_msg(msg, details):
-    return msg + ('\nDetails: ' + details if details.strip() != '' else '')
+    if details.strip() != '':
+        details = translate('Logging', 'Details:') + ' ' + details
+
+    return msg + '\n' + details
 
 
 def _dialog(title, msg, details, type_):

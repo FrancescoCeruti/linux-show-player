@@ -291,7 +291,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
 
     def _load_from_file(self):
         if self._check_saved():
-            path, _ = QFileDialog.getOpenFileName(filter='*.lsp',
+            path, _ = QFileDialog.getOpenFileName(self, filter='*.lsp',
                                                   directory=os.getenv('HOME'))
 
             if os.path.exists(path):

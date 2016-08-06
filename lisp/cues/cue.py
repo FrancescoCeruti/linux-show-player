@@ -18,7 +18,7 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from abc import abstractmethod
-from enum import Enum
+from enum import Enum, IntEnum
 from threading import Event
 from uuid import uuid4
 
@@ -27,7 +27,7 @@ from lisp.core.has_properties import HasProperties, Property
 from lisp.core.signal import Signal
 
 
-class CueState(Enum):
+class CueState(IntEnum):
     Error = -1
     Stop = 0
     Running = 1

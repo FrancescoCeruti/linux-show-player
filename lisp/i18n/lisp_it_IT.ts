@@ -70,6 +70,29 @@
     </message>
 </context>
 <context>
+    <name>CueAction</name>
+    <message>
+        <location filename="../ui/qdelegates.py" line="29"/>
+        <source>Default</source>
+        <translation>Automatica</translation>
+    </message>
+    <message>
+        <location filename="../ui/qdelegates.py" line="30"/>
+        <source>Pause</source>
+        <translation>Pausa</translation>
+    </message>
+    <message>
+        <location filename="../ui/qdelegates.py" line="31"/>
+        <source>Start</source>
+        <translation>Avvia</translation>
+    </message>
+    <message>
+        <location filename="../ui/qdelegates.py" line="32"/>
+        <source>Stop</source>
+        <translation>Ferma</translation>
+    </message>
+</context>
+<context>
     <name>CueAppearanceSettings</name>
     <message>
         <location filename="../ui/settings/pages/cue_appearance.py" line="74"/>
@@ -161,6 +184,34 @@
         <location filename="../ui/layoutselect.py" line="55"/>
         <source>Open file</source>
         <translation>Apri file</translation>
+    </message>
+</context>
+<context>
+    <name>Logging</name>
+    <message>
+        <location filename="../utils/logging.py" line="35"/>
+        <source>Information</source>
+        <translation>Informazione</translation>
+    </message>
+    <message>
+        <location filename="../utils/logging.py" line="42"/>
+        <source>Debug</source>
+        <translation>Debug</translation>
+    </message>
+    <message>
+        <location filename="../utils/logging.py" line="49"/>
+        <source>Warning</source>
+        <translation>Avviso</translation>
+    </message>
+    <message>
+        <location filename="../utils/logging.py" line="63"/>
+        <source>Error</source>
+        <translation>Errore</translation>
+    </message>
+    <message>
+        <location filename="../utils/logging.py" line="69"/>
+        <source>Details:</source>
+        <translation>Dettagli:</translation>
     </message>
 </context>
 <context>
@@ -367,7 +418,7 @@
     <message>
         <location filename="../ui/settings/pages/cue_general.py" line="30"/>
         <source>Cue</source>
-        <translation type="unfinished"></translation>
+        <translation>Cue</translation>
     </message>
 </context>
 </TS>

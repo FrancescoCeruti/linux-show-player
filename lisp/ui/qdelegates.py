@@ -17,30 +17,71 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
+from PyQt5.QtWidgets import QStyle
 from PyQt5.QtWidgets import QStyledItemDelegate, QComboBox, QSpinBox, QLineEdit
+from lisp.cues.cue import CueAction
 
 from lisp.ui.qmodels import CueClassRole
+from lisp.utils.util import translate
 
 
-class ComboBoxDelegate(QStyledItemDelegate):
-    def __init__(self, options=(), **kwargs):
+QT_TRANSLATE_NOOP('CueAction', 'Default')
+QT_TRANSLATE_NOOP('CueAction', 'Pause')
+QT_TRANSLATE_NOOP('CueAction', 'Start')
+QT_TRANSLATE_NOOP('CueAction', 'Stop')
+
+
+class LabelDelegate(QStyledItemDelegate):
+    def _text(self, painter, option, index):
+        return ''
+
+    def paint(self, painter, option, index):
+        text = self._text(painter, option, index)
+        text = option.fontMetrics.elidedText(text, Qt.ElideRight,
+                                             option.rect.width())
+
+        painter.save()
+
+        if option.state & QStyle.State_Selected:
+            painter.setBrush(option.palette.highlight())
+
+            pen = painter.pen()
+            pen.setBrush(option.palette.highlightedText())
+            painter.setPen(pen)
+
+        painter.drawText(option.rect, option.displayAlignment, text)
+
+        painter.restore()
+
+
+class ComboBoxDelegate(LabelDelegate):
+    def __init__(self, options=(), tr_context=None, **kwargs):
         super().__init__(**kwargs)
         self.options = options
+        self.tr_context = tr_context
+
+    def _text(self, painter, option, index):
+        return translate(self.tr_context, index.data())
+
+    def paint(self, painter, option, index):
+        option.displayAlignment = Qt.AlignHCenter | Qt.AlignVCenter
+        super().paint(painter, option, index)
 
     def createEditor(self, parent, option, index):
         editor = QComboBox(parent)
         editor.setFrame(False)
-        editor.addItems(self.options)
+        for option in self.options:
+            editor.addItem(translate(self.tr_context, option), option)
 
         return editor
 
     def setEditorData(self, comboBox, index):
         value = index.model().data(index, Qt.EditRole)
-        comboBox.setCurrentText(value)
+        comboBox.setCurrentText(translate(self.tr_context, value))
 
     def setModelData(self, comboBox, model, index):
-        model.setData(index, comboBox.currentText(), Qt.EditRole)
+        model.setData(index, comboBox.currentData(), Qt.EditRole)
 
     def updateEditorGeometry(self, editor, option, index):
         editor.setGeometry(option.rect)
@@ -75,7 +116,6 @@ class SpinBoxDelegate(QStyledItemDelegate):
 
 
 class LineEditDelegate(QStyledItemDelegate):
-
     def __init__(self, max_length=-1, validator=None, **kwargs):
         super().__init__(**kwargs)
 
@@ -103,23 +143,35 @@ class LineEditDelegate(QStyledItemDelegate):
         editor.setGeometry(option.rect)
 
 
-class CueActionDelegate(QStyledItemDelegate):
+class CueActionDelegate(LabelDelegate):
+    def _text(self, painter, option, index):
+        action = index.data(Qt.EditRole)
+        if action in CueAction:
+            return translate('CueAction', action.name)
+        else:
+            return 'ERR'
+
+    def paint(self, painter, option, index):
+        option.displayAlignment = Qt.AlignHCenter | Qt.AlignVCenter
+        super().paint(painter, option, index)
 
     def createEditor(self, parent, option, index):
         cue = index.data(CueClassRole)
         if cue is not None:
             editor = QComboBox(parent)
             editor.setFrame(False)
-            editor.addItems([action.value for action in cue.CueActions])
+
+            for action in cue.CueActions:
+                editor.addItem(translate('CueAction', action.name), action)
 
             return editor
 
     def setEditorData(self, comboBox, index):
-        value = index.model().data(index, Qt.EditRole)
-        comboBox.setCurrentText(value)
+        action = index.data(Qt.EditRole)
+        comboBox.setCurrentText(translate('CueAction', action.name))
 
     def setModelData(self, comboBox, model, index):
-        model.setData(index, comboBox.currentText(), Qt.EditRole)
+        model.setData(index, comboBox.currentData(), Qt.EditRole)
 
     def updateEditorGeometry(self, editor, option, index):
         editor.setGeometry(option.rect)

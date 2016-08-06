@@ -18,15 +18,15 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import QEvent, QT_TRANSLATE_NOOP, Qt
-from PyQt5.QtGui import QFontMetrics
-from PyQt5.QtWidgets import QVBoxLayout, QDialogButtonBox, QSizePolicy,\
-    QDialog, QHeaderView, QStyle, QStyledItemDelegate, QTableView
+from PyQt5.QtWidgets import QVBoxLayout, QDialogButtonBox, QSizePolicy, \
+    QDialog, QHeaderView, QTableView
 
 from lisp.application import Application
 from lisp.cues.cue import Cue, CueAction
 from lisp.plugins.triggers.triggers_handler import CueTriggers
 from lisp.ui.cuelistdialog import CueListDialog
-from lisp.ui.qdelegates import ComboBoxDelegate, CueActionDelegate
+from lisp.ui.qdelegates import ComboBoxDelegate, CueActionDelegate, \
+    LabelDelegate
 from lisp.ui.qmodels import SimpleTableModel, CueClassRole
 from lisp.ui.settings.settings_page import SettingsPage
 from lisp.utils.util import translate
@@ -69,7 +69,7 @@ class TriggersSettings(SettingsPage):
                 self.triggersModel.appendRow(cue.__class__,
                                              CueTriggers.Started.value,
                                              cue.id,
-                                             cue.CueActions[0].value)
+                                             cue.CueActions[0])
 
     def _remove_trigger(self):
         self.triggersModel.removeRow(self.triggersView.currentIndex().row())
@@ -85,11 +85,13 @@ class TriggersSettings(SettingsPage):
                 target = Application().cue_model.get(target)
                 if target is not None:
                     self.triggersModel.appendRow(target.__class__, trigger,
-                                                 target.id, action)
+                                                 target.id, CueAction(action))
 
     def get_settings(self):
         triggers = {}
         for trigger, target, action in self.triggersModel.rows:
+            action = action.value
+
             if trigger not in triggers:
                 triggers[trigger] = []
 
@@ -118,7 +120,8 @@ class TriggersView(QTableView):
         self.verticalHeader().setHighlightSections(False)
 
         self.delegates = [
-            ComboBoxDelegate(options=[e.value for e in CueTriggers]),
+            ComboBoxDelegate(options=[e.value for e in CueTriggers],
+                             tr_context='CueTriggers'),
             CueSelectionDelegate(cue_select),
             CueActionDelegate()
         ]
@@ -127,32 +130,17 @@ class TriggersView(QTableView):
             self.setItemDelegateForColumn(column, delegate)
 
 
-class CueSelectionDelegate(QStyledItemDelegate):
-
+class CueSelectionDelegate(LabelDelegate):
     def __init__(self, cue_select, **kwargs):
         super().__init__(**kwargs)
         self.cue_select = cue_select
 
-    def paint(self, painter, option, index):
+    def _text(self, painter, option, index):
         cue = Application().cue_model.get(index.data())
         if cue is not None:
-            text = '{} | {}'.format(cue.index, cue.name)
-        else:
-            text = 'UNDEF'
+            return '{} | {}'.format(cue.index, cue.name)
 
-        fm = QFontMetrics(option.font, painter.device())
-        text = fm.elidedText(text, Qt.ElideRight, option.rect.width())
-
-        painter.save()
-
-        if option.state & QStyle.State_Selected:
-            pen = painter.pen()
-            pen.setBrush(option.palette.highlightedText())
-            painter.setPen(pen)
-
-        painter.drawText(option.rect, Qt.AlignLeft | Qt.AlignVCenter, text)
-
-        painter.restore()
+        return 'UNDEF'
 
     def editorEvent(self, event, model, option, index):
         if event.type() == QEvent.MouseButtonDblClick:
@@ -160,8 +148,7 @@ class CueSelectionDelegate(QStyledItemDelegate):
                 cue = self.cue_select.selected_cue()
                 if cue is not None:
                     model.setData(index, cue.id, Qt.EditRole)
-                    model.setData(index, cue.__class__,
-                                  TriggersModel.CueClassRole)
+                    model.setData(index, cue.__class__, CueClassRole)
             return True
 
         return super().editorEvent(event, model, option, index)
@@ -170,7 +157,9 @@ class CueSelectionDelegate(QStyledItemDelegate):
 class TriggersModel(SimpleTableModel):
     def __init__(self):
         # NOTE: The model does fixed-indices operations based on this list
-        super().__init__(['Trigger', 'Cue', 'Action'])
+        super().__init__([translate('TriggersSettings', 'Trigger'),
+                          translate('TriggersSettings', 'Cue'),
+                          translate('TriggersSettings', 'Action')])
 
         self.rows_cc = []
 
@@ -193,8 +182,8 @@ class TriggersModel(SimpleTableModel):
             if issubclass(value, Cue):
                 self.rows_cc[index.row()] = value
 
-                if CueAction(self.rows[index.row()][2]) not in value.CueActions:
-                    self.rows[index.row()][2] = value.CueActions[0].value
+                if self.rows[index.row()][2] not in value.CueActions:
+                    self.rows[index.row()][2] = value.CueActions[0]
                     self.dataChanged.emit(self.index(index.row(), 2),
                                           self.index(index.row(), 2),
                                           [Qt.DisplayRole, Qt.EditRole])

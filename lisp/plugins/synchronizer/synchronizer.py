@@ -28,6 +28,7 @@ from lisp.application import Application
 from lisp.core.plugin import Plugin
 from lisp.core.signal import Connection
 from lisp.ui.mainwindow import MainWindow
+from lisp.utils.util import translate
 from .peers_dialog import PeersDialog
 
 
@@ -35,14 +36,16 @@ class Synchronizer(Plugin):
     Name = 'Synchronizer'
 
     def __init__(self):
-        self.syncMenu = QMenu('Synchronization')
+        self.syncMenu = QMenu(translate('Synchronizer', 'Synchronization'))
         self.menu_action = MainWindow().menuTools.addMenu(self.syncMenu)
 
-        self.addPeerAction = QAction('Manage connected peers', MainWindow())
+        self.addPeerAction = QAction(
+            translate('Synchronizer', 'Manage connected peers'), MainWindow())
         self.addPeerAction.triggered.connect(self.manage_peers)
         self.syncMenu.addAction(self.addPeerAction)
 
-        self.showIpAction = QAction('Show your IP', MainWindow())
+        self.showIpAction = QAction(
+            translate('Synchronizer', 'Show your IP'), MainWindow())
         self.showIpAction.triggered.connect(self.show_ip)
         self.syncMenu.addAction(self.showIpAction)
 
@@ -54,13 +57,13 @@ class Synchronizer(Plugin):
                                                   mode=Connection.Async)
 
     def manage_peers(self):
-        manager = PeersDialog(self.peers)
+        manager = PeersDialog(self.peers, parent=MainWindow())
         manager.exec_()
 
     def show_ip(self):
-        ip = 'Your IP is:' + os.linesep
+        ip = translate('Synchronizer', 'Your IP is:') + ' '
         ip += socket.gethostbyname(socket.gethostname())
-        QMessageBox.information(MainWindow(), 'Your IP', ip)
+        QMessageBox.information(MainWindow(), ' ', ip)
 
     def reset(self):
         self.peers.clear()

@@ -18,17 +18,17 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QDialog, QVBoxLayout, QListWidget, QDialogButtonBox, \
-    QListWidgetItem
+from PyQt5.QtWidgets import QVBoxLayout, QListWidget, QDialogButtonBox, \
+    QListWidgetItem, QDialog
 
 from lisp.core.signal import Connection
 from lisp.modules.remote.discovery import Discoverer
+from lisp.utils.util import translate
 
 
 class PeersDiscoveryDialog(QDialog):
-
-    def __init__(self):
-        super().__init__()
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
 
         self.setWindowModality(Qt.ApplicationModal)
         self.setLayout(QVBoxLayout())
@@ -52,21 +52,25 @@ class PeersDiscoveryDialog(QDialog):
         self._discoverer.discovered.connect(self._new_peer, Connection.QtQueued)
 
     def retranslateUi(self):
-        self.setWindowTitle("Discovering peers ...")
+        self.setWindowTitle(translate('Synchronizer', 'Discovering peers ...'))
 
     def accept(self):
         self._discoverer.stop()
         return super().accept()
+
+    def reject(self):
+        self._discoverer.stop()
+        return super().reject()
 
     def exec_(self):
         self._discoverer.start()
         return super().exec_()
 
     def get_peers(self):
-        return [item.adders for item in self.listWidget.selectedItems()]
+        return [item.address for item in self.listWidget.selectedItems()]
 
     def _new_peer(self, peer):
-        item = QListWidgetItem(peer[1] + ' at ' + peer[0])
-        item.adders = peer[0]
+        item = QListWidgetItem(peer[1] + ' - ' + peer[0])
+        item.address = peer[0]
 
         self.listWidget.addItem(item)

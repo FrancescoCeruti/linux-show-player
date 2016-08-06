@@ -19,16 +19,18 @@
 
 from enum import Enum
 
+from PyQt5.QtCore import QT_TRANSLATE_NOOP
+
 from lisp.application import Application
 from lisp.core.signal import Connection
 from lisp.cues.cue import CueAction
 
 
 class CueTriggers(Enum):
-    Started = 'Started'
-    Paused = 'Paused'
-    Stopped = 'Stopped'
-    Ended = 'Ended'
+    Started = QT_TRANSLATE_NOOP('CueTriggers', 'Started')
+    Paused = QT_TRANSLATE_NOOP('CueTriggers', 'Paused')
+    Stopped = QT_TRANSLATE_NOOP('CueTriggers', 'Stopped')
+    Ended = QT_TRANSLATE_NOOP('CueTriggers','Ended')
 
 
 class CueHandler:

@@ -17,7 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import QGroupBox, QGridLayout, QTableView, QHeaderView, \
     QPushButton, QVBoxLayout
 
@@ -26,6 +26,7 @@ from lisp.plugins.controller.protocols.protocol import Protocol
 from lisp.ui.qdelegates import ComboBoxDelegate, LineEditDelegate
 from lisp.ui.qmodels import SimpleTableModel
 from lisp.ui.settings.settings_page import CueSettingsPage
+from lisp.utils.util import translate
 
 
 class Keyboard(Protocol):
@@ -42,7 +43,7 @@ class Keyboard(Protocol):
 
 
 class KeyboardSettings(CueSettingsPage):
-    Name = 'Keyboard shortcuts'
+    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Keyboard Shortcuts')
 
     def __init__(self, cue_class, **kwargs):
         super().__init__(cue_class, **kwargs)
@@ -50,23 +51,31 @@ class KeyboardSettings(CueSettingsPage):
         self.layout().setAlignment(Qt.AlignTop)
 
         self.keyGroup = QGroupBox(self)
-        self.keyGroup.setTitle('Hot-Keys')
         self.keyGroup.setLayout(QGridLayout())
         self.layout().addWidget(self.keyGroup)
 
-        self.keyboardModel = SimpleTableModel(['Key', 'Action'])
+        self.keyboardModel = SimpleTableModel([
+            translate('ControllerKeySettings', 'Key'),
+            translate('ControllerKeySettings', 'Action')])
 
         self.keyboardView = KeyboardView(cue_class, parent=self.keyGroup)
         self.keyboardView.setModel(self.keyboardModel)
         self.keyGroup.layout().addWidget(self.keyboardView, 0, 0, 1, 2)
 
-        self.addButton = QPushButton('Add', self.keyGroup)
+        self.addButton = QPushButton(self.keyGroup)
         self.addButton.clicked.connect(self.__new_key)
         self.keyGroup.layout().addWidget(self.addButton, 1, 0)
 
-        self.removeButton = QPushButton('Remove', self.keyGroup)
+        self.removeButton = QPushButton(self.keyGroup)
         self.removeButton.clicked.connect(self.__remove_key)
         self.keyGroup.layout().addWidget(self.removeButton, 1, 1)
+
+        self.retranslateUi()
+
+    def retranslateUi(self):
+        self.keyGroup.setTitle(translate('ControllerKeySettings', 'Shortcuts'))
+        self.addButton.setText(translate('ControllerSettings', 'Add'))
+        self.removeButton.setText(translate('ControllerSettings', 'Remove'))
 
     def enable_check(self, enabled):
         self.keyGroup.setCheckable(enabled)
@@ -111,7 +120,8 @@ class KeyboardView(QTableView):
 
         cue_actions = [action.name for action in cue_class.CueActions]
         self.delegates = [LineEditDelegate(max_length=1),
-                          ComboBoxDelegate(options=cue_actions)]
+                          ComboBoxDelegate(options=cue_actions,
+                                           tr_context='CueAction')]
 
         for column, delegate in enumerate(self.delegates):
             self.setItemDelegateForColumn(column, delegate)

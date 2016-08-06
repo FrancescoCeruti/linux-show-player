@@ -17,9 +17,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QGroupBox, QPushButton, QComboBox, \
-    QVBoxLayout, QMessageBox, QTableView, QTableWidget, QHeaderView, QGridLayout
+from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
+from PyQt5.QtWidgets import QGroupBox, QPushButton, QComboBox, QVBoxLayout, \
+    QMessageBox, QTableView, QTableWidget, QHeaderView, QGridLayout
 
 from lisp.modules import check_module
 from lisp.modules.midi.midi_input import MIDIInput
@@ -27,10 +27,10 @@ from lisp.plugins.controller.protocols.protocol import Protocol
 from lisp.ui.qdelegates import ComboBoxDelegate, SpinBoxDelegate
 from lisp.ui.qmodels import SimpleTableModel
 from lisp.ui.settings.settings_page import CueSettingsPage
+from lisp.utils.util import translate
 
 
 class Midi(Protocol):
-
     def __init__(self):
         super().__init__()
 
@@ -59,8 +59,7 @@ class Midi(Protocol):
 
 
 class MidiSettings(CueSettingsPage):
-
-    Name = 'MIDI controls'
+    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'MIDI Controls')
 
     def __init__(self, cue_class, **kwargs):
         super().__init__(cue_class, **kwargs)
@@ -68,37 +67,50 @@ class MidiSettings(CueSettingsPage):
         self.layout().setAlignment(Qt.AlignTop)
 
         self.midiGroup = QGroupBox(self)
-        self.midiGroup.setTitle('MIDI')
-        self.midiGroup.setEnabled(check_module('midi'))
+        self.midiGroup.setTitle(translate('ControllerMidiSettings', 'MIDI'))
+        # self.midiGroup.setEnabled(check_module('midi'))
         self.midiGroup.setLayout(QGridLayout())
         self.layout().addWidget(self.midiGroup)
 
-        self.midiModel = SimpleTableModel(['Type', 'Channel', 'Note', 'Action'])
+        self.midiModel = SimpleTableModel([
+            translate('ControllerMidiSettings', 'Type'),
+            translate('ControllerMidiSettings', 'Channel'),
+            translate('ControllerMidiSettings', 'Note'),
+            translate('ControllerMidiSettings', 'Action')])
 
         self.midiView = MidiView(cue_class, parent=self.midiGroup)
         self.midiView.setModel(self.midiModel)
         self.midiGroup.layout().addWidget(self.midiView, 0, 0, 1, 2)
 
-        self.addButton = QPushButton('Add', self.midiGroup)
+        self.addButton = QPushButton(self.midiGroup)
         self.addButton.clicked.connect(self.__new_message)
         self.midiGroup.layout().addWidget(self.addButton, 1, 0)
 
-        self.removeButton = QPushButton('Remove', self.midiGroup)
+        self.removeButton = QPushButton(self.midiGroup)
         self.removeButton.clicked.connect(self.__remove_message)
         self.midiGroup.layout().addWidget(self.removeButton, 1, 1)
 
-        self.midiCapture = QPushButton('Capture', self.midiGroup)
+        self.midiCapture = QPushButton(self.midiGroup)
         self.midiCapture.clicked.connect(self.capture_message)
         self.midiGroup.layout().addWidget(self.midiCapture, 2, 0)
 
         self.msgTypeCombo = QComboBox(self.midiGroup)
-        self.msgTypeCombo.addItem('Filter "note on"')
+        self.msgTypeCombo.addItem(
+            translate('ControllerMidiSettings', 'Filter "note on"'))
         self.msgTypeCombo.setItemData(0, 'note_on', Qt.UserRole)
-        self.msgTypeCombo.addItem('Filter "note off"')
+        self.msgTypeCombo.addItem(
+            translate('ControllerMidiSettings', 'Filter "note off"'))
         self.msgTypeCombo.setItemData(1, 'note_off', Qt.UserRole)
         self.midiGroup.layout().addWidget(self.msgTypeCombo, 2, 1)
 
+        self.retranslateUi()
+
         self._default_action = self._cue_class.CueActions[0].name
+
+    def retranslateUi(self):
+        self.addButton.setText(translate('ControllerSettings', 'Add'))
+        self.removeButton.setText(translate('ControllerSettings', 'Remove'))
+        self.midiCapture.setText(translate('ControllerMidiSettings', 'Capture'))
 
     def enable_check(self, enabled):
         self.midiGroup.setCheckable(enabled)
@@ -131,7 +143,9 @@ class MidiSettings(CueSettingsPage):
         handler.alternate_mode = True
         handler.new_message_alt.connect(self.__add_message)
 
-        QMessageBox.information(self, 'Input', 'Listening MIDI events ...')
+        QMessageBox.information(self, '',
+                                translate('ControllerMidiSettings',
+                                          'Listening MIDI messages ...'))
 
         handler.new_message_alt.disconnect(self.__add_message)
         handler.alternate_mode = False
@@ -150,7 +164,6 @@ class MidiSettings(CueSettingsPage):
 
 
 class MidiView(QTableView):
-
     def __init__(self, cue_class, **kwargs):
         super().__init__(**kwargs)
 
@@ -158,7 +171,8 @@ class MidiView(QTableView):
         self.delegates = [ComboBoxDelegate(options=['note_on', 'note_off']),
                           SpinBoxDelegate(minimum=0, maximum=15),
                           SpinBoxDelegate(minimum=0, maximum=127),
-                          ComboBoxDelegate(options=cue_actions)]
+                          ComboBoxDelegate(options=cue_actions,
+                                           tr_context='CueAction')]
 
         self.setSelectionBehavior(QTableWidget.SelectRows)
         self.setSelectionMode(QTableView.SingleSelection)
