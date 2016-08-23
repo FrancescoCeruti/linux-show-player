@@ -22,7 +22,6 @@ from PyQt5.QtWidgets import QDialog, QHBoxLayout, QListWidget, QVBoxLayout, \
     QPushButton, QDialogButtonBox, QInputDialog, QMessageBox
 
 from lisp.modules.remote.remote import RemoteController
-from lisp.ui.mainwindow import MainWindow
 from lisp.utils import logging
 from lisp.utils.configuration import config
 from lisp.utils.util import compose_http_url, translate

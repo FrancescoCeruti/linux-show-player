@@ -67,8 +67,9 @@ def exception(msg, exception, dialog=True):
 def _log_msg(msg, details):
     if details.strip() != '':
         details = translate('Logging', 'Details:') + ' ' + details
+        return msg + '\n' + details
 
-    return msg + '\n' + details
+    return msg
 
 
 def _dialog(title, msg, details, type_):

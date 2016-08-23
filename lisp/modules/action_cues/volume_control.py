@@ -22,10 +22,14 @@ from time import sleep
 from PyQt5 import QtCore
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtGui import QIcon
+from PyQt5.QtWidgets import QSizePolicy
 from PyQt5.QtWidgets import QVBoxLayout, QLabel, QHBoxLayout, QGroupBox, \
     QPushButton, QDoubleSpinBox, QGridLayout, QComboBox, QStyledItemDelegate
+from PyQt5.QtWidgets import QWidget
 
 from lisp.application import Application
+from lisp.backend.audio_utils import MIN_VOLUME_DB, MAX_VOLUME_DB, linear_to_db, \
+    db_to_linear
 from lisp.backend.media import MediaState
 from lisp.core.decorators import async, synchronized_method
 from lisp.core.has_properties import Property
@@ -149,6 +153,7 @@ class VolumeSettings(SettingsPage):
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
+        self.__v_edit_flag = False
         self.cue_id = -1
 
         cues = Application().cue_model.filter(MediaCue)
@@ -171,12 +176,23 @@ class VolumeSettings(SettingsPage):
         self.layout().addWidget(self.volumeGroup)
 
         self.volumeEdit = QDoubleSpinBox(self.volumeGroup)
+        self.volumeEdit.setDecimals(8)
         self.volumeEdit.setMaximum(10)
         self.volumeGroup.layout().addWidget(self.volumeEdit)
 
-        self.volumeLabel = QLabel(self.volumeGroup)
-        self.volumeLabel.setAlignment(QtCore.Qt.AlignCenter)
-        self.volumeGroup.layout().addWidget(self.volumeLabel)
+        self.percentLabel = QLabel('%', self.volumeGroup)
+        self.volumeGroup.layout().addWidget(self.percentLabel)
+
+        self.volumeDbEdit = QDoubleSpinBox(self.volumeGroup)
+        self.volumeDbEdit.setRange(MIN_VOLUME_DB, MAX_VOLUME_DB)
+        self.volumeDbEdit.setValue(MIN_VOLUME_DB)
+        self.volumeGroup.layout().addWidget(self.volumeDbEdit)
+
+        self.dbLabel = QLabel('dB', self.volumeGroup)
+        self.volumeGroup.layout().addWidget(self.dbLabel)
+
+        self.volumeEdit.valueChanged.connect(self.__volume_change)
+        self.volumeDbEdit.valueChanged.connect(self.__db_volume_change)
 
         # Fade
         self.fadeGroup = QGroupBox(self)
@@ -210,8 +226,7 @@ class VolumeSettings(SettingsPage):
         self.cueGroup.setTitle(translate('VolumeControl', 'Cue'))
         self.cueButton.setText(translate('VolumeControl', 'Click to select'))
         self.cueLabel.setText(translate('VolumeControl', 'Not selected'))
-        self.volumeGroup.setTitle(translate('VolumeControl', 'Volume'))
-        self.volumeLabel.setText(translate('VolumeControl', 'Volume to reach'))
+        self.volumeGroup.setTitle(translate('VolumeControl', 'Volume to reach'))
         self.fadeGroup.setTitle(translate('VolumeControl', 'Fade'))
         self.fadeLabel.setText(translate('VolumeControl', 'Time (sec)'))
         self.fadeCurveLabel.setText(translate('VolumeControl', 'Curve'))
@@ -260,5 +275,20 @@ class VolumeSettings(SettingsPage):
             self.fadeCurveCombo.setCurrentText(
                 translate('VolumeControl', settings['fade_type']))
 
+    def __volume_change(self, value):
+        if not self.__v_edit_flag:
+            try:
+                self.__v_edit_flag = True
+                self.volumeDbEdit.setValue(linear_to_db(value))
+            finally:
+                self.__v_edit_flag = False
+
+    def __db_volume_change(self, value):
+        if not self.__v_edit_flag:
+            try:
+                self.__v_edit_flag = True
+                self.volumeEdit.setValue(db_to_linear(value))
+            finally:
+                self.__v_edit_flag = False
 
 CueSettingsRegistry().add_item(VolumeSettings, VolumeControl)

@@ -23,6 +23,15 @@ import sunau
 import urllib.parse
 import wave
 
+# Decibel value to be considered -inf
+MIN_VOLUME_DB = -144
+# Linear value of MIN_VOLUME_DB
+MIN_VOLUME = 6.30957344480193e-08
+# Maximum linear value for the volume, equals to 1000%
+MAX_VOLUME = 10
+# Decibel value of MAX_VOLUME
+MAX_VOLUME_DB = 20
+
 
 def db_to_linear(value):
     """dB value to linear value conversion."""
@@ -31,7 +40,7 @@ def db_to_linear(value):
 
 def linear_to_db(value):
     """Linear value to dB value conversion."""
-    return 20 * math.log10(value) if value > 6.30957344480193e-08 else -144
+    return 20 * math.log10(value) if value > MIN_VOLUME else MIN_VOLUME_DB
 
 
 def fader_to_slider(value):
