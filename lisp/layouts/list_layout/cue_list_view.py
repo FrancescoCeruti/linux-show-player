@@ -83,8 +83,8 @@ class CueListView(QTreeWidget):
         # Get the starting-item row
         start_index = stream.readInt()
         new_index = self.indexAt(event.pos()).row()
-        if new_index < 0 or new_index >= len(self._model):
-            new_index = len(self._model) - 1
+        if not 0 <= new_index <= len(self._model):
+            new_index = len(self._model)
 
         if qApp.keyboardModifiers() == Qt.ControlModifier:
             cue = self._model.item(start_index)
