@@ -140,7 +140,22 @@ class CueLayout:
     def select_all(self):
         """Select all the cues"""
 
-    def show_context_menu(self, position):
+    @staticmethod
+    def show_context_menu(position):
+        menu_edit = MainWindow().menuEdit
+        menu_edit.move(position)
+        menu_edit.show()
+
+        # Adjust the menu position
+        desktop = qApp.desktop().availableGeometry()
+        menu_rect = menu_edit.geometry()
+
+        if menu_rect.bottom() > desktop.bottom():
+            menu_edit.move(menu_edit.x(), menu_edit.y() - menu_edit.height())
+        if menu_rect.right() > desktop.right():
+            menu_edit.move(menu_edit.x() - menu_edit.width(), menu_edit.y())
+
+    def show_cue_context_menu(self, position):
         menu = QMenu(self)
 
         cue_class = self.get_context_cue().__class__

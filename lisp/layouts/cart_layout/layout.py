@@ -211,6 +211,13 @@ class CartLayout(QTabWidget, CueLayout):
         for widget in self.widgets():
             widget.selected = not widget.selected
 
+    def contextMenuEvent(self, event):
+        # For some reason the currentWidget geometry does not include the
+        # vertical offset created by the tabBar.
+        geometry = self.currentWidget().geometry().translated(0, self.tabBar().geometry().height())
+        if geometry.contains(event.pos()):
+            self.show_context_menu(event.globalPos())
+
     def dragEnterEvent(self, event):
         if qApp.keyboardModifiers() == Qt.ControlModifier:
             event.setDropAction(Qt.MoveAction)
@@ -366,7 +373,7 @@ class CartLayout(QTabWidget, CueLayout):
 
     def _on_context_menu(self, widget, position):
         self.__context_widget = widget
-        self.show_context_menu(position)
+        self.show_cue_context_menu(position)
 
     def _edit_cue_action(self):
         self.edit_cue(self.get_context_cue())

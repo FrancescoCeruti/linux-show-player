@@ -302,11 +302,11 @@ class ListLayout(QWidget, CueLayout):
     def context_event(self, event):
         self._context_item = self.listView.itemAt(event.pos())
         if self._context_item is not None:
-            self.show_context_menu(event.globalPos())
+            self.show_cue_context_menu(event.globalPos())
 
     def contextMenuEvent(self, event):
         if self.listView.geometry().contains(event.pos()):
-            super().contextMenuEvent(event)
+            self.show_context_menu(event.globalPos())
 
     def remove_context_cue(self):
         self._model_adapter.remove(self.get_context_cue())

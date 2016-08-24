@@ -71,6 +71,9 @@ class CueListView(QTreeWidget):
 
         self.currentItemChanged.connect(self.__current_changed)
 
+        self.__guard = False
+        self.verticalScrollBar().rangeChanged.connect(self.__update_range)
+
     def dropEvent(self, event):
         # Decode mimedata information about the drag&drop event, since only
         # internal movement are allowed we assume the data format is correct
@@ -131,9 +134,10 @@ class CueListView(QTreeWidget):
         self.insertTopLevelItem(cue.index, item)
         self.__init_item(item, cue)
 
-        if cue.index == 0:
-            self.setCurrentItem(item)
-            self.setFocus()
+        # Select the added item and scroll to it
+        self.setCurrentItem(item)
+        # Ensure that the focus is set
+        self.setFocus()
 
     def __cue_moved(self, start, end):
         item = self.takeTopLevelItem(start)
@@ -161,3 +165,9 @@ class CueListView(QTreeWidget):
                 self.setItemWidget(item, index, widget(cue))
 
         self.updateGeometries()
+
+    def __update_range(self, min_, max_):
+        if not self.__guard:
+            self.__guard = True
+            self.verticalScrollBar().setMaximum(max_ + 1)
+            self.__guard = False

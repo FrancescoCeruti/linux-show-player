@@ -64,14 +64,14 @@
         <translation>Cue MIDI</translation>
     </message>
     <message>
-        <location filename="../volume_control.py" line="42"/>
+        <location filename="../volume_control.py" line="46"/>
         <source>Volume Control</source>
         <translation>Controllo Volume</translation>
     </message>
     <message>
         <location filename="../seek_cue.py" line="36"/>
         <source>Seek Cue</source>
-        <translation type="unfinished"></translation>
+        <translation>Seek Cue</translation>
     </message>
     <message>
         <location filename="../collection_cue.py" line="35"/>
@@ -128,7 +128,7 @@
 <context>
     <name>SettingsPageName</name>
     <message>
-        <location filename="../volume_control.py" line="136"/>
+        <location filename="../volume_control.py" line="140"/>
         <source>Volume Settings</source>
         <translation>Impostazioni Volume</translation>
     </message>
@@ -174,62 +174,57 @@
 <context>
     <name>VolumeControl</name>
     <message>
-        <location filename="../volume_control.py" line="114"/>
+        <location filename="../volume_control.py" line="118"/>
         <source>Error during cue execution</source>
         <translation>Errore durante l&apos;esecuzione della cue</translation>
     </message>
     <message>
-        <location filename="../volume_control.py" line="139"/>
+        <location filename="../volume_control.py" line="143"/>
         <source>Linear</source>
         <translation>Lineare</translation>
     </message>
     <message>
-        <location filename="../volume_control.py" line="141"/>
+        <location filename="../volume_control.py" line="145"/>
         <source>Quadratic</source>
-        <translation type="unfinished">Quadratica</translation>
+        <translation>Quadratica</translation>
     </message>
     <message>
-        <location filename="../volume_control.py" line="143"/>
+        <location filename="../volume_control.py" line="147"/>
         <source>Quadratic2</source>
-        <translation type="unfinished">Quadratica2</translation>
+        <translation>Quadratica2</translation>
     </message>
     <message>
-        <location filename="../volume_control.py" line="210"/>
+        <location filename="../volume_control.py" line="226"/>
         <source>Cue</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../volume_control.py" line="211"/>
+        <location filename="../volume_control.py" line="227"/>
         <source>Click to select</source>
         <translation>Clicca per selezionare</translation>
     </message>
     <message>
-        <location filename="../volume_control.py" line="212"/>
+        <location filename="../volume_control.py" line="228"/>
         <source>Not selected</source>
         <translation>Non slezionata</translation>
     </message>
     <message>
-        <location filename="../volume_control.py" line="213"/>
-        <source>Volume</source>
-        <translation>Volume</translation>
-    </message>
-    <message>
-        <location filename="../volume_control.py" line="214"/>
+        <location filename="../volume_control.py" line="229"/>
         <source>Volume to reach</source>
-        <translation>Volume da ranggiungere</translation>
+        <translation>Volume da raggiungere</translation>
     </message>
     <message>
-        <location filename="../volume_control.py" line="215"/>
+        <location filename="../volume_control.py" line="230"/>
         <source>Fade</source>
         <translation>Dissolvenza</translation>
     </message>
     <message>
-        <location filename="../volume_control.py" line="216"/>
+        <location filename="../volume_control.py" line="231"/>
         <source>Time (sec)</source>
         <translation>Durata (sec)</translation>
     </message>
     <message>
-        <location filename="../volume_control.py" line="217"/>
+        <location filename="../volume_control.py" line="232"/>
         <source>Curve</source>
         <translation>Curva</translation>
     </message>

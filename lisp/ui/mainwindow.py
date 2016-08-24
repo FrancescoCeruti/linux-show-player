@@ -200,22 +200,6 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         self.deselectAll.triggered.connect(self.layout.deselect_all)
         self.invertSelection.triggered.connect(self.layout.invert_selection)
 
-    def contextMenuEvent(self, event):
-        if self.layout.geometry().contains(event.pos()):
-            self.menuEdit.move(event.globalPos())
-            self.menuEdit.show()
-
-            # Adjust the menu position
-            desktop = qApp.desktop().availableGeometry()
-            menu_rect = self.menuEdit.geometry()
-
-            if menu_rect.bottom() > desktop.bottom():
-                self.menuEdit.move(self.menuEdit.x(),
-                                   self.menuEdit.y() - self.menuEdit.height())
-            if menu_rect.right() > desktop.right():
-                self.menuEdit.move(self.menuEdit.x() - self.menuEdit.width(),
-                                   self.menuEdit.y())
-
     def closeEvent(self, event):
         self._exit()
         event.ignore()
