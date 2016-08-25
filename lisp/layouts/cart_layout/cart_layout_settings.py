@@ -22,6 +22,7 @@ from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QCheckBox, QGridLayout, \
     QSpinBox, QLabel
 
 from lisp.ui.settings.settings_page import SettingsPage
+from lisp.utils.util import translate
 
 
 class CartLayoutSettings(SettingsPage):
@@ -49,11 +50,13 @@ class CartLayoutSettings(SettingsPage):
         self.showAccurate = QCheckBox(self.behaviorsGroup)
         self.behaviorsGroup.layout().addWidget(self.showAccurate)
 
+        self.showVolume = QCheckBox(self.behaviorsGroup)
+        self.behaviorsGroup.layout().addWidget(self.showVolume)
+
         self.autoAddPage = QCheckBox(self.behaviorsGroup)
         self.behaviorsGroup.layout().addWidget(self.autoAddPage)
 
         self.gridSizeGroup = QGroupBox(self)
-        self.gridSizeGroup.setTitle('Grid size')
         self.gridSizeGroup.setLayout(QGridLayout())
         self.layout().addWidget(self.gridSizeGroup)
 
@@ -77,42 +80,48 @@ class CartLayoutSettings(SettingsPage):
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.behaviorsGroup.setTitle('Default behaviors')
-        self.countdownMode.setText('Countdown mode')
-        self.showSeek.setText('Show seek sliders')
-        self.showDbMeters.setText('Show db-meters')
-        self.showAccurate.setText('Show accurate time')
-        self.autoAddPage.setText('Automatically add new page')
-        self.columnsLabel.setText('Number of columns')
-        self.rowsLabel.setText('Number of rows')
+        self.behaviorsGroup.setTitle(
+            translate('CartLayout', 'Default behaviors'))
+        self.countdownMode.setText(translate('CartLayout', 'Countdown mode'))
+        self.showSeek.setText(translate('CartLayout', 'Show seek-bars'))
+        self.showDbMeters.setText(translate('CartLayout', 'Show dB-meters'))
+        self.showAccurate.setText(translate('CartLayout', 'Show accurate time'))
+        self.showVolume.setText(translate('CartLayout', 'Show volume'))
+        self.autoAddPage.setText(
+            translate('CartLayout', 'Automatically add new page'))
+        self.gridSizeGroup.setTitle(translate('CartLayout', 'Grid size'))
+        self.columnsLabel.setText(translate('CartLayout', 'Number of columns'))
+        self.rowsLabel.setText(translate('CartLayout', 'Number of rows'))
 
     def get_settings(self):
-        conf = {}
-
-        conf['gridcolumns'] = str(self.columnsSpin.value())
-        conf['gridrows'] = str(self.rowsSpin.value())
-        conf['showdbmeters'] = str(self.showDbMeters.isChecked())
-        conf['showseek'] = str(self.showSeek.isChecked())
-        conf['showaccurate'] = str(self.showAccurate.isChecked())
-        conf['countdown'] = str(self.countdownMode.isChecked())
-        conf['autoaddpage'] = str(self.autoAddPage.isChecked())
+        conf = {
+            'gridcolumns': str(self.columnsSpin.value()),
+            'gridrows': str(self.rowsSpin.value()),
+            'showdbmeters': str(self.showDbMeters.isChecked()),
+            'showseek': str(self.showSeek.isChecked()),
+            'showaccurate': str(self.showAccurate.isChecked()),
+            'showvolume': str(self.showVolume.isChecked()),
+            'countdown': str(self.countdownMode.isChecked()),
+            'autoaddpage': str(self.autoAddPage.isChecked())
+        }
 
         return {'CartLayout': conf}
 
     def load_settings(self, settings):
-        if 'CartLayout' in settings:
-            settings = settings['CartLayout']
-            if 'gridcolumns' in settings:
-                self.columnsSpin.setValue(int(settings['gridcolumns']))
-            if 'gridrows' in settings:
-                self.rowsSpin.setValue(int(settings['gridrows']))
-            if 'showsseek' in settings:
-                self.showSeek.setChecked(settings['showseek'] == 'True')
-            if 'showdbmeter' in settings:
-                self.showDbMeters.setChecked(settings['showdbmeters'] == 'True')
-            if 'showaccurate' in settings:
-                self.showAccurate.setChecked(settings['showaccurate'] == 'True')
-            if 'countdown' in settings:
-                self.countdownMode.setChecked(settings['countdown'] == 'True')
-            if 'autoaddpage' in settings:
-                self.autoAddPage.setChecked(settings['autoaddpage'] == 'True')
+        settings = settings.get('CartLayout', {})
+        if 'gridcolumns' in settings:
+            self.columnsSpin.setValue(int(settings['gridcolumns']))
+        if 'gridrows' in settings:
+            self.rowsSpin.setValue(int(settings['gridrows']))
+        if 'showseek' in settings:
+            self.showSeek.setChecked(settings['showseek'] == 'True')
+        if 'showdbmeter' in settings:
+            self.showDbMeters.setChecked(settings['showdbmeters'] == 'True')
+        if 'showaccurate' in settings:
+            self.showAccurate.setChecked(settings['showaccurate'] == 'True')
+        if 'showvolume' in settings:
+            self.showVolume.setChecked(settings['showvolume'] == 'True')
+        if 'countdown' in settings:
+            self.countdownMode.setChecked(settings['countdown'] == 'True')
+        if 'autoaddpage' in settings:
+            self.autoAddPage.setChecked(settings['autoaddpage'] == 'True')

@@ -18,7 +18,8 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5 import QtCore
-from PyQt5.QtCore import pyqtSignal, Qt, QDataStream, QIODevice
+from PyQt5.QtCore import pyqtSignal, Qt, QDataStream, QIODevice, \
+    QT_TRANSLATE_NOOP
 from PyQt5.QtGui import QKeyEvent, QContextMenuEvent
 from PyQt5.QtWidgets import QTreeWidget, QHeaderView, qApp
 
@@ -30,6 +31,9 @@ from lisp.layouts.list_layout.listwidgets import CueStatusIcon, PreWaitWidget, \
 
 
 # TODO: here we should build a custom qt model/view
+from lisp.utils.util import translate
+
+
 class CueListView(QTreeWidget):
 
     key_event = pyqtSignal(QKeyEvent)
@@ -37,9 +41,14 @@ class CueListView(QTreeWidget):
     drop_move_event = QtCore.pyqtSignal(int, int)
     drop_copy_event = QtCore.pyqtSignal(int, int)
 
-    H_NAMES = ['', '#', 'Cue', 'Pre wait', 'Action', 'Post wait', '']
-    H_WIDGETS = [CueStatusIcon, None, None, PreWaitWidget, CueTimeWidget,
-                 PostWaitWidget, NextActionIcon]
+    HEADER_NAMES = ['', '#',
+                    QT_TRANSLATE_NOOP('ListLayoutHeader', 'Cue'),
+                    QT_TRANSLATE_NOOP('ListLayoutHeader', 'Pre wait'),
+                    QT_TRANSLATE_NOOP('ListLayoutHeader', 'Action'),
+                    QT_TRANSLATE_NOOP('ListLayoutHeader', 'Post wait'),
+                    '']
+    HEADER_WIDGETS = [CueStatusIcon, None, None, PreWaitWidget, CueTimeWidget,
+                      PostWaitWidget, NextActionIcon]
 
     def __init__(self, cue_model, parent=None):
         """
@@ -53,7 +62,8 @@ class CueListView(QTreeWidget):
         self._model.model_reset.connect(self.__model_reset)
         self.__item_moving = False
 
-        self.setHeaderLabels(CueListView.H_NAMES)
+        self.setHeaderLabels(
+            [translate('ListLayoutHeader', h) for h in CueListView.HEADER_NAMES])
         self.header().setDragEnabled(False)
         self.header().setStretchLastSection(False)
         self.header().setSectionResizeMode(QHeaderView.Fixed)
@@ -61,7 +71,7 @@ class CueListView(QTreeWidget):
         self.header().setSectionResizeMode(2, QHeaderView.Stretch)
 
         self.setColumnWidth(0, 40)
-        self.setColumnWidth(len(CueListView.H_NAMES) - 1, 18)
+        self.setColumnWidth(len(CueListView.HEADER_NAMES) - 1, 18)
         self.setSelectionMode(self.SingleSelection)
         self.setDragDropMode(self.InternalMove)
         self.setAlternatingRowColors(True)
@@ -159,8 +169,8 @@ class CueListView(QTreeWidget):
         self.clear()
 
     def __init_item(self, item, cue):
-        item.name_column = CueListView.H_NAMES.index('Cue')
-        for index, widget in enumerate(CueListView.H_WIDGETS):
+        item.name_column = CueListView.HEADER_NAMES.index('Cue')
+        for index, widget in enumerate(CueListView.HEADER_WIDGETS):
             if widget is not None:
                 self.setItemWidget(item, index, widget(cue))
 

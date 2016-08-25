@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="it" sourcelanguage="en">
+<!DOCTYPE TS>
+<TS version="2.0" language="it" sourcelanguage="en">
 <context>
     <name>CollectionCue</name>
     <message>
-        <location filename="../collection_cue.py" line="71"/>
+        <location filename="../collection_cue.py" line="77"/>
         <source>Add</source>
         <translation>Aggiungi</translation>
     </message>
     <message>
-        <location filename="../collection_cue.py" line="75"/>
+        <location filename="../collection_cue.py" line="81"/>
         <source>Remove</source>
         <translation>Rimuovi</translation>
+    </message>
+    <message>
+        <location filename="../collection_cue.py" line="144"/>
+        <source>Cue</source>
+        <translation>Cue</translation>
+    </message>
+    <message>
+        <location filename="../collection_cue.py" line="144"/>
+        <source>Action</source>
+        <translation>Azione</translation>
     </message>
 </context>
 <context>
@@ -74,7 +85,7 @@
         <translation>Seek Cue</translation>
     </message>
     <message>
-        <location filename="../collection_cue.py" line="35"/>
+        <location filename="../collection_cue.py" line="36"/>
         <source>Collection Cue</source>
         <translation>Collezione</translation>
     </message>
@@ -153,7 +164,7 @@
         <translation>Impostazioni MIDI</translation>
     </message>
     <message>
-        <location filename="../collection_cue.py" line="55"/>
+        <location filename="../collection_cue.py" line="56"/>
         <source>Edit Collection</source>
         <translation>Modifica Collezione</translation>
     </message>

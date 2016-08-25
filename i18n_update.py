@@ -25,7 +25,7 @@ import subprocess
 import sys
 
 parser = argparse.ArgumentParser(description='Generate ts files for LiSP')
-parser.add_argument('-l', '--locales', nargs='*', required=True,
+parser.add_argument('locales', nargs='+',
                     help='Locales of witch generate translations')
 parser.add_argument('-n', '--noobsolete', help='Discard obsolete strings',
                     action='store_true')

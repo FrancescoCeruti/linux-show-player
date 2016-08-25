@@ -18,7 +18,7 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>
 
 from PyQt5 import QtCore
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QDialog, QGridLayout, QLabel, QWidget, QTabWidget, \
     QTextBrowser, QDialogButtonBox
@@ -29,6 +29,27 @@ from lisp.utils.util import translate, file_path
 
 class About(QDialog):
     ICON = file_path(__file__, "icon.png")
+
+    LICENSE = '''
+    <center>
+        Linux Show Player is free software: you can redistribute it and/or
+        modify it under the terms of the GNU General Public License as published by
+        the Free Software Foundation, either version 3 of the License, or
+        (at your option) any later version.<br />
+        <br />
+        Linux Show Player is distributed in the hope that it will be useful,
+        but WITHOUT ANY WARRANTY; without even the implied warranty of
+        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+        GNU General Public License for more details.
+    </center>
+    '''
+
+    DESCRIPTION = QT_TRANSLATE_NOOP('AboutDialog',
+        'Linux Show Player is a cue-player designed for stage productions.')
+    WEB_SITE = 'http://linux-show-player.sourceforge.net'
+    USER_GROUP = 'http://groups.google.com/group/linux-show-player---users'
+    SOURCE_CODE = 'https://github.com/FrancescoCeruti/linux-show-player'
+
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -62,7 +83,16 @@ class About(QDialog):
 
         self.info = QTextBrowser(self)
         self.info.setOpenExternalLinks(True)
-        self.info.setHtml(self.INFO)
+        self.info.setHtml('''
+            <center><br />{0}<br /><br />
+            <a href="{1}">{2}</a><br />
+            <a href="{3}">{4}</a><br />
+            <a href="{5}">{6}</a><br /><center>'''.format(
+                translate('AboutDialog', self.DESCRIPTION),
+                self.WEB_SITE, translate('AboutDialog', 'Web site'),
+                self.USER_GROUP, translate('AboutDialog', 'Users  group'),
+                self.SOURCE_CODE, translate('AboutDialog', 'Source code'))
+        )
         self.tabWidget.addTab(self.info, translate('AboutDialog', 'Info'))
 
         self.license = QTextBrowser(self)
@@ -72,7 +102,12 @@ class About(QDialog):
 
         self.contributors = QTextBrowser(self)
         self.contributors.setOpenExternalLinks(True)
-        self.contributors.setHtml(self.CONTRIBUTORS)
+        self.contributors.setHtml('''
+            <center><b>{0}</b><br />
+            Francesco Ceruti - <a href="mailto:ceppofrancy@gmail.com">ceppofrancy@gmail.com</a>
+            <center>'''.format(
+                translate('AboutDialog', 'Author:'))
+        )
         self.tabWidget.addTab(self.contributors,
                               translate('AboutDialog', 'Contributors'))
 
@@ -90,33 +125,3 @@ class About(QDialog):
         self.layout().setRowStretch(3, 3)
 
         self.buttons.setFocus()
-
-    LICENSE = '''
-<center>
-    Linux Show Player is free software: you can redistribute it and/or
-    modify it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.<br />
-    <br />
-    Linux Show Player is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-</center>'''
-
-    INFO = '''
-<center><br /> ''' + translate('AboutDialog', '''\
-    Linux Show Player is a cue-player designed for stage productions.''') + '''<br \>
-</center>
-<center><br />''' + \
-translate('AboutDialog', 'Web site:') + '<a href="http://linux-show-player.sourceforge.net">linux-show-player.sourceforge.net</a><br \>' + \
-translate('AboutDialog', 'Users  group:') + '<a href="http://groups.google.com/group/linux-show-player---users">groups.google.com</a><br \>' + \
-translate('AboutDialog', 'Source code:') + '''<a href="https://github.com/FrancescoCeruti/linux-show-player">GitHub</a>
-</center>'''
-
-    CONTRIBUTORS = '''
-<center>
-    <b>''' + translate('AboutDialog', 'Author:') + '''</b><br />
-    Francesco Ceruti - <a href="mailto:ceppofrancy@gmail.com">ceppofrancy@gmail.com</a><br \>
-</center>
-'''

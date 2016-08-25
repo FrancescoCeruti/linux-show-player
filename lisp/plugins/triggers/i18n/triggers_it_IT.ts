@@ -44,17 +44,17 @@
         <translation>Rimuovi</translation>
     </message>
     <message>
-        <location filename="../triggers_settings.py" line="160"/>
+        <location filename="../triggers_settings.py" line="136"/>
         <source>Trigger</source>
         <translation>Evento</translation>
     </message>
     <message>
-        <location filename="../triggers_settings.py" line="160"/>
+        <location filename="../triggers_settings.py" line="136"/>
         <source>Cue</source>
         <translation>Cue</translation>
     </message>
     <message>
-        <location filename="../triggers_settings.py" line="160"/>
+        <location filename="../triggers_settings.py" line="136"/>
         <source>Action</source>
         <translation>Azione</translation>
     </message>

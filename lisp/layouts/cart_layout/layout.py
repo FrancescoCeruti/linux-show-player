@@ -17,7 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import QTabWidget, QAction, QInputDialog, qApp, \
     QMessageBox
 
@@ -37,21 +37,22 @@ from lisp.ui.settings.pages.cue_appearance import Appearance
 from lisp.ui.settings.pages.cue_general import CueGeneralSettings
 from lisp.ui.settings.pages.media_cue_settings import MediaCueSettings
 from lisp.utils.configuration import config
+from lisp.utils.util import translate
 
 AppSettings.register_settings_widget(CartLayoutSettings)
 
 
 class CartLayout(QTabWidget, CueLayout):
     NAME = 'Cart Layout'
-    DESCRIPTION = '''
-                    This layout organize the cues in multiple grid-like pages:
-                    <ul>
-                        <li>Cues are displayed as buttons
-                        <li>Clik to execute cues
-                        <li>SHIFT+Clik open edit dialog
-                        <li>CTRL+Drag&Drop to move cues
-                        <li>SHIFT+Drag&Drop to copy cues
-                    </ul> '''
+    DESCRIPTION = translate('LayoutDescription',
+                            'Organize cues in grid like pages')
+    DETAILS = [
+        QT_TRANSLATE_NOOP('LayoutDetails', 'Click a cue to run it'),
+        QT_TRANSLATE_NOOP('LayoutDetails', 'SHIFT + Click to edit a cue'),
+        QT_TRANSLATE_NOOP('LayoutDetails', 'SHIFT + Drag&Drop to copy cues'),
+        QT_TRANSLATE_NOOP('LayoutDetails', 'CTRL + Drag&Drop to move cues'),
+        QT_TRANSLATE_NOOP('LayoutDetails', 'CTRL + Click to select a cue')
+    ]
 
     def __init__(self, cue_model, **kwargs):
         super().__init__(cue_model=cue_model, **kwargs)
@@ -161,29 +162,36 @@ class CartLayout(QTabWidget, CueLayout):
         self.add_page()
 
     def retranslateUi(self):
-        self.new_page_action.setText("Add page")
-        self.new_pages_action.setText("Add pages")
-        self.rm_current_page_action.setText('Remove current page')
-        self.countdown_mode.setText('Countdown mode')
-        self.show_seek_action.setText('Show seek bars')
-        self.show_dbmeter_action.setText('Show dB-meters')
-        self.show_volume_action.setText('Show volume')
-        self.show_accurate_action.setText('Accurate time')
+        self.new_page_action.setText(translate('CartLayout', 'Add page'))
+        self.new_pages_action.setText(translate('CartLayout', 'Add pages'))
+        self.rm_current_page_action.setText(
+            translate('CartLayout', 'Remove current page'))
+        self.countdown_mode.setText(translate('CartLayout', 'Countdown mode'))
+        self.show_seek_action.setText(translate('CartLayout', 'Show seek-bars'))
+        self.show_dbmeter_action.setText(
+            translate('CartLayout', 'Show dB-meters'))
+        self.show_volume_action.setText(translate('CartLayout', 'Show volume'))
+        self.show_accurate_action.setText(
+            translate('CartLayout', 'Show accurate time'))
 
-        self.edit_action.setText('Edit cue')
-        self.remove_action.setText('Remove')
-        self.select_action.setText('Select')
-        self.play_action.setText('Play')
-        self.pause_action.setText('Pause')
-        self.stop_action.setText('Stop')
+        self.edit_action.setText(translate('CartLayout', 'Edit cue'))
+        self.remove_action.setText(translate('CartLayout', 'Remove'))
+        self.select_action.setText(translate('CartLayout', 'Select'))
+        self.play_action.setText(translate('CartLayout', 'Play'))
+        self.pause_action.setText(translate('CartLayout', 'Pause'))
+        self.stop_action.setText(translate('CartLayout', 'Stop'))
 
     @CueLayout.model_adapter.getter
     def model_adapter(self):
         return self._model_adapter
 
     def add_pages(self):
-        pages, accepted = QInputDialog.getInt(self, 'Input', 'Number of Pages:',
-                                              value=1, min=1, max=10)
+        pages, accepted = QInputDialog.getInt(
+            self,
+            translate('CartLayout', 'Add pages'),
+            translate('CartLayout', 'Number of Pages:'),
+            value=1, min=1, max=10)
+
         if accepted:
             for _ in range(pages):
                 self.add_page()
@@ -254,16 +262,17 @@ class CartLayout(QTabWidget, CueLayout):
 
     def remove_current_page(self):
         if self.__pages:
-            msgBox = QMessageBox()
-            msgBox.setIcon(msgBox.Question)
-            msgBox.setWindowTitle("Warning")
-            msgBox.setText(
-                "Removing the current page every cue contained will be lost.")
-            msgBox.setInformativeText("Are you sure to continue?")
-            msgBox.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
-            msgBox.setDefaultButton(QMessageBox.No)
+            confirm = QMessageBox()
+            confirm.setIcon(confirm.Question)
+            confirm.setWindowTitle(translate('CartLayout', 'Warning'))
+            confirm.setText(
+                translate('CartLayout', 'Every cue in the page will be lost.'))
+            confirm.setInformativeText(
+                translate('CartLayout', 'Are you sure to continue?'))
+            confirm.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+            confirm.setDefaultButton(QMessageBox.No)
 
-            if msgBox.exec_() == QMessageBox.Yes:
+            if confirm.exec_() == QMessageBox.Yes:
                 self.remove_page(self.currentIndex())
 
     def remove_page(self, page):
@@ -277,8 +286,9 @@ class CartLayout(QTabWidget, CueLayout):
             page_widget.copy_drop_event.disconnect()
 
             # Rename every successive tab accordingly
+            text = translate('CartLayout', 'Page') + ' {}'
             for n in range(page, self.count()):
-                self.setTabText(n, 'Page ' + str(n + 1))
+                self.setTabText(n, text.format(n + 1))
 
     def widgets(self):
         for page in self.__pages:

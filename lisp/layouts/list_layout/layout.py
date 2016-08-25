@@ -19,7 +19,7 @@
 
 from enum import Enum
 
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtGui import QKeySequence
 from PyQt5.QtWidgets import QWidget, QAction, qApp, QGridLayout, \
     QPushButton, QSizePolicy
@@ -42,6 +42,7 @@ from lisp.ui.settings.pages.cue_appearance import Appearance
 from lisp.ui.settings.pages.cue_general import CueGeneralSettings
 from lisp.ui.settings.pages.media_cue_settings import MediaCueSettings
 from lisp.utils.configuration import config
+from lisp.utils.util import translate
 
 AppSettings.register_settings_widget(ListLayoutSettings)
 
@@ -53,14 +54,15 @@ class EndListBehavior(Enum):
 
 class ListLayout(QWidget, CueLayout):
     NAME = 'List Layout'
-    DESCRIPTION = '''
-        This layout organize the cues in a list:
-        <ul>
-            <li>Space to execute cues
-            <li>SHIFT+Space or Double-Click to open edit dialog
-            <li>Drag&Drop to move cues
-            <li>CTRL+Drag&Drop to copy cues
-        </ul>'''
+    DESCRIPTION = QT_TRANSLATE_NOOP('LayoutDescription',
+                                    'Organize the cues in a list')
+    DETAILS = [
+        QT_TRANSLATE_NOOP('LayoutDetails', 'Space to execute the current cue'),
+        QT_TRANSLATE_NOOP('LayoutDetails',
+                          'SHIFT + Space or Double-Click to edit a cue'),
+        QT_TRANSLATE_NOOP('LayoutDetails', 'CTRL + Drag&Drop to copy cues'),
+        QT_TRANSLATE_NOOP('LayoutDetails', 'Drag&Drop to move cues')
+    ]
 
     def __init__(self, cue_model, **kwargs):
         super().__init__(cue_model=cue_model, **kwargs)
@@ -187,15 +189,19 @@ class ListLayout(QWidget, CueLayout):
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.showPlayingAction.setText("Show playing")
-        self.showDbMeterAction.setText("Show Db-meters")
-        self.showSeekAction.setText("Show seek bars")
-        self.accurateTimingAction.setText('Accurate timing')
-        self.autoNextAction.setText('Auto-change current cue')
+        self.showPlayingAction.setText(
+            translate('ListLayout', 'Show playing cues'))
+        self.showDbMeterAction.setText(
+            translate('ListLayout', 'Show dB-meters'))
+        self.showSeekAction.setText(translate('ListLayout', 'Show seek-bars'))
+        self.accurateTimingAction.setText(
+            translate('ListLayout', 'Show accurate time'))
+        self.autoNextAction.setText(
+            translate('ListLayout', 'Auto-select next cue'))
 
-        self.edit_action.setText('Edit cue')
-        self.remove_action.setText('Remove')
-        self.select_action.setText('Select')
+        self.edit_action.setText(translate('ListLayout', 'Edit cue'))
+        self.remove_action.setText(translate('ListLayout', 'Remove'))
+        self.select_action.setText(translate('ListLayout', 'Select'))
 
     @CueLayout.model_adapter.getter
     def model_adapter(self):

@@ -35,8 +35,10 @@ from lisp.utils.util import greatest_common_superclass
 class CueLayout:
     # Layout name
     NAME = 'Base'
-    # Layout info (html)
-    DESCRIPTION = '<p>No description</p>'
+    # Layout short description
+    DESCRIPTION = 'No description'
+    # Layout details (some useful info)
+    DETAILS = ''
 
     cm_registry = CueMenuRegistry()
 

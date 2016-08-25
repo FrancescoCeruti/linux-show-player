@@ -32,7 +32,6 @@ class LayoutSelect(QDialog):
         super().__init__(parent)
 
         self.filepath = ''
-        self.layouts = {}
 
         self.setWindowModality(Qt.ApplicationModal)
         self.setWindowTitle(translate('LayoutSelect', 'Layout selection'))
@@ -43,12 +42,13 @@ class LayoutSelect(QDialog):
         self.setLayout(QGridLayout(self))
         self.layout().setContentsMargins(5, 5, 5, 5)
 
-        self.layoutBox = QComboBox(self)
-        self.layout().addWidget(self.layoutBox, 0, 0)
+        self.layoutCombo = QComboBox(self)
+        self.layoutCombo.currentIndexChanged.connect(self.show_description)
+        self.layout().addWidget(self.layoutCombo, 0, 0)
 
-        self.layButton = QPushButton(self)
-        self.layButton.setText(translate('LayoutSelect', 'Select layout'))
-        self.layout().addWidget(self.layButton, 0, 1)
+        self.confirmButton = QPushButton(self)
+        self.confirmButton.setText(translate('LayoutSelect', 'Select layout'))
+        self.layout().addWidget(self.confirmButton, 0, 1)
 
         self.fileButton = QPushButton(self)
         self.fileButton.setText(translate('LayoutSelect', 'Open file'))
@@ -67,32 +67,32 @@ class LayoutSelect(QDialog):
         self.layout().addWidget(self.description, 2, 0, 1, 3)
 
         for layout_class in layouts.get_layouts():
-            self.layoutBox.addItem(layout_class.NAME)
-            self.layouts[layout_class.NAME] = (layout_class,
-                                               layout_class.DESCRIPTION)
+            self.layoutCombo.addItem(layout_class.NAME, layout_class)
 
-        if self.layoutBox.count() == 0:
+        if self.layoutCombo.count() == 0:
             raise Exception('No layout installed!')
 
-        self.show_description(self.layoutBox.currentText())
-
-        self.layoutBox.currentTextChanged.connect(self.show_description)
-        self.layButton.clicked.connect(self.accept)
+        self.confirmButton.clicked.connect(self.accept)
         self.fileButton.clicked.connect(self.open_file)
 
     def selected(self):
-        return self.layouts[self.layoutBox.currentText()][0]
+        return self.layoutCombo.currentData()
 
-    def show_description(self, layout_name):
-        self.description.setHtml('<center><h2>' + layout_name +
-                                 '</h2></center><br>' +
-                                 self.layouts[layout_name][1])
+    def show_description(self, index):
+        layout = self.layoutCombo.currentData()
+
+        details = '<ul>'
+        for detail in layout.DETAILS:
+            details += '<li>' + translate('LayoutDetails', detail)
+        details += '</ul>'
+
+        self.description.setHtml(
+            '<center><h2>' + layout.NAME + '</h2>'
+            '<i><h4>' + translate('LayoutDescription', layout.DESCRIPTION) +
+            '</h4></i></center>' + details)
 
     def open_file(self):
         path, _ = QFileDialog.getOpenFileName(self, filter='*.lsp',
                                               directory=os.getenv('HOME'))
         self.filepath = path
         self.accept()
-
-    def closeEvent(self, e):
-        e.ignore()

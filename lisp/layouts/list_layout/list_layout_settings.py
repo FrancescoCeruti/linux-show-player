@@ -23,6 +23,7 @@ from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QCheckBox, QComboBox, \
     QHBoxLayout, QLabel, QKeySequenceEdit
 
 from lisp.ui.settings.settings_page import SettingsPage
+from lisp.utils.util import translate
 
 
 class ListLayoutSettings(SettingsPage):
@@ -34,7 +35,6 @@ class ListLayoutSettings(SettingsPage):
         self.layout().setAlignment(Qt.AlignTop)
 
         self.behaviorsGroup = QGroupBox(self)
-        self.behaviorsGroup.setTitle('Default behaviors')
         self.behaviorsGroup.setLayout(QVBoxLayout())
         self.layout().addWidget(self.behaviorsGroup)
 
@@ -58,7 +58,9 @@ class ListLayoutSettings(SettingsPage):
         self.endListLabel = QLabel(self.behaviorsGroup)
         self.endListLayout.addWidget(self.endListLabel)
         self.endListBehavior = QComboBox(self.behaviorsGroup)
-        self.endListBehavior.addItems(['Stop', 'Restart'])
+        self.endListBehavior.addItem(translate('ListLayout', 'Stop'), 'Stop')
+        self.endListBehavior.addItem(translate('ListLayout', 'Restart'),
+                                     'Restart')
         self.endListLayout.addWidget(self.endListBehavior)
         self.endListLayout.setStretch(0, 2)
         self.endListLayout.setStretch(1, 5)
@@ -75,14 +77,15 @@ class ListLayoutSettings(SettingsPage):
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.behaviorsGroup.setTitle('Default behaviors')
-        self.showPlaying.setText('Show playing-sidebar')
-        self.showDbMeters.setText('Show db-meters')
-        self.showAccurate.setText('Show accurate time')
-        self.showSeek.setText('Show seek sliders')
-        self.autoNext.setText('Automatically select the next cue')
-        self.endListLabel.setText('At list end:')
-        self.goKeyLabel.setText('Go shortcuts:')
+        self.behaviorsGroup.setTitle(
+            translate('ListLayout', 'Default behaviors'))
+        self.showPlaying.setText(translate('ListLayout', 'Show playing cues'))
+        self.showDbMeters.setText(translate('ListLayout', 'Show dB-meters'))
+        self.showAccurate.setText(translate('ListLayout', 'Show accurate time'))
+        self.showSeek.setText(translate('ListLayout', 'Show seek-bars'))
+        self.autoNext.setText(translate('ListLayout', 'Auto-select next cue'))
+        self.endListLabel.setText(translate('ListLayout', 'At list end:'))
+        self.goKeyLabel.setText(translate('ListLayout', 'Go key:'))
 
     def get_settings(self):
         settings = {
@@ -91,7 +94,7 @@ class ListLayoutSettings(SettingsPage):
             'showseek': str(self.showSeek.isChecked()),
             'showaccurate': str(self.showAccurate.isChecked()),
             'autocontinue': str(self.autoNext.isChecked()),
-            'endlist': str(self.endListBehavior.currentText()),
+            'endlist': str(self.endListBehavior.currentData()),
             'gokey': self.goKeyEdit.keySequence().toString(
                 QKeySequence.NativeText)}
 
@@ -105,7 +108,8 @@ class ListLayoutSettings(SettingsPage):
         self.showAccurate.setChecked(settings.get('showaccurate') == 'True')
         self.showSeek.setChecked(settings.get('showseek') == 'True')
         self.autoNext.setChecked(settings.get('autocontinue') == 'True')
-        self.endListBehavior.setCurrentText(settings.get('endlist'))
+        self.endListBehavior.setCurrentText(
+            translate('ListLayout', settings.get('endlist', '')))
         self.goKeyEdit.setKeySequence(
             QKeySequence(settings.get('gokey', 'Space'),
                          QKeySequence.NativeText))

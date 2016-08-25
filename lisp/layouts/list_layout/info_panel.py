@@ -20,6 +20,8 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QTextEdit, QLineEdit, QVBoxLayout
 
+from lisp.utils.util import translate
+
 
 class InfoPanel(QWidget):
     def __init__(self, **kwargs):
@@ -31,7 +33,6 @@ class InfoPanel(QWidget):
 
         # cue name
         self.cueName = QLineEdit(self)
-        self.cueName.setPlaceholderText('Cue name')
         self.cueName.setFocusPolicy(Qt.NoFocus)
         self.cueName.setReadOnly(True)
         self.layout().addWidget(self.cueName)
@@ -39,10 +40,17 @@ class InfoPanel(QWidget):
         # cue description
         self.cueDescription = QTextEdit(self)
         self.cueDescription.setObjectName('InfoPanelDescription')
-        self.cueDescription.setPlaceholderText('Cue description')
         self.cueDescription.setFocusPolicy(Qt.NoFocus)
         self.cueDescription.setReadOnly(True)
         self.layout().addWidget(self.cueDescription)
+
+        self.retranslateUi()
+
+    def retranslateUi(self):
+        self.cueName.setPlaceholderText(
+            translate('ListLayoutInfoPanel', 'Cue name'))
+        self.cueDescription.setPlaceholderText(
+            translate('ListLayoutInfoPanel', 'Cue description'))
 
     def cue_changed(self, cue):
         if self.__cue is not None:

@@ -21,6 +21,8 @@ from PyQt5.QtCore import Qt, QSize
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QWidget, QGridLayout, QPushButton, QSizePolicy
 
+from lisp.utils.util import translate
+
 
 class ControlButtons(QWidget):
     def __init__(self, **kwargs):
@@ -34,7 +36,6 @@ class ControlButtons(QWidget):
         iconSize = QSize(48, 48)
 
         self.stopButton = QPushButton(self)
-        self.stopButton.setToolTip('Stop all')
         self.stopButton.setFocusPolicy(Qt.NoFocus)
         self.stopButton.setSizePolicy(hPolicy, vPolicy)
         self.stopButton.setIcon(QIcon.fromTheme("media-playback-stop"))
@@ -42,7 +43,6 @@ class ControlButtons(QWidget):
         self.layout().addWidget(self.stopButton, 0, 0)
 
         self.pauseButton = QPushButton(self)
-        self.pauseButton.setToolTip('Pause all')
         self.pauseButton.setFocusPolicy(Qt.NoFocus)
         self.pauseButton.setSizePolicy(hPolicy, vPolicy)
         self.pauseButton.setIcon(QIcon.fromTheme("media-playback-pause"))
@@ -50,9 +50,15 @@ class ControlButtons(QWidget):
         self.layout().addWidget(self.pauseButton, 0, 1)
 
         self.restartButton = QPushButton(self)
-        self.restartButton.setToolTip('Restart all')
         self.restartButton.setFocusPolicy(Qt.NoFocus)
         self.restartButton.setSizePolicy(hPolicy, vPolicy)
         self.restartButton.setIcon(QIcon.fromTheme("media-playback-start"))
         self.restartButton.setIconSize(iconSize)
         self.layout().addWidget(self.restartButton, 0, 2)
+
+        self.retranslateUi()
+
+    def retranslateUi(self):
+        self.stopButton.setToolTip(translate('ListLayout', 'Stop all'))
+        self.pauseButton.setToolTip(translate('ListLayout', 'Pause all'))
+        self.restartButton.setToolTip(translate('ListLayout', 'Restart all'))
