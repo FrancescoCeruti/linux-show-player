@@ -17,14 +17,14 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
-from PyQt5.QtWidgets import QStyle
-from PyQt5.QtWidgets import QStyledItemDelegate, QComboBox, QSpinBox, QLineEdit
-from lisp.cues.cue import CueAction
+from PyQt5.QtCore import Qt, QEvent, QT_TRANSLATE_NOOP
+from PyQt5.QtWidgets import QStyledItemDelegate, QComboBox, QSpinBox,\
+    QLineEdit, QStyle, QDialog
 
+from lisp.application import Application
+from lisp.cues.cue import CueAction
 from lisp.ui.qmodels import CueClassRole
 from lisp.utils.util import translate
-
 
 QT_TRANSLATE_NOOP('CueAction', 'Default')
 QT_TRANSLATE_NOOP('CueAction', 'Pause')
@@ -37,6 +37,9 @@ class LabelDelegate(QStyledItemDelegate):
         return ''
 
     def paint(self, painter, option, index):
+        # Add 4px of left an right padding
+        option.rect.adjust(4, 0, 4, 0)
+
         text = self._text(painter, option, index)
         text = option.fontMetrics.elidedText(text, Qt.ElideRight,
                                              option.rect.width())
@@ -175,3 +178,27 @@ class CueActionDelegate(LabelDelegate):
 
     def updateEditorGeometry(self, editor, option, index):
         editor.setGeometry(option.rect)
+
+
+class CueSelectionDelegate(LabelDelegate):
+    def __init__(self, cue_select_dialog, **kwargs):
+        super().__init__(**kwargs)
+        self.cue_select = cue_select_dialog
+
+    def _text(self, painter, option, index):
+        cue = Application().cue_model.get(index.data())
+        if cue is not None:
+            return '{} | {}'.format(cue.index, cue.name)
+
+        return 'UNDEF'
+
+    def editorEvent(self, event, model, option, index):
+        if event.type() == QEvent.MouseButtonDblClick:
+            if self.cue_select.exec_() == QDialog.Accepted:
+                cue = self.cue_select.selected_cue()
+                if cue is not None:
+                    model.setData(index, cue.id, Qt.EditRole)
+                    model.setData(index, cue.__class__, CueClassRole)
+            return True
+
+        return super().editorEvent(event, model, option, index)

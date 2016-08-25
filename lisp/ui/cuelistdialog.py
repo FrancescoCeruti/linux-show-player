@@ -24,7 +24,7 @@ from PyQt5.QtWidgets import QDialog, QTreeWidget, QHeaderView, QVBoxLayout, \
 from lisp.utils import logging
 
 
-class CueListDialog(QDialog):
+class CueSelectDialog(QDialog):
     def __init__(self, cues=None, properties=('index', 'name'),
                  selection_mode=QTreeWidget.SingleSelection, **kwargs):
         super().__init__(**kwargs)

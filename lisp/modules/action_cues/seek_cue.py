@@ -26,7 +26,7 @@ from lisp.application import Application
 from lisp.core.has_properties import Property
 from lisp.cues.cue import Cue, CueState
 from lisp.cues.media_cue import MediaCue
-from lisp.ui.cuelistdialog import CueListDialog
+from lisp.ui.cuelistdialog import CueSelectDialog
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
 from lisp.ui.settings.settings_page import SettingsPage
 from lisp.utils.util import translate
@@ -62,7 +62,7 @@ class SeekCueSettings(SettingsPage):
 
         self.cue_id = -1
 
-        self.cueDialog = CueListDialog(
+        self.cueDialog = CueSelectDialog(
             cues=Application().cue_model.filter(MediaCue), parent=self)
 
         self.cueGroup = QGroupBox(self)

@@ -17,15 +17,16 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import QSize, QT_TRANSLATE_NOOP
-from PyQt5.QtWidgets import QVBoxLayout, QSizePolicy, QListWidget, \
-    QDialogButtonBox, QDialog, QAbstractItemView, QWidget, QHBoxLayout, \
-    QPushButton, QComboBox, QListWidgetItem
+from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
+from PyQt5.QtWidgets import QVBoxLayout, QSizePolicy, QDialogButtonBox,\
+    QDialog, QAbstractItemView, QHeaderView, QTableView
 
 from lisp.application import Application
 from lisp.core.has_properties import Property
 from lisp.cues.cue import Cue, CueState, CueAction
-from lisp.ui.cuelistdialog import CueListDialog
+from lisp.ui.cuelistdialog import CueSelectDialog
+from lisp.ui.qdelegates import CueActionDelegate, CueSelectionDelegate
+from lisp.ui.qmodels import CueClassRole, SimpleCueListModel
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
 from lisp.ui.settings.settings_page import SettingsPage
 from lisp.utils.util import translate
@@ -58,9 +59,14 @@ class CollectionCueSettings(SettingsPage):
         super().__init__(**kwargs)
         self.setLayout(QVBoxLayout(self))
 
-        self.cuesWidget = QListWidget(self)
-        self.cuesWidget.setAlternatingRowColors(True)
-        self.layout().addWidget(self.cuesWidget)
+        self.cue_dialog = CueSelectDialog(cues=Application().cue_model,
+                                          selection_mode=QAbstractItemView.ExtendedSelection)
+
+        self.collectionModel = CollectionModel()
+        self.collectionView = CollectionView(self.cue_dialog, parent=self)
+        self.collectionView.setModel(self.collectionModel)
+        self.collectionView.setAlternatingRowColors(True)
+        self.layout().addWidget(self.collectionView)
 
         # Buttons
         self.dialogButtons = QDialogButtonBox(self)
@@ -76,79 +82,79 @@ class CollectionCueSettings(SettingsPage):
             translate('CollectionCue', 'Remove'), QDialogButtonBox.ActionRole)
         self.delButton.clicked.connect(self._remove_selected)
 
-        self.cue_dialog = CueListDialog(cues=Application().cue_model,
-                                        selection_mode=QAbstractItemView.ExtendedSelection)
-
     def load_settings(self, settings):
         for target_id, action in settings.get('targets', []):
             target = Application().cue_model.get(target_id)
             if target is not None:
-                self._add_cue(target, action)
+                self._add_cue(target, CueAction(action))
 
     def get_settings(self):
         targets = []
-        for n in range(self.cuesWidget.count()):
-            widget = self.cuesWidget.itemWidget(self.cuesWidget.item(n))
-            target_id, action = widget.get_target()
-            targets.append((target_id, action))
+        for target_id, action in self.collectionModel.rows:
+            targets.append((target_id, action.value))
 
         return {'targets': targets}
 
     def _add_cue(self, cue, action):
-        item = QListWidgetItem()
-        item.setSizeHint(QSize(200, 30))
-
-        widget = CueItemWidget(cue, action, self.cue_dialog)
-
-        self.cuesWidget.addItem(item)
-        self.cuesWidget.setItemWidget(item, widget)
+        self.collectionModel.appendRow(cue.__class__, cue.id, action)
         self.cue_dialog.remove_cue(cue)
 
     def _add_dialog(self):
         if self.cue_dialog.exec_() == QDialog.Accepted:
             for target in self.cue_dialog.selected_cues():
-                self._add_cue(target, tuple(target.CueActions)[0].name)
+                self._add_cue(target, target.CueActions[0])
 
     def _remove_selected(self):
-        cue = self.cuesWidget.itemWidget(self.cuesWidget.currentItem()).target
+        row = self.collectionView.currentIndex().row()
+        cue_id = self.collectionModel.rows[row][0]
 
-        self.cuesWidget.takeItem(self.cuesWidget.currentRow())
-        self.cue_dialog.add_cue(cue)
+        self.collectionModel.removeRow(row)
+        self.cue_dialog.add_cue(Application().cue_model.get(cue_id))
 
 
-class CueItemWidget(QWidget):
-    def __init__(self, target, action, cue_dialog, **kwargs):
+class CollectionView(QTableView):
+    def __init__(self, cue_select, **kwargs):
         super().__init__(**kwargs)
 
-        self.target = target
-        self.cue_dialog = cue_dialog
+        self.setSelectionBehavior(QTableView.SelectRows)
+        self.setSelectionMode(QTableView.SingleSelection)
 
-        self.setLayout(QHBoxLayout(self))
-        self.layout().setContentsMargins(2, 1, 2, 1)
+        self.setShowGrid(False)
+        self.setAlternatingRowColors(True)
 
-        self.selectButton = QPushButton(self)
-        self.selectButton.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Fixed)
-        self.selectButton.setText(target.name)
-        self.selectButton.setToolTip(target.name)
-        self.selectButton.clicked.connect(self.select_target)
-        self.layout().addWidget(self.selectButton)
+        self.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.horizontalHeader().setHighlightSections(False)
 
-        self.targetActionsCombo = QComboBox(self)
-        self.targetActionsCombo.addItems([a.name for a in CueAction])
-        self.targetActionsCombo.setCurrentText(CueAction[action].name)
-        self.layout().addWidget(self.targetActionsCombo)
+        self.verticalHeader().sectionResizeMode(QHeaderView.Fixed)
+        self.verticalHeader().setDefaultSectionSize(26)
+        self.verticalHeader().setHighlightSections(False)
 
-        self.layout().setStretch(0, 3)
-        self.layout().setStretch(1, 1)
+        self.delegates = [
+            CueSelectionDelegate(cue_select),
+            CueActionDelegate()
+        ]
 
-    def get_target(self):
-        return self.target.id, self.targetActionsCombo.currentText()
+        for column, delegate in enumerate(self.delegates):
+            self.setItemDelegateForColumn(column, delegate)
 
-    def select_target(self):
-        if self.cue_dialog.exec_() == QDialog.Accepted:
-            self.target = self.cue_dialog.selected_cues()[0]
-            self.selectButton.setText(self.target.name)
-            self.selectButton.setToolTip(self.target.name)
+
+class CollectionModel(SimpleCueListModel):
+    def __init__(self):
+        # NOTE: The model does fixed-indices operations based on this list
+        super().__init__([translate('CollectionCue', 'Cue'),
+                          translate('CollectionCue', 'Action')])
+
+    def setData(self, index, value, role=Qt.DisplayRole):
+        result = super().setData(index, value, role)
+
+        if result and role == CueClassRole:
+            if self.rows[index.row()][1] not in value.CueActions:
+                self.rows[index.row()][1] = value.CueActions[0]
+                self.dataChanged.emit(self.index(index.row(), 1),
+                                      self.index(index.row(), 1),
+                                      [Qt.DisplayRole, Qt.EditRole])
+
+        return result
 
 
 CueSettingsRegistry().add_item(CollectionCueSettings, CollectionCue)

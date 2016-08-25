@@ -35,7 +35,7 @@ from lisp.core.decorators import async, synchronized_method
 from lisp.core.has_properties import Property
 from lisp.cues.cue import Cue, CueState, CueAction
 from lisp.cues.media_cue import MediaCue
-from lisp.ui.cuelistdialog import CueListDialog
+from lisp.ui.cuelistdialog import CueSelectDialog
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
 from lisp.ui.settings.settings_page import SettingsPage
 from lisp.utils.fade_functor import ntime, FadeIn, FadeOut
@@ -157,7 +157,7 @@ class VolumeSettings(SettingsPage):
         self.cue_id = -1
 
         cues = Application().cue_model.filter(MediaCue)
-        self.cueDialog = CueListDialog(cues=cues, parent=self)
+        self.cueDialog = CueSelectDialog(cues=cues, parent=self)
 
         self.cueGroup = QGroupBox(self)
         self.cueGroup.setLayout(QVBoxLayout())

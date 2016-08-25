@@ -19,6 +19,8 @@
 
 from PyQt5.QtCore import QAbstractTableModel, QModelIndex, Qt
 
+from lisp.cues.cue import Cue
+
 # Application defended data-roles
 CueClassRole = Qt.UserRole + 1
 
@@ -31,11 +33,11 @@ class SimpleTableModel(QAbstractTableModel):
         intended for a simple and straightforward usage.
     """
 
-    def __init__(self, columns, values=None):
+    def __init__(self, columns):
         super().__init__()
 
         self.columns = columns
-        self.rows = values if values is not None else []
+        self.rows = []
 
     def appendRow(self, *values):
         row = len(self.rows) - 1
@@ -87,3 +89,36 @@ class SimpleTableModel(QAbstractTableModel):
 
     def flags(self, index):
         return Qt.ItemIsEditable | Qt.ItemIsEnabled | Qt.ItemIsSelectable
+
+
+class SimpleCueListModel(SimpleTableModel):
+    """Extension of SimpleTableModel supporting the CueClassRole for rows."""
+
+    def __init__(self, columns):
+        super().__init__(columns)
+
+        self.rows_cc = []
+
+    def appendRow(self, cue_class, *values):
+        self.rows_cc.append(cue_class)
+        super().appendRow(*values)
+
+    def removeRow(self, row, parent=None):
+        if super().removeRow(row):
+            self.rows_cc.pop(row)
+
+    def data(self, index, role=Qt.DisplayRole):
+        if role == CueClassRole and index.isValid:
+            return self.rows_cc[index.row()]
+
+        return super().data(index, role)
+
+    def setData(self, index, value, role=Qt.DisplayRole):
+        if role == CueClassRole and index.isValid():
+            if issubclass(value, Cue):
+                self.rows_cc[index.row()] = value
+                return True
+
+            return False
+
+        return super().setData(index, value, role)

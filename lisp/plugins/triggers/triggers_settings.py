@@ -17,17 +17,17 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import QEvent, QT_TRANSLATE_NOOP, Qt
+from PyQt5.QtCore import QT_TRANSLATE_NOOP, Qt
 from PyQt5.QtWidgets import QVBoxLayout, QDialogButtonBox, QSizePolicy, \
-    QDialog, QHeaderView, QTableView
+    QHeaderView, QTableView
 
 from lisp.application import Application
-from lisp.cues.cue import Cue, CueAction
+from lisp.cues.cue import CueAction
 from lisp.plugins.triggers.triggers_handler import CueTriggers
-from lisp.ui.cuelistdialog import CueListDialog
+from lisp.ui.cuelistdialog import CueSelectDialog
 from lisp.ui.qdelegates import ComboBoxDelegate, CueActionDelegate, \
-    LabelDelegate
-from lisp.ui.qmodels import SimpleTableModel, CueClassRole
+    CueSelectionDelegate
+from lisp.ui.qmodels import CueClassRole, SimpleCueListModel
 from lisp.ui.settings.settings_page import SettingsPage
 from lisp.utils.util import translate
 
@@ -40,7 +40,7 @@ class TriggersSettings(SettingsPage):
         self.setLayout(QVBoxLayout(self))
         self.layout().setAlignment(Qt.AlignTop)
 
-        self.cue_select = CueListDialog(cues=Application().cue_model)
+        self.cue_select = CueSelectDialog(cues=Application().cue_model)
 
         self.triggersModel = TriggersModel()
 
@@ -130,31 +130,7 @@ class TriggersView(QTableView):
             self.setItemDelegateForColumn(column, delegate)
 
 
-class CueSelectionDelegate(LabelDelegate):
-    def __init__(self, cue_select, **kwargs):
-        super().__init__(**kwargs)
-        self.cue_select = cue_select
-
-    def _text(self, painter, option, index):
-        cue = Application().cue_model.get(index.data())
-        if cue is not None:
-            return '{} | {}'.format(cue.index, cue.name)
-
-        return 'UNDEF'
-
-    def editorEvent(self, event, model, option, index):
-        if event.type() == QEvent.MouseButtonDblClick:
-            if self.cue_select.exec_() == QDialog.Accepted:
-                cue = self.cue_select.selected_cue()
-                if cue is not None:
-                    model.setData(index, cue.id, Qt.EditRole)
-                    model.setData(index, cue.__class__, CueClassRole)
-            return True
-
-        return super().editorEvent(event, model, option, index)
-
-
-class TriggersModel(SimpleTableModel):
+class TriggersModel(SimpleCueListModel):
     def __init__(self):
         # NOTE: The model does fixed-indices operations based on this list
         super().__init__([translate('TriggersSettings', 'Trigger'),
@@ -163,36 +139,14 @@ class TriggersModel(SimpleTableModel):
 
         self.rows_cc = []
 
-    def appendRow(self, cue_class, *values):
-        self.rows_cc.append(cue_class)
-        super().appendRow(*values)
-
-    def removeRow(self, row, parent=None):
-        if super().removeRow(row):
-            self.rows_cc.pop(row)
-
-    def data(self, index, role=Qt.DisplayRole):
-        if role == CueClassRole and index.isValid:
-            return self.rows_cc[index.row()]
-
-        return super().data(index, role)
-
     def setData(self, index, value, role=Qt.DisplayRole):
-        if role == CueClassRole and index.isValid():
-            if issubclass(value, Cue):
-                self.rows_cc[index.row()] = value
+        result = super().setData(index, value, role)
 
-                if self.rows[index.row()][2] not in value.CueActions:
-                    self.rows[index.row()][2] = value.CueActions[0]
-                    self.dataChanged.emit(self.index(index.row(), 2),
-                                          self.index(index.row(), 2),
-                                          [Qt.DisplayRole, Qt.EditRole])
+        if result and role == CueClassRole:
+            if self.rows[index.row()][2] not in value.CueActions:
+                self.rows[index.row()][2] = value.CueActions[0]
+                self.dataChanged.emit(self.index(index.row(), 2),
+                                      self.index(index.row(), 2),
+                                      [Qt.DisplayRole, Qt.EditRole])
 
-                return True
-
-            return False
-
-        return super().setData(index, value, role)
-
-    def flags(self, index):
-        return super().flags(index)
+        return result
