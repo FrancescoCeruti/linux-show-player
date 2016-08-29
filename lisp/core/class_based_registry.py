@@ -30,8 +30,8 @@ class ClassBasedRegistry:
         reg.add_item('Object-Item', object)
         reg.add_item('List-Item', list)
 
-        list(reg.filter(object))  # ['objectEntry', 'MediaobjectEntry']
-        list(reg.filter(list))    # ['MediaobjectEntry']
+        list(reg.filter(object))  # ['Object-Item', 'List-Item']
+        list(reg.filter(list))    # ['List-Item']
     """
 
     def __init__(self):
@@ -65,6 +65,10 @@ class ClassBasedRegistry:
     def clear_class(self, ref_class=object):
         """Remove all the items for ref_class."""
         self._registry[ref_class].clear()
+
+    def ref_classes(self):
+        """Return a view-like object of all the registered references."""
+        return self._registry.keys()
 
     def clear(self):
         self._registry.clear()

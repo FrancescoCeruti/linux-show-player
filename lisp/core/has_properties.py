@@ -58,10 +58,17 @@ class Property:
                 instance.__dict__[self.name] = value
                 self.__changed__(instance, value)
 
+    def changed(self, instance):
+        if instance is not None:
+            value = self.__get__(instance)
+            return value != self.default, value
+
+        return False, self.default
+
     def __changed__(self, instance, value):
         instance.property_changed.emit(instance, self.name, value)
         # Get the related signal
-        property_signal = instance.changed_signals.get(self.name, None)
+        property_signal = instance.changed_signals.get(self.name)
         if property_signal is not None:
             property_signal.emit(value)
 
@@ -85,16 +92,26 @@ class NestedProperties(Property):
         if instance is None:
             return self
         else:
-            provider = instance.__dict__.get(self.provider_name, None)
+            provider = instance.__dict__.get(self.provider_name)
             if isinstance(provider, HasProperties):
                 return provider.properties()
 
     def __set__(self, instance, value):
         if instance is not None:
-            provider = instance.__dict__.get(self.provider_name, None)
+            provider = instance.__dict__.get(self.provider_name)
             if isinstance(provider, HasProperties):
                 provider.update_properties(value)
                 self.__changed__(instance, value)
+
+    def changed(self, instance):
+        if instance is not None:
+            provider = instance.__dict__.get(self.provider_name)
+            if isinstance(provider, HasProperties):
+                properties = provider.properties(only_changed=True)
+                # If no properties is changed (empty dict) return false
+                return bool(properties), properties
+
+        return False, {}
 
 
 class HasPropertiesMeta(ABCMeta):
@@ -182,11 +199,20 @@ class HasProperties(metaclass=HasPropertiesMeta):
 
         return signal
 
-    def properties(self):
+    def properties(self, only_changed=False):
         """
         :return: The properties as a dictionary {name: value}
         :rtype: dict
         """
+        if only_changed:
+            properties = {}
+            for name in self.__properties__:
+                changed, value = getattr(self.__class__, name).changed(self)
+                if changed:
+                    properties[name] = value
+
+            return properties
+
         return {name: getattr(self, name) for name in self.__properties__}
 
     @classmethod

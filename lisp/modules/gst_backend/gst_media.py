@@ -182,8 +182,15 @@ class GstMedia(Media):
     def elements(self):
         return self._elements.copy()
 
-    def elements_properties(self):
-        return {type(e).__name__: e.properties() for e in self._elements}
+    def elements_properties(self, only_changed=False):
+        properties = {}
+
+        for element in self._elements:
+            e_properties = element.properties(only_changed)
+            if e_properties:
+                properties[type(element).__name__] = e_properties
+
+        return properties
 
     def input_uri(self):
         try:
@@ -208,9 +215,9 @@ class GstMedia(Media):
                      self._state == MediaState.Paused):
             self.interrupted.emit(self)
 
-    def properties(self):
-        properties = super().properties().copy()
-        properties['elements'] = self.elements_properties()
+    def properties(self, only_changed=False):
+        properties = super().properties(only_changed).copy()
+        properties['elements'] = self.elements_properties(only_changed)
         return properties
 
     def update_elements(self, properties):

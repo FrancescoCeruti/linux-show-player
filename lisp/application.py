@@ -132,12 +132,12 @@ class Application(metaclass=Singleton):
         self._mainWindow.deleteLater()
 
     def _save_to_file(self, session_file):
-        """ Save the current session into a file """
+        """Save the current session into a file."""
         session = {"cues": [], "plugins": {}, "application": []}
 
         # Add the cues
         for cue in self._cue_model:
-            session['cues'].append(cue.properties())
+            session['cues'].append(cue.properties(only_changed=True))
         # Sort cues by index, allow sorted-models to load properly
         session['cues'].sort(key=lambda cue: cue['index'])
 

@@ -93,10 +93,6 @@ class CueLayout:
         """
 
     @abstractmethod
-    def deselect_all(self):
-        """Deselect all the cues"""
-
-    @abstractmethod
     def finalize(self):
         """Destroy all the layout elements"""
 
@@ -131,7 +127,7 @@ class CueLayout:
 
     @abstractmethod
     def get_selected_cues(self, cue_class=Cue):
-        """Return an "ordered" list of all selected cues"""
+        """Return a list of all selected cues, filtered by cue_class"""
         return []
 
     @abstractmethod
@@ -139,8 +135,12 @@ class CueLayout:
         """Invert selection"""
 
     @abstractmethod
-    def select_all(self):
+    def select_all(self, cue_class=Cue):
         """Select all the cues"""
+
+    @abstractmethod
+    def deselect_all(self, cue_class=Cue):
+        """Deselect all the cues"""
 
     @staticmethod
     def show_context_menu(position):

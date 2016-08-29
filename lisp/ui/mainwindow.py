@@ -27,6 +27,7 @@ from PyQt5.QtWidgets import QMainWindow, QStatusBar, QMenuBar, QMenu, QAction, \
 
 from lisp.core.actions_handler import MainActionsHandler
 from lisp.core.singleton import QSingleton
+from lisp.cues.media_cue import MediaCue
 from lisp.ui import about
 from lisp.ui.settings.app_settings import AppSettings
 from lisp.utils import configuration
@@ -110,6 +111,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         self.actionRedo.triggered.connect(MainActionsHandler().redo_action)
         self.multiEdit = QAction(self)
         self.selectAll = QAction(self)
+        self.selectAllMedia = QAction(self)
         self.deselectAll = QAction(self)
         self.invertSelection = QAction(self)
 
@@ -118,6 +120,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         self.menuEdit.addAction(self.actionRedo)
         self.menuEdit.addSeparator()
         self.menuEdit.addAction(self.selectAll)
+        self.menuEdit.addAction(self.selectAllMedia)
         self.menuEdit.addAction(self.deselectAll)
         self.menuEdit.addAction(self.invertSelection)
         self.menuEdit.addSeparator()
@@ -163,6 +166,8 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         self.actionRedo.setText(translate('MainWindow', 'Redo'))
         self.actionRedo.setShortcut(QKeySequence.Redo)
         self.selectAll.setText(translate('MainWindow', 'Select all'))
+        self.selectAllMedia.setText(
+            translate('MainWindow', 'Select all media cues'))
         self.selectAll.setShortcut(QKeySequence.SelectAll)
         self.deselectAll.setText(translate('MainWindow', 'Deselect all'))
         self.deselectAll.setShortcut(translate('MainWindow', 'CTRL+SHIFT+A'))
@@ -188,6 +193,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
 
             self.multiEdit.triggered.disconnect()
             self.selectAll.triggered.disconnect()
+            self.selectAllMedia.triggered.disconnect()
             self.deselectAll.triggered.disconnect()
             self.invertSelection.triggered.disconnect()
 
@@ -196,8 +202,10 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         self.layout.show()
 
         self.multiEdit.triggered.connect(self.layout.edit_selected_cues)
-        self.selectAll.triggered.connect(self.layout.select_all)
-        self.deselectAll.triggered.connect(self.layout.deselect_all)
+        self.selectAll.triggered.connect(lambda: self.layout.select_all())
+        self.selectAllMedia.triggered.connect(
+            lambda: self.layout.select_all(MediaCue))
+        self.deselectAll.triggered.connect(lambda: self.layout.deselect_all())
         self.invertSelection.triggered.connect(self.layout.invert_selection)
 
     def closeEvent(self, event):

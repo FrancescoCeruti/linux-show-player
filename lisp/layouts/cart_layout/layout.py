@@ -207,13 +207,15 @@ class CartLayout(QTabWidget, CueLayout):
     def select_context_cue(self):
         self.__context_widget.selected = not self.__context_widget.selected
 
-    def select_all(self):
+    def select_all(self, cue_class=Cue):
         for widget in self.widgets():
-            widget.selected = True
+            if isinstance(widget.cue, cue_class):
+                widget.selected = True
 
-    def deselect_all(self):
+    def deselect_all(self, cue_class=Cue):
         for widget in self.widgets():
-            widget.selected = False
+            if isinstance(widget.cue, cue_class):
+                widget.selected = False
 
     def invert_selection(self):
         for widget in self.widgets():

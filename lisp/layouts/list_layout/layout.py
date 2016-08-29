@@ -361,13 +361,15 @@ class ListLayout(QWidget, CueLayout):
     def get_context_cue(self):
         return self._context_item.cue
 
-    def select_all(self):
+    def select_all(self, cue_class=Cue):
         for index in range(self.listView.topLevelItemCount()):
-            self.listView.topLevelItem(index).selected = True
+            if isinstance(self.model_adapter.item(index), cue_class):
+                self.listView.topLevelItem(index).selected = True
 
-    def deselect_all(self):
+    def deselect_all(self, cue_class=Cue):
         for index in range(self.listView.topLevelItemCount()):
-            self.listView.topLevelItem(index).selected = False
+            if isinstance(self.model_adapter.item(index), cue_class):
+                self.listView.topLevelItem(index).selected = False
 
     def invert_selection(self):
         for index in range(self.listView.topLevelItemCount()):

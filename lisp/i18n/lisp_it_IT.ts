@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="it_IT" sourcelanguage="en">
+<!DOCTYPE TS>
+<TS version="2.0" language="it_IT" sourcelanguage="en">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -147,22 +148,22 @@
         <translation>Numero di Pagine:</translation>
     </message>
     <message>
-        <location filename="../layouts/cart_layout/layout.py" line="267"/>
+        <location filename="../layouts/cart_layout/layout.py" line="269"/>
         <source>Warning</source>
         <translation>Attenzione</translation>
     </message>
     <message>
-        <location filename="../layouts/cart_layout/layout.py" line="268"/>
+        <location filename="../layouts/cart_layout/layout.py" line="270"/>
         <source>Every cue in the page will be lost.</source>
         <translation>Ogni cue nella pagina sarà persa.</translation>
     </message>
     <message>
-        <location filename="../layouts/cart_layout/layout.py" line="270"/>
+        <location filename="../layouts/cart_layout/layout.py" line="272"/>
         <source>Are you sure to continue?</source>
         <translation>Sei sicuro di voler continuare?</translation>
     </message>
     <message>
-        <location filename="../layouts/cart_layout/layout.py" line="289"/>
+        <location filename="../layouts/cart_layout/layout.py" line="291"/>
         <source>Page</source>
         <translation>Pagina</translation>
     </message>
@@ -520,149 +521,154 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../ui/mainwindow.py" line="147"/>
+        <location filename="../ui/mainwindow.py" line="150"/>
         <source>New session</source>
         <translation>Nuova sessione</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.py" line="149"/>
+        <location filename="../ui/mainwindow.py" line="152"/>
         <source>Open</source>
         <translation>Apri</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.py" line="151"/>
+        <location filename="../ui/mainwindow.py" line="154"/>
         <source>Save session</source>
         <translation>Salva sessione</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.py" line="153"/>
+        <location filename="../ui/mainwindow.py" line="156"/>
         <source>Preferences</source>
         <translation>Preferenze</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.py" line="159"/>
+        <location filename="../ui/mainwindow.py" line="162"/>
         <source>Exit</source>
         <translation>Esci</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.py" line="162"/>
+        <location filename="../ui/mainwindow.py" line="165"/>
         <source>Undo</source>
         <translation>Annulla</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.py" line="164"/>
+        <location filename="../ui/mainwindow.py" line="167"/>
         <source>Redo</source>
         <translation>Ripeti</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.py" line="166"/>
+        <location filename="../ui/mainwindow.py" line="169"/>
         <source>Select all</source>
         <translation>Seleziona tutti</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.py" line="168"/>
+        <location filename="../ui/mainwindow.py" line="173"/>
         <source>Deselect all</source>
         <translation>Deseleziona tutti</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.py" line="169"/>
+        <location filename="../ui/mainwindow.py" line="174"/>
         <source>CTRL+SHIFT+A</source>
         <translation>CTRL+SHIFT+A</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.py" line="170"/>
+        <location filename="../ui/mainwindow.py" line="175"/>
         <source>Invert selection</source>
         <translation>Inverti selezione</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.py" line="172"/>
+        <location filename="../ui/mainwindow.py" line="177"/>
         <source>CTRL+I</source>
         <translation>CTRL+I</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.py" line="174"/>
+        <location filename="../ui/mainwindow.py" line="179"/>
         <source>CTRL+SHIFT+E</source>
         <translation>CTRL+SHIFT+E</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.py" line="182"/>
+        <location filename="../ui/mainwindow.py" line="187"/>
         <source>About</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.py" line="183"/>
+        <location filename="../ui/mainwindow.py" line="188"/>
         <source>About Qt</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.py" line="245"/>
+        <location filename="../ui/mainwindow.py" line="253"/>
         <source>Undone: </source>
         <translation>Annullato: </translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.py" line="250"/>
+        <location filename="../ui/mainwindow.py" line="258"/>
         <source>Redone: </source>
         <translation>Ripetuto: </translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.py" line="294"/>
+        <location filename="../ui/mainwindow.py" line="302"/>
         <source>Close session</source>
         <translation>Chiudi sessione</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.py" line="295"/>
+        <location filename="../ui/mainwindow.py" line="303"/>
         <source>The current session is not saved.</source>
         <translation>La sessione corrente non è salvata.</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.py" line="297"/>
+        <location filename="../ui/mainwindow.py" line="305"/>
         <source>Discard the changes?</source>
         <translation>Scartare la modifiche?</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.py" line="161"/>
+        <location filename="../ui/mainwindow.py" line="164"/>
         <source>&amp;Edit</source>
         <translation>&amp;Modifica</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.py" line="179"/>
+        <location filename="../ui/mainwindow.py" line="184"/>
         <source>Edit selection</source>
         <translation>Modifica slezionati</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.py" line="176"/>
+        <location filename="../ui/mainwindow.py" line="181"/>
         <source>&amp;Layout</source>
         <translation>&amp;Layout</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.py" line="178"/>
+        <location filename="../ui/mainwindow.py" line="183"/>
         <source>&amp;Tools</source>
         <translation>&amp;Strumenti</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.py" line="181"/>
+        <location filename="../ui/mainwindow.py" line="186"/>
         <source>&amp;About</source>
         <translation>&amp;About</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.py" line="173"/>
+        <location filename="../ui/mainwindow.py" line="178"/>
         <source>Edit selected</source>
         <translation>Modifica selezionati</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.py" line="146"/>
+        <location filename="../ui/mainwindow.py" line="149"/>
         <source>&amp;File</source>
         <translation>&amp;File</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.py" line="155"/>
+        <location filename="../ui/mainwindow.py" line="158"/>
         <source>Save as</source>
         <translation>Salva come</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.py" line="157"/>
+        <location filename="../ui/mainwindow.py" line="160"/>
         <source>Full Screen</source>
         <translation>Schermo Intero</translation>
+    </message>
+    <message>
+        <location filename="../ui/mainwindow.py" line="170"/>
+        <source>Select all media cues</source>
+        <translation>Seleziona tutte le media-cue</translation>
     </message>
 </context>
 <context>
