@@ -1,32 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="it_IT" sourcelanguage="en">
+<!DOCTYPE TS><TS version="2.0" language="it" sourcelanguage="">
 <context>
     <name>AboutDialog</name>
     <message>
-        <location filename="../ui/about.py" line="96"/>
-        <source>Info</source>
-        <translation>Informazioni</translation>
-    </message>
-    <message>
-        <location filename="../ui/about.py" line="101"/>
-        <source>License</source>
-        <translation>Licenza</translation>
-    </message>
-    <message>
-        <location filename="../ui/about.py" line="111"/>
-        <source>Contributors</source>
-        <translation>Contributori</translation>
-    </message>
-    <message>
-        <location filename="../ui/about.py" line="105"/>
-        <source>Author:</source>
-        <translation>Autore:</translation>
-    </message>
-    <message>
         <location filename="../ui/about.py" line="47"/>
         <source>Linux Show Player is a cue-player designed for stage productions.</source>
-        <translation></translation>
+        <translation>Linux Show Player è un cue-player pensato per produzioni teatrali.</translation>
     </message>
     <message>
         <location filename="../ui/about.py" line="86"/>
@@ -42,6 +21,26 @@
         <location filename="../ui/about.py" line="86"/>
         <source>Source code</source>
         <translation>Codice sorgente</translation>
+    </message>
+    <message>
+        <location filename="../ui/about.py" line="96"/>
+        <source>Info</source>
+        <translation>Informazioni</translation>
+    </message>
+    <message>
+        <location filename="../ui/about.py" line="101"/>
+        <source>License</source>
+        <translation>Licenza</translation>
+    </message>
+    <message>
+        <location filename="../ui/about.py" line="105"/>
+        <source>Author:</source>
+        <translation>Autore:</translation>
+    </message>
+    <message>
+        <location filename="../ui/about.py" line="111"/>
+        <source>Contributors</source>
+        <translation>Contributori</translation>
     </message>
 </context>
 <context>
@@ -143,6 +142,11 @@
         <translation>Ferma</translation>
     </message>
     <message>
+        <location filename="../layouts/cart_layout/layout.py" line="187"/>
+        <source>Reset volume</source>
+        <translation>Resetta volume</translation>
+    </message>
+    <message>
         <location filename="../layouts/cart_layout/layout.py" line="194"/>
         <source>Number of Pages:</source>
         <translation>Numero di Pagine:</translation>
@@ -192,11 +196,6 @@
         <source>Number of rows</source>
         <translation>Numero di righe</translation>
     </message>
-    <message>
-        <location filename="../layouts/cart_layout/layout.py" line="187"/>
-        <source>Reset volume</source>
-        <translation>Resetta volume</translation>
-    </message>
 </context>
 <context>
     <name>CueAction</name>
@@ -234,6 +233,11 @@
         <translation>Nome della cue</translation>
     </message>
     <message>
+        <location filename="../ui/settings/pages/cue_appearance.py" line="85"/>
+        <source>NoName</source>
+        <translation>NoName</translation>
+    </message>
+    <message>
         <location filename="../ui/settings/pages/cue_appearance.py" line="87"/>
         <source>Description/Note</source>
         <translation>Descrizione/Note</translation>
@@ -257,11 +261,6 @@
         <location filename="../ui/settings/pages/cue_appearance.py" line="94"/>
         <source>Select font color</source>
         <translation>Seleziona colore del carattere</translation>
-    </message>
-    <message>
-        <location filename="../ui/settings/pages/cue_appearance.py" line="85"/>
-        <source>NoName</source>
-        <translation></translation>
     </message>
 </context>
 <context>
@@ -379,6 +378,11 @@
 <context>
     <name>ListLayout</name>
     <message>
+        <location filename="../layouts/list_layout/list_layout_settings.py" line="82"/>
+        <source>Show playing cues</source>
+        <translation>Mostra cue in riproduzione</translation>
+    </message>
+    <message>
         <location filename="../layouts/list_layout/list_layout_settings.py" line="83"/>
         <source>Show dB-meters</source>
         <translation>Mostra indicatori dB</translation>
@@ -387,6 +391,11 @@
         <location filename="../layouts/list_layout/list_layout_settings.py" line="85"/>
         <source>Show seek-bars</source>
         <translation>Mostra barre di avanzamento</translation>
+    </message>
+    <message>
+        <location filename="../layouts/list_layout/list_layout_settings.py" line="84"/>
+        <source>Show accurate time</source>
+        <translation>Mostra tempo accurato</translation>
     </message>
     <message>
         <location filename="../layouts/list_layout/list_layout_settings.py" line="86"/>
@@ -439,19 +448,9 @@
         <translation>Comportamenti predefiniti</translation>
     </message>
     <message>
-        <location filename="../layouts/list_layout/list_layout_settings.py" line="84"/>
-        <source>Show accurate time</source>
-        <translation>Mostra tempo accurato</translation>
-    </message>
-    <message>
         <location filename="../layouts/list_layout/list_layout_settings.py" line="87"/>
         <source>At list end:</source>
         <translation>A fine lista:</translation>
-    </message>
-    <message>
-        <location filename="../layouts/list_layout/list_layout_settings.py" line="82"/>
-        <source>Show playing cues</source>
-        <translation>Mostra cue in riproduzione</translation>
     </message>
     <message>
         <location filename="../layouts/list_layout/list_layout_settings.py" line="88"/>
@@ -526,6 +525,11 @@
 <context>
     <name>MainWindow</name>
     <message>
+        <location filename="../ui/mainwindow.py" line="149"/>
+        <source>&amp;File</source>
+        <translation>&amp;File</translation>
+    </message>
+    <message>
         <location filename="../ui/mainwindow.py" line="150"/>
         <source>New session</source>
         <translation>Nuova sessione</translation>
@@ -546,9 +550,24 @@
         <translation>Preferenze</translation>
     </message>
     <message>
+        <location filename="../ui/mainwindow.py" line="158"/>
+        <source>Save as</source>
+        <translation>Salva come</translation>
+    </message>
+    <message>
+        <location filename="../ui/mainwindow.py" line="160"/>
+        <source>Full Screen</source>
+        <translation>Schermo Intero</translation>
+    </message>
+    <message>
         <location filename="../ui/mainwindow.py" line="162"/>
         <source>Exit</source>
         <translation>Esci</translation>
+    </message>
+    <message>
+        <location filename="../ui/mainwindow.py" line="164"/>
+        <source>&amp;Edit</source>
+        <translation>&amp;Modifica</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.py" line="165"/>
@@ -564,6 +583,11 @@
         <location filename="../ui/mainwindow.py" line="169"/>
         <source>Select all</source>
         <translation>Seleziona tutti</translation>
+    </message>
+    <message>
+        <location filename="../ui/mainwindow.py" line="170"/>
+        <source>Select all media cues</source>
+        <translation>Seleziona tutte le media-cue</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.py" line="173"/>
@@ -586,19 +610,44 @@
         <translation>CTRL+I</translation>
     </message>
     <message>
+        <location filename="../ui/mainwindow.py" line="178"/>
+        <source>Edit selected</source>
+        <translation>Modifica selezionati</translation>
+    </message>
+    <message>
         <location filename="../ui/mainwindow.py" line="179"/>
         <source>CTRL+SHIFT+E</source>
         <translation>CTRL+SHIFT+E</translation>
     </message>
     <message>
+        <location filename="../ui/mainwindow.py" line="181"/>
+        <source>&amp;Layout</source>
+        <translation>&amp;Layout</translation>
+    </message>
+    <message>
+        <location filename="../ui/mainwindow.py" line="183"/>
+        <source>&amp;Tools</source>
+        <translation>&amp;Strumenti</translation>
+    </message>
+    <message>
+        <location filename="../ui/mainwindow.py" line="184"/>
+        <source>Edit selection</source>
+        <translation>Modifica slezionati</translation>
+    </message>
+    <message>
+        <location filename="../ui/mainwindow.py" line="186"/>
+        <source>&amp;About</source>
+        <translation>&amp;About</translation>
+    </message>
+    <message>
         <location filename="../ui/mainwindow.py" line="187"/>
         <source>About</source>
-        <translation></translation>
+        <translation>Informazioni</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.py" line="188"/>
         <source>About Qt</source>
-        <translation></translation>
+        <translation>Informazioni su Qt</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.py" line="253"/>
@@ -624,56 +673,6 @@
         <location filename="../ui/mainwindow.py" line="305"/>
         <source>Discard the changes?</source>
         <translation>Scartare la modifiche?</translation>
-    </message>
-    <message>
-        <location filename="../ui/mainwindow.py" line="164"/>
-        <source>&amp;Edit</source>
-        <translation>&amp;Modifica</translation>
-    </message>
-    <message>
-        <location filename="../ui/mainwindow.py" line="184"/>
-        <source>Edit selection</source>
-        <translation>Modifica slezionati</translation>
-    </message>
-    <message>
-        <location filename="../ui/mainwindow.py" line="181"/>
-        <source>&amp;Layout</source>
-        <translation>&amp;Layout</translation>
-    </message>
-    <message>
-        <location filename="../ui/mainwindow.py" line="183"/>
-        <source>&amp;Tools</source>
-        <translation>&amp;Strumenti</translation>
-    </message>
-    <message>
-        <location filename="../ui/mainwindow.py" line="186"/>
-        <source>&amp;About</source>
-        <translation>&amp;About</translation>
-    </message>
-    <message>
-        <location filename="../ui/mainwindow.py" line="178"/>
-        <source>Edit selected</source>
-        <translation>Modifica selezionati</translation>
-    </message>
-    <message>
-        <location filename="../ui/mainwindow.py" line="149"/>
-        <source>&amp;File</source>
-        <translation>&amp;File</translation>
-    </message>
-    <message>
-        <location filename="../ui/mainwindow.py" line="158"/>
-        <source>Save as</source>
-        <translation>Salva come</translation>
-    </message>
-    <message>
-        <location filename="../ui/mainwindow.py" line="160"/>
-        <source>Full Screen</source>
-        <translation>Schermo Intero</translation>
-    </message>
-    <message>
-        <location filename="../ui/mainwindow.py" line="170"/>
-        <source>Select all media cues</source>
-        <translation>Seleziona tutte le media-cue</translation>
     </message>
 </context>
 <context>
@@ -701,7 +700,7 @@
     <message>
         <location filename="../ui/settings/pages/media_cue_settings.py" line="83"/>
         <source>Loop</source>
-        <translation></translation>
+        <translation>Loop</translation>
     </message>
     <message>
         <location filename="../ui/settings/pages/media_cue_settings.py" line="84"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="it" sourcelanguage="en">
+<!DOCTYPE TS><TS version="2.0" language="it" sourcelanguage="">
 <context>
     <name>AlsaSinkSettings</name>
     <message>
@@ -174,7 +174,7 @@
     <message>
         <location filename="../gst_settings.py" line="46"/>
         <source>Pipeline</source>
-        <translation></translation>
+        <translation>Pipeline</translation>
     </message>
 </context>
 <context>
@@ -183,6 +183,11 @@
         <location filename="../settings/jack_sink.py" line="68"/>
         <source>Name of the server to connect with</source>
         <translation>Nome del server con cui connettersi</translation>
+    </message>
+    <message>
+        <location filename="../settings/jack_sink.py" line="70"/>
+        <source>Server name</source>
+        <translation>Nome server</translation>
     </message>
     <message>
         <location filename="../settings/jack_sink.py" line="71"/>
@@ -214,14 +219,14 @@
         <source>Disconnect</source>
         <translation>Disconnetti</translation>
     </message>
-    <message>
-        <location filename="../settings/jack_sink.py" line="70"/>
-        <source>Server name</source>
-        <translation>Nome server</translation>
-    </message>
 </context>
 <context>
     <name>MediaElementName</name>
+    <message>
+        <location filename="../elements/audio_dynamic.py" line="32"/>
+        <source>Compressor/Expander</source>
+        <translation>Compressore/Espansore</translation>
+    </message>
     <message>
         <location filename="../elements/audio_pan.py" line="30"/>
         <source>Audio Pan</source>
@@ -235,7 +240,17 @@
     <message>
         <location filename="../elements/volume.py" line="31"/>
         <source>Volume</source>
-        <translation></translation>
+        <translation>Volume</translation>
+    </message>
+    <message>
+        <location filename="../elements/db_meter.py" line="31"/>
+        <source>dB Meter</source>
+        <translation>Indicatore dB</translation>
+    </message>
+    <message>
+        <location filename="../elements/auto_src.py" line="29"/>
+        <source>System Input</source>
+        <translation>Ingresso di Sistema</translation>
     </message>
     <message>
         <location filename="../elements/alsa_sink.py" line="30"/>
@@ -243,9 +258,19 @@
         <translation>Uscita ALSA</translation>
     </message>
     <message>
+        <location filename="../elements/jack_sink.py" line="32"/>
+        <source>JACK Out</source>
+        <translation>Uscita JACK</translation>
+    </message>
+    <message>
         <location filename="../elements/user_element.py" line="31"/>
         <source>Custom Element</source>
         <translation>Elemento Personalizzato</translation>
+    </message>
+    <message>
+        <location filename="../elements/auto_sink.py" line="30"/>
+        <source>System Out</source>
+        <translation>Uscita di Sistema</translation>
     </message>
     <message>
         <location filename="../elements/pitch.py" line="30"/>
@@ -258,14 +283,14 @@
         <translation>Ingresso URI</translation>
     </message>
     <message>
+        <location filename="../elements/equalizer10.py" line="30"/>
+        <source>10 Bands Equalizer</source>
+        <translation>Equalizzatore 10 bande</translation>
+    </message>
+    <message>
         <location filename="../elements/fade.py" line="37"/>
         <source>Fade</source>
         <translation>Dissolvenza</translation>
-    </message>
-    <message>
-        <location filename="../elements/audio_dynamic.py" line="32"/>
-        <source>Compressor/Expander</source>
-        <translation>Compressore/Espansore</translation>
     </message>
     <message>
         <location filename="../elements/speed.py" line="31"/>
@@ -276,31 +301,6 @@
         <location filename="../elements/preset_src.py" line="32"/>
         <source>Preset Input</source>
         <translation>Ingresso Preset</translation>
-    </message>
-    <message>
-        <location filename="../elements/auto_src.py" line="29"/>
-        <source>System Input</source>
-        <translation>Ingresso di Sistema</translation>
-    </message>
-    <message>
-        <location filename="../elements/jack_sink.py" line="32"/>
-        <source>JACK Out</source>
-        <translation>Uscita JACK</translation>
-    </message>
-    <message>
-        <location filename="../elements/auto_sink.py" line="30"/>
-        <source>System Out</source>
-        <translation>Uscita di Sistema</translation>
-    </message>
-    <message>
-        <location filename="../elements/db_meter.py" line="31"/>
-        <source>dB Meter</source>
-        <translation>Indicatore dB</translation>
-    </message>
-    <message>
-        <location filename="../elements/equalizer10.py" line="30"/>
-        <source>10 Bands Equalizer</source>
-        <translation>Equalizzatore 10 bande</translation>
     </message>
 </context>
 <context>
@@ -353,9 +353,14 @@
         <translation>Sorgente</translation>
     </message>
     <message>
+        <location filename="../settings/uri_input.py" line="73"/>
+        <source>Find File</source>
+        <translation>Seleziona file</translation>
+    </message>
+    <message>
         <location filename="../settings/uri_input.py" line="74"/>
         <source>Buffering</source>
-        <translation></translation>
+        <translation>Buffering</translation>
     </message>
     <message>
         <location filename="../settings/uri_input.py" line="75"/>
@@ -382,11 +387,6 @@
         <source>All files</source>
         <translation>Tutti i file</translation>
     </message>
-    <message>
-        <location filename="../settings/uri_input.py" line="73"/>
-        <source>Find File</source>
-        <translation>Seleziona file</translation>
-    </message>
 </context>
 <context>
     <name>UserElementSettings</name>
@@ -406,7 +406,7 @@
     <message>
         <location filename="../settings/volume.py" line="79"/>
         <source>Volume</source>
-        <translation></translation>
+        <translation>Volume</translation>
     </message>
     <message>
         <location filename="../settings/volume.py" line="81"/>

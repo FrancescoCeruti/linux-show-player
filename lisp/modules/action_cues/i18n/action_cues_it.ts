@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="it" sourcelanguage="en">
+<!DOCTYPE TS><TS version="2.0" language="it" sourcelanguage="">
 <context>
     <name>CollectionCue</name>
     <message>
@@ -112,7 +112,7 @@
     <message>
         <location filename="../seek_cue.py" line="95"/>
         <source>Cue</source>
-        <translation></translation>
+        <translation>Cue</translation>
     </message>
     <message>
         <location filename="../seek_cue.py" line="96"/>
@@ -138,21 +138,6 @@
 <context>
     <name>SettingsPageName</name>
     <message>
-        <location filename="../volume_control.py" line="140"/>
-        <source>Volume Settings</source>
-        <translation>Impostazioni Volume</translation>
-    </message>
-    <message>
-        <location filename="../seek_cue.py" line="56"/>
-        <source>Seek Settings</source>
-        <translation>Impostazioni Posizione</translation>
-    </message>
-    <message>
-        <location filename="../stop_all.py" line="51"/>
-        <source>Cue Settings</source>
-        <translation>Impostazioni Cue</translation>
-    </message>
-    <message>
         <location filename="../command_cue.py" line="97"/>
         <source>Command</source>
         <translation>Comando</translation>
@@ -163,9 +148,24 @@
         <translation>Impostazioni MIDI</translation>
     </message>
     <message>
+        <location filename="../volume_control.py" line="140"/>
+        <source>Volume Settings</source>
+        <translation>Impostazioni Volume</translation>
+    </message>
+    <message>
+        <location filename="../seek_cue.py" line="56"/>
+        <source>Seek Settings</source>
+        <translation>Impostazioni Posizione</translation>
+    </message>
+    <message>
         <location filename="../collection_cue.py" line="56"/>
         <source>Edit Collection</source>
         <translation>Modifica Collezione</translation>
+    </message>
+    <message>
+        <location filename="../stop_all.py" line="51"/>
+        <source>Cue Settings</source>
+        <translation>Impostazioni Cue</translation>
     </message>
 </context>
 <context>
@@ -206,7 +206,7 @@
     <message>
         <location filename="../volume_control.py" line="226"/>
         <source>Cue</source>
-        <translation></translation>
+        <translation>Cue</translation>
     </message>
     <message>
         <location filename="../volume_control.py" line="227"/>

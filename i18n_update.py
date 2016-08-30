@@ -31,6 +31,7 @@ parser.add_argument('-n', '--noobsolete', help='Discard obsolete strings',
                     action='store_true')
 parser.add_argument('-q', '--quiet', help='Less output',
                     action='store_true')
+parser.add_argument('-qm', help='Release .qm files', action='store_true')
 
 args = parser.parse_args()
 
@@ -78,7 +79,7 @@ def create_pro_file(root, exclude=(), extensions=('py',)):
         pro_file.write(files)
 
 
-def generate_for_submodules(path):
+def generate_for_submodules(path, qm=False):
     # Here "modules" is used generically
     modules = [entry.path for entry in os.scandir(path) if entry.is_dir()]
     for module in modules:
@@ -88,6 +89,10 @@ def generate_for_submodules(path):
             subprocess.run(PYLUPDATE_CMD + [p_file],
                            stdout=sys.stdout,
                            stderr=sys.stderr)
+            if qm:
+                subprocess.run(['lrelease', p_file],
+                               stdout=sys.stdout,
+                               stderr=sys.stderr)
 
 
 print('>>> UPDATE TRANSLATIONS FOR APPLICATION')
@@ -95,11 +100,15 @@ create_pro_file('lisp', exclude=('lisp/modules', 'lisp/plugins'))
 subprocess.run(PYLUPDATE_CMD + ['lisp/lisp.pro'],
                stdout=sys.stdout,
                stderr=sys.stderr)
+if args.qm:
+    subprocess.run(['lrelease', '-compress'],
+                   stdout=sys.stdout,
+                   stderr=sys.stderr)
 
 print('#########################################')
 print('>>> UPDATE TRANSLATIONS FOR MODULES')
-generate_for_submodules('lisp/modules')
+generate_for_submodules('lisp/modules', qm=args.qm)
 
 print('#########################################')
 print('>>> UPDATE TRANSLATIONS FOR PLUGINS')
-generate_for_submodules('lisp/plugins')
+generate_for_submodules('lisp/plugins', qm=args.qm)
