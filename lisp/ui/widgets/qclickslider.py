@@ -18,13 +18,13 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import Qt, pyqtSignal
+from PyQt5.QtWidgets import QSlider
 from PyQt5.QtWidgets import QStyle, QStyleOptionSlider
 
 from lisp.ui.widgets.qstyledslider import QStyledSlider
 
 
-class QClickSlider(QStyledSlider):
-
+class QClickSlider(QSlider):
     sliderJumped = pyqtSignal(int)
 
     def mousePressEvent(self, e):

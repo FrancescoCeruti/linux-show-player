@@ -488,26 +488,29 @@ QTreeView::branch:open:has-children:has-siblings {
     image: url(:/assets/branch-open.png);
 }
 
-QSlider{
+QSlider {
+    background: none;
+}
+
+QSlider:disabled {
     background: none;
 }
 
 QSlider:groove:horizontal {
     border: 1px solid #3A3A3A;
-    height: 4px;
+    height: 3px;
+    margin: 0px 3px;
     background: #202020;
-    margin: 0px 10px;
-    border-radius: 2px;
+    border-radius: 1px;
 }
 
 QSlider:groove:vertical {
     border: 1px solid #3A3A3A;
-    width: 4px;
+    width: 3px;
+    margin: 3px 0px;
     background: #202020;
-    margin: 10px 0px;
-    border-radius: 2px;
+    border-radius: 1px;
 }
-
 
 QSlider:add-page:vertical:disabled,
 QSlider:sub-page:horizontal:disabled {
@@ -515,28 +518,42 @@ QSlider:sub-page:horizontal:disabled {
 }
 
 QSlider:sub-page:horizontal {
-    height: 4px;
-    margin-left: 10px;
-    border-radius: 2px;
+    height: 2px;
+    border-radius: 1px;
     border: none;
     background-color: #80AAD5;
 }
 
 QSlider:add-page:vertical {
-    width: 4px;
-    margin-bottom: 10px;
-    border-radius: 2px;
+    width: 2px;
+    border-radius: 1px;
     border: none;
     background-color: #80AAD5;
 }
 
 QSlider:handle {
-    margin: -8px;
-    image: url(':/assets/slider-handle.png')
+    background-color: #606060;
+    border: 1px solid black;
+    border-radius: 2px;
+}
+
+QSlider:handle:horizontal {
+    margin: -5px -4px;
+    width: 8px;
+    height: 8px;
+    /*margin: -8px;
+    image: url(':/assets/slider-handle.png')*/
+}
+
+QSlider:handle:vertical {
+    margin: -4px -5px;
+    width: 8px;
+    height: 8px;
 }
 
 QSlider:handle:disabled {
-    image: url(':/assets/slider-handle-disabled.png')
+    background-color: white;
+    /*image: url(':/assets/slider-handle-disabled.png')*/
 }
 
 QToolButton {
@@ -696,4 +713,14 @@ QRadioButton:indicator:checked:disabled {
 
 #InfoPanelDescription[readOnly="true"] {
     border: 1px solid #3A3A3A;
+}
+
+#VolumeSlider:sub-page:horizontal {
+    border: none;
+    background-color: none;
+}
+
+#VolumeSlider:add-page:vertical {
+    border: none;
+    background-color: none;
 }

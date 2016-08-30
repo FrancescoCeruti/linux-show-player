@@ -73,17 +73,17 @@
 <context>
     <name>CartLayout</name>
     <message>
-        <location filename="../layouts/cart_layout/layout.py" line="165"/>
+        <location filename="../layouts/cart_layout/layout.py" line="169"/>
         <source>Add page</source>
         <translation>Aggungi pagina</translation>
     </message>
     <message>
-        <location filename="../layouts/cart_layout/layout.py" line="189"/>
+        <location filename="../layouts/cart_layout/layout.py" line="194"/>
         <source>Add pages</source>
         <translation>Aggiungi pagine</translation>
     </message>
     <message>
-        <location filename="../layouts/cart_layout/layout.py" line="167"/>
+        <location filename="../layouts/cart_layout/layout.py" line="171"/>
         <source>Remove current page</source>
         <translation>Rimuovi pagina corrente</translation>
     </message>
@@ -113,57 +113,57 @@
         <translation>Mostra tempo accurato</translation>
     </message>
     <message>
-        <location filename="../layouts/cart_layout/layout.py" line="177"/>
+        <location filename="../layouts/cart_layout/layout.py" line="181"/>
         <source>Edit cue</source>
         <translation>Modifica Cue</translation>
     </message>
     <message>
-        <location filename="../layouts/cart_layout/layout.py" line="178"/>
+        <location filename="../layouts/cart_layout/layout.py" line="182"/>
         <source>Remove</source>
         <translation>Rimuovi</translation>
     </message>
     <message>
-        <location filename="../layouts/cart_layout/layout.py" line="179"/>
+        <location filename="../layouts/cart_layout/layout.py" line="183"/>
         <source>Select</source>
         <translation>Seleziona</translation>
     </message>
     <message>
-        <location filename="../layouts/cart_layout/layout.py" line="180"/>
+        <location filename="../layouts/cart_layout/layout.py" line="184"/>
         <source>Play</source>
         <translation>Riproduci</translation>
     </message>
     <message>
-        <location filename="../layouts/cart_layout/layout.py" line="181"/>
+        <location filename="../layouts/cart_layout/layout.py" line="185"/>
         <source>Pause</source>
         <translation>Pausa</translation>
     </message>
     <message>
-        <location filename="../layouts/cart_layout/layout.py" line="182"/>
+        <location filename="../layouts/cart_layout/layout.py" line="186"/>
         <source>Stop</source>
         <translation>Ferma</translation>
     </message>
     <message>
-        <location filename="../layouts/cart_layout/layout.py" line="189"/>
+        <location filename="../layouts/cart_layout/layout.py" line="194"/>
         <source>Number of Pages:</source>
         <translation>Numero di Pagine:</translation>
     </message>
     <message>
-        <location filename="../layouts/cart_layout/layout.py" line="269"/>
+        <location filename="../layouts/cart_layout/layout.py" line="274"/>
         <source>Warning</source>
         <translation>Attenzione</translation>
     </message>
     <message>
-        <location filename="../layouts/cart_layout/layout.py" line="270"/>
+        <location filename="../layouts/cart_layout/layout.py" line="275"/>
         <source>Every cue in the page will be lost.</source>
         <translation>Ogni cue nella pagina sarà persa.</translation>
     </message>
     <message>
-        <location filename="../layouts/cart_layout/layout.py" line="272"/>
+        <location filename="../layouts/cart_layout/layout.py" line="277"/>
         <source>Are you sure to continue?</source>
         <translation>Sei sicuro di voler continuare?</translation>
     </message>
     <message>
-        <location filename="../layouts/cart_layout/layout.py" line="291"/>
+        <location filename="../layouts/cart_layout/layout.py" line="296"/>
         <source>Page</source>
         <translation>Pagina</translation>
     </message>
@@ -191,6 +191,11 @@
         <location filename="../layouts/cart_layout/cart_layout_settings.py" line="94"/>
         <source>Number of rows</source>
         <translation>Numero di righe</translation>
+    </message>
+    <message>
+        <location filename="../layouts/cart_layout/layout.py" line="187"/>
+        <source>Reset volume</source>
+        <translation>Resetta volume</translation>
     </message>
 </context>
 <context>

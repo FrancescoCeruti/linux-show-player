@@ -85,11 +85,11 @@ class CueWidget(QWidget):
         self.seekSlider.setVisible(False)
 
         self.volumeSlider = QClickSlider(self.nameButton)
+        self.volumeSlider.setObjectName('VolumeSlider')
         self.volumeSlider.setOrientation(Qt.Vertical)
         self.volumeSlider.setFocusPolicy(Qt.NoFocus)
-        self.volumeSlider.setRange(CueWidget.SLIDER_RANGE, 0)
+        self.volumeSlider.setRange(0, CueWidget.SLIDER_RANGE)
         self.volumeSlider.setPageStep(10)
-        self.volumeSlider.setTracking(True)
         self.volumeSlider.valueChanged.connect(self._change_volume,
                                                Qt.DirectConnection)
         self.volumeSlider.setVisible(False)
@@ -190,16 +190,16 @@ class CueWidget(QWidget):
 
             if self._volume_element is not None:
                 self._volume_element.changed('volume').disconnect(
-                    self._reset_volume)
+                    self.reset_volume)
                 self._volume_element = None
 
             if visible:
                 self.volumeSlider.setEnabled(self.cue.state == CueState.Running)
                 self._volume_element = self.cue.media.element('Volume')
                 if self._volume_element is not None:
-                    self._reset_volume()
+                    self.reset_volume()
                     self._volume_element.changed('volume').connect(
-                        self._reset_volume,
+                        self.reset_volume,
                         Connection.QtQueued)
 
                 self.layout().addWidget(self.volumeSlider, 0, 1)
@@ -211,6 +211,11 @@ class CueWidget(QWidget):
                 self.volumeSlider.hide()
 
             self.update()
+
+    def reset_volume(self):
+        if self._volume_element is not None:
+            self.volumeSlider.setValue(round(fader_to_slider(
+                self._volume_element.volume) * CueWidget.SLIDER_RANGE))
 
     def _set_cue(self, cue):
         self.cue = cue
@@ -273,11 +278,6 @@ class CueWidget(QWidget):
     def _update_description(self, description):
         self.nameButton.setToolTip(description)
 
-    def _reset_volume(self):
-        if self._volume_element is not None:
-            self.volumeSlider.setValue(round(fader_to_slider(
-                self._volume_element.volume) * CueWidget.SLIDER_RANGE))
-
     def _change_volume(self, new_volume):
         self._volume_element.current_volume = slider_to_fader(
             new_volume / CueWidget.SLIDER_RANGE)
@@ -316,7 +316,7 @@ class CueWidget(QWidget):
             pixmap_from_icon('led-off', CueWidget.ICON_SIZE))
         self.volumeSlider.setEnabled(False)
         self._update_time(0, True)
-        self._reset_volume()
+        self.reset_volume()
 
     def _status_playing(self):
         self.statusIcon.setPixmap(
@@ -332,7 +332,7 @@ class CueWidget(QWidget):
         self.statusIcon.setPixmap(
             pixmap_from_icon('led-error', CueWidget.ICON_SIZE))
         self.volumeSlider.setEnabled(False)
-        self._reset_volume()
+        self.reset_volume()
 
         QDetailedMessageBox.dcritical(self.cue.name, error, details)
 

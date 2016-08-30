@@ -115,7 +115,7 @@ class CartLayoutSettings(SettingsPage):
             self.rowsSpin.setValue(int(settings['gridrows']))
         if 'showseek' in settings:
             self.showSeek.setChecked(settings['showseek'] == 'True')
-        if 'showdbmeter' in settings:
+        if 'showdbmeters' in settings:
             self.showDbMeters.setChecked(settings['showdbmeters'] == 'True')
         if 'showaccurate' in settings:
             self.showAccurate.setChecked(settings['showaccurate'] == 'True')

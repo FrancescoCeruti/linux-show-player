@@ -156,6 +156,10 @@ class CartLayout(QTabWidget, CueLayout):
         self.stop_action.triggered.connect(self._stop_context_cue)
         self.cm_registry.add_item(self.stop_action, MediaCue)
 
+        self.reset_volume_action = QAction(self)
+        self.reset_volume_action.triggered.connect(self._reset_cue_volume)
+        self.cm_registry.add_item(self.reset_volume_action, MediaCue)
+
         self.setAcceptDrops(True)
         self.retranslateUi()
 
@@ -180,6 +184,7 @@ class CartLayout(QTabWidget, CueLayout):
         self.play_action.setText(translate('CartLayout', 'Play'))
         self.pause_action.setText(translate('CartLayout', 'Pause'))
         self.stop_action.setText(translate('CartLayout', 'Stop'))
+        self.reset_volume_action.setText(translate('CartLayout', 'Reset volume'))
 
     @CueLayout.model_adapter.getter
     def model_adapter(self):
@@ -350,6 +355,7 @@ class CartLayout(QTabWidget, CueLayout):
         self.play_action.triggered.disconnect()
         self.pause_action.triggered.disconnect()
         self.stop_action.triggered.disconnect()
+        self.reset_volume_action.disconnect()
 
         # Remove context-items
         self.cm_registry.remove_item(self.edit_action)
@@ -360,6 +366,7 @@ class CartLayout(QTabWidget, CueLayout):
         self.cm_registry.remove_item(self.play_action)
         self.cm_registry.remove_item(self.pause_action)
         self.cm_registry.remove_item(self.stop_action)
+        self.cm_registry.remove_item(self.reset_volume_action)
 
         # Delete the layout
         self.deleteLater()
@@ -393,6 +400,9 @@ class CartLayout(QTabWidget, CueLayout):
     def _remove_cue_action(self):
         self._model_adapter.remove(self.get_context_cue())
         self.__context_widget = None
+
+    def _reset_cue_volume(self):
+        self.__context_widget.reset_volume()
 
     def __cue_added(self, cue):
         page, row, column = self.to_3d_index(cue.index)
