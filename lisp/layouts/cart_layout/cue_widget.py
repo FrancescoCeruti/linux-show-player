@@ -381,10 +381,10 @@ class CueWidget(QWidget):
         super().update()
         self.layout().activate()
 
-        s_width = self.nameButton.width()
+        s_width = self.nameButton.width() - 8
         s_height = self.seekSlider.height()
         s_ypos = self.nameButton.height() - s_height
 
-        self.seekSlider.setGeometry(0, s_ypos, s_width, s_height)
+        self.seekSlider.setGeometry(4, s_ypos, s_width, s_height)
         self.statusIcon.setGeometry(4, 4, CueWidget.ICON_SIZE,
                                     CueWidget.ICON_SIZE)

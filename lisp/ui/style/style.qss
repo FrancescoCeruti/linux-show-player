@@ -496,20 +496,25 @@ QSlider:disabled {
     background: none;
 }
 
-QSlider:groove:horizontal {
+
+QSlider:groove {
     border: 1px solid #3A3A3A;
+    border-radius: 1px;
+    background: #202020;
+}
+
+QSlider:groove:disabled {
+    background: #2D2D2D;
+}
+
+QSlider:groove:horizontal {
     height: 3px;
     margin: 0px 3px;
-    background: #202020;
-    border-radius: 1px;
 }
 
 QSlider:groove:vertical {
-    border: 1px solid #3A3A3A;
     width: 3px;
     margin: 3px 0px;
-    background: #202020;
-    border-radius: 1px;
 }
 
 QSlider:add-page:vertical:disabled,
@@ -532,32 +537,29 @@ QSlider:add-page:vertical {
 }
 
 QSlider:handle {
-    background-color: #606060;
+    background-color: #666;
     border: 1px solid black;
     border-radius: 2px;
 }
 
 QSlider:handle:horizontal {
-    margin: -5px -4px;
+    margin: -6px -4px;
     width: 8px;
     height: 8px;
-    /*margin: -8px;
-    image: url(':/assets/slider-handle.png')*/
 }
 
 QSlider:handle:vertical {
-    margin: -4px -5px;
+    margin: -4px -6px;
     width: 8px;
     height: 8px;
 }
 
 QSlider:handle:disabled {
-    background-color: white;
-    /*image: url(':/assets/slider-handle-disabled.png')*/
+    background-color: #CCC;
 }
 
 QToolButton {
-    background-color: #333;
+    background-color: #3A3A3A;
 }
 
 QToolButton:pressed {
