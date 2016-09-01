@@ -22,7 +22,7 @@ from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QCheckBox, QGridLayout, \
     QSpinBox, QLabel
 
 from lisp.ui.settings.settings_page import SettingsPage
-from lisp.utils.util import translate
+from lisp.ui.ui_utils import translate
 
 
 class CartLayoutSettings(SettingsPage):

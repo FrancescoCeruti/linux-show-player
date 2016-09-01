@@ -32,7 +32,8 @@ from lisp.ui.widgets.qclicklabel import QClickLabel
 from lisp.ui.widgets.qclickslider import QClickSlider
 from lisp.ui.widgets.qdbmeter import QDbMeter
 from lisp.ui.widgets.qmessagebox import QDetailedMessageBox
-from lisp.utils.util import strtime, pixmap_from_icon
+from lisp.utils.util import strtime
+from lisp.ui.ui_utils import pixmap_from_icon
 
 
 class CueWidget(QWidget):

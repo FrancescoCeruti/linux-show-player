@@ -39,7 +39,7 @@ from lisp.ui.cuelistdialog import CueSelectDialog
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
 from lisp.ui.settings.settings_page import SettingsPage
 from lisp.utils.fade_functor import ntime, FadeIn, FadeOut
-from lisp.utils.util import translate, tr_sorted
+from lisp.ui.ui_utils import translate, tr_sorted
 
 
 class VolumeControl(Cue):

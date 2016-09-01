@@ -21,7 +21,7 @@ from PyQt5.QtCore import Qt, QSize
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QWidget, QGridLayout, QPushButton, QSizePolicy
 
-from lisp.utils.util import translate
+from lisp.ui.ui_utils import translate
 
 
 class ControlButtons(QWidget):

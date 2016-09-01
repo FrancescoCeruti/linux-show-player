@@ -24,7 +24,7 @@ from PyQt5.QtWidgets import QDialog, QGridLayout, QComboBox, QListWidget, \
     QListWidgetItem
 
 from lisp.modules.gst_backend import elements
-from lisp.utils.util import translate
+from lisp.ui.ui_utils import translate
 
 
 class GstPipeEdit(QWidget):

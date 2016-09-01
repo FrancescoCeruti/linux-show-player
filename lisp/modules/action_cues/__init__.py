@@ -21,27 +21,26 @@ import logging
 from os import path
 
 from lisp.application import Application
+from lisp.core.loading import load_classes
 from lisp.core.module import Module
 from lisp.cues.cue_factory import CueFactory
 from lisp.ui.mainwindow import MainWindow
-from lisp.utils.dyamic_loader import ClassesLoader
-from lisp.utils.util import translate
+from lisp.ui.ui_utils import translate
 
 
 class ActionCues(Module):
 
     def __init__(self):
-        for cue_name, cue_class in ClassesLoader(path.dirname(__file__)):
+        for name, cue in load_classes(__package__, path.dirname(__file__)):
             # Register the action-cue in the cue-factory
-            CueFactory.register_factory(cue_class.__name__, cue_class)
+            CueFactory.register_factory(cue.__name__, cue)
             # Register the menu action for adding the action-cue
-            add_function = ActionCues.create_add_action_cue_method(cue_class)
+            add_function = ActionCues.create_add_action_cue_method(cue)
             MainWindow().register_cue_menu_action(
-                translate('CueName', cue_class.Name),
-                add_function,
-                'Action cues')
+                translate('CueName', cue.Name),
+                add_function, 'Action cues')
 
-            logging.debug('ACTION-CUES: Loaded "' + cue_name + '"')
+            logging.debug('ACTION-CUES: Loaded "' + name + '"')
 
     @staticmethod
     def create_add_action_cue_method(cue_class):

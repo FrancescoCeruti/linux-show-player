@@ -21,7 +21,7 @@ from PyQt5.QtWidgets import QAction
 
 from lisp.core.module import Module
 from lisp.ui.mainwindow import MainWindow
-from lisp.utils.util import translate
+from lisp.ui.ui_utils import translate
 from .uri_changer_dialog import UriChangerDialog
 
 

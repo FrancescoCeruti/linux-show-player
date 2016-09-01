@@ -31,7 +31,7 @@ from lisp.layouts.list_layout.listwidgets import CueStatusIcon, PreWaitWidget, \
 
 
 # TODO: here we should build a custom qt model/view
-from lisp.utils.util import translate
+from lisp.ui.ui_utils import translate
 
 
 class CueListView(QTreeWidget):

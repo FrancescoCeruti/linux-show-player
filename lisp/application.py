@@ -35,7 +35,7 @@ from lisp.ui.mainwindow import MainWindow
 from lisp.ui.settings.app_settings import AppSettings
 from lisp.ui.settings.pages.app_general import General
 from lisp.utils import configuration as cfg
-from lisp.utils import logging
+from lisp.utils import elogging
 
 
 class Application(metaclass=Singleton):
@@ -98,7 +98,7 @@ class Application(metaclass=Singleton):
                 self._new_session(dialog.selected())
 
         except Exception as e:
-            logging.exception('Startup error', e)
+            elogging.exception('Startup error', e)
             qApp.quit()
             exit(-1)
 
@@ -171,7 +171,7 @@ class Application(metaclass=Singleton):
                     cue.update_properties(cue_conf)
                     self._cue_model.add(cue)
                 except Exception as e:
-                    logging.exception('Unable to create the cue', e)
+                    elogging.exception('Unable to create the cue', e)
 
             MainActionsHandler().set_saved()
             self._mainWindow.update_window_title()
@@ -183,5 +183,5 @@ class Application(metaclass=Singleton):
             self._mainWindow.filename = session_file
             self._mainWindow.update()
         except Exception as e:
-            logging.exception('Error during file reading', e)
+            elogging.exception('Error during file reading', e)
             self.new_session_dialog()

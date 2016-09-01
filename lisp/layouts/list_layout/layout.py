@@ -42,7 +42,7 @@ from lisp.ui.settings.pages.cue_appearance import Appearance
 from lisp.ui.settings.pages.cue_general import CueGeneralSettings
 from lisp.ui.settings.pages.media_cue_settings import MediaCueSettings
 from lisp.utils.configuration import config
-from lisp.utils.util import translate
+from lisp.ui.ui_utils import translate
 
 AppSettings.register_settings_widget(ListLayoutSettings)
 

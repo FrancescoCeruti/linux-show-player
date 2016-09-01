@@ -24,7 +24,7 @@ from PyQt5.QtWidgets import QGroupBox, QGridLayout, QLabel, QSlider, QVBoxLayout
 
 from lisp.modules.gst_backend.elements.equalizer10 import Equalizer10
 from lisp.ui.settings.settings_page import SettingsPage
-from lisp.utils.util import translate
+from lisp.ui.ui_utils import translate
 
 
 class Equalizer10Settings(SettingsPage):

@@ -28,7 +28,7 @@ from lisp.application import Application
 from lisp.core.module import Module
 from lisp.cues.cue_factory import CueFactory
 from lisp.ui.mainwindow import MainWindow
-from lisp.utils.util import qfile_filters, translate
+from lisp.ui.ui_utils import qfile_filters, translate
 
 
 class MediaCueMenus(Module):

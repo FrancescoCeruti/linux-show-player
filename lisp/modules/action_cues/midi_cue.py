@@ -27,7 +27,7 @@ from lisp.modules.midi.midi_output import MIDIOutput
 from lisp.modules.midi.midi_utils import str_msg_to_dict, dict_msg_to_str
 from lisp.ui.settings.settings_page import SettingsPage
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
-from lisp.utils.util import translate
+from lisp.ui.ui_utils import translate
 
 
 class MidiCue(Cue):

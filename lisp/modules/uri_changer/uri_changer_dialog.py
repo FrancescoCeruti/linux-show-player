@@ -25,7 +25,7 @@ from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QLineEdit, \
     QPushButton, QGridLayout, QLabel, QListWidget, QDialogButtonBox, \
     QFileDialog, QMessageBox
 
-from lisp.utils.util import translate
+from lisp.ui.ui_utils import translate
 from .session import Session
 
 

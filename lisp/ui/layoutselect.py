@@ -23,7 +23,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog, QComboBox, QPushButton, QFrame, QTextBrowser, QFileDialog, QGridLayout
 
 from lisp import layouts
-from lisp.utils.util import translate
+from lisp.ui.ui_utils import translate
 
 
 class LayoutSelect(QDialog):

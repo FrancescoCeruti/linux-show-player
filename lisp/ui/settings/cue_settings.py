@@ -26,7 +26,8 @@ from lisp.core.class_based_registry import ClassBasedRegistry
 from lisp.core.singleton import Singleton
 from lisp.cues.cue import Cue
 from lisp.ui.settings.settings_page import SettingsPage, CueSettingsPage
-from lisp.utils.util import deep_update, translate
+from lisp.utils.util import deep_update
+from lisp.ui.ui_utils import translate
 
 
 class CueSettingsRegistry(ClassBasedRegistry, metaclass=Singleton):

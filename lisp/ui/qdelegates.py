@@ -24,7 +24,7 @@ from PyQt5.QtWidgets import QStyledItemDelegate, QComboBox, QSpinBox,\
 from lisp.application import Application
 from lisp.cues.cue import CueAction
 from lisp.ui.qmodels import CueClassRole
-from lisp.utils.util import translate
+from lisp.ui.ui_utils import translate
 
 QT_TRANSLATE_NOOP('CueAction', 'Default')
 QT_TRANSLATE_NOOP('CueAction', 'Pause')

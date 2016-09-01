@@ -30,7 +30,7 @@ from lisp.core.module import Module
 from lisp.cues.media_cue import MediaCue
 from lisp.layouts.cue_layout import CueLayout
 from lisp.ui.mainwindow import MainWindow
-from lisp.utils.util import translate
+from lisp.ui.ui_utils import translate
 
 
 class MediaInfo(Module):

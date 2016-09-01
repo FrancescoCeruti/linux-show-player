@@ -22,7 +22,7 @@ from PyQt5.QtWidgets import QVBoxLayout, QGroupBox
 
 from lisp.modules.gst_backend.gst_pipe_edit import GstPipeEdit
 from lisp.ui.settings.settings_page import SettingsPage
-from lisp.utils.util import translate
+from lisp.ui.ui_utils import translate
 
 
 class GstSettings(SettingsPage):

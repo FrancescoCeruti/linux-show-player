@@ -21,9 +21,9 @@ from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QCheckBox, QComboBox
 
 from lisp import layouts
-from lisp.ui import styles
+from lisp.ui.styles import styles
 from lisp.ui.settings.settings_page import SettingsPage
-from lisp.utils.util import translate
+from lisp.ui.ui_utils import translate
 
 
 class General(SettingsPage):
@@ -61,7 +61,7 @@ class General(SettingsPage):
         self.layout().addWidget(self.themeGroup)
 
         self.themeCombo = QComboBox(self.themeGroup)
-        self.themeCombo.addItems(styles.get_styles())
+        self.themeCombo.addItems(styles.styles())
         self.themeGroup.layout().addWidget(self.themeCombo)
 
     def get_settings(self):

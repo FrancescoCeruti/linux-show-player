@@ -16,6 +16,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>
+import os
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
@@ -24,11 +25,11 @@ from PyQt5.QtWidgets import QDialog, QGridLayout, QLabel, QWidget, QTabWidget, \
     QTextBrowser, QDialogButtonBox
 
 import lisp
-from lisp.utils.util import translate, file_path
+from lisp.ui.ui_utils import translate
 
 
 class About(QDialog):
-    ICON = file_path(__file__, "icon.png")
+    ICON = os.path.join(os.path.dirname(__file__), 'icon.png')
 
     LICENSE = '''
     <center>

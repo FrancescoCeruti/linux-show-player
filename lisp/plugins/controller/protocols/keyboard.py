@@ -26,7 +26,7 @@ from lisp.plugins.controller.protocols.protocol import Protocol
 from lisp.ui.qdelegates import ComboBoxDelegate, LineEditDelegate
 from lisp.ui.qmodels import SimpleTableModel
 from lisp.ui.settings.settings_page import CueSettingsPage
-from lisp.utils.util import translate
+from lisp.ui.ui_utils import translate
 
 
 class Keyboard(Protocol):

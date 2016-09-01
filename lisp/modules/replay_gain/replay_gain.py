@@ -25,7 +25,7 @@ from threading import Thread, Lock
 
 import gi
 
-from lisp.utils.util import translate
+from lisp.ui.ui_utils import translate
 
 gi.require_version('Gst', '1.0')
 from gi.repository import Gst

@@ -19,27 +19,26 @@
 
 import os
 import traceback
-from os.path import dirname
 
-from lisp.utils import logging
-from lisp.utils.dyamic_loader import ClassesLoader
+from lisp.core.loading import load_classes
+from lisp.utils import elogging
 
 __MODULES = {}
 
 
 def load_modules():
-    for module_name, module in ClassesLoader(dirname(__file__)):
+    for name, module in load_classes(__package__, os.path.dirname(__file__)):
         try:
-            __MODULES[module_name] = module()
-            logging.debug('MODULES: Loaded "{0}"'.format(module_name))
+            __MODULES[name] = module()
+            elogging.debug('MODULES: Loaded "{0}"'.format(name))
         except Exception as e:
-            logging.error('Failed "{0}" lading'.format(module_name),
-                          details=str(e))
-            logging.debug(traceback.format_exc())
+            elogging.error('Failed "{0}" lading'.format(name),
+                           details=str(e))
+            elogging.debug(traceback.format_exc())
 
 
 def translations(locale):
-    base_path = dirname(__file__)
+    base_path = os.path.dirname(__file__)
     for module in next(os.walk(base_path))[1]:
         tr_file = os.path.join(base_path, module)
         tr_file = os.path.join(tr_file, 'i18n')
@@ -52,11 +51,11 @@ def terminate_modules():
     for module_name in __MODULES:
         try:
             __MODULES[module_name].terminate()
-            logging.debug('MODULES: Terminated "{0}"'.format(module_name))
+            elogging.debug('MODULES: Terminated "{0}"'.format(module_name))
         except Exception as e:
-            logging.error('Failed "{0}" termination'.format(module_name),
-                          details=str(e))
-            logging.debug(traceback.format_exc())
+            elogging.error('Failed "{0}" termination'.format(module_name),
+                           details=str(e))
+            elogging.debug(traceback.format_exc())
 
 
 def check_module(modname):

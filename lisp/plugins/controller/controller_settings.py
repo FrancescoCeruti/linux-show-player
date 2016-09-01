@@ -20,13 +20,13 @@
 from PyQt5.QtCore import QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import QHBoxLayout, QTabWidget
 
+from lisp.plugins.controller import protocols
 from lisp.ui.settings.settings_page import CueSettingsPage
-from lisp.utils.util import translate
+from lisp.ui.ui_utils import translate
 
 
 class ControllerSettings(CueSettingsPage):
     Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Cue Control')
-    SettingsPages = []
 
     def __init__(self, cue_class, **kwargs):
         super().__init__(cue_class, **kwargs)
@@ -37,7 +37,7 @@ class ControllerSettings(CueSettingsPage):
         self.tabWidget = QTabWidget(self)
         self.layout().addWidget(self.tabWidget)
 
-        for page in ControllerSettings.SettingsPages:
+        for page in protocols.ProtocolsSettingsPages:
             page_widget = page(cue_class, parent=self)
 
             self.tabWidget.addTab(page_widget,

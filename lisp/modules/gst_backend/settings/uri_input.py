@@ -23,7 +23,7 @@ from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QPushButton, QLineEdit, \
 
 from lisp.modules.gst_backend.elements.uri_input import UriInput
 from lisp.ui.settings.settings_page import SettingsPage
-from lisp.utils.util import translate
+from lisp.ui.ui_utils import translate
 
 
 class UriInputSettings(SettingsPage):

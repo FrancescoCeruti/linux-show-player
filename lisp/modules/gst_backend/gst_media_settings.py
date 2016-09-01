@@ -26,7 +26,7 @@ from PyQt5.QtWidgets import QGridLayout, QListWidget, QPushButton, \
 from lisp.modules.gst_backend.gst_pipe_edit import GstPipeEditDialog
 from lisp.modules.gst_backend.settings import pages_by_element
 from lisp.ui.settings.settings_page import SettingsPage
-from lisp.utils.util import translate
+from lisp.ui.ui_utils import translate
 
 
 class GstMediaSettings(SettingsPage):

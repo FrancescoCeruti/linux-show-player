@@ -22,9 +22,10 @@ from PyQt5.QtWidgets import QDialog, QHBoxLayout, QListWidget, QVBoxLayout, \
     QPushButton, QDialogButtonBox, QInputDialog, QMessageBox
 
 from lisp.modules.remote.remote import RemoteController
-from lisp.utils import logging
+from lisp.utils import elogging
 from lisp.utils.configuration import config
-from lisp.utils.util import compose_http_url, translate
+from lisp.utils.util import compose_http_url
+from lisp.ui.ui_utils import translate
 from .peers_discovery_dialog import PeersDiscoveryDialog
 
 
@@ -112,8 +113,8 @@ class PeersDialog(QDialog):
             self.peers.append(peer)
             self.listWidget.addItem(peer['uri'])
         except Exception as e:
-            logging.exception(translate('SyncPeerDialog', 'Cannot add peer'),
-                              str(e))
+            elogging.exception(translate('SyncPeerDialog', 'Cannot add peer'),
+                               str(e))
 
     def discover_peers(self):
         dialog = PeersDiscoveryDialog(parent=self)

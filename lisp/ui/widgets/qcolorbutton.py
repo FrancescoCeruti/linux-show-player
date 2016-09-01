@@ -21,7 +21,7 @@ from PyQt5.QtCore import pyqtSignal, Qt
 from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import QPushButton, QColorDialog
 
-from lisp.utils.util import translate
+from lisp.ui.ui_utils import translate
 
 
 class QColorButton(QPushButton):

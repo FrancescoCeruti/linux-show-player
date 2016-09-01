@@ -18,6 +18,7 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import inspect
+import logging
 import traceback
 import weakref
 from enum import Enum
@@ -28,7 +29,6 @@ from PyQt5.QtCore import QEvent, QObject
 from PyQt5.QtWidgets import QApplication
 
 from lisp.core.decorators import async
-from lisp.utils import logging
 from lisp.utils.util import weak_call_proxy
 
 __all__ = ['Signal', 'Connection']
@@ -71,8 +71,8 @@ class Slot:
                     self._reference()()
                 else:
                     self._reference()(*args, **kwargs)
-        except Exception as e:
-            logging.exception('', e, dialog=False)
+        except Exception:
+            logging.error(traceback.format_exc())
 
     def is_alive(self):
         return self._reference() is not None

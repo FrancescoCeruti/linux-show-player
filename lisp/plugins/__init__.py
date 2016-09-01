@@ -19,27 +19,26 @@
 
 import os
 import traceback
-from os.path import dirname
 
-from lisp.utils import logging
-from lisp.utils.dyamic_loader import ClassesLoader
+from lisp.core.loading import load_classes
+from lisp.utils import elogging
 
 __PLUGINS = {}
 
 
 def load_plugins():
     """Load available plugins."""
-    for plugin_name, plugin in ClassesLoader(dirname(__file__)):
+    for name, plugin in load_classes(__package__, os.path.dirname(__file__)):
         try:
-            __PLUGINS[plugin_name] = plugin()
-            logging.debug('PLUGINS: Loaded "{0}"'.format(plugin_name))
+            __PLUGINS[name] = plugin()
+            elogging.debug('PLUGINS: Loaded "{0}"'.format(name))
         except Exception:
-            logging.error('PLUGINS: Failed "{0}" load'.format(plugin_name))
-            logging.debug('PLUGINS: {0}'.format(traceback.format_exc()))
+            elogging.error('PLUGINS: Failed "{0}" load'.format(name))
+            elogging.debug('PLUGINS: {0}'.format(traceback.format_exc()))
 
 
 def translations(locale):
-    base_path = dirname(__file__)
+    base_path = os.path.dirname(__file__)
     for plugin in next(os.walk(base_path))[1]:
         tr_file = os.path.join(base_path, plugin)
         tr_file = os.path.join(tr_file, 'i18n')
@@ -53,11 +52,11 @@ def init_plugins():
     for plugin in __PLUGINS:
         try:
             __PLUGINS[plugin].init()
-            logging.debug('PLUGINS: Initialized "{0}"'.format(plugin))
+            elogging.debug('PLUGINS: Initialized "{0}"'.format(plugin))
         except Exception:
             __PLUGINS.pop(plugin)
-            logging.error('PLUGINS: Failed "{0}" init'.format(plugin))
-            logging.debug('PLUGINS: {0}'.format(traceback.format_exc()))
+            elogging.error('PLUGINS: Failed "{0}" init'.format(plugin))
+            elogging.debug('PLUGINS: {0}'.format(traceback.format_exc()))
 
 
 def reset_plugins():
@@ -65,10 +64,10 @@ def reset_plugins():
     for plugin in __PLUGINS:
         try:
             __PLUGINS[plugin].reset()
-            logging.debug('PLUGINS: Reset "{0}"'.format(plugin))
+            elogging.debug('PLUGINS: Reset "{0}"'.format(plugin))
         except Exception:
-            logging.error('PLUGINS: Failed "{0}" reset'.format(plugin))
-            logging.debug('PLUGINS: {0}'.format(traceback.format_exc()))
+            elogging.error('PLUGINS: Failed "{0}" reset'.format(plugin))
+            elogging.debug('PLUGINS: {0}'.format(traceback.format_exc()))
 
 
 def set_plugins_settings(settings):
@@ -79,9 +78,9 @@ def set_plugins_settings(settings):
             try:
                 plugin.load_settings(settings[plugin.Name])
             except Exception as e:
-                logging.error('PLUGINS: Failed "{0}" settings load'
-                              .format(plugin.Name))
-                logging.debug('PLUGINS: {0}'.format(traceback.format_exc()))
+                elogging.error('PLUGINS: Failed "{0}" settings load'
+                               .format(plugin.Name))
+                elogging.debug('PLUGINS: {0}'.format(traceback.format_exc()))
                 failed.append((plugin.Name, e))
 
     return failed
@@ -96,8 +95,8 @@ def get_plugin_settings():
             if settings is not None and len(settings) > 0:
                 plugins_settings[plugin.Name] = settings
         except Exception:
-            logging.error('PLUGINS: Failed "{0}" settings retrieve'
-                          .format(plugin.Name))
-            logging.debug('PLUGINS: {0}'.format(traceback.format_exc()))
+            elogging.error('PLUGINS: Failed "{0}" settings retrieve'
+                           .format(plugin.Name))
+            elogging.debug('PLUGINS: {0}'.format(traceback.format_exc()))
 
     return plugins_settings

@@ -31,7 +31,7 @@ from lisp.cues.media_cue import MediaCue
 from lisp.ui import about
 from lisp.ui.settings.app_settings import AppSettings
 from lisp.utils import configuration
-from lisp.utils.util import translate
+from lisp.ui.ui_utils import translate
 
 
 class MainWindow(QMainWindow, metaclass=QSingleton):

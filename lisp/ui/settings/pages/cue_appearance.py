@@ -23,7 +23,7 @@ from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QHBoxLayout, QTextEdit, \
 
 from lisp.ui.settings.settings_page import SettingsPage
 from lisp.ui.widgets.qcolorbutton import QColorButton
-from lisp.utils.util import translate
+from lisp.ui.ui_utils import translate
 
 
 class Appearance(SettingsPage):

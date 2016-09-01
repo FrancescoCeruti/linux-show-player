@@ -18,14 +18,8 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from collections import Mapping
-from itertools import chain
 from os import listdir, path
 from os.path import isdir, exists, join
-
-from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QApplication
-
-from lisp.core.decorators import memoize
 
 
 def deep_update(d1, d2):
@@ -39,49 +33,6 @@ def deep_update(d1, d2):
             d1[key] = d2[key]
 
     return d1
-
-
-def qfile_filters(extensions, allexts=True, anyfile=True):
-    """Create a filter-string for a FileChooser.
-
-    The result will be something like this: '<group1> (*.ext1 *.ext2);;
-    <group2> (*.ext1)'
-
-    :param extensions: The extensions as a dictionary {group: [extensions]}
-    :type extensions: dict
-    :param allexts: Add a group composed by all the given groups
-    :type allexts: bool
-    :param anyfile: Add the "Any File" group
-    :type anyfile: bool
-    :return: A QFileDialog filter-string
-    :rtype: str
-    """
-    filters = []
-
-    for key in extensions:
-        filters.append(key.title() + ' (' + ' *.'.join(extensions[key]) + ')')
-
-    filters.sort()
-
-    if allexts:
-        filters.insert(0, 'All supported (' +
-                       ' *.'.join(chain(*extensions.values())) + ')')
-    if anyfile:
-        filters.append('Any file (*)')
-
-    return ';;'.join(filters)
-
-
-def file_path(base, filename):
-    """Shortcut for path.abspath(path.join(path.dirname(base), filename))
-
-    :param base: A file or a directory, used as reference path
-    :type base: str
-
-    :param filename: The file name to join with base
-    :type filename: str
-    """
-    return path.abspath(path.join(path.dirname(base), filename))
 
 
 def find_packages(path='.'):
@@ -116,12 +67,11 @@ def strtime(time, accurate=False):
     """
     time = time_tuple(time)
     if time[0] > 0:
-        return '%02d:%02d:%02d' % time[:-1]
+        return '{:02}:{:02}:{:02}'.format(*time[:-1])
     elif accurate:
-        time = time[1:3] + (time[3] // 100,)
-        return '%02d:%02d.%01d' % time + '0'
+        return '{:02}:{:02}.{}0'.format(*time[1:3], time[3] // 100)
     else:
-        return '%02d:%02d' % time[1:3] + '.00'
+        return '{:02}:{:02}.00'.format(*time[1:3])
 
 
 def compose_http_url(url, port, directory='/'):
@@ -148,50 +98,3 @@ def weak_call_proxy(weakref):
             weakref()(*args, **kwargs)
 
     return proxy
-
-
-def translate(context, text, disambiguation=None, n=-1):
-    return QApplication.translate(context, text, disambiguation, n)
-
-
-def translate_many(context, texts):
-    """Return a translate iterator."""
-    for item in texts:
-        yield translate(context, item)
-
-
-def tr_sorted(context, iterable, key=None, reverse=False):
-    """Return a new sorted list from the items in iterable.
-
-    The sorting is done using translated versions of the iterable values.
-    """
-    if key is not None:
-        tr_key = lambda item: translate(context, key(item))
-    else:
-        tr_key = lambda item: translate(context, item)
-
-    return sorted(iterable, key=tr_key, reverse=reverse)
-
-
-@memoize
-def load_icon(icon_name):
-    """Return a QIcon from the icon theme.
-
-    The loaded icons are cached.
-
-    .. warning:
-        QIcons should be loaded only from the QT main loop.
-    """
-    return QIcon.fromTheme(icon_name)
-
-
-@memoize
-def pixmap_from_icon(icon_name, size):
-    """Return a QPixmap of "size x size" pixels from the icon theme.
-
-    The returned pixmaps are cached.
-
-    .. warning:
-        QPixmap should be created only from the QT main loop.
-    """
-    return load_icon(icon_name).pixmap(size, size)

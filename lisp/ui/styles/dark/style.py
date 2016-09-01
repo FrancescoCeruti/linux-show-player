@@ -17,24 +17,16 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from os.path import dirname
+from PyQt5.QtGui import QColor
+from PyQt5.QtGui import QPalette
+from PyQt5.QtWidgets import qApp
 
-from lisp.core.loading import load_classes
+# Import resources
+# noinspection PyUnresolvedReferences
+from lisp.ui.styles.dark import assetes
 
-# Use a set() for avoiding duplication
-__PAGES = set()
-
-
-def load():
-    for _, page in load_classes(__package__,
-                                dirname(__file__),
-                                suf=('Settings', )):
-        __PAGES.add(page)
-
-
-def pages():
-    return list(__PAGES)
-
-
-def pages_by_element():
-    return {s.ELEMENT.__name__: s for s in __PAGES}
+# Change link color
+palette = qApp.palette()
+palette.setColor(QPalette.Link, QColor(65, 155, 230))
+palette.setColor(QPalette.LinkVisited, QColor(43, 103, 153))
+qApp.setPalette(palette)

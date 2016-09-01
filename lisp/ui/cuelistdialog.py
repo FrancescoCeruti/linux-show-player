@@ -21,7 +21,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog, QTreeWidget, QHeaderView, QVBoxLayout, \
     QDialogButtonBox, QTreeWidgetItem
 
-from lisp.utils import logging
+from lisp.utils import elogging
 
 
 class CueSelectDialog(QDialog):
@@ -68,8 +68,8 @@ class CueSelectDialog(QDialog):
             try:
                 item.setData(n, Qt.DisplayRole, getattr(cue, prop, 'Undefined'))
             except Exception as e:
-                logging.exception('Cannot display {0} property'.format(prop), e,
-                                  dialog=False)
+                elogging.exception('Cannot display {0} property'.format(prop), e,
+                                   dialog=False)
 
         self._cues[cue] = item
         item.setData(0, Qt.UserRole, cue)

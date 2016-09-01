@@ -25,7 +25,7 @@ from lisp.backend.audio_utils import db_to_linear, linear_to_db
 from lisp.modules.gst_backend.elements.volume import Volume
 from lisp.ui.settings.settings_page import SettingsPage
 from lisp.ui.widgets.qmutebutton import QMuteButton
-from lisp.utils.util import translate
+from lisp.ui.ui_utils import translate
 
 
 class VolumeSettings(SettingsPage):

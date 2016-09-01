@@ -23,7 +23,8 @@ from PyQt5.QtWidgets import QLabel, QProgressBar
 from lisp.core.signal import Connection
 from lisp.cues.cue import CueNextAction, CueState
 from lisp.cues.cue_time import CueTime, CueWaitTime
-from lisp.utils.util import strtime, pixmap_from_icon
+from lisp.utils.util import strtime
+from lisp.ui.ui_utils import pixmap_from_icon
 
 
 class CueStatusIcon(QLabel):

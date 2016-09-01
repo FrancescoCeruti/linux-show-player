@@ -17,16 +17,13 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from os import path
-
 from lisp.application import Application
 from lisp.core.has_properties import Property
 from lisp.core.plugin import Plugin
 from lisp.cues.cue import Cue, CueAction
+from lisp.plugins.controller import protocols
+from lisp.plugins.controller.controller_settings import ControllerSettings
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
-from lisp.ui.settings.settings_page import SettingsPage
-from lisp.utils.dyamic_loader import ClassesLoader
-from .controller_settings import ControllerSettings
 
 
 class Controller(Plugin):
@@ -92,14 +89,10 @@ class Controller(Plugin):
         self.delete_from_map(cue)
 
     def __load_protocols(self):
-        find_path = path.join(path.dirname(__file__), 'protocols')
+        protocols.load()
 
-        for cls_name, cls in ClassesLoader(find_path, excluded=('protocol',),
-                                           prefixes=('', ''),
-                                           suffixes=('', 'Settings', )):
-            if issubclass(cls, SettingsPage):
-                ControllerSettings.SettingsPages.append(cls)
-            else:
-                protocol = cls()
-                protocol.protocol_event.connect(self.perform_action)
-                self.__protocols[cls_name.lower()] = protocol
+        for protocol_class in protocols.Protocols:
+            protocol = protocol_class()
+            protocol.protocol_event.connect(self.perform_action)
+
+            self.__protocols[protocol_class.__name__.lower()] = protocol

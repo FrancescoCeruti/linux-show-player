@@ -29,7 +29,7 @@ from lisp.ui.qdelegates import CueActionDelegate, CueSelectionDelegate
 from lisp.ui.qmodels import CueClassRole, SimpleCueListModel
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
 from lisp.ui.settings.settings_page import SettingsPage
-from lisp.utils.util import translate
+from lisp.ui.ui_utils import translate
 
 
 class CollectionCue(Cue):

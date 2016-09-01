@@ -26,7 +26,7 @@ from PyQt5.QtWidgets import QGroupBox, QGridLayout, QComboBox, QDoubleSpinBox, \
 
 from lisp.modules.gst_backend.elements.audio_dynamic import AudioDynamic
 from lisp.ui.settings.settings_page import SettingsPage
-from lisp.utils.util import translate
+from lisp.ui.ui_utils import translate
 
 MIN_dB = 0.000000312  # -100dB
 

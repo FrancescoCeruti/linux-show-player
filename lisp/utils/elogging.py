@@ -26,7 +26,7 @@ import logging
 import traceback
 
 from lisp.ui.widgets.qmessagebox import QDetailedMessageBox
-from lisp.utils.util import translate
+from lisp.ui.ui_utils import translate
 
 
 def info(msg, details='', dialog=False):

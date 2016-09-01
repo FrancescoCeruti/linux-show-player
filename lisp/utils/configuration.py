@@ -21,9 +21,7 @@ import os
 from configparser import ConfigParser
 from shutil import copyfile
 
-from lisp.utils import util
-
-DEFAULT_CFG_PATH = util.file_path(__file__, '../default.cfg')
+DEFAULT_CFG_PATH = os.path.join(os.path.dirname(__file__), '../default.cfg')
 CFG_DIR = os.path.expanduser("~") + '/.linux_show_player'
 CFG_PATH = CFG_DIR + '/config.cfg'
 
@@ -40,7 +38,7 @@ def check_user_conf():
         current = ConfigParser()
         current.read(CFG_PATH)
 
-        current_version = current['Version'].get('Number')
+        current_version = current['Version']['Number']
         update = current_version != default['Version']['Number']
 
         if update:

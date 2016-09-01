@@ -25,7 +25,7 @@ from lisp.modules.midi.midi_input import MIDIInput
 from lisp.modules.midi.midi_output import MIDIOutput
 from lisp.modules.midi.midi_utils import mido_backend
 from lisp.ui.settings.settings_page import SettingsPage
-from lisp.utils.util import translate
+from lisp.ui.ui_utils import translate
 
 
 class MIDISettings(SettingsPage):

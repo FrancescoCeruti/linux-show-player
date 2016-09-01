@@ -27,7 +27,7 @@ from lisp.application import Application
 from lisp.core.plugin import Plugin
 from lisp.core.signal import Connection
 from lisp.ui.mainwindow import MainWindow
-from lisp.utils.util import translate
+from lisp.ui.ui_utils import translate
 from .peers_dialog import PeersDialog
 
 

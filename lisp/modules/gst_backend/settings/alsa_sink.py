@@ -24,7 +24,7 @@ from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QComboBox, QLabel, \
 
 from lisp.modules.gst_backend.elements.alsa_sink import AlsaSink
 from lisp.ui.settings.settings_page import SettingsPage
-from lisp.utils.util import translate
+from lisp.ui.ui_utils import translate
 
 
 class AlsaSinkSettings(SettingsPage):

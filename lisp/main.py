@@ -29,7 +29,7 @@ from PyQt5.QtCore import QTranslator, QLocale, QLibraryInfo
 from lisp import modules
 from lisp import plugins
 from lisp.application import Application
-from lisp.ui import styles
+from lisp.ui.styles import styles
 from lisp.utils.configuration import config
 
 
