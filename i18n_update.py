@@ -24,14 +24,13 @@ import re
 import subprocess
 import sys
 
-parser = argparse.ArgumentParser(description='Generate ts files for LiSP')
+parser = argparse.ArgumentParser(description='i18n utility for LiSP')
 parser.add_argument('locales', nargs='+',
                     help='Locales of witch generate translations')
 parser.add_argument('-n', '--noobsolete', help='Discard obsolete strings',
                     action='store_true')
-parser.add_argument('-q', '--quiet', help='Less output',
-                    action='store_true')
-parser.add_argument('-qm', help='Release .qm files', action='store_true')
+parser.add_argument('-q', '--qm', help='Release .qm files', action='store_true')
+
 
 args = parser.parse_args()
 
@@ -39,8 +38,6 @@ args = parser.parse_args()
 PYLUPDATE_CMD = ['pylupdate5']
 if args.noobsolete:
     PYLUPDATE_CMD.append('-noobsolete')
-if not args.quiet:
-    PYLUPDATE_CMD.append('-verbose')
 
 # Locales of which generate translations files
 LOCALES = args.locales
@@ -86,22 +83,24 @@ def generate_for_submodules(path, qm=False):
         if os.path.exists(os.path.join(module, 'i18n')):
             create_pro_file(module)
             p_file = os.path.join(module, os.path.basename(module) + '.pro')
-            subprocess.run(PYLUPDATE_CMD + [p_file],
-                           stdout=sys.stdout,
-                           stderr=sys.stderr)
             if qm:
                 subprocess.run(['lrelease', p_file],
+                               stdout=sys.stdout,
+                               stderr=sys.stderr)
+            else:
+                subprocess.run(PYLUPDATE_CMD + [p_file],
                                stdout=sys.stdout,
                                stderr=sys.stderr)
 
 
 print('>>> UPDATE TRANSLATIONS FOR APPLICATION')
 create_pro_file('lisp', exclude=('lisp/modules', 'lisp/plugins'))
-subprocess.run(PYLUPDATE_CMD + ['lisp/lisp.pro'],
-               stdout=sys.stdout,
-               stderr=sys.stderr)
 if args.qm:
-    subprocess.run(['lrelease', '-compress'],
+    subprocess.run(['lrelease', 'lisp/lisp.pro'],
+                   stdout=sys.stdout,
+                   stderr=sys.stderr)
+else:
+    subprocess.run(PYLUPDATE_CMD + ['lisp/lisp.pro'],
                    stdout=sys.stdout,
                    stderr=sys.stderr)
 

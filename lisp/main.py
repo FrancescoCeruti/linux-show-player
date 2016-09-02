@@ -19,6 +19,7 @@
 
 import argparse
 import logging
+import os
 import sys
 from itertools import chain
 
@@ -68,24 +69,28 @@ def main():
     QIcon.setThemeName(config['Theme']['icons'])
     styles.apply_style(config['Theme']['theme'])
 
-    # Get the locale
+    # Get/Set the locale
     locale = args.locale
     if not locale:
         locale = QLocale().system().name()
+    else:
+        QLocale().setDefault(QLocale(locale))
+
+    logging.info('Using {} locale'.format(QLocale().name()))
 
     # Main app translations
     translator = QTranslator()
-    translator.load('i18n/lisp_' + locale + '.qm')
-    qt_app.installTranslator(translator)
+    translator.load(os.path.abspath('i18n/lisp_') + locale)
 
+    qt_app.installTranslator(translator)
     ui_translators = [translator]
 
     # Qt platform translation
     translator = QTranslator()
     translator.load("qt_" + locale,
                     QLibraryInfo.location(QLibraryInfo.TranslationsPath))
-    qt_app.installTranslator(translator)
 
+    qt_app.installTranslator(translator)
     ui_translators.append(translator)
 
     # Modules and plugins translations
@@ -93,8 +98,8 @@ def main():
                          plugins.translations(locale)):
         translator = QTranslator()
         translator.load(tr_file)
-        qt_app.installTranslator(translator)
 
+        qt_app.installTranslator(translator)
         ui_translators.append(translator)
 
     # Create the application
