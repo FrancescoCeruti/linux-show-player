@@ -1,4 +1,4 @@
-# Linux Show Player [![GitHub release](https://img.shields.io/github/release/FrancescoCeruti/linux-show-player.svg)](https://github.com/FrancescoCeruti/linux-show-player/releases) [![Github Releases](https://img.shields.io/github/downloads/FrancescoCeruti/linux-show-player/total.svg)](https://github.com/FrancescoCeruti/linux-show-player/releases) [![Code Health](https://landscape.io/github/FrancescoCeruti/linux-show-player/master/landscape.svg?style=flat)](https://landscape.io/github/FrancescoCeruti/linux-show-player/master) [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg?maxAge=2592000)](https://gitter.im/linux-show-player/linux-show-player)
+# Linux Show Player [![GitHub release](https://img.shields.io/github/release/FrancescoCeruti/linux-show-player.svg?maxAge=2592000)](https://github.com/FrancescoCeruti/linux-show-player/releases) [![Github All Releases](https://img.shields.io/github/downloads/FrancescoCeruti/linux-show-player/total.svg?maxAge=2592000)](https://github.com/FrancescoCeruti/linux-show-player/releases/) [![Code Health](https://landscape.io/github/FrancescoCeruti/linux-show-player/master/landscape.svg?style=flat)](https://landscape.io/github/FrancescoCeruti/linux-show-player/master) [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg?maxAge=2592000)](https://gitter.im/linux-show-player/linux-show-player)
 Linux Show Player (LiSP) - Sound player designed for stage productions
 
 ---
@@ -7,7 +7,7 @@ Every component on which LiSP relies (python3, GStreamer and Qt5) is multi-platf
 
 No special hardware is required to run LiSP, but some processing operations would surely take benefit from a recent CPU.
 
-For bugs/requests an issue can be open on the GitHub issues-tracker, any other question can be asked on the [user-group](https://groups.google.com/forum/#!forum/linux-show-player---users).
+For bugs/requests an issue can be open on the GitHub issues-tracker, for everything else [gitter](https://gitter.im/linux-show-player/linux-show-player) can be used.
 
 ---
 
