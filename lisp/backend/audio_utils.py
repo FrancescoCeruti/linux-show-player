@@ -33,8 +33,11 @@ MAX_VOLUME = 10
 MAX_VOLUME_DB = 20
 
 
-def db_to_linear(value):
+def db_to_linear(value, min_db_zero=True):
     """dB value to linear value conversion."""
+    if min_db_zero and value <= MIN_VOLUME_DB:
+        return 0
+
     return 10 ** (value / 20)
 
 

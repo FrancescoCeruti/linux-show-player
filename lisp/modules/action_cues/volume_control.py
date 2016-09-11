@@ -176,8 +176,8 @@ class VolumeSettings(SettingsPage):
         self.layout().addWidget(self.volumeGroup)
 
         self.volumeEdit = QDoubleSpinBox(self.volumeGroup)
-        self.volumeEdit.setDecimals(8)
-        self.volumeEdit.setMaximum(10)
+        self.volumeEdit.setDecimals(6)
+        self.volumeEdit.setMaximum(100)
         self.volumeGroup.layout().addWidget(self.volumeEdit)
 
         self.percentLabel = QLabel('%', self.volumeGroup)
@@ -256,7 +256,7 @@ class VolumeSettings(SettingsPage):
         if not (checkable and not self.cueGroup.isChecked()):
             conf['target_id'] = self.cue_id
         if not (checkable and not self.volumeGroup.isCheckable()):
-            conf['volume'] = self.volumeEdit.value()
+            conf['volume'] = self.volumeEdit.value() / 100
         if not (checkable and not self.fadeGroup.isCheckable()):
             conf['duration'] = self.fadeSpin.value() * 1000
             conf['fade_type'] = self.fadeCurveCombo.currentData()
@@ -279,7 +279,7 @@ class VolumeSettings(SettingsPage):
         if not self.__v_edit_flag:
             try:
                 self.__v_edit_flag = True
-                self.volumeDbEdit.setValue(linear_to_db(value))
+                self.volumeDbEdit.setValue(linear_to_db(value / 100))
             finally:
                 self.__v_edit_flag = False
 
@@ -287,7 +287,7 @@ class VolumeSettings(SettingsPage):
         if not self.__v_edit_flag:
             try:
                 self.__v_edit_flag = True
-                self.volumeEdit.setValue(db_to_linear(value))
+                self.volumeEdit.setValue(db_to_linear(value) * 100)
             finally:
                 self.__v_edit_flag = False
 
