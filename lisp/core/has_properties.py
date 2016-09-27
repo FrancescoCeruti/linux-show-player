@@ -35,7 +35,7 @@ class Property:
         If extended any subclass *MUST*:
         1) if the __get__ method receive a None instance return self;
         2) if the __get__ is called while the value is not set, set it with a
-           safe copy of 'default' and return it.
+           safe copy of 'default' and return.
         3) After the value is changed call the __changed__ method.
     """
 
@@ -71,6 +71,18 @@ class Property:
         property_signal = instance.changed_signals.get(self.name)
         if property_signal is not None:
             property_signal.emit(value)
+
+
+class WriteOnceProperty(Property):
+    """Property that can be modified only once.
+
+    Obviously this is not really "write-once", but if used as normal attribute
+    will ignore any change when the stored value is different from default.
+    """
+
+    def __set__(self, instance, value):
+        if self.__get__(instance) == self.default:
+            super().__set__(instance, value)
 
 
 class NestedProperties(Property):
@@ -201,6 +213,9 @@ class HasProperties(metaclass=HasPropertiesMeta):
 
     def properties(self, only_changed=False):
         """
+        :param only_changed: when True only "changed" properties are collected
+        :type only_changed: bool
+
         :return: The properties as a dictionary {name: value}
         :rtype: dict
         """
