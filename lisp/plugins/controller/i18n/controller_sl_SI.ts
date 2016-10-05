@@ -1,21 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="it" sourcelanguage="">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="sl_SI" version="2.0">
 <context>
     <name>ControllerKeySettings</name>
     <message>
         <location filename="../protocols/keyboard.py" line="57"/>
         <source>Key</source>
-        <translation>Tasto</translation>
+        <translation>Ključ</translation>
     </message>
     <message>
         <location filename="../protocols/keyboard.py" line="57"/>
         <source>Action</source>
-        <translation>Azione</translation>
+        <translation>Akcija</translation>
     </message>
     <message>
         <location filename="../protocols/keyboard.py" line="76"/>
         <source>Shortcuts</source>
-        <translation>Scorciatoie</translation>
+        <translation>Bližnjica</translation>
     </message>
 </context>
 <context>
@@ -28,42 +27,42 @@
     <message>
         <location filename="../protocols/midi.py" line="75"/>
         <source>Type</source>
-        <translation>Tipo</translation>
+        <translation>Tip</translation>
     </message>
     <message>
         <location filename="../protocols/midi.py" line="75"/>
         <source>Channel</source>
-        <translation>Canale</translation>
+        <translation>Kanal</translation>
     </message>
     <message>
         <location filename="../protocols/midi.py" line="75"/>
         <source>Note</source>
-        <translation>Nota</translation>
+        <translation>Beležka</translation>
     </message>
     <message>
         <location filename="../protocols/midi.py" line="75"/>
         <source>Action</source>
-        <translation>Azione</translation>
+        <translation>Akcija</translation>
     </message>
     <message>
         <location filename="../protocols/midi.py" line="98"/>
         <source>Filter &quot;note on&quot;</source>
-        <translation>Filtro &quot;note on&quot;</translation>
+        <translation>Filter &quot;Beležka aktivna&quot;</translation>
     </message>
     <message>
         <location filename="../protocols/midi.py" line="101"/>
         <source>Filter &quot;note off&quot;</source>
-        <translation>Filtro &quot;note off&quot;</translation>
+        <translation>Filter &quot;Beležka neaktivna&quot;</translation>
     </message>
     <message>
         <location filename="../protocols/midi.py" line="113"/>
         <source>Capture</source>
-        <translation>Cattura</translation>
+        <translation>Zajemi</translation>
     </message>
     <message>
         <location filename="../protocols/midi.py" line="146"/>
         <source>Listening MIDI messages ...</source>
-        <translation>Ascoltando messaggi MIDI ...</translation>
+        <translation>Poslušam MIDI sporočila ...</translation>
     </message>
 </context>
 <context>
@@ -71,30 +70,30 @@
     <message>
         <location filename="../protocols/keyboard.py" line="77"/>
         <source>Add</source>
-        <translation>Aggiungi</translation>
+        <translation>Dodaj</translation>
     </message>
     <message>
         <location filename="../protocols/keyboard.py" line="78"/>
         <source>Remove</source>
-        <translation>Rimuovi</translation>
+        <translation>Odstrani</translation>
     </message>
 </context>
 <context>
     <name>SettingsPageName</name>
     <message>
-        <location filename="../controller_settings.py" line="29"/>
+        <location filename="../controller_settings.py" line="28"/>
         <source>Cue Control</source>
-        <translation>Controllo Cue</translation>
+        <translation>Krmiljenje vrste</translation>
     </message>
     <message>
         <location filename="../protocols/midi.py" line="62"/>
         <source>MIDI Controls</source>
-        <translation>Controlli MIDI</translation>
+        <translation>Krmiljenje MIDI</translation>
     </message>
     <message>
         <location filename="../protocols/keyboard.py" line="46"/>
         <source>Keyboard Shortcuts</source>
-        <translation>Scorciatoie Tastiera</translation>
+        <translation>Bližnjice na tipkovnici</translation>
     </message>
 </context>
 </TS>

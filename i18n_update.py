@@ -66,8 +66,6 @@ def create_pro_file(root, exclude=(), extensions=('py',)):
     for local in LOCALES:
         translations += os.path.join('i18n', base_name + '_' + local + '.ts ')
 
-    global RELATIVE
-    RELATIVE = True
     files = 'SOURCES = ' + ' '.join(search_files(root, exclude, extensions))
 
     with open(os.path.join(root, base_name + '.pro'), mode='w') as pro_file:
@@ -94,7 +92,7 @@ def generate_for_submodules(path, qm=False):
 
 
 print('>>> UPDATE TRANSLATIONS FOR APPLICATION')
-create_pro_file('lisp', exclude=('lisp/modules', 'lisp/plugins'))
+create_pro_file('lisp', exclude=('lisp/modules/', 'lisp/plugins/'))
 if args.qm:
     subprocess.run(['lrelease', 'lisp/lisp.pro'],
                    stdout=sys.stdout,

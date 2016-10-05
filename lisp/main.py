@@ -80,14 +80,14 @@ def main():
 
     # Main app translations
     translator = QTranslator()
-    translator.load(os.path.abspath('i18n/lisp_') + locale)
+    translator.load(QLocale(), 'lisp', '_', os.path.abspath('lisp/i18n'))
 
     qt_app.installTranslator(translator)
     ui_translators = [translator]
 
     # Qt platform translation
     translator = QTranslator()
-    translator.load("qt_" + locale,
+    translator.load(QLocale(), 'qt', '_',
                     QLibraryInfo.location(QLibraryInfo.TranslationsPath))
 
     qt_app.installTranslator(translator)
@@ -97,7 +97,7 @@ def main():
     for tr_file in chain(modules.translations(locale),
                          plugins.translations(locale)):
         translator = QTranslator()
-        translator.load(tr_file)
+        translator.load(QLocale(), tr_file, '_')
 
         qt_app.installTranslator(translator)
         ui_translators.append(translator)
