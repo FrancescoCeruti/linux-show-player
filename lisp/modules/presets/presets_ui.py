@@ -17,8 +17,11 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtWidgets import QInputDialog
-from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QDialog, QInputDialog, QMessageBox, QListWidget
+from PyQt5.QtWidgets import QHBoxLayout
+from PyQt5.QtWidgets import QPushButton
+from PyQt5.QtWidgets import QVBoxLayout
 
 from lisp.ui.mainwindow import MainWindow
 from lisp.ui.ui_utils import translate
@@ -36,3 +39,36 @@ def select_preset_dialog(presets):
                                     presets, editable=False)
 
     return item if ok else None
+
+
+class PresetsUi(QDialog):
+
+    def __init__(self, presets, **kwargs):
+        super().__init__(**kwargs)
+        self.resize(400, 400)
+        self.setMaximumSize(self.size())
+        self.setMinimumSize(self.size())
+        self.setLayout(QVBoxLayout())
+
+        self.presetsList = QListWidget(self)
+        self.presetsList.addItems(presets)
+        self.layout().addWidget(self.presetsList)
+
+        self.buttonsLayout = QHBoxLayout()
+        self.buttonsLayout.setAlignment(Qt.AlignRight)
+        self.layout().addLayout(self.buttonsLayout)
+
+        self.addPresetButton = QPushButton(self)
+        self.editPresetButton = QPushButton(self)
+        self.removePresetButton = QPushButton(self)
+
+        self.buttonsLayout.addWidget(self.addPresetButton)
+        self.buttonsLayout.addWidget(self.editPresetButton)
+        self.buttonsLayout.addWidget(self.removePresetButton)
+
+        self.retranslateUi()
+
+    def retranslateUi(self):
+        self.addPresetButton.setText(translate('Preset', 'Add'))
+        self.editPresetButton.setText(translate('Preset', 'Edit'))
+        self.removePresetButton.setText(translate('Preset', 'Remove'))

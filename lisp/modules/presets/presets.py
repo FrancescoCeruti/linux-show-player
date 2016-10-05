@@ -27,7 +27,7 @@ from lisp.application import Application
 
 from lisp.core.module import Module
 from lisp.layouts.cue_layout import CueLayout
-from lisp.modules.presets.presets_ui import select_preset_dialog
+from lisp.modules.presets.presets_ui import select_preset_dialog, PresetsUi
 from lisp.ui.mainwindow import MainWindow
 from lisp.ui.ui_utils import translate
 from lisp.utils import configuration
@@ -82,7 +82,8 @@ class Presets(Module):
         CueLayout.cm_registry.add_separator()
 
     def __edit_presets(self):
-        pass
+        ui = PresetsUi(self.list_presets(), parent=MainWindow())
+        ui.show()
 
     def __cue_from_preset(self):
         preset_name = select_preset_dialog(tuple(self.list_presets()))
