@@ -94,8 +94,8 @@ def main():
     ui_translators.append(translator)
 
     # Modules and plugins translations
-    for tr_file in chain(modules.translations(locale),
-                         plugins.translations(locale)):
+    for tr_file in chain(modules.translations(),
+                         plugins.translations()):
         translator = QTranslator()
         translator.load(QLocale(), tr_file, '_')
 

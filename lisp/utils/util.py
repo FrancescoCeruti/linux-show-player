@@ -18,7 +18,7 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from collections import Mapping
-from os import listdir, path
+from os import listdir
 from os.path import isdir, exists, join
 
 
@@ -67,11 +67,11 @@ def strtime(time, accurate=False):
     """
     time = time_tuple(time)
     if time[0] > 0:
-        return '{:02}:{:02}:{:02}'.format(*time[:-1])
+        return '{:02}:{:02}:{:02}'.format(time[0], time[1], time[2])
     elif accurate:
-        return '{:02}:{:02}.{}0'.format(*time[1:3], time[3] // 100)
+        return '{:02}:{:02}.{}0'.format(time[1], time[2], time[3] // 100)
     else:
-        return '{:02}:{:02}.00'.format(*time[1:3])
+        return '{:02}:{:02}.00'.format(time[1], time[2])
 
 
 def compose_http_url(url, port, directory='/'):

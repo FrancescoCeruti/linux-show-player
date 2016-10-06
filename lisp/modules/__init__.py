@@ -37,7 +37,7 @@ def load_modules():
             elogging.debug(traceback.format_exc())
 
 
-def translations(locale):
+def translations():
     base_path = os.path.abspath('lisp/modules')
     for module in next(os.walk(base_path))[1]:
         tr_file = os.path.join(base_path, module)
