@@ -24,7 +24,7 @@ from collections import namedtuple
 from PyQt5.QtGui import QPalette, QColor
 from PyQt5.QtWidgets import QStyleFactory, qApp
 
-StylesPath = os.path.abspath(os.path.join(os.path.dirname(__file__)))
+StylesPath = os.path.abspath(os.path.dirname(__file__))
 IconsThemePaths = [os.path.join(StylesPath, 'icons')]
 
 LiSPStyles = {}

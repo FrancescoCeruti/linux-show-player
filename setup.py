@@ -17,9 +17,10 @@ def package_files(directory, prefix=''):
     return paths
 
 
-lisp_icon_path = os.path.join(os.path.dirname(__file__), 'lisp/ui/icons')
-lisp_ui_data = package_files(lisp_icon_path, 'lisp/ui/') + ['style/style.qss',
-                                                            'icon.png']
+base_path = os.path.dirname(__file__)
+lisp_icon_path = os.path.join(base_path, 'lisp/ui/styles/icons')
+lisp_icons = package_files(lisp_icon_path, 'lisp/ui/styles/')
+
 
 setup(name='linux-show-player',
       author=lisp.__author__,
@@ -37,6 +38,8 @@ setup(name='linux-show-player',
       packages=find_packages(),
       package_data={
           'lisp': ['default.cfg'],
-          'lisp.ui': lisp_ui_data
+          'lisp.ui': ['icon.png'],
+          'lisp.ui.styles': lisp_icons,
+          'lisp.ui.styles.dark': ['style.qss']
       },
       scripts=['linux-show-player'])
