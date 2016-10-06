@@ -29,6 +29,8 @@ Download the archive from the release page on GitHub.
 
 #####2.2 Install (and build) dependencies
 
+**Note:** _Python 3.5 required_
+
 **PyPI packages (auto-installed when using pip):**
 
 <pre>
