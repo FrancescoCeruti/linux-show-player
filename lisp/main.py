@@ -19,13 +19,13 @@
 
 import argparse
 import logging
-import os
 import sys
 from itertools import chain
+from os import path
 
+from PyQt5.QtCore import QTranslator, QLocale, QLibraryInfo
 from PyQt5.QtGui import QFont, QIcon
 from PyQt5.QtWidgets import QApplication
-from PyQt5.QtCore import QTranslator, QLocale, QLibraryInfo
 
 from lisp import modules
 from lisp import plugins
@@ -71,16 +71,15 @@ def main():
 
     # Get/Set the locale
     locale = args.locale
-    if not locale:
-        locale = QLocale().system().name()
-    else:
+    if locale:
         QLocale().setDefault(QLocale(locale))
 
     logging.info('Using {} locale'.format(QLocale().name()))
 
     # Main app translations
     translator = QTranslator()
-    translator.load(QLocale(), 'lisp', '_', os.path.abspath('lisp/i18n'))
+    translator.load(QLocale(), 'lisp', '_',
+                    path.join(path.dirname(path.realpath(__file__)), 'i18n'))
 
     qt_app.installTranslator(translator)
     ui_translators = [translator]

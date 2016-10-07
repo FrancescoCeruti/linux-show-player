@@ -38,13 +38,11 @@ def load_plugins():
 
 
 def translations():
-    base_path = os.path.abspath('lisp/plugins')
+    base_path = os.path.dirname(os.path.realpath(__file__))
     for module in next(os.walk(base_path))[1]:
-        tr_file = os.path.join(base_path, module)
-        tr_file = os.path.join(tr_file, 'i18n')
-        tr_file = os.path.join(tr_file, module)
-
-        yield tr_file
+        i18n_dir = os.path.join(base_path, module, 'i18n')
+        if os.path.exists(i18n_dir):
+            yield os.path.join(i18n_dir, module)
 
 
 def init_plugins():
