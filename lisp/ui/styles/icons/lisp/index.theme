@@ -6,6 +6,10 @@ Directories=16, scalable
 Size=16
 Type=fixed
 
+[512]
+Size=512
+Type=fixed
+
 [scalable]
 Size=96
 Type=scalable

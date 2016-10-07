@@ -20,6 +20,7 @@ import os
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
+from PyQt5.QtGui import QIcon
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QDialog, QGridLayout, QLabel, QWidget, QTabWidget, \
     QTextBrowser, QDialogButtonBox
@@ -29,8 +30,6 @@ from lisp.ui.ui_utils import translate
 
 
 class About(QDialog):
-    ICON = os.path.join(os.path.dirname(__file__), 'icon.png')
-
     LICENSE = '''
     <center>
         Linux Show Player is free software: you can redistribute it and/or
@@ -65,8 +64,7 @@ class About(QDialog):
 
         self.iconLabel = QLabel(self)
         self.iconLabel.setPixmap(
-            QPixmap(self.ICON).scaled(100, 100,
-                                      transformMode=Qt.SmoothTransformation))
+            QIcon.fromTheme('linux-show-player').pixmap(100, 100))
         self.layout().addWidget(self.iconLabel, 0, 0)
 
         self.shortInfo = QLabel(self)

@@ -7,39 +7,36 @@ from setuptools import find_packages, setup
 import lisp
 
 
-def package_files(directory, prefix=''):
+def data_dirs(directory, match='*', rel=''):
     paths = []
-    for (path, directories, filenames) in os.walk(directory):
-        if path.startswith(prefix):
-            path = path[len(prefix):]
-        for filename in filenames:
-            paths.append(os.path.join(path, filename))
+    for path, directories, file_names in os.walk(directory):
+        paths.append(os.path.join(path[len(rel):], match))
     return paths
 
 
-base_path = os.path.dirname(__file__)
-lisp_icon_path = os.path.join(base_path, 'lisp/ui/styles/icons')
-lisp_icons = package_files(lisp_icon_path, 'lisp/ui/styles/')
+# List the directories with icons to be installed
+lisp_icons = data_dirs('lisp/ui/styles/icons', rel='lisp/ui/styles/')
 
-
-setup(name='linux-show-player',
-      author=lisp.__author__,
-      author_email=lisp.__email__,
-      version=lisp.__version__,
-      license=lisp.__license__,
-      url=lisp.__email__,
-      description='Cue player for live shows',
-      install_requires=[
-          'sortedcontainers',
-          'mido',
-          'python-rtmidi',
-          'JACK-Client'
-      ],
-      packages=find_packages(),
-      package_data={
-          'lisp': ['default.cfg'],
-          'lisp.ui': ['icon.png'],
-          'lisp.ui.styles': lisp_icons,
-          'lisp.ui.styles.dark': ['style.qss']
-      },
-      scripts=['linux-show-player'])
+# Setup function
+setup(
+    name='linux-show-player',
+    author=lisp.__author__,
+    author_email=lisp.__email__,
+    version=lisp.__version__,
+    license=lisp.__license__,
+    url=lisp.__email__,
+    description='Cue player for live shows',
+    install_requires=[
+        'sortedcontainers',
+        'mido',
+        'python-rtmidi',
+        'JACK-Client'
+    ],
+    packages=find_packages(),
+    include_package_data=True,
+    package_data={
+        '': ['i18n/*.qm', '*.qss', '*.cfg'],
+        'lisp.ui.styles': lisp_icons,
+    },
+    scripts=['linux-show-player']
+)
