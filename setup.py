@@ -1,21 +1,24 @@
 #!/usr/bin/env python3
 
 import os
-
+import re
 from setuptools import find_packages, setup
 
 import lisp
 
 
-def data_dirs(directory, match='*', rel=''):
+def find_files(directory, regex='.*', rel=''):
+    """Search for files that match `regex` in `directory`."""
     paths = []
     for path, directories, file_names in os.walk(directory):
-        paths.append(os.path.join(path[len(rel):], match))
+        for filename in file_names:
+            file_path = os.path.join(path, filename)
+            if re.match(regex, file_path):
+                paths.append(file_path[len(rel):])
     return paths
 
-
 # List the directories with icons to be installed
-lisp_icons = data_dirs('lisp/ui/styles/icons', rel='lisp/ui/styles/')
+lisp_icons = find_files('lisp/ui/styles/icons', rel='lisp/ui/styles/')
 
 # Setup function
 setup(
@@ -33,7 +36,6 @@ setup(
         'JACK-Client'
     ],
     packages=find_packages(),
-    include_package_data=True,
     package_data={
         '': ['i18n/*.qm', '*.qss', '*.cfg'],
         'lisp.ui.styles': lisp_icons,
