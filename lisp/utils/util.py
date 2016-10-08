@@ -65,7 +65,8 @@ def strtime(time, accurate=False):
         mm:ss:00 when < 1h and accurate=False
         mm:ss:z0 when < 1h and accurate=True
     """
-    time = time_tuple(time)
+    # Cast time to int to avoid formatting problems
+    time = time_tuple(int(time))
     if time[0] > 0:
         return '{:02}:{:02}:{:02}'.format(*time[:-1])
     elif accurate:
