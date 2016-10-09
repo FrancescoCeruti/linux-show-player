@@ -21,3 +21,7 @@ override_dh_auto_install:
 	mkdir -p $(CURDIR)/debian/linux-show-player/usr/share/applications/
 	cp $(CURDIR)/dist/linux-show-player.desktop \
 	   $(CURDIR)/debian/linux-show-player/usr/share/applications/
+
+override_dh_auto_clean:
+	dh_auto_clean
+	-rm -r $(CURDIR)/linux_show_player.egg-info/
