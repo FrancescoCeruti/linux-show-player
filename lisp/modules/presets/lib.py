@@ -27,10 +27,22 @@ from lisp.utils import elogging
 PRESETS_DIR = os.path.join(configuration.CFG_DIR, 'presets')
 
 
-def scan_presets():
+def preset_path(name):
+    """Return the preset-file path.
+
+    :param name: Name of the preset
+    :type name: str
+    """
+    return os.path.join(PRESETS_DIR, name)
+
+
+def scan_presets(show_error=True):
     """Iterate over presets.
 
     Every time this function is called a search in `PRESETS_DIR` is performed.
+
+    :param show_error: If True display error to user
+    :type show_error: bool
     """
     # TODO: verify if a cached version can improve this function
     try:
@@ -38,17 +50,18 @@ def scan_presets():
             if entry.is_file():
                 yield entry.name
     except OSError as e:
-        elogging.exception(
-            translate('Presets', 'Error while reading presets.'), e)
+        elogging.exception(translate('Presets', 'Cannot load presets list.'), e,
+                           dialog=show_error)
 
 
 def preset_exists(name):
     """Return True if the preset already exist, False otherwise.
 
     :param name: Name of the preset
+    :type name: str
     :rtype: bool
     """
-    return os.path.exists(os.path.join(PRESETS_DIR, name))
+    return os.path.exists(preset_path(name))
 
 
 def load_on_cue(preset_name, cue):
@@ -62,29 +75,29 @@ def load_on_cue(preset_name, cue):
     cue.update_properties(load_preset(preset_name))
 
 
-def load_preset(name, noerror=True):
+def load_preset(name, show_error=True):
     """Load the preset with the given name and return it.
 
     :param name: The preset name
     :type name: str
-    :param noerror: If True no exception is raised if the preset do not exists
-    :type noerror: bool
+    :param show_error: If True display error to user
+    :type show_error: bool
     :rtype: dict
-
-    :raise FileNotFoundError: if the preset doesn't exists and noerror is False
     """
-    path = os.path.join(PRESETS_DIR, name)
+    path = preset_path(name)
 
     if os.path.exists(path):
-        with open(path, mode='r') as in_file:
-            return json.load(in_file)
-    elif not noerror:
-        raise FileNotFoundError('The preset-file do not exits: {}'.format(path))
+        try:
+            with open(path, mode='r') as in_file:
+                return json.load(in_file)
+        except OSError as e:
+            elogging.exception(translate('Presets', 'Cannot load preset.'), e,
+                               dialog=show_error)
 
     return {}
 
 
-def write_preset(name, preset, overwrite=True):
+def write_preset(name, preset, overwrite=True, show_error=True):
     """Write a preset with the given name in `PRESET_DIR`.
 
     :param name: The preset name
@@ -93,16 +106,46 @@ def write_preset(name, preset, overwrite=True):
     :type preset: dict
     :param overwrite: If True overwrite existing files
     :type overwrite: bool
-
-    :raise FileExistsError: if `overwrite` is False an the preset-file exists
+    :param show_error: If True display error to user
+    :type show_error: bool
+    :return: True when no error occurs, False otherwise
+    :rtype: bool
     """
-    path = os.path.join(PRESETS_DIR, name)
+    path = preset_path(name)
 
-    if not overwrite and os.path.exists(path):
-        raise FileExistsError('The preset-file already exist: {}'.format(path))
+    if not(not overwrite and os.path.exists(path)):
+        try:
+            with open(path, mode='w') as out_file:
+                json.dump(preset, out_file)
 
-    with open(path, mode='w') as out_file:
-        json.dump(preset, out_file)
+            return True
+        except OSError as e:
+            elogging.exception(translate('Presets', 'Cannot save presets.'), e,
+                               dialog=show_error)
+
+    return False
+
+
+def rename_preset(old_name, new_name, show_error=True):
+    """Rename an exist preset, if the new name is not already used.
+
+    :param old_name: The preset (old) name
+    :param new_name: The new preset name
+    :param show_error: If True display error to user
+    :type show_error: bool
+    :return: True if the preset as been renamed successfully, False otherwise
+    :rtype: bool
+    """
+    if preset_exists(old_name) and not preset_exists(new_name):
+        try:
+            os.rename(preset_path(old_name), preset_path(new_name))
+            return True
+        except OSError as e:
+            elogging.exception(
+                translate('Presets', 'Cannot rename presets.'), e,
+                dialog=show_error)
+
+    return False
 
 
 def delete_preset(name):
@@ -110,8 +153,18 @@ def delete_preset(name):
 
     :param name: The preset to be deleted
     :type name: str
+    :return: True if the preset is deleted, False otherwise
+    :rtype: bool
     """
-    path = os.path.join(PRESETS_DIR, name)
+    path = preset_path(name)
 
     if os.path.exists(path):
-        os.remove(path)
+        try:
+            os.remove(path)
+        except OSError as e:
+            elogging.exception(
+                translate('Presets', 'Cannot delete presets.'), e)
+            return False
+
+    # If the path do not exists we return True anyway (just don't tell anyone)
+    return True

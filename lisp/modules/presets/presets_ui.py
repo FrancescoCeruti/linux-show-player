@@ -24,7 +24,7 @@ from PyQt5.QtWidgets import QDialog, QInputDialog, QMessageBox, QListWidget, \
 from lisp.cues.cue import Cue
 from lisp.cues.cue_factory import CueFactory
 from lisp.modules.presets.lib import scan_presets, delete_preset, load_preset, \
-    write_preset
+    write_preset, preset_exists, rename_preset
 from lisp.ui.mainwindow import MainWindow
 from lisp.ui.settings.cue_settings import CueSettings
 from lisp.ui.ui_utils import translate
@@ -33,17 +33,40 @@ from lisp.ui.ui_utils import translate
 def select_preset_dialog():
     presets = tuple(scan_presets())
 
-    if not presets:
-        QMessageBox.warning(MainWindow(),
-                            translate('Preset', 'Warning'),
-                            translate('Preset', 'No preset found!'))
-        return
+    if presets:
+        item, confirm = QInputDialog.getItem(
+            MainWindow(),
+            translate('Presets', 'Select Preset'), '',
+            presets,
+            editable=False)
 
-    item, ok = QInputDialog.getItem(MainWindow(),
-                                    translate('Presets', 'Select Preset'), '',
-                                    presets, editable=False)
+        if confirm:
+            return item
+    else:
+        QMessageBox.warning(
+            MainWindow(),
+            translate('Presets', 'Warning'),
+            translate('Presets', 'No preset found!'))
 
-    return item if ok else None
+
+def save_preset_dialog():
+    name, confirm = QInputDialog.getText(
+        MainWindow(),
+        translate('Presets', 'Presets'),
+        translate('Presets', 'Preset name'))
+
+    if confirm:
+        if preset_exists(name):
+            answer = QMessageBox.question(
+                MainWindow(),
+                translate('Presets', 'Presets'),
+                translate('Presets', 'Preset already exists, overwrite?'),
+                buttons=QMessageBox.Yes | QMessageBox.Cancel)
+
+            if answer == QMessageBox.Yes:
+                return name
+        else:
+            return name
 
 
 class PresetsUi(QDialog):
@@ -53,12 +76,15 @@ class PresetsUi(QDialog):
         self.setMaximumSize(self.size())
         self.setMinimumSize(self.size())
         self.setLayout(QVBoxLayout())
+        self.setWindowModality(Qt.ApplicationModal)
 
         self.presetsList = QListWidget(self)
         self.presetsList.setAlternatingRowColors(True)
         self.presetsList.setFocusPolicy(Qt.NoFocus)
         self.presetsList.addItems(scan_presets())
+        self.presetsList.setSortingEnabled(True)
         self.presetsList.itemSelectionChanged.connect(self.__selection_changed)
+        self.presetsList.itemDoubleClicked.connect(self.__rename_preset)
         self.layout().addWidget(self.presetsList)
 
         self.buttonsLayout = QHBoxLayout()
@@ -81,20 +107,27 @@ class PresetsUi(QDialog):
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.addPresetButton.setText(translate('Preset', 'Add'))
-        self.editPresetButton.setText(translate('Preset', 'Edit'))
-        self.removePresetButton.setText(translate('Preset', 'Remove'))
+        self.addPresetButton.setText(translate('Presets', 'Add'))
+        self.editPresetButton.setText(translate('Presets', 'Edit'))
+        self.removePresetButton.setText(translate('Presets', 'Remove'))
 
     def __remove_preset(self):
         item = self.presetsList.currentItem()
-        if item:
-            delete_preset(item.text())
+        if item is not None:
+            if delete_preset(item.text()):
+                self.presetsList.takeItem(self.presetsList.currentRow())
 
     def __add_preset(self):
-        name = 'TEST'
-        write_preset(name, {'_type_': 'Cue'})
+        name = save_preset_dialog()
+        if name is not None:
+            if write_preset(name, {'_type_': 'Cue'}):
+                self.presetsList.addItem(name)
 
-        self.presetsList.addItem(name)
+    def __rename_preset(self, item):
+        new_name = save_preset_dialog()
+        if new_name is not None:
+            if rename_preset(item.text(), new_name):
+                item.setText(new_name)
 
     def __edit_preset(self):
         item = self.presetsList.currentItem()

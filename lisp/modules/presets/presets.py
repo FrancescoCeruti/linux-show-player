@@ -28,7 +28,8 @@ from lisp.core.module import Module
 from lisp.layouts.cue_layout import CueLayout
 from lisp.modules.presets.lib import PRESETS_DIR, load_preset, load_on_cue, \
     write_preset
-from lisp.modules.presets.presets_ui import select_preset_dialog, PresetsUi
+from lisp.modules.presets.presets_ui import select_preset_dialog, PresetsUi, \
+    save_preset_dialog
 from lisp.ui.mainwindow import MainWindow
 from lisp.ui.ui_utils import translate
 
@@ -67,22 +68,24 @@ class Presets(Module):
 
         self.loadOnCueAction = QAction(None)
         self.loadOnCueAction.triggered.connect(self.__load_on_cue)
-        self.loadOnCueAction.setText(translate('Preset', 'Load preset'))
+        self.loadOnCueAction.setText(translate('Presets', 'Load preset'))
 
         self.createFromCueAction = QAction(None)
         self.createFromCueAction.triggered.connect(self.__create_from_cue)
-        self.createFromCueAction.setText(translate('Preset', 'Save as preset'))
+        self.createFromCueAction.setText(translate('Presets', 'Save as preset'))
 
         CueLayout.cm_registry.add_separator()
         CueLayout.cm_registry.add_item(self.loadOnCueAction)
         CueLayout.cm_registry.add_item(self.createFromCueAction)
         CueLayout.cm_registry.add_separator()
 
-    def __edit_presets(self):
+    @staticmethod
+    def __edit_presets():
         ui = PresetsUi(parent=MainWindow())
         ui.show()
 
-    def __cue_from_preset(self):
+    @staticmethod
+    def __cue_from_preset():
         preset_name = select_preset_dialog()
         if preset_name is not None:
             preset = load_preset(preset_name)
@@ -91,24 +94,31 @@ class Presets(Module):
             cue.update_properties(preset)
             Application().cue_model.add(cue)
 
-    def __load_on_selected(self):
+    @staticmethod
+    def __load_on_selected():
         preset_name = select_preset_dialog()
         if preset_name is not None:
             for cue in Application().layout.get_selected_cues():
                 load_on_cue(preset_name, cue)
 
-    def __load_on_cue(self):
+    @staticmethod
+    def __load_on_cue():
         preset_name = select_preset_dialog()
         if preset_name is not None:
             load_on_cue(preset_name, Application().layout.get_context_cue())
 
-    def __create_from_cue(self):
-        preset = Application().layout.get_context_cue().properties(
-            only_changed=True)
-        # Discard id and index
-        preset.pop('id')
-        preset.pop('index')
+    @staticmethod
+    def __create_from_cue():
+        preset_name = save_preset_dialog()
 
-        write_preset('TEST', preset)
+        if preset_name is not None:
+            preset = Application().layout.get_context_cue().properties(
+                only_changed=True)
+
+            # Discard id and index
+            preset.pop('id')
+            preset.pop('index')
+
+            write_preset(preset_name, preset)
 
 
