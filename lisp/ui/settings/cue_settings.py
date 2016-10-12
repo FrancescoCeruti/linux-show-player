@@ -103,14 +103,21 @@ class CueSettings(QDialog):
             apply = self.dialogButtons.button(QDialogButtonBox.Apply)
             apply.clicked.connect(self.apply)
 
-    def accept(self):
-        self.apply()
-        super().accept()
+    def load_settings(self, settings):
+        for n in range(self.sections.count()):
+            self.sections.widget(n).load_settings(settings)
 
-    def apply(self):
+    def get_settings(self):
         settings = {}
 
         for n in range(self.sections.count()):
             deep_update(settings, self.sections.widget(n).get_settings())
 
-        self.on_apply.emit(settings)
+        return settings
+
+    def apply(self):
+        self.on_apply.emit(self.get_settings())
+
+    def accept(self):
+        self.apply()
+        super().accept()

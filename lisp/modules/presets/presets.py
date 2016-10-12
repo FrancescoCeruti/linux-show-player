@@ -17,7 +17,6 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-import json
 import os
 
 from PyQt5.QtWidgets import QAction, QMenu
@@ -27,22 +26,20 @@ from lisp.application import Application
 
 from lisp.core.module import Module
 from lisp.layouts.cue_layout import CueLayout
+from lisp.modules.presets.lib import PRESETS_DIR, load_preset, load_on_cue, \
+    write_preset
 from lisp.modules.presets.presets_ui import select_preset_dialog, PresetsUi
 from lisp.ui.mainwindow import MainWindow
 from lisp.ui.ui_utils import translate
-from lisp.utils import configuration
-from lisp.utils import elogging
 
 
 class Presets(Module):
 
-    PRESETS_DIR = os.path.join(configuration.CFG_DIR, 'presets')
-
     def __init__(self):
         super().__init__()
 
-        if not os.path.exists(Presets.PRESETS_DIR):
-            os.makedirs(Presets.PRESETS_DIR, exist_ok=True)
+        if not os.path.exists(PRESETS_DIR):
+            os.makedirs(PRESETS_DIR, exist_ok=True)
 
         # Entry in mainWindow menu
         self.menu = QMenu(translate('Presets', 'Presets'))
@@ -82,29 +79,28 @@ class Presets(Module):
         CueLayout.cm_registry.add_separator()
 
     def __edit_presets(self):
-        ui = PresetsUi(self.list_presets(), parent=MainWindow())
+        ui = PresetsUi(parent=MainWindow())
         ui.show()
 
     def __cue_from_preset(self):
-        preset_name = select_preset_dialog(tuple(self.list_presets()))
+        preset_name = select_preset_dialog()
         if preset_name is not None:
-            preset = self.load_preset(preset_name)
+            preset = load_preset(preset_name)
             cue = CueFactory.create_cue(preset['_type_'])
 
             cue.update_properties(preset)
             Application().cue_model.add(cue)
 
     def __load_on_selected(self):
-        preset_name = select_preset_dialog(tuple(self.list_presets()))
+        preset_name = select_preset_dialog()
         if preset_name is not None:
             for cue in Application().layout.get_selected_cues():
-                self.load_on_cue(preset_name, cue)
+                load_on_cue(preset_name, cue)
 
     def __load_on_cue(self):
-        preset_name = select_preset_dialog(tuple(self.list_presets()))
+        preset_name = select_preset_dialog()
         if preset_name is not None:
-            self.load_on_cue(preset_name,
-                             Application().layout.get_context_cue())
+            load_on_cue(preset_name, Application().layout.get_context_cue())
 
     def __create_from_cue(self):
         preset = Application().layout.get_context_cue().properties(
@@ -113,32 +109,6 @@ class Presets(Module):
         preset.pop('id')
         preset.pop('index')
 
-        self.write_preset('TEST', preset)
+        write_preset('TEST', preset)
 
-    def load_on_cue(self, preset_name, cue):
-        cue.update_properties(self.load_preset(preset_name))
 
-    @staticmethod
-    def list_presets():
-        try:
-            for entry in os.scandir(Presets.PRESETS_DIR):
-                if entry.is_file():
-                    yield entry.name
-        except OSError as e:
-            elogging.exception(
-                translate('Presets', 'Error while reading presets'), e)
-
-    @staticmethod
-    def load_preset(name):
-        path = os.path.join(Presets.PRESETS_DIR, name)
-        if os.path.exists(path):
-            with open(path, mode='r') as in_file:
-                return json.load(in_file)
-
-        return {}
-
-    @staticmethod
-    def write_preset(name, preset):
-        path = os.path.join(Presets.PRESETS_DIR, name)
-        with open(path, mode='w') as out_file:
-            json.dump(preset, out_file)

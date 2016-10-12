@@ -18,16 +18,21 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QDialog, QInputDialog, QMessageBox, QListWidget
-from PyQt5.QtWidgets import QHBoxLayout
-from PyQt5.QtWidgets import QPushButton
-from PyQt5.QtWidgets import QVBoxLayout
+from PyQt5.QtWidgets import QDialog, QInputDialog, QMessageBox, QListWidget, \
+    QHBoxLayout, QPushButton, QVBoxLayout
 
+from lisp.cues.cue import Cue
+from lisp.cues.cue_factory import CueFactory
+from lisp.modules.presets.lib import scan_presets, delete_preset, load_preset, \
+    write_preset
 from lisp.ui.mainwindow import MainWindow
+from lisp.ui.settings.cue_settings import CueSettings
 from lisp.ui.ui_utils import translate
 
 
-def select_preset_dialog(presets):
+def select_preset_dialog():
+    presets = tuple(scan_presets())
+
     if not presets:
         QMessageBox.warning(MainWindow(),
                             translate('Preset', 'Warning'),
@@ -42,8 +47,7 @@ def select_preset_dialog(presets):
 
 
 class PresetsUi(QDialog):
-
-    def __init__(self, presets, **kwargs):
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.resize(400, 400)
         self.setMaximumSize(self.size())
@@ -51,7 +55,10 @@ class PresetsUi(QDialog):
         self.setLayout(QVBoxLayout())
 
         self.presetsList = QListWidget(self)
-        self.presetsList.addItems(presets)
+        self.presetsList.setAlternatingRowColors(True)
+        self.presetsList.setFocusPolicy(Qt.NoFocus)
+        self.presetsList.addItems(scan_presets())
+        self.presetsList.itemSelectionChanged.connect(self.__selection_changed)
         self.layout().addWidget(self.presetsList)
 
         self.buttonsLayout = QHBoxLayout()
@@ -59,8 +66,13 @@ class PresetsUi(QDialog):
         self.layout().addLayout(self.buttonsLayout)
 
         self.addPresetButton = QPushButton(self)
+        self.addPresetButton.clicked.connect(self.__add_preset)
+
         self.editPresetButton = QPushButton(self)
+        self.editPresetButton.clicked.connect(self.__edit_preset)
+
         self.removePresetButton = QPushButton(self)
+        self.removePresetButton.clicked.connect(self.__remove_preset)
 
         self.buttonsLayout.addWidget(self.addPresetButton)
         self.buttonsLayout.addWidget(self.editPresetButton)
@@ -72,3 +84,36 @@ class PresetsUi(QDialog):
         self.addPresetButton.setText(translate('Preset', 'Add'))
         self.editPresetButton.setText(translate('Preset', 'Edit'))
         self.removePresetButton.setText(translate('Preset', 'Remove'))
+
+    def __remove_preset(self):
+        item = self.presetsList.currentItem()
+        if item:
+            delete_preset(item.text())
+
+    def __add_preset(self):
+        name = 'TEST'
+        write_preset(name, {'_type_': 'Cue'})
+
+        self.presetsList.addItem(name)
+
+    def __edit_preset(self):
+        item = self.presetsList.currentItem()
+        if item:
+            preset = load_preset(item.text())
+
+            try:
+                cue_class = CueFactory.create_cue(preset.get('_type_'))
+                cue_class = cue_class.__class__
+            except Exception:
+                cue_class = Cue
+
+            edit_dialog = CueSettings(cue_class=cue_class)
+            edit_dialog.load_settings(preset)
+            if edit_dialog.exec_() == edit_dialog.Accepted:
+                write_preset(item.text(), edit_dialog.get_settings())
+
+    def __selection_changed(self):
+        selection = bool(self.presetsList.selectedIndexes())
+
+        self.editPresetButton.setEnabled(selection)
+        self.removePresetButton.setEnabled(selection)
