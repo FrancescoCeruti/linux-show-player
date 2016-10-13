@@ -28,7 +28,7 @@ from lisp.core.module import Module
 from lisp.layouts.cue_layout import CueLayout
 from lisp.modules.presets.lib import PRESETS_DIR, load_preset, load_on_cue, \
     write_preset
-from lisp.modules.presets.presets_ui import select_preset_dialog, PresetsUi, \
+from lisp.modules.presets.presets_ui import select_preset_dialog, PresetsDialog, \
     save_preset_dialog
 from lisp.ui.mainwindow import MainWindow
 from lisp.ui.ui_utils import translate
@@ -81,7 +81,7 @@ class Presets(Module):
 
     @staticmethod
     def __edit_presets():
-        ui = PresetsUi(parent=MainWindow())
+        ui = PresetsDialog(parent=MainWindow())
         ui.show()
 
     @staticmethod

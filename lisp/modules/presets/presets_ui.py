@@ -19,14 +19,14 @@
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog, QInputDialog, QMessageBox, QListWidget, \
-    QHBoxLayout, QPushButton, QVBoxLayout
+    QPushButton, QVBoxLayout, QGridLayout, QDialogButtonBox, QWidget
 
 from lisp.cues.cue import Cue
 from lisp.cues.cue_factory import CueFactory
 from lisp.modules.presets.lib import scan_presets, delete_preset, load_preset, \
     write_preset, preset_exists, rename_preset
 from lisp.ui.mainwindow import MainWindow
-from lisp.ui.settings.cue_settings import CueSettings
+from lisp.ui.settings.cue_settings import CueSettings, CueSettingsRegistry
 from lisp.ui.ui_utils import translate
 
 
@@ -69,13 +69,13 @@ def save_preset_dialog():
             return name
 
 
-class PresetsUi(QDialog):
+class PresetsDialog(QDialog):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.resize(400, 400)
+        self.resize(500, 400)
         self.setMaximumSize(self.size())
         self.setMinimumSize(self.size())
-        self.setLayout(QVBoxLayout())
+        self.setLayout(QGridLayout())
         self.setWindowModality(Qt.ApplicationModal)
 
         self.presetsList = QListWidget(self)
@@ -84,30 +84,44 @@ class PresetsUi(QDialog):
         self.presetsList.addItems(scan_presets())
         self.presetsList.setSortingEnabled(True)
         self.presetsList.itemSelectionChanged.connect(self.__selection_changed)
-        self.presetsList.itemDoubleClicked.connect(self.__rename_preset)
-        self.layout().addWidget(self.presetsList)
+        self.presetsList.itemDoubleClicked.connect(self.__edit_preset)
+        self.layout().addWidget(self.presetsList, 0, 0)
 
-        self.buttonsLayout = QHBoxLayout()
-        self.buttonsLayout.setAlignment(Qt.AlignRight)
-        self.layout().addLayout(self.buttonsLayout)
+        self.presetsButtons = QWidget(self)
+        self.presetsButtons.setLayout(QVBoxLayout())
+        self.presetsButtons.layout().setContentsMargins(0, 0, 0, 0)
+        self.layout().addWidget(self.presetsButtons, 0, 1)
+        self.layout().setAlignment(self.presetsButtons, Qt.AlignTop)
 
-        self.addPresetButton = QPushButton(self)
+        self.addPresetButton = QPushButton(self.presetsButtons)
         self.addPresetButton.clicked.connect(self.__add_preset)
+        self.presetsButtons.layout().addWidget(self.addPresetButton)
 
-        self.editPresetButton = QPushButton(self)
+        self.renamePresetButton = QPushButton(self.presetsButtons)
+        self.renamePresetButton.clicked.connect(self.__rename_preset)
+        self.presetsButtons.layout().addWidget(self.renamePresetButton)
+
+        self.editPresetButton = QPushButton(self.presetsButtons)
         self.editPresetButton.clicked.connect(self.__edit_preset)
+        self.presetsButtons.layout().addWidget(self.editPresetButton)
 
-        self.removePresetButton = QPushButton(self)
+        self.removePresetButton = QPushButton(self.presetsButtons)
         self.removePresetButton.clicked.connect(self.__remove_preset)
+        self.presetsButtons.layout().addWidget(self.removePresetButton)
 
-        self.buttonsLayout.addWidget(self.addPresetButton)
-        self.buttonsLayout.addWidget(self.editPresetButton)
-        self.buttonsLayout.addWidget(self.removePresetButton)
+        self.dialogButtons = QDialogButtonBox(self)
+        self.dialogButtons.setStandardButtons(QDialogButtonBox.Ok)
+        self.dialogButtons.accepted.connect(self.accept)
+        self.layout().addWidget(self.dialogButtons, 1, 0, 1, 2)
+
+        self.layout().setColumnStretch(0, 4)
+        self.layout().setColumnStretch(1, 1)
 
         self.retranslateUi()
 
     def retranslateUi(self):
         self.addPresetButton.setText(translate('Presets', 'Add'))
+        self.renamePresetButton.setText(translate('Presets', 'Rename'))
         self.editPresetButton.setText(translate('Presets', 'Edit'))
         self.removePresetButton.setText(translate('Presets', 'Remove'))
 
@@ -120,18 +134,28 @@ class PresetsUi(QDialog):
     def __add_preset(self):
         name = save_preset_dialog()
         if name is not None:
-            if write_preset(name, {'_type_': 'Cue'}):
-                self.presetsList.addItem(name)
+            types = [c.__name__ for c in CueSettingsRegistry().ref_classes()]
+            cue_type, confirm = QInputDialog.getItem(
+                self,
+                translate('Presets', 'Presets'),
+                translate('Presets', 'Select cue type:'),
+                types)
 
-    def __rename_preset(self, item):
-        new_name = save_preset_dialog()
-        if new_name is not None:
-            if rename_preset(item.text(), new_name):
-                item.setText(new_name)
+            if confirm:
+                if write_preset(name, {'_type_': cue_type}):
+                    self.presetsList.addItem(name)
 
-    def __edit_preset(self):
+    def __rename_preset(self):
         item = self.presetsList.currentItem()
-        if item:
+        if item is not None:
+            new_name = save_preset_dialog()
+            if new_name is not None:
+                if rename_preset(item.text(), new_name):
+                    item.setText(new_name)
+
+    def __edit_preset(self, *args):
+        item = self.presetsList.currentItem()
+        if item is not None:
             preset = load_preset(item.text())
 
             try:
@@ -143,7 +167,8 @@ class PresetsUi(QDialog):
             edit_dialog = CueSettings(cue_class=cue_class)
             edit_dialog.load_settings(preset)
             if edit_dialog.exec_() == edit_dialog.Accepted:
-                write_preset(item.text(), edit_dialog.get_settings())
+                preset.update(edit_dialog.get_settings())
+                write_preset(item.text(), preset)
 
     def __selection_changed(self):
         selection = bool(self.presetsList.selectedIndexes())
