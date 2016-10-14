@@ -42,6 +42,9 @@ class CueListModel(ModelAdapter):
 
     def move(self, old_index, new_index):
         if old_index != new_index:
+            if new_index >= len(self.__cues):
+                new_index = len(self.__cues) - 1
+
             cue = self.__cues.pop(old_index)
             self.__cues.insert(new_index, cue)
 
@@ -53,8 +56,7 @@ class CueListModel(ModelAdapter):
                 max_index = old_index
 
             self._update_indices(min_index, max_index + 1)
-
-        self.item_moved.emit(old_index, new_index)
+            self.item_moved.emit(old_index, new_index)
 
     def _model_reset(self):
         self.__cues.clear()
