@@ -19,10 +19,9 @@
 
 import json
 import os
+from zipfile import ZipFile, BadZipFile
 
-from lisp.ui.ui_utils import translate
 from lisp.utils import configuration
-from lisp.utils import elogging
 
 PRESETS_DIR = os.path.join(configuration.CFG_DIR, 'presets')
 
@@ -36,22 +35,14 @@ def preset_path(name):
     return os.path.join(PRESETS_DIR, name)
 
 
-def scan_presets(show_error=True):
+def scan_presets():
     """Iterate over presets.
 
     Every time this function is called a search in `PRESETS_DIR` is performed.
-
-    :param show_error: If True display error to user
-    :type show_error: bool
     """
-    # TODO: verify if a cached version can improve this function
-    try:
-        for entry in os.scandir(PRESETS_DIR):
-            if entry.is_file():
-                yield entry.name
-    except OSError as e:
-        elogging.exception(translate('Presets', 'Cannot load presets list.'), e,
-                           dialog=show_error)
+    for entry in os.scandir(PRESETS_DIR):
+        if entry.is_file():
+            yield entry.name
 
 
 def preset_exists(name):
@@ -75,77 +66,44 @@ def load_on_cue(preset_name, cue):
     cue.update_properties(load_preset(preset_name))
 
 
-def load_preset(name, show_error=True):
+def load_preset(name):
     """Load the preset with the given name and return it.
 
     :param name: The preset name
     :type name: str
-    :param show_error: If True display error to user
-    :type show_error: bool
     :rtype: dict
     """
     path = preset_path(name)
 
-    if os.path.exists(path):
-        try:
-            with open(path, mode='r') as in_file:
-                return json.load(in_file)
-        except OSError as e:
-            elogging.exception(translate('Presets', 'Cannot load preset.'), e,
-                               dialog=show_error)
-
-    return {}
+    with open(path, mode='r') as in_file:
+        return json.load(in_file)
 
 
-def write_preset(name, preset, overwrite=True, show_error=True):
+def write_preset(name, preset):
     """Write a preset with the given name in `PRESET_DIR`.
 
     :param name: The preset name
     :type name: str
     :param preset: The content of the preset
     :type preset: dict
-    :param overwrite: If True overwrite existing files
-    :type overwrite: bool
-    :param show_error: If True display error to user
-    :type show_error: bool
     :return: True when no error occurs, False otherwise
     :rtype: bool
     """
     path = preset_path(name)
 
-    if not(not overwrite and os.path.exists(path)):
-        try:
-            with open(path, mode='w') as out_file:
-                json.dump(preset, out_file)
-
-            return True
-        except OSError as e:
-            elogging.exception(translate('Presets', 'Cannot save presets.'), e,
-                               dialog=show_error)
-
-    return False
+    with open(path, mode='w') as out_file:
+        json.dump(preset, out_file)
 
 
-def rename_preset(old_name, new_name, show_error=True):
-    """Rename an exist preset, if the new name is not already used.
+def rename_preset(old_name, new_name):
+    """Rename an existing preset, if the new name is not already used.
 
     :param old_name: The preset (old) name
     :param new_name: The new preset name
-    :param show_error: If True display error to user
-    :type show_error: bool
     :return: True if the preset as been renamed successfully, False otherwise
     :rtype: bool
     """
-    if preset_exists(old_name) and not preset_exists(new_name):
-        try:
-            os.rename(preset_path(old_name), preset_path(new_name))
-            return True
-        except OSError as e:
-            elogging.exception(
-                translate('Presets', 'Cannot rename presets.'), e,
-                dialog=show_error)
-
-    return False
+    os.rename(preset_path(old_name), preset_path(new_name))
 
 
 def delete_preset(name):
@@ -153,18 +111,91 @@ def delete_preset(name):
 
     :param name: The preset to be deleted
     :type name: str
-    :return: True if the preset is deleted, False otherwise
-    :rtype: bool
     """
     path = preset_path(name)
 
     if os.path.exists(path):
-        try:
-            os.remove(path)
-        except OSError as e:
-            elogging.exception(
-                translate('Presets', 'Cannot delete presets.'), e)
-            return False
+        os.remove(path)
 
-    # If the path do not exists we return True anyway (just don't tell anyone)
-    return True
+
+class PresetImportError(Exception):
+    """
+    Raised when an error occur during presets import.
+    """
+
+
+class PresetExportError(Exception):
+    """
+    Raised when an error occur during presets export.
+    """
+
+
+def export_presets(names, archive):
+    """Export presets-files into an archive.
+
+    :param names: The presets to be exported
+    :type names: collections.Iterable[Str]
+    :param archive: The path of the archive
+    :type archive: str
+    """
+    if names:
+        try:
+            with ZipFile(archive, mode='w') as archive:
+                for name in names:
+                    archive.write(preset_path(name), name)
+        except(OSError, BadZipFile) as e:
+            raise PresetExportError(str(e))
+
+
+def import_presets(archive, overwrite=True):
+    """Import presets for an archive.
+
+    :param archive: The archive path
+    :type archive: str
+    :param overwrite: Overwrite existing files
+    :type overwrite: bool
+    """
+    try:
+        with ZipFile(archive) as archive:
+            for member in archive.namelist():
+                if not (preset_exists(member) and not overwrite):
+                    archive.extract(member, path=PRESETS_DIR)
+    except(OSError, BadZipFile) as e:
+        raise PresetImportError(str(e))
+
+
+def import_has_conflicts(archive):
+    """Verify if the `archive` files conflicts with the user presets.
+
+    :param archive: path of the archive to analyze
+    :type archive: str
+    :rtype: bool
+    """
+    try:
+        with ZipFile(archive) as archive:
+            for member in archive.namelist():
+                if preset_exists(member):
+                    return True
+    except(OSError, BadZipFile) as e:
+        raise PresetImportError(str(e))
+
+    return False
+
+
+def import_conflicts(archive):
+    """Return a list of conflicts between `archive` files and user presets.
+
+    :param archive: path of the archive to analyze
+    :type archive: str
+    """
+    conflicts = []
+
+    try:
+        with ZipFile(archive) as archive:
+            for member in archive.namelist():
+                if preset_exists(member):
+                    conflicts.append(member)
+    except(OSError, BadZipFile) as e:
+        raise PresetImportError(str(e))
+
+    return conflicts

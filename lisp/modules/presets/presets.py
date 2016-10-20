@@ -20,16 +20,13 @@
 import os
 
 from PyQt5.QtWidgets import QAction, QMenu
-from lisp.cues.cue_factory import CueFactory
 
 from lisp.application import Application
-
 from lisp.core.module import Module
 from lisp.layouts.cue_layout import CueLayout
-from lisp.modules.presets.lib import PRESETS_DIR, load_preset, load_on_cue, \
-    write_preset
-from lisp.modules.presets.presets_ui import select_preset_dialog, PresetsDialog, \
-    save_preset_dialog
+from lisp.modules.presets.lib import PRESETS_DIR, load_on_cue, preset_exists
+from lisp.modules.presets.presets_ui import select_preset_dialog, \
+    PresetsDialog, save_preset_dialog, check_override_dialog, write_preset
 from lisp.ui.mainwindow import MainWindow
 from lisp.ui.ui_utils import translate
 
@@ -49,11 +46,7 @@ class Presets(Module):
         self.editPresetsAction = QAction(MainWindow())
         self.editPresetsAction.triggered.connect(self.__edit_presets)
         self.editPresetsAction.setText(
-            translate('Presets', 'Edit presets'))
-
-        self.cueFromPresetAction = QAction(MainWindow())
-        self.cueFromPresetAction.triggered.connect(self.__cue_from_preset)
-        self.cueFromPresetAction.setText(translate('Preset', 'Cue from preset'))
+            translate('Presets', 'Manage'))
 
         self.loadOnSelectedAction = QAction(MainWindow())
         self.loadOnSelectedAction.triggered.connect(self.__load_on_selected)
@@ -62,7 +55,6 @@ class Presets(Module):
 
         self.menu.addActions((
             self.editPresetsAction,
-            self.cueFromPresetAction,
             self.loadOnSelectedAction
         ))
 
@@ -85,16 +77,6 @@ class Presets(Module):
         ui.show()
 
     @staticmethod
-    def __cue_from_preset():
-        preset_name = select_preset_dialog()
-        if preset_name is not None:
-            preset = load_preset(preset_name)
-            cue = CueFactory.create_cue(preset['_type_'])
-
-            cue.update_properties(preset)
-            Application().cue_model.add(cue)
-
-    @staticmethod
     def __load_on_selected():
         preset_name = select_preset_dialog()
         if preset_name is not None:
@@ -109,16 +91,15 @@ class Presets(Module):
 
     @staticmethod
     def __create_from_cue():
-        preset_name = save_preset_dialog()
+        cue = Application().layout.get_context_cue()
+        name = save_preset_dialog(cue.name)
 
-        if preset_name is not None:
-            preset = Application().layout.get_context_cue().properties(
-                only_changed=True)
+        if name is not None:
+            if not (preset_exists(name) and not check_override_dialog(name)):
+                preset = cue.properties(only_changed=True)
 
-            # Discard id and index
-            preset.pop('id')
-            preset.pop('index')
+                # Discard id and index
+                preset.pop('id')
+                preset.pop('index')
 
-            write_preset(preset_name, preset)
-
-
+                write_preset(name, preset)

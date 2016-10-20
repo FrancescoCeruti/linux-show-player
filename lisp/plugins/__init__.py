@@ -18,7 +18,6 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
-import traceback
 
 from lisp.core.loading import load_classes
 from lisp.utils import elogging
@@ -32,9 +31,8 @@ def load_plugins():
         try:
             __PLUGINS[name] = plugin()
             elogging.debug('PLUGINS: Loaded "{0}"'.format(name))
-        except Exception:
-            elogging.error('PLUGINS: Failed "{0}" load'.format(name))
-            elogging.debug('PLUGINS: {0}'.format(traceback.format_exc()))
+        except Exception as e:
+            elogging.exception('PLUGINS: Failed "{0}" load'.format(name), e)
 
 
 def translations(locale):
@@ -49,14 +47,17 @@ def translations(locale):
 
 def init_plugins():
     """Initialize all the plugins."""
+    failed = []
     for plugin in __PLUGINS:
         try:
             __PLUGINS[plugin].init()
             elogging.debug('PLUGINS: Initialized "{0}"'.format(plugin))
-        except Exception:
-            __PLUGINS.pop(plugin)
-            elogging.error('PLUGINS: Failed "{0}" init'.format(plugin))
-            elogging.debug('PLUGINS: {0}'.format(traceback.format_exc()))
+        except Exception as e:
+            failed.append(plugin)
+            elogging.exception('PLUGINS: Failed "{0}" init'.format(plugin), e)
+
+    for plugin in failed:
+        __PLUGINS.pop(plugin)
 
 
 def reset_plugins():
@@ -65,25 +66,18 @@ def reset_plugins():
         try:
             __PLUGINS[plugin].reset()
             elogging.debug('PLUGINS: Reset "{0}"'.format(plugin))
-        except Exception:
-            elogging.error('PLUGINS: Failed "{0}" reset'.format(plugin))
-            elogging.debug('PLUGINS: {0}'.format(traceback.format_exc()))
+        except Exception as e:
+            elogging.exception('PLUGINS: Failed "{0}" reset'.format(plugin), e)
 
 
 def set_plugins_settings(settings):
-    failed = []
-
     for plugin in __PLUGINS.values():
         if plugin.Name in settings:
             try:
                 plugin.load_settings(settings[plugin.Name])
             except Exception as e:
-                elogging.error('PLUGINS: Failed "{0}" settings load'
-                               .format(plugin.Name))
-                elogging.debug('PLUGINS: {0}'.format(traceback.format_exc()))
-                failed.append((plugin.Name, e))
-
-    return failed
+                elogging.exception('PLUGINS: Failed "{0}" settings load'
+                                   .format(plugin.Name), e)
 
 
 def get_plugin_settings():
@@ -94,9 +88,8 @@ def get_plugin_settings():
             settings = plugin.settings()
             if settings is not None and len(settings) > 0:
                 plugins_settings[plugin.Name] = settings
-        except Exception:
-            elogging.error('PLUGINS: Failed "{0}" settings retrieve'
-                           .format(plugin.Name))
-            elogging.debug('PLUGINS: {0}'.format(traceback.format_exc()))
+        except Exception as e:
+            elogging.exception('PLUGINS: Failed "{0}" settings retrieve'
+                               .format(plugin.Name), e)
 
     return plugins_settings

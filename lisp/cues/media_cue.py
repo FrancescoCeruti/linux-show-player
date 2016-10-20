@@ -22,6 +22,8 @@ from lisp.cues.cue import Cue, CueState, CueAction
 
 
 class MediaCue(Cue):
+    Name = 'Media Cue'
+
     _media_ = NestedProperties('media', default={})
 
     CueActions = (CueAction.Default, CueAction.Start, CueAction.Stop,

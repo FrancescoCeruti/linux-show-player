@@ -52,7 +52,7 @@ class QDetailedMessageBox(QMessageBox):
 
     @staticmethod
     def dgeneric(title, text, detail_text, icon, parent=None):
-        """Build and show a MessageBox whit detailed text"""
+        """Build and show a MessageBox with detailed text"""
         messageBox = QMessageBox(parent)
 
         messageBox.setIcon(icon)

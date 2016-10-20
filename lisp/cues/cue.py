@@ -84,6 +84,7 @@ class Cue(HasProperties):
         'post_wait' value is ignored.
 
     """
+    Name = 'Cue'
 
     _type_ = WriteOnceProperty()
     id = WriteOnceProperty()

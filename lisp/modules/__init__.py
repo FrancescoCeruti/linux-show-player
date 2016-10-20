@@ -18,7 +18,6 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
-import traceback
 
 from lisp.core.loading import load_classes
 from lisp.utils import elogging
@@ -32,9 +31,7 @@ def load_modules():
             __MODULES[name] = module()
             elogging.debug('MODULES: Loaded "{0}"'.format(name))
         except Exception as e:
-            elogging.error('Failed "{0}" lading'.format(name),
-                           details=str(e))
-            elogging.debug(traceback.format_exc())
+            elogging.exception('Failed "{0}" lading'.format(name), e)
 
 
 def translations(locale):
@@ -53,9 +50,8 @@ def terminate_modules():
             __MODULES[module_name].terminate()
             elogging.debug('MODULES: Terminated "{0}"'.format(module_name))
         except Exception as e:
-            elogging.error('Failed "{0}" termination'.format(module_name),
-                           details=str(e))
-            elogging.debug(traceback.format_exc())
+            elogging.exception('Failed "{0}" termination'.format(module_name),
+                               e)
 
 
 def check_module(modname):
