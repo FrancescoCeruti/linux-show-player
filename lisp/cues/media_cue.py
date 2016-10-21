@@ -17,12 +17,14 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+from PyQt5.QtCore import QT_TRANSLATE_NOOP
+
 from lisp.core.has_properties import NestedProperties
 from lisp.cues.cue import Cue, CueState, CueAction
 
 
 class MediaCue(Cue):
-    Name = 'Media Cue'
+    Name = QT_TRANSLATE_NOOP('CueName', 'Media Cue')
 
     _media_ = NestedProperties('media', default={})
 
