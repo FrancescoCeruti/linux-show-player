@@ -23,7 +23,7 @@ from threading import Event
 from uuid import uuid4
 
 from lisp.core.decorators import async, synchronized_method
-from lisp.core.has_properties import HasProperties, Property
+from lisp.core.has_properties import HasProperties, Property, WriteOnceProperty
 from lisp.core.signal import Signal
 
 
@@ -84,9 +84,10 @@ class Cue(HasProperties):
         'post_wait' value is ignored.
 
     """
+    Name = 'Cue'
 
-    _type_ = Property()
-    id = Property()
+    _type_ = WriteOnceProperty()
+    id = WriteOnceProperty()
     name = Property(default='Untitled')
     index = Property(default=-1)
     description = Property(default='')

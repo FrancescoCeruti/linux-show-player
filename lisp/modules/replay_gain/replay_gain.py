@@ -153,7 +153,7 @@ class ReplayGain(Module):
     def __init__(self):
         self._gain_thread = None
 
-        # Voice in mainWindow menu
+        # Entry in mainWindow menu
         self.menu = QMenu(translate('ReplayGain',
                                     'ReplayGain / Normalization'))
         self.menu_action = MainWindow().menuTools.addMenu(self.menu)

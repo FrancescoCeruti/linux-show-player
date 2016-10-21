@@ -21,52 +21,60 @@ from copy import deepcopy
 
 
 class CueFactory:
-    """Provide a factory for build different cues types.
+    """Provide a generic factory to build different cues types.
 
-    Any cue must be register, via register_factory function.
+    Cues can be register via `register_factory` function.
     """
 
-    _REGISTRY_ = {}
+    __REGISTRY = {}
 
     # Register methods
 
     @classmethod
     def register_factory(cls, cue_type, factory):
-        """
-        Register a new cue-type in the factory.
+        """Register a new cue-type in the factory.
 
         :param cue_type: The cue class name
         :type cue_type: str
         :param factory: The cue class or a factory function
-
         """
-        cls._REGISTRY_[cue_type] = factory
+        cls.__REGISTRY[cue_type] = factory
+
+    @classmethod
+    def has_factory(cls, cue_type):
+        """Return True if there is a factory for `cue_type`
+
+        :param cue_type: The cue type to check
+        :rtype cue_type: str
+        :rtype: bool
+        """
+        return cue_type in cls.__REGISTRY
 
     @classmethod
     def remove_factory(cls, cue_type):
-        """
-        Remove the registered cue from the factory
+        """Remove the registered cue from the factory
 
         :param cue_type: the cue class name (the same used for registration)
         """
-        cls._REGISTRY_.pop(cue_type)
+        cls.__REGISTRY.pop(cue_type)
 
     # Create methods
 
     @classmethod
     def create_cue(cls, cue_type, **kwargs):
-        """
-        Return a new cue of the specified type.
+        """Return a new cue of the specified type.
 
         ..note:
             Some factory can take keyword-arguments (e.g. URIAudio)
 
         :param cue_type: The cue type
+        :rtype: lisp.cues.cue.Cue
         """
-        factory = cls._REGISTRY_.get(cue_type)
+        factory = cls.__REGISTRY.get(cue_type)
 
         if not callable(factory):
-            raise Exception('Cue not available or badly registered: ' + str(cue_type))
+            raise Exception(
+                'Cue not available or badly registered: {}'.format(cue_type))
 
         return factory(**kwargs)
 
@@ -75,6 +83,7 @@ class CueFactory:
         """Return a copy of the given cue. The id is not copied.
 
         :param cue: the cue to be copied
+        :rtype: lisp.cues.cue.Cue
         """
         properties = deepcopy(cue.properties())
         properties.pop('id')

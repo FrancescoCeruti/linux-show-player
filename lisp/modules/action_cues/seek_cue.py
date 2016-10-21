@@ -121,14 +121,15 @@ class SeekCueSettings(SettingsPage):
 
     def load_settings(self, settings):
         if settings is not None:
-            cue = Application().cue_model.get(settings['target_id'])
+            cue = Application().cue_model.get(settings.get('target_id'))
             if cue is not None:
                 self.cue_id = settings['target_id']
-                self.seekEdit.setTime(
-                    QTime.fromMSecsSinceStartOfDay(settings['time']))
                 self.seekEdit.setMaximumTime(
                     QTime.fromMSecsSinceStartOfDay(cue.media.duration))
                 self.cueLabel.setText(cue.name)
+
+            self.seekEdit.setTime(
+                QTime.fromMSecsSinceStartOfDay(settings.get('time', 0)))
 
 
 CueSettingsRegistry().add_item(SeekCueSettings, SeekCue)
