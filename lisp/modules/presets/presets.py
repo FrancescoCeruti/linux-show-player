@@ -26,7 +26,8 @@ from lisp.core.module import Module
 from lisp.layouts.cue_layout import CueLayout
 from lisp.modules.presets.lib import PRESETS_DIR, load_on_cue, preset_exists
 from lisp.modules.presets.presets_ui import select_preset_dialog, \
-    PresetsDialog, save_preset_dialog, check_override_dialog, write_preset
+    PresetsDialog, save_preset_dialog, check_override_dialog, write_preset, \
+    load_preset_error, write_preset_error
 from lisp.ui.mainwindow import MainWindow
 from lisp.ui.ui_utils import translate
 
@@ -81,13 +82,19 @@ class Presets(Module):
         preset_name = select_preset_dialog()
         if preset_name is not None:
             for cue in Application().layout.get_selected_cues():
-                load_on_cue(preset_name, cue)
+                try:
+                    load_on_cue(preset_name, cue)
+                except OSError as e:
+                    load_preset_error(e, preset_name, parent=MainWindow())
 
     @staticmethod
     def __load_on_cue():
         preset_name = select_preset_dialog()
         if preset_name is not None:
-            load_on_cue(preset_name, Application().layout.get_context_cue())
+            try:
+                load_on_cue(preset_name, Application().layout.get_context_cue())
+            except OSError as e:
+                load_preset_error(e, preset_name, parent=MainWindow())
 
     @staticmethod
     def __create_from_cue():
@@ -102,4 +109,7 @@ class Presets(Module):
                 preset.pop('id')
                 preset.pop('index')
 
-                write_preset(name, preset)
+                try:
+                    write_preset(name, preset)
+                except OSError as e:
+                    write_preset_error(e, name, parent=MainWindow())

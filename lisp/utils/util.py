@@ -16,7 +16,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
-
+import re
 from collections import Mapping
 from os import listdir, path
 from os.path import isdir, exists, join
@@ -98,3 +98,18 @@ def weak_call_proxy(weakref):
             weakref()(*args, **kwargs)
 
     return proxy
+
+
+def natural_keys(text):
+    """Turn a string into a list of string and number chunks.
+
+    "z23a" -> ["z", 23, "a"]
+
+    From: http://stackoverflow.com/questions/5967500/how-to-correctly-sort-a-string-with-a-number-inside
+
+    .. Example::
+        >>> l = ['something1', 'something17', 'something4']
+        >>> l.sort(key=natural_keys) # sorts in human order
+        >>> ['something1', 'something4', 'something17']
+    """
+    return [int(c) if c.isdigit() else c for c in re.split('(\d+)', text)]
