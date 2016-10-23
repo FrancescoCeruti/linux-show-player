@@ -146,6 +146,7 @@ class PresetsDialog(QDialog):
         self.presetsList.itemDoubleClicked.connect(self.__edit_preset)
         self.layout().addWidget(self.presetsList, 0, 0)
 
+        # Preset buttons
         self.presetsButtons = QWidget(self)
         self.presetsButtons.setLayout(QVBoxLayout())
         self.presetsButtons.layout().setContentsMargins(0, 0, 0, 0)
@@ -172,20 +173,22 @@ class PresetsDialog(QDialog):
         self.cueFromSelectedButton.clicked.connect(self.__cue_from_selected)
         self.presetsButtons.layout().addWidget(self.cueFromSelectedButton)
 
+        # Import/Export buttons
         self.ieButtons = QWidget(self)
         self.ieButtons.setLayout(QHBoxLayout())
         self.ieButtons.layout().setContentsMargins(0, 0, 0, 0)
         self.layout().addWidget(self.ieButtons, 1, 0)
         self.layout().setAlignment(self.ieButtons, Qt.AlignLeft)
 
-        self.exportButton = QPushButton(self.ieButtons)
-        self.exportButton.clicked.connect(self.__export_presets)
-        self.ieButtons.layout().addWidget(self.exportButton)
+        self.exportSelectedButton = QPushButton(self.ieButtons)
+        self.exportSelectedButton.clicked.connect(self.__export_presets)
+        self.ieButtons.layout().addWidget(self.exportSelectedButton)
 
         self.importButton = QPushButton(self.ieButtons)
         self.importButton.clicked.connect(self.__import_presets)
         self.ieButtons.layout().addWidget(self.importButton)
 
+        # Dialog buttons
         self.dialogButtons = QDialogButtonBox(self)
         self.dialogButtons.setStandardButtons(QDialogButtonBox.Ok)
         self.dialogButtons.accepted.connect(self.accept)
@@ -205,7 +208,7 @@ class PresetsDialog(QDialog):
         self.editPresetButton.setText(translate('Presets', 'Edit'))
         self.removePresetButton.setText(translate('Presets', 'Remove'))
         self.cueFromSelectedButton.setText(translate('Preset', 'Create Cue'))
-        self.exportButton.setText(translate('Presets', 'Export selected'))
+        self.exportSelectedButton.setText(translate('Presets', 'Export selected'))
         self.importButton.setText(translate('Presets', 'Import'))
 
     def __populate(self):
@@ -355,7 +358,7 @@ class PresetsDialog(QDialog):
         self.renamePresetButton.setEnabled(selection == 1)
         self.removePresetButton.setEnabled(selection > 0)
         self.cueFromSelectedButton.setEnabled(selection > 0)
-        self.exportButton.setEnabled(selection > 0)
+        self.exportSelectedButton.setEnabled(selection > 0)
 
 
 class NewPresetDialog(QDialog):

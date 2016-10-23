@@ -120,7 +120,7 @@ class GainMainThread(Thread):
                     break
 
         if self._running:
-            MainActionsHandler().do_action(self._action)
+            MainActionsHandler.do_action(self._action)
         else:
             logging.info('REPLY-GAIN:: Stopped by user')
 
@@ -227,7 +227,7 @@ class ReplayGain(Module):
         action = GainAction()
         for cue in cues:
             action.add_media(cue.media, 1.0)
-        MainActionsHandler().do_action(action)
+        MainActionsHandler.do_action(action)
 
 
 class GstGain:

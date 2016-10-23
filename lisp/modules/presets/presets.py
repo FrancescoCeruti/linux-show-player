@@ -24,7 +24,8 @@ from PyQt5.QtWidgets import QAction, QMenu
 from lisp.application import Application
 from lisp.core.module import Module
 from lisp.layouts.cue_layout import CueLayout
-from lisp.modules.presets.lib import PRESETS_DIR, load_on_cue, preset_exists
+from lisp.modules.presets.lib import PRESETS_DIR, load_on_cue, preset_exists, \
+    load_on_cues
 from lisp.modules.presets.presets_ui import select_preset_dialog, \
     PresetsDialog, save_preset_dialog, check_override_dialog, write_preset, \
     load_preset_error, write_preset_error
@@ -81,11 +82,12 @@ class Presets(Module):
     def __load_on_selected():
         preset_name = select_preset_dialog()
         if preset_name is not None:
-            for cue in Application().layout.get_selected_cues():
-                try:
-                    load_on_cue(preset_name, cue)
-                except OSError as e:
-                    load_preset_error(e, preset_name, parent=MainWindow())
+            try:
+                cues = Application().layout.get_selected_cues()
+                if cues:
+                    load_on_cues(preset_name, cues)
+            except OSError as e:
+                load_preset_error(e, preset_name, parent=MainWindow())
 
     @staticmethod
     def __load_on_cue():

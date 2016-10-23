@@ -39,7 +39,7 @@ class MementoModel(ReadOnlyProxyModel):
         super().__init__(model)
 
         if handler is None:
-            handler = MainActionsHandler()
+            handler = MainActionsHandler
 
         self._handler = handler
         self._locked = False

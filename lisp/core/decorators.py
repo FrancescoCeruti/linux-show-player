@@ -163,7 +163,7 @@ def suppress_exceptions(target=None, *, log=True):
     return wrapped
 
 
-def memoize(obj):
+def memoize(callable_):
     """Decorator. Caches a function's return value each time it is called.
 
     If called later with the same arguments, the cached value is returned
@@ -173,13 +173,13 @@ def memoize(obj):
         This works for any callable object.
         The arguments are cached (as strings) in object.cache.
     """
-    cache = obj.cache = {}
+    cache = callable_.cache = {}
 
-    @wraps(obj)
+    @wraps(callable_)
     def memoizer(*args, **kwargs):
         key = str(args) + str(kwargs)
         if key not in cache:
-            cache[key] = obj(*args, **kwargs)
+            cache[key] = callable_(*args, **kwargs)
         return cache[key]
 
     return memoizer

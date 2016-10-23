@@ -52,9 +52,9 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         # Status Bar
         self.statusBar = QStatusBar(self)
         self.setStatusBar(self.statusBar)
-        MainActionsHandler().action_done.connect(self._action_done)
-        MainActionsHandler().action_undone.connect(self._action_undone)
-        MainActionsHandler().action_redone.connect(self._action_redone)
+        MainActionsHandler.action_done.connect(self._action_done)
+        MainActionsHandler.action_undone.connect(self._action_undone)
+        MainActionsHandler.action_redone.connect(self._action_redone)
 
         # Menubar
         self.menubar = QMenuBar(self)
@@ -106,9 +106,9 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
 
         # menuEdit
         self.actionUndo = QAction(self)
-        self.actionUndo.triggered.connect(MainActionsHandler().undo_action)
+        self.actionUndo.triggered.connect(MainActionsHandler.undo_action)
         self.actionRedo = QAction(self)
-        self.actionRedo.triggered.connect(MainActionsHandler().redo_action)
+        self.actionRedo.triggered.connect(MainActionsHandler.redo_action)
         self.multiEdit = QAction(self)
         self.selectAll = QAction(self)
         self.selectAllMedia = QAction(self)
@@ -238,7 +238,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
             self.menuEdit.insertAction(self.cueSeparator, action)
 
     def update_window_title(self):
-        saved = MainActionsHandler().is_saved()
+        saved = MainActionsHandler.is_saved()
         if not saved and not self.windowTitle()[0] == '*':
             self.setWindowTitle('*' + self.windowTitle())
         elif saved and self.windowTitle()[0] == '*':
@@ -295,7 +295,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
             self.new_session.emit()
 
     def _check_saved(self):
-        if not MainActionsHandler().is_saved():
+        if not MainActionsHandler.is_saved():
             msgBox = QMessageBox(self)
             msgBox.setIcon(QMessageBox.Warning)
             msgBox.setWindowTitle(translate('MainWindow', 'Close session'))

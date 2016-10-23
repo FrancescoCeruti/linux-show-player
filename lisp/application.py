@@ -114,7 +114,7 @@ class Application(metaclass=Singleton):
 
     def _delete_session(self):
         if self._layout is not None:
-            MainActionsHandler().clear()
+            MainActionsHandler.clear()
             plugins.reset_plugins()
 
             self._app_conf.clear()
@@ -148,7 +148,7 @@ class Application(metaclass=Singleton):
         with open(session_file, mode='w', encoding='utf-8') as file:
             file.write(json.dumps(session, sort_keys=True, indent=4))
 
-        MainActionsHandler().set_saved()
+        MainActionsHandler.set_saved()
         self._mainWindow.update_window_title()
 
     def _load_from_file(self, session_file):
@@ -173,7 +173,7 @@ class Application(metaclass=Singleton):
                 except Exception as e:
                     elogging.exception('Unable to create the cue', e)
 
-            MainActionsHandler().set_saved()
+            MainActionsHandler.set_saved()
             self._mainWindow.update_window_title()
 
             # Load plugins settings

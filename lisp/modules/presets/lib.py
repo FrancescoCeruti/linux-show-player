@@ -21,6 +21,9 @@ import json
 import os
 from zipfile import ZipFile, BadZipFile
 
+from lisp.core.actions_handler import MainActionsHandler
+
+from lisp.cues.cue_actions import UpdateCueAction, UpdateCuesAction
 from lisp.utils import configuration
 
 PRESETS_DIR = os.path.join(configuration.CFG_DIR, 'presets')
@@ -58,12 +61,28 @@ def preset_exists(name):
 def load_on_cue(preset_name, cue):
     """Load the preset with the given name on cue.
 
+    Use `UpdateCueAction`
+
     :param preset_name: The preset to be loaded
     :type preset_name: str
-    :param cue: The cue on witch load the preset
+    :param cue: The cue on which load the preset
     :type cue: lisp.cue.Cue
     """
-    cue.update_properties(load_preset(preset_name))
+    MainActionsHandler.do_action(
+        UpdateCueAction(load_preset(preset_name), cue))
+
+
+def load_on_cues(preset_name, cues):
+    """
+    Use `UpdateCuesAction`
+
+    :param preset_name: The preset to be loaded
+    :type preset_name: str
+    :param cues: The cues on which load the preset
+    :type cues: typing.Iterable[lisp.cue.Cue]
+    """
+    MainActionsHandler.do_action(
+        UpdateCuesAction(load_preset(preset_name), cues))
 
 
 def load_preset(name):
@@ -134,7 +153,7 @@ def export_presets(names, archive):
     """Export presets-files into an archive.
 
     :param names: The presets to be exported
-    :type names: collections.Iterable[Str]
+    :type names: typing.Iterable[Str]
     :param archive: The path of the archive
     :type archive: str
     """
