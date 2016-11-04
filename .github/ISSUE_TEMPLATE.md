@@ -8,6 +8,7 @@ When writing an issue:
  - for bugs/unexpected behavior, use the following "template"
  - remove the template text you don't need, like these first 9 lines
 
+---
 
 Short description of the issue, if the title isn't enough.
 
