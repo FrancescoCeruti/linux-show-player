@@ -74,7 +74,6 @@ class OlaTimecode():
     def __send_timecode(self, time):
         tt = time_tuple(time)
         try:
-            print(tt)
             if self.__use_hours:
                 self.__client.SendTimeCode(self.__format, self.__track, tt[1], tt[2], round(tt[3] / self.__millis), 0)
             else:
