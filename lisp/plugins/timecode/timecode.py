@@ -22,7 +22,6 @@ from collections import namedtuple
 from lisp.application import Application, AppSettings
 from lisp.core.has_properties import Property
 from lisp.core.plugin import Plugin
-from lisp.core.signal import Connection
 from lisp.cues.cue import Cue
 from lisp.cues.media_cue import MediaCue
 from lisp.cues.cue_time import CueTime
@@ -36,18 +35,6 @@ from lisp.utils import elogging
 from ola.OlaClient import OLADNotRunningException, OlaClient
 
 TimecodeFormatDescr = namedtuple('TimecodeDef', ['format', 'millis'])
-
-class TimecodeFormat():
-    __TC_DEF__ = {
-        'FILM'  : TimecodeFormatDescr(format=OlaClient.TIMECODE_FILM, millis=1000/24),
-        'EBU'   : TimecodeFormatDescr(format=OlaClient.TIMECODE_EBU, millis=1000/25),
-        'SMPTE' : TimecodeFormatDescr(format=OlaClient.TIMECODE_SMPTE, millis=1000/30)
-    }
-
-    @staticmethod
-    def get(name):
-        if name in TimecodeFormat.__TC_DEF__:
-            return TimecodeFormat.__TC_DEF__[name]
 
 
 class OlaTimecode():
