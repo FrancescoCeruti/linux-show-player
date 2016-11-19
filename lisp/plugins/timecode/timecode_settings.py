@@ -19,12 +19,84 @@
 
 from PyQt5.QtCore import QT_TRANSLATE_NOOP, Qt
 from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QLabel,\
-    QCheckBox, QComboBox, QHBoxLayout
+    QCheckBox, QComboBox, QHBoxLayout, QMessageBox, QSpinBox
 
-from lisp.ui.settings.settings_page import CueSettingsPage
+from lisp.ui.mainwindow import MainWindow
+from lisp.ui.settings.settings_page import CueSettingsPage,\
+    SettingsPage
+from lisp.utils import elogging
+from lisp.utils.configuration import config
+from lisp.ui.ui_utils import translate
+
+from ola.OlaClient import OLADNotRunningException, OlaClient
 
 
-class TimecodeSettings(CueSettingsPage):
+class TimecodeSettings(SettingsPage):
+    Name = 'Timecode Settings'
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        self.setLayout(QVBoxLayout())
+        self.layout().setAlignment(Qt.AlignTop)
+
+        self.behaviorsGroup = QGroupBox(self)
+        self.behaviorsGroup.setLayout(QVBoxLayout())
+        self.behaviorsGroup.setTitle(
+            translate('TimecodeSettings', 'OLA Timecode Settings'))
+        self.layout().addWidget(self.behaviorsGroup)
+
+        self.activateBox = QCheckBox(self.behaviorsGroup)
+        self.activateBox.setText(
+            translate('TimecodeSettings', 'Enable Plugin'))
+        self.behaviorsGroup.layout().addWidget(self.activateBox)
+
+        self.comboLayout = QHBoxLayout()
+        self.behaviorsGroup.layout().addLayout(self.comboLayout)
+        self.formatLabel = QLabel(self.behaviorsGroup)
+        self.comboLayout.addWidget(self.formatLabel)
+        self.formatLabel.setText(
+            translate('TimecodeSettings', 'Timecode Format:'))
+        self.formatBox = QComboBox(self.behaviorsGroup)
+        self.formatBox.addItem('FILM')
+        self.formatBox.addItem('EBU')
+        self.formatBox.addItem('SMPTE')
+        self.comboLayout.addWidget(self.formatBox)
+
+        self.activateBox.stateChanged.connect(self.testOla, Qt.QueuedConnection)
+
+    def testOla(self):
+        if self.activateBox.isChecked():
+            try:
+                client = OlaClient()
+                del client
+                config.set('Timecode', 'enabled', 'True')
+            except OLADNotRunningException as e:
+                elogging.warning('Plugin Timecode disabled', details=str(e), dialog=False)
+                QMessageBox.warning(MainWindow(), 'Error', 'OLA is not running - Plugin is disabled,\n'
+                                                           'start the OLA daemon to enable it.')
+                self.activateBox.blockSignals(True)
+                self.activateBox.setChecked(False)
+                self.activateBox.blockSignals(False)
+
+                config.set('Timecode', 'enabled', 'False')
+
+    def get_settings(self):
+        settings = {
+            'enabled': str(self.activateBox.isChecked()),
+            'format': str(self.formatBox.currentText())
+        }
+
+        return {'Timecode': settings}
+
+    def load_settings(self, settings):
+        settings = settings.get('Timecode', {})
+
+        self.activateBox.setChecked(settings.get('enabled') == 'True')
+        self.formatBox.setCurrentText(settings.get('format'))
+
+
+class TimecodeCueSettings(CueSettingsPage):
     Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Timecode')
 
     def __init__(self, cue_class, **kwargs):
@@ -46,18 +118,17 @@ class TimecodeSettings(CueSettingsPage):
         groupbox.layout().addWidget(self.tc_enable)
 
         # Hours can be replaced by cue number h:m:s:frames -> CUE:m:s:frames
-        self.tc_usehours = QCheckBox("replace HOURS by cue index")
+        self.tc_usehours = QCheckBox("replace HOURS by a static track number")
         self.tc_usehours.setChecked(True)
         groupbox.layout().addWidget(self.tc_usehours)
 
-        # TimeCode Format: FILM, EBU, SMPTE
         hbox = QHBoxLayout()
-        self.tc_format = QComboBox()
-        self.tc_format.addItem("FILM")
-        self.tc_format.addItem("EBU")
-        self.tc_format.addItem("SMPTE")
-        hbox.layout().addWidget(self.tc_format)
-        label = QLabel("Choose Timecode Format")
+
+        self.tc_track = QSpinBox(self)
+        self.tc_track.setMinimum(0)
+        self.tc_track.setMaximum(99)
+        hbox.layout().addWidget(self.tc_track)
+        label = QLabel("track number")
         hbox.layout().addWidget(label)
         groupbox.layout().addLayout(hbox)
 
@@ -65,7 +136,7 @@ class TimecodeSettings(CueSettingsPage):
         conf = dict()
         conf['enabled'] = self.tc_enable.isChecked()
         conf['use_hours'] = self.tc_usehours.isChecked()
-        conf['format'] = self.tc_format.currentIndex()
+        conf['track'] = self.tc_track.value()
         return {'timecode': conf}
 
     def load_settings(self, settings):
@@ -75,5 +146,5 @@ class TimecodeSettings(CueSettingsPage):
                 self.tc_enable.setChecked(conf['enabled'])
             if 'use_hours' in conf:
                 self.tc_usehours.setChecked(conf['use_hours'])
-            if 'format' in conf:
-                self.tc_format.setCurrentIndex(conf['format'])
+            if 'track' in conf:
+                self.tc_track.setValue(conf['track'])

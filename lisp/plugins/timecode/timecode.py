@@ -17,64 +17,125 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from enum import Enum
+from collections import namedtuple
 
-from lisp.application import Application
+from lisp.application import Application, AppSettings
 from lisp.core.has_properties import Property
 from lisp.core.plugin import Plugin
 from lisp.core.signal import Connection
 from lisp.cues.cue import Cue
+from lisp.cues.media_cue import MediaCue
 from lisp.cues.cue_time import CueTime
-from lisp.plugins.timecode.timecode_settings import TimecodeSettings
+from lisp.plugins.timecode.timecode_settings import TimecodeCueSettings,\
+    TimecodeSettings
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
 from lisp.utils.util import time_tuple
+from lisp.utils.configuration import config
+from lisp.utils import elogging
 
-__AVAILABLE__ = True
-try:
-    from ola.OlaClient import OLADNotRunningException, OlaClient
-except ImportError:
-    __AVAILABLE__ = False
+from ola.OlaClient import OLADNotRunningException, OlaClient
+
+TimecodeFormatDescr = namedtuple('TimecodeDef', ['format', 'millis'])
+
+class TimecodeFormat():
+    __TC_DEF__ = {
+        'FILM'  : TimecodeFormatDescr(format=OlaClient.TIMECODE_FILM, millis=1000/24),
+        'EBU'   : TimecodeFormatDescr(format=OlaClient.TIMECODE_EBU, millis=1000/25),
+        'SMPTE' : TimecodeFormatDescr(format=OlaClient.TIMECODE_SMPTE, millis=1000/30)
+    }
+
+    @staticmethod
+    def get(name):
+        if name in TimecodeFormat.__TC_DEF__:
+            return TimecodeFormat.__TC_DEF__[name]
+
+
+class OlaTimecode():
+    __TC_DEF__ = {
+        'FILM'  : TimecodeFormatDescr(format=OlaClient.TIMECODE_FILM, millis=1000/24),
+        'EBU'   : TimecodeFormatDescr(format=OlaClient.TIMECODE_EBU, millis=1000/25),
+        'SMPTE' : TimecodeFormatDescr(format=OlaClient.TIMECODE_SMPTE, millis=1000/30)
+    }
+
+    def __init__(self):
+        try:
+            self.__client = OlaClient()
+        except OLADNotRunningException:
+            self.__client = None
+        self.__handler = None
+        self.__format = self.__TC_DEF__[config['Timecode']['format']].format
+        self.__millis = self.__TC_DEF__[config['Timecode']['format']].millis
+        self.__use_hours = False
+        self.__track = 0
+
+    def status(self):
+        return bool(self.__client)
+
+    def __send_timecode(self, time):
+        tt = time_tuple(time)
+        try:
+            print(tt)
+            if self.__use_hours:
+                self.__client.SendTimeCode(self.__format, self.__track, tt[1], tt[2], round(tt[3] / self.__millis), 0)
+            else:
+                self.__client.SendTimeCode(self.__format, tt[0], tt[1], tt[2], round(tt[3] / self.__millis), 0)
+        except OLADNotRunningException:
+            self.stop_timecode()
+            config.set('Timecode', 'enabled', 'False')
+            elogging.warning('Plugin Timecode disabled', details='Ola is not running', dialog=False)
+
+    def start_timecode(self, handler):
+        # get current timecode format settings
+        self.__format = self.__TC_DEF__[config['Timecode']['format']].format
+        self.__millis = self.__TC_DEF__[config['Timecode']['format']].millis
+
+        # disconnect old handler
+        self.stop_timecode()
+
+        # test plugin enabled
+        if config['Timecode']['enabled'] is False:
+            return
+
+        # timecode for handler enabled
+        if handler.enabled:
+            self.__handler = handler
+            self.__use_hours = self.__handler.use_hours
+            self.__track = self.__handler.track
+        else:
+            return
+
+        # test and create client, return on False
+        if not self.__client:
+            try:
+                self.__client = OlaClient()
+            except OLADNotRunningException:
+                return
+
+        self.__handler.notify.connect(self.__send_timecode)
+
+    def stop_timecode(self):
+        if self.__handler:
+            self.__handler.notify.disconnect()
 
 
 class TimecodeHandler(CueTime):
-    TC_DEF = [
-        {'millis':1000/24, 'format':OlaClient.TIMECODE_FILM },
-        {'millis':1000/25, 'format':OlaClient.TIMECODE_EBU },
-        {'millis':1000/24, 'format':OlaClient.TIMECODE_SMPTE }
-    ]
-
     def __init__(self, cue):
-        global __AVAILABLE__
         super().__init__(cue)
 
-        if __AVAILABLE__:
-            self.__client = OlaClient()
-            self.__cue = cue
-            self.__conf = cue.timecode
-            self.__connected = False
+        self.__cue = cue
+        self.__conf = cue.timecode
 
-    def send_timecode(self, time):
-        if __AVAILABLE__:
-            tt = time_tuple(time)
-            fmt = self.__conf['format']
-            millis = self.TC_DEF[fmt]['millis']
-            tcfmt = self.TC_DEF[fmt]['format']
-            if self.__conf['use_hours']:
-                print(tcfmt, self.__cue.index, tt[1], tt[2], round(tt[3]/millis))
-                self.__client.SendTimeCode(tcfmt, self.__cue.index, tt[1], tt[2], round(tt[3]/millis), 0)
-            else:
-                print(tcfmt, tt[0], tt[1], tt[2], round(tt[3]/millis))
-                self.__client.SendTimeCode(tcfmt, tt[0], tt[1], tt[2], round(tt[3]/millis), 0)
+    @property
+    def enabled(self):
+        return self.__conf['enabled']
 
-    def start_timecode(self):
-        if self.__conf['enabled']:
-            self.__connected = True
-            self.notify.connect(self.send_timecode, Connection.QtQueued)
+    @property
+    def use_hours(self):
+        return self.__conf['use_hours']
 
-    def stop_timecode(self):
-        if self.__connected:
-            self.__connected = False
-            self.notify.disconnect()
+    @property
+    def track(self):
+        return self.__conf['track']
 
     def update_conf(self, timecode):
         self.__conf = timecode
@@ -86,27 +147,28 @@ class Timecode(Plugin):
     
     def __init__(self):
         super().__init__()
-        global __AVAILABLE__
 
         self.__handlers = {}
 
         # Register a new Cue property to store settings
         Cue.register_property('timecode', Property(default={}))
 
-        # Register settings-page
-        CueSettingsRegistry().add_item(TimecodeSettings)
+        # Register cue-settings-page
+        CueSettingsRegistry().add_item(TimecodeCueSettings, MediaCue)
+
+        # Register pref-settings-page
+        AppSettings.register_settings_widget(TimecodeSettings)
 
         # Connect Timecode
         Application().cue_model.item_added.connect(self.__cue_added)
         Application().cue_model.item_removed.connect(self.__cue_removed)
 
+        self.__client = OlaTimecode()
+
     def init(self):
-        global __AVAILABLE__
-        try:
-            client = OlaClient()
-            del client
-        except OLADNotRunningException:
-            __AVAILABLE__ = False
+        if not self.__client.status() and config['Timecode']['enabled']:
+            config.set('Timecode', 'enabled', 'False')
+            elogging.warning('Plugin Timecode disabled', details='Ola is not running', dialog=False)
 
     def __cue_changed(self, cue, property_name, value):
         if property_name == 'timecode':
@@ -122,10 +184,8 @@ class Timecode(Plugin):
 
     def __cue_removed(self, cue):
         cue.property_changed.disconnect(self.__cue_changed)
+        self.__client.stop_timecode()
         self.__handlers.pop(cue.id, None)
 
     def __cue_started(self, cue):
-        if __AVAILABLE__:
-            for key in self.__handlers:
-                self.__handlers[key].stop_timecode()
-            self.__handlers[cue.id].start_timecode()
+        self.__client.start_timecode(self.__handlers[cue.id])
