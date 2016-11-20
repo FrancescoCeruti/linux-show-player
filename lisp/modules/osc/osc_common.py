@@ -22,36 +22,83 @@ from lisp.core.singleton import ABCSingleton
 from liblo import ServerThread, Address, ServerError
 
 from lisp.utils.configuration import config
+from lisp.layouts.list_layout.layout import ListLayout
 from lisp.utils import elogging
+from lisp.ui.mainwindow import MainWindow
+from lisp.application import Application
+from lisp.cues.cue import Cue, CueState
+
+
+def _go(path, args, types, src):
+    go = int(args[0])
+    if isinstance(MainWindow().layout, ListLayout):
+        if go >= 1:
+            MainWindow().layout.go()
+
+
+def _pause_all(path, args, types, src):
+    pause = int(args[0])
+    for cue in Application().cue_model:
+        if cue.state == CueState.Running and pause >= 1:
+            cue.start()
+
+
+def _restart_all(path, args, types, src):
+    restart = int(args[0])
+    for cue in Application().cue_model:
+        if cue.state == CueState.Pause and restart >= 1:
+            cue.start()
+
+
+def _stop_all(path, args, types, src):
+    stop = int(args[0])
+    if stop >= 1:
+        for cue in Application().cue_model:
+            cue.stop()
 
 
 class OscCommon(metaclass=ABCSingleton):
     def __init__(self):
         self.__srv = None
         self.__listening = False
-        self.__callbacks = []
+
+        # TODO: static paths and callbacks, find smarter way
+        self.__callbacks = [
+            ['/lisp/go', 'i', _go],
+            ['/lisp/pause', 'i', _pause_all],
+            ['/lisp/start', 'i', _restart_all],
+            ['/lisp/stop', 'i', _stop_all],
+        ]
 
     def start(self):
-        self.stop()
+        if self.__listening:
+            return
+
         try:
-            self.__srv = ServerThread(config['OSC']['port'])
+            self.__srv = ServerThread(int(config['OSC']['inport']))
             for cb in self.__callbacks:
                 self.__srv.add_method(cb[0], cb[1], cb[2])
             self.__srv.start()
             self.__listening = True
+            elogging.info('OSC: Server started ' + self.__srv.url, dialog=False)
         except ServerError as e:
             elogging.error(e, dialog=False)
 
     def stop(self):
-        if self.__listening:
-            self.__srv.stop()
-            self.__listening = False
-        self.__srv.free()
+        if self.__srv:
+            if self.__listening:
+                self.__srv.stop()
+                self.__listening = False
+            self.__srv.free()
+            elogging.info('OSC: Server stopped', dialog=False)
 
     def send(self, path, *args):
         if self.__listening:
-            target = Address(config['OSC']['hostname'], config['OSC']['port'])
+            target = Address(config['OSC']['hostname'], int(config['OSC']['port']))
             self.__srv.send(target, path, *args)
 
     def register_callback(self, path, typespec, func):
         self.__callbacks.append([path, typespec, func])
+
+    def activate_feedback(self, feedback):
+        pass
