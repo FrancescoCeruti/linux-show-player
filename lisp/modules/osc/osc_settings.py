@@ -18,9 +18,12 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from PyQt5.QtCore import QTime, QT_TRANSLATE_NOOP
+from PyQt5.QtCore import QT_TRANSLATE_NOOP, Qt
+from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QLabel,\
+    QCheckBox, QComboBox, QHBoxLayout, QMessageBox, QSpinBox,\
+    QLineEdit
 
-
+from lisp.ui.ui_utils import translate
 from lisp.ui.settings.settings_page import SettingsPage
 
 
@@ -29,16 +32,70 @@ class OscSettings(SettingsPage):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.setLayout(QVBoxLayout())
+        self.layout().setAlignment(Qt.AlignTop)
+
+        self.groupBox = QGroupBox(self)
+        self.groupBox.setLayout(QVBoxLayout())
+        self.groupBox.setTitle(
+            translate('OscSettings', 'OSC Settings'))
+        self.layout().addWidget(self.groupBox)
+
+        self.enableModule = QCheckBox(self.groupBox)
+        self.enableModule.setText(
+            translate('OscSettings', 'enable OSC'))
+        self.groupBox.layout().addWidget(self.enableModule)
+
+        self.enableFeedback = QCheckBox(self.groupBox)
+        self.enableFeedback.setText(
+            translate('OscSettings', 'enable Feedback'))
+        self.groupBox.layout().addWidget(self.enableFeedback)
+
+        hbox = QHBoxLayout()
+        self.inportBox = QSpinBox(self)
+        self.inportBox.setMinimum(1000)
+        self.inportBox.setMaximum(99999)
+        hbox.layout().addWidget(self.inportBox)
+        label = QLabel(
+            translate('OscSettings', 'Input Port'))
+        hbox.layout().addWidget(label)
+        self.groupBox.layout().addLayout(hbox)
+
+        hbox = QHBoxLayout()
+        self.outportBox = QSpinBox(self)
+        self.outportBox.setMinimum(1000)
+        self.outportBox.setMaximum(99999)
+        hbox.layout().addWidget(self.outportBox)
+        label = QLabel(
+            translate('OscSettings', 'Input Port'))
+        hbox.layout().addWidget(label)
+        self.groupBox.layout().addLayout(hbox)
+
+        hbox = QHBoxLayout()
+        self.hostnameEdit = QLineEdit()
+        self.hostnameEdit.setText('localhost')
+        self.hostnameEdit.setMaximumWidth(200)
+        hbox.layout().addWidget(self.hostnameEdit)
+        label = QLabel(
+            translate('OscSettings', 'Hostname'))
+        hbox.layout().addWidget(label)
+        self.groupBox.layout().addLayout(hbox)
 
     def get_settings(self):
         conf = {
-            'inport': 9001,
-            'outport': 9002,
-            'hostname': 'localhost',
-            'feedback': True
+            'enabled': str(self.enableCheck.isChecked()),
+            'inport': str(self.inportBox.value()),
+            'outport': str(self.outportBox.value()),
+            'hostname': str(self.hostnameEdit.text()),
+            'feedback': str(self.enableFeedback.isChecked())
         }
-
         return {'OSC': conf}
 
     def load_settings(self, settings):
-        pass
+        settings = settings.get('OSC', {})
+
+        self.enableModule.setChecked(settings.get('enabled') == 'True')
+        self.enableFeedback.setChecked(settings.get('feedback') == 'True')
+        self.inportBox.setValue(int(settings.get('inport')))
+        self.outportBox.setValue(int(settings.get('outport')))
+        self.hostnameEdit.setText(settings.get('hostname'))

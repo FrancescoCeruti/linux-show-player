@@ -19,8 +19,10 @@
 
 
 from lisp.core.module import Module
+from lisp.utils.configuration import config
 from lisp.ui.settings.app_settings import AppSettings
 from lisp.modules.osc.osc_settings import OscSettings
+from lisp.modules.osc.osc_common import OscCommon
 
 
 class Osc(Module):
@@ -30,3 +32,5 @@ class Osc(Module):
         # Register the settings widget
         AppSettings.register_settings_widget(OscSettings)
 
+        # if config['OSC']['enabled']:
+        #     OscCommon().start()
