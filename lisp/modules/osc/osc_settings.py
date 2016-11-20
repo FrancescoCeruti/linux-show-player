@@ -20,10 +20,10 @@
 
 from PyQt5.QtCore import QT_TRANSLATE_NOOP, Qt
 from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QLabel,\
-    QCheckBox, QHBoxLayout, QSpinBox, QLineEdit
+    QCheckBox, QComboBox, QHBoxLayout, QMessageBox, QSpinBox,\
+    QLineEdit
 
 from lisp.ui.ui_utils import translate
-from lisp.utils.configuration import config
 from lisp.ui.settings.settings_page import SettingsPage
 from lisp.modules.osc.osc_common import OscCommon
 
@@ -56,71 +56,35 @@ class OscSettings(SettingsPage):
         self.inportBox = QSpinBox(self)
         self.inportBox.setMinimum(1000)
         self.inportBox.setMaximum(99999)
-        label = QLabel(
-            translate('OscSettings', 'Input Port:'))
-        hbox.layout().addWidget(label)
         hbox.layout().addWidget(self.inportBox)
+        label = QLabel(
+            translate('OscSettings', 'Input Port'))
+        hbox.layout().addWidget(label)
         self.groupBox.layout().addLayout(hbox)
 
         hbox = QHBoxLayout()
         self.outportBox = QSpinBox(self)
         self.outportBox.setMinimum(1000)
         self.outportBox.setMaximum(99999)
-        label = QLabel(
-            translate('OscSettings', 'Output Port:'))
-        hbox.layout().addWidget(label)
         hbox.layout().addWidget(self.outportBox)
+        label = QLabel(
+            translate('OscSettings', 'Input Port'))
+        hbox.layout().addWidget(label)
         self.groupBox.layout().addLayout(hbox)
 
         hbox = QHBoxLayout()
         self.hostnameEdit = QLineEdit()
         self.hostnameEdit.setText('localhost')
         self.hostnameEdit.setMaximumWidth(200)
-        label = QLabel(
-            translate('OscSettings', 'Hostname:'))
-        hbox.layout().addWidget(label)
         hbox.layout().addWidget(self.hostnameEdit)
+        label = QLabel(
+            translate('OscSettings', 'Hostname'))
+        hbox.layout().addWidget(label)
         self.groupBox.layout().addLayout(hbox)
-
-        self.enableModule.stateChanged.connect(self.activate_module, Qt.QueuedConnection)
-        self.enableFeedback.stateChanged.connect(self.activate_feedback, Qt.QueuedConnection)
-        self.inportBox.valueChanged.connect(self.change_inport, Qt.QueuedConnection)
-        self.outportBox.valueChanged.connect(self.change_outport, Qt.QueuedConnection)
-        self.hostnameEdit.textChanged.connect(self.change_hostname, Qt.QueuedConnection)
-
-    def activate_module(self):
-        if self.enableModule.isChecked():
-            # start osc server
-            OscCommon().start()
-            # enable OSC Module in Settings
-            config.set('OSC', 'enabled', 'True')
-        else:
-            # stop osc server
-            OscCommon().stop()
-            # disable OSC Module in Settings
-            config.set('OSC', 'enabled', 'False')
-
-    def activate_feedback(self):
-        OscCommon().activate_feedback(self.enableFeedback.isChecked())
-
-    def change_inport(self):
-        port = self.inportBox.value()
-        if str(port) != config.get('OSC', 'inport'):
-            config.set('OSC', 'inport', str(port))
-            if self.enableModule.isChecked():
-                self.enableModule.setChecked(False)
-
-    def change_outport(self):
-        port = self.outportBox.value()
-        config.set('OSC', 'outport', str(port))
-
-    def change_hostname(self):
-        hostname = self.hostnameEdit.text()
-        config.set('OSC', 'hostname', hostname)
 
     def get_settings(self):
         conf = {
-            'enabled': str(self.enableModule.isChecked()),
+            'enabled': str(self.enableCheck.isChecked()),
             'inport': str(self.inportBox.value()),
             'outport': str(self.outportBox.value()),
             'hostname': str(self.hostnameEdit.text()),
