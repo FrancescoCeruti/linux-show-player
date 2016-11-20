@@ -17,13 +17,22 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+from enum import Enum
 
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
-
+from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QGridLayout, QLabel, \
+    QComboBox, QSpinBox, QFrame
 
 from lisp.cues.cue import Cue, CueState
 from lisp.ui.settings.cue_settings import CueSettingsRegistry,\
     SettingsPage
+
+
+class OscMessageType(Enum):
+    Int = 'Integer',
+    Float = 'Float',
+    Bool = 'Bool',
+    String = 'String'
 
 
 class OscCue(Cue):
@@ -45,7 +54,22 @@ class OscCueSettings(SettingsPage):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.setLayout(QVBoxLayout())
+        self.layout().setAlignment(Qt.AlignTop)
+
+        self.msgGroup = QGroupBox(self)
+        self.msgGroup.setLayout(QGridLayout())
+        self.layout().addWidget(self.msgGroup)
+
+        self.retranslateUi()
+
+    def retranslateUi(self):
+        self.msgGroup.setTitle(translate('OscCue', 'OSC Message'))
+
+    def get_settings(self):
         pass
 
+    def load_settings(self, settings):
+        pass
 
 CueSettingsRegistry().add_item(OscCueSettings, OscCue)
