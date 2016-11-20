@@ -34,14 +34,14 @@ from lisp.utils import elogging
 
 from ola.OlaClient import OLADNotRunningException, OlaClient
 
-TimecodeFormatDescr = namedtuple('TimecodeDef', ['format', 'millis'])
+TimecodeFormatDef = namedtuple('TimecodeDef', ['format', 'millis'])
 
 
 class OlaTimecode():
     __TC_DEF__ = {
-        'FILM'  : TimecodeFormatDescr(format=OlaClient.TIMECODE_FILM, millis=1000/24),
-        'EBU'   : TimecodeFormatDescr(format=OlaClient.TIMECODE_EBU, millis=1000/25),
-        'SMPTE' : TimecodeFormatDescr(format=OlaClient.TIMECODE_SMPTE, millis=1000/30)
+        'FILM'  : TimecodeFormatDef(format=OlaClient.TIMECODE_FILM, millis=1000/24),
+        'EBU'   : TimecodeFormatDef(format=OlaClient.TIMECODE_EBU, millis=1000/25),
+        'SMPTE' : TimecodeFormatDef(format=OlaClient.TIMECODE_SMPTE, millis=1000/30)
     }
 
     def __init__(self):
@@ -113,15 +113,24 @@ class TimecodeHandler(CueTime):
 
     @property
     def enabled(self):
-        return self.__conf['enabled']
+        if 'enabled' in self.__conf:
+            return self.__conf['enabled']
+        else:
+            return False
 
     @property
     def use_hours(self):
-        return self.__conf['use_hours']
+        if 'use_hours' in self.__conf:
+            return self.__conf['use_hours']
+        else:
+            return False
 
     @property
     def track(self):
-        return self.__conf['track']
+        if 'track' in self.__conf:
+            return self.__conf['track']
+        else:
+            return 0
 
     def update_conf(self, timecode):
         self.__conf = timecode
