@@ -20,12 +20,15 @@
 from enum import Enum
 
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
-from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QGridLayout, QLabel, \
-    QComboBox, QSpinBox, QFrame
+from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QGridLayout, \
+    QTableView, QTableWidget, QHeaderView, QPushButton
 
+from lisp.ui.qmodels import SimpleTableModel
+from lisp.ui.qdelegates import ComboBoxDelegate, LineEditDelegate
 from lisp.cues.cue import Cue, CueState
 from lisp.ui.settings.cue_settings import CueSettingsRegistry,\
     SettingsPage
+from lisp.ui.ui_utils import translate
 
 
 class OscMessageType(Enum):
@@ -57,19 +60,76 @@ class OscCueSettings(SettingsPage):
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
-        self.msgGroup = QGroupBox(self)
-        self.msgGroup.setLayout(QGridLayout())
-        self.layout().addWidget(self.msgGroup)
+        self.oscGroup = QGroupBox(self)
+        self.oscGroup.setLayout(QGridLayout())
+        self.layout().addWidget(self.oscGroup)
+
+        self.oscModel = SimpleTableModel([
+            translate('ControllerMidiSettings', 'Type'),
+            translate('ControllerMidiSettings', 'Argument')])
+
+        self.oscView = OscView(parent=self.oscGroup)
+        self.oscView.setModel(self.oscModel)
+        self.oscGroup.layout().addWidget(self.oscView, 0, 0, 1, 2)
+
+        self.addButton = QPushButton(self.oscGroup)
+        self.addButton.clicked.connect(self.__new_message)
+        self.oscGroup.layout().addWidget(self.addButton, 1, 0)
+
+        self.removeButton = QPushButton(self.oscGroup)
+        self.removeButton.clicked.connect(self.__remove_message)
+        self.oscGroup.layout().addWidget(self.removeButton, 1, 1)
+
+        self.oscCapture = QPushButton(self.oscGroup)
+        self.oscCapture.clicked.connect(self.capture_message)
+        self.oscGroup.layout().addWidget(self.oscCapture, 2, 0)
 
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.msgGroup.setTitle(translate('OscCue', 'OSC Message'))
+        self.oscGroup.setTitle(translate('OscCue', 'OSC Message'))
+        self.addButton.setText(translate('OscCue', 'Add'))
+        self.removeButton.setText(translate('OscCue', 'Remove'))
+        self.oscCapture.setText(translate('OscCue', 'Capture'))
 
     def get_settings(self):
         pass
 
     def load_settings(self, settings):
         pass
+
+    def __new_message(self):
+        pass
+
+    def __remove_message(self):
+        pass
+
+    def capture_message(self):
+        pass
+
+
+class OscView(QTableView):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        self.delegates = [ComboBoxDelegate(options=OscMessageType,
+                                           tr_context='OscMessageType'),
+                          LineEditDelegate()]
+
+        self.setSelectionBehavior(QTableWidget.SelectRows)
+        self.setSelectionMode(QTableView.SingleSelection)
+
+        self.setShowGrid(False)
+        self.setAlternatingRowColors(True)
+
+        self.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.horizontalHeader().setHighlightSections(False)
+
+        self.verticalHeader().sectionResizeMode(QHeaderView.Fixed)
+        self.verticalHeader().setDefaultSectionSize(24)
+        self.verticalHeader().setHighlightSections(False)
+
+        for column, delegate in enumerate(self.delegates):
+            self.setItemDelegateForColumn(column, delegate)
 
 CueSettingsRegistry().add_item(OscCueSettings, OscCue)
