@@ -68,7 +68,7 @@ class OscSettings(SettingsPage):
         self.outportBox.setMinimum(1000)
         self.outportBox.setMaximum(99999)
         label = QLabel(
-            translate('OscSettings', 'Input Port:'))
+            translate('OscSettings', 'Output Port:'))
         hbox.layout().addWidget(label)
         hbox.layout().addWidget(self.outportBox)
         self.groupBox.layout().addLayout(hbox)

@@ -94,7 +94,7 @@ class OscCommon(metaclass=ABCSingleton):
 
     def send(self, path, *args):
         if self.__listening:
-            target = Address(config['OSC']['hostname'], int(config['OSC']['port']))
+            target = Address(config['OSC']['hostname'], int(config['OSC']['outport']))
             self.__srv.send(target, path, *args)
 
     def register_callback(self, path, typespec, func):
