@@ -36,11 +36,11 @@ class StopAll(Cue):
         super().__init__(**kwargs)
         self.name = translate('CueName', self.Name)
 
-    @Cue.state.getter
+    @property
     def state(self):
         return CueState.Stop
 
-    def __start__(self):
+    def __start__(self, fade):
         cue_action = CueAction.Pause if self.pause_mode else CueAction.Stop
 
         for cue in Application().cue_model:

@@ -43,11 +43,11 @@ class MidiCue(Cue):
         if not midi_out.is_open():
             midi_out.open()
 
-    @Cue.state.getter
+    @property
     def state(self):
         return CueState.Stop
 
-    def __start__(self):
+    def __start__(self, fade):
         if self.message:
             MIDIOutput().send_from_str(self.message)
 

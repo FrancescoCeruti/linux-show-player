@@ -92,14 +92,14 @@ class GstMedia(Media):
             self.__build_pipeline()
             self.update_elements(elements_properties)
 
-            self._elements[0].changed('duration').connect(self.__duration_changed)
+            self._elements[0].changed('duration').connect(
+                self.__duration_changed)
             self.__duration_changed(self._elements[0].duration)
 
     def current_time(self):
         ok, position = self._gst_pipe.query_position(Gst.Format.TIME)
         return position // Gst.MSECOND if ok else 0
 
-    @async
     def play(self):
         if self.state == MediaState.Stopped or self.state == MediaState.Paused:
             self.on_play.emit(self)
@@ -116,7 +116,6 @@ class GstMedia(Media):
 
             self.played.emit(self)
 
-    @async
     def pause(self):
         if self.state == MediaState.Playing:
             self.on_pause.emit(self)
@@ -128,9 +127,10 @@ class GstMedia(Media):
             self._gst_pipe.set_state(Gst.State.PAUSED)
             self._gst_pipe.get_state(Gst.SECOND)
 
+            # FIXME: the pipeline is not flushed (fucking GStreamer)
+
             self.paused.emit(self)
 
-    @async
     def stop(self):
         if self.state == MediaState.Playing or self.state == MediaState.Paused:
             self.on_stop.emit(self)
@@ -142,8 +142,8 @@ class GstMedia(Media):
             self.stopped.emit(self)
 
     def __seek(self, position):
+        # FIXME: not working when in pause (fix or disallow)
         if self.state == MediaState.Playing or self.state == MediaState.Paused:
-
             max_position = self.duration
             if 0 < self.stop_time < self.duration:
                 max_position = self.stop_time
@@ -160,15 +160,18 @@ class GstMedia(Media):
                     stop_type = Gst.SeekType.SET
 
                 # Seek the pipeline
-                self._gst_pipe.seek(rate if rate > 0 else 1,
-                                    Gst.Format.TIME,
-                                    Gst.SeekFlags.FLUSH,
-                                    Gst.SeekType.SET,
-                                    position * Gst.MSECOND,
-                                    stop_type,
-                                    self.stop_time * Gst.MSECOND)
+                result = self._gst_pipe.seek(
+                    rate if rate > 0 else 1,
+                    Gst.Format.TIME,
+                    Gst.SeekFlags.FLUSH,
+                    Gst.SeekType.SET,
+                    position * Gst.MSECOND,
+                    stop_type,
+                    self.stop_time * Gst.MSECOND)
 
-                return True
+                return result
+
+        return False
 
     def seek(self, position):
         if self.__seek(position):
@@ -212,7 +215,7 @@ class GstMedia(Media):
         self._loop_count = self.loop
 
         if emit and (self._state == MediaState.Playing or
-                     self._state == MediaState.Paused):
+                             self._state == MediaState.Paused):
             self.interrupted.emit(self)
 
     def properties(self, only_changed=False):

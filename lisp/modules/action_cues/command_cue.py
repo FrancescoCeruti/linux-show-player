@@ -51,12 +51,12 @@ class CommandCue(Cue):
         self.__state = CueState.Stop
         self.__process = None
 
-    @Cue.state.getter
+    @property
     def state(self):
         return self.__state
 
     @async
-    def __start__(self):
+    def __start__(self, fade):
         if not self.command.strip():
             return
 
@@ -82,7 +82,7 @@ class CommandCue(Cue):
                               'Process ended with an error status.'),
                     translate('CommandCue', 'Exit code: ') + str(rcode))
 
-    def __stop__(self):
+    def __stop__(self, fade):
         if self.__state == CueState.Running:
             if self.kill:
                 self.__process.kill()

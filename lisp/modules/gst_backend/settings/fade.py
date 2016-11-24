@@ -51,7 +51,7 @@ class FadeSettings(SettingsPage):
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
-        # FadeIn
+        # FadeInType
         self.fadeInGroup = QGroupBox(self)
         self.fadeInGroup.setLayout(QGridLayout())
         self.layout().addWidget(self.fadeInGroup)
@@ -76,7 +76,7 @@ class FadeSettings(SettingsPage):
         self.fadeInExpLabel.setAlignment(Qt.AlignCenter)
         self.fadeInGroup.layout().addWidget(self.fadeInExpLabel, 1, 1)
 
-        # FadeOut
+        # FadeOutType
         self.fadeOutGroup = QGroupBox(self)
         self.fadeOutGroup.setLayout(QGridLayout())
         self.layout().addWidget(self.fadeOutGroup)

@@ -41,11 +41,11 @@ class CollectionCue(Cue):
         super().__init__(**kwargs)
         self.name = translate('CueName', self.Name)
 
-    @Cue.state.getter
+    @property
     def state(self):
         return CueState.Stop
 
-    def __start__(self):
+    def __start__(self, fade):
         for target_id, action in self.targets:
             cue = Application().cue_model.get(target_id)
             if cue is not None and cue is not self:

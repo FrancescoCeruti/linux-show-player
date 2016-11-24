@@ -58,6 +58,9 @@ class Volume(GstMediaElement):
     def src(self):
         return self.audio_convert
 
-    def play(self):
+    def stop(self):
         self.current_mute = self.mute
         self.current_volume = self.volume
+
+    def interrupt(self):
+        self.stop()

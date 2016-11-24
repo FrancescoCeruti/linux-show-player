@@ -19,10 +19,10 @@
 
 import mido
 
+from lisp.core.configuration import config
 from lisp.core.module import Module
 from lisp.modules.midi.midi_settings import MIDISettings
 from lisp.ui.settings.app_settings import AppSettings
-from lisp.utils.configuration import config
 
 
 class Midi(Module):

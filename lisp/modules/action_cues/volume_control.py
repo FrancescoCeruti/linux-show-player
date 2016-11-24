@@ -22,23 +22,21 @@ from time import sleep
 from PyQt5 import QtCore
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QSizePolicy
 from PyQt5.QtWidgets import QVBoxLayout, QLabel, QHBoxLayout, QGroupBox, \
     QPushButton, QDoubleSpinBox, QGridLayout, QComboBox, QStyledItemDelegate
-from PyQt5.QtWidgets import QWidget
 
 from lisp.application import Application
 from lisp.backend.audio_utils import MIN_VOLUME_DB, MAX_VOLUME_DB, linear_to_db, \
     db_to_linear
 from lisp.backend.media import MediaState
-from lisp.core.decorators import async, synchronized_method
+from lisp.core.decorators import async, locked_method
+from lisp.core.fade_functions import ntime, FadeInType, FadeOutType
 from lisp.core.has_properties import Property
 from lisp.cues.cue import Cue, CueState, CueAction
 from lisp.cues.media_cue import MediaCue
 from lisp.ui.cuelistdialog import CueSelectDialog
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
 from lisp.ui.settings.settings_page import SettingsPage
-from lisp.utils.fade_functor import ntime, FadeIn, FadeOut
 from lisp.ui.ui_utils import translate, tr_sorted
 
 
@@ -46,7 +44,7 @@ class VolumeControl(Cue):
     Name = QT_TRANSLATE_NOOP('CueName', 'Volume Control')
 
     target_id = Property()
-    fade_type = Property(default='Linear')
+    fade_type = Property(default=FadeInType.Linear.name)
     volume = Property(default=.0)
 
     CueActions = (CueAction.Default, CueAction.Start, CueAction.Stop,
@@ -62,16 +60,20 @@ class VolumeControl(Cue):
         self.__pause = False
 
     @async
-    def __start__(self):
+    def __start__(self, fade):
         cue = Application().cue_model.get(self.target_id)
         if isinstance(cue, MediaCue):
             volume = cue.media.element('Volume')
             if volume is not None:
                 if self.duration > 0:
                     if volume.current_volume > self.volume:
-                        self._fade(FadeOut[self.fade_type], volume, cue.media)
+                        self._fade(FadeOutType[self.fade_type].value,
+                                   volume,
+                                   cue.media)
                     elif volume.current_volume < self.volume:
-                        self._fade(FadeIn[self.fade_type], volume, cue.media)
+                        self._fade(FadeInType[self.fade_type].value,
+                                   volume,
+                                   cue.media)
                 else:
                     self.__state = CueState.Running
                     self.started.emit(self)
@@ -79,15 +81,15 @@ class VolumeControl(Cue):
                     self.__state = CueState.Stop
                     self.end.emit(self)
 
-    def __stop__(self):
+    def __stop__(self, fade):
         if self.__state == CueState.Running:
             self.__stop = True
 
-    def __pause__(self):
+    def __pause__(self, fade):
         if self.__state == CueState.Running:
             self.__pause = True
 
-    @synchronized_method(blocking=False)
+    @locked_method(blocking=False)
     def _fade(self, functor, volume, media):
         try:
             self.started.emit(self)
@@ -131,7 +133,7 @@ class VolumeControl(Cue):
     def current_time(self):
         return self.__time * 10
 
-    @Cue.state.getter
+    @property
     def state(self):
         return self.__state
 

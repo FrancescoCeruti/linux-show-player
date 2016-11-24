@@ -1,0 +1,130 @@
+# -*- coding: utf-8 -*-
+#
+# This file is part of Linux Show Player
+#
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+#
+# Linux Show Player is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Linux Show Player is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
+
+from threading import Event, Lock
+
+from lisp.core.decorators import locked_method
+from lisp.core.fade_functions import ntime, FadeInType, FadeOutType
+from lisp.core.util import rsetattr, rgetattr
+
+
+class Fader:
+    """Allow to perform fades on "generic" objects attributes.
+
+    Fades have a resolution of `1-hundredth-of-second`.
+
+    To be able to fade correctly the attribute must be numeric, if not, the
+    `fade` function will fail.
+
+    When fading, the `fade` function cannot be entered by other threads,
+    if this happens the function will simply return immediately.
+
+    Changing a fader target will also stop the fader, the `stop` function will
+    wait until all "pending" target changes are applied.
+    """
+
+    def __init__(self, target, attribute):
+        """
+        :param target: The target object
+        :type target: object
+        :param attribute: The target attribute (name) to be faded
+        :type attribute: str
+        """
+        self._target = target
+        self._attribute = attribute
+        self._is_running = Event()
+        self._lock = Lock()
+
+    @property
+    def target(self):
+        return self._target
+
+    @target.setter
+    def target(self, target):
+        self.stop()
+        self._target = target
+
+    @property
+    def attribute(self):
+        return self._attribute
+
+    @attribute.setter
+    def attribute(self, target_property):
+        self.stop()
+        self._attribute = target_property
+
+    @locked_method(blocking=False)
+    def fade(self, duration, to_value, fade_type):
+        """
+        :param duration: How much the fade should be long (in seconds)
+        :type duration: float
+        :param to_value: The value to reach
+        :type to_value: float
+        :param fade_type: The fade type
+        :type fade_type: FadeInType | FadeOutType
+
+        :return: False if the fade as been interrupted, True otherwise
+        :rtype: bool
+        """
+        if duration <= 0:
+            return
+
+        if not isinstance(fade_type, (FadeInType, FadeOutType)):
+            raise AttributeError(
+                'fade_type must be on of FadeInType or FadeOutType member,'
+                'not {}'.format(fade_type.__class__.__name__))
+
+        try:
+            self._is_running.clear()
+
+            time = 0
+            begin = 0
+            functor = fade_type.value
+            duration = int(duration * 100)
+            base_value = rgetattr(self._target, self._attribute)
+            value_diff = to_value - base_value
+
+            if value_diff == 0:
+                return
+
+            while time <= duration:
+                with self._lock:
+                    if not self._is_running.is_set():
+                        rsetattr(self._target,
+                                 self._attribute,
+                                 functor(ntime(time, begin, duration),
+                                         value_diff,
+                                         base_value))
+                    else:
+                        break
+
+                time += 1
+                self._is_running.wait(0.01)
+        finally:
+            interrupted = self._is_running.is_set()
+            self._is_running.set()
+
+        return not interrupted
+
+    def stop(self):
+        with self._lock:
+            self._is_running.set()
+
+    def is_running(self):
+        return not self._is_running.is_set()

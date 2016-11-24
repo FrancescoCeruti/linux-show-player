@@ -18,7 +18,10 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import QT_TRANSLATE_NOOP
+from lisp.core.decorators import async
 
+from lisp.core.fade_functions import FadeInType, FadeOutType
+from lisp.core.fader import Fader
 from lisp.core.has_properties import NestedProperties
 from lisp.cues.cue import Cue, CueState, CueAction
 
@@ -28,58 +31,129 @@ class MediaCue(Cue):
 
     _media_ = NestedProperties('media', default={})
 
-    CueActions = (CueAction.Default, CueAction.Start, CueAction.Stop,
-                  CueAction.Pause)
+    CueActions = (CueAction.Default, CueAction.Start, CueAction.FadeIn,
+                  CueAction.Stop, CueAction.FadeOutStop, CueAction.Pause,
+                  CueAction.FadeOutPause)
 
     def __init__(self, media, cue_id=None):
         super().__init__(cue_id)
-
-        self.__state = CueState.Stop
-
         self.media = media
         self.media.changed('duration').connect(self._duration_change)
-        self.media.on_play.connect(self._running)
-        self.media.stopped.connect(self._stop)
-        self.media.paused.connect(self._pause)
-        self.media.error.connect(self._error)
-        self.media.eos.connect(self._end)
-        self.media.interrupted.connect(self._stop)
+        self.media.changed('pipe').connect(self.__pipe_changed)
+        self.media.error.connect(self._on_error)
+        self.media.eos.connect(self._on_eos)
 
-    def __start__(self):
+        self.__in_fadein = False
+        self.__in_fadeout = False
+
+        self.__volume = self.media.element('Volume')
+        self.__fader = Fader(self.__volume, 'current_volume')
+
+    def __pipe_changed(self):
+        self.__volume = self.media.element('Volume')
+        self.__fader.target = self.__volume
+
+    def __start__(self, fade):
+        if fade and self._can_fadein():
+            self.__volume.current_volume = 0
+
         self.media.play()
 
-    def __stop__(self):
-        self.media.stop()
+        if fade:
+            self._fadein()
 
-    def __pause__(self):
-        self.media.pause()
+    def __stop__(self, fade):
+        if self.__in_fadeout:
+            self.__fader.stop()
+        else:
+            if self.__in_fadein:
+                self.__fader.stop()
+
+            if fade and not self._fadeout():
+                return False
+
+            self.media.stop()
+
+        return True
+
+    def __pause__(self, fade):
+        if self.__in_fadeout:
+            self.__fader.stop()
+        else:
+            if self.__in_fadein:
+                self.__fader.stop()
+
+            if fade and not self._fadeout():
+                return False
+
+            self.media.pause()
+
+        return True
+
+    def __interrupt__(self):
+        self.__fader.stop()
+        self.media.interrupt()
 
     def current_time(self):
         return self.media.current_time()
 
-    @Cue.state.getter
-    def state(self):
-        return self.__state
-
     def _duration_change(self, value):
         self.duration = value
 
-    def _running(self, *args):
-        self.__state = CueState.Running
-        self.started.emit(self)
+    def _on_eos(self, *args):
+        with self._st_lock:
+            self.__fader.stop()
 
-    def _stop(self, *args):
-        self.__state = CueState.Stop
-        self.stopped.emit(self)
+            if self._state == CueState.Running:
+                self._state = CueState.Stop
+            else:
+                self._state ^= CueState.Running
 
-    def _pause(self, *args):
-        self.__state = CueState.Pause
-        self.paused.emit(self)
+            self.end.emit(self)
 
-    def _end(self, *args):
-        self.__state = CueState.Stop
-        self.end.emit(self)
+    def _on_error(self, media, msg, details):
+        with self._st_lock:
+            # Remove non-wait state
+            self._state = (
+                (self._state ^ CueState.Running) &
+                (self._state ^ CueState.Pause) &
+                (self._state ^ CueState.Stop)
+            )
+            self._state |= CueState.Error
 
-    def _error(self, media, msg, details):
-        self.__state = CueState.Error
-        self.error.emit(self, msg, details)
+            self.__fader.stop()
+            self.error.emit(self, msg, details)
+
+    def _can_fadein(self):
+        return self.__volume is not None and self.fadein > 0
+
+    def _can_fadeout(self):
+        return self.__volume is not None and self.fadeout > 0
+
+    @async
+    def _fadein(self):
+        if self._can_fadein():
+            self.__in_fadein = True
+            self.fadein_start.emit()
+            try:
+                self.__fader.fade(self.fadein,
+                                  self.__volume.volume,
+                                  FadeInType[self.fadein_type])
+            finally:
+                self.__in_fadein = False
+                self.fadein_end.emit()
+
+    def _fadeout(self):
+        ended = True
+        if self._can_fadeout():
+            self.__in_fadeout = True
+            self.fadeout_start.emit()
+            try:
+                ended = self.__fader.fade(self.fadeout,
+                                          0,
+                                          FadeOutType[self.fadeout_type])
+            finally:
+                self.__in_fadeout = False
+                self.fadeout_end.emit()
+
+        return ended

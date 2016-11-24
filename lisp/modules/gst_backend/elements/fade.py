@@ -24,11 +24,11 @@ from PyQt5.QtCore import QT_TRANSLATE_NOOP
 
 from lisp.backend.media_element import ElementType, MediaType
 from lisp.core.decorators import async
+from lisp.core.fade_functions import ntime, FadeOutType, FadeInType
 from lisp.core.has_properties import Property
 from lisp.core.signal import Signal
 from lisp.modules.gst_backend.gi_repository import Gst
 from lisp.modules.gst_backend.gst_element import GstMediaElement
-from lisp.utils.fade_functor import ntime, FadeOut, FadeIn
 
 
 class Fade(GstMediaElement):
@@ -99,7 +99,7 @@ class Fade(GstMediaElement):
         try:
             self.enter_fadein.emit()
 
-            functor = FadeIn[self.fadein_type]
+            functor = FadeInType[self.fadein_type]
             duration = self.fadein * 100
             volume = self.volume.get_property('volume')
             time = 0
@@ -123,7 +123,7 @@ class Fade(GstMediaElement):
         try:
             self.enter_fadeout.emit()
 
-            functor = FadeOut[self.fadeout_type]
+            functor = FadeOutType[self.fadeout_type]
             duration = self.fadeout * 100
             volume = self.volume.get_property('volume')
             time = 0

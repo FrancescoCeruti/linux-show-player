@@ -23,10 +23,10 @@ from PyQt5.QtWidgets import QWidget, QGridLayout, QLabel, QSizePolicy, \
     QPushButton, QLCDNumber
 
 from lisp.core.signal import Connection
+from lisp.core.util import strtime
 from lisp.cues.cue_time import CueTime
-from lisp.ui.widgets.qdbmeter import QDbMeter
 from lisp.ui.widgets.qclickslider import QClickSlider
-from lisp.utils.util import strtime
+from lisp.ui.widgets.qdbmeter import QDbMeter
 
 
 class PlayingMediaWidget(QWidget):

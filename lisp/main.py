@@ -30,8 +30,8 @@ from PyQt5.QtWidgets import QApplication
 from lisp import modules
 from lisp import plugins
 from lisp.application import Application
+from lisp.core.configuration import config
 from lisp.ui.styles import styles
-from lisp.utils.configuration import config
 
 
 def main():

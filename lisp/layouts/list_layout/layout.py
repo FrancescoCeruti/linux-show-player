@@ -24,8 +24,9 @@ from PyQt5.QtGui import QKeySequence
 from PyQt5.QtWidgets import QWidget, QAction, qApp, QGridLayout, \
     QPushButton, QSizePolicy
 
+from lisp.core.configuration import config
 from lisp.core.signal import Connection
-from lisp.cues.cue import Cue, CueState, CueAction
+from lisp.cues.cue import Cue, CueAction
 from lisp.cues.media_cue import MediaCue
 from lisp.layouts.cue_layout import CueLayout
 from lisp.layouts.list_layout.control_buttons import ControlButtons
@@ -41,7 +42,6 @@ from lisp.ui.settings.cue_settings import CueSettingsRegistry
 from lisp.ui.settings.pages.cue_appearance import Appearance
 from lisp.ui.settings.pages.cue_general import CueGeneralSettings
 from lisp.ui.settings.pages.media_cue_settings import MediaCueSettings
-from lisp.utils.configuration import config
 from lisp.ui.ui_utils import translate
 
 AppSettings.register_settings_widget(ListLayoutSettings)
@@ -285,21 +285,6 @@ class ListLayout(QWidget, CueLayout):
 
         e.accept()
 
-    def start_current(self):
-        cue = self.current_cue()
-        if cue is not None:
-            cue.start()
-
-    def pause_current(self):
-        cue = self.current_cue()
-        if cue is not None:
-            cue.pause()
-
-    def stop_current(self):
-        cue = self.current_cue()
-        if cue is not None:
-            cue.stop()
-
     def double_clicked(self, event):
         cue = self.current_cue()
         if cue is not None:
@@ -322,16 +307,15 @@ class ListLayout(QWidget, CueLayout):
 
     def stop_all(self):
         for cue in self._model_adapter:
-            cue.stop()
+            cue.stop(True)
 
     def pause_all(self):
         for cue in self._model_adapter:
-            cue.pause()
+            cue.pause(True)
 
     def restart_all(self):
         for cue in self._model_adapter:
-            if cue.state == CueState.Pause:
-                cue.start()
+            cue.restart(True)
 
     def get_selected_cues(self, cue_class=Cue):
         cues = []

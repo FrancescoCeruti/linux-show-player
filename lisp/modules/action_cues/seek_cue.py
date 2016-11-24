@@ -42,11 +42,11 @@ class SeekCue(Cue):
         super().__init__(**kwargs)
         self.name = translate('CueName', self.Name)
 
-    @Cue.state.getter
+    @property
     def state(self):
         return CueState.Stop
 
-    def __start__(self):
+    def __start__(self, fade):
         cue = Application().cue_model.get(self.target_id)
         if isinstance(cue, MediaCue) and self.time >= 0:
             cue.media.seek(self.time)

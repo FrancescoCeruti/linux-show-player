@@ -20,8 +20,8 @@
 import socket
 from threading import Thread
 
+from lisp.core.configuration import config
 from lisp.core.signal import Signal
-from lisp.utils.configuration import config
 
 IP = config['Remote']['BindIp']
 PORT = int(config['Remote']['DiscoverPort'])

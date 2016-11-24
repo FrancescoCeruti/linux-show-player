@@ -24,16 +24,16 @@ from PyQt5.QtWidgets import QProgressBar, QLCDNumber, QLabel, QHBoxLayout, \
 
 from lisp.backend.audio_utils import slider_to_fader, fader_to_slider
 from lisp.core.signal import Connection
+from lisp.core.util import strtime
 from lisp.cues.cue import CueState
 from lisp.cues.cue_time import CueTime
 from lisp.cues.media_cue import MediaCue
 from lisp.layouts.cart_layout.page_widget import PageWidget
+from lisp.ui.ui_utils import pixmap_from_icon
 from lisp.ui.widgets.qclicklabel import QClickLabel
 from lisp.ui.widgets.qclickslider import QClickSlider
 from lisp.ui.widgets.qdbmeter import QDbMeter
 from lisp.ui.widgets.qmessagebox import QDetailedMessageBox
-from lisp.utils.util import strtime
-from lisp.ui.ui_utils import pixmap_from_icon
 
 
 class CueWidget(QWidget):
@@ -152,9 +152,9 @@ class CueWidget(QWidget):
 
     def set_accurate_timing(self, enable):
         self._accurate_timing = enable
-        if self.cue.state == CueState.Pause:
+        if self.cue.state & CueState.Pause:
             self._update_time(self.cue.current_time(), True)
-        elif self.cue.state != CueState.Running:
+        elif not self.cue.state & CueState.Running:
             self._update_duration(self.cue.duration)
 
     def show_seek_slider(self, visible):
@@ -195,7 +195,7 @@ class CueWidget(QWidget):
                 self._volume_element = None
 
             if visible:
-                self.volumeSlider.setEnabled(self.cue.state == CueState.Running)
+                self.volumeSlider.setEnabled(self.cue.state & CueState.Running)
                 self._volume_element = self.cue.media.element('Volume')
                 if self._volume_element is not None:
                     self.reset_volume()
@@ -350,8 +350,7 @@ class CueWidget(QWidget):
             self.timeBar.hide()
             self.layout().setRowStretch(1, 0)
 
-        # If not in playing or paused update the widget showed time
-        if self.cue.state != CueState.Running or self.cue.state != CueState.Running:
+        if not self.cue.state & CueState.Running:
             self._update_time(duration, True)
 
     def _update_time(self, time, ignore_visibility=False):

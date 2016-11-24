@@ -21,7 +21,7 @@ from abc import ABCMeta
 from copy import deepcopy
 
 from lisp.core.signal import Signal
-from lisp.utils.util import subclasses
+from lisp.core.util import subclasses
 
 
 class Property:

@@ -61,12 +61,13 @@ class CueFactory:
     # Create methods
 
     @classmethod
-    def create_cue(cls, cue_type, **kwargs):
+    def create_cue(cls, cue_type, cue_id=None, **kwargs):
         """Return a new cue of the specified type.
 
         ..note:
             Some factory can take keyword-arguments (e.g. URIAudio)
 
+        :param cue_id: The id to use with the new cue
         :param cue_type: The cue type
         :rtype: lisp.cues.cue.Cue
         """
@@ -76,7 +77,7 @@ class CueFactory:
             raise Exception(
                 'Cue not available or badly registered: {}'.format(cue_type))
 
-        return factory(**kwargs)
+        return factory(cue_id=cue_id, **kwargs)
 
     @classmethod
     def clone_cue(cls, cue):

@@ -17,23 +17,23 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from lisp.modules.gst_backend.gst_media import GstMedia
+from lisp.core.configuration import config
 from lisp.cues.cue_factory import CueFactory
 from lisp.cues.media_cue import MediaCue
-from lisp.utils.configuration import config
+from lisp.modules.gst_backend.gst_media import GstMedia
 
 
-def gst_media(pipeline=None):
+def gst_media(cue_id=None, pipeline=None):
     media = GstMedia()
 
     if pipeline is not None:
         media.pipe = pipeline
 
-    return MediaCue(media)
+    return MediaCue(media, cue_id=cue_id)
 
 
-def uri_audio(uri=None):
-    cue = gst_media(pipeline=compose_pipeline('UriInput'))
+def uri_audio(cue_id=None, uri=None):
+    cue = gst_media(cue_id=cue_id, pipeline=compose_pipeline('UriInput'))
 
     if uri is not None:
         cue.media.element('UriInput').uri = uri
@@ -41,8 +41,8 @@ def uri_audio(uri=None):
     return cue
 
 
-def capture_audio():
-    return gst_media(pipeline=compose_pipeline('AutoSrc'))
+def capture_audio(cue_id=None):
+    return gst_media(cue_id=cue_id, pipeline=compose_pipeline('AutoSrc'))
 
 
 def compose_pipeline(input_element):

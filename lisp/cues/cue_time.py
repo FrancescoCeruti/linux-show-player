@@ -17,12 +17,11 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-import time
 from enum import IntEnum
 from weakref import WeakValueDictionary
 
 from lisp.core.clock import Clock
-from lisp.core.decorators import synchronized_method
+from lisp.core.decorators import locked_method
 from lisp.core.signal import Connection, Signal
 from lisp.cues.cue import CueState
 
@@ -32,7 +31,7 @@ class MetaCueTime(type):
 
     __Instances = WeakValueDictionary()
 
-    @synchronized_method
+    @locked_method
     def __call__(cls, cue):
         instance = cls.__Instances.get(cue.id)
         if instance is None:
@@ -72,7 +71,7 @@ class CueTime(metaclass=MetaCueTime):
             self._cue.end.connect(self.stop, Connection.QtQueued)
             self._cue.error.connect(self.stop, Connection.QtQueued)
 
-            if self._cue.state == CueState.Running:
+            if self._cue.state & CueState.Running:
                 self.start()
             self._active = True
         elif self._cue.duration < 0 and self._active:
@@ -123,30 +122,28 @@ class CueWaitTime:
         self._mode = mode
 
         if self._mode == CueWaitTime.Mode.Pre:
-            self._cue.pre_wait_enter.connect(self.start, Connection.QtQueued)
-            self._cue.pre_wait_exit.connect(self.stop, Connection.QtQueued)
+            self._cue.prewait_ended.connect(self.stop, Connection.QtQueued)
+            self._cue.prewait_start.connect(self.start, Connection.QtQueued)
+            self._cue.prewait_paused.connect(self.stop, Connection.QtQueued)
+            self._cue.prewait_stopped.connect(self.stop, Connection.QtQueued)
         elif self._mode == CueWaitTime.Mode.Post:
-            self._cue.post_wait_enter.connect(self.start, Connection.QtQueued)
-            self._cue.post_wait_exit.connect(self.stop, Connection.QtQueued)
+            self._cue.postwait_ended.connect(self.stop, Connection.QtQueued)
+            self._cue.postwait_start.connect(self.start, Connection.QtQueued)
+            self._cue.postwait_paused.connect(self.stop, Connection.QtQueued)
+            self._cue.postwait_stopped.connect(self.stop, Connection.QtQueued)
 
     def __notify(self):
-        self._last = time.perf_counter() - self._start_time
-        self.notify.emit(int(self._last * 1000))
+        if self._mode == CueWaitTime.Mode.Pre:
+            self.notify.emit(int(self._cue.prewait_time() * 100) * 10)
+        else:
+            self.notify.emit(int(self._cue.postwait_time() * 100) * 10)
 
     def start(self):
-        self._start_time = time.perf_counter()
         self._clock.add_callback(self.__notify)
 
     def stop(self):
         try:
             self._clock.remove_callback(self.__notify)
-
-            # FIXME: ugly workaround
-            if self._mode == CueWaitTime.Mode.Post:
-                if self._last < self._cue.post_wait:
-                    self.notify.emit(self._cue.post_wait * 1000)
-            elif self._last < self._cue.pre_wait:
-                self.notify.emit(self._cue.pre_wait * 1000)
         except Exception:
             # TODO: catch only the exception when the callback is not registered
             pass

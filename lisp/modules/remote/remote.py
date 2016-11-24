@@ -19,9 +19,9 @@
 
 import socket
 
+from lisp.core.configuration import config
 from lisp.core.module import Module
 from lisp.modules.remote.controller import RemoteController
-from lisp.utils.configuration import config
 
 
 class Remote(Module):
