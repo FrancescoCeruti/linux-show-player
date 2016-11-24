@@ -4,7 +4,7 @@
     <message>
         <location filename="../ui/about.py" line="47"/>
         <source>Linux Show Player is a cue-player designed for stage productions.</source>
-        <translation>Linux Show Player est un logiciel de playback de cue pour le théâtre ou l&apos;événementiel.</translation>
+        <translation>Linux Show Player est un logiciel de lecture de cue pensé pour le théâtre ou l&apos;événementiel.</translation>
     </message>
     <message>
         <location filename="../ui/about.py" line="86"/>
@@ -29,7 +29,7 @@
     <message>
         <location filename="../ui/about.py" line="101"/>
         <source>License</source>
-        <translation>License</translation>
+        <translation>Licence</translation>
     </message>
     <message>
         <location filename="../ui/about.py" line="105"/>
@@ -47,17 +47,17 @@
     <message>
         <location filename="../ui/settings/pages/app_general.py" line="39"/>
         <source>Startup layout</source>
-        <translation>Etat de démarrage</translation>
+        <translation>État de démarrage</translation>
     </message>
     <message>
         <location filename="../ui/settings/pages/app_general.py" line="45"/>
         <source>Use startup dialog</source>
-        <translation>Utilisez la boite de dialogue du démarrage</translation>
+        <translation>Utilisez le dialogue du démarrage</translation>
     </message>
     <message>
         <location filename="../ui/settings/pages/app_general.py" line="58"/>
         <source>Application theme</source>
-        <translation>Theme de l&apos;application</translation>
+        <translation>Thème de l&apos;application</translation>
     </message>
 </context>
 <context>
@@ -83,7 +83,7 @@
     <message>
         <location filename="../layouts/cart_layout/layout.py" line="171"/>
         <source>Remove current page</source>
-        <translation>Retirer la page en cour</translation>
+        <translation>Retirer la page actuelle</translation>
     </message>
     <message>
         <location filename="../layouts/cart_layout/cart_layout_settings.py" line="85"/>
@@ -93,27 +93,27 @@
     <message>
         <location filename="../layouts/cart_layout/cart_layout_settings.py" line="86"/>
         <source>Show seek-bars</source>
-        <translation>Montrer le seek bar</translation>
+        <translation>Montrer le barre de recherche</translation>
     </message>
     <message>
         <location filename="../layouts/cart_layout/cart_layout_settings.py" line="87"/>
         <source>Show dB-meters</source>
-        <translation>Montrer le dB mêtre</translation>
+        <translation>Afficher le mesureur de dB</translation>
     </message>
     <message>
         <location filename="../layouts/cart_layout/cart_layout_settings.py" line="89"/>
         <source>Show volume</source>
-        <translation>Montrer le volume</translation>
+        <translation>Afficher le volume</translation>
     </message>
     <message>
         <location filename="../layouts/cart_layout/cart_layout_settings.py" line="88"/>
         <source>Show accurate time</source>
-        <translation>Montrer le temps exacte</translation>
+        <translation>Afficher le temps exact</translation>
     </message>
     <message>
         <location filename="../layouts/cart_layout/layout.py" line="181"/>
         <source>Edit cue</source>
-        <translation>Editer la cue</translation>
+        <translation>Éditer la cue</translation>
     </message>
     <message>
         <location filename="../layouts/cart_layout/layout.py" line="182"/>
@@ -128,7 +128,7 @@
     <message>
         <location filename="../layouts/cart_layout/layout.py" line="184"/>
         <source>Play</source>
-        <translation>Play</translation>
+        <translation>Lecture</translation>
     </message>
     <message>
         <location filename="../layouts/cart_layout/layout.py" line="185"/>
@@ -143,12 +143,12 @@
     <message>
         <location filename="../layouts/cart_layout/layout.py" line="187"/>
         <source>Reset volume</source>
-        <translation>Remise à zéro du volume</translation>
+        <translation>Réinitialisation du volume</translation>
     </message>
     <message>
         <location filename="../layouts/cart_layout/layout.py" line="194"/>
         <source>Number of Pages:</source>
-        <translation>Nombre de Pages :</translation>
+        <translation>Nombre de pages :</translation>
     </message>
     <message>
         <location filename="../layouts/cart_layout/layout.py" line="274"/>
@@ -173,7 +173,7 @@
     <message>
         <location filename="../layouts/cart_layout/cart_layout_settings.py" line="83"/>
         <source>Default behaviors</source>
-        <translation>Comportement par défaut </translation>
+        <translation>Comportements par défaut </translation>
     </message>
     <message>
         <location filename="../layouts/cart_layout/cart_layout_settings.py" line="90"/>
@@ -211,7 +211,7 @@
     <message>
         <location filename="../ui/qdelegates.py" line="31"/>
         <source>Start</source>
-        <translation>Start</translation>
+        <translation>Démarrer</translation>
     </message>
     <message>
         <location filename="../ui/qdelegates.py" line="32"/>
@@ -224,7 +224,7 @@
     <message>
         <location filename="../ui/settings/pages/cue_appearance.py" line="74"/>
         <source>The appearance depends on the layout</source>
-        <translation>L&apos;apparence dépend de l&apos;état</translation>
+        <translation>L&apos;apparence dépend de l&apos;agencement</translation>
     </message>
     <message>
         <location filename="../ui/settings/pages/cue_appearance.py" line="83"/>
@@ -239,7 +239,7 @@
     <message>
         <location filename="../ui/settings/pages/cue_appearance.py" line="87"/>
         <source>Description/Note</source>
-        <translation>Description / Note</translation>
+        <translation>Description / note</translation>
     </message>
     <message>
         <location filename="../ui/settings/pages/cue_appearance.py" line="89"/>
@@ -254,7 +254,7 @@
     <message>
         <location filename="../ui/settings/pages/cue_appearance.py" line="92"/>
         <source>Select background color</source>
-        <translation>Sélectionner la couleur du fond</translation>
+        <translation>Sélectionner la couleur de fond</translation>
     </message>
     <message>
         <location filename="../ui/settings/pages/cue_appearance.py" line="94"/>
@@ -267,7 +267,7 @@
     <message>
         <location filename="../ui/settings/pages/cue_general.py" line="78"/>
         <source>Pre wait</source>
-        <translation>Pre attente</translation>
+        <translation>Pré-attente</translation>
     </message>
     <message>
         <location filename="../ui/settings/pages/cue_general.py" line="79"/>
@@ -277,7 +277,7 @@
     <message>
         <location filename="../ui/settings/pages/cue_general.py" line="81"/>
         <source>Post wait</source>
-        <translation>Post attente</translation>
+        <translation>Post-attente</translation>
     </message>
     <message>
         <location filename="../ui/settings/pages/cue_general.py" line="82"/>
@@ -292,7 +292,7 @@
     <message>
         <location filename="../ui/settings/pages/cue_general.py" line="85"/>
         <source>Pause instead of stop(if supported)</source>
-        <translation>Pause au lieu de stop ( si supporté )</translation>
+        <translation>Pause au lieu de stop (si supporté)</translation>
     </message>
 </context>
 <context>
@@ -313,27 +313,27 @@
     <message>
         <location filename="../layouts/cart_layout/layout.py" line="50"/>
         <source>Click a cue to run it</source>
-        <translation>Cliquer une cue pour l&apos;exécuter</translation>
+        <translation>Cliquer sur une cue pour l&apos;exécuter</translation>
     </message>
     <message>
         <location filename="../layouts/cart_layout/layout.py" line="51"/>
         <source>SHIFT + Click to edit a cue</source>
-        <translation>MAJ + Clique pour éditer une cue</translation>
+        <translation>MAJ + clic pour éditer une cue</translation>
     </message>
     <message>
         <location filename="../layouts/cart_layout/layout.py" line="52"/>
         <source>SHIFT + Drag&amp;Drop to copy cues</source>
-        <translation>MAJ + Glisser Déposer pour copier une cue</translation>
+        <translation>MAJ + glisser&amp;déposer pour copier des cues</translation>
     </message>
     <message>
         <location filename="../layouts/cart_layout/layout.py" line="53"/>
         <source>CTRL + Drag&amp;Drop to move cues</source>
-        <translation>CTRL + Glisser  Déposer pour bouger une cue</translation>
+        <translation>CTRL + glisser&amp;déposer pour déplacer des cues</translation>
     </message>
     <message>
         <location filename="../layouts/cart_layout/layout.py" line="54"/>
         <source>CTRL + Click to select a cue</source>
-        <translation>CTRL + Clique pour sélectionner une cue</translation>
+        <translation>CTRL + clic pour sélectionner une cue</translation>
     </message>
     <message>
         <location filename="../layouts/list_layout/layout.py" line="60"/>
@@ -343,17 +343,17 @@
     <message>
         <location filename="../layouts/list_layout/layout.py" line="61"/>
         <source>SHIFT + Space or Double-Click to edit a cue</source>
-        <translation>MAJ + Espace ou Double Clique pour éditer une cue</translation>
+        <translation>MAJ + Espace ou double-clic pour éditer une cue</translation>
     </message>
     <message>
         <location filename="../layouts/list_layout/layout.py" line="63"/>
         <source>CTRL + Drag&amp;Drop to copy cues</source>
-        <translation>CTRL + Glisser Déposer pour copier une cue</translation>
+        <translation>CTRL + glisser&amp;déposer pour copier des cues</translation>
     </message>
     <message>
         <location filename="../layouts/list_layout/layout.py" line="64"/>
         <source>Drag&amp;Drop to move cues</source>
-        <translation>Glisser Déposer pour bouger une cue</translation>
+        <translation>Glisser&amp;déposer pour déplacer des cues</translation>
     </message>
 </context>
 <context>
@@ -361,12 +361,12 @@
     <message>
         <location filename="../ui/layoutselect.py" line="38"/>
         <source>Layout selection</source>
-        <translation>Sélection de l&apos;état</translation>
+        <translation>Sélection de l&apos;agencement</translation>
     </message>
     <message>
         <location filename="../ui/layoutselect.py" line="51"/>
         <source>Select layout</source>
-        <translation>Sélectionner l&apos;état</translation>
+        <translation>Sélectionner l&apos;agencement</translation>
     </message>
     <message>
         <location filename="../ui/layoutselect.py" line="55"/>
@@ -379,32 +379,32 @@
     <message>
         <location filename="../layouts/list_layout/list_layout_settings.py" line="82"/>
         <source>Show playing cues</source>
-        <translation>Montrer les cues en court</translation>
+        <translation>Montrer les cues en cours</translation>
     </message>
     <message>
         <location filename="../layouts/list_layout/list_layout_settings.py" line="83"/>
         <source>Show dB-meters</source>
-        <translation>Montrer le dB mètre</translation>
+        <translation>Afficher le mesureur de dB</translation>
     </message>
     <message>
         <location filename="../layouts/list_layout/list_layout_settings.py" line="85"/>
         <source>Show seek-bars</source>
-        <translation>Montrer le seek-bar</translation>
+        <translation>Afficher la barre de recherche</translation>
     </message>
     <message>
         <location filename="../layouts/list_layout/list_layout_settings.py" line="84"/>
         <source>Show accurate time</source>
-        <translation>Montrer le temps exact</translation>
+        <translation>Afficher le temps exact</translation>
     </message>
     <message>
         <location filename="../layouts/list_layout/list_layout_settings.py" line="86"/>
         <source>Auto-select next cue</source>
-        <translation>Auto-select la prochaine cue</translation>
+        <translation>Auto-sélectionner la prochaine cue</translation>
     </message>
     <message>
         <location filename="../layouts/list_layout/layout.py" line="202"/>
         <source>Edit cue</source>
-        <translation>Editer la cue</translation>
+        <translation>Éditer la cue</translation>
     </message>
     <message>
         <location filename="../layouts/list_layout/layout.py" line="203"/>
@@ -419,17 +419,17 @@
     <message>
         <location filename="../layouts/list_layout/control_buttons.py" line="62"/>
         <source>Stop all</source>
-        <translation>Stop Tout</translation>
+        <translation>Tout stopper</translation>
     </message>
     <message>
         <location filename="../layouts/list_layout/control_buttons.py" line="63"/>
         <source>Pause all</source>
-        <translation>Pause Tout</translation>
+        <translation>Tout mettre en pause</translation>
     </message>
     <message>
         <location filename="../layouts/list_layout/control_buttons.py" line="64"/>
         <source>Restart all</source>
-        <translation>Redémarrer Tout</translation>
+        <translation>Tout redémarrer</translation>
     </message>
     <message>
         <location filename="../layouts/list_layout/list_layout_settings.py" line="61"/>
@@ -444,17 +444,17 @@
     <message>
         <location filename="../layouts/list_layout/list_layout_settings.py" line="80"/>
         <source>Default behaviors</source>
-        <translation>Comportement par défaut </translation>
+        <translation>Comportements par défaut </translation>
     </message>
     <message>
         <location filename="../layouts/list_layout/list_layout_settings.py" line="87"/>
         <source>At list end:</source>
-        <translation>A la fin de la liste :</translation>
+        <translation>À la fin de la liste :</translation>
     </message>
     <message>
         <location filename="../layouts/list_layout/list_layout_settings.py" line="88"/>
         <source>Go key:</source>
-        <translation>Touche pour Go :</translation>
+        <translation>Touche pour lancer :</translation>
     </message>
 </context>
 <context>
@@ -467,7 +467,7 @@
     <message>
         <location filename="../layouts/list_layout/cue_list_view.py" line="46"/>
         <source>Pre wait</source>
-        <translation>Pre attente</translation>
+        <translation>Pré-attente</translation>
     </message>
     <message>
         <location filename="../layouts/list_layout/cue_list_view.py" line="47"/>
@@ -477,7 +477,7 @@
     <message>
         <location filename="../layouts/list_layout/cue_list_view.py" line="48"/>
         <source>Post wait</source>
-        <translation>Post attente</translation>
+        <translation>Post-attente</translation>
     </message>
 </context>
 <context>
@@ -498,12 +498,12 @@
     <message>
         <location filename="../utils/logging.py" line="35"/>
         <source>Information</source>
-        <translation>Information</translation>
+        <translation>Informations</translation>
     </message>
     <message>
         <location filename="../utils/logging.py" line="42"/>
         <source>Debug</source>
-        <translation>Debug</translation>
+        <translation>Déboguage</translation>
     </message>
     <message>
         <location filename="../utils/logging.py" line="49"/>
@@ -526,7 +526,7 @@
     <message>
         <location filename="../ui/mainwindow.py" line="149"/>
         <source>&amp;File</source>
-        <translation>&amp; Fichier</translation>
+        <translation>&amp;Fichier</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.py" line="150"/>
@@ -566,7 +566,7 @@
     <message>
         <location filename="../ui/mainwindow.py" line="164"/>
         <source>&amp;Edit</source>
-        <translation>&amp; Editer</translation>
+        <translation>Édit&amp;er</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.py" line="165"/>
@@ -576,7 +576,7 @@
     <message>
         <location filename="../ui/mainwindow.py" line="167"/>
         <source>Redo</source>
-        <translation>Re-faire</translation>
+        <translation>Refaire</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.py" line="169"/>
@@ -611,7 +611,7 @@
     <message>
         <location filename="../ui/mainwindow.py" line="178"/>
         <source>Edit selected</source>
-        <translation>Editer la sélection</translation>
+        <translation>Éditer la sélection</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.py" line="179"/>
@@ -621,42 +621,42 @@
     <message>
         <location filename="../ui/mainwindow.py" line="181"/>
         <source>&amp;Layout</source>
-        <translation>&amp; Etat</translation>
+        <translation>É&amp;tat</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.py" line="183"/>
         <source>&amp;Tools</source>
-        <translation>&amp; Outils</translation>
+        <translation>Ou&amp;tils</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.py" line="184"/>
         <source>Edit selection</source>
-        <translation>Editer la sélection</translation>
+        <translation>Éditer la sélection</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.py" line="186"/>
         <source>&amp;About</source>
-        <translation>&amp; A propos</translation>
+        <translation>À &amp;propos</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.py" line="187"/>
         <source>About</source>
-        <translation>A propos</translation>
+        <translation>À propos</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.py" line="188"/>
         <source>About Qt</source>
-        <translation>A propos de Qt</translation>
+        <translation>À propos de Qt</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.py" line="253"/>
         <source>Undone: </source>
-        <translation>Annuler :</translation>
+        <translation>Défaire :</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.py" line="258"/>
         <source>Redone: </source>
-        <translation>Re-faire :</translation>
+        <translation>Refaire :</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.py" line="302"/>
@@ -671,7 +671,7 @@
     <message>
         <location filename="../ui/mainwindow.py" line="305"/>
         <source>Discard the changes?</source>
-        <translation>Annuler le changement ?</translation>
+        <translation>Annuler les changements ?</translation>
     </message>
 </context>
 <context>
@@ -684,7 +684,7 @@
     <message>
         <location filename="../ui/settings/pages/media_cue_settings.py" line="78"/>
         <source>Stop position of the media</source>
-        <translation>Stop la position du média</translation>
+        <translation>Position de fin du média</translation>
     </message>
     <message>
         <location filename="../ui/settings/pages/media_cue_settings.py" line="80"/>
@@ -694,7 +694,7 @@
     <message>
         <location filename="../ui/settings/pages/media_cue_settings.py" line="81"/>
         <source>Start position of the media</source>
-        <translation>Démarrer la position du média</translation>
+        <translation>Position de démarrage du média</translation>
     </message>
     <message>
         <location filename="../ui/settings/pages/media_cue_settings.py" line="83"/>
@@ -704,7 +704,7 @@
     <message>
         <location filename="../ui/settings/pages/media_cue_settings.py" line="84"/>
         <source>Repetition after first play (-1 = infinite)</source>
-        <translation>Répétition après la première lecture (-1=infinie)</translation>
+        <translation>Répétition après la première lecture (-1 = infinie)</translation>
     </message>
 </context>
 <context>
@@ -712,7 +712,7 @@
     <message>
         <location filename="../ui/widgets/qcolorbutton.py" line="40"/>
         <source>Right click to reset</source>
-        <translation>Clic droit pour remise à zéro</translation>
+        <translation>Clic-droit pour réinitialiser</translation>
     </message>
 </context>
 <context>
