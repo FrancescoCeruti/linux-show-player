@@ -42,12 +42,12 @@
     <message>
         <location filename="../command_cue.py" line="124"/>
         <source>Command to execute, as in a shell</source>
-        <translation>Commande à exécuter, comme dans bash</translation>
+        <translation>Commande à exécuter, comme dans un terminal</translation>
     </message>
     <message>
         <location filename="../command_cue.py" line="126"/>
         <source>Discard command output</source>
-        <translation>Ne pas prendre en compte la commande</translation>
+        <translation>Abandonner la sortie de commande</translation>
     </message>
     <message>
         <location filename="../command_cue.py" line="128"/>
@@ -75,22 +75,22 @@
     <message>
         <location filename="../volume_control.py" line="46"/>
         <source>Volume Control</source>
-        <translation>Control du Volume</translation>
+        <translation>Contrôle du Volume</translation>
     </message>
     <message>
         <location filename="../seek_cue.py" line="36"/>
         <source>Seek Cue</source>
-        <translation>Seek Cue</translation>
+        <translation>Recherche de Cue</translation>
     </message>
     <message>
         <location filename="../collection_cue.py" line="36"/>
         <source>Collection Cue</source>
-        <translation>Collection Cue</translation>
+        <translation>Collection de cue</translation>
     </message>
     <message>
         <location filename="../stop_all.py" line="31"/>
         <source>Stop-All</source>
-        <translation>Stop Tout</translation>
+        <translation>Tout arrêter</translation>
     </message>
 </context>
 <context>
@@ -121,12 +121,12 @@
     <message>
         <location filename="../seek_cue.py" line="97"/>
         <source>Not selected</source>
-        <translation>Non sélectionner </translation>
+        <translation>Non sélectionné</translation>
     </message>
     <message>
         <location filename="../seek_cue.py" line="98"/>
         <source>Seek</source>
-        <translation>Seek</translation>
+        <translation>Recherche</translation>
     </message>
     <message>
         <location filename="../seek_cue.py" line="99"/>
@@ -149,22 +149,22 @@
     <message>
         <location filename="../volume_control.py" line="140"/>
         <source>Volume Settings</source>
-        <translation>Préférences de Volume</translation>
+        <translation>Préférences de volume</translation>
     </message>
     <message>
         <location filename="../seek_cue.py" line="56"/>
         <source>Seek Settings</source>
-        <translation>Préférences pour Seek</translation>
+        <translation>Préférences de recherche</translation>
     </message>
     <message>
         <location filename="../collection_cue.py" line="56"/>
         <source>Edit Collection</source>
-        <translation>Editer Collection</translation>
+        <translation>Editer la collection</translation>
     </message>
     <message>
         <location filename="../stop_all.py" line="51"/>
         <source>Cue Settings</source>
-        <translation>Préférences pour Cue</translation>
+        <translation>Préférences pour cue</translation>
     </message>
 </context>
 <context>
@@ -225,7 +225,7 @@
     <message>
         <location filename="../volume_control.py" line="230"/>
         <source>Fade</source>
-        <translation>Fade</translation>
+        <translation>Fondu</translation>
     </message>
     <message>
         <location filename="../volume_control.py" line="231"/>
