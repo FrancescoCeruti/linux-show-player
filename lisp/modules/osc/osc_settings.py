@@ -20,8 +20,7 @@
 
 from PyQt5.QtCore import QT_TRANSLATE_NOOP, Qt
 from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QLabel,\
-    QCheckBox, QComboBox, QHBoxLayout, QMessageBox, QSpinBox,\
-    QLineEdit
+    QCheckBox, QHBoxLayout, QSpinBox, QLineEdit
 
 from lisp.ui.ui_utils import translate
 from lisp.utils.configuration import config

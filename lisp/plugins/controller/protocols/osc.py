@@ -18,20 +18,11 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
-<<<<<<< HEAD
 from PyQt5.QtWidgets import QGroupBox, QPushButton, QVBoxLayout, \
     QTableView, QTableWidget, QHeaderView, QGridLayout, QLabel, \
     QDialog, QDialogButtonBox
 
 from lisp.modules import check_module
-=======
-from PyQt5.QtWidgets import QGroupBox, QPushButton, QComboBox, QVBoxLayout, \
-    QMessageBox, QTableView, QTableWidget, QHeaderView, QGridLayout, QLabel, \
-    QDialog, QDialogButtonBox
-
-from lisp.modules import check_module
-from lisp.application import MainWindow
->>>>>>> 6f32977... implemented OSC Protocol
 from lisp.modules.osc.osc_common import OscCommon
 from lisp.plugins.controller.protocols.protocol import Protocol
 from lisp.ui.qdelegates import ComboBoxDelegate, LineEditDelegate
