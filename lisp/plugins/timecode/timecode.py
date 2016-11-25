@@ -19,7 +19,8 @@
 
 from collections import namedtuple
 
-from lisp.application import Application, AppSettings
+from lisp.application import Application
+from lisp.ui.settings.app_settings import AppSettings
 from lisp.core.has_properties import Property
 from lisp.core.plugin import Plugin
 from lisp.cues.cue import Cue
@@ -65,6 +66,7 @@ class OlaTimecode():
                 self.__client.SendTimeCode(self.__format, self.__track, tt[1], tt[2], round(tt[3] / self.__millis), 0)
             else:
                 self.__client.SendTimeCode(self.__format, tt[0], tt[1], tt[2], round(tt[3] / self.__millis), 0)
+            print(self.__format, self.__track, tt[1], tt[2], round(tt[3] / self.__millis))
         except OLADNotRunningException:
             self.stop_timecode()
             config.set('Timecode', 'enabled', 'False')
