@@ -17,7 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-# TODO: proper Test for Format, add Error Dialog, Test Cue Button in Settings
+# TODO: proper Test for Format, add Error Dialog, Cue Test-Button in Settings
 
 from enum import Enum
 
