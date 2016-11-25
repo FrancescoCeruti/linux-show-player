@@ -4,27 +4,27 @@
     <message>
         <location filename="../peers_dialog.py" line="80"/>
         <source>Manage connected peers</source>
-        <translation>Gérer les pairs connectés</translation>
+        <translation>Gestion des paires connectées</translation>
     </message>
     <message>
         <location filename="../peers_dialog.py" line="82"/>
         <source>Discover peers</source>
-        <translation>Découvrir des pairs</translation>
+        <translation>Découvrir les paires</translation>
     </message>
     <message>
         <location filename="../peers_dialog.py" line="84"/>
         <source>Manually add a peer</source>
-        <translation>Ajouter un pair manuelement</translation>
+        <translation>Ajouter manuelement une paire</translation>
     </message>
     <message>
         <location filename="../peers_dialog.py" line="86"/>
         <source>Remove selected peer</source>
-        <translation>Retirer le pair séléctionner</translation>
+        <translation>Retirer la paire séléctionnée</translation>
     </message>
     <message>
         <location filename="../peers_dialog.py" line="88"/>
         <source>Remove all peers</source>
-        <translation>Retirer tout les pairs</translation>
+        <translation>Retirer toutes les paires</translation>
     </message>
     <message>
         <location filename="../peers_dialog.py" line="92"/>
@@ -34,7 +34,7 @@
     <message>
         <location filename="../peers_dialog.py" line="92"/>
         <source>Peer IP</source>
-        <translation>IP du pair</translation>
+        <translation>IP de la paire</translation>
     </message>
     <message>
         <location filename="../peers_dialog.py" line="104"/>
@@ -49,7 +49,7 @@
     <message>
         <location filename="../peers_dialog.py" line="115"/>
         <source>Cannot add peer</source>
-        <translation>Impossible d&apos;ajouter un pair</translation>
+        <translation>Impossible d&apos;ajouter une paire</translation>
     </message>
 </context>
 <context>
@@ -62,12 +62,12 @@
     <message>
         <location filename="../synchronizer.py" line="41"/>
         <source>Manage connected peers</source>
-        <translation>Gérer les pairs connectés</translation>
+        <translation>Gérer les paiers connectées</translation>
     </message>
     <message>
         <location filename="../synchronizer.py" line="46"/>
         <source>Show your IP</source>
-        <translation>Montrer votre IP</translation>
+        <translation>Afficher votre IP</translation>
     </message>
     <message>
         <location filename="../synchronizer.py" line="63"/>
@@ -77,7 +77,7 @@
     <message>
         <location filename="../peers_discovery_dialog.py" line="55"/>
         <source>Discovering peers ...</source>
-        <translation>Découvrir des pairs ...</translation>
+        <translation>Découverte des paires ...</translation>
     </message>
 </context>
 </TS>
