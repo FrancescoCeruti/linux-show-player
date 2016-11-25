@@ -4,7 +4,7 @@
     <message>
         <location filename="../midi_settings.py" line="40"/>
         <source>MIDI default devices</source>
-        <translation>Dispositif MIDI par défaut</translation>
+        <translation>Périphériques MIDI par défaut</translation>
     </message>
     <message>
         <location filename="../midi_settings.py" line="45"/>

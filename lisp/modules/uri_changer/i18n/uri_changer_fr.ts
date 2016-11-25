@@ -4,12 +4,12 @@
     <message>
         <location filename="../uri_changer.py" line="32"/>
         <source>Session URI change</source>
-        <translation>Changer la session URI§</translation>
+        <translation>Modifier l'URI de la session</translation>
     </message>
     <message>
         <location filename="../uri_changer_dialog.py" line="97"/>
         <source>Current</source>
-        <translation>En court</translation>
+        <translation>Actuel</translation>
     </message>
     <message>
         <location filename="../uri_changer_dialog.py" line="101"/>

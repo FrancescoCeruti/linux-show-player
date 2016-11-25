@@ -32,7 +32,7 @@
     <message>
         <location filename="../protocols/midi.py" line="75"/>
         <source>Channel</source>
-        <translation>Channel</translation>
+        <translation>Canal</translation>
     </message>
     <message>
         <location filename="../protocols/midi.py" line="75"/>
@@ -47,12 +47,12 @@
     <message>
         <location filename="../protocols/midi.py" line="98"/>
         <source>Filter &quot;note on&quot;</source>
-        <translation>Filtrer &quot;note on&quot;</translation>
+        <translation>Filtrer les &quot;note on&quot;</translation>
     </message>
     <message>
         <location filename="../protocols/midi.py" line="101"/>
         <source>Filter &quot;note off&quot;</source>
-        <translation>Filtrer &quot;note off&quot;</translation>
+        <translation>Filtrer les &quot;note off&quot;</translation>
     </message>
     <message>
         <location filename="../protocols/midi.py" line="113"/>
@@ -62,7 +62,7 @@
     <message>
         <location filename="../protocols/midi.py" line="146"/>
         <source>Listening MIDI messages ...</source>
-        <translation>Ecouter les messages MIDI ...</translation>
+        <translation>Écoute des messages MIDI ...</translation>
     </message>
 </context>
 <context>
@@ -83,17 +83,17 @@
     <message>
         <location filename="../controller_settings.py" line="28"/>
         <source>Cue Control</source>
-        <translation>Control de la Cue</translation>
+        <translation>Contrôle de la cue</translation>
     </message>
     <message>
         <location filename="../protocols/midi.py" line="62"/>
         <source>MIDI Controls</source>
-        <translation>Controls MIDI</translation>
+        <translation>Contrôles MIDI</translation>
     </message>
     <message>
         <location filename="../protocols/keyboard.py" line="46"/>
         <source>Keyboard Shortcuts</source>
-        <translation>Racourcis clavier</translation>
+        <translation>Raccourcis-clavier</translation>
     </message>
 </context>
 </TS>

@@ -14,7 +14,7 @@
     <message>
         <location filename="../media_info.py" line="50"/>
         <source>No info to display</source>
-        <translation>Pas d&apos;info à montrer</translation>
+        <translation>Pas d&apos;info à afficher</translation>
     </message>
     <message>
         <location filename="../media_info.py" line="106"/>

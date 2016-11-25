@@ -4,7 +4,7 @@
     <message>
         <location filename="../triggers_handler.py" line="30"/>
         <source>Started</source>
-        <translation>Démaré</translation>
+        <translation>Démarré</translation>
     </message>
     <message>
         <location filename="../triggers_handler.py" line="31"/>
@@ -14,7 +14,7 @@
     <message>
         <location filename="../triggers_handler.py" line="32"/>
         <source>Stopped</source>
-        <translation>Stopé</translation>
+        <translation>Arrêté</translation>
     </message>
     <message>
         <location filename="../triggers_handler.py" line="33"/>
@@ -27,7 +27,7 @@
     <message>
         <location filename="../triggers_settings.py" line="36"/>
         <source>Triggers</source>
-        <translation>Amorces</translation>
+        <translation>Déclencheurs</translation>
     </message>
 </context>
 <context>
@@ -45,7 +45,7 @@
     <message>
         <location filename="../triggers_settings.py" line="136"/>
         <source>Trigger</source>
-        <translation>Amorce</translation>
+        <translation>Déclencheur</translation>
     </message>
     <message>
         <location filename="../triggers_settings.py" line="136"/>
