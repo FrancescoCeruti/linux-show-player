@@ -125,7 +125,7 @@ class MidiSettings(CueSettingsPage):
             messages = []
 
             for row in self.midiModel.rows:
-                message = Midi.str_from_values(row[0], row[1], row[2])
+                message = Midi.str_from_values(row[0], row[1]-1, row[2])
                 messages.append((message, row[-1]))
 
             if messages:
@@ -137,7 +137,7 @@ class MidiSettings(CueSettingsPage):
         if 'midi' in settings:
             for options in settings['midi']:
                 m_type, channel, note = Midi.from_string(options[0])
-                self.midiModel.appendRow(m_type, channel, note, options[1])
+                self.midiModel.appendRow(m_type, channel+1, note, options[1])
 
     def capture_message(self):
         handler = MIDIInput()
@@ -153,12 +153,12 @@ class MidiSettings(CueSettingsPage):
 
     def __add_message(self, msg):
         if self.msgTypeCombo.currentData(Qt.UserRole) == msg.type:
-            self.midiModel.appendRow(msg.type, msg.channel, msg.note,
+            self.midiModel.appendRow(msg.type, msg.channel+1, msg.note,
                                      self._default_action)
 
     def __new_message(self):
         message_type = self.msgTypeCombo.currentData(Qt.UserRole)
-        self.midiModel.appendRow(message_type, 0, 0, self._default_action)
+        self.midiModel.appendRow(message_type, 1, 0, self._default_action)
 
     def __remove_message(self):
         self.midiModel.removeRow(self.midiView.currentIndex().row())
@@ -170,7 +170,7 @@ class MidiView(QTableView):
 
         self.delegates = [
             ComboBoxDelegate(options=['note_on', 'note_off']),
-            SpinBoxDelegate(minimum=0, maximum=15),
+            SpinBoxDelegate(minimum=1, maximum=16),
             SpinBoxDelegate(minimum=0, maximum=127),
             CueActionDelegate(cue_class=cue_class,
                               mode=CueActionDelegate.Mode.Name)
