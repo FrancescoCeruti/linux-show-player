@@ -20,26 +20,29 @@
 import weakref
 
 from lisp.backend.media import Media, MediaState
-from lisp.core.decorators import async
 from lisp.core.has_properties import Property
 from lisp.modules.gst_backend import elements
 from lisp.modules.gst_backend.gi_repository import Gst
 
 
-def validate_pipeline(pipe):
+def validate_pipeline(pipe, rebuild=False):
     # The first must be an input element
     if pipe[0] not in elements.inputs().keys():
         return False
 
     # The middle elements must be plugins elements
-    if len(set(pipe[1:-1]) - set(elements.plugins().keys())) != 0:
-        return False
+    if rebuild:
+        pipe[1:-1] = set(pipe[1:-1]).intersection(
+            set(elements.plugins().keys()))
+    else:
+        if len(set(pipe[1:-1]) - set(elements.plugins().keys())) != 0:
+            return False
 
     # The last must be an output element
     if pipe[-1] not in elements.outputs().keys():
         return False
 
-    return True
+    return pipe if rebuild else True
 
 
 class GstMedia(Media):
@@ -84,7 +87,8 @@ class GstMedia(Media):
             self._old_pipe = pipe
 
             # If the pipeline is invalid raise an error
-            if not validate_pipeline(pipe):
+            pipe = validate_pipeline(pipe, rebuild=True)
+            if not pipe:
                 raise ValueError('Invalid pipeline "{0}"'.format(pipe))
 
             # Build the pipeline

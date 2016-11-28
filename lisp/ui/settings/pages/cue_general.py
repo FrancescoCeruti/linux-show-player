@@ -112,7 +112,9 @@ class CueGeneralSettings(CueSettingsPage):
         self.tab_2.layout().addWidget(self.nextActionGroup)
 
         self.nextActionCombo = QComboBox(self.nextActionGroup)
-        self.nextActionCombo.addItems([e.value for e in CueNextAction])
+        for action in CueNextAction:
+            self.nextActionCombo.addItem(
+                translate('CueNextAction', action.name), action.value)
         self.nextActionGroup.layout().addWidget(self.nextActionCombo)
 
         # TAB 3 (Fade In/Out)
@@ -256,7 +258,7 @@ class CueGeneralSettings(CueSettingsPage):
         if not (checkable and not self.postWaitGroup.isChecked()):
             conf['post_wait'] = self.postWaitSpin.value()
         if not (checkable and not self.nextActionGroup.isChecked()):
-            conf['next_action'] = self.nextActionCombo.currentText()
+            conf['next_action'] = self.nextActionCombo.currentData()
 
         if not (checkable and not self.fadeInGroup.isChecked()):
             conf['fadein_type'] = self.fadeInTypeCombo.currentType()

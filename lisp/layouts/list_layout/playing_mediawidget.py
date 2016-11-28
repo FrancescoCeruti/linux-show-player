@@ -101,21 +101,20 @@ class PlayingMediaWidget(QWidget):
         cue.media.played.connect(self._pause_to_play)
         cue.media.paused.connect(self._play_to_pause)
 
-        self.fade = self.cue.media.element('Fade')
-        if self.fade is not None:
-            self.fade.enter_fadein.connect(self.enter_fadein)
-            self.fade.enter_fadeout.connect(self.enter_fadeout)
-            self.fade.exit_fadein.connect(self.exit_fade)
-            self.fade.exit_fadeout.connect(self.exit_fade)
-
-    def enter_fadeout(self):
-        p = self.timeDisplay.palette()
-        p.setColor(p.Text, QColor(255, 50, 50))
-        self.timeDisplay.setPalette(p)
+        # Fade enter/exit
+        cue.fadein_start.connect(self.enter_fadein, Connection.QtQueued)
+        cue.fadein_end.connect(self.exit_fade, Connection.QtQueued)
+        cue.fadeout_start.connect(self.enter_fadeout, Connection.QtQueued)
+        cue.fadeout_end.connect(self.exit_fade, Connection.QtQueued)
 
     def enter_fadein(self):
         p = self.timeDisplay.palette()
         p.setColor(p.Text, QColor(0, 255, 0))
+        self.timeDisplay.setPalette(p)
+
+    def enter_fadeout(self):
+        p = self.timeDisplay.palette()
+        p.setColor(p.Text, QColor(255, 50, 50))
         self.timeDisplay.setPalette(p)
 
     def exit_fade(self):
