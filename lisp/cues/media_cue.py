@@ -31,15 +31,18 @@ class MediaCue(Cue):
 
     _media_ = NestedProperties('media', default={})
 
-    CueActions = (CueAction.Default, CueAction.Start, CueAction.FadeIn,
+    CueActions = (CueAction.Default, CueAction.Start, CueAction.FadeInStart,
                   CueAction.Stop, CueAction.FadeOutStop, CueAction.Pause,
                   CueAction.FadeOutPause)
 
-    def __init__(self, media, cue_id=None):
-        super().__init__(cue_id)
+    def __init__(self, media, id=None):
+        super().__init__(id=id)
+        self.default_start_action = CueAction.FadeInStart.value
+        self.default_stop_action = CueAction.FadeOutStop.value
+
         self.media = media
         self.media.changed('duration').connect(self._duration_change)
-        self.media.changed('pipe').connect(self.__pipe_changed)
+        self.media.elements_changed.connect(self.__elements_changed)
         self.media.error.connect(self._on_error)
         self.media.eos.connect(self._on_eos)
 
@@ -49,11 +52,11 @@ class MediaCue(Cue):
         self.__volume = self.media.element('Volume')
         self.__fader = Fader(self.__volume, 'current_volume')
 
-    def __pipe_changed(self):
+    def __elements_changed(self):
         self.__volume = self.media.element('Volume')
         self.__fader.target = self.__volume
 
-    def __start__(self, fade):
+    def __start__(self, fade=False):
         if fade and self._can_fadein():
             self.__volume.current_volume = 0
 
@@ -62,21 +65,9 @@ class MediaCue(Cue):
         if fade:
             self._fadein()
 
-    def __stop__(self, fade):
-        if self.__in_fadeout:
-            self.__fader.stop()
-        else:
-            if self.__in_fadein:
-                self.__fader.stop()
-
-            if fade and not self._fadeout():
-                return False
-
-            self.media.stop()
-
         return True
 
-    def __pause__(self, fade):
+    def __stop__(self, fade=False):
         if self.__in_fadeout:
             self.__fader.stop()
         else:
@@ -86,8 +77,20 @@ class MediaCue(Cue):
             if fade and not self._fadeout():
                 return False
 
-            self.media.pause()
+        self.media.stop()
+        return True
 
+    def __pause__(self, fade=False):
+        if self.__in_fadeout:
+            self.__fader.stop()
+        else:
+            if self.__in_fadein:
+                self.__fader.stop()
+
+            if fade and not self._fadeout():
+                return False
+
+        self.media.pause()
         return True
 
     def __interrupt__(self):
@@ -103,32 +106,18 @@ class MediaCue(Cue):
     def _on_eos(self, *args):
         with self._st_lock:
             self.__fader.stop()
+            self._ended()
 
-            if self._state == CueState.Running:
-                self._state = CueState.Stop
-            else:
-                self._state ^= CueState.Running
-
-            self.end.emit(self)
-
-    def _on_error(self, media, msg, details):
+    def _on_error(self, media, message, details):
         with self._st_lock:
-            # Remove non-wait state
-            self._state = (
-                (self._state ^ CueState.Running) &
-                (self._state ^ CueState.Pause) &
-                (self._state ^ CueState.Stop)
-            )
-            self._state |= CueState.Error
-
             self.__fader.stop()
-            self.error.emit(self, msg, details)
+            self._error(message, details)
 
     def _can_fadein(self):
-        return self.__volume is not None and self.fadein > 0
+        return self.__volume is not None and self.fadein_duration > 0
 
     def _can_fadeout(self):
-        return self.__volume is not None and self.fadeout > 0
+        return self.__volume is not None and self.fadeout_duration > 0
 
     @async
     def _fadein(self):
@@ -136,7 +125,8 @@ class MediaCue(Cue):
             self.__in_fadein = True
             self.fadein_start.emit()
             try:
-                self.__fader.fade(self.fadein,
+                self.__fader.prepare()
+                self.__fader.fade(self.fadein_duration,
                                   self.__volume.volume,
                                   FadeInType[self.fadein_type])
             finally:
@@ -149,9 +139,11 @@ class MediaCue(Cue):
             self.__in_fadeout = True
             self.fadeout_start.emit()
             try:
-                ended = self.__fader.fade(self.fadeout,
-                                          0,
+                self.__fader.prepare()
+                self._st_lock.release()
+                ended = self.__fader.fade(self.fadeout_duration, 0,
                                           FadeOutType[self.fadeout_type])
+                self._st_lock.acquire()
             finally:
                 self.__in_fadeout = False
                 self.fadeout_end.emit()

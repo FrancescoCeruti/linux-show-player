@@ -22,11 +22,11 @@ from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QGridLayout, QLabel, \
     QComboBox, QSpinBox, QFrame
 
 from lisp.core.has_properties import Property
-from lisp.cues.cue import Cue, CueState
+from lisp.cues.cue import Cue
 from lisp.modules.midi.midi_output import MIDIOutput
 from lisp.modules.midi.midi_utils import str_msg_to_dict, dict_msg_to_str
-from lisp.ui.settings.settings_page import SettingsPage
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
+from lisp.ui.settings.settings_page import SettingsPage
 from lisp.ui.ui_utils import translate
 
 
@@ -43,13 +43,11 @@ class MidiCue(Cue):
         if not midi_out.is_open():
             midi_out.open()
 
-    @property
-    def state(self):
-        return CueState.Stop
-
-    def __start__(self, fade):
+    def __start__(self, fade=False):
         if self.message:
             MIDIOutput().send_from_str(self.message)
+
+        return False
 
 
 class MidiCueSettings(SettingsPage):

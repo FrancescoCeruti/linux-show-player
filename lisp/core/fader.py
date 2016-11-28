@@ -27,16 +27,16 @@ from lisp.core.util import rsetattr, rgetattr
 class Fader:
     """Allow to perform fades on "generic" objects attributes.
 
-    Fades have a resolution of `1-hundredth-of-second`.
-
-    To be able to fade correctly the attribute must be numeric, if not, the
-    `fade` function will fail.
-
-    When fading, the `fade` function cannot be entered by other threads,
-    if this happens the function will simply return immediately.
-
-    Changing a fader target will also stop the fader, the `stop` function will
-    wait until all "pending" target changes are applied.
+     * Fades have a resolution of `1-hundredth-of-second`
+     * To be able to fade correctly the attribute must be numeric, if not, the
+       `fade` function will fail
+     * When fading, the `fade` function cannot be entered by other threads,
+       if this happens the function will simply return immediately
+     * To execute a fader, the `prepare` function must be called first,
+       this will also stop the fader
+     * After calling `prepare` the fader is considered as running
+     * The `stop` function wait until all "pending" target changes are applied
+     * Changing the target will also stop the fader
     """
 
     def __init__(self, target, attribute):
@@ -48,8 +48,11 @@ class Fader:
         """
         self._target = target
         self._attribute = attribute
+
         self._is_running = Event()
-        self._lock = Lock()
+        self._is_running.set()
+        self._is_ready = Event()
+        self._is_ready.set()
 
     @property
     def target(self):
@@ -68,6 +71,12 @@ class Fader:
     def attribute(self, target_property):
         self.stop()
         self._attribute = target_property
+
+    def prepare(self):
+        self.stop()
+
+        self._is_running.clear()
+        self._is_ready.clear()
 
     @locked_method(blocking=False)
     def fade(self, duration, to_value, fade_type):
@@ -91,8 +100,6 @@ class Fader:
                 'not {}'.format(fade_type.__class__.__name__))
 
         try:
-            self._is_running.clear()
-
             time = 0
             begin = 0
             functor = fade_type.value
@@ -104,27 +111,28 @@ class Fader:
                 return
 
             while time <= duration:
-                with self._lock:
-                    if not self._is_running.is_set():
-                        rsetattr(self._target,
-                                 self._attribute,
-                                 functor(ntime(time, begin, duration),
-                                         value_diff,
-                                         base_value))
-                    else:
-                        break
+                if not self._is_running.is_set():
+                    rsetattr(self._target,
+                             self._attribute,
+                             functor(ntime(time, begin, duration),
+                                     value_diff,
+                                     base_value))
+                else:
+                    break
 
                 time += 1
                 self._is_running.wait(0.01)
         finally:
             interrupted = self._is_running.is_set()
             self._is_running.set()
+            self._is_ready.set()
 
         return not interrupted
 
     def stop(self):
-        with self._lock:
+        if self.is_running():
             self._is_running.set()
+            self._is_ready.wait()
 
     def is_running(self):
         return not self._is_running.is_set()

@@ -307,15 +307,15 @@ class ListLayout(QWidget, CueLayout):
 
     def stop_all(self):
         for cue in self._model_adapter:
-            cue.stop(True)
+            cue.stop(fade=True)
 
     def pause_all(self):
         for cue in self._model_adapter:
-            cue.pause(True)
+            cue.pause(fade=True)
 
     def restart_all(self):
         for cue in self._model_adapter:
-            cue.restart(True)
+            cue.restart(fade=True)
 
     def get_selected_cues(self, cue_class=Cue):
         cues = []

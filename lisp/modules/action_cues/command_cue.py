@@ -47,50 +47,46 @@ class CommandCue(Cue):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.name = translate('CueName', self.Name)
-
-        self.__state = CueState.Stop
         self.__process = None
 
-    @property
-    def state(self):
-        return self.__state
+    def __start__(self, fade=False):
+        self.__exec_command()
+        return True
 
     @async
-    def __start__(self, fade):
+    def __exec_command(self):
         if not self.command.strip():
             return
 
-        if self.__state == CueState.Stop or self.__state == CueState.Error:
-            self.__state = CueState.Running
-            self.started.emit(self)
+        # If no_output is True, discard all the outputs
+        std = subprocess.DEVNULL if self.no_output else None
+        # Execute the command
+        self.__process = subprocess.Popen(self.command, shell=True,
+                                          stdout=std, stderr=std)
+        rcode = self.__process.wait()
 
-            # If no_output is True, "suppress" all the outputs
-            std = subprocess.DEVNULL if self.no_output else None
-            # Execute the command
-            self.__process = subprocess.Popen(self.command, shell=True,
-                                              stdout=std, stderr=std)
-            rcode = self.__process.wait()
+        if rcode == 0 or rcode == -9 or self.no_error:
+            # If terminate normally, killed or in no-error mode
+            self.__process = None
+            # FIXME: when __stop__ is called we shouldn't call `_ended()`
+            self._ended()
+        elif not self.no_error:
+            # If an error occurs and not in no-error mode
+            self._error(
+                translate('CommandCue', 'Process ended with an error status.'),
+                translate('CommandCue', 'Exit code: ') + str(rcode))
 
-            if rcode == 0 or rcode == -9:
-                # If terminate normally or killed, set the cue as ended
-                self.__state = CueState.Stop
-                self.end.emit(self)
-            elif not self.no_error:
-                self.__state = CueState.Error
-                self.error.emit(self,
-                    translate('CommandCue',
-                              'Process ended with an error status.'),
-                    translate('CommandCue', 'Exit code: ') + str(rcode))
-
-    def __stop__(self, fade):
-        if self.__state == CueState.Running:
+    def __stop__(self, fade=False):
+        if self.__process is not None:
             if self.kill:
                 self.__process.kill()
             else:
                 self.__process.terminate()
 
-            self.__state = CueState.Stop
-            self.stopped.emit(self)
+        return True
+
+    def __interrupt__(self):
+        self.__stop__()
 
 
 class CommandCueSettings(SettingsPage):

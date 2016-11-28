@@ -25,8 +25,7 @@ from PyQt5.QtWidgets import QWidget, QGridLayout, QLabel, QSizePolicy, \
 from lisp.core.signal import Connection
 from lisp.core.util import strtime
 from lisp.cues.cue_time import CueTime
-from lisp.ui.widgets.qclickslider import QClickSlider
-from lisp.ui.widgets.qdbmeter import QDbMeter
+from lisp.ui.widgets import QClickSlider, QDbMeter
 
 
 class PlayingMediaWidget(QWidget):
@@ -172,17 +171,17 @@ class PlayingMediaWidget(QWidget):
             self.timeDisplay.display(strtime(self.cue.media.duration - time,
                                              accurate=self._accurate_time))
 
-    def update_duration(self, media, duration):
+    def update_duration(self, duration):
         self.seekSlider.setMaximum(duration)
 
     def _stop(self, *args):
-        self.cue.stop()
+        self.cue.stop(fade=True)
 
     def _play(self, *args):
-        self.cue.start()
+        self.cue.start(fade=True)
 
     def _pause(self, *args):
-        self.cue.pause()
+        self.cue.pause(fade=True)
 
     def _seek(self, position):
         self.cue.media.seek(position)

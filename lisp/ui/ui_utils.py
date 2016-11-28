@@ -95,8 +95,10 @@ def tr_sorted(context, iterable, key=None, reverse=False):
     The sorting is done using translated versions of the iterable values.
     """
     if key is not None:
-        tr_key = lambda item: translate(context, key(item))
+        def tr_key(item):
+            translate(context, key(item))
     else:
-        tr_key = lambda item: translate(context, item)
+        def tr_key(item):
+            translate(context, item)
 
-    return sorted(iterable, key=tr_key, reverse=reverse)
+    return sorted(iterable, key=tr_key, reverse=reverse)\

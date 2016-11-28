@@ -279,6 +279,8 @@ class GstMedia(Media):
         self._state = MediaState.Stopped
         self._gst_pipe.set_state(Gst.State.READY)
 
+        self.elements_changed.emit(self)
+
     def __on_message(self, bus, message):
         if message.src == self._gst_pipe:
             if message.type == Gst.MessageType.STATE_CHANGED:

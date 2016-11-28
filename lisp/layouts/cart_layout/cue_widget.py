@@ -30,10 +30,8 @@ from lisp.cues.cue_time import CueTime
 from lisp.cues.media_cue import MediaCue
 from lisp.layouts.cart_layout.page_widget import PageWidget
 from lisp.ui.ui_utils import pixmap_from_icon
-from lisp.ui.widgets.qclicklabel import QClickLabel
-from lisp.ui.widgets.qclickslider import QClickSlider
-from lisp.ui.widgets.qdbmeter import QDbMeter
-from lisp.ui.widgets.qmessagebox import QDetailedMessageBox
+from lisp.ui.widgets import QClickLabel, QClickSlider, QDbMeter,\
+    QDetailedMessageBox
 
 
 class CueWidget(QWidget):
@@ -91,8 +89,8 @@ class CueWidget(QWidget):
         self.volumeSlider.setFocusPolicy(Qt.NoFocus)
         self.volumeSlider.setRange(0, CueWidget.SLIDER_RANGE)
         self.volumeSlider.setPageStep(10)
-        self.volumeSlider.valueChanged.connect(self._change_volume,
-                                               Qt.DirectConnection)
+        self.volumeSlider.valueChanged.connect(
+            self._change_volume, Qt.DirectConnection)
         self.volumeSlider.setVisible(False)
 
         self.dbMeter = QDbMeter(self)
@@ -220,17 +218,34 @@ class CueWidget(QWidget):
 
     def _set_cue(self, cue):
         self.cue = cue
-        self.cue.changed('name').connect(self._update_name, Connection.QtQueued)
-        self.cue.changed('stylesheet').connect(self._update_style,
-                                               Connection.QtQueued)
-        self.cue.changed('duration').connect(self._update_duration,
-                                             Connection.QtQueued)
-        self.cue.changed('description').connect(self._update_description,
-                                                Connection.QtQueued)
 
+        # Cue properties changes
+        self.cue.changed('name').connect(
+            self._update_name, Connection.QtQueued)
+        self.cue.changed('stylesheet').connect(
+            self._update_style, Connection.QtQueued)
+        self.cue.changed('duration').connect(
+            self._update_duration, Connection.QtQueued)
+        self.cue.changed('description').connect(
+            self._update_description, Connection.QtQueued)
+
+        # Fade enter/exit
+        self.cue.fadein_start.connect(self._enter_fadein, Connection.QtQueued)
+        self.cue.fadein_end.connect(self._exit_fade, Connection.QtQueued)
+        self.cue.fadeout_start.connect(self._enter_fadeout, Connection.QtQueued)
+        self.cue.fadeout_end.connect(self._exit_fade, Connection.QtQueued)
+
+        # Cue status changed
+        self.cue.started.connect(self._status_playing, Connection.QtQueued)
+        self.cue.stopped.connect(self._status_stopped, Connection.QtQueued)
+        self.cue.paused.connect(self._status_paused, Connection.QtQueued)
+        self.cue.error.connect(self._status_error, Connection.QtQueued)
+        self.cue.end.connect(self._status_stopped, Connection.QtQueued)
+
+        # DbMeter connections
         if isinstance(cue, MediaCue):
-            self.cue.media.changed('pipe').connect(self._media_updated,
-                                                   Connection.QtQueued)
+            self.cue.media.elements_changed.connect(
+                self._media_updated, Connection.QtQueued)
 
             self.cue.paused.connect(self.dbMeter.reset, Connection.QtQueued)
             self.cue.stopped.connect(self.dbMeter.reset, Connection.QtQueued)
@@ -239,13 +254,6 @@ class CueWidget(QWidget):
 
             self.seekSlider.sliderMoved.connect(self.cue.media.seek)
             self.seekSlider.sliderJumped.connect(self.cue.media.seek)
-
-        # Cue status changed
-        self.cue.started.connect(self._status_playing, Connection.QtQueued)
-        self.cue.stopped.connect(self._status_stopped, Connection.QtQueued)
-        self.cue.paused.connect(self._status_paused, Connection.QtQueued)
-        self.cue.error.connect(self._status_error, Connection.QtQueued)
-        self.cue.end.connect(self._status_stopped, Connection.QtQueued)
 
         self._cue_time = CueTime(self.cue)
         self._cue_time.notify.connect(self._update_time, Connection.QtQueued)
@@ -257,21 +265,6 @@ class CueWidget(QWidget):
     def _media_updated(self):
         self.show_dbmeters(self._show_dbmeter)
         self.show_volume_slider(self._show_volume)
-
-        new_fade = self.cue.media.element('Fade')
-        if new_fade is not self._fade_element:
-            if self._fade_element is not None:
-                self._fade_element.enter_fadein.disconnect(self._enter_fadein)
-                self._fade_element.enter_fadeout.disconnect(self._enter_fadeout)
-                self._fade_element.exit_fadein.disconnect(self._exit_fade)
-                self._fade_element.exit_fadeout.disconnect(self._exit_fade)
-
-            if new_fade is not None:
-                self._fade_element = new_fade
-                self._fade_element.enter_fadein.connect(self._enter_fadein)
-                self._fade_element.enter_fadeout.connect(self._enter_fadeout)
-                self._fade_element.exit_fadein.connect(self._exit_fade)
-                self._fade_element.exit_fadeout.connect(self._exit_fade)
 
     def _update_name(self, name):
         self.nameButton.setText(name)
@@ -371,8 +364,8 @@ class CueWidget(QWidget):
                 self.timeBar.setValue(time)
 
             # Show the time in the widget
-            self.timeDisplay.display(strtime(time,
-                                             accurate=self._accurate_timing))
+            self.timeDisplay.display(
+                strtime(time, accurate=self._accurate_timing))
 
     def resizeEvent(self, event):
         self.update()
@@ -386,5 +379,6 @@ class CueWidget(QWidget):
         s_ypos = self.nameButton.height() - s_height
 
         self.seekSlider.setGeometry(4, s_ypos, s_width, s_height)
-        self.statusIcon.setGeometry(4, 4, CueWidget.ICON_SIZE,
+        self.statusIcon.setGeometry(4, 4,
+                                    CueWidget.ICON_SIZE,
                                     CueWidget.ICON_SIZE)

@@ -23,17 +23,17 @@ from lisp.cues.media_cue import MediaCue
 from lisp.modules.gst_backend.gst_media import GstMedia
 
 
-def gst_media(cue_id=None, pipeline=None):
+def gst_media(id=None, pipeline=None):
     media = GstMedia()
 
     if pipeline is not None:
         media.pipe = pipeline
 
-    return MediaCue(media, cue_id=cue_id)
+    return MediaCue(media, id=id)
 
 
-def uri_audio(cue_id=None, uri=None):
-    cue = gst_media(cue_id=cue_id, pipeline=compose_pipeline('UriInput'))
+def uri_audio(id=None, uri=None):
+    cue = gst_media(id=id, pipeline=compose_pipeline('UriInput'))
 
     if uri is not None:
         cue.media.element('UriInput').uri = uri
@@ -41,8 +41,8 @@ def uri_audio(cue_id=None, uri=None):
     return cue
 
 
-def capture_audio(cue_id=None):
-    return gst_media(cue_id=cue_id, pipeline=compose_pipeline('AutoSrc'))
+def capture_audio(id=None):
+    return gst_media(id=id, pipeline=compose_pipeline('AutoSrc'))
 
 
 def compose_pipeline(input_element):

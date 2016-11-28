@@ -77,7 +77,7 @@ class CueFactory:
             raise Exception(
                 'Cue not available or badly registered: {}'.format(cue_type))
 
-        return factory(cue_id=cue_id, **kwargs)
+        return factory(id=cue_id, **kwargs)
 
     @classmethod
     def clone_cue(cls, cue):

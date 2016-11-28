@@ -20,7 +20,7 @@
 from threading import Lock
 from uuid import uuid4
 
-from lisp.core.decorators import async, locked_method
+from lisp.core.decorators import async
 from lisp.core.fade_functions import FadeInType, FadeOutType
 from lisp.core.has_properties import HasProperties, Property, WriteOnceProperty
 from lisp.core.rwait import RWait
@@ -48,7 +48,7 @@ class CueState:
 
 class CueAction(EqEnum):
     Default = 'Default'
-    FadeIn = 'FadeIn'
+    FadeInStart = 'FadeInStart'
     FadeOutStop = 'FadeOutStop'
     FadeOutPause = 'FadeOutPause'
     Interrupt = 'Interrupt'
@@ -87,16 +87,16 @@ class Cue(HasProperties):
     :ivar duration: The cue duration in milliseconds. (0 means no duration)
     :ivar stop_pause: If True, by default the cue is paused instead of stopped.
     :ivar pre_wait: Cue pre-wait in seconds.
-    :ivar post_wait: Cue post-wait in seconds (see note).
-    :ivar next_action: What do after post_wait (see note).
+    :ivar post_wait: Cue post-wait in seconds.
+    :ivar next_action: What do after post_wait.
     :cvar CueActions: actions supported by the cue (default: CueAction.Start)
 
     A cue should declare CueAction.Default as supported only if CueAction.Start
     and CueAction.Stop are both supported.
 
     .. Note::
-        If 'next_action' is set to CueNextAction.AutoFollow value, then the
-        'post_wait' value is ignored.
+        If 'next_action' is AutoFollow or DoNothing, the postwait is not
+        performed.
 
     """
     Name = 'Cue'
@@ -111,14 +111,12 @@ class Cue(HasProperties):
     pre_wait = Property(default=0)
     post_wait = Property(default=0)
     next_action = Property(default=CueNextAction.DoNothing.value)
-
-    # TODO: implement settings of those properties
-    fadein = Property(default=0)
-    fadeout = Property(default=0)
     fadein_type = Property(default=FadeInType.Linear.name)
     fadeout_type = Property(default=FadeOutType.Linear.name)
-    default_start_action = Property(default=CueAction.FadeIn.value)
-    default_stop_action = Property(default=CueAction.FadeOutStop.value)
+    fadein_duration = Property(default=0)
+    fadeout_duration = Property(default=0)
+    default_start_action = Property(default=CueAction.Start.value)
+    default_stop_action = Property(default=CueAction.Stop.value)
 
     CueActions = (CueAction.Start,)
 
@@ -170,6 +168,7 @@ class Cue(HasProperties):
             cue state, if this action is not supported nothing will be done.
 
         :param action: the action to be performed
+        :type action: CueAction
         """
         if action == CueAction.Default:
             if self._state & CueState.IsRunning:
@@ -180,16 +179,16 @@ class Cue(HasProperties):
         if action in self.CueActions:
             if action == CueAction.Start:
                 self.start()
-            elif action == CueAction.FadeIn:
-                self.start(fade=self.fadein > 0)
+            elif action == CueAction.FadeInStart:
+                self.start(fade=self.fadein_duration > 0)
             elif action == CueAction.Stop:
                 self.stop()
             elif action == CueAction.FadeOutStop:
-                self.stop(fade=self.fadeout > 0)
+                self.stop(fade=self.fadeout_duration > 0)
             elif action == CueAction.Pause:
                 self.pause()
             elif action == CueAction.FadeOutPause:
-                self.pause(fade=self.fadeout > 0)
+                self.pause(fade=self.fadeout_duration > 0)
 
     @async
     def start(self, fade=False):
@@ -222,9 +221,13 @@ class Cue(HasProperties):
             if state & (CueState.IsStopped |
                         CueState.Pause |
                         CueState.PreWait_Pause):
-                self.__start__(fade)
+
+                running = self.__start__(fade)
                 self._state = CueState.Running
                 self.started.emit(self)
+
+                if not running:
+                    self._ended()
 
             # PostWait (still locked)
             if state & (CueState.IsStopped |
@@ -253,15 +256,24 @@ class Cue(HasProperties):
         if self._state & CueState.IsPaused:
             self.start(fade)
 
-    def __start__(self, fade):
+    def __start__(self, fade=False):
         """Implement the cue `start` behavior.
 
         Long running task should not block this function (i.e. the fade should
         be performed in another thread).
 
+        When called from `Cue.start()`, `_st_lock` is acquired.
+
+        If the execution is instantaneous should return False, otherwise
+        return True and call the `_ended` function later.
+
         :param fade: True if a fade should be performed (when supported)
         :type fade: bool
+        :return: False if the cue is already terminated, True otherwise
+            (e.g. asynchronous execution)
+        :rtype: bool
         """
+        return False
 
     @async
     def stop(self, fade=False):
@@ -304,7 +316,7 @@ class Cue(HasProperties):
         finally:
             self._st_lock.release()
 
-    def __stop__(self, fade):
+    def __stop__(self, fade=False):
         """Implement the cue `stop` behavior.
 
         Long running task should block this function (i.e. the fade should
@@ -313,9 +325,6 @@ class Cue(HasProperties):
 
         If called during a `fadeout` operation this should be interrupted,
         the cue stopped and return `True`.
-
-        If during the execution the fade operation is interrupted this function
-        must return `False`.
 
         :param fade: True if a fade should be performed (when supported)
         :type fade: bool
@@ -356,7 +365,7 @@ class Cue(HasProperties):
         finally:
             self._st_lock.release()
 
-    def __pause__(self, fade):
+    def __pause__(self, fade=False):
         """Implement the cue `pause` behavior.
 
         Long running task should block this function (i.e. the fade should
@@ -383,11 +392,41 @@ class Cue(HasProperties):
             self._postwait.stop()
 
             self.__interrupt__()
-
             self._state = CueState.Stop
+
+            self.interrupted.emit(self)
 
     def __interrupt__(self):
         pass
+
+    def _ended(self):
+        """Remove the Running state, if needed set it to Stop."""
+        locked = self._st_lock.acquire(blocking=False)
+
+        if self._state == CueState.Running:
+            self._state = CueState.Stop
+        else:
+            self._state ^= CueState.Running
+
+        self.end.emit(self)
+
+        if locked:
+            self._st_lock.release()
+
+    def _error(self, message, details):
+        """Remove Running/Pause/Stop state and add Error state."""
+        locked = self._st_lock.acquire(blocking=False)
+
+        self._state = (
+            (self._state ^ CueState.Running) &
+            (self._state ^ CueState.Pause) &
+            (self._state ^ CueState.Stop)
+        ) | CueState.Error
+
+        self.error.emit(self, message, details)
+
+        if locked:
+            self._st_lock.release()
 
     def current_time(self):
         """Return the current execution time if available, otherwise 0.

@@ -48,6 +48,10 @@ def main():
     # Set the logging level
     if args.log == 'debug':
         log = logging.DEBUG
+
+        # If something bad happen at low-level (e.g. segfault) print the stack
+        import faulthandler
+        faulthandler.enable()
     elif args.log == 'info':
         log = logging.INFO
     else:

@@ -24,7 +24,8 @@ from PyQt5.QtWidgets import QGroupBox, QPushButton, QComboBox, QVBoxLayout, \
 from lisp.modules import check_module
 from lisp.modules.midi.midi_input import MIDIInput
 from lisp.plugins.controller.protocols.protocol import Protocol
-from lisp.ui.qdelegates import ComboBoxDelegate, SpinBoxDelegate
+from lisp.ui.qdelegates import ComboBoxDelegate, SpinBoxDelegate, \
+    CueActionDelegate
 from lisp.ui.qmodels import SimpleTableModel
 from lisp.ui.settings.settings_page import CueSettingsPage
 from lisp.ui.ui_utils import translate
@@ -167,12 +168,13 @@ class MidiView(QTableView):
     def __init__(self, cue_class, **kwargs):
         super().__init__(**kwargs)
 
-        cue_actions = [action.name for action in cue_class.CueActions]
-        self.delegates = [ComboBoxDelegate(options=['note_on', 'note_off']),
-                          SpinBoxDelegate(minimum=0, maximum=15),
-                          SpinBoxDelegate(minimum=0, maximum=127),
-                          ComboBoxDelegate(options=cue_actions,
-                                           tr_context='CueAction')]
+        self.delegates = [
+            ComboBoxDelegate(options=['note_on', 'note_off']),
+            SpinBoxDelegate(minimum=0, maximum=15),
+            SpinBoxDelegate(minimum=0, maximum=127),
+            CueActionDelegate(cue_class=cue_class,
+                              mode=CueActionDelegate.Mode.Name)
+        ]
 
         self.setSelectionBehavior(QTableWidget.SelectRows)
         self.setSelectionMode(QTableView.SingleSelection)
