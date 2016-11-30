@@ -29,7 +29,7 @@ from PyQt5.QtCore import QEvent, QObject
 from PyQt5.QtWidgets import QApplication
 
 from lisp.core.decorators import async
-from lisp.utils.util import weak_call_proxy
+from lisp.core.util import weak_call_proxy
 
 __all__ = ['Signal', 'Connection']
 

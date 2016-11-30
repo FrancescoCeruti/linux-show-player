@@ -23,13 +23,13 @@ from PyQt5.QtWidgets import QAction, QMenu, qApp
 
 from lisp.core.actions_handler import MainActionsHandler
 from lisp.core.signal import Signal
+from lisp.core.util import greatest_common_superclass
 from lisp.cues.cue import Cue, CueAction
 from lisp.cues.cue_actions import UpdateCueAction, \
     UpdateCuesAction
 from lisp.layouts.cue_menu_registry import CueMenuRegistry
 from lisp.ui.mainwindow import MainWindow
 from lisp.ui.settings.cue_settings import CueSettings
-from lisp.utils.util import greatest_common_superclass
 
 
 class CueLayout:

@@ -22,11 +22,11 @@ from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QGridLayout, QLabel, \
     QComboBox, QSpinBox, QFrame
 
 from lisp.core.has_properties import Property
-from lisp.cues.cue import Cue, CueState
+from lisp.cues.cue import Cue
 from lisp.modules.midi.midi_output import MIDIOutput
 from lisp.modules.midi.midi_utils import str_msg_to_dict, dict_msg_to_str
-from lisp.ui.settings.settings_page import SettingsPage
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
+from lisp.ui.settings.settings_page import SettingsPage
 from lisp.ui.ui_utils import translate
 
 
@@ -43,13 +43,11 @@ class MidiCue(Cue):
         if not midi_out.is_open():
             midi_out.open()
 
-    @Cue.state.getter
-    def state(self):
-        return CueState.Stop
-
-    def __start__(self):
+    def __start__(self, fade=False):
         if self.message:
             MIDIOutput().send_from_str(self.message)
+
+        return False
 
 
 class MidiCueSettings(SettingsPage):
@@ -70,11 +68,11 @@ class MidiCueSettings(SettingsPage):
     }
 
     ATTRIBUTES_RANGE = {
-        'channel': (0, 15), 'note': (0, 127),
-        'velocity': (0, 127), 'control': (0, 127),
-        'program': (0, 127), 'value': (0, 127),
-        'song': (0, 127), 'pitch': (-8192, 8191),
-        'pos': (0, 16383)
+        'channel': (1, 16, -1), 'note': (0, 127, 0),
+        'velocity': (0, 127, 0), 'control': (0, 127, 0),
+        'program': (0, 127, 0), 'value': (0, 127, 0),
+        'song': (0, 127, 0), 'pitch': (-8192, 8191, 0),
+        'pos': (0, 16383, 0)
     }
 
     def __init__(self, **kwargs):
@@ -119,8 +117,7 @@ class MidiCueSettings(SettingsPage):
         self.msgTypeLabel.setText(translate('MIDICue', 'Message type'))
 
     def __type_changed(self, msg_type):
-        for (label, spin), attr_name in zip(self._data_widgets,
-                                            self.MSGS_ATTRIBUTES[msg_type]):
+        for label, spin, attr_name in self.__attributes(msg_type):
             if attr_name is None:
                 label.setEnabled(False)
                 label.setText('')
@@ -130,18 +127,24 @@ class MidiCueSettings(SettingsPage):
                 label.setText(attr_name.title())
 
                 spin.setEnabled(True)
-                spin.setRange(*self.ATTRIBUTES_RANGE.get(attr_name, (0, 0)))
+                spin.setRange(
+                    *self.ATTRIBUTES_RANGE.get(attr_name, (0, 0, 0))[0:2])
 
     def get_settings(self):
         msg_type = self.msgTypeCombo.currentText()
         msg_dict = {'type': msg_type}
 
-        for (label, spin), attr_name in zip(self._data_widgets,
-                                            self.MSGS_ATTRIBUTES[msg_type]):
+        for label, spin, attr_name in self.__attributes(msg_type):
             if spin.isEnabled():
-                msg_dict[attr_name] = spin.value()
+                offset = self.ATTRIBUTES_RANGE.get(attr_name, (0, 0, 0))[2]
+                msg_dict[attr_name] = spin.value() + offset
 
         return {'message': dict_msg_to_str(msg_dict)}
+
+    def __attributes(self, msg_type):
+        for (label, spin), attr in zip(self._data_widgets,
+                                       self.MSGS_ATTRIBUTES[msg_type]):
+            yield label, spin, attr
 
     def load_settings(self, settings):
         str_msg = settings.get('message', '')
@@ -149,8 +152,9 @@ class MidiCueSettings(SettingsPage):
             dict_msg = str_msg_to_dict(str_msg)
             self.msgTypeCombo.setCurrentText(dict_msg['type'])
 
-            for label, spin in self._data_widgets:
-                spin.setValue(dict_msg.get(label.text().lower(), 0))
+            for label, spin, attr_name in self.__attributes(dict_msg['type']):
+                offset = self.ATTRIBUTES_RANGE.get(attr_name, (0, 0, 0))[2]
+                spin.setValue(dict_msg.get(label.text().lower(), 0) - offset)
 
 
 CueSettingsRegistry().add_item(MidiCueSettings, MidiCue)

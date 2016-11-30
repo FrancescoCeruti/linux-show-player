@@ -22,8 +22,6 @@ import traceback
 from functools import wraps, partial
 from threading import Thread, Lock, RLock
 
-_synchronized_meta_lock = Lock()
-
 
 def async(target):
     """Decorator. Make a function asynchronous.
@@ -64,21 +62,29 @@ def async_in_pool(pool):
     return decorator
 
 
-def synchronized_function(target=None, *, blocking=True, timeout=-1):
-    """Decorator. Make a *function* synchronized.
+def locked_function(target=None, *, lock=None, blocking=True, timeout=-1):
+    """Decorator. Make a *function* "synchronized".
 
-    Only one thread at time can enter the decorated function, but the same
-    thread can reenter.
+    Only one thread at time can access the decorated function.
+
+    :param target: the function to decorate
+    :param lock: the lock to be used (if not specified an RLock is created)
+    :param blocking: if True the lock-acquirement is blocking
+    :param timeout: timeout for the lock-acquirement
     """
 
+    # If called with (keywords) arguments
     if target is None:
-        return partial(synchronized_function, blocking=blocking,
+        return partial(locked_function, lock=lock, blocking=blocking,
                        timeout=timeout)
 
-    target.__lock__ = RLock()
+    if lock is None:
+        target.__lock__ = RLock()
+    else:
+        target.__lock__ = lock
 
     @wraps(target)
-    def synchronized(*args, **kwargs):
+    def locked(*args, **kwargs):
         try:
             if target.__lock__.acquire(blocking=blocking, timeout=timeout):
                 return target(*args, **kwargs)
@@ -90,39 +96,30 @@ def synchronized_function(target=None, *, blocking=True, timeout=-1):
             except RuntimeError:
                 pass
 
-    return synchronized
+    return locked
 
 
-def synchronized_method(target=None, *, lock_name=None, blocking=True,
-                        timeout=-1):
+def locked_method(target=None, *, blocking=True, timeout=-1):
     """Decorator. Make a *method* synchronized.
 
-    Only one thread at time can access the decorated method, but the same
-    thread can reenter.
+    Only one thread at time can access the decorated method.
 
-    If in the same object more the one method is decorated with the same
-    lock_name, those will share the same lock.
-    If no lock_name is specified one will be generated based on the method name.
-
-    ..note:
-        The lock is created automatically by the method, but, if needed, can
-        be "manually" created by the user as an object attribute named as same
-        as lock_name.
-
+    :param target: the function to decorate
+    :param blocking: if True the lock-acquirement is blocking
+    :param timeout: timeout for the lock-acquirement
     """
 
     # If called with (keywords) arguments
     if target is None:
-        return partial(synchronized_method, lock_name=lock_name,
-                       blocking=blocking, timeout=timeout)
+        return partial(locked_method, blocking=blocking, timeout=timeout)
 
-    if not isinstance(lock_name, str):
-        # generate a lock_name like "__method_name_lock__"
-        lock_name = '__' + target.__name__ + '_lock__'
+    # generate a lock_name like "__method_name_lock__"
+    lock_name = '__' + target.__name__ + '_lock__'
+    target.__meta_lock__ = Lock()
 
     @wraps(target)
-    def wrapped(self, *args, **kwargs):
-        with _synchronized_meta_lock:
+    def locked(self, *args, **kwargs):
+        with target.__meta_lock__:
             lock = getattr(self, lock_name, None)
 
             # If the lock is not defined, then define it
@@ -141,7 +138,7 @@ def synchronized_method(target=None, *, lock_name=None, blocking=True,
             except RuntimeError:
                 pass
 
-    return wrapped
+    return locked
 
 
 def suppress_exceptions(target=None, *, log=True):
@@ -183,33 +180,3 @@ def memoize(callable_):
         return cache[key]
 
     return memoizer
-
-
-def typechecked(target):
-    """Decorator. Check a function arguments types at runtime.
-
-    Annotations are used for checking the type (e.g. def fun(a: int, b: str)),
-    this decorator should be used only if really needed, duck typing is the
-    python-way, furthermore this will add a little overhead.
-    """
-
-    @wraps(target)
-    def wrapped(*args, **kwargs):
-        for index, name in enumerate(target.__code__.co_varnames):
-            annotation = target.__annotations__.get(name)
-            # Only check if annotation exists and a type
-            if isinstance(annotation, type):
-                # First len(args) are positional, after that keywords
-                if index < len(args):
-                    value = args[index]
-                elif name in kwargs:
-                    value = kwargs[name]
-                else:
-                    continue
-
-                if not isinstance(value, annotation):
-                    raise TypeError('Incorrect type for "{0}"'.format(name))
-
-        return target(*args, **kwargs)
-
-    return wrapped

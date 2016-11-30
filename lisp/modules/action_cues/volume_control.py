@@ -21,32 +21,30 @@ from time import sleep
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
-from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QSizePolicy
 from PyQt5.QtWidgets import QVBoxLayout, QLabel, QHBoxLayout, QGroupBox, \
-    QPushButton, QDoubleSpinBox, QGridLayout, QComboBox, QStyledItemDelegate
-from PyQt5.QtWidgets import QWidget
+    QPushButton, QDoubleSpinBox, QGridLayout
 
 from lisp.application import Application
 from lisp.backend.audio_utils import MIN_VOLUME_DB, MAX_VOLUME_DB, linear_to_db, \
     db_to_linear
 from lisp.backend.media import MediaState
-from lisp.core.decorators import async, synchronized_method
+from lisp.core.decorators import async, locked_method
+from lisp.core.fade_functions import ntime, FadeInType, FadeOutType
 from lisp.core.has_properties import Property
-from lisp.cues.cue import Cue, CueState, CueAction
+from lisp.cues.cue import Cue, CueAction, CueState
 from lisp.cues.media_cue import MediaCue
 from lisp.ui.cuelistdialog import CueSelectDialog
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
 from lisp.ui.settings.settings_page import SettingsPage
-from lisp.utils.fade_functor import ntime, FadeIn, FadeOut
-from lisp.ui.ui_utils import translate, tr_sorted
+from lisp.ui.ui_utils import translate
+from lisp.ui.widgets import FadeComboBox
 
 
 class VolumeControl(Cue):
     Name = QT_TRANSLATE_NOOP('CueName', 'Volume Control')
 
     target_id = Property()
-    fade_type = Property(default='Linear')
+    fade_type = Property(default=FadeInType.Linear.name)
     volume = Property(default=.0)
 
     CueActions = (CueAction.Default, CueAction.Start, CueAction.Stop,
@@ -56,43 +54,47 @@ class VolumeControl(Cue):
         super().__init__(**kwargs)
         self.name = translate('CueName', self.Name)
 
-        self.__state = CueState.Stop
         self.__time = 0
         self.__stop = False
         self.__pause = False
 
-    @async
-    def __start__(self):
+    def __start__(self, fade=False):
         cue = Application().cue_model.get(self.target_id)
-        if isinstance(cue, MediaCue):
+
+        if isinstance(cue, MediaCue) and cue.state & CueState.Running:
             volume = cue.media.element('Volume')
             if volume is not None:
                 if self.duration > 0:
                     if volume.current_volume > self.volume:
-                        self._fade(FadeOut[self.fade_type], volume, cue.media)
+                        self._fade(FadeOutType[self.fade_type].value,
+                                   volume,
+                                   cue.media)
+                        return True
                     elif volume.current_volume < self.volume:
-                        self._fade(FadeIn[self.fade_type], volume, cue.media)
+                        self._fade(FadeInType[self.fade_type].value,
+                                   volume,
+                                   cue.media)
+                        return True
                 else:
-                    self.__state = CueState.Running
-                    self.started.emit(self)
                     volume.current_volume = self.volume
-                    self.__state = CueState.Stop
-                    self.end.emit(self)
 
-    def __stop__(self):
-        if self.__state == CueState.Running:
-            self.__stop = True
+        return False
 
-    def __pause__(self):
-        if self.__state == CueState.Running:
-            self.__pause = True
+    def __stop__(self, fade=False):
+        self.__stop = True
+        return True
 
-    @synchronized_method(blocking=False)
+    def __pause__(self, fade=False):
+        self.__pause = True
+        return True
+
+    @async
+    @locked_method
     def _fade(self, functor, volume, media):
-        try:
-            self.started.emit(self)
-            self.__state = CueState.Running
+        self.__stop = False
+        self.__pause = False
 
+        try:
             begin = self.__time
             duration = (self.duration // 10)
             base_volume = volume.current_volume
@@ -107,46 +109,26 @@ class VolumeControl(Cue):
                 self.__time += 1
                 sleep(0.01)
 
-            if self.__stop:
-                self.stopped.emit(self)
-            elif self.__pause:
-                self.paused.emit(self)
-            else:
-                self.end.emit(self)
+            if not self.__pause:
+                # to avoid approximation problems
+                volume.current_volume = self.volume
+                if not self.__stop:
+                    self._ended()
         except Exception as e:
-            self.__state = CueState.Error
-            self.error.emit(self, translate('VolumeControl',
-                                            'Error during cue execution'),
-                            str(e))
+            self._error(
+                translate('VolumeControl', 'Error during cue execution'),
+                str(e)
+            )
         finally:
             if not self.__pause:
-                self.__state = CueState.Stop
                 self.__time = 0
-            else:
-                self.__state = CueState.Pause
-
-            self.__stop = False
-            self.__pause = False
 
     def current_time(self):
         return self.__time * 10
 
-    @Cue.state.getter
-    def state(self):
-        return self.__state
-
 
 class VolumeSettings(SettingsPage):
     Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Volume Settings')
-
-    FadeIcons = {
-        QT_TRANSLATE_NOOP('VolumeControl', 'Linear'): QIcon.fromTheme(
-            'fadein_linear'),
-        QT_TRANSLATE_NOOP('VolumeControl', 'Quadratic'): QIcon.fromTheme(
-            'fadein_quadratic'),
-        QT_TRANSLATE_NOOP('VolumeControl', 'Quadratic2'): QIcon.fromTheme(
-            'fadein_quadratic2')
-    }
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -207,13 +189,7 @@ class VolumeSettings(SettingsPage):
         self.fadeLabel.setAlignment(QtCore.Qt.AlignCenter)
         self.fadeGroup.layout().addWidget(self.fadeLabel, 0, 1)
 
-        self.fadeCurveCombo = QComboBox(self.fadeGroup)
-        self.fadeCurveCombo.setItemDelegate(QStyledItemDelegate())
-        for key in tr_sorted(context='VolumeControl',
-                             iterable=VolumeSettings.FadeIcons.keys()):
-            self.fadeCurveCombo.addItem(VolumeSettings.FadeIcons[key],
-                                        translate('VolumeControl', key),
-                                        key)
+        self.fadeCurveCombo = FadeComboBox(parent=self.fadeGroup)
         self.fadeGroup.layout().addWidget(self.fadeCurveCombo, 1, 0)
 
         self.fadeCurveLabel = QLabel(self.fadeGroup)
@@ -259,21 +235,19 @@ class VolumeSettings(SettingsPage):
             conf['volume'] = self.volumeEdit.value() / 100
         if not (checkable and not self.fadeGroup.isCheckable()):
             conf['duration'] = self.fadeSpin.value() * 1000
-            conf['fade_type'] = self.fadeCurveCombo.currentData()
+            conf['fade_type'] = self.fadeCurveCombo.currentType()
 
         return conf
 
     def load_settings(self, settings):
-        if settings is not None:
-            cue = Application().cue_model.get(settings['target_id'])
-            if cue is not None:
-                self.cue_id = settings['target_id']
-                self.cueLabel.setText(cue.name)
+        cue = Application().cue_model.get(settings.get('target_id', ''))
+        if cue is not None:
+            self.cue_id = settings['target_id']
+            self.cueLabel.setText(cue.name)
 
-            self.volumeEdit.setValue(settings['volume'])
-            self.fadeSpin.setValue(settings['duration'] / 1000)
-            self.fadeCurveCombo.setCurrentText(
-                translate('VolumeControl', settings['fade_type']))
+        self.volumeEdit.setValue(settings.get('volume', 0) * 100)
+        self.fadeSpin.setValue(settings.get('duration', 0) / 1000)
+        self.fadeCurveCombo.setCurrentType(settings.get('fade_type', ''))
 
     def __volume_change(self, value):
         if not self.__v_edit_flag:
@@ -290,5 +264,6 @@ class VolumeSettings(SettingsPage):
                 self.volumeEdit.setValue(db_to_linear(value) * 100)
             finally:
                 self.__v_edit_flag = False
+
 
 CueSettingsRegistry().add_item(VolumeSettings, VolumeControl)

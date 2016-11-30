@@ -25,12 +25,12 @@ from PyQt5.QtGui import QKeySequence
 from PyQt5.QtWidgets import QMainWindow, QStatusBar, QMenuBar, QMenu, QAction, \
     qApp, QFileDialog, QDialog, QMessageBox, QVBoxLayout, QWidget
 
+from lisp.core import configuration
 from lisp.core.actions_handler import MainActionsHandler
 from lisp.core.singleton import QSingleton
 from lisp.cues.media_cue import MediaCue
 from lisp.ui import about
 from lisp.ui.settings.app_settings import AppSettings
-from lisp.utils import configuration
 from lisp.ui.ui_utils import translate
 
 

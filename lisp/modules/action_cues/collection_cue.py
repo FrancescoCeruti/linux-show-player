@@ -23,7 +23,7 @@ from PyQt5.QtWidgets import QVBoxLayout, QSizePolicy, QDialogButtonBox,\
 
 from lisp.application import Application
 from lisp.core.has_properties import Property
-from lisp.cues.cue import Cue, CueState, CueAction
+from lisp.cues.cue import Cue, CueAction
 from lisp.ui.cuelistdialog import CueSelectDialog
 from lisp.ui.qdelegates import CueActionDelegate, CueSelectionDelegate
 from lisp.ui.qmodels import CueClassRole, SimpleCueListModel
@@ -41,15 +41,13 @@ class CollectionCue(Cue):
         super().__init__(**kwargs)
         self.name = translate('CueName', self.Name)
 
-    @Cue.state.getter
-    def state(self):
-        return CueState.Stop
-
-    def __start__(self):
+    def __start__(self, fade=False):
         for target_id, action in self.targets:
             cue = Application().cue_model.get(target_id)
-            if cue is not None and cue is not self:
+            if cue is not self:
                 cue.execute(action=CueAction[action])
+
+        return False
 
 
 class CollectionCueSettings(SettingsPage):
@@ -59,8 +57,9 @@ class CollectionCueSettings(SettingsPage):
         super().__init__(**kwargs)
         self.setLayout(QVBoxLayout(self))
 
-        self.cue_dialog = CueSelectDialog(cues=Application().cue_model,
-                                          selection_mode=QAbstractItemView.ExtendedSelection)
+        self.cue_dialog = CueSelectDialog(
+            cues=Application().cue_model,
+            selection_mode=QAbstractItemView.ExtendedSelection)
 
         self.collectionModel = CollectionModel()
         self.collectionView = CollectionView(self.cue_dialog, parent=self)

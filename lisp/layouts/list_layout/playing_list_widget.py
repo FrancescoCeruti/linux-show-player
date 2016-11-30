@@ -35,9 +35,12 @@ class PlayingListWidget(QListWidget):
 
         self._playing_items = {}
         self._playing_model = playing_model
-        self._playing_model.item_added.connect(self._item_added, Connection.QtQueued)
-        self._playing_model.item_removed.connect(self._item_removed, Connection.QtQueued)
-        self._playing_model.model_reset.connect(self._model_reset, Connection.QtQueued)
+        self._playing_model.item_added.connect(
+            self._item_added, Connection.QtQueued)
+        self._playing_model.item_removed.connect(
+            self._item_removed, Connection.QtQueued)
+        self._playing_model.model_reset.connect(
+            self._model_reset, Connection.QtQueued)
 
         self.__dbmeter_visible = False
         self.__seek_visible = False
