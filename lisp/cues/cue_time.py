@@ -32,10 +32,10 @@ class MetaCueTime(type):
     __Instances = WeakValueDictionary()
 
     @locked_method
-    def __call__(cls, cue):
+    def __call__(cls, cue, *args, **kwargs):
         instance = MetaCueTime.__Instances.get((cls, cue.id))
         if instance is None:
-            instance = super().__call__(cue)
+            instance = super().__call__(cue, *args, **kwargs)
             MetaCueTime.__Instances[(cls, cue.id)] = instance
 
         return instance
