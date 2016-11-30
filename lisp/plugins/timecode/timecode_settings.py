@@ -38,29 +38,33 @@ class TimecodeSettings(SettingsPage):
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
-        self.groupGroup = QGroupBox(self)
-        self.groupGroup.setLayout(QVBoxLayout())
-        self.layout().addWidget(self.groupGroup)
+        self.groupBox = QGroupBox(self)
+        self.groupBox.setLayout(QGridLayout())
+        self.layout().addWidget(self.groupBox)
 
-        self.activateBox = QCheckBox(self.groupGroup)
-        self.groupGroup.layout().addWidget(self.activateBox)
+        self.activateBox = QCheckBox(self.groupBox)
+        self.groupBox.layout().addWidget(self.activateBox, 0, 0)
 
-        self.comboLayout = QHBoxLayout()
-        self.groupGroup.layout().addLayout(self.comboLayout)
-        self.formatLabel = QLabel(self.groupGroup)
-        self.comboLayout.addWidget(self.formatLabel)
-        self.formatBox = QComboBox(self.groupGroup)
+        self.hresBox = QCheckBox(self.groupBox)
+        self.groupBox.layout().addWidget(self.hresBox, 1, 0)
+
+        self.formatLabel = QLabel(self.groupBox)
+        self.groupBox.layout().addWidget(self.formatLabel, 2, 0)
+
+        self.formatBox = QComboBox(self.groupBox)
         self.formatBox.addItem('FILM')
         self.formatBox.addItem('EBU')
         self.formatBox.addItem('SMPTE')
-        self.comboLayout.addWidget(self.formatBox)
+        self.groupBox.layout().addWidget(self.formatBox, 2, 1)
 
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.groupGroup.setTitle(
+        self.groupBox.setTitle(
             translate('TimecodeSettings', 'OLA Timecode Settings'))
         self.activateBox.setText(translate('TimecodeSettings', 'Enable Plugin'))
+        self.hresBox.setText(
+            translate('TimecodeSettings', 'High-Resolution Timecode'))
         self.formatLabel.setText(
             translate('TimecodeSettings', 'Timecode Format:'))
 
@@ -80,6 +84,7 @@ class TimecodeSettings(SettingsPage):
     def get_settings(self):
         return {'Timecode': {
             'enabled': str(self.activateBox.isChecked()),
+            'hres': str(self.hresBox.isChecked()),
             'format': self.formatBox.currentText()
         }}
 
@@ -87,6 +92,7 @@ class TimecodeSettings(SettingsPage):
         settings = settings.get('Timecode', {})
 
         self.activateBox.setChecked(settings.get('enabled') == 'True')
+        self.hresBox.setChecked(settings.get('hres') == 'True')
         self.formatBox.setCurrentText(settings.get('format', ''))
 
         self.activateBox.stateChanged.connect(self.testOla)

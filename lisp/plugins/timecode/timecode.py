@@ -23,6 +23,7 @@ from collections import namedtuple
 from ola.OlaClient import OLADNotRunningException, OlaClient
 
 from lisp.application import Application
+from lisp.core.clock import Clock
 from lisp.core.configuration import config
 from lisp.core.has_properties import Property
 from lisp.core.plugin import Plugin
@@ -38,19 +39,19 @@ from lisp.ui.settings.app_settings import AppSettings
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
 from lisp.ui.ui_utils import translate
 
-TimecodeFormatDef = namedtuple('TimecodeDef', ['format', 'millis'])
+TcFormatDef = namedtuple('TimecodeDef', ['format', 'millis'])
+TcFormat = {
+    'FILM': TcFormatDef(format=OlaClient.TIMECODE_FILM, millis=1000 / 24),
+    'EBU': TcFormatDef(format=OlaClient.TIMECODE_EBU, millis=1000 / 25),
+    'SMPTE': TcFormatDef(format=OlaClient.TIMECODE_SMPTE, millis=1000 / 30)
+}
+
+
+class HRCueTime(CueTime):
+    _Clock = Clock(30)  # 1000 /30  = 33.3333 milliseconds
 
 
 class OlaTimecode:
-    __TC_DEF__ = {
-        'FILM': TimecodeFormatDef(format=OlaClient.TIMECODE_FILM,
-                                  millis=1000 / 24),
-        'EBU': TimecodeFormatDef(format=OlaClient.TIMECODE_EBU,
-                                 millis=1000 / 25),
-        'SMPTE': TimecodeFormatDef(format=OlaClient.TIMECODE_SMPTE,
-                                   millis=1000 / 30)
-    }
-
     def __init__(self):
         try:
             self.__client = OlaClient()
@@ -61,9 +62,11 @@ class OlaTimecode:
         self.__cue_time = None
 
         self.__track = 0
-        self.__format = self.__TC_DEF__[config['Timecode']['format']].format
-        self.__millis = self.__TC_DEF__[config['Timecode']['format']].millis
+        self.__hres = config['Timecode'].getboolean('hres')
+        self.__format = TcFormat[config['Timecode']['format']].format
+        self.__millis = TcFormat[config['Timecode']['format']].millis
         self.__use_hours = False
+        self.__last_frame = -1
 
     @property
     def cue(self):
@@ -83,26 +86,26 @@ class OlaTimecode:
                 return
 
         # Load cue settings, if enabled, otherwise return
-        if cue.timecode['enabled']:
-            self.stop_timecode()
-
-            self.__cue = cue
-            self.__cue_time = CueTime(cue)
-            self.__use_hours = cue.timecode['use_hours']
-            self.__track = cue.timecode['track']
-        else:
+        if not cue.timecode['enabled']:
             return
 
-        # Reload timecode format settings
-        self.__format = self.__TC_DEF__[config['Timecode']['format']].format
-        self.__millis = self.__TC_DEF__[config['Timecode']['format']].millis
+        # Stop the currently "running" timecode
+        self.stop_timecode()
+
+        # Reload format settings
+        self.__hres = config['Timecode'].getboolean('hres')
+        self.__format = TcFormat[config['Timecode']['format']].format
+        self.__millis = TcFormat[config['Timecode']['format']].millis
+
+        # Setup new cue and options
+        self.__cue = cue
+        self.__cue_time = HRCueTime(cue) if self.__hres else CueTime(cue)
+        self.__use_hours = cue.timecode['use_hours']
+        self.__track = cue.timecode['track']
 
         # Start watching the new cue
         self.__cue_time.notify.connect(
             self.__send_timecode, Connection.QtQueued)
-
-        logging.info(
-            'TIMECODE: Start tracking cue: {}'.format(self.__cue.name))
 
     def stop_timecode(self, rclient=False, rcue=False):
         """Stop the timecode
@@ -113,10 +116,7 @@ class OlaTimecode:
         if self.__cue_time is not None:
             self.__cue_time.notify.disconnect(self.__send_timecode)
 
-        if self.__cue is not None:
-            logging.info(
-                'TIMECODE: Stop tracking cue: {}'.format(self.__cue.name))
-
+        self.__last_frame = -1
         if rclient:
             self.__client = None
         if rcue:
@@ -125,15 +125,21 @@ class OlaTimecode:
 
     def __send_timecode(self, time):
         tt = time_tuple(time)
+        frame = int(tt[3] / self.__millis)
+
+        if self.__hres:
+            if self.__last_frame == frame:
+                return
+            self.__last_frame = frame
+
         try:
             if self.__use_hours:
-                self.__client.SendTimeCode(self.__format,
-                                           self.__track, tt[1], tt[2],
-                                           round(tt[3] / self.__millis), 0)
+                track = tt[0]
             else:
-                self.__client.SendTimeCode(self.__format,
-                                           tt[0], tt[1], tt[2],
-                                           round(tt[3] / self.__millis), 0)
+                track = self.__track
+
+            self.__client.SendTimeCode(self.__format,
+                                       track, tt[1], tt[2], frame)
         except OLADNotRunningException:
             self.stop_timecode(rclient=True, rcue=True)
             elogging.error(
@@ -179,7 +185,7 @@ class Timecode(Plugin):
             if value.get('enabled', False):
                 if cue.id not in self.__cues:
                     self.__cues.add(cue.id)
-                    cue.started.connect(self.__cue_started)
+                    cue.started.connect(self.__cue_started, Connection.QtQueued)
             else:
                 self.__cue_removed(cue)
 
@@ -190,7 +196,7 @@ class Timecode(Plugin):
     def __cue_removed(self, cue):
         try:
             self.__cues.remove(cue.id)
-            if self.__client.cue.id == cue.id:
+            if self.__client.cue is cue:
                 self.__client.stop_timecode(rcue=True)
 
             cue.started.disconnect(self.__cue_started)
