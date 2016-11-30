@@ -16,10 +16,14 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
+
 import re
 from collections import Mapping
+from enum import Enum
 from os import listdir
 from os.path import isdir, exists, join
+
+import functools
 
 
 def deep_update(d1, d2):
@@ -108,9 +112,106 @@ def natural_keys(text):
 
     From: http://stackoverflow.com/questions/5967500/how-to-correctly-sort-a-string-with-a-number-inside
 
-    .. Example::
-        >>> l = ['something1', 'something17', 'something4']
-        >>> l.sort(key=natural_keys) # sorts in human order
-        >>> ['something1', 'something4', 'something17']
+    .. highlight::
+
+        l = ['something1', 'something17', 'something4']
+        l.sort(key=natural_keys) # sorts in human order
+        ['something1', 'something4', 'something17']
     """
     return [int(c) if c.isdigit() else c for c in re.split('(\d+)', text)]
+
+
+def rhasattr(obj, attr):
+    """Check object's attribute, can use dot notation.
+
+    .. highlight::
+
+        class A: pass
+        a = A()
+        a.b = A()
+        a.b.c = 42
+        hasattr(a, 'b.c')  # True
+    """
+    return functools.reduce(hasattr, attr.split('.'), obj)
+
+
+def rsetattr(obj, attr, value):
+    """Set object's attribute, can use dot notation.
+
+    From: http://stackoverflow.com/questions/31174295/getattr-and-setattr-on-nested-objects
+
+    .. highlight::
+
+        class A: pass
+        a = A()
+        a.b = A()
+        a.b.c = 0
+        rsetattr(a, 'b.c', 42)
+        a.b.c  # 42
+    """
+    pre, _, post = attr.rpartition('.')
+    setattr(rgetattr(obj, pre) if pre else obj, post, value)
+
+
+rgetattr_sentinel = object()
+
+
+def rgetattr(obj, attr, default=rgetattr_sentinel):
+    """Get object's attribute, can use dot notation.
+
+    From: http://stackoverflow.com/questions/31174295/getattr-and-setattr-on-nested-objects
+
+    .. highlight::
+
+        class A: pass
+        a = A()
+        a.b = A()
+        a.b.c = 24
+        rgetattr(a, 'b.c')  # 42
+    """
+    if default is rgetattr_sentinel:
+        _getattr = getattr
+    else:
+        def _getattr(obj, name):
+            return getattr(obj, name, default)
+
+    return functools.reduce(_getattr, attr.split('.'), obj)
+
+
+class EqEnum(Enum):
+    """Value-comparable Enum.
+
+    EqEnum members can be compared for equality with their values:
+
+    .. highlight::
+
+        class E(EqEnum):
+            A = 10
+
+        class E2(EqEnum):
+            A2 = 10
+
+        # Equality NOT identity
+        E.A == 10  # True
+        E.A is 10  # False
+
+        E.A == E.A2  # False
+    """
+
+    def __eq__(self, other):
+        if not isinstance(other, Enum):
+            return self.value == other
+
+        return super().__eq__(other)
+
+
+class FunctionProxy:
+    """Allow to mask a function as an Object.
+
+    Can be useful in enum.Enum (Python enumeration) to have callable values.
+    """
+    def __init__(self, function):
+        self.function = function
+
+    def __call__(self, *args, **kwargs):
+        return self.function(*args, **kwargs)

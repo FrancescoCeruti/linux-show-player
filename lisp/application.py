@@ -25,17 +25,17 @@ from PyQt5.QtWidgets import QDialog, qApp
 from lisp import layouts
 from lisp import modules
 from lisp import plugins
+from lisp.core import configuration as cfg
 from lisp.core.actions_handler import MainActionsHandler
 from lisp.core.memento_model import AdapterMementoModel
 from lisp.core.singleton import Singleton
 from lisp.cues.cue_factory import CueFactory
 from lisp.cues.cue_model import CueModel
+from lisp.ui import elogging
 from lisp.ui.layoutselect import LayoutSelect
 from lisp.ui.mainwindow import MainWindow
 from lisp.ui.settings.app_settings import AppSettings
 from lisp.ui.settings.pages.app_general import General
-from lisp.utils import configuration as cfg
-from lisp.utils import elogging
 
 
 class Application(metaclass=Singleton):
@@ -166,8 +166,9 @@ class Application(metaclass=Singleton):
             # Load cues
             for cue_conf in session['cues']:
                 cue_type = cue_conf.pop('_type_', 'Undefined')
+                cue_id = cue_conf.pop('id')
                 try:
-                    cue = CueFactory.create_cue(cue_type)
+                    cue = CueFactory.create_cue(cue_type, cue_id=cue_id)
                     cue.update_properties(cue_conf)
                     self._cue_model.add(cue)
                 except Exception as e:

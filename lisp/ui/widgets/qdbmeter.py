@@ -21,8 +21,8 @@ from PyQt5 import QtCore
 from PyQt5.QtGui import QLinearGradient, QColor, QPainter
 from PyQt5.QtWidgets import QWidget
 
+from lisp.core.configuration import config
 from lisp.core.decorators import suppress_exceptions
-from lisp.utils.configuration import config
 
 
 class QDbMeter(QWidget):

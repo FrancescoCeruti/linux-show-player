@@ -35,8 +35,10 @@ class CueListItem(QTreeWidgetItem):
 
         self._selected = False
 
-        self.cue.changed('name').connect(self._update_name, Connection.QtQueued)
-        self.cue.changed('index').connect(self._update_index, Connection.QtQueued)
+        self.cue.changed('name').connect(
+            self._update_name, Connection.QtQueued)
+        self.cue.changed('index').connect(
+            self._update_index, Connection.QtQueued)
 
         self._update_name(self.cue.name)
         self._update_index(self.cue.index)

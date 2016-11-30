@@ -21,10 +21,10 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog, QHBoxLayout, QListWidget, QVBoxLayout, \
     QPushButton, QDialogButtonBox, QInputDialog, QMessageBox
 
+from lisp.core.configuration import config
+from lisp.core.util import compose_http_url
 from lisp.modules.remote.remote import RemoteController
-from lisp.utils import elogging
-from lisp.utils.configuration import config
-from lisp.utils.util import compose_http_url
+from lisp.ui import elogging
 from lisp.ui.ui_utils import translate
 from .peers_discovery_dialog import PeersDiscoveryDialog
 

@@ -17,37 +17,52 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from abc import abstractmethod
-from enum import Enum, IntEnum
-from threading import Event
+from threading import Lock
 from uuid import uuid4
 
-from lisp.core.decorators import async, synchronized_method
+from lisp.core.decorators import async
+from lisp.core.fade_functions import FadeInType, FadeOutType
 from lisp.core.has_properties import HasProperties, Property, WriteOnceProperty
+from lisp.core.rwait import RWait
 from lisp.core.signal import Signal
+from lisp.core.util import EqEnum
 
 
-class CueState(IntEnum):
-    Error = -1
-    Stop = 0
-    Running = 1
-    Pause = 2
+class CueState:
+    Invalid = 0
+
+    Error = 1
+    Stop = 2
+    Running = 4
+    Pause = 8
+
+    PreWait = 16
+    PostWait = 32
+    PreWait_Pause = 64
+    PostWait_Pause = 128
+
+    IsRunning = Running | PreWait | PostWait
+    IsPaused = Pause | PreWait_Pause | PostWait_Pause
+    IsStopped = Error | Stop
 
 
-class CueAction(Enum):
+class CueAction(EqEnum):
     Default = 'Default'
+    FadeInStart = 'FadeInStart'
+    FadeOutStop = 'FadeOutStop'
+    FadeOutPause = 'FadeOutPause'
+    Interrupt = 'Interrupt'
     Start = 'Start'
     Stop = 'Stop'
     Pause = 'Pause'
 
 
-class CueNextAction(Enum):
+class CueNextAction(EqEnum):
     DoNothing = 'DoNothing'
     AutoNext = 'AutoNext'
     AutoFollow = 'AutoFollow'
 
 
-# TODO: pause-able pre/post wait
 class Cue(HasProperties):
     """Cue(s) are the base component for implement any kind of live-controllable
     element (live = during a show).
@@ -72,16 +87,16 @@ class Cue(HasProperties):
     :ivar duration: The cue duration in milliseconds. (0 means no duration)
     :ivar stop_pause: If True, by default the cue is paused instead of stopped.
     :ivar pre_wait: Cue pre-wait in seconds.
-    :ivar post_wait: Cue post-wait in seconds (see note).
-    :ivar next_action: What do after post_wait (see note).
+    :ivar post_wait: Cue post-wait in seconds.
+    :ivar next_action: What do after post_wait.
     :cvar CueActions: actions supported by the cue (default: CueAction.Start)
 
     A cue should declare CueAction.Default as supported only if CueAction.Start
     and CueAction.Stop are both supported.
 
     .. Note::
-        If 'next_action' is set to CueNextAction.AutoFollow value, then the
-        'post_wait' value is ignored.
+        If 'next_action' is AutoFollow or DoNothing, the postwait is not
+        performed.
 
     """
     Name = 'Cue'
@@ -93,34 +108,55 @@ class Cue(HasProperties):
     description = Property(default='')
     stylesheet = Property(default='')
     duration = Property(default=0)
-    stop_pause = Property(default=False)
     pre_wait = Property(default=0)
     post_wait = Property(default=0)
     next_action = Property(default=CueNextAction.DoNothing.value)
+    fadein_type = Property(default=FadeInType.Linear.name)
+    fadeout_type = Property(default=FadeOutType.Linear.name)
+    fadein_duration = Property(default=0)
+    fadeout_duration = Property(default=0)
+    default_start_action = Property(default=CueAction.Start.value)
+    default_stop_action = Property(default=CueAction.Stop.value)
 
-    CueActions = (CueAction.Start, )
+    CueActions = (CueAction.Start,)
 
     def __init__(self, id=None):
         super().__init__()
-        self._waiting = Event()
-        self._waiting.set()
-
         self.id = str(uuid4()) if id is None else id
         self._type_ = self.__class__.__name__
 
-        self.pre_wait_enter = Signal()
-        self.pre_wait_exit = Signal()       # True if not interrupted
-        self.post_wait_enter = Signal()
-        self.post_wait_exit = Signal()      # True if not interrupted
+        self._st_lock = Lock()
+        self._state = CueState.Stop
+        self._prewait = RWait()
+        self._postwait = RWait()
 
-        self.started = Signal()     # self
-        self.stopped = Signal()     # self
-        self.paused = Signal()      # self
-        self.error = Signal()       # self, error, details
-        self.next = Signal()        # self
-        self.end = Signal()         # self
+        # Pre-Wait signals
+        self.prewait_start = self._prewait.start
+        self.prewait_ended = self._prewait.ended
+        self.prewait_paused = self._prewait.paused
+        self.prewait_stopped = self._prewait.stopped
 
-        self.stopped.connect(self._waiting.set)
+        # Post-Wait signals
+        self.postwait_start = self._postwait.start
+        self.postwait_ended = self._postwait.ended
+        self.postwait_paused = self._postwait.paused
+        self.postwait_stopped = self._postwait.stopped
+
+        # Fade signals
+        self.fadein_start = Signal()
+        self.fadein_end = Signal()
+        self.fadeout_start = Signal()
+        self.fadeout_end = Signal()
+
+        # Status signals
+        self.interrupted = Signal()  # self
+        self.started = Signal()  # self
+        self.stopped = Signal()  # self
+        self.paused = Signal()  # self
+        self.error = Signal()  # self, error, details
+        self.next = Signal()  # self
+        self.end = Signal()  # self
+
         self.changed('next_action').connect(self.__next_action_changed)
 
     def execute(self, action=CueAction.Default):
@@ -132,84 +168,265 @@ class Cue(HasProperties):
             cue state, if this action is not supported nothing will be done.
 
         :param action: the action to be performed
+        :type action: CueAction
         """
         if action == CueAction.Default:
-            if self.state == CueState.Running:
-                if self.stop_pause and CueAction.Pause in self.CueActions:
-                    action = CueAction.Pause
-                else:
-                    action = CueAction.Stop
-            elif self.is_waiting():
-                self._waiting.set()
-                return
+            if self._state & CueState.IsRunning:
+                action = CueAction(self.default_stop_action)
             else:
-                action = CueAction.Start
+                action = CueAction(self.default_start_action)
 
         if action in self.CueActions:
             if action == CueAction.Start:
                 self.start()
+            elif action == CueAction.FadeInStart:
+                self.start(fade=self.fadein_duration > 0)
             elif action == CueAction.Stop:
                 self.stop()
+            elif action == CueAction.FadeOutStop:
+                self.stop(fade=self.fadeout_duration > 0)
             elif action == CueAction.Pause:
                 self.pause()
+            elif action == CueAction.FadeOutPause:
+                self.pause(fade=self.fadeout_duration > 0)
 
     @async
-    @synchronized_method(blocking=True)
-    def start(self):
-        """Start the cue.
+    def start(self, fade=False):
+        """Start the cue."""
 
-        .. note::
-            Calling during pre/post wait has no effect.
-        """
-
-        do_wait = self.state == CueState.Stop or self.state == CueState.Error
-        # The pre/post waits are done only if going from stop->start or
-        # error->start.
-        if do_wait and not self.__pre_wait():
-            # self.__pre_wait() is executed only if do_wait is True
-            # if self.__pre_wait() return False, the wait is been interrupted
-            # so the cue doesn't start.
+        # If possible acquire the state-lock, otherwise return
+        if not self._st_lock.acquire(blocking=False):
             return
 
-        # Start the cue
-        self.__start__()
+        try:
+            # If we are already running release and return
+            if self._state & CueState.IsRunning:
+                return
 
-        if do_wait and self.next_action != CueNextAction.AutoFollow.value:
-            # If next-action is AutoFollow no post-wait is executed, in this
-            # case higher-level components should watch directly the cue-state
-            # signals.
-            if self.__post_wait() and self.next_action == CueNextAction.AutoNext.value:
-                # If the post-wait is not interrupted and the next-action
-                # is AutoNext, than emit the 'next' signal.
-                self.next.emit(self)
+            state = self._state
 
-    @abstractmethod
-    def __start__(self):
-        pass
+            # PreWait
+            if self.pre_wait and state & (CueState.IsStopped |
+                                          CueState.PreWait_Pause):
+                self._state = CueState.PreWait
+                # Start the wait, the lock is released during the wait and
+                # re-acquired after
+                if not self._prewait.wait(self.pre_wait, lock=self._st_lock):
+                    # PreWait interrupted, check the state to be correct
+                    if self._state & CueState.PreWait:
+                        self._state ^= CueState.PreWait
+                    return
 
-    def stop(self):
-        """Stop the cue.
+            # Cue-Start (still locked), the __start__ function should not block
+            if state & (CueState.IsStopped |
+                        CueState.Pause |
+                        CueState.PreWait_Pause):
 
-        .. note::
-            If called during pre/post wait, the wait is interrupted.
+                running = self.__start__(fade)
+                self._state = CueState.Running
+                self.started.emit(self)
+
+                if not running:
+                    self._ended()
+
+            # PostWait (still locked)
+            if state & (CueState.IsStopped |
+                        CueState.PreWait_Pause |
+                        CueState.PostWait_Pause):
+                if self.next_action == CueNextAction.AutoNext:
+                    self._state |= CueState.PostWait
+
+                    if self._postwait.wait(self.post_wait, lock=self._st_lock):
+                        # PostWait ended
+                        self._state ^= CueState.PostWait
+                        self.next.emit(self)
+                    elif self._state & CueState.PostWait:
+                        # PostWait interrupted, check the state to be correct
+                        self._state ^= CueState.PostWait
+
+                    # If the cue was only post-waiting we remain with
+                    # an invalid state
+                    if not self._state:
+                        self._state = CueState.Stop
+        finally:
+            self._st_lock.release()
+
+    def restart(self, fade=False):
+        """Restart the cue if paused."""
+        if self._state & CueState.IsPaused:
+            self.start(fade)
+
+    def __start__(self, fade=False):
+        """Implement the cue `start` behavior.
+
+        Long running task should not block this function (i.e. the fade should
+        be performed in another thread).
+
+        When called from `Cue.start()`, `_st_lock` is acquired.
+
+        If the execution is instantaneous should return False, otherwise
+        return True and call the `_ended` function later.
+
+        :param fade: True if a fade should be performed (when supported)
+        :type fade: bool
+        :return: False if the cue is already terminated, True otherwise
+            (e.g. asynchronous execution)
+        :rtype: bool
         """
-        self._waiting.set()  # Stop the wait
-        self.__stop__()
+        return False
 
-    def __stop__(self):
-        pass
+    @async
+    def stop(self, fade=False):
+        """Stop the cue."""
 
-    def pause(self):
-        """Pause the cue.
+        # If possible acquire the state-lock, otherwise return
+        if not self._st_lock.acquire(blocking=False):
+            return
 
-        .. note::
-            Calling during pre/post wait has no effect.
+        try:
+            # Stop PreWait (if in PreWait(_Pause) nothing else is "running")
+            if self._state & (CueState.PreWait | CueState.PreWait_Pause):
+                self._state = CueState.Stop
+                self._prewait.stop()
+            else:
+                # Stop the cue
+                if self._state & (CueState.Running | CueState.Pause):
+                    # Here the __stop__ function should release and re-acquire
+                    # the state-lock during a fade operation
+                    if not self.__stop__(fade):
+                        # Stop operation interrupted
+                        return
+
+                    # Remove Running or Pause state
+                    self._state = (
+                        (self._state ^ CueState.Running) &
+                        (self._state ^ CueState.Pause)
+                    )
+                    self._state |= CueState.Stop
+                    self.stopped.emit()
+
+                # Stop PostWait
+                if self._state & (CueState.PostWait | CueState.PostWait_Pause):
+                    # Remove PostWait or PostWait_Pause state
+                    self._state = (
+                        (self._state ^ CueState.PostWait) &
+                        (self._state ^ CueState.PostWait_Pause)
+                    )
+                    self._postwait.stop()
+        finally:
+            self._st_lock.release()
+
+    def __stop__(self, fade=False):
+        """Implement the cue `stop` behavior.
+
+        Long running task should block this function (i.e. the fade should
+        "block" this function), when this happen `_st_lock` must be released and
+        than re-acquired.
+
+        If called during a `fadeout` operation this should be interrupted,
+        the cue stopped and return `True`.
+
+        :param fade: True if a fade should be performed (when supported)
+        :type fade: bool
+        :return: False if interrupted, True otherwise
+        :rtype: bool
         """
-        if not self.is_waiting():
-            self.__pause__()
+        return True
 
-    def __pause__(self):
+    @async
+    def pause(self, fade=False):
+        """Pause the cue."""
+
+        # If possible acquire the state-lock, otherwise return
+        if not self._st_lock.acquire(blocking=False):
+            return
+
+        try:
+            # Pause PreWait (if in PreWait nothing else is "running")
+            if self._state & CueState.PreWait:
+                self._state ^= CueState.PreWait
+                self._state |= CueState.PreWait_Pause
+                self._prewait.pause()
+            else:
+                if self._state & CueState.Running:
+                    # Here the __pause__ function should release and re-acquire
+                    # the state-lock during a fade operation
+                    if not self.__pause__(fade):
+                        return
+
+                    self._state ^= CueState.Running
+                    self._state |= CueState.Pause
+                    self.paused.emit()
+
+                if self._state & CueState.PostWait:
+                    self._state ^= CueState.PostWait
+                    self._state |= CueState.PostWait_Pause
+                    self._postwait.pause()
+        finally:
+            self._st_lock.release()
+
+    def __pause__(self, fade=False):
+        """Implement the cue `pause` behavior.
+
+        Long running task should block this function (i.e. the fade should
+        "block" this function), when this happen `_st_lock` must be released and
+        than re-acquired.
+
+        If called during a `fadeout` operation this should be interrupted,
+        the cue paused and return `True`.
+
+        If during the execution the fade operation is interrupted this function
+        must return `False`.
+
+        :param fade: True if a fade should be performed (when supported)
+        :type fade: bool
+        :return: False if interrupted, True otherwise
+        :rtype: bool
+        """
+        return True
+
+    def interrupt(self):
+        """Interrupt the cue."""
+        with self._st_lock:
+            self._prewait.stop()
+            self._postwait.stop()
+
+            self.__interrupt__()
+            self._state = CueState.Stop
+
+            self.interrupted.emit(self)
+
+    def __interrupt__(self):
         pass
+
+    def _ended(self):
+        """Remove the Running state, if needed set it to Stop."""
+        locked = self._st_lock.acquire(blocking=False)
+
+        if self._state == CueState.Running:
+            self._state = CueState.Stop
+        else:
+            self._state ^= CueState.Running
+
+        self.end.emit(self)
+
+        if locked:
+            self._st_lock.release()
+
+    def _error(self, message, details):
+        """Remove Running/Pause/Stop state and add Error state."""
+        locked = self._st_lock.acquire(blocking=False)
+
+        self._state = (
+            (self._state ^ CueState.Running) &
+            (self._state ^ CueState.Pause) &
+            (self._state ^ CueState.Stop)
+        ) | CueState.Error
+
+        self.error.emit(self, message, details)
+
+        if locked:
+            self._st_lock.release()
 
     def current_time(self):
         """Return the current execution time if available, otherwise 0.
@@ -218,44 +435,22 @@ class Cue(HasProperties):
         """
         return 0
 
+    def prewait_time(self):
+        return self._prewait.current_time()
+
+    def postwait_time(self):
+        return self._postwait.current_time()
+
     @property
-    @abstractmethod
     def state(self):
         """Return the current state.
 
-        During pre/post-wait the cue is considered in Stop state.
-
-        :rtype: CueState
+        :rtype: int
         """
-
-    def is_waiting(self):
-        return not self._waiting.is_set()
-
-    def __pre_wait(self):
-        """Return False if the wait is interrupted"""
-        not_stopped = True
-        if self.pre_wait > 0:
-            self.pre_wait_enter.emit()
-            self._waiting.clear()
-            not_stopped = not self._waiting.wait(self.pre_wait)
-            self._waiting.set()
-            self.pre_wait_exit.emit(not_stopped)
-
-        return not_stopped
-
-    def __post_wait(self):
-        """Return False if the wait is interrupted"""
-        not_stopped = True
-        if self.post_wait > 0:
-            self.post_wait_enter.emit()
-            self._waiting.clear()
-            not_stopped = not self._waiting.wait(self.post_wait)
-            self._waiting.set()
-            self.post_wait_exit.emit(not_stopped)
-
-        return not_stopped
+        with self._st_lock:
+            return self._state
 
     def __next_action_changed(self, next_action):
         self.end.disconnect(self.next.emit)
-        if next_action == CueNextAction.AutoFollow.value:
+        if next_action == CueNextAction.AutoFollow:
             self.end.connect(self.next.emit)

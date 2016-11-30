@@ -24,16 +24,16 @@ from PyQt5.QtWidgets import QDialog, QTabWidget, QDialogButtonBox
 
 from lisp.core.class_based_registry import ClassBasedRegistry
 from lisp.core.singleton import Singleton
+from lisp.core.util import deep_update
 from lisp.cues.cue import Cue
 from lisp.ui.settings.settings_page import SettingsPage, CueSettingsPage
-from lisp.utils.util import deep_update
 from lisp.ui.ui_utils import translate
 
 
 class CueSettingsRegistry(ClassBasedRegistry, metaclass=Singleton):
     def add_item(self, item, ref_class=Cue):
         if not issubclass(item, SettingsPage):
-            raise TypeError('item must be a CueSettingPage subclass, '
+            raise TypeError('item must be a SettingPage subclass, '
                             'not {0}'.format(item.__name__))
         if not issubclass(ref_class, Cue):
             raise TypeError('ref_class must be Cue or a subclass, not {0}'

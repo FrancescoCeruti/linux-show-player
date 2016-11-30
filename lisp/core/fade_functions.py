@@ -27,19 +27,23 @@ a = y1 - y0                where 'y' is the value (y0 initial, y1 final)
 b = y0
 """
 
+from enum import Enum
+
+from lisp.core.util import FunctionProxy
+
 
 def fade_linear(t, a, b):
-    """ Linear fade. """
+    """Linear fade."""
     return a * t + b
 
 
 def fadein_quad(t, a, b):
-    """ Quadratic (t^2) fade in: accelerating from zero velocity. """
+    """Quadratic (t^2) fade in: accelerating from zero velocity."""
     return a * (t ** 2) + b
 
 
 def fadeout_quad(t, a, b):
-    """ Quadratic (t^2) fade out: decelerating to zero velocity. """
+    """Quadratic (t^2) fade out: decelerating to zero velocity."""
     return a * (t * (2 - t)) + b
 
 
@@ -56,19 +60,17 @@ def fade_inout_quad(t, a, b):
 
 
 def ntime(time, begin, duration):
-    """ Return normalized time """
+    """Return normalized time."""
     return (time - begin) / (duration - begin)
 
 
-FadeIn = {
-    'Linear': fade_linear,
-    'Quadratic': fadein_quad,
-    'Quadratic2': fade_inout_quad
-}
+class FadeInType(Enum):
+    Linear = FunctionProxy(fade_linear)
+    Quadratic = FunctionProxy(fadein_quad)
+    Quadratic2 = FunctionProxy(fade_inout_quad)
 
 
-FadeOut = {
-    'Linear': fade_linear,
-    'Quadratic': fadeout_quad,
-    'Quadratic2': fade_inout_quad
-}
+class FadeOutType(Enum):
+    Linear = FunctionProxy(fade_linear)
+    Quadratic = FunctionProxy(fadeout_quad)
+    Quadratic2 = FunctionProxy(fade_inout_quad)

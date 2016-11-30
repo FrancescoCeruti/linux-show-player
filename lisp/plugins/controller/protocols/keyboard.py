@@ -23,7 +23,8 @@ from PyQt5.QtWidgets import QGroupBox, QGridLayout, QTableView, QHeaderView, \
 
 from lisp.application import Application
 from lisp.plugins.controller.protocols.protocol import Protocol
-from lisp.ui.qdelegates import ComboBoxDelegate, LineEditDelegate
+from lisp.ui.qdelegates import ComboBoxDelegate, LineEditDelegate, \
+    CueActionDelegate
 from lisp.ui.qmodels import SimpleTableModel
 from lisp.ui.settings.settings_page import CueSettingsPage
 from lisp.ui.ui_utils import translate
@@ -118,10 +119,9 @@ class KeyboardView(QTableView):
         self.verticalHeader().setDefaultSectionSize(24)
         self.verticalHeader().setHighlightSections(False)
 
-        cue_actions = [action.name for action in cue_class.CueActions]
         self.delegates = [LineEditDelegate(max_length=1),
-                          ComboBoxDelegate(options=cue_actions,
-                                           tr_context='CueAction')]
+                          CueActionDelegate(cue_class=cue_class,
+                                            mode=CueActionDelegate.Mode.Name)]
 
         for column, delegate in enumerate(self.delegates):
             self.setItemDelegateForColumn(column, delegate)

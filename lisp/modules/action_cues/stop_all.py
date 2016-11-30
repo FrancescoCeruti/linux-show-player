@@ -16,12 +16,13 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
+
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
-from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QHBoxLayout, QCheckBox
+from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QCheckBox
 
 from lisp.application import Application
 from lisp.core.has_properties import Property
-from lisp.cues.cue import Cue, CueState, CueAction
+from lisp.cues.cue import Cue, CueAction
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
 from lisp.ui.settings.settings_page import SettingsPage
 from lisp.ui.ui_utils import translate
@@ -31,24 +32,33 @@ class StopAll(Cue):
     Name = QT_TRANSLATE_NOOP('CueName', 'Stop-All')
 
     pause_mode = Property(default=False)
+    fade_mode = Property(default=False)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.name = translate('CueName', self.Name)
 
-    @Cue.state.getter
-    def state(self):
-        return CueState.Stop
-
-    def __start__(self):
-        cue_action = CueAction.Pause if self.pause_mode else CueAction.Stop
-
+    def __start__(self, fade=False):
         for cue in Application().cue_model:
-            cue.execute(action=cue_action)
+            action = CueAction.Stop
+
+            if self.pause_mode:
+                if self.fade_mode and CueAction.FadeOutPause in cue.CueActions:
+                    action = CueAction.FadeOutPause
+                elif CueAction.Pause in cue.CueActions:
+                    action = CueAction.Pause
+                elif self.fade_mode and CueAction.FadeOutStop in cue.CueActions:
+                    action = CueAction.FadeOutStop
+            elif self.fade_mode and CueAction.FadeOutStop in cue.CueActions:
+                action = CueAction.FadeOutStop
+
+            cue.execute(action=action)
+
+        return False
 
 
 class StopAllSettings(SettingsPage):
-    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Cue Settings')
+    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Stop Settings')
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -56,17 +66,20 @@ class StopAllSettings(SettingsPage):
         self.layout().setAlignment(Qt.AlignTop)
 
         self.group = QGroupBox(self)
-        self.group.setLayout(QHBoxLayout(self.group))
+        self.group.setLayout(QVBoxLayout(self.group))
         self.layout().addWidget(self.group)
 
         self.pauseMode = QCheckBox(self.group)
         self.group.layout().addWidget(self.pauseMode)
+        self.fadeMode = QCheckBox(self.group)
+        self.group.layout().addWidget(self.fadeMode)
 
         self.retranslateUi()
 
     def retranslateUi(self):
         self.group.setTitle(translate('StopAll', 'Mode'))
         self.pauseMode.setText(translate('StopAll', 'Pause mode'))
+        self.fadeMode.setText(translate('StopAll', 'Fade mode'))
 
     def enable_check(self, enabled):
         self.group.setCheckable(enabled)
@@ -77,12 +90,13 @@ class StopAllSettings(SettingsPage):
 
         if not (self.group.isCheckable() and not self.group.isChecked()):
             conf['pause_mode'] = self.pauseMode.isChecked()
+            conf['fade_mode'] = self.fadeMode.isChecked()
 
         return conf
 
     def load_settings(self, settings):
-        if 'pause_mode' in settings:
-            self.pauseMode.setChecked(settings['pause_mode'])
+        self.pauseMode.setChecked(settings.get('pause_mode', False))
+        self.fadeMode.setChecked(settings.get('fade_mode', False))
 
 
 CueSettingsRegistry().add_item(StopAllSettings, StopAll)

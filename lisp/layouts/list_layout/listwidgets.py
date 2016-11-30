@@ -21,9 +21,9 @@ from PyQt5.QtCore import QSize
 from PyQt5.QtWidgets import QLabel, QProgressBar
 
 from lisp.core.signal import Connection
+from lisp.core.util import strtime
 from lisp.cues.cue import CueNextAction, CueState
 from lisp.cues.cue_time import CueTime, CueWaitTime
-from lisp.utils.util import strtime
 from lisp.ui.ui_utils import pixmap_from_icon
 
 
@@ -67,7 +67,8 @@ class NextActionIcon(QLabel):
         self.setStyleSheet(self.STYLESHEET)
 
         self.cue = cue
-        self.cue.changed('next_action').connect(self._update_icon, Connection.QtQueued)
+        self.cue.changed('next_action').connect(
+            self._update_icon, Connection.QtQueued)
 
         self._update_icon(self.cue.next_action)
 
@@ -149,16 +150,17 @@ class CueTimeWidget(TimeWidget):
         self.cue.paused.connect(self._pause, Connection.QtQueued)
         self.cue.error.connect(self._error, Connection.QtQueued)
         self.cue.end.connect(self._stop, Connection.QtQueued)
-        self.cue.changed('duration').connect(self._update_duration, Connection.QtQueued)
+        self.cue.changed('duration').connect(
+            self._update_duration, Connection.QtQueued)
 
         self.cue_time = CueTime(self.cue)
         self.cue_time.notify.connect(self._update_time, Connection.QtQueued)
 
-        if cue.state == CueState.Running:
+        if cue.state & CueState.Running:
             self._running()
-        elif cue.state == CueState.Pause:
+        elif cue.state & CueState.Pause:
             self._pause()
-        elif cue.state == CueState.Error:
+        elif cue.state & CueState.Error:
             self._error()
         else:
             self._stop()
@@ -174,9 +176,12 @@ class PreWaitWidget(TimeWidget):
         super().__init__(cue, *args)
         self.show_zero_duration = True
 
-        self.cue.pre_wait_enter.connect(self._running, Connection.QtQueued)
-        self.cue.pre_wait_exit.connect(self._stop, Connection.QtQueued)
-        self.cue.changed('pre_wait').connect(self._update_duration, Connection.QtQueued)
+        self.cue.prewait_start.connect(self._running, Connection.QtQueued)
+        self.cue.prewait_stopped.connect(self._stop, Connection.QtQueued)
+        self.cue.prewait_paused.connect(self._pause, Connection.QtQueued)
+        self.cue.prewait_ended.connect(self._stop, Connection.QtQueued)
+        self.cue.changed('pre_wait').connect(
+            self._update_duration, Connection.QtQueued)
 
         self._update_duration(self.cue.pre_wait)
 
@@ -198,11 +203,11 @@ class PostWaitWidget(TimeWidget):
         super().__init__(cue, *args)
         self.show_zero_duration = True
 
-        self.cue.post_wait_exit.connect(self._stop, Connection.QtQueued)
         self.cue.end.connect(self._cue_stop, Connection.QtQueued)
         self.cue.stopped.connect(self._cue_stop, Connection.QtQueued)
         self.cue.error.connect(self._cue_stop, Connection.QtQueued)
-        self.cue.changed('next_action').connect(self._next_action_changed, Connection.QtQueued)
+        self.cue.changed('next_action').connect(
+            self._next_action_changed, Connection.QtQueued)
 
         self.wait_time = CueWaitTime(self.cue, mode=CueWaitTime.Mode.Post)
         self.cue_time = CueTime(self.cue)
@@ -217,22 +222,36 @@ class PostWaitWidget(TimeWidget):
         super()._update_duration(duration)
 
     def _next_action_changed(self, next_action):
+        self.cue.postwait_start.disconnect(self._running)
+        self.cue.postwait_stopped.disconnect(self._stop)
+        self.cue.postwait_paused.disconnect(self._pause)
+        self.cue.postwait_ended.disconnect(self._stop)
+
         self.cue.started.disconnect(self._running)
-        self.cue.post_wait_enter.disconnect(self._running)
+
         self.cue_time.notify.disconnect(self._update_time)
         self.wait_time.notify.disconnect(self._update_time)
+
         self.cue.changed('post_wait').disconnect(self._update_duration)
         self.cue.changed('duration').disconnect(self._update_duration)
 
         if next_action == CueNextAction.AutoFollow.value:
             self.cue.started.connect(self._running, Connection.QtQueued)
+            self.cue.changed('duration').connect(
+                self._update_duration, Connection.QtQueued)
+
             self.cue_time.notify.connect(self._update_time, Connection.QtQueued)
-            self.cue.changed('duration').connect(self._update_duration, Connection.QtQueued)
             self._update_duration(self.cue.duration)
         else:
-            self.cue.post_wait_enter.connect(self._running, Connection.QtQueued)
-            self.wait_time.notify.connect(self._update_time, Connection.QtQueued)
-            self.cue.changed('post_wait').connect(self._update_duration, Connection.QtQueued)
+            self.cue.postwait_start.connect(self._running, Connection.QtQueued)
+            self.cue.postwait_stopped.connect(self._stop, Connection.QtQueued)
+            self.cue.postwait_paused.connect(self._pause, Connection.QtQueued)
+            self.cue.postwait_ended.connect(self._stop, Connection.QtQueued)
+            self.cue.changed('post_wait').connect(
+                self._update_duration, Connection.QtQueued)
+
+            self.wait_time.notify.connect(
+                self._update_time, Connection.QtQueued)
             self._update_duration(self.cue.post_wait)
 
     def _cue_stop(self):

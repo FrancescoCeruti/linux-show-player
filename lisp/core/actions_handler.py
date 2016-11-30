@@ -20,9 +20,9 @@
 import logging
 from collections import deque
 
+from lisp.core import configuration as cfg
 from lisp.core.action import Action
 from lisp.core.signal import Signal
-from lisp.utils import configuration as cfg
 
 
 class ActionsHandler:

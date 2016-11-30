@@ -19,7 +19,7 @@
 
 import mido
 
-from lisp.utils.configuration import config
+from lisp.core.configuration import config
 
 
 def str_msg_to_dict(str_message):
