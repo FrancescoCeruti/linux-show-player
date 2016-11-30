@@ -18,82 +18,78 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import QT_TRANSLATE_NOOP, Qt
+from PyQt5.QtWidgets import QGridLayout
+from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QLabel,\
-    QCheckBox, QComboBox, QHBoxLayout, QMessageBox, QSpinBox
+    QCheckBox, QComboBox, QHBoxLayout, QSpinBox
+from ola.OlaClient import OLADNotRunningException, OlaClient
 
 from lisp.ui.mainwindow import MainWindow
 from lisp.ui.settings.settings_page import CueSettingsPage,\
     SettingsPage
-from lisp.utils import elogging
-from lisp.utils.configuration import config
 from lisp.ui.ui_utils import translate
-
-from ola.OlaClient import OLADNotRunningException, OlaClient
 
 
 class TimecodeSettings(SettingsPage):
-    Name = 'Timecode Settings'
+    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Timecode Settings')
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
-        self.behaviorsGroup = QGroupBox(self)
-        self.behaviorsGroup.setLayout(QVBoxLayout())
-        self.behaviorsGroup.setTitle(
-            translate('TimecodeSettings', 'OLA Timecode Settings'))
-        self.layout().addWidget(self.behaviorsGroup)
+        self.groupGroup = QGroupBox(self)
+        self.groupGroup.setLayout(QVBoxLayout())
+        self.layout().addWidget(self.groupGroup)
 
-        self.activateBox = QCheckBox(self.behaviorsGroup)
-        self.activateBox.setText(
-            translate('TimecodeSettings', 'Enable Plugin'))
-        self.behaviorsGroup.layout().addWidget(self.activateBox)
+        self.activateBox = QCheckBox(self.groupGroup)
+        self.groupGroup.layout().addWidget(self.activateBox)
 
         self.comboLayout = QHBoxLayout()
-        self.behaviorsGroup.layout().addLayout(self.comboLayout)
-        self.formatLabel = QLabel(self.behaviorsGroup)
+        self.groupGroup.layout().addLayout(self.comboLayout)
+        self.formatLabel = QLabel(self.groupGroup)
         self.comboLayout.addWidget(self.formatLabel)
-        self.formatLabel.setText(
-            translate('TimecodeSettings', 'Timecode Format:'))
-        self.formatBox = QComboBox(self.behaviorsGroup)
+        self.formatBox = QComboBox(self.groupGroup)
         self.formatBox.addItem('FILM')
         self.formatBox.addItem('EBU')
         self.formatBox.addItem('SMPTE')
         self.comboLayout.addWidget(self.formatBox)
 
-        self.activateBox.stateChanged.connect(self.testOla, Qt.QueuedConnection)
+        self.retranslateUi()
+
+    def retranslateUi(self):
+        self.groupGroup.setTitle(
+            translate('TimecodeSettings', 'OLA Timecode Settings'))
+        self.activateBox.setText(translate('TimecodeSettings', 'Enable Plugin'))
+        self.formatLabel.setText(
+            translate('TimecodeSettings', 'Timecode Format:'))
 
     def testOla(self):
         if self.activateBox.isChecked():
             try:
                 client = OlaClient()
                 del client
-                config.set('Timecode', 'enabled', 'True')
-            except OLADNotRunningException as e:
-                elogging.warning('Plugin Timecode disabled', details=str(e), dialog=False)
-                QMessageBox.warning(MainWindow(), 'Error', 'OLA is not running - Plugin is disabled,\n'
-                                                           'start the OLA daemon to enable it.')
-                self.activateBox.blockSignals(True)
-                self.activateBox.setChecked(False)
-                self.activateBox.blockSignals(False)
-
-                config.set('Timecode', 'enabled', 'False')
+            except OLADNotRunningException:
+                QMessageBox.warning(
+                    MainWindow(),
+                    translate('TimecodeSettings', 'OLA status'),
+                    translate('TimecodeSettings',
+                              'OLA is not running - start the OLA daemon.')
+                )
 
     def get_settings(self):
-        settings = {
+        return {'Timecode': {
             'enabled': str(self.activateBox.isChecked()),
-            'format': str(self.formatBox.currentText())
-        }
-
-        return {'Timecode': settings}
+            'format': self.formatBox.currentText()
+        }}
 
     def load_settings(self, settings):
         settings = settings.get('Timecode', {})
 
         self.activateBox.setChecked(settings.get('enabled') == 'True')
-        self.formatBox.setCurrentText(settings.get('format'))
+        self.formatBox.setCurrentText(settings.get('format', ''))
+
+        self.activateBox.stateChanged.connect(self.testOla)
 
 
 class TimecodeCueSettings(CueSettingsPage):
@@ -102,49 +98,66 @@ class TimecodeCueSettings(CueSettingsPage):
     def __init__(self, cue_class, **kwargs):
         super().__init__(cue_class, **kwargs)
         self.setLayout(QVBoxLayout())
+        self.layout().setAlignment(Qt.AlignTop)
 
-        groupbox = QGroupBox(self)
-        groupbox.setLayout(QVBoxLayout())
-        groupbox.setAlignment(Qt.AlignTop)
-        groupbox.setTitle("Timecode")
-        self.layout().addWidget(groupbox)
-
-        label = QLabel("to send ArtNet Timecode you need to setup a running OLA session!")
-        groupbox.layout().addWidget(label)
+        self.groupBox = QGroupBox(self)
+        self.groupBox.setLayout(QGridLayout())
+        self.layout().addWidget(self.groupBox)
 
         # enable / disable timecode
-        self.tc_enable = QCheckBox("send ArtNet Timecode")
-        self.tc_enable.setChecked(False)
-        groupbox.layout().addWidget(self.tc_enable)
+        self.enableCheck = QCheckBox(self.groupBox)
+        self.enableCheck.setChecked(False)
+        self.groupBox.layout().addWidget(self.enableCheck, 0, 0)
 
         # Hours can be replaced by cue number h:m:s:frames -> CUE:m:s:frames
-        self.tc_usehours = QCheckBox("replace HOURS by a static track number")
-        self.tc_usehours.setChecked(True)
-        groupbox.layout().addWidget(self.tc_usehours)
+        self.useHoursCheck = QCheckBox(self.groupBox)
+        self.useHoursCheck.setChecked(True)
+        self.groupBox.layout().addWidget(self.useHoursCheck, 1, 0)
 
-        hbox = QHBoxLayout()
+        self.trackSpin = QSpinBox(self)
+        self.trackSpin.setMinimum(0)
+        self.trackSpin.setMaximum(99)
+        self.useHoursCheck.stateChanged.connect(self.trackSpin.setEnabled)
+        self.groupBox.layout().addWidget(self.trackSpin, 2, 0)
 
-        self.tc_track = QSpinBox(self)
-        self.tc_track.setMinimum(0)
-        self.tc_track.setMaximum(99)
-        hbox.layout().addWidget(self.tc_track)
-        label = QLabel("track number")
-        hbox.layout().addWidget(label)
-        groupbox.layout().addLayout(hbox)
+        self.trackLabel = QLabel(self.groupBox)
+        self.trackLabel.setAlignment(Qt.AlignCenter)
+        self.groupBox.layout().addWidget(self.trackLabel, 2, 1)
+
+        self.layout().addSpacing(50)
+
+        self.warnLabel = QLabel(self)
+        self.warnLabel.setAlignment(Qt.AlignCenter)
+        self.warnLabel.setStyleSheet('color: #FFA500; font-weight: bold')
+        self.layout().addWidget(self.warnLabel)
+
+        self.retranslateUi()
+
+    def retranslateUi(self):
+        self.groupBox.setTitle('Timecode')
+        self.useHoursCheck.setText(
+            translate('TimecodeSettings',
+                      'Replace HOURS by a static track number'))
+        self.enableCheck.setText(
+            translate('TimecodeSettings', 'Enable ArtNet Timecode'))
+        self.trackLabel.setText(
+            translate('TimecodeSettings', 'Track number'))
+        self.warnLabel.setText(
+            translate('TimecodeSettings',
+                      'To send ArtNet Timecode you need to setup a running OLA'
+                      ' session!'))
 
     def get_settings(self):
-        conf = dict()
-        conf['enabled'] = self.tc_enable.isChecked()
-        conf['use_hours'] = self.tc_usehours.isChecked()
-        conf['track'] = self.tc_track.value()
-        return {'timecode': conf}
+        settings = {
+            'enabled': self.enableCheck.isChecked(),
+            'use_hours': self.useHoursCheck.isChecked(),
+            'track': self.trackSpin.value()
+        }
+
+        return {'timecode': settings}
 
     def load_settings(self, settings):
-        if settings is not None and 'timecode' in settings:
-            conf = settings['timecode']
-            if 'enabled' in conf:
-                self.tc_enable.setChecked(conf['enabled'])
-            if 'use_hours' in conf:
-                self.tc_usehours.setChecked(conf['use_hours'])
-            if 'track' in conf:
-                self.tc_track.setValue(conf['track'])
+        settings = settings.get('timecode', {})
+        self.enableCheck.setChecked(settings.get('enabled', False))
+        self.useHoursCheck.setChecked(settings.get('use_hours', False))
+        self.trackSpin.setValue(settings.get('track', 0))
