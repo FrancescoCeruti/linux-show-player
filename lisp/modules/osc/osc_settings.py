@@ -23,7 +23,7 @@ from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QLabel,\
     QCheckBox, QHBoxLayout, QSpinBox, QLineEdit
 
 from lisp.ui.ui_utils import translate
-from lisp.utils.configuration import config
+from lisp.core.configuration import config
 from lisp.ui.settings.settings_page import SettingsPage
 from lisp.modules.osc.osc_common import OscCommon
 

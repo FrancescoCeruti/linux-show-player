@@ -56,7 +56,7 @@ class OscCue(Cue):
     def state(self):
         return CueState.Stop
 
-    def __start__(self):
+    def __start__(self, fade=False):
         arg_list = []
         for arg in self.args:
             conv_arg = self.__convert_arg(arg[0], arg[1])

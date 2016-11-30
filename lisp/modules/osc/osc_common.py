@@ -22,9 +22,9 @@ from collections import deque
 from lisp.core.singleton import ABCSingleton
 from liblo import ServerThread, Address, ServerError
 
-from lisp.utils.configuration import config
+from lisp.core.configuration import config
 from lisp.layouts.list_layout.layout import ListLayout
-from lisp.utils import elogging
+from lisp.ui import elogging
 from lisp.ui.mainwindow import MainWindow
 from lisp.application import Application
 from lisp.cues.cue import CueState
