@@ -447,8 +447,7 @@ class Cue(HasProperties):
 
         :rtype: int
         """
-        with self._st_lock:
-            return self._state
+        return self._state
 
     def __next_action_changed(self, next_action):
         self.end.disconnect(self.next.emit)
