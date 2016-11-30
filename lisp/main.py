@@ -57,7 +57,11 @@ def main():
     else:
         log = logging.WARNING
 
-    logging.basicConfig(format='%(levelname)s:: %(message)s', level=log)
+    logging.basicConfig(
+        format='%(asctime)s.%(msecs)03d %(levelname)s:: %(message)s',
+        datefmt='%H:%M:%S',
+        level=log
+    )
 
     # Create the QApplication
     qt_app = QApplication(sys.argv)
