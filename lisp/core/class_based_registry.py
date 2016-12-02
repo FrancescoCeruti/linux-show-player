@@ -24,7 +24,7 @@ class ClassBasedRegistry:
     The filter "check" whenever the filter-class is a subclass of
     the one used to register the item or exactly the the same.
 
-    .. Example:
+    .. highlight::
 
         reg = ClassBasedRegistry()
         reg.add_item('Object-Item', object)

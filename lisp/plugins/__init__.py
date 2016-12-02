@@ -20,7 +20,7 @@
 import os
 
 from lisp.core.loading import load_classes
-from lisp.utils import elogging
+from lisp.ui import elogging
 
 __PLUGINS = {}
 

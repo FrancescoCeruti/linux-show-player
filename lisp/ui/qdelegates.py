@@ -17,19 +17,15 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt, QEvent, QT_TRANSLATE_NOOP
-from PyQt5.QtWidgets import QStyledItemDelegate, QComboBox, QSpinBox,\
+from PyQt5.QtCore import Qt, QEvent
+from PyQt5.QtWidgets import QStyledItemDelegate, QComboBox, QSpinBox, \
     QLineEdit, QStyle, QDialog
 
 from lisp.application import Application
 from lisp.cues.cue import CueAction
 from lisp.ui.qmodels import CueClassRole
 from lisp.ui.ui_utils import translate
-
-QT_TRANSLATE_NOOP('CueAction', 'Default')
-QT_TRANSLATE_NOOP('CueAction', 'Pause')
-QT_TRANSLATE_NOOP('CueAction', 'Start')
-QT_TRANSLATE_NOOP('CueAction', 'Stop')
+from lisp.ui.widgets import CueActionComboBox
 
 
 class LabelDelegate(QStyledItemDelegate):
@@ -147,30 +143,48 @@ class LineEditDelegate(QStyledItemDelegate):
 
 
 class CueActionDelegate(LabelDelegate):
+    Mode = CueActionComboBox.Mode
+
+    def __init__(self, cue_class=None, mode=Mode.Action, **kwargs):
+        super().__init__(**kwargs)
+        self.cue_class = cue_class
+        self.mode = mode
+
     def _text(self, painter, option, index):
-        action = index.data(Qt.EditRole)
-        if action in CueAction:
-            return translate('CueAction', action.name)
+        value = index.data(Qt.EditRole)
+        if self.mode == CueActionDelegate.Mode.Action:
+            name = value.name
+        elif self.mode == CueActionDelegate.Mode.Name:
+            name = value
         else:
-            return 'ERR'
+            name = CueAction(value).name
+
+        return translate('CueAction', name)
 
     def paint(self, painter, option, index):
         option.displayAlignment = Qt.AlignHCenter | Qt.AlignVCenter
         super().paint(painter, option, index)
 
     def createEditor(self, parent, option, index):
-        cue = index.data(CueClassRole)
-        if cue is not None:
-            editor = QComboBox(parent)
-            editor.setFrame(False)
+        if self.cue_class is None:
+            self.cue_class = index.data(CueClassRole)
 
-            for action in cue.CueActions:
-                editor.addItem(translate('CueAction', action.name), action)
+        editor = CueActionComboBox(self.cue_class,
+                                   mode=self.mode,
+                                   parent=parent)
+        editor.setFrame(False)
 
-            return editor
+        return editor
 
     def setEditorData(self, comboBox, index):
-        action = index.data(Qt.EditRole)
+        value = index.data(Qt.EditRole)
+        if self.mode == CueActionDelegate.Mode.Action:
+            action = value
+        elif self.mode == CueActionDelegate.Mode.Name:
+            action = CueAction[value]
+        else:
+            action = CueAction(value)
+
         comboBox.setCurrentText(translate('CueAction', action.name))
 
     def setModelData(self, comboBox, model, index):

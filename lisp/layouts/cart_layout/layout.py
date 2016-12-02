@@ -21,6 +21,7 @@ from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import QTabWidget, QAction, QInputDialog, qApp, \
     QMessageBox
 
+from lisp.core.configuration import config
 from lisp.core.signal import Connection
 from lisp.cues.cue import Cue
 from lisp.cues.cue_factory import CueFactory
@@ -36,7 +37,6 @@ from lisp.ui.settings.cue_settings import CueSettingsRegistry
 from lisp.ui.settings.pages.cue_appearance import Appearance
 from lisp.ui.settings.pages.cue_general import CueGeneralSettings
 from lisp.ui.settings.pages.media_cue_settings import MediaCueSettings
-from lisp.utils.configuration import config
 from lisp.ui.ui_utils import translate
 
 AppSettings.register_settings_widget(CartLayoutSettings)

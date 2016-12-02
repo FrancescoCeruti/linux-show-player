@@ -30,7 +30,7 @@ class load_classes:
     The class name must be the same as the module name, optionally
     suffixes and prefixes lists can be provided.
 
-    .. Example:
+    .. highlight::
 
         modules
         ├── module1.py

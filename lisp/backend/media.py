@@ -74,6 +74,9 @@ class Media(HasProperties):
         self.error = Signal()
         """Emitted when an error occurs (self, error, details)"""
 
+        self.elements_changed = Signal()
+        """Emitted when one or more elements are added/removed (self)"""
+
     @property
     @abstractmethod
     def state(self):

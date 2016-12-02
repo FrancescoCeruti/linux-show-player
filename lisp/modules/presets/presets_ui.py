@@ -26,6 +26,7 @@ from PyQt5.QtWidgets import QFileDialog
 from PyQt5.QtWidgets import QHBoxLayout
 
 from lisp.application import Application
+from lisp.core.util import natural_keys
 from lisp.cues.cue import Cue
 from lisp.cues.cue_factory import CueFactory
 from lisp.modules.presets.lib import preset_exists, export_presets, \
@@ -34,8 +35,7 @@ from lisp.modules.presets.lib import preset_exists, export_presets, \
 from lisp.ui.mainwindow import MainWindow
 from lisp.ui.settings.cue_settings import CueSettings, CueSettingsRegistry
 from lisp.ui.ui_utils import translate
-from lisp.ui.widgets.qmessagebox import QDetailedMessageBox
-from lisp.utils.util import natural_keys
+from lisp.ui.widgets import QDetailedMessageBox
 
 
 def preset_error(exception, text, parent=None):

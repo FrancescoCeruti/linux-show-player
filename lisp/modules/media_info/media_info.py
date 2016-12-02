@@ -22,6 +22,7 @@ from urllib.request import unquote
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QAction, QMessageBox, QDialog, QVBoxLayout, \
     QTreeWidget, QAbstractItemView, QDialogButtonBox, QTreeWidgetItem
+from PyQt5.QtWidgets import QHeaderView
 
 from lisp.application import Application
 from lisp.modules.gst_backend.gst_utils import gst_uri_metadata, \
@@ -51,7 +52,7 @@ class MediaInfo(Module):
                                  translate('MediaInfo', 'No info to display'))
         else:
             gst_info = gst_uri_metadata(media_uri)
-            info = {'Uri': unquote(gst_info.get_uri())}
+            info = {'URI': unquote(gst_info.get_uri())}
 
             # Audio streams info
             for stream in gst_info.get_audio_streams():
@@ -96,8 +97,8 @@ class InfoDialog(QDialog):
         self.setWindowTitle(
             translate('MediaInfo', 'Media Info') + ' - ' + title)
         self.setWindowModality(QtCore.Qt.ApplicationModal)
-        self.setMinimumSize(500, 250)
-        self.resize(500, 250)
+        self.setMinimumSize(550, 300)
+        self.resize(550, 500)
 
         self.vLayout = QVBoxLayout(self)
 
@@ -108,10 +109,13 @@ class InfoDialog(QDialog):
         self.infoTree.setAlternatingRowColors(True)
         self.infoTree.setSelectionMode(QAbstractItemView.NoSelection)
         self.infoTree.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.infoTree.header().setStretchLastSection(False)
+        self.infoTree.header().setSectionResizeMode(
+            QHeaderView.ResizeToContents)
         self.vLayout.addWidget(self.infoTree)
 
         self.__generate_items(info)
-        self.infoTree.setColumnWidth(0, 150)
+        self.infoTree.expandAll()
 
         self.buttonBox = QDialogButtonBox(self)
         self.buttonBox.setStandardButtons(QDialogButtonBox.Close)

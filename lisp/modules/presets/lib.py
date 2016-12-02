@@ -21,10 +21,9 @@ import json
 import os
 from zipfile import ZipFile, BadZipFile
 
+from lisp.core import configuration
 from lisp.core.actions_handler import MainActionsHandler
-
 from lisp.cues.cue_actions import UpdateCueAction, UpdateCuesAction
-from lisp.utils import configuration
 
 PRESETS_DIR = os.path.join(configuration.CFG_DIR, 'presets')
 

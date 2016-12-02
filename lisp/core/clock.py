@@ -21,10 +21,8 @@ from threading import Lock
 
 from PyQt5.QtCore import QTimer
 
-from lisp.core.singleton import QSingleton
 
-
-class Clock(QTimer, metaclass=QSingleton):
+class Clock(QTimer):
     """Clock based on Qt.QTimer class.
 
     The class provide two functions to add and remove
@@ -32,7 +30,7 @@ class Clock(QTimer, metaclass=QSingleton):
     there's one, or more, callbacks.
     """
 
-    def __init__(self, timeout=100):
+    def __init__(self, timeout):
         super().__init__()
         self.setInterval(timeout)
 
@@ -54,3 +52,7 @@ class Clock(QTimer, metaclass=QSingleton):
             self.__clients -= 1
             if self.__clients == 0:
                 self.stop()
+
+
+Clock_10 = Clock(10)
+Clock_100 = Clock(100)

@@ -21,7 +21,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog, QTreeWidget, QHeaderView, QVBoxLayout, \
     QDialogButtonBox, QTreeWidgetItem
 
-from lisp.utils import elogging
+from lisp.ui import elogging
 
 
 class CueSelectDialog(QDialog):
