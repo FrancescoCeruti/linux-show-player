@@ -26,6 +26,7 @@ from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QGridLayout, \
     QTableView, QTableWidget, QHeaderView, QPushButton, QLabel, \
     QLineEdit
 
+from lisp.ui import elogging
 from lisp.ui.qmodels import SimpleTableModel
 from lisp.core.has_properties import Property
 from lisp.ui.qdelegates import ComboBoxDelegate, LineEditDelegate
@@ -43,6 +44,46 @@ class OscMessageType(Enum):
     String = 'String'
 
 
+def string_to_value(t, sarg):
+    """converts string to requested value for given type"""
+    if t == OscMessageType.Int.value:
+        return int(sarg)
+    elif t == OscMessageType.Float.value:
+        return float(sarg)
+    elif t == OscMessageType.Bool.value:
+        if sarg.lower() == 'true':
+            return True
+        elif sarg.lower() == 'false':
+            return False
+        else:
+            return bool(int(sarg))
+    elif t == OscMessageType.String.value:
+        return str(sarg)
+    else:
+        raise ValueError
+
+
+def format_string(t, sarg):
+    """checks if string can be converted and formats it"""
+    if len(sarg) == 0:
+        return ''
+    elif t == OscMessageType.Int.value:
+        return "{0:d}".format(int(sarg))
+    elif t == OscMessageType.Float.value:
+        return "{0:.2f}".format(int(sarg))
+    elif t == OscMessageType.Bool.value:
+        if sarg.lower() == 'true':
+            return 'True'
+        elif sarg.lower() == 'false':
+            return 'False'
+        else:
+            return "{0}".format(bool(int(sarg)))
+    elif t == OscMessageType.String.value:
+        return "{0}".format(sarg)
+    else:
+        raise ValueError
+
+
 class OscCue(Cue):
     Name = QT_TRANSLATE_NOOP('CueName', 'OSC Cue')
 
@@ -58,26 +99,16 @@ class OscCue(Cue):
 
     def __start__(self, fade=False):
         arg_list = []
-        for arg in self.args:
-            conv_arg = self.__convert_arg(arg[0], arg[1])
-            if conv_arg is not None:
-                arg_list.append(conv_arg)
-        OscCommon().send(self.path, *arg_list)
-
-    def __convert_arg(self, t, arg):
+        if len(self.path) < 2 or self.path[0] != '/':
+            elogging.warning("OSC: no valid path for OSC message - nothing sent", dialog=False)
+            return
         try:
-            if t == OscMessageType.Int.value:
-                return int(arg)
-            elif t == OscMessageType.Float.value:
-                return float(arg)
-            elif t == OscMessageType.Bool.value:
-                return bool(arg)
-            elif t == OscMessageType.String.value:
-                return str(arg)
-            else:
-                return None
+            for arg in self.args:
+                conv_arg = string_to_value(arg[0], arg[1])
+                arg_list.append(conv_arg)
+            OscCommon().send(self.path, *arg_list)
         except ValueError:
-            return None
+            elogging.warning("OSC: Error on parsing argument list - nothing sent", dialog=False)
 
 
 class OscCueSettings(SettingsPage):
@@ -102,6 +133,8 @@ class OscCueSettings(SettingsPage):
             translate('Osc Cue', 'Type'),
             translate('Osc Cue', 'Argument')])
 
+        self.oscModel.dataChanged.connect(self.__argument_changed)
+
         self.oscView = OscView(parent=self.oscGroup)
         self.oscView.setModel(self.oscModel)
         self.oscGroup.layout().addWidget(self.oscView, 2, 0, 1, 2)
@@ -114,12 +147,17 @@ class OscCueSettings(SettingsPage):
         self.removeButton.clicked.connect(self.__remove_argument)
         self.oscGroup.layout().addWidget(self.removeButton, 3, 1)
 
+        self.testButton = QPushButton(self.oscGroup)
+        self.testButton.clicked.connect(self.__test_message)
+        self.oscGroup.layout().addWidget(self.testButton, 4, 0)
+
         self.retranslateUi()
 
     def retranslateUi(self):
         self.oscGroup.setTitle(translate('OscCue', 'OSC Message'))
         self.addButton.setText(translate('OscCue', 'Add'))
         self.removeButton.setText(translate('OscCue', 'Remove'))
+        self.testButton.setText(translate('OscCue', 'Test'))
         self.pathLabel.setText(translate('OscCue', 'OSC Path: (example: "/path/to/something")'))
 
     def get_settings(self):
@@ -137,11 +175,45 @@ class OscCueSettings(SettingsPage):
                     self.oscModel.appendRow(row[0], row[1])
 
     def __new_argument(self):
-        self.oscModel.appendRow(OscMessageType.Int.value, 'argument')
+        self.oscModel.appendRow(OscMessageType.Int.value, '')
 
     def __remove_argument(self):
         if self.oscModel.rowCount():
             self.oscModel.removeRow(self.oscView.currentIndex().row())
+
+    def __test_message(self):
+        oscmsg = {'path': self.pathEdit.text(),
+                  'args': [row for row in self.oscModel.rows]}
+        arg_list = []
+        if len(oscmsg['path']) < 2:
+            elogging.warning("OSC: no valid path for OSC message - nothing sent",
+                             details="Path too short.",
+                             dialog=True)
+            return
+
+        if oscmsg['path'][0] != '/':
+            elogging.warning("OSC: no valid path for OSC message - nothing",
+                             details="Path should start with '/'.",
+                             dialog=True)
+            return
+
+        try:
+            for arg in oscmsg['args']:
+                conv_arg = string_to_value(arg[0], arg[1])
+                arg_list.append(conv_arg)
+            OscCommon().send(oscmsg['path'], *arg_list)
+        except ValueError:
+            elogging.warning("OSC: Error on parsing argument list - nothing sent")
+
+    def __argument_changed(self, index_topleft, index_bottomright, roles):
+        model = index_bottomright.model()
+        osctype = model.rows[index_bottomright.row()][0]
+        argument = model.rows[index_bottomright.row()][1]
+        try:
+            model.rows[index_bottomright.row()][1] = format_string(osctype, argument)
+        except ValueError:
+            model.rows[index_bottomright.row()][1] = ''
+            elogging.warning("OSC Argument Error", details="{0} not a {1}".format(argument, osctype), dialog=True)
 
 
 class OscView(QTableView):
