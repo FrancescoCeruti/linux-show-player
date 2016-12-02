@@ -156,7 +156,7 @@ class TimecodeCueSettings(CueSettingsPage):
     def get_settings(self):
         settings = {
             'enabled': self.enableCheck.isChecked(),
-            'use_hours': self.useHoursCheck.isChecked(),
+            'replace_hours': self.useHoursCheck.isChecked(),
             'track': self.trackSpin.value()
         }
 
@@ -165,5 +165,5 @@ class TimecodeCueSettings(CueSettingsPage):
     def load_settings(self, settings):
         settings = settings.get('timecode', {})
         self.enableCheck.setChecked(settings.get('enabled', False))
-        self.useHoursCheck.setChecked(settings.get('use_hours', False))
+        self.useHoursCheck.setChecked(settings.get('replace_hours', False))
         self.trackSpin.setValue(settings.get('track', 0))

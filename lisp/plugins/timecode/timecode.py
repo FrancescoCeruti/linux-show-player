@@ -65,7 +65,7 @@ class OlaTimecode:
         self.__hres = config['Timecode'].getboolean('hres')
         self.__format = TcFormat[config['Timecode']['format']].format
         self.__millis = TcFormat[config['Timecode']['format']].millis
-        self.__use_hours = False
+        self.__replace_hours = False
         self.__last_frame = -1
 
     @property
@@ -100,7 +100,7 @@ class OlaTimecode:
         # Setup new cue and options
         self.__cue = cue
         self.__cue_time = HRCueTime(cue) if self.__hres else CueTime(cue)
-        self.__use_hours = cue.timecode['use_hours']
+        self.__replace_hours = cue.timecode['replace_hours']
         self.__track = cue.timecode['track']
 
         # Start watching the new cue
@@ -133,7 +133,7 @@ class OlaTimecode:
             self.__last_frame = frame
 
         try:
-            if self.__use_hours:
+            if not self.__replace_hours:
                 track = tt[0]
             else:
                 track = self.__track
