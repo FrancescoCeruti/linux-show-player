@@ -1,8 +1,10 @@
+from lisp.core.configuration import config
+
 try:
-    import sys
-    from lisp.utils import elogging
-    from lisp.utils.configuration import config
+    import ola
+except ImportError:
+    ola = False
+    raise ImportError('OLA module not found, plugin not loaded.')
+
+if ola:
     from .timecode import Timecode
-except (ImportError, NameError) as e:
-    elogging.warning('Plugin Timecode not loaded', details=str(e), dialog=False)
-    config.set('Timecode', 'enabled', 'False')
