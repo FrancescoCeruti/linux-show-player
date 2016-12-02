@@ -32,6 +32,9 @@ def validate_pipeline(pipe, rebuild=False):
 
     # The middle elements must be plugins elements
     if rebuild:
+        if not isinstance(pipe, list):
+            pipe = list(pipe)
+
         pipe[1:-1] = set(pipe[1:-1]).intersection(
             set(elements.plugins().keys()))
     else:

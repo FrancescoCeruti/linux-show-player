@@ -20,7 +20,7 @@
 from enum import IntEnum
 from weakref import WeakValueDictionary
 
-from lisp.core.clock import Clock
+from lisp.core.clock import Clock_100
 from lisp.core.decorators import locked_method
 from lisp.core.signal import Connection, Signal
 from lisp.cues.cue import CueState
@@ -32,11 +32,11 @@ class MetaCueTime(type):
     __Instances = WeakValueDictionary()
 
     @locked_method
-    def __call__(cls, cue):
-        instance = cls.__Instances.get(cue.id)
+    def __call__(cls, cue, *args, **kwargs):
+        instance = MetaCueTime.__Instances.get((cls, cue.id))
         if instance is None:
-            instance = super().__call__(cue)
-            cls.__Instances[cue.id] = instance
+            instance = super().__call__(cue, *args, **kwargs)
+            MetaCueTime.__Instances[(cls, cue.id)] = instance
 
         return instance
 
@@ -45,8 +45,7 @@ class CueTime(metaclass=MetaCueTime):
     """Provide timing for a Cue.
 
     Once created the notify signal provide timing for the given cue.
-    The current time is queried using :meth:`lisp.cue.Cue.current_time method`,
-    the interval between notification depends on :class:`lisp.core.clock.Clock`.
+    The current time is queried using :meth:`lisp.cue.Cue.current_time method`.
 
     .. note::
         The notify signal is emitted only when the cue is running.
@@ -55,7 +54,7 @@ class CueTime(metaclass=MetaCueTime):
     def __init__(self, cue):
         self.notify = Signal()
 
-        self._clock = Clock()
+        self._clock = Clock_100
         self._active = False
         self._cue = cue
         self._cue.changed('duration').connect(self.__init)
@@ -115,7 +114,7 @@ class CueWaitTime:
     def __init__(self, cue, mode=Mode.Pre):
         self.notify = Signal()
 
-        self._clock = Clock()
+        self._clock = Clock_100
         self._start_time = 0
         self._last = 0
         self._cue = cue
