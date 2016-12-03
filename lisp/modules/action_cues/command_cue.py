@@ -47,7 +47,9 @@ class CommandCue(Cue):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.name = translate('CueName', self.Name)
+
         self.__process = None
+        self.__stopped = False
 
     def __start__(self, fade=False):
         self.__exec_command()
@@ -67,9 +69,11 @@ class CommandCue(Cue):
 
         if rcode == 0 or rcode == -9 or self.no_error:
             # If terminate normally, killed or in no-error mode
+            if not self.__stopped:
+                self._ended()
+
             self.__process = None
-            # FIXME: when __stop__ is called we shouldn't call `_ended()`
-            self._ended()
+            self.__stopped = False
         elif not self.no_error:
             # If an error occurs and not in no-error mode
             self._error(
@@ -78,6 +82,7 @@ class CommandCue(Cue):
 
     def __stop__(self, fade=False):
         if self.__process is not None:
+            self.__stopped = True
             if self.kill:
                 self.__process.kill()
             else:
@@ -85,8 +90,7 @@ class CommandCue(Cue):
 
         return True
 
-    def __interrupt__(self):
-        self.__stop__()
+    __interrupt__ = __stop__
 
 
 class CommandCueSettings(SettingsPage):

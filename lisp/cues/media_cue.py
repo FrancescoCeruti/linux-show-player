@@ -93,8 +93,12 @@ class MediaCue(Cue):
         self.media.pause()
         return True
 
-    def __interrupt__(self):
+    def __interrupt__(self, fade=False):
         self.__fader.stop()
+
+        if fade and self._can_fadeout():
+            self._fadeout(release=False)
+
         self.media.interrupt()
 
     def current_time(self):
@@ -133,17 +137,21 @@ class MediaCue(Cue):
                 self.__in_fadein = False
                 self.fadein_end.emit()
 
-    def _fadeout(self):
+    def _fadeout(self, release=True):
         ended = True
         if self._can_fadeout():
             self.__in_fadeout = True
             self.fadeout_start.emit()
             try:
                 self.__fader.prepare()
-                self._st_lock.release()
+                if release:
+                    self._st_lock.release()
+
                 ended = self.__fader.fade(self.fadeout_duration, 0,
                                           FadeOutType[self.fadeout_type])
-                self._st_lock.acquire()
+
+                if release:
+                    self._st_lock.acquire()
             finally:
                 self.__in_fadeout = False
                 self.fadeout_end.emit()

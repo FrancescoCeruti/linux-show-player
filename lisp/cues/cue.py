@@ -67,13 +67,8 @@ class Cue(HasProperties):
     """Cue(s) are the base component for implement any kind of live-controllable
     element (live = during a show).
 
-    A cue implement his behavior(s) reimplementing the __start__, __stop__ and
-    __pause__ methods.
-    Can be triggered calling the execute() method, providing the action to
-    be executed, or calling directly start()/stop() or pause().
-
-    .. note:
-        If needed __start__, __stop__ and __pause__ can be asynchronous.
+    A cue implement his behavior(s) reimplementing __start__, __stop__,
+    __pause__ and __interrupt__ methods.
 
     Cue provide **(and any subclass should do the same)** properties via
     HasProperties/Property specifications.
@@ -92,12 +87,11 @@ class Cue(HasProperties):
     :cvar CueActions: actions supported by the cue (default: CueAction.Start)
 
     A cue should declare CueAction.Default as supported only if CueAction.Start
-    and CueAction.Stop are both supported.
+    and CueAction.Stop are both supported, if CueAction.Stop is supported.
 
     .. Note::
         If 'next_action' is AutoFollow or DoNothing, the postwait is not
         performed.
-
     """
     Name = 'Cue'
 
@@ -149,13 +143,13 @@ class Cue(HasProperties):
         self.fadeout_end = Signal()
 
         # Status signals
-        self.interrupted = Signal()  # self
-        self.started = Signal()  # self
-        self.stopped = Signal()  # self
-        self.paused = Signal()  # self
-        self.error = Signal()  # self, error, details
-        self.next = Signal()  # self
-        self.end = Signal()  # self
+        self.interrupted = Signal()     # self
+        self.started = Signal()         # self
+        self.stopped = Signal()         # self
+        self.paused = Signal()          # self
+        self.error = Signal()           # self, error, details
+        self.next = Signal()            # self
+        self.end = Signal()             # self
 
         self.changed('next_action').connect(self.__next_action_changed)
 
@@ -385,18 +379,31 @@ class Cue(HasProperties):
         """
         return True
 
-    def interrupt(self):
-        """Interrupt the cue."""
+    @async
+    def interrupt(self, fade=False):
+        """Interrupt the cue.
+
+        :param fade: True if a fade should be performed (when supported)
+        :type fade: bool
+        """
         with self._st_lock:
             self._prewait.stop()
             self._postwait.stop()
 
-            self.__interrupt__()
+            self.__interrupt__(fade)
             self._state = CueState.Stop
 
             self.interrupted.emit(self)
 
-    def __interrupt__(self):
+    def __interrupt__(self, fade=False):
+        """Implement the cue `interrupt` behavior.
+
+        Long running task should block this function without releasing
+        `_st_lock`.
+
+        :param fade: True if a fade should be performed (when supported)
+        :type fade: bool
+        """
         pass
 
     def _ended(self):

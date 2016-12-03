@@ -22,6 +22,7 @@ from PyQt5.QtGui import QIcon, QColor
 from PyQt5.QtWidgets import QWidget, QGridLayout, QLabel, QSizePolicy, \
     QPushButton, QLCDNumber
 
+from lisp.core.configuration import config
 from lisp.core.signal import Connection
 from lisp.core.util import strtime
 from lisp.cues.cue_time import CueTime
@@ -174,13 +175,13 @@ class PlayingMediaWidget(QWidget):
         self.seekSlider.setMaximum(duration)
 
     def _stop(self, *args):
-        self.cue.stop(fade=True)
+        self.cue.stop(fade=config['ListLayout'].getboolean('StopCueFade'))
 
     def _play(self, *args):
-        self.cue.start(fade=True)
+        self.cue.start(fade=config['ListLayout'].getboolean('RestartCueFade'))
 
     def _pause(self, *args):
-        self.cue.pause(fade=True)
+        self.cue.pause(fade=config['ListLayout'].getboolean('PauseCueFade'))
 
     def _seek(self, position):
         self.cue.media.seek(position)
