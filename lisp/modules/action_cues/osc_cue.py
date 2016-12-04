@@ -93,10 +93,6 @@ class OscCue(Cue):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-    @Cue.state.getter
-    def state(self):
-        return CueState.Stop
-
     def __start__(self, fade=False):
         arg_list = []
         if len(self.path) < 2 or self.path[0] != '/':
@@ -109,6 +105,8 @@ class OscCue(Cue):
             OscCommon().send(self.path, *arg_list)
         except ValueError:
             elogging.warning("OSC: Error on parsing argument list - nothing sent", dialog=False)
+
+        return False
 
 
 class OscCueSettings(SettingsPage):
