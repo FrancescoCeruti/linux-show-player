@@ -20,22 +20,32 @@
 # TODO: proper Test for Format, add Error Dialog, Cue Test-Button in Settings
 
 from enum import Enum
+from time import sleep
 
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QGridLayout, \
     QTableView, QTableWidget, QHeaderView, QPushButton, QLabel, \
     QLineEdit
 
+from lisp.core.decorators import async, locked_method
+from lisp.core.fade_functions import ntime, FadeInType, FadeOutType
+from lisp.core.fader import Fader
+from lisp.cues.cue import Cue, CueState, CueAction
 from lisp.ui import elogging
 from lisp.ui.qmodels import SimpleTableModel
 from lisp.core.has_properties import Property
-from lisp.ui.qdelegates import ComboBoxDelegate, LineEditDelegate
+from lisp.ui.qdelegates import ComboBoxDelegate, LineEditDelegate,\
+    CheckBoxDelegate
 from lisp.cues.cue import Cue, CueState
 from lisp.ui.settings.cue_settings import CueSettingsRegistry,\
     SettingsPage
 from lisp.modules.osc.osc_common import OscCommon
 from lisp.ui.ui_utils import translate
 
+COL_TYPE = 0
+COL_START_VAL = 1
+COL_END_VAL = 2
+COL_DO_FADE = 3
 
 class OscMessageType(Enum):
     Int = 'Integer'
@@ -84,29 +94,98 @@ def format_string(t, sarg):
         raise ValueError
 
 
+def can_fade(t):
+    if t == OscMessageType.Int.value:
+        return True
+    elif t == OscMessageType.Float.value:
+        return True
+    else:
+        return False
+
+
 class OscCue(Cue):
     Name = QT_TRANSLATE_NOOP('CueName', 'OSC Cue')
+
+    CueActions = (CueAction.Default, CueAction.Start, CueAction.FadeInStart,
+                  CueAction.Stop, CueAction.FadeOutStop, CueAction.Pause,
+                  CueAction.FadeOutPause)
 
     path = Property(default='')
     args = Property(default=[])
 
+    # one global fader used for all faded arguments
+    position = Property(default=0.0)
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-    def __start__(self, fade=False):
-        arg_list = []
-        if len(self.path) < 2 or self.path[0] != '/':
-            elogging.warning("OSC: no valid path for OSC message - nothing sent", dialog=False)
-            return
-        try:
-            for arg in self.args:
-                conv_arg = string_to_value(arg[0], arg[1])
-                arg_list.append(conv_arg)
-            OscCommon().send(self.path, *arg_list)
-        except ValueError:
-            elogging.warning("OSC: Error on parsing argument list - nothing sent", dialog=False)
+        self.__in_fadein = False
+        self.__in_fadeout = False
+        self.__fader = Fader(self, 'position')
+        self.changed('position').connect(self.__send_fade)
 
-        return False
+    def __send_fade(self):
+        print("OSC fade position:", self.position)
+
+    def __start__(self, fade=False):
+        if fade and self._can_fadein():
+            # Proceed fadein
+            self._fadein()
+            return True
+        else:
+            # Single Shot
+            value_list = []
+
+            if len(self.path) < 2 or self.path[0] != '/':
+                elogging.warning("OSC: no valid path for OSC message - nothing sent", dialog=False)
+                return
+            try:
+                for arg in self.args:
+                    value = string_to_value(arg[COL_TYPE], arg[COL_START_VAL])
+                    value_list.append(value)
+                OscCommon().send(self.path, *value_list)
+            except ValueError:
+                elogging.warning("OSC: Error on parsing argument list - nothing sent", dialog=False)
+
+            return False
+
+    def __stop__(self, fade=False):
+        return True
+
+    def __pause__(self, fade=False):
+        return True
+
+    def _can_fade(self):
+        has_fade = False
+        for arg in self.args:
+            if arg[COL_DO_FADE]:
+                has_fade = True
+                break
+        return has_fade
+
+    def _can_fadein(self):
+        return self._can_fade() and self.fadein_duration > 0
+
+    def _can_fadeout(self):
+        return self._can_fade() and self.fadeout_duration > 0
+
+    @async
+    def _fadein(self):
+        if self._can_fadein():
+            self.__in_fadein = True
+            self.fadein_start.emit()
+            try:
+                self.__fader.prepare()
+                self.__fader.fade(self.fadein_duration,
+                                  1.0,
+                                  FadeInType[self.fadein_type])
+            finally:
+                self.__in_fadein = False
+                self.fadein_end.emit()
+
+    def _fadeout(self):
+        ended = True
+        return ended
 
 
 class OscCueSettings(SettingsPage):
@@ -129,7 +208,9 @@ class OscCueSettings(SettingsPage):
 
         self.oscModel = SimpleTableModel([
             translate('Osc Cue', 'Type'),
-            translate('Osc Cue', 'Argument')])
+            translate('Osc Cue', 'Argument'),
+            translate('Osc Cue', 'FadeTo'),
+            translate('Osc Cue', 'Fade')])
 
         self.oscModel.dataChanged.connect(self.__argument_changed)
 
@@ -170,10 +251,10 @@ class OscCueSettings(SettingsPage):
             if 'args' in settings:
                 args = settings.get('args', '')
                 for row in args:
-                    self.oscModel.appendRow(row[0], row[1])
+                    self.oscModel.appendRow(row[0], row[1], row[2], row[3])
 
     def __new_argument(self):
-        self.oscModel.appendRow(OscMessageType.Int.value, '')
+        self.oscModel.appendRow(OscMessageType.Int.value, '', '', False)
 
     def __remove_argument(self):
         if self.oscModel.rowCount():
@@ -182,7 +263,7 @@ class OscCueSettings(SettingsPage):
     def __test_message(self):
         oscmsg = {'path': self.pathEdit.text(),
                   'args': [row for row in self.oscModel.rows]}
-        arg_list = []
+        value_list = []
         if len(oscmsg['path']) < 2:
             elogging.warning("OSC: no valid path for OSC message - nothing sent",
                              details="Path too short.",
@@ -197,21 +278,32 @@ class OscCueSettings(SettingsPage):
 
         try:
             for arg in oscmsg['args']:
-                conv_arg = string_to_value(arg[0], arg[1])
-                arg_list.append(conv_arg)
-            OscCommon().send(oscmsg['path'], *arg_list)
+                value = string_to_value(arg[0], arg[1])
+                value_list.append(value)
+            OscCommon().send(oscmsg['path'], *value_list)
         except ValueError:
             elogging.warning("OSC: Error on parsing argument list - nothing sent")
 
     def __argument_changed(self, index_topleft, index_bottomright, roles):
         model = index_bottomright.model()
         osctype = model.rows[index_bottomright.row()][0]
-        argument = model.rows[index_bottomright.row()][1]
+        start = model.rows[index_bottomright.row()][1]
+        end = model.rows[index_bottomright.row()][2]
+
         try:
-            model.rows[index_bottomright.row()][1] = format_string(osctype, argument)
+            model.rows[index_bottomright.row()][1] = format_string(osctype, start)
         except ValueError:
             model.rows[index_bottomright.row()][1] = ''
-            elogging.warning("OSC Argument Error", details="{0} not a {1}".format(argument, osctype), dialog=True)
+            elogging.warning("OSC Argument Error", details="{0} not a {1}".format(start, osctype), dialog=True)
+
+        try:
+            model.rows[index_bottomright.row()][2] = format_string(osctype, end)
+        except ValueError:
+            model.rows[index_bottomright.row()][2] = ''
+            elogging.warning("OSC Argument Error", details="{0} not a {1}".format(end, osctype), dialog=True)
+
+        if not can_fade(osctype):
+            model.rows[index_bottomright.row()][3] = False
 
 
 class OscView(QTableView):
@@ -220,7 +312,9 @@ class OscView(QTableView):
 
         self.delegates = [ComboBoxDelegate(options=[i.value for i in OscMessageType],
                                            tr_context='OscMessageType'),
-                          LineEditDelegate()]
+                          LineEditDelegate(),
+                          LineEditDelegate(),
+                          CheckBoxDelegate()]
 
         self.setSelectionBehavior(QTableWidget.SelectRows)
         self.setSelectionMode(QTableView.SingleSelection)

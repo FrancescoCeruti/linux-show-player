@@ -19,7 +19,7 @@
 
 from PyQt5.QtCore import Qt, QEvent
 from PyQt5.QtWidgets import QStyledItemDelegate, QComboBox, QSpinBox, \
-    QLineEdit, QStyle, QDialog
+    QLineEdit, QStyle, QDialog, QCheckBox
 
 from lisp.application import Application
 from lisp.cues.cue import CueAction
@@ -109,6 +109,27 @@ class SpinBoxDelegate(QStyledItemDelegate):
     def setModelData(self, spinBox, model, index):
         spinBox.interpretText()
         model.setData(index, spinBox.value(), Qt.EditRole)
+
+    def updateEditorGeometry(self, editor, option, index):
+        editor.setGeometry(option.rect)
+
+
+class CheckBoxDelegate(QStyledItemDelegate):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def createEditor(self, parent, option, index):
+        editor = QCheckBox(parent)
+
+        return editor
+
+    def setEditorData(self, checkBox, index):
+        value = index.model().data(index, Qt.EditRole)
+        if isinstance(value, bool):
+            checkBox.setChecked(value)
+
+    def setModelData(self, checkBox, model, index):
+        model.setData(index, checkBox.isChecked(), Qt.EditRole)
 
     def updateEditorGeometry(self, editor, option, index):
         editor.setGeometry(option.rect)
