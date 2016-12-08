@@ -47,6 +47,7 @@ COL_START_VAL = 1
 COL_END_VAL = 2
 COL_DO_FADE = 3
 
+
 class OscMessageType(Enum):
     Int = 'Integer'
     Float = 'Float'
@@ -80,7 +81,7 @@ def format_string(t, sarg):
     elif t == OscMessageType.Int.value:
         return "{0:d}".format(int(sarg))
     elif t == OscMessageType.Float.value:
-        return "{0:.2f}".format(int(sarg))
+        return "{0:.2f}".format(float(sarg))
     elif t == OscMessageType.Bool.value:
         if sarg.lower() == 'true':
             return 'True'
@@ -94,7 +95,7 @@ def format_string(t, sarg):
         raise ValueError
 
 
-def can_fade(t):
+def type_can_fade(t):
     if t == OscMessageType.Int.value:
         return True
     elif t == OscMessageType.Float.value:
@@ -124,44 +125,48 @@ class OscCue(Cue):
         self.__fader = Fader(self, 'position')
         self.changed('position').connect(self.__send_fade)
 
-    def __send_fade(self):
-        print("OSC fade position:", self.position)
+    def __filter_fade_args(self):
+        value_list = []
+        for arg in self.args:
+            if arg[COL_DO_FADE]:
+                value_list.append(arg)
+        return value_list
 
     def __start__(self, fade=False):
-        if fade and self._can_fadein():
+        faded_args = self.__filter_fade_args()
+        print("FADED ARGS: ", faded_args)
+        if fade and faded_args:
             # Proceed fadein
-            self._fadein()
-            return True
+            # self._fadein()
+            # return True
+            return self.__send_single_shot()
         else:
-            # Single Shot
-            value_list = []
+            return self.__send_single_shot()
 
-            if len(self.path) < 2 or self.path[0] != '/':
-                elogging.warning("OSC: no valid path for OSC message - nothing sent", dialog=False)
-                return
-            try:
-                for arg in self.args:
-                    value = string_to_value(arg[COL_TYPE], arg[COL_START_VAL])
-                    value_list.append(value)
-                OscCommon().send(self.path, *value_list)
-            except ValueError:
-                elogging.warning("OSC: Error on parsing argument list - nothing sent", dialog=False)
+    def __send_single_shot(self):
+        value_list = []
 
-            return False
+        if len(self.path) < 2 or self.path[0] != '/':
+            elogging.warning("OSC: no valid path for OSC message - nothing sent", dialog=False)
+            return
+        try:
+            for arg in self.args:
+                value = string_to_value(arg[COL_TYPE], arg[COL_START_VAL])
+                value_list.append(value)
+            OscCommon().send(self.path, *value_list)
+        except ValueError:
+            elogging.warning("OSC: Error on parsing argument list - nothing sent", dialog=False)
+
+        return False
+
+    def __send_fade(self):
+        print("OSC fade position:", self.position)
 
     def __stop__(self, fade=False):
         return True
 
     def __pause__(self, fade=False):
         return True
-
-    def _can_fade(self):
-        has_fade = False
-        for arg in self.args:
-            if arg[COL_DO_FADE]:
-                has_fade = True
-                break
-        return has_fade
 
     def _can_fadein(self):
         return self._can_fade() and self.fadein_duration > 0
@@ -286,23 +291,32 @@ class OscCueSettings(SettingsPage):
 
     def __argument_changed(self, index_topleft, index_bottomright, roles):
         model = index_bottomright.model()
-        osctype = model.rows[index_bottomright.row()][0]
-        start = model.rows[index_bottomright.row()][1]
-        end = model.rows[index_bottomright.row()][2]
+        osctype = model.rows[index_bottomright.row()][COL_TYPE]
+        start = model.rows[index_bottomright.row()][COL_START_VAL]
+        end = model.rows[index_bottomright.row()][COL_END_VAL]
 
+        # test Start value for correct format
         try:
-            model.rows[index_bottomright.row()][1] = format_string(osctype, start)
+            model.rows[index_bottomright.row()][COL_START_VAL] = format_string(osctype, start)
         except ValueError:
-            model.rows[index_bottomright.row()][1] = ''
+            model.rows[index_bottomright.row()][COL_START_VAL] = ''
             elogging.warning("OSC Argument Error", details="{0} not a {1}".format(start, osctype), dialog=True)
 
+        # test End value for correct format
         try:
-            model.rows[index_bottomright.row()][2] = format_string(osctype, end)
+            model.rows[index_bottomright.row()][COL_END_VAL] = format_string(osctype, end)
         except ValueError:
-            model.rows[index_bottomright.row()][2] = ''
+            model.rows[index_bottomright.row()][COL_END_VAL] = ''
             elogging.warning("OSC Argument Error", details="{0} not a {1}".format(end, osctype), dialog=True)
 
-        if not can_fade(osctype):
+        # Fade only enabled for Int and Float
+        if not type_can_fade(osctype):
+            model.rows[index_bottomright.row()][COL_DO_FADE] = False
+
+        # for Fade, test if end value is provided
+        if not model.rows[index_bottomright.row()][COL_END_VAL]and \
+                model.rows[index_bottomright.row()][COL_DO_FADE]:
+            elogging.warning("OSC Argument Error", details="FadeOut value is missing", dialog=True)
             model.rows[index_bottomright.row()][3] = False
 
 
