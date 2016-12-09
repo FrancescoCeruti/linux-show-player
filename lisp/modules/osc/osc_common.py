@@ -42,12 +42,14 @@ def osc_handler(func):
 
 @osc_handler
 def _go(path, args, types, src):
+    """triggers GO in ListLayout"""
     if isinstance(MainWindow().layout, ListLayout):
         MainWindow().layout.go()
 
 
 @osc_handler
 def _reset_list(path, args, types, src):
+    """reset, stops all cues, sets cursor to Cue index 0 in ListLayout"""
     if isinstance(MainWindow().layout, ListLayout):
         for cue in Application().cue_model:
             cue.stop()
@@ -56,6 +58,7 @@ def _reset_list(path, args, types, src):
 
 @osc_handler
 def _pause_all(path, args, types, src):
+    """triggers global pause all media"""
     for cue in Application().cue_model:
         if cue.state == CueState.Running:
             cue.pause()
@@ -63,6 +66,7 @@ def _pause_all(path, args, types, src):
 
 @osc_handler
 def _restart_all(path, args, types, src):
+    """triggers global play, if pausing"""
     for cue in Application().cue_model:
         if cue.state == CueState.Pause:
             cue.start()
@@ -70,6 +74,7 @@ def _restart_all(path, args, types, src):
 
 @osc_handler
 def _stop_all(path, args, types, src):
+    """triggers global stop, stops all media cues"""
     for cue in Application().cue_model:
         cue.stop()
 
@@ -83,8 +88,8 @@ class OscCommon(metaclass=ABCSingleton):
 
         # TODO: static paths and callbacks, find smarter way
         self.__callbacks = [
-            ['/lisp/go', '', _go],
-            ['/lisp/reset', '', _reset_list],
+            ['/lisp/list/go', '', _go],
+            ['/lisp/list/reset', '', _reset_list],
             ['/lisp/pause', '', _pause_all],
             ['/lisp/start', '', _restart_all],
             ['/lisp/stop', '', _stop_all],
