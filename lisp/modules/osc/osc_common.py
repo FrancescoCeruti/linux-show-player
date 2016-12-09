@@ -47,6 +47,14 @@ def _go(path, args, types, src):
 
 
 @osc_handler
+def _reset_list(path, args, types, src):
+    if isinstance(MainWindow().layout, ListLayout):
+        for cue in Application().cue_model:
+            cue.stop()
+        MainWindow().layout.set_current_index(0)
+
+
+@osc_handler
 def _pause_all(path, args, types, src):
     for cue in Application().cue_model:
         if cue.state == CueState.Running:
@@ -76,6 +84,7 @@ class OscCommon(metaclass=ABCSingleton):
         # TODO: static paths and callbacks, find smarter way
         self.__callbacks = [
             ['/lisp/go', '', _go],
+            ['/lisp/reset', '', _reset_list],
             ['/lisp/pause', '', _pause_all],
             ['/lisp/start', '', _restart_all],
             ['/lisp/stop', '', _stop_all],
