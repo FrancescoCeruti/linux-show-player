@@ -22,10 +22,13 @@
 from enum import Enum
 from time import sleep
 
+from PyQt5 import QtCore
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QGridLayout, \
     QTableView, QTableWidget, QHeaderView, QPushButton, QLabel, \
-    QLineEdit
+    QLineEdit, QDoubleSpinBox
+
+from lisp.ui.widgets import FadeComboBox
 
 from lisp.core.decorators import async, locked_method
 from lisp.core.fade_functions import ntime, FadeInType, FadeOutType
@@ -46,6 +49,10 @@ COL_TYPE = 0
 COL_START_VAL = 1
 COL_END_VAL = 2
 COL_DO_FADE = 3
+
+COL_BASE_VAL = 1
+COL_DIFF_VAL = 2
+COL_FUNCTOR = 3
 
 
 class OscMessageType(Enum):
@@ -70,6 +77,20 @@ def string_to_value(t, sarg):
             return bool(int(sarg))
     elif t == OscMessageType.String.value:
         return str(sarg)
+    else:
+        raise ValueError
+
+
+def convert_value(t, value):
+    """converts value to requested value for given type"""
+    if t == OscMessageType.Int.value:
+        return round(int(value))
+    elif t == OscMessageType.Float.value:
+        return float(value)
+    elif t == OscMessageType.Bool.value:
+        return bool(value)
+    elif t == OscMessageType.String.value:
+        return str(value)
     else:
         raise ValueError
 
@@ -107,48 +128,70 @@ def type_can_fade(t):
 class OscCue(Cue):
     Name = QT_TRANSLATE_NOOP('CueName', 'OSC Cue')
 
-    CueActions = (CueAction.Default, CueAction.Start, CueAction.FadeInStart,
-                  CueAction.Stop, CueAction.FadeOutStop, CueAction.Pause,
-                  CueAction.FadeOutPause)
+    CueActions = (CueAction.Default, CueAction.Start, CueAction.Stop,
+                  CueAction.Pause)
 
     path = Property(default='')
     args = Property(default=[])
+    fade_type = Property(default=FadeInType.Linear.name)
 
     # one global fader used for all faded arguments
     position = Property(default=0.0)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.name = translate('CueName', self.Name)
 
-        self.__in_fadein = False
-        self.__in_fadeout = False
-        self.__fader = Fader(self, 'position')
-        self.changed('position').connect(self.__send_fade)
+        self.__fade_args = None
+        self.__time = 0
+        self.__stop = False
+        self.__pause = False
 
-    def __filter_fade_args(self):
+    def __prepare_fade(self):
+        """ returns list of arguments, that will be faded
+            each item of the list contains:
+            message type tag, start value, diff value, fade functor
+            start and end value are converted from strings to the
+            type to the correct type (message type tag)
+        """
         value_list = []
         for arg in self.args:
-            if arg[COL_DO_FADE]:
-                value_list.append(arg)
+            if not arg[COL_END_VAL] or not arg[COL_DO_FADE]:
+                value_list.append([arg[COL_TYPE],
+                                   string_to_value(arg[COL_TYPE], arg[COL_BASE_VAL]),
+                                   0,
+                                   None])
+            else:
+                base_value = string_to_value(arg[COL_TYPE], arg[COL_START_VAL])
+                diff_value = string_to_value(arg[COL_TYPE], arg[COL_END_VAL]) - base_value
+                if arg[COL_DO_FADE] and abs(diff_value):
+                    fade_arg = []
+                    fade_arg.append(arg[COL_TYPE])
+                    fade_arg.append(base_value)
+                    fade_arg.append(diff_value)
+                    if diff_value > 0:
+                        fade_arg.append(FadeInType[self.fade_type].value)
+                    else:
+                        fade_arg.append(FadeOutType[self.fade_type].value)
+                    value_list.append(fade_arg)
         return value_list
 
     def __start__(self, fade=False):
-        faded_args = self.__filter_fade_args()
-        print("FADED ARGS: ", faded_args)
-        if fade and faded_args:
-            # Proceed fadein
-            # self._fadein()
-            # return True
-            return self.__send_single_shot()
+        self.__fade_args = self.__prepare_fade()
+        if self.__can_fade():
+            self.__send_fade()
+            return True
         else:
-            return self.__send_single_shot()
+            self.__send_single_shot()
+
+        return False
 
     def __send_single_shot(self):
         value_list = []
 
         if len(self.path) < 2 or self.path[0] != '/':
             elogging.warning("OSC: no valid path for OSC message - nothing sent", dialog=False)
-            return
+            return False
         try:
             for arg in self.args:
                 value = string_to_value(arg[COL_TYPE], arg[COL_START_VAL])
@@ -159,39 +202,62 @@ class OscCue(Cue):
 
         return False
 
+    @async
+    @locked_method
     def __send_fade(self):
-        print("OSC fade position:", self.position)
+        self.__stop = False
+        self.__pause = False
+
+        try:
+            begin = self.__time
+            duration = (self.duration // 10)
+
+            while (not (self.__stop or self.__pause) and
+                           self.__time <= duration):
+                time = ntime(self.__time, begin, duration)
+
+                value_list = []
+                for arg in self.__fade_args:
+                    if arg[COL_DIFF_VAL]:
+                        functor = arg[COL_FUNCTOR]
+                        current = functor(time, arg[COL_DIFF_VAL], arg[COL_BASE_VAL])
+                        value_list.append(convert_value(arg[COL_TYPE], current))
+                    else:
+                        value_list.append(convert_value(arg[COL_TYPE], arg[COL_BASE_VAL]))
+
+                OscCommon().send(self.path, *value_list)
+
+                self.__time += 1
+                sleep(0.01)
+
+            if not self.__pause:
+                # to avoid approximation problems
+                # self.__send_single_shot() # but with end value
+                if not self.__stop:
+                    self._ended()
+
+        except Exception as e:
+            self._error(
+                translate('OscCue', 'Error during cue execution'),
+                str(e)
+            )
+        finally:
+            if not self.__pause:
+                self.__time = 0
 
     def __stop__(self, fade=False):
+        self.__stop = True
         return True
 
     def __pause__(self, fade=False):
+        self.__pause = True
         return True
 
-    def _can_fadein(self):
-        return self._can_fade() and self.fadein_duration > 0
+    def __can_fade(self):
+        return self.__fade_args and self.duration > 0
 
-    def _can_fadeout(self):
-        return self._can_fade() and self.fadeout_duration > 0
-
-    @async
-    def _fadein(self):
-        if self._can_fadein():
-            self.__in_fadein = True
-            self.fadein_start.emit()
-            try:
-                self.__fader.prepare()
-                self.__fader.fade(self.fadein_duration,
-                                  1.0,
-                                  FadeInType[self.fadein_type])
-            finally:
-                self.__in_fadein = False
-                self.fadein_end.emit()
-
-    def _fadeout(self):
-        ended = True
-        return ended
-
+    def current_time(self):
+        return self.__time * 10
 
 class OscCueSettings(SettingsPage):
     Name = QT_TRANSLATE_NOOP('Cue Name', 'OSC Settings')
@@ -235,6 +301,26 @@ class OscCueSettings(SettingsPage):
         self.testButton.clicked.connect(self.__test_message)
         self.oscGroup.layout().addWidget(self.testButton, 4, 0)
 
+        # Fade
+        self.fadeGroup = QGroupBox(self)
+        self.fadeGroup.setLayout(QGridLayout())
+        self.layout().addWidget(self.fadeGroup)
+
+        self.fadeSpin = QDoubleSpinBox(self.fadeGroup)
+        self.fadeSpin.setMaximum(3600)
+        self.fadeGroup.layout().addWidget(self.fadeSpin, 0, 0)
+
+        self.fadeLabel = QLabel(self.fadeGroup)
+        self.fadeLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.fadeGroup.layout().addWidget(self.fadeLabel, 0, 1)
+
+        self.fadeCurveCombo = FadeComboBox(parent=self.fadeGroup)
+        self.fadeGroup.layout().addWidget(self.fadeCurveCombo, 1, 0)
+
+        self.fadeCurveLabel = QLabel(self.fadeGroup)
+        self.fadeCurveLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.fadeGroup.layout().addWidget(self.fadeCurveLabel, 1, 1)
+
         self.retranslateUi()
 
     def retranslateUi(self):
@@ -243,10 +329,15 @@ class OscCueSettings(SettingsPage):
         self.removeButton.setText(translate('OscCue', 'Remove'))
         self.testButton.setText(translate('OscCue', 'Test'))
         self.pathLabel.setText(translate('OscCue', 'OSC Path: (example: "/path/to/something")'))
+        self.fadeGroup.setTitle(translate('OscCue', 'Fade'))
+        self.fadeLabel.setText(translate('OscCue', 'Time (sec)'))
+        self.fadeCurveLabel.setText(translate('OscCue', 'Curve'))
 
     def get_settings(self):
         oscmsg = {'path': self.pathEdit.text(),
-                  'args': [row for row in self.oscModel.rows]}
+                  'args': [row for row in self.oscModel.rows],
+                  'duration': self.fadeSpin.value() * 1000,
+                  'fade_type': self.fadeCurveCombo.currentType()}
         return oscmsg
 
     def load_settings(self, settings):
@@ -257,6 +348,8 @@ class OscCueSettings(SettingsPage):
                 args = settings.get('args', '')
                 for row in args:
                     self.oscModel.appendRow(row[0], row[1], row[2], row[3])
+            self.fadeSpin.setValue(settings.get('duration', 0) / 1000)
+            self.fadeCurveCombo.setCurrentType(settings.get('fade_type', ''))
 
     def __new_argument(self):
         self.oscModel.appendRow(OscMessageType.Int.value, '', '', False)
