@@ -301,8 +301,7 @@ QPushButton:pressed {
 }
 
 QComboBox:focus,
-QPushButton:focus,
-QMenuBar:focus {
+QPushButton:focus {
     border: 1px solid #419BE6;
 }
 
