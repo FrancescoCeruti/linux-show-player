@@ -106,6 +106,8 @@ class VolumeControl(Cue):
                 time = ntime(self.__time, begin, duration)
                 volume.current_volume = functor(time, volume_diff, base_volume)
 
+                volume.changed('volume').emit()
+
                 self.__time += 1
                 sleep(0.01)
 

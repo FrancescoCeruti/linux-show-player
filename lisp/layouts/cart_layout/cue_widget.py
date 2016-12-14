@@ -214,7 +214,7 @@ class CueWidget(QWidget):
     def reset_volume(self):
         if self._volume_element is not None:
             self.volumeSlider.setValue(round(fader_to_slider(
-                self._volume_element.volume) * CueWidget.SLIDER_RANGE))
+                self._volume_element.current_volume) * CueWidget.SLIDER_RANGE))
 
     def _set_cue(self, cue):
         self.cue = cue
