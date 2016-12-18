@@ -17,7 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from threading import Event, Lock
+from threading import Event
 
 from lisp.core.decorators import locked_method
 from lisp.core.fade_functions import ntime, FadeInType, FadeOutType
@@ -46,13 +46,16 @@ class Fader:
         :param attribute: The target attribute (name) to be faded
         :type attribute: str
         """
+        self._time = 0  # current fade time in hundredths-of-seconds
         self._target = target
         self._attribute = attribute
 
-        self._is_running = Event()
-        self._is_running.set()
         self._is_ready = Event()
         self._is_ready.set()
+        self._running = Event()
+        self._running.set()
+        self._pause = Event()
+        self._pause.set()
 
     @property
     def target(self):
@@ -75,7 +78,7 @@ class Fader:
     def prepare(self):
         self.stop()
 
-        self._is_running.clear()
+        self._running.clear()
         self._is_ready.clear()
 
     @locked_method(blocking=False)
@@ -96,11 +99,11 @@ class Fader:
 
         if not isinstance(fade_type, (FadeInType, FadeOutType)):
             raise AttributeError(
-                'fade_type must be on of FadeInType or FadeOutType member,'
+                'fade_type must be one of FadeInType or FadeOutType member,'
                 'not {}'.format(fade_type.__class__.__name__))
 
         try:
-            time = 0
+            self._time = 0
             begin = 0
             functor = fade_type.value
             duration = int(duration * 100)
@@ -110,29 +113,47 @@ class Fader:
             if value_diff == 0:
                 return
 
-            while time <= duration:
-                if not self._is_running.is_set():
-                    rsetattr(self._target,
-                             self._attribute,
-                             functor(ntime(time, begin, duration),
-                                     value_diff,
-                                     base_value))
-                else:
-                    break
+            while self._time <= duration and not self._running.is_set():
+                self._pause.wait()
 
-                time += 1
-                self._is_running.wait(0.01)
+                rsetattr(self._target,
+                         self._attribute,
+                         functor(ntime(self._time, begin, duration),
+                                 value_diff,
+                                 base_value))
+
+                self._time += 1
+                self._running.wait(0.01)
         finally:
-            interrupted = self._is_running.is_set()
-            self._is_running.set()
+            interrupted = self._running.is_set()
+            self._running.set()
             self._is_ready.set()
+            self._time = 0
 
         return not interrupted
 
     def stop(self):
-        if self.is_running():
-            self._is_running.set()
+        if self.is_running() or self.is_paused():
+            self._running.set()
             self._is_ready.wait()
 
+        if self.is_paused():
+            self._pause.set()
+
+    def pause(self):
+        if self.is_running():
+            self._pause.clear()
+
+    def restart(self):
+        if self.is_paused():
+            self._pause.set()
+
+    def is_paused(self):
+        return not self._pause.is_set()
+
     def is_running(self):
-        return not self._is_running.is_set()
+        return not self._running.is_set() and not self.is_paused()
+
+    def current_time(self):
+        # Return the time in millisecond
+        return self._time * 10
