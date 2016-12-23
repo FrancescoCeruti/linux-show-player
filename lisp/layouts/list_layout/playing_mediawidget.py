@@ -33,6 +33,8 @@ class PlayingMediaWidget(QWidget):
 
     def __init__(self, cue, **kwargs):
         super().__init__(**kwargs)
+        self.setFocusPolicy(Qt.NoFocus)
+        self.setGeometry(0, 0, self.parent().viewport().width(), 100)
 
         self.cue = cue
         self.cue_time = CueTime(cue)
@@ -41,14 +43,11 @@ class PlayingMediaWidget(QWidget):
         self._dbmeter_element = None
         self._accurate_time = False
 
-        scroll_size = (self.parent().verticalScrollBar().width() + 5)
-        self.setGeometry(0, 0, self.parent().width() - scroll_size, 102)
-        self.setFocusPolicy(Qt.NoFocus)
-
         self.gridLayoutWidget = QWidget(self)
         self.gridLayoutWidget.setGeometry(self.geometry())
         self.gridLayout = QGridLayout(self.gridLayoutWidget)
         self.gridLayout.setContentsMargins(2, 2, 2, 2)
+        self.gridLayout.setSpacing(3)
 
         self.nameLabel = QLabel(self.gridLayoutWidget)
         self.nameLabel.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
@@ -98,9 +97,9 @@ class PlayingMediaWidget(QWidget):
         self.gridLayout.setColumnStretch(2, 5)
 
         cue.changed('name').connect(self.name_changed)
-        cue.media.changed('duration').connect(self.update_duration)
-        cue.media.played.connect(self._pause_to_play)
-        cue.media.paused.connect(self._play_to_pause)
+        cue.changed('duration').connect(self.update_duration)
+        cue.started.connect(self._pause_to_play)
+        cue.paused.connect(self._play_to_pause)
 
         # Fade enter/exit
         cue.fadein_start.connect(self.enter_fadein, Connection.QtQueued)
@@ -175,7 +174,11 @@ class PlayingMediaWidget(QWidget):
         self.seekSlider.setMaximum(duration)
 
     def _stop(self, *args):
-        self.cue.stop(fade=config['ListLayout'].getboolean('StopCueFade'))
+        if config['ListLayout'].getboolean('StopCueInterrupt'):
+            self.cue.interrupt(
+                fade=config['ListLayout'].getboolean('InterruptCueFade'))
+        else:
+            self.cue.stop(fade=config['ListLayout'].getboolean('StopCueFade'))
 
     def _play(self, *args):
         self.cue.start(fade=config['ListLayout'].getboolean('RestartCueFade'))

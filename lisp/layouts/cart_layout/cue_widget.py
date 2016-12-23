@@ -236,6 +236,7 @@ class CueWidget(QWidget):
         self.cue.fadeout_end.connect(self._exit_fade, Connection.QtQueued)
 
         # Cue status changed
+        self.cue.interrupted.connect(self._status_stopped, Connection.QtQueued)
         self.cue.started.connect(self._status_playing, Connection.QtQueued)
         self.cue.stopped.connect(self._status_stopped, Connection.QtQueued)
         self.cue.paused.connect(self._status_paused, Connection.QtQueued)

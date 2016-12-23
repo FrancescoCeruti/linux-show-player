@@ -212,6 +212,8 @@ class GstMedia(Media):
         for element in self._elements:
             element.interrupt()
 
+        state = self._state
+
         self._gst_pipe.set_state(Gst.State.NULL)
         if dispose:
             self._state = MediaState.Null
@@ -221,8 +223,8 @@ class GstMedia(Media):
 
         self._loop_count = self.loop
 
-        if emit and (self._state == MediaState.Playing or
-                             self._state == MediaState.Paused):
+        if emit and (state == MediaState.Playing or
+                     state == MediaState.Paused):
             self.interrupted.emit(self)
 
     def properties(self, only_changed=False):

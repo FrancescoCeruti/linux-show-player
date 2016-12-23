@@ -53,6 +53,12 @@ class ListLayoutSettings(SettingsPage):
         self.autoNext = QCheckBox(self.behaviorsGroup)
         self.behaviorsGroup.layout().addWidget(self.autoNext)
 
+        self.stopCueInterrupt = QCheckBox(self.behaviorsGroup)
+        self.behaviorsGroup.layout().addWidget(self.stopCueInterrupt)
+
+        self.stopAllInterrupt = QCheckBox(self.behaviorsGroup)
+        self.behaviorsGroup.layout().addWidget(self.stopAllInterrupt)
+
         self.endListLayout = QHBoxLayout()
         self.behaviorsGroup.layout().addLayout(self.endListLayout)
         self.endListLabel = QLabel(self.behaviorsGroup)
@@ -108,18 +114,22 @@ class ListLayoutSettings(SettingsPage):
         self.showAccurate.setText(translate('ListLayout', 'Show accurate time'))
         self.showSeek.setText(translate('ListLayout', 'Show seek-bars'))
         self.autoNext.setText(translate('ListLayout', 'Auto-select next cue'))
+        self.stopCueInterrupt.setText(
+            translate('ListLayout', 'Cue stop-button interrupt'))
+        self.stopAllInterrupt.setText(
+            translate('ListLayout', 'Stop-All button interrupt'))
         self.endListLabel.setText(translate('ListLayout', 'At list end:'))
         self.goKeyLabel.setText(translate('ListLayout', 'Go key:'))
 
         self.useFadeGroup.setTitle(translate('ListLayout', 'Use fade'))
-        self.stopCueFade.setText(translate('ListLayout', 'Stop-cue'))
-        self.pauseCueFade.setText(translate('ListLayout', 'Pause-cue'))
-        self.restartCueFade.setText(translate('ListLayout', 'Restart-cue'))
-        self.interruptCueFade.setText(translate('ListLayout', 'Interrupt-cue'))
-        self.stopAllFade.setText(translate('ListLayout', 'Stop-all'))
-        self.pauseAllFade.setText(translate('ListLayout', 'Pause-all'))
-        self.restartAllFade.setText(translate('ListLayout', 'Restart-all'))
-        self.interruptAllFade.setText(translate('ListLayout', 'Interrupt-all'))
+        self.stopCueFade.setText(translate('ListLayout', 'Stop Cue'))
+        self.pauseCueFade.setText(translate('ListLayout', 'Pause Cue'))
+        self.restartCueFade.setText(translate('ListLayout', 'Restart Cue'))
+        self.interruptCueFade.setText(translate('ListLayout', 'Interrupt Cue'))
+        self.stopAllFade.setText(translate('ListLayout', 'Stop All'))
+        self.pauseAllFade.setText(translate('ListLayout', 'Pause All'))
+        self.restartAllFade.setText(translate('ListLayout', 'Restart All'))
+        self.interruptAllFade.setText(translate('ListLayout', 'Interrupt All'))
 
     def get_settings(self):
         settings = {
@@ -128,6 +138,8 @@ class ListLayoutSettings(SettingsPage):
             'showseek': str(self.showSeek.isChecked()),
             'showaccurate': str(self.showAccurate.isChecked()),
             'autocontinue': str(self.autoNext.isChecked()),
+            'stopcueinterrupt': str(self.stopCueInterrupt.isChecked()),
+            'stopallinterrupt': str(self.stopAllInterrupt.isChecked()),
             'endlist': str(self.endListBehavior.currentData()),
             'gokey': self.goKeyEdit.keySequence().toString(
                 QKeySequence.NativeText),
@@ -151,6 +163,10 @@ class ListLayoutSettings(SettingsPage):
         self.showAccurate.setChecked(settings.get('showaccurate') == 'True')
         self.showSeek.setChecked(settings.get('showseek') == 'True')
         self.autoNext.setChecked(settings.get('autocontinue') == 'True')
+        self.stopCueInterrupt.setChecked(
+            settings.get('stopcueinterrupt') == 'True')
+        self.stopAllInterrupt.setChecked(
+            settings.get('stopallinterrupt') == 'True')
         self.endListBehavior.setCurrentText(
             translate('ListLayout', settings.get('endlist', '')))
         self.goKeyEdit.setKeySequence(
