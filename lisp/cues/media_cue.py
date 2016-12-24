@@ -99,12 +99,7 @@ class MediaCue(Cue):
     def __interrupt__(self, fade=False):
         self.__fader.stop()
 
-        try:
-            d = config['MediaCue'].getint('interruptfade')
-        except (KeyError, ValueError):
-            d = 0
-
-        if fade and d > 0 and self.__volume is not None:
+        if fade:
             self._fadeout(interrupt=True)
 
         self.media.interrupt()
@@ -128,8 +123,17 @@ class MediaCue(Cue):
     def _can_fadein(self):
         return self.__volume is not None and self.fadein_duration > 0
 
-    def _can_fadeout(self):
-        return self.__volume is not None and self.fadeout_duration > 0
+    def _can_fadeout(self, interrupt=False):
+        if self.__volume is not None:
+            if interrupt:
+                try:
+                    return config['MediaCue'].getfloat('InterruptFade') > 0
+                except (KeyError, ValueError):
+                    return False
+            else:
+                return self.fadeout_duration > 0
+
+        return False
 
     @async
     def _fadein(self):
@@ -147,7 +151,7 @@ class MediaCue(Cue):
 
     def _fadeout(self, interrupt=False):
         ended = True
-        if self._can_fadeout():
+        if self._can_fadeout(interrupt):
             self.__in_fadeout = True
             self.fadeout_start.emit()
             try:
@@ -157,8 +161,8 @@ class MediaCue(Cue):
                     duration = self.fadeout_duration
                     type = FadeOutType[self.fadeout_type]
                 else:
-                    duration = config['MediaCue'].getint('interruptfade')
-                    type = FadeOutType[config['MediaCue']['interruptfadetype']]
+                    duration = config['MediaCue'].getfloat('InterruptFade')
+                    type = FadeOutType[config['MediaCue']['InterruptFadeType']]
 
                 ended = self.__fader.fade(duration, 0, type)
 

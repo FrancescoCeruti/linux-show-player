@@ -36,6 +36,7 @@ from lisp.ui.layoutselect import LayoutSelect
 from lisp.ui.mainwindow import MainWindow
 from lisp.ui.settings.app_settings import AppSettings
 from lisp.ui.settings.pages.app_general import General
+from lisp.ui.settings.pages.media_cue_settings import MediaCueAppSettings
 
 
 class Application(metaclass=Singleton):
@@ -53,6 +54,7 @@ class Application(metaclass=Singleton):
 
         # Register general settings widget
         AppSettings.register_settings_widget(General)
+        AppSettings.register_settings_widget(MediaCueAppSettings)
 
         # Show the mainWindow maximized
         self._mainWindow.showMaximized()

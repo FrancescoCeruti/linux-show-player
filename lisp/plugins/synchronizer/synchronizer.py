@@ -61,7 +61,10 @@ class Synchronizer(Plugin):
 
     def show_ip(self):
         ip = translate('Synchronizer', 'Your IP is:') + ' '
-        ip += socket.gethostbyname(socket.gethostname())
+        try:
+            ip += socket.gethostbyname(socket.gethostname())
+        except OSError:
+            ip = '127.0.0.1'
         QMessageBox.information(MainWindow(), ' ', ip)
 
     def reset(self):
