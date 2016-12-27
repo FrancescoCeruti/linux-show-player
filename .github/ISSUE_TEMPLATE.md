@@ -1,6 +1,7 @@
 Before posting an issue:
- - avoid opening a new issue if you need a simple or a yes/no answer, use gitter instead
+ - avoid opening a new issue if you need a simple or a yes/no answer, use `gitter` instead
  - check if the same issue is already been reported
+ - check if the enhancement is already mentioned in the `TODO project`
 
 When writing an issue:
  - use the markdown formatting to make the issue easier to read

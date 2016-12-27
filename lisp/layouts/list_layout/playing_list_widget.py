@@ -29,7 +29,7 @@ class PlayingListWidget(QListWidget):
     def __init__(self, playing_model, **kwargs):
         super().__init__(**kwargs)
 
-        self.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        self.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.setFocusPolicy(Qt.NoFocus)
         self.setSelectionMode(self.NoSelection)
 

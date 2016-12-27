@@ -45,16 +45,17 @@ class CueTime(metaclass=MetaCueTime):
     """Provide timing for a Cue.
 
     Once created the notify signal provide timing for the given cue.
-    The current time is queried using :meth:`lisp.cue.Cue.current_time method`.
+    The current time is queried using `Cue.current_time()`.
 
     .. note::
         The notify signal is emitted only when the cue is running.
     """
+    _Clock = Clock_100
 
     def __init__(self, cue):
         self.notify = Signal()
 
-        self._clock = Clock_100
+        self._clock = self._Clock
         self._active = False
         self._cue = cue
         self._cue.changed('duration').connect(self.__init)

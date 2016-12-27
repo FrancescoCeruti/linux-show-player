@@ -17,21 +17,19 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from time import sleep
-
 from PyQt5 import QtCore
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import QVBoxLayout, QLabel, QHBoxLayout, QGroupBox, \
     QPushButton, QDoubleSpinBox, QGridLayout
 
 from lisp.application import Application
-from lisp.backend.audio_utils import MIN_VOLUME_DB, MAX_VOLUME_DB, linear_to_db, \
-    db_to_linear
-from lisp.backend.media import MediaState
-from lisp.core.decorators import async, locked_method
-from lisp.core.fade_functions import ntime, FadeInType, FadeOutType
+from lisp.backend.audio_utils import MIN_VOLUME_DB, MAX_VOLUME_DB, \
+    linear_to_db, db_to_linear
+from lisp.core.decorators import async
+from lisp.core.fade_functions import FadeInType, FadeOutType
+from lisp.core.fader import Fader
 from lisp.core.has_properties import Property
-from lisp.cues.cue import Cue, CueAction, CueState
+from lisp.cues.cue import Cue, CueAction
 from lisp.cues.media_cue import MediaCue
 from lisp.ui.cuelistdialog import CueSelectDialog
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
@@ -54,77 +52,69 @@ class VolumeControl(Cue):
         super().__init__(**kwargs)
         self.name = translate('CueName', self.Name)
 
-        self.__time = 0
-        self.__stop = False
-        self.__pause = False
+        self.__fader = Fader(None, 'current_volume')
+        self.__init_fader()
 
-    def __start__(self, fade=False):
+    def __init_fader(self):
         cue = Application().cue_model.get(self.target_id)
 
-        if isinstance(cue, MediaCue) and cue.state & CueState.Running:
+        if isinstance(cue, MediaCue):
             volume = cue.media.element('Volume')
             if volume is not None:
-                if self.duration > 0:
-                    if volume.current_volume > self.volume:
-                        self._fade(FadeOutType[self.fade_type].value,
-                                   volume,
-                                   cue.media)
-                        return True
-                    elif volume.current_volume < self.volume:
-                        self._fade(FadeInType[self.fade_type].value,
-                                   volume,
-                                   cue.media)
-                        return True
-                else:
-                    volume.current_volume = self.volume
+                if volume is not self.__fader.target:
+                    self.__fader.target = volume
+                return True
+
+        return False
+
+    def __start__(self, fade=False):
+        if self.__init_fader():
+            if self.__fader.is_paused():
+                self.__fader.restart()
+                return True
+
+            if self.duration > 0:
+                if self.__fader.target.current_volume > self.volume:
+                    self.__fade(FadeOutType[self.fade_type])
+                    return True
+                elif self.__fader.target.current_volume < self.volume:
+                    self.__fade(FadeInType[self.fade_type])
+                    return True
+            else:
+                self.__fader.target.current_volume = self.volume
 
         return False
 
     def __stop__(self, fade=False):
-        self.__stop = True
+        self.__fader.stop()
         return True
 
     def __pause__(self, fade=False):
-        self.__pause = True
+        self.__fader.pause()
         return True
 
+    __interrupt__ = __stop__
+
     @async
-    @locked_method
-    def _fade(self, functor, volume, media):
-        self.__stop = False
-        self.__pause = False
-
+    def __fade(self, fade_type):
         try:
-            begin = self.__time
-            duration = (self.duration // 10)
-            base_volume = volume.current_volume
-            volume_diff = self.volume - base_volume
+            self.__fader.prepare()
+            ended = self.__fader.fade(round(self.duration / 1000, 2),
+                                      self.volume,
+                                      fade_type)
 
-            while (not (self.__stop or self.__pause) and
-                           self.__time <= duration and
-                           media.state == MediaState.Playing):
-                time = ntime(self.__time, begin, duration)
-                volume.current_volume = functor(time, volume_diff, base_volume)
-
-                self.__time += 1
-                sleep(0.01)
-
-            if not self.__pause:
-                # to avoid approximation problems
-                volume.current_volume = self.volume
-                if not self.__stop:
-                    self._ended()
+            # to avoid approximation problems
+            self.__fader.target.current_volume = self.volume
+            if ended:
+                self._ended()
         except Exception as e:
             self._error(
                 translate('VolumeControl', 'Error during cue execution'),
                 str(e)
             )
-        finally:
-            if not self.__pause:
-                self.__time = 0
 
     def current_time(self):
-        return self.__time * 10
+        return self.__fader.current_time()
 
 
 class VolumeSettings(SettingsPage):

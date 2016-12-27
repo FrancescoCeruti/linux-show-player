@@ -18,7 +18,8 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
-from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QCheckBox
+from PyQt5.QtWidgets import QComboBox
+from PyQt5.QtWidgets import QVBoxLayout, QGroupBox
 
 from lisp.application import Application
 from lisp.core.has_properties import Property
@@ -31,8 +32,7 @@ from lisp.ui.ui_utils import translate
 class StopAll(Cue):
     Name = QT_TRANSLATE_NOOP('CueName', 'Stop-All')
 
-    pause_mode = Property(default=False)
-    fade_mode = Property(default=False)
+    action = Property(default=CueAction.Stop.value)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -40,21 +40,25 @@ class StopAll(Cue):
 
     def __start__(self, fade=False):
         for cue in Application().cue_model:
-            action = CueAction.Stop
-
-            if self.pause_mode:
-                if self.fade_mode and CueAction.FadeOutPause in cue.CueActions:
-                    action = CueAction.FadeOutPause
-                elif CueAction.Pause in cue.CueActions:
-                    action = CueAction.Pause
-                elif self.fade_mode and CueAction.FadeOutStop in cue.CueActions:
-                    action = CueAction.FadeOutStop
-            elif self.fade_mode and CueAction.FadeOutStop in cue.CueActions:
-                action = CueAction.FadeOutStop
-
-            cue.execute(action=action)
+            action = self.__adjust_action(cue, CueAction(self.action))
+            if action:
+                cue.execute(action=action)
 
         return False
+
+    def __adjust_action(self, cue, action, fade=False):
+        if action in cue.CueActions:
+            return action
+        elif action is CueAction.FadeOutPause:
+            return self.__adjust_action(cue, CueAction.Pause, True)
+        elif action is CueAction.Pause and fade:
+            return self.__adjust_action(cue, CueAction.FadeOutStop)
+        elif action is CueAction.FadeOutInterrupt:
+            return self.__adjust_action(cue, CueAction.Interrupt)
+        elif action is CueAction.FadeOutStop:
+            return self.__adjust_action(cue, CueAction.Stop)
+
+        return None
 
 
 class StopAllSettings(SettingsPage):
@@ -69,17 +73,18 @@ class StopAllSettings(SettingsPage):
         self.group.setLayout(QVBoxLayout(self.group))
         self.layout().addWidget(self.group)
 
-        self.pauseMode = QCheckBox(self.group)
-        self.group.layout().addWidget(self.pauseMode)
-        self.fadeMode = QCheckBox(self.group)
-        self.group.layout().addWidget(self.fadeMode)
+        self.actionCombo = QComboBox(self.group)
+        for action in [CueAction.Stop, CueAction.FadeOutStop, CueAction.Pause,
+                       CueAction.FadeOutPause, CueAction.Interrupt,
+                       CueAction.FadeOutInterrupt]:
+            self.actionCombo.addItem(
+                translate('CueAction', action.name), action.value)
+        self.group.layout().addWidget(self.actionCombo)
 
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.group.setTitle(translate('StopAll', 'Mode'))
-        self.pauseMode.setText(translate('StopAll', 'Pause mode'))
-        self.fadeMode.setText(translate('StopAll', 'Fade mode'))
+        self.group.setTitle(translate('StopAll', 'Stop Action'))
 
     def enable_check(self, enabled):
         self.group.setCheckable(enabled)
@@ -89,14 +94,13 @@ class StopAllSettings(SettingsPage):
         conf = {}
 
         if not (self.group.isCheckable() and not self.group.isChecked()):
-            conf['pause_mode'] = self.pauseMode.isChecked()
-            conf['fade_mode'] = self.fadeMode.isChecked()
+            conf['action'] = self.actionCombo.currentData()
 
         return conf
 
     def load_settings(self, settings):
-        self.pauseMode.setChecked(settings.get('pause_mode', False))
-        self.fadeMode.setChecked(settings.get('fade_mode', False))
+        self.actionCombo.setCurrentText(
+            translate('CueAction', settings.get('action', '')))
 
 
 CueSettingsRegistry().add_item(StopAllSettings, StopAll)

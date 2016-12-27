@@ -29,30 +29,30 @@ class ControlButtons(QWidget):
         super().__init__(**kwargs)
         self.setLayout(QGridLayout())
         self.layout().setContentsMargins(0, 10, 0, 10)
-        self.layout().setSpacing(10)
+        self.layout().setSpacing(5)
 
         hPolicy = QSizePolicy.Ignored
         vPolicy = QSizePolicy.Expanding
-        iconSize = QSize(48, 48)
+        iconSize = QSize(64, 64)
 
         self.stopButton = QPushButton(self)
         self.stopButton.setFocusPolicy(Qt.NoFocus)
         self.stopButton.setSizePolicy(hPolicy, vPolicy)
-        self.stopButton.setIcon(QIcon.fromTheme("media-playback-stop"))
+        self.stopButton.setIcon(QIcon.fromTheme('media-playback-stop'))
         self.stopButton.setIconSize(iconSize)
         self.layout().addWidget(self.stopButton, 0, 0)
 
         self.pauseButton = QPushButton(self)
         self.pauseButton.setFocusPolicy(Qt.NoFocus)
         self.pauseButton.setSizePolicy(hPolicy, vPolicy)
-        self.pauseButton.setIcon(QIcon.fromTheme("media-playback-pause"))
+        self.pauseButton.setIcon(QIcon.fromTheme('media-playback-pause'))
         self.pauseButton.setIconSize(iconSize)
         self.layout().addWidget(self.pauseButton, 0, 1)
 
         self.restartButton = QPushButton(self)
         self.restartButton.setFocusPolicy(Qt.NoFocus)
         self.restartButton.setSizePolicy(hPolicy, vPolicy)
-        self.restartButton.setIcon(QIcon.fromTheme("media-playback-start"))
+        self.restartButton.setIcon(QIcon.fromTheme('media-playback-start'))
         self.restartButton.setIconSize(iconSize)
         self.layout().addWidget(self.restartButton, 0, 2)
 

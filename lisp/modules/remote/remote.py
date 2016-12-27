@@ -33,7 +33,10 @@ class Remote(Module):
 
         # Using 'localhost' or similar make the server unreachable from outside
         if ip == 'localhost' or ip.startswith('127.'):
-            ip = socket.gethostbyname(socket.gethostname())
+            try:
+                ip = socket.gethostbyname(socket.gethostname())
+            except OSError:
+                pass
 
         RemoteController(ip=ip, port=port)
         RemoteController().start()

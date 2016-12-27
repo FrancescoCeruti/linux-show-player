@@ -18,12 +18,14 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import QT_TRANSLATE_NOOP
+
+from lisp.core.configuration import config
 from lisp.core.decorators import async
 
 from lisp.core.fade_functions import FadeInType, FadeOutType
 from lisp.core.fader import Fader
 from lisp.core.has_properties import NestedProperties
-from lisp.cues.cue import Cue, CueState, CueAction
+from lisp.cues.cue import Cue, CueAction
 
 
 class MediaCue(Cue):
@@ -33,7 +35,8 @@ class MediaCue(Cue):
 
     CueActions = (CueAction.Default, CueAction.Start, CueAction.FadeInStart,
                   CueAction.Stop, CueAction.FadeOutStop, CueAction.Pause,
-                  CueAction.FadeOutPause)
+                  CueAction.FadeOutPause, CueAction.Interrupt,
+                  CueAction.FadeOutInterrupt)
 
     def __init__(self, media, id=None):
         super().__init__(id=id)
@@ -93,8 +96,12 @@ class MediaCue(Cue):
         self.media.pause()
         return True
 
-    def __interrupt__(self):
+    def __interrupt__(self, fade=False):
         self.__fader.stop()
+
+        if fade:
+            self._fadeout(interrupt=True)
+
         self.media.interrupt()
 
     def current_time(self):
@@ -116,8 +123,17 @@ class MediaCue(Cue):
     def _can_fadein(self):
         return self.__volume is not None and self.fadein_duration > 0
 
-    def _can_fadeout(self):
-        return self.__volume is not None and self.fadeout_duration > 0
+    def _can_fadeout(self, interrupt=False):
+        if self.__volume is not None:
+            if interrupt:
+                try:
+                    return config['MediaCue'].getfloat('InterruptFade') > 0
+                except (KeyError, ValueError):
+                    return False
+            else:
+                return self.fadeout_duration > 0
+
+        return False
 
     @async
     def _fadein(self):
@@ -133,17 +149,25 @@ class MediaCue(Cue):
                 self.__in_fadein = False
                 self.fadein_end.emit()
 
-    def _fadeout(self):
+    def _fadeout(self, interrupt=False):
         ended = True
-        if self._can_fadeout():
+        if self._can_fadeout(interrupt):
             self.__in_fadeout = True
             self.fadeout_start.emit()
             try:
                 self.__fader.prepare()
-                self._st_lock.release()
-                ended = self.__fader.fade(self.fadeout_duration, 0,
-                                          FadeOutType[self.fadeout_type])
-                self._st_lock.acquire()
+                if not interrupt:
+                    self._st_lock.release()
+                    duration = self.fadeout_duration
+                    type = FadeOutType[self.fadeout_type]
+                else:
+                    duration = config['MediaCue'].getfloat('InterruptFade')
+                    type = FadeOutType[config['MediaCue']['InterruptFadeType']]
+
+                ended = self.__fader.fade(duration, 0, type)
+
+                if not interrupt:
+                    self._st_lock.acquire()
             finally:
                 self.__in_fadeout = False
                 self.fadeout_end.emit()
