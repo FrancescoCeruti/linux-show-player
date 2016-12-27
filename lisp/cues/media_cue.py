@@ -25,7 +25,7 @@ from lisp.core.decorators import async
 from lisp.core.fade_functions import FadeInType, FadeOutType
 from lisp.core.fader import Fader
 from lisp.core.has_properties import NestedProperties
-from lisp.cues.cue import Cue, CueAction
+from lisp.cues.cue import Cue, CueAction, CueState
 
 
 class MediaCue(Cue):
@@ -77,7 +77,7 @@ class MediaCue(Cue):
             if self.__in_fadein:
                 self.__fader.stop()
 
-            if fade and not self._fadeout():
+            if self._state & CueState.Running and fade and not self._fadeout():
                 return False
 
         self.media.stop()
