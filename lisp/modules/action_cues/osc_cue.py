@@ -40,7 +40,6 @@ from lisp.ui.qmodels import SimpleTableModel
 from lisp.core.has_properties import Property
 from lisp.ui.qdelegates import ComboBoxDelegate, LineEditDelegate,\
     CheckBoxDelegate
-from lisp.cues.cue import Cue, CueState
 from lisp.ui.settings.cue_settings import CueSettingsRegistry,\
     SettingsPage
 from lisp.modules.osc.osc_common import OscCommon
