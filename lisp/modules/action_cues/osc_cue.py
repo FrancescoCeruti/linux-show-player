@@ -18,7 +18,6 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-# TODO: proper Test for Format, add Error Dialog, Cue Test-Button in Settings
 
 from enum import Enum
 from time import sleep
@@ -32,18 +31,19 @@ from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QGridLayout, \
 from lisp.ui.widgets import FadeComboBox
 
 from lisp.core.decorators import async, locked_method
-from lisp.core.fade_functions import ntime, FadeInType, FadeOutType
 from lisp.core.fader import Fader
-from lisp.cues.cue import Cue, CueState, CueAction
+from lisp.core.fade_functions import ntime, FadeInType, FadeOutType
+from lisp.cues.cue import Cue, CueAction
 from lisp.ui import elogging
 from lisp.ui.qmodels import SimpleTableModel
 from lisp.core.has_properties import Property
-from lisp.ui.qdelegates import ComboBoxDelegate, LineEditDelegate,\
+from lisp.ui.qdelegates import ComboBoxDelegate, LineEditDelegate, \
     CheckBoxDelegate
-from lisp.ui.settings.cue_settings import CueSettingsRegistry,\
+from lisp.ui.settings.cue_settings import CueSettingsRegistry, \
     SettingsPage
 from lisp.modules.osc.osc_common import OscCommon
 from lisp.ui.ui_utils import translate
+
 
 COL_TYPE = 0
 COL_START_VAL = 1
@@ -52,7 +52,6 @@ COL_DO_FADE = 3
 
 COL_BASE_VAL = 1
 COL_DIFF_VAL = 2
-COL_FUNCTOR = 3
 
 
 class OscMessageType(Enum):
@@ -135,129 +134,71 @@ class OscCue(Cue):
     args = Property(default=[])
     fade_type = Property(default=FadeInType.Linear.name)
 
-    # one global fader used for all faded arguments
-    position = Property(default=0.0)
-
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.name = translate('CueName', self.Name)
 
-        self.__fade_args = None
-        self.__time = 0
-        self.__stop = False
-        self.__pause = False
+        self.__fader = Fader(self, 'position')
+        self.value = 1
+        self.current_value = 0
 
-    def __prepare_fade(self):
-        """ returns list of arguments, that will be faded
-            each item of the list contains:
-            message type tag, start value, diff value, fade functor
-            start and end value are converted from strings to the
-            type to the correct type (message type tag)
-        """
-        value_list = []
-        for arg in self.args:
-            if not arg[COL_END_VAL] or not arg[COL_DO_FADE]:
-                value_list.append([arg[COL_TYPE],
-                                   string_to_value(arg[COL_TYPE], arg[COL_BASE_VAL]),
-                                   0,
-                                   None])
-            else:
-                base_value = string_to_value(arg[COL_TYPE], arg[COL_START_VAL])
-                diff_value = string_to_value(arg[COL_TYPE], arg[COL_END_VAL]) - base_value
-                if arg[COL_DO_FADE] and abs(diff_value):
-                    fade_arg = []
-                    fade_arg.append(arg[COL_TYPE])
-                    fade_arg.append(base_value)
-                    fade_arg.append(diff_value)
-                    if diff_value > 0:
-                        fade_arg.append(FadeInType[self.fade_type].value)
-                    else:
-                        fade_arg.append(FadeOutType[self.fade_type].value)
-                    value_list.append(fade_arg)
-        return value_list
+        self.__arg_list = []
+        self.__has_fade = False
+
+    def __init_fader(self):
+        self.__fader.target = self
+        return True
 
     def __start__(self, fade=False):
-        self.__fade_args = self.__prepare_fade()
-        if self.__can_fade():
-            self.__send_fade()
-            return True
-        else:
-            self.__send_single_shot()
+        if self.__init_fader():
+            if self.__fader.is_paused():
+                self.__fader.restart()
+                return True
+
+            if self.duration > 0:
+                if self.__fader.target.current_value > self.value:
+                    self.__fade(FadeOutType[self.fade_type])
+                    return True
+                elif self.__fader.target.current_value < self.value:
+                    self.__fade(FadeInType[self.fade_type])
+                    return True
+            else:
+                # single shot
+                self.__fader.target.current_value = self.value
 
         return False
 
-    def __send_single_shot(self):
-        value_list = []
+    def __stop__(self, fade=False):
+        self.__fader.stop()
+        return True
 
-        if len(self.path) < 2 or self.path[0] != '/':
-            elogging.warning("OSC: no valid path for OSC message - nothing sent", dialog=False)
-            return False
-        try:
-            for arg in self.args:
-                value = string_to_value(arg[COL_TYPE], arg[COL_START_VAL])
-                value_list.append(value)
-            OscCommon().send(self.path, *value_list)
-        except ValueError:
-            elogging.warning("OSC: Error on parsing argument list - nothing sent", dialog=False)
+    def __pause__(self, fade=False):
+        self.__fader.pause()
+        return True
 
-        return False
+    __interrupt__ = __stop__
 
     @async
-    @locked_method
-    def __send_fade(self):
-        self.__stop = False
-        self.__pause = False
-
+    def __fade(self, fade_type):
         try:
-            begin = self.__time
-            duration = (self.duration // 10)
+            self.__fader.prepare()
+            ended = self.__fader.fade(round(self.duration / 1000, 2),
+                                      self.value,
+                                      fade_type)
 
-            while (not (self.__stop or self.__pause) and
-                           self.__time <= duration):
-                time = ntime(self.__time, begin, duration)
-
-                value_list = []
-                for arg in self.__fade_args:
-                    if arg[COL_DIFF_VAL]:
-                        functor = arg[COL_FUNCTOR]
-                        current = functor(time, arg[COL_DIFF_VAL], arg[COL_BASE_VAL])
-                        value_list.append(convert_value(arg[COL_TYPE], current))
-                    else:
-                        value_list.append(convert_value(arg[COL_TYPE], arg[COL_BASE_VAL]))
-
-                OscCommon().send(self.path, *value_list)
-
-                self.__time += 1
-                sleep(0.01)
-
-            if not self.__pause:
-                # to avoid approximation problems
-                # self.__send_single_shot() # but with end value
-                if not self.__stop:
-                    self._ended()
-
+            # to avoid approximation problems
+            self.__fader.target.current_value = self.value
+            if ended:
+                self._ended()
         except Exception as e:
             self._error(
                 translate('OscCue', 'Error during cue execution'),
                 str(e)
             )
-        finally:
-            if not self.__pause:
-                self.__time = 0
-
-    def __stop__(self, fade=False):
-        self.__stop = True
-        return True
-
-    def __pause__(self, fade=False):
-        self.__pause = True
-        return True
-
-    def __can_fade(self):
-        return self.__fade_args and self.duration > 0
 
     def current_time(self):
-        return self.__time * 10
+        return self.__fader.current_time()
+
 
 class OscCueSettings(SettingsPage):
     Name = QT_TRANSLATE_NOOP('Cue Name', 'OSC Settings')
@@ -394,7 +335,8 @@ class OscCueSettings(SettingsPage):
         except ValueError:
             elogging.warning("OSC: Error on parsing argument list - nothing sent")
 
-    def __argument_changed(self, index_topleft, index_bottomright, roles):
+    @staticmethod
+    def __argument_changed(index_topleft, index_bottomright, roles):
         model = index_bottomright.model()
         osctype = model.rows[index_bottomright.row()][COL_TYPE]
         start = model.rows[index_bottomright.row()][COL_START_VAL]
@@ -419,7 +361,7 @@ class OscCueSettings(SettingsPage):
             model.rows[index_bottomright.row()][COL_DO_FADE] = False
 
         # for Fade, test if end value is provided
-        if not model.rows[index_bottomright.row()][COL_END_VAL]and \
+        if not model.rows[index_bottomright.row()][COL_END_VAL] and \
                 model.rows[index_bottomright.row()][COL_DO_FADE]:
             elogging.warning("OSC Argument Error", details="FadeOut value is missing", dialog=True)
             model.rows[index_bottomright.row()][3] = False
@@ -450,5 +392,6 @@ class OscView(QTableView):
 
         for column, delegate in enumerate(self.delegates):
             self.setItemDelegateForColumn(column, delegate)
+
 
 CueSettingsRegistry().add_item(OscCueSettings, OscCue)
