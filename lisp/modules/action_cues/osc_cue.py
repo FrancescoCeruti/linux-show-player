@@ -44,14 +44,11 @@ from lisp.ui.settings.cue_settings import CueSettingsRegistry, \
 from lisp.modules.osc.osc_common import OscCommon
 from lisp.ui.ui_utils import translate
 
-
 COL_TYPE = 0
 COL_START_VAL = 1
 COL_END_VAL = 2
-COL_DO_FADE = 3
-
-COL_BASE_VAL = 1
 COL_DIFF_VAL = 2
+COL_DO_FADE = 3
 
 
 class OscMessageType(Enum):
@@ -138,16 +135,63 @@ class OscCue(Cue):
         super().__init__(**kwargs)
         self.name = translate('CueName', self.Name)
 
-        self.__fader = Fader(self, 'position')
-        self.value = 1
-        self.current_value = 0
+        self.__fader = Fader(self, '_position')
+        self.__value = 0
+        self.__is_fadein = True
 
         self.__arg_list = []
         self.__has_fade = False
 
+    def __get_position(self):
+        return self.__value
+
+    def __set_position(self, value):
+        self.__value = value
+        arguments = [row[COL_START_VAL] + row[COL_DIFF_VAL] * self.__value for row in self.__arg_list]
+        OscCommon().send(self.path, *arguments)
+
+    def __get_fadein(self):
+        return self.__is_fadein
+
+    def __set_fadein(self, fadein):
+        if fadein:
+            self.__is_fadein = True
+        else:
+            self.__is_fadein = False
+
+    _position = property(__get_position, __set_position)
+    is_fadein = property(__get_fadein, __set_fadein)
+
     def __init_fader(self):
-        self.__fader.target = self
+        self.__arg_list = []
+        for arg in self.args:
+            if not arg[COL_END_VAL] or not arg[COL_DO_FADE]:
+                self.__arg_list.append([arg[COL_TYPE],
+                                        string_to_value(arg[COL_TYPE], arg[COL_START_VAL]),
+                                        0])
+            else:
+                self.__has_fade = True
+                base_value = string_to_value(arg[COL_TYPE], arg[COL_START_VAL])
+                diff_value = string_to_value(arg[COL_TYPE], arg[COL_END_VAL]) - base_value
+                self.__arg_list.append([arg[COL_TYPE], base_value, diff_value])
+
+        for row in self.__arg_list:
+            if row[COL_DIFF_VAL] > 0:
+                self.is_fadein = True
+                break
+            elif row[COL_DIFF_VAL] < 0:
+                self.is_fadein = False
+                break
+            else:
+                continue
+
+        # we always fade from 0 to 1, reset value before start or restart
+        self.__value = 0
+
         return True
+
+    def has_fade(self):
+        return self.duration > 0 and self.__has_fade
 
     def __start__(self, fade=False):
         if self.__init_fader():
@@ -155,16 +199,15 @@ class OscCue(Cue):
                 self.__fader.restart()
                 return True
 
-            if self.duration > 0:
-                if self.__fader.target.current_value > self.value:
+            if self.has_fade():
+                if not self.is_fadein:
                     self.__fade(FadeOutType[self.fade_type])
                     return True
-                elif self.__fader.target.current_value < self.value:
+                else:
                     self.__fade(FadeInType[self.fade_type])
                     return True
             else:
-                # single shot
-                self.__fader.target.current_value = self.value
+                self._position = 1
 
         return False
 
@@ -183,11 +226,11 @@ class OscCue(Cue):
         try:
             self.__fader.prepare()
             ended = self.__fader.fade(round(self.duration / 1000, 2),
-                                      self.value,
+                                      1,
                                       fade_type)
 
             # to avoid approximation problems
-            self.__fader.target.current_value = self.value
+            self._position = 1
             if ended:
                 self._ended()
         except Exception as e:
@@ -365,6 +408,11 @@ class OscCueSettings(SettingsPage):
                 model.rows[index_bottomright.row()][COL_DO_FADE]:
             elogging.warning("OSC Argument Error", details="FadeOut value is missing", dialog=True)
             model.rows[index_bottomright.row()][3] = False
+
+        # test if start != end value
+        if model.rows[index_bottomright.row()][COL_END_VAL] == model.rows[index_bottomright.row()][COL_START_VAL]:
+            model.rows[index_bottomright.row()][COL_DO_FADE] = False
+            elogging.warning("OSC Argument Error", details="FadeIn equals FadeOut - no fade", dialog=True)
 
 
 class OscView(QTableView):
