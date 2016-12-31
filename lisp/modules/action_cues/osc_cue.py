@@ -163,6 +163,8 @@ class OscCue(Cue):
     is_fadein = property(__get_fadein, __set_fadein)
 
     def __init_fader(self):
+        # arguments from the gui are converted and stored in a new list
+        # list: [ type, base_value, diff_value ]
         self.__arg_list = []
         for arg in self.args:
             if not arg[COL_END_VAL] or not arg[COL_DO_FADE]:
@@ -175,6 +177,14 @@ class OscCue(Cue):
                 diff_value = string_to_value(arg[COL_TYPE], arg[COL_END_VAL]) - base_value
                 self.__arg_list.append([arg[COL_TYPE], base_value, diff_value])
 
+        # as only one fader for all arguments is used,
+        # we decide at the first faded argument
+        # if we use fadein or fadeout,
+        # following arguments containing fades are ignored for that test.
+        # in and outfades on different arguments are possible,
+        # but handled internal either as in or outfade together,
+        # can cause problems with quadric curve (add this to the wikki),
+        # which can start reverse, when mixing in and out fade values in one message
         for row in self.__arg_list:
             if row[COL_DIFF_VAL] > 0:
                 self.is_fadein = True
@@ -185,7 +195,7 @@ class OscCue(Cue):
             else:
                 continue
 
-        # we always fade from 0 to 1, reset value before start or restart
+        # always fade from 0 to 1, reset value before start or restart fade
         self.__value = 0
 
         return True
