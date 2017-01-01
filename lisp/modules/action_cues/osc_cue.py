@@ -20,7 +20,6 @@
 
 
 from enum import Enum
-from time import sleep
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
@@ -30,9 +29,9 @@ from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QGridLayout, \
 
 from lisp.ui.widgets import FadeComboBox
 
-from lisp.core.decorators import async, locked_method
+from lisp.core.decorators import async
 from lisp.core.fader import Fader
-from lisp.core.fade_functions import ntime, FadeInType, FadeOutType
+from lisp.core.fade_functions import FadeInType, FadeOutType
 from lisp.cues.cue import Cue, CueAction
 from lisp.ui import elogging
 from lisp.ui.qmodels import SimpleTableModel
@@ -137,7 +136,7 @@ class OscCue(Cue):
 
         self.__fader = Fader(self, '_position')
         self.__value = 0
-        self.__is_fadein = True
+        self.__fadein = True
 
         self.__arg_list = []
         self.__has_fade = False
@@ -150,17 +149,7 @@ class OscCue(Cue):
         arguments = [row[COL_START_VAL] + row[COL_DIFF_VAL] * self.__value for row in self.__arg_list]
         OscCommon().send(self.path, *arguments)
 
-    def __get_fadein(self):
-        return self.__is_fadein
-
-    def __set_fadein(self, fadein):
-        if fadein:
-            self.__is_fadein = True
-        else:
-            self.__is_fadein = False
-
     _position = property(__get_position, __set_position)
-    is_fadein = property(__get_fadein, __set_fadein)
 
     def __init_fader(self):
         # arguments from the gui are converted and stored in a new list
@@ -187,10 +176,10 @@ class OscCue(Cue):
         # which can start reverse, when mixing in and out fade values in one message
         for row in self.__arg_list:
             if row[COL_DIFF_VAL] > 0:
-                self.is_fadein = True
+                self.__fadein = True
                 break
             elif row[COL_DIFF_VAL] < 0:
-                self.is_fadein = False
+                self.__fadein = False
                 break
             else:
                 continue
@@ -210,7 +199,7 @@ class OscCue(Cue):
                 return True
 
             if self.has_fade():
-                if not self.is_fadein:
+                if not self.__fadein:
                     self.__fade(FadeOutType[self.fade_type])
                     return True
                 else:
