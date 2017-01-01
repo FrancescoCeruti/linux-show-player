@@ -48,11 +48,6 @@ class OscSettings(SettingsPage):
             translate('OscSettings', 'enable OSC'))
         self.groupBox.layout().addWidget(self.enableModule)
 
-        self.enableFeedback = QCheckBox(self.groupBox)
-        self.enableFeedback.setText(
-            translate('OscSettings', 'enable Feedback'))
-        self.groupBox.layout().addWidget(self.enableFeedback)
-
         hbox = QHBoxLayout()
         self.inportBox = QSpinBox(self)
         self.inportBox.setMinimum(1000)
@@ -84,7 +79,6 @@ class OscSettings(SettingsPage):
         self.groupBox.layout().addLayout(hbox)
 
         self.enableModule.stateChanged.connect(self.activate_module, Qt.QueuedConnection)
-        self.enableFeedback.stateChanged.connect(self.activate_feedback, Qt.QueuedConnection)
         self.inportBox.valueChanged.connect(self.change_inport, Qt.QueuedConnection)
         self.outportBox.valueChanged.connect(self.change_outport, Qt.QueuedConnection)
         self.hostnameEdit.textChanged.connect(self.change_hostname, Qt.QueuedConnection)
@@ -100,9 +94,6 @@ class OscSettings(SettingsPage):
             OscCommon().stop()
             # disable OSC Module in Settings
             config.set('OSC', 'enabled', 'False')
-
-    def activate_feedback(self):
-        OscCommon().activate_feedback(self.enableFeedback.isChecked())
 
     def change_inport(self):
         port = self.inportBox.value()
@@ -125,7 +116,6 @@ class OscSettings(SettingsPage):
             'inport': str(self.inportBox.value()),
             'outport': str(self.outportBox.value()),
             'hostname': str(self.hostnameEdit.text()),
-            'feedback': str(self.enableFeedback.isChecked())
         }
         return {'OSC': conf}
 
@@ -133,7 +123,6 @@ class OscSettings(SettingsPage):
         settings = settings.get('OSC', {})
 
         self.enableModule.setChecked(settings.get('enabled') == 'True')
-        self.enableFeedback.setChecked(settings.get('feedback') == 'True')
         self.inportBox.setValue(int(settings.get('inport')))
         self.outportBox.setValue(int(settings.get('outport')))
         self.hostnameEdit.setText(settings.get('hostname'))

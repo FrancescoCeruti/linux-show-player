@@ -137,16 +137,3 @@ class OscCommon(metaclass=ABCSingleton):
     def __new_message(self, path, args, types, src):
         self.push_log(path, args, types, src, False)
         self.new_message.emit(path, args, types, src)
-        # elogging.warning('OscCommon: unknown message received: {0} {1} {2}'.format(path, types, args), dialog=False)
-
-    # def register_callback(self, path, typespec, func):
-    #     # insert into callback list before callback, otherwise its ignored
-    #     self.__callbacks.insert(-1, [path, typespec, func])
-    #
-    #     # fallback needs to be the registered callback
-    #     self.__srv.del_method(None, None)
-    #     self.__srv.add_method(path, typespec, func)
-    #     self.__srv.add_method(None, None, self.__new_message)
-
-    def activate_feedback(self, feedback):
-        pass
