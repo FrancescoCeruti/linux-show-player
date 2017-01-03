@@ -18,6 +18,7 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from lisp.core.signal import Connection
+from lisp.ui import elogging
 from lisp.core.configuration import config
 from lisp.core.clock import Clock
 from lisp.cues.cue_time import CueTime
@@ -45,12 +46,14 @@ class TimecodeOutput(TimecodeCommon):
 
     def status(self):
         """returns the status of the backend"""
-        return self.backend.status()
+        if self.backend:
+            return self.backend.status() and config['Timecode'].getboolean('enabled')
+        else:
+            return False
 
     def start(self, cue):
         """initialize timecode for new cue, stop old"""
-        # Load cue settings, if enabled, otherwise return
-        if not cue.timecode['enabled']:
+        if not cue.timecode['enabled'] or not self.status():
             return
 
         # Stop the currently "running" timecode
@@ -81,11 +84,11 @@ class TimecodeOutput(TimecodeCommon):
             self.__cue = None
             self.__cue_time = None
 
-        self.backend.stop(rclient)
+        if self.backend:
+            self.backend.stop(rclient)
 
     def send(self, time, rewind=False):
         """sends timecode"""
-
         if not self.backend.send(self.__format, time, self.__track, rewind):
-            # TODO: Error Handling
-            raise RuntimeError('TODO')
+            elogging.error('TIMECODE: could not send timecode, stopping timecode')
+            self.stop()
