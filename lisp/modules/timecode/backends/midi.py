@@ -70,9 +70,9 @@ class Midi(TimecodeBackend):
         msg.frame_value = self.__table__[frame_type](hours, minutes, seconds, frames, rate)
         MIDIOutput().send(msg)
 
-    def __continous(self, num_frames, format, hours, minutes, seconds, frames):
+    def __continous(self, num_quarters, format, hours, minutes, seconds, frames):
         frame_type = self.__last_frame
-        for num in range(num_frames):
+        for num in range(num_quarters):
             if frame_type < len(self.__table__) - 1:
                 frame_type += 1
             else:
@@ -98,22 +98,23 @@ class Midi(TimecodeBackend):
             return self.__rewind(format, hours, minutes, seconds, frames)
         else:
             time_diff = time - self.__last_time
-            num_frames = int(round(time_diff / format.value))
+            num_quarters = int(round(time_diff / format.value * 4))
             if time_diff < 0:
                 # this seems not supported by every software, anyway resets __last_frame
                 self.__last_time = time
                 return self.__rewind(format, hours, minutes, seconds, frames)
-            elif num_frames < 2:
+            elif num_quarters < 2:
                 return True
-            elif num_frames > 8:
+            elif num_quarters > 8:
                 # too much frames skipped
                 self.__last_frame = -1
                 self.__last_time = time
-                # return self.__continous(num_frames, format, hours, minutes, seconds, frames)
+                # TODO: seems buggy on scrubbing
+                # return self.__continous(num_quarters, format, hours, minutes, seconds, frames)
                 return True
             else:
                 self.__last_time = time
-                return self.__continous(num_frames, format, hours, minutes, seconds, frames)
+                return self.__continous(num_quarters, format, hours, minutes, seconds, frames)
 
     def stop(self, rclient=False):
         self.__last_time = -1
