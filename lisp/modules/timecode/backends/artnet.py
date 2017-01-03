@@ -17,8 +17,12 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from ola.OlaClient import OlaClient
+
+from ola.OlaClient import OlaClient, OLADNotRunningException
+
+from lisp.ui import elogging
 from lisp.core.util import time_tuple
+from lisp.core.configuration import config
 from lisp.modules.timecode.timecode_backend import TimecodeBackend
 from lisp.modules.timecode.timecode_common import TcFormat
 
@@ -32,8 +36,14 @@ class Artnet(TimecodeBackend):
 
     def __init__(self):
         super().__init__()
-        # TODO: Error Handling
-        self.__client = OlaClient()
+        try:
+            self.__client = OlaClient()
+        except OLADNotRunningException as e:
+            self.__client = None
+            config.set('Timecode', 'enabled', 'False')
+            elogging.error('TIMECODE: ArtNet Backend not available, Timecode Module disabled.',
+                           details="Reason: {0}".format(e))
+
         self.__last_time = -1
 
     def status(self):

@@ -19,6 +19,7 @@
 
 from mido import Message
 from lisp.core.util import time_tuple
+from lisp.ui import elogging
 from lisp.modules.timecode.timecode_backend import TimecodeBackend
 from lisp.modules.timecode.timecode_common import TcFormat
 from lisp.modules.midi.midi_output import MIDIOutput
@@ -45,15 +46,17 @@ class Midi(TimecodeBackend):
     ]
 
     def __init__(self):
-        """this backend uses the midi module"""
         super().__init__()
         self.__last_time = -1
         self.__last_frame = -1
         if not MIDIOutput().is_open():
             MIDIOutput().open()
+            if not self.status():
+                config.set('Timecode', 'enabled', 'False')
+                elogging.error('TIMECODE: Timecode Backend MIDI not available, Timecode Module disabled')
 
     def status(self):
-        return True
+        return MIDIOutput().is_open()
 
     def __rewind(self, fmt, hours, minutes, seconds, frames):
         fmt = self.__format__[fmt]
@@ -109,7 +112,7 @@ class Midi(TimecodeBackend):
                 # too much frames skipped
                 self.__last_frame = -1
                 self.__last_time = time
-                # TODO: seems buggy on scrubbing
+                # TODO: seems buggy on scrubbing, test it again
                 # return self.__continous(num_quarters, format, hours, minutes, seconds, frames)
                 return True
             else:
