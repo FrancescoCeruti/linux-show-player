@@ -34,7 +34,6 @@ class TimecodeCommon(metaclass=ABCSingleton):
     def __init__(self):
         bk_name = config['Timecode']['backend']
         self.__backend = backends.get(bk_name)
-        print("self.__backend ", self.__backend)
 
     def __get_backend(self):
         return self.__backend
