@@ -36,19 +36,16 @@ def load():
     else:
         exclude = ''
 
-    try:
-        for name, backend_class in load_classes(__package__, dirname(__file__), exclude=exclude):
-            __BACKENDS[backend_class.Name] = backend_class
-            elogging.debug('TIMECODE: Loaded Backend "{0}"'.format(name))
-    except Exception as e:
-        elogging.exception('TIMECODE: Failed Backend "{0}" loading'.format(name), e)
+    for name, backend_class in load_classes(__package__, dirname(__file__), exclude=exclude):
+        __BACKENDS[backend_class.Name] = backend_class
+        elogging.debug('TIMECODE: Loaded Backend "{0}"'.format(name))
 
 
 def get(name):
     if name in __BACKENDS and callable(__BACKENDS[name]):
         return __BACKENDS[name]()
     else:
-        RuntimeError("Timecode Backend - {0} not found".format(name))
+        raise AttributeError("Timecode Backend - {0} not found".format(name))
 
 
 def list():
