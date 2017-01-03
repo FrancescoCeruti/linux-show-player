@@ -18,15 +18,17 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+
 from PyQt5.QtCore import QT_TRANSLATE_NOOP, Qt
 from PyQt5.QtWidgets import QGridLayout
 from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QLabel,\
     QCheckBox, QComboBox
 
+from lisp.core.configuration import config
 from lisp.ui.settings.settings_page import SettingsPage
 from lisp.modules.timecode import backends
 from lisp.ui.ui_utils import translate
-from lisp.modules.timecode.timecode_common import TcFormat
+from lisp.modules.timecode.timecode_common import TcFormat, TimecodeCommon
 
 
 class TimecodeSettings(SettingsPage):
@@ -77,6 +79,10 @@ class TimecodeSettings(SettingsPage):
             translate('TimecodeSettings', 'Timecode Backend:'))
 
     def get_settings(self):
+        # check for restart
+        if self.activateBox.isChecked() and not config['Timecode'].getboolean('enabled'):
+            TimecodeCommon().backend = self.backendBox.currentText()
+
         return {'Timecode': {
             'enabled': str(self.activateBox.isChecked()),
             'hres': str(self.hresBox.isChecked()),
