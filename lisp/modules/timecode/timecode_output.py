@@ -17,7 +17,6 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from lisp.core.util import time_tuple
 from lisp.core.signal import Connection
 from lisp.core.configuration import config
 from lisp.core.clock import Clock

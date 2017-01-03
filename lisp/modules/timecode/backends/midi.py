@@ -55,34 +55,34 @@ class Midi(TimecodeBackend):
     def status(self):
         return True
 
-    def __rewind(self, format, hours, minutes, seconds, frames):
-        fmt = self.__format__[format]
+    def __rewind(self, fmt, hours, minutes, seconds, frames):
+        fmt = self.__format__[fmt]
         hh = (fmt << 5) + hours
         msg = Message('sysex', data=[0x7f, 0x7f, 0x01, 0x01, hh, minutes, seconds, frames])
         MIDIOutput().send(msg)
         self.__last_frame = -1
         return True
 
-    def __quarterframe(self, format, frame_type, hours, minutes, seconds, frames):
-        rate = self.__format__[format]
+    def __quarterframe(self, fmt, frame_type, hours, minutes, seconds, frames):
+        rate = self.__format__[fmt]
         msg = Message('quarter_frame')
         msg.frame_type = frame_type
         msg.frame_value = self.__table__[frame_type](hours, minutes, seconds, frames, rate)
         MIDIOutput().send(msg)
 
-    def __continous(self, num_quarters, format, hours, minutes, seconds, frames):
+    def __continous(self, num_quarters, fmt, hours, minutes, seconds, frames):
         frame_type = self.__last_frame
         for num in range(num_quarters):
             if frame_type < len(self.__table__) - 1:
                 frame_type += 1
             else:
                 frame_type = 0
-            self.__quarterframe(format, frame_type, hours, minutes, seconds, frames)
+            self.__quarterframe(fmt, frame_type, hours, minutes, seconds, frames)
 
         self.__last_frame = frame_type
         return True
 
-    def send(self, format, time, track=-1, rewind=False):
+    def send(self, fmt, time, track=-1, rewind=False):
         tt = time_tuple(time)
 
         hours = tt[0]
@@ -91,18 +91,18 @@ class Midi(TimecodeBackend):
 
         minutes = tt[1]
         seconds = tt[2]
-        frames = int(tt[3] / format.value)
+        frames = int(tt[3] / fmt.value)
 
         if rewind:
             self.__last_time = time
-            return self.__rewind(format, hours, minutes, seconds, frames)
+            return self.__rewind(fmt, hours, minutes, seconds, frames)
         else:
             time_diff = time - self.__last_time
-            num_quarters = int(round(time_diff / format.value * 4))
+            num_quarters = int(round(time_diff / fmt.value * 4))
             if time_diff < 0:
                 # this seems not supported by every software, anyway resets __last_frame
                 self.__last_time = time
-                return self.__rewind(format, hours, minutes, seconds, frames)
+                return self.__rewind(fmt, hours, minutes, seconds, frames)
             elif num_quarters < 2:
                 return True
             elif num_quarters > 8:
@@ -114,7 +114,7 @@ class Midi(TimecodeBackend):
                 return True
             else:
                 self.__last_time = time
-                return self.__continous(num_quarters, format, hours, minutes, seconds, frames)
+                return self.__continous(num_quarters, fmt, hours, minutes, seconds, frames)
 
     def stop(self, rclient=False):
         self.__last_time = -1

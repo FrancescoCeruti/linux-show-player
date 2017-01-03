@@ -26,10 +26,11 @@ class TimecodeBackend():
         """constructor of timecode backend"""
 
     def status(self):
+        """returns status of backend, True if ready"""
         return True
 
-    def send(self, tcfmt, time, track=-1, rewind=False):
-        """send timecode, returs success"""
+    def send(self, fmt, time, track=-1, rewind=False):
+        """send timecode, returs success for error handling"""
         return False
 
     def stop(self, rclient=False):

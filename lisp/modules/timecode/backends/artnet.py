@@ -39,8 +39,8 @@ class Artnet(TimecodeBackend):
     def status(self):
         return bool(self.__client)
 
-    def send(self, format, time, track=-1, rewind=False):
-        if self.__last_time + format.value >= time:
+    def send(self, fmt, time, track=-1, rewind=False):
+        if self.__last_time + fmt.value >= time:
             return
 
         tt = time_tuple(time)
@@ -50,10 +50,10 @@ class Artnet(TimecodeBackend):
             hours = track
         minutes = tt[1]
         seconds = tt[2]
-        frames = int(tt[3] / format.value)
+        frames = int(tt[3] / fmt.value)
 
         try:
-            self.__client.SendTimeCode(self.__format__[format],
+            self.__client.SendTimeCode(self.__format__[fmt],
                                        hours,
                                        minutes,
                                        seconds,
