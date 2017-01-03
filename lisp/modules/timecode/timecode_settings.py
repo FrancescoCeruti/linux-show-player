@@ -80,8 +80,9 @@ class TimecodeSettings(SettingsPage):
 
     def get_settings(self):
         # check for restart
-        if self.activateBox.isChecked() and not config['Timecode'].getboolean('enabled'):
-            TimecodeCommon().backend = self.backendBox.currentText()
+        if self.activateBox.isChecked():
+            if not config['Timecode'].getboolean('enabled') or self.backendBox.currentText() != config['Timecode']['backend']:
+                TimecodeCommon().backend = self.backendBox.currentText()
 
         return {'Timecode': {
             'enabled': str(self.activateBox.isChecked()),
