@@ -18,15 +18,30 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from os.path import dirname
-
+from lisp.ui import elogging
 from lisp.core.loading import load_classes
+
+# TODO: proper error handling if OLA could not imported
+try:
+    import ola
+except ImportError:
+    ola = False
 
 __BACKENDS = {}
 
 
 def load():
-    for _, backend_class in load_classes(__package__, dirname(__file__)):
-        __BACKENDS[backend_class.Name] = backend_class
+    if not ola:
+       exclude = 'artnet'
+    else:
+        exclude = ''
+
+    try:
+        for name, backend_class in load_classes(__package__, dirname(__file__), exclude=exclude):
+            __BACKENDS[backend_class.Name] = backend_class
+            elogging.debug('TIMECODE: Loaded Backend "{0}"'.format(name))
+    except Exception as e:
+        elogging.exception('TIMECODE: Failed Backend "{0}" loading'.format(name), e)
 
 
 def get(name):
