@@ -36,7 +36,8 @@ from lisp.ui.settings.settings_page import CueSettingsPage
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
 from lisp.modules.timecode.timecode_output import TimecodeOutput
 
-class TimecodeOutputSettings(CueSettingsPage):
+
+class TimecodeSettings(CueSettingsPage):
     Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Timecode')
 
     def __init__(self, cue_class, **kwargs):
@@ -107,19 +108,18 @@ class TimecodeOutputSettings(CueSettingsPage):
         self.trackSpin.setValue(settings.get('track', 0))
 
 
-class TimecodeOutput(Plugin):
-    Name = 'TimecodeOutput'
+class Timecode(Plugin):
+    Name = 'Timecode'
 
     def __init__(self):
         super().__init__()
-        # self.__client = OlaTimecode()
         self.__cues = set()
 
         # Register a new Cue property to store settings
         Cue.register_property('timecode', Property(default={}))
 
         # Register cue-settings-page
-        CueSettingsRegistry().add_item(TimecodeCueSettings, MediaCue)
+        CueSettingsRegistry().add_item(TimecodeSettings, MediaCue)
 
         # Watch cue-model changes
         Application().cue_model.item_added.connect(self.__cue_added)
@@ -133,7 +133,7 @@ class TimecodeOutput(Plugin):
 
     def reset(self):
         self.__cues.clear()
-        self.__client.stop_timecode(rclient=True, rcue=True)
+        TimecodeOutput().stop(rclient=True, rcue=True)
 
     def __cue_changed(self, cue, property_name, value):
         if property_name == 'timecode':
@@ -151,8 +151,8 @@ class TimecodeOutput(Plugin):
     def __cue_removed(self, cue):
         try:
             self.__cues.remove(cue.id)
-            if self.__client.cue is cue:
-                self.__client.stop_timecode(rcue=True)
+            if TimecodeOutput().cue is cue:
+                TimecodeOutput().stop(rcue=True)
 
             cue.started.disconnect(self.__cue_started)
             cue.property_changed.disconnect(self.__cue_changed)
@@ -161,7 +161,7 @@ class TimecodeOutput(Plugin):
 
     def __cue_started(self, cue):
         if config['Timecode'].getboolean('enabled'):
-            if cue is not self.__client.cue:
-                self.__client.start_timecode(cue)
-        elif cue is self.__client.cue:
-            self.__client.stop_timecode(rcue=True)
+            if cue is not TimecodeOutput().cue:
+                TimecodeOutput().start(cue)
+        elif cue is TimecodeOutput().cue:
+            TimecodeOutput().stop(rcue=True)

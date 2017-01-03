@@ -18,6 +18,7 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from ola.OlaClient import OlaClient
+from lisp.core.util import time_tuple
 from lisp.modules.timecode.timecode_backend import TimecodeBackend
 from lisp.modules.timecode.timecode_common import TcFormat
 
@@ -31,9 +32,26 @@ class Artnet(TimecodeBackend):
 
     def __init__(self):
         super().__init__()
+        # TODO: Error Handling
         self.__client = OlaClient()
+        self.__last_time = -1
 
-    def send(self, format, hours, minutes, seconds, frames, rewind=False):
+    def status(self):
+        return bool(self.__client)
+
+    def send(self, format, time, track=-1, rewind=False):
+        if self.__last_time + format.value >= time:
+            return
+
+        tt = time_tuple(time)
+
+        hours = tt[0]
+        if track > 0:
+            hours = track
+        minutes = tt[1]
+        seconds = tt[2]
+        frames = int(tt[3] / format.value)
+
         try:
             self.__client.SendTimeCode(self.__format__[format],
                                        hours,
@@ -50,8 +68,11 @@ class Artnet(TimecodeBackend):
             elogging.exception('Cannot send timecode.', e, dialog=False)
             return False
 
+        self.__last_time = time
         return True
 
     def stop(self, rclient=False):
+        self.__last_time = -1
+
         if rclient:
             self.__client = None

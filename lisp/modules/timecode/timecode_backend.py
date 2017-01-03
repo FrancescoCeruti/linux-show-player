@@ -26,9 +26,9 @@ class TimecodeBackend():
         """constructor of timecode backend"""
 
     def status(self):
-        return False
+        return True
 
-    def send(self, format, hours, minutes, seconds, frames, rewind=False):
+    def send(self, tcfmt, time, track=-1, rewind=False):
         """send timecode, returs success"""
         return False
 

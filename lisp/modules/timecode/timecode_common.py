@@ -33,13 +33,12 @@ class TcFormat(Enum):
 class TimecodeCommon(metaclass=ABCSingleton):
     def __init__(self):
         bk_name = config['Timecode']['backend']
-        self.__backend = self.__set_backend(bk_name)
+        self.__backend = backends.get(bk_name)
+        print("self.__backend ", self.__backend)
 
-    @property
     def __get_backend(self):
         return self.__backend
 
-    @property
     def __set_backend(self, backend_name):
         if backend_name in backends.list():
             self.__backend = backends.get(backends)

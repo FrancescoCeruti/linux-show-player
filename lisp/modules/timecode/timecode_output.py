@@ -17,6 +17,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+from lisp.core.util import time_tuple
+from lisp.core.signal import Connection
 from lisp.core.configuration import config
 from lisp.core.clock import Clock
 from lisp.cues.cue_time import CueTime
@@ -35,10 +37,8 @@ class TimecodeOutput(TimecodeCommon):
         self.__cue_time = None
 
         self.__track = 0
-        self.__hres = config['Timecode'].getboolean('hres')
         self.__format = TcFormat[config['Timecode']['format']]
         self.__replace_hours = False
-        self.__last_frame = -1
 
     @property
     def cue(self):
@@ -48,27 +48,25 @@ class TimecodeOutput(TimecodeCommon):
         """returns the status of the backend"""
         return self.backend.status()
 
-    def init(self, cue):
+    def start(self, cue):
         """initialize timecode for new cue, stop old"""
         # Load cue settings, if enabled, otherwise return
         if not cue.timecode['enabled']:
             return
 
         # Stop the currently "running" timecode
-        self.stop_timecode()
+        self.stop()
 
         # Reload format settings
-        self.__hres = config['Timecode'].getboolean('hres')
         self.__format = TcFormat[config['Timecode']['format']]
 
         # Setup new cue and options
         self.__cue = cue
-        self.__cue_time = HRCueTime(cue) if self.__hres else CueTime(cue)
+        hres = config['Timecode'].getboolean('hres')
+        self.__cue_time = HRCueTime(cue) if hres else CueTime(cue)
         self.__replace_hours = cue.timecode['replace_hours']
         self.__track = cue.timecode['track']
 
-    def start(self):
-        """starts sending timecode of a new cue, send full frame"""
         self.send(self.__cue.current_time(), True)
 
         # Start watching the new cue
@@ -80,8 +78,6 @@ class TimecodeOutput(TimecodeCommon):
         if self.__cue_time is not None:
             self.__cue_time.notify.disconnect(self.send)
 
-        self.__last_frame = -1
-
         if rcue:
             self.__cue = None
             self.__cue_time = None
@@ -90,18 +86,7 @@ class TimecodeOutput(TimecodeCommon):
 
     def send(self, time, rewind=False):
         """sends timecode"""
-        tt = time_tuple(time)
-        frame = int(tt[3] / self.__format.value)
 
-        if self.__hres:
-            if self.__last_frame == frame:
-                return
-            self.__last_frame = frame
-
-        track = self.__track
-        if not self.__replace_hours:
-            track = tt[0]
-
-        if not self.backend.send(self.__format, track, tt[1], tt[2], tt[3], rewind):
+        if not self.backend.send(self.__format, time, self.__track, rewind):
             # TODO: Error Handling
             raise RuntimeError('TODO')
