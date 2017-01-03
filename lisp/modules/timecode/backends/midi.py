@@ -101,7 +101,7 @@ class Midi(TimecodeBackend):
             return self.__rewind(fmt, hours, minutes, seconds, frames)
         else:
             time_diff = time - self.__last_time
-            num_quarters = int(round(time_diff / fmt.value * 4))
+            num_quarters = int(time_diff / fmt.value * 4)
             if time_diff < 0:
                 # this seems not supported by every software, anyway resets __last_frame
                 self.__last_time = time
