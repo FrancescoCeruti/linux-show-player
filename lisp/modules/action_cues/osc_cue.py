@@ -18,6 +18,10 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+# TODO: work with values in config['args'] not strings
+# only gui operates with strings, config holds real values
+# config['args'] is a dict (keys: type, start, end (optional), fade)
+# all conversions are done in settings not the cue
 
 from enum import Enum
 
@@ -46,8 +50,10 @@ from lisp.ui.ui_utils import translate
 COL_TYPE = 0
 COL_START_VAL = 1
 COL_END_VAL = 2
-COL_DIFF_VAL = 2
 COL_DO_FADE = 3
+
+COL_BASE_VAL = 1
+COL_DIFF_VAL = 2
 
 
 class OscMessageType(Enum):
@@ -55,6 +61,17 @@ class OscMessageType(Enum):
     Float = 'Float'
     Bool = 'Bool'
     String = 'String'
+
+
+def test_path(path):
+    if isinstance(path, str):
+        if len(path) > 1 and path[0] is '/':
+            return True
+    return False
+
+# TODO: test argument list
+def test_arguments(args):
+    print(args)
 
 
 def string_to_value(t, sarg):
@@ -92,9 +109,9 @@ def convert_value(t, value):
 
 def format_string(t, sarg):
     """checks if string can be converted and formats it"""
-    if len(sarg) == 0:
-        return ''
-    elif t == OscMessageType.Int.value:
+    # if len(sarg) == 0:
+    #     return ''
+    if t == OscMessageType.Int.value:
         return "{0:d}".format(int(sarg))
     elif t == OscMessageType.Float.value:
         return "{0:.2f}".format(float(sarg))
@@ -146,43 +163,49 @@ class OscCue(Cue):
 
     def __set_position(self, value):
         self.__value = value
-        arguments = [row[COL_START_VAL] + row[COL_DIFF_VAL] * self.__value for row in self.__arg_list]
-        OscCommon().send(self.path, *arguments)
+        args = []
+        for row in self.__arg_list:
+            if row[COL_DIFF_VAL] > 0:
+                args.append(row[COL_BASE_VAL] + row[COL_DIFF_VAL] * self.__value)
+            else:
+                args.append(row[COL_BASE_VAL])
+        OscCommon().send(self.path, *args)
 
     _position = property(__get_position, __set_position)
 
-    def __init_fader(self):
-        # arguments from the gui are converted and stored in a new list
+    def __init_arguments(self):
+        # check path
+        if not test_path(self.path):
+            return False
+
+        # arguments from the cue settings are converted and stored in a new list
         # list: [ type, base_value, diff_value ]
         self.__arg_list = []
-        for arg in self.args:
-            if not arg[COL_END_VAL] or not arg[COL_DO_FADE]:
-                self.__arg_list.append([arg[COL_TYPE],
-                                        string_to_value(arg[COL_TYPE], arg[COL_START_VAL]),
-                                        0])
-            else:
-                self.__has_fade = True
-                base_value = string_to_value(arg[COL_TYPE], arg[COL_START_VAL])
-                diff_value = string_to_value(arg[COL_TYPE], arg[COL_END_VAL]) - base_value
-                self.__arg_list.append([arg[COL_TYPE], base_value, diff_value])
+        try:
+            for arg in self.args:
+                if 'end' in arg and arg['fade']:
+                    self.__has_fade = True
+                    diff_value = arg['end'] - arg['start']
+                    self.__arg_list.append([arg['type'], arg['start'], diff_value])
+                else:
+                    self.__arg_list.append([arg['type'],
+                                            arg['start'],
+                                            0])
+        except:
+            elogging.error("OSC: could not parse argument list, nothing sent")
+            return False
 
-        # as only one fader for all arguments is used,
-        # we decide at the first faded argument
-        # if we use fadein or fadeout,
-        # following arguments containing fades are ignored for that test.
-        # in and outfades on different arguments are possible,
-        # but handled internal either as in or outfade together,
-        # can cause problems with quadric curve (add this to the wikki),
-        # which can start reverse, when mixing in and out fade values in one message
-        for row in self.__arg_list:
-            if row[COL_DIFF_VAL] > 0:
-                self.__fadein = True
-                break
-            elif row[COL_DIFF_VAL] < 0:
-                self.__fadein = False
-                break
-            else:
-                continue
+        # set fade type, based on the first argument, which will have a fade
+        if self.__has_fade:
+            for row in self.__arg_list:
+                if row[COL_DIFF_VAL] > 0:
+                    self.__fadein = True
+                    break
+                elif row[COL_DIFF_VAL] < 0:
+                    self.__fadein = False
+                    break
+                else:
+                    continue
 
         # always fade from 0 to 1, reset value before start or restart fade
         self.__value = 0
@@ -193,7 +216,7 @@ class OscCue(Cue):
         return self.duration > 0 and self.__has_fade
 
     def __start__(self, fade=False):
-        if self.__init_fader():
+        if self.__init_arguments():
             if self.__fader.is_paused():
                 self.__fader.restart()
                 return True
@@ -207,6 +230,8 @@ class OscCue(Cue):
                     return True
             else:
                 self._position = 1
+        else:
+            elogging.error("OSC: Error on parsing argument list - nothing sent", dialog=False)
 
         return False
 
@@ -259,6 +284,7 @@ class OscCueSettings(SettingsPage):
 
         self.pathEdit = QLineEdit()
         self.oscGroup.layout().addWidget(self.pathEdit, 1, 0, 1, 2)
+        self.pathEdit.editingFinished.connect(self.__path_changed)
 
         self.oscModel = SimpleTableModel([
             translate('Osc Cue', 'Type'),
@@ -327,9 +353,25 @@ class OscCueSettings(SettingsPage):
         conf = {}
         checkable = self.oscGroup.isCheckable()
 
+        # TODO: test paths and argument
+        # if not (checkable and not self.oscGroup.isChecked()):
+        #     if test_path():
+        #         return test_arguments([row for row in self.oscModel.rows])
+
         if not (checkable and not self.oscGroup.isChecked()):
             conf['path'] = self.pathEdit.text()
-            conf['args'] = [row for row in self.oscModel.rows]
+            args_list = []
+            for row in self.oscModel.rows:
+                arg = {'type': row[COL_TYPE],
+                       'start': string_to_value(row[COL_TYPE], row[COL_START_VAL])}
+
+                if row[COL_END_VAL]:
+                    arg['end'] = string_to_value(row[COL_TYPE], row[COL_END_VAL])
+
+                arg['fade'] = row[COL_DO_FADE]
+                args_list.append(arg)
+
+            conf['args'] = args_list
         if not (checkable and not self.fadeGroup.isCheckable()):
             conf['duration'] = self.fadeSpin.value() * 1000
             conf['fade_type'] = self.fadeCurveCombo.currentType()
@@ -340,45 +382,60 @@ class OscCueSettings(SettingsPage):
             path = settings.get('path', '')
             self.pathEdit.setText(path)
             if 'args' in settings:
+
                 args = settings.get('args', '')
-                for row in args:
-                    self.oscModel.appendRow(row[0], row[1], row[2], row[3])
+                for arg in args:
+                    self.oscModel.appendRow(arg['type'],
+                                            str(arg['start']),
+                                            str(arg['end']) if 'end' in arg else '',
+                                            arg['fade'])
+
             self.fadeSpin.setValue(settings.get('duration', 0) / 1000)
             self.fadeCurveCombo.setCurrentType(settings.get('fade_type', ''))
 
     def __new_argument(self):
-        self.oscModel.appendRow(OscMessageType.Int.value, '', '', False)
+        self.oscModel.appendRow(OscMessageType.Int.value, '1', '', False)
 
     def __remove_argument(self):
         if self.oscModel.rowCount():
             self.oscModel.removeRow(self.oscView.currentIndex().row())
 
     def __test_message(self):
-        oscmsg = {'path': self.pathEdit.text(),
-                  'args': [row for row in self.oscModel.rows]}
-        value_list = []
-        if len(oscmsg['path']) < 2:
-            elogging.warning("OSC: no valid path for OSC message - nothing sent",
-                             details="Path too short.",
-                             dialog=True)
-            return
+        # TODO: check arguments for error
 
-        if oscmsg['path'][0] != '/':
-            elogging.warning("OSC: no valid path for OSC message - nothing",
-                             details="Path should start with '/'.",
+        path = self.pathEdit.text()
+
+        if not test_path(path):
+            elogging.warning("OSC: no valid path for OSC message - nothing sent",
+                             details="Path should start with a '/' followed by a name.",
                              dialog=True)
             return
 
         try:
-            for arg in oscmsg['args']:
-                value = string_to_value(arg[0], arg[1])
-                value_list.append(value)
-            OscCommon().send(oscmsg['path'], *value_list)
+            args = []
+            for row in self.oscModel.rows:
+                if row[COL_END_VAL] and row[COL_DO_FADE]:
+                    args.append(string_to_value(row[COL_TYPE], row[COL_END_VAL]))
+                else:
+                    args.append(string_to_value(row[COL_TYPE], row[COL_START_VAL]))
+
+            OscCommon().send(path, *args)
         except ValueError:
-            elogging.warning("OSC: Error on parsing argument list - nothing sent")
+            elogging.error("OSC: Error on parsing argument list - nothing sent")
+
+    def __path_changed(self):
+        if not test_path(self.pathEdit.text()):
+            elogging.warning("OSC: no valid path for OSC message",
+                             details="Path should start with a '/' followed by a name.",
+                             dialog=True)
 
     @staticmethod
     def __argument_changed(index_topleft, index_bottomright, roles):
+        """helper function, no error handling:
+            *formats input
+            *disable fade for non fade types
+            *checks if start and end value is provided
+        """
         model = index_bottomright.model()
         osctype = model.rows[index_bottomright.row()][COL_TYPE]
         start = model.rows[index_bottomright.row()][COL_START_VAL]
@@ -388,30 +445,27 @@ class OscCueSettings(SettingsPage):
         try:
             model.rows[index_bottomright.row()][COL_START_VAL] = format_string(osctype, start)
         except ValueError:
-            model.rows[index_bottomright.row()][COL_START_VAL] = ''
+            model.rows[index_bottomright.row()][COL_START_VAL] = '1'
             elogging.warning("OSC Argument Error", details="{0} not a {1}".format(start, osctype), dialog=True)
 
-        # test End value for correct format
-        try:
-            model.rows[index_bottomright.row()][COL_END_VAL] = format_string(osctype, end)
-        except ValueError:
-            model.rows[index_bottomright.row()][COL_END_VAL] = ''
-            elogging.warning("OSC Argument Error", details="{0} not a {1}".format(end, osctype), dialog=True)
-
-        # Fade only enabled for Int and Float
-        if not type_can_fade(osctype):
-            model.rows[index_bottomright.row()][COL_DO_FADE] = False
-
-        # for Fade, test if end value is provided
-        if not model.rows[index_bottomright.row()][COL_END_VAL] and \
-                model.rows[index_bottomright.row()][COL_DO_FADE]:
-            elogging.warning("OSC Argument Error", details="FadeOut value is missing", dialog=True)
-            model.rows[index_bottomright.row()][3] = False
-
-        # test if start != end value
-        if model.rows[index_bottomright.row()][COL_END_VAL] == model.rows[index_bottomright.row()][COL_START_VAL]:
-            model.rows[index_bottomright.row()][COL_DO_FADE] = False
-            elogging.warning("OSC Argument Error", details="FadeIn equals FadeOut - no fade", dialog=True)
+        # test fades
+        if model.rows[index_bottomright.row()][COL_DO_FADE]:
+            if type_can_fade(osctype):
+                try:
+                    model.rows[index_bottomright.row()][COL_END_VAL] = format_string(osctype, end)
+                except ValueError:
+                    elogging.warning("OSC Argument Error", details="{0} not a {1}".format(end, osctype), dialog=True)
+                    model.rows[index_bottomright.row()][COL_END_VAL] = ''
+                    model.rows[index_bottomright.row()][3] = False
+                # end_value equals start_value
+                if model.rows[index_bottomright.row()][COL_END_VAL] == model.rows[index_bottomright.row()][COL_START_VAL]:
+                    model.rows[index_bottomright.row()][COL_END_VAL] = ''
+                    model.rows[index_bottomright.row()][COL_DO_FADE] = False
+                    elogging.warning("OSC Argument Error", details="FadeIn equals FadeOut - no fade", dialog=True)
+            else:
+                # disable fade for non fade types
+                model.rows[index_bottomright.row()][COL_DO_FADE] = False
+                model.rows[index_bottomright.row()][COL_END_VAL] = ''
 
 
 class OscView(QTableView):
