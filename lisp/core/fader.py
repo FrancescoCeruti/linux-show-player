@@ -114,8 +114,6 @@ class Fader:
                 return
 
             while self._time <= duration and not self._running.is_set():
-                self._pause.wait()
-
                 rsetattr(self._target,
                          self._attribute,
                          functor(ntime(self._time, begin, duration),
@@ -124,6 +122,7 @@ class Fader:
 
                 self._time += 1
                 self._running.wait(0.01)
+                self._pause.wait()
         finally:
             interrupted = self._running.is_set()
             self._running.set()
@@ -133,20 +132,17 @@ class Fader:
         return not interrupted
 
     def stop(self):
-        if self.is_running() or self.is_paused():
+        if not self._running.is_set() or not self._pause.is_set():
             self._running.set()
-            self._is_ready.wait()
-
-        if self.is_paused():
             self._pause.set()
+            self._is_ready.wait()
 
     def pause(self):
         if self.is_running():
             self._pause.clear()
 
     def restart(self):
-        if self.is_paused():
-            self._pause.set()
+        self._pause.set()
 
     def is_paused(self):
         return not self._pause.is_set()

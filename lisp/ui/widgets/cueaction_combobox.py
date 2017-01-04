@@ -22,7 +22,7 @@ from enum import Enum
 from PyQt5.QtCore import QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import QComboBox
 
-from lisp.cues.cue import Cue
+from lisp.cues.cue import Cue, CueAction
 from lisp.ui.ui_utils import translate
 
 QT_TRANSLATE_NOOP('CueAction', 'Default')
@@ -42,14 +42,28 @@ class CueActionComboBox(QComboBox):
 
     def __init__(self, cue_class, mode=Mode.Action, **kwargs):
         super().__init__(**kwargs)
+        self.mode = mode
 
         if issubclass(cue_class, Cue):
             for action in cue_class.CueActions:
-                if mode == CueActionComboBox.Mode.Value:
+                if mode is CueActionComboBox.Mode.Value:
                     value = action.value
-                elif mode == CueActionComboBox.Mode.Name:
-                    value = action.value
+                elif mode is CueActionComboBox.Mode.Name:
+                    value = action.name
                 else:
                     value = action
 
                 self.addItem(translate('CueAction', action.name), value)
+
+    def currentAction(self):
+        return self.currentData()
+
+    def setCurrentAction(self, action):
+        if self.mode is CueActionComboBox.Mode.Value:
+            name = CueAction(action).name
+        elif self.mode is CueActionComboBox.Mode.Action:
+            name = action.name
+        else:
+            name = action
+
+        self.setCurrentText(translate('CueAction', name))
