@@ -48,7 +48,7 @@ class TimecodeCommon(metaclass=ABCSingleton):
 
     def status(self):
         """returns the status of the backend"""
-        return config['Timecode'].getboolean('enabled') and self._backend and self._backend.status()
+        return self._backend and self._backend.status()
 
     def _disable(self):
         config.set('Timecode', 'enabled', 'False')

@@ -87,7 +87,8 @@ class TimecodeSettings(SettingsPage):
 
         # check for restart
         if enabled and (not config['Timecode'].getboolean('enabled') or backend != config['Timecode']['backend']):
-            if not TimecodeOutput().change_backend(backend):
+            TimecodeOutput().change_backend(backend)
+            if not TimecodeOutput().status():
                 enabled = False
 
         conf['enabled'] = str(enabled)

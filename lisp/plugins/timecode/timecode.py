@@ -87,10 +87,11 @@ class TimecodeSettings(CueSettingsPage):
             translate('TimecodeOutput', 'Enable ArtNet Timecode'))
         self.trackLabel.setText(
             translate('TimecodeOutput', 'Track number'))
-        self.warnLabel.setText(
-            translate('TimecodeOutput',
-                      'To send ArtNet Timecode you need to setup a running OLA'
-                      ' session!'))
+        if 'artnet' in config['Timecode']['backend'].lower():
+            self.warnLabel.setText(
+                translate('TimecodeOutput',
+                          'To send ArtNet Timecode you need to setup a running OLA'
+                          ' session!'))
 
     def get_settings(self):
         settings = {
