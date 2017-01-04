@@ -28,7 +28,8 @@ class Timecode(Module):
     """Provide Timecode I/O functionality"""
 
     def __init__(self):
-        backends.load()
+        # load timecode backend components
+        backends.load_backends()
 
         # Register the settings widget
         AppSettings.register_settings_widget(TimecodeSettings)

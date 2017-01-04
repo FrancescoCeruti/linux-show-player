@@ -22,6 +22,7 @@ from lisp.ui import elogging
 from lisp.core.configuration import config
 from lisp.core.clock import Clock
 from lisp.cues.cue_time import CueTime
+from lisp.modules.timecode import backends
 from lisp.modules.timecode.timecode_common import TimecodeCommon, TcFormat
 
 
@@ -44,12 +45,12 @@ class TimecodeOutput(TimecodeCommon):
     def cue(self):
         return self.__cue
 
-    def status(self):
-        """returns the status of the backend"""
-        if self.backend:
-            return self.backend.status() and config['Timecode'].getboolean('enabled')
+    def init(self):
+        self._backend = backends.create_backend(self._backend_name)
+        if self._backend.status():
+            elogging.debug("TIMECODE: backend created - {0}".format(self._backend.Name))
         else:
-            return False
+            self._disable()
 
     def start(self, cue):
         """initialize timecode for new cue, stop old"""
@@ -84,11 +85,11 @@ class TimecodeOutput(TimecodeCommon):
             self.__cue = None
             self.__cue_time = None
 
-        if self.backend:
-            self.backend.stop(rclient)
+        if self.status():
+            self._backend.stop(rclient)
 
     def send(self, time, rewind=False):
         """sends timecode"""
-        if not self.backend.send(self.__format, time, self.__track, rewind):
+        if not self._backend.send(self.__format, time, self.__track, rewind):
             elogging.error('TIMECODE: could not send timecode, stopping timecode')
             self.stop()

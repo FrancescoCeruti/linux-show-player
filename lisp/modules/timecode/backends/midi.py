@@ -51,9 +51,6 @@ class Midi(TimecodeBackend):
         self.__last_frame = -1
         if not MIDIOutput().is_open():
             MIDIOutput().open()
-            if not self.status():
-                config.set('Timecode', 'enabled', 'False')
-                elogging.error('TIMECODE: Timecode Backend MIDI not available, Timecode Module disabled')
 
     def status(self):
         return MIDIOutput().is_open()

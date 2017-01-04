@@ -128,7 +128,7 @@ class Timecode(Plugin):
     def init(self):
         if not config['Timecode'].getboolean('enabled'):
             logging.info('TIMECODE: disabled by application settings')
-        elif not TimecodeOutput().status():
+        elif not TimecodeOutput().init():
             logging.info('TIMECODE: output not available')
 
     def reset(self):

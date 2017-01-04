@@ -22,7 +22,6 @@ from ola.OlaClient import OlaClient, OLADNotRunningException
 
 from lisp.ui import elogging
 from lisp.core.util import time_tuple
-from lisp.core.configuration import config
 from lisp.modules.timecode.timecode_backend import TimecodeBackend
 from lisp.modules.timecode.timecode_common import TcFormat
 
@@ -40,9 +39,8 @@ class Artnet(TimecodeBackend):
             self.__client = OlaClient()
         except OLADNotRunningException as e:
             self.__client = None
-            config.set('Timecode', 'enabled', 'False')
-            elogging.error('TIMECODE: ArtNet Backend not available, Timecode Module disabled.',
-                           details="Reason: {0}".format(e))
+            elogging.error('TIMECODE: Could not create OlaClient',
+                           details="{0}".format(e), dialog=False)
 
         self.__last_time = -1
 

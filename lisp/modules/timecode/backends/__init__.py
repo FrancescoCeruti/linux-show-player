@@ -30,7 +30,7 @@ except ImportError:
 __BACKENDS = {}
 
 
-def load():
+def load_backends():
     if not ola:
        exclude = 'artnet'
     else:
@@ -41,12 +41,12 @@ def load():
         elogging.debug('TIMECODE: Loaded Backend "{0}"'.format(name))
 
 
-def get(name):
+def create_backend(name):
     if name in __BACKENDS and callable(__BACKENDS[name]):
         return __BACKENDS[name]()
     else:
         raise AttributeError("Timecode Backend - {0} not found".format(name))
 
 
-def list():
+def list_backends():
     return __BACKENDS

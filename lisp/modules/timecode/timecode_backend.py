@@ -27,7 +27,7 @@ class TimecodeBackend():
 
     def status(self):
         """returns status of backend, True if ready"""
-        return True
+        return False
 
     def send(self, fmt, time, track=-1, rewind=False):
         """send timecode, returs success for error handling"""

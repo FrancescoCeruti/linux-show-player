@@ -28,7 +28,7 @@ from lisp.core.configuration import config
 from lisp.ui.settings.settings_page import SettingsPage
 from lisp.modules.timecode import backends
 from lisp.ui.ui_utils import translate
-from lisp.modules.timecode.timecode_common import TcFormat, TimecodeCommon
+from lisp.modules.timecode.timecode_output import TcFormat, TimecodeOutput
 
 
 class TimecodeSettings(SettingsPage):
@@ -61,7 +61,7 @@ class TimecodeSettings(SettingsPage):
         self.groupBox.layout().addWidget(self.backendLabel, 3, 0)
 
         self.backendBox = QComboBox(self.groupBox)
-        for backend in backends.list():
+        for backend in backends.list_backends():
             self.backendBox.addItem(backend)
         self.groupBox.layout().addWidget(self.backendBox, 3, 1)
 
@@ -79,17 +79,23 @@ class TimecodeSettings(SettingsPage):
             translate('TimecodeSettings', 'Timecode Backend:'))
 
     def get_settings(self):
-        # check for restart
-        if self.activateBox.isChecked():
-            if not config['Timecode'].getboolean('enabled') or self.backendBox.currentText() != config['Timecode']['backend']:
-                TimecodeCommon().backend = self.backendBox.currentText()
+        conf = {}
+        enabled = self.activateBox.isChecked()
+        hres = self.hresBox.isChecked()
+        fmt = self.formatBox.currentText()
+        backend = self.backendBox.currentText()
 
-        return {'Timecode': {
-            'enabled': str(self.activateBox.isChecked()),
-            'hres': str(self.hresBox.isChecked()),
-            'format': self.formatBox.currentText(),
-            'backend': self.backendBox.currentText()
-        }}
+        # check for restart
+        if enabled and (not config['Timecode'].getboolean('enabled') or backend != config['Timecode']['backend']):
+            if not TimecodeOutput().change_backend(backend):
+                enabled = False
+
+        conf['enabled'] = str(enabled)
+        conf['hres'] = str(hres)
+        conf['format'] = fmt
+        conf['backend'] = backend
+
+        return {'Timecode': conf}
 
     def load_settings(self, settings):
         settings = settings.get('Timecode', {})
