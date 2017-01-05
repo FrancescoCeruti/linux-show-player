@@ -38,7 +38,7 @@ class Osc(Protocol):
         if check_module('osc') and OscCommon().listening:
             OscCommon().new_message.connect(self.__new_message)
 
-    def __new_message(self, path, args, types, src):
+    def __new_message(self, path, args, types):
         self.protocol_event.emit(Osc.key_from_message(path, types))
 
     @staticmethod
@@ -145,7 +145,7 @@ class OscSettings(CueSettingsPage):
             self.oscModel.appendRow(self.capturedMessage['path'], self.capturedMessage['types'], self._default_action)
         OscCommon().new_message.disconnect(self.__show_message)
 
-    def __show_message(self, path, args, types, src):
+    def __show_message(self, path, args, types):
         self.capturedMessage['path'] = path
         self.capturedMessage['types'] = types
         self.captureLabel.setText('{0} "{1}" {2}'.format(path, types, args))

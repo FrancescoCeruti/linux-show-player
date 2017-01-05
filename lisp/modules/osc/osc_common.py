@@ -33,23 +33,23 @@ from lisp.core.signal import Signal
 
 
 # decorator for OSC callback (pushing messages to log, emits message_event)
-def osc_handler(func):
-   def func_wrapper(path, args, types, src):
-       func(path, args, types, src)
-       OscCommon().push_log(path, args, types, src)
-       OscCommon().new_message.emit(path, args, types, src)
-   return func_wrapper
+# def __osc_handler(func):
+#    def func_wrapper(path, args, types):
+#        func()
+#        # OscCommon().push_log(path, args, types, src)
+#        OscCommon().new_message.emit(path, args, types)
+#    return func_wrapper
 
 
-@osc_handler
-def _go(path, args, types, src):
+# @__osc_handler
+def _go():
     """triggers GO in ListLayout"""
     if isinstance(MainWindow().layout, ListLayout):
         MainWindow().layout.go()
 
 
-@osc_handler
-def _reset_list(path, args, types, src):
+# @__osc_handler
+def _reset_list():
     """reset, stops all cues, sets cursor to Cue index 0 in ListLayout"""
     if isinstance(MainWindow().layout, ListLayout):
         for cue in Application().cue_model:
@@ -57,24 +57,24 @@ def _reset_list(path, args, types, src):
         MainWindow().layout.set_current_index(0)
 
 
-@osc_handler
-def _pause_all(path, args, types, src):
+# @__osc_handler
+def _pause_all():
     """triggers global pause all media"""
     for cue in Application().cue_model:
         if cue.state == CueState.Running:
             cue.pause()
 
 
-@osc_handler
-def _restart_all(path, args, types, src):
+# @__osc_handler
+def _restart_all():
     """triggers global play, if pausing"""
     for cue in Application().cue_model:
         if cue.state == CueState.Pause:
             cue.start()
 
 
-@osc_handler
-def _stop_all(path, args, types, src):
+# @__osc_handler
+def _stop_all():
     """triggers global stop, stops all media cues"""
     for cue in Application().cue_model:
         cue.stop()
@@ -89,19 +89,19 @@ class OscCommon(metaclass=ABCSingleton):
 
         # TODO: static paths and callbacks, find smarter way
         self.__callbacks = [
-            ['/lisp/list/go', '', _go],
-            ['/lisp/list/reset', '', _reset_list],
-            ['/lisp/pause', '', _pause_all],
-            ['/lisp/start', '', _restart_all],
-            ['/lisp/stop', '', _stop_all],
+            ['/lisp/list/go', None, _go],
+            ['/lisp/list/reset', None, _reset_list],
+            ['/lisp/pause', None, _pause_all],
+            ['/lisp/start', None, _restart_all],
+            ['/lisp/stop', None, _stop_all],
             [None, None, self.__new_message]
         ]
 
-    def push_log(self, path, args, types, src, success=True):
-        self.__log.append([path, args, types, src, success])
-
-    def get_log(self):
-        return self.__log
+    # def push_log(self, path, args, types, src, success=True):
+    #     self.__log.append([path, args, types, src, success])
+    #
+    # def get_log(self):
+    #     return self.__log
 
     def start(self):
         if self.__listening:
@@ -134,6 +134,6 @@ class OscCommon(metaclass=ABCSingleton):
             target = Address(config['OSC']['hostname'], int(config['OSC']['outport']))
             self.__srv.send(target, path, *args)
 
-    def __new_message(self, path, args, types, src):
-        self.push_log(path, args, types, src, False)
-        self.new_message.emit(path, args, types, src)
+    def __new_message(self, path, args, types):
+        # self.push_log(path, args, types, src, False)
+        self.new_message.emit(path, args, types)

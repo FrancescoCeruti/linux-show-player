@@ -354,9 +354,10 @@ class OscCueSettings(SettingsPage):
         checkable = self.oscGroup.isCheckable()
 
         # TODO: test paths and argument
-        # if not (checkable and not self.oscGroup.isChecked()):
-        #     if test_path():
-        #         return test_arguments([row for row in self.oscModel.rows])
+        if not (checkable and not self.oscGroup.isChecked()):
+            if not test_path(self.pathEdit.text()) or not test_arguments([row for row in self.oscModel.rows]):
+                elogging.error("OSC: Error parsing message elements, remove message")
+                return conf
 
         if not (checkable and not self.oscGroup.isChecked()):
             conf['path'] = self.pathEdit.text()
