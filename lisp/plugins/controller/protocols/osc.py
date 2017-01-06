@@ -39,19 +39,28 @@ class Osc(Protocol):
             OscCommon().new_message.connect(self.__new_message)
 
     def __new_message(self, path, args, types):
-        self.protocol_event.emit(Osc.key_from_message(path, types))
+        key = Osc.key_from_message(path, args, types)
+        self.protocol_event.emit(key)
 
     @staticmethod
-    def key_from_message(path, types):
+    def key_from_message(path, args, types):
         if len(types):
-            return '{0} {1}'.format(path, types)
+            args = ' '.join([str(i) for i in args])
+            return 'OSC\u001f{0}\u001f{1}\u001f{2}'.format(path, args, types)
         else:
-            return path
+            return 'OSC\u001f{0}'.format(path)
+
+    @staticmethod
+    def key_from_settings(path, args, types):
+        if len(types):
+            return 'OSC\u001f{0}\u001f{1}\u001f{2}'.format(path, args, types)
+        else:
+            return 'OSC\u001f{0}'.format(path)
 
     @staticmethod
     def from_key(message_str):
-        m = message_str.split(' ')
-        return m[0], '' if len(m) < 2 else m[1]
+        m = message_str.split('\u001f')[1:]
+        return (m[0], m[1], m[2]) if len(m) > 2 else (m[0], '', '')
 
 
 class OscSettings(CueSettingsPage):
@@ -69,6 +78,7 @@ class OscSettings(CueSettingsPage):
 
         self.oscModel = SimpleTableModel([
             translate('ControllerOscSettings', 'Path'),
+            translate('ControllerOscSettings', 'Arguments'),
             translate('ControllerOscSettings', 'Types'),
             translate('ControllerOscSettings', 'Actions')])
 
@@ -103,7 +113,7 @@ class OscSettings(CueSettingsPage):
         self.buttonBox.rejected.connect(self.captureDialog.reject)
         self.captureDialog.layout().addWidget(self.buttonBox)
 
-        self.capturedMessage = {'path': None, 'types': None}
+        self.capturedMessage = {'path': None, 'args': None, 'types': None}
 
         self.retranslateUi()
 
@@ -124,7 +134,7 @@ class OscSettings(CueSettingsPage):
         messages = []
 
         for row in self.oscModel.rows:
-            message = Osc.key_from_message(row[0], row[1])
+            message = Osc.key_from_settings(row[0], row[1], row[2])
             messages.append((message, row[-1]))
 
         if messages:
@@ -135,23 +145,27 @@ class OscSettings(CueSettingsPage):
     def load_settings(self, settings):
         if 'osc' in settings:
             for options in settings['osc']:
-                path, types = Osc.from_key(options[0])
-                self.oscModel.appendRow(path, types, options[1])
+                path, args, types = Osc.from_key(options[0])
+                self.oscModel.appendRow(path, args, types, options[1])
 
     def capture_message(self):
         OscCommon().new_message.connect(self.__show_message)
         result = self.captureDialog.exec()
         if result == QDialog.Accepted:
-            self.oscModel.appendRow(self.capturedMessage['path'], self.capturedMessage['types'], self._default_action)
+            self.oscModel.appendRow(self.capturedMessage['path'],
+                                    self.capturedMessage['args'],
+                                    self.capturedMessage['types'],
+                                    self._default_action)
         OscCommon().new_message.disconnect(self.__show_message)
 
     def __show_message(self, path, args, types):
         self.capturedMessage['path'] = path
+        self.capturedMessage['args'] = ' '.join([str(i) for i in args])
         self.capturedMessage['types'] = types
         self.captureLabel.setText('{0} "{1}" {2}'.format(path, types, args))
 
     def __new_message(self):
-        self.oscModel.appendRow('', '', self._default_action)
+        self.oscModel.appendRow('', '', '', self._default_action)
 
     def __remove_message(self):
         self.oscModel.removeRow(self.OscView.currentIndex().row())
@@ -163,6 +177,7 @@ class OscView(QTableView):
 
         cue_actions = [action.name for action in cue_class.CueActions]
         self.delegates = [LineEditDelegate(),
+                          LineEditDelegate(),
                           LineEditDelegate(),
                           ComboBoxDelegate(options=cue_actions,
                                            tr_context='CueAction')]
