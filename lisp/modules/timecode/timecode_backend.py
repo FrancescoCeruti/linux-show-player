@@ -17,21 +17,25 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+from abc import abstractmethod
+from abc import ABCMeta
 
-class TimecodeBackend():
+
+class TimecodeBackend(metaclass=ABCMeta):
     """base class for timecode backends"""
     Name = 'None'
 
     def __init__(self):
         """constructor of timecode backend"""
 
+    @abstractmethod
     def status(self):
         """returns status of backend, True if ready"""
-        return False
 
+    @abstractmethod
     def send(self, fmt, time, track=-1, rewind=False):
         """send timecode, returs success for error handling"""
-        return False
 
+    @abstractmethod
     def stop(self, rclient=False):
         """cleanup after client has stopped"""

@@ -72,7 +72,7 @@ class Midi(TimecodeBackend):
 
     def __continous(self, num_quarters, fmt, hours, minutes, seconds, frames):
         frame_type = self.__last_frame
-        for num in range(num_quarters):
+        for _ in range(num_quarters):
             if frame_type < len(self.__table__) - 1:
                 frame_type += 1
             else:
