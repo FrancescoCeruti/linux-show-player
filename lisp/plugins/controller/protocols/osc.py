@@ -17,6 +17,11 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+# TODO: LineEdit text orientation
+# TODO: error handling for manual edited messages
+
+import ast
+
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import QGroupBox, QPushButton, QVBoxLayout, \
     QTableView, QTableWidget, QHeaderView, QGridLayout, QLabel, \
@@ -39,28 +44,25 @@ class Osc(Protocol):
             OscCommon().new_message.connect(self.__new_message)
 
     def __new_message(self, path, args, types):
-        key = Osc.key_from_message(path, args, types)
+        key = Osc.key_from_message(path, types, args)
         self.protocol_event.emit(key)
 
     @staticmethod
-    def key_from_message(path, args, types):
-        if len(types):
-            args = ' '.join([str(i) for i in args])
-            return 'OSC\u001f{0}\u001f{1}\u001f{2}'.format(path, args, types)
-        else:
-            return 'OSC\u001f{0}'.format(path)
+    def key_from_message(path, types, args):
+        key = [path, types, *args]
+        return 'OSC{}'.format(key)
 
     @staticmethod
-    def key_from_settings(path, args, types):
-        if len(types):
-            return 'OSC\u001f{0}\u001f{1}\u001f{2}'.format(path, args, types)
+    def key_from_settings(path, types, args):
+        if not len(types):
+            return "OSC['{0}', '{1}']".format(path, types)
         else:
-            return 'OSC\u001f{0}'.format(path)
+            return "OSC['{0}', '{1}', {2}]".format(path, types, args)
 
     @staticmethod
-    def from_key(message_str):
-        m = message_str.split('\u001f')[1:]
-        return (m[0], m[1], m[2]) if len(m) > 2 else (m[0], '', '')
+    def message_from_key(key):
+        key = ast.literal_eval(key[3:])
+        return key
 
 
 class OscSettings(CueSettingsPage):
@@ -78,8 +80,8 @@ class OscSettings(CueSettingsPage):
 
         self.oscModel = SimpleTableModel([
             translate('ControllerOscSettings', 'Path'),
-            translate('ControllerOscSettings', 'Arguments'),
             translate('ControllerOscSettings', 'Types'),
+            translate('ControllerOscSettings', 'Arguments'),
             translate('ControllerOscSettings', 'Actions')])
 
         self.OscView = OscView(cue_class, parent=self.oscGroup)
@@ -98,11 +100,10 @@ class OscSettings(CueSettingsPage):
         self.oscCapture.clicked.connect(self.capture_message)
         self.oscGroup.layout().addWidget(self.oscCapture, 2, 0)
 
-        self.captureDialog = QDialog()
-        self.captureDialog.setWindowTitle(translate('ControllerOscSettings',
-                                             'OSC Capture'))
+        self.captureDialog = QDialog(self, flags=Qt.Dialog)
+        self.captureDialog.setWindowTitle(translate('ControllerOscSettings', 'OSC Capture'))
         self.captureDialog.setModal(True)
-        self.captureLabel = QLabel('...')
+        self.captureLabel = QLabel('Waiting for message:')
         self.captureDialog.setLayout(QVBoxLayout())
         self.captureDialog.layout().addWidget(self.captureLabel)
 
@@ -113,7 +114,7 @@ class OscSettings(CueSettingsPage):
         self.buttonBox.rejected.connect(self.captureDialog.reject)
         self.captureDialog.layout().addWidget(self.buttonBox)
 
-        self.capturedMessage = {'path': None, 'args': None, 'types': None}
+        self.capturedMessage = {'path': None, 'types': None, 'args': None}
 
         self.retranslateUi()
 
@@ -134,8 +135,8 @@ class OscSettings(CueSettingsPage):
         messages = []
 
         for row in self.oscModel.rows:
-            message = Osc.key_from_settings(row[0], row[1], row[2])
-            messages.append((message, row[-1]))
+            key = Osc.key_from_settings(row[0], row[1], row[2])
+            messages.append((key, row[-1]))
 
         if messages:
             settings['osc'] = messages
@@ -145,24 +146,33 @@ class OscSettings(CueSettingsPage):
     def load_settings(self, settings):
         if 'osc' in settings:
             for options in settings['osc']:
-                path, args, types = Osc.from_key(options[0])
-                self.oscModel.appendRow(path, args, types, options[1])
+                key = Osc.message_from_key(options[0])
+                self.oscModel.appendRow(key[0],
+                                        key[1],
+                                        '{}'.format(key[2:])[1:-1],
+                                        options[1])
 
     def capture_message(self):
         OscCommon().new_message.connect(self.__show_message)
         result = self.captureDialog.exec()
-        if result == QDialog.Accepted:
+        if result == QDialog.Accepted and self.capturedMessage['path']:
+            args = '{}'.format(self.capturedMessage['args'])[1:-1]
             self.oscModel.appendRow(self.capturedMessage['path'],
-                                    self.capturedMessage['args'],
                                     self.capturedMessage['types'],
+                                    args,
                                     self._default_action)
         OscCommon().new_message.disconnect(self.__show_message)
+        self.captureLabel.setText('Waiting for messsage:')
 
     def __show_message(self, path, args, types):
+        key = Osc.key_from_message(path, types, args)
+
         self.capturedMessage['path'] = path
-        self.capturedMessage['args'] = ' '.join([str(i) for i in args])
         self.capturedMessage['types'] = types
-        self.captureLabel.setText('{0} "{1}" {2}'.format(path, types, args))
+        self.capturedMessage['args'] = args
+        self.captureLabel.setText('OSC: "{0}" "{1}" {2}'.format(self.capturedMessage['path'],
+                                                                    self.capturedMessage['types'],
+                                                                    self.capturedMessage['args']))
 
     def __new_message(self):
         self.oscModel.appendRow('', '', '', self._default_action)
