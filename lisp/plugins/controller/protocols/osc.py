@@ -165,8 +165,6 @@ class OscSettings(CueSettingsPage):
         self.captureLabel.setText('Waiting for messsage:')
 
     def __show_message(self, path, args, types):
-        key = Osc.key_from_message(path, types, args)
-
         self.capturedMessage['path'] = path
         self.capturedMessage['types'] = types
         self.capturedMessage['args'] = args
