@@ -19,6 +19,16 @@
 
 # TODO: LineEdit text orientation
 # TODO: error handling for manual edited messages
+#   error check get_settings:
+#   1. Path
+#   1.1 path not set
+#   1.2 path wrong (leading / and len)
+#   2. Types
+#   2.1 types are set, values None
+#   2.2 types not set, values not None
+#   2.3 len(types) != len(values)
+#   3 Semantic test on argument list
+#   3.2 type for type in types == convert_str_to_type(arg for arg in args)
 
 import ast
 
@@ -101,9 +111,13 @@ class OscSettings(CueSettingsPage):
         self.oscGroup.layout().addWidget(self.oscCapture, 2, 0)
 
         self.captureDialog = QDialog(self, flags=Qt.Dialog)
+        self.captureDialog.resize(300, 150)
+        self.captureDialog.setMaximumSize(self.captureDialog.size())
+        self.captureDialog.setMinimumSize(self.captureDialog.size())
         self.captureDialog.setWindowTitle(translate('ControllerOscSettings', 'OSC Capture'))
         self.captureDialog.setModal(True)
         self.captureLabel = QLabel('Waiting for message:')
+        self.captureLabel.setAlignment(Qt.AlignCenter)
         self.captureDialog.setLayout(QVBoxLayout())
         self.captureDialog.layout().addWidget(self.captureLabel)
 
@@ -162,15 +176,15 @@ class OscSettings(CueSettingsPage):
                                     args,
                                     self._default_action)
         OscCommon().new_message.disconnect(self.__show_message)
-        self.captureLabel.setText('Waiting for messsage:')
+        self.captureLabel.setText('Waiting for message:')
 
     def __show_message(self, path, args, types):
         self.capturedMessage['path'] = path
         self.capturedMessage['types'] = types
         self.capturedMessage['args'] = args
         self.captureLabel.setText('OSC: "{0}" "{1}" {2}'.format(self.capturedMessage['path'],
-                                                                    self.capturedMessage['types'],
-                                                                    self.capturedMessage['args']))
+                                                                self.capturedMessage['types'],
+                                                                self.capturedMessage['args']))
 
     def __new_message(self):
         self.oscModel.appendRow('', '', '', self._default_action)
