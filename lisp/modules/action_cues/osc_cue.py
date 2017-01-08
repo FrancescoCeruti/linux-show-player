@@ -191,7 +191,7 @@ class OscCue(Cue):
                     self.__arg_list.append([arg['type'],
                                             arg['start'],
                                             0])
-        except:
+        except KeyError:
             elogging.error("OSC: could not parse argument list, nothing sent")
             return False
 
