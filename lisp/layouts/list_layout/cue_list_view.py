@@ -20,7 +20,7 @@
 from PyQt5 import QtCore
 from PyQt5.QtCore import pyqtSignal, Qt, QDataStream, QIODevice, \
     QT_TRANSLATE_NOOP
-from PyQt5.QtGui import QKeyEvent, QContextMenuEvent
+from PyQt5.QtGui import QKeyEvent, QContextMenuEvent, QMouseEvent
 from PyQt5.QtWidgets import QTreeWidget, QHeaderView, qApp
 
 from lisp.core.signal import Connection
@@ -38,6 +38,7 @@ class CueListView(QTreeWidget):
 
     key_event = pyqtSignal(QKeyEvent)
     context_event = pyqtSignal(QContextMenuEvent)
+    select_cue_event = pyqtSignal(QMouseEvent)
     drop_move_event = QtCore.pyqtSignal(int, int)
     drop_copy_event = QtCore.pyqtSignal(int, int)
 
@@ -121,8 +122,8 @@ class CueListView(QTreeWidget):
 
     def mousePressEvent(self, event):
         if qApp.keyboardModifiers() == Qt.ControlModifier:
-            # Prevent items to be deselected
-            event.ignore()
+            # For cue selection
+            self.select_cue_event.emit(event)
         else:
             super().mousePressEvent(event)
 

@@ -152,6 +152,7 @@ class ListLayout(QWidget, CueLayout):
         self.listView.currentItemChanged.connect(self.__current_changed)
         self.listView.context_event.connect(self.context_event)
         self.listView.key_event.connect(self.onKeyPressEvent)
+        self.listView.select_cue_event.connect(self.select_event)
         self.layout().addWidget(self.listView, 1, 0, 1, 2)
 
         # PLAYING VIEW (center right)
@@ -289,6 +290,11 @@ class ListLayout(QWidget, CueLayout):
         cue = self.current_cue()
         if cue is not None:
             self.edit_cue(cue)
+
+    def select_event(self, event):
+        self._context_item = self.listView.itemAt(event.pos())
+        if self._context_item is not None:
+            self.select_context_cue()
 
     def context_event(self, event):
         self._context_item = self.listView.itemAt(event.pos())
