@@ -42,21 +42,9 @@ class JackSinkSettings(SettingsPage):
         self.jackGroup.setLayout(QHBoxLayout())
         self.layout().addWidget(self.jackGroup)
 
-        self.serverLineEdit = QLineEdit(self.jackGroup)
-        self.serverLineEdit.setText('default')
-        self.jackGroup.layout().addWidget(self.serverLineEdit)
-
-        self.serverLineEditLabel = QLabel(self.jackGroup)
-        self.serverLineEditLabel.setAlignment(Qt.AlignCenter)
-        self.jackGroup.layout().addWidget(self.serverLineEditLabel)
-
-        self.connectionsGroup = QGroupBox(self)
-        self.connectionsGroup.setLayout(QHBoxLayout())
-        self.layout().addWidget(self.connectionsGroup)
-
-        self.connectionsEdit = QPushButton(self)
+        self.connectionsEdit = QPushButton(self.jackGroup)
         self.connectionsEdit.clicked.connect(self.__edit_connections)
-        self.connectionsGroup.layout().addWidget(self.connectionsEdit)
+        self.jackGroup.layout().addWidget(self.connectionsEdit)
 
         self.__jack_client = jack.Client('LinuxShowPlayer_SettingsControl')
         self.connections = JackSink.default_connections(self.__jack_client)
@@ -64,12 +52,7 @@ class JackSinkSettings(SettingsPage):
         self.retranlsateUi()
 
     def retranlsateUi(self):
-        self.jackGroup.setTitle('JACK')
-        self.serverLineEdit.setToolTip(
-            translate('JackSinkSettings', 'Name of the server to connect with'))
-        self.serverLineEdit.setText(translate('JackSinkSettings', 'Server name'))
-        self.connectionsGroup.setTitle(
-            translate('JackSinkSettings', 'Connections'))
+        self.jackGroup.setTitle(translate('JackSinkSettings', 'Connections'))
         self.connectionsEdit.setText(
             translate('JackSinkSettings', 'Edit connections'))
 
@@ -80,20 +63,13 @@ class JackSinkSettings(SettingsPage):
     def get_settings(self):
         settings = {}
 
-        if not (
-                    self.jackGroup.isCheckable() and not self.jackGroup.isChecked()):
-            server = self.serverLineEdit.text()
-            settings['server'] = server if server.lower() != 'default' else None
+        if not (self.jackGroup.isCheckable() and
+                not self.jackGroup.isChecked()):
             settings['connections'] = self.connections
 
         return settings
 
     def load_settings(self, settings):
-        if settings.get('server') is None:
-            self.serverLineEdit.setText('default')
-        else:
-            self.serverLineEdit.setText(settings['server'])
-
         self.connections = settings.get('connections', self.connections).copy()
 
     def enable_check(self, enable):
@@ -217,7 +193,6 @@ class JackConnectionsDialog(QDialog):
         self.resize(600, 400)
 
         self.setLayout(QGridLayout())
-        # self.layout().setContentsMargins(0, 0, 0, 0)
 
         self.output_widget = QTreeWidget(self)
         self.input_widget = QTreeWidget(self)
