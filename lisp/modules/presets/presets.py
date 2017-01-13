@@ -42,23 +42,11 @@ class Presets(Module):
             os.makedirs(PRESETS_DIR, exist_ok=True)
 
         # Entry in mainWindow menu
-        self.menu = QMenu(translate('Presets', 'Presets'))
-        self.menu_action = MainWindow().menuTools.addMenu(self.menu)
+        self.manageAction = QAction(MainWindow())
+        self.manageAction.triggered.connect(self.__edit_presets)
+        self.manageAction.setText(translate('Presets', 'Presets'))
 
-        self.editPresetsAction = QAction(MainWindow())
-        self.editPresetsAction.triggered.connect(self.__edit_presets)
-        self.editPresetsAction.setText(
-            translate('Presets', 'Manage'))
-
-        self.loadOnSelectedAction = QAction(MainWindow())
-        self.loadOnSelectedAction.triggered.connect(self.__load_on_selected)
-        self.loadOnSelectedAction.setText(
-            translate('Presets', 'Load preset on selected cues'))
-
-        self.menu.addActions((
-            self.editPresetsAction,
-            self.loadOnSelectedAction
-        ))
+        self.menu_action = MainWindow().menuTools.addAction(self.manageAction)
 
         self.loadOnCueAction = QAction(None)
         self.loadOnCueAction.triggered.connect(self.__load_on_cue)
@@ -77,17 +65,6 @@ class Presets(Module):
     def __edit_presets():
         ui = PresetsDialog(parent=MainWindow())
         ui.show()
-
-    @staticmethod
-    def __load_on_selected():
-        preset_name = select_preset_dialog()
-        if preset_name is not None:
-            try:
-                cues = Application().layout.get_selected_cues()
-                if cues:
-                    load_on_cues(preset_name, cues)
-            except OSError as e:
-                load_preset_error(e, preset_name, parent=MainWindow())
 
     @staticmethod
     def __load_on_cue():

@@ -30,8 +30,9 @@ from lisp.core.util import natural_keys
 from lisp.cues.cue import Cue
 from lisp.cues.cue_factory import CueFactory
 from lisp.modules.presets.lib import preset_exists, export_presets, \
-    import_presets, import_has_conflicts, PresetExportError, PresetImportError, \
-    scan_presets, delete_preset, write_preset, rename_preset, load_preset
+    import_presets, import_has_conflicts, PresetExportError,\
+    PresetImportError, scan_presets, delete_preset, write_preset,\
+    rename_preset, load_preset, load_on_cues
 from lisp.ui.mainwindow import MainWindow
 from lisp.ui.settings.cue_settings import CueSettings, CueSettingsRegistry
 from lisp.ui.ui_utils import translate
@@ -173,6 +174,10 @@ class PresetsDialog(QDialog):
         self.cueFromSelectedButton.clicked.connect(self.__cue_from_selected)
         self.presetsButtons.layout().addWidget(self.cueFromSelectedButton)
 
+        self.loadOnSelectedButton = QPushButton(self.presetsButtons)
+        self.loadOnSelectedButton.clicked.connect(self.__load_on_selected)
+        self.presetsButtons.layout().addWidget(self.loadOnSelectedButton)
+
         # Import/Export buttons
         self.ieButtons = QWidget(self)
         self.ieButtons.setLayout(QHBoxLayout())
@@ -208,6 +213,7 @@ class PresetsDialog(QDialog):
         self.editPresetButton.setText(translate('Presets', 'Edit'))
         self.removePresetButton.setText(translate('Presets', 'Remove'))
         self.cueFromSelectedButton.setText(translate('Preset', 'Create Cue'))
+        self.loadOnSelectedButton.setText(translate('Preset', 'Load on selected Cues'))
         self.exportSelectedButton.setText(translate('Presets', 'Export selected'))
         self.importButton.setText(translate('Presets', 'Import'))
 
@@ -305,6 +311,17 @@ class PresetsDialog(QDialog):
         for item in self.presetsList.selectedItems():
             self.__cue_from_preset(item.text())
 
+    def __load_on_selected(self):
+        item = self.presetsList.currentItem()
+        if item is not None:
+            preset_name = item.text()
+            try:
+                cues = Application().layout.get_selected_cues()
+                if cues:
+                    load_on_cues(preset_name, cues)
+            except OSError as e:
+                load_preset_error(e, preset_name, parent=MainWindow())
+
     def __export_presets(self):
         names = [item.text() for item in self.presetsList.selectedItems()]
         archive, _ = QFileDialog.getSaveFileName(
@@ -356,6 +373,7 @@ class PresetsDialog(QDialog):
 
         self.editPresetButton.setEnabled(selection == 1)
         self.renamePresetButton.setEnabled(selection == 1)
+        self.loadOnSelectedButton.setEnabled(selection == 1)
         self.removePresetButton.setEnabled(selection > 0)
         self.cueFromSelectedButton.setEnabled(selection > 0)
         self.exportSelectedButton.setEnabled(selection > 0)
