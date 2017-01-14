@@ -60,6 +60,8 @@ class ListLayout(QWidget, CueLayout):
         QT_TRANSLATE_NOOP('LayoutDetails', 'Space to execute the current cue'),
         QT_TRANSLATE_NOOP('LayoutDetails',
                           'SHIFT + Space or Double-Click to edit a cue'),
+        QT_TRANSLATE_NOOP('LayoutDetails',
+                          'CTRL + Left Click to select cues'),
         QT_TRANSLATE_NOOP('LayoutDetails', 'CTRL + Drag&Drop to copy cues'),
         QT_TRANSLATE_NOOP('LayoutDetails', 'Drag&Drop to move cues')
     ]
@@ -152,6 +154,7 @@ class ListLayout(QWidget, CueLayout):
         self.listView.currentItemChanged.connect(self.__current_changed)
         self.listView.context_event.connect(self.context_event)
         self.listView.key_event.connect(self.onKeyPressEvent)
+        self.listView.select_cue_event.connect(self.select_event)
         self.layout().addWidget(self.listView, 1, 0, 1, 2)
 
         # PLAYING VIEW (center right)
@@ -289,6 +292,11 @@ class ListLayout(QWidget, CueLayout):
         cue = self.current_cue()
         if cue is not None:
             self.edit_cue(cue)
+
+    def select_event(self, event):
+        item = self.listView.itemAt(event.pos())
+        if item is not None:
+            item.selected = not item.selected
 
     def context_event(self, event):
         self._context_item = self.listView.itemAt(event.pos())
