@@ -19,6 +19,7 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from collections import deque
+from enum import Enum
 
 from lisp.core.singleton import ABCSingleton
 from liblo import ServerThread, Address, ServerError
@@ -31,6 +32,14 @@ from lisp.application import Application
 from lisp.cues.cue import CueState
 from lisp.core.signal import Signal
 
+# TODO: add osc log as queue and dialog to show it
+
+
+class OscMessageType(Enum):
+    Int = 'Integer'
+    Float = 'Float'
+    Bool = 'Bool'
+    String = 'String'
 
 # decorator for OSC callback (pushing messages to log, emits message_event)
 # def __osc_handler(func):
@@ -49,7 +58,7 @@ def _go():
 
 
 # @__osc_handler
-def _reset_list():
+def _list_reset():
     """reset, stops all cues, sets cursor to Cue index 0 in ListLayout"""
     if isinstance(MainWindow().layout, ListLayout):
         for cue in Application().cue_model:
@@ -58,11 +67,23 @@ def _reset_list():
 
 
 # @__osc_handler
+def _list_index(path, args, types):
+    """sets cursor to given Cue index in ListLayout"""
+    if not isinstance(MainWindow().layout, ListLayout):
+        MainWindow().layout.set_current_index(0)
+        return
+
+    if path == '/lisp/list/index' and types == 'i':
+        index = args[0]
+        MainWindow().layout.set_current_index(index)
+
+
+# @__osc_handler
 def _pause_all():
     """triggers global pause all media"""
     for cue in Application().cue_model:
         if cue.state == CueState.Running:
-            cue.pause()
+            cue.pause(True)
 
 
 # @__osc_handler
@@ -70,14 +91,15 @@ def _restart_all():
     """triggers global play, if pausing"""
     for cue in Application().cue_model:
         if cue.state == CueState.Pause:
-            cue.start()
+            cue.start(True)
 
 
+# TODO: add fade as option to message?
 # @__osc_handler
 def _stop_all():
     """triggers global stop, stops all media cues"""
     for cue in Application().cue_model:
-        cue.stop()
+        cue.stop(True)
 
 
 class OscCommon(metaclass=ABCSingleton):
@@ -87,10 +109,11 @@ class OscCommon(metaclass=ABCSingleton):
         self.__log = deque([], 10)
         self.new_message = Signal()
 
-        # TODO: static paths and callbacks, find smarter way
+        # TODO: static paths and callbacks, make it editable through settings dialog
         self.__callbacks = [
             ['/lisp/list/go', None, _go],
-            ['/lisp/list/reset', None, _reset_list],
+            ['/lisp/list/reset', None, _list_reset],
+            ['/lisp/list/index', 'i', _list_index],
             ['/lisp/pause', None, _pause_all],
             ['/lisp/start', None, _restart_all],
             ['/lisp/stop', None, _stop_all],
