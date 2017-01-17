@@ -213,7 +213,6 @@ class OscArgumentDelegate(QStyledItemDelegate):
     def setModelData(self, widget, model, index):
         if self.tag is OscMessageType.Int:
             widget.interpretText()
-            print("widget value: ", widget.value(), type(widget.value()))
             model.setData(index, widget.value(), Qt.EditRole)
         elif self.tag is OscMessageType.Float:
             widget.interpretText()

@@ -67,13 +67,13 @@ def _list_reset():
 
 
 # @__osc_handler
-def _list_index(path, args, types):
+def _list_cursor(path, args, types):
     """sets cursor to given Cue index in ListLayout"""
     if not isinstance(MainWindow().layout, ListLayout):
         MainWindow().layout.set_current_index(0)
         return
 
-    if path == '/lisp/list/index' and types == 'i':
+    if path == '/lisp/list/cursor' and types == 'i':
         index = args[0]
         MainWindow().layout.set_current_index(index)
 
@@ -87,7 +87,7 @@ def _pause_all():
 
 
 # @__osc_handler
-def _restart_all():
+def _play_all():
     """triggers global play, if pausing"""
     for cue in Application().cue_model:
         if cue.state == CueState.Pause:
@@ -113,9 +113,9 @@ class OscCommon(metaclass=ABCSingleton):
         self.__callbacks = [
             ['/lisp/list/go', None, _go],
             ['/lisp/list/reset', None, _list_reset],
-            ['/lisp/list/index', 'i', _list_index],
+            ['/lisp/list/cursor', 'i', _list_cursor],
             ['/lisp/pause', None, _pause_all],
-            ['/lisp/start', None, _restart_all],
+            ['/lisp/play', None, _play_all],
             ['/lisp/stop', None, _stop_all],
             [None, None, self.__new_message]
         ]
