@@ -21,7 +21,6 @@ from os.path import dirname
 from lisp.ui import elogging
 from lisp.core.loading import load_classes
 
-# TODO: proper error handling if OLA could not imported
 try:
     import ola
 except ImportError:
@@ -32,7 +31,7 @@ __BACKENDS = {}
 
 def load_backends():
     if not ola:
-       exclude = 'artnet'
+        exclude = 'artnet'
     else:
         exclude = ''
 
