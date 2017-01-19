@@ -47,7 +47,7 @@ class Artnet(TimecodeBackend):
     def status(self):
         return bool(self.__client)
 
-    def send(self, fmt, time, track=-1, rewind=False):
+    def send(self, fmt, time, track=-1):
         if self.__last_time + fmt.value >= time:
             return
 

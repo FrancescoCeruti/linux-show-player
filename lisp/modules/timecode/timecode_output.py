@@ -58,7 +58,7 @@ class TimecodeOutput(TimecodeCommon):
             return
 
         # Stop the currently "running" timecode
-        self.stop()
+        self.stop(rcue=self.__cue)
 
         # Reload format settings
         self.__format = TcFormat[config['Timecode']['format']]
@@ -70,7 +70,7 @@ class TimecodeOutput(TimecodeCommon):
         self.__replace_hours = cue.timecode['replace_hours']
         self.__track = cue.timecode['track']
 
-        self.send(self.__cue.current_time(), True)
+        self.send(self.__cue.current_time())
 
         # Start watching the new cue
         self.__cue_time.notify.connect(
@@ -88,8 +88,8 @@ class TimecodeOutput(TimecodeCommon):
         if self.status():
             self._backend.stop(rclient)
 
-    def send(self, time, rewind=False):
+    def send(self, time):
         """sends timecode"""
-        if not self._backend.send(self.__format, time, self.__track, rewind):
-            elogging.error('TIMECODE: could not send timecode, stopping timecode')
+        if not self._backend.send(self.__format, time, self.__track):
+            elogging.error('TIMECODE: could not send timecode, stopping timecode', dialog=False)
             self.stop()

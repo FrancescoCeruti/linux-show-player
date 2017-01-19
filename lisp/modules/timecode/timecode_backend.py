@@ -33,7 +33,7 @@ class TimecodeBackend(metaclass=ABCMeta):
         """returns status of backend, True if ready"""
 
     @abstractmethod
-    def send(self, fmt, time, track=-1, rewind=False):
+    def send(self, fmt, time, track=-1):
         """send timecode, returs success for error handling"""
 
     @abstractmethod

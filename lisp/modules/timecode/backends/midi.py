@@ -61,7 +61,6 @@ class Midi(TimecodeBackend):
         hh = (fmt << 5) + hours
         msg = Message('sysex', data=[0x7f, 0x7f, 0x01, 0x01, hh, minutes, seconds, frames])
         MIDIOutput().send(msg)
-        self.__last_frame = -1
         return True
 
     def __send_quarterframe(self, frame_type, fmt, hours, minutes, seconds, frames):
@@ -75,29 +74,39 @@ class Midi(TimecodeBackend):
     def __next_frame(self, fmt, time):
         return time - self.__last_time > (fmt.value / 4)
 
-    def send(self, fmt, time, track=-1, rewind=False):
-        # TODO: drop handling
+    def send(self, fmt, time, track=-1):
+        tick = fmt.value / 4
+
+        if self.__last_time < 0 or time - self.__last_time > tick * 8 or time - self.__last_time < 0:
+            tt = time_tuple(time)
+            self.__send_fullframe(fmt,
+                                  int(tt[0]) if track < 0 else track,
+                                  int(tt[1]),
+                                  int(tt[2]),
+                                  int(tt[3]/fmt.value))
+            self.__last_time = time
+            self.__last_frame = -1
+            return True
+        print(time - self.__last_time)
         if not self.__next_frame(fmt, time):
             return True
-
-        tt = time_tuple(time)
-
-        hours = int(tt[0])
-        if track > 0:
-            hours = track
-
-        tick = fmt.value / 4
 
         frame_type = self.__last_frame
 
         while self.__last_time + tick < time:
             self.__last_time += tick
-            tt_diff = time_tuple(self.__last_time)
+            tt = time_tuple(self.__last_time)
             if frame_type < len(self.__table__) - 1:
                 frame_type += 1
             else:
                 frame_type = 0
-            self.__send_quarterframe(frame_type, fmt, hours, int(tt_diff[1]), int(tt_diff[2]), int(tt_diff[3]/fmt.value))
+            self.__send_quarterframe(frame_type,
+                                     fmt,
+                                     tt[0] if track < 0 else track,
+                                     int(tt[1]),
+                                     int(tt[2]),
+                                     int(tt[3]/fmt.value))
+
         self.__last_frame = frame_type
 
         return True
@@ -105,3 +114,6 @@ class Midi(TimecodeBackend):
     def stop(self, rclient=False):
         self.__last_time = -1
         self.__last_frame = -1
+
+        if rclient:
+            elogging.debug("TIMECODE midi backend should be closed by midi module. Doing nothing", dialog=False)

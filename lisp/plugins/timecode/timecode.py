@@ -154,7 +154,6 @@ class Timecode(Plugin):
             self.__cues.remove(cue.id)
             if TimecodeOutput().cue is cue:
                 TimecodeOutput().stop(rcue=True)
-
             cue.started.disconnect(self.__cue_started)
             cue.property_changed.disconnect(self.__cue_changed)
         except KeyError:
@@ -162,7 +161,4 @@ class Timecode(Plugin):
 
     def __cue_started(self, cue):
         if config['Timecode'].getboolean('enabled'):
-            if cue is not TimecodeOutput().cue:
-                TimecodeOutput().start(cue)
-        elif cue is TimecodeOutput().cue:
-            TimecodeOutput().stop(rcue=True)
+            TimecodeOutput().start(cue)
