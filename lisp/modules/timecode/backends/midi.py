@@ -84,10 +84,12 @@ class Midi(TimecodeBackend):
                                   int(tt[1]),
                                   int(tt[2]),
                                   int(tt[3]/fmt.value))
+            if int(tt[3]/fmt.value) % 2:
+                self.__last_frame = 3
+            else:
+                self.__last_frame = -1
             self.__last_time = time
-            self.__last_frame = -1
             return True
-        print(time - self.__last_time)
         if not self.__next_frame(fmt, time):
             return True
 
