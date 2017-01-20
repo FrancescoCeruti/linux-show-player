@@ -33,5 +33,5 @@ class Osc(Module):
         # Register the settings widget
         AppSettings.register_settings_widget(OscSettings)
 
-        if config['OSC']['enable']:
+        if config['OSC'].getboolean('enabled') is True:
             OscCommon().start()
