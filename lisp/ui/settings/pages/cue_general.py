@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2017 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -49,8 +49,10 @@ class CueGeneralSettings(CueSettingsPage):
 
         self.startActionCombo = QComboBox(self.startActionGroup)
         for action in [CueAction.Start, CueAction.FadeInStart]:
-            self.startActionCombo.addItem(
-                translate('CueAction', action.name), action.value)
+            if action in cue_class.CueActions:
+                self.startActionCombo.addItem(
+                    translate('CueAction', action.name), action.value)
+        self.startActionCombo.setEnabled(self.startActionCombo.count() > 1)
         self.startActionGroup.layout().addWidget(self.startActionCombo)
 
         self.startActionLabel = QLabel(self.startActionGroup)
@@ -65,8 +67,10 @@ class CueGeneralSettings(CueSettingsPage):
         self.stopActionCombo = QComboBox(self.stopActionGroup)
         for action in [CueAction.Stop, CueAction.Pause,
                        CueAction.FadeOutStop, CueAction.FadeOutPause]:
-            self.stopActionCombo.addItem(
-                translate('CueAction', action.name), action.value)
+            if action in cue_class.CueActions:
+                self.stopActionCombo.addItem(
+                    translate('CueAction', action.name), action.value)
+        self.stopActionCombo.setEnabled(self.stopActionCombo.count() > 1)
         self.stopActionGroup.layout().addWidget(self.stopActionCombo)
 
         self.stopActionLabel = QLabel(self.stopActionGroup)
@@ -74,6 +78,8 @@ class CueGeneralSettings(CueSettingsPage):
         self.stopActionGroup.layout().addWidget(self.stopActionLabel)
 
         self.tab_1.layout().addSpacing(150)
+        self.tab_1.setEnabled(self.stopActionCombo.isEnabled() and
+                              self.startActionCombo.isEnabled())
 
         # TAB 2 (Pre/Post Wait)
         self.tab_2 = QWidget(self.tabWidget)
@@ -249,9 +255,11 @@ class CueGeneralSettings(CueSettingsPage):
         checkable = self.preWaitGroup.isCheckable()
 
         if not (checkable and not self.startActionGroup.isChecked()):
-            conf['default_start_action'] = self.startActionCombo.currentData()
+            if self.startActionCombo.isEnabled():
+                conf['default_start_action'] = self.startActionCombo.currentData()
         if not (checkable and not self.stopActionGroup.isChecked()):
-            conf['default_stop_action'] = self.stopActionCombo.currentData()
+            if self.stopActionCombo.isEnabled():
+                conf['default_stop_action'] = self.stopActionCombo.currentData()
 
         if not (checkable and not self.preWaitGroup.isChecked()):
             conf['pre_wait'] = self.preWaitSpin.value()

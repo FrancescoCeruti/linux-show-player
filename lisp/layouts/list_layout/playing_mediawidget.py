@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2017 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,9 +23,11 @@ from PyQt5.QtWidgets import QWidget, QGridLayout, QLabel, QSizePolicy, \
     QPushButton, QLCDNumber
 
 from lisp.core.configuration import config
+from lisp.core.fade_functions import FadeOutType, FadeInType
 from lisp.core.signal import Connection
 from lisp.core.util import strtime
 from lisp.cues.cue_time import CueTime
+from lisp.layouts.list_layout.control_buttons import CueControlButtons
 from lisp.ui.widgets import QClickSlider, QDbMeter
 
 
@@ -34,7 +36,7 @@ class PlayingMediaWidget(QWidget):
     def __init__(self, cue, **kwargs):
         super().__init__(**kwargs)
         self.setFocusPolicy(Qt.NoFocus)
-        self.setGeometry(0, 0, self.parent().viewport().width(), 100)
+        self.setGeometry(0, 0, self.parent().viewport().width(), 110)
 
         self.cue = cue
         self.cue_time = CueTime(cue)
@@ -46,38 +48,30 @@ class PlayingMediaWidget(QWidget):
         self.gridLayoutWidget = QWidget(self)
         self.gridLayoutWidget.setGeometry(self.geometry())
         self.gridLayout = QGridLayout(self.gridLayoutWidget)
-        self.gridLayout.setContentsMargins(2, 2, 2, 2)
-        self.gridLayout.setSpacing(3)
+        self.gridLayout.setContentsMargins(3, 3, 3, 3)
+        self.gridLayout.setSpacing(2)
 
         self.nameLabel = QLabel(self.gridLayoutWidget)
         self.nameLabel.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
         self.nameLabel.setText(cue.name)
         self.nameLabel.setToolTip(cue.name)
-        self.gridLayout.addWidget(self.nameLabel, 0, 0, 1, 3)
+        self.gridLayout.addWidget(self.nameLabel, 0, 0, 1, 2)
 
-        self.playPauseButton = QPushButton(self.gridLayoutWidget)
-        self.playPauseButton.setSizePolicy(QSizePolicy.Ignored,
-                                           QSizePolicy.Ignored)
-        self.playPauseButton.setIcon(QIcon.fromTheme('media-playback-pause'))
-        self.playPauseButton.setIconSize(QSize(24, 24))
-        self.playPauseButton.setFocusPolicy(Qt.NoFocus)
-        self.playPauseButton.clicked.connect(self._pause)
-        self.gridLayout.addWidget(self.playPauseButton, 1, 0)
-
-        self.stopButton = QPushButton(self.gridLayoutWidget)
-        self.stopButton.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
-        self.stopButton.setIcon(QIcon.fromTheme('media-playback-stop'))
-        self.stopButton.setIconSize(QSize(24, 24))
-        self.stopButton.setFocusPolicy(Qt.NoFocus)
-        self.stopButton.clicked.connect(self._stop)
-        self.gridLayout.addWidget(self.stopButton, 1, 1)
+        self.controlButtons = CueControlButtons(parent=self.gridLayoutWidget)
+        self.controlButtons.stopButton.clicked.connect(self._stop)
+        self.controlButtons.pauseButton.clicked.connect(self._pause)
+        self.controlButtons.startButton.clicked.connect(self._start)
+        self.controlButtons.fadeInButton.clicked.connect(self._fadein)
+        self.controlButtons.fadeOutButton.clicked.connect(self._fadeout)
+        self.controlButtons.interruptButton.clicked.connect(self._interrupt)
+        self.gridLayout.addWidget(self.controlButtons, 1, 0)
 
         self.timeDisplay = QLCDNumber(self.gridLayoutWidget)
         self.timeDisplay.setStyleSheet('background-color: transparent')
         self.timeDisplay.setSegmentStyle(QLCDNumber.Flat)
         self.timeDisplay.setDigitCount(8)
         self.timeDisplay.display(strtime(cue.media.duration))
-        self.gridLayout.addWidget(self.timeDisplay, 1, 2)
+        self.gridLayout.addWidget(self.timeDisplay, 1, 1)
 
         self.seekSlider = QClickSlider(self.gridLayoutWidget)
         self.seekSlider.setOrientation(Qt.Horizontal)
@@ -91,15 +85,14 @@ class PlayingMediaWidget(QWidget):
         self.dbmeter.setVisible(False)
 
         self.gridLayout.setRowStretch(0, 1)
-        self.gridLayout.setRowStretch(1, 2)
-        self.gridLayout.setColumnStretch(0, 3)
-        self.gridLayout.setColumnStretch(1, 3)
-        self.gridLayout.setColumnStretch(2, 5)
+        self.gridLayout.setRowStretch(1, 3)
+        self.gridLayout.setColumnStretch(0, 7)
+        self.gridLayout.setColumnStretch(1, 5)
 
         cue.changed('name').connect(self.name_changed)
         cue.changed('duration').connect(self.update_duration)
-        cue.started.connect(self._pause_to_play)
-        cue.paused.connect(self._play_to_pause)
+        cue.started.connect(self.controlButtons.pauseMode)
+        cue.paused.connect(self.controlButtons.startMode)
 
         # Fade enter/exit
         cue.fadein_start.connect(self.enter_fadein, Connection.QtQueued)
@@ -129,7 +122,7 @@ class PlayingMediaWidget(QWidget):
 
     def set_seek_visible(self, visible):
         if visible and not self.seekSlider.isVisible():
-            self.gridLayout.addWidget(self.seekSlider, 2, 0, 1, 3)
+            self.gridLayout.addWidget(self.seekSlider, 2, 0, 1, 2)
             self.gridLayout.setRowStretch(2, 1)
         elif not visible and self.seekSlider.isVisible():
             self.gridLayout.removeWidget(self.seekSlider)
@@ -149,11 +142,11 @@ class PlayingMediaWidget(QWidget):
 
         # Add/Remove the QDbMeter in the layout
         if visible and not self.dbmeter.isVisible():
-            self.gridLayout.addWidget(self.dbmeter, 0, 3, 4, 1)
-            self.gridLayout.setColumnStretch(3, 1)
+            self.gridLayout.addWidget(self.dbmeter, 0, 2, 3, 1)
+            self.gridLayout.setColumnStretch(2, 1)
         elif not visible and self.dbmeter.isVisible():
             self.gridLayout.removeWidget(self.dbmeter)
-            self.gridLayout.setColumnStretch(3, 0)
+            self.gridLayout.setColumnStretch(2, 0)
 
         self.dbmeter.setVisible(visible)
 
@@ -173,28 +166,26 @@ class PlayingMediaWidget(QWidget):
     def update_duration(self, duration):
         self.seekSlider.setMaximum(duration)
 
-    def _stop(self, *args):
-        if config['ListLayout'].getboolean('StopCueInterrupt'):
-            self.cue.interrupt(
-                fade=config['ListLayout'].getboolean('InterruptCueFade'))
-        else:
-            self.cue.stop(fade=config['ListLayout'].getboolean('StopCueFade'))
+    def _pause(self):
+        self.cue.pause(fade=config['ListLayout'].getboolean('PauseCueFade'))
 
-    def _play(self, *args):
+    def _start(self):
         self.cue.start(fade=config['ListLayout'].getboolean('RestartCueFade'))
 
-    def _pause(self, *args):
-        self.cue.pause(fade=config['ListLayout'].getboolean('PauseCueFade'))
+    def _stop(self):
+        self.cue.stop(fade=config['ListLayout'].getboolean('StopCueFade'))
+
+    def _interrupt(self):
+        self.cue.interrupt(
+            fade=config['ListLayout'].getboolean('InterruptCueFade'))
+
+    def _fadeout(self):
+        self.cue.fadeout(config['ListLayout'].getfloat('CueFadeDuration'),
+                         FadeOutType[config['ListLayout'].get('CueFadeType')])
+
+    def _fadein(self):
+        self.cue.fadein(config['ListLayout'].getfloat('CueFadeDuration'),
+                        FadeInType[config['ListLayout'].get('CueFadeType')])
 
     def _seek(self, position):
         self.cue.media.seek(position)
-
-    def _play_to_pause(self):
-        self.playPauseButton.clicked.disconnect()
-        self.playPauseButton.clicked.connect(self._play)
-        self.playPauseButton.setIcon(QIcon.fromTheme('media-playback-start'))
-
-    def _pause_to_play(self):
-        self.playPauseButton.clicked.disconnect()
-        self.playPauseButton.clicked.connect(self._pause)
-        self.playPauseButton.setIcon(QIcon.fromTheme('media-playback-pause'))

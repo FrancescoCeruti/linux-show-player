@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2017 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,8 +24,7 @@ from PyQt5.QtWidgets import QAction, QMenu
 from lisp.application import Application
 from lisp.core.module import Module
 from lisp.layouts.cue_layout import CueLayout
-from lisp.modules.presets.lib import PRESETS_DIR, load_on_cue, preset_exists, \
-    load_on_cues
+from lisp.modules.presets.lib import PRESETS_DIR, load_on_cue, preset_exists
 from lisp.modules.presets.presets_ui import select_preset_dialog, \
     PresetsDialog, save_preset_dialog, check_override_dialog, write_preset, \
     load_preset_error, write_preset_error

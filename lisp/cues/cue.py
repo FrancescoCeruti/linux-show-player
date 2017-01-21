@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2017 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -81,10 +81,15 @@ class Cue(HasProperties):
     :ivar description: Cue text description.
     :ivar stylesheet: Cue style, used by the view.
     :ivar duration: The cue duration in milliseconds. (0 means no duration)
-    :ivar stop_pause: If True, by default the cue is paused instead of stopped.
     :ivar pre_wait: Cue pre-wait in seconds.
     :ivar post_wait: Cue post-wait in seconds.
     :ivar next_action: What do after post_wait.
+    :ivar fadein_type: Fade-In type
+    :ivar fadeout_type: Fade-Out type
+    :ivar fadein_duration: Fade-In duration in seconds
+    :ivar fadeout_duration: Fade-Out duration in seconds
+    :ivar default_start_action: action to execute to start
+    :ivar default_stop_action: action to execute to stop
     :cvar CueActions: actions supported by the cue (default: CueAction.Start)
 
     A cue should declare CueAction.Default as supported only if CueAction.Start
@@ -282,38 +287,37 @@ class Cue(HasProperties):
         if not self._st_lock.acquire(blocking=False):
             return
 
-        try:
-            # Stop PreWait (if in PreWait(_Pause) nothing else is "running")
-            if self._state & (CueState.PreWait | CueState.PreWait_Pause):
-                self._state = CueState.Stop
-                self._prewait.stop()
-            else:
-                # Stop PostWait
-                if self._state & (CueState.PostWait | CueState.PostWait_Pause):
-                    # Remove PostWait or PostWait_Pause state
-                    self._state = (
-                        (self._state ^ CueState.PostWait) &
-                        (self._state ^ CueState.PostWait_Pause)
-                    )
-                    self._postwait.stop()
+        # Stop PreWait (if in PreWait(_Pause) nothing else is "running")
+        if self._state & (CueState.PreWait | CueState.PreWait_Pause):
+            self._state = CueState.Stop
+            self._prewait.stop()
+        else:
+            # Stop PostWait
+            if self._state & (CueState.PostWait | CueState.PostWait_Pause):
+                # Remove PostWait or PostWait_Pause state
+                self._state = (
+                    (self._state ^ CueState.PostWait) &
+                    (self._state ^ CueState.PostWait_Pause)
+                )
+                self._postwait.stop()
 
-                # Stop the cue
-                if self._state & (CueState.Running | CueState.Pause):
-                    # Here the __stop__ function should release and re-acquire
-                    # the state-lock during a fade operation
-                    if not self.__stop__(fade):
-                        # Stop operation interrupted
-                        return
+            # Stop the cue
+            if self._state & (CueState.Running | CueState.Pause):
+                # Here the __stop__ function should release and re-acquire
+                # the state-lock during a fade operation
+                if not self.__stop__(fade):
+                    # Stop operation interrupted
+                    return
 
-                    # Remove Running or Pause state
-                    self._state = (
-                        (self._state ^ CueState.Running) &
-                        (self._state ^ CueState.Pause)
-                    )
-                    self._state |= CueState.Stop
-                    self.stopped.emit()
-        finally:
-            self._st_lock.release()
+                # Remove Running or Pause state
+                self._state = (
+                    (self._state ^ CueState.Running) &
+                    (self._state ^ CueState.Pause)
+                )
+                self._state |= CueState.Stop
+                self.stopped.emit()
+
+        self._st_lock.release()
 
     def __stop__(self, fade=False):
         """Implement the cue `stop` behavior.
@@ -340,31 +344,30 @@ class Cue(HasProperties):
         if not self._st_lock.acquire(blocking=False):
             return
 
-        try:
-            # Pause PreWait (if in PreWait nothing else is "running")
-            if self._state & CueState.PreWait:
-                self._state ^= CueState.PreWait
-                self._state |= CueState.PreWait_Pause
-                self._prewait.pause()
-            else:
-                # Pause PostWait
-                if self._state & CueState.PostWait:
-                    self._state ^= CueState.PostWait
-                    self._state |= CueState.PostWait_Pause
-                    self._postwait.pause()
+        # Pause PreWait (if in PreWait nothing else is "running")
+        if self._state & CueState.PreWait:
+            self._state ^= CueState.PreWait
+            self._state |= CueState.PreWait_Pause
+            self._prewait.pause()
+        else:
+            # Pause PostWait
+            if self._state & CueState.PostWait:
+                self._state ^= CueState.PostWait
+                self._state |= CueState.PostWait_Pause
+                self._postwait.pause()
 
-                # Pause the cue
-                if self._state & CueState.Running:
-                    # Here the __pause__ function should release and re-acquire
-                    # the state-lock during a fade operation
-                    if not self.__pause__(fade):
-                        return
+            # Pause the cue
+            if self._state & CueState.Running:
+                # Here the __pause__ function should release and re-acquire
+                # the state-lock during a fade operation
+                if not self.__pause__(fade):
+                    return
 
-                    self._state ^= CueState.Running
-                    self._state |= CueState.Pause
-                    self.paused.emit()
-        finally:
-            self._st_lock.release()
+                self._state ^= CueState.Running
+                self._state |= CueState.Pause
+                self.paused.emit()
+
+        self._st_lock.release()
 
     def __pause__(self, fade=False):
         """Implement the cue `pause` behavior.
@@ -429,7 +432,24 @@ class Cue(HasProperties):
         :param fade: True if a fade should be performed (when supported)
         :type fade: bool
         """
-        pass
+
+    def fadein(self, duration, fade_type):
+        """Fade-in the cue.
+
+        :param duration: How much the fade should be long (in seconds)
+        :type duration: float
+        :param fade_type: The fade type
+        :type fade_type: FadeInType
+        """
+
+    def fadeout(self, duration, fade_type):
+        """Fade-out the cue.
+
+        :param duration: How much the fade should be long (in seconds)
+        :type duration: float
+        :param fade_type: The fade type
+        :type fade_type: FadeOutType
+        """
 
     def _ended(self):
         """Remove the Running state, if needed set it to Stop."""
