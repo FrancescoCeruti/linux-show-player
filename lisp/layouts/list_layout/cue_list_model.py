@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2017 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -100,16 +100,18 @@ class PlayingMediaCueModel(ReadOnlyProxyModel):
         if isinstance(item, MediaCue):
             self.__cues[item.media] = item
 
-            item.media.on_play.connect(self._add)
-            item.media.stopped.connect(self._remove)
             item.media.eos.connect(self._remove)
+            item.media.on_play.connect(self._add)
+            item.media.error.connect(self._remove)
+            item.media.stopped.connect(self._remove)
             item.media.interrupted.connect(self._remove)
 
     def _item_removed(self, item):
         if isinstance(item, MediaCue):
-            item.media.on_play.disconnect(self._add)
-            item.media.stopped.disconnect(self._remove)
             item.media.eos.disconnect(self._remove)
+            item.media.on_play.disconnect(self._add)
+            item.media.error.disconnect(self._remove)
+            item.media.stopped.disconnect(self._remove)
             item.media.interrupted.disconnect(self._remove)
 
             if item.media in self.__playing:
@@ -128,7 +130,7 @@ class PlayingMediaCueModel(ReadOnlyProxyModel):
             self.__playing.append(media)
             self.item_added.emit(self.__cues[media])
 
-    def _remove(self, media):
+    def _remove(self, media, *args):
         self.__playing.remove(media)
         self.item_removed.emit(self.__cues[media])
 

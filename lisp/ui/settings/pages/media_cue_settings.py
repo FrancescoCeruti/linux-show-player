@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2017 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -170,12 +170,8 @@ class MediaCueAppSettings(SettingsPage):
             translate('MediaCueSettings', 'Interrupt fade type'))
 
     def load_settings(self, settings):
-        try:
-            self.fadeDurationSpin.setValue(
-                float(settings['MediaCue'].get('interruptfade', 0)))
-        except ValueError:
-            pass
-
+        self.fadeDurationSpin.setValue(
+            float(settings['MediaCue'].get('interruptfade', 0)))
         self.fadeTypeCombo.setCurrentType(
             settings['MediaCue'].get('interruptfadetype', ''))
 

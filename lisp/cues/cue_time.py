@@ -86,7 +86,8 @@ class CueTime(metaclass=MetaCueTime):
 
     def __notify(self):
         """Notify the cue current-time"""
-        self.notify.emit(self._cue.current_time())
+        if self._cue.state & (CueState.Running ^ CueState.Pause):
+            self.notify.emit(self._cue.current_time())
 
     def start(self):
         self._clock.add_callback(self.__notify)

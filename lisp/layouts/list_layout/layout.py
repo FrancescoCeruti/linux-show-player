@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2017 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,11 +25,12 @@ from PyQt5.QtWidgets import QWidget, QAction, qApp, QGridLayout, \
     QPushButton, QSizePolicy
 
 from lisp.core.configuration import config
+from lisp.core.fade_functions import FadeInType, FadeOutType
 from lisp.core.signal import Connection
 from lisp.cues.cue import Cue, CueAction
 from lisp.cues.media_cue import MediaCue
 from lisp.layouts.cue_layout import CueLayout
-from lisp.layouts.list_layout.control_buttons import ControlButtons
+from lisp.layouts.list_layout.control_buttons import ShowControlButtons
 from lisp.layouts.list_layout.cue_list_model import CueListModel, \
     PlayingMediaCueModel
 from lisp.layouts.list_layout.cue_list_view import CueListView
@@ -60,6 +61,8 @@ class ListLayout(QWidget, CueLayout):
         QT_TRANSLATE_NOOP('LayoutDetails', 'Space to execute the current cue'),
         QT_TRANSLATE_NOOP('LayoutDetails',
                           'SHIFT + Space or Double-Click to edit a cue'),
+        QT_TRANSLATE_NOOP('LayoutDetails',
+                          'CTRL + Left Click to select cues'),
         QT_TRANSLATE_NOOP('LayoutDetails', 'CTRL + Drag&Drop to copy cues'),
         QT_TRANSLATE_NOOP('LayoutDetails', 'Drag&Drop to move cues')
     ]
@@ -139,11 +142,14 @@ class ListLayout(QWidget, CueLayout):
         self.layout().addWidget(self.infoPanel, 0, 1)
 
         # CONTROL-BUTTONS (top-right)
-        self.controlButtons = ControlButtons(parent=self)
+        self.controlButtons = ShowControlButtons(parent=self)
         self.controlButtons.setFixedHeight(100)
         self.controlButtons.stopButton.clicked.connect(self.stop_all)
         self.controlButtons.pauseButton.clicked.connect(self.pause_all)
+        self.controlButtons.fadeInButton.clicked.connect(self.fadein_all)
+        self.controlButtons.fadeOutButton.clicked.connect(self.fadeout_all)
         self.controlButtons.restartButton.clicked.connect(self.restart_all)
+        self.controlButtons.interruptButton.clicked.connect(self.interrupt_all)
         self.layout().addWidget(self.controlButtons, 0, 2)
 
         # CUE VIEW (center left)
@@ -152,6 +158,7 @@ class ListLayout(QWidget, CueLayout):
         self.listView.currentItemChanged.connect(self.__current_changed)
         self.listView.context_event.connect(self.context_event)
         self.listView.key_event.connect(self.onKeyPressEvent)
+        self.listView.select_cue_event.connect(self.select_event)
         self.layout().addWidget(self.listView, 1, 0, 1, 2)
 
         # PLAYING VIEW (center right)
@@ -256,7 +263,6 @@ class ListLayout(QWidget, CueLayout):
 
     def onKeyPressEvent(self, e):
         if not e.isAutoRepeat():
-
             keys = e.key()
             modifiers = e.modifiers()
 
@@ -290,6 +296,11 @@ class ListLayout(QWidget, CueLayout):
         if cue is not None:
             self.edit_cue(cue)
 
+    def select_event(self, event):
+        item = self.listView.itemAt(event.pos())
+        if item is not None:
+            item.selected = not item.selected
+
     def context_event(self, event):
         self._context_item = self.listView.itemAt(event.pos())
         if self._context_item is not None:
@@ -306,14 +317,14 @@ class ListLayout(QWidget, CueLayout):
         self.edit_cue(self.get_context_cue())
 
     def stop_all(self):
-        if config['ListLayout'].getboolean('StopAllInterrupt'):
-            fade = config['ListLayout'].getboolean('InterruptAllFade')
-            for cue in self._model_adapter:
-                cue.interrupt(fade=fade)
-        else:
-            fade = config['ListLayout'].getboolean('StopAllFade')
-            for cue in self._model_adapter:
-                cue.stop(fade=fade)
+        fade = config['ListLayout'].getboolean('StopAllFade')
+        for cue in self._model_adapter:
+            cue.stop(fade=fade)
+
+    def interrupt_all(self):
+        fade = config['ListLayout'].getboolean('InterruptAllFade')
+        for cue in self._model_adapter:
+            cue.interrupt(fade=fade)
 
     def pause_all(self):
         fade = config['ListLayout'].getboolean('PauseAllFade')
@@ -324,6 +335,16 @@ class ListLayout(QWidget, CueLayout):
         fade = config['ListLayout'].getboolean('RestartAllFade')
         for cue in self._model_adapter:
             cue.restart(fade=fade)
+
+    def fadein_all(self):
+        for cue in self._model_adapter:
+            cue.fadein(config['ListLayout'].getfloat('CueFadeDuration'),
+                       FadeInType[config['ListLayout'].get('CueFadeType')])
+
+    def fadeout_all(self):
+        for cue in self._model_adapter:
+            cue.fadeout(config['ListLayout'].getfloat('CueFadeDuration'),
+                        FadeOutType[config['ListLayout'].get('CueFadeType')])
 
     def get_selected_cues(self, cue_class=Cue):
         cues = []

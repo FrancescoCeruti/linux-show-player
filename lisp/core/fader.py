@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2017 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -113,7 +113,7 @@ class Fader:
             if value_diff == 0:
                 return
 
-            while self._time <= duration and not self._running.is_set():
+            while self._time <= duration and self._alive():
                 rsetattr(self._target,
                          self._attribute,
                          functor(ntime(self._time, begin, duration),
@@ -153,3 +153,13 @@ class Fader:
     def current_time(self):
         # Return the time in millisecond
         return self._time * 10
+
+    def _alive(self):
+        """Check if fader can work on the target, called on every iteration.
+
+        Can be overridden in subclasses to provide custom conditions, when doing
+        so, the result of super()._alive() must always be taken in account.
+
+        :return: True if fade can run, false otherwise.
+        """
+        return not self._running.is_set()

@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2017 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,11 +19,13 @@
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QKeySequence
+from PyQt5.QtWidgets import QDoubleSpinBox
 from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QCheckBox, QComboBox, \
     QHBoxLayout, QLabel, QKeySequenceEdit, QGridLayout
 
 from lisp.ui.settings.settings_page import SettingsPage
 from lisp.ui.ui_utils import translate
+from lisp.ui.widgets import FadeComboBox
 
 
 class ListLayoutSettings(SettingsPage):
@@ -32,7 +34,7 @@ class ListLayoutSettings(SettingsPage):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
-        self.layout().setAlignment(Qt.AlignTop)
+        #self.layout().setAlignment(Qt.AlignTop)
 
         self.behaviorsGroup = QGroupBox(self)
         self.behaviorsGroup.setLayout(QVBoxLayout())
@@ -52,12 +54,6 @@ class ListLayoutSettings(SettingsPage):
 
         self.autoNext = QCheckBox(self.behaviorsGroup)
         self.behaviorsGroup.layout().addWidget(self.autoNext)
-
-        self.stopCueInterrupt = QCheckBox(self.behaviorsGroup)
-        self.behaviorsGroup.layout().addWidget(self.stopCueInterrupt)
-
-        self.stopAllInterrupt = QCheckBox(self.behaviorsGroup)
-        self.behaviorsGroup.layout().addWidget(self.stopAllInterrupt)
 
         self.endListLayout = QHBoxLayout()
         self.behaviorsGroup.layout().addLayout(self.endListLayout)
@@ -104,6 +100,26 @@ class ListLayoutSettings(SettingsPage):
         self.interruptAllFade = QCheckBox(self.useFadeGroup)
         self.useFadeGroup.layout().addWidget(self.interruptAllFade, 3, 1)
 
+        # Fade settings
+        self.fadeGroup = QGroupBox(self)
+        self.fadeGroup.setLayout(QGridLayout())
+        self.layout().addWidget(self.fadeGroup)
+
+        self.fadeDurationSpin = QDoubleSpinBox(self.fadeGroup)
+        self.fadeDurationSpin.setRange(0, 3600)
+        self.fadeGroup.layout().addWidget(self.fadeDurationSpin, 0, 0)
+
+        self.fadeDurationLabel = QLabel(self.fadeGroup)
+        self.fadeDurationLabel.setAlignment(Qt.AlignCenter)
+        self.fadeGroup.layout().addWidget(self.fadeDurationLabel, 0, 1)
+
+        self.fadeTypeCombo = FadeComboBox(self.fadeGroup)
+        self.fadeGroup.layout().addWidget(self.fadeTypeCombo, 1, 0)
+
+        self.fadeTypeLabel = QLabel(self.fadeGroup)
+        self.fadeTypeLabel.setAlignment(Qt.AlignCenter)
+        self.fadeGroup.layout().addWidget(self.fadeTypeLabel, 1, 1)
+
         self.retranslateUi()
 
     def retranslateUi(self):
@@ -114,10 +130,6 @@ class ListLayoutSettings(SettingsPage):
         self.showAccurate.setText(translate('ListLayout', 'Show accurate time'))
         self.showSeek.setText(translate('ListLayout', 'Show seek-bars'))
         self.autoNext.setText(translate('ListLayout', 'Auto-select next cue'))
-        self.stopCueInterrupt.setText(
-            translate('ListLayout', 'Cue stop-button interrupt'))
-        self.stopAllInterrupt.setText(
-            translate('ListLayout', 'Stop-All button interrupt'))
         self.endListLabel.setText(translate('ListLayout', 'At list end:'))
         self.goKeyLabel.setText(translate('ListLayout', 'Go key:'))
 
@@ -131,6 +143,11 @@ class ListLayoutSettings(SettingsPage):
         self.restartAllFade.setText(translate('ListLayout', 'Restart All'))
         self.interruptAllFade.setText(translate('ListLayout', 'Interrupt All'))
 
+        self.fadeGroup.setTitle(
+            translate('ListLayout', 'Fade (buttons) settings'))
+        self.fadeDurationLabel.setText(translate('ListLayout', 'Fade duration'))
+        self.fadeTypeLabel.setText(translate('ListLayout', 'Fade type'))
+
     def get_settings(self):
         settings = {
             'showplaying': str(self.showPlaying.isChecked()),
@@ -138,8 +155,6 @@ class ListLayoutSettings(SettingsPage):
             'showseek': str(self.showSeek.isChecked()),
             'showaccurate': str(self.showAccurate.isChecked()),
             'autocontinue': str(self.autoNext.isChecked()),
-            'stopcueinterrupt': str(self.stopCueInterrupt.isChecked()),
-            'stopallinterrupt': str(self.stopAllInterrupt.isChecked()),
             'endlist': str(self.endListBehavior.currentData()),
             'gokey': self.goKeyEdit.keySequence().toString(
                 QKeySequence.NativeText),
@@ -150,7 +165,9 @@ class ListLayoutSettings(SettingsPage):
             'stopallfade': str(self.stopAllFade.isChecked()),
             'pauseallfade': str(self.pauseAllFade.isChecked()),
             'restartallfade': str(self.restartAllFade.isChecked()),
-            'interruptallfade': str(self.interruptAllFade.isChecked())
+            'interruptallfade': str(self.interruptAllFade.isChecked()),
+            'cuefadeduration': str(self.fadeDurationSpin.value()),
+            'cuefadetype': self.fadeTypeCombo.currentType()
         }
 
         return {'ListLayout': settings}
@@ -163,10 +180,6 @@ class ListLayoutSettings(SettingsPage):
         self.showAccurate.setChecked(settings.get('showaccurate') == 'True')
         self.showSeek.setChecked(settings.get('showseek') == 'True')
         self.autoNext.setChecked(settings.get('autocontinue') == 'True')
-        self.stopCueInterrupt.setChecked(
-            settings.get('stopcueinterrupt') == 'True')
-        self.stopAllInterrupt.setChecked(
-            settings.get('stopallinterrupt') == 'True')
         self.endListBehavior.setCurrentText(
             translate('ListLayout', settings.get('endlist', '')))
         self.goKeyEdit.setKeySequence(
@@ -184,3 +197,7 @@ class ListLayoutSettings(SettingsPage):
         self.restartAllFade.setChecked(settings.get('restartallfade') == 'True')
         self.interruptAllFade.setChecked(
             settings.get('interruptallfade') == 'True')
+
+        self.fadeDurationSpin.setValue(
+            float(settings.get('cuefadeduration', 0)))
+        self.fadeTypeCombo.setCurrentType(settings.get('cuefadetype', ''))
