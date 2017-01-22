@@ -17,33 +17,24 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-# TODO: LineEdit text orientation
-# TODO: error handling for manual edited messages
-#   error check get_settings:
-#   1. Path
-#   1.1 path not set
-#   1.2 path wrong (leading / and len)
-#   2. Types
-#   2.1 types are set, values None
-#   2.2 types not set, values not None
-#   2.3 len(types) != len(values)
-#   3 Semantic test on argument list
-#   3.2 type for type in types == convert_str_to_type(arg for arg in args)
 
 import ast
 
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import QGroupBox, QPushButton, QVBoxLayout, \
     QTableView, QTableWidget, QHeaderView, QGridLayout, QLabel, \
-    QDialog, QDialogButtonBox
+    QDialog, QDialogButtonBox, QLineEdit
 
 from lisp.modules import check_module
 from lisp.modules.osc.osc_common import OscCommon
+from lisp.ui.qdelegates import OscArgumentDelegate
+from lisp.modules.osc.osc_common import OscMessageType
 from lisp.plugins.controller.protocols.protocol import Protocol
 from lisp.ui.qdelegates import ComboBoxDelegate, LineEditDelegate
 from lisp.ui.qmodels import SimpleTableModel
 from lisp.ui.settings.settings_page import CueSettingsPage
 from lisp.ui.ui_utils import translate
+from lisp.ui import elogging
 
 
 class Osc(Protocol):
@@ -73,6 +64,112 @@ class Osc(Protocol):
     def message_from_key(key):
         key = ast.literal_eval(key[3:])
         return key
+
+
+class OscMessageDialog(QDialog):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.setMaximumSize(500, 300)
+        self.setMinimumSize(500, 300)
+        self.resize(500, 300)
+
+        self.setLayout(QVBoxLayout())
+        self.layout().setAlignment(Qt.AlignTop)
+
+        self.groupBox = QGroupBox(self)
+        self.groupBox.setLayout(QGridLayout())
+        self.layout().addWidget(self.groupBox)
+
+        self.pathLabel = QLabel()
+        self.groupBox.layout().addWidget(self.pathLabel, 0, 0, 1, 2)
+
+        self.pathEdit = QLineEdit()
+        self.groupBox.layout().addWidget(self.pathEdit, 1, 0, 1, 2)
+
+        self.model = SimpleTableModel([
+            translate('Osc Cue', 'Type'),
+            translate('Osc Cue', 'Argument')])
+
+        self.model.dataChanged.connect(self.__argument_changed)
+
+        self.view = OscArgumentView(parent=self.groupBox)
+        self.view.setModel(self.model)
+        self.groupBox.layout().addWidget(self.view, 2, 0, 1, 2)
+
+        self.buttons = QDialogButtonBox(self)
+        self.buttons.addButton(QDialogButtonBox.Cancel)
+        self.buttons.addButton(QDialogButtonBox.Ok)
+        self.layout().addWidget(self.buttons)
+
+        self.addButton = QPushButton(self.groupBox)
+        self.addButton.clicked.connect(self.__add_argument)
+        self.groupBox.layout().addWidget(self.addButton, 3, 0)
+
+        self.removeButton = QPushButton(self.groupBox)
+        self.removeButton.clicked.connect(self.__remove_argument)
+        self.groupBox.layout().addWidget(self.removeButton, 3, 1)
+
+        self.buttons.accepted.connect(self.accept)
+        self.buttons.rejected.connect(self.reject)
+
+        self.retranslateUi()
+
+    def __add_argument(self):
+        self.model.appendRow(OscMessageType.Int.value, 0)
+
+    def __remove_argument(self):
+        if self.model.rowCount() and self.view.currentIndex().row():
+            self.model.removeRow(self.view.currentIndex().row())
+
+    def __argument_changed(self, index_topleft, index_bottomright, roles):
+        model = index_bottomright.model()
+        curr_row = index_topleft.row()
+        model_row = model.rows[curr_row]
+        curr_col = index_bottomright.column()
+        osc_type = model_row[0]
+
+        if curr_col == 0:
+            index = model.createIndex(curr_row, 1)
+            delegate = self.view.itemDelegate(index)
+            delegate.updateEditor(OscMessageType[osc_type])
+
+            if osc_type == 'Integer' or osc_type == 'Float':
+                model_row[1] = 0
+            elif osc_type == 'Bool':
+                model_row[1] = True
+            else:
+                model_row[1] = ''
+
+    def retranslateUi(self):
+        self.groupBox.setTitle(translate('ControllerOscSettings', 'OSC Message'))
+        self.pathLabel.setText(translate('ControllerOscSettings', 'OSC Path: (example: "/path/to/something")'))
+        self.addButton.setText(translate('OscCue', 'Add'))
+        self.removeButton.setText(translate('OscCue', 'Remove'))
+
+
+class OscArgumentView(QTableView):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        self.delegates = [ComboBoxDelegate(options=[i.value for i in OscMessageType],
+                                           tr_context='OscMessageType'),
+                          OscArgumentDelegate()]
+
+        self.setSelectionBehavior(QTableWidget.SelectRows)
+        self.setSelectionMode(QTableView.SingleSelection)
+
+        self.setShowGrid(False)
+        self.setAlternatingRowColors(True)
+
+        self.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.horizontalHeader().setHighlightSections(False)
+
+        self.verticalHeader().sectionResizeMode(QHeaderView.Fixed)
+        self.verticalHeader().setDefaultSectionSize(24)
+        self.verticalHeader().setHighlightSections(False)
+
+        for column, delegate in enumerate(self.delegates):
+            self.setItemDelegateForColumn(column, delegate)
 
 
 class OscSettings(CueSettingsPage):
@@ -187,10 +284,36 @@ class OscSettings(CueSettingsPage):
                                                                 self.capturedMessage['args']))
 
     def __new_message(self):
-        self.oscModel.appendRow('', '', '', self._default_action)
+        dialog = OscMessageDialog(parent=self)
+        if dialog.exec_() == dialog.Accepted:
+            path = dialog.pathEdit.text()
+            if len(path) < 2 or path[0] is not '/':
+                elogging.warning('OSC: Osc path seems not valid,\ndo not forget to edit the path later.',
+                                 dialog=True)
+            types = ''
+            arguments = []
+            for row in dialog.model.rows:
+                if row[0] == 'Bool':
+                    if row[1] is True:
+                        types += 'T'
+                    if row[1] is True:
+                        types += 'F'
+                else:
+                    if row[0] == 'Integer':
+                        types += 'i'
+                    elif row[0] == 'Float':
+                        types += 'f'
+                    elif row[0] == 'String':
+                        types += 's'
+                    else:
+                        raise TypeError('Unsupported Osc Type')
+                    arguments.append(row[1])
+
+            self.oscModel.appendRow(path, types, '{}'.format(arguments)[1:-1], self._default_action)
 
     def __remove_message(self):
-        self.oscModel.removeRow(self.OscView.currentIndex().row())
+        if self.oscModel.rowCount() and self.OscView.currentIndex().row():
+            self.oscModel.removeRow(self.OscView.currentIndex().row())
 
 
 class OscView(QTableView):
