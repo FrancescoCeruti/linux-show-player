@@ -19,7 +19,7 @@
 
 from PyQt5.QtCore import Qt, QEvent
 from PyQt5.QtWidgets import QStyledItemDelegate, QComboBox, QSpinBox, \
-    QLineEdit, QStyle, QDialog, QCheckBox, QDoubleSpinBox, QLabel
+    QLineEdit, QStyle, QDialog, QCheckBox, QDoubleSpinBox
 
 from lisp.application import Application
 from lisp.cues.cue import CueAction
