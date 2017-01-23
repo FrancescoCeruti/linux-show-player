@@ -80,9 +80,10 @@ class MediaCue(Cue):
 
             if self._state & CueState.Running and fade:
                 self._st_lock.release()
-                if not self._on_stop_fade():
-                    return False
+                ended = self._on_stop_fade()
                 self._st_lock.acquire()
+                if not ended:
+                    return False
 
         self.media.stop()
         return True
@@ -96,9 +97,10 @@ class MediaCue(Cue):
 
             if fade:
                 self._st_lock.release()
-                if not self._on_stop_fade():
-                    return False
+                ended = self._on_stop_fade()
                 self._st_lock.acquire()
+                if not ended:
+                    return False
 
         self.media.pause()
         return True
