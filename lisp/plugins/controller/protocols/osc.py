@@ -122,6 +122,9 @@ class OscMessageDialog(QDialog):
             self.model.removeRow(self.view.currentIndex().row())
 
     def __argument_changed(self, index_topleft, index_bottomright, roles):
+        if not (Qt.EditRole in roles):
+            return
+
         model = index_bottomright.model()
         curr_row = index_topleft.row()
         model_row = model.rows[curr_row]
