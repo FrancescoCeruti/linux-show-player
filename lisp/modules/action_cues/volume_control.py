@@ -46,7 +46,7 @@ class VolumeControl(Cue):
     volume = Property(default=.0)
 
     CueActions = (CueAction.Default, CueAction.Start, CueAction.Stop,
-                  CueAction.Pause)
+                  CueAction.Pause, CueAction.Interrupt)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -103,9 +103,9 @@ class VolumeControl(Cue):
                                       self.volume,
                                       fade_type)
 
-            # to avoid approximation problems
-            self.__fader.target.current_volume = self.volume
             if ended:
+                # to avoid approximation problems
+                self.__fader.target.current_volume = self.volume
                 self._ended()
         except Exception as e:
             self._error(

@@ -21,25 +21,24 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QListWidget, QListWidgetItem
 
 from lisp.core.signal import Connection
-from lisp.layouts.list_layout.playing_mediawidget import PlayingMediaWidget
+from lisp.layouts.list_layout.playing_mediawidget import get_running_widget
 
 
-class PlayingListWidget(QListWidget):
+class RunningCuesListWidget(QListWidget):
 
-    def __init__(self, playing_model, **kwargs):
+    def __init__(self, running_model, **kwargs):
         super().__init__(**kwargs)
-
         self.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.setFocusPolicy(Qt.NoFocus)
         self.setSelectionMode(self.NoSelection)
 
-        self._playing_items = {}
-        self._playing_model = playing_model
-        self._playing_model.item_added.connect(
+        self._running_cues = {}
+        self._running_model = running_model
+        self._running_model.item_added.connect(
             self._item_added, Connection.QtQueued)
-        self._playing_model.item_removed.connect(
+        self._running_model.item_removed.connect(
             self._item_removed, Connection.QtQueued)
-        self._playing_model.model_reset.connect(
+        self._running_model.model_reset.connect(
             self._model_reset, Connection.QtQueued)
 
         self.__dbmeter_visible = False
@@ -53,8 +52,11 @@ class PlayingListWidget(QListWidget):
     @dbmeter_visible.setter
     def dbmeter_visible(self, visible):
         self.__dbmeter_visible = visible
-        for item in self._playing_items.values():
-            self.itemWidget(item).set_dbmeter_visible(visible)
+        for item in self._running_cues.values():
+            try:
+                self.itemWidget(item).set_dbmeter_visible(visible)
+            except AttributeError:
+                pass
 
     @property
     def seek_visible(self):
@@ -63,8 +65,11 @@ class PlayingListWidget(QListWidget):
     @seek_visible.setter
     def seek_visible(self, visible):
         self.__seek_visible = visible
-        for item in self._playing_items.values():
-            self.itemWidget(item).set_seek_visible(visible)
+        for item in self._running_cues.values():
+            try:
+                self.itemWidget(item).set_seek_visible(visible)
+            except AttributeError:
+                pass
 
     @property
     def accurate_time(self):
@@ -73,24 +78,27 @@ class PlayingListWidget(QListWidget):
     @accurate_time.setter
     def accurate_time(self, accurate):
         self.__accurate_time = accurate
-        for item in self._playing_items.values():
+        for item in self._running_cues.values():
             self.itemWidget(item).set_accurate_time(accurate)
 
     def _item_added(self, cue):
-        widget = PlayingMediaWidget(cue, parent=self)
-        widget.set_dbmeter_visible(self.__dbmeter_visible)
-        widget.set_seek_visible(self.__seek_visible)
+        widget = get_running_widget(cue, parent=self)
         widget.set_accurate_time(self.__accurate_time)
+        try:
+            widget.set_dbmeter_visible(self.__dbmeter_visible)
+            widget.set_seek_visible(self.__seek_visible)
+        except AttributeError:
+            pass
 
         item = QListWidgetItem()
         item.setSizeHint(widget.size())
 
         self.addItem(item)
         self.setItemWidget(item, widget)
-        self._playing_items[cue] = item
+        self._running_cues[cue] = item
 
     def _item_removed(self, cue):
-        item = self._playing_items.pop(cue)
+        item = self._running_cues.pop(cue)
         widget = self.itemWidget(item)
         row = self.indexFromItem(item).row()
 
@@ -100,5 +108,5 @@ class PlayingListWidget(QListWidget):
         widget.deleteLater()
 
     def _model_reset(self):
-        for cue in list(self._playing_items.keys()):
+        for cue in list(self._running_cues.keys()):
             self._item_removed(cue)

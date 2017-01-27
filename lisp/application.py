@@ -35,8 +35,8 @@ from lisp.ui import elogging
 from lisp.ui.layoutselect import LayoutSelect
 from lisp.ui.mainwindow import MainWindow
 from lisp.ui.settings.app_settings import AppSettings
-from lisp.ui.settings.pages.app_general import General
-from lisp.ui.settings.pages.media_cue_settings import MediaCueAppSettings
+from lisp.ui.settings.pages.app_general import AppGeneral
+from lisp.ui.settings.pages.cue_app_settings import CueAppSettings
 
 
 class Application(metaclass=Singleton):
@@ -53,8 +53,8 @@ class Application(metaclass=Singleton):
         self._mainWindow.open_session.connect(self._load_from_file)
 
         # Register general settings widget
-        AppSettings.register_settings_widget(General)
-        AppSettings.register_settings_widget(MediaCueAppSettings)
+        AppSettings.register_settings_widget(AppGeneral)
+        AppSettings.register_settings_widget(CueAppSettings)
 
         # Show the mainWindow maximized
         self._mainWindow.showMaximized()

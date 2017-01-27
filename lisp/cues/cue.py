@@ -20,6 +20,7 @@
 from threading import Lock
 from uuid import uuid4
 
+from lisp.core.configuration import config
 from lisp.core.decorators import async
 from lisp.core.fade_functions import FadeInType, FadeOutType
 from lisp.core.has_properties import HasProperties, Property, WriteOnceProperty
@@ -48,6 +49,8 @@ class CueState:
 
 class CueAction(EqEnum):
     Default = 'Default'
+    FadeIn = 'FadeIn'
+    FadeOut = 'FadeOut'
     FadeInStart = 'FadeInStart'
     FadeOutStop = 'FadeOutStop'
     FadeOutPause = 'FadeOutPause'
@@ -93,7 +96,8 @@ class Cue(HasProperties):
     :cvar CueActions: actions supported by the cue (default: CueAction.Start)
 
     A cue should declare CueAction.Default as supported only if CueAction.Start
-    and CueAction.Stop are both supported, if CueAction.Stop is supported.
+    and CueAction.Stop are both supported.
+    If CueAction.Stop is supported, CueAction.Interrupt should be supported.
 
     .. Note::
         If 'next_action' is AutoFollow or DoNothing, the postwait is not
@@ -193,6 +197,14 @@ class Cue(HasProperties):
                 self.pause()
             elif action == CueAction.FadeOutPause:
                 self.pause(fade=self.fadeout_duration > 0)
+            elif action == CueAction.FadeOut:
+                duration = config['Cue'].getfloat('FadeActionDuration')
+                fade_type = FadeOutType[config['Cue'].get('FadeActionType')]
+                self.fadeout(duration, fade_type)
+            elif action == CueAction.FadeIn:
+                duration = config['Cue'].getfloat('FadeActionDuration')
+                fade_type = FadeInType[config['Cue'].get('FadeActionType')]
+                self.fadein(duration, fade_type)
 
     @async
     def start(self, fade=False):

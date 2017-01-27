@@ -34,7 +34,7 @@ class ListLayoutSettings(SettingsPage):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
-        #self.layout().setAlignment(Qt.AlignTop)
+        self.layout().setAlignment(Qt.AlignTop)
 
         self.behaviorsGroup = QGroupBox(self)
         self.behaviorsGroup.setLayout(QVBoxLayout())
@@ -100,26 +100,6 @@ class ListLayoutSettings(SettingsPage):
         self.interruptAllFade = QCheckBox(self.useFadeGroup)
         self.useFadeGroup.layout().addWidget(self.interruptAllFade, 3, 1)
 
-        # Fade settings
-        self.fadeGroup = QGroupBox(self)
-        self.fadeGroup.setLayout(QGridLayout())
-        self.layout().addWidget(self.fadeGroup)
-
-        self.fadeDurationSpin = QDoubleSpinBox(self.fadeGroup)
-        self.fadeDurationSpin.setRange(0, 3600)
-        self.fadeGroup.layout().addWidget(self.fadeDurationSpin, 0, 0)
-
-        self.fadeDurationLabel = QLabel(self.fadeGroup)
-        self.fadeDurationLabel.setAlignment(Qt.AlignCenter)
-        self.fadeGroup.layout().addWidget(self.fadeDurationLabel, 0, 1)
-
-        self.fadeTypeCombo = FadeComboBox(self.fadeGroup)
-        self.fadeGroup.layout().addWidget(self.fadeTypeCombo, 1, 0)
-
-        self.fadeTypeLabel = QLabel(self.fadeGroup)
-        self.fadeTypeLabel.setAlignment(Qt.AlignCenter)
-        self.fadeGroup.layout().addWidget(self.fadeTypeLabel, 1, 1)
-
         self.retranslateUi()
 
     def retranslateUi(self):
@@ -143,11 +123,6 @@ class ListLayoutSettings(SettingsPage):
         self.restartAllFade.setText(translate('ListLayout', 'Restart All'))
         self.interruptAllFade.setText(translate('ListLayout', 'Interrupt All'))
 
-        self.fadeGroup.setTitle(
-            translate('ListLayout', 'Fade (buttons) settings'))
-        self.fadeDurationLabel.setText(translate('ListLayout', 'Fade duration'))
-        self.fadeTypeLabel.setText(translate('ListLayout', 'Fade type'))
-
     def get_settings(self):
         settings = {
             'showplaying': str(self.showPlaying.isChecked()),
@@ -166,8 +141,6 @@ class ListLayoutSettings(SettingsPage):
             'pauseallfade': str(self.pauseAllFade.isChecked()),
             'restartallfade': str(self.restartAllFade.isChecked()),
             'interruptallfade': str(self.interruptAllFade.isChecked()),
-            'cuefadeduration': str(self.fadeDurationSpin.value()),
-            'cuefadetype': self.fadeTypeCombo.currentType()
         }
 
         return {'ListLayout': settings}
@@ -197,7 +170,3 @@ class ListLayoutSettings(SettingsPage):
         self.restartAllFade.setChecked(settings.get('restartallfade') == 'True')
         self.interruptAllFade.setChecked(
             settings.get('interruptallfade') == 'True')
-
-        self.fadeDurationSpin.setValue(
-            float(settings.get('cuefadeduration', 0)))
-        self.fadeTypeCombo.setCurrentType(settings.get('cuefadetype', ''))

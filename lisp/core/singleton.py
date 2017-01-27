@@ -19,7 +19,7 @@
 
 from abc import ABCMeta
 
-from PyQt5.QtCore import pyqtWrapperType
+from PyQt5.QtCore import QObject
 
 from lisp.core.qmeta import QABCMeta
 
@@ -44,7 +44,7 @@ class ABCSingleton(ABCMeta):
             return cls.__instance
 
 
-class QSingleton(pyqtWrapperType):
+class QSingleton(type(QObject)):
 
     def __call__(cls, *args, **kwargs):
         try:
