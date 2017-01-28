@@ -26,7 +26,7 @@ from lisp.ui.widgets import FadeComboBox
 
 class FadeEdit(QWidget):
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, mode=FadeComboBox.Mode.FadeOut, **kwargs):
         super().__init__(*args, **kwargs)
         self.setLayout(QGridLayout())
 
@@ -38,7 +38,7 @@ class FadeEdit(QWidget):
         self.fadeDurationLabel.setAlignment(Qt.AlignCenter)
         self.layout().addWidget(self.fadeDurationLabel, 0, 1)
 
-        self.fadeTypeCombo = FadeComboBox(self)
+        self.fadeTypeCombo = FadeComboBox(self, mode=mode)
         self.layout().addWidget(self.fadeTypeCombo, 1, 0)
 
         self.fadeTypeLabel = QLabel(self)
@@ -48,8 +48,8 @@ class FadeEdit(QWidget):
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.fadeDurationLabel.setText(translate('FadeEdit', 'Fade duration'))
-        self.fadeTypeLabel.setText(translate('FadeEdit', 'Fade type'))
+        self.fadeDurationLabel.setText(translate('FadeEdit', 'Duration (sec)'))
+        self.fadeTypeLabel.setText(translate('FadeEdit', 'Curve'))
 
     def duration(self):
         return self.fadeDurationSpin.value()

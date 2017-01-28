@@ -16,12 +16,12 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>
-import os
+
+from collections import OrderedDict
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtGui import QIcon
-from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QDialog, QGridLayout, QLabel, QWidget, QTabWidget, \
     QTextBrowser, QDialogButtonBox
 
@@ -31,17 +31,17 @@ from lisp.ui.ui_utils import translate
 
 class About(QDialog):
     LICENSE = '''
-    <center>
-        Linux Show Player is free software: you can redistribute it and/or
-        modify it under the terms of the GNU General Public License as published by
-        the Free Software Foundation, either version 3 of the License, or
-        (at your option) any later version.<br />
-        <br />
-        Linux Show Player is distributed in the hope that it will be useful,
-        but WITHOUT ANY WARRANTY; without even the implied warranty of
-        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-        GNU General Public License for more details.
-    </center>
+    <p>
+    Linux Show Player is free software: you can redistribute it and/or<br />
+    modify it under the terms of the GNU General Public License as published by<br />
+    the Free Software Foundation, either version 3 of the License, or<br />
+    (at your option) any later version.<br />
+    <br />
+    Linux Show Player is distributed in the hope that it will be useful,<br />
+    but WITHOUT ANY WARRANTY; without even the implied warranty of<br />
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the<br />
+    GNU General Public License for more details.
+    </p>
     '''
 
     DESCRIPTION = QT_TRANSLATE_NOOP('AboutDialog',
@@ -50,12 +50,29 @@ class About(QDialog):
     USER_GROUP = 'http://groups.google.com/group/linux-show-player---users'
     SOURCE_CODE = 'https://github.com/FrancescoCeruti/linux-show-player'
 
+    CONTRIBUTORS = OrderedDict({
+        QT_TRANSLATE_NOOP('About', 'Authors'): [
+            ('Francesco Ceruti', 'ceppofrancy@gmail.com')
+        ],
+        QT_TRANSLATE_NOOP('About', 'Contributors'): [
+            ('Yinameah', 'https://github.com/Yinameah'),
+            ('nodiscc', 'https://github.com/nodiscc'),
+            ('Thomas Achtner', 'info@offtools.de')
+        ],
+        QT_TRANSLATE_NOOP('About', 'Translators'): [
+            ('aroomthedoomed', 'https://github.com/aroomthedoomed'),
+            ('fri', 'https://www.transifex.com/user/profile/fri'),
+            ('Luis García-Tornel', 'tornel@gmail.com'),
+            ('miharix', 'https://github.com/miharix'),
+            ('Olivier Humbert', 'https://github.com/trebmuh')
+        ],
+    })
 
-    def __init__(self, parent=None):
-        super().__init__(parent)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
         self.setWindowModality(QtCore.Qt.ApplicationModal)
-        self.setWindowTitle('About Linux Show Player')
+        self.setWindowTitle(translate('About', 'About Linux Show Player'))
         self.setMaximumSize(500, 420)
         self.setMinimumSize(500, 420)
         self.resize(500, 420)
@@ -87,10 +104,10 @@ class About(QDialog):
             <a href="{1}">{2}</a><br />
             <a href="{3}">{4}</a><br />
             <a href="{5}">{6}</a><br /><center>'''.format(
-                translate('AboutDialog', self.DESCRIPTION),
-                self.WEB_SITE, translate('AboutDialog', 'Web site'),
-                self.USER_GROUP, translate('AboutDialog', 'Users  group'),
-                self.SOURCE_CODE, translate('AboutDialog', 'Source code'))
+            translate('AboutDialog', self.DESCRIPTION),
+            self.WEB_SITE, translate('AboutDialog', 'Web site'),
+            self.USER_GROUP, translate('AboutDialog', 'Users  group'),
+            self.SOURCE_CODE, translate('AboutDialog', 'Source code'))
         )
         self.tabWidget.addTab(self.info, translate('AboutDialog', 'Info'))
 
@@ -101,12 +118,8 @@ class About(QDialog):
 
         self.contributors = QTextBrowser(self)
         self.contributors.setOpenExternalLinks(True)
-        self.contributors.setHtml('''
-            <center><b>{0}</b><br />
-            Francesco Ceruti - <a href="mailto:ceppofrancy@gmail.com">ceppofrancy@gmail.com</a>
-            <center>'''.format(
-                translate('AboutDialog', 'Author:'))
-        )
+
+        self.contributors.setHtml(self.__contributors())
         self.tabWidget.addTab(self.contributors,
                               translate('AboutDialog', 'Contributors'))
 
@@ -124,3 +137,22 @@ class About(QDialog):
         self.layout().setRowStretch(3, 3)
 
         self.buttons.setFocus()
+
+    def __contributors(self):
+        text = ''
+        for section, people in self.CONTRIBUTORS.items():
+            text += '<u><b>{0}:</b></u><br />'.format(translate('About',
+                                                                section))
+
+            for person in people:
+                text += person[0]
+                if '://' in person[1]:
+                    text += ' - <a href="{0}">{1}</a>'.format(
+                        person[1], person[1][person[1].index('://')+3:])
+                elif person[1]:
+                    text += ' - <a href="mailto:{0}">{0}</a>'.format(person[1])
+                text += '<br />'
+
+            text += '<br />'
+
+        return text

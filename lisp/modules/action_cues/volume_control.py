@@ -36,6 +36,7 @@ from lisp.ui.settings.cue_settings import CueSettingsRegistry
 from lisp.ui.settings.settings_page import SettingsPage
 from lisp.ui.ui_utils import translate
 from lisp.ui.widgets import FadeComboBox
+from lisp.ui.widgets.fade_edit import FadeEdit
 
 
 class VolumeControl(Cue):
@@ -135,13 +136,14 @@ class VolumeSettings(SettingsPage):
         self.cueGroup.setLayout(QVBoxLayout())
         self.layout().addWidget(self.cueGroup)
 
+        self.cueLabel = QLabel(self.cueGroup)
+        self.cueLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.cueLabel.setStyleSheet('font-weight: bold;')
+        self.cueGroup.layout().addWidget(self.cueLabel)
+
         self.cueButton = QPushButton(self.cueGroup)
         self.cueButton.clicked.connect(self.select_cue)
         self.cueGroup.layout().addWidget(self.cueButton)
-
-        self.cueLabel = QLabel(self.cueGroup)
-        self.cueLabel.setAlignment(QtCore.Qt.AlignCenter)
-        self.cueGroup.layout().addWidget(self.cueLabel)
 
         self.volumeGroup = QGroupBox(self)
         self.volumeGroup.setLayout(QHBoxLayout())
@@ -168,23 +170,11 @@ class VolumeSettings(SettingsPage):
 
         # Fade
         self.fadeGroup = QGroupBox(self)
-        self.fadeGroup.setLayout(QGridLayout())
+        self.fadeGroup.setLayout(QHBoxLayout())
         self.layout().addWidget(self.fadeGroup)
 
-        self.fadeSpin = QDoubleSpinBox(self.fadeGroup)
-        self.fadeSpin.setMaximum(3600)
-        self.fadeGroup.layout().addWidget(self.fadeSpin, 0, 0)
-
-        self.fadeLabel = QLabel(self.fadeGroup)
-        self.fadeLabel.setAlignment(QtCore.Qt.AlignCenter)
-        self.fadeGroup.layout().addWidget(self.fadeLabel, 0, 1)
-
-        self.fadeCurveCombo = FadeComboBox(parent=self.fadeGroup)
-        self.fadeGroup.layout().addWidget(self.fadeCurveCombo, 1, 0)
-
-        self.fadeCurveLabel = QLabel(self.fadeGroup)
-        self.fadeCurveLabel.setAlignment(QtCore.Qt.AlignCenter)
-        self.fadeGroup.layout().addWidget(self.fadeCurveLabel, 1, 1)
+        self.fadeEdit = FadeEdit(self.fadeGroup)
+        self.fadeGroup.layout().addWidget(self.fadeEdit)
 
         self.retranslateUi()
 
@@ -194,8 +184,6 @@ class VolumeSettings(SettingsPage):
         self.cueLabel.setText(translate('VolumeControl', 'Not selected'))
         self.volumeGroup.setTitle(translate('VolumeControl', 'Volume to reach'))
         self.fadeGroup.setTitle(translate('VolumeControl', 'Fade'))
-        self.fadeLabel.setText(translate('VolumeControl', 'Time (sec)'))
-        self.fadeCurveLabel.setText(translate('VolumeControl', 'Curve'))
 
     def select_cue(self):
         if self.cueDialog.exec_() == self.cueDialog.Accepted:
@@ -224,8 +212,8 @@ class VolumeSettings(SettingsPage):
         if not (checkable and not self.volumeGroup.isCheckable()):
             conf['volume'] = self.volumeEdit.value() / 100
         if not (checkable and not self.fadeGroup.isCheckable()):
-            conf['duration'] = self.fadeSpin.value() * 1000
-            conf['fade_type'] = self.fadeCurveCombo.currentType()
+            conf['duration'] = self.fadeEdit.duration() * 1000
+            conf['fade_type'] = self.fadeEdit.fadeType()
 
         return conf
 
@@ -236,8 +224,8 @@ class VolumeSettings(SettingsPage):
             self.cueLabel.setText(cue.name)
 
         self.volumeEdit.setValue(settings.get('volume', 0) * 100)
-        self.fadeSpin.setValue(settings.get('duration', 0) / 1000)
-        self.fadeCurveCombo.setCurrentType(settings.get('fade_type', ''))
+        self.fadeEdit.setDuration(settings.get('duration', 0) / 1000)
+        self.fadeEdit.setFadeType(settings.get('fade_type', ''))
 
     def __volume_change(self, value):
         if not self.__v_edit_flag:
