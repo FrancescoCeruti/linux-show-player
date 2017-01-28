@@ -57,13 +57,13 @@ class ListLayout(QWidget, CueLayout):
     DESCRIPTION = QT_TRANSLATE_NOOP('LayoutDescription',
                                     'Organize the cues in a list')
     DETAILS = [
-        QT_TRANSLATE_NOOP('LayoutDetails', 'Space to execute the current cue'),
         QT_TRANSLATE_NOOP('LayoutDetails',
                           'SHIFT + Space or Double-Click to edit a cue'),
         QT_TRANSLATE_NOOP('LayoutDetails',
                           'CTRL + Left Click to select cues'),
-        QT_TRANSLATE_NOOP('LayoutDetails', 'CTRL + Drag&Drop to copy cues'),
-        QT_TRANSLATE_NOOP('LayoutDetails', 'Drag&Drop to move cues')
+        QT_TRANSLATE_NOOP('LayoutDetails',
+                          'To copy cues drag them while pressing CTRL'),
+        QT_TRANSLATE_NOOP('LayoutDetails', 'To move cues drag them')
     ]
 
     def __init__(self, cue_model, **kwargs):

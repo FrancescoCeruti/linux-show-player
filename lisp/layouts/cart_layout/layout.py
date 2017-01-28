@@ -49,9 +49,11 @@ class CartLayout(QTabWidget, CueLayout):
     DETAILS = [
         QT_TRANSLATE_NOOP('LayoutDetails', 'Click a cue to run it'),
         QT_TRANSLATE_NOOP('LayoutDetails', 'SHIFT + Click to edit a cue'),
-        QT_TRANSLATE_NOOP('LayoutDetails', 'SHIFT + Drag&Drop to copy cues'),
-        QT_TRANSLATE_NOOP('LayoutDetails', 'CTRL + Drag&Drop to move cues'),
-        QT_TRANSLATE_NOOP('LayoutDetails', 'CTRL + Click to select a cue')
+        QT_TRANSLATE_NOOP('LayoutDetails', 'CTRL + Click to select a cue'),
+        QT_TRANSLATE_NOOP('LayoutDetails',
+                          'To copy cues drag them while pressing CTRL'),
+        QT_TRANSLATE_NOOP('LayoutDetails',
+                          'To copy cues drag them while pressing SHIFT')
     ]
 
     def __init__(self, cue_model, **kwargs):
