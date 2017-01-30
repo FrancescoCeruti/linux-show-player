@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+########################################################################
+# Get virtualenv on the target system
+########################################################################
+
+sudo apt-get update
+sudo apt-get -y install python3-virtualenv virtualenv python3-pip python3-setuptools
+
+########################################################################
+# Get Build dependencies
+########################################################################
+
+sudo apt-get -y install python3-dev libffi-dev libportmidi-dev libasound2-dev libjack-jackd2-dev
+
+########################################################################
+# Get the last version of the app from GitHub
+########################################################################
+
+REPO="FrancescoCeruti/linux-show-player"
+#RID="latest"
+RID="5293377"
+DLD=$(wget -q "https://api.github.com/repos/$REPO/releases/"$RID  -O - | grep -E "tarball_url.*https.*" | cut -d'"' -f4)
+VERSION=$(echo $DLD | cut -d/ -f8 | cut -d'v' -f2)
+NAME="linux-show-player-"$VERSION
+ARCHIVE=$NAME".tar.gz"
+
+# Download in the "$APP" directory
+if [ ! -f $ARCHIVE ]
+then
+    wget $DLD -O $ARCHIVE
+fi
+
+echo $ARCHIVE > ARCHIVE
+echo $VERSION > VERSION
+

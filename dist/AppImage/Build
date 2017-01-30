@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+
+########################################################################
+# Create a virtualenv inside the AppDir
+########################################################################
+
+pip3 install -U pip setuptools
+virtualenv -p python3 --always-copy usr
+
+########################################################################
+# "Install" the app in the AppDir
+########################################################################
+
+APP="LinuxShowPlayer"
+LOWERAPP=${APP,,}
+ARCHIVE=$(cat ../ARCHIVE)
+
+# Activate the virtualenv
+source ./usr/bin/activate
+
+# Install
+pip install -U pip setuptools
+pip install -U PyQt5
+pip install ../$ARCHIVE
+
+# Decativate the virtualenv
+source deactivate
+
+# Patch absolute paths created by the virtualenv
+REPLACE="/home.*/$APP/$APP\.AppDir/usr"
+find . -type f -print0 | xargs -0 sed -i -e 's|'$REPLACE'|././|g'
+
+########################################################################
+# "Install" needed resources
+########################################################################
+
+# Icon
+cd ..
+tar zxvf $ARCHIVE
+find . -name linux-show-player.png -exec cp {} $APP.AppDir/$LOWERAPP.png \;
+cd $APP.AppDir/
+
+# Desktop file
+cat > $LOWERAPP.desktop <<EOF
+[Desktop Entry]
+Name=Linux Show Player
+Comment=Cue player for stage productions
+Exec=linux-show-player -f %u
+Icon=linuxshowplayer
+Type=Application
+Categories=AudioVideo;Audio;Player;
+EOF
+
