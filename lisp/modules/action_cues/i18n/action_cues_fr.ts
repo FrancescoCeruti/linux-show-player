@@ -96,7 +96,7 @@
     <message>
         <location filename="../index_action_cue.py" line="33"/>
         <source>Index Action</source>
-        <translation>Index d'action</translation>
+        <translation>Index d&apos;action</translation>
     </message>
 </context>
 <context>
