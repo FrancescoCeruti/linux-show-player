@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="2.0" language="it" sourcelanguage="">
 <context>
+    <name>About</name>
+    <message>
+        <location filename="../ui/about.py" line="53"/>
+        <source>Authors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/about.py" line="53"/>
+        <source>Contributors</source>
+        <translation type="unfinished">Contributori</translation>
+    </message>
+    <message>
+        <location filename="../ui/about.py" line="53"/>
+        <source>Translators</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/about.py" line="75"/>
+        <source>About Linux Show Player</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AboutDialog</name>
     <message>
         <location filename="../ui/about.py" line="47"/>
@@ -8,37 +31,37 @@
         <translation>Linux Show Player è un cue-player pensato per produzioni teatrali.</translation>
     </message>
     <message>
-        <location filename="../ui/about.py" line="86"/>
+        <location filename="../ui/about.py" line="102"/>
         <source>Web site</source>
         <translation>Sito web</translation>
     </message>
     <message>
-        <location filename="../ui/about.py" line="86"/>
+        <location filename="../ui/about.py" line="102"/>
         <source>Users  group</source>
         <translation>Gruppo di discussione</translation>
     </message>
     <message>
-        <location filename="../ui/about.py" line="86"/>
+        <location filename="../ui/about.py" line="102"/>
         <source>Source code</source>
         <translation>Codice sorgente</translation>
     </message>
     <message>
-        <location filename="../ui/about.py" line="96"/>
+        <location filename="../ui/about.py" line="112"/>
         <source>Info</source>
         <translation>Informazioni</translation>
     </message>
     <message>
-        <location filename="../ui/about.py" line="101"/>
+        <location filename="../ui/about.py" line="117"/>
         <source>License</source>
         <translation>Licenza</translation>
     </message>
     <message>
         <location filename="../ui/about.py" line="105"/>
         <source>Author:</source>
-        <translation>Autore:</translation>
+        <translation type="obsolete">Autore:</translation>
     </message>
     <message>
-        <location filename="../ui/about.py" line="111"/>
+        <location filename="../ui/about.py" line="123"/>
         <source>Contributors</source>
         <translation>Contributori</translation>
     </message>
@@ -64,7 +87,7 @@
 <context>
     <name>AppSettings</name>
     <message>
-        <location filename="../ui/settings/app_settings.py" line="35"/>
+        <location filename="../ui/settings/app_settings.py" line="36"/>
         <source>LiSP preferences</source>
         <translation>Preferenze di LiSP</translation>
     </message>
@@ -72,17 +95,17 @@
 <context>
     <name>CartLayout</name>
     <message>
-        <location filename="../layouts/cart_layout/layout.py" line="169"/>
+        <location filename="../layouts/cart_layout/layout.py" line="171"/>
         <source>Add page</source>
         <translation>Aggungi pagina</translation>
     </message>
     <message>
-        <location filename="../layouts/cart_layout/layout.py" line="194"/>
+        <location filename="../layouts/cart_layout/layout.py" line="196"/>
         <source>Add pages</source>
         <translation>Aggiungi pagine</translation>
     </message>
     <message>
-        <location filename="../layouts/cart_layout/layout.py" line="171"/>
+        <location filename="../layouts/cart_layout/layout.py" line="173"/>
         <source>Remove current page</source>
         <translation>Rimuovi pagina corrente</translation>
     </message>
@@ -112,62 +135,62 @@
         <translation>Mostra tempo accurato</translation>
     </message>
     <message>
-        <location filename="../layouts/cart_layout/layout.py" line="181"/>
+        <location filename="../layouts/cart_layout/layout.py" line="183"/>
         <source>Edit cue</source>
         <translation>Modifica Cue</translation>
     </message>
     <message>
-        <location filename="../layouts/cart_layout/layout.py" line="182"/>
+        <location filename="../layouts/cart_layout/layout.py" line="184"/>
         <source>Remove</source>
         <translation>Rimuovi</translation>
     </message>
     <message>
-        <location filename="../layouts/cart_layout/layout.py" line="183"/>
+        <location filename="../layouts/cart_layout/layout.py" line="185"/>
         <source>Select</source>
         <translation>Seleziona</translation>
     </message>
     <message>
-        <location filename="../layouts/cart_layout/layout.py" line="184"/>
+        <location filename="../layouts/cart_layout/layout.py" line="186"/>
         <source>Play</source>
         <translation>Riproduci</translation>
     </message>
     <message>
-        <location filename="../layouts/cart_layout/layout.py" line="185"/>
+        <location filename="../layouts/cart_layout/layout.py" line="187"/>
         <source>Pause</source>
         <translation>Pausa</translation>
     </message>
     <message>
-        <location filename="../layouts/cart_layout/layout.py" line="186"/>
+        <location filename="../layouts/cart_layout/layout.py" line="188"/>
         <source>Stop</source>
         <translation>Ferma</translation>
     </message>
     <message>
-        <location filename="../layouts/cart_layout/layout.py" line="187"/>
+        <location filename="../layouts/cart_layout/layout.py" line="189"/>
         <source>Reset volume</source>
         <translation>Resetta volume</translation>
     </message>
     <message>
-        <location filename="../layouts/cart_layout/layout.py" line="194"/>
+        <location filename="../layouts/cart_layout/layout.py" line="196"/>
         <source>Number of Pages:</source>
         <translation>Numero di Pagine:</translation>
     </message>
     <message>
-        <location filename="../layouts/cart_layout/layout.py" line="274"/>
+        <location filename="../layouts/cart_layout/layout.py" line="276"/>
         <source>Warning</source>
         <translation>Attenzione</translation>
     </message>
     <message>
-        <location filename="../layouts/cart_layout/layout.py" line="275"/>
+        <location filename="../layouts/cart_layout/layout.py" line="277"/>
         <source>Every cue in the page will be lost.</source>
         <translation>Ogni cue nella pagina sarà persa.</translation>
     </message>
     <message>
-        <location filename="../layouts/cart_layout/layout.py" line="277"/>
+        <location filename="../layouts/cart_layout/layout.py" line="279"/>
         <source>Are you sure to continue?</source>
         <translation>Sei sicuro di voler continuare?</translation>
     </message>
     <message>
-        <location filename="../layouts/cart_layout/layout.py" line="296"/>
+        <location filename="../layouts/cart_layout/layout.py" line="298"/>
         <source>Page</source>
         <translation>Pagina</translation>
     </message>
@@ -200,24 +223,52 @@
 <context>
     <name>CueAction</name>
     <message>
-        <location filename="../ui/qdelegates.py" line="29"/>
+        <location filename="../ui/widgets/cueaction_combobox.py" line="28"/>
         <source>Default</source>
         <translation>Automatica</translation>
     </message>
     <message>
-        <location filename="../ui/qdelegates.py" line="30"/>
+        <location filename="../ui/widgets/cueaction_combobox.py" line="34"/>
         <source>Pause</source>
         <translation>Pausa</translation>
     </message>
     <message>
-        <location filename="../ui/qdelegates.py" line="31"/>
+        <location filename="../ui/widgets/cueaction_combobox.py" line="32"/>
         <source>Start</source>
         <translation>Avvia</translation>
     </message>
     <message>
-        <location filename="../ui/qdelegates.py" line="32"/>
+        <location filename="../ui/widgets/cueaction_combobox.py" line="33"/>
         <source>Stop</source>
         <translation>Ferma</translation>
+    </message>
+    <message>
+        <location filename="../ui/widgets/cueaction_combobox.py" line="29"/>
+        <source>FadeInStart</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/widgets/cueaction_combobox.py" line="30"/>
+        <source>FadeOutStop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/widgets/cueaction_combobox.py" line="31"/>
+        <source>FadeOutPause</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CueActionLog</name>
+    <message>
+        <location filename="../cues/cue_actions.py" line="48"/>
+        <source>Cue settings changed: &quot;{}&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../cues/cue_actions.py" line="76"/>
+        <source>Cues settings changed.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -264,36 +315,133 @@
     </message>
 </context>
 <context>
+    <name>CueName</name>
+    <message>
+        <location filename="../cues/media_cue.py" line="33"/>
+        <source>Media Cue</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CueSettings</name>
     <message>
-        <location filename="../ui/settings/pages/cue_general.py" line="78"/>
+        <location filename="../ui/settings/pages/cue_general.py" line="177"/>
         <source>Pre wait</source>
         <translation>Pre wait</translation>
     </message>
     <message>
-        <location filename="../ui/settings/pages/cue_general.py" line="79"/>
+        <location filename="../ui/settings/pages/cue_general.py" line="178"/>
         <source>Wait before cue execution</source>
         <translation>Attesa prima dell&apos;esecuzione della cue</translation>
     </message>
     <message>
-        <location filename="../ui/settings/pages/cue_general.py" line="81"/>
+        <location filename="../ui/settings/pages/cue_general.py" line="181"/>
         <source>Post wait</source>
         <translation>Post wait</translation>
     </message>
     <message>
-        <location filename="../ui/settings/pages/cue_general.py" line="82"/>
+        <location filename="../ui/settings/pages/cue_general.py" line="182"/>
         <source>Wait after cue execution</source>
         <translation>Attesa dopo l&apos;esecuzione della cue</translation>
     </message>
     <message>
-        <location filename="../ui/settings/pages/cue_general.py" line="84"/>
+        <location filename="../ui/settings/pages/cue_general.py" line="185"/>
         <source>Next action</source>
         <translation>Azione successiva</translation>
     </message>
     <message>
         <location filename="../ui/settings/pages/cue_general.py" line="85"/>
         <source>Pause instead of stop(if supported)</source>
-        <translation>Metti in pausa invece di stoppare (se supportato)</translation>
+        <translation type="obsolete">Metti in pausa invece di stoppare (se supportato)</translation>
+    </message>
+    <message>
+        <location filename="../ui/settings/pages/cue_app_settings.py" line="55"/>
+        <source>Interrupt Fade</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/settings/pages/cue_app_settings.py" line="56"/>
+        <source>Fade Action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/settings/pages/cue_general.py" line="161"/>
+        <source>Behaviours</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/settings/pages/cue_general.py" line="162"/>
+        <source>Pre/Post Wait</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/settings/pages/cue_general.py" line="163"/>
+        <source>Fade In/Out</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/settings/pages/cue_general.py" line="166"/>
+        <source>Start action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/settings/pages/cue_general.py" line="168"/>
+        <source>Default action to start the cue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/settings/pages/cue_general.py" line="171"/>
+        <source>Stop action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/settings/pages/cue_general.py" line="173"/>
+        <source>Default action to stop the cue</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Fade</name>
+    <message>
+        <location filename="../ui/widgets/fade_combobox.py" line="28"/>
+        <source>Linear</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/widgets/fade_combobox.py" line="29"/>
+        <source>Quadratic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/widgets/fade_combobox.py" line="30"/>
+        <source>Quadratic2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FadeEdit</name>
+    <message>
+        <location filename="../ui/widgets/fade_edit.py" line="51"/>
+        <source>Duration (sec)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/widgets/fade_edit.py" line="52"/>
+        <source>Curve</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FadeSettings</name>
+    <message>
+        <location filename="../ui/settings/pages/cue_general.py" line="188"/>
+        <source>Fade In</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/settings/pages/cue_general.py" line="189"/>
+        <source>Fade Out</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -324,37 +472,57 @@
     <message>
         <location filename="../layouts/cart_layout/layout.py" line="52"/>
         <source>SHIFT + Drag&amp;Drop to copy cues</source>
-        <translation>SHIFT + Trascinamento per copiare</translation>
+        <translation type="obsolete">SHIFT + Trascinamento per copiare</translation>
     </message>
     <message>
         <location filename="../layouts/cart_layout/layout.py" line="53"/>
         <source>CTRL + Drag&amp;Drop to move cues</source>
-        <translation>CTRL + Trascinamento per spostare</translation>
+        <translation type="obsolete">CTRL + Trascinamento per spostare</translation>
     </message>
     <message>
-        <location filename="../layouts/cart_layout/layout.py" line="54"/>
+        <location filename="../layouts/cart_layout/layout.py" line="52"/>
         <source>CTRL + Click to select a cue</source>
         <translation>CTRL + Click per selezionare una cue</translation>
     </message>
     <message>
         <location filename="../layouts/list_layout/layout.py" line="60"/>
         <source>Space to execute the current cue</source>
-        <translation>Spazio per eseguite la cue corrente</translation>
+        <translation type="obsolete">Spazio per eseguite la cue corrente</translation>
     </message>
     <message>
-        <location filename="../layouts/list_layout/layout.py" line="61"/>
+        <location filename="../layouts/list_layout/layout.py" line="60"/>
         <source>SHIFT + Space or Double-Click to edit a cue</source>
         <translation>SHIFT + Spazio o Doppio Click per modifcare una cue</translation>
     </message>
     <message>
         <location filename="../layouts/list_layout/layout.py" line="63"/>
         <source>CTRL + Drag&amp;Drop to copy cues</source>
-        <translation>CTRL + Trascinamento per copiare</translation>
+        <translation type="obsolete">CTRL + Trascinamento per copiare</translation>
     </message>
     <message>
         <location filename="../layouts/list_layout/layout.py" line="64"/>
         <source>Drag&amp;Drop to move cues</source>
-        <translation>Trascina per muovere le cue</translation>
+        <translation type="obsolete">Trascina per muovere le cue</translation>
+    </message>
+    <message>
+        <location filename="../layouts/list_layout/layout.py" line="64"/>
+        <source>To copy cues drag them while pressing CTRL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../layouts/cart_layout/layout.py" line="55"/>
+        <source>To copy cues drag them while pressing SHIFT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../layouts/list_layout/layout.py" line="62"/>
+        <source>CTRL + Left Click to select cues</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../layouts/list_layout/layout.py" line="66"/>
+        <source>To move cues drag them</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -378,42 +546,42 @@
 <context>
     <name>ListLayout</name>
     <message>
-        <location filename="../layouts/list_layout/list_layout_settings.py" line="82"/>
+        <location filename="../layouts/list_layout/list_layout_settings.py" line="108"/>
         <source>Show playing cues</source>
         <translation>Mostra cue in riproduzione</translation>
     </message>
     <message>
-        <location filename="../layouts/list_layout/list_layout_settings.py" line="83"/>
+        <location filename="../layouts/list_layout/list_layout_settings.py" line="109"/>
         <source>Show dB-meters</source>
         <translation>Mostra indicatori dB</translation>
     </message>
     <message>
-        <location filename="../layouts/list_layout/list_layout_settings.py" line="85"/>
+        <location filename="../layouts/list_layout/list_layout_settings.py" line="111"/>
         <source>Show seek-bars</source>
         <translation>Mostra barre di avanzamento</translation>
     </message>
     <message>
-        <location filename="../layouts/list_layout/list_layout_settings.py" line="84"/>
+        <location filename="../layouts/list_layout/list_layout_settings.py" line="110"/>
         <source>Show accurate time</source>
         <translation>Mostra tempo accurato</translation>
     </message>
     <message>
-        <location filename="../layouts/list_layout/list_layout_settings.py" line="86"/>
+        <location filename="../layouts/list_layout/list_layout_settings.py" line="112"/>
         <source>Auto-select next cue</source>
         <translation>Auto-seleziona prossima cue</translation>
     </message>
     <message>
-        <location filename="../layouts/list_layout/layout.py" line="202"/>
+        <location filename="../layouts/list_layout/layout.py" line="208"/>
         <source>Edit cue</source>
         <translation>Modifica Cue</translation>
     </message>
     <message>
-        <location filename="../layouts/list_layout/layout.py" line="203"/>
+        <location filename="../layouts/list_layout/layout.py" line="209"/>
         <source>Remove</source>
         <translation>Rimuovi</translation>
     </message>
     <message>
-        <location filename="../layouts/list_layout/layout.py" line="204"/>
+        <location filename="../layouts/list_layout/layout.py" line="210"/>
         <source>Select</source>
         <translation>Seleziona</translation>
     </message>
@@ -423,60 +591,120 @@
         <translation>Ferma tutte</translation>
     </message>
     <message>
-        <location filename="../layouts/list_layout/control_buttons.py" line="63"/>
+        <location filename="../layouts/list_layout/control_buttons.py" line="61"/>
         <source>Pause all</source>
         <translation>Sospendi tutte</translation>
     </message>
     <message>
-        <location filename="../layouts/list_layout/control_buttons.py" line="64"/>
+        <location filename="../layouts/list_layout/control_buttons.py" line="66"/>
         <source>Restart all</source>
         <translation>Riavvia tutte</translation>
     </message>
     <message>
-        <location filename="../layouts/list_layout/list_layout_settings.py" line="61"/>
+        <location filename="../layouts/list_layout/list_layout_settings.py" line="63"/>
         <source>Stop</source>
         <translation>Ferma</translation>
     </message>
     <message>
-        <location filename="../layouts/list_layout/list_layout_settings.py" line="62"/>
+        <location filename="../layouts/list_layout/list_layout_settings.py" line="64"/>
         <source>Restart</source>
         <translation>Riavvia</translation>
     </message>
     <message>
-        <location filename="../layouts/list_layout/list_layout_settings.py" line="80"/>
+        <location filename="../layouts/list_layout/list_layout_settings.py" line="106"/>
         <source>Default behaviors</source>
         <translation>Comportamenti predefiniti</translation>
     </message>
     <message>
-        <location filename="../layouts/list_layout/list_layout_settings.py" line="87"/>
+        <location filename="../layouts/list_layout/list_layout_settings.py" line="113"/>
         <source>At list end:</source>
         <translation>A fine lista:</translation>
     </message>
     <message>
-        <location filename="../layouts/list_layout/list_layout_settings.py" line="88"/>
+        <location filename="../layouts/list_layout/list_layout_settings.py" line="114"/>
         <source>Go key:</source>
         <translation>Tasto &quot;Go&quot;:</translation>
+    </message>
+    <message>
+        <location filename="../layouts/list_layout/control_buttons.py" line="63"/>
+        <source>Interrupt all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../layouts/list_layout/control_buttons.py" line="67"/>
+        <source>Fade-Out all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../layouts/list_layout/control_buttons.py" line="68"/>
+        <source>Fade-In all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../layouts/list_layout/list_layout_settings.py" line="116"/>
+        <source>Use fade</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../layouts/list_layout/list_layout_settings.py" line="117"/>
+        <source>Stop Cue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../layouts/list_layout/list_layout_settings.py" line="118"/>
+        <source>Pause Cue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../layouts/list_layout/list_layout_settings.py" line="119"/>
+        <source>Restart Cue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../layouts/list_layout/list_layout_settings.py" line="120"/>
+        <source>Interrupt Cue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../layouts/list_layout/list_layout_settings.py" line="121"/>
+        <source>Stop All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../layouts/list_layout/list_layout_settings.py" line="122"/>
+        <source>Pause All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../layouts/list_layout/list_layout_settings.py" line="123"/>
+        <source>Restart All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../layouts/list_layout/list_layout_settings.py" line="124"/>
+        <source>Interrupt All</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ListLayoutHeader</name>
     <message>
-        <location filename="../layouts/list_layout/cue_list_view.py" line="45"/>
+        <location filename="../layouts/list_layout/cue_list_view.py" line="46"/>
         <source>Cue</source>
         <translation>Cue</translation>
     </message>
     <message>
-        <location filename="../layouts/list_layout/cue_list_view.py" line="46"/>
+        <location filename="../layouts/list_layout/cue_list_view.py" line="47"/>
         <source>Pre wait</source>
         <translation>Pre wait</translation>
     </message>
     <message>
-        <location filename="../layouts/list_layout/cue_list_view.py" line="47"/>
+        <location filename="../layouts/list_layout/cue_list_view.py" line="48"/>
         <source>Action</source>
         <translation>Azione</translation>
     </message>
     <message>
-        <location filename="../layouts/list_layout/cue_list_view.py" line="48"/>
+        <location filename="../layouts/list_layout/cue_list_view.py" line="49"/>
         <source>Post wait</source>
         <translation>Post wait</translation>
     </message>
@@ -497,27 +725,27 @@
 <context>
     <name>Logging</name>
     <message>
-        <location filename="../utils/logging.py" line="35"/>
+        <location filename="../ui/elogging.py" line="35"/>
         <source>Information</source>
         <translation>Informazione</translation>
     </message>
     <message>
-        <location filename="../utils/logging.py" line="42"/>
+        <location filename="../ui/elogging.py" line="42"/>
         <source>Debug</source>
         <translation>Debug</translation>
     </message>
     <message>
-        <location filename="../utils/logging.py" line="49"/>
+        <location filename="../ui/elogging.py" line="49"/>
         <source>Warning</source>
         <translation>Avviso</translation>
     </message>
     <message>
-        <location filename="../utils/logging.py" line="63"/>
+        <location filename="../ui/elogging.py" line="63"/>
         <source>Error</source>
         <translation>Errore</translation>
     </message>
     <message>
-        <location filename="../utils/logging.py" line="69"/>
+        <location filename="../ui/elogging.py" line="69"/>
         <source>Details:</source>
         <translation>Dettagli:</translation>
     </message>
@@ -676,6 +904,19 @@
     </message>
 </context>
 <context>
+    <name>MediaCueMenus</name>
+    <message>
+        <location filename="../modules/media_cue_menus.py" line="38"/>
+        <source>Audio cue (from file)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../modules/media_cue_menus.py" line="59"/>
+        <source>Select media files</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MediaCueSettings</name>
     <message>
         <location filename="../ui/settings/pages/media_cue_settings.py" line="77"/>
@@ -729,9 +970,14 @@
         <translation>Generale</translation>
     </message>
     <message>
-        <location filename="../ui/settings/pages/cue_general.py" line="30"/>
+        <location filename="../ui/settings/pages/cue_general.py" line="32"/>
         <source>Cue</source>
         <translation>Cue</translation>
+    </message>
+    <message>
+        <location filename="../ui/settings/pages/cue_app_settings.py" line="29"/>
+        <source>Cue Settings</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

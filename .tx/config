@@ -46,6 +46,11 @@ file_filter = lisp/plugins/triggers/i18n/triggers_<lang>.ts
 source_lang = en
 type = QT
 
+[linux-show-player.lisp-module-timecode]
+file_filter = lisp/plugins/timecode/i18n/timecode_<lang>.ts
+source_lang = en
+type = QT
+
 [linux-show-player.lisp-module-uri-changer]
 file_filter = lisp/modules/uri_changer/i18n/uri_changer_<lang>.ts
 source_lang = en

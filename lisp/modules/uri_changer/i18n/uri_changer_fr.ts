@@ -1,10 +1,11 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="fr" version="2.0">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS><TS version="2.0" language="fr" sourcelanguage="">
 <context>
     <name>UriChanger</name>
     <message>
         <location filename="../uri_changer.py" line="32"/>
         <source>Session URI change</source>
-        <translation>Modifier l'URI de la session</translation>
+        <translation>Modifier l&apos;URI de la session</translation>
     </message>
     <message>
         <location filename="../uri_changer_dialog.py" line="97"/>

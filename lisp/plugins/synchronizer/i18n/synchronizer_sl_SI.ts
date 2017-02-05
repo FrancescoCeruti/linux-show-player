@@ -1,53 +1,54 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="sl_SI" version="2.0">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS><TS version="2.0" language="sl_SI" sourcelanguage="">
 <context>
     <name>SyncPeerDialog</name>
     <message>
-        <location filename="../peers_dialog.py" line="80"/>
+        <location filename="../peers_dialog.py" line="81"/>
         <source>Manage connected peers</source>
         <translation>Upravljaj povezane soležnike</translation>
     </message>
     <message>
-        <location filename="../peers_dialog.py" line="82"/>
+        <location filename="../peers_dialog.py" line="83"/>
         <source>Discover peers</source>
         <translation>Odkrij soležnike</translation>
     </message>
     <message>
-        <location filename="../peers_dialog.py" line="84"/>
+        <location filename="../peers_dialog.py" line="85"/>
         <source>Manually add a peer</source>
         <translation>Ročno dodaj soležnik</translation>
     </message>
     <message>
-        <location filename="../peers_dialog.py" line="86"/>
+        <location filename="../peers_dialog.py" line="87"/>
         <source>Remove selected peer</source>
         <translation>Odstrani izbrani soležnik</translation>
     </message>
     <message>
-        <location filename="../peers_dialog.py" line="88"/>
+        <location filename="../peers_dialog.py" line="89"/>
         <source>Remove all peers</source>
         <translation>Odstrani vse soležnike</translation>
     </message>
     <message>
-        <location filename="../peers_dialog.py" line="92"/>
+        <location filename="../peers_dialog.py" line="93"/>
         <source>Address</source>
         <translation>Naslov</translation>
     </message>
     <message>
-        <location filename="../peers_dialog.py" line="92"/>
+        <location filename="../peers_dialog.py" line="93"/>
         <source>Peer IP</source>
         <translation>IP soležnika</translation>
     </message>
     <message>
-        <location filename="../peers_dialog.py" line="104"/>
+        <location filename="../peers_dialog.py" line="105"/>
         <source>Error</source>
         <translation>Napaka</translation>
     </message>
     <message>
-        <location filename="../peers_dialog.py" line="104"/>
+        <location filename="../peers_dialog.py" line="105"/>
         <source>Already connected</source>
         <translation>Že povezan</translation>
     </message>
     <message>
-        <location filename="../peers_dialog.py" line="115"/>
+        <location filename="../peers_dialog.py" line="116"/>
         <source>Cannot add peer</source>
         <translation>Ne morem dodat soležnika</translation>
     </message>

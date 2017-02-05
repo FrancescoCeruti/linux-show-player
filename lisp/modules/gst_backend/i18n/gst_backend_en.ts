@@ -116,44 +116,6 @@
     </message>
 </context>
 <context>
-    <name>FadeSettings</name>
-    <message>
-        <location filename="../settings/fade.py" line="35"/>
-        <source>Linear</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../settings/fade.py" line="37"/>
-        <source>Quadratic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../settings/fade.py" line="39"/>
-        <source>Quadratic2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../settings/fade.py" line="107"/>
-        <source>Fade In</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../settings/fade.py" line="111"/>
-        <source>Duration (sec)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../settings/fade.py" line="112"/>
-        <source>Curve</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../settings/fade.py" line="110"/>
-        <source>Fade Out</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>GstMediaSettings</name>
     <message>
         <location filename="../gst_media_settings.py" line="47"/>
@@ -180,42 +142,32 @@
 <context>
     <name>JackSinkSettings</name>
     <message>
-        <location filename="../settings/jack_sink.py" line="68"/>
-        <source>Name of the server to connect with</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../settings/jack_sink.py" line="70"/>
-        <source>Server name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../settings/jack_sink.py" line="71"/>
+        <location filename="../settings/jack_sink.py" line="55"/>
         <source>Connections</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../settings/jack_sink.py" line="73"/>
+        <location filename="../settings/jack_sink.py" line="56"/>
         <source>Edit connections</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../settings/jack_sink.py" line="267"/>
+        <location filename="../settings/jack_sink.py" line="242"/>
         <source>Output ports</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../settings/jack_sink.py" line="269"/>
+        <location filename="../settings/jack_sink.py" line="244"/>
         <source>Input ports</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../settings/jack_sink.py" line="325"/>
+        <location filename="../settings/jack_sink.py" line="300"/>
         <source>Connect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../settings/jack_sink.py" line="321"/>
+        <location filename="../settings/jack_sink.py" line="296"/>
         <source>Disconnect</source>
         <translation type="unfinished"></translation>
     </message>
@@ -258,7 +210,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../elements/jack_sink.py" line="32"/>
+        <location filename="../elements/jack_sink.py" line="33"/>
         <source>JACK Out</source>
         <translation type="unfinished"></translation>
     </message>
@@ -285,11 +237,6 @@
     <message>
         <location filename="../elements/equalizer10.py" line="30"/>
         <source>10 Bands Equalizer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../elements/fade.py" line="37"/>
-        <source>Fade</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
