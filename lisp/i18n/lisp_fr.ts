@@ -5,7 +5,7 @@
     <message>
         <location filename="../ui/about.py" line="53"/>
         <source>Authors</source>
-        <translation>Auteur</translation>
+        <translation>Auteurs</translation>
     </message>
     <message>
         <location filename="../ui/about.py" line="53"/>
