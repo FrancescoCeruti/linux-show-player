@@ -31,6 +31,11 @@ file_filter = lisp/modules/midi/i18n/midi_<lang>.ts
 source_lang = en
 type = QT
 
+[linux-show-player.lisp-module-presets]
+file_filter = lisp/modules/presets/i18n/presets_<lang>.ts
+source_lang = en
+type = QT
+
 [linux-show-player.lisp-module-replaygain]
 file_filter = lisp/modules/replay_gain/i18n/replay_gain_<lang>.ts
 source_lang = en

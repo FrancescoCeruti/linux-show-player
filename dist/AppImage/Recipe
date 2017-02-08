@@ -1,0 +1,204 @@
+#!/usr/bin/env bash
+
+# TODO:
+# - build and install "ola"
+# FIXME:
+# - gstreamer not working
+# WONTFIX:
+# - Failed to load plugin '././/lib/x86_64-linux-gnu/gstreamer-1.0/libgstopencv.so': /usr/lib/libgdk-x11-2.0.so.0: undefined symbol: XRRGetMonitors
+
+# WE NEED AN INSTALLATION OF PYTHON VERSION >= 3.5, IF NOT AVAILABLE
+# WE CAN USE "PYENV"
+
+# Cleanup the console
+echo -en "\ec"
+# Enable verbose shell output
+set -vx
+
+#PREFIX=`pwd`
+
+########################################################################
+# Create the AppDir
+########################################################################
+
+APP="LinuxShowPlayer"
+LOWERAPP=${APP,,} 
+
+if [ -d $APP/$APP.AppDir/ ]; then
+    rm -r $APP/$APP.AppDir/
+fi
+
+mkdir -p $APP/$APP.AppDir/
+cd $APP/
+
+########################################################################
+# Get virtualenv on the target system
+########################################################################
+
+sudo apt-get update
+sudo apt-get -y install python3-virtualenv virtualenv python3-pip python3-setuptools
+
+########################################################################
+# Get Build dependencies
+########################################################################
+
+sudo apt-get -y install python3-dev libffi-dev libportmidi-dev libasound2-dev libjack-jackd2-dev
+
+########################################################################
+# Source some helper functions
+########################################################################
+
+wget -q -nc https://github.com/probonopd/AppImages/raw/master/functions.sh -O ./functions.sh
+. ./functions.sh
+
+########################################################################
+# Get the last version of the app from GitHub
+########################################################################
+
+REPO="FrancescoCeruti/linux-show-player"
+#RID="latest"
+RID="5293377"
+DLD=$(wget -q "https://api.github.com/repos/$REPO/releases/"$RID  -O - | grep -E "tarball_url.*https.*" | cut -d'"' -f4)
+VERSION=$(echo $DLD | cut -d/ -f8 | cut -d'v' -f2)
+NAME="linux-show-player-"$VERSION
+ARCHIVE=$NAME".tar.gz"
+
+# Download in the "$APP" directory
+wget -q -c -nc $DLD -O $ARCHIVE
+
+########################################################################
+# Get the dependencies
+########################################################################
+
+mkdir -p debs
+cd debs
+apt-get download libgstreamer1.0-0 gstreamer1.0-plugins-base gstreamer1.0-plugins-good \
+  gstreamer1.0-plugins-ugly gstreamer1.0-plugins-bad gstreamer1.0-alsa gstreamer1.0-pulseaudio \
+  gstreamer1.0-libav gstreamer1.0-fluendo-mp3 gir1.2-gstreamer-1.0 gir1.2-gst-plugins-base-1.0 \
+  libportmidi0 alsa-utils libasound2 libpulse0 libasound2-data
+cd ..
+
+########################################################################
+# Get "special" dependencies
+########################################################################
+
+# We need to re-compile pygobject aganist our python version
+# this may become unecessary in future
+apt-get source python3-gi
+# To be able to compile it we need to install some build-dependecies
+sudo apt-get build-dep python3-gi
+# Get the dependencies for python3-gi (excluding python3 and libc)
+cd debs
+apt-get download gir1.2-glib-2.0 libffi6 libgirepository-1.0-1 libglib2.0-0
+cd ..
+
+# Build PyGObject
+cd pygobject-3*
+./configure --disable-cairo
+make
+# Copy the python module (we will move it in the correct directory later)
+cp -r gi ../
+cd ..
+
+########################################################################
+# Create a virtualenv inside the AppDir
+########################################################################
+
+PYVERSION=`python3 -V | cut -d' ' -f2 | cut -d'.' -f1,2`
+SYS_PYLIB=`python3 -c 'import os; print(os.path.dirname(os.__file__))'`
+APP_PYLIB='usr/lib/python'$PYVERSION
+
+cd $APP.AppDir/
+
+# Create the virtualenv in "usr" with python3, coping the files
+virtualenv -p python3 --always-copy usr
+# Copy all the python stdlib files skipped by virtualenv (why??)
+rsync -tr $SYS_PYLIB/* $APP_PYLIB/ --exclude="*-packages/"
+
+# Patch site.py with empty "USER" paths (better safe than sorry)
+sed -i -e 's|USER_BASE = None|USER_BASE = ""|g' $APP_PYLIB"/site.py"
+sed -i -e 's|USER_SITE = None|USER_SITE = ""|g' $APP_PYLIB"/site.py"
+
+########################################################################
+# "Install" the app in the AppDir
+########################################################################
+
+# Activate the virtualenv
+source usr/bin/activate
+
+pip install -U pip setuptools
+# Install with pip
+pip install -U PyQt5
+pip install -U ../$ARCHIVE
+
+# Decativate the virtualenv
+deactivate
+
+# Patch absolute paths created by the virtualenv
+REPLACE="/home.*/$APP/$APP\.AppDir/usr"
+find usr/bin/ -type f -exec grep -Iq . {} \; -and -print0 | xargs -0 sed -i -e 's|'$REPLACE'|././|g'
+
+# "Install" the compiled "gi" module at the appropriate position
+cp -r ../gi usr/lib/python3.5/site-packages/
+
+# Install from deb packages
+find ../debs/ -name *deb -exec dpkg -x {} . \;
+
+########################################################################
+# Finalize the AppDir
+########################################################################
+
+get_apprun
+
+cd ..
+tar zxf $ARCHIVE
+find . -name linux-show-player.png -exec cp {} $APP.AppDir/$LOWERAPP.png \;
+cd $APP.AppDir/
+
+# Workaround to set some GStreamer variable
+cat > usr/bin/$LOWERAPP <<EOF
+#!/bin/sh
+
+# Set variables
+export GST_PLUGIN_PATH_1_0="././/lib/x86_64-linux-gnu/gstreamer-1.0/"
+export GST_PLUGIN_SCANNER_1_0="././/lib/x86_64-linux-gnu/gstreamer1.0/gstreamer-1.0/gst-plugin-scanner"
+
+# Invoke the app with the argument passed
+././bin/linux-show-player \$@
+EOF
+chmod +x usr/bin/$LOWERAPP
+
+cat > $LOWERAPP.desktop <<EOF
+[Desktop Entry]
+Name=Linux Show Player
+Comment=Cue player for stage productions
+Exec=linuxshowplayer
+Icon=linuxshowplayer
+Type=Application
+Categories=AudioVideo;Audio;Player;
+EOF
+
+# Make the AppImage ask to "install" itself into the menu
+get_desktopintegration $LOWERAPP
+
+########################################################################
+# Bundle dependencies
+########################################################################
+
+copy_deps
+delete_blacklisted
+move_lib
+
+# For some reason a "home" directory is created
+rm -r ./home
+
+########################################################################
+# Package the AppDir as an AppImage
+########################################################################
+
+# At this point, you should be able to run the application by executing
+# ./AppRun
+
+cd ..
+
+generate_appimage
