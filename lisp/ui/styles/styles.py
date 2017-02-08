@@ -18,11 +18,16 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import importlib.util
-import os
+import os.path
 from collections import namedtuple
 
 from PyQt5.QtGui import QPalette, QColor
 from PyQt5.QtWidgets import QStyleFactory, qApp
+
+try:
+    from os import scandir
+except ImportError:
+    from scandir import scandir
 
 StylesPath = os.path.abspath(os.path.dirname(__file__))
 IconsThemePaths = [os.path.join(StylesPath, 'icons')]
@@ -40,7 +45,7 @@ def scan_styles():
     """Scan for "installed" styles."""
     LiSPStyles.clear()
 
-    for entry in os.scandir(StylesPath):
+    for entry in scandir(StylesPath):
         if entry.is_dir():
             has_qss = os.path.exists(os.path.join(entry.path, 'style.qss'))
             has_py = os.path.exists(os.path.join(entry.path, 'style.py'))

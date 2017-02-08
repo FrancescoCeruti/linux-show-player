@@ -1,4 +1,0 @@
-mido
-sortedcontainers
-python-rtmidi
-JACK-Client

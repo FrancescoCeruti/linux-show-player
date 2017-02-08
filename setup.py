@@ -33,7 +33,8 @@ setup(
         'sortedcontainers',
         'mido',
         'python-rtmidi',
-        'JACK-Client'
+        'JACK-Client',
+        'scandir;python_version<"3.4"'
     ],
     packages=find_packages(),
     package_data={

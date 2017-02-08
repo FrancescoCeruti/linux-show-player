@@ -25,6 +25,11 @@ from lisp.core import configuration
 from lisp.core.actions_handler import MainActionsHandler
 from lisp.cues.cue_actions import UpdateCueAction, UpdateCuesAction
 
+try:
+    from os import scandir
+except ImportError:
+    from scandir import scandir
+
 PRESETS_DIR = os.path.join(configuration.CFG_DIR, 'presets')
 
 
@@ -42,7 +47,7 @@ def scan_presets():
 
     Every time this function is called a search in `PRESETS_DIR` is performed.
     """
-    for entry in os.scandir(PRESETS_DIR):
+    for entry in scandir(PRESETS_DIR):
         if entry.is_file():
             yield entry.name
 

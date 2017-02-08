@@ -74,7 +74,7 @@ def strtime(time, accurate=False):
     if time[0] > 0:
         return '{:02}:{:02}:{:02}'.format(*time[:-1])
     elif accurate:
-        return '{:02}:{:02}.{}0'.format(*time[1:3], time[3] // 100)
+        return '{:02}:{:02}.{}0'.format(time[1], time[2], time[3] // 100)
     else:
         return '{:02}:{:02}.00'.format(*time[1:3])
 
