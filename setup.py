@@ -34,7 +34,7 @@ setup(
         'mido',
         'python-rtmidi',
         'JACK-Client',
-        'scandir;python_version<"3.4"'
+        'scandir;python_version<"3.5"'
     ],
     packages=find_packages(),
     package_data={

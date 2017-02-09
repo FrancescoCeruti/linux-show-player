@@ -24,6 +24,12 @@ import re
 import subprocess
 import sys
 
+try:
+    from os import scandir
+except ImportError:
+    from scandir import scandir
+
+
 parser = argparse.ArgumentParser(description='i18n utility for LiSP')
 parser.add_argument('locales', nargs='*',
                     help='Locales of witch generate translations')
@@ -41,7 +47,7 @@ if args.noobsolete:
 
 
 def existing_locales():
-    for entry in os.scandir('lisp/i18n'):
+    for entry in scandir('lisp/i18n'):
         if entry.name.startswith('lisp_') and entry.name.endswith('.ts'):
             yield entry.name[5:-3]
 
@@ -85,7 +91,7 @@ def create_pro_file(root, exclude=(), extensions=('py',)):
 
 def generate_for_submodules(path, qm=False):
     # Here "modules" is used generically
-    modules = [entry.path for entry in os.scandir(path) if entry.is_dir()]
+    modules = [entry.path for entry in scandir(path) if entry.is_dir()]
     for module in modules:
         if os.path.exists(os.path.join(module, 'i18n')):
             create_pro_file(module)
