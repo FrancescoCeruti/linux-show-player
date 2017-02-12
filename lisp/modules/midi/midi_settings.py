@@ -58,7 +58,10 @@ class MIDISettings(SettingsPage):
         self.midiGroup.layout().setColumnStretch(1, 3)
 
         if check_module('Midi'):
-            self._load_devices()
+            try:
+                self._load_devices()
+            except Exception:
+                self.setEnabled(False)
         else:
             self.setEnabled(False)
 

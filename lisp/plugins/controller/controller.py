@@ -92,7 +92,15 @@ class Controller(Plugin):
         protocols.load()
 
         for protocol_class in protocols.Protocols:
-            protocol = protocol_class()
-            protocol.protocol_event.connect(self.perform_action)
+            try:
+                protocol = protocol_class()
+                protocol.protocol_event.connect(self.perform_action)
 
-            self.__protocols[protocol_class.__name__.lower()] = protocol
+                self.__protocols[protocol_class.__name__.lower()] = protocol
+            except Exception as e:
+                import logging
+                import traceback
+
+                logging.error('CONTROLLER: cannot setup protocol "{}"'.format(
+                    protocol_class.__name__))
+                logging.debug(traceback.format_exc())
