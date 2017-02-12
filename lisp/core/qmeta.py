@@ -19,12 +19,12 @@
 
 from abc import ABCMeta
 
-from PyQt5.QtCore import pyqtWrapperType
+from PyQt5.QtCore import QObject
 
 
-class QMeta(pyqtWrapperType, type):
+class QMeta(type(QObject), type):
     pass
 
 
-class QABCMeta(pyqtWrapperType, ABCMeta):
+class QABCMeta(type(QObject), ABCMeta):
     pass

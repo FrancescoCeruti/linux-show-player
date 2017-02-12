@@ -36,8 +36,8 @@ class MediaCue(Cue):
 
     CueActions = (CueAction.Default, CueAction.Start, CueAction.FadeInStart,
                   CueAction.Stop, CueAction.FadeOutStop, CueAction.Pause,
-                  CueAction.FadeOutPause, CueAction.Interrupt,
-                  CueAction.FadeOutInterrupt)
+                  CueAction.FadeOut, CueAction.FadeIn, CueAction.FadeOutPause,
+                  CueAction.Interrupt, CueAction.FadeOutInterrupt)
 
     def __init__(self, media, id=None):
         super().__init__(id=id)
@@ -80,9 +80,10 @@ class MediaCue(Cue):
 
             if self._state & CueState.Running and fade:
                 self._st_lock.release()
-                if not self._on_stop_fade():
-                    return False
+                ended = self._on_stop_fade()
                 self._st_lock.acquire()
+                if not ended:
+                    return False
 
         self.media.stop()
         return True
@@ -96,9 +97,10 @@ class MediaCue(Cue):
 
             if fade:
                 self._st_lock.release()
-                if not self._on_stop_fade():
-                    return False
+                ended = self._on_stop_fade()
                 self._st_lock.acquire()
+                if not ended:
+                    return False
 
         self.media.pause()
         return True
@@ -205,8 +207,8 @@ class MediaCue(Cue):
 
     def _on_stop_fade(self, interrupt=False):
         if interrupt:
-            duration = config['MediaCue'].getfloat('InterruptFade')
-            fade_type = config['MediaCue']['InterruptFadeType']
+            duration = config['Cue'].getfloat('InterruptFade')
+            fade_type = config['Cue'].get('InterruptFadeType')
         else:
             duration = self.fadeout_duration
             fade_type = self.fadeout_type

@@ -89,60 +89,51 @@ class CueListModel(ModelAdapter):
         return self.__cues.__iter__()
 
 
-class PlayingMediaCueModel(ReadOnlyProxyModel):
+class RunningCueModel(ReadOnlyProxyModel):
 
     def __init__(self, model):
         super().__init__(model)
-        self.__cues = {}
         self.__playing = []
 
-    def _item_added(self, item):
-        if isinstance(item, MediaCue):
-            self.__cues[item.media] = item
+    def _item_added(self, cue):
+        cue.end.connect(self._remove)
+        cue.started.connect(self._add)
+        cue.error.connect(self._remove)
+        cue.stopped.connect(self._remove)
+        cue.interrupted.connect(self._remove)
 
-            item.media.eos.connect(self._remove)
-            item.media.on_play.connect(self._add)
-            item.media.error.connect(self._remove)
-            item.media.stopped.connect(self._remove)
-            item.media.interrupted.connect(self._remove)
+    def _item_removed(self, cue):
+        cue.end.disconnect(self._remove)
+        cue.started.disconnect(self._add)
+        cue.error.disconnect(self._remove)
+        cue.stopped.disconnect(self._remove)
+        cue.interrupted.disconnect(self._remove)
 
-    def _item_removed(self, item):
-        if isinstance(item, MediaCue):
-            item.media.eos.disconnect(self._remove)
-            item.media.on_play.disconnect(self._add)
-            item.media.error.disconnect(self._remove)
-            item.media.stopped.disconnect(self._remove)
-            item.media.interrupted.disconnect(self._remove)
-
-            if item.media in self.__playing:
-                self._remove(item.media)
-
-            self.__cues.pop(item.media)
+        self._remove(cue)
 
     def _model_reset(self):
-        for cue in self.__cues:
+        for cue in self.model:
             self._item_removed(cue)
 
         self.model_reset.emit()
 
-    def _add(self, media):
-        if media not in self.__playing:
-            self.__playing.append(media)
-            self.item_added.emit(self.__cues[media])
+    def _add(self, cue):
+        if cue.duration > 0 and cue not in self.__playing:
+            self.__playing.append(cue)
+            self.item_added.emit(cue)
 
-    def _remove(self, media, *args):
-        self.__playing.remove(media)
-        self.item_removed.emit(self.__cues[media])
+    def _remove(self, cue, *args):
+        try:
+            self.__playing.remove(cue)
+            self.item_removed.emit(cue)
+        except ValueError:
+            pass
 
     def __len__(self):
         return len(self.__playing)
 
     def __iter__(self):
-        for media in self.__playing:
-            yield self.__cues[media]
+        yield from self.__playing
 
     def __contains__(self, item):
-        if isinstance(item, MediaCue):
-            return item.media in self.__cues
-
-        return False
+        return item in self.__playing

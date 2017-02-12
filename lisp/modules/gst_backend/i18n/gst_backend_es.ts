@@ -1,4 +1,5 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="es" version="2.0">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS><TS version="2.0" language="es" sourcelanguage="">
 <context>
     <name>AlsaSinkSettings</name>
     <message>
@@ -119,37 +120,37 @@
     <message>
         <location filename="../settings/fade.py" line="35"/>
         <source>Linear</source>
-        <translation>Linear</translation>
+        <translation type="obsolete">Linear</translation>
     </message>
     <message>
         <location filename="../settings/fade.py" line="37"/>
         <source>Quadratic</source>
-        <translation>Cuadrático</translation>
+        <translation type="obsolete">Cuadrático</translation>
     </message>
     <message>
         <location filename="../settings/fade.py" line="39"/>
         <source>Quadratic2</source>
-        <translation>Cuadrático2</translation>
+        <translation type="obsolete">Cuadrático2</translation>
     </message>
     <message>
         <location filename="../settings/fade.py" line="107"/>
         <source>Fade In</source>
-        <translation>Fundido de ingreso</translation>
+        <translation type="obsolete">Fundido de ingreso</translation>
     </message>
     <message>
         <location filename="../settings/fade.py" line="111"/>
         <source>Duration (sec)</source>
-        <translation>Duración (seg.)</translation>
+        <translation type="obsolete">Duración (seg.)</translation>
     </message>
     <message>
         <location filename="../settings/fade.py" line="112"/>
         <source>Curve</source>
-        <translation>Curva</translation>
+        <translation type="obsolete">Curva</translation>
     </message>
     <message>
         <location filename="../settings/fade.py" line="110"/>
         <source>Fade Out</source>
-        <translation>Fundido de salida</translation>
+        <translation type="obsolete">Fundido de salida</translation>
     </message>
 </context>
 <context>
@@ -181,40 +182,40 @@
     <message>
         <location filename="../settings/jack_sink.py" line="68"/>
         <source>Name of the server to connect with</source>
-        <translation>Nombre del servidor a conectarse</translation>
+        <translation type="obsolete">Nombre del servidor a conectarse</translation>
     </message>
     <message>
         <location filename="../settings/jack_sink.py" line="70"/>
         <source>Server name</source>
-        <translation>Nombre del servidor</translation>
+        <translation type="obsolete">Nombre del servidor</translation>
     </message>
     <message>
-        <location filename="../settings/jack_sink.py" line="71"/>
+        <location filename="../settings/jack_sink.py" line="55"/>
         <source>Connections</source>
         <translation>Conexiones</translation>
     </message>
     <message>
-        <location filename="../settings/jack_sink.py" line="73"/>
+        <location filename="../settings/jack_sink.py" line="56"/>
         <source>Edit connections</source>
         <translation>Editar conexiones</translation>
     </message>
     <message>
-        <location filename="../settings/jack_sink.py" line="267"/>
+        <location filename="../settings/jack_sink.py" line="242"/>
         <source>Output ports</source>
         <translation>Puertos de salida</translation>
     </message>
     <message>
-        <location filename="../settings/jack_sink.py" line="269"/>
+        <location filename="../settings/jack_sink.py" line="244"/>
         <source>Input ports</source>
         <translation>Puertos de entrada</translation>
     </message>
     <message>
-        <location filename="../settings/jack_sink.py" line="325"/>
+        <location filename="../settings/jack_sink.py" line="300"/>
         <source>Connect</source>
         <translation>Conectar</translation>
     </message>
     <message>
-        <location filename="../settings/jack_sink.py" line="321"/>
+        <location filename="../settings/jack_sink.py" line="296"/>
         <source>Disconnect</source>
         <translation>Desconectar</translation>
     </message>
@@ -257,7 +258,7 @@
         <translation>Salida ALSA</translation>
     </message>
     <message>
-        <location filename="../elements/jack_sink.py" line="32"/>
+        <location filename="../elements/jack_sink.py" line="33"/>
         <source>JACK Out</source>
         <translation>Salida JACK</translation>
     </message>
@@ -289,7 +290,7 @@
     <message>
         <location filename="../elements/fade.py" line="37"/>
         <source>Fade</source>
-        <translation>Fundido</translation>
+        <translation type="obsolete">Fundido</translation>
     </message>
     <message>
         <location filename="../elements/speed.py" line="31"/>

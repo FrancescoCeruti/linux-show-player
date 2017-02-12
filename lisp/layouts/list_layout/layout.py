@@ -25,18 +25,17 @@ from PyQt5.QtWidgets import QWidget, QAction, qApp, QGridLayout, \
     QPushButton, QSizePolicy
 
 from lisp.core.configuration import config
-from lisp.core.fade_functions import FadeInType, FadeOutType
 from lisp.core.signal import Connection
 from lisp.cues.cue import Cue, CueAction
 from lisp.cues.media_cue import MediaCue
 from lisp.layouts.cue_layout import CueLayout
 from lisp.layouts.list_layout.control_buttons import ShowControlButtons
 from lisp.layouts.list_layout.cue_list_model import CueListModel, \
-    PlayingMediaCueModel
+    RunningCueModel
 from lisp.layouts.list_layout.cue_list_view import CueListView
 from lisp.layouts.list_layout.info_panel import InfoPanel
 from lisp.layouts.list_layout.list_layout_settings import ListLayoutSettings
-from lisp.layouts.list_layout.playing_list_widget import PlayingListWidget
+from lisp.layouts.list_layout.playing_list_widget import RunningCuesListWidget
 from lisp.ui.mainwindow import MainWindow
 from lisp.ui.settings.app_settings import AppSettings
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
@@ -58,13 +57,13 @@ class ListLayout(QWidget, CueLayout):
     DESCRIPTION = QT_TRANSLATE_NOOP('LayoutDescription',
                                     'Organize the cues in a list')
     DETAILS = [
-        QT_TRANSLATE_NOOP('LayoutDetails', 'Space to execute the current cue'),
         QT_TRANSLATE_NOOP('LayoutDetails',
                           'SHIFT + Space or Double-Click to edit a cue'),
         QT_TRANSLATE_NOOP('LayoutDetails',
                           'CTRL + Left Click to select cues'),
-        QT_TRANSLATE_NOOP('LayoutDetails', 'CTRL + Drag&Drop to copy cues'),
-        QT_TRANSLATE_NOOP('LayoutDetails', 'Drag&Drop to move cues')
+        QT_TRANSLATE_NOOP('LayoutDetails',
+                          'To copy cues drag them while pressing CTRL'),
+        QT_TRANSLATE_NOOP('LayoutDetails', 'To move cues drag them')
     ]
 
     def __init__(self, cue_model, **kwargs):
@@ -76,7 +75,7 @@ class ListLayout(QWidget, CueLayout):
         self._model_adapter.item_added.connect(self.__cue_added)
         self._model_adapter.item_removed.connect(self.__cue_removed)
 
-        self._playing_model = PlayingMediaCueModel(self._cue_model)
+        self._playing_model = RunningCueModel(self._cue_model)
         self._context_item = None
         self._next_cue_index = 0
 
@@ -162,7 +161,7 @@ class ListLayout(QWidget, CueLayout):
         self.layout().addWidget(self.listView, 1, 0, 1, 2)
 
         # PLAYING VIEW (center right)
-        self.playView = PlayingListWidget(self._playing_model, parent=self)
+        self.playView = RunningCuesListWidget(self._playing_model, parent=self)
         self.playView.dbmeter_visible = self._show_dbmeter
         self.playView.accurate_time = self._accurate_time
         self.playView.seek_visible = self._seek_visible
@@ -338,13 +337,11 @@ class ListLayout(QWidget, CueLayout):
 
     def fadein_all(self):
         for cue in self._model_adapter:
-            cue.fadein(config['ListLayout'].getfloat('CueFadeDuration'),
-                       FadeInType[config['ListLayout'].get('CueFadeType')])
+            cue.execute(CueAction.FadeIn)
 
     def fadeout_all(self):
         for cue in self._model_adapter:
-            cue.fadeout(config['ListLayout'].getfloat('CueFadeDuration'),
-                        FadeOutType[config['ListLayout'].get('CueFadeType')])
+            cue.execute(CueAction.FadeOut)
 
     def get_selected_cues(self, cue_class=Cue):
         cues = []

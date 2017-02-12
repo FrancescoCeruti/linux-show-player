@@ -1,0 +1,223 @@
+#!/usr/bin/env bash
+
+########################################################################
+# We need Python >= 3.5 to build the appimage (Ubuntu 16.04)
+########################################################################
+
+# TODO:
+# - build and install "ola"
+# - cleanup (remove unused stuff)
+# - check the following:
+#   - "/usr/lib/x86_64-linux-gnu/mesa/libGL.so.1"
+#   - "/usr/lib/x86_64-linux-gnu/libX11.so.6"
+#   - "/usr/lib/x86_64-linux-gnu/libxcb.so.1"
+#   - "/usr/lib/x86_64-linux-gnu/libdrm.so.2"
+#   - "/usr/lib/x86_64-linux-gnu/libSM.so.6"
+#   - "/usr/lib/x86_64-linux-gnu/libICE.so.6"
+#   - "/usr/lib/x86_64-linux-gnu/libfontconfig.so.1"
+#   - "/usr/lib/x86_64-linux-gnu/mesa-egl/libEGL.so.1"
+# FIXME:
+# - "No Gst namespace found" (debian 8 live)
+
+# Cleanup the console
+echo -en "\ec"
+# Enable verbose shell output
+set -vx
+
+#PREFIX=`pwd`
+
+########################################################################
+# Create the AppDir
+########################################################################
+
+APP="LinuxShowPlayer"
+LOWERAPP=${APP,,} 
+
+if [ -d $APP/$APP.AppDir/ ]; then
+    rm -r $APP/$APP.AppDir/
+fi
+
+mkdir -p $APP/$APP.AppDir/
+cd $APP/
+
+########################################################################
+# Get virtualenv on the target system
+########################################################################
+
+sudo apt-get update
+sudo apt-get -y install python3-virtualenv virtualenv python3-pip python3-setuptools
+
+########################################################################
+# Get Build dependencies
+########################################################################
+
+sudo apt-get -y install python3-dev libffi-dev libportmidi-dev libasound2-dev libjack-jackd2-dev
+
+########################################################################
+# Source some helper functions
+########################################################################
+
+wget -q -nc https://github.com/probonopd/AppImages/raw/master/functions.sh -O ./functions.sh
+. ./functions.sh
+
+########################################################################
+# Get the last version of the app from GitHub
+########################################################################
+
+REPO="FrancescoCeruti/linux-show-player"
+#VERSION=$(wget -q "https://api.github.com/repos/$REPO/releases/latest"  -O - | grep -E "tag_name" | cut -d'"' -f4)
+VERSION="master"
+DLD="https://github.com/$REPO/archive/"$VERSION".tar.gz"
+ARCHIVE="linux-show-player-"$VERSION".tar.gz"
+
+# Download in the "$APP" directory
+wget -q $DLD -O $ARCHIVE
+
+########################################################################
+# Get the dependencies
+########################################################################
+
+mkdir -p debs
+cd debs
+apt-get download libglib2.0-0 libgstreamer1.0-0 gstreamer1.0-plugins-base gstreamer1.0-plugins-good \
+  gstreamer1.0-plugins-ugly gstreamer1.0-plugins-bad gstreamer1.0-alsa gstreamer1.0-pulseaudio \
+  gstreamer1.0-libav gstreamer1.0-fluendo-mp3 gir1.2-gstreamer-1.0 gir1.2-gst-plugins-base-1.0 \
+  libportmidi0 alsa-utils libasound2 libasound2-plugins libasound2-plugins-extra \
+  libpulse0 python3-gi
+cd ..
+
+########################################################################
+# Create a virtualenv inside the AppDir
+########################################################################
+
+PYVERSION=`python3 -V | cut -d' ' -f2 | cut -d'.' -f1,2`
+SYS_PYLIB=`python3 -c 'import os; print(os.path.dirname(os.__file__))'`
+APP_PYLIB='usr/lib/python'$PYVERSION
+
+cd $APP.AppDir/
+
+# Create the virtualenv in "usr" with python3, coping the files
+virtualenv -p python3 --always-copy usr
+# Copy all the python stdlib files skipped by virtualenv (why??)
+rsync -tr $SYS_PYLIB/* $APP_PYLIB/ --exclude="*-packages/"
+# For some reason using "--always-copy" even "python"/"python3" are not linked but copied
+# fix that and save ~10MB of space
+cd usr/bin
+rm python3 python
+ln -s python$PYVERSION python
+ln -s python$PYVERSION python3
+cd ../..
+
+# Create "sitecustomize.py" to load "site-packages"
+cat > $APP_PYLIB"/sitecustomize.py" <<EOF
+import sys, os
+sys.path.append((os.path.join(os.path.dirname(__file__), 'site-packages')))
+EOF
+
+# Patch site.py with empty "USER" paths
+sed -i -e 's|USER_BASE = None|USER_BASE = ""|g' $APP_PYLIB"/site.py"
+sed -i -e 's|USER_SITE = None|USER_SITE = ""|g' $APP_PYLIB"/site.py"
+
+########################################################################
+# "Install" the app in the AppDir
+########################################################################
+
+# Activate the virtualenv
+source usr/bin/activate
+
+# Upgrade pip and stuptools
+pip install -U pip setuptools
+# Install the application and it's dependencies
+pip install -U PyQt5
+pip install -U ../$ARCHIVE
+
+# Decativate the virtualenv
+deactivate
+
+# Patch absolute paths created by the virtualenv
+REPLACE="/home.*/$APP/$APP\.AppDir/usr"
+find usr/bin/ -type f -exec grep -Iq . {} \; -and -print0 | xargs -0 sed -i -e 's|'$REPLACE'|././|g'
+
+# Install from deb packages
+find ../debs/ -name *deb -exec dpkg -x {} . \;
+
+########################################################################
+# Workarounds/Patches
+########################################################################
+
+# Workaround to set enviroment variable
+mv usr/bin/linux-show-player usr/bin/linux-show-player-origin
+
+cat > usr/bin/linux-show-player <<EOF
+#!/bin/sh
+
+# Set GStreamer variables
+export GST_PLUGIN_PATH_1_0="././/lib/x86_64-linux-gnu/gstreamer-1.0/"
+export GST_PLUGIN_SCANNER_1_0="././/lib/x86_64-linux-gnu/gstreamer1.0/gstreamer-1.0/gst-plugin-scanner"
+
+# Invoke the app with the argument passed
+././bin/linux-show-player-origin \$@
+EOF
+chmod +x usr/bin/linux-show-player
+
+
+########################################################################
+# Finalize the AppDir
+########################################################################
+
+cd ..
+
+# Extract the archive
+ARCHIVE_CONT="linux-show-player-content"
+mkdir $ARCHIVE_CONT && tar zxf $ARCHIVE -C $ARCHIVE_CONT --strip-components 1
+
+# Copy icons/mime
+MIME_DIR="$APP.AppDir/usr/share/mime"
+DESKTOP_DIR="$APP.AppDir/usr/share/applications"
+ICONS_DIR="$APP.AppDir/usr/share/icons/default/512x512/apps"
+MIME_ICONS_DIR="$APP.AppDir/usr/share/icons/default/512x512/mimetypes"
+
+mkdir -p $MIME_DIR
+mkdir -p $ICONS_DIR
+mkdir -p $DESKTOP_DIR
+mkdir -p $MIME_ICONS_DIR
+
+cp $ARCHIVE_CONT/dist/linuxshowplayer.xml $MIME_DIR
+cp $ARCHIVE_CONT/dist/linuxshowplayer.png $ICONS_DIR
+cp $ARCHIVE_CONT/dist/linuxshowplayer.desktop $DESKTOP_DIR
+cp $ARCHIVE_CONT/dist/application-x-linuxshowplayer.png $MIME_ICONS_DIR
+
+cd $APP.AppDir/
+
+# Apprun & desktop-integration
+get_apprun
+
+get_icon
+get_desktop
+get_desktopintegration $LOWERAPP
+
+########################################################################
+# Bundle dependencies
+########################################################################
+
+copy_deps
+delete_blacklisted
+move_lib
+
+# For some reason a "home" directory is created
+rm -r ./home
+
+########################################################################
+# Package the AppDir as an AppImage
+########################################################################
+
+# At this point, you should be able to run the application by executing
+# ./AppRun
+
+cd ..
+
+generate_type2_appimage
+
+# To check libraries opened from the base system
+#strace -eopen -f ./AppRun 2>&1 | grep '("/usr/lib/' | grep '.so'
+

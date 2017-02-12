@@ -3,52 +3,52 @@
 <context>
     <name>SyncPeerDialog</name>
     <message>
-        <location filename="../peers_dialog.py" line="80"/>
+        <location filename="../peers_dialog.py" line="81"/>
         <source>Manage connected peers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../peers_dialog.py" line="82"/>
+        <location filename="../peers_dialog.py" line="83"/>
         <source>Discover peers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../peers_dialog.py" line="84"/>
+        <location filename="../peers_dialog.py" line="85"/>
         <source>Manually add a peer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../peers_dialog.py" line="86"/>
+        <location filename="../peers_dialog.py" line="87"/>
         <source>Remove selected peer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../peers_dialog.py" line="88"/>
+        <location filename="../peers_dialog.py" line="89"/>
         <source>Remove all peers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../peers_dialog.py" line="92"/>
+        <location filename="../peers_dialog.py" line="93"/>
         <source>Address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../peers_dialog.py" line="92"/>
+        <location filename="../peers_dialog.py" line="93"/>
         <source>Peer IP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../peers_dialog.py" line="104"/>
+        <location filename="../peers_dialog.py" line="105"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../peers_dialog.py" line="104"/>
+        <location filename="../peers_dialog.py" line="105"/>
         <source>Already connected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../peers_dialog.py" line="115"/>
+        <location filename="../peers_dialog.py" line="116"/>
         <source>Cannot add peer</source>
         <translation type="unfinished"></translation>
     </message>

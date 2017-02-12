@@ -18,10 +18,14 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import logging
-import os
+import os.path
+import re
 import traceback
 
-import re
+try:
+    from os import scandir
+except ImportError:
+    from scandir import scandir
 
 
 class load_classes:
@@ -62,7 +66,7 @@ class load_classes:
 
     def load(self):
         """Generate lists of tuples (class-name, class-object)."""
-        for entry in os.scandir(self.pkg_path):
+        for entry in scandir(self.pkg_path):
 
             # Exclude __init__, __pycache__ and likely
             if re.match('^__.*', entry.name):
