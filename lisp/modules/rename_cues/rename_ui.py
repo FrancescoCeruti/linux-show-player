@@ -17,104 +17,171 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from os import cpu_count
+import re
+from copy import copy
+import logging
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QDialog, QDialogButtonBox, QRadioButton, QSpinBox, \
-    QCheckBox, QFrame, QLabel, QGridLayout, QButtonGroup, QProgressDialog, QLineEdit
+from PyQt5.QtWidgets import QDialog, QDialogButtonBox, QGridLayout, QLineEdit, \
+    QTreeWidget, QTreeWidgetItem, QPushButton
 
-from lisp.ui.ui_utils import translate
 from lisp.application import Application
+from lisp.ui.ui_utils import translate
+
 
 
 class RenameUi(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
 
+        self.__cue_names = []
+        self.__cue_names_preview = []
+        # Here are stored regex result in the same order as the cue names
+        self.__cue_names_regex_groups = []
+
         self.setWindowModality(Qt.ApplicationModal)
-        self.setMaximumSize(380, 210)
-        self.setMinimumSize(380, 210)
-        self.resize(380, 210)
+        self.setMaximumSize(600, 400)
+        self.setMinimumSize(600, 210)
+        self.resize(600, 300)
 
         self.setLayout(QGridLayout())
 
+        # Preview List
+        self.previewList = QTreeWidget()
+        self.previewList.setColumnCount(2)
+        self.previewList.setHeaderLabels(
+            ['Actuel', 'Preview'])
+        self.previewList.resizeColumnToContents(0)
+        self.previewList.resizeColumnToContents(1)
+        self.layout().addWidget(self.previewList, 0, 0, 3, 3)
 
-        # Preview label
-        self.previewLabel = QLabel(self)
-        self.previewLabel.setText('Preview :')
-        self.layout().addWidget(self.previewLabel, 0, 0)
-        self.previewEdit = QLineEdit(self)
-        self.previewEdit.setReadOnly(True)
-        self.layout().addWidget(self.previewEdit, 0, 1)
+        # Options buttons
 
-        # Options checkbox
-        self.capitalizeBox = QCheckBox(self)
-        self.capitalizeBox.toggled.connect(self.capitalize_cue_name)
-        self.layout().addWidget(self.capitalizeBox, 1, 0)
-        self.capitalizeLabel = QLabel(self)
-        self.capitalizeBox.setText('Capitalize')
-        self.layout().addWidget(self.capitalizeLabel, 1, 1)
+        self.capitalizeButton = QPushButton()
+        self.capitalizeButton.setText('Capitalize')
+        self.capitalizeButton.clicked.connect(self.onCapitalizeButtonClicked)
+        self.layout().addWidget(self.capitalizeButton, 3, 0)
 
-        self.lowerBox = QCheckBox(self)
-        self.lowerBox.toggled.connect(self.lower_cue_name)
-        self.layout().addWidget(self.lowerBox, 2, 0)
-        self.lowerLabel = QLabel(self)
-        self.lowerLabel.setText('Lowercase')
-        self.layout().addWidget(self.lowerLabel, 2, 1)
+        self.lowerButton = QPushButton()
+        self.lowerButton.setText('Lowercase')
+        self.lowerButton.clicked.connect(self.onLowerButtonClicked)
+        self.layout().addWidget(self.lowerButton, 4, 0)
+
+        self.upperButton = QPushButton()
+        self.upperButton.setText('Uppercase')
+        self.upperButton.clicked.connect(self.onUpperButtonClicked)
+        self.layout().addWidget(self.upperButton, 5, 0)
+
+        self.removeNumButton = QPushButton()
+        self.removeNumButton.setText('Remove Numbers')
+        self.removeNumButton.clicked.connect(self.onRemoveNumButtonClicked)
+        self.layout().addWidget(self.removeNumButton, 3, 1)
+
+        # Modif line
+        self.regexLine = QLineEdit()
+        self.regexLine.setPlaceholderText('Type your regex here :')
+        self.regexLine.textChanged.connect(self.onRegexLineChanged)
+        self.layout().addWidget(self.regexLine, 4, 2)
+
+        self.outRegexLine = QLineEdit()
+        self.outRegexLine.setPlaceholderText('Output, display catched () with $1, $2, etc..."')
+        self.outRegexLine.textChanged.connect(self.onOutRegexChanged)
+        self.layout().addWidget(self.outRegexLine, 5, 2)
 
         # OK / Cancel buttons
-        self.dialogButtons = QDialogButtonBox(self)
+        self.dialogButtons = QDialogButtonBox()
         self.dialogButtons.setStandardButtons(QDialogButtonBox.Ok |
                                               QDialogButtonBox.Cancel)
-        self.layout().addWidget(self.dialogButtons, 5, 0, 1, 2)
+        self.layout().addWidget(self.dialogButtons, 6, 2)
 
         self.dialogButtons.accepted.connect(self.accept)
         self.dialogButtons.rejected.connect(self.reject)
 
-
+        # i18n
         self.retranslateUi()
 
+        # Populate the preview list
         self.get_cues_name()
 
-
     def retranslateUi(self):
-        #TODO : translation file & Co
+        # TODO : translation file & Co
         self.setWindowTitle(
             translate('RenameCues', 'Rename cues'))
 
     def get_cues_name(self):
-        cues = Application().layout.get_selected_cues()
-        if cues != []:
-            # FIXME : Récupère juste le premier pour le test
-            self.previewEdit.setText('{}'.format(cues[0].name))
+        for cue in Application().layout.get_selected_cues():
+            self.__cue_names.append(cue.name)
+        self.__cue_names_preview = copy(self.__cue_names)
+        # Initialization for regex matches
+        self.__cue_names_regex_groups = [() for i in self.__cue_names]
 
-    def capitalize_cue_name(self):
-        if self.capitalizeBox.isChecked():
-            self.previewEdit.setText(self.previewEdit.text().upper())
+        self.update_preview_list()
 
-    def lower_cue_name(self):
-        if self.lowerBox.isChecked():
-            self.previewEdit.setText(self.previewEdit.text().lower())
+        self.previewList.setColumnWidth(0, 300)
 
+    def update_preview_list(self):
+        self.previewList.clear()
 
-# class GainProgressDialog(QProgressDialog):
-#     def __init__(self, maximum, parent=None):
-#         super().__init__(parent)
-#
-#         self.setWindowModality(Qt.ApplicationModal)
-#         self.setWindowTitle(translate('ReplayGain', 'Processing files ...'))
-#         self.setMaximumSize(320, 110)
-#         self.setMinimumSize(320, 110)
-#         self.resize(320, 110)
-#
-#         self.setMaximum(maximum)
-#         self.setLabelText('0 / {0}'.format(maximum))
-#
-#     def on_progress(self, value):
-#         if value == -1:
-#             # Hide the progress dialog
-#             self.setValue(self.maximum())
-#             self.deleteLater()
-#         else:
-#             self.setValue(self.value() + value)
-#             self.setLabelText('{0} / {1}'.format(self.value(), self.maximum()))
+        if self.__cue_names != []:
+            for i, cue in enumerate(self.__cue_names):
+                a = QTreeWidgetItem(self.previewList)
+                a.setText(0, cue)
+                a.setText(1, self.__cue_names_preview[i])
+
+    def onCapitalizeButtonClicked(self):
+        self.__cue_names_preview = [
+            x.capitalize() for x in self.__cue_names_preview]
+        self.update_preview_list()
+
+    def onLowerButtonClicked(self):
+        self.__cue_names_preview = [
+            x.lower() for x in self.__cue_names_preview]
+        self.update_preview_list()
+
+    def onUpperButtonClicked(self):
+        self.__cue_names_preview = [
+            x.upper() for x in self.__cue_names_preview]
+        self.update_preview_list()
+
+    def onRemoveNumButtonClicked(self):
+        def remove_numb(input):
+            #TODO : compile this fucking regex !!
+            match = re.search('^[^a-zA-Z]+(.+)', input)
+            if match is not None:
+                return match.group(1)
+            else:
+                return input
+
+        self.__cue_names_preview = [
+            remove_numb(x) for x in self.__cue_names_preview]
+        self.update_preview_list()
+
+    def onRegexLineChanged(self):
+        pattern = self.regexLine.text()
+        try:
+            regex = re.compile(pattern)
+        except re.error:
+            logging.info("Regex error : not a valid pattern")
+        else:
+            for i, cue_name in enumerate(self.__cue_names):
+                result = regex.search(cue_name)
+                if result:
+                    self.__cue_names_regex_groups[i] = result.groups()
+
+            self.onOutRegexChanged()
+
+    def onOutRegexChanged(self):
+        out_pattern = self.outRegexLine.text()
+        rep_variables = re.findall('\$[0-9]+', out_pattern)
+
+        for i, cue_name in enumerate(self.__cue_names):
+            out_string = out_pattern
+            for n in range(len(rep_variables)):
+                pattern = '\${}'.format(n)
+                try:
+                    out_string = re.sub(pattern, self.__cue_names_regex_groups[i][n], out_string)
+                except IndexError:
+                    logging.info("Regex error : Catch with () before display with $n")
+            self.__cue_names_preview[i] = out_string
+
+        self.update_preview_list()

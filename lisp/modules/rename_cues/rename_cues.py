@@ -45,7 +45,7 @@ class RenameCues(Module):
     Name = 'RenameCues'
 
     def __init__(self):
-        self._gain_thread = None
+        #self._gain_thread = None
 
         # Entry in mainWindow menu
         self.menuAction = QAction(translate('RenameCues',
@@ -67,8 +67,8 @@ class RenameCues(Module):
             renameUi.exec_()
 
             if renameUi.result() == QDialog.Accepted:
-                cues = Application().layout.get_selected_cues()
-                cues[0].name = renameUi.previewEdit.text()
+                print('Actually modification of the cues')
+
 
     def terminate(self):
         MainWindow().menuTools.removeAction(self.menuAction)
