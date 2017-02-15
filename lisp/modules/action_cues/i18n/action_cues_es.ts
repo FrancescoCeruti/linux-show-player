@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="es" sourcelanguage="">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="es" version="2.0">
 <context>
     <name>CollectionCue</name>
     <message>
@@ -96,7 +95,7 @@
     <message>
         <location filename="../index_action_cue.py" line="33"/>
         <source>Index Action</source>
-        <translation type="unfinished"></translation>
+        <translation>Índice de Acciones</translation>
     </message>
 </context>
 <context>
@@ -104,22 +103,22 @@
     <message>
         <location filename="../index_action_cue.py" line="94"/>
         <source>Index</source>
-        <translation type="unfinished"></translation>
+        <translation>Índice</translation>
     </message>
     <message>
         <location filename="../index_action_cue.py" line="95"/>
         <source>Use a relative index</source>
-        <translation type="unfinished"></translation>
+        <translation>Usar índice relativo</translation>
     </message>
     <message>
         <location filename="../index_action_cue.py" line="97"/>
         <source>Target index</source>
-        <translation type="unfinished"></translation>
+        <translation>Índice de Target</translation>
     </message>
     <message>
         <location filename="../index_action_cue.py" line="99"/>
         <source>Action</source>
-        <translation type="unfinished">Acción</translation>
+        <translation>Acción</translation>
     </message>
 </context>
 <context>
@@ -191,37 +190,22 @@
         <translation>Editar Colección</translation>
     </message>
     <message>
-        <location filename="../stop_all.py" line="51"/>
-        <source>Cue Settings</source>
-        <translation type="obsolete">Ajustes de Cue</translation>
-    </message>
-    <message>
         <location filename="../index_action_cue.py" line="58"/>
         <source>Action Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajustes de Acción</translation>
     </message>
     <message>
         <location filename="../stop_all.py" line="65"/>
         <source>Stop Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajustes de Detención</translation>
     </message>
 </context>
 <context>
     <name>StopAll</name>
     <message>
-        <location filename="../stop_all.py" line="68"/>
-        <source>Mode</source>
-        <translation type="obsolete">Modo</translation>
-    </message>
-    <message>
-        <location filename="../stop_all.py" line="69"/>
-        <source>Pause mode</source>
-        <translation type="obsolete">Modo de pausa</translation>
-    </message>
-    <message>
         <location filename="../stop_all.py" line="87"/>
         <source>Stop Action</source>
-        <translation type="unfinished"></translation>
+        <translation>Detener Acción</translation>
     </message>
 </context>
 <context>
@@ -230,21 +214,6 @@
         <location filename="../volume_control.py" line="112"/>
         <source>Error during cue execution</source>
         <translation>Error durante la ejecución del cue</translation>
-    </message>
-    <message>
-        <location filename="../volume_control.py" line="143"/>
-        <source>Linear</source>
-        <translation type="obsolete">Linear</translation>
-    </message>
-    <message>
-        <location filename="../volume_control.py" line="145"/>
-        <source>Quadratic</source>
-        <translation type="obsolete">Cuadrático</translation>
-    </message>
-    <message>
-        <location filename="../volume_control.py" line="147"/>
-        <source>Quadratic2</source>
-        <translation type="obsolete">Cuadrático2</translation>
     </message>
     <message>
         <location filename="../volume_control.py" line="182"/>
@@ -270,16 +239,6 @@
         <location filename="../volume_control.py" line="186"/>
         <source>Fade</source>
         <translation>Fundido</translation>
-    </message>
-    <message>
-        <location filename="../volume_control.py" line="231"/>
-        <source>Time (sec)</source>
-        <translation type="obsolete">Tiempo (seg.)</translation>
-    </message>
-    <message>
-        <location filename="../volume_control.py" line="232"/>
-        <source>Curve</source>
-        <translation type="obsolete">Curva</translation>
     </message>
 </context>
 </TS>
