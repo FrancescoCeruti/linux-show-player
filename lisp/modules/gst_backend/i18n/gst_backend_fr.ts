@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="fr" sourcelanguage="">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="fr" version="2.0">
 <context>
     <name>AlsaSinkSettings</name>
     <message>
@@ -116,44 +115,6 @@
     </message>
 </context>
 <context>
-    <name>FadeSettings</name>
-    <message>
-        <location filename="../settings/fade.py" line="35"/>
-        <source>Linear</source>
-        <translation type="obsolete">Linéaire</translation>
-    </message>
-    <message>
-        <location filename="../settings/fade.py" line="37"/>
-        <source>Quadratic</source>
-        <translation type="obsolete">Quadratique</translation>
-    </message>
-    <message>
-        <location filename="../settings/fade.py" line="39"/>
-        <source>Quadratic2</source>
-        <translation type="obsolete">Quadratique 2</translation>
-    </message>
-    <message>
-        <location filename="../settings/fade.py" line="107"/>
-        <source>Fade In</source>
-        <translation type="obsolete">Fondu à l&apos;ouverture</translation>
-    </message>
-    <message>
-        <location filename="../settings/fade.py" line="111"/>
-        <source>Duration (sec)</source>
-        <translation type="obsolete">Durée (sec)</translation>
-    </message>
-    <message>
-        <location filename="../settings/fade.py" line="112"/>
-        <source>Curve</source>
-        <translation type="obsolete">Courbe</translation>
-    </message>
-    <message>
-        <location filename="../settings/fade.py" line="110"/>
-        <source>Fade Out</source>
-        <translation type="obsolete">Fondu à la fermeture</translation>
-    </message>
-</context>
-<context>
     <name>GstMediaSettings</name>
     <message>
         <location filename="../gst_media_settings.py" line="47"/>
@@ -179,16 +140,6 @@
 </context>
 <context>
     <name>JackSinkSettings</name>
-    <message>
-        <location filename="../settings/jack_sink.py" line="68"/>
-        <source>Name of the server to connect with</source>
-        <translation type="obsolete">Nom du serveur auquel se connecter</translation>
-    </message>
-    <message>
-        <location filename="../settings/jack_sink.py" line="70"/>
-        <source>Server name</source>
-        <translation type="obsolete">Nom du serveur</translation>
-    </message>
     <message>
         <location filename="../settings/jack_sink.py" line="55"/>
         <source>Connections</source>
@@ -286,11 +237,6 @@
         <location filename="../elements/equalizer10.py" line="30"/>
         <source>10 Bands Equalizer</source>
         <translation>Égaliseur 10 bandes</translation>
-    </message>
-    <message>
-        <location filename="../elements/fade.py" line="37"/>
-        <source>Fade</source>
-        <translation type="obsolete">Fondu</translation>
     </message>
     <message>
         <location filename="../elements/speed.py" line="31"/>

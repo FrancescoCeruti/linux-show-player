@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="fr" sourcelanguage="">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="fr" version="2.0">
 <context>
     <name>CollectionCue</name>
     <message>
@@ -191,11 +190,6 @@
         <translation>Editer la collection</translation>
     </message>
     <message>
-        <location filename="../stop_all.py" line="51"/>
-        <source>Cue Settings</source>
-        <translation type="obsolete">Préférences pour cue</translation>
-    </message>
-    <message>
         <location filename="../index_action_cue.py" line="58"/>
         <source>Action Settings</source>
         <translation>Paramètres d&apos;action</translation>
@@ -209,16 +203,6 @@
 <context>
     <name>StopAll</name>
     <message>
-        <location filename="../stop_all.py" line="68"/>
-        <source>Mode</source>
-        <translation type="obsolete">Mode</translation>
-    </message>
-    <message>
-        <location filename="../stop_all.py" line="69"/>
-        <source>Pause mode</source>
-        <translation type="obsolete">Mode pause</translation>
-    </message>
-    <message>
         <location filename="../stop_all.py" line="87"/>
         <source>Stop Action</source>
         <translation>Action d&apos;arrêt</translation>
@@ -230,21 +214,6 @@
         <location filename="../volume_control.py" line="112"/>
         <source>Error during cue execution</source>
         <translation>Erreur lors de l&apos;exécution de la cue</translation>
-    </message>
-    <message>
-        <location filename="../volume_control.py" line="143"/>
-        <source>Linear</source>
-        <translation type="obsolete">Linéaire</translation>
-    </message>
-    <message>
-        <location filename="../volume_control.py" line="145"/>
-        <source>Quadratic</source>
-        <translation type="obsolete">Quadratique</translation>
-    </message>
-    <message>
-        <location filename="../volume_control.py" line="147"/>
-        <source>Quadratic2</source>
-        <translation type="obsolete">Quadratique 2</translation>
     </message>
     <message>
         <location filename="../volume_control.py" line="182"/>
@@ -270,16 +239,6 @@
         <location filename="../volume_control.py" line="186"/>
         <source>Fade</source>
         <translation>Fondu</translation>
-    </message>
-    <message>
-        <location filename="../volume_control.py" line="231"/>
-        <source>Time (sec)</source>
-        <translation type="obsolete">Temps (sec)</translation>
-    </message>
-    <message>
-        <location filename="../volume_control.py" line="232"/>
-        <source>Curve</source>
-        <translation type="obsolete">Courbe</translation>
     </message>
 </context>
 </TS>

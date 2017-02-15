@@ -1,31 +1,30 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="en" version="2.0">
 <context>
     <name>MediaInfo</name>
     <message>
         <location filename="../media_info.py" line="97"/>
         <source>Media Info</source>
-        <translation type="unfinished"></translation>
+        <translation>Media Info</translation>
     </message>
     <message>
         <location filename="../media_info.py" line="51"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Error</translation>
     </message>
     <message>
         <location filename="../media_info.py" line="51"/>
         <source>No info to display</source>
-        <translation type="unfinished"></translation>
+        <translation>No info to display</translation>
     </message>
     <message>
         <location filename="../media_info.py" line="107"/>
         <source>Info</source>
-        <translation type="unfinished"></translation>
+        <translation>Info</translation>
     </message>
     <message>
         <location filename="../media_info.py" line="107"/>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Value</translation>
     </message>
 </context>
 </TS>

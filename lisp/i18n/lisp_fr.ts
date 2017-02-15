@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="fr" sourcelanguage="">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="fr" version="2.0">
 <context>
     <name>About</name>
     <message>
@@ -54,11 +53,6 @@
         <location filename="../ui/about.py" line="117"/>
         <source>License</source>
         <translation>Licence</translation>
-    </message>
-    <message>
-        <location filename="../ui/about.py" line="105"/>
-        <source>Author:</source>
-        <translation type="obsolete">Auteur :</translation>
     </message>
     <message>
         <location filename="../ui/about.py" line="123"/>
@@ -350,11 +344,6 @@
         <translation>Prochaine action</translation>
     </message>
     <message>
-        <location filename="../ui/settings/pages/cue_general.py" line="85"/>
-        <source>Pause instead of stop(if supported)</source>
-        <translation type="obsolete">Pause au lieu de stop (si supporté)</translation>
-    </message>
-    <message>
         <location filename="../ui/settings/pages/cue_app_settings.py" line="55"/>
         <source>Interrupt Fade</source>
         <translation>Interrompre le fondu</translation>
@@ -471,38 +460,13 @@
     </message>
     <message>
         <location filename="../layouts/cart_layout/layout.py" line="52"/>
-        <source>SHIFT + Drag&amp;Drop to copy cues</source>
-        <translation type="obsolete">MAJ + glisser&amp;déposer pour copier des cues</translation>
-    </message>
-    <message>
-        <location filename="../layouts/cart_layout/layout.py" line="53"/>
-        <source>CTRL + Drag&amp;Drop to move cues</source>
-        <translation type="obsolete">CTRL + glisser&amp;déposer pour déplacer des cues</translation>
-    </message>
-    <message>
-        <location filename="../layouts/cart_layout/layout.py" line="52"/>
         <source>CTRL + Click to select a cue</source>
         <translation>CTRL + clic pour sélectionner une cue</translation>
     </message>
     <message>
         <location filename="../layouts/list_layout/layout.py" line="60"/>
-        <source>Space to execute the current cue</source>
-        <translation type="obsolete">Espace pour exécuter la cue actuelle</translation>
-    </message>
-    <message>
-        <location filename="../layouts/list_layout/layout.py" line="60"/>
         <source>SHIFT + Space or Double-Click to edit a cue</source>
         <translation>MAJ + Espace ou double-clic pour éditer une cue</translation>
-    </message>
-    <message>
-        <location filename="../layouts/list_layout/layout.py" line="63"/>
-        <source>CTRL + Drag&amp;Drop to copy cues</source>
-        <translation type="obsolete">CTRL + glisser&amp;déposer pour copier des cues</translation>
-    </message>
-    <message>
-        <location filename="../layouts/list_layout/layout.py" line="64"/>
-        <source>Drag&amp;Drop to move cues</source>
-        <translation type="obsolete">Glisser&amp;déposer pour déplacer des cues</translation>
     </message>
     <message>
         <location filename="../layouts/list_layout/layout.py" line="64"/>
