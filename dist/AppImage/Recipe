@@ -1,30 +1,20 @@
 #!/usr/bin/env bash
 
 ########################################################################
-# We need Python >= 3.5 to build the appimage (Ubuntu 16.04)
+# We need Python >= 3.5 to build the AppImage (Ubuntu 16.04)
 ########################################################################
 
 # TODO:
-# - build and install "ola"
-# - cleanup (remove unused stuff)
-# - check the following:
-#   - "/usr/lib/x86_64-linux-gnu/mesa/libGL.so.1"
-#   - "/usr/lib/x86_64-linux-gnu/libX11.so.6"
-#   - "/usr/lib/x86_64-linux-gnu/libxcb.so.1"
-#   - "/usr/lib/x86_64-linux-gnu/libdrm.so.2"
-#   - "/usr/lib/x86_64-linux-gnu/libSM.so.6"
-#   - "/usr/lib/x86_64-linux-gnu/libICE.so.6"
-#   - "/usr/lib/x86_64-linux-gnu/libfontconfig.so.1"
-#   - "/usr/lib/x86_64-linux-gnu/mesa-egl/libEGL.so.1"
+# - 
 # FIXME:
-# - "No Gst namespace found" (debian 8 live)
+# - No "jack" library on Fedora 24
 
 # Cleanup the console
 echo -en "\ec"
+# Exit on error
+set -e
 # Enable verbose shell output
 set -vx
-
-#PREFIX=`pwd`
 
 ########################################################################
 # Create the AppDir
@@ -41,23 +31,25 @@ mkdir -p $APP/$APP.AppDir/
 cd $APP/
 
 ########################################################################
-# Get virtualenv on the target system
+# Get Build dependencies (and virtualenv)
 ########################################################################
 
 sudo apt-get update
-sudo apt-get -y install python3-virtualenv virtualenv python3-pip python3-setuptools
+sudo apt-get -y install build-essential python3-dev libffi-dev libportmidi-dev libasound2-dev \
+   libjack-jackd2-dev bison flex libcppunit-dev bison flex uuid-dev libprotobuf-dev protobuf-compiler \
+   libprotoc-dev libncurses5-dev python3-virtualenv virtualenv python3-pip python3-setuptools \
+   autoconf libtool
 
-########################################################################
-# Get Build dependencies
-########################################################################
-
-sudo apt-get -y install python3-dev libffi-dev libportmidi-dev libasound2-dev libjack-jackd2-dev
+# Upgrade pip to the last version
+pip3 install --user --upgrade pip
+# Install python-protobuf via pip3 because on Ubuntu 16.04 is not available for python3
+pip3 install --user protobuf
 
 ########################################################################
 # Source some helper functions
 ########################################################################
 
-wget -q -nc https://github.com/probonopd/AppImages/raw/master/functions.sh -O ./functions.sh
+wget -nc -c "https://github.com/probonopd/AppImages/raw/master/functions.sh"
 . ./functions.sh
 
 ########################################################################
@@ -71,20 +63,25 @@ DLD="https://github.com/$REPO/archive/"$VERSION".tar.gz"
 ARCHIVE="linux-show-player-"$VERSION".tar.gz"
 
 # Download in the "$APP" directory
-wget -q $DLD -O $ARCHIVE
+wget -c $DLD -O $ARCHIVE
 
 ########################################################################
 # Get the dependencies
 ########################################################################
 
+# Get .deb(s)
 mkdir -p debs
 cd debs
-apt-get download libglib2.0-0 libgstreamer1.0-0 gstreamer1.0-plugins-base gstreamer1.0-plugins-good \
-  gstreamer1.0-plugins-ugly gstreamer1.0-plugins-bad gstreamer1.0-alsa gstreamer1.0-pulseaudio \
-  gstreamer1.0-libav gstreamer1.0-fluendo-mp3 gir1.2-gstreamer-1.0 gir1.2-gst-plugins-base-1.0 \
-  libportmidi0 alsa-utils libasound2 libasound2-plugins libasound2-plugins-extra \
-  libpulse0 python3-gi
+apt-get download python3-gi libglib2.0-0 libgstreamer1.0-0 gstreamer1.0-plugins-base \
+  gstreamer1.0-plugins-good gstreamer1.0-plugins-ugly gstreamer1.0-plugins-bad gstreamer1.0-alsa \
+  gstreamer1.0-pulseaudio gstreamer1.0-libav gstreamer1.0-fluendo-mp3 gir1.2-gstreamer-1.0 \
+  gir1.2-gst-plugins-base-1.0 gir1.2-glib-2.0 libportmidi0 alsa-utils libasound2 libpulse0
 cd ..
+
+# Get OLA
+OLA_VERSION="0.10.3"
+OLA_FILE="ola-"$OLA_VERSION
+wget -nc -c "https://github.com/OpenLightingProject/ola/releases/download/"$OLA_VERSION"/"$OLA_FILE".tar.gz"
 
 ########################################################################
 # Create a virtualenv inside the AppDir
@@ -124,28 +121,48 @@ sed -i -e 's|USER_SITE = None|USER_SITE = ""|g' $APP_PYLIB"/site.py"
 
 # Activate the virtualenv
 source usr/bin/activate
-
-# Upgrade pip and stuptools
-pip install -U pip setuptools
 # Install the application and it's dependencies
-pip install -U PyQt5
-pip install -U ../$ARCHIVE
-
-# Decativate the virtualenv
+pip install PyQt5 protobuf ../$ARCHIVE
+# Deactivate the virtualenv
 deactivate
 
 # Patch absolute paths created by the virtualenv
 REPLACE="/home.*/$APP/$APP\.AppDir/usr"
 find usr/bin/ -type f -exec grep -Iq . {} \; -and -print0 | xargs -0 sed -i -e 's|'$REPLACE'|././|g'
 
+# Build & Install OLA (only the python client)
+cd ..
+tar xzf $OLA_FILE".tar.gz"
+cd $OLA_FILE
+# configure
+autoreconf -i
+PYTHON=python3 ./configure --enable-python-libs
+# generate the protobuf files
+make builtfiles
+# remove unwanted files
+rm python/ola/Makefile.mk || true
+rm python/ola/*Test.py || true
+rm python/ola/rpc/Makefile.mk || true
+rm python/ola/rpc/*Test.py || true
+# copy the python client
+cp -r python/ola ../$APP.AppDir/$APP_PYLIB/site-packages/
+cd ../$APP.AppDir
+
 # Install from deb packages
 find ../debs/ -name *deb -exec dpkg -x {} . \;
+
+# Bundle dependencies
+set +x
+copy_deps
+delete_blacklisted
+move_lib
+set -x
 
 ########################################################################
 # Workarounds/Patches
 ########################################################################
 
-# Workaround to set enviroment variable
+# Workaround to set environment variable
 mv usr/bin/linux-show-player usr/bin/linux-show-player-origin
 
 cat > usr/bin/linux-show-player <<EOF
@@ -155,11 +172,39 @@ cat > usr/bin/linux-show-player <<EOF
 export GST_PLUGIN_PATH_1_0="././/lib/x86_64-linux-gnu/gstreamer-1.0/"
 export GST_PLUGIN_SCANNER_1_0="././/lib/x86_64-linux-gnu/gstreamer1.0/gstreamer-1.0/gst-plugin-scanner"
 
-# Invoke the app with the argument passed
-././bin/linux-show-player-origin \$@
+# Allow GObject-Introspection to work correctly
+export GI_TYPELIB_PATH="././/lib/girepository-1.0"
+
+# Invoke the app with the arguments passed
+linux-show-player-origin \$@
 EOF
 chmod +x usr/bin/linux-show-player
 
+# Move nested libs
+mv usr/lib/x86_64-linux-gnu/mesa-egl/* usr/lib/ # Otherwise Fedora cannot load the Qt platform plugin "xcb"
+rm -r usr/lib/x86_64-linux-gnu/mesa-egl/
+
+mv usr/lib/x86_64-linux-gnu/pulseaudio/* usr/lib/x86_64-linux-gnu/ # Otherwise cannot find libpulsecommon-<version>.so
+rm -r usr/lib/x86_64-linux-gnu/pulseaudio/
+
+mv usr/lib/x86_64-linux-gnu/girepository-1.0/* usr/lib/girepository-1.0/ || true # Allow GI_TYPELIB_PATH to point a single location
+rm -r usr/lib/x86_64-linux-gnu/girepository-1.0 || true
+
+# Remove some "garbage"
+rm -r ./home || true
+rm -r ./var || true
+rm -r ./etc || true
+rm -r usr/lib/udev/ || true
+rm -r usr/lib/systemd/ || true
+rm -r usr/lib/x86_64-linux-gnu/mesa/ || true
+rm -r usr/lib/x86_64-linux-gnu/gio/ || true
+rm -r usr/share/alsa || true
+rm -r usr/share/doc || true
+rm -r usr/share/glib-2.0 || true
+rm -r usr/share/lintian || true
+rm -r usr/share/man || true
+rm -r usr/share/python-wheels || true
+rm -r usr/share/sounds || true
 
 ########################################################################
 # Finalize the AppDir
@@ -197,17 +242,6 @@ get_desktop
 get_desktopintegration $LOWERAPP
 
 ########################################################################
-# Bundle dependencies
-########################################################################
-
-copy_deps
-delete_blacklisted
-move_lib
-
-# For some reason a "home" directory is created
-rm -r ./home
-
-########################################################################
 # Package the AppDir as an AppImage
 ########################################################################
 
@@ -219,5 +253,5 @@ cd ..
 generate_type2_appimage
 
 # To check libraries opened from the base system
-#strace -eopen -f ./AppRun 2>&1 | grep '("/usr/lib/' | grep '.so'
+#strace -e open -f ./AppRun 2>&1 | grep '("/usr/lib/' | grep so
 

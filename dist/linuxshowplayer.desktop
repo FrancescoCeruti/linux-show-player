@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=Linux Show Player
 Comment=Cue player for stage productions
+Comment[fr]=Lecteur de Cue pour production scénique
 Exec=linux-show-player -f %u
 Icon=linuxshowplayer
 Type=Application

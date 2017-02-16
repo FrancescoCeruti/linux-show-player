@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="sl_SI" sourcelanguage="">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="sl_SI" version="2.0">
 <context>
     <name>CollectionCue</name>
     <message>
@@ -96,7 +95,7 @@
     <message>
         <location filename="../index_action_cue.py" line="33"/>
         <source>Index Action</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -104,22 +103,22 @@
     <message>
         <location filename="../index_action_cue.py" line="94"/>
         <source>Index</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../index_action_cue.py" line="95"/>
         <source>Use a relative index</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../index_action_cue.py" line="97"/>
         <source>Target index</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../index_action_cue.py" line="99"/>
         <source>Action</source>
-        <translation type="unfinished">Akcija</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -191,37 +190,22 @@
         <translation>Uredi zbirko</translation>
     </message>
     <message>
-        <location filename="../stop_all.py" line="51"/>
-        <source>Cue Settings</source>
-        <translation type="obsolete">Nastavitve vrste</translation>
-    </message>
-    <message>
         <location filename="../index_action_cue.py" line="58"/>
         <source>Action Settings</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../stop_all.py" line="65"/>
         <source>Stop Settings</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>StopAll</name>
     <message>
-        <location filename="../stop_all.py" line="68"/>
-        <source>Mode</source>
-        <translation type="obsolete">Način</translation>
-    </message>
-    <message>
-        <location filename="../stop_all.py" line="69"/>
-        <source>Pause mode</source>
-        <translation type="obsolete">Način premora</translation>
-    </message>
-    <message>
         <location filename="../stop_all.py" line="87"/>
         <source>Stop Action</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -230,21 +214,6 @@
         <location filename="../volume_control.py" line="112"/>
         <source>Error during cue execution</source>
         <translation>Napaka med izvajanjem vrste</translation>
-    </message>
-    <message>
-        <location filename="../volume_control.py" line="143"/>
-        <source>Linear</source>
-        <translation type="obsolete">Linearno</translation>
-    </message>
-    <message>
-        <location filename="../volume_control.py" line="145"/>
-        <source>Quadratic</source>
-        <translation type="obsolete">Kvadratno</translation>
-    </message>
-    <message>
-        <location filename="../volume_control.py" line="147"/>
-        <source>Quadratic2</source>
-        <translation type="obsolete">Kvadratno2</translation>
     </message>
     <message>
         <location filename="../volume_control.py" line="182"/>
@@ -270,16 +239,6 @@
         <location filename="../volume_control.py" line="186"/>
         <source>Fade</source>
         <translation>Pojenjanje</translation>
-    </message>
-    <message>
-        <location filename="../volume_control.py" line="231"/>
-        <source>Time (sec)</source>
-        <translation type="obsolete">Čas (s)</translation>
-    </message>
-    <message>
-        <location filename="../volume_control.py" line="232"/>
-        <source>Curve</source>
-        <translation type="obsolete">Krivulja</translation>
     </message>
 </context>
 </TS>

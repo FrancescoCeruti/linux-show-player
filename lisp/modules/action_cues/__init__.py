@@ -45,7 +45,13 @@ class ActionCues(Module):
     @staticmethod
     def create_add_action_cue_method(cue_class):
         def method():
-            cue = CueFactory.create_cue(cue_class.__name__)
-            Application().cue_model.add(cue)
+            try:
+                cue = CueFactory.create_cue(cue_class.__name__)
+                Application().cue_model.add(cue)
+            except Exception:
+                # TODO: Display a message to the user
+                import logging, traceback
+                logging.error('Cannot create cue {}', cue_class.__name__)
+                logging.debug(traceback.format_exc())
 
         return method
