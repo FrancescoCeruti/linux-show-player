@@ -54,7 +54,7 @@ class Osc(Protocol):
         return 'OSC{}'.format(key)
 
     @staticmethod
-    def key_from_settings(path, types, args):
+    def key_from_values(path, types, args):
         if not len(types):
             return "OSC['{0}', '{1}']".format(path, types)
         else:
@@ -249,7 +249,7 @@ class OscSettings(CueSettingsPage):
         messages = []
 
         for row in self.oscModel.rows:
-            key = Osc.key_from_settings(row[0], row[1], row[2])
+            key = Osc.key_from_values(row[0], row[1], row[2])
             messages.append((key, row[-1]))
 
         if messages:
