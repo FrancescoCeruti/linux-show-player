@@ -17,36 +17,22 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-import logging
-from concurrent.futures import ThreadPoolExecutor
-from concurrent.futures import as_completed as futures_completed
-from math import pow
-from threading import Thread, Lock
-
 import gi
-
-from lisp.ui.ui_utils import translate
-
-gi.require_version('Gst', '1.0')
-from gi.repository import Gst
-from PyQt5.QtWidgets import QMenu, QAction, QDialog, QMessageBox
+from PyQt5.QtWidgets import QAction, QDialog, QMessageBox
 
 from lisp.application import Application
-from lisp.core.action import Action
-from lisp.core.actions_handler import MainActionsHandler
 from lisp.core.module import Module
-from lisp.core.signal import Signal, Connection
-from lisp.cues.media_cue import MediaCue
 from lisp.ui.mainwindow import MainWindow
+from lisp.ui.ui_utils import translate
 from .rename_ui import RenameUi
+
+gi.require_version('Gst', '1.0')
 
 
 class RenameCues(Module):
     Name = 'RenameCues'
 
     def __init__(self):
-        #self._gain_thread = None
-
         # Entry in mainWindow menu
         self.menuAction = QAction(translate('RenameCues',
                                     'Rename Cues'), MainWindow())
@@ -55,7 +41,6 @@ class RenameCues(Module):
         MainWindow().menuTools.addAction(self.menuAction)
 
     def rename(self):
-
         # Warning if no cue is selected
         if Application().layout.get_selected_cues() == []:
             msg = QMessageBox()
@@ -68,8 +53,7 @@ class RenameCues(Module):
             renameUi.exec_()
 
             if renameUi.result() == QDialog.Accepted:
-                print('Actually modification of the cues')
-
+                renameUi.record_cues_name()
 
     def terminate(self):
         MainWindow().menuTools.removeAction(self.menuAction)

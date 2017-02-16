@@ -17,9 +17,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+import logging
 import re
 from copy import copy
-import logging
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog, QDialogButtonBox, QGridLayout, QLineEdit, \
@@ -27,7 +27,6 @@ from PyQt5.QtWidgets import QDialog, QDialogButtonBox, QGridLayout, QLineEdit, \
 
 from lisp.application import Application
 from lisp.ui.ui_utils import translate
-
 
 
 class RenameUi(QDialog):
@@ -51,6 +50,7 @@ class RenameUi(QDialog):
             ['Actuel', 'Preview'])
         self.previewList.resizeColumnToContents(0)
         self.previewList.resizeColumnToContents(1)
+        self.previewList.setColumnWidth(0, 300)
         self.layout().addWidget(self.previewList, 0, 0, 3, 4)
 
         # Options buttons
@@ -119,8 +119,6 @@ class RenameUi(QDialog):
 
         self.update_preview_list()
 
-        self.previewList.setColumnWidth(0, 300)
-
     def update_preview_list(self):
         self.previewList.clear()
 
@@ -146,9 +144,10 @@ class RenameUi(QDialog):
         self.update_preview_list()
 
     def onRemoveNumButtonClicked(self):
+        regex = re.compile('^[^a-zA-Z]+(.+)')
+
         def remove_numb(input):
-            #TODO : compile this fucking regex !!
-            match = re.search('^[^a-zA-Z]+(.+)', input)
+            match = regex.search(input)
             if match is not None:
                 return match.group(1)
             else:
@@ -156,13 +155,15 @@ class RenameUi(QDialog):
 
         self.__cue_names_preview = [
             remove_numb(x) for x in self.__cue_names_preview]
+
         self.update_preview_list()
 
     def onAddNumberingButtonClicked(self):
         cues_nbr = len(self.__cue_names)
         digit_nbr = len(str(cues_nbr))
         self.__cue_names_preview = [
-            f"{i:0{digit_nbr}.0f} - {cue_name}" for i, cue_name in enumerate(self.__cue_names_preview)
+            f"{i+1:0{digit_nbr}.0f} - {cue_name}"
+            for i, cue_name in enumerate(self.__cue_names_preview)
         ]
 
         self.update_preview_list()
@@ -183,20 +184,27 @@ class RenameUi(QDialog):
 
     def onOutRegexChanged(self):
         out_pattern = self.outRegexLine.text()
-        rep_variables = re.findall('\$[0-9]+', out_pattern)
 
-        for i, cue_name in enumerate(self.__cue_names):
-            out_string = out_pattern
-            for n in range(len(rep_variables)):
-                pattern = '\${}'.format(n)
-                try:
-                    out_string = re.sub(pattern, self.__cue_names_regex_groups[i][n], out_string)
-                except IndexError:
-                    logging.info("Regex error : Catch with () before display with $n")
-            self.__cue_names_preview[i] = out_string
+        if out_pattern == '':
+            self.__cue_names_preview = copy(self.__cue_names)
+        else:
+            for i, cue_name in enumerate(self.__cue_names):
+                out_string = out_pattern
+                for n in range(len(self.__cue_names_regex_groups[0])):
+                    pattern = '\${}'.format(n)
+                    try:
+                        out_string = re.sub(pattern,
+                                            self.__cue_names_regex_groups[i][n], out_string)
+                    except IndexError:
+                        logging.info("Regex error : Catch with () before display with $n")
+                self.__cue_names_preview[i] = out_string
 
         self.update_preview_list()
 
+    def record_cues_name(self):
+        for i, cue_name in enumerate(self.__cue_names_preview):
+            old_cue = Application().layout.get_selected_cues()[i]
+            old_cue.name = cue_name
 
 if __name__ == "__main__":
     # To test Ui quickly
