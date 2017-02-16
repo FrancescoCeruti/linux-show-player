@@ -64,6 +64,7 @@ class RenameCues(Module):
             msg.exec_()
         else:
             renameUi = RenameUi(MainWindow())
+            renameUi.get_cues_name()
             renameUi.exec_()
 
             if renameUi.result() == QDialog.Accepted:

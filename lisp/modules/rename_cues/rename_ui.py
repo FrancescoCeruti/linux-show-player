@@ -23,7 +23,7 @@ import logging
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog, QDialogButtonBox, QGridLayout, QLineEdit, \
-    QTreeWidget, QTreeWidgetItem, QPushButton
+    QTreeWidget, QTreeWidgetItem, QPushButton, QSpacerItem
 
 from lisp.application import Application
 from lisp.ui.ui_utils import translate
@@ -36,13 +36,11 @@ class RenameUi(QDialog):
 
         self.__cue_names = []
         self.__cue_names_preview = []
-        # Here are stored regex result in the same order as the cue names
+        # Here will be stored regex result in the same order as the cue names above
         self.__cue_names_regex_groups = []
 
         self.setWindowModality(Qt.ApplicationModal)
-        self.setMaximumSize(600, 400)
-        self.setMinimumSize(600, 210)
-        self.resize(600, 300)
+        self.resize(650, 350)
 
         self.setLayout(QGridLayout())
 
@@ -53,10 +51,9 @@ class RenameUi(QDialog):
             ['Actuel', 'Preview'])
         self.previewList.resizeColumnToContents(0)
         self.previewList.resizeColumnToContents(1)
-        self.layout().addWidget(self.previewList, 0, 0, 3, 3)
+        self.layout().addWidget(self.previewList, 0, 0, 3, 4)
 
         # Options buttons
-
         self.capitalizeButton = QPushButton()
         self.capitalizeButton.setText('Capitalize')
         self.capitalizeButton.clicked.connect(self.onCapitalizeButtonClicked)
@@ -77,31 +74,36 @@ class RenameUi(QDialog):
         self.removeNumButton.clicked.connect(self.onRemoveNumButtonClicked)
         self.layout().addWidget(self.removeNumButton, 3, 1)
 
-        # Modif line
+        self.addNumberingButton = QPushButton()
+        self.addNumberingButton.setText('Add numbering')
+        self.addNumberingButton.clicked.connect(self.onAddNumberingButtonClicked)
+        self.layout().addWidget(self.addNumberingButton, 4, 1)
+
+        # Spacer
+        self.layout().addItem(QSpacerItem(30, 0), 3, 2)
+
+        # Regex lines
+        self.outRegexLine = QLineEdit()
+        self.outRegexLine.setPlaceholderText('Rename all cue. () in regex above usable with $0, $1 ...')
+        self.outRegexLine.textChanged.connect(self.onOutRegexChanged)
+        self.layout().addWidget(self.outRegexLine, 3, 3)
+
         self.regexLine = QLineEdit()
         self.regexLine.setPlaceholderText('Type your regex here :')
         self.regexLine.textChanged.connect(self.onRegexLineChanged)
-        self.layout().addWidget(self.regexLine, 4, 2)
-
-        self.outRegexLine = QLineEdit()
-        self.outRegexLine.setPlaceholderText('Output, display catched () with $1, $2, etc..."')
-        self.outRegexLine.textChanged.connect(self.onOutRegexChanged)
-        self.layout().addWidget(self.outRegexLine, 5, 2)
+        self.layout().addWidget(self.regexLine, 4, 3)
 
         # OK / Cancel buttons
         self.dialogButtons = QDialogButtonBox()
         self.dialogButtons.setStandardButtons(QDialogButtonBox.Ok |
                                               QDialogButtonBox.Cancel)
-        self.layout().addWidget(self.dialogButtons, 6, 2)
+        self.layout().addWidget(self.dialogButtons, 6, 3)
 
         self.dialogButtons.accepted.connect(self.accept)
         self.dialogButtons.rejected.connect(self.reject)
 
         # i18n
         self.retranslateUi()
-
-        # Populate the preview list
-        self.get_cues_name()
 
     def retranslateUi(self):
         # TODO : translation file & Co
@@ -130,7 +132,7 @@ class RenameUi(QDialog):
 
     def onCapitalizeButtonClicked(self):
         self.__cue_names_preview = [
-            x.capitalize() for x in self.__cue_names_preview]
+            x.title() for x in self.__cue_names_preview]
         self.update_preview_list()
 
     def onLowerButtonClicked(self):
@@ -154,6 +156,15 @@ class RenameUi(QDialog):
 
         self.__cue_names_preview = [
             remove_numb(x) for x in self.__cue_names_preview]
+        self.update_preview_list()
+
+    def onAddNumberingButtonClicked(self):
+        cues_nbr = len(self.__cue_names)
+        digit_nbr = len(str(cues_nbr))
+        self.__cue_names_preview = [
+            f"{i:0{digit_nbr}.0f} - {cue_name}" for i, cue_name in enumerate(self.__cue_names_preview)
+        ]
+
         self.update_preview_list()
 
     def onRegexLineChanged(self):
@@ -185,3 +196,14 @@ class RenameUi(QDialog):
             self.__cue_names_preview[i] = out_string
 
         self.update_preview_list()
+
+
+if __name__ == "__main__":
+    # To test Ui quickly
+    from PyQt5.QtWidgets import QApplication
+    import sys
+
+    gui_test_app = QApplication(sys.argv)
+    rename_ui = RenameUi()
+    rename_ui.show()
+    sys.exit(gui_test_app.exec())
