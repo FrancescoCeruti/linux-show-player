@@ -16,10 +16,10 @@ before_install:
   - sudo apt-get update -qq || true
 
 install:
-- bash -ex ./.travis_install.sh
+- "./.travis_install.sh"
 
 script:
-- bash -ex ./.travis_run.sh
+- "./.travis_run.sh"
 
 after_success:
 - ls -lh out/*

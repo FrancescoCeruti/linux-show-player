@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+set -e
+set -x
+
 # Build on Travis CI
 
 if [ ! $(env | grep TRAVIS_JOB_ID ) ] ; then

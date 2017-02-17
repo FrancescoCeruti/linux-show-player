@@ -4,9 +4,9 @@
 # We need Python >= 3.5 to build the AppImage (pyenv can solve this)
 ########################################################################
 # curl -L https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer | bash
-# pyenv install 3.5.3
 # export PATH="~/.pyenv/bin:$PATH"
 # eval "$(pyenv init -)"
+# pyenv install 3.5.3
 # pyenv global 3.5.3
 
 # TODO:
@@ -19,7 +19,7 @@ echo -en "\ec"
 # Exit on error
 set -e
 # Enable verbose shell output
-set -vx
+set -x
 # Allow to use ldconfig under Debian Jessie
 export PATH="/sbin:$PATH"
 
@@ -177,11 +177,9 @@ cd ../$APP.AppDir
 find ../debs/ -name *deb -exec dpkg -x {} . \;
 
 # Bundle dependencies
-set +x
 copy_deps
 delete_blacklisted
 move_lib
-set -x
 
 ########################################################################
 # Workarounds/Patches
