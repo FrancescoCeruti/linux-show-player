@@ -7,5 +7,6 @@ curl -L https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-
 export PATH="~/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"
 #eval "$(pyenv virtualenv-init -)"
+pyenv update
 pyenv install 3.5.3
 pyenv global 3.5.3
