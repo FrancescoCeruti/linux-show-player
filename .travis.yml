@@ -1,0 +1,34 @@
+sudo: required
+dist: trusty
+addons:
+  apt:
+    packages:
+    - wget
+    - curl
+    - squashfs-tools
+
+before_install:
+  - sudo apt-get update
+
+install:
+- bash -e ./.travis_install.sh
+
+script:
+- bash -e ./.travis_run.sh
+
+after_success:
+  - ls -lh out/*
+  - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
+  - bash -e ./upload.sh out/*
+
+branches:
+  only:
+  - master
+
+#notifications:
+#  webhooks:
+#    urls:
+#      - https://webhooks.gitter.im/e/
+#    on_success: always  # options: [always|never|change] default: always
+#    on_failure: always  # options: [always|never|change] default: always
+#    on_start: always     # options: [always|never|change] default: always

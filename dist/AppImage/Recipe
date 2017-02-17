@@ -1,11 +1,16 @@
 #!/usr/bin/env bash
 
 ########################################################################
-# We need Python >= 3.5 to build the AppImage (Ubuntu 16.04)
+# We need Python >= 3.5 to build the AppImage (pyenv can solve this)
 ########################################################################
+# curl -L https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer | bash
+# pyenv install 3.5.3
+# export PATH="~/.pyenv/bin:$PATH"
+# eval "$(pyenv init -)"
+# pyenv global 3.5.3
 
 # TODO:
-# - 
+# -
 # FIXME:
 # - No "jack" library on Fedora 24
 
@@ -15,13 +20,15 @@ echo -en "\ec"
 set -e
 # Enable verbose shell output
 set -vx
+# Allow to use ldconfig under Debian Jessie
+export PATH="/sbin:$PATH"
 
 ########################################################################
 # Create the AppDir
 ########################################################################
 
 APP="LinuxShowPlayer"
-LOWERAPP=${APP,,} 
+LOWERAPP=${APP,,}
 
 if [ -d $APP/$APP.AppDir/ ]; then
     rm -r $APP/$APP.AppDir/
@@ -49,7 +56,7 @@ pip3 install --user protobuf
 # Source some helper functions
 ########################################################################
 
-wget -nc -c "https://github.com/probonopd/AppImages/raw/master/functions.sh"
+wget -c "https://github.com/probonopd/AppImages/raw/master/functions.sh"
 . ./functions.sh
 
 ########################################################################
@@ -69,19 +76,25 @@ wget -c $DLD -O $ARCHIVE
 # Get the dependencies
 ########################################################################
 
-# Get .deb(s)
-mkdir -p debs
-cd debs
-apt-get download python3-gi libglib2.0-0 libgstreamer1.0-0 gstreamer1.0-plugins-base \
-  gstreamer1.0-plugins-good gstreamer1.0-plugins-ugly gstreamer1.0-plugins-bad gstreamer1.0-alsa \
-  gstreamer1.0-pulseaudio gstreamer1.0-libav gstreamer1.0-fluendo-mp3 gir1.2-gstreamer-1.0 \
-  gir1.2-gst-plugins-base-1.0 gir1.2-glib-2.0 libportmidi0 alsa-utils libasound2 libpulse0
-cd ..
-
 # Get OLA
 OLA_VERSION="0.10.3"
 OLA_FILE="ola-"$OLA_VERSION
 wget -nc -c "https://github.com/OpenLightingProject/ola/releases/download/"$OLA_VERSION"/"$OLA_FILE".tar.gz"
+
+# We need to re-compile PyGObject aganist our python version (may become unecessary in future)
+# Get PyGObject
+apt-get source python3-gi
+# To be able to compile it we need to install some build-dependecies
+sudo apt-get build-dep python3-gi
+
+# Get .deb(s)
+mkdir -p debs
+cd debs
+apt-get download libglib2.0-0 libgstreamer1.0-0 gstreamer1.0-plugins-base libgirepository-1.0-1 \
+  gstreamer1.0-plugins-good gstreamer1.0-plugins-ugly gstreamer1.0-plugins-bad gstreamer1.0-alsa \
+  gstreamer1.0-pulseaudio gstreamer1.0-libav gstreamer1.0-fluendo-mp3 gir1.2-gstreamer-1.0 \
+  gir1.2-gst-plugins-base-1.0 gir1.2-glib-2.0 libportmidi0 alsa-utils libasound2 libpulse0 libffi6
+cd ..
 
 ########################################################################
 # Create a virtualenv inside the AppDir
@@ -121,8 +134,10 @@ sed -i -e 's|USER_SITE = None|USER_SITE = ""|g' $APP_PYLIB"/site.py"
 
 # Activate the virtualenv
 source usr/bin/activate
+# Install the last version of pip & setuptools
+pip3 install -U pip setuptools
 # Install the application and it's dependencies
-pip install PyQt5 protobuf ../$ARCHIVE
+pip3 install PyQt5 protobuf ../$ARCHIVE
 # Deactivate the virtualenv
 deactivate
 
@@ -146,6 +161,16 @@ rm python/ola/rpc/Makefile.mk || true
 rm python/ola/rpc/*Test.py || true
 # copy the python client
 cp -r python/ola ../$APP.AppDir/$APP_PYLIB/site-packages/
+cd ..
+
+# Build & Install PyGObject
+cd pygobject-3*
+# configure
+./configure --disable-cairo --disable-glibtest
+# build
+make
+# "install"
+cp -r gi ../$APP.AppDir/$APP_PYLIB/site-packages/
 cd ../$APP.AppDir
 
 # Install from deb packages
@@ -180,10 +205,9 @@ linux-show-player-origin \$@
 EOF
 chmod +x usr/bin/linux-show-player
 
-# Move nested libs
-mv usr/lib/x86_64-linux-gnu/mesa-egl/* usr/lib/ # Otherwise Fedora cannot load the Qt platform plugin "xcb"
-rm -r usr/lib/x86_64-linux-gnu/mesa-egl/
+cp $(ldconfig -p | grep libEGL.so.1 | cut -d ">" -f 2 | xargs) ./usr/lib/ # Otherwise Fedora cannot load the Qt platform plugin "xcb"
 
+# Move nested libs
 mv usr/lib/x86_64-linux-gnu/pulseaudio/* usr/lib/x86_64-linux-gnu/ # Otherwise cannot find libpulsecommon-<version>.so
 rm -r usr/lib/x86_64-linux-gnu/pulseaudio/
 
@@ -191,12 +215,13 @@ mv usr/lib/x86_64-linux-gnu/girepository-1.0/* usr/lib/girepository-1.0/ || true
 rm -r usr/lib/x86_64-linux-gnu/girepository-1.0 || true
 
 # Remove some "garbage"
-rm -r ./home || true
+#rm -r ./home || true
 rm -r ./var || true
 rm -r ./etc || true
 rm -r usr/lib/udev/ || true
 rm -r usr/lib/systemd/ || true
 rm -r usr/lib/x86_64-linux-gnu/mesa/ || true
+rm -r usr/lib/x86_64-linux-gnu/mesa-egl/ || true
 rm -r usr/lib/x86_64-linux-gnu/gio/ || true
 rm -r usr/share/alsa || true
 rm -r usr/share/doc || true
@@ -214,7 +239,8 @@ cd ..
 
 # Extract the archive
 ARCHIVE_CONT="linux-show-player-content"
-mkdir $ARCHIVE_CONT && tar zxf $ARCHIVE -C $ARCHIVE_CONT --strip-components 1
+mkdir -p $ARCHIVE_CONT
+tar zxf $ARCHIVE -C $ARCHIVE_CONT --strip-components 1
 
 # Copy icons/mime
 MIME_DIR="$APP.AppDir/usr/share/mime"
