@@ -13,7 +13,7 @@ addons:
     - squashfs-tools
 
 before_install:
-  - sudo apt-get update
+  - sudo apt-get update -qq || true
 
 install:
 - bash -ex ./.travis_install.sh

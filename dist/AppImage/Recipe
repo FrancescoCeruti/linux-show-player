@@ -41,7 +41,7 @@ cd $APP/
 # Get Build dependencies (and virtualenv)
 ########################################################################
 
-sudo apt-get update
+sudo apt-get update || true
 sudo apt-get -y install build-essential python3-dev libffi-dev libportmidi-dev libasound2-dev \
    libjack-jackd2-dev bison flex libcppunit-dev bison flex uuid-dev libprotobuf-dev protobuf-compiler \
    libprotoc-dev libncurses5-dev python3-virtualenv virtualenv python3-pip python3-setuptools \
