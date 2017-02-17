@@ -1,3 +1,8 @@
+cache:
+  directories:
+  - "$HOME/.cache/pip"
+  - "$HOME/.pyenv"
+
 sudo: required
 dist: trusty
 addons:
@@ -11,20 +16,19 @@ before_install:
   - sudo apt-get update
 
 install:
- - echo `python3 -V | cut -d' ' -f2 | cut -d'.' -f1,2`
- - bash -ex ./.travis_install.sh
+- bash -ex ./.travis_install.sh
 
 script:
- - bash -ex ./.travis_run.sh
+- bash -ex ./.travis_run.sh
 
 after_success:
-  - ls -lh out/*
-  - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
-  - bash -ex ./upload.sh out/*
+- ls -lh out/*
+- wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
+- bash -ex ./upload.sh out/*
 
 branches:
   only:
-   - master
+  - master
 
 #notifications:
 #  webhooks:
