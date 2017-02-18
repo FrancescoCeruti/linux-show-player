@@ -3,11 +3,19 @@
 ########################################################################
 # We need Python >= 3.5 to build the AppImage (pyenv can solve this)
 ########################################################################
-# curl -L https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer | bash
-# export PATH="~/.pyenv/bin:$PATH"
-# eval "$(pyenv init -)"
-# pyenv install 3.5.3
-# pyenv global 3.5.3
+# If the python3 version is < 3.5
+if [ `python3 -c 'import sys; print(sys.version_info.major >= 3 and sys.version_info.minor >= 5)'` = "False" ];
+then
+    # Install and initialize pyenv
+    curl -L https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer | bash
+    export PYENV_ROOT="$HOME/.pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init -)"
+    #eval "$(pyenv virtualenv-init -)"
+    #pyenv install --list
+    pyenv install -s 3.5.3
+    pyenv global 3.5.3
+fi
 
 # TODO:
 # -
@@ -31,7 +39,7 @@ APP="LinuxShowPlayer"
 LOWERAPP=${APP,,}
 
 if [ -d $APP/$APP.AppDir/ ]; then
-    rm -r $APP/$APP.AppDir/
+    rm -rf $APP/$APP.AppDir/
 fi
 
 mkdir -p $APP/$APP.AppDir/
@@ -41,22 +49,19 @@ cd $APP/
 # Get Build dependencies (and virtualenv)
 ########################################################################
 
-sudo apt-get update || true
+sudo apt-get update -qq || true
 sudo apt-get -y install build-essential python3-dev libffi-dev libportmidi-dev libasound2-dev \
    libjack-jackd2-dev bison flex libcppunit-dev bison flex uuid-dev libprotobuf-dev protobuf-compiler \
-   libprotoc-dev libncurses5-dev python3-virtualenv virtualenv python3-pip python3-setuptools \
-   autoconf libtool
+   libprotoc-dev libncurses5-dev autoconf libtool python3-setuptools python3-pip virtualenv
 
-# Upgrade pip to the last version
-pip3 install --user --upgrade pip
-# Install python-protobuf via pip3 because on Ubuntu 16.04 is not available for python3
+# Install some via pip
 pip3 install --user protobuf
 
 ########################################################################
 # Source some helper functions
 ########################################################################
 
-wget -c "https://github.com/probonopd/AppImages/raw/master/functions.sh"
+wget "https://github.com/probonopd/AppImages/raw/master/functions.sh"
 . ./functions.sh
 
 ########################################################################
@@ -64,13 +69,18 @@ wget -c "https://github.com/probonopd/AppImages/raw/master/functions.sh"
 ########################################################################
 
 REPO="FrancescoCeruti/linux-show-player"
-#VERSION=$(wget -q "https://api.github.com/repos/$REPO/releases/latest"  -O - | grep -E "tag_name" | cut -d'"' -f4)
-VERSION="master"
+if [ -z "$1" ]; then
+    VERSION="master"
+elif [ "$1" = "latest" ]; then
+    VERSION=$(wget -q "https://api.github.com/repos/$REPO/releases/latest"  -O - | grep -E "tag_name" | cut -d'"' -f4)
+else
+    VERSION="$1"
+fi
 DLD="https://github.com/$REPO/archive/"$VERSION".tar.gz"
 ARCHIVE="linux-show-player-"$VERSION".tar.gz"
 
 # Download in the "$APP" directory
-wget -c $DLD -O $ARCHIVE
+wget $DLD -O $ARCHIVE
 
 ########################################################################
 # Get the dependencies
@@ -137,7 +147,7 @@ source usr/bin/activate
 # Install the last version of pip & setuptools
 pip3 install -U pip setuptools
 # Install the application and it's dependencies
-pip3 install PyQt5 protobuf ../$ARCHIVE
+pip3 install PyQt5==5.7.1 protobuf ../$ARCHIVE
 # Deactivate the virtualenv
 deactivate
 
@@ -177,9 +187,11 @@ cd ../$APP.AppDir
 find ../debs/ -name *deb -exec dpkg -x {} . \;
 
 # Bundle dependencies
+set +x
 copy_deps
 delete_blacklisted
 move_lib
+set -x
 
 ########################################################################
 # Workarounds/Patches
@@ -203,31 +215,36 @@ linux-show-player-origin \$@
 EOF
 chmod +x usr/bin/linux-show-player
 
-cp $(ldconfig -p | grep libEGL.so.1 | cut -d ">" -f 2 | xargs) ./usr/lib/ # Otherwise Fedora cannot load the Qt platform plugin "xcb"
+# Otherwise Fedora cannot load the Qt platform plugin "xcb"
+cp $(ldconfig -p | grep libEGL.so.1 | cut -d ">" -f 2 | xargs) ./usr/lib/
 
-# Move nested libs
-mv usr/lib/x86_64-linux-gnu/pulseaudio/* usr/lib/x86_64-linux-gnu/ # Otherwise cannot find libpulsecommon-<version>.so
-rm -r usr/lib/x86_64-linux-gnu/pulseaudio/
+# Include libstdc++ so that the AppImage can work on older systems (test)
+cp $(ldconfig -p | grep libstdc++.so | cut -d ">" -f 2 | xargs) ./usr/lib/
 
-mv usr/lib/x86_64-linux-gnu/girepository-1.0/* usr/lib/girepository-1.0/ || true # Allow GI_TYPELIB_PATH to point a single location
-rm -r usr/lib/x86_64-linux-gnu/girepository-1.0 || true
+# move libpulsecommon-<version>.so to the parent directory
+mv usr/lib/x86_64-linux-gnu/pulseaudio/* usr/lib/x86_64-linux-gnu/
+rm -rf usr/lib/x86_64-linux-gnu/pulseaudio/
+
+# make sure that GI_TYPELIB_PATH point to the right directory (some distro put gir files in different locations)
+mv usr/lib/x86_64-linux-gnu/girepository-1.0/* usr/lib/girepository-1.0/ || true
+rm -rf usr/lib/x86_64-linux-gnu/girepository-1.0 || true
 
 # Remove some "garbage"
-#rm -r ./home || true
-rm -r ./var || true
-rm -r ./etc || true
-rm -r usr/lib/udev/ || true
-rm -r usr/lib/systemd/ || true
-rm -r usr/lib/x86_64-linux-gnu/mesa/ || true
-rm -r usr/lib/x86_64-linux-gnu/mesa-egl/ || true
-rm -r usr/lib/x86_64-linux-gnu/gio/ || true
-rm -r usr/share/alsa || true
-rm -r usr/share/doc || true
-rm -r usr/share/glib-2.0 || true
-rm -r usr/share/lintian || true
-rm -r usr/share/man || true
-rm -r usr/share/python-wheels || true
-rm -r usr/share/sounds || true
+rm -rf ./home || true
+rm -rf ./var || true
+rm -rf ./etc || true
+rm -rf usr/lib/udev/ || true
+rm -rf usr/lib/systemd/ || true
+rm -rf usr/lib/x86_64-linux-gnu/mesa/ || true
+rm -rf usr/lib/x86_64-linux-gnu/mesa-egl/ || true
+rm -rf usr/lib/x86_64-linux-gnu/gio/ || true
+rm -rf usr/share/alsa || true
+rm -rf usr/share/doc || true
+rm -rf usr/share/lintian || true
+rm -rf usr/share/man || true
+rm -rf usr/share/python-wheels || true
+rm -rf usr/lib/python-wheels || true
+rm -rf usr/share/sounds || true
 
 ########################################################################
 # Finalize the AppDir
@@ -278,4 +295,3 @@ generate_type2_appimage
 
 # To check libraries opened from the base system
 #strace -e open -f ./AppRun 2>&1 | grep '("/usr/lib/' | grep so
-
