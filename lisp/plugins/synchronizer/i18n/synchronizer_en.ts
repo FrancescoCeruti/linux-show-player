@@ -1,56 +1,55 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="en" version="2.0">
 <context>
     <name>SyncPeerDialog</name>
     <message>
-        <location filename="../peers_dialog.py" line="80"/>
+        <location filename="../peers_dialog.py" line="81"/>
         <source>Manage connected peers</source>
-        <translation type="unfinished"></translation>
+        <translation>Manage connected peers</translation>
     </message>
     <message>
-        <location filename="../peers_dialog.py" line="82"/>
+        <location filename="../peers_dialog.py" line="83"/>
         <source>Discover peers</source>
-        <translation type="unfinished"></translation>
+        <translation>Discover peers</translation>
     </message>
     <message>
-        <location filename="../peers_dialog.py" line="84"/>
+        <location filename="../peers_dialog.py" line="85"/>
         <source>Manually add a peer</source>
-        <translation type="unfinished"></translation>
+        <translation>Manually add a peer</translation>
     </message>
     <message>
-        <location filename="../peers_dialog.py" line="86"/>
+        <location filename="../peers_dialog.py" line="87"/>
         <source>Remove selected peer</source>
-        <translation type="unfinished"></translation>
+        <translation>Remove selected peer</translation>
     </message>
     <message>
-        <location filename="../peers_dialog.py" line="88"/>
+        <location filename="../peers_dialog.py" line="89"/>
         <source>Remove all peers</source>
-        <translation type="unfinished"></translation>
+        <translation>Remove all peers</translation>
     </message>
     <message>
-        <location filename="../peers_dialog.py" line="92"/>
+        <location filename="../peers_dialog.py" line="93"/>
         <source>Address</source>
-        <translation type="unfinished"></translation>
+        <translation>Address</translation>
     </message>
     <message>
-        <location filename="../peers_dialog.py" line="92"/>
+        <location filename="../peers_dialog.py" line="93"/>
         <source>Peer IP</source>
-        <translation type="unfinished"></translation>
+        <translation>Peer IP</translation>
     </message>
     <message>
-        <location filename="../peers_dialog.py" line="104"/>
+        <location filename="../peers_dialog.py" line="105"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Error</translation>
     </message>
     <message>
-        <location filename="../peers_dialog.py" line="104"/>
+        <location filename="../peers_dialog.py" line="105"/>
         <source>Already connected</source>
-        <translation type="unfinished"></translation>
+        <translation>Already connected</translation>
     </message>
     <message>
-        <location filename="../peers_dialog.py" line="115"/>
+        <location filename="../peers_dialog.py" line="116"/>
         <source>Cannot add peer</source>
-        <translation type="unfinished"></translation>
+        <translation>Cannot add peer</translation>
     </message>
 </context>
 <context>
@@ -58,27 +57,27 @@
     <message>
         <location filename="../synchronizer.py" line="38"/>
         <source>Synchronization</source>
-        <translation type="unfinished"></translation>
+        <translation>Synchronization</translation>
     </message>
     <message>
         <location filename="../synchronizer.py" line="41"/>
         <source>Manage connected peers</source>
-        <translation type="unfinished"></translation>
+        <translation>Manage connected peers</translation>
     </message>
     <message>
         <location filename="../synchronizer.py" line="46"/>
         <source>Show your IP</source>
-        <translation type="unfinished"></translation>
+        <translation>Show your IP</translation>
     </message>
     <message>
         <location filename="../synchronizer.py" line="63"/>
         <source>Your IP is:</source>
-        <translation type="unfinished"></translation>
+        <translation>Your IP is:</translation>
     </message>
     <message>
         <location filename="../peers_discovery_dialog.py" line="55"/>
         <source>Discovering peers ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Discovering peers ...</translation>
     </message>
 </context>
 </TS>

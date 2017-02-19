@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2017 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,12 +19,13 @@
 
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QLabel, QComboBox,\
-    QVBoxLayout, QDoubleSpinBox, QTabWidget, QWidget, QGridLayout
+    QVBoxLayout, QDoubleSpinBox, QTabWidget, QWidget
 
 from lisp.cues.cue import CueNextAction, CueAction
 from lisp.ui.settings.settings_page import CueSettingsPage
 from lisp.ui.ui_utils import translate
 from lisp.ui.widgets import FadeComboBox
+from lisp.ui.widgets.fade_edit import FadeEdit
 
 
 class CueGeneralSettings(CueSettingsPage):
@@ -49,8 +50,10 @@ class CueGeneralSettings(CueSettingsPage):
 
         self.startActionCombo = QComboBox(self.startActionGroup)
         for action in [CueAction.Start, CueAction.FadeInStart]:
-            self.startActionCombo.addItem(
-                translate('CueAction', action.name), action.value)
+            if action in cue_class.CueActions:
+                self.startActionCombo.addItem(
+                    translate('CueAction', action.name), action.value)
+        self.startActionCombo.setEnabled(self.startActionCombo.count() > 1)
         self.startActionGroup.layout().addWidget(self.startActionCombo)
 
         self.startActionLabel = QLabel(self.startActionGroup)
@@ -65,8 +68,10 @@ class CueGeneralSettings(CueSettingsPage):
         self.stopActionCombo = QComboBox(self.stopActionGroup)
         for action in [CueAction.Stop, CueAction.Pause,
                        CueAction.FadeOutStop, CueAction.FadeOutPause]:
-            self.stopActionCombo.addItem(
-                translate('CueAction', action.name), action.value)
+            if action in cue_class.CueActions:
+                self.stopActionCombo.addItem(
+                    translate('CueAction', action.name), action.value)
+        self.stopActionCombo.setEnabled(self.stopActionCombo.count() > 1)
         self.stopActionGroup.layout().addWidget(self.stopActionCombo)
 
         self.stopActionLabel = QLabel(self.stopActionGroup)
@@ -74,6 +79,8 @@ class CueGeneralSettings(CueSettingsPage):
         self.stopActionGroup.layout().addWidget(self.stopActionLabel)
 
         self.tab_1.layout().addSpacing(150)
+        self.tab_1.setEnabled(self.stopActionCombo.isEnabled() and
+                              self.startActionCombo.isEnabled())
 
         # TAB 2 (Pre/Post Wait)
         self.tab_2 = QWidget(self.tabWidget)
@@ -122,54 +129,30 @@ class CueGeneralSettings(CueSettingsPage):
         self.tab_3.setLayout(QVBoxLayout())
         self.tabWidget.addTab(self.tab_3, '3')
 
-        # FadeInType
+        # FadeIn
         self.fadeInGroup = QGroupBox(self.tab_3)
         self.fadeInGroup.setEnabled(
             CueAction.FadeInStart in cue_class.CueActions
         )
-        self.fadeInGroup.setLayout(QGridLayout())
+        self.fadeInGroup.setLayout(QHBoxLayout())
         self.tab_3.layout().addWidget(self.fadeInGroup)
 
-        self.fadeInDurationSpin = QDoubleSpinBox(self.fadeInGroup)
-        self.fadeInDurationSpin.setMaximum(3600)
-        self.fadeInGroup.layout().addWidget(self.fadeInDurationSpin, 0, 0)
+        self.fadeInEdit = FadeEdit(self.fadeInGroup,
+                                   mode=FadeComboBox.Mode.FadeIn)
+        self.fadeInGroup.layout().addWidget(self.fadeInEdit)
 
-        self.fadeInLabel = QLabel(self.fadeInGroup)
-        self.fadeInLabel.setAlignment(Qt.AlignCenter)
-        self.fadeInGroup.layout().addWidget(self.fadeInLabel, 0, 1)
-
-        self.fadeInTypeCombo = FadeComboBox(mode=FadeComboBox.Mode.FadeIn,
-                                            parent=self.fadeInGroup)
-        self.fadeInGroup.layout().addWidget(self.fadeInTypeCombo, 1, 0)
-
-        self.fadeInTypeLabel = QLabel(self.fadeInGroup)
-        self.fadeInTypeLabel.setAlignment(Qt.AlignCenter)
-        self.fadeInGroup.layout().addWidget(self.fadeInTypeLabel, 1, 1)
-
-        # FadeOutType
+        # FadeOut
         self.fadeOutGroup = QGroupBox(self.tab_3)
         self.fadeOutGroup.setEnabled(
             CueAction.FadeOutPause in cue_class.CueActions or
             CueAction.FadeOutStop in cue_class.CueActions
         )
-        self.fadeOutGroup.setLayout(QGridLayout())
+        self.fadeOutGroup.setLayout(QHBoxLayout())
         self.tab_3.layout().addWidget(self.fadeOutGroup)
 
-        self.fadeOutDurationSpin = QDoubleSpinBox(self.fadeOutGroup)
-        self.fadeOutDurationSpin.setMaximum(3600)
-        self.fadeOutGroup.layout().addWidget(self.fadeOutDurationSpin, 0, 0)
-
-        self.fadeOutLabel = QLabel(self.fadeOutGroup)
-        self.fadeOutLabel.setAlignment(Qt.AlignCenter)
-        self.fadeOutGroup.layout().addWidget(self.fadeOutLabel, 0, 1)
-
-        self.fadeOutTypeCombo = FadeComboBox(mode=FadeComboBox.Mode.FadeOut,
-                                             parent=self.fadeOutGroup)
-        self.fadeOutGroup.layout().addWidget(self.fadeOutTypeCombo, 1, 0)
-
-        self.fadeOutTypeLabel = QLabel(self.fadeOutGroup)
-        self.fadeOutTypeLabel.setAlignment(Qt.AlignCenter)
-        self.fadeOutGroup.layout().addWidget(self.fadeOutTypeLabel, 1, 1)
+        self.fadeOutEdit = FadeEdit(self.fadeOutGroup,
+                                    mode=FadeComboBox.Mode.FadeOut)
+        self.fadeOutGroup.layout().addWidget(self.fadeOutEdit)
 
         self.retranslateUi()
 
@@ -201,14 +184,9 @@ class CueGeneralSettings(CueSettingsPage):
         # NextAction
         self.nextActionGroup.setTitle(translate('CueSettings', 'Next action'))
 
-        # FadeIn
+        # FadeIn/Out
         self.fadeInGroup.setTitle(translate('FadeSettings', 'Fade In'))
-        self.fadeInLabel.setText(translate('FadeSettings', 'Duration (sec)'))
-        self.fadeInTypeLabel.setText(translate('FadeSettings', 'Curve'))
-        # FadeOut
         self.fadeOutGroup.setTitle(translate('FadeSettings', 'Fade Out'))
-        self.fadeOutLabel.setText(translate('FadeSettings', 'Duration (sec)'))
-        self.fadeOutTypeLabel.setText(translate('FadeSettings', 'Curve'))
 
     def load_settings(self, settings):
         self.startActionCombo.setCurrentText(
@@ -221,10 +199,10 @@ class CueGeneralSettings(CueSettingsPage):
         self.nextActionCombo.setCurrentText(
             translate('CueNextAction', settings.get('next_action', '')))
 
-        self.fadeInTypeCombo.setCurrentType(settings.get('fadein_type', ''))
-        self.fadeInDurationSpin.setValue(settings.get('fadein_duration', 0))
-        self.fadeOutTypeCombo.setCurrentType(settings.get('fadeout_type', ''))
-        self.fadeOutDurationSpin.setValue(settings.get('fadeout_duration', 0))
+        self.fadeInEdit.setFadeType(settings.get('fadein_type', ''))
+        self.fadeInEdit.setDuration(settings.get('fadein_duration', 0))
+        self.fadeOutEdit.setFadeType(settings.get('fadeout_type', ''))
+        self.fadeOutEdit.setDuration(settings.get('fadeout_duration', 0))
 
     def enable_check(self, enable):
         self.startActionGroup.setCheckable(enable)
@@ -249,9 +227,11 @@ class CueGeneralSettings(CueSettingsPage):
         checkable = self.preWaitGroup.isCheckable()
 
         if not (checkable and not self.startActionGroup.isChecked()):
-            conf['default_start_action'] = self.startActionCombo.currentData()
+            if self.startActionCombo.isEnabled():
+                conf['default_start_action'] = self.startActionCombo.currentData()
         if not (checkable and not self.stopActionGroup.isChecked()):
-            conf['default_stop_action'] = self.stopActionCombo.currentData()
+            if self.stopActionCombo.isEnabled():
+                conf['default_stop_action'] = self.stopActionCombo.currentData()
 
         if not (checkable and not self.preWaitGroup.isChecked()):
             conf['pre_wait'] = self.preWaitSpin.value()
@@ -261,10 +241,10 @@ class CueGeneralSettings(CueSettingsPage):
             conf['next_action'] = self.nextActionCombo.currentData()
 
         if not (checkable and not self.fadeInGroup.isChecked()):
-            conf['fadein_type'] = self.fadeInTypeCombo.currentType()
-            conf['fadein_duration'] = self.fadeInDurationSpin.value()
+            conf['fadein_type'] = self.fadeInEdit.fadeType()
+            conf['fadein_duration'] = self.fadeInEdit.duration()
         if not (checkable and not self.fadeInGroup.isChecked()):
-            conf['fadeout_type'] = self.fadeInTypeCombo.currentType()
-            conf['fadeout_duration'] = self.fadeOutDurationSpin.value()
+            conf['fadeout_type'] = self.fadeOutEdit.fadeType()
+            conf['fadeout_duration'] = self.fadeOutEdit.duration()
 
         return conf

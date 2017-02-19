@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="it" sourcelanguage="">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="it" version="2.0">
 <context>
     <name>AlsaSinkSettings</name>
     <message>
@@ -116,44 +115,6 @@
     </message>
 </context>
 <context>
-    <name>FadeSettings</name>
-    <message>
-        <location filename="../settings/fade.py" line="35"/>
-        <source>Linear</source>
-        <translation>Lineare</translation>
-    </message>
-    <message>
-        <location filename="../settings/fade.py" line="37"/>
-        <source>Quadratic</source>
-        <translation>Quadratico</translation>
-    </message>
-    <message>
-        <location filename="../settings/fade.py" line="39"/>
-        <source>Quadratic2</source>
-        <translation>Quadratico 2</translation>
-    </message>
-    <message>
-        <location filename="../settings/fade.py" line="107"/>
-        <source>Fade In</source>
-        <translation>Dissolvenza Ingresso</translation>
-    </message>
-    <message>
-        <location filename="../settings/fade.py" line="111"/>
-        <source>Duration (sec)</source>
-        <translation>Durata (sec)</translation>
-    </message>
-    <message>
-        <location filename="../settings/fade.py" line="112"/>
-        <source>Curve</source>
-        <translation>Curva</translation>
-    </message>
-    <message>
-        <location filename="../settings/fade.py" line="110"/>
-        <source>Fade Out</source>
-        <translation>Dissolvenza Uscita</translation>
-    </message>
-</context>
-<context>
     <name>GstMediaSettings</name>
     <message>
         <location filename="../gst_media_settings.py" line="47"/>
@@ -180,42 +141,32 @@
 <context>
     <name>JackSinkSettings</name>
     <message>
-        <location filename="../settings/jack_sink.py" line="68"/>
-        <source>Name of the server to connect with</source>
-        <translation>Nome del server con cui connettersi</translation>
-    </message>
-    <message>
-        <location filename="../settings/jack_sink.py" line="70"/>
-        <source>Server name</source>
-        <translation>Nome server</translation>
-    </message>
-    <message>
-        <location filename="../settings/jack_sink.py" line="71"/>
+        <location filename="../settings/jack_sink.py" line="55"/>
         <source>Connections</source>
         <translation>Connessioni</translation>
     </message>
     <message>
-        <location filename="../settings/jack_sink.py" line="73"/>
+        <location filename="../settings/jack_sink.py" line="56"/>
         <source>Edit connections</source>
         <translation>Modifica connessioni</translation>
     </message>
     <message>
-        <location filename="../settings/jack_sink.py" line="267"/>
+        <location filename="../settings/jack_sink.py" line="242"/>
         <source>Output ports</source>
         <translation>Uscite</translation>
     </message>
     <message>
-        <location filename="../settings/jack_sink.py" line="269"/>
+        <location filename="../settings/jack_sink.py" line="244"/>
         <source>Input ports</source>
         <translation>Ingressi</translation>
     </message>
     <message>
-        <location filename="../settings/jack_sink.py" line="325"/>
+        <location filename="../settings/jack_sink.py" line="300"/>
         <source>Connect</source>
         <translation>Connetti</translation>
     </message>
     <message>
-        <location filename="../settings/jack_sink.py" line="321"/>
+        <location filename="../settings/jack_sink.py" line="296"/>
         <source>Disconnect</source>
         <translation>Disconnetti</translation>
     </message>
@@ -258,7 +209,7 @@
         <translation>Uscita ALSA</translation>
     </message>
     <message>
-        <location filename="../elements/jack_sink.py" line="32"/>
+        <location filename="../elements/jack_sink.py" line="33"/>
         <source>JACK Out</source>
         <translation>Uscita JACK</translation>
     </message>
@@ -286,11 +237,6 @@
         <location filename="../elements/equalizer10.py" line="30"/>
         <source>10 Bands Equalizer</source>
         <translation>Equalizzatore 10 bande</translation>
-    </message>
-    <message>
-        <location filename="../elements/fade.py" line="37"/>
-        <source>Fade</source>
-        <translation>Dissolvenza</translation>
     </message>
     <message>
         <location filename="../elements/speed.py" line="31"/>

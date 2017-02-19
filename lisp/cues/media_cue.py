@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2017 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,11 +17,12 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+from threading import Lock
+
 from PyQt5.QtCore import QT_TRANSLATE_NOOP
 
 from lisp.core.configuration import config
 from lisp.core.decorators import async
-
 from lisp.core.fade_functions import FadeInType, FadeOutType
 from lisp.core.fader import Fader
 from lisp.core.has_properties import NestedProperties
@@ -35,8 +36,8 @@ class MediaCue(Cue):
 
     CueActions = (CueAction.Default, CueAction.Start, CueAction.FadeInStart,
                   CueAction.Stop, CueAction.FadeOutStop, CueAction.Pause,
-                  CueAction.FadeOutPause, CueAction.Interrupt,
-                  CueAction.FadeOutInterrupt)
+                  CueAction.FadeOut, CueAction.FadeIn, CueAction.FadeOutPause,
+                  CueAction.Interrupt, CueAction.FadeOutInterrupt)
 
     def __init__(self, media, id=None):
         super().__init__(id=id)
@@ -54,19 +55,19 @@ class MediaCue(Cue):
 
         self.__volume = self.media.element('Volume')
         self.__fader = Fader(self.__volume, 'current_volume')
+        self.__fade_lock = Lock()
 
     def __elements_changed(self):
         self.__volume = self.media.element('Volume')
         self.__fader.target = self.__volume
 
     def __start__(self, fade=False):
-        if fade and self._can_fadein():
+        if fade and self._can_fade(self.fadein_duration):
             self.__volume.current_volume = 0
 
         self.media.play()
-
         if fade:
-            self._fadein()
+            self._on_start_fade()
 
         return True
 
@@ -77,8 +78,12 @@ class MediaCue(Cue):
             if self.__in_fadein:
                 self.__fader.stop()
 
-            if self._state & CueState.Running and fade and not self._fadeout():
-                return False
+            if self._state & CueState.Running and fade:
+                self._st_lock.release()
+                ended = self._on_stop_fade()
+                self._st_lock.acquire()
+                if not ended:
+                    return False
 
         self.media.stop()
         return True
@@ -90,8 +95,12 @@ class MediaCue(Cue):
             if self.__in_fadein:
                 self.__fader.stop()
 
-            if fade and not self._fadeout():
-                return False
+            if fade:
+                self._st_lock.release()
+                ended = self._on_stop_fade()
+                self._st_lock.acquire()
+                if not ended:
+                    return False
 
         self.media.pause()
         return True
@@ -99,10 +108,76 @@ class MediaCue(Cue):
     def __interrupt__(self, fade=False):
         self.__fader.stop()
 
-        if fade:
-            self._fadeout(interrupt=True)
+        if self._state & CueState.Running and fade:
+            self._on_stop_fade(interrupt=True)
 
         self.media.interrupt()
+
+    @async
+    def fadein(self, duration, fade_type):
+        if not self._st_lock.acquire(timeout=0.1):
+            return
+
+        if self._state & CueState.Running:
+            self.__fader.stop()
+
+            if self.__volume is not None:
+                if duration <= 0:
+                    self.__volume.current_volume = self.__volume.volume
+                else:
+                    self._st_lock.release()
+                    self.__fadein(duration, self.__volume.volume, fade_type)
+                    return
+
+        self._st_lock.release()
+
+    @async
+    def fadeout(self, duration, fade_type):
+        if not self._st_lock.acquire(timeout=0.1):
+            return
+
+        if self._state & CueState.Running:
+            self.__fader.stop()
+
+            if self.__volume is not None:
+                if duration <= 0:
+                    self.__volume.current_volume = 0
+                else:
+                    self._st_lock.release()
+                    self.__fadeout(duration, 0, fade_type)
+                    return
+
+        self._st_lock.release()
+
+    def __fadein(self, duration, to_value, fade_type):
+        ended = True
+        if self._can_fade(duration):
+            with self.__fade_lock:
+                self.__in_fadein = True
+                self.fadein_start.emit()
+                try:
+                    self.__fader.prepare()
+                    ended = self.__fader.fade(duration, to_value, fade_type)
+                finally:
+                    self.__in_fadein = False
+                    self.fadein_end.emit()
+
+        return ended
+
+    def __fadeout(self, duration, to_value, fade_type):
+        ended = True
+        if self._can_fade(duration):
+            with self.__fade_lock:
+                self.__in_fadeout = True
+                self.fadeout_start.emit()
+                try:
+                    self.__fader.prepare()
+                    ended = self.__fader.fade(duration, to_value, fade_type)
+                finally:
+                    self.__in_fadeout = False
+                    self.fadeout_end.emit()
+
+        return ended
 
     def current_time(self):
         return self.media.current_time()
@@ -120,56 +195,22 @@ class MediaCue(Cue):
             self.__fader.stop()
             self._error(message, details)
 
-    def _can_fadein(self):
-        return self.__volume is not None and self.fadein_duration > 0
-
-    def _can_fadeout(self, interrupt=False):
-        if self.__volume is not None:
-            if interrupt:
-                try:
-                    return config['MediaCue'].getfloat('InterruptFade') > 0
-                except (KeyError, ValueError):
-                    return False
-            else:
-                return self.fadeout_duration > 0
-
-        return False
+    def _can_fade(self, duration):
+        return self.__volume is not None and duration > 0
 
     @async
-    def _fadein(self):
-        if self._can_fadein():
-            self.__in_fadein = True
-            self.fadein_start.emit()
-            try:
-                self.__fader.prepare()
-                self.__fader.fade(self.fadein_duration,
-                                  self.__volume.volume,
-                                  FadeInType[self.fadein_type])
-            finally:
-                self.__in_fadein = False
-                self.fadein_end.emit()
+    def _on_start_fade(self):
+        if self.__volume is not None:
+            self.__fadein(self.fadein_duration,
+                          self.__volume.volume,
+                          FadeInType[self.fadein_type])
 
-    def _fadeout(self, interrupt=False):
-        ended = True
-        if self._can_fadeout(interrupt):
-            self.__in_fadeout = True
-            self.fadeout_start.emit()
-            try:
-                self.__fader.prepare()
-                if not interrupt:
-                    self._st_lock.release()
-                    duration = self.fadeout_duration
-                    type = FadeOutType[self.fadeout_type]
-                else:
-                    duration = config['MediaCue'].getfloat('InterruptFade')
-                    type = FadeOutType[config['MediaCue']['InterruptFadeType']]
+    def _on_stop_fade(self, interrupt=False):
+        if interrupt:
+            duration = config['Cue'].getfloat('InterruptFade')
+            fade_type = config['Cue'].get('InterruptFadeType')
+        else:
+            duration = self.fadeout_duration
+            fade_type = self.fadeout_type
 
-                ended = self.__fader.fade(duration, 0, type)
-
-                if not interrupt:
-                    self._st_lock.acquire()
-            finally:
-                self.__in_fadeout = False
-                self.fadeout_end.emit()
-
-        return ended
+        return self.__fadeout(duration, 0, FadeOutType[fade_type])

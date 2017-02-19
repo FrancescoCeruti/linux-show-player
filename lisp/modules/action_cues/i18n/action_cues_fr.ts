@@ -2,22 +2,22 @@
 <context>
     <name>CollectionCue</name>
     <message>
-        <location filename="../collection_cue.py" line="77"/>
+        <location filename="../collection_cue.py" line="76"/>
         <source>Add</source>
         <translation>Ajouter</translation>
     </message>
     <message>
-        <location filename="../collection_cue.py" line="81"/>
+        <location filename="../collection_cue.py" line="80"/>
         <source>Remove</source>
         <translation>Retirer</translation>
     </message>
     <message>
-        <location filename="../collection_cue.py" line="144"/>
+        <location filename="../collection_cue.py" line="143"/>
         <source>Cue</source>
         <translation>Cue</translation>
     </message>
     <message>
-        <location filename="../collection_cue.py" line="144"/>
+        <location filename="../collection_cue.py" line="143"/>
         <source>Action</source>
         <translation>Action</translation>
     </message>
@@ -25,12 +25,12 @@
 <context>
     <name>CommandCue</name>
     <message>
-        <location filename="../command_cue.py" line="80"/>
+        <location filename="../command_cue.py" line="79"/>
         <source>Process ended with an error status.</source>
         <translation>Le process s&apos;est terminé par une erreur </translation>
     </message>
     <message>
-        <location filename="../command_cue.py" line="80"/>
+        <location filename="../command_cue.py" line="79"/>
         <source>Exit code: </source>
         <translation>Code de sortie :</translation>
     </message>
@@ -73,7 +73,7 @@
         <translation>Cue MIDI</translation>
     </message>
     <message>
-        <location filename="../volume_control.py" line="46"/>
+        <location filename="../volume_control.py" line="43"/>
         <source>Volume Control</source>
         <translation>Contrôle du Volume</translation>
     </message>
@@ -88,20 +88,48 @@
         <translation>Collection de cue</translation>
     </message>
     <message>
-        <location filename="../stop_all.py" line="31"/>
+        <location filename="../stop_all.py" line="33"/>
         <source>Stop-All</source>
         <translation>Tout arrêter</translation>
+    </message>
+    <message>
+        <location filename="../index_action_cue.py" line="33"/>
+        <source>Index Action</source>
+        <translation>Index d&apos;action</translation>
+    </message>
+</context>
+<context>
+    <name>IndexActionCue</name>
+    <message>
+        <location filename="../index_action_cue.py" line="94"/>
+        <source>Index</source>
+        <translation>Index</translation>
+    </message>
+    <message>
+        <location filename="../index_action_cue.py" line="95"/>
+        <source>Use a relative index</source>
+        <translation>Utiliser un index relatif</translation>
+    </message>
+    <message>
+        <location filename="../index_action_cue.py" line="97"/>
+        <source>Target index</source>
+        <translation>Index cible</translation>
+    </message>
+    <message>
+        <location filename="../index_action_cue.py" line="99"/>
+        <source>Action</source>
+        <translation>Action</translation>
     </message>
 </context>
 <context>
     <name>MIDICue</name>
     <message>
-        <location filename="../midi_cue.py" line="118"/>
+        <location filename="../midi_cue.py" line="116"/>
         <source>MIDI Message</source>
         <translation>Message MIDI</translation>
     </message>
     <message>
-        <location filename="../midi_cue.py" line="119"/>
+        <location filename="../midi_cue.py" line="117"/>
         <source>Message type</source>
         <translation>Type de message</translation>
     </message>
@@ -109,27 +137,27 @@
 <context>
     <name>SeekCue</name>
     <message>
-        <location filename="../seek_cue.py" line="95"/>
+        <location filename="../seek_cue.py" line="93"/>
         <source>Cue</source>
         <translation>Cue</translation>
     </message>
     <message>
-        <location filename="../seek_cue.py" line="96"/>
+        <location filename="../seek_cue.py" line="94"/>
         <source>Click to select</source>
         <translation>Cliquer pour sélectionner</translation>
     </message>
     <message>
-        <location filename="../seek_cue.py" line="97"/>
+        <location filename="../seek_cue.py" line="95"/>
         <source>Not selected</source>
         <translation>Non sélectionné</translation>
     </message>
     <message>
-        <location filename="../seek_cue.py" line="98"/>
+        <location filename="../seek_cue.py" line="96"/>
         <source>Seek</source>
         <translation>Recherche</translation>
     </message>
     <message>
-        <location filename="../seek_cue.py" line="99"/>
+        <location filename="../seek_cue.py" line="97"/>
         <source>Time to reach</source>
         <translation>Temps à atteindre</translation>
     </message>
@@ -142,100 +170,75 @@
         <translation>Commande</translation>
     </message>
     <message>
-        <location filename="../midi_cue.py" line="56"/>
+        <location filename="../midi_cue.py" line="54"/>
         <source>MIDI Settings</source>
         <translation>Préférences MIDI</translation>
     </message>
     <message>
-        <location filename="../volume_control.py" line="140"/>
+        <location filename="../volume_control.py" line="122"/>
         <source>Volume Settings</source>
         <translation>Préférences de volume</translation>
     </message>
     <message>
-        <location filename="../seek_cue.py" line="56"/>
+        <location filename="../seek_cue.py" line="54"/>
         <source>Seek Settings</source>
         <translation>Préférences de recherche</translation>
     </message>
     <message>
-        <location filename="../collection_cue.py" line="56"/>
+        <location filename="../collection_cue.py" line="54"/>
         <source>Edit Collection</source>
         <translation>Editer la collection</translation>
     </message>
     <message>
-        <location filename="../stop_all.py" line="51"/>
-        <source>Cue Settings</source>
-        <translation>Préférences pour cue</translation>
+        <location filename="../index_action_cue.py" line="58"/>
+        <source>Action Settings</source>
+        <translation>Paramètres d&apos;action</translation>
+    </message>
+    <message>
+        <location filename="../stop_all.py" line="65"/>
+        <source>Stop Settings</source>
+        <translation>Paramètres d&apos;arrêt</translation>
     </message>
 </context>
 <context>
     <name>StopAll</name>
     <message>
-        <location filename="../stop_all.py" line="68"/>
-        <source>Mode</source>
-        <translation>Mode</translation>
-    </message>
-    <message>
-        <location filename="../stop_all.py" line="69"/>
-        <source>Pause mode</source>
-        <translation>Mode pause</translation>
+        <location filename="../stop_all.py" line="87"/>
+        <source>Stop Action</source>
+        <translation>Action d&apos;arrêt</translation>
     </message>
 </context>
 <context>
     <name>VolumeControl</name>
     <message>
-        <location filename="../volume_control.py" line="118"/>
+        <location filename="../volume_control.py" line="112"/>
         <source>Error during cue execution</source>
         <translation>Erreur lors de l&apos;exécution de la cue</translation>
     </message>
     <message>
-        <location filename="../volume_control.py" line="143"/>
-        <source>Linear</source>
-        <translation>Linéaire</translation>
-    </message>
-    <message>
-        <location filename="../volume_control.py" line="145"/>
-        <source>Quadratic</source>
-        <translation>Quadratique</translation>
-    </message>
-    <message>
-        <location filename="../volume_control.py" line="147"/>
-        <source>Quadratic2</source>
-        <translation>Quadratique 2</translation>
-    </message>
-    <message>
-        <location filename="../volume_control.py" line="226"/>
+        <location filename="../volume_control.py" line="182"/>
         <source>Cue</source>
         <translation>Cue</translation>
     </message>
     <message>
-        <location filename="../volume_control.py" line="227"/>
+        <location filename="../volume_control.py" line="183"/>
         <source>Click to select</source>
         <translation>Cliquer pour sélectionner</translation>
     </message>
     <message>
-        <location filename="../volume_control.py" line="228"/>
+        <location filename="../volume_control.py" line="184"/>
         <source>Not selected</source>
         <translation>Non sélectionné</translation>
     </message>
     <message>
-        <location filename="../volume_control.py" line="229"/>
+        <location filename="../volume_control.py" line="185"/>
         <source>Volume to reach</source>
         <translation>Volume à atteindre</translation>
     </message>
     <message>
-        <location filename="../volume_control.py" line="230"/>
+        <location filename="../volume_control.py" line="186"/>
         <source>Fade</source>
         <translation>Fondu</translation>
-    </message>
-    <message>
-        <location filename="../volume_control.py" line="231"/>
-        <source>Time (sec)</source>
-        <translation>Temps (sec)</translation>
-    </message>
-    <message>
-        <location filename="../volume_control.py" line="232"/>
-        <source>Curve</source>
-        <translation>Courbe</translation>
     </message>
 </context>
 </TS>

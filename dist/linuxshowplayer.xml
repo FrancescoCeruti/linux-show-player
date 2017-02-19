@@ -2,7 +2,7 @@
 <mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
 	<mime-type type="application/x-linuxshowplayer">  
 		<sub-class-of type="application/json"/>
-		<comment>Linux Show Player save file</comment>
+		<comment>Linux Show Player session file</comment>
 		<glob pattern="*.lsp"/>
 	</mime-type>
 </mime-info>

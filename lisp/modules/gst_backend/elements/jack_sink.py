@@ -18,6 +18,7 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import jack
+import logging
 from PyQt5.QtCore import QT_TRANSLATE_NOOP
 
 from lisp.backend.media_element import ElementType, MediaType
@@ -37,7 +38,6 @@ class JackSink(GstMediaElement):
     _ControlClient = None
     _clients = []
 
-    server = GstProperty('jack_sink')
     connections = Property(default=[[] for _ in range(8)])
 
     def __init__(self, pipeline):
@@ -120,13 +120,19 @@ class JackSink(GstMediaElement):
 
         for port in out_ports:
             for conn_port in JackSink._ControlClient.get_all_connections(port):
-                JackSink._ControlClient.disconnect(port, conn_port)
+                try:
+                    JackSink._ControlClient.disconnect(port, conn_port)
+                except jack.JackError as e:
+                    logging.error('GST: JACK-SINK: {}'.format(e))
 
         for output, in_ports in enumerate(self.connections):
             for input_name in in_ports:
                 if output < len(out_ports):
-                    JackSink._ControlClient.connect(out_ports[output],
-                                                    input_name)
+                    try:
+                        JackSink._ControlClient.connect(out_ports[output],
+                                                        input_name)
+                    except jack.JackError as e:
+                        logging.error('GST: JACK-SINK: {}'.format(e))
                 else:
                     break
 
@@ -138,5 +144,5 @@ class JackSink(GstMediaElement):
                 # The jack ports are available when the the jackaudiosink
                 # change from READY to PAUSED state
                 if (change[0] == Gst.State.READY and
-                            change[1] == Gst.State.PAUSED):
+                        change[1] == Gst.State.PAUSED):
                     self.__jack_connect()

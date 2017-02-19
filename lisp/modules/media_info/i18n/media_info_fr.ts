@@ -2,27 +2,27 @@
 <context>
     <name>MediaInfo</name>
     <message>
-        <location filename="../media_info.py" line="96"/>
+        <location filename="../media_info.py" line="97"/>
         <source>Media Info</source>
         <translation>Info sur le média</translation>
     </message>
     <message>
-        <location filename="../media_info.py" line="50"/>
+        <location filename="../media_info.py" line="51"/>
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../media_info.py" line="50"/>
+        <location filename="../media_info.py" line="51"/>
         <source>No info to display</source>
         <translation>Pas d&apos;info à afficher</translation>
     </message>
     <message>
-        <location filename="../media_info.py" line="106"/>
+        <location filename="../media_info.py" line="107"/>
         <source>Info</source>
         <translation>Info</translation>
     </message>
     <message>
-        <location filename="../media_info.py" line="106"/>
+        <location filename="../media_info.py" line="107"/>
         <source>Value</source>
         <translation>Valeur</translation>
     </message>

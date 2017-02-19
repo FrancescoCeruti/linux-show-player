@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2017 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,13 +17,12 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import QTime, Qt, QT_TRANSLATE_NOOP
+from PyQt5.QtCore import QTime, Qt
 from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QTimeEdit, QLabel, \
-    QSpinBox, QVBoxLayout, QGridLayout, QDoubleSpinBox
+    QSpinBox, QVBoxLayout
 
 from lisp.ui.settings.settings_page import SettingsPage
 from lisp.ui.ui_utils import translate
-from lisp.ui.widgets import FadeComboBox
 
 
 class MediaCueSettings(SettingsPage):
@@ -128,59 +127,3 @@ class MediaCueSettings(SettingsPage):
 
     def _to_qtime(self, m_seconds):
         return QTime.fromMSecsSinceStartOfDay(m_seconds)
-
-
-class MediaCueAppSettings(SettingsPage):
-    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'MediaCue Settings')
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.setLayout(QVBoxLayout())
-        self.layout().setAlignment(Qt.AlignTop)
-
-        self.group = QGroupBox(self)
-        self.group.setLayout(QGridLayout())
-        self.layout().addWidget(self.group)
-
-        # Fade Duration
-        self.fadeDurationSpin = QDoubleSpinBox(self.group)
-        self.fadeDurationSpin.setRange(0, 3600)
-        self.group.layout().addWidget(self.fadeDurationSpin, 0, 0)
-
-        self.fadeDurationLabel = QLabel(self.group)
-        self.fadeDurationLabel.setAlignment(Qt.AlignCenter)
-        self.group.layout().addWidget(self.fadeDurationLabel, 0, 1)
-
-        # Fade Type
-        self.fadeTypeCombo = FadeComboBox(self.group)
-        self.group.layout().addWidget(self.fadeTypeCombo, 1, 0)
-
-        self.fadeTypeLabel = QLabel(self.group)
-        self.fadeTypeLabel.setAlignment(Qt.AlignCenter)
-        self.group.layout().addWidget(self.fadeTypeLabel, 1, 1)
-
-        self.retranslateUi()
-
-    def retranslateUi(self):
-        self.group.setTitle(
-            translate('MediaCueSettings', 'Interrupt settings'))
-        self.fadeDurationLabel.setText(
-            translate('MediaCueSettings', 'Interrupt fade duration'))
-        self.fadeTypeLabel.setText(
-            translate('MediaCueSettings', 'Interrupt fade type'))
-
-    def load_settings(self, settings):
-        try:
-            self.fadeDurationSpin.setValue(
-                float(settings['MediaCue'].get('interruptfade', 0)))
-        except ValueError:
-            pass
-
-        self.fadeTypeCombo.setCurrentType(
-            settings['MediaCue'].get('interruptfadetype', ''))
-
-    def get_settings(self):
-        return {'MediaCue': {
-            'interruptfade': str(self.fadeDurationSpin.value()),
-            'interruptfadetype': self.fadeTypeCombo.currentType()
-        }}

@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2017 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 from threading import Lock
 from uuid import uuid4
 
+from lisp.core.configuration import config
 from lisp.core.decorators import async
 from lisp.core.fade_functions import FadeInType, FadeOutType
 from lisp.core.has_properties import HasProperties, Property, WriteOnceProperty
@@ -48,6 +49,8 @@ class CueState:
 
 class CueAction(EqEnum):
     Default = 'Default'
+    FadeIn = 'FadeIn'
+    FadeOut = 'FadeOut'
     FadeInStart = 'FadeInStart'
     FadeOutStop = 'FadeOutStop'
     FadeOutPause = 'FadeOutPause'
@@ -81,14 +84,20 @@ class Cue(HasProperties):
     :ivar description: Cue text description.
     :ivar stylesheet: Cue style, used by the view.
     :ivar duration: The cue duration in milliseconds. (0 means no duration)
-    :ivar stop_pause: If True, by default the cue is paused instead of stopped.
     :ivar pre_wait: Cue pre-wait in seconds.
     :ivar post_wait: Cue post-wait in seconds.
     :ivar next_action: What do after post_wait.
+    :ivar fadein_type: Fade-In type
+    :ivar fadeout_type: Fade-Out type
+    :ivar fadein_duration: Fade-In duration in seconds
+    :ivar fadeout_duration: Fade-Out duration in seconds
+    :ivar default_start_action: action to execute to start
+    :ivar default_stop_action: action to execute to stop
     :cvar CueActions: actions supported by the cue (default: CueAction.Start)
 
     A cue should declare CueAction.Default as supported only if CueAction.Start
-    and CueAction.Stop are both supported, if CueAction.Stop is supported.
+    and CueAction.Stop are both supported.
+    If CueAction.Stop is supported, CueAction.Interrupt should be supported.
 
     .. Note::
         If 'next_action' is AutoFollow or DoNothing, the postwait is not
@@ -188,6 +197,14 @@ class Cue(HasProperties):
                 self.pause()
             elif action == CueAction.FadeOutPause:
                 self.pause(fade=self.fadeout_duration > 0)
+            elif action == CueAction.FadeOut:
+                duration = config['Cue'].getfloat('FadeActionDuration')
+                fade_type = FadeOutType[config['Cue'].get('FadeActionType')]
+                self.fadeout(duration, fade_type)
+            elif action == CueAction.FadeIn:
+                duration = config['Cue'].getfloat('FadeActionDuration')
+                fade_type = FadeInType[config['Cue'].get('FadeActionType')]
+                self.fadein(duration, fade_type)
 
     @async
     def start(self, fade=False):
@@ -311,7 +328,7 @@ class Cue(HasProperties):
                         (self._state ^ CueState.Pause)
                     )
                     self._state |= CueState.Stop
-                    self.stopped.emit()
+                    self.stopped.emit(self)
         finally:
             self._st_lock.release()
 
@@ -320,7 +337,7 @@ class Cue(HasProperties):
 
         Long running task should block this function (i.e. the fade should
         "block" this function), when this happen `_st_lock` must be released and
-        than re-acquired.
+        then re-acquired.
 
         If called during a `fadeout` operation this should be interrupted,
         the cue stopped and return `True`.
@@ -330,7 +347,7 @@ class Cue(HasProperties):
         :return: False if interrupted, True otherwise
         :rtype: bool
         """
-        return True
+        return False
 
     @async
     def pause(self, fade=False):
@@ -362,7 +379,7 @@ class Cue(HasProperties):
 
                     self._state ^= CueState.Running
                     self._state |= CueState.Pause
-                    self.paused.emit()
+                    self.paused.emit(self)
         finally:
             self._st_lock.release()
 
@@ -371,7 +388,7 @@ class Cue(HasProperties):
 
         Long running task should block this function (i.e. the fade should
         "block" this function), when this happen `_st_lock` must be released and
-        than re-acquired.
+        then re-acquired.
 
         If called during a `fadeout` operation this should be interrupted,
         the cue paused and return `True`.
@@ -384,7 +401,7 @@ class Cue(HasProperties):
         :return: False if interrupted, True otherwise
         :rtype: bool
         """
-        return True
+        return False
 
     @async
     def interrupt(self, fade=False):
@@ -418,7 +435,7 @@ class Cue(HasProperties):
                         (self._state ^ CueState.Pause)
                     )
                     self._state |= CueState.Stop
-                    self.interrupted.emit()
+                    self.interrupted.emit(self)
 
     def __interrupt__(self, fade=False):
         """Implement the cue `interrupt` behavior.
@@ -429,7 +446,24 @@ class Cue(HasProperties):
         :param fade: True if a fade should be performed (when supported)
         :type fade: bool
         """
-        pass
+
+    def fadein(self, duration, fade_type):
+        """Fade-in the cue.
+
+        :param duration: How much the fade should be long (in seconds)
+        :type duration: float
+        :param fade_type: The fade type
+        :type fade_type: FadeInType
+        """
+
+    def fadeout(self, duration, fade_type):
+        """Fade-out the cue.
+
+        :param duration: How much the fade should be long (in seconds)
+        :type duration: float
+        :param fade_type: The fade type
+        :type fade_type: FadeOutType
+        """
 
     def _ended(self):
         """Remove the Running state, if needed set it to Stop."""

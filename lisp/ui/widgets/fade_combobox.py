@@ -32,23 +32,23 @@ QT_TRANSLATE_NOOP('Fade', 'Quadratic2')
 
 class FadeComboBox(QComboBox):
     FadeOutIcons = {
-        'Linear': QIcon.fromTheme('fadeout_linear'),
-        'Quadratic': QIcon.fromTheme('fadeout_quadratic'),
-        'Quadratic2': QIcon.fromTheme('fadeout_quadratic2')
+        'Linear': QIcon.fromTheme('fadeout-linear'),
+        'Quadratic': QIcon.fromTheme('fadeout-quadratic'),
+        'Quadratic2': QIcon.fromTheme('fadeout-quadratic2')
     }
 
     FadeInIcons = {
-        'Linear': QIcon.fromTheme('fadein_linear'),
-        'Quadratic': QIcon.fromTheme('fadein_quadratic'),
-        'Quadratic2': QIcon.fromTheme('fadein_quadratic2')
+        'Linear': QIcon.fromTheme('fadein-linear'),
+        'Quadratic': QIcon.fromTheme('fadein-quadratic'),
+        'Quadratic2': QIcon.fromTheme('fadein-quadratic2')
     }
 
     class Mode(Enum):
         FadeIn = 0
         FadeOut = 1
 
-    def __init__(self, mode=Mode.FadeOut, **kwargs):
-        super().__init__(**kwargs)
+    def __init__(self, *args, mode=Mode.FadeOut, **kwargs):
+        super().__init__(*args, **kwargs)
         self.setItemDelegate(QStyledItemDelegate())
 
         if mode == self.Mode.FadeIn:

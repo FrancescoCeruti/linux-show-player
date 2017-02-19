@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2017 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -44,13 +44,13 @@ class CueStatusIcon(QLabel):
         self.cue.end.connect(self._stop, Connection.QtQueued)
 
     def _start(self):
-        self.setPixmap(pixmap_from_icon('media-playback-start', self.SIZE))
+        self.setPixmap(pixmap_from_icon('led-running', self.SIZE))
 
     def _pause(self):
-        self.setPixmap(pixmap_from_icon('media-playback-pause', self.SIZE))
+        self.setPixmap(pixmap_from_icon('led-pause', self.SIZE))
 
     def _error(self, *args):
-        self.setPixmap(pixmap_from_icon('dialog-error', self.SIZE))
+        self.setPixmap(pixmap_from_icon('led-error', self.SIZE))
 
     def _stop(self):
         self.setPixmap(pixmap_from_icon('', self.SIZE))

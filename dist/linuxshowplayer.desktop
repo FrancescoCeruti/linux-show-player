@@ -1,10 +1,9 @@
 [Desktop Entry]
 Name=Linux Show Player
-Comment=Audio player for theatral shows
+Comment=Cue player for stage productions
+Comment[fr]=Lecteur de Cue pour production scénique
 Exec=linux-show-player -f %u
-Icon=linux_show_player.png
-StartupNotify=true
-Terminal=false
+Icon=linuxshowplayer
 Type=Application
 Categories=AudioVideo;Audio;Player;
 MimeType=application/x-linuxshowplayer

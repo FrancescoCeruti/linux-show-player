@@ -17,12 +17,17 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-import importlib.util
-import os
+import sys
+import os.path
 from collections import namedtuple
 
 from PyQt5.QtGui import QPalette, QColor
 from PyQt5.QtWidgets import QStyleFactory, qApp
+
+try:
+    from os import scandir
+except ImportError:
+    from scandir import scandir
 
 StylesPath = os.path.abspath(os.path.dirname(__file__))
 IconsThemePaths = [os.path.join(StylesPath, 'icons')]
@@ -40,15 +45,17 @@ def scan_styles():
     """Scan for "installed" styles."""
     LiSPStyles.clear()
 
-    for entry in os.scandir(StylesPath):
+    for entry in scandir(StylesPath):
         if entry.is_dir():
             has_qss = os.path.exists(os.path.join(entry.path, 'style.qss'))
             has_py = os.path.exists(os.path.join(entry.path, 'style.py'))
 
             if has_qss or has_py:
-                LiSPStyles[entry.name.title()] = Style(path=entry.path,
-                                                       has_qss=has_qss,
-                                                       has_py=has_py)
+                LiSPStyles[entry.name.title()] = Style(
+                    path=entry.path,
+                    has_qss=has_qss,
+                    has_py=has_py
+                )
 
 
 def __load_qss_style(path):
@@ -59,11 +66,9 @@ def __load_qss_style(path):
     qApp.setStyleSheet(style)
 
 
-def __load_py_style(path):
+def __load_py_style(module):
     """Load the python style module."""
-    spec = importlib.util.spec_from_file_location(os.path.split(path)[-1], path)
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
+    __import__(module, globals(), locals(), ['*'])
 
 
 def apply_style(name):
@@ -72,16 +77,11 @@ def apply_style(name):
 
     if isinstance(style, Style):
         if style.has_py:
-            __load_py_style(os.path.join(style.path, 'style.py'))
+            module = __package__ + '.' + os.path.basename(style.path) + '.style'
+            __load_py_style(module)
 
         if style.has_qss:
             __load_qss_style(os.path.join(style.path, 'style.qss'))
-
-        # Change link color
-        palette = qApp.palette()
-        palette.setColor(QPalette.Link, QColor(65, 155, 230))
-        palette.setColor(QPalette.LinkVisited, QColor(43, 103, 153))
-        qApp.setPalette(palette)
     else:
         qApp.setStyleSheet('')
         qApp.setStyle(QStyleFactory.create(name))

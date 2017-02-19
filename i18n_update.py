@@ -24,8 +24,14 @@ import re
 import subprocess
 import sys
 
+try:
+    from os import scandir
+except ImportError:
+    from scandir import scandir
+
+
 parser = argparse.ArgumentParser(description='i18n utility for LiSP')
-parser.add_argument('locales', nargs='+',
+parser.add_argument('locales', nargs='*',
                     help='Locales of witch generate translations')
 parser.add_argument('-n', '--noobsolete', help='Discard obsolete strings',
                     action='store_true')
@@ -39,8 +45,17 @@ PYLUPDATE_CMD = ['pylupdate5']
 if args.noobsolete:
     PYLUPDATE_CMD.append('-noobsolete')
 
+
+def existing_locales():
+    for entry in scandir('lisp/i18n'):
+        if entry.name.startswith('lisp_') and entry.name.endswith('.ts'):
+            yield entry.name[5:-3]
+
 # Locales of which generate translations files
 LOCALES = args.locales
+if not LOCALES:
+    LOCALES = list(existing_locales())
+    print('>>> UPDATE EXISTING:', ', '.join(LOCALES))
 
 
 def search_files(root, exclude=(), extensions=()):
@@ -76,7 +91,7 @@ def create_pro_file(root, exclude=(), extensions=('py',)):
 
 def generate_for_submodules(path, qm=False):
     # Here "modules" is used generically
-    modules = [entry.path for entry in os.scandir(path) if entry.is_dir()]
+    modules = [entry.path for entry in scandir(path) if entry.is_dir()]
     for module in modules:
         if os.path.exists(os.path.join(module, 'i18n')):
             create_pro_file(module)
@@ -102,10 +117,8 @@ else:
                    stdout=sys.stdout,
                    stderr=sys.stderr)
 
-print('#########################################')
 print('>>> UPDATE TRANSLATIONS FOR MODULES')
 generate_for_submodules('lisp/modules', qm=args.qm)
 
-print('#########################################')
 print('>>> UPDATE TRANSLATIONS FOR PLUGINS')
 generate_for_submodules('lisp/plugins', qm=args.qm)

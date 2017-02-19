@@ -26,7 +26,7 @@ from lisp.ui.settings.settings_page import SettingsPage
 from lisp.ui.ui_utils import translate
 
 
-class General(SettingsPage):
+class AppGeneral(SettingsPage):
     Name = QT_TRANSLATE_NOOP('SettingsPageName', 'General')
 
     def __init__(self, **kwargs):

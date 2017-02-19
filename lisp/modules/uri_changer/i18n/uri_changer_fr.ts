@@ -4,7 +4,7 @@
     <message>
         <location filename="../uri_changer.py" line="32"/>
         <source>Session URI change</source>
-        <translation>Modifier l'URI de la session</translation>
+        <translation>Modifier l&apos;URI de la session</translation>
     </message>
     <message>
         <location filename="../uri_changer_dialog.py" line="97"/>

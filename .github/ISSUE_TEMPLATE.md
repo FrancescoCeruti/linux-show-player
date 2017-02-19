@@ -5,9 +5,10 @@ Before posting an issue:
 
 When writing an issue:
  - use the markdown formatting to make the issue easier to read
+ - if the issue is spefic to some git version start the title with `[git]` or `[git:<branch>]`
  - don't worry about being sarcastic ;-)
  - for bugs/unexpected behavior, use the following "template"
- - remove the template text you don't need, like these first 9 lines
+ - remove the template text you don't need, like these first 11 lines
 
 ---
 

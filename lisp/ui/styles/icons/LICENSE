@@ -1,10 +1,10 @@
 * Fade functions icons from Qtractor - http://qtractor.sourceforge.net/qtractor-index.html
-    * icons/lisp/16/fadein_linear.png
-    * icons/lisp/16/fadein_quadratic.png
-    * icons/lisp/16/fadein_quadratic2.png
-    * icons/lisp/16/fadeout_linear.png
-    * icons/lisp/16/fadeout_quadratic.png
-    * icons/lisp/16/fadeout_quadratic2.png
+    * icons/lisp/16/fadein-linear.png
+    * icons/lisp/16/fadein-quadratic.png
+    * icons/lisp/16/fadein-quadratic2.png
+    * icons/lisp/16/fadeout-linear.png
+    * icons/lisp/16/fadeout-quadratic.png
+    * icons/lisp/16/fadeout-quadratic2.png
 
 * Numix Project icons - https://numixproject.org - https://github.com/numixproject
     * /icons/numix/
