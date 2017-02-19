@@ -57,4 +57,3 @@ class RenameCues(Module):
 
     def terminate(self):
         MainWindow().menuTools.removeAction(self.menuAction)
-

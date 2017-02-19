@@ -26,6 +26,8 @@ from PyQt5.QtWidgets import QDialog, QDialogButtonBox, QGridLayout, QLineEdit, \
     QTreeWidget, QTreeWidgetItem, QPushButton, QSpacerItem
 
 from lisp.application import Application
+from lisp.application import MainActionsHandler
+from lisp.modules.rename_cues.rename_action import RenameCueAction
 from lisp.ui.ui_utils import translate
 
 
@@ -38,6 +40,7 @@ class RenameUi(QDialog):
         # Here will be stored regex result in the same order as the cue names above
         self.__cue_names_regex_groups = []
 
+        self.setWindowTitle(translate('RenameCues', 'Rename cues'))
         self.setWindowModality(Qt.ApplicationModal)
         self.resize(650, 350)
 
@@ -46,8 +49,10 @@ class RenameUi(QDialog):
         # Preview List
         self.previewList = QTreeWidget()
         self.previewList.setColumnCount(2)
-        self.previewList.setHeaderLabels(
-            ['Actuel', 'Preview'])
+        self.previewList.setHeaderLabels([
+            translate('RenameCues', 'Current'),
+            translate('RenameCues', 'Preview')
+        ])
         self.previewList.resizeColumnToContents(0)
         self.previewList.resizeColumnToContents(1)
         self.previewList.setColumnWidth(0, 300)
@@ -55,41 +60,47 @@ class RenameUi(QDialog):
 
         # Options buttons
         self.capitalizeButton = QPushButton()
-        self.capitalizeButton.setText('Capitalize')
+        self.capitalizeButton.setText(translate('RenameCues', 'Capitalize'))
         self.capitalizeButton.clicked.connect(self.onCapitalizeButtonClicked)
         self.layout().addWidget(self.capitalizeButton, 3, 0)
 
         self.lowerButton = QPushButton()
-        self.lowerButton.setText('Lowercase')
+        self.lowerButton.setText(translate('RenameCues', 'Lowercase'))
         self.lowerButton.clicked.connect(self.onLowerButtonClicked)
         self.layout().addWidget(self.lowerButton, 4, 0)
 
         self.upperButton = QPushButton()
-        self.upperButton.setText('Uppercase')
+        self.upperButton.setText(translate('RenameCues', 'Uppercase'))
         self.upperButton.clicked.connect(self.onUpperButtonClicked)
         self.layout().addWidget(self.upperButton, 5, 0)
 
         self.removeNumButton = QPushButton()
-        self.removeNumButton.setText('Remove Numbers')
+        self.removeNumButton.setText(translate('RenameCues', 'Remove Numbers'))
         self.removeNumButton.clicked.connect(self.onRemoveNumButtonClicked)
         self.layout().addWidget(self.removeNumButton, 3, 1)
 
         self.addNumberingButton = QPushButton()
-        self.addNumberingButton.setText('Add numbering')
+        self.addNumberingButton.setText(translate('RenameCues', 'Add numbering'))
         self.addNumberingButton.clicked.connect(self.onAddNumberingButtonClicked)
         self.layout().addWidget(self.addNumberingButton, 4, 1)
+
+        self.resetButton = QPushButton()
+        self.resetButton.setText(translate('RenameCues', 'Reset'))
+        self.resetButton.clicked.connect(self.onResetButtonClicked)
+        self.layout().addWidget(self.resetButton, 5, 1)
 
         # Spacer
         self.layout().addItem(QSpacerItem(30, 0), 3, 2)
 
         # Regex lines
         self.outRegexLine = QLineEdit()
-        self.outRegexLine.setPlaceholderText('Rename all cue. () in regex above usable with $0, $1 ...')
+        self.outRegexLine.setPlaceholderText(
+            translate('RenameCues', 'Rename all cue. () in regex below usable with $0, $1 ...'))
         self.outRegexLine.textChanged.connect(self.onOutRegexChanged)
         self.layout().addWidget(self.outRegexLine, 3, 3)
 
         self.regexLine = QLineEdit()
-        self.regexLine.setPlaceholderText('Type your regex here :')
+        self.regexLine.setPlaceholderText(translate('RenameCues', 'Type your regex here :'))
         self.regexLine.textChanged.connect(self.onRegexLineChanged)
         self.layout().addWidget(self.regexLine, 4, 3)
 
@@ -101,14 +112,6 @@ class RenameUi(QDialog):
 
         self.dialogButtons.accepted.connect(self.accept)
         self.dialogButtons.rejected.connect(self.reject)
-
-        # i18n
-        self.retranslateUi()
-
-    def retranslateUi(self):
-        # TODO : translation file & Co
-        self.setWindowTitle(
-            translate('RenameCues', 'Rename cues'))
 
     def get_cues_name(self):
         for cue in Application().layout.get_selected_cues():
@@ -168,6 +171,11 @@ class RenameUi(QDialog):
 
         self.update_preview_list()
 
+    def onResetButtonClicked(self):
+        self.__cue_names_preview = copy(self.__cue_names)
+
+        self.update_preview_list()
+
     def onRegexLineChanged(self):
         pattern = self.regexLine.text()
         try:
@@ -202,9 +210,9 @@ class RenameUi(QDialog):
         self.update_preview_list()
 
     def record_cues_name(self):
-        for i, cue_name in enumerate(self.__cue_names_preview):
-            old_cue = Application().layout.get_selected_cues()[i]
-            old_cue.name = cue_name
+        MainActionsHandler.do_action(
+            RenameCueAction(self.__cue_names_preview)
+        )
 
 if __name__ == "__main__":
     # To test Ui quickly
