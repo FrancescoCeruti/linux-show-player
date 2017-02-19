@@ -84,7 +84,7 @@ class TimecodeSettings(CueSettingsPage):
             translate('TimecodeOutput',
                       'Replace HOURS by a static track number'))
         self.enableCheck.setText(
-            translate('TimecodeOutput', 'Enable ArtNet Timecode'))
+            translate('TimecodeOutput', 'Enable Timecode'))
         self.trackLabel.setText(
             translate('TimecodeOutput', 'Track number'))
         if 'artnet' in config['Timecode']['backend'].lower():
