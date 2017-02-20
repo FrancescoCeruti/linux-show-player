@@ -20,7 +20,7 @@ fi
 # TODO:
 # -
 # FIXME:
-# - No "jack" library on Fedora 24
+# -
 
 # Cleanup the console
 echo -en "\ec"
@@ -52,10 +52,10 @@ cd $APP/
 sudo apt-get update -qq || true
 sudo apt-get -y install build-essential python3-dev libffi-dev libportmidi-dev libasound2-dev \
    libjack-jackd2-dev bison flex libcppunit-dev bison flex uuid-dev libprotobuf-dev protobuf-compiler \
-   libprotoc-dev libncurses5-dev autoconf libtool python3-setuptools python3-pip virtualenv
+   libprotoc-dev libncurses5-dev autoconf libtool
 
 # Install some via pip
-pip3 install --user protobuf
+pip3 install --user protobuf pip setuptools virtualenv
 
 ########################################################################
 # Source some helper functions
@@ -103,7 +103,7 @@ cd debs
 apt-get download libglib2.0-0 libgstreamer1.0-0 gstreamer1.0-plugins-base libgirepository-1.0-1 \
   gstreamer1.0-plugins-good gstreamer1.0-plugins-ugly gstreamer1.0-plugins-bad gstreamer1.0-alsa \
   gstreamer1.0-pulseaudio gstreamer1.0-libav gstreamer1.0-fluendo-mp3 gir1.2-gstreamer-1.0 \
-  gir1.2-gst-plugins-base-1.0 gir1.2-glib-2.0 libportmidi0 alsa-utils libasound2 libpulse0 libffi6
+  gir1.2-gst-plugins-base-1.0 gir1.2-glib-2.0 libportmidi0 alsa-utils libpulse0 libffi6
 cd ..
 
 ########################################################################
@@ -197,6 +197,18 @@ set -x
 # Workarounds/Patches
 ########################################################################
 
+# Backport ctypes.util (from 3.6.0) so that ctypes.util.find_libary(name) use also "LD_LIBRARY_PATH" to search
+wget https://raw.githubusercontent.com/python/cpython/v3.6.0/Lib/ctypes/util.py -O $APP_PYLIB/ctypes/util.py
+
+# Create libjack.so as a link to libjack.so.0 otherwise ctypes.util.find_libary(name) is not able to find it
+# NOTE: this may be necessary for every "find_library(name)" target that should be picked from the AppImage
+# NOTE: cffi.dlopen(name) will use "find_library(name)" if name is not a specific libaray name/path
+# grep -r --include '*.py' "find_library('" .
+# grep -r --include '*.py' "dlopen('" .
+cd usr/lib/x86_64-linux-gnu
+ln -s libjack.so.0 libjack.so
+cd ../../..
+
 # Workaround to set environment variable
 mv usr/bin/linux-show-player usr/bin/linux-show-player-origin
 
@@ -215,11 +227,8 @@ linux-show-player-origin \$@
 EOF
 chmod +x usr/bin/linux-show-player
 
-# Otherwise Fedora cannot load the Qt platform plugin "xcb"
+# Otherwise in Fedora cannot load the Qt platform plugin "xcb"
 cp $(ldconfig -p | grep libEGL.so.1 | cut -d ">" -f 2 | xargs) ./usr/lib/
-
-# Include libstdc++ so that the AppImage can work on older systems (test)
-cp $(ldconfig -p | grep libstdc++.so | cut -d ">" -f 2 | xargs) ./usr/lib/
 
 # move libpulsecommon-<version>.so to the parent directory
 mv usr/lib/x86_64-linux-gnu/pulseaudio/* usr/lib/x86_64-linux-gnu/
