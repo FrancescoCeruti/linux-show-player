@@ -1,26 +1,9 @@
 #!/usr/bin/env bash
 
-########################################################################
-# We need Python >= 3.5 to build the AppImage (pyenv can solve this)
-########################################################################
-# If the python3 version is < 3.5
-if [ `python3 -c 'import sys; print(sys.version_info.major >= 3 and sys.version_info.minor >= 5)'` = "False" ];
-then
-    # Install and initialize pyenv
-    curl -L https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer | bash
-    export PYENV_ROOT="$HOME/.pyenv"
-    export PATH="$PYENV_ROOT/bin:$PATH"
-    eval "$(pyenv init -)"
-    #eval "$(pyenv virtualenv-init -)"
-    #pyenv install --list
-    pyenv install -s 3.5.3
-    pyenv global 3.5.3
-fi
-
 # TODO:
-# -
+# - 
 # FIXME:
-# -
+# - PyQt5 from pypi is available only for x86_64
 
 # Cleanup the console
 echo -en "\ec"
@@ -52,10 +35,25 @@ cd $APP/
 sudo apt-get update -qq || true
 sudo apt-get -y install build-essential python3-dev libffi-dev libportmidi-dev libasound2-dev \
    libjack-jackd2-dev bison flex libcppunit-dev bison flex uuid-dev libprotobuf-dev protobuf-compiler \
-   libprotoc-dev libncurses5-dev autoconf libtool
+   libprotoc-dev libncurses5-dev autoconf libtool rsync wget python3-pip virtualenv
+
+# If the python3 version is < 3.5
+if [ `python3 -c 'import sys; print(sys.version_info.major >= 3 and sys.version_info.minor >= 5)'` = "False" ];
+then
+    # Install and initialize pyenv
+    sudo apt-get -y install libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev curl git llvm libncurses5-dev libncursesw5-dev xz-utils
+    curl -L https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer | bash
+    export PYENV_ROOT="$HOME/.pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init -)"
+    #eval "$(pyenv virtualenv-init -)"
+    #pyenv install --list
+    pyenv install -s 3.5.3
+    pyenv global 3.5.3
+fi
 
 # Install some via pip
-pip3 install --user protobuf pip setuptools virtualenv
+pip3 install --user -U protobuf pip setuptools virtualenv
 
 ########################################################################
 # Source some helper functions
@@ -95,7 +93,7 @@ wget -nc -c "https://github.com/OpenLightingProject/ola/releases/download/"$OLA_
 # Get PyGObject
 apt-get source python3-gi
 # To be able to compile it we need to install some build-dependecies
-sudo apt-get build-dep python3-gi
+sudo apt-get -y build-dep python3-gi
 
 # Get .deb(s)
 mkdir -p debs
