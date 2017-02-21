@@ -9,7 +9,7 @@
     <message>
         <location filename="../timecode_settings.py" line="103"/>
         <source>Timecode</source>
-        <translation>Timcode</translation>
+        <translation>Timecode</translation>
     </message>
 </context>
 <context>

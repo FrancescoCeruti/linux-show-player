@@ -132,7 +132,7 @@
     <message>
         <location filename="../presets_ui.py" line="420"/>
         <source>Cue type</source>
-        <translation>Tipo cue</translation>
+        <translation>Tipo di cue</translation>
     </message>
 </context>
 </TS>

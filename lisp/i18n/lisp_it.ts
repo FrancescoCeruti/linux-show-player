@@ -4,7 +4,7 @@
     <message>
         <location filename="../ui/about.py" line="53"/>
         <source>Authors</source>
-        <translation>Autori:</translation>
+        <translation>Autori</translation>
     </message>
     <message>
         <location filename="../ui/about.py" line="53"/>
@@ -351,7 +351,7 @@
     <message>
         <location filename="../ui/settings/pages/cue_app_settings.py" line="56"/>
         <source>Fade Action</source>
-        <translation>Dissolvenza Azioni</translation>
+        <translation>Operazioni di Dissolvenza</translation>
     </message>
     <message>
         <location filename="../ui/settings/pages/cue_general.py" line="161"/>

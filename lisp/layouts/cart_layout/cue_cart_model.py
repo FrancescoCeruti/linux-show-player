@@ -55,7 +55,10 @@ class CueCartModel(ModelAdapter):
 
     def item(self, index):
         index = self.flat(index)
-        return self.__cues.get(index)
+        try:
+            return self.__cues[index]
+        except KeyError:
+            raise IndexError('index out of range')
 
     def insert(self, item, index):
         index = self.flat(index)
@@ -67,8 +70,11 @@ class CueCartModel(ModelAdapter):
 
     def pop(self, index):
         index = self.flat(index)
+        try:
+            cue = self.__cues[index]
+        except KeyError:
+            raise IndexError('index out of range')
 
-        cue = self.__cues[index]
         self.model.remove(cue)
         return cue
 
