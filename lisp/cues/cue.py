@@ -23,7 +23,8 @@ from uuid import uuid4
 from lisp.core.configuration import config
 from lisp.core.decorators import async
 from lisp.core.fade_functions import FadeInType, FadeOutType
-from lisp.core.has_properties import HasProperties, Property, WriteOnceProperty
+from lisp.core.has_properties import HasProperties
+from lisp.core.properties import Property, WriteOnceProperty
 from lisp.core.rwait import RWait
 from lisp.core.signal import Signal
 from lisp.core.util import EqEnum

@@ -18,13 +18,14 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from lisp.backend.media_element import MediaElement, ElementType
-from lisp.core.has_properties import Property
+from lisp.core.properties import Property, LiveProperty
 
 
 class GstProperty(Property):
 
-    def __init__(self, element_name, default=None, gst_name=None, adapter=None):
-        super().__init__(default=default)
+    def __init__(self, element_name, default=None, gst_name=None, adapter=None,
+                 **meta):
+        super().__init__(default=default, **meta)
 
         self.element_name = element_name
         self.gst_name = gst_name
@@ -41,14 +42,15 @@ class GstProperty(Property):
             getattr(instance, self.element_name).set_property(name, value)
 
 
-class GstRuntimeProperty:
+class GstLiveProperty(LiveProperty):
 
-    def __init__(self, element_name, property_name, adapter=None):
+    def __init__(self, element_name, property_name, adapter=None, **meta):
+        super().__init__(**meta)
         self.element_name = element_name
         self.property_name = property_name
         self.adapter = adapter
 
-    def __get__(self, instance, cls):
+    def __get__(self, instance, owner=None):
         if instance is None:
             return self
         else:

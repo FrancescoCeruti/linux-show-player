@@ -20,7 +20,8 @@
 from abc import abstractmethod
 from enum import Enum
 
-from lisp.core.has_properties import HasProperties, Property
+from lisp.core.has_properties import HasProperties
+from lisp.core.properties import Property
 from lisp.core.signal import Signal
 
 

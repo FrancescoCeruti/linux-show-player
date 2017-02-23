@@ -18,8 +18,8 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from lisp.application import Application
-from lisp.core.has_properties import Property
 from lisp.core.plugin import Plugin
+from lisp.core.properties import Property
 from lisp.cues.cue import Cue, CueAction
 from lisp.plugins.controller import protocols
 from lisp.plugins.controller.controller_settings import ControllerSettings
@@ -37,7 +37,7 @@ class Controller(Plugin):
         self.__protocols = {}
 
         # Register a new Cue property to store settings
-        Cue.register_property('controller', Property(default={}))
+        Cue.controller = Property(default={})
 
         # Listen cue_model changes
         Application().cue_model.item_added.connect(self.__cue_added)

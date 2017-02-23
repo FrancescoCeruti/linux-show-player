@@ -22,7 +22,7 @@ import math
 from PyQt5.QtCore import QT_TRANSLATE_NOOP
 
 from lisp.backend.media_element import MediaType
-from lisp.core.has_properties import Property
+from lisp.core.properties import Property
 from lisp.modules.gst_backend.gi_repository import Gst, GstApp
 from lisp.modules.gst_backend.gst_element import GstSrcElement
 

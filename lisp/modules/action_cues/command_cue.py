@@ -23,8 +23,8 @@ from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QLineEdit, QCheckBox
 
 from lisp.core.decorators import async
-from lisp.core.has_properties import Property
-from lisp.cues.cue import Cue, CueState, CueAction
+from lisp.core.properties import Property
+from lisp.cues.cue import Cue, CueAction
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
 from lisp.ui.settings.settings_page import SettingsPage
 from lisp.ui.ui_utils import translate

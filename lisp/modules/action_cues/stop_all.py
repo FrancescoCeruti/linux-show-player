@@ -22,7 +22,7 @@ from PyQt5.QtWidgets import QComboBox
 from PyQt5.QtWidgets import QVBoxLayout, QGroupBox
 
 from lisp.application import Application
-from lisp.core.has_properties import Property
+from lisp.core.properties import Property
 from lisp.cues.cue import Cue, CueAction
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
 from lisp.ui.settings.settings_page import SettingsPage

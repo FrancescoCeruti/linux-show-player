@@ -18,8 +18,8 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from lisp.application import Application
-from lisp.core.has_properties import Property
 from lisp.core.plugin import Plugin
+from lisp.core.properties import Property
 from lisp.cues.cue import Cue
 from lisp.plugins.triggers.triggers_handler import CueHandler
 from lisp.plugins.triggers.triggers_settings import TriggersSettings
@@ -34,7 +34,7 @@ class Triggers(Plugin):
         self.__handlers = {}
 
         # Register a Cue property to store settings
-        Cue.register_property('triggers', Property({}))
+        Cue.triggers = Property({})
         # Cue.triggers -> {trigger: [(target_id, action), ...]}
 
         # Register SettingsPage

@@ -26,8 +26,8 @@ from ola.OlaClient import OLADNotRunningException, OlaClient
 from lisp.application import Application
 from lisp.core.clock import Clock
 from lisp.core.configuration import config
-from lisp.core.has_properties import Property
 from lisp.core.plugin import Plugin
+from lisp.core.properties import Property
 from lisp.core.signal import Connection
 from lisp.core.util import time_tuple
 from lisp.cues.cue import Cue
@@ -160,7 +160,7 @@ class Timecode(Plugin):
         self.__cues = set()
 
         # Register a new Cue property to store settings
-        Cue.register_property('timecode', Property(default={}))
+        Cue.timecode = Property(default={})
 
         # Register cue-settings-page
         CueSettingsRegistry().add_item(TimecodeCueSettings, MediaCue)

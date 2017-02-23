@@ -22,7 +22,7 @@ from PyQt5.QtWidgets import QVBoxLayout, QSizePolicy, QDialogButtonBox,\
     QDialog, QAbstractItemView, QHeaderView, QTableView
 
 from lisp.application import Application
-from lisp.core.has_properties import Property
+from lisp.core.properties import Property
 from lisp.cues.cue import Cue, CueAction
 from lisp.ui.cuelistdialog import CueSelectDialog
 from lisp.ui.qdelegates import CueActionDelegate, CueSelectionDelegate

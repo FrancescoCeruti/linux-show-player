@@ -20,7 +20,7 @@
 import weakref
 
 from lisp.backend.media import Media, MediaState
-from lisp.core.has_properties import Property
+from lisp.core.properties import Property
 from lisp.modules.gst_backend import elements
 from lisp.modules.gst_backend.gi_repository import Gst
 
