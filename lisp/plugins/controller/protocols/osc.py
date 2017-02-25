@@ -93,6 +93,7 @@ class OscMessageDialog(QDialog):
         self.model.dataChanged.connect(self.__argument_changed)
 
         self.view = OscArgumentView(parent=self.groupBox)
+        self.view.doubleClicked.connect(self.__update_editor)
         self.view.setModel(self.model)
         self.groupBox.layout().addWidget(self.view, 2, 0, 1, 2)
 
@@ -121,21 +122,28 @@ class OscMessageDialog(QDialog):
         if self.model.rowCount() and self.view.currentIndex().row():
             self.model.removeRow(self.view.currentIndex().row())
 
+    def __update_editor(self, model_index):
+        print("QModelIndex: ", model_index.row(), model_index.column())
+        column = model_index.column()
+        row = model_index.row()
+        if column == 1:
+            model = model_index.model()
+            osc_type = model.rows[row][0]
+            print(osc_type)
+            delegate = self.view.itemDelegate(model_index)
+            delegate.updateEditor(OscMessageType(osc_type))
+
     def __argument_changed(self, index_topleft, index_bottomright, roles):
         if not (Qt.EditRole in roles):
             return
 
-        model = index_bottomright.model()
+        model = self.model
         curr_row = index_topleft.row()
         model_row = model.rows[curr_row]
         curr_col = index_bottomright.column()
         osc_type = model_row[0]
 
         if curr_col == 0:
-            index = model.createIndex(curr_row, 1)
-            delegate = self.view.itemDelegate(index)
-            delegate.updateEditor(OscMessageType[osc_type])
-
             if osc_type == 'Integer' or osc_type == 'Float':
                 model_row[1] = 0
             elif osc_type == 'Bool':
