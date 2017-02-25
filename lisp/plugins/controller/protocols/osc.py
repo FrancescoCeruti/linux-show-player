@@ -123,13 +123,11 @@ class OscMessageDialog(QDialog):
             self.model.removeRow(self.view.currentIndex().row())
 
     def __update_editor(self, model_index):
-        print("QModelIndex: ", model_index.row(), model_index.column())
         column = model_index.column()
         row = model_index.row()
         if column == 1:
             model = model_index.model()
             osc_type = model.rows[row][0]
-            print(osc_type)
             delegate = self.view.itemDelegate(model_index)
             delegate.updateEditor(OscMessageType(osc_type))
 
