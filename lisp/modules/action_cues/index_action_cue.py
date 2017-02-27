@@ -27,12 +27,13 @@ from lisp.cues.cue import Cue, CueAction
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
 from lisp.ui.settings.settings_page import SettingsPage
 from lisp.ui.ui_utils import translate
+from lisp.ui.widgets import CueActionComboBox
 
 
 class IndexActionCue(Cue):
     Name = QT_TRANSLATE_NOOP('CueName', 'Index Action')
 
-    target_index = Property(default=-1)
+    target_index = Property(default=0)
     relative = Property(default=True)
     action = Property(default=CueAction.Stop.value)
 
@@ -62,7 +63,8 @@ class IndexActionCueSettings(SettingsPage):
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
-        self._cue_index = -1
+        self._cue_index = 0
+        self._target_class = Cue
 
         self.indexGroup = QGroupBox(self)
         self.indexGroup.setLayout(QGridLayout())
@@ -73,6 +75,7 @@ class IndexActionCueSettings(SettingsPage):
         self.indexGroup.layout().addWidget(self.relativeCheck, 0, 0, 1, 2)
 
         self.targetIndexSpin = QSpinBox(self)
+        self.targetIndexSpin.editingFinished.connect(self._update_action_combo)
         self.indexGroup.layout().addWidget(self.targetIndexSpin, 1, 0)
 
         self.targetIndexLabel = QLabel(self)
@@ -82,10 +85,9 @@ class IndexActionCueSettings(SettingsPage):
         self.actionGroup.setLayout(QVBoxLayout(self.actionGroup))
         self.layout().addWidget(self.actionGroup)
 
-        self.actionCombo = QComboBox(self.actionGroup)
-        for action in CueAction:
-            self.actionCombo.addItem(
-                translate('CueAction', action.name), action.value)
+        self.actionCombo = CueActionComboBox(self._target_class,
+                                             mode=CueActionComboBox.Mode.Value,
+                                             parent=self.actionGroup)
         self.actionGroup.layout().addWidget(self.actionCombo)
 
         self.retranslateUi()
@@ -121,9 +123,33 @@ class IndexActionCueSettings(SettingsPage):
         self._cue_index = settings.get('index', -1)
 
         self.relativeCheck.setChecked(settings.get('relative', True))
-        self.targetIndexSpin.setValue(settings.get('target_index', -1))
+        self.targetIndexSpin.setValue(settings.get('target_index', 0))
         self.actionCombo.setCurrentText(
             translate('CueAction', settings.get('action', '')))
+
+    def _update_action_combo(self):
+        if self.relativeCheck.isChecked():
+            index = self._cue_index + self.targetIndexSpin.value()
+        else:
+            index = self.targetIndexSpin.value()
+
+        try:
+            target = Application().layout.model_adapter.item(index)
+            target_class = target.__class__
+        except IndexError:
+            target_class = Cue
+
+        if target_class is not self._target_class:
+            self._target_class = target_class
+
+            self.actionGroup.layout().removeWidget(self.actionCombo)
+            self.actionCombo.deleteLater()
+
+            self.actionCombo = CueActionComboBox(
+                self._target_class,
+                mode=CueActionComboBox.Mode.Value,
+                parent=self.actionGroup)
+            self.actionGroup.layout().addWidget(self.actionCombo)
 
     def _relative_changed(self):
         max_index = len(Application().cue_model) - 1
