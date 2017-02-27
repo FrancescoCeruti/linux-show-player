@@ -41,19 +41,24 @@ class RenameCues(Module):
         MainWindow().menuTools.addAction(self.menuAction)
 
     def rename(self):
-        # Warning if no cue is selected
+        # Initiate rename windows
+        renameUi = RenameUi(MainWindow())
+        # Different behaviour if no cues are selected
         if Application().layout.get_selected_cues() == []:
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Information)
-            msg.setText('You have to select some cues to rename them')
+            msg.setText(translate('RenameCues',
+                "No cues are selected. Rename tool will display all your cues.\n"))
             msg.exec_()
-        else:
-            renameUi = RenameUi(MainWindow())
-            renameUi.get_cues_name()
-            renameUi.exec_()
 
-            if renameUi.result() == QDialog.Accepted:
-                renameUi.record_cues_name()
+            renameUi.get_all_cues()
+        else:
+            renameUi.get_selected_cues()
+
+        renameUi.exec_()
+
+        if renameUi.result() == QDialog.Accepted:
+            renameUi.record_cues_name()
 
     def terminate(self):
         MainWindow().menuTools.removeAction(self.menuAction)

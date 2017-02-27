@@ -25,11 +25,10 @@ class RenameCueAction(Action):
     # Store names for undo/redo in a dict like that : {'id': name}
     names = {}
 
-    def __init__(self, new_names):
-        """Get and store names"""
-        for i, new_cue_name in enumerate(new_names):
-            cue = Application().layout.get_selected_cues()[i]
-            self.names[cue.id] = new_cue_name
+    def __init__(self, new_cue_list):
+        """Store new names with id"""
+        for renamed_cue in new_cue_list:
+            self.names[renamed_cue['id']] = renamed_cue['cue_preview']
 
     def do(self):
         """Use stored name and exchange with current names"""
