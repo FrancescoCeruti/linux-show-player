@@ -18,6 +18,7 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import re
+import socket
 from collections import Mapping
 from enum import Enum
 from os import listdir
@@ -91,6 +92,23 @@ def greatest_common_superclass(instances):
             return x
 
 
+def get_lan_ip():
+    """Return active interface LAN IP, or localhost if no address is assigned.
+
+    From: http://stackoverflow.com/a/28950776/5773767
+    """
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    try:
+        # Doesn't have to be reachable
+        s.connect(('10.255.255.255', 0))
+        ip = s.getsockname()[0]
+    except:
+        ip = '127.0.0.1'
+    finally:
+        s.close()
+    return ip
+
+
 def subclasses(cls):
     for subclass in cls.__subclasses__():
         yield from subclasses(subclass)
@@ -110,7 +128,7 @@ def natural_keys(text):
 
     "z23a" -> ["z", 23, "a"]
 
-    From: http://stackoverflow.com/questions/5967500/how-to-correctly-sort-a-string-with-a-number-inside
+    From: http://stackoverflow.com/a/5967539/5773767
 
     .. highlight::
 
@@ -138,7 +156,7 @@ def rhasattr(obj, attr):
 def rsetattr(obj, attr, value):
     """Set object's attribute, can use dot notation.
 
-    From: http://stackoverflow.com/questions/31174295/getattr-and-setattr-on-nested-objects
+    From: http://stackoverflow.com/a/31174427/5773767
 
     .. highlight::
 
@@ -159,7 +177,7 @@ rgetattr_sentinel = object()
 def rgetattr(obj, attr, default=rgetattr_sentinel):
     """Get object's attribute, can use dot notation.
 
-    From: http://stackoverflow.com/questions/31174295/getattr-and-setattr-on-nested-objects
+    From: http://stackoverflow.com/a/31174427/5773767
 
     .. highlight::
 

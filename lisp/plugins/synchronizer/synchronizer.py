@@ -26,6 +26,7 @@ from PyQt5.QtWidgets import QMenu, QAction, QMessageBox
 from lisp.application import Application
 from lisp.core.plugin import Plugin
 from lisp.core.signal import Connection
+from lisp.core.util import get_lan_ip
 from lisp.ui.mainwindow import MainWindow
 from lisp.ui.ui_utils import translate
 from .peers_dialog import PeersDialog
@@ -60,17 +61,12 @@ class Synchronizer(Plugin):
         manager.exec_()
 
     def show_ip(self):
-        ip = translate('Synchronizer', 'Your IP is:') + ' '
-        try:
-            ip += socket.gethostbyname(socket.gethostname())
-        except OSError:
-            ip = '127.0.0.1'
+        ip = translate('Synchronizer', 'Your IP is:') + ' ' + str(get_lan_ip())
         QMessageBox.information(MainWindow(), ' ', ip)
 
     def reset(self):
         self.peers.clear()
         self.cue_media.clear()
-        self.syncMenu.clear()
 
     def remote_execute(self, cue):
         for peer in self.peers:
