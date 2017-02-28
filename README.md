@@ -13,93 +13,17 @@ For bugs/requests an issue can be open on the GitHub issues-tracker, for everyth
 
 ### Installation
 
-####1. Package installation
+You can download an [AppImage](http://appimage.org/) bundle of LiSP from the release page, once downloaded make the file executable.
+Now you should be able to run LiSP by double-clicking the file.
 
-**For Ubuntu/Debian users:** Follow the instructions on the [releases page](https://github.com/FrancescoCeruti/linux-show-player/releases) on GitHub.
+Tested on the following systems:
+ * Debian 8
+ * Ubuntu 16.04
+ * Fedora 24
 
-**For ArchLinux users:** there is an AUR package, serch for _linux-show-player_.
+<br />Otherwise follow the instructions on the [wiki](https://github.com/FrancescoCeruti/linux-show-player/wiki/Installation) 
 
-####2. Manual Installation
-
-On Debain/Ubuntu and derivates you can build the ".deb" packages, the needed file can be found in _dist/Debian/_
-
-#####2.1 Get the source
-
-Download the archive from the release page on GitHub.
-
-#####2.2 Install (and build) dependencies
-
-**Note:** _Python 3.5 required_
-
-**PyPI packages (auto-installed when using pip):**
-
-<pre>
-* mido
-* python-rtmidi
-* JACK-Client
-* sortedcontainers
-</pre>
-
-**Arch-Linux required packages:**
-
-<pre>
-* python
-* python-pyqt5
-* python-gobject
-* python-setuptools
-* qt5-svg
-* qt5-translations
-* gstreamer 1.x
-* gst-plugins-base
-* gst-plugins-good
-* gst-plugins-ugly
-* gst-plugins-bad
-* gst-libav			(optional, for larger format support)
-* portmidi			(optional, for portmidi support)
-</pre>
-
-**Debian-based distributions required packages:**
-
-<pre>
-* python3
-* python3-dev				(build)
-* python3-pyqt5
-* python3-gi
-* python3-setuptools
-* python3-pip
-* python3-wheel
-* libqt5svg5
-* libqt5svg5-dev
-* qttranslations5-l10n
-* gstreamer1.0-plugins-base
-* gstreamer1.0-plugins-bad
-* gstreamer1.0-plugins-good
-* gstreamer1.0-plugins-ugly
-* gstreamer1.0-libav
-* python3-cffi
-* libffi-dev				(build)
-* libportmidi-dev			(build)
-* libportmidi0
-* libasound2-dev			(build)
-* asound2
-* libjack-jackd2-dev		(build)
-* jackd2
-</pre>
-
-#####2.3 Install LiSP
-
-    # pip(3) install --pre <archive-name>
-
-for example, to install the latest release from the downloaded zip file:
-	
-    # pip(3) install --pre linux-show-player-0.3.1.zip
-
-or
-
-    # git clone https://github.com/FrancescoCeruti/linux-show-player
-    # pip install --pre linux-show-player/
-
-to install the latest development version from git **(May be unstable and/or contains unfished features)**.
+---
 
 ### Usage
 
@@ -108,5 +32,6 @@ Use the installed launcher from the menu (for the package installation), or
     $ linux-show-player                                  # Launch the program
     $ linux-show-player -l [debug/warning/info]          # Launch with different log options
     $ linux-show-player -f <file/path>                   # Open a saved session
+    $ linux-show-plater --locale <locale>                # Launch using the given locale
 
-*User documentation (in progress) can be found [here](https://github.com/FrancescoCeruti/linux-show-player/wiki)*
+*User documentation downloaded under the GitHub release page*
