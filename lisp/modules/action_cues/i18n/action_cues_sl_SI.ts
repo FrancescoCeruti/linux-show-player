@@ -95,7 +95,7 @@
     <message>
         <location filename="../index_action_cue.py" line="33"/>
         <source>Index Action</source>
-        <translation type="unfinished"/>
+        <translation>Akcija indeksa</translation>
     </message>
 </context>
 <context>
@@ -103,22 +103,22 @@
     <message>
         <location filename="../index_action_cue.py" line="94"/>
         <source>Index</source>
-        <translation type="unfinished"/>
+        <translation>Indeks</translation>
     </message>
     <message>
         <location filename="../index_action_cue.py" line="95"/>
         <source>Use a relative index</source>
-        <translation type="unfinished"/>
+        <translation>Uporabi relativni indeks</translation>
     </message>
     <message>
         <location filename="../index_action_cue.py" line="97"/>
         <source>Target index</source>
-        <translation type="unfinished"/>
+        <translation>Ciljni indeks</translation>
     </message>
     <message>
         <location filename="../index_action_cue.py" line="99"/>
         <source>Action</source>
-        <translation type="unfinished"/>
+        <translation>Akcija</translation>
     </message>
 </context>
 <context>
@@ -192,12 +192,12 @@
     <message>
         <location filename="../index_action_cue.py" line="58"/>
         <source>Action Settings</source>
-        <translation type="unfinished"/>
+        <translation>Nastavitve akcije</translation>
     </message>
     <message>
         <location filename="../stop_all.py" line="65"/>
         <source>Stop Settings</source>
-        <translation type="unfinished"/>
+        <translation>Nastavitve ustavitve</translation>
     </message>
 </context>
 <context>
@@ -205,7 +205,7 @@
     <message>
         <location filename="../stop_all.py" line="87"/>
         <source>Stop Action</source>
-        <translation type="unfinished"/>
+        <translation>Akcija ustavitve</translation>
     </message>
 </context>
 <context>

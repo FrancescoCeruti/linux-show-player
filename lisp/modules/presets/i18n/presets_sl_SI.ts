@@ -4,12 +4,12 @@
     <message>
         <location filename="../presets_ui.py" line="215"/>
         <source>Create Cue</source>
-        <translation type="unfinished"/>
+        <translation>Ustvari vrsto</translation>
     </message>
     <message>
         <location filename="../presets_ui.py" line="216"/>
         <source>Load on selected Cues</source>
-        <translation type="unfinished"/>
+        <translation>Naloži izbrane vrste</translation>
     </message>
 </context>
 <context>
@@ -17,122 +17,122 @@
     <message>
         <location filename="../presets_ui.py" line="364"/>
         <source>Presets</source>
-        <translation type="unfinished"/>
+        <translation>Pred-nastavitve</translation>
     </message>
     <message>
         <location filename="../presets.py" line="52"/>
         <source>Load preset</source>
-        <translation type="unfinished"/>
+        <translation>Naloži pred-nastavitve</translation>
     </message>
     <message>
         <location filename="../presets.py" line="56"/>
         <source>Save as preset</source>
-        <translation type="unfinished"/>
+        <translation>Shrani kot pred-nastavitev</translation>
     </message>
     <message>
         <location filename="../presets_ui.py" line="52"/>
         <source>Cannot scan presets</source>
-        <translation type="unfinished"/>
+        <translation>Ne morem prebrat pred-nastavitve</translation>
     </message>
     <message>
         <location filename="../presets_ui.py" line="60"/>
         <source>Error while deleting preset &quot;{}&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Napaka med brisanjem pred-nastavitve &quot;{}&quot;</translation>
     </message>
     <message>
         <location filename="../presets_ui.py" line="68"/>
         <source>Cannot load preset &quot;{}&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Ne morem naložit pred-nastavitve &quot;{}&quot;</translation>
     </message>
     <message>
         <location filename="../presets_ui.py" line="76"/>
         <source>Cannot save preset &quot;{}&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Ne morem shranit pred-nastavitev &quot;{}&quot;</translation>
     </message>
     <message>
         <location filename="../presets_ui.py" line="84"/>
         <source>Cannot rename preset &quot;{}&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Ne morem preimenovat pred-nastavitve &quot;{}&quot;</translation>
     </message>
     <message>
         <location filename="../presets_ui.py" line="96"/>
         <source>Select Preset</source>
-        <translation type="unfinished"/>
+        <translation>Izberi pred-nastavitve</translation>
     </message>
     <message>
         <location filename="../presets_ui.py" line="109"/>
         <source>Preset already exists, overwrite?</source>
-        <translation type="unfinished"/>
+        <translation>Pred-nastavitev že obstaja, prepišem?</translation>
     </message>
     <message>
         <location filename="../presets_ui.py" line="419"/>
         <source>Preset name</source>
-        <translation type="unfinished"/>
+        <translation>Ime pred-nastavitve</translation>
     </message>
     <message>
         <location filename="../presets_ui.py" line="211"/>
         <source>Add</source>
-        <translation type="unfinished"/>
+        <translation>Dodaj</translation>
     </message>
     <message>
         <location filename="../presets_ui.py" line="212"/>
         <source>Rename</source>
-        <translation type="unfinished"/>
+        <translation>Preimenuj</translation>
     </message>
     <message>
         <location filename="../presets_ui.py" line="213"/>
         <source>Edit</source>
-        <translation type="unfinished"/>
+        <translation>Uredi</translation>
     </message>
     <message>
         <location filename="../presets_ui.py" line="214"/>
         <source>Remove</source>
-        <translation type="unfinished"/>
+        <translation>Odstrani</translation>
     </message>
     <message>
         <location filename="../presets_ui.py" line="217"/>
         <source>Export selected</source>
-        <translation type="unfinished"/>
+        <translation>Izvozi izbrano</translation>
     </message>
     <message>
         <location filename="../presets_ui.py" line="218"/>
         <source>Import</source>
-        <translation type="unfinished"/>
+        <translation>Uvozi</translation>
     </message>
     <message>
         <location filename="../presets_ui.py" line="301"/>
         <source>Warning</source>
-        <translation type="unfinished"/>
+        <translation>Opozorilo</translation>
     </message>
     <message>
         <location filename="../presets_ui.py" line="256"/>
         <source>The same name is already used!</source>
-        <translation type="unfinished"/>
+        <translation>Ime je že v uporabi!</translation>
     </message>
     <message>
         <location filename="../presets_ui.py" line="301"/>
         <source>Cannot create a cue from this preset: {}</source>
-        <translation type="unfinished"/>
+        <translation>Ne morem ustvarit vrste iz te pred-nastavitve: &quot;{}&quot;</translation>
     </message>
     <message>
         <location filename="../presets_ui.py" line="339"/>
         <source>Cannot export correctly.</source>
-        <translation type="unfinished"/>
+        <translation>Ne morem pravilno izvozit.</translation>
     </message>
     <message>
         <location filename="../presets_ui.py" line="351"/>
         <source>Some presets already exists, overwrite?</source>
-        <translation type="unfinished"/>
+        <translation>Nekatere pred-nastavitve že obstajajo, prepišem?</translation>
     </message>
     <message>
         <location filename="../presets_ui.py" line="364"/>
         <source>Cannot import correctly.</source>
-        <translation type="unfinished"/>
+        <translation>Ne morem pravilno uvozit.</translation>
     </message>
     <message>
         <location filename="../presets_ui.py" line="420"/>
         <source>Cue type</source>
-        <translation type="unfinished"/>
+        <translation>Tip vrste</translation>
     </message>
 </context>
 </TS>

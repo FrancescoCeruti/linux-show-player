@@ -4,22 +4,22 @@
     <message>
         <location filename="../ui/about.py" line="53"/>
         <source>Authors</source>
-        <translation type="unfinished"/>
+        <translation>Avtorji</translation>
     </message>
     <message>
         <location filename="../ui/about.py" line="53"/>
         <source>Contributors</source>
-        <translation type="unfinished"/>
+        <translation>Prispevkarji</translation>
     </message>
     <message>
         <location filename="../ui/about.py" line="53"/>
         <source>Translators</source>
-        <translation type="unfinished"/>
+        <translation>Prevajalci</translation>
     </message>
     <message>
         <location filename="../ui/about.py" line="75"/>
         <source>About Linux Show Player</source>
-        <translation type="unfinished"/>
+        <translation>Opis Linux Show Player-ja</translation>
     </message>
 </context>
 <context>
@@ -239,17 +239,17 @@
     <message>
         <location filename="../ui/widgets/cueaction_combobox.py" line="29"/>
         <source>FadeInStart</source>
-        <translation type="unfinished"/>
+        <translation>Ojačevanje ob začetku</translation>
     </message>
     <message>
         <location filename="../ui/widgets/cueaction_combobox.py" line="30"/>
         <source>FadeOutStop</source>
-        <translation type="unfinished"/>
+        <translation>Pojemanje ob ustavitvi</translation>
     </message>
     <message>
         <location filename="../ui/widgets/cueaction_combobox.py" line="31"/>
         <source>FadeOutPause</source>
-        <translation type="unfinished"/>
+        <translation>Pojemanje ob premoru</translation>
     </message>
 </context>
 <context>
@@ -257,12 +257,12 @@
     <message>
         <location filename="../cues/cue_actions.py" line="48"/>
         <source>Cue settings changed: &quot;{}&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Nastavitev vrste spremenjene: &quot;{}&quot;</translation>
     </message>
     <message>
         <location filename="../cues/cue_actions.py" line="76"/>
         <source>Cues settings changed.</source>
-        <translation type="unfinished"/>
+        <translation>Nastavitev vrst spremenjene.</translation>
     </message>
 </context>
 <context>
@@ -313,7 +313,7 @@
     <message>
         <location filename="../cues/media_cue.py" line="33"/>
         <source>Media Cue</source>
-        <translation type="unfinished"/>
+        <translation>Medijska vrsta</translation>
     </message>
 </context>
 <context>
@@ -346,47 +346,47 @@
     <message>
         <location filename="../ui/settings/pages/cue_app_settings.py" line="55"/>
         <source>Interrupt Fade</source>
-        <translation type="unfinished"/>
+        <translation>Prekini prehod</translation>
     </message>
     <message>
         <location filename="../ui/settings/pages/cue_app_settings.py" line="56"/>
         <source>Fade Action</source>
-        <translation type="unfinished"/>
+        <translation>Akcija prehoda</translation>
     </message>
     <message>
         <location filename="../ui/settings/pages/cue_general.py" line="161"/>
         <source>Behaviours</source>
-        <translation type="unfinished"/>
+        <translation>Obnašanja</translation>
     </message>
     <message>
         <location filename="../ui/settings/pages/cue_general.py" line="162"/>
         <source>Pre/Post Wait</source>
-        <translation type="unfinished"/>
+        <translation>Pred/Po čakanje</translation>
     </message>
     <message>
         <location filename="../ui/settings/pages/cue_general.py" line="163"/>
         <source>Fade In/Out</source>
-        <translation type="unfinished"/>
+        <translation>Prehod v/iz</translation>
     </message>
     <message>
         <location filename="../ui/settings/pages/cue_general.py" line="166"/>
         <source>Start action</source>
-        <translation type="unfinished"/>
+        <translation>Začetna akcija</translation>
     </message>
     <message>
         <location filename="../ui/settings/pages/cue_general.py" line="168"/>
         <source>Default action to start the cue</source>
-        <translation type="unfinished"/>
+        <translation>Privzeta akcija za zagon vrste</translation>
     </message>
     <message>
         <location filename="../ui/settings/pages/cue_general.py" line="171"/>
         <source>Stop action</source>
-        <translation type="unfinished"/>
+        <translation>Ustavi akcijo</translation>
     </message>
     <message>
         <location filename="../ui/settings/pages/cue_general.py" line="173"/>
         <source>Default action to stop the cue</source>
-        <translation type="unfinished"/>
+        <translation>Privzeta akcija ob ustavitvi vrste</translation>
     </message>
 </context>
 <context>
@@ -394,17 +394,17 @@
     <message>
         <location filename="../ui/widgets/fade_combobox.py" line="28"/>
         <source>Linear</source>
-        <translation type="unfinished"/>
+        <translation>Linearno</translation>
     </message>
     <message>
         <location filename="../ui/widgets/fade_combobox.py" line="29"/>
         <source>Quadratic</source>
-        <translation type="unfinished"/>
+        <translation>Kvadratno</translation>
     </message>
     <message>
         <location filename="../ui/widgets/fade_combobox.py" line="30"/>
         <source>Quadratic2</source>
-        <translation type="unfinished"/>
+        <translation>Kvadratno2</translation>
     </message>
 </context>
 <context>
@@ -412,12 +412,12 @@
     <message>
         <location filename="../ui/widgets/fade_edit.py" line="51"/>
         <source>Duration (sec)</source>
-        <translation type="unfinished"/>
+        <translation>Trajanje (s)</translation>
     </message>
     <message>
         <location filename="../ui/widgets/fade_edit.py" line="52"/>
         <source>Curve</source>
-        <translation type="unfinished"/>
+        <translation>Krivulja</translation>
     </message>
 </context>
 <context>
@@ -425,12 +425,12 @@
     <message>
         <location filename="../ui/settings/pages/cue_general.py" line="188"/>
         <source>Fade In</source>
-        <translation type="unfinished"/>
+        <translation>Ojačevanje</translation>
     </message>
     <message>
         <location filename="../ui/settings/pages/cue_general.py" line="189"/>
         <source>Fade Out</source>
-        <translation type="unfinished"/>
+        <translation>Pojemanje</translation>
     </message>
 </context>
 <context>
@@ -471,22 +471,22 @@
     <message>
         <location filename="../layouts/list_layout/layout.py" line="64"/>
         <source>To copy cues drag them while pressing CTRL</source>
-        <translation type="unfinished"/>
+        <translation>Za kopiranje vrst, med vlečenjem pridržite SHIFT</translation>
     </message>
     <message>
         <location filename="../layouts/cart_layout/layout.py" line="55"/>
         <source>To copy cues drag them while pressing SHIFT</source>
-        <translation type="unfinished"/>
+        <translation>Za kopiranje vrst, med vlečenjem pridržite SHIFT</translation>
     </message>
     <message>
         <location filename="../layouts/list_layout/layout.py" line="62"/>
         <source>CTRL + Left Click to select cues</source>
-        <translation type="unfinished"/>
+        <translation>CTRL + Levi klik, za izbor vrst</translation>
     </message>
     <message>
         <location filename="../layouts/list_layout/layout.py" line="66"/>
         <source>To move cues drag them</source>
-        <translation type="unfinished"/>
+        <translation>Za premikanje vrst jih povlecite</translation>
     </message>
 </context>
 <context>
@@ -592,62 +592,62 @@
     <message>
         <location filename="../layouts/list_layout/control_buttons.py" line="63"/>
         <source>Interrupt all</source>
-        <translation type="unfinished"/>
+        <translation>Prekini vse</translation>
     </message>
     <message>
         <location filename="../layouts/list_layout/control_buttons.py" line="67"/>
         <source>Fade-Out all</source>
-        <translation type="unfinished"/>
+        <translation>Pojemanje vse</translation>
     </message>
     <message>
         <location filename="../layouts/list_layout/control_buttons.py" line="68"/>
         <source>Fade-In all</source>
-        <translation type="unfinished"/>
+        <translation>Ojačevanje vse</translation>
     </message>
     <message>
         <location filename="../layouts/list_layout/list_layout_settings.py" line="116"/>
         <source>Use fade</source>
-        <translation type="unfinished"/>
+        <translation>Uporabi prehod</translation>
     </message>
     <message>
         <location filename="../layouts/list_layout/list_layout_settings.py" line="117"/>
         <source>Stop Cue</source>
-        <translation type="unfinished"/>
+        <translation>Ustavi vrsto</translation>
     </message>
     <message>
         <location filename="../layouts/list_layout/list_layout_settings.py" line="118"/>
         <source>Pause Cue</source>
-        <translation type="unfinished"/>
+        <translation>Premor vrste</translation>
     </message>
     <message>
         <location filename="../layouts/list_layout/list_layout_settings.py" line="119"/>
         <source>Restart Cue</source>
-        <translation type="unfinished"/>
+        <translation>Ponovno zaženi vrsto</translation>
     </message>
     <message>
         <location filename="../layouts/list_layout/list_layout_settings.py" line="120"/>
         <source>Interrupt Cue</source>
-        <translation type="unfinished"/>
+        <translation>Prekini vrsto</translation>
     </message>
     <message>
         <location filename="../layouts/list_layout/list_layout_settings.py" line="121"/>
         <source>Stop All</source>
-        <translation type="unfinished"/>
+        <translation>Ustavi vse</translation>
     </message>
     <message>
         <location filename="../layouts/list_layout/list_layout_settings.py" line="122"/>
         <source>Pause All</source>
-        <translation type="unfinished"/>
+        <translation>V premor vse</translation>
     </message>
     <message>
         <location filename="../layouts/list_layout/list_layout_settings.py" line="123"/>
         <source>Restart All</source>
-        <translation type="unfinished"/>
+        <translation>Ponovno zaženi vse</translation>
     </message>
     <message>
         <location filename="../layouts/list_layout/list_layout_settings.py" line="124"/>
         <source>Interrupt All</source>
-        <translation type="unfinished"/>
+        <translation>Prekini vse</translation>
     </message>
 </context>
 <context>
@@ -872,12 +872,12 @@
     <message>
         <location filename="../modules/media_cue_menus.py" line="38"/>
         <source>Audio cue (from file)</source>
-        <translation type="unfinished"/>
+        <translation>Avdio vrsta (iz datoteke)</translation>
     </message>
     <message>
         <location filename="../modules/media_cue_menus.py" line="59"/>
         <source>Select media files</source>
-        <translation type="unfinished"/>
+        <translation>Izberi medijske datoteke</translation>
     </message>
 </context>
 <context>
@@ -941,7 +941,7 @@
     <message>
         <location filename="../ui/settings/pages/cue_app_settings.py" line="29"/>
         <source>Cue Settings</source>
-        <translation type="unfinished"/>
+        <translation>Nastavitve vrste</translation>
     </message>
 </context>
 </TS>
