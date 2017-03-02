@@ -34,4 +34,4 @@ Use the installed launcher from the menu (for the package installation), or
     $ linux-show-player -f <file/path>                   # Open a saved session
     $ linux-show-plater --locale <locale>                # Launch using the given locale
 
-*User documentation downloaded under the GitHub release page*
+*User documentation downloaded under the GitHub release page or [viewed online](http://linux-show-player-users.readthedocs.io/en/latest/index.html)*
