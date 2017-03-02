@@ -119,7 +119,7 @@ class OscMessageDialog(QDialog):
         self.model.appendRow(OscMessageType.Int.value, 0)
 
     def __remove_argument(self):
-        if self.model.rowCount() and self.view.currentIndex().row() >= 0:
+        if self.model.rowCount() and self.view.currentIndex().row() > -1:
             self.model.removeRow(self.view.currentIndex().row())
 
     def __update_editor(self, model_index):
@@ -321,7 +321,7 @@ class OscSettings(CueSettingsPage):
             self.oscModel.appendRow(path, types, '{}'.format(arguments)[1:-1], self._default_action)
 
     def __remove_message(self):
-        if self.oscModel.rowCount() and self.OscView.currentIndex().row():
+        if self.oscModel.rowCount() and self.OscView.currentIndex().row() > -1:
             self.oscModel.removeRow(self.OscView.currentIndex().row())
 
 
