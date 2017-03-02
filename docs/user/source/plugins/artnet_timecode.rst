@@ -24,6 +24,7 @@ Timecode Preferences
     :align: center
 
 |
+
 To enable and setup the plugin go to ``File > Preferences > Timecode Settings``.
 
 * **Enable Plugin:** enables/disable the plugin
