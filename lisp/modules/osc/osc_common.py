@@ -27,12 +27,8 @@ from liblo import ServerThread, Address, ServerError
 from lisp.core.configuration import config
 from lisp.layouts.list_layout.layout import ListLayout
 from lisp.ui import elogging
-from lisp.ui.mainwindow import MainWindow
 from lisp.application import Application
-from lisp.cues.cue import CueState
 from lisp.core.signal import Signal
-
-# TODO: add osc log as queue and dialog to show it
 
 
 class OscMessageType(Enum):
@@ -41,65 +37,62 @@ class OscMessageType(Enum):
     Bool = 'Bool'
     String = 'String'
 
-# decorator for OSC callback (pushing messages to log, emits message_event)
-# def __osc_handler(func):
-#    def func_wrapper(path, args, types):
-#        func()
-#        # OscCommon().push_log(path, args, types, src)
-#        OscCommon().new_message.emit(path, args, types)
-#    return func_wrapper
 
-
-# @__osc_handler
-def _go():
-    """triggers GO in ListLayout"""
-    if isinstance(MainWindow().layout, ListLayout):
-        MainWindow().layout.go()
-
-
-# @__osc_handler
-def _list_reset():
-    """reset, stops all cues, sets cursor to Cue index 0 in ListLayout"""
-    if isinstance(MainWindow().layout, ListLayout):
-        for cue in Application().cue_model:
-            cue.stop()
-        MainWindow().layout.set_current_index(0)
-
-
-# @__osc_handler
-def _list_cursor(path, args, types):
-    """sets cursor to given Cue index in ListLayout"""
-    if not isinstance(MainWindow().layout, ListLayout):
-        MainWindow().layout.set_current_index(0)
+def callback_go(_, args, types):
+    if not isinstance(Application().layout, ListLayout):
         return
 
-    if path == '/lisp/list/cursor' and types == 'i':
-        index = args[0]
-        MainWindow().layout.set_current_index(index)
+    if (types == 'i' and args[0] == 1) or types == '':
+        Application().layout.go()
 
 
-# @__osc_handler
-def _pause_all():
-    """triggers global pause all media"""
-    for cue in Application().cue_model:
-        if cue.state == CueState.Running:
-            cue.pause(True)
+def callback_reset(_, args, types):
+    if not isinstance(Application().layout, ListLayout):
+        return
+
+    if (types == 'i' and args[0] == 1) or types == '':
+        Application().layout.interrupt_all()
+        Application().layout.set_current_index(0)
 
 
-# @__osc_handler
-def _play_all():
-    """triggers global play, if pausing"""
-    for cue in Application().cue_model:
-        if cue.state == CueState.Pause:
-            cue.start(True)
+def callback_restart(_, args, types):
+    if not isinstance(Application().layout, ListLayout):
+        return
+
+    if (types == 'i' and args[0] == 1) or types == '':
+        Application().layout.restart_all()
 
 
-# TODO: add fade as option to message?
-# @__osc_handler
-def _stop_all():
-    """triggers global stop, stops all media cues"""
-    for cue in Application().cue_model:
-        cue.stop(True)
+def callback_pause(_, args, types):
+    if not isinstance(Application().layout, ListLayout):
+        return
+
+    if (types == 'i' and args[0] == 1) or types == '':
+        Application().layout.pause_all()
+
+
+def callback_stop(_, args, types):
+    if not isinstance(Application().layout, ListLayout):
+        return
+
+    if (types == 'i' and args[0] == 1) or types == '':
+        Application().layout.stop_all()
+
+
+def callback_select(_, args, types):
+    if not isinstance(Application().layout, ListLayout):
+        return
+
+    if types == 'i' and args[0] > -1:
+        Application().layout.set_current_index(args[0])
+
+
+def callback_interrupt(_, args, types):
+    if not isinstance(Application().layout, ListLayout):
+        return
+
+    if (types == 'i' and args[0] == 1) or types == '':
+        Application().layout.interrupt_all()
 
 
 class OscCommon(metaclass=ABCSingleton):
@@ -109,22 +102,15 @@ class OscCommon(metaclass=ABCSingleton):
         self.__log = deque([], 10)
         self.new_message = Signal()
 
-        # TODO: static paths and callbacks, make it editable through settings dialog
         self.__callbacks = [
-            ['/lisp/list/go', None, _go],
-            ['/lisp/list/reset', None, _list_reset],
-            ['/lisp/list/cursor', 'i', _list_cursor],
-            ['/lisp/pause', None, _pause_all],
-            ['/lisp/play', None, _play_all],
-            ['/lisp/stop', None, _stop_all],
-            [None, None, self.__new_message]
+            ['/lisp/list/go', None, callback_go],
+            ['/lisp/list/reset', None, callback_reset],
+            ['/lisp/list/select', 'i', callback_select],
+            ['/lisp/list/pause', None, callback_pause],
+            ['/lisp/list/restart', None, callback_restart],
+            ['/lisp/list/stop', None, callback_stop],
+            ['/lisp/list/interrupt', None, callback_interrupt]
         ]
-
-    # def push_log(self, path, args, types, src, success=True):
-    #     self.__log.append([path, args, types, src, success])
-    #
-    # def get_log(self):
-    #     return self.__log
 
     def start(self):
         if self.__listening:
@@ -132,8 +118,13 @@ class OscCommon(metaclass=ABCSingleton):
 
         try:
             self.__srv = ServerThread(int(config['OSC']['inport']))
-            for cb in self.__callbacks:
-                self.__srv.add_method(cb[0], cb[1], cb[2])
+
+            if isinstance(Application().layout, ListLayout):
+                for cb in self.__callbacks:
+                    self.__srv.add_method(cb[0], cb[1], cb[2])
+
+            self.__srv.add_method(None, None, self.__new_message)
+
             self.__srv.start()
             self.__listening = True
             elogging.info('OSC: Server started ' + self.__srv.url, dialog=False)
@@ -147,6 +138,10 @@ class OscCommon(metaclass=ABCSingleton):
                 self.__listening = False
             self.__srv.free()
             elogging.info('OSC: Server stopped', dialog=False)
+
+    @property
+    def enabled(self):
+        return config['OSC']['enabled'] == 'True'
 
     @property
     def listening(self):

@@ -44,6 +44,13 @@ class Osc(Protocol):
         if check_module('osc') and OscCommon().listening:
             OscCommon().new_message.connect(self.__new_message)
 
+    def init(self):
+        if OscCommon().enabled:
+            OscCommon().start()
+
+    def reset(self):
+        OscCommon().stop()
+
     def __new_message(self, path, args, types):
         key = Osc.key_from_message(path, types, args)
         self.protocol_event.emit(key)
