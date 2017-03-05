@@ -20,6 +20,7 @@
 
 from ola.OlaClient import OlaClient, OLADNotRunningException
 
+from lisp.ui.ui_utils import translate
 from lisp.core.util import time_tuple
 from lisp.plugins.timecode.timecode_common import TcFormat
 from lisp.plugins.timecode.timecode_protocol import TimecodeProtocol
@@ -39,7 +40,7 @@ class Artnet(TimecodeProtocol):
             self.__client = OlaClient()
         except OLADNotRunningException as e:
             self.__client = None
-            elogging.error('TIMECODE: Could not create OlaClient',
+            elogging.error(translate('Timecode', 'TIMECODE: Could not create OlaClient'),
                            details="{0}".format(e), dialog=False)
 
         self.__last_time = -1

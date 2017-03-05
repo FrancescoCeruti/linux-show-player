@@ -82,4 +82,4 @@ class Timecode(Plugin):
             pass
 
     def __cue_started(self, cue):
-            TimecodeCommon().start(cue)
+        TimecodeCommon().start(cue)
