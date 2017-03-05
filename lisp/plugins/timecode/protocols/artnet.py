@@ -20,13 +20,13 @@
 
 from ola.OlaClient import OlaClient, OLADNotRunningException
 
-from lisp.ui import elogging
 from lisp.core.util import time_tuple
-from lisp.modules.timecode.timecode_backend import TimecodeBackend
-from lisp.modules.timecode.timecode_common import TcFormat
+from lisp.plugins.timecode.timecode_common import TcFormat
+from lisp.plugins.timecode.timecode_protocol import TimecodeProtocol
+from lisp.ui import elogging
 
 
-class Artnet(TimecodeBackend):
+class Artnet(TimecodeProtocol):
     Name = 'ArtNet'
 
     __format__ = {TcFormat.FILM: OlaClient.TIMECODE_FILM,

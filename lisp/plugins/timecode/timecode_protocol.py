@@ -21,8 +21,8 @@ from abc import abstractmethod
 from abc import ABCMeta
 
 
-class TimecodeBackend(metaclass=ABCMeta):
-    """base class for timecode backends"""
+class TimecodeProtocol(metaclass=ABCMeta):
+    """base class for timecode protocol"""
     Name = 'None'
 
     def __init__(self):

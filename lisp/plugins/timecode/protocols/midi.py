@@ -18,14 +18,15 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from mido import Message
+
 from lisp.core.util import time_tuple
-from lisp.ui import elogging
-from lisp.modules.timecode.timecode_backend import TimecodeBackend
-from lisp.modules.timecode.timecode_common import TcFormat
 from lisp.modules.midi.midi_output import MIDIOutput
+from lisp.plugins.timecode.timecode_common import TcFormat
+from lisp.plugins.timecode.timecode_protocol import TimecodeProtocol
+from lisp.ui import elogging
 
 
-class Midi(TimecodeBackend):
+class Midi(TimecodeProtocol):
     Name = 'MIDI'
 
     __format__ = {

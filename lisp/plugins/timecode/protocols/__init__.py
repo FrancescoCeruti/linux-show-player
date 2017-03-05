@@ -26,26 +26,36 @@ try:
 except ImportError:
     ola = False
 
-__BACKENDS = {}
+__PROTOCOLS = {}
 
 
-def load_backends():
+def load_protocols():
     if not ola:
         exclude = 'artnet'
     else:
         exclude = ''
 
-    for name, backend_class in load_classes(__package__, dirname(__file__), exclude=exclude):
-        __BACKENDS[backend_class.Name] = backend_class
-        elogging.debug('TIMECODE: Loaded Backend "{0}"'.format(name))
+    for name, protocol_class in load_classes(__package__, dirname(__file__), exclude=exclude):
+        __PROTOCOLS[protocol_class.Name] = protocol_class
+        elogging.debug('TIMECODE: Loaded Timecode protocol "{0}"'.format(name))
 
 
-def create_backend(name):
-    if name in __BACKENDS and callable(__BACKENDS[name]):
-        return __BACKENDS[name]()
+def get_protocol(name):
+    """
+    :param name: protocol name
+    :type name: str
+    :return: instance of a TimecodeProtocol
+    :rtype: TimecodeProtocol
+    """
+    if name in __PROTOCOLS and callable(__PROTOCOLS[name]):
+        return __PROTOCOLS[name]()
     else:
-        raise AttributeError("Timecode Backend - {0} not found".format(name))
+        raise AttributeError("Timecode Protocol not found", name)
 
 
-def list_backends():
-    return __BACKENDS
+def list_protocols():
+    """
+    :return: list of protocol names
+    :rtype: list
+    """
+    return __PROTOCOLS

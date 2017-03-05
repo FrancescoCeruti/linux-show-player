@@ -17,22 +17,32 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from lisp.core.signal import Connection
-from lisp.ui import elogging
-from lisp.core.configuration import config
-from lisp.core.clock import Clock
-from lisp.cues.cue_time import CueTime
-from lisp.modules.timecode import backends
-from lisp.modules.timecode.timecode_common import TimecodeCommon, TcFormat
+from enum import Enum
 
+from lisp.core.clock import Clock
+from lisp.core.configuration import config
+from lisp.core.signal import Connection
+from lisp.core.singleton import ABCSingleton
+from lisp.cues.cue_time import CueTime
+from lisp.plugins.timecode import protocols
+from lisp.ui import elogging
+
+
+class TcFormat(Enum):
+
+    FILM = 1000 / 24
+    EBU = 1000 / 25
+    SMPTE = 1000 / 30
+    
 
 class HRCueTime(CueTime):
     _Clock = Clock(30)  # 1000 /30  = 33.3333 milliseconds
 
 
-class TimecodeOutput(TimecodeCommon):
+class TimecodeCommon(metaclass=ABCSingleton):
     def __init__(self):
-        super().__init__()
+        self.__protocol_name = config['Timecode']['protocol']
+        self.__protocol = None
 
         self.__cue = None
         self.__cue_time = None
@@ -41,20 +51,40 @@ class TimecodeOutput(TimecodeCommon):
         self.__format = TcFormat[config['Timecode']['format']]
         self.__replace_hours = False
 
+        # load timecode protocol components
+        protocols.load_protocols()
+
     @property
     def cue(self):
+        """current cue, which timecode is send"""
         return self.__cue
 
+    @property
+    def status(self):
+        """returns the status of the protocol"""
+        return self.__protocol and self.__protocol.status()
+
+    @property
+    def protocol(self):
+        return self.__protocol.Name
+
     def init(self):
-        self._backend = backends.create_backend(self._backend_name)
-        if self._backend.status():
-            elogging.debug("TIMECODE: backend created - {0}".format(self._backend.Name))
+        """set timecode protocol"""
+        self.__protocol = protocols.get_protocol(self.__protocol_name)
+
+        if self.__protocol.status():
+            elogging.debug("TIMECODE: protocol created - {0}".format(self.__protocol.Name))
         else:
-            self._disable()
+            elogging.error("TIMECODE: error creating protocol - {0}".format(self.__protocol.Name))
+
+    def change_protocol(self, protocol_name):
+        if protocol_name in protocols.list_protocols():
+            self.__protocol_name = protocol_name
+            self.init()
 
     def start(self, cue):
         """initialize timecode for new cue, stop old"""
-        if not cue.timecode['enabled'] or not self.status():
+        if not self.status:
             return
 
         # Stop the currently "running" timecode
@@ -85,11 +115,11 @@ class TimecodeOutput(TimecodeCommon):
             self.__cue = None
             self.__cue_time = None
 
-        if self.status():
-            self._backend.stop(rclient)
+        if self.status:
+            self.__protocol.stop(rclient)
 
     def send(self, time):
         """sends timecode"""
-        if not self._backend.send(self.__format, time, self.__track):
+        if not self.__protocol.send(self.__format, time, self.__track):
             elogging.error('TIMECODE: could not send timecode, stopping timecode', dialog=False)
             self.stop()
