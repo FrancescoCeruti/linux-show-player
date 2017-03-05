@@ -54,7 +54,7 @@ class Artnet(TimecodeProtocol):
         tt = time_tuple(time)
 
         hours = tt[0]
-        if track > 0:
+        if track > -1:
             hours = track
         minutes = tt[1]
         seconds = tt[2]

@@ -95,10 +95,12 @@ class TimecodeCommon(metaclass=ABCSingleton):
 
         # Setup new cue and options
         self.__cue = cue
-        hres = config['Timecode'].getboolean('hres')
-        self.__cue_time = HRCueTime(cue) if hres else CueTime(cue)
+        self.__cue_time = HRCueTime(cue)
         self.__replace_hours = cue.timecode['replace_hours']
-        self.__track = cue.timecode['track']
+        if self.__replace_hours:
+            self.__track = cue.timecode['track']
+        else:
+            self.__track = -1
 
         self.send(self.__cue.current_time())
 
