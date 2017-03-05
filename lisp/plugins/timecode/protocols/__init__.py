@@ -18,7 +18,6 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from os.path import dirname
-from lisp.ui import elogging
 from lisp.core.loading import load_classes
 
 try:
