@@ -24,6 +24,7 @@ from PyQt5.QtWidgets import QGridLayout
 from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QLabel,\
     QCheckBox, QSpinBox, QComboBox
 
+from lisp.ui import elogging
 from lisp.ui.ui_utils import translate
 from lisp.core.configuration import config
 from lisp.plugins.timecode.timecode_common import TcFormat
@@ -85,7 +86,8 @@ class TimecodeSettings(CueSettingsPage):
             translate('TimecodeSettings', 'Track number'))
         if 'artnet' in config['Timecode']['protocol'].lower():
             self.warnLabel.setText(
-                translate('TimecodeSettings',
+                translate('TimecodeSettings'
+                          '',
                           'To send ArtNet Timecode you need to setup a running OLA'
                           ' session!'))
 
@@ -131,7 +133,6 @@ class TimecodeAppSettings(SettingsPage):
         self.protocolCombo = QComboBox(self.groupBox)
         for protocol in protocols.list_protocols():
             self.protocolCombo.addItem(protocol)
-        self.protocolCombo.currentTextChanged.connect(self.__protocol_changed)
         self.groupBox.layout().addWidget(self.protocolCombo, 1, 1)
 
         self.retranslateUi()
@@ -146,8 +147,14 @@ class TimecodeAppSettings(SettingsPage):
 
     def __protocol_changed(self, protocol):
         # check for restart
-        if protocol != config['Timecode']['protocol']:
-            TimecodeCommon().change_protocol(protocol)
+        TimecodeCommon().change_protocol(protocol)
+
+        print("__protocol_changed", protocol, TimecodeCommon().status)
+        if not TimecodeCommon().status:
+            elogging.error(
+                translate('TimecodeSettings', 'Error on setting Timecode Protocol to {}.\n'
+                                              'Timecode cannot be sent.\n'
+                                              'Change the Protocol Entry.').format(protocol))
 
     def get_settings(self):
         conf = {}
@@ -162,3 +169,4 @@ class TimecodeAppSettings(SettingsPage):
 
         self.formatBox.setCurrentText(settings.get('format', ''))
         self.protocolCombo.setCurrentText(settings.get('protocol', ''))
+        self.protocolCombo.currentTextChanged.connect(self.__protocol_changed)

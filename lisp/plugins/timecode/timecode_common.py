@@ -75,7 +75,7 @@ class TimecodeCommon(metaclass=ABCSingleton):
         if self.__protocol.status():
             elogging.debug("TIMECODE: protocol created - {0}".format(self.__protocol.Name))
         else:
-            elogging.error("TIMECODE: error creating protocol - {0}".format(self.__protocol.Name))
+            elogging.error("TIMECODE: error creating protocol - {0}".format(self.__protocol.Name), dialog=False)
 
     def change_protocol(self, protocol_name):
         if protocol_name in protocols.list_protocols():
