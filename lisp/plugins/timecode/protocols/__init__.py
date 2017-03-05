@@ -37,7 +37,6 @@ def load_protocols():
 
     for name, protocol_class in load_classes(__package__, dirname(__file__), exclude=exclude):
         __PROTOCOLS[protocol_class.Name] = protocol_class
-        elogging.debug('TIMECODE: Loaded Timecode protocol "{0}"'.format(name))
 
 
 def get_protocol(name):
