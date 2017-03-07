@@ -18,23 +18,14 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from os.path import dirname
-from lisp.core.loading import load_classes
 
-try:
-    import ola
-except ImportError:
-    ola = False
+from lisp.core.loading import load_classes
 
 __PROTOCOLS = {}
 
 
 def load_protocols():
-    if not ola:
-        exclude = 'artnet'
-    else:
-        exclude = ''
-
-    for name, protocol_class in load_classes(__package__, dirname(__file__), exclude=exclude):
+    for name, protocol_class in load_classes(__package__, dirname(__file__)):
         __PROTOCOLS[protocol_class.Name] = protocol_class
 
 
@@ -48,7 +39,7 @@ def get_protocol(name):
     if name in __PROTOCOLS and callable(__PROTOCOLS[name]):
         return __PROTOCOLS[name]()
     else:
-        raise AttributeError("Timecode Protocol not found", name)
+        raise AttributeError('Timecode-Protocol not found', name)
 
 
 def list_protocols():
