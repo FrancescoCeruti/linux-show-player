@@ -2,8 +2,8 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
-# Copyright 2016 Thomas Achtner <info@offtools.de>
+# Copyright 2012-2017 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2016-2017 Thomas Achtner <info@offtools.de>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -40,10 +40,8 @@ class Timecode(Plugin):
 
         # Register a new Cue property to store settings
         Cue.register_property('timecode', Property(default={}))
-
         # Register cue-settings-page
         CueSettingsRegistry().add_item(TimecodeSettings, MediaCue)
-
         # Register the settings widget
         AppSettings.register_settings_widget(TimecodeAppSettings)
 
@@ -63,7 +61,8 @@ class Timecode(Plugin):
             if value.get('enabled', False):
                 if cue.id not in self.__cues:
                     self.__cues.add(cue.id)
-                    cue.started.connect(self.__cue_started, Connection.QtQueued)
+                    cue.started.connect(TimecodeCommon().start,
+                                        Connection.QtQueued)
             else:
                 self.__cue_removed(cue)
 
@@ -73,13 +72,15 @@ class Timecode(Plugin):
 
     def __cue_removed(self, cue):
         try:
+            # Try removing the cue
             self.__cues.remove(cue.id)
+
+            # If the cue is tracked, stop the tracking
             if TimecodeCommon().cue is cue:
                 TimecodeCommon().stop(rcue=True)
-            cue.started.disconnect(self.__cue_started)
+
+            # Disconnect signals
+            cue.started.disconnect(TimecodeCommon().start)
             cue.property_changed.disconnect(self.__cue_changed)
         except KeyError:
             pass
-
-    def __cue_started(self, cue):
-        TimecodeCommon().start(cue)

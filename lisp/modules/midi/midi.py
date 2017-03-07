@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2017 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -28,13 +28,27 @@ from lisp.ui.settings.app_settings import AppSettings
 class Midi(Module):
     """Provide MIDI I/O functionality"""
 
+    AppPort = None
+
     def __init__(self):
         # Register the settings widget
         AppSettings.register_settings_widget(MIDISettings)
 
-        bk_name = config['MIDI']['Backend']
+        backend = config['MIDI']['Backend']
         try:
-            # Load the backend and set as current mido backend
-            mido.set_backend(mido.Backend(bk_name, load=True))
+            # Load the backend and set it as current mido backend
+            mido.set_backend(mido.Backend(backend, load=True))
         except Exception:
-            raise RuntimeError('Backend loading failed: {0}'.format(bk_name))
+            raise RuntimeError('Backend loading failed: {0}'.format(backend))
+
+        # Create LiSP MIDI I/O port
+        try:
+            Midi.AppPort = mido.backend.open_ioport(
+                config['MIDI']['AppPortName'], virtual=True)
+        except IOError:
+            import logging
+            logging.error('MIDI: cannot open application virtual-port.')
+
+    def terminate(self):
+        if Midi.AppPort is not None:
+            Midi.AppPort.close()

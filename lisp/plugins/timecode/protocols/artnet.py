@@ -2,7 +2,8 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2017 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2016-2017 Thomas Achtner <info@offtools.de>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,31 +18,35 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+import logging
 
 from ola.OlaClient import OlaClient, OLADNotRunningException
 
-from lisp.ui.ui_utils import translate
 from lisp.core.util import time_tuple
 from lisp.plugins.timecode.timecode_common import TcFormat
 from lisp.plugins.timecode.timecode_protocol import TimecodeProtocol
 from lisp.ui import elogging
+from lisp.ui.ui_utils import translate
+
+ARTNET_FORMATS = {
+    TcFormat.FILM: OlaClient.TIMECODE_FILM,
+    TcFormat.EBU: OlaClient.TIMECODE_EBU,
+    TcFormat.SMPTE: OlaClient.TIMECODE_SMPTE
+}
 
 
 class Artnet(TimecodeProtocol):
     Name = 'ArtNet'
 
-    __format__ = {TcFormat.FILM: OlaClient.TIMECODE_FILM,
-                  TcFormat.EBU: OlaClient.TIMECODE_EBU,
-                  TcFormat.SMPTE: OlaClient.TIMECODE_SMPTE}
-
     def __init__(self):
         super().__init__()
+
         try:
             self.__client = OlaClient()
         except OLADNotRunningException as e:
             self.__client = None
-            elogging.error(translate('Timecode', 'TIMECODE: Could not create OlaClient'),
-                           details="{0}".format(e), dialog=False)
+            logging.error('TIMECODE: cannot create OlaClient')
+            logging.debug('TIMECODE: {}'.format(e))
 
         self.__last_time = -1
 
@@ -52,29 +57,22 @@ class Artnet(TimecodeProtocol):
         if self.__last_time + fmt.value >= time:
             return
 
-        tt = time_tuple(time)
-
-        hours = tt[0]
+        hours, minutes, seconds, millis = time_tuple(time)
+        frame = int(millis / fmt.value)
         if track > -1:
             hours = track
-        minutes = tt[1]
-        seconds = tt[2]
-        frames = int(tt[3] / fmt.value)
 
         try:
-            self.__client.SendTimeCode(self.__format__[fmt],
-                                       hours,
-                                       minutes,
-                                       seconds,
-                                       frames)
-
+            self.__client.SendTimeCode(
+                ARTNET_FORMATS[fmt], hours, minutes, seconds, frame)
         except OLADNotRunningException:
             elogging.error(
                 translate('Timecode', 'Cannot send timecode.'),
                 details=translate('Timecode', 'OLA has stopped.'))
             return False
         except Exception as e:
-            elogging.exception('Cannot send timecode.', e, dialog=False)
+            logging.error('TIMECODE: Cannot send timecode')
+            logging.debug('TIMECODE: {}'.format(e))
             return False
 
         self.__last_time = time

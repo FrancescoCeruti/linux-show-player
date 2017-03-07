@@ -2,8 +2,8 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
-# Copyright 2016 Thomas Achtner <info@offtools.de>
+# Copyright 2012-2017 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2016-2017 Thomas Achtner <info@offtools.de>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,10 +21,10 @@
 
 from PyQt5.QtCore import QT_TRANSLATE_NOOP, Qt
 from PyQt5.QtWidgets import QGridLayout
-from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QLabel,\
+from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QLabel, \
     QCheckBox, QSpinBox, QComboBox
 
-from lisp.ui import elogging
 from lisp.ui.ui_utils import translate
 from lisp.core.configuration import config
 from lisp.plugins.timecode.timecode_common import TcFormat
@@ -84,24 +84,23 @@ class TimecodeSettings(CueSettingsPage):
             translate('TimecodeSettings', 'Enable Timecode'))
         self.trackLabel.setText(
             translate('TimecodeSettings', 'Track number'))
+
         if 'artnet' in config['Timecode']['protocol'].lower():
             self.warnLabel.setText(
-                translate('TimecodeSettings'
-                          '',
-                          'To send ArtNet Timecode you need to setup a running OLA'
-                          ' session!'))
+                translate('TimecodeSettings',
+                          'To send ArtNet Timecode you need to setup a running'
+                          'OLA session!'))
 
     def get_settings(self):
-        settings = {
+        return {'timecode': {
             'enabled': self.enableCheck.isChecked(),
             'replace_hours': self.useHoursCheck.isChecked(),
             'track': self.trackSpin.value()
-        }
-
-        return {'timecode': settings}
+        }}
 
     def load_settings(self, settings):
         settings = settings.get('timecode', {})
+
         self.enableCheck.setChecked(settings.get('enabled', False))
         self.useHoursCheck.setChecked(settings.get('replace_hours', False))
         self.trackSpin.setValue(settings.get('track', 0))
@@ -149,20 +148,17 @@ class TimecodeAppSettings(SettingsPage):
         # check for restart
         TimecodeCommon().change_protocol(protocol)
 
-        print("__protocol_changed", protocol, TimecodeCommon().status)
         if not TimecodeCommon().status:
-            elogging.error(
-                translate('TimecodeSettings', 'Error on setting Timecode Protocol to {}.\n'
-                                              'Timecode cannot be sent.\n'
-                                              'Change the Protocol Entry.').format(protocol))
+            QMessageBox.critical(
+                self, translate('TimecodeSettings', 'Error'),
+                translate('TimecodeSettings',
+                          'Cannot enable "{}" protocol').format(protocol))
 
     def get_settings(self):
-        conf = {}
-
-        conf['format'] = self.formatBox.currentText()
-        conf['protocol'] = self.protocolCombo.currentText()
-
-        return {'Timecode': conf}
+        return {'Timecode': {
+            'format': self.formatBox.currentText(),
+            'protocol': self.protocolCombo.currentText()
+        }}
 
     def load_settings(self, settings):
         settings = settings.get('Timecode', {})

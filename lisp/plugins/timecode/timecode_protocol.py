@@ -2,7 +2,8 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2017 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2016-2017 Thomas Achtner <info@offtools.de>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,20 +23,17 @@ from abc import ABCMeta
 
 
 class TimecodeProtocol(metaclass=ABCMeta):
-    """base class for timecode protocol"""
+    """Base class for timecode protocols"""
     Name = 'None'
-
-    def __init__(self):
-        """constructor of timecode backend"""
 
     @abstractmethod
     def status(self):
-        """returns status of backend, True if ready"""
+        """Return the status of the backend, True if ready"""
 
     @abstractmethod
     def send(self, fmt, time, track=-1):
-        """send timecode, returs success for error handling"""
+        """Send timecode, returns success for error handling"""
 
     @abstractmethod
     def stop(self, rclient=False):
-        """cleanup after client has stopped"""
+        """Cleanup after client has stopped"""
