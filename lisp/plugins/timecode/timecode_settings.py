@@ -18,88 +18,23 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+
 from PyQt5.QtCore import QT_TRANSLATE_NOOP, Qt
 from PyQt5.QtWidgets import QGridLayout
-from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QLabel,\
-    QCheckBox, QComboBox, QHBoxLayout, QSpinBox
-from ola.OlaClient import OLADNotRunningException, OlaClient
+    QCheckBox, QSpinBox, QComboBox
 
-from lisp.ui.mainwindow import MainWindow
-from lisp.ui.settings.settings_page import CueSettingsPage,\
-    SettingsPage
+from lisp.ui import elogging
 from lisp.ui.ui_utils import translate
+from lisp.core.configuration import config
+from lisp.plugins.timecode.timecode_common import TcFormat
+from lisp.plugins.timecode import protocols
+from lisp.ui.settings.settings_page import SettingsPage
+from lisp.ui.settings.settings_page import CueSettingsPage
+from lisp.plugins.timecode.timecode_common import TimecodeCommon
 
 
-class TimecodeSettings(SettingsPage):
-    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Timecode Settings')
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.setLayout(QVBoxLayout())
-        self.layout().setAlignment(Qt.AlignTop)
-
-        self.groupBox = QGroupBox(self)
-        self.groupBox.setLayout(QGridLayout())
-        self.layout().addWidget(self.groupBox)
-
-        self.activateBox = QCheckBox(self.groupBox)
-        self.groupBox.layout().addWidget(self.activateBox, 0, 0)
-
-        self.hresBox = QCheckBox(self.groupBox)
-        self.groupBox.layout().addWidget(self.hresBox, 1, 0)
-
-        self.formatLabel = QLabel(self.groupBox)
-        self.groupBox.layout().addWidget(self.formatLabel, 2, 0)
-
-        self.formatBox = QComboBox(self.groupBox)
-        self.formatBox.addItem('FILM')
-        self.formatBox.addItem('EBU')
-        self.formatBox.addItem('SMPTE')
-        self.groupBox.layout().addWidget(self.formatBox, 2, 1)
-
-        self.retranslateUi()
-
-    def retranslateUi(self):
-        self.groupBox.setTitle(
-            translate('TimecodeSettings', 'OLA Timecode Settings'))
-        self.activateBox.setText(translate('TimecodeSettings', 'Enable Plugin'))
-        self.hresBox.setText(
-            translate('TimecodeSettings', 'High-Resolution Timecode'))
-        self.formatLabel.setText(
-            translate('TimecodeSettings', 'Timecode Format:'))
-
-    def testOla(self):
-        if self.activateBox.isChecked():
-            try:
-                client = OlaClient()
-                del client
-            except OLADNotRunningException:
-                QMessageBox.warning(
-                    MainWindow(),
-                    translate('TimecodeSettings', 'OLA status'),
-                    translate('TimecodeSettings',
-                              'OLA is not running - start the OLA daemon.')
-                )
-
-    def get_settings(self):
-        return {'Timecode': {
-            'enabled': str(self.activateBox.isChecked()),
-            'hres': str(self.hresBox.isChecked()),
-            'format': self.formatBox.currentText()
-        }}
-
-    def load_settings(self, settings):
-        settings = settings.get('Timecode', {})
-
-        self.activateBox.setChecked(settings.get('enabled') == 'True')
-        self.hresBox.setChecked(settings.get('hres') == 'True')
-        self.formatBox.setCurrentText(settings.get('format', ''))
-
-        self.activateBox.stateChanged.connect(self.testOla)
-
-
-class TimecodeCueSettings(CueSettingsPage):
+class TimecodeSettings(CueSettingsPage):
     Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Timecode')
 
     def __init__(self, cue_class, **kwargs):
@@ -146,13 +81,15 @@ class TimecodeCueSettings(CueSettingsPage):
             translate('TimecodeSettings',
                       'Replace HOURS by a static track number'))
         self.enableCheck.setText(
-            translate('TimecodeSettings', 'Enable ArtNet Timecode'))
+            translate('TimecodeSettings', 'Enable Timecode'))
         self.trackLabel.setText(
             translate('TimecodeSettings', 'Track number'))
-        self.warnLabel.setText(
-            translate('TimecodeSettings',
-                      'To send ArtNet Timecode you need to setup a running OLA'
-                      ' session!'))
+        if 'artnet' in config['Timecode']['protocol'].lower():
+            self.warnLabel.setText(
+                translate('TimecodeSettings'
+                          '',
+                          'To send ArtNet Timecode you need to setup a running OLA'
+                          ' session!'))
 
     def get_settings(self):
         settings = {
@@ -168,3 +105,68 @@ class TimecodeCueSettings(CueSettingsPage):
         self.enableCheck.setChecked(settings.get('enabled', False))
         self.useHoursCheck.setChecked(settings.get('replace_hours', False))
         self.trackSpin.setValue(settings.get('track', 0))
+
+
+class TimecodeAppSettings(SettingsPage):
+    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Timecode Settings')
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.setLayout(QVBoxLayout())
+        self.layout().setAlignment(Qt.AlignTop)
+
+        self.groupBox = QGroupBox(self)
+        self.groupBox.setLayout(QGridLayout())
+        self.layout().addWidget(self.groupBox)
+
+        self.formatLabel = QLabel(self.groupBox)
+        self.groupBox.layout().addWidget(self.formatLabel, 0, 0)
+
+        self.formatBox = QComboBox(self.groupBox)
+        for fmt in TcFormat:
+            self.formatBox.addItem(fmt.name)
+        self.groupBox.layout().addWidget(self.formatBox, 0, 1)
+
+        self.protocolLabel = QLabel(self.groupBox)
+        self.groupBox.layout().addWidget(self.protocolLabel, 1, 0)
+
+        self.protocolCombo = QComboBox(self.groupBox)
+        for protocol in protocols.list_protocols():
+            self.protocolCombo.addItem(protocol)
+        self.groupBox.layout().addWidget(self.protocolCombo, 1, 1)
+
+        self.retranslateUi()
+
+    def retranslateUi(self):
+        self.groupBox.setTitle(
+            translate('TimecodeSettings', 'Timecode Settings'))
+        self.formatLabel.setText(
+            translate('TimecodeSettings', 'Timecode Format:'))
+        self.protocolLabel.setText(
+            translate('TimecodeSettings', 'Timecode Protocol:'))
+
+    def __protocol_changed(self, protocol):
+        # check for restart
+        TimecodeCommon().change_protocol(protocol)
+
+        print("__protocol_changed", protocol, TimecodeCommon().status)
+        if not TimecodeCommon().status:
+            elogging.error(
+                translate('TimecodeSettings', 'Error on setting Timecode Protocol to {}.\n'
+                                              'Timecode cannot be sent.\n'
+                                              'Change the Protocol Entry.').format(protocol))
+
+    def get_settings(self):
+        conf = {}
+
+        conf['format'] = self.formatBox.currentText()
+        conf['protocol'] = self.protocolCombo.currentText()
+
+        return {'Timecode': conf}
+
+    def load_settings(self, settings):
+        settings = settings.get('Timecode', {})
+
+        self.formatBox.setCurrentText(settings.get('format', ''))
+        self.protocolCombo.setCurrentText(settings.get('protocol', ''))
+        self.protocolCombo.currentTextChanged.connect(self.__protocol_changed)

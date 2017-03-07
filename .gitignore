@@ -20,3 +20,4 @@ eggs/
 
 # QT project files, generated only for pylupdate (qt i18n)
 *.pro
+/doc/
