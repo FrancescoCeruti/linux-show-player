@@ -213,18 +213,17 @@ class _MscLookupTable:
     REV_CMD = {value: key for key, value in CMD.items()}
 
     CMD_ARGS_TYPES = {
-        MscArgument.Q_NUMBER: {'type': float, 'min': 0},
-        MscArgument.Q_PATH: {'type': float, 'min': 0},
-        MscArgument.Q_LIST: {'type': float, 'min': 0},
-        MscArgument.MACRO_NUM: {'type': int, 'min': 0, 'max': 127},
-        MscArgument.CTRL_NUM: {'type': int, 'min': 0, 'max': 1023},
-        MscArgument.CTRL_VALUE: {'type': int, 'min': 0, 'max': 1023},
-        MscArgument.TIMECODE: {'type': int, 'min': 0},
-        MscArgument.TIME_TYPE: {'type': MscTimeType}
+        MscArgument.Q_NUMBER: {'type': float, 'min': 0, 'default': 0},
+        MscArgument.Q_PATH: {'type': float, 'min': 0, 'default': 0},
+        MscArgument.Q_LIST: {'type': float, 'min': 0, 'default': 0},
+        MscArgument.MACRO_NUM: {'type': int, 'min': 0, 'max': 127, 'default': 0},
+        MscArgument.CTRL_NUM: {'type': int, 'min': 0, 'max': 1023, 'default': 0},
+        MscArgument.CTRL_VALUE: {'type': int, 'min': 0, 'max': 1023, 'default': 0},
+        MscArgument.TIMECODE: {'type': int, 'min': 0, 'default': 0},
+        MscArgument.TIME_TYPE: {'type': MscTimeType, 'default': MscTimeType.SMPTE}
     }
 
-    # dict holds MscArguments for certain MscCommands: { MsgArgument: [ required by ] }
-    # required by: None -> optional; MscCommand -> required by command; MscArgument -> only if argument is set
+    # dict holds MscArguments for certain MscCommands: { MsgArgument: [ depends on: MscCommand | MscArgument | None ] }
     CMD_ARGS = {
         MscCommand.GO: {MscArgument.Q_NUMBER: None,
                         MscArgument.Q_LIST: MscArgument.Q_PATH,
@@ -506,8 +505,8 @@ class MscMessage(MscObject):
             if key in self:
                 continue
             else:
-                elogging.error("MscMessage: no valid message missing argument: {0}".format(key), dialog=False)
-                return []
+                self[key] = _MscLookupTable.CMD_ARGS_TYPES[key]['default']
+                elogging.debug("MscMessage: missing argument: {0}, adding default".format(key), dialog=False)
 
         data = [
             0x7F,
