@@ -55,232 +55,270 @@ class MscCue(Cue):
         return False
 
 
-class MscCueSettings(SettingsPage):
-    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'MSC Settings')
+class MscGroupBox:
 
     DATA_WIDGET = 0
     CHECK_WIDGET = 1
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.setLayout(QVBoxLayout())
-        self.layout().setAlignment(Qt.AlignTop)
+    def __init__(self):
 
-        self.mscGroup = QGroupBox(self)
-        self.mscGroup.setLayout(QGridLayout())
-        self.mscGroup.layout().setColumnStretch(0, 10)
-        self.mscGroup.layout().setColumnStretch(1, 10)
-        self.mscGroup.layout().setColumnStretch(2, 1)
-        self.layout().addWidget(self.mscGroup)
+        self.__mscGroup = QGroupBox(self)
+        self.__mscGroup.setLayout(QGridLayout())
+        self.__mscGroup.layout().setColumnStretch(0, 10)
+        self.__mscGroup.layout().setColumnStretch(1, 10)
+        self.__mscGroup.layout().setColumnStretch(2, 1)
 
         # Device ID
-        self.mscDeviceLabel = QLabel(self.mscGroup)
-        self.mscGroup.layout().addWidget(self.mscDeviceLabel, 0, 0)
-        self.mscDeviceSpin = QSpinBox(self.mscGroup)
-        self.mscDeviceSpin.setRange(0, 127)
-        self.mscDeviceSpin.setValue(1)
-        self.mscDeviceSpin.valueChanged.connect(self.__show_messsage)
-        self.mscGroup.layout().addWidget(self.mscDeviceSpin, 0, 1, 1, 2)
+        self.__mscDeviceLabel = QLabel(self.__mscGroup)
+        self.__mscGroup.layout().addWidget(self.__mscDeviceLabel, 0, 0)
+        self.__mscDeviceSpin = QSpinBox(self.__mscGroup)
+        self.__mscDeviceSpin.setRange(0, 127)
+        self.__mscDeviceSpin.setValue(0)
+        self.__mscDeviceSpin.valueChanged.connect(self.__show_messsage)
+        self.__mscGroup.layout().addWidget(self.__mscDeviceSpin, 0, 1, 1, 2)
 
-        self.mscCmdFmtLabel = QLabel(self.mscGroup)
-        self.mscGroup.layout().addWidget(self.mscCmdFmtLabel, 1, 0)
-        self.mscCmdFmtCombo = QComboBox(self.mscGroup)
-        self.mscCmdFmtCombo.addItems([str(i) for i in MscCommandFormat])
-        self.mscCmdFmtCombo.currentTextChanged.connect(self.__show_messsage)
-        self.mscGroup.layout().addWidget(self.mscCmdFmtCombo, 1, 1, 1, 2)
+        self.__mscCmdFmtLabel = QLabel(self.__mscGroup)
+        self.__mscGroup.layout().addWidget(self.__mscCmdFmtLabel, 1, 0)
+        self.__mscCmdFmtCombo = QComboBox(self.__mscGroup)
+        self.__mscCmdFmtCombo.addItems([str(i) for i in MscCommandFormat])
+        self.__mscCmdFmtCombo.currentTextChanged.connect(self.__show_messsage)
+        self.__mscGroup.layout().addWidget(self.__mscCmdFmtCombo, 1, 1, 1, 2)
 
-        self.mscCommandLabel = QLabel(self.mscGroup)
-        self.mscGroup.layout().addWidget(self.mscCommandLabel, 2, 0)
-        self.mscCommandCombo = QComboBox(self.mscGroup)
-        self.mscCommandCombo.addItems([str(i) for i in MscCommand])
-        self.mscCommandCombo.currentTextChanged.connect(self.__type_changed)
-        self.mscCommandCombo.currentTextChanged.connect(self.__show_messsage)
-        self.mscGroup.layout().addWidget(self.mscCommandCombo, 2, 1, 1, 2)
+        self.__mscCommandLabel = QLabel(self.__mscGroup)
+        self.__mscGroup.layout().addWidget(self.__mscCommandLabel, 2, 0)
+        self.__mscCommandCombo = QComboBox(self.__mscGroup)
+        self.__mscCommandCombo.addItems([str(i) for i in MscCommand])
+        self.__mscCommandCombo.currentTextChanged.connect(self.__type_changed)
+        self.__mscCommandCombo.currentTextChanged.connect(self.__show_messsage)
+        self.__mscGroup.layout().addWidget(self.__mscCommandCombo, 2, 1, 1, 2)
 
-        line = QFrame(self.mscGroup)
+        line = QFrame(self.__mscGroup)
         line.setFrameShape(QFrame.HLine)
         line.setFrameShadow(QFrame.Sunken)
-        self.mscGroup.layout().addWidget(line, 3, 0, 1, 3)
+        self.__mscGroup.layout().addWidget(line, 3, 0, 1, 3)
 
         # Data widgets
-        self._data_widgets = {}
+        self.__data_widgets = {}
 
-        self.mscQNumberLabel = QLabel(self.mscGroup)
-        self.mscGroup.layout().addWidget(self.mscQNumberLabel, 4, 0)
-        self.mscQNumberSpin = QDoubleSpinBox(self.mscGroup)
-        self.mscQNumberSpin.setRange(0, 999)
-        self.mscQNumberSpin.setDecimals(3)
-        self.mscQNumberSpin.setSingleStep(1.0)
-        self.mscQNumberSpin.setValue(1)
-        self.mscQNumberSpin.valueChanged.connect(self.__show_messsage)
-        self.mscGroup.layout().addWidget(self.mscQNumberSpin, 4, 1)
-        self.mscQNumberCheck = QCheckBox(self.mscGroup)
-        self.mscQNumberCheck.toggled.connect(functools.partial(self.__checked, MscArgument.Q_NUMBER))
-        self.mscGroup.layout().addWidget(self.mscQNumberCheck, 4, 2)
-        self._data_widgets[MscArgument.Q_NUMBER] = [self.mscQNumberSpin, self.mscQNumberCheck]
+        self.__mscQNumberLabel = QLabel(self.__mscGroup)
+        self.__mscGroup.layout().addWidget(self.__mscQNumberLabel, 4, 0)
+        self.__mscQNumberSpin = QDoubleSpinBox(self.__mscGroup)
+        self.__mscQNumberSpin.setRange(0, 999)
+        self.__mscQNumberSpin.setDecimals(3)
+        self.__mscQNumberSpin.setSingleStep(1.0)
+        self.__mscQNumberSpin.setValue(0)
+        self.__mscQNumberSpin.valueChanged.connect(self.__show_messsage)
+        self.__mscGroup.layout().addWidget(self.__mscQNumberSpin, 4, 1)
+        self.__mscQNumberCheck = QCheckBox(self.__mscGroup)
+        self.__mscQNumberCheck.toggled.connect(functools.partial(self.__checked, MscArgument.Q_NUMBER))
+        self.__mscGroup.layout().addWidget(self.__mscQNumberCheck, 4, 2)
+        self.__data_widgets[MscArgument.Q_NUMBER] = [self.__mscQNumberSpin, self.__mscQNumberCheck]
 
-        self.mscQListLabel = QLabel(self.mscGroup)
-        self.mscGroup.layout().addWidget(self.mscQListLabel, 5, 0)
-        self.mscQListSpin = QDoubleSpinBox(self.mscGroup)
-        self.mscQListSpin.setRange(0, 999)
-        self.mscQListSpin.setDecimals(3)
-        self.mscQListSpin.setSingleStep(1.0)
-        self.mscQListSpin.setValue(1)
-        self.mscQListSpin.valueChanged.connect(self.__show_messsage)
-        self.mscGroup.layout().addWidget(self.mscQListSpin, 5, 1)
-        self.mscQListCheck = QCheckBox(self.mscGroup)
-        self.mscQListCheck.toggled.connect(functools.partial(self.__checked, MscArgument.Q_LIST))
-        self.mscGroup.layout().addWidget(self.mscQListCheck, 5, 2)
-        self._data_widgets[MscArgument.Q_LIST] = [self.mscQListSpin, self.mscQListCheck]
+        self.__mscQListLabel = QLabel(self.__mscGroup)
+        self.__mscGroup.layout().addWidget(self.__mscQListLabel, 5, 0)
+        self.__mscQListSpin = QDoubleSpinBox(self.__mscGroup)
+        self.__mscQListSpin.setRange(0, 999)
+        self.__mscQListSpin.setDecimals(3)
+        self.__mscQListSpin.setSingleStep(1.0)
+        self.__mscQListSpin.setValue(0)
+        self.__mscQListSpin.valueChanged.connect(self.__show_messsage)
+        self.__mscGroup.layout().addWidget(self.__mscQListSpin, 5, 1)
+        self.__mscQListCheck = QCheckBox(self.__mscGroup)
+        self.__mscQListCheck.toggled.connect(functools.partial(self.__checked, MscArgument.Q_LIST))
+        self.__mscGroup.layout().addWidget(self.__mscQListCheck, 5, 2)
+        self.__data_widgets[MscArgument.Q_LIST] = [self.__mscQListSpin, self.__mscQListCheck]
 
-        self.mscQPathLabel = QLabel(self.mscGroup)
-        self.mscGroup.layout().addWidget(self.mscQPathLabel, 6, 0)
-        self.mscQPathSpin = QDoubleSpinBox(self.mscGroup)
-        self.mscQPathSpin.setRange(0, 999)
-        self.mscQPathSpin.setDecimals(3)
-        self.mscQPathSpin.setSingleStep(1.0)
-        self.mscQPathSpin.setValue(1)
-        self.mscQPathSpin.valueChanged.connect(self.__show_messsage)
-        self.mscGroup.layout().addWidget(self.mscQPathSpin, 6, 1)
-        self.mscQPathCheck = QCheckBox(self.mscGroup)
-        self.mscQPathCheck.toggled.connect(functools.partial(self.__checked, MscArgument.Q_PATH))
-        self.mscGroup.layout().addWidget(self.mscQPathCheck, 6, 2)
-        self._data_widgets[MscArgument.Q_PATH] = [self.mscQPathSpin, self.mscQPathCheck]
+        self.__mscQPathLabel = QLabel(self.__mscGroup)
+        self.__mscGroup.layout().addWidget(self.__mscQPathLabel, 6, 0)
+        self.__mscQPathSpin = QDoubleSpinBox(self.__mscGroup)
+        self.__mscQPathSpin.setRange(0, 999)
+        self.__mscQPathSpin.setDecimals(3)
+        self.__mscQPathSpin.setSingleStep(1.0)
+        self.__mscQPathSpin.setValue(0)
+        self.__mscQPathSpin.valueChanged.connect(self.__show_messsage)
+        self.__mscGroup.layout().addWidget(self.__mscQPathSpin, 6, 1)
+        self.__mscQPathCheck = QCheckBox(self.__mscGroup)
+        self.__mscQPathCheck.toggled.connect(functools.partial(self.__checked, MscArgument.Q_PATH))
+        self.__mscGroup.layout().addWidget(self.__mscQPathCheck, 6, 2)
+        self.__data_widgets[MscArgument.Q_PATH] = [self.__mscQPathSpin, self.__mscQPathCheck]
 
-        self.mscMacroLabel = QLabel(self.mscGroup)
-        self.mscGroup.layout().addWidget(self.mscMacroLabel, 7, 0)
-        self.mscMacroSpin = QSpinBox(self.mscGroup)
-        self.mscMacroSpin.setRange(0, 127)
-        self.mscMacroSpin.setValue(1)
-        self.mscMacroSpin.valueChanged.connect(self.__show_messsage)
-        self.mscGroup.layout().addWidget(self.mscMacroSpin, 7, 1)
-        self.mscMacroCheck = QCheckBox(self.mscGroup)
-        self.mscMacroCheck.toggled.connect(functools.partial(self.__checked, MscArgument.MACRO_NUM))
-        self.mscGroup.layout().addWidget(self.mscMacroCheck, 7, 2)
-        self._data_widgets[MscArgument.MACRO_NUM] = [self.mscMacroSpin, self.mscMacroCheck]
+        self.__mscMacroLabel = QLabel(self.__mscGroup)
+        self.__mscGroup.layout().addWidget(self.__mscMacroLabel, 7, 0)
+        self.__mscMacroSpin = QSpinBox(self.__mscGroup)
+        self.__mscMacroSpin.setRange(0, 127)
+        self.__mscMacroSpin.setValue(0)
+        self.__mscMacroSpin.valueChanged.connect(self.__show_messsage)
+        self.__mscGroup.layout().addWidget(self.__mscMacroSpin, 7, 1)
+        self.__mscMacroCheck = QCheckBox(self.__mscGroup)
+        self.__mscMacroCheck.toggled.connect(functools.partial(self.__checked, MscArgument.MACRO_NUM))
+        self.__mscGroup.layout().addWidget(self.__mscMacroCheck, 7, 2)
+        self.__data_widgets[MscArgument.MACRO_NUM] = [self.__mscMacroSpin, self.__mscMacroCheck]
 
-        self.mscCtrlNumLabel = QLabel(self.mscGroup)
-        self.mscGroup.layout().addWidget(self.mscCtrlNumLabel, 8, 0)
-        self.mscCtrlNumSpin = QSpinBox(self.mscGroup)
-        self.mscCtrlNumSpin.setRange(0, 1023)
-        self.mscCtrlNumSpin.setValue(1)
-        self.mscCtrlNumSpin.valueChanged.connect(self.__show_messsage)
-        self.mscGroup.layout().addWidget(self.mscCtrlNumSpin, 8, 1)
-        self.mscCtrlNumCheck = QCheckBox(self.mscGroup)
-        self.mscCtrlNumCheck.toggled.connect(functools.partial(self.__checked, MscArgument.CTRL_NUM))
-        self.mscGroup.layout().addWidget(self.mscCtrlNumCheck, 8, 2)
-        self._data_widgets[MscArgument.CTRL_NUM] = [self.mscCtrlNumSpin, self.mscCtrlNumCheck]
+        self.__mscCtrlNumLabel = QLabel(self.__mscGroup)
+        self.__mscGroup.layout().addWidget(self.__mscCtrlNumLabel, 8, 0)
+        self.__mscCtrlNumSpin = QSpinBox(self.__mscGroup)
+        self.__mscCtrlNumSpin.setRange(0, 1023)
+        self.__mscCtrlNumSpin.setValue(0)
+        self.__mscCtrlNumSpin.valueChanged.connect(self.__show_messsage)
+        self.__mscGroup.layout().addWidget(self.__mscCtrlNumSpin, 8, 1)
+        self.__mscCtrlNumCheck = QCheckBox(self.__mscGroup)
+        self.__mscCtrlNumCheck.toggled.connect(functools.partial(self.__checked, MscArgument.CTRL_NUM))
+        self.__mscGroup.layout().addWidget(self.__mscCtrlNumCheck, 8, 2)
+        self.__data_widgets[MscArgument.CTRL_NUM] = [self.__mscCtrlNumSpin, self.__mscCtrlNumCheck]
 
-        self.mscCtrlValLabel = QLabel(self.mscGroup)
-        self.mscGroup.layout().addWidget(self.mscCtrlValLabel, 9, 0)
-        self.mscCtrlValSpin = QSpinBox(self.mscGroup)
-        self.mscCtrlValSpin.setRange(0, 1023)
-        self.mscCtrlValSpin.setValue(1)
-        self.mscCtrlValSpin.valueChanged.connect(self.__show_messsage)
-        self.mscGroup.layout().addWidget(self.mscCtrlValSpin, 9, 1)
-        self.mscCtrlValCheck = QCheckBox(self.mscGroup)
-        self.mscCtrlValCheck.toggled.connect(functools.partial(self.__checked, MscArgument.CTRL_VALUE))
-        self.mscGroup.layout().addWidget(self.mscCtrlValCheck, 9, 2)
-        self._data_widgets[MscArgument.CTRL_VALUE] = [self.mscCtrlValSpin, self.mscCtrlValCheck]
+        self.__mscCtrlValLabel = QLabel(self.__mscGroup)
+        self.__mscGroup.layout().addWidget(self.__mscCtrlValLabel, 9, 0)
+        self.__mscCtrlValSpin = QSpinBox(self.__mscGroup)
+        self.__mscCtrlValSpin.setRange(0, 1023)
+        self.__mscCtrlValSpin.setValue(0)
+        self.__mscCtrlValSpin.valueChanged.connect(self.__show_messsage)
+        self.__mscGroup.layout().addWidget(self.__mscCtrlValSpin, 9, 1)
+        self.__mscCtrlValCheck = QCheckBox(self.__mscGroup)
+        self.__mscCtrlValCheck.toggled.connect(functools.partial(self.__checked, MscArgument.CTRL_VALUE))
+        self.__mscGroup.layout().addWidget(self.__mscCtrlValCheck, 9, 2)
+        self.__data_widgets[MscArgument.CTRL_VALUE] = [self.__mscCtrlValSpin, self.__mscCtrlValCheck]
 
-        self.mscTimecodeLabel = QLabel(self.mscGroup)
-        self.mscGroup.layout().addWidget(self.mscTimecodeLabel, 10, 0)
-        self.mscTimecodeEdit = QTimeEdit(self.mscGroup)
-        self.mscTimecodeEdit.setDisplayFormat('HH.mm.ss.zzz')
-        self.mscTimecodeEdit.timeChanged.connect(self.__show_messsage)
-        self.mscGroup.layout().addWidget(self.mscTimecodeEdit, 10, 1)
-        self.mscTimecodeCheck = QCheckBox(self.mscGroup)
-        self.mscTimecodeCheck.toggled.connect(functools.partial(self.__checked, MscArgument.TIMECODE))
-        self.mscGroup.layout().addWidget(self.mscTimecodeCheck, 10, 2)
-        self._data_widgets[MscArgument.TIMECODE] = [self.mscTimecodeEdit, self.mscTimecodeCheck]
+        self.__mscTimecodeLabel = QLabel(self.__mscGroup)
+        self.__mscGroup.layout().addWidget(self.__mscTimecodeLabel, 10, 0)
+        self.__mscTimecodeEdit = QTimeEdit(self.__mscGroup)
+        self.__mscTimecodeEdit.setDisplayFormat('HH.mm.ss.zzz')
+        self.__mscTimecodeEdit.timeChanged.connect(self.__show_messsage)
+        self.__mscGroup.layout().addWidget(self.__mscTimecodeEdit, 10, 1)
+        self.__mscTimecodeCheck = QCheckBox(self.__mscGroup)
+        self.__mscTimecodeCheck.toggled.connect(functools.partial(self.__checked, MscArgument.TIMECODE))
+        self.__mscGroup.layout().addWidget(self.__mscTimecodeCheck, 10, 2)
+        self.__data_widgets[MscArgument.TIMECODE] = [self.__mscTimecodeEdit, self.__mscTimecodeCheck]
 
-        self.mscTimeTypeLabel = QLabel(self.mscGroup)
-        self.mscGroup.layout().addWidget(self.mscTimeTypeLabel, 11, 0)
-        self.mscTimeTypeCombo = QComboBox(self.mscGroup)
-        self.mscTimeTypeCombo.addItems([str(i) for i in MscTimeType])
-        self.mscTimeTypeCombo.currentTextChanged.connect(self.__show_messsage)
-        self.mscGroup.layout().addWidget(self.mscTimeTypeCombo, 11, 1)
-        self.mscTimeTypeCheck = QCheckBox(self.mscGroup)
-        self.mscTimeTypeCheck .toggled.connect(functools.partial(self.__checked, MscArgument.TIME_TYPE))
-        self.mscGroup.layout().addWidget(self.mscTimeTypeCheck, 11, 2)
-        self._data_widgets[MscArgument.TIME_TYPE] = [self.mscTimeTypeCombo, self.mscTimeTypeCheck]
+        self.__mscTimeTypeLabel = QLabel(self.__mscGroup)
+        self.__mscGroup.layout().addWidget(self.__mscTimeTypeLabel, 11, 0)
+        self.__mscTimeTypeCombo = QComboBox(self.__mscGroup)
+        self.__mscTimeTypeCombo.addItems([str(i) for i in MscTimeType])
+        self.__mscTimeTypeCombo.setCurrentText(str(MscTimeType.SMPTE))
+        self.__mscTimeTypeCombo.currentTextChanged.connect(self.__show_messsage)
+        self.__mscGroup.layout().addWidget(self.__mscTimeTypeCombo, 11, 1)
+        self.__mscTimeTypeCheck = QCheckBox(self.__mscGroup)
+        self.__mscTimeTypeCheck .toggled.connect(functools.partial(self.__checked, MscArgument.TIME_TYPE))
+        self.__mscGroup.layout().addWidget(self.__mscTimeTypeCheck, 11, 2)
+        self.__data_widgets[MscArgument.TIME_TYPE] = [self.__mscTimeTypeCombo, self.__mscTimeTypeCheck]
 
-        self.mscPreview = QLabel(self.mscGroup)
-        self.mscPreview.setStyleSheet('font: bold')
-        self.mscPreview.setMinimumHeight(50)
-        self.mscGroup.layout().addWidget(self.mscPreview, 13, 0, 1, 2)
+        self.__mscPreview = QLabel(self.__mscGroup)
+        self.__mscPreview.setStyleSheet('font: bold')
+        self.__mscPreview.setMinimumHeight(50)
+        self.__mscGroup.layout().addWidget(self.__mscPreview, 13, 0, 1, 2)
 
-        self.testButton = QPushButton(self.mscGroup)
-        self.testButton.pressed.connect(self.__test_message)
-        self.mscGroup.layout().addWidget(self.testButton, 13, 2)
+        self.__retranslateUi()
 
-        self.retranslateUi()
+        self.__mscCommandCombo.currentTextChanged.emit(str(MscCommand.GO))
 
-        self.mscCommandCombo.currentTextChanged.emit(str(MscCommand.GO))
+    @property
+    def widgets(self):
+        return self.__mscGroup
 
-    def retranslateUi(self):
-        self.mscGroup.setTitle(translate('MSCCue', 'MSC Message'))
-        self.mscDeviceLabel.setText(translate('MSCCue', 'Device ID'))
-        self.mscCmdFmtLabel.setText(translate('MSCCue', 'Command Format'))
-        self.mscCommandLabel.setText(translate('MSCCue', 'MSC Command'))
-        self.mscQNumberLabel.setText(translate('MSCCue', 'Q_Number'))
-        self.mscQListLabel.setText(translate('MSCCue', 'Q_List'))
-        self.mscQPathLabel.setText(translate('MSCCue', 'Q_Path'))
-        self.mscMacroLabel.setText(translate('MSCCue', 'Macro Number'))
-        self.mscCtrlNumLabel.setText(translate('MSCCue', 'Generic Control  Number'))
-        self.mscCtrlValLabel.setText(translate('MSCCue', 'Generic Control  Value'))
-        self.mscTimecodeLabel.setText(translate('MSCCue', 'Timecode'))
-        self.testButton.setText(translate('MSCCue', 'Test'))
+    @property
+    def device_id(self):
+        return self.__mscDeviceSpin.value()
 
+    @device_id.setter
+    def device_id(self, device_id):
+        self.__mscDeviceSpin.setValue(device_id)
 
-    def __get_message(self):
-        device_id = self.mscDeviceSpin.value()
-        command = MscCommand(self.mscCommandCombo.currentText())
-        command_format = MscCommandFormat(self.mscCmdFmtCombo.currentText())
+    @property
+    def command_format(self):
+        return MscCommandFormat(self.__mscCmdFmtCombo.currentTextChanged())
+
+    @command_format.setter
+    def command_format(self, command_format):
+        self.__mscCmdFmtCombo.setCurrentText(str(command_format))
+
+    @property
+    def command(self):
+        return MscCommand(self.__mscCommandCombo.currentText())
+
+    @command.setter
+    def command(self, command):
+        self.__mscCommandCombo.setCurrentText(str(command))
+
+    def get_argument_widget(self, msc_arg):
+        return self.__data_widgets[msc_arg][self.DATA_WIDGET]
+
+    def set_argument(self, msc_arg, arg):
+        if msc_arg is MscArgument.TIME_TYPE:
+            if not isinstance(arg, MscTimeType):
+                raise ValueError("not an MscTimeType")
+            self.__data_widgets[msc_arg][self.DATA_WIDGET].setCurrentText(str(arg))
+        elif msc_arg is MscArgument.TIMECODE:
+            if not isinstance(arg, int) and arg < 0:
+                raise ValueError("not an int")
+            self.__data_widgets[msc_arg][self.DATA_WIDGET].setTime(QTime().fromMSecsSinceStartOfDay(arg))
+
+        else:
+            if not isinstance(arg, (int, float)) and arg < 0:
+                raise ValueError("not an int or float")
+            self.__data_widgets[msc_arg][self.DATA_WIDGET].setValue(arg)
+
+    def checkbox_enable(self, msc_arg, enable):
+        self.__data_widgets[msc_arg][self.CHECK_WIDGET].setEnabled(enable)
+
+    def checkbox_toggle(self, msc_arg, checked):
+        self.__data_widgets[msc_arg][self.CHECK_WIDGET].setChecked(checked)
+
+    def __retranslateUi(self):
+        self.__mscGroup.setTitle(translate('MSCSettings', 'MSC Message'))
+        self.__mscDeviceLabel.setText(translate('MSCSettings', 'Device ID'))
+        self.__mscCmdFmtLabel.setText(translate('MSCSettings', 'Command Format'))
+        self.__mscCommandLabel.setText(translate('MSCSettings', 'MSC Command'))
+        self.__mscQNumberLabel.setText(translate('MSCSettings', 'Q_Number'))
+        self.__mscQListLabel.setText(translate('MSCSettings', 'Q_List'))
+        self.__mscQPathLabel.setText(translate('MSCSettings', 'Q_Path'))
+        self.__mscMacroLabel.setText(translate('MSCSettings', 'Macro Number'))
+        self.__mscCtrlNumLabel.setText(translate('MSCSettings', 'Generic Control  Number'))
+        self.__mscCtrlValLabel.setText(translate('MSCSettings', 'Generic Control  Value'))
+        self.__mscTimecodeLabel.setText(translate('MSCSettings', 'Timecode'))
+
+    def get_message(self):
+        device_id = self.__mscDeviceSpin.value()
+        command = MscCommand(self.__mscCommandCombo.currentText())
+        command_format = MscCommandFormat(self.__mscCmdFmtCombo.currentText())
 
         message = MscMessage(device_id, command_format, command)
 
         for msc_arg in MscMessage.get_arguments(command):
-            if self._data_widgets[msc_arg][self.CHECK_WIDGET].isChecked():
+            if self.__data_widgets[msc_arg][self.CHECK_WIDGET].isChecked():
                 if msc_arg is MscArgument.TIME_TYPE:
-                    message[msc_arg] = self._data_widgets[msc_arg][self.DATA_WIDGET].currentText()
+                    message[msc_arg] = self.__data_widgets[msc_arg][self.DATA_WIDGET].currentText()
                 elif msc_arg is MscArgument.TIMECODE:
-                    message[msc_arg] = self._data_widgets[msc_arg][self.DATA_WIDGET].time().msecsSinceStartOfDay()
+                    message[msc_arg] = self.__data_widgets[msc_arg][self.DATA_WIDGET].time().msecsSinceStartOfDay()
                 else:
-                    message[msc_arg] = self._data_widgets[msc_arg][self.DATA_WIDGET].value()
+                    message[msc_arg] = self.__data_widgets[msc_arg][self.DATA_WIDGET].value()
 
         return message
 
-    def __test_message(self):
-        message = self.__get_message()
-        MIDIOutput().send_from_str(message.message_str)
-
     def __show_messsage(self):
-        message = self.__get_message()
-        self.mscPreview.setText('MSC:  {0}'.format(message.to_hex_str()))
+        message = self.get_message()
+        self.__mscPreview.setText('MSC:  {0}'.format(message.to_hex_str()))
 
     def __checked(self, msc_arg, checked):
-        self._data_widgets[msc_arg][self.DATA_WIDGET].setEnabled(checked)
+        self.__data_widgets[msc_arg][self.DATA_WIDGET].setEnabled(checked)
 
         if msc_arg is MscArgument.Q_LIST:
-            self._data_widgets[MscArgument.Q_PATH][self.CHECK_WIDGET].setChecked(checked)
-            self._data_widgets[MscArgument.Q_PATH][self.CHECK_WIDGET].setEnabled(checked)
+            self.__data_widgets[MscArgument.Q_PATH][self.CHECK_WIDGET].setChecked(checked)
+            self.__data_widgets[MscArgument.Q_PATH][self.CHECK_WIDGET].setEnabled(checked)
 
         elif msc_arg is MscArgument.Q_PATH:
-            self._data_widgets[MscArgument.Q_LIST][self.CHECK_WIDGET].setEnabled(not checked)
+            self.__data_widgets[MscArgument.Q_LIST][self.CHECK_WIDGET].setEnabled(not checked)
 
         elif msc_arg is MscArgument.TIMECODE:
-            self._data_widgets[MscArgument.TIME_TYPE][self.CHECK_WIDGET].setChecked(checked)
+            self.__data_widgets[MscArgument.TIME_TYPE][self.CHECK_WIDGET].setChecked(checked)
 
         elif msc_arg is MscArgument.TIME_TYPE:
-            self._data_widgets[MscArgument.TIME_TYPE][self.CHECK_WIDGET].setEnabled(False)
+            self.__data_widgets[MscArgument.TIME_TYPE][self.CHECK_WIDGET].setEnabled(False)
 
         self.__show_messsage()
 
     def __type_changed(self, cmd_str):
         cmd = MscCommand(cmd_str)
         args = MscMessage.get_arguments(cmd)
-        for key, widgets in self._data_widgets.items():
+        for key, widgets in self.__data_widgets.items():
             if key in args:
                 if args[key] is cmd:
                     widgets[self.CHECK_WIDGET].setChecked(True)
@@ -295,9 +333,28 @@ class MscCueSettings(SettingsPage):
                 widgets[1].setEnabled(False)
                 widgets[0].setEnabled(False)
 
+
+class MscCueSettings(SettingsPage, MscGroupBox):
+    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'MSC Settings')
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.setLayout(QVBoxLayout())
+        self.layout().setAlignment(Qt.AlignTop)
+        self.layout().addWidget(self.widgets)
+
+        self.testButton = QPushButton(self.widgets)
+        self.testButton.pressed.connect(self.__test_message)
+        self.testButton.setText(translate('MSCCue', 'Test'))
+        self.widgets.layout().addWidget(self.testButton, 13, 2)
+
+    def __test_message(self):
+        message = self.get_message()
+        MIDIOutput().send_from_str(message.message_str)
+
     def get_settings(self):
 
-        message = self.__get_message()
+        message = self.get_message()
         msg_str = message.message_str
         if not msg_str:
             elogging.error("MscCue: could not create MSC messsage")
@@ -311,16 +368,15 @@ class MscCueSettings(SettingsPage):
         if not msg_str:
             return
 
-        print(msg_str)
         parser = MscStringParser(msg_str)
 
         if not parser.valid:
             elogging.error("MscCue: could not parse MSC message")
             return
 
-        self.mscDeviceSpin.setValue(parser.device_id)
-        self.mscCommandCombo.setCurrentText(str(parser.command))
-        self.mscCmdFmtCombo.setCurrentText(str(parser.command_format))
+        self.device_id = parser.device_id
+        self.command_format = parser.command_format
+        self.command = parser.command
 
         for msc_arg in MscArgument:
             value = parser.get(msc_arg)
@@ -328,17 +384,16 @@ class MscCueSettings(SettingsPage):
                 if msc_arg is MscArgument.TIME_TYPE:
                     pass
                 elif msc_arg is MscArgument.TIMECODE:
-                    self.mscTimeTypeCombo.setCurrentText(str(parser[MscArgument.TIME_TYPE]))
-                    self.mscTimecodeEdit.setTime(QTime().fromMSecsSinceStartOfDay(value))
-                    self._data_widgets[msc_arg][self.CHECK_WIDGET].setChecked(True)
-                    self._data_widgets[msc_arg][self.CHECK_WIDGET].setEnabled(not parser.required(msc_arg))
+                    self.set_argument(MscArgument.TIME_TYPE, parser[MscArgument.TIME_TYPE])
+                    self.set_argument(MscArgument.TIMECODE, value)
+                    self.checkbox_toggle(msc_arg, True)
+                    self.checkbox_enable(msc_arg, not parser.required(msc_arg))
+
                 else:
-                    self._data_widgets[msc_arg][self.DATA_WIDGET].setValue(value)
-                    self._data_widgets[msc_arg][self.CHECK_WIDGET].setChecked(True)
-                    self._data_widgets[msc_arg][self.CHECK_WIDGET].setEnabled(not parser.required(msc_arg))
-
+                    self.set_argument(msc_arg, value)
+                    self.checkbox_toggle(msc_arg, True)
+                    self.checkbox_enable(msc_arg, not parser.required(msc_arg))
             else:
-                self._data_widgets[msc_arg][self.CHECK_WIDGET].setChecked(False)
-
+                self.checkbox_toggle(msc_arg, False)
 
 CueSettingsRegistry().add_item(MscCueSettings, MscCue)
