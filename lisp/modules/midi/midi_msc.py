@@ -500,6 +500,10 @@ class MscMessage(MscObject):
         else:
             return ''
 
+    @property
+    def message(self):
+        return mido.parse_string(self.message_str)
+
     def __create_msg(self):
         for key in self._get_required():
             if key in self:
