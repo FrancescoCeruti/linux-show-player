@@ -271,7 +271,7 @@ class MscGroupBox(QGroupBox):
         self.__data_widgets[msc_arg][self.DATA_WIDGET].setEnabled(checked)
 
         if msc_arg is MscArgument.Q_LIST:
-            self.__data_widgets[MscArgument.Q_PATH][self.CHECK_WIDGET].setChecked(checked)
+            # self.__data_widgets[MscArgument.Q_PATH][self.CHECK_WIDGET].setChecked(checked)
             self.__data_widgets[MscArgument.Q_PATH][self.CHECK_WIDGET].setEnabled(checked)
 
         elif msc_arg is MscArgument.Q_PATH:
