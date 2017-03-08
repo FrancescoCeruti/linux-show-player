@@ -46,7 +46,6 @@ class Msc(Protocol):
 
     def __new_message(self, message):
         if message.type == 'sysex':
-            print(Msc.str_from_message(message))
             self.protocol_event.emit(Msc.str_from_message(message))
 
     @staticmethod
