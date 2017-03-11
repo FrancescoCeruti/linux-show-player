@@ -676,7 +676,7 @@ class MscMessage(MscObject):
             if key is MscArgument.Q_NUMBER:
                 chunk = _MscLookupTable.pack_float(self.get(key))
                 if chunk:
-                    data.extend()
+                    data.extend(chunk)
                 else:
                     return None
 
