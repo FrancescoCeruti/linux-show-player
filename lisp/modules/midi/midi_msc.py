@@ -223,7 +223,7 @@ class _MscLookupTable:
         MscArgument.TIME_TYPE: {'type': MscTimeType, 'default': MscTimeType.SMPTE}
     }
 
-    # dict holds MscArguments for certain MscCommands: { MsgArgument: [ depends on: MscCommand | MscArgument | None ] }
+    # dict holds MscArguments for certain MscCommands: { MsgArgument: [ required by: MscCommand | MscArgument | None ] }
     CMD_ARGS = {
         MscCommand.GO: {MscArgument.Q_NUMBER: None,
                         MscArgument.Q_LIST: MscArgument.Q_PATH,
