@@ -326,16 +326,13 @@ class _MscLookupTable:
         :return: list of int
         :rtype: list
         """
-        if isinstance(value, float) or isinstance(value, int):
-            l = []
-            for i in "%g" % value:
-                if i.isdigit():
-                    l.append(int(i) + 0x30)
-                else:
-                    l.append(0x2E)
-            return l
-        else:
-            return None
+        l = []
+        for i in "%g" % value:
+            if i.isdigit():
+                l.append(int(i) + 0x30)
+            else:
+                l.append(0x2E)
+        return l
 
     @staticmethod
     def unpack_float(digit_list):
@@ -373,16 +370,13 @@ class _MscLookupTable:
         :return: timecoded milliseconds as five ints
         :rtype: int, int, int, int, int
         """
-        if isinstance(time_type, MscTimeType) and msec > -1:
-            tt = time_tuple(msec)
-            hh = (_MscLookupTable.TIME_TYPE[time_type] << 5) + tt[0]
-            mm = tt[1]  # we use non colour frame (7th bit stays 0)
-            ss = tt[2]  # subframes, standard
-            frame = _MscLookupTable.TIME_TYPE_FRAME[time_type]
-            ff, fr = math.modf(tt[3] / frame)
-            return hh, mm, ss, int(fr), int(ff * 100)
-        else:
-            return None
+        tt = time_tuple(msec)
+        hh = (_MscLookupTable.TIME_TYPE[time_type] << 5) + tt[0]
+        mm = tt[1]  # we use non colour frame (7th bit stays 0)
+        ss = tt[2]  # subframes, standard
+        frame = _MscLookupTable.TIME_TYPE_FRAME[time_type]
+        ff, fr = math.modf(tt[3] / frame)
+        return hh, mm, ss, int(fr), int(ff * 100)
 
     @staticmethod
     def unpack_time_type(data):
@@ -446,10 +440,7 @@ class _MscLookupTable:
         :return: lsb, msb
         :rtype: int, int
         """
-        if isinstance(value, int) and (0 <= value <= 1023):
-            return value & 0x7F, value >> 7
-        else:
-            return None
+        return value & 0x7F, value >> 7
 
     @staticmethod
     def unpack_int16(data):
@@ -674,51 +665,31 @@ class MscMessage(MscObject):
 
         for key in self:
             if key is MscArgument.Q_NUMBER:
-                chunk = _MscLookupTable.pack_float(self.get(key))
-                if chunk:
-                    data.extend(chunk)
-                else:
-                    return None
+                data.extend(_MscLookupTable.pack_float(self.get(key)))
 
             elif key is MscArgument.Q_LIST:
                 chunk = _MscLookupTable.pack_float(self.get(key))
-                if chunk:
-                    if MscArgument.Q_NUMBER in _MscLookupTable.CMD_ARGS[self._command]:
-                        data.append(0x0)
-                    data.extend(chunk)
-                else:
-                    return None
+                if MscArgument.Q_NUMBER in _MscLookupTable.CMD_ARGS[self._command]:
+                    data.append(0x0)
+                data.extend(chunk)
 
             elif key is MscArgument.Q_PATH:
                 chunk = _MscLookupTable.pack_float(self.get(key))
-                if chunk:
-                    if MscArgument.Q_LIST in self:
-                        data.append(0x0)
-                        data.extend(chunk)
-                else:
-                    return None
+                if MscArgument.Q_LIST in self:
+                    data.append(0x0)
+                    data.extend(chunk)
 
             elif key is MscArgument.MACRO_NUM:
-                chunk = self.get(key)
-                if 0 <= chunk <= 127:
-                    data.append(self.get(key))
-                else:
-                    return None
+                data.append(self.get(key))
 
             elif key is MscArgument.CTRL_NUM or key is MscArgument.CTRL_VALUE:
                 chunk = _MscLookupTable.pack_int16(self.get(key))
-                if chunk:
-                    data.extend(chunk)
-                else:
-                    return None
+                data.extend(chunk)
 
             elif key is MscArgument.TIMECODE:
                 time_type = self[MscArgument.TIME_TYPE]
                 timecode = _MscLookupTable.pack_millis(self.get(key), time_type)
-                if timecode:
-                    data.extend(timecode)
-                else:
-                    return None
+                data.extend(timecode)
 
         return data
 
