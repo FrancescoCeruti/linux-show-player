@@ -21,7 +21,7 @@ Tested on the following systems *(it should work on newer versions)*:
  * Ubuntu 16.04
  * Fedora 24
 
-<br />Otherwise follow the instructions on the [wiki](https://github.com/FrancescoCeruti/linux-show-player/wiki/Installation) 
+<br />Otherwise follow the instructions on the [wiki](https://github.com/FrancescoCeruti/linux-show-player/wiki/Install) 
 
 ---
 
