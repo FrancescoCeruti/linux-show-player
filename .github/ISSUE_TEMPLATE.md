@@ -10,6 +10,8 @@ When writing an issue:
  - for bugs/unexpected behavior, use the following "template"
  - remove the template text you don't need, like these first 11 lines
 
+**Open diffrent issues for different and unrelated bugs/requests**
+
 ---
 
 Short description of the issue, if the title isn't enough.
