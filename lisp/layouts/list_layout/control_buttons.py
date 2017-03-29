@@ -44,9 +44,9 @@ class ShowControlButtons(QWidget):
         self.layout().addWidget(self.interruptButton, 0, 2)
 
         # Row 1
-        self.restartButton = self.newButton(
+        self.resumeButton = self.newButton(
             QIcon.fromTheme('media-playback-start'))
-        self.layout().addWidget(self.restartButton, 1, 0)
+        self.layout().addWidget(self.resumeButton, 1, 0)
 
         self.fadeOutButton = self.newButton(QIcon.fromTheme('fadeout-generic'))
         self.layout().addWidget(self.fadeOutButton, 1, 1)
@@ -63,7 +63,7 @@ class ShowControlButtons(QWidget):
         self.interruptButton.setToolTip(
             translate('ListLayout', 'Interrupt all'))
         # Row 1
-        self.restartButton.setToolTip(translate('ListLayout', 'Restart all'))
+        self.resumeButton.setToolTip(translate('ListLayout', 'Resume all'))
         self.fadeOutButton.setToolTip(translate('ListLayout', 'Fade-Out all'))
         self.fadeInButton.setToolTip(translate('ListLayout', 'Fade-In all'))
 

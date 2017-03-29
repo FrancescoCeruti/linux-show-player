@@ -47,7 +47,7 @@ class SimpleTableModel(QAbstractTableModel):
         self.endInsertRows()
 
     def removeRow(self, row, parent=QModelIndex()):
-        if row < len(self.rows):
+        if -1 < row < len(self.rows):
             self.beginRemoveRows(parent, row, row)
             self.rows.pop(row)
             self.endRemoveRows()

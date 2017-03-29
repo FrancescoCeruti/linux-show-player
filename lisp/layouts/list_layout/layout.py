@@ -147,7 +147,7 @@ class ListLayout(QWidget, CueLayout):
         self.controlButtons.pauseButton.clicked.connect(self.pause_all)
         self.controlButtons.fadeInButton.clicked.connect(self.fadein_all)
         self.controlButtons.fadeOutButton.clicked.connect(self.fadeout_all)
-        self.controlButtons.restartButton.clicked.connect(self.restart_all)
+        self.controlButtons.resumeButton.clicked.connect(self.restart_all)
         self.controlButtons.interruptButton.clicked.connect(self.interrupt_all)
         self.layout().addWidget(self.controlButtons, 0, 2)
 
@@ -331,7 +331,8 @@ class ListLayout(QWidget, CueLayout):
             cue.pause(fade=fade)
 
     def restart_all(self):
-        fade = config['ListLayout'].getboolean('RestartAllFade')
+        # TODO: change to resume
+        fade = config['ListLayout'].getboolean('ResumeAllFade')
         for cue in self._model_adapter:
             cue.restart(fade=fade)
 
