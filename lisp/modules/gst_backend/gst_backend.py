@@ -22,7 +22,7 @@ from lisp.backend.backend import Backend as BaseBackend
 from lisp.core.decorators import memoize
 from lisp.core.module import Module
 from lisp.cues.media_cue import MediaCue
-from lisp.modules.gst_backend.gst_utils import gst_parse_tag_list
+from lisp.modules.gst_backend.gst_utils import gst_parse_tags_list
 from lisp.modules.gst_backend.gst_utils import gst_uri_metadata, gst_mime_types, \
     gst_uri_duration
 from lisp.ui.settings.app_settings import AppSettings
@@ -55,7 +55,11 @@ class GstBackend(Module, BaseBackend):
         return gst_uri_duration(uri)
 
     def uri_tags(self, uri):
-        return gst_parse_tag_list(gst_uri_metadata(uri).get_tags())
+        tags = gst_uri_metadata(uri).get_tags()
+        if tags is not None:
+            return gst_parse_tags_list(tags)
+
+        return {}
 
     @memoize
     def supported_extensions(self):

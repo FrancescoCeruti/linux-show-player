@@ -54,7 +54,7 @@ def gst_uri_metadata(uri):
 
 
 # Adaption of the code found in https://github.com/ch3pjw/pyam
-def gst_parse_tag_list(gst_tag_list):
+def gst_parse_tags_list(gst_tag_list):
     """Takes a GstTagList object and returns a dict."""
     parsed_tags = {}
 

@@ -142,6 +142,7 @@ class Fader:
             self._pause.clear()
 
     def restart(self):
+        # TODO: change to resume
         self._pause.set()
 
     def is_paused(self):

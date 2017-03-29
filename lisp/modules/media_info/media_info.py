@@ -26,7 +26,7 @@ from PyQt5.QtWidgets import QHeaderView
 
 from lisp.application import Application
 from lisp.modules.gst_backend.gst_utils import gst_uri_metadata, \
-    gst_parse_tag_list
+    gst_parse_tags_list
 from lisp.core.module import Module
 from lisp.cues.media_cue import MediaCue
 from lisp.layouts.cue_layout import CueLayout
@@ -76,10 +76,13 @@ class MediaInfo(Module):
 
             # Media tags
             info['Tags'] = {}
-            tags = gst_parse_tag_list(gst_info.get_tags())
-            for tag_name in tags:
-                if type(tags[tag_name]).__str__ is not object.__str__:
-                    info['Tags'][tag_name.capitalize()] = str(tags[tag_name])
+
+            tags = gst_info.get_tags()
+            if tags is not None:
+                tags = gst_parse_tags_list(tags)
+                for tag in tags:
+                    if type(tags[tag]).__str__ is not object.__str__:
+                        info['Tags'][tag.capitalize()] = str(tags[tag])
 
             if not info['Tags']:
                 info.pop('Tags')

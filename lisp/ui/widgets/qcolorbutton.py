@@ -46,7 +46,8 @@ class QColorButton(QPushButton):
             self.colorChanged.emit()
 
         if self._color is not None:
-            self.setStyleSheet('background-color: {0};'.format(self._color))
+            self.setStyleSheet(
+                'QColorButton {{ background-color: {0}; }}'.format(self._color))
         else:
             self.setStyleSheet('')
 
@@ -54,7 +55,7 @@ class QColorButton(QPushButton):
         return self._color
 
     def onColorPicker(self):
-        dlg = QColorDialog(self)
+        dlg = QColorDialog()
 
         if self._color is not None:
             dlg.setCurrentColor(QColor(self._color))

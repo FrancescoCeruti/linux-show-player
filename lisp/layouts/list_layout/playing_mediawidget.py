@@ -75,7 +75,7 @@ class RunningCueWidget(QWidget):
             self.controlButtons.stopButton.setEnabled(False)
         if CueAction.Pause in cue.CueActions:
             self.controlButtons.pauseButton.clicked.connect(self._pause)
-            self.controlButtons.startButton.clicked.connect(self._restart)
+            self.controlButtons.startButton.clicked.connect(self._resume)
         else:
             self.controlButtons.pauseButton.setEnabled(False)
             self.controlButtons.startButton.setEnabled(False)
@@ -149,8 +149,8 @@ class RunningCueWidget(QWidget):
     def _pause(self):
         self.cue.pause(fade=config['ListLayout'].getboolean('PauseCueFade'))
 
-    def _restart(self):
-        self.cue.restart(fade=config['ListLayout'].getboolean('RestartCueFade'))
+    def _resume(self):
+        self.cue.restart(fade=config['ListLayout'].getboolean('ResumeCueFade'))
 
     def _stop(self):
         self.cue.stop(fade=config['ListLayout'].getboolean('StopCueFade'))
