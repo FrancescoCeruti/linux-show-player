@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2017 Francesco Ceruti <ceppofrancy@gmail.com>
 # Copyright 2012-2016 Thomas Achtner <info@offtools.de>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
@@ -18,17 +18,17 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+import logging
+import traceback
 from collections import deque
 from enum import Enum
-
-from lisp.core.singleton import ABCSingleton
 from liblo import ServerThread, Address, ServerError
 
-from lisp.core.configuration import config
-from lisp.layouts.list_layout.layout import ListLayout
-from lisp.ui import elogging
 from lisp.application import Application
+from lisp.core.configuration import config
 from lisp.core.signal import Signal
+from lisp.core.singleton import ABCSingleton
+from lisp.layouts.list_layout.layout import ListLayout
 
 
 class OscMessageType(Enum):
@@ -95,22 +95,24 @@ def callback_interrupt(_, args, types):
         Application().layout.interrupt_all()
 
 
+GLOBAL_CALLBACKS = [
+    ['/lisp/list/go', None, callback_go],
+    ['/lisp/list/reset', None, callback_reset],
+    ['/lisp/list/select', 'i', callback_select],
+    ['/lisp/list/pause', None, callback_pause],
+    ['/lisp/list/restart', None, callback_restart],
+    ['/lisp/list/stop', None, callback_stop],
+    ['/lisp/list/interrupt', None, callback_interrupt]
+]
+
+
 class OscCommon(metaclass=ABCSingleton):
     def __init__(self):
         self.__srv = None
         self.__listening = False
         self.__log = deque([], 10)
-        self.new_message = Signal()
 
-        self.__callbacks = [
-            ['/lisp/list/go', None, callback_go],
-            ['/lisp/list/reset', None, callback_reset],
-            ['/lisp/list/select', 'i', callback_select],
-            ['/lisp/list/pause', None, callback_pause],
-            ['/lisp/list/restart', None, callback_restart],
-            ['/lisp/list/stop', None, callback_stop],
-            ['/lisp/list/interrupt', None, callback_interrupt]
-        ]
+        self.new_message = Signal()
 
     def start(self):
         if self.__listening:
@@ -120,24 +122,25 @@ class OscCommon(metaclass=ABCSingleton):
             self.__srv = ServerThread(int(config['OSC']['inport']))
 
             if isinstance(Application().layout, ListLayout):
-                for cb in self.__callbacks:
+                for cb in GLOBAL_CALLBACKS:
                     self.__srv.add_method(cb[0], cb[1], cb[2])
 
             self.__srv.add_method(None, None, self.__new_message)
 
             self.__srv.start()
             self.__listening = True
-            elogging.info('OSC: Server started ' + self.__srv.url, dialog=False)
-        except ServerError as e:
-            elogging.error(e, dialog=False)
+            logging.info('OSC: Server started at {}'.format(self.__srv.url))
+        except ServerError:
+            logging.error('OSC: Cannot start sever')
+            logging.debug(traceback.format_exc())
 
     def stop(self):
-        if self.__srv:
+        if self.__srv is not None:
             if self.__listening:
                 self.__srv.stop()
                 self.__listening = False
             self.__srv.free()
-            elogging.info('OSC: Server stopped', dialog=False)
+            logging.info('OSC: Server stopped')
 
     @property
     def enabled(self):
@@ -149,7 +152,8 @@ class OscCommon(metaclass=ABCSingleton):
 
     def send(self, path, *args):
         if self.__listening:
-            target = Address(config['OSC']['hostname'], int(config['OSC']['outport']))
+            target = Address(config['OSC']['hostname'],
+                             int(config['OSC']['outport']))
             self.__srv.send(target, path, *args)
 
     def __new_message(self, path, args, types):

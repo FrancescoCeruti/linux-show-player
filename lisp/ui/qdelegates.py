@@ -120,9 +120,7 @@ class CheckBoxDelegate(QStyledItemDelegate):
         super().__init__(**kwargs)
 
     def createEditor(self, parent, option, index):
-        editor = QCheckBox(parent)
-
-        return editor
+        return QCheckBox(parent)
 
     def setEditorData(self, checkBox, index):
         value = index.model().data(index, Qt.EditRole)
@@ -194,27 +192,22 @@ class OscArgumentDelegate(QStyledItemDelegate):
         return editor
 
     def setEditorData(self, widget, index):
+        value = index.model().data(index, Qt.EditRole)
+
         if self.tag is OscMessageType.Int:
-            value = index.model().data(index, Qt.EditRole)
             if isinstance(value, int):
                 widget.setValue(value)
         elif self.tag is OscMessageType.Float:
-            value = index.model().data(index, Qt.EditRole)
             if isinstance(value, float):
                 widget.setValue(value)
         elif self.tag is OscMessageType.Bool:
-            value = index.model().data(index, Qt.EditRole)
             if isinstance(value, bool):
                 widget.setChecked(value)
         else:
-            value = index.model().data(index, Qt.EditRole)
             widget.setText(str(value))
 
     def setModelData(self, widget, model, index):
-        if self.tag is OscMessageType.Int:
-            widget.interpretText()
-            model.setData(index, widget.value(), Qt.EditRole)
-        elif self.tag is OscMessageType.Float:
+        if self.tag is OscMessageType.Int or self.tag is OscMessageType.Float:
             widget.interpretText()
             model.setData(index, widget.value(), Qt.EditRole)
         elif self.tag is OscMessageType.Bool:

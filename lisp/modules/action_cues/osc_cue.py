@@ -18,30 +18,26 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-
+import logging
 from PyQt5 import QtCore
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
-from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QGridLayout, \
-    QTableView, QTableWidget, QHeaderView, QPushButton, QLabel, \
-    QLineEdit, QDoubleSpinBox
-
-from lisp.ui.widgets import FadeComboBox
+from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QGridLayout, QLineEdit, \
+    QTableView, QTableWidget, QHeaderView, QPushButton, QLabel, QDoubleSpinBox
 
 from lisp.core.decorators import async
-from lisp.core.fader import Fader
 from lisp.core.fade_functions import FadeInType, FadeOutType
-from lisp.cues.cue import Cue, CueAction
-from lisp.ui import elogging
-from lisp.ui.qmodels import SimpleTableModel
+from lisp.core.fader import Fader
 from lisp.core.has_properties import Property
+from lisp.cues.cue import Cue, CueAction
+from lisp.modules.osc.osc_common import OscCommon
+from lisp.modules.osc.osc_common import OscMessageType
+from lisp.ui import elogging
 from lisp.ui.qdelegates import ComboBoxDelegate, OscArgumentDelegate, \
     CheckBoxDelegate
-from lisp.ui.settings.cue_settings import CueSettingsRegistry, \
-    SettingsPage
-from lisp.modules.osc.osc_common import OscCommon
+from lisp.ui.qmodels import SimpleTableModel
+from lisp.ui.settings.cue_settings import CueSettingsRegistry, SettingsPage
 from lisp.ui.ui_utils import translate
-from lisp.modules.osc.osc_common import OscMessageType
-
+from lisp.ui.widgets import FadeComboBox
 
 COL_TYPE = 0
 COL_START_VAL = 1
@@ -162,7 +158,7 @@ class OscCue(Cue):
             else:
                 self._position = 1
         else:
-            elogging.error("OSC: Error on parsing argument list - nothing sent", dialog=False)
+            logging.error("OSC: Error while parsing arguments, nothing sent")
 
         return False
 

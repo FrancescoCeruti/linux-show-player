@@ -48,9 +48,6 @@ class Osc(Protocol):
         if OscCommon().enabled:
             OscCommon().start()
 
-    def reset(self):
-        OscCommon().stop()
-
     def __new_message(self, path, args, types):
         key = Osc.key_from_message(path, types, args)
         self.protocol_event.emit(key)

@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2017 Francesco Ceruti <ceppofrancy@gmail.com>
 # Copyright 2012-2016 Thomas Achtner <info@offtools.de>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
@@ -20,10 +20,9 @@
 
 
 from lisp.core.module import Module
-from lisp.core.configuration import config
-from lisp.ui.settings.app_settings import AppSettings
-from lisp.modules.osc.osc_settings import OscSettings
 from lisp.modules.osc.osc_common import OscCommon
+from lisp.modules.osc.osc_settings import OscSettings
+from lisp.ui.settings.app_settings import AppSettings
 
 
 class Osc(Module):
@@ -32,3 +31,6 @@ class Osc(Module):
     def __init__(self):
         # Register the settings widget
         AppSettings.register_settings_widget(OscSettings)
+
+    def terminate(self):
+        OscCommon().stop()
