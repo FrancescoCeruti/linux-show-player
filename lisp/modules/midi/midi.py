@@ -28,8 +28,6 @@ from lisp.ui.settings.app_settings import AppSettings
 class Midi(Module):
     """Provide MIDI I/O functionality"""
 
-    AppPort = None
-
     def __init__(self):
         # Register the settings widget
         AppSettings.register_settings_widget(MIDISettings)
@@ -40,15 +38,3 @@ class Midi(Module):
             mido.set_backend(mido.Backend(backend, load=True))
         except Exception:
             raise RuntimeError('Backend loading failed: {0}'.format(backend))
-
-        # Create LiSP MIDI I/O port
-        try:
-            Midi.AppPort = mido.backend.open_ioport(
-                config['MIDI']['AppPortName'], virtual=True)
-        except IOError:
-            import logging
-            logging.error('MIDI: cannot open application virtual-port.')
-
-    def terminate(self):
-        if Midi.AppPort is not None:
-            Midi.AppPort.close()
