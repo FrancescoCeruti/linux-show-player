@@ -20,9 +20,11 @@
 import logging
 import re
 
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QSize
+from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QDialog, QDialogButtonBox, QGridLayout, QLineEdit, \
-    QTreeWidget, QAbstractItemView, QTreeWidgetItem, QPushButton, QSpacerItem
+    QTreeWidget, QAbstractItemView, QTreeWidgetItem, QPushButton, QSpacerItem, \
+    QMessageBox
 
 from lisp.application import Application
 from lisp.application import MainActionsHandler
@@ -55,7 +57,7 @@ class RenameUi(QDialog):
         self.previewList.setColumnWidth(0, 300)
         self.previewList.setSelectionMode(QAbstractItemView.NoSelection)
         self.previewList.itemPressed.connect(self.onPreviewListItemPressed)
-        self.layout().addWidget(self.previewList, 0, 0, 3, 4)
+        self.layout().addWidget(self.previewList, 0, 0, 3, 5)
 
         # Options buttons
         self.capitalizeButton = QPushButton()
@@ -95,23 +97,20 @@ class RenameUi(QDialog):
         self.outRegexLine = QLineEdit()
         self.outRegexLine.setPlaceholderText(
             translate('RenameCues', 'Rename all cue. () in regex below usable with $0, $1 ...'))
-        self.outRegexLine.setToolTip(
-            translate('RenameCues', 'What you type here is used to rename all cues.\n'
-                                    'The regex line below is used to match patterns, and to '
-                                    'capture parts of the text with parenthesis.\n'
-                                    'You can use the content of first () here with $0, the second with $1, etc..'))
         self.outRegexLine.textChanged.connect(self.onOutRegexChanged)
         self.layout().addWidget(self.outRegexLine, 3, 3)
 
         self.regexLine = QLineEdit()
         self.regexLine.setPlaceholderText(translate('RenameCues', 'Type your regex here :'))
-        self.regexLine.setToolTip(translate('RenameCues', 'Match patterns with standard python regex.\n'
-                                            'Exemple : [a-z]([0-9]+) will find a lower case character [a-z] '
-                                            'followed by one or more number.\n'
-                                            'Only the numbers will be captured for use with $0 above.\n'
-                                            'For more information, consult python documentation'))
         self.regexLine.textChanged.connect(self.onRegexLineChanged)
         self.layout().addWidget(self.regexLine, 4, 3)
+
+        # Help button
+        self.helpButton = QPushButton()
+        self.helpButton.setIcon(QIcon.fromTheme('help-info'))
+        self.helpButton.setIconSize(QSize(32, 32))
+        self.layout().addWidget(self.helpButton, 3, 4, 2, 1)
+        self.helpButton.clicked.connect(self.onHelpButtonClicked)
 
         # OK / Cancel buttons
         self.dialogButtons = QDialogButtonBox()
@@ -235,6 +234,26 @@ class RenameUi(QDialog):
             cue['selected'] = True
 
         self.update_preview_list()
+
+    def onHelpButtonClicked(self):
+
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Information)
+        msg.setWindowTitle(translate('RenameCues', 'Regex help'))
+        msg.setText(translate('RenameCues',
+                              "You can use Regexes to rename your cues.\n\n"
+                              "Insert expressions captured with regexes in the "
+                              "line below with $0 for the first parenthesis, $1 for"
+                              "the second, etc...\n"
+                              "In the second line, you can use standard Python Regexes "
+                              "to match expressions in the original cues names. Use "
+                              "parenthesis to capture parts of the matched expression.\n\n"
+                              "Exemple : \n^[a-z]([0-9]+) will find a lower case character ([a-z]), "
+                              "followed by one or more number.\n"
+                              "Only the numbers are between parenthesis and will be usable with "
+                              "$0 in the first line.\n\n"
+                              "For more information about Regexes, consult python documentation"))
+        msg.exec_()
 
     def onRegexLineChanged(self):
         pattern = self.regexLine.text()
