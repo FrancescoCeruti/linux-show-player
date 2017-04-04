@@ -26,18 +26,14 @@ from PyQt5.QtWidgets import QDialog, QDialogButtonBox, QGridLayout, QLineEdit, \
     QTreeWidget, QAbstractItemView, QTreeWidgetItem, QPushButton, QSpacerItem, \
     QMessageBox
 
-from lisp.application import Application
 from lisp.application import MainActionsHandler
 from lisp.modules.rename_cues.rename_action import RenameCueAction
 from lisp.ui.ui_utils import translate
 
 
 class RenameUi(QDialog):
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, selected_cues=[]):
         super().__init__(parent)
-
-        # This list store infos on cues with dict (see self.get_selected_cues)
-        self._cues_list = []
 
         self.setWindowTitle(translate('RenameCues', 'Rename cues'))
         self.setWindowModality(Qt.ApplicationModal)
@@ -55,8 +51,8 @@ class RenameUi(QDialog):
         self.previewList.resizeColumnToContents(0)
         self.previewList.resizeColumnToContents(1)
         self.previewList.setColumnWidth(0, 300)
-        self.previewList.setSelectionMode(QAbstractItemView.NoSelection)
-        self.previewList.itemPressed.connect(self.onPreviewListItemPressed)
+        self.previewList.setSelectionMode(QAbstractItemView.ExtendedSelection)
+        self.previewList.itemSelectionChanged.connect(self.onPreviewListItemSelectionChanged)
         self.layout().addWidget(self.previewList, 0, 0, 3, 5)
 
         # Options buttons
@@ -121,20 +117,10 @@ class RenameUi(QDialog):
         self.dialogButtons.accepted.connect(self.accept)
         self.dialogButtons.rejected.connect(self.reject)
 
-    def get_selected_cues(self):
-        for cue in Application().layout.get_selected_cues():
-            self._cues_list.append({
-                'cue_name': cue.name,
-                'cue_preview': cue.name,
-                'selected': True,
-                'regex_groups': [],
-                'id': cue.id
-                })
 
-        self.update_preview_list()
-
-    def get_all_cues(self):
-        for cue in Application().cue_model.filter():
+        # This list store infos on cues with dicts
+        self._cues_list = []
+        for cue in selected_cues:
             self._cues_list.append({
                 'cue_name': cue.name,
                 'cue_preview': cue.name,
@@ -143,42 +129,25 @@ class RenameUi(QDialog):
                 'id': cue.id
             })
 
-        self.update_preview_list()
+        # Populate Preview list
+        for cue_to_rename in self._cues_list:
+            item = QTreeWidgetItem(self.previewList)
+            item.setText(0, cue_to_rename['cue_name'])
+            item.setText(1, cue_to_rename['cue_preview'])
+        self.previewList.selectAll()
 
     def update_preview_list(self):
-        if self.previewList.topLevelItemCount() == 0:
-            self.populate_preview_list()
-        else:
-            for i in range(self.previewList.topLevelItemCount()):
-                item = self.previewList.topLevelItem(i)
-                item.setText(0, self._cues_list[i]['cue_name'])
-                item.setText(1, self._cues_list[i]['cue_preview'])
-                if self._cues_list[i]['selected']:
-                    item.setCheckState(0, Qt.Checked)
-                else:
-                    item.setCheckState(0, Qt.Unchecked)
+        for i in range(self.previewList.topLevelItemCount()):
+            item = self.previewList.topLevelItem(i)
+            item.setText(1, self._cues_list[i]['cue_preview'])
 
-    def populate_preview_list(self):
-        if self._cues_list != []:
-            for cue_to_rename in self._cues_list:
-                item = QTreeWidgetItem(self.previewList)
-                item.setText(0, cue_to_rename['cue_name'])
-                item.setText(1, cue_to_rename['cue_preview'])
-                if cue_to_rename['selected']:
-                    item.setCheckState(0, Qt.Checked)
-                else:
-                    item.setCheckState(0, Qt.Unchecked)
-
-    def onPreviewListItemPressed(self, item, event):
-        # Toggle checkbox on first column
-        # and change 'selected' in self._cues_list
-        i = self.previewList.indexOfTopLevelItem(item)
-        if item.checkState(0) == Qt.Checked:
-            item.setCheckState(0, Qt.Unchecked)
-            self._cues_list[i]['selected'] = False
-        else:
-            item.setCheckState(0, Qt.Checked)
-            self._cues_list[i]['selected'] = True
+    def onPreviewListItemSelectionChanged(self):
+        for i in range(self.previewList.topLevelItemCount()):
+            item = self.previewList.topLevelItem(i)
+            if item.isSelected():
+                self._cues_list[i]['selected'] = True
+            else:
+                self._cues_list[i]['selected'] = False
 
     def onCapitalizeButtonClicked(self):
         for cue in self._cues_list:
@@ -201,16 +170,11 @@ class RenameUi(QDialog):
     def onRemoveNumButtonClicked(self):
         regex = re.compile('^[^a-zA-Z]+(.+)')
 
-        def remove_numb(input):
-            match = regex.search(input)
-            if match is not None:
-                return match.group(1)
-            else:
-                return input
-
         for cue in self._cues_list:
             if cue['selected']:
-                cue['cue_preview'] = remove_numb(cue['cue_preview'])
+                match = regex.search(cue['cue_preview'])
+                if match is not None:
+                    cue['cue_preview'] = match.group(1)
 
         self.update_preview_list()
 
@@ -234,6 +198,7 @@ class RenameUi(QDialog):
             cue['selected'] = True
 
         self.update_preview_list()
+        self.previewList.selectAll()
 
     def onHelpButtonClicked(self):
 
@@ -260,7 +225,7 @@ class RenameUi(QDialog):
         try:
             regex = re.compile(pattern)
         except re.error:
-            logging.info("Regex error : not a valid pattern")
+            logging.debug("Regex error : not a valid pattern")
         else:
             for cue in self._cues_list:
                 result = regex.search(cue['cue_name'])
@@ -285,7 +250,7 @@ class RenameUi(QDialog):
                         out_string = re.sub(pattern,
                                             cue['regex_groups'][n], out_string)
                     except IndexError:
-                        logging.info("Regex error : Catch with () before display with $n")
+                        logging.debug("Regex error : Catch with () before display with $n")
                 if cue['selected']:
                     cue['cue_preview'] = out_string
 
@@ -301,17 +266,22 @@ if __name__ == "__main__":
     from PyQt5.QtWidgets import QApplication
     import sys
 
-    gui_test_app = QApplication(sys.argv)
-    rename_ui = RenameUi()
-
     # Put a few names for test
-    rename_ui._cues_list.append(
-        {'cue_name': 'Cue Name', 'cue_preview': 'Cue Preview', 'selected': True, 'regex_groups': []})
-    rename_ui._cues_list.append(
-        {'cue_name': 'Other Cue Name', 'cue_preview': 'Cue Preview', 'selected': True, 'regex_groups': []})
-    rename_ui._cues_list.append(
-        {'cue_name': 'Third Cue Name', 'cue_preview': 'Cue Preview', 'selected': True, 'regex_groups': []})
-    rename_ui.populate_preview_list()
+    class FakeCue:
+        def __init__(self, name, id):
+            self.name = name
+            self.id = id
+
+    cue1 = FakeCue('Cue Name',        '3829434920')
+    cue2 = FakeCue('Other Name',      '4934893213')
+    cue3 = FakeCue('Foo Bar foo bar', '4985943859')
+    cue4 = FakeCue('blablablabla',    '9938492384')
+
+    fake_cue_list = [cue1, cue2, cue3, cue4]
+
+    gui_test_app = QApplication(sys.argv)
+    rename_ui = RenameUi(None, fake_cue_list)
+
 
     rename_ui.show()
 
