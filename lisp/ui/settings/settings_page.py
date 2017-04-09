@@ -22,6 +22,8 @@ from PyQt5.QtWidgets import QWidget
 
 class SettingsPage(QWidget):
     Name = 'Page'
+    MinHeight = 350
+    MinWidth = 400
 
     def enable_check(self, enabled):
         """Enable option check"""

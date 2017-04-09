@@ -57,7 +57,9 @@ class Application(metaclass=Singleton):
         AppSettings.register_settings_widget(CueAppSettings)
 
         # Show the mainWindow maximized
-        self._mainWindow.showMaximized()
+        # TODO : redo that, for test only
+        self._mainWindow.show()
+        #self._mainWindow.showMaximized()
 
     @property
     def layout(self):
