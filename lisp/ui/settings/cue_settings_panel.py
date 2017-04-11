@@ -19,20 +19,32 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 """
-Contain three classes for creating the Cue Editing Panel
+Contain three classes for creating the Cue Settings Panel
 
-A reimplementation of QSplitterHandle and QSplitter to integrate a fold button
-and a custom widget to display the Cue Settings
+A custom of QSplitterHandle and QSplitter to integrate the fold button and logic.
+And a custom widget to display the Cue Settings
 """
 
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QSplitter, QSplitterHandle,  QPushButton
+from copy import deepcopy
+
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QSplitter, QSplitterHandle,  QPushButton, QTabWidget, \
+    QHBoxLayout, QTextEdit
 from PyQt5.QtGui import QIcon, QPainter, QColor
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QRect
+
+from lisp.layouts.cue_layout import CueMenuRegistry
+from lisp.ui.settings.cue_settings import CueSettingsRegistry, CueSettings
+from lisp.cues.cue import Cue
+from lisp.ui.settings.settings_page import CueSettingsPage
+from lisp.ui.ui_utils import translate
+
+
 
 class CueSettingsPanelSplitterHandle(QSplitterHandle):
     def __init__(self, splitter):
         super().__init__(Qt.Vertical, splitter)
 
+        self._panel_max_size = 500
         self._panel_current_size = 400
         self.is_fold = True
 
@@ -50,13 +62,21 @@ class CueSettingsPanelSplitterHandle(QSplitterHandle):
         self.fold_button.clicked.connect(self.onFoldButtonClicked)
         self.layout().addWidget(self.fold_button)
 
+    def open_panel(self, max_size = False):
+        if max_size:
+            self._panel_current_size = self._panel_max_size
+        cues_zone, panel_zone = self.splitter().sizes()
+        self.splitter().setSizes([cues_zone+panel_zone-self._panel_current_size, self._panel_current_size])
+
+    def close_panel(self):
+        self._panel_current_size = self.splitter().sizes()[1]
+        self.splitter().setSizes([10000, 0])
+
     def onFoldButtonClicked(self):
         if self.is_fold:
-            cues_zone, panel_zone = self.splitter().sizes()
-            self.splitter().setSizes([cues_zone+panel_zone-self._panel_current_size, self._panel_current_size])
+            self.open_panel()
         else:
-            self._panel_current_size = self.splitter().sizes()[1]
-            self.splitter().setSizes([10000, 0])
+            self.close_panel()
 
     def fold_toggled(self):
         self.is_fold = not self.is_fold
@@ -79,6 +99,10 @@ class CueSettingsPanelSplitterHandle(QSplitterHandle):
         p.fillRect(self.rect(), col)
 
 class CueSettingsPanelSplitter(QSplitter):
+    """
+    This custom QSplitter is intended to work with only two widgets since
+    it makes use of `self.handle(0)` which return the handle between widgets 1 and 2
+    """
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -94,19 +118,56 @@ class CueSettingsPanelSplitter(QSplitter):
         """This can only be done when Widgets have been added"""
         self.setCollapsible(0, False)
         self.setCollapsible(1, True)
+        #self.handle(0).onFoldButtonClicked()
 
+    def open_settings_panel(self, max_size = False):
+        handle = self.handle(0)
+        handle.open_panel()
 
-class CueSettingsPanelWidget(QWidget):
+class CueSettingsPanel(QWidget):
 
-    def __init__(self, parent=None):
-
+    def __init__(self, parent= None):
         super().__init__(parent)
 
         self.setMaximumHeight(600)
         self.setMinimumHeight(100)
 
-        self.setLayout(QVBoxLayout())
+        self.setLayout(QHBoxLayout())
 
-        self.base = QPushButton()
-        self.base.setText('le bordel')
-        self.layout().addWidget(self.base)
+        self.info = QTextEdit()
+        self.layout().addWidget(self.info)
+
+        # TODO : could settings be automatically saved when widget loose focus ?
+        # TODO : Playing a cue does imply panel loosing focus ?
+
+
+    def display_cue(self, cue = None, cue_class = None):
+        """
+        :param cue: Target cue, or None for multi-editing
+        :param cue_class: when cue is None, used to specify the reference class
+        """
+
+        # Delete all widgets present in layout
+        for i in reversed(range(self.layout().count())):
+            self.layout().itemAt(i).widget().setParent(None)
+
+        if cue is not None:
+            cue_class = cue.__class__
+            cue_properties = deepcopy(cue.properties())
+            self.setWindowTitle(cue_properties['name'])
+        else:
+            cue_properties = {}
+            if cue_class is None:
+                cue_class = Cue
+
+        def sk(widget):
+            # Sort-Key function
+            return translate('SettingsPageName', widget.Name)
+
+        for widget in sorted(CueSettingsRegistry().filter(cue_class), key=sk):
+            if issubclass(widget, CueSettingsPage):
+                settings_widget = widget(cue_class)
+            else:
+                settings_widget = widget()
+
+            self.layout().addWidget(settings_widget)
