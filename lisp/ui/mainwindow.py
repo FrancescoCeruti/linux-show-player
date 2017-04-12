@@ -41,7 +41,10 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
 
     def __init__(self):
         super().__init__()
-        self.setMinimumSize(500, 400)
+        # TODO : is this minimum size acceptable ? smaller is difficult for Cue Setting Panel
+        self.setMinimumSize(800, 600)
+        # TODO : remove this, test purpose only
+        self.move(0, 0)
         self.setCentralWidget(QWidget())
         self.centralWidget().setLayout(QVBoxLayout())
         self.centralWidget().layout().setContentsMargins(5, 5, 5, 5)

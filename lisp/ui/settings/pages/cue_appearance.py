@@ -60,7 +60,7 @@ class Appearance(SettingsPage):
 
         # Color
         self.colorGroup = QGroupBox(self)
-        self.colorGroup.setLayout(QHBoxLayout())
+        self.colorGroup.setLayout(QVBoxLayout())
         self.layout().addWidget(self.colorGroup)
 
         self.colorBButton = QColorButton(self.colorGroup)

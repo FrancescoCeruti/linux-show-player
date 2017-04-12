@@ -31,7 +31,6 @@ from lisp.layouts.cue_menu_registry import CueMenuRegistry
 from lisp.ui.mainwindow import MainWindow
 from lisp.ui.settings.cue_settings import CueSettings
 
-
 class CueLayout:
     # Layout name
     NAME = 'Base'
@@ -105,6 +104,7 @@ class CueLayout:
 
         edit_ui.on_apply.connect(on_apply)
         edit_ui.exec_()
+
 
     def edit_selected_cues(self):
         cues = self.get_selected_cues()

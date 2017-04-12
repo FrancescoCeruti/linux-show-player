@@ -182,8 +182,6 @@ class ListLayout(QWidget, CueLayout):
         # CUE SETTINGS VIEW  (bottom center)
         self.cueSettingsPanel = CueSettingsPanel(parent=self)
         self.mainSplitter.addWidget(self.cueSettingsPanel)
-        # FIXME : seems a bit dirty way to force mainSplitter to give max space to first widget
-        self.mainSplitter.setSizes([8000, 0])
         self.mainSplitter.lazy_init()
 
         # TODO: maybe can be moved outside the layout
@@ -318,9 +316,9 @@ class ListLayout(QWidget, CueLayout):
     def double_clicked(self, event):
         cue = self.current_cue()
         if cue is not None:
-            #self.edit_cue(cue)
+            self.edit_cue(cue)
             # Open the panel instead of the settings dialog
-            self.mainSplitter.open_settings_panel()
+            # self.mainSplitter.open_settings_panel()
 
     def select_event(self, event):
         item = self.listView.itemAt(event.pos())
@@ -422,7 +420,7 @@ class ListLayout(QWidget, CueLayout):
             index = self.listView.indexOfTopLevelItem(new_item)
             cue = self.model_adapter.item(index)
             self.infoPanel.cue_changed(cue)
-            self.cueSettingsPanel.display_cue(cue)
+            self.cueSettingsPanel.display_cue_settings(cue)
         except IndexError:
             self.infoPanel.cue_changed(None)
 

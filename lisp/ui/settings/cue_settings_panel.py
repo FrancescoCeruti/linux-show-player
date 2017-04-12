@@ -27,15 +27,15 @@ And a custom widget to display the Cue Settings
 
 from copy import deepcopy
 
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QSplitter, QSplitterHandle,  QPushButton, QTabWidget, \
-    QHBoxLayout, QTextEdit
+from PyQt5.QtWidgets import qApp, QWidget, QVBoxLayout, QSplitter, QSplitterHandle,  QPushButton, QTabWidget, \
+    QHBoxLayout, QTextEdit, QScrollArea, QFrame, QLineEdit, QSpinBox, QCheckBox, QTimeEdit
 from PyQt5.QtGui import QIcon, QPainter, QColor
-from PyQt5.QtCore import Qt, QRect
+from PyQt5.QtCore import pyqtSignal, Qt, QRect, QObject, QEvent
 
 from lisp.layouts.cue_layout import CueMenuRegistry
 from lisp.ui.settings.cue_settings import CueSettingsRegistry, CueSettings
 from lisp.cues.cue import Cue
-from lisp.ui.settings.settings_page import CueSettingsPage
+from lisp.ui.settings.settings_page import CueSettingsPage, SettingsPage
 from lisp.ui.ui_utils import translate
 
 
@@ -44,8 +44,7 @@ class CueSettingsPanelSplitterHandle(QSplitterHandle):
     def __init__(self, splitter):
         super().__init__(Qt.Vertical, splitter)
 
-        self._panel_max_size = 500
-        self._panel_current_size = 400
+        self._panel_current_size = 385
         self.is_fold = True
 
         self.setFixedHeight(25)
@@ -62,9 +61,7 @@ class CueSettingsPanelSplitterHandle(QSplitterHandle):
         self.fold_button.clicked.connect(self.onFoldButtonClicked)
         self.layout().addWidget(self.fold_button)
 
-    def open_panel(self, max_size = False):
-        if max_size:
-            self._panel_current_size = self._panel_max_size
+    def open_panel(self):
         cues_zone, panel_zone = self.splitter().sizes()
         self.splitter().setSizes([cues_zone+panel_zone-self._panel_current_size, self._panel_current_size])
 
@@ -114,15 +111,20 @@ class CueSettingsPanelSplitter(QSplitter):
         handle = CueSettingsPanelSplitterHandle(self)
         return handle
 
+    def open_settings_panel(self):
+        handle = self.handle(0)
+        handle.open_panel()
+
+    def close_settings_panel(self):
+        handle = self.handle(0)
+        handle.close_panel()
+
     def lazy_init(self):
         """This can only be done when Widgets have been added"""
         self.setCollapsible(0, False)
         self.setCollapsible(1, True)
-        #self.handle(0).onFoldButtonClicked()
-
-    def open_settings_panel(self, max_size = False):
-        handle = self.handle(0)
-        handle.open_panel()
+        #self.close_settings_panel()
+        self.open_settings_panel()
 
 class CueSettingsPanel(QWidget):
 
@@ -132,24 +134,30 @@ class CueSettingsPanel(QWidget):
         self.setMaximumHeight(600)
         self.setMinimumHeight(100)
 
-        self.setLayout(QHBoxLayout())
+        self.setFocusPolicy(Qt.ClickFocus)
+        self.setLayout(QVBoxLayout())
 
-        self.info = QTextEdit()
-        self.layout().addWidget(self.info)
+        self.scrollWidget = QWidget()
+        layout = QHBoxLayout()
+        self.scrollWidget.setLayout(layout)
+
+        self.scrollArea = QScrollArea()
+        self.scrollArea.setWidgetResizable(True)
+
+        self.layout().addWidget(self.scrollArea)
 
         # TODO : could settings be automatically saved when widget loose focus ?
         # TODO : Playing a cue does imply panel loosing focus ?
 
-
-    def display_cue(self, cue = None, cue_class = None):
+    def display_cue_settings(self, cue = None, cue_class = None):
         """
         :param cue: Target cue, or None for multi-editing
         :param cue_class: when cue is None, used to specify the reference class
         """
 
         # Delete all widgets present in layout
-        for i in reversed(range(self.layout().count())):
-            self.layout().itemAt(i).widget().setParent(None)
+        for i in reversed(range(self.scrollWidget.layout().count())):
+            self.scrollWidget.layout().itemAt(i).widget().setParent(None)
 
         if cue is not None:
             cue_class = cue.__class__
@@ -170,4 +178,21 @@ class CueSettingsPanel(QWidget):
             else:
                 settings_widget = widget()
 
-            self.layout().addWidget(settings_widget)
+            settings_widget.load_settings(cue_properties)
+
+            # Quite simple way to label the page settings
+            tab = QTabWidget()
+            tab.setLayout(QVBoxLayout())
+            # TODO : width should be smaller than 480, but need to refactor cue setting pages
+            tab.setMinimumSize(480, 345)
+            tab.addTab(settings_widget,
+                                 translate('SettingsPageName',
+                                           settings_widget.Name))
+            self.scrollWidget.layout().addWidget(tab)
+
+
+        self.scrollArea.setWidget(self.scrollWidget)
+
+    def apply(self, page):
+        settings = page.get_settings()
+        self.on_apply.emit(settings)
