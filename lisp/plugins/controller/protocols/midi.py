@@ -139,6 +139,10 @@ class MidiSettings(CueSettingsPage):
                 m_type, channel, note = Midi.from_string(options[0])
                 self.midiModel.appendRow(m_type, channel+1, note, options[1])
 
+    def clear_settings(self):
+        for i in reversed(range(self.midiModel.rowCount())):
+            self.midiModel.removeRow(i)
+
     def capture_message(self):
         handler = MIDIInput()
         handler.alternate_mode = True

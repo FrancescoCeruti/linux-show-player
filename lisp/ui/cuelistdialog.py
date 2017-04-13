@@ -85,9 +85,10 @@ class CueSelectDialog(QDialog):
         try:
             index = self.list.indexOfTopLevelItem(self._cues.pop(cue))
             self.list.takeTopLevelItem(index)
-        # TODO : not sure why I get this problem with cue_panel_settings
+        # FIXME : not sure why I get this problem with cue_panel_settings
         except KeyError:
-            print('can\'t pop lis in cue list settings')
+            pass
+            #print(f'can\'t pop list in {cue} list settings')
 
     def reset(self):
         self.list.clear()

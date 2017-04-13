@@ -101,6 +101,10 @@ class TriggersSettings(SettingsPage):
 
         return {'triggers': triggers}
 
+    def clear_settings(self):
+        for i in reversed(range(self.triggersModel.rowCount())):
+            self.triggersModel.removeRow(i)
+
 
 class TriggersView(QTableView):
     def __init__(self, cue_select, **kwargs):

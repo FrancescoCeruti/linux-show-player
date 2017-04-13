@@ -130,3 +130,15 @@ class GstMediaSettings(SettingsPage):
 
             self.load_settings({'_media_': self._settings})
             self.enable_check(self._check)
+
+    def clear_settings(self):
+        # TODO : This one is more complicated, I'll come back
+        if self._current_page is not None:
+            self.layout().removeWidget(self._current_page)
+            self._current_page.hide()
+
+        self.listWidget.clear()
+        self._pages = []
+        self._current_page = None
+        self._settings = {}
+        self._check = False

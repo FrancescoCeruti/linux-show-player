@@ -109,17 +109,20 @@ class CueSettingsPanelSplitter(QSplitter):
         self.setOrientation(Qt.Vertical)
         self.setHandleWidth(25)
 
+        self.handle = None
+
     def createHandle(self):
-        handle = CueSettingsPanelSplitterHandle(self)
-        return handle
+        self.handle = CueSettingsPanelSplitterHandle(self)
+        return self.handle
 
     def open_settings_panel(self):
-        handle = self.handle(0)
-        handle.open_panel()
+        self.handle.open_panel()
 
     def close_settings_panel(self):
-        handle = self.handle(0)
-        handle.close_panel()
+        self.handle.close_panel()
+
+    def is_panel_open(self):
+        return not self.handle.is_fold
 
     def lazy_init(self):
         """This can only be done when Widgets have been added"""
@@ -178,12 +181,12 @@ class CueSettingsPanel(QWidget):
         for tab, sett_w in self.settings_widgets.values():
             tab.mark_to_delete = True
             tab.fold()
-            # TODO : add sett_w.clear_content
 
         if cue is not None:
             cue_class = cue.__class__
             cue_properties = deepcopy(cue.properties())
-            self.setWindowTitle(cue_properties['name'])
+            # TODO : could be added somewhere for multiediting
+            #self.setWindowTitle(cue_properties['name'])
         else:
             cue_properties = {}
             if cue_class is None:
@@ -195,26 +198,28 @@ class CueSettingsPanel(QWidget):
 
         # Now we take every needed page for the cue, and test against existing pages
         for widget in sorted(CueSettingsRegistry().filter(cue_class), key=sk):
-            if issubclass(widget, CueSettingsPage):
-                settings_widget = widget(cue_class)
-            else:
-                settings_widget = widget()
-
+            # TODO : not useful to initialize every time if we don't use it just after !
             # add if not already present
-            if type(settings_widget) not in self.settings_widgets:
+            if widget not in self.settings_widgets:
+                if issubclass(widget, CueSettingsPage):
+                    settings_widget = widget(cue_class)
+                else:
+                    settings_widget = widget()
+
                 tab = QFoldableTab()
                 self.settings_widgets[type(settings_widget)] = (tab, settings_widget)
                 tab.addTab(settings_widget, translate('SettingsPageName', settings_widget.Name))
                 self.scrollWidget.layout().addWidget(tab)
 
-            tab, ret_settings_widget = self.settings_widgets[type(settings_widget)]
+            tab, ret_settings_widget = self.settings_widgets[widget]
             tab.mark_to_delete = False
             tab.unfold()
+            ret_settings_widget.clear_settings()
+            ret_settings_widget.set_active(cue_class)
             ret_settings_widget.load_settings(cue_properties)
 
         # Finally, we remove unused tabs
         to_delete = [(key, page) for key, page in self.settings_widgets.items() if page[0].mark_to_delete]
-        print(to_delete)
         for key, page in to_delete:
             page[0].setParent(None)
             self.settings_widgets.pop(key)

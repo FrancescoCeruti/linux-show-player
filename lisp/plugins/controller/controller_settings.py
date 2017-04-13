@@ -62,3 +62,7 @@ class ControllerSettings(CueSettingsPage):
 
         for page in self._pages:
             page.load_settings(settings)
+
+    def clear_settings(self):
+        for page in self._pages:
+            page.clear_settings()

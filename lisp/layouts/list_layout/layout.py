@@ -420,7 +420,8 @@ class ListLayout(QWidget, CueLayout):
             index = self.listView.indexOfTopLevelItem(new_item)
             cue = self.model_adapter.item(index)
             self.infoPanel.cue_changed(cue)
-            self.cueSettingsPanel.display_cue_settings(cue)
+            if self.mainSplitter.is_panel_open():
+                self.cueSettingsPanel.display_cue_settings(cue)
         except IndexError:
             self.infoPanel.cue_changed(None)
 

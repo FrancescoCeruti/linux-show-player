@@ -33,6 +33,19 @@ class SettingsPage(QWidget):
     def load_settings(self, settings):
         """Load the settings."""
 
+    def clear_settings(self):
+        """
+        Clear Settings.
+        Should be implemented for widgets how are likely to accumulate settings
+        from multiple cues, like QListView, QComboBox, ...
+        """
+    def set_active(self, cue_class):
+        """
+        Activate corresponding settings sections.
+        Should be implemented when setting page have sub-sections who are not
+        available for all cues. Example : lisp.ui.settings.pages.cue_general.CueGeneralSettings
+        :param cue_class: Cue.__class__
+        """
 
 class CueSettingsPage(SettingsPage):
     Name = 'Cue page'

@@ -144,6 +144,10 @@ class Appearance(SettingsPage):
                 # [:-2] for removing "pt"
                 self.fontSizeSpin.setValue(int(settings['font-size'][:-2]))
 
+    def clear_settings(self):
+        self.colorFButton.setColor(None)
+        self.colorBButton.setColor(None)
+
 
 def css_to_dict(css):
     dict = {}
