@@ -179,16 +179,16 @@ class ListLayout(QWidget, CueLayout):
         self.playView.setFixedWidth(300)
         self.centralSplitter.addWidget(self.playView)
 
-        # CUE SETTINGS VIEW  (bottom center)
-        self.cueSettingsPanel = CueSettingsPanel(parent=self)
-        self.mainSplitter.addWidget(self.cueSettingsPanel)
-        self.mainSplitter.lazy_init()
-
         # TODO: maybe can be moved outside the layout
         # Add cue preferences widgets
         CueSettingsRegistry().add_item(CueGeneralSettings, Cue)
         CueSettingsRegistry().add_item(MediaCueSettings, MediaCue)
         CueSettingsRegistry().add_item(Appearance)
+
+        # CUE SETTINGS VIEW  (bottom center)
+        self.cueSettingsPanel = CueSettingsPanel(parent=self)
+        self.mainSplitter.addWidget(self.cueSettingsPanel)
+        self.mainSplitter.lazy_init()
 
         # Context menu actions
         self.edit_action = QAction(self)

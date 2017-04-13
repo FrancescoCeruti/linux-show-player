@@ -82,8 +82,12 @@ class CueSelectDialog(QDialog):
         self.list.setSortingEnabled(True)
 
     def remove_cue(self, cue):
-        index = self.list.indexOfTopLevelItem(self._cues.pop(cue))
-        self.list.takeTopLevelItem(index)
+        try:
+            index = self.list.indexOfTopLevelItem(self._cues.pop(cue))
+            self.list.takeTopLevelItem(index)
+        # TODO : not sure why I get this problem with cue_panel_settings
+        except KeyError:
+            print('can\'t pop lis in cue list settings')
 
     def reset(self):
         self.list.clear()

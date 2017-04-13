@@ -22,10 +22,11 @@
 Contain three classes for creating the Cue Settings Panel
 
 A custom of QSplitterHandle and QSplitter to integrate the fold button and logic.
-And a custom widget to display the Cue Settings
+And a custom widget to display, get and save the Cue Settings
 """
 
 from copy import deepcopy
+from collections import OrderedDict
 
 from PyQt5.QtWidgets import qApp, QWidget, QVBoxLayout, QSplitter, QSplitterHandle,  QPushButton, QTabWidget, \
     QHBoxLayout, QTextEdit, QScrollArea, QFrame, QLineEdit, QSpinBox, QCheckBox, QTimeEdit
@@ -36,6 +37,7 @@ from lisp.layouts.cue_layout import CueMenuRegistry
 from lisp.ui.settings.cue_settings import CueSettingsRegistry, CueSettings
 from lisp.cues.cue import Cue
 from lisp.ui.settings.settings_page import CueSettingsPage, SettingsPage
+from lisp.ui.widgets.qfoldabletab import QFoldableTab
 from lisp.ui.ui_utils import translate
 
 
@@ -146,18 +148,37 @@ class CueSettingsPanel(QWidget):
 
         self.layout().addWidget(self.scrollArea)
 
-        # TODO : could settings be automatically saved when widget loose focus ?
-        # TODO : Playing a cue does imply panel loosing focus ?
+        # keep trace of tabs wit 'type(SettingWidget)':('QFoldableTab', 'SettingWidget')
+        self.settings_widgets = OrderedDict()
+
+        # TODO : Settings should be automatically recorded. Intervention en SettingsPages is needed
+
+        # First, we display settings page available for all widgets (Cue class)
+        for widget in sorted(CueSettingsRegistry().filter(Cue), key=lambda w: translate('SettingsPageName', w.Name)):
+            if issubclass(widget, CueSettingsPage):
+                settings_widget = widget(Cue)
+            else:
+                settings_widget = widget()
+            # Create new tabs and keep trace
+            tab = QFoldableTab()
+            self.settings_widgets[type(settings_widget)] = (tab, settings_widget)
+            tab.fold()
+            tab.addTab(settings_widget, translate('SettingsPageName', settings_widget.Name))
+            self.scrollWidget.layout().addWidget(tab)
+        self.scrollArea.setWidget(self.scrollWidget)
+
 
     def display_cue_settings(self, cue = None, cue_class = None):
         """
         :param cue: Target cue, or None for multi-editing
         :param cue_class: when cue is None, used to specify the reference class
         """
-
-        # Delete all widgets present in layout
-        for i in reversed(range(self.scrollWidget.layout().count())):
-            self.scrollWidget.layout().itemAt(i).widget().setParent(None)
+        # Add this attribute to delete unused setting page
+        # Start by marking every page as unused.
+        for tab, sett_w in self.settings_widgets.values():
+            tab.mark_to_delete = True
+            tab.fold()
+            # TODO : add sett_w.clear_content
 
         if cue is not None:
             cue_class = cue.__class__
@@ -172,27 +193,29 @@ class CueSettingsPanel(QWidget):
             # Sort-Key function
             return translate('SettingsPageName', widget.Name)
 
+        # Now we take every needed page for the cue, and test against existing pages
         for widget in sorted(CueSettingsRegistry().filter(cue_class), key=sk):
             if issubclass(widget, CueSettingsPage):
                 settings_widget = widget(cue_class)
             else:
                 settings_widget = widget()
 
-            settings_widget.load_settings(cue_properties)
+            # add if not already present
+            if type(settings_widget) not in self.settings_widgets:
+                tab = QFoldableTab()
+                self.settings_widgets[type(settings_widget)] = (tab, settings_widget)
+                tab.addTab(settings_widget, translate('SettingsPageName', settings_widget.Name))
+                self.scrollWidget.layout().addWidget(tab)
 
-            # Quite simple way to label the page settings
-            tab = QTabWidget()
-            tab.setLayout(QVBoxLayout())
-            # TODO : width should be smaller than 480, but need to refactor cue setting pages
-            tab.setMinimumSize(480, 345)
-            tab.addTab(settings_widget,
-                                 translate('SettingsPageName',
-                                           settings_widget.Name))
-            self.scrollWidget.layout().addWidget(tab)
+            tab, ret_settings_widget = self.settings_widgets[type(settings_widget)]
+            tab.mark_to_delete = False
+            tab.unfold()
+            ret_settings_widget.load_settings(cue_properties)
 
+        # Finally, we remove unused tabs
+        to_delete = [(key, page) for key, page in self.settings_widgets.items() if page[0].mark_to_delete]
+        print(to_delete)
+        for key, page in to_delete:
+            page[0].setParent(None)
+            self.settings_widgets.pop(key)
 
-        self.scrollArea.setWidget(self.scrollWidget)
-
-    def apply(self, page):
-        settings = page.get_settings()
-        self.on_apply.emit(settings)
