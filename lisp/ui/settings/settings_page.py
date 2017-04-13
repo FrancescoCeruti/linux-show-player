@@ -18,10 +18,16 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtWidgets import QWidget
-
+from PyQt5.QtCore import pyqtSignal
 
 class SettingsPage(QWidget):
     Name = 'Page'
+    MinHeight = 350
+    MinWidth = 400
+
+    # TODO : should be in CueSettingsPage, but some pages subclass SettingsPage directly ...
+    modified = pyqtSignal(object, object)
+    """Emitted when a setting as been modified (SettingsPage, sender_widget)"""
 
     def enable_check(self, enabled):
         """Enable option check"""
@@ -54,3 +60,4 @@ class CueSettingsPage(SettingsPage):
         super().__init__(**kwargs)
 
         self._cue_class = cue_class
+

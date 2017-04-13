@@ -29,6 +29,7 @@ from lisp.core.signal import Connection
 from lisp.cues.cue import Cue, CueAction
 from lisp.cues.media_cue import MediaCue
 from lisp.layouts.cue_layout import CueLayout
+from lisp.layouts.list_layout.central_splitter import CentralSplitter
 from lisp.layouts.list_layout.control_buttons import ShowControlButtons
 from lisp.layouts.list_layout.cue_list_model import CueListModel, \
     RunningCueModel
@@ -36,11 +37,10 @@ from lisp.layouts.list_layout.cue_list_view import CueListView
 from lisp.layouts.list_layout.info_panel import InfoPanel
 from lisp.layouts.list_layout.list_layout_settings import ListLayoutSettings
 from lisp.layouts.list_layout.playing_list_widget import RunningCuesListWidget
-from lisp.ui.settings.cue_settings_panel import CueSettingsPanel, CueSettingsPanelSplitter
-from lisp.layouts.list_layout.central_splitter import CentralSplitter
 from lisp.ui.mainwindow import MainWindow
 from lisp.ui.settings.app_settings import AppSettings
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
+from lisp.ui.settings.cue_settings_panel import CueSettingsPanel, CueSettingsPanelSplitter
 from lisp.ui.settings.pages.cue_appearance import Appearance
 from lisp.ui.settings.pages.cue_general import CueGeneralSettings
 from lisp.ui.settings.pages.media_cue_settings import MediaCueSettings
@@ -186,7 +186,7 @@ class ListLayout(QWidget, CueLayout):
         CueSettingsRegistry().add_item(Appearance)
 
         # CUE SETTINGS VIEW  (bottom center)
-        self.cueSettingsPanel = CueSettingsPanel(parent=self)
+        self.cueSettingsPanel = CueSettingsPanel(self.mainSplitter)
         self.mainSplitter.addWidget(self.cueSettingsPanel)
         self.mainSplitter.lazy_init()
 
@@ -317,8 +317,6 @@ class ListLayout(QWidget, CueLayout):
         cue = self.current_cue()
         if cue is not None:
             self.edit_cue(cue)
-            # Open the panel instead of the settings dialog
-            # self.mainSplitter.open_settings_panel()
 
     def select_event(self, event):
         item = self.listView.itemAt(event.pos())

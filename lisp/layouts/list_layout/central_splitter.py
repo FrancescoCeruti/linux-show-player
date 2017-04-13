@@ -25,10 +25,11 @@ of the list layout.
 Permit integration of "collapse event" with "showPlayingAction" in menu
 """
 
-from PyQt5.QtWidgets import QSplitter, QSplitterHandle
 from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QSplitter, QSplitterHandle
 
 from lisp.core.signal import Signal
+
 
 class CentralSplitterHandle(QSplitterHandle):
 
