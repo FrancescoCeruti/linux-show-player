@@ -19,7 +19,7 @@
 
 from enum import Enum
 
-from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
+from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP, pyqtSignal
 from PyQt5.QtGui import QKeySequence
 from PyQt5.QtWidgets import QWidget, QAction, qApp, QGridLayout, \
     QPushButton, QSizePolicy
@@ -156,6 +156,7 @@ class ListLayout(QWidget, CueLayout):
 
         # SPLITTERS AND SUB-LAYOUTS
         self.mainSplitter = CueSettingsPanelSplitter()
+        self.mainSplitter.panel_opened.connect(self.__selection_changed)
         self.layout().addWidget(self.mainSplitter, 1, 0, 1, 3)
         self.centralSplitter = CentralSplitter()
         self.mainSplitter.addWidget(self.centralSplitter)
@@ -322,6 +323,7 @@ class ListLayout(QWidget, CueLayout):
         item = self.listView.itemAt(event.pos())
         if item is not None:
             item.selected = not item.selected
+        self.__selection_changed()
 
     def context_event(self, event):
         self._context_item = self.listView.itemAt(event.pos())
@@ -399,29 +401,42 @@ class ListLayout(QWidget, CueLayout):
         for index in range(self.listView.topLevelItemCount()):
             if isinstance(self.model_adapter.item(index), cue_class):
                 self.listView.topLevelItem(index).selected = True
+        self.__selection_changed()
+
 
     def deselect_all(self, cue_class=Cue):
         for index in range(self.listView.topLevelItemCount()):
             if isinstance(self.model_adapter.item(index), cue_class):
                 self.listView.topLevelItem(index).selected = False
+        self.__selection_changed()
 
     def invert_selection(self):
         for index in range(self.listView.topLevelItemCount()):
             item = self.listView.topLevelItem(index)
             item.selected = not item.selected
+        self.__selection_changed()
 
     def __go_slot(self):
         self.go()
 
     def __current_changed(self, new_item, current_item):
-        try:
-            index = self.listView.indexOfTopLevelItem(new_item)
-            cue = self.model_adapter.item(index)
-            self.infoPanel.cue_changed(cue)
-            if self.mainSplitter.is_panel_open():
+        index = self.listView.indexOfTopLevelItem(new_item)
+        cue = self.model_adapter.item(index)
+        self.infoPanel.cue_changed(cue)
+        if self.mainSplitter.is_panel_open():
+            # Display current cue in panel only if there is no selection
+            if not self.get_selected_cues():
                 self.cueSettingsPanel.display_cue_settings(cue)
-        except IndexError:
-            self.infoPanel.cue_changed(None)
+
+    def __selection_changed(self):
+        current_selection = self.get_selected_cues()
+        if current_selection:
+            self.cueSettingsPanel.display_cue_settings(current_selection)
+        else:
+            index = self.listView.currentIndex()
+            cue = self.model_adapter.item(index.row())
+            self.cueSettingsPanel.display_cue_settings(cue)
+
 
     def __cue_added(self, cue):
         cue.next.connect(self.__cue_next, Connection.QtQueued)

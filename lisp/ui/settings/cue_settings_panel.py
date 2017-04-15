@@ -30,9 +30,11 @@ from copy import deepcopy
 
 from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtGui import QIcon, QPainter, QColor
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QSplitter, QSplitterHandle,  QPushButton, QHBoxLayout, QScrollArea
+from PyQt5.QtWidgets import QWidget, QSplitter, QSplitterHandle,  QPushButton,\
+    QHBoxLayout, QScrollArea, QLineEdit, QSizePolicy
 
 from lisp.cues.cue import Cue
+from lisp.layouts.cue_layout import CueLayout
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
 from lisp.ui.settings.settings_page import CueSettingsPage
 from lisp.ui.ui_utils import translate
@@ -41,6 +43,10 @@ from lisp.ui.widgets import QFoldableTab
 
 class CueSettingsPanelSplitterHandle(QSplitterHandle):
 
+    panel_opened = pyqtSignal()
+    """emitted after Settings panel has open"""
+    panel_closed = pyqtSignal()
+    """emitted after Settings panel has close"""
     apply_button_clicked = pyqtSignal()
     """emitted when apply button clicked"""
 
@@ -54,7 +60,25 @@ class CueSettingsPanelSplitterHandle(QSplitterHandle):
 
         self.setLayout(QHBoxLayout())
         self.layout().setContentsMargins(0, 3, 0, 3)
-        self.layout().setAlignment(Qt.AlignHCenter)
+        #self.layout().setAlignment(Qt.AlignHCenter)
+
+        self.cue_name = QLineEdit()
+        self.cue_name.setText(translate('CueSettingsPanel', 'Cue Name'))
+        self.cue_name.setFocusPolicy(Qt.NoFocus)
+        policy = QSizePolicy()
+        policy.setHorizontalPolicy(QSizePolicy.MinimumExpanding)
+        self.cue_name.setSizePolicy(policy)
+        self.cue_name.setCursor(Qt.ArrowCursor)
+        self.cue_name.selectionChanged.connect(self.cue_name.deselect)
+        self.layout().addWidget(self.cue_name)
+
+        self.apply_button = QPushButton('Apply')
+        self.apply_button.setFocusPolicy(Qt.NoFocus)
+        self.apply_button.setFixedWidth(65)
+        self.apply_button.setCursor(Qt.ArrowCursor)
+        self.apply_button.clicked.connect(self.onApplyButtonClicked)
+        self.layout().addWidget(self.apply_button)
+        self.layout().addStretch()
 
         self.fold_button = QPushButton()
         self.fold_button.setFocusPolicy(Qt.NoFocus)
@@ -63,23 +87,21 @@ class CueSettingsPanelSplitterHandle(QSplitterHandle):
         self.fold_button.setCursor(Qt.ArrowCursor)
         self.fold_button.clicked.connect(self.onFoldButtonClicked)
         self.layout().addWidget(self.fold_button)
-
-        self.apply_button = QPushButton('Apply')
-        self.apply_button.setFocusPolicy(Qt.NoFocus)
-        self.apply_button.setFixedWidth(65)
-        self.apply_button.setCursor(Qt.ArrowCursor)
-        self.apply_button.clicked.connect(self.onApplyButtonClicked)
-        self.layout().addWidget(self.apply_button)
+        self.layout().addStretch()
 
     def open_panel(self):
         cues_zone, panel_zone = self.splitter().sizes()
         self.splitter().setSizes([cues_zone+panel_zone-self._panel_current_size, self._panel_current_size])
         self.apply_button.show()
+        self.cue_name.show()
+        self.panel_opened.emit()
 
     def close_panel(self):
         self._panel_current_size = self.splitter().sizes()[1]
         self.splitter().setSizes([10000, 0])
         self.apply_button.hide()
+        self.cue_name.hide()
+        self.panel_closed.emit()
 
     def onFoldButtonClicked(self):
         if self.is_fold:
@@ -111,16 +133,19 @@ class CueSettingsPanelSplitterHandle(QSplitterHandle):
         col = QColor(58, 58, 58)
         p.fillRect(self.rect(), col)
 
+    def display_cue_name(self, text):
+        self.cue_name.setText(text)
+
 
 class CueSettingsPanelSplitter(QSplitter):
     """
     This custom QSplitter is intended to work with only two widgets since
-    it makes use of `self.handle(0)` which return the handle between widgets 1 and 2
+    It return CueSettingsPanelSplitterHandle as handle and manage a couple of signals
     """
-    panel_open = pyqtSignal()
-    """emitted when Settings panel open"""
+    panel_opened = pyqtSignal()
+    """emitted after Settings panel has open"""
     panel_closed = pyqtSignal()
-    """emitted when Settings panel close"""
+    """emitted after Settings panel has close"""
     apply_button_clicked = pyqtSignal()
     """emitted when apply button is clicked"""
 
@@ -132,18 +157,21 @@ class CueSettingsPanelSplitter(QSplitter):
 
         self.handle = None
 
+    def display_cue_name(self, text):
+        self.handle.display_cue_name(text)
+
     def createHandle(self):
         self.handle = CueSettingsPanelSplitterHandle(self)
         self.handle.apply_button_clicked.connect(lambda: self.apply_button_clicked.emit())
+        self.handle.panel_opened.connect(lambda: self.panel_opened.emit())
+        self.handle.panel_closed.connect(lambda: self.panel_closed.emit())
         return self.handle
 
     def open_settings_panel(self):
         self.handle.open_panel()
-        self.panel_open.emit()
 
     def close_settings_panel(self):
         self.handle.close_panel()
-        self.panel_closed.emit()
 
     def is_panel_open(self):
         return not self.handle.is_fold
@@ -158,12 +186,15 @@ class CueSettingsPanelSplitter(QSplitter):
 
 class CueSettingsPanel(QWidget):
 
-    def __init__(self, splitter, parent=None):
-        super().__init__(parent)
+    apply_button_clicked = pyqtSignal(object)
+    """emitted when apply button is clicked (list of cues to update)"""
 
-        splitter.apply_button_clicked.connect(self.apply)
+    def __init__(self, splitter):
+        super().__init__()
 
-        self.setMaximumHeight(600)
+        self.splitter = splitter
+
+        self.setMaximumHeight(350)
         self.setMinimumHeight(100)
 
         self.setLayout(QHBoxLayout())
@@ -180,6 +211,11 @@ class CueSettingsPanel(QWidget):
 
         self.layout().addWidget(self.scrollArea)
 
+        self._cues_to_update = []
+
+        # TODO : Start here to record settings
+        #self.splitter.apply_button_clicked.connect(
+        #    lambda: self.apply_button_clicked(self._cues_to_update))
         # keep trace of tabs with 'type(SettingWidget)':('QFoldableTab', 'SettingWidget')
         self.settings_widgets = OrderedDict()
 
@@ -215,14 +251,26 @@ class CueSettingsPanel(QWidget):
 
     # TODO : this should be called also when an Undo in MainActionHandler is done, otherwise values don't get updated
     # TODO : this should be called also when the panel opens, since it doesn't update when close
-    def display_cue_settings(self, cue=None):
+    def display_cue_settings(self, cues=None):
         """
-        :param cue: Target cue
+        :param cues : list of cues to display settings from
         """
+        self.splitter
+        print(f'CueSettingsPanel.display_cue_settings() called with {cues}')
 
+        # TODO : adapt logic for list of cues
+        # cues can be [list of cues], cue, None
+        # cue classes must be extracted from cues to disposition
+        # Then, it should be relativly easy to load
+        cue = None
+        cue_class = None
         if cue is not None:
             cue_class = cue.__class__
             cue_properties = deepcopy(cue.properties())
+        else:
+            cue_properties = {}
+            if cue_class is None:
+                cue_class = Cue
 
         # hide and clear everything
         for tab, widget in self.settings_widgets.values():
@@ -235,7 +283,5 @@ class CueSettingsPanel(QWidget):
             tab.show()
             ret_settings_widget.load_settings(cue_properties)
 
-    def apply(self):
-        print('save that shit !!')
 
 
