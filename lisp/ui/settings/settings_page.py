@@ -42,8 +42,7 @@ class SettingsPage(QWidget):
     def clear_settings(self):
         """
         Clear Settings.
-        Should be implemented for widgets how are likely to accumulate settings
-        from multiple cues, like QListView, QComboBox, ...
+        All input widgets must be cleared with this function
         """
     def set_active(self, cue_class):
         """
@@ -60,4 +59,3 @@ class CueSettingsPage(SettingsPage):
         super().__init__(**kwargs)
 
         self._cue_class = cue_class
-

@@ -155,8 +155,10 @@ class Appearance(SettingsPage):
                 self.fontSizeSpin.setValue(int(settings['font-size'][:-2]))
 
     def clear_settings(self):
-        self.colorFButton.setColor(None)
-        self.colorBButton.setColor(None)
+        for w in self.findChildren((QLineEdit, QTextEdit, QSpinBox)):
+            w.clear()
+        for b in self.findChildren((QColorButton)):
+            b.setColor(None)
 
 
 def css_to_dict(css):

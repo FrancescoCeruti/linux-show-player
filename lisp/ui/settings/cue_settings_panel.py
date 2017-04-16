@@ -33,6 +33,7 @@ from PyQt5.QtGui import QIcon, QPainter, QColor
 from PyQt5.QtWidgets import QWidget, QSplitter, QSplitterHandle,  QPushButton,\
     QHBoxLayout, QScrollArea, QLineEdit, QSizePolicy
 
+from lisp.core.util import greatest_common_superclass
 from lisp.cues.cue import Cue
 from lisp.layouts.cue_layout import CueLayout
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
@@ -63,7 +64,6 @@ class CueSettingsPanelSplitterHandle(QSplitterHandle):
         #self.layout().setAlignment(Qt.AlignHCenter)
 
         self.cue_name = QLineEdit()
-        self.cue_name.setText(translate('CueSettingsPanel', 'Cue Name'))
         self.cue_name.setFocusPolicy(Qt.NoFocus)
         policy = QSizePolicy()
         policy.setHorizontalPolicy(QSizePolicy.MinimumExpanding)
@@ -135,6 +135,7 @@ class CueSettingsPanelSplitterHandle(QSplitterHandle):
 
     def display_cue_name(self, text):
         self.cue_name.setText(text)
+        self.cue_name.setSelection(0, 0)
 
 
 class CueSettingsPanelSplitter(QSplitter):
@@ -156,9 +157,6 @@ class CueSettingsPanelSplitter(QSplitter):
         self.setHandleWidth(25)
 
         self.handle = None
-
-    def display_cue_name(self, text):
-        self.handle.display_cue_name(text)
 
     def createHandle(self):
         self.handle = CueSettingsPanelSplitterHandle(self)
@@ -217,6 +215,8 @@ class CueSettingsPanel(QWidget):
         #self.splitter.apply_button_clicked.connect(
         #    lambda: self.apply_button_clicked(self._cues_to_update))
         # keep trace of tabs with 'type(SettingWidget)':('QFoldableTab', 'SettingWidget')
+
+        # FIXME : is orderedDict still needed ?
         self.settings_widgets = OrderedDict()
 
         def sk(widget):
@@ -250,38 +250,51 @@ class CueSettingsPanel(QWidget):
         self.scrollArea.setWidget(self.scrollWidget)
 
     # TODO : this should be called also when an Undo in MainActionHandler is done, otherwise values don't get updated
-    # TODO : this should be called also when the panel opens, since it doesn't update when close
     def display_cue_settings(self, cues=None):
         """
-        :param cues : list of cues to display settings from
+        Retrieve cues settings and display them in relevant settings pages in Settings Panel
+        :param cues : List of cues or None
         """
-        self.splitter
-        print(f'CueSettingsPanel.display_cue_settings() called with {cues}')
 
-        # TODO : adapt logic for list of cues
-        # cues can be [list of cues], cue, None
-        # cue classes must be extracted from cues to disposition
-        # Then, it should be relativly easy to load
-        cue = None
-        cue_class = None
-        if cue is not None:
-            cue_class = cue.__class__
-            cue_properties = deepcopy(cue.properties())
-        else:
-            cue_properties = {}
-            if cue_class is None:
-                cue_class = Cue
-
-        # hide and clear everything
+        # Hide and clear everything
         for tab, widget in self.settings_widgets.values():
             tab.hide()
+            widget.enable_check(False)
             widget.clear_settings()
 
-        # show relevant pages, and get settings
-        for widget in CueSettingsRegistry().filter(cue_class):
-            tab, ret_settings_widget = self.settings_widgets[widget]
+        # Check if there is multiple cues, and prepare
+        if cues is None:
+            multiple_cues = False
+            cue_properties = {}
+            cue_class = Cue
+            name_to_display = ''
+        elif type(cues) is not list:
+            multiple_cues = False
+            cue_properties = deepcopy(cues.properties())
+            cue_class = cues.__class__
+            name_to_display = cues.name
+            pass
+        elif len(cues) <= 1:
+            multiple_cues = False
+            cue_properties = deepcopy(cues[0].properties())
+            cue_class = cues[0].__class__
+            name_to_display = cues[0].name
+        else:
+            multiple_cues = True
+            cue_properties = {}
+            cue_class = greatest_common_superclass(cues)
+            name_to_display = translate('CueSettingsPanel',
+                    'Multiple selection : ') + str([cue.name for cue in cues])
+
+
+        # Display currently edited cue
+        self.splitter.handle.display_cue_name(name_to_display)
+
+        # Load settings in correspondant widgets
+        for page in CueSettingsRegistry().filter(cue_class):
+            tab, widget = self.settings_widgets[page]
+            if multiple_cues:
+                widget.enable_check(True)
+            widget.load_settings(cue_properties)
             tab.show()
-            ret_settings_widget.load_settings(cue_properties)
-
-
 
