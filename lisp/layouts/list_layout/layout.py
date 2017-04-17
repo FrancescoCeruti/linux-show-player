@@ -19,7 +19,7 @@
 
 from enum import Enum
 
-from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
+from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP, pyqtSignal
 from PyQt5.QtGui import QKeySequence
 from PyQt5.QtWidgets import QWidget, QAction, qApp, QGridLayout, \
     QPushButton, QSizePolicy
@@ -29,6 +29,7 @@ from lisp.core.signal import Connection
 from lisp.cues.cue import Cue, CueAction
 from lisp.cues.media_cue import MediaCue
 from lisp.layouts.cue_layout import CueLayout
+from lisp.layouts.list_layout.central_splitter import CentralSplitter
 from lisp.layouts.list_layout.control_buttons import ShowControlButtons
 from lisp.layouts.list_layout.cue_list_model import CueListModel, \
     RunningCueModel
@@ -39,6 +40,7 @@ from lisp.layouts.list_layout.playing_list_widget import RunningCuesListWidget
 from lisp.ui.mainwindow import MainWindow
 from lisp.ui.settings.app_settings import AppSettings
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
+from lisp.ui.settings.cue_settings_panel import CueSettingsPanel, CueSettingsPanelSplitter
 from lisp.ui.settings.pages.cue_appearance import Appearance
 from lisp.ui.settings.pages.cue_general import CueGeneralSettings
 from lisp.ui.settings.pages.media_cue_settings import MediaCueSettings
@@ -142,6 +144,7 @@ class ListLayout(QWidget, CueLayout):
 
         # CONTROL-BUTTONS (top-right)
         self.controlButtons = ShowControlButtons(parent=self)
+        self.controlButtons.setFixedWidth(300)
         self.controlButtons.setFixedHeight(100)
         self.controlButtons.stopButton.clicked.connect(self.stop_all)
         self.controlButtons.pauseButton.clicked.connect(self.pause_all)
@@ -151,6 +154,13 @@ class ListLayout(QWidget, CueLayout):
         self.controlButtons.interruptButton.clicked.connect(self.interrupt_all)
         self.layout().addWidget(self.controlButtons, 0, 2)
 
+        # SPLITTERS AND SUB-LAYOUTS
+        self.mainSplitter = CueSettingsPanelSplitter()
+        self.mainSplitter.panel_opened.connect(self.__selection_changed)
+        self.layout().addWidget(self.mainSplitter, 1, 0, 1, 3)
+        self.centralSplitter = CentralSplitter()
+        self.mainSplitter.addWidget(self.centralSplitter)
+
         # CUE VIEW (center left)
         self.listView = CueListView(self._model_adapter, self)
         self.listView.itemDoubleClicked.connect(self.double_clicked)
@@ -158,24 +168,28 @@ class ListLayout(QWidget, CueLayout):
         self.listView.context_event.connect(self.context_event)
         self.listView.key_event.connect(self.onKeyPressEvent)
         self.listView.select_cue_event.connect(self.select_event)
-        self.layout().addWidget(self.listView, 1, 0, 1, 2)
+        self.centralSplitter.addWidget(self.listView)
+        self.centralSplitter.setCollapsible(0, False)
+        self.centralSplitter.right_widget_folded.connect(self.onRightPaneFolded)
 
         # PLAYING VIEW (center right)
         self.playView = RunningCuesListWidget(self._playing_model, parent=self)
         self.playView.dbmeter_visible = self._show_dbmeter
         self.playView.accurate_time = self._accurate_time
         self.playView.seek_visible = self._seek_visible
-        self.playView.setMinimumWidth(300)
-        self.playView.setMaximumWidth(300)
-        self.layout().addWidget(self.playView, 1, 2)
-
-        self.set_playing_visible(self._show_playing)
+        self.playView.setFixedWidth(300)
+        self.centralSplitter.addWidget(self.playView)
 
         # TODO: maybe can be moved outside the layout
         # Add cue preferences widgets
         CueSettingsRegistry().add_item(CueGeneralSettings, Cue)
         CueSettingsRegistry().add_item(MediaCueSettings, MediaCue)
         CueSettingsRegistry().add_item(Appearance)
+
+        # CUE SETTINGS VIEW  (bottom center)
+        self.cueSettingsPanel = CueSettingsPanel(self.mainSplitter)
+        self.mainSplitter.addWidget(self.cueSettingsPanel)
+        self.mainSplitter.lazy_init()
 
         # Context menu actions
         self.edit_action = QAction(self)
@@ -256,9 +270,19 @@ class ListLayout(QWidget, CueLayout):
         self.playView.dbmeter_visible = visible
 
     def set_playing_visible(self, visible):
-        self._show_playing = visible
-        self.playView.setVisible(visible)
         self.controlButtons.setVisible(visible)
+        if visible:
+            width_list, width_play = self.centralSplitter.sizes()
+            width_list = width_list + width_play - self.centralSplitter.size().width()
+            width_play = self.centralSplitter.size().width()
+            self.centralSplitter.setSizes([width_list, width_play])
+        else:
+            self.centralSplitter.setSizes([8000, 0])
+
+    def onRightPaneFolded(self, fold_state):
+        self.showPlayingAction.setChecked(not fold_state)
+        if not fold_state:
+            self.controlButtons.setVisible(True)
 
     def onKeyPressEvent(self, e):
         if not e.isAutoRepeat():
@@ -299,6 +323,7 @@ class ListLayout(QWidget, CueLayout):
         item = self.listView.itemAt(event.pos())
         if item is not None:
             item.selected = not item.selected
+        self.__selection_changed()
 
     def context_event(self, event):
         self._context_item = self.listView.itemAt(event.pos())
@@ -376,16 +401,20 @@ class ListLayout(QWidget, CueLayout):
         for index in range(self.listView.topLevelItemCount()):
             if isinstance(self.model_adapter.item(index), cue_class):
                 self.listView.topLevelItem(index).selected = True
+        self.__selection_changed()
+
 
     def deselect_all(self, cue_class=Cue):
         for index in range(self.listView.topLevelItemCount()):
             if isinstance(self.model_adapter.item(index), cue_class):
                 self.listView.topLevelItem(index).selected = False
+        self.__selection_changed()
 
     def invert_selection(self):
         for index in range(self.listView.topLevelItemCount()):
             item = self.listView.topLevelItem(index)
             item.selected = not item.selected
+        self.__selection_changed()
 
     def __go_slot(self):
         self.go()
@@ -394,9 +423,24 @@ class ListLayout(QWidget, CueLayout):
         try:
             index = self.listView.indexOfTopLevelItem(new_item)
             cue = self.model_adapter.item(index)
-            self.infoPanel.cue_changed(cue)
         except IndexError:
-            self.infoPanel.cue_changed(None)
+            cue = None
+
+        self.infoPanel.cue_changed(cue)
+
+        if self.mainSplitter.is_panel_open():
+            if not self.get_selected_cues():
+                self.cueSettingsPanel.display_cue_settings(cue)
+
+    def __selection_changed(self):
+        current_selection = self.get_selected_cues()
+        if current_selection:
+            self.cueSettingsPanel.display_cue_settings(current_selection)
+        else:
+            index = self.listView.currentIndex()
+            cue = self.model_adapter.item(index.row())
+            self.cueSettingsPanel.display_cue_settings(cue)
+
 
     def __cue_added(self, cue):
         cue.next.connect(self.__cue_next, Connection.QtQueued)

@@ -39,6 +39,8 @@ class Appearance(SettingsPage):
         self.layout().addWidget(self.cueNameGroup)
 
         self.cueNameEdit = QLineEdit(self.cueNameGroup)
+        self.cueNameEdit.textEdited.connect(
+            lambda: self.modified.emit(self, self.cueNameEdit))
         self.cueNameGroup.layout().addWidget(self.cueNameEdit)
 
         # Description
@@ -47,6 +49,8 @@ class Appearance(SettingsPage):
         self.layout().addWidget(self.cueDescriptionGroup)
 
         self.cueDescriptionEdit = QTextEdit(self.cueNameGroup)
+        self.cueDescriptionEdit.textChanged.connect(
+            lambda: self.modified.emit(self, self.cueDescriptionEdit))
         self.cueDescriptionGroup.layout().addWidget(self.cueDescriptionEdit)
 
         # Font
@@ -56,15 +60,21 @@ class Appearance(SettingsPage):
 
         self.fontSizeSpin = QSpinBox(self.fontSizeGroup)
         self.fontSizeSpin.setValue(QLabel().fontInfo().pointSize())
+        self.fontSizeSpin.valueChanged.connect(
+            lambda: self.modified.emit(self, self.fontSizeSpin))
         self.fontSizeGroup.layout().addWidget(self.fontSizeSpin)
 
         # Color
         self.colorGroup = QGroupBox(self)
-        self.colorGroup.setLayout(QHBoxLayout())
+        self.colorGroup.setLayout(QVBoxLayout())
         self.layout().addWidget(self.colorGroup)
 
         self.colorBButton = QColorButton(self.colorGroup)
+        self.colorBButton.colorChanged.connect(
+            lambda: self.modified.emit(self, self.colorBButton))
         self.colorFButton = QColorButton(self.colorGroup)
+        self.colorFButton.colorChanged.connect(
+            lambda: self.modified.emit(self, self.colorFButton))
 
         self.colorGroup.layout().addWidget(self.colorBButton)
         self.colorGroup.layout().addWidget(self.colorFButton)
@@ -143,6 +153,12 @@ class Appearance(SettingsPage):
             if 'font-size' in settings:
                 # [:-2] for removing "pt"
                 self.fontSizeSpin.setValue(int(settings['font-size'][:-2]))
+
+    def clear_settings(self):
+        super().clear_settings()
+
+        for b in self.findChildren((QColorButton)):
+            b.setColor(None)
 
 
 def css_to_dict(css):

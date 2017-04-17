@@ -17,11 +17,19 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtWidgets import QWidget
+from PyQt5.QtWidgets import QWidget, QLineEdit, QTextEdit, QSpinBox, QTimeEdit, QListWidget
+from PyQt5.QtCore import pyqtSignal
 
+from lisp.ui.qmodels import SimpleTableModel
 
 class SettingsPage(QWidget):
     Name = 'Page'
+    MinHeight = 350
+    MinWidth = 400
+
+    # TODO : will be useful for auto-recording
+    modified = pyqtSignal(object, object)
+    """Emitted when a setting as been modified (SettingsPage, sender_widget)"""
 
     def enable_check(self, enabled):
         """Enable option check"""
@@ -33,6 +41,21 @@ class SettingsPage(QWidget):
     def load_settings(self, settings):
         """Load the settings."""
 
+    def clear_settings(self):
+        """
+        Clear Settings inputs.
+        Needs to be completed when subclasses make use of non standard widgets, lists, etc..
+        """
+        for w in self.findChildren((QLineEdit, QTextEdit, QSpinBox,
+                        QTimeEdit, QListWidget)):
+            w.clear()
+
+    def prepare_for_load(self, cue_class):
+        """
+        Useful for preparing sub pages or input widget how depends on edited
+        Cue classes, or other special initialization
+        :param cue_class: Cue.__class__
+        """
 
 class CueSettingsPage(SettingsPage):
     Name = 'Cue page'

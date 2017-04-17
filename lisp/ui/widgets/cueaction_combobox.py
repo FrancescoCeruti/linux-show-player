@@ -42,7 +42,15 @@ class CueActionComboBox(QComboBox):
 
     def __init__(self, cue_class, mode=Mode.Action, **kwargs):
         super().__init__(**kwargs)
+
+        self.loadPossibleActions(cue_class, mode)
+
+    def loadPossibleActions(self, cue_class, mode=Mode.Action):
+
         self.mode = mode
+
+        for i in reversed(range(self.count())):
+            self.removeItem(i)
 
         if issubclass(cue_class, Cue):
             for action in cue_class.CueActions:

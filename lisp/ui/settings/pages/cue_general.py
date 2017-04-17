@@ -188,6 +188,43 @@ class CueGeneralSettings(CueSettingsPage):
         self.fadeInGroup.setTitle(translate('FadeSettings', 'Fade In'))
         self.fadeOutGroup.setTitle(translate('FadeSettings', 'Fade Out'))
 
+    def prepare_for_load(self, cue_class):
+    # TODO : this method could be called at the end of initialization and corresponding
+    # code removed from __init__and / Or some part could be moved in self.load_settings
+    # For the moment I let it so to be sure not to break Setting Dialog
+
+        # Child will never become enable without parent being enable
+        self.tab_1.setEnabled(True)
+
+        for action in [CueAction.Start, CueAction.FadeInStart]:
+            if action in cue_class.CueActions:
+                self.startActionCombo.addItem(
+                    translate('CueAction', action.name), action.value)
+        self.startActionCombo.setEnabled(self.startActionCombo.count() > 1)
+
+        for action in [CueAction.Stop, CueAction.Pause,
+                       CueAction.FadeOutStop, CueAction.FadeOutPause]:
+            if action in cue_class.CueActions:
+                self.stopActionCombo.addItem(
+                    translate('CueAction', action.name), action.value)
+        self.stopActionCombo.setEnabled(self.stopActionCombo.count() > 1)
+
+        self.tab_1.setEnabled(self.stopActionCombo.isEnabled() and
+                              self.startActionCombo.isEnabled())
+
+        for action in CueNextAction:
+            self.nextActionCombo.addItem(
+                translate('CueNextAction', action.name), action.value)
+
+        self.fadeInGroup.setEnabled(
+            CueAction.FadeInStart in cue_class.CueActions
+        )
+
+        self.fadeOutGroup.setEnabled(
+            CueAction.FadeOutPause in cue_class.CueActions or
+            CueAction.FadeOutStop in cue_class.CueActions
+        )
+
     def load_settings(self, settings):
         self.startActionCombo.setCurrentText(
             translate('CueAction', settings.get('default_start_action', '')))
@@ -248,3 +285,8 @@ class CueGeneralSettings(CueSettingsPage):
             conf['fadeout_duration'] = self.fadeOutEdit.duration()
 
         return conf
+
+    def clear_settings(self):
+        self.startActionCombo.clear()
+        self.stopActionCombo.clear()
+        self.nextActionCombo.clear()

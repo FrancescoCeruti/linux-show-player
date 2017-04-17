@@ -96,3 +96,4 @@ class MIDISettings(SettingsPage):
         self.outputCombo.clear()
         self.outputCombo.addItems(['AppDefault', 'SysDefault'])
         self.outputCombo.addItems(backend.get_output_names())
+

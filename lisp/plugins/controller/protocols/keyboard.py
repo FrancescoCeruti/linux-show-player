@@ -94,6 +94,10 @@ class KeyboardSettings(CueSettingsPage):
         for key, action in settings.get('keyboard', []):
             self.keyboardModel.appendRow(key, action)
 
+    def clear_settings(self):
+        for i in reversed(range(self.keyboardModel.rowCount())):
+            self.keyboardModel.removeRow(i)
+
     def __new_key(self):
         self.keyboardModel.appendRow('', self._cue_class.CueActions[0].name)
 
