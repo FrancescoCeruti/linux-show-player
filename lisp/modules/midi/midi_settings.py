@@ -97,7 +97,3 @@ class MIDISettings(SettingsPage):
         self.outputCombo.addItems(['AppDefault', 'SysDefault'])
         self.outputCombo.addItems(backend.get_output_names())
 
-    def clear_settings(self):
-        # TODO : Test if something goes wrong with midi device plugged
-        # It is okay for the moment
-        pass

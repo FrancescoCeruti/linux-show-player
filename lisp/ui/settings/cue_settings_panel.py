@@ -295,6 +295,7 @@ class CueSettingsPanel(QWidget):
             tab, widget = self.settings_widgets[page]
             if multiple_cues:
                 widget.enable_check(True)
+            widget.prepare_for_load(cue_class)
             widget.load_settings(cue_properties)
             tab.show()
 

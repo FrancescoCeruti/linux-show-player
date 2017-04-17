@@ -156,5 +156,8 @@ class MidiCueSettings(SettingsPage):
                 offset = self.ATTRIBUTES_RANGE.get(attr_name, (0, 0, 0))[2]
                 spin.setValue(dict_msg.get(label.text().lower(), 0) - offset)
 
+    def clear_settings(self):
+        self.msgTypeCombo.setCurrentIndex(0)
+
 
 CueSettingsRegistry().add_item(MidiCueSettings, MidiCue)

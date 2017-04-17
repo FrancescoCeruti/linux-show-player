@@ -17,15 +17,17 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtWidgets import QWidget
+from PyQt5.QtWidgets import QWidget, QLineEdit, QTextEdit, QSpinBox, QTimeEdit, QListWidget
 from PyQt5.QtCore import pyqtSignal
+
+from lisp.ui.qmodels import SimpleTableModel
 
 class SettingsPage(QWidget):
     Name = 'Page'
     MinHeight = 350
     MinWidth = 400
 
-    # TODO : should be in CueSettingsPage, but some pages subclass SettingsPage directly ...
+    # TODO : will be useful for auto-recording
     modified = pyqtSignal(object, object)
     """Emitted when a setting as been modified (SettingsPage, sender_widget)"""
 
@@ -41,14 +43,17 @@ class SettingsPage(QWidget):
 
     def clear_settings(self):
         """
-        Clear Settings.
-        All input widgets must be cleared with this function
+        Clear Settings inputs.
+        Needs to be completed when subclasses make use of non standard widgets, lists, etc..
         """
-    def set_active(self, cue_class):
+        for w in self.findChildren((QLineEdit, QTextEdit, QSpinBox,
+                        QTimeEdit, QListWidget)):
+            w.clear()
+
+    def prepare_for_load(self, cue_class):
         """
-        Activate corresponding settings sections.
-        Should be implemented when setting page have sub-sections who are not
-        available for all cues. Example : lisp.ui.settings.pages.cue_general.CueGeneralSettings
+        Useful for preparing sub pages or input widget how depends on edited
+        Cue classes, or other special initialization
         :param cue_class: Cue.__class__
         """
 

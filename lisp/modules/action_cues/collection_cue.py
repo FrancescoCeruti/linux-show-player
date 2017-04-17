@@ -94,6 +94,10 @@ class CollectionCueSettings(SettingsPage):
 
         return {'targets': targets}
 
+    def clear_settings(self):
+        for i in reversed(range(self.collectionModel.rowCount())):
+            self.collectionModel.removeRow(i)
+
     def _add_cue(self, cue, action):
         self.collectionModel.appendRow(cue.__class__, cue.id, action)
         self.cue_dialog.remove_cue(cue)

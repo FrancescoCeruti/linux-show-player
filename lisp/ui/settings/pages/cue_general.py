@@ -188,10 +188,11 @@ class CueGeneralSettings(CueSettingsPage):
         self.fadeInGroup.setTitle(translate('FadeSettings', 'Fade In'))
         self.fadeOutGroup.setTitle(translate('FadeSettings', 'Fade Out'))
 
-    def set_active(self, cue_class):
-    # TODO : this method could be called at the end of initialization and corresponding lines removed from __init__
-    # And / Or some part could be moved in self.load_settings
+    def prepare_for_load(self, cue_class):
+    # TODO : this method could be called at the end of initialization and corresponding
+    # code removed from __init__and / Or some part could be moved in self.load_settings
     # For the moment I let it so to be sure not to break Setting Dialog
+
         # Child will never become enable without parent being enable
         self.tab_1.setEnabled(True)
 

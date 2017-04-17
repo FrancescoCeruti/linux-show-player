@@ -38,6 +38,7 @@ class GstMediaSettings(SettingsPage):
 
         self._pages = []
         self._current_page = None
+        self._last_used_page = None
         self._settings = {}
         self._check = False
 
@@ -55,6 +56,9 @@ class GstMediaSettings(SettingsPage):
         self.pipeButton.clicked.connect(self.__edit_pipe)
 
     def load_settings(self, settings):
+        # Before loading, try to remember last used page
+        last_used_page = self._current_page
+
         settings = settings.get('_media_', {})
         # Create a local copy of the configuration
         self._settings = deepcopy(settings)
@@ -75,7 +79,13 @@ class GstMediaSettings(SettingsPage):
                 item = QListWidgetItem(translate('MediaElementName', page.Name))
                 self.listWidget.addItem(item)
 
+        try:
+            last_index = [type(page) for page in self._pages].index(type(last_used_page))
+            self.listWidget.setCurrentRow(last_index)
+        except ValueError:
             self.listWidget.setCurrentRow(0)
+
+
 
     def get_settings(self):
         settings = {'elements': {}}
@@ -132,13 +142,5 @@ class GstMediaSettings(SettingsPage):
             self.enable_check(self._check)
 
     def clear_settings(self):
-        # TODO : This one is more complicated, I'll come back
-        if self._current_page is not None:
-            self.layout().removeWidget(self._current_page)
-            self._current_page.hide()
-
-        self.listWidget.clear()
+        super().clear_settings()
         self._pages = []
-        self._current_page = None
-        self._settings = {}
-        self._check = False

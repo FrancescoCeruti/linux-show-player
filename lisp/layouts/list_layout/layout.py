@@ -420,11 +420,15 @@ class ListLayout(QWidget, CueLayout):
         self.go()
 
     def __current_changed(self, new_item, current_item):
-        index = self.listView.indexOfTopLevelItem(new_item)
-        cue = self.model_adapter.item(index)
+        try:
+            index = self.listView.indexOfTopLevelItem(new_item)
+            cue = self.model_adapter.item(index)
+        except IndexError:
+            cue = None
+
         self.infoPanel.cue_changed(cue)
+
         if self.mainSplitter.is_panel_open():
-            # Display current cue in panel only if there is no selection
             if not self.get_selected_cues():
                 self.cueSettingsPanel.display_cue_settings(cue)
 
