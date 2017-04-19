@@ -96,6 +96,8 @@ class CommandCue(Cue):
 class CommandCueSettings(SettingsPage):
     Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Command')
 
+    MinWidth = 360
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.setLayout(QVBoxLayout())

@@ -156,7 +156,7 @@ class ListLayout(QWidget, CueLayout):
 
         # SPLITTERS AND SUB-LAYOUTS
         self.mainSplitter = CueSettingsPanelSplitter()
-        self.mainSplitter.panel_opened.connect(self.__selection_changed)
+        self.mainSplitter.panel_opened.connect(self.__on_panel_opened)
         self.layout().addWidget(self.mainSplitter, 1, 0, 1, 3)
         self.centralSplitter = CentralSplitter()
         self.mainSplitter.addWidget(self.centralSplitter)
@@ -169,7 +169,6 @@ class ListLayout(QWidget, CueLayout):
         self.listView.key_event.connect(self.onKeyPressEvent)
         self.listView.select_cue_event.connect(self.select_event)
         self.centralSplitter.addWidget(self.listView)
-        self.centralSplitter.setCollapsible(0, False)
         self.centralSplitter.right_widget_folded.connect(self.onRightPaneFolded)
 
         # PLAYING VIEW (center right)
@@ -432,13 +431,18 @@ class ListLayout(QWidget, CueLayout):
                 self.cueSettingsPanel.display_cue_settings(cue)
 
     def __selection_changed(self):
-        current_selection = self.get_selected_cues()
-        if current_selection:
-            self.cueSettingsPanel.display_cue_settings(current_selection)
-        else:
-            index = self.listView.currentIndex()
-            cue = self.model_adapter.item(index.row())
-            self.cueSettingsPanel.display_cue_settings(cue)
+        if self.mainSplitter.is_panel_open():
+            current_selection = self.get_selected_cues()
+            if current_selection:
+                self.cueSettingsPanel.display_cue_settings(current_selection)
+            else:
+                index = self.listView.currentIndex()
+                cue = self.model_adapter.item(index.row())
+                self.cueSettingsPanel.display_cue_settings(cue)
+
+    def __on_panel_opened(self):
+        self.listView.scrollToItem(self.current_item())
+        self.__selection_changed()
 
     def __cue_added(self, cue):
         cue.next.connect(self.__cue_next, Connection.QtQueued)

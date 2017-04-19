@@ -22,8 +22,10 @@ from PyQt5.QtWidgets import QWidget
 
 class SettingsPage(QWidget):
     Name = 'Page'
-    MinHeight = 350
-    MinWidth = 400
+    # These values are used by QFoldableTab for CueSettingsPanel
+    # Can be overridden to be more accurate on specific pages
+    MinWidth = 330
+    MinHeight = 220
 
     def enable_check(self, enabled):
         """Enable option check"""

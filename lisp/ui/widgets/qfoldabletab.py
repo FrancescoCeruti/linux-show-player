@@ -23,11 +23,14 @@ Custom QTabWidget and QTabBar. Has ability to "fold" when double click on tab is
 It has been designed for only one tabbar, as used in cue_setting_panel.py
 """
 
-from PyQt5.QtWidgets import QTabWidget, QTabBar, QSizePolicy
-from PyQt5.QtCore import QSize
+from PyQt5.QtWidgets import QTabWidget, QTabBar
+from PyQt5.QtCore import QSize, pyqtSignal
 
 
 class QFoldableTab(QTabWidget):
+
+    fold_toggled = pyqtSignal()
+    """emitted when tab as been fold or unfold"""
 
     def __init__(self):
         super().__init__()
@@ -37,13 +40,11 @@ class QFoldableTab(QTabWidget):
         self.settings_page = None
         self.is_fold = False
 
-        # Just for initialization. These values should overridden when a tab is added
+        # Just for initialization. These values should be overridden when a tab is added
+        self.min_folded_height = 100
         self.min_folded_width = 100
         self.min_widget_width = 100
         self.min_widget_height = 100
-
-        sizepol = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
-        self.setSizePolicy(sizepol)
 
         self.tabBarDoubleClicked.connect(self.toggle_fold)
 
@@ -54,6 +55,7 @@ class QFoldableTab(QTabWidget):
         else:
             self.fold()
             self.is_fold = True
+        self.fold_toggled.emit()
 
     def fold(self):
         self.is_fold = True
@@ -75,6 +77,7 @@ class QFoldableTab(QTabWidget):
     def addTab(self, widget, *__args):
         super().addTab(widget, *__args)
         self.min_folded_width = self.tabBar().tabSizeHint(0).width()
+        self.min_folded_height = self.tabBar().tabSizeHint(0).height()*3
         self.min_widget_height = widget.MinHeight
         self.min_widget_width = widget.MinWidth
 
@@ -86,7 +89,7 @@ class QFoldableTab(QTabWidget):
 
     def sizeHint(self):
         if self.is_fold:
-            size = QSize(self.min_folded_width, self.min_widget_height)
+            size = QSize(self.min_folded_width, self.min_folded_height)
         else:
             size = QSize(self.min_widget_width, self.min_widget_height)
         return size

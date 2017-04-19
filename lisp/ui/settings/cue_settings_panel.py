@@ -46,23 +46,16 @@ from lisp.ui.widgets import QFoldableTab
 
 class CueSettingsPanelSplitterHandle(QSplitterHandle):
 
-    panel_opened = pyqtSignal()
-    """emitted after Settings panel has open"""
-    panel_closed = pyqtSignal()
-    """emitted after Settings panel has close"""
-    apply_button_clicked = pyqtSignal()
-    """emitted when apply button clicked"""
-
     def __init__(self, splitter):
         super().__init__(Qt.Vertical, splitter)
 
-        self._panel_current_size = 385
+        self._panel_current_size = 150
         self.is_fold = True
 
         self.setFixedHeight(25)
 
         self.setLayout(QHBoxLayout())
-        self.layout().setContentsMargins(0, 3, 0, 3)
+        self.layout().setContentsMargins(6, 3, 6, 3)
 
         self.cue_name = QLineEdit()
         self.cue_name.setFocusPolicy(Qt.NoFocus)
@@ -70,62 +63,69 @@ class CueSettingsPanelSplitterHandle(QSplitterHandle):
         policy.setHorizontalPolicy(QSizePolicy.MinimumExpanding)
         self.cue_name.setSizePolicy(policy)
         self.cue_name.setCursor(Qt.ArrowCursor)
+        self.cue_name.hide()
         self.cue_name.selectionChanged.connect(self.cue_name.deselect)
         self.layout().addWidget(self.cue_name)
 
-        self.apply_button = QPushButton('Apply')
+        self.apply_button = QPushButton(
+            translate('CueSettingsPanel', 'Apply'))
         self.apply_button.setFocusPolicy(Qt.NoFocus)
         self.apply_button.setFixedWidth(65)
         self.apply_button.setCursor(Qt.ArrowCursor)
-        self.apply_button.clicked.connect(self.onApplyButtonClicked)
+        self.apply_button.hide()
+        self.apply_button.clicked.connect(self.splitter().onApplyButtonClicked)
         self.layout().addWidget(self.apply_button)
         self.layout().addStretch()
 
         self.fold_button = QPushButton()
         self.fold_button.setFocusPolicy(Qt.NoFocus)
         self.fold_button.setFixedWidth(65)
-        self.fold_button.setIcon(QIcon.fromTheme('go-up'))
         self.fold_button.setCursor(Qt.ArrowCursor)
-        self.fold_button.clicked.connect(self.onFoldButtonClicked)
+        self.fold_button.setIcon(QIcon.fromTheme('go-up'))
+        self.fold_button.clicked.connect(self.splitter().onFoldButtonClicked)
         self.layout().addWidget(self.fold_button)
         self.layout().addStretch()
 
-    def open_panel(self):
-        cues_zone, panel_zone = self.splitter().sizes()
-        self.splitter().setSizes([cues_zone+panel_zone-self._panel_current_size, self._panel_current_size])
-        self.apply_button.show()
-        self.cue_name.show()
-        self.panel_opened.emit()
+    def toggle_fold(self):
+        if self.is_fold:
+            cues_zone, panel_zone = self.splitter().sizes()
+            self.splitter().setSizes(
+                [cues_zone+panel_zone-self._panel_current_size, self._panel_current_size])
+        else:
+            self._panel_current_size = self.splitter().sizes()[1]
+            self.splitter().setSizes([10000, 0])
 
-    def close_panel(self):
-        self._panel_current_size = self.splitter().sizes()[1]
-        self.splitter().setSizes([10000, 0])
+    def on_fold(self):
+        self.fold_button.setIcon(QIcon.fromTheme('go-up'))
         self.apply_button.hide()
         self.cue_name.hide()
-        self.panel_closed.emit()
 
-    def onFoldButtonClicked(self):
-        if self.is_fold:
-            self.open_panel()
-        else:
-            self.close_panel()
+    def on_unfold(self):
+        self.fold_button.setIcon(QIcon.fromTheme('go-down'))
+        self.apply_button.show()
+        self.cue_name.show()
+        self.splitter().panel_opened.emit()
 
-    def onApplyButtonClicked(self):
-        self.apply_button_clicked.emit()
+    def adjust_height(self):
+        pref_height = self.splitter().widget(1).prefered_height()
+        # Take margins into account
+        pref_height += 10
+        cues_zone, panel_zone = self.splitter().sizes()
+        self.splitter().setSizes(
+            [cues_zone+panel_zone-pref_height, pref_height])
 
-    def fold_toggled(self):
-        self.is_fold = not self.is_fold
-        if self.is_fold:
-            self.fold_button.setIcon(QIcon.fromTheme('go-up'))
-        else:
-            self.fold_button.setIcon(QIcon.fromTheme('go-down'))
+    def display_cue_name(self, text):
+        self.cue_name.setText(text)
+        self.cue_name.setSelection(0, 0)
 
     def moveEvent(self, event):
         min_panel_height = self.splitter().widget(1).minimumSize().height()
         if self.is_fold and self.splitter().sizes()[1] >= min_panel_height:
-            self.fold_toggled()
+            self.is_fold = False
+            self.on_unfold()
         elif not self.is_fold and self.splitter().sizes()[1] < min_panel_height:
-            self.fold_toggled()
+            self.is_fold = True
+            self.on_fold()
 
     def paintEvent(self, event):
         # TODO : color value should be taken in style, not hardcoded
@@ -133,20 +133,11 @@ class CueSettingsPanelSplitterHandle(QSplitterHandle):
         col = QColor(58, 58, 58)
         p.fillRect(self.rect(), col)
 
-    def display_cue_name(self, text):
-        self.cue_name.setText(text)
-        self.cue_name.setSelection(0, 0)
-
 
 class CueSettingsPanelSplitter(QSplitter):
-    """
-    This custom QSplitter has been designed to work with two child widgets
-    It return CueSettingsPanelSplitterHandle as handle and manage a couple of signals
-    """
+
     panel_opened = pyqtSignal()
-    """emitted after Settings panel has open"""
-    panel_closed = pyqtSignal()
-    """emitted after Settings panel has close"""
+    """emitted when panel opens"""
     apply_button_clicked = pyqtSignal()
     """emitted when apply button is clicked"""
 
@@ -160,10 +151,13 @@ class CueSettingsPanelSplitter(QSplitter):
 
     def createHandle(self):
         self.handle = CueSettingsPanelSplitterHandle(self)
-        self.handle.apply_button_clicked.connect(lambda: self.apply_button_clicked.emit())
-        self.handle.panel_opened.connect(lambda: self.panel_opened.emit())
-        self.handle.panel_closed.connect(lambda: self.panel_closed.emit())
         return self.handle
+
+    def onApplyButtonClicked(self):
+        self.apply_button_clicked.emit()
+
+    def onFoldButtonClicked(self):
+        self.handle.toggle_fold()
 
     def open_settings_panel(self):
         self.handle.open_panel()
@@ -175,33 +169,35 @@ class CueSettingsPanelSplitter(QSplitter):
         return not self.handle.is_fold
 
     def lazy_init(self):
-        """This can only be done when Widgets have been added"""
+        """
+        Ui initialisation
+        This can only be done when Widgets have been added
+        """
         self.setCollapsible(0, False)
         self.setCollapsible(1, True)
-        self.close_settings_panel()
+        self.setSizes([10000, 0])
 
 
 class CueSettingsPanel(QWidget, metaclass=QSingleton):
-
-    apply_button_clicked = pyqtSignal(object)
-    """emitted when apply button is clicked (list of cues to update)"""
 
     def __init__(self, splitter):
         super().__init__()
 
         self.splitter = splitter
 
-        self.setMaximumHeight(350)
-        self.setMinimumHeight(100)
+        self.setMinimumHeight(150)
 
-        self.setLayout(QHBoxLayout())
+        layout = QHBoxLayout()
+        layout.setContentsMargins(0, 0, 0, 0)
+        self.setLayout(layout)
 
-        self.scrollWidget = QWidget()
-        self.scrollWidget.setLayout(QHBoxLayout())
+        self.scrollWidget = QSplitter()
+        self.scrollWidget.setChildrenCollapsible(False)
+        self.scrollWidget.setContentsMargins(8, 5, 8, 0)
 
         stretch_widget = QWidget()
         stretch_widget.setLayout(QHBoxLayout())
-        self.scrollWidget.layout().addWidget(stretch_widget)
+        self.scrollWidget.addWidget(stretch_widget)
 
         self.scrollArea = QScrollArea()
         self.scrollArea.setWidgetResizable(True)
@@ -228,20 +224,27 @@ class CueSettingsPanel(QWidget, metaclass=QSingleton):
         for widget in cue_pages:
 
             tab = QFoldableTab()
+            tab.fold_toggled.connect(self.splitter.handle.adjust_height)
+            tab.fold_toggled.connect(self.adjust_page_width)
             # Keep easily accessible refs of the tabs
             self.settings_widgets[widget] = tab
             tab.fold()
             tab.hide()
             # insert before stretch
-            n = self.scrollWidget.layout().count()
-            self.scrollWidget.layout().insertWidget(n-1, tab)
+            n = self.scrollWidget.count()
+            self.scrollWidget.insertWidget(n-1, tab)
 
         self.scrollArea.setWidget(self.scrollWidget)
+        self.adjust_page_width()
+
+    def keyPressEvent(self, event):
+        if event.key() == Qt.Key_Return:
+            self.save_cues_settings()
 
     def display_cue_settings(self, cues=None):
         """
         Retrieve cues settings and display them in relevant settings pages in Settings Panel
-        :param cues : List of cues or None
+        :param cues : List of Cues or Cue or None
         """
         # Disconnect previous property_updated signal
         if self._current_displayed_cues is not None:
@@ -320,6 +323,7 @@ class CueSettingsPanel(QWidget, metaclass=QSingleton):
         print(f"display called from on_cue_properties_updated for {self._current_displayed_cues}")
 
     def save_cues_settings(self):
+        print(f'start saving cues for {self._current_displayed_cues}')
         aggregated_settings = {}
         for tab in self.settings_widgets.values():
             if tab.isVisible():
@@ -333,4 +337,24 @@ class CueSettingsPanel(QWidget, metaclass=QSingleton):
             action = UpdateCueAction(aggregated_settings, self._current_displayed_cues)
             MainActionsHandler.do_action(action)
 
+    def prefered_height(self):
+        """
+        Return prefered height based on custom hints given by QFoldableTab
+        :return: int
+        """
+        pref_height = 0
+        for tab in self.settings_widgets.values():
+            height = tab.sizeHint().height()
+            if height > pref_height:
+                pref_height = height
+        return pref_height
+
+    def adjust_page_width(self):
+        """Give maximum space to the last widget (spacer)"""
+        pass
+        sizes = [0 for i in range(self.scrollWidget.count()-1)]
+        sizes.append(10000)
+        # sizes = self.scrollWidget.sizes()
+        # sizes[-1] = 10000
+        self.scrollWidget.setSizes(sizes)
 
