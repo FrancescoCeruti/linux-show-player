@@ -19,7 +19,7 @@
 
 from enum import Enum
 
-from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP, pyqtSignal
+from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtGui import QKeySequence
 from PyQt5.QtWidgets import QWidget, QAction, qApp, QGridLayout, \
     QPushButton, QSizePolicy
@@ -403,7 +403,6 @@ class ListLayout(QWidget, CueLayout):
                 self.listView.topLevelItem(index).selected = True
         self.__selection_changed()
 
-
     def deselect_all(self, cue_class=Cue):
         for index in range(self.listView.topLevelItemCount()):
             if isinstance(self.model_adapter.item(index), cue_class):
@@ -440,7 +439,6 @@ class ListLayout(QWidget, CueLayout):
             index = self.listView.currentIndex()
             cue = self.model_adapter.item(index.row())
             self.cueSettingsPanel.display_cue_settings(cue)
-
 
     def __cue_added(self, cue):
         cue.next.connect(self.__cue_next, Connection.QtQueued)

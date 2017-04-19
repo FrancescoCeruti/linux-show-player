@@ -25,7 +25,6 @@ A custom of QSplitterHandle and QSplitter to integrate the fold button and logic
 And a custom widget to display and save the Cue Settings
 """
 
-from collections import OrderedDict
 from copy import deepcopy
 
 from PyQt5.QtCore import Qt, pyqtSignal
@@ -33,9 +32,12 @@ from PyQt5.QtGui import QIcon, QPainter, QColor
 from PyQt5.QtWidgets import QWidget, QSplitter, QSplitterHandle,  QPushButton,\
     QHBoxLayout, QScrollArea, QLineEdit, QSizePolicy
 
+from lisp.core.actions_handler import MainActionsHandler
+from lisp.core.signal import Connection
+from lisp.core.singleton import QSingleton
 from lisp.core.util import greatest_common_superclass
 from lisp.cues.cue import Cue
-from lisp.layouts.cue_layout import CueLayout
+from lisp.cues.cue_actions import UpdateCueAction, UpdateCuesAction
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
 from lisp.ui.settings.settings_page import CueSettingsPage
 from lisp.ui.ui_utils import translate
@@ -61,7 +63,6 @@ class CueSettingsPanelSplitterHandle(QSplitterHandle):
 
         self.setLayout(QHBoxLayout())
         self.layout().setContentsMargins(0, 3, 0, 3)
-        #self.layout().setAlignment(Qt.AlignHCenter)
 
         self.cue_name = QLineEdit()
         self.cue_name.setFocusPolicy(Qt.NoFocus)
@@ -112,7 +113,6 @@ class CueSettingsPanelSplitterHandle(QSplitterHandle):
     def onApplyButtonClicked(self):
         self.apply_button_clicked.emit()
 
-
     def fold_toggled(self):
         self.is_fold = not self.is_fold
         if self.is_fold:
@@ -140,7 +140,7 @@ class CueSettingsPanelSplitterHandle(QSplitterHandle):
 
 class CueSettingsPanelSplitter(QSplitter):
     """
-    This custom QSplitter is intended to work with only two widgets since
+    This custom QSplitter has been designed to work with two child widgets
     It return CueSettingsPanelSplitterHandle as handle and manage a couple of signals
     """
     panel_opened = pyqtSignal()
@@ -178,11 +178,10 @@ class CueSettingsPanelSplitter(QSplitter):
         """This can only be done when Widgets have been added"""
         self.setCollapsible(0, False)
         self.setCollapsible(1, True)
-        #self.close_settings_panel()
-        self.open_settings_panel()
+        self.close_settings_panel()
 
 
-class CueSettingsPanel(QWidget):
+class CueSettingsPanel(QWidget, metaclass=QSingleton):
 
     apply_button_clicked = pyqtSignal(object)
     """emitted when apply button is clicked (list of cues to update)"""
@@ -209,15 +208,10 @@ class CueSettingsPanel(QWidget):
 
         self.layout().addWidget(self.scrollArea)
 
-        self._cues_to_update = []
+        self._current_displayed_cues = None
+        self.splitter.apply_button_clicked.connect(self.save_cues_settings)
 
-        # TODO : Start here to record settings
-        #self.splitter.apply_button_clicked.connect(
-        #    lambda: self.apply_button_clicked(self._cues_to_update))
-        # keep trace of tabs with 'type(SettingWidget)':('QFoldableTab', 'SettingWidget')
-
-        # FIXME : is orderedDict still needed ?
-        self.settings_widgets = OrderedDict()
+        self.settings_widgets = {}
 
         def sk(widget):
             # Sort-Key function
@@ -244,12 +238,32 @@ class CueSettingsPanel(QWidget):
 
         self.scrollArea.setWidget(self.scrollWidget)
 
-    # TODO : this should be called also when an Undo in MainActionHandler is done, otherwise values don't get updated
     def display_cue_settings(self, cues=None):
         """
         Retrieve cues settings and display them in relevant settings pages in Settings Panel
         :param cues : List of cues or None
         """
+        # Disconnect previous property_updated signal
+        if self._current_displayed_cues is not None:
+            if type(self._current_displayed_cues) is list:
+                for cue in self._current_displayed_cues:
+                    cue.property_updated.disconnect(
+                        self.on_cue_properties_updated)
+            else:
+                self._current_displayed_cues.property_updated.disconnect(
+                        self.on_cue_properties_updated)
+
+        self._current_displayed_cues = cues
+
+        # Connect new ones
+        if self._current_displayed_cues is not None:
+            if type(self._current_displayed_cues) is list:
+                for cue in self._current_displayed_cues:
+                    cue.property_updated.connect(
+                        self.on_cue_properties_updated, mode=Connection.QtQueued)
+            else:
+                self._current_displayed_cues.property_updated.connect(
+                        self.on_cue_properties_updated, mode=Connection.QtQueued)
 
         # Hide everything
         for tab in self.settings_widgets.values():
@@ -279,7 +293,6 @@ class CueSettingsPanel(QWidget):
             name_to_display = translate('CueSettingsPanel',
                     'Multiple selection : ') + str([cue.name for cue in cues])
 
-
         # Display currently edited cue
         self.splitter.handle.display_cue_name(name_to_display)
 
@@ -301,4 +314,23 @@ class CueSettingsPanel(QWidget):
 
             settings_widget.load_settings(cue_properties)
             tab.show()
+
+    def on_cue_properties_updated(self):
+        self.display_cue_settings(self._current_displayed_cues)
+        print(f"display called from on_cue_properties_updated for {self._current_displayed_cues}")
+
+    def save_cues_settings(self):
+        aggregated_settings = {}
+        for tab in self.settings_widgets.values():
+            if tab.isVisible():
+                settings = tab.currentWidget().get_settings()
+                aggregated_settings = {**aggregated_settings, **settings}
+
+        if type(self._current_displayed_cues) is list:
+            action = UpdateCuesAction(aggregated_settings, self._current_displayed_cues)
+            MainActionsHandler.do_action(action)
+        else:
+            action = UpdateCueAction(aggregated_settings, self._current_displayed_cues)
+            MainActionsHandler.do_action(action)
+
 
