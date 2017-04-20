@@ -19,7 +19,7 @@
 
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import QTabWidget, QAction, QInputDialog, qApp, \
-    QMessageBox
+    QMessageBox, QWidget, QVBoxLayout
 
 from lisp.core.configuration import config
 from lisp.core.signal import Connection
@@ -37,12 +37,14 @@ from lisp.ui.settings.cue_settings import CueSettingsRegistry
 from lisp.ui.settings.pages.cue_appearance import Appearance
 from lisp.ui.settings.pages.cue_general import CueGeneralSettings
 from lisp.ui.settings.pages.media_cue_settings import MediaCueSettings
+from lisp.ui.settings.cue_settings_panel import CueSettingsPanel, CueSettingsPanelSplitter
 from lisp.ui.ui_utils import translate
 
 AppSettings.register_settings_widget(CartLayoutSettings)
 
 
-class CartLayout(QTabWidget, CueLayout):
+class CartLayout(QWidget, CueLayout):
+
     NAME = 'Cart Layout'
     DESCRIPTION = translate('LayoutDescription',
                             'Organize cues in grid like pages')
@@ -55,6 +57,49 @@ class CartLayout(QTabWidget, CueLayout):
         QT_TRANSLATE_NOOP('LayoutDetails',
                           'To copy cues drag them while pressing SHIFT')
     ]
+
+    def __init__(self, cue_model, **kwargs):
+        super().__init__(cue_model=cue_model)
+
+        self.setLayout(QVBoxLayout())
+
+        self.splitter = CueSettingsPanelSplitter()
+        self.layout().addWidget(self.splitter)
+
+        self.cart_layout_pages = CartLayoutPages(cue_model, **kwargs)
+        self.splitter.addWidget(self.cart_layout_pages)
+        self.splitter.addWidget(CueSettingsPanel(self.splitter))
+
+        self.splitter.lazy_init()
+        CueSettingsPanel().display_cue_settings(None)
+
+    def finalize(self):
+        self.cart_layout_pages.finalize()
+
+    @CueLayout.model_adapter.getter
+    def model_adapter(self):
+        return self.cart_layout_pages.model_adapter
+
+    def edit_selected_cues(self):
+        self.cart_layout_pages.edit_selected_cues()
+
+    def select_all(self, cue_class=Cue):
+        self.cart_layout_pages.select_all(cue_class)
+
+    def deselect_all(self, cue_class=Cue):
+        self.cart_layout_pages.deselect_all(cue_class)
+
+    def invert_selection(self):
+        self.cart_layout_pages.invert_selection()
+
+    def get_context_cue(self):
+        self.cart_layout_pages.get_context_cue()
+
+    def get_selected_cues(self, cue_class=Cue):
+        self.cart_layout_pages.get_selected_cues()
+
+
+class CartLayoutPages(QTabWidget, CueLayout):
 
     def __init__(self, cue_model, **kwargs):
         super().__init__(cue_model=cue_model, **kwargs)
@@ -218,15 +263,25 @@ class CartLayout(QTabWidget, CueLayout):
         for widget in self.widgets():
             if isinstance(widget.cue, cue_class):
                 widget.selected = True
+        self.__selection_changed()
 
     def deselect_all(self, cue_class=Cue):
         for widget in self.widgets():
             if isinstance(widget.cue, cue_class):
                 widget.selected = False
+        self.__selection_changed()
 
     def invert_selection(self):
         for widget in self.widgets():
             widget.selected = not widget.selected
+        self.__selection_changed()
+
+    def __selection_changed(self):
+        sel = self.get_selected_cues()
+        if sel:
+            CueSettingsPanel().display_cue_settings(sel)
+        else:
+            CueSettingsPanel().display_cue_settings(None)
 
     def contextMenuEvent(self, event):
         # For some reason the currentWidget geometry does not include the
@@ -411,6 +466,7 @@ class CartLayout(QTabWidget, CueLayout):
 
         widget = CueWidget(cue)
         widget.cue_executed.connect(self.cue_executed.emit)
+        widget.cue_selected.connect(self.__selection_changed)
         widget.context_menu_request.connect(self._on_context_menu)
         widget.edit_request.connect(self.edit_cue)
         widget.set_accurate_timing(self._accurate_timing)
@@ -435,6 +491,7 @@ class CartLayout(QTabWidget, CueLayout):
         widget = self.__pages[page].take_widget(row, column)
 
         widget.cue_executed.disconnect()
+        widget.cue_selected.disconnect()
         widget.context_menu_request.disconnect()
         widget.edit_request.disconnect()
 

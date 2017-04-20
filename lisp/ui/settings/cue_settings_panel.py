@@ -107,7 +107,7 @@ class CueSettingsPanelSplitterHandle(QSplitterHandle):
         self.splitter().panel_opened.emit()
 
     def adjust_height(self):
-        pref_height = self.splitter().widget(1).prefered_height()
+        pref_height = self.splitter().widget(1).preferred_height()
         # Take margins into account
         pref_height += 10
         cues_zone, panel_zone = self.splitter().sizes()
@@ -323,21 +323,27 @@ class CueSettingsPanel(QWidget, metaclass=QSingleton):
         print(f"display called from on_cue_properties_updated for {self._current_displayed_cues}")
 
     def save_cues_settings(self):
-        print(f'start saving cues for {self._current_displayed_cues}')
-        aggregated_settings = {}
-        for tab in self.settings_widgets.values():
-            if tab.isVisible():
-                settings = tab.currentWidget().get_settings()
-                aggregated_settings = {**aggregated_settings, **settings}
+        if self._current_displayed_cues is not None:
+            aggregated_settings = {}
+            for tab in self.settings_widgets.values():
+                if tab.isVisible():
+                    settings = tab.currentWidget().get_settings()
+                    aggregated_settings = {**aggregated_settings, **settings}
 
-        if type(self._current_displayed_cues) is list:
-            action = UpdateCuesAction(aggregated_settings, self._current_displayed_cues)
-            MainActionsHandler.do_action(action)
-        else:
-            action = UpdateCueAction(aggregated_settings, self._current_displayed_cues)
-            MainActionsHandler.do_action(action)
+            if type(self._current_displayed_cues) is list:
+                self._current_displayed_cues.property_updated.disconnect(self.on_cue_properties_updated)
+                action = UpdateCuesAction(aggregated_settings, self._current_displayed_cues)
+                MainActionsHandler.do_action(action)
+                self._current_displayed_cues.property_updated.connect(
+                    self.on_cue_properties_updated, mode=Connection.QtQueued)
+            else:
+                self._current_displayed_cues.property_updated.disconnect(self.on_cue_properties_updated)
+                action = UpdateCueAction(aggregated_settings, self._current_displayed_cues)
+                MainActionsHandler.do_action(action)
+                self._current_displayed_cues.property_updated.connect(
+                    self.on_cue_properties_updated, mode=Connection.QtQueued)
 
-    def prefered_height(self):
+    def preferred_height(self):
         """
         Return prefered height based on custom hints given by QFoldableTab
         :return: int
