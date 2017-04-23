@@ -31,6 +31,8 @@ from lisp.ui.widgets import FadeComboBox
 class ListLayoutSettings(SettingsPage):
     Name = 'List Layout'
 
+    ExtraSettings = []
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
@@ -100,6 +102,13 @@ class ListLayoutSettings(SettingsPage):
         self.interruptAllFade = QCheckBox(self.useFadeGroup)
         self.useFadeGroup.layout().addWidget(self.interruptAllFade, 3, 1)
 
+        # extra settings
+        self._extra_settings_widget = []
+        for widget in self.ExtraSettings:
+            init_widget = widget()
+            self.layout().addWidget(init_widget)
+            self._extra_settings_widget.append(init_widget)
+
         self.retranslateUi()
 
     def retranslateUi(self):
@@ -142,6 +151,10 @@ class ListLayoutSettings(SettingsPage):
             'resumeallfade': str(self.resumeAllFade.isChecked()),
             'interruptallfade': str(self.interruptAllFade.isChecked()),
         }
+        # extra settings
+        for widget in self._extra_settings_widget:
+            for item, sett_value in widget.get_settings():
+                settings[item] = str(sett_value)
 
         return {'ListLayout': settings}
 
@@ -170,3 +183,16 @@ class ListLayoutSettings(SettingsPage):
         self.resumeAllFade.setChecked(settings.get('resumeallfade') == 'True')
         self.interruptAllFade.setChecked(
             settings.get('interruptallfade') == 'True')
+
+        # extra settings
+        for widget in self._extra_settings_widget:
+            widget.load_settings(settings)
+
+    @classmethod
+    def register_extra_settings(cls, widget):
+        """
+        Register extra settings in ListLayoutSettings that are added to layout
+        :param widget: Extra settings (PyQt5.QWidget)
+        """
+        if widget not in cls.ExtraSettings:
+            cls.ExtraSettings.append(widget)
