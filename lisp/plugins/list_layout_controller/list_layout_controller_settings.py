@@ -18,9 +18,10 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QHBoxLayout, QLabel, QPushButton, QMessageBox
 from PyQt5.QtCore import QT_TRANSLATE_NOOP
+from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QHBoxLayout, QLabel, QPushButton, QMessageBox
 
+from lisp.modules.midi import midi_utils
 from lisp.modules.midi.midi_input import MIDIInput
 from lisp.ui.settings.settings_page import SettingsPage
 from lisp.ui.ui_utils import translate
@@ -88,6 +89,14 @@ class ListLayoutControllerSetting(SettingsPage):
         layout.addWidget(self.resumeMidiButton)
         self.midiMapping.layout().addLayout(layout)
 
+        self.interruptMidiButton = QPushButton()
+        self.interruptMidiButton.clicked.connect(self.__learn_midi)
+        self.interruptMidiLabel = QLabel()
+        layout = QHBoxLayout()
+        layout.addWidget(self.interruptMidiLabel)
+        layout.addWidget(self.interruptMidiButton)
+        self.midiMapping.layout().addLayout(layout)
+
         self.retranslateUi()
 
     def retranslateUi(self):
@@ -104,6 +113,8 @@ class ListLayoutControllerSetting(SettingsPage):
         self.fadeOutMidiButton.setText(translate('ListLayoutController', 'No MIDI mapping'))
         self.resumeMidiLabel.setText(translate('ListLayoutController', 'Resume control'))
         self.resumeMidiButton.setText(translate('ListLayoutController', 'No MIDI mapping'))
+        self.interruptMidiLabel.setText(translate('ListLayoutController', 'Interrupt control'))
+        self.interruptMidiButton.setText(translate('ListLayoutController', 'No MIDI mapping'))
 
     def get_settings(self):
         conf = {}
@@ -114,6 +125,7 @@ class ListLayoutControllerSetting(SettingsPage):
         conf['fadeinmidimapping'] = str(self.fadeInMidiButton.text())
         conf['fadeoutmidimapping'] = str(self.fadeOutMidiButton.text())
         conf['resumemidimapping'] = str(self.resumeMidiButton.text())
+        conf['interruptmidimapping'] = str(self.interruptMidiButton.text())
 
         return {'ListLayoutController': conf}
 
@@ -124,13 +136,20 @@ class ListLayoutControllerSetting(SettingsPage):
         self.fadeInMidiButton.setText(settings['ListLayoutController']['fadeinmidimapping'])
         self.fadeOutMidiButton.setText(settings['ListLayoutController']['fadeoutmidimapping'])
         self.resumeMidiButton.setText(settings['ListLayoutController']['resumemidimapping'])
+        self.interruptMidiButton.setText(settings['ListLayoutController']['interruptmidimapping'])
 
     def __learn_midi(self):
         handler = MIDIInput()
         handler.alternate_mode = True
 
         def received_message(msg):
-            self.sender().setText(str(msg))
+            msg_dict = midi_utils.str_msg_to_dict(str(msg))
+            try:
+                msg_dict.pop('velocity')
+            except KeyError:
+                pass
+            simplified_msg = midi_utils.dict_msg_to_str(msg_dict)
+            self.sender().setText(simplified_msg)
             self.midi_learn.accept()
 
         handler.new_message_alt.connect(received_message)
@@ -147,5 +166,4 @@ class ListLayoutControllerSetting(SettingsPage):
 
         handler.new_message_alt.disconnect(received_message)
         handler.alternate_mode = False
-
 

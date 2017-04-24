@@ -137,7 +137,6 @@ class CueListView(QTreeWidget):
 
     def __current_changed(self, current_item, previous_item):
         self.scrollToItem(current_item)
-        self.repaint()
 
     def __cue_added(self, cue):
         item = CueListItem(cue)
