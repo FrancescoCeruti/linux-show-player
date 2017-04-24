@@ -25,6 +25,7 @@ from lisp.modules.midi.midi_input import MIDIInput
 from lisp.plugins.list_layout_controller.list_layout_controller_settings import ListLayoutControllerSetting
 from lisp.modules.midi import midi_utils
 from lisp.application import Application
+from lisp.ui.mainwindow import MainWindow
 from lisp.layouts.list_layout.layout import ListLayout
 
 
@@ -33,36 +34,43 @@ class ListLayoutController(Plugin):
 
     Name = 'ListLayoutController'
 
+    def __init__(self):
+        super().__init__()
+
+        self.__midi_mapping = {}
+
     def init(self):
 
         ListLayoutSettings.register_extra_settings(ListLayoutControllerSetting)
 
-        self.__midi_mapping = {}
-        self.__midi_mapping = self.load_mapping_from_config()
-
         if isinstance(Application().layout, ListLayout):
             MIDIInput().new_message.connect(self.do_something_when_midi_triggered)
-            print('midi signal connected !')
-        print('init of plugin done')
+            MainWindow().app_settings_updated.connect(self.load_mapping_from_config)
+            self.load_mapping_from_config()
 
     def load_mapping_from_config(self):
-        # FIXME : this will crash if option is not in config file.
-        # TODO : find the right way to deal with new application option
-        cfg = config['ListLayout']['gomidimapping']
-        restored_message = midi_utils.str_msg_to_dict(cfg)
 
-        return restored_message
+        try:
+            cfg = config['ListLayout']['gomidimapping']
+        except KeyError:
+            cfg = None
+
+        if cfg is not None:
+            try:
+                restored_message = midi_utils.str_msg_to_dict(cfg)
+                self.__midi_mapping = restored_message
+            except ValueError:
+                self.__midi_mapping = {'channel': '', 'type': '', 'note': ''}
+        else:
+            self.__midi_mapping = {'channel': '', 'type': '', 'note': ''}
 
     def do_something_when_midi_triggered(self, message):
         msg = midi_utils.str_msg_to_dict(str(message))
 
-        if message.type != 'polytouch':
-            print(f"msg from config : {self.__midi_mapping}")
-            print(f"msg received : {msg}")
-
+        # TODO : simple way how works only for "note" type. Do better
         if msg['channel'] == self.__midi_mapping['channel']:
             if msg['type'] == self.__midi_mapping['type']:
                 if msg['note'] == self.__midi_mapping['note']:
                     Application().layout.go()
-                    print('Trigger activated')
+                    # print('Trigger activated')
 

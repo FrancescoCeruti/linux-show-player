@@ -38,6 +38,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
     new_session = pyqtSignal()
     save_session = pyqtSignal(str)
     open_session = pyqtSignal(str)
+    app_settings_updated = pyqtSignal()
 
     def __init__(self):
         super().__init__()
@@ -280,6 +281,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
 
         if prefUi.result() == QDialog.Accepted:
             configuration.update_config_from_dict(prefUi.get_configuraton())
+            self.app_settings_updated.emit()
 
     def _load_from_file(self):
         if self._check_saved():
