@@ -75,6 +75,7 @@ class ListLayoutControllerSetting(QGroupBox, SettingsPage):
             self.goMidiButton.setText(translate('ListLayout', 'No midi mapping'))
 
         handler.new_message_alt.disconnect(self.__received_message)
+        handler.alternate_mode = False
 
     def __received_message(self, msg):
         self.goMidiButton.setText(str(msg))
