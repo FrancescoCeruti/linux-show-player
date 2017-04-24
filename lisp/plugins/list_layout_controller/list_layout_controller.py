@@ -23,6 +23,7 @@ from lisp.core.plugin import Plugin
 from lisp.layouts.list_layout.list_layout_settings import ListLayoutSettings
 from lisp.modules.midi.midi_input import MIDIInput
 from lisp.plugins.list_layout_controller.list_layout_controller_settings import ListLayoutControllerSetting
+from lisp.ui.settings.app_settings import AppSettings
 from lisp.modules.midi import midi_utils
 from lisp.application import Application
 from lisp.ui.mainwindow import MainWindow
@@ -41,27 +42,22 @@ class ListLayoutController(Plugin):
 
     def init(self):
 
-        ListLayoutSettings.register_extra_settings(ListLayoutControllerSetting)
 
         if isinstance(Application().layout, ListLayout):
+            AppSettings.register_settings_widget(ListLayoutControllerSetting)
+
             MIDIInput().new_message.connect(self.do_something_when_midi_triggered)
             MainWindow().app_settings_updated.connect(self.load_mapping_from_config)
             self.load_mapping_from_config()
 
     def load_mapping_from_config(self):
 
-        try:
-            cfg = config['ListLayout']['gomidimapping']
-        except KeyError:
-            cfg = None
+        cfg = config['ListLayoutController']['gomidimapping']
 
-        if cfg is not None:
-            try:
-                restored_message = midi_utils.str_msg_to_dict(cfg)
-                self.__midi_mapping = restored_message
-            except ValueError:
-                self.__midi_mapping = {'channel': '', 'type': '', 'note': ''}
-        else:
+        try:
+            restored_message = midi_utils.str_msg_to_dict(cfg)
+            self.__midi_mapping = restored_message
+        except ValueError:
             self.__midi_mapping = {'channel': '', 'type': '', 'note': ''}
 
     def do_something_when_midi_triggered(self, message):
