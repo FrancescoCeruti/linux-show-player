@@ -43,14 +43,16 @@ class ListLayoutController(Plugin):
         if isinstance(Application().layout, ListLayout):
             AppSettings.register_settings_widget(ListLayoutControllerSetting)
 
-            self.__keyword_to_button = {
-                'gomidimapping': Application().layout.goButton,
-                'stopmidimapping': Application().layout.controlButtons.stopButton,
-                'pausemidimapping': Application().layout.controlButtons.pauseButton,
-                'fadeinmidimapping': Application().layout.controlButtons.fadeInButton,
-                'fadeoutmidimapping': Application().layout.controlButtons.fadeOutButton,
-                'resumemidimapping': Application().layout.controlButtons.resumeButton,
-                'interruptmidimapping': Application().layout.controlButtons.interruptButton
+            self.__keyword_to_action = {
+                'gomidimapping': Application().layout.goButton.click,
+                'stopmidimapping': Application().layout.controlButtons.stopButton.click,
+                'pausemidimapping': Application().layout.controlButtons.pauseButton.click,
+                'fadeinmidimapping': Application().layout.controlButtons.fadeInButton.click,
+                'fadeoutmidimapping': Application().layout.controlButtons.fadeOutButton.click,
+                'resumemidimapping': Application().layout.controlButtons.resumeButton.click,
+                'interruptmidimapping': Application().layout.controlButtons.interruptButton.click,
+                'prevcuemidimapping' : Application().layout.set_current_index_prev,
+                'nextcuemidimapping' : Application().layout.set_current_index_next
             }
 
             MIDIInput().new_message.connect(self.on_new_midi_message)
@@ -73,5 +75,5 @@ class ListLayoutController(Plugin):
 
         for keyword, mapping in self.__midi_mapping.items():
             if mapping == simplified_msg:
-                self.__keyword_to_button[keyword].click()
+                self.__keyword_to_action[keyword]()
 

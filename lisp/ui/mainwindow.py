@@ -279,7 +279,6 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         prefUi = AppSettings(configuration.config_to_dict(), parent=self)
 
         def save_app_settings():
-            print('save_config trigger')
             configuration.update_config_from_dict(prefUi.get_configuraton())
             self.app_settings_updated.emit()
 

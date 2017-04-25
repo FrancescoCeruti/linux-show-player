@@ -97,6 +97,22 @@ class ListLayoutControllerSetting(SettingsPage):
         layout.addWidget(self.interruptMidiButton)
         self.midiMapping.layout().addLayout(layout)
 
+        self.prevCueMidiButton = QPushButton()
+        self.prevCueMidiButton.clicked.connect(self.__learn_midi)
+        self.prevCueMidiLabel = QLabel()
+        layout = QHBoxLayout()
+        layout.addWidget(self.prevCueMidiLabel)
+        layout.addWidget(self.prevCueMidiButton)
+        self.midiMapping.layout().addLayout(layout)
+
+        self.nextCueMidiButton = QPushButton()
+        self.nextCueMidiButton.clicked.connect(self.__learn_midi)
+        self.nextCueMidiLabel = QLabel()
+        layout = QHBoxLayout()
+        layout.addWidget(self.nextCueMidiLabel)
+        layout.addWidget(self.nextCueMidiButton)
+        self.midiMapping.layout().addLayout(layout)
+
         self.retranslateUi()
 
     def retranslateUi(self):
@@ -116,6 +132,11 @@ class ListLayoutControllerSetting(SettingsPage):
         self.interruptMidiLabel.setText(translate('ListLayoutController', 'Interrupt control'))
         self.interruptMidiButton.setText(translate('ListLayoutController', 'No MIDI mapping'))
 
+        self.prevCueMidiLabel.setText(translate('ListLayoutController', 'Previous Cue control'))
+        self.prevCueMidiButton.setText(translate('ListLayoutController', 'No MIDI mapping'))
+        self.nextCueMidiLabel.setText(translate('ListLayoutController', 'Next Cue control'))
+        self.nextCueMidiButton.setText(translate('ListLayoutController', 'No MIDI mapping'))
+
     def get_settings(self):
         conf = {}
 
@@ -127,6 +148,9 @@ class ListLayoutControllerSetting(SettingsPage):
         conf['resumemidimapping'] = str(self.resumeMidiButton.text())
         conf['interruptmidimapping'] = str(self.interruptMidiButton.text())
 
+        conf['prevcuemidimapping'] = str(self.prevCueMidiButton.text())
+        conf['nextcuemidimapping'] = str(self.nextCueMidiButton.text())
+
         return {'ListLayoutController': conf}
 
     def load_settings(self, settings):
@@ -137,6 +161,9 @@ class ListLayoutControllerSetting(SettingsPage):
         self.fadeOutMidiButton.setText(settings['ListLayoutController']['fadeoutmidimapping'])
         self.resumeMidiButton.setText(settings['ListLayoutController']['resumemidimapping'])
         self.interruptMidiButton.setText(settings['ListLayoutController']['interruptmidimapping'])
+
+        self.prevCueMidiButton.setText(settings['ListLayoutController']['prevcuemidimapping'])
+        self.nextCueMidiButton.setText(settings['ListLayoutController']['nextcuemidimapping'])
 
     def __learn_midi(self):
         handler = MIDIInput()

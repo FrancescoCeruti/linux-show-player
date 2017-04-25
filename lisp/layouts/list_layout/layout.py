@@ -224,6 +224,14 @@ class ListLayout(QWidget, CueLayout):
             next_item = self.listView.topLevelItem(index)
             self.listView.setCurrentItem(next_item)
 
+        self.listView.repaint()
+
+    def set_current_index_next(self):
+        self.set_current_index(self.current_index()+1)
+
+    def set_current_index_prev(self):
+        self.set_current_index(self.current_index()-1)
+
     def go(self, action=CueAction.Default, advance=1):
         current_cue = self.current_cue()
         if current_cue is not None:
