@@ -23,7 +23,9 @@ from os import path
 from lisp.application import Application
 from lisp.core.loading import load_classes
 from lisp.core.module import Module
+from lisp.cues.cue import Cue
 from lisp.cues.cue_factory import CueFactory
+from lisp.modules.action_cues.select_action_cue_dialog import SelectActionCueDialog
 from lisp.ui.mainwindow import MainWindow
 from lisp.ui.ui_utils import translate
 
@@ -31,16 +33,35 @@ from lisp.ui.ui_utils import translate
 class ActionCues(Module):
 
     def __init__(self):
-        for name, cue in load_classes(__package__, path.dirname(__file__)):
-            # Register the action-cue in the cue-factory
-            CueFactory.register_factory(cue.__name__, cue)
-            # Register the menu action for adding the action-cue
-            add_function = ActionCues.create_add_action_cue_method(cue)
-            MainWindow().register_cue_menu_action(
-                translate('CueName', cue.Name),
-                add_function, 'Action cues')
 
-            logging.debug('ACTION-CUES: Loaded "' + name + '"')
+        self.available_cues = {}
+
+        for name, cue in load_classes(__package__, path.dirname(__file__)):
+            if issubclass(cue, Cue):
+                # Register the action-cue in the cue-factory
+                CueFactory.register_factory(cue.__name__, cue)
+                # Register the menu action for adding the action-cue
+                add_function = ActionCues.create_add_action_cue_method(cue)
+                MainWindow().register_cue_menu_action(
+                    translate('CueName', cue.Name),
+                    add_function, 'Action cues')
+
+                self.available_cues[translate('CueName', cue.Name)] = add_function
+
+                logging.debug('ACTION-CUES: Loaded "' + name + '"')
+
+        MainWindow().register_cue_menu_action(
+            translate('MainWindow', 'New Action Cue'),
+            self.new_action_cue,
+            category='Action cues',
+            shortcut='CTRL+ALT+C')
+
+    def new_action_cue(self):
+        dialog = SelectActionCueDialog(self.available_cues)
+        dialog.exec_()
+
+        if dialog.result() == dialog.Accepted:
+            self.available_cues[dialog.LastActionCueChoice]()
 
     @staticmethod
     def create_add_action_cue_method(cue_class):
