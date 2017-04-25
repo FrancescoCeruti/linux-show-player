@@ -29,6 +29,8 @@ class AppSettings(QDialog):
 
     SettingsWidgets = []
 
+    on_app_settings_apply = QtCore.pyqtSignal()
+
     def __init__(self, conf, **kwargs):
         super().__init__(**kwargs)
 
@@ -62,10 +64,13 @@ class AppSettings(QDialog):
         self.dialogButtons = QDialogButtonBox(self)
         self.dialogButtons.setGeometry(10, 495, 615, 30)
         self.dialogButtons.setStandardButtons(QDialogButtonBox.Cancel |
+                                              QDialogButtonBox.Apply |
                                               QDialogButtonBox.Ok)
+        self.apply_button = self.dialogButtons.button(QDialogButtonBox.Apply)
 
         self.dialogButtons.rejected.connect(self.reject)
         self.dialogButtons.accepted.connect(self.accept)
+        self.apply_button.clicked.connect(lambda: self.on_app_settings_apply.emit())
 
     def get_configuraton(self):
         conf = {}

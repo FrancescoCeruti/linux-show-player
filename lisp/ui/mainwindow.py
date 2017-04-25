@@ -277,11 +277,17 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
 
     def _show_preferences(self):
         prefUi = AppSettings(configuration.config_to_dict(), parent=self)
+
+        def save_app_settings():
+            print('save_config trigger')
+            configuration.update_config_from_dict(prefUi.get_configuraton())
+            self.app_settings_updated.emit()
+
+        prefUi.on_app_settings_apply.connect(save_app_settings)
         prefUi.exec_()
 
         if prefUi.result() == QDialog.Accepted:
-            configuration.update_config_from_dict(prefUi.get_configuraton())
-            self.app_settings_updated.emit()
+            save_app_settings()
 
     def _load_from_file(self):
         if self._check_saved():
