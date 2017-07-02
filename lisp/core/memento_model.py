@@ -31,8 +31,8 @@ class MementoModel(ReadOnlyProxyModel):
     If no handler is specified the MainActionHandler is used.
 
     ..note::
-        The methods, locks and unlock, allow to avoid reentering when an action
-        is undone/redone.
+        The methods, `locks` and `unlock`, avoid reentering when an action is
+        undone/redone.
     """
 
     def __init__(self, model, handler=None):
@@ -62,7 +62,7 @@ class MementoModel(ReadOnlyProxyModel):
         """Reset cannot be reverted"""
 
 
-class AdapterMementoModel(MementoModel):
+class MementoModelAdapter(MementoModel):
     """Extension of the MementoModel that use a ModelAdapter as a base-model"""
 
     def __init__(self, model_adapter, handler=None):

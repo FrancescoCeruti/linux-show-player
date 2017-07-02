@@ -38,10 +38,6 @@ from lisp.layouts.list_layout.list_layout_settings import ListLayoutSettings
 from lisp.layouts.list_layout.playing_list_widget import RunningCuesListWidget
 from lisp.ui.mainwindow import MainWindow
 from lisp.ui.settings.app_settings import AppSettings
-from lisp.ui.settings.cue_settings import CueSettingsRegistry
-from lisp.ui.settings.pages.cue_appearance import Appearance
-from lisp.ui.settings.pages.cue_general import CueGeneralSettings
-from lisp.ui.settings.pages.media_cue_settings import MediaCueSettings
 from lisp.ui.ui_utils import translate
 
 AppSettings.register_settings_widget(ListLayoutSettings)
@@ -53,6 +49,7 @@ class EndListBehavior(Enum):
 
 
 class ListLayout(QWidget, CueLayout):
+    ID=1
     NAME = 'List Layout'
     DESCRIPTION = QT_TRANSLATE_NOOP('LayoutDescription',
                                     'Organize the cues in a list')
@@ -170,12 +167,6 @@ class ListLayout(QWidget, CueLayout):
         self.layout().addWidget(self.playView, 1, 2)
 
         self.set_playing_visible(self._show_playing)
-
-        # TODO: maybe can be moved outside the layout
-        # Add cue preferences widgets
-        CueSettingsRegistry().add_item(CueGeneralSettings, Cue)
-        CueSettingsRegistry().add_item(MediaCueSettings, MediaCue)
-        CueSettingsRegistry().add_item(Appearance)
 
         # Context menu actions
         self.edit_action = QAction(self)

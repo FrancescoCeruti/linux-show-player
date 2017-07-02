@@ -39,6 +39,8 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
     save_session = pyqtSignal(str)
     open_session = pyqtSignal(str)
 
+    TITLE = 'Linux Show Player'
+
     def __init__(self):
         super().__init__()
         self.setMinimumSize(500, 400)
@@ -47,7 +49,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         self.centralWidget().layout().setContentsMargins(5, 5, 5, 5)
 
         self._cue_add_menu = {}
-        self.layout = None
+        self.session = None
 
         # Status Bar
         self.statusBar = QStatusBar(self)
@@ -143,7 +145,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         self.filename = ''
 
     def retranslateUi(self):
-        self.setWindowTitle('Linux Show Player')
+        self.setWindowTitle(MainWindow.TITLE)
         # menuFile
         self.menuFile.setTitle(translate('MainWindow', '&File'))
         self.newSessionAction.setText(translate('MainWindow', 'New session'))
@@ -186,10 +188,10 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         self.actionAbout.setText(translate('MainWindow', 'About'))
         self.actionAbout_Qt.setText(translate('MainWindow', 'About Qt'))
 
-    def set_layout(self, layout):
-        if self.layout is not None:
-            self.layout.hide()
-            self.centralWidget().layout().removeWidget(self.layout)
+    def set_session(self, session):
+        if self.session is not None:
+            layout = self.session.layout
+            self.centralWidget().layout().removeWidget(layout)
 
             self.multiEdit.triggered.disconnect()
             self.selectAll.triggered.disconnect()
@@ -197,16 +199,18 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
             self.deselectAll.triggered.disconnect()
             self.invertSelection.triggered.disconnect()
 
-        self.layout = layout
-        self.centralWidget().layout().addWidget(self.layout)
-        self.layout.show()
+        self.session = session
+        layout = self.session.layout
 
-        self.multiEdit.triggered.connect(self.layout.edit_selected_cues)
-        self.selectAll.triggered.connect(lambda: self.layout.select_all())
+        self.centralWidget().layout().addWidget(layout)
+        layout.show()
+
+        self.multiEdit.triggered.connect(layout.edit_selected_cues)
+        self.selectAll.triggered.connect(lambda: layout.select_all())
+        self.invertSelection.triggered.connect(layout.invert_selection)
+        self.deselectAll.triggered.connect(lambda: layout.deselect_all())
         self.selectAllMedia.triggered.connect(
-            lambda: self.layout.select_all(MediaCue))
-        self.deselectAll.triggered.connect(lambda: self.layout.deselect_all())
-        self.invertSelection.triggered.connect(self.layout.invert_selection)
+            lambda: layout.select_all(MediaCue))
 
     def closeEvent(self, event):
         self._exit()
@@ -238,11 +242,11 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
             self.menuEdit.insertAction(self.cueSeparator, action)
 
     def update_window_title(self):
-        saved = MainActionsHandler.is_saved()
-        if not saved and not self.windowTitle()[0] == '*':
-            self.setWindowTitle('*' + self.windowTitle())
-        elif saved and self.windowTitle()[0] == '*':
-            self.setWindowTitle(self.windowTitle()[1:])
+        tile = MainWindow.TITLE + ' - ' + self.session.name()
+        if not MainActionsHandler.is_saved():
+            tile = '*' + tile
+
+        self.setWindowTitle(tile)
 
     def _action_done(self, action):
         self.statusBar.showMessage(action.log())
@@ -259,20 +263,20 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         self.update_window_title()
 
     def _save(self):
-        if self.filename == '':
+        if self.session.session_file == '':
             self._save_with_name()
         else:
-            self.save_session.emit(self.filename)
+            self.save_session.emit(self.session.session_file)
 
     def _save_with_name(self):
-        filename, _ = QFileDialog.getSaveFileName(parent=self,
-                                                  filter='*.lsp',
-                                                  directory=os.getenv('HOME'))
-        if filename != '':
+        filename, ok = QFileDialog.getSaveFileName(
+            parent=self, filter='*.lsp', directory=self.session.path())
+
+        if ok:
             if not filename.endswith('.lsp'):
                 filename += '.lsp'
-            self.filename = filename
-            self._save()
+
+            self.save_session.emit(filename)
 
     def _show_preferences(self):
         prefUi = AppSettings(configuration.config_to_dict(), parent=self)

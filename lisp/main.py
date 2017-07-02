@@ -120,6 +120,8 @@ def main():
     # Start Qt Application (block until exit)
     exit_code = qt_app.exec_()
 
+    # Terminate the modules
+    modules.terminate_modules()
     # Finalize the application
     lisp_app.finalize()
     # Exit

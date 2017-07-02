@@ -102,12 +102,9 @@ class UriInputSettings(SettingsPage):
 
     def select_file(self):
         path = QStandardPaths.writableLocation(QStandardPaths.MusicLocation)
-        file, ok = QFileDialog.getOpenFileName(self,
-                                               translate('UriInputSettings',
-                                                         'Choose file'),
-                                               path,
-                                               translate('UriInputSettings',
-                                                         'All files') + ' (*)')
+        file, ok = QFileDialog.getOpenFileName(
+            self, translate('UriInputSettings', 'Choose file'),
+            path, translate('UriInputSettings', 'All files') + ' (*)')
 
         if ok:
             self.filePath.setText('file://' + file)

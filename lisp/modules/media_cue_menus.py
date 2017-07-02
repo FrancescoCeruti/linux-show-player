@@ -44,27 +44,22 @@ class MediaCueMenus(Module):
     @staticmethod
     def add_uri_audio_media_cue():
         """Add audio MediaCue(s) form user-selected files"""
-
         if get_backend() is None:
             QMessageBox.critical(MainWindow(), 'Error', 'Backend not loaded')
             return
 
-        # Default path to system "music" folder
-        path = QStandardPaths.writableLocation(QStandardPaths.MusicLocation)
-
-        # Get the backend extensions and create a filter for the Qt file-dialog
-        extensions = get_backend().supported_extensions()
-        filters = qfile_filters(extensions, anyfile=False)
-        # Display a file-dialog for the user to choose the media-files
-        files, _ = QFileDialog.getOpenFileNames(MainWindow(),
-                                                translate('MediaCueMenus',
-                                                          'Select media files'),
-                                                path, filters)
+        files, _ = QFileDialog.getOpenFileNames(
+            MainWindow(),
+            translate('MediaCueMenus', 'Select media files'),
+            Application().session.path(),
+            qfile_filters(get_backend().supported_extensions(), anyfile=False)
+        )
 
         QApplication.setOverrideCursor(QCursor(Qt.WaitCursor))
 
         # Create media cues, and add them to the Application cue_model
         for file in files:
+            file = os.path.relpath(file, start=Application().session.path())
             cue = CueFactory.create_cue('URIAudioCue', uri='file://' + file)
             # Use the filename without extension as cue name
             cue.name = os.path.splitext(os.path.basename(file))[0]

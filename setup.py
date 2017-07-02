@@ -34,6 +34,7 @@ setup(
         'mido',
         'python-rtmidi',
         'JACK-Client',
+        'pyliblo',
         'scandir;python_version<"3.5"'
     ],
     packages=find_packages(),

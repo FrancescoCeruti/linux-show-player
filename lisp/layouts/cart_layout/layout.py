@@ -33,10 +33,6 @@ from lisp.layouts.cart_layout.page_widget import PageWidget
 from lisp.layouts.cue_layout import CueLayout
 from lisp.ui.mainwindow import MainWindow
 from lisp.ui.settings.app_settings import AppSettings
-from lisp.ui.settings.cue_settings import CueSettingsRegistry
-from lisp.ui.settings.pages.cue_appearance import Appearance
-from lisp.ui.settings.pages.cue_general import CueGeneralSettings
-from lisp.ui.settings.pages.media_cue_settings import MediaCueSettings
 from lisp.ui.ui_utils import translate
 
 AppSettings.register_settings_widget(CartLayoutSettings)
@@ -121,12 +117,6 @@ class CartLayout(QTabWidget, CueLayout):
         layoutMenu.addAction(self.show_dbmeter_action)
         layoutMenu.addAction(self.show_volume_action)
         layoutMenu.addAction(self.show_accurate_action)
-
-        # TODO: maybe can be moved outside the layout
-        # Add cue preferences widgets
-        CueSettingsRegistry().add_item(CueGeneralSettings, Cue)
-        CueSettingsRegistry().add_item(MediaCueSettings, MediaCue)
-        CueSettingsRegistry().add_item(Appearance)
 
         # Cue(s) context-menu actions
         self.edit_action = QAction(self)

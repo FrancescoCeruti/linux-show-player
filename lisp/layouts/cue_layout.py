@@ -92,10 +92,6 @@ class CueLayout:
         :rtype: lisp.cues.cue.Cue
         """
 
-    @abstractmethod
-    def finalize(self):
-        """Destroy all the layout elements"""
-
     def edit_cue(self, cue):
         edit_ui = CueSettings(cue, parent=MainWindow())
 
@@ -178,3 +174,6 @@ class CueLayout:
             menu.move(menu.x(), menu.y() - menu.height())
         if menu_rect.right() > desktop.right():
             menu.move(menu.x() - menu.width(), menu.y())
+
+    def finalize(self):
+        """Destroy all the layout elements"""

@@ -66,28 +66,3 @@ def reset_plugins():
             elogging.debug('PLUGINS: Reset "{0}"'.format(plugin))
         except Exception as e:
             elogging.exception('PLUGINS: Failed "{0}" reset'.format(plugin), e)
-
-
-def set_plugins_settings(settings):
-    for plugin in __PLUGINS.values():
-        if plugin.Name in settings:
-            try:
-                plugin.load_settings(settings[plugin.Name])
-            except Exception as e:
-                elogging.exception('PLUGINS: Failed "{0}" settings load'
-                                   .format(plugin.Name), e)
-
-
-def get_plugin_settings():
-    plugins_settings = {}
-
-    for plugin in __PLUGINS.values():
-        try:
-            settings = plugin.settings()
-            if settings is not None and len(settings) > 0:
-                plugins_settings[plugin.Name] = settings
-        except Exception as e:
-            elogging.exception('PLUGINS: Failed "{0}" settings retrieve'
-                               .format(plugin.Name), e)
-
-    return plugins_settings
