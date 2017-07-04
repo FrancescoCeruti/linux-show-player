@@ -19,9 +19,10 @@
 
 from enum import Enum
 
-from PyQt5.QtCore import QT_TRANSLATE_NOOP
+from PyQt5.QtCore import QT_TRANSLATE_NOOP, Qt
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QComboBox, QStyledItemDelegate
+from PyQt5.QtWidgets import QComboBox, QStyledItemDelegate, QWidget, \
+    QGridLayout, QDoubleSpinBox, QLabel
 
 from lisp.ui.ui_utils import translate
 
@@ -64,3 +65,43 @@ class FadeComboBox(QComboBox):
 
     def currentType(self):
         return self.currentData()
+
+
+class FadeEdit(QWidget):
+
+    def __init__(self, *args, mode=FadeComboBox.Mode.FadeOut, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.setLayout(QGridLayout())
+
+        self.fadeDurationSpin = QDoubleSpinBox(self)
+        self.fadeDurationSpin.setRange(0, 3600)
+        self.layout().addWidget(self.fadeDurationSpin, 0, 0)
+
+        self.fadeDurationLabel = QLabel(self)
+        self.fadeDurationLabel.setAlignment(Qt.AlignCenter)
+        self.layout().addWidget(self.fadeDurationLabel, 0, 1)
+
+        self.fadeTypeCombo = FadeComboBox(self, mode=mode)
+        self.layout().addWidget(self.fadeTypeCombo, 1, 0)
+
+        self.fadeTypeLabel = QLabel(self)
+        self.fadeTypeLabel.setAlignment(Qt.AlignCenter)
+        self.layout().addWidget(self.fadeTypeLabel, 1, 1)
+
+        self.retranslateUi()
+
+    def retranslateUi(self):
+        self.fadeDurationLabel.setText(translate('FadeEdit', 'Duration (sec)'))
+        self.fadeTypeLabel.setText(translate('FadeEdit', 'Curve'))
+
+    def duration(self):
+        return self.fadeDurationSpin.value()
+
+    def setDuration(self, value):
+        self.fadeDurationSpin.setValue(value)
+
+    def fadeType(self):
+        return self.fadeTypeCombo.currentType()
+
+    def setFadeType(self, fade_type):
+        self.fadeTypeCombo.setCurrentType(fade_type)

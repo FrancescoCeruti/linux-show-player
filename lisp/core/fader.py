@@ -99,7 +99,7 @@ class Fader:
 
         if not isinstance(fade_type, (FadeInType, FadeOutType)):
             raise AttributeError(
-                'fade_type must be one of FadeInType or FadeOutType member,'
+                'fade_type must be one of FadeInType or FadeOutType members,'
                 'not {}'.format(fade_type.__class__.__name__))
 
         try:

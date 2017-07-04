@@ -22,7 +22,7 @@ from PyQt5.QtWidgets import QVBoxLayout, QGroupBox
 
 from lisp.ui.settings.settings_page import SettingsPage
 from lisp.ui.ui_utils import translate
-from lisp.ui.widgets.fade_edit import FadeEdit
+from lisp.ui.widgets import FadeEdit
 
 
 class CueAppSettings(SettingsPage):

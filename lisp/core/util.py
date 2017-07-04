@@ -214,6 +214,7 @@ class EqEnum(Enum):
         E.A is 10  # False
 
         E.A == E.A2  # False
+        E.A == E.A2.value # True
     """
 
     def __eq__(self, other):
@@ -221,6 +222,8 @@ class EqEnum(Enum):
             return self.value == other
 
         return super().__eq__(other)
+
+    __hash__ = Enum.__hash__
 
 
 class FunctionProxy:

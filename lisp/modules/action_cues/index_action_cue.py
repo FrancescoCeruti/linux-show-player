@@ -85,7 +85,7 @@ class IndexActionCueSettings(SettingsPage):
         self.actionGroup.setLayout(QVBoxLayout(self.actionGroup))
         self.layout().addWidget(self.actionGroup)
 
-        self.actionCombo = CueActionComboBox(self._target_class,
+        self.actionCombo = CueActionComboBox(self._target_class.CueActions,
                                              mode=CueActionComboBox.Mode.Value,
                                              parent=self.actionGroup)
         self.actionGroup.layout().addWidget(self.actionCombo)
@@ -146,7 +146,7 @@ class IndexActionCueSettings(SettingsPage):
             self.actionCombo.deleteLater()
 
             self.actionCombo = CueActionComboBox(
-                self._target_class,
+                self._target_class.CueActions,
                 mode=CueActionComboBox.Mode.Value,
                 parent=self.actionGroup)
             self.actionGroup.layout().addWidget(self.actionCombo)

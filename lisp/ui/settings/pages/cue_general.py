@@ -18,14 +18,14 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
-from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QLabel, QComboBox,\
-    QVBoxLayout, QDoubleSpinBox, QTabWidget, QWidget
+from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QLabel, QVBoxLayout, \
+    QDoubleSpinBox, QTabWidget, QWidget
 
-from lisp.cues.cue import CueNextAction, CueAction
+from lisp.cues.cue import CueAction
 from lisp.ui.settings.settings_page import CueSettingsPage
 from lisp.ui.ui_utils import translate
-from lisp.ui.widgets import FadeComboBox
-from lisp.ui.widgets.fade_edit import FadeEdit
+from lisp.ui.widgets import FadeComboBox, CueActionComboBox,\
+    CueNextActionComboBox, FadeEdit
 
 
 class CueGeneralSettings(CueSettingsPage):
@@ -48,11 +48,14 @@ class CueGeneralSettings(CueSettingsPage):
         self.startActionGroup.setLayout(QHBoxLayout())
         self.tab_1.layout().addWidget(self.startActionGroup)
 
-        self.startActionCombo = QComboBox(self.startActionGroup)
-        for action in [CueAction.Start, CueAction.FadeInStart]:
-            if action in cue_class.CueActions:
-                self.startActionCombo.addItem(
-                    translate('CueAction', action.name), action.value)
+        self.startActionCombo = CueActionComboBox(
+            {
+                CueAction.Start,
+                CueAction.FadeInStart
+            }.intersection(cue_class.CueActions),
+            mode=CueActionComboBox.Mode.Value,
+            parent=self.startActionGroup
+        )
         self.startActionCombo.setEnabled(self.startActionCombo.count() > 1)
         self.startActionGroup.layout().addWidget(self.startActionCombo)
 
@@ -65,12 +68,16 @@ class CueGeneralSettings(CueSettingsPage):
         self.stopActionGroup.setLayout(QHBoxLayout())
         self.tab_1.layout().addWidget(self.stopActionGroup)
 
-        self.stopActionCombo = QComboBox(self.stopActionGroup)
-        for action in [CueAction.Stop, CueAction.Pause,
-                       CueAction.FadeOutStop, CueAction.FadeOutPause]:
-            if action in cue_class.CueActions:
-                self.stopActionCombo.addItem(
-                    translate('CueAction', action.name), action.value)
+        self.stopActionCombo = CueActionComboBox(
+            {
+                CueAction.Stop,
+                CueAction.Pause,
+                CueAction.FadeOutStop,
+                CueAction.FadeOutPause
+            }.intersection(cue_class.CueActions),
+            mode=CueActionComboBox.Mode.Value,
+            parent=self.stopActionGroup
+        )
         self.stopActionCombo.setEnabled(self.stopActionCombo.count() > 1)
         self.stopActionGroup.layout().addWidget(self.stopActionCombo)
 
@@ -118,10 +125,8 @@ class CueGeneralSettings(CueSettingsPage):
         self.nextActionGroup.setLayout(QHBoxLayout())
         self.tab_2.layout().addWidget(self.nextActionGroup)
 
-        self.nextActionCombo = QComboBox(self.nextActionGroup)
-        for action in CueNextAction:
-            self.nextActionCombo.addItem(
-                translate('CueNextAction', action.name), action.value)
+        self.nextActionCombo = CueNextActionComboBox(
+            parent=self.nextActionGroup)
         self.nextActionGroup.layout().addWidget(self.nextActionCombo)
 
         # TAB 3 (Fade In/Out)
@@ -189,15 +194,14 @@ class CueGeneralSettings(CueSettingsPage):
         self.fadeOutGroup.setTitle(translate('FadeSettings', 'Fade Out'))
 
     def load_settings(self, settings):
-        self.startActionCombo.setCurrentText(
-            translate('CueAction', settings.get('default_start_action', '')))
-        self.stopActionCombo.setCurrentText(
-            translate('CueAction', settings.get('default_stop_action', '')))
+        self.startActionCombo.setCurrentAction(
+            settings.get('default_start_action', ''))
+        self.stopActionCombo.setCurrentAction(
+            settings.get('default_stop_action', ''))
 
         self.preWaitSpin.setValue(settings.get('pre_wait', 0))
         self.postWaitSpin.setValue(settings.get('post_wait', 0))
-        self.nextActionCombo.setCurrentText(
-            translate('CueNextAction', settings.get('next_action', '')))
+        self.nextActionCombo.setCurrentAction(settings.get('next_action', ''))
 
         self.fadeInEdit.setFadeType(settings.get('fadein_type', ''))
         self.fadeInEdit.setDuration(settings.get('fadein_duration', 0))
@@ -228,10 +232,10 @@ class CueGeneralSettings(CueSettingsPage):
 
         if not (checkable and not self.startActionGroup.isChecked()):
             if self.startActionCombo.isEnabled():
-                conf['default_start_action'] = self.startActionCombo.currentData()
+                conf['default_start_action'] = self.startActionCombo.currentAction()
         if not (checkable and not self.stopActionGroup.isChecked()):
             if self.stopActionCombo.isEnabled():
-                conf['default_stop_action'] = self.stopActionCombo.currentData()
+                conf['default_stop_action'] = self.stopActionCombo.currentAction()
 
         if not (checkable and not self.preWaitGroup.isChecked()):
             conf['pre_wait'] = self.preWaitSpin.value()

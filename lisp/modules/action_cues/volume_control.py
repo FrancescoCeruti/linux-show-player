@@ -35,8 +35,7 @@ from lisp.ui.cuelistdialog import CueSelectDialog
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
 from lisp.ui.settings.settings_page import SettingsPage
 from lisp.ui.ui_utils import translate
-from lisp.ui.widgets import FadeComboBox
-from lisp.ui.widgets.fade_edit import FadeEdit
+from lisp.ui.widgets import FadeComboBox, FadeEdit
 
 
 class VolumeControl(Cue):

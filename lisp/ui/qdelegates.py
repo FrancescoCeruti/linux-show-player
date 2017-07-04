@@ -252,7 +252,7 @@ class CueActionDelegate(LabelDelegate):
         if self.cue_class is None:
             self.cue_class = index.data(CueClassRole)
 
-        editor = CueActionComboBox(self.cue_class,
+        editor = CueActionComboBox(self.cue_class.CueActions,
                                    mode=self.mode,
                                    parent=parent)
         editor.setFrame(False)
