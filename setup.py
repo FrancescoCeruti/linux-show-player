@@ -30,12 +30,12 @@ setup(
     url=lisp.__email__,
     description='Cue player for live shows',
     install_requires=[
+        'scandir;python_version<"3.5"',
         'sortedcontainers',
-        'mido',
         'python-rtmidi',
         'JACK-Client',
         'pyliblo',
-        'scandir;python_version<"3.5"'
+        'mido'
     ],
     packages=find_packages(),
     package_data={
