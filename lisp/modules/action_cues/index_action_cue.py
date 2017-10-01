@@ -18,8 +18,8 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
-from PyQt5.QtWidgets import QCheckBox, QComboBox, QGroupBox, QLabel, QSpinBox,\
-    QGridLayout, QVBoxLayout
+from PyQt5.QtWidgets import QCheckBox, QGroupBox, QLabel, QSpinBox, \
+    QGridLayout, QVBoxLayout, QLineEdit
 
 from lisp.application import Application
 from lisp.core.has_properties import Property
@@ -58,6 +58,8 @@ class IndexActionCue(Cue):
 class IndexActionCueSettings(SettingsPage):
     Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Action Settings')
 
+    DEFAULT_SUGGESTION = translate('IndexActionCue', 'No suggestion')
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
@@ -75,20 +77,35 @@ class IndexActionCueSettings(SettingsPage):
         self.indexGroup.layout().addWidget(self.relativeCheck, 0, 0, 1, 2)
 
         self.targetIndexSpin = QSpinBox(self)
-        self.targetIndexSpin.editingFinished.connect(self._update_action_combo)
+        self.targetIndexSpin.valueChanged.connect(self._target_changed)
+        self.targetIndexSpin.setRange(0, len(Application().cue_model) - 1)
         self.indexGroup.layout().addWidget(self.targetIndexSpin, 1, 0)
 
         self.targetIndexLabel = QLabel(self)
+        self.targetIndexLabel.setAlignment(Qt.AlignCenter)
         self.indexGroup.layout().addWidget(self.targetIndexLabel, 1, 1)
 
         self.actionGroup = QGroupBox(self)
         self.actionGroup.setLayout(QVBoxLayout(self.actionGroup))
         self.layout().addWidget(self.actionGroup)
 
-        self.actionCombo = CueActionComboBox(self._target_class.CueActions,
-                                             mode=CueActionComboBox.Mode.Value,
-                                             parent=self.actionGroup)
+        self.actionCombo = CueActionComboBox(
+            self._target_class.CueActions,
+            mode=CueActionComboBox.Mode.Value,
+            parent=self.actionGroup)
         self.actionGroup.layout().addWidget(self.actionCombo)
+
+        self.suggestionGroup = QGroupBox(self)
+        self.suggestionGroup.setLayout(QVBoxLayout())
+        self.layout().addWidget(self.suggestionGroup)
+
+        self.suggestionPreview = QLineEdit(self.suggestionGroup)
+        self.suggestionPreview.setAlignment(Qt.AlignCenter)
+        self.suggestionPreview.setText(
+            IndexActionCueSettings.DEFAULT_SUGGESTION)
+        self.suggestionGroup.layout().addWidget(self.suggestionPreview)
+
+        self.actionCombo.currentTextChanged.connect(self._update_suggestion)
 
         self.retranslateUi()
 
@@ -99,6 +116,9 @@ class IndexActionCueSettings(SettingsPage):
         self.targetIndexLabel.setText(
             translate('IndexActionCue', 'Target index'))
         self.actionGroup.setTitle(translate('IndexActionCue', 'Action'))
+
+        self.suggestionGroup.setTitle(
+            translate('IndexActionCue', 'Suggested cue name'))
 
     def enable_check(self, enabled):
         self.indexGroup.setChecked(enabled)
@@ -124,32 +144,32 @@ class IndexActionCueSettings(SettingsPage):
 
         self.relativeCheck.setChecked(settings.get('relative', True))
         self.targetIndexSpin.setValue(settings.get('target_index', 0))
-        self.actionCombo.setCurrentText(
-            translate('CueAction', settings.get('action', '')))
+        self._target_changed()  # Ensure that the correct options are displayed
+        self.actionCombo.setCurrentAction(settings.get('action', ''))
 
-    def _update_action_combo(self):
-        if self.relativeCheck.isChecked():
-            index = self._cue_index + self.targetIndexSpin.value()
-        else:
-            index = self.targetIndexSpin.value()
+    def _target_changed(self):
+        target = self._current_target()
 
-        try:
-            target = Application().layout.model_adapter.item(index)
+        if target is not None:
             target_class = target.__class__
-        except IndexError:
+        else:
             target_class = Cue
 
         if target_class is not self._target_class:
             self._target_class = target_class
+            self.actionCombo.rebuild(self._target_class.CueActions)
 
-            self.actionGroup.layout().removeWidget(self.actionCombo)
-            self.actionCombo.deleteLater()
+        self._update_suggestion()
 
-            self.actionCombo = CueActionComboBox(
-                self._target_class.CueActions,
-                mode=CueActionComboBox.Mode.Value,
-                parent=self.actionGroup)
-            self.actionGroup.layout().addWidget(self.actionCombo)
+    def _update_suggestion(self):
+        target = self._current_target()
+
+        if target is not None:
+            suggestion = self.actionCombo.currentText() + ' ➜ ' + target.name
+        else:
+            suggestion = IndexActionCueSettings.DEFAULT_SUGGESTION
+
+        self.suggestionPreview.setText(suggestion)
 
     def _relative_changed(self):
         max_index = len(Application().cue_model) - 1
@@ -158,10 +178,25 @@ class IndexActionCueSettings(SettingsPage):
             self.targetIndexSpin.setRange(0, max_index)
         else:
             if self._cue_index >= 0:
-                self.targetIndexSpin.setRange(-self._cue_index,
-                                              max_index - self._cue_index)
+                self.targetIndexSpin.setRange(
+                    -self._cue_index,
+                    max_index - self._cue_index
+                )
             else:
                 self.targetIndexSpin.setRange(-max_index, max_index)
+
+        self._target_changed()
+
+    def _current_target(self):
+        index = self.targetIndexSpin.value()
+
+        if self.relativeCheck.isChecked():
+            index += self._cue_index
+
+        try:
+            return Application().layout.model_adapter.item(index)
+        except IndexError:
+            return None
 
 
 CueSettingsRegistry().add_item(IndexActionCueSettings, IndexActionCue)

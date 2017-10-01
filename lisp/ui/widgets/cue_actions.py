@@ -60,11 +60,15 @@ class CueActionComboBox(QComboBox):
     def __init__(self, actions, mode=Mode.Action, **kwargs):
         super().__init__(**kwargs)
         self.mode = mode
+        self.rebuild(actions)
+
+    def rebuild(self, actions):
+        self.clear()
 
         for action in actions:
-            if mode is CueActionComboBox.Mode.Value:
+            if self.mode is CueActionComboBox.Mode.Value:
                 value = action.value
-            elif mode is CueActionComboBox.Mode.Name:
+            elif self.mode is CueActionComboBox.Mode.Name:
                 value = action.name
             else:
                 value = action
