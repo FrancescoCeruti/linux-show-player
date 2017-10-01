@@ -149,7 +149,6 @@ class GstMedia(Media):
             self.stopped.emit(self)
 
     def __seek(self, position):
-        # FIXME: not working when in pause (fix or disallow)
         if self.state == MediaState.Playing or self.state == MediaState.Paused:
             max_position = self.duration
             if 0 < self.stop_time < self.duration:

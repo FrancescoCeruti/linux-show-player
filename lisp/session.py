@@ -34,7 +34,7 @@ class BaseSession(HasProperties):
 
     def __init__(self, layout):
         super().__init__()
-        self.destroyed = Signal()
+        self.finalized = Signal()
 
         self.layout_type = layout.__class__.__name__
 
@@ -77,8 +77,8 @@ class BaseSession(HasProperties):
     def rel_path(self, abs_path):
         return os.path.relpath(abs_path, start=self.path())
 
-    def destroy(self):
+    def finalize(self):
         self.__layout.finalize()
         self.__cue_model.reset()
 
-        self.destroyed.emit()
+        self.finalized.emit()

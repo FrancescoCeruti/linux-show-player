@@ -145,7 +145,7 @@ class OscCue(Cue):
     def __start__(self, fade=False):
         if self.__init_arguments():
             if self.__fader.is_paused():
-                self.__fader.restart()
+                self.__fader.resume()
                 return True
 
             if self.has_fade():

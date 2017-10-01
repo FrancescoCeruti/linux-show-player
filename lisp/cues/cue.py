@@ -267,9 +267,8 @@ class Cue(HasProperties):
         finally:
             self._st_lock.release()
 
-    def restart(self, fade=False):
+    def resume(self, fade=False):
         """Restart the cue if paused."""
-        # TODO: change to resume
         if self._state & CueState.IsPaused:
             self.start(fade)
 

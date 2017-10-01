@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2017 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -129,7 +129,7 @@ class Application(metaclass=Singleton):
             MainActionsHandler.clear()
             plugins.reset_plugins()
 
-            self.__session.destroy()
+            self.__session.finalize()
             self.__session = None
 
     def _save_to_file(self, session_file):

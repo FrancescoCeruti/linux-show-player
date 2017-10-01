@@ -150,7 +150,7 @@ class RunningCueWidget(QWidget):
         self.cue.pause(fade=config['ListLayout'].getboolean('PauseCueFade'))
 
     def _resume(self):
-        self.cue.restart(fade=config['ListLayout'].getboolean('ResumeCueFade'))
+        self.cue.resume(fade=config['ListLayout'].getboolean('ResumeCueFade'))
 
     def _stop(self):
         self.cue.stop(fade=config['ListLayout'].getboolean('StopCueFade'))

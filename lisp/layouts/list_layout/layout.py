@@ -49,7 +49,6 @@ class EndListBehavior(Enum):
 
 
 class ListLayout(QWidget, CueLayout):
-    ID=1
     NAME = 'List Layout'
     DESCRIPTION = QT_TRANSLATE_NOOP('LayoutDescription',
                                     'Organize the cues in a list')
@@ -144,7 +143,7 @@ class ListLayout(QWidget, CueLayout):
         self.controlButtons.pauseButton.clicked.connect(self.pause_all)
         self.controlButtons.fadeInButton.clicked.connect(self.fadein_all)
         self.controlButtons.fadeOutButton.clicked.connect(self.fadeout_all)
-        self.controlButtons.resumeButton.clicked.connect(self.restart_all)
+        self.controlButtons.resumeButton.clicked.connect(self.resume_all)
         self.controlButtons.interruptButton.clicked.connect(self.interrupt_all)
         self.layout().addWidget(self.controlButtons, 0, 2)
 
@@ -305,35 +304,6 @@ class ListLayout(QWidget, CueLayout):
 
     def edit_context_cue(self):
         self.edit_cue(self.get_context_cue())
-
-    def stop_all(self):
-        fade = config['ListLayout'].getboolean('StopAllFade')
-        for cue in self._model_adapter:
-            cue.stop(fade=fade)
-
-    def interrupt_all(self):
-        fade = config['ListLayout'].getboolean('InterruptAllFade')
-        for cue in self._model_adapter:
-            cue.interrupt(fade=fade)
-
-    def pause_all(self):
-        fade = config['ListLayout'].getboolean('PauseAllFade')
-        for cue in self._model_adapter:
-            cue.pause(fade=fade)
-
-    def restart_all(self):
-        # TODO: change to resume
-        fade = config['ListLayout'].getboolean('ResumeAllFade')
-        for cue in self._model_adapter:
-            cue.restart(fade=fade)
-
-    def fadein_all(self):
-        for cue in self._model_adapter:
-            cue.execute(CueAction.FadeIn)
-
-    def fadeout_all(self):
-        for cue in self._model_adapter:
-            cue.execute(CueAction.FadeOut)
 
     def get_selected_cues(self, cue_class=Cue):
         cues = []

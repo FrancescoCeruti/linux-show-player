@@ -22,6 +22,7 @@ from abc import abstractmethod
 from PyQt5.QtWidgets import QAction, QMenu, qApp
 
 from lisp.core.actions_handler import MainActionsHandler
+from lisp.core.configuration import config
 from lisp.core.signal import Signal
 from lisp.core.util import greatest_common_superclass
 from lisp.cues.cue import Cue, CueAction
@@ -91,6 +92,34 @@ class CueLayout:
         :param advance: number of index to advance (with negative will go back)
         :rtype: lisp.cues.cue.Cue
         """
+
+    def stop_all(self):
+        fade = config['Layout'].getboolean('StopAllFade')
+        for cue in self.model_adapter:
+            cue.stop(fade=fade)
+
+    def interrupt_all(self):
+        fade = config['Layout'].getboolean('InterruptAllFade')
+        for cue in self.model_adapter:
+            cue.interrupt(fade=fade)
+
+    def pause_all(self):
+        fade = config['Layout'].getboolean('PauseAllFade')
+        for cue in self.model_adapter:
+            cue.pause(fade=fade)
+
+    def resume_all(self):
+        fade = config['Layout'].getboolean('ResumeAllFade')
+        for cue in self.model_adapter:
+            cue.resume(fade=fade)
+
+    def fadein_all(self):
+        for cue in self.model_adapter:
+            cue.execute(CueAction.FadeIn)
+
+    def fadeout_all(self):
+        for cue in self.model_adapter:
+            cue.execute(CueAction.FadeOut)
 
     def edit_cue(self, cue):
         edit_ui = CueSettings(cue, parent=MainWindow())

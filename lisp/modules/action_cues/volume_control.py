@@ -70,7 +70,7 @@ class VolumeControl(Cue):
     def __start__(self, fade=False):
         if self.__init_fader():
             if self.__fader.is_paused():
-                self.__fader.restart()
+                self.__fader.resume()
                 return True
 
             if self.duration > 0:

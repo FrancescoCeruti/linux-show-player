@@ -60,7 +60,7 @@ def callback_restart(_, args, types):
         return
 
     if (types == 'i' and args[0] == 1) or types == '':
-        Application().layout.restart_all()
+        Application().layout.resume_all()
 
 
 def callback_pause(_, args, types):

@@ -141,8 +141,7 @@ class Fader:
         if self.is_running():
             self._pause.clear()
 
-    def restart(self):
-        # TODO: change to resume
+    def resume(self):
         self._pause.set()
 
     def is_paused(self):
