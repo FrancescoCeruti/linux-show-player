@@ -93,7 +93,7 @@ class load_classes:
 
                 # Load class from imported module
                 for prefix, suffix in zip(self.prefixes, self.suffixes):
-                    name = self._class_name(mod_name, prefix, suffix)
+                    name = module_to_class_name(mod_name, prefix, suffix)
                     if hasattr(module, name):
                         cls = getattr(module, name)
                         yield (name, cls)
@@ -102,23 +102,23 @@ class load_classes:
                 logging.warning('Cannot load module: {0}'.format(mod_name))
                 logging.debug(traceback.format_exc())
 
-    @staticmethod
-    def _class_name(mod_name, pre='', suf=''):
-        """Return the supposed class name from loaded module.
 
-        Substitutions:
-         * Remove `underscores`
-         * First letters to uppercase version
+def module_to_class_name(mod_name, pre='', suf=''):
+    """Return the supposed class name from loaded module.
 
-        For example:
-         * For "module", the result will be "Module"
-         * For "module_name", the result will be "ModuleName"
-        """
+    Substitutions:
+     * Remove `underscores`
+     * First letters to uppercase version
 
-        # Capitalize the first letter of each word
-        base_name = ''.join(word.title() for word in mod_name.split('_'))
-        # Add prefix and suffix to the base name
-        return pre + base_name + suf
+    For example:
+     * For "module", the result will be "Module"
+     * For "module_name", the result will be "ModuleName"
+    """
+
+    # Capitalize the first letter of each word
+    base_name = ''.join(word.title() for word in mod_name.split('_'))
+    # Add prefix and suffix to the base name
+    return pre + base_name + suf
 
 
 def import_module(module_path):

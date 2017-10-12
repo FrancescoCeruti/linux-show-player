@@ -21,8 +21,8 @@
 class Plugin:
     """Interface for plugins.
 
-    The "init" and "reset" functions are called respectively after the session
-    layout is created (init) and before (reset).
+    The "reset" and "init" functions are called respectively before the session
+    layout is created (reset) and after (init).
     """
 
     Name = 'Plugin'

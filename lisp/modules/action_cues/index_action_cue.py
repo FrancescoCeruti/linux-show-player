@@ -165,6 +165,7 @@ class IndexActionCueSettings(SettingsPage):
         target = self._current_target()
 
         if target is not None:
+            # This require unicode support by the used font, but hey, it's 2017
             suggestion = self.actionCombo.currentText() + ' ➜ ' + target.name
         else:
             suggestion = IndexActionCueSettings.DEFAULT_SUGGESTION

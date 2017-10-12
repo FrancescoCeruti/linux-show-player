@@ -22,16 +22,15 @@ from os.path import exists
 
 from PyQt5.QtWidgets import QDialog, qApp
 
-from lisp import layouts
-from lisp import plugins
+from lisp import layouts, plugins
 from lisp.core.actions_handler import MainActionsHandler
 from lisp.core.configuration import config
+from lisp.core.session import new_session
 from lisp.core.singleton import Singleton
 from lisp.cues.cue import Cue
 from lisp.cues.cue_factory import CueFactory
 from lisp.cues.cue_model import CueModel
 from lisp.cues.media_cue import MediaCue
-from lisp.session import new_session
 from lisp.ui import elogging
 from lisp.ui.layoutselect import LayoutSelect
 from lisp.ui.mainwindow import MainWindow

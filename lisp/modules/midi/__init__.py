@@ -1,1 +1,1 @@
-from  .midi import Midi
+from .midi import Midi
