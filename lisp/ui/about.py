@@ -64,7 +64,7 @@ class About(QDialog):
             ('fri', 'https://www.transifex.com/user/profile/fri'),
             ('Luis García-Tornel', 'tornel@gmail.com'),
             ('miharix', 'https://github.com/miharix'),
-            ('Olivier Humbert', 'https://github.com/trebmuh')
+            ('Olivier Humbert - français', 'trebmuh@tuxfamily.org')
         ],
     })
 
