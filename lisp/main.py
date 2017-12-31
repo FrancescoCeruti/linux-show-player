@@ -66,6 +66,7 @@ def main():
     # Create the QApplication
     qt_app = QApplication(sys.argv)
     qt_app.setApplicationName('Linux Show Player')
+    qt_app.setWindowIcon(QIcon(path.join(path.dirname(path.realpath(__file__)), './ui/styles/icons/lisp/512/linux-show-player.png')))
     qt_app.setQuitOnLastWindowClosed(True)
 
     # Force light font, for environment with "bad" QT support.
