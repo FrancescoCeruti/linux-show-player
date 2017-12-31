@@ -17,57 +17,57 @@
     <message>
         <location filename="../presets_ui.py" line="364"/>
         <source>Presets</source>
-        <translation>Pré-réglages</translation>
+        <translation>Préréglages</translation>
     </message>
     <message>
         <location filename="../presets.py" line="52"/>
         <source>Load preset</source>
-        <translation>Charger un pré-réglage</translation>
+        <translation>Charger un préréglage</translation>
     </message>
     <message>
         <location filename="../presets.py" line="56"/>
         <source>Save as preset</source>
-        <translation>Sauvegarder un pré-réglage sous</translation>
+        <translation>Sauvegarder un préréglage sous</translation>
     </message>
     <message>
         <location filename="../presets_ui.py" line="52"/>
         <source>Cannot scan presets</source>
-        <translation>Impossible d&apos;examiner les pré-réglages</translation>
+        <translation>Impossible d&apos;examiner les préréglages</translation>
     </message>
     <message>
         <location filename="../presets_ui.py" line="60"/>
         <source>Error while deleting preset &quot;{}&quot;</source>
-        <translation>Erreur lors de la suppression du pré-réglage &quot;{}&quot;</translation>
+        <translation>Erreur lors de la suppression du préréglage &quot;{}&quot;</translation>
     </message>
     <message>
         <location filename="../presets_ui.py" line="68"/>
         <source>Cannot load preset &quot;{}&quot;</source>
-        <translation>Impossible de charger le pré-réglage &quot;{}&quot;</translation>
+        <translation>Impossible de charger le préréglage &quot;{}&quot;</translation>
     </message>
     <message>
         <location filename="../presets_ui.py" line="76"/>
         <source>Cannot save preset &quot;{}&quot;</source>
-        <translation>Impossible de sauvegarder le pré-réglage &quot;{}&quot;</translation>
+        <translation>Impossible de sauvegarder le préréglage &quot;{}&quot;</translation>
     </message>
     <message>
         <location filename="../presets_ui.py" line="84"/>
         <source>Cannot rename preset &quot;{}&quot;</source>
-        <translation>Impossible de renommer le pré-réglage &quot;{}&quot;</translation>
+        <translation>Impossible de renommer le préréglage &quot;{}&quot;</translation>
     </message>
     <message>
         <location filename="../presets_ui.py" line="96"/>
         <source>Select Preset</source>
-        <translation>Sélectionner le pré-réglage</translation>
+        <translation>Sélectionner le préréglage</translation>
     </message>
     <message>
         <location filename="../presets_ui.py" line="109"/>
         <source>Preset already exists, overwrite?</source>
-        <translation>Le pré-réglage existe déjà, l&apos;écraser ?</translation>
+        <translation>Le préréglage existe déjà, l&apos;écraser ?</translation>
     </message>
     <message>
         <location filename="../presets_ui.py" line="419"/>
         <source>Preset name</source>
-        <translation>Nom du pré-réglage</translation>
+        <translation>Nom du préréglage</translation>
     </message>
     <message>
         <location filename="../presets_ui.py" line="211"/>
@@ -112,7 +112,7 @@
     <message>
         <location filename="../presets_ui.py" line="301"/>
         <source>Cannot create a cue from this preset: {}</source>
-        <translation>Impossible de créer un cue depuis ce pré-réglage : {}</translation>
+        <translation>Impossible de créer un cue depuis ce préréglage : {}</translation>
     </message>
     <message>
         <location filename="../presets_ui.py" line="339"/>
@@ -122,7 +122,7 @@
     <message>
         <location filename="../presets_ui.py" line="351"/>
         <source>Some presets already exists, overwrite?</source>
-        <translation>Certains pré-réglages existent déjà, les écraser ?</translation>
+        <translation>Certains préréglages existent déjà, les écraser ?</translation>
     </message>
     <message>
         <location filename="../presets_ui.py" line="364"/>
