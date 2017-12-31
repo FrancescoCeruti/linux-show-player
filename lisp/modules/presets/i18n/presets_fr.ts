@@ -4,12 +4,12 @@
     <message>
         <location filename="../presets_ui.py" line="215"/>
         <source>Create Cue</source>
-        <translation>Créer un cue</translation>
+        <translation>Créer une cue</translation>
     </message>
     <message>
         <location filename="../presets_ui.py" line="216"/>
         <source>Load on selected Cues</source>
-        <translation>Charger les cues sélectionnés</translation>
+        <translation>Charger les cues sélectionnées</translation>
     </message>
 </context>
 <context>
@@ -112,7 +112,7 @@
     <message>
         <location filename="../presets_ui.py" line="301"/>
         <source>Cannot create a cue from this preset: {}</source>
-        <translation>Impossible de créer un cue depuis ce préréglage : {}</translation>
+        <translation>Impossible de créer une cue depuis ce préréglage : {}</translation>
     </message>
     <message>
         <location filename="../presets_ui.py" line="339"/>
