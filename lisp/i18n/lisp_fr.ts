@@ -376,7 +376,7 @@
     <message>
         <location filename="../ui/settings/pages/cue_general.py" line="168"/>
         <source>Default action to start the cue</source>
-        <translation>Action par défaut pour démarrer le cue</translation>
+        <translation>Action par défaut pour démarrer la cue</translation>
     </message>
     <message>
         <location filename="../ui/settings/pages/cue_general.py" line="171"/>
