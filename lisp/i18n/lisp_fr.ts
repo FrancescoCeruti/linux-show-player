@@ -522,7 +522,7 @@
     <message>
         <location filename="../layouts/list_layout/list_layout_settings.py" line="111"/>
         <source>Show seek-bars</source>
-        <translation>Afficher les barres de position</translation>
+        <translation>Montrer les barres de position</translation>
     </message>
     <message>
         <location filename="../layouts/list_layout/list_layout_settings.py" line="110"/>
