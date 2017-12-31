@@ -19,7 +19,7 @@
     <message>
         <location filename="../peers_dialog.py" line="87"/>
         <source>Remove selected peer</source>
-        <translation>Retirer la paire séléctionnée</translation>
+        <translation>Retirer la paire sélectionnée</translation>
     </message>
     <message>
         <location filename="../peers_dialog.py" line="89"/>
