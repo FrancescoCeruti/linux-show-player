@@ -29,7 +29,7 @@
     <message>
         <location filename="../gain_ui.py" line="104"/>
         <source>Apply only to selected media</source>
-        <translation>Ne s&apos;applique seulement au média sélectionné</translation>
+        <translation>N&apos;appliquer qu&apos;au média sélectionné</translation>
     </message>
     <message>
         <location filename="../gain_ui.py" line="106"/>
