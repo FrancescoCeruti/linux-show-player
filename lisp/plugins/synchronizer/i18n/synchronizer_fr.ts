@@ -14,12 +14,12 @@
     <message>
         <location filename="../peers_dialog.py" line="85"/>
         <source>Manually add a peer</source>
-        <translation>Ajouter manuelement une paire</translation>
+        <translation>Ajouter manuellement une paire</translation>
     </message>
     <message>
         <location filename="../peers_dialog.py" line="87"/>
         <source>Remove selected peer</source>
-        <translation>Retirer la paire séléctionnée</translation>
+        <translation>Retirer la paire sélectionnée</translation>
     </message>
     <message>
         <location filename="../peers_dialog.py" line="89"/>
@@ -62,7 +62,7 @@
     <message>
         <location filename="../synchronizer.py" line="41"/>
         <source>Manage connected peers</source>
-        <translation>Gérer les paiers connectées</translation>
+        <translation>Gérer les paires connectées</translation>
     </message>
     <message>
         <location filename="../synchronizer.py" line="46"/>

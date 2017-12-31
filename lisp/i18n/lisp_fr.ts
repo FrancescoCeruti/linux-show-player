@@ -27,7 +27,7 @@
     <message>
         <location filename="../ui/about.py" line="47"/>
         <source>Linux Show Player is a cue-player designed for stage productions.</source>
-        <translation>Linux Show Player est un logiciel de lecture de cue pensé pour le théâtre ou l&apos;événementiel.</translation>
+        <translation>Linux Show Player est un logiciel de lecture de cue conçu pour le théâtre ou l&apos;événementiel.</translation>
     </message>
     <message>
         <location filename="../ui/about.py" line="102"/>
@@ -111,7 +111,7 @@
     <message>
         <location filename="../layouts/cart_layout/cart_layout_settings.py" line="86"/>
         <source>Show seek-bars</source>
-        <translation>Montrer le barre de recherche</translation>
+        <translation>Montrer les barres de position</translation>
     </message>
     <message>
         <location filename="../layouts/cart_layout/cart_layout_settings.py" line="87"/>
@@ -376,7 +376,7 @@
     <message>
         <location filename="../ui/settings/pages/cue_general.py" line="168"/>
         <source>Default action to start the cue</source>
-        <translation>Action par défaut pour démarrer le cue</translation>
+        <translation>Action par défaut pour démarrer la cue</translation>
     </message>
     <message>
         <location filename="../ui/settings/pages/cue_general.py" line="171"/>
@@ -386,7 +386,7 @@
     <message>
         <location filename="../ui/settings/pages/cue_general.py" line="173"/>
         <source>Default action to stop the cue</source>
-        <translation>Action par défaut pour arrêter le cue</translation>
+        <translation>Action par défaut pour arrêter la cue</translation>
     </message>
 </context>
 <context>
@@ -522,7 +522,7 @@
     <message>
         <location filename="../layouts/list_layout/list_layout_settings.py" line="111"/>
         <source>Show seek-bars</source>
-        <translation>Afficher la barre de recherche</translation>
+        <translation>Montrer les barres de position</translation>
     </message>
     <message>
         <location filename="../layouts/list_layout/list_layout_settings.py" line="110"/>

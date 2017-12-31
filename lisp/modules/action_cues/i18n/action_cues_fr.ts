@@ -75,17 +75,17 @@
     <message>
         <location filename="../volume_control.py" line="43"/>
         <source>Volume Control</source>
-        <translation>Contrôle du Volume</translation>
+        <translation>Contrôle du volume</translation>
     </message>
     <message>
         <location filename="../seek_cue.py" line="36"/>
         <source>Seek Cue</source>
-        <translation>Recherche de Cue</translation>
+        <translation>Recherche de cue</translation>
     </message>
     <message>
         <location filename="../collection_cue.py" line="36"/>
         <source>Collection Cue</source>
-        <translation>Collection de cue</translation>
+        <translation>Collection de cues</translation>
     </message>
     <message>
         <location filename="../stop_all.py" line="33"/>
