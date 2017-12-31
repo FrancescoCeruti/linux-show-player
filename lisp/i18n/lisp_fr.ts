@@ -27,7 +27,7 @@
     <message>
         <location filename="../ui/about.py" line="47"/>
         <source>Linux Show Player is a cue-player designed for stage productions.</source>
-        <translation>Linux Show Player est un logiciel de lecture de cue pensé pour le théâtre ou l&apos;événementiel.</translation>
+        <translation>Linux Show Player est un logiciel de lecture de cue conçu pour le théâtre ou l&apos;événementiel.</translation>
     </message>
     <message>
         <location filename="../ui/about.py" line="102"/>
