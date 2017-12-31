@@ -14,7 +14,7 @@
     <message>
         <location filename="../peers_dialog.py" line="85"/>
         <source>Manually add a peer</source>
-        <translation>Ajouter manuelement une paire</translation>
+        <translation>Ajouter manuellement une paire</translation>
     </message>
     <message>
         <location filename="../peers_dialog.py" line="87"/>
