@@ -386,7 +386,7 @@
     <message>
         <location filename="../ui/settings/pages/cue_general.py" line="173"/>
         <source>Default action to stop the cue</source>
-        <translation>Action par défaut pour arrêter le cue</translation>
+        <translation>Action par défaut pour arrêter la cue</translation>
     </message>
 </context>
 <context>
