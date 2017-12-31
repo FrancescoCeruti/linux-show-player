@@ -19,7 +19,7 @@
     <message>
         <location filename="../replay_gain.py" line="173"/>
         <source>Reset selected</source>
-        <translation>Réinitialiser la séléction</translation>
+        <translation>Réinitialiser la sélection</translation>
     </message>
     <message>
         <location filename="../gain_ui.py" line="103"/>
