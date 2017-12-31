@@ -111,7 +111,7 @@
     <message>
         <location filename="../layouts/cart_layout/cart_layout_settings.py" line="86"/>
         <source>Show seek-bars</source>
-        <translation>Montrer le barre de recherche</translation>
+        <translation>Montrer les barres de position</translation>
     </message>
     <message>
         <location filename="../layouts/cart_layout/cart_layout_settings.py" line="87"/>
@@ -522,7 +522,7 @@
     <message>
         <location filename="../layouts/list_layout/list_layout_settings.py" line="111"/>
         <source>Show seek-bars</source>
-        <translation>Afficher la barre de recherche</translation>
+        <translation>Afficher les barres de position</translation>
     </message>
     <message>
         <location filename="../layouts/list_layout/list_layout_settings.py" line="110"/>
