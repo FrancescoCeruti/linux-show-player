@@ -207,7 +207,7 @@ class MediaCue(Cue):
 
     def _on_stop_fade(self, interrupt=False):
         if interrupt:
-            duration = AppConfig().getfloat('Cue', 'InterruptFade', 0)
+            duration = AppConfig().get('Cue', 'InterruptFade', 0)
             fade_type = AppConfig().get(
                 'Cue', 'InterruptFadeType', FadeOutType.Linear.name)
         else:

@@ -137,7 +137,7 @@ class DummyConfiguration(Configuration):
         pass
 
 
-# TODO: move into Application?
+# TODO: we should remove this in favor of a non-singleton
 class AppConfig(Configuration, metaclass=Singleton):
     """Provide access to the application configuration (singleton)"""
 
