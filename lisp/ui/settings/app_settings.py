@@ -21,18 +21,15 @@ from PyQt5 import QtCore
 from PyQt5.QtWidgets import QDialog, QListWidget, QStackedWidget, \
     QDialogButtonBox
 
-from lisp.core.util import deep_update
 from lisp.ui.ui_utils import translate
 
 
 class AppSettings(QDialog):
 
-    SettingsWidgets = []
+    SettingsWidgets = {}
 
-    def __init__(self, conf, **kwargs):
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
-
-        self.conf = conf
         self.setWindowTitle(translate('AppSettings', 'LiSP preferences'))
 
         self.setWindowModality(QtCore.Qt.ApplicationModal)
@@ -46,10 +43,10 @@ class AppSettings(QDialog):
         self.sections = QStackedWidget(self)
         self.sections.setGeometry(QtCore.QRect(200, 10, 430, 470))
 
-        for widget in self.SettingsWidgets:
+        for widget, config in self.SettingsWidgets.items():
             widget = widget(parent=self)
             widget.resize(430, 465)
-            widget.load_settings(self.conf)
+            widget.load_settings(config.copy())
 
             self.listWidget.addItem(translate('SettingsPageName', widget.Name))
             self.sections.addWidget(widget)
@@ -67,25 +64,28 @@ class AppSettings(QDialog):
         self.dialogButtons.rejected.connect(self.reject)
         self.dialogButtons.accepted.connect(self.accept)
 
-    def get_configuraton(self):
-        conf = {}
-
+    def accept(self):
         for n in range(self.sections.count()):
             widget = self.sections.widget(n)
-            newconf = widget.get_settings()
-            deep_update(conf, newconf)
 
-        return conf
+            config = AppSettings.SettingsWidgets[widget.__class__]
+            config.update(widget.get_settings())
+            config.write()
+
+        return super().accept()
 
     @classmethod
-    def register_settings_widget(cls, widget):
+    def register_settings_widget(cls, widget, configuration):
+        """
+        :type widget: Type[lisp.ui.settings.settings_page.SettingsPage]
+        :type configuration: lisp.core.configuration.Configuration
+        """
         if widget not in cls.SettingsWidgets:
-            cls.SettingsWidgets.append(widget)
+            cls.SettingsWidgets[widget] = configuration
 
     @classmethod
     def unregister_settings_widget(cls, widget):
-        if widget in cls.SettingsWidgets:
-            cls.SettingsWidgets.remove(widget)
+        cls.SettingsWidgets.pop(widget, None)
 
     def _change_page(self, current, previous):
         if not current:

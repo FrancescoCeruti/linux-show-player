@@ -16,13 +16,19 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
+import logging
 from itertools import chain
+from os import path
 
+from PyQt5.QtCore import QTranslator, QLocale
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QApplication
 
+import lisp
 from lisp.core.decorators import memoize
 
+DEFAULT_I18N_PATH = path.join(path.dirname(lisp.__file__), 'i18n')
+TRANSLATORS = []
 
 @memoize
 def load_icon(icon_name):
@@ -77,6 +83,18 @@ def qfile_filters(extensions, allexts=True, anyfile=True):
         filters.append('Any file (*)')
 
     return ';;'.join(filters)
+
+
+def install_translation(name, tr_path=DEFAULT_I18N_PATH):
+    tr_file = path.join(tr_path, name)
+
+    translator = QTranslator()
+    translator.load(QLocale(), tr_file, '_')
+
+    TRANSLATORS.append(translator)
+
+    if QApplication.installTranslator(translator):
+        logging.debug('Installed translation: {}'.format(tr_file))
 
 
 def translate(context, text, disambiguation=None, n=-1):

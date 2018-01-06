@@ -22,7 +22,7 @@ from abc import abstractmethod
 from PyQt5.QtWidgets import QAction, QMenu, qApp
 
 from lisp.core.actions_handler import MainActionsHandler
-from lisp.core.configuration import config
+from lisp.core.configuration import AppConfig
 from lisp.core.signal import Signal
 from lisp.core.util import greatest_common_superclass
 from lisp.cues.cue import Cue, CueAction
@@ -94,22 +94,22 @@ class CueLayout:
         """
 
     def stop_all(self):
-        fade = config['Layout'].getboolean('StopAllFade')
+        fade = AppConfig().getbool('Layout', 'StopAllFade')
         for cue in self.model_adapter:
             cue.stop(fade=fade)
 
     def interrupt_all(self):
-        fade = config['Layout'].getboolean('InterruptAllFade')
+        fade = AppConfig().getbool('Layout','InterruptAllFade')
         for cue in self.model_adapter:
             cue.interrupt(fade=fade)
 
     def pause_all(self):
-        fade = config['Layout'].getboolean('PauseAllFade')
+        fade = AppConfig().getbool('Layout','PauseAllFade')
         for cue in self.model_adapter:
             cue.pause(fade=fade)
 
     def resume_all(self):
-        fade = config['Layout'].getboolean('ResumeAllFade')
+        fade = AppConfig().getbool('Layout','ResumeAllFade')
         for cue in self.model_adapter:
             cue.resume(fade=fade)
 

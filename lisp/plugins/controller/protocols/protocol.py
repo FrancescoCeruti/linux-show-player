@@ -23,8 +23,8 @@ from lisp.core.signal import Signal
 class Protocol:
     """Base interface for protocols.
 
-    The init() and reset() functions are called when the respective functions
-    of the main-plugin are called.
+    The init() and reset() functions are called when a session is created
+    and deleted.
 
     When an event that can trigger a cue is "detected", the protocol_event
     signal should be emitted with the event representation.

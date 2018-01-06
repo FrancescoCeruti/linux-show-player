@@ -21,7 +21,7 @@ from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import QTabWidget, QAction, QInputDialog, qApp, \
     QMessageBox
 
-from lisp.core.configuration import config
+from lisp.core.configuration import AppConfig
 from lisp.core.signal import Connection
 from lisp.cues.cue import Cue
 from lisp.cues.cue_factory import CueFactory
@@ -35,7 +35,7 @@ from lisp.ui.mainwindow import MainWindow
 from lisp.ui.settings.app_settings import AppSettings
 from lisp.ui.ui_utils import translate
 
-AppSettings.register_settings_widget(CartLayoutSettings)
+AppSettings.register_settings_widget(CartLayoutSettings, AppConfig())
 
 
 class CartLayout(QTabWidget, CueLayout):
@@ -56,17 +56,17 @@ class CartLayout(QTabWidget, CueLayout):
         super().__init__(cue_model=cue_model, **kwargs)
         self.tabBar().setObjectName('CartTabBar')
 
-        self.__columns = int(config['CartLayout']['GridColumns'])
-        self.__rows = int(config['CartLayout']['GridRows'])
+        self.__columns = AppConfig()['CartLayout']['GridColumns']
+        self.__rows = AppConfig()['CartLayout']['GridRows']
         self.__pages = []
         self.__context_widget = None
 
-        self._show_seek = config['CartLayout'].getboolean('ShowSeek')
-        self._show_dbmeter = config['CartLayout'].getboolean('ShowDbMeters')
-        self._show_volume = config['CartLayout'].getboolean('ShowVolume')
-        self._accurate_timing = config['CartLayout'].getboolean('ShowAccurate')
-        self._countdown_mode = config['CartLayout'].getboolean('CountDown')
-        self._auto_add_page = config['CartLayout'].getboolean('AutoAddPage')
+        self._show_seek = AppConfig()['CartLayout']['ShowSeek']
+        self._show_dbmeter = AppConfig()['CartLayout']['ShowDbMeters']
+        self._show_volume = AppConfig()['CartLayout']['ShowVolume']
+        self._accurate_timing = AppConfig()['CartLayout']['ShowAccurate']
+        self._countdown_mode = AppConfig()['CartLayout']['Countdown']
+        self._auto_add_page = AppConfig()['CartLayout']['AutoAddPage']
 
         self._model_adapter = CueCartModel(cue_model, self.__rows, self.__columns)
         self._model_adapter.item_added.connect(self.__cue_added, Connection.QtQueued)

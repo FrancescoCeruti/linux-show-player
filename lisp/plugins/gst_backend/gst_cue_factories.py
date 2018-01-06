@@ -1,0 +1,63 @@
+# -*- coding: utf-8 -*-
+#
+# This file is part of Linux Show Player
+#
+# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+#
+# Linux Show Player is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Linux Show Player is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
+
+from lisp.cues.media_cue import MediaCue
+from lisp.plugins.gst_backend.gst_media import GstMedia
+
+
+def gst_media_cue_factory(id=None, pipeline=None):
+    media = GstMedia()
+
+    if pipeline is not None:
+        media.pipe = pipeline
+
+    return MediaCue(media, id=id)
+
+
+class GstCueFactory:
+
+    def __init__(self, base_pipeline):
+        self.base_pipeline = base_pipeline
+        self.input = ''
+
+    def __call__(self, id=None):
+        return gst_media_cue_factory(id=id, pipeline=self.pipeline())
+
+    def pipeline(self):
+        return [self.input] + self.base_pipeline
+
+
+class UriAudioCueFactory(GstCueFactory):
+    def __init__(self, base_pipeline):
+        super().__init__(base_pipeline)
+        self.input = 'UriInput'
+
+    def __call__(self, id=None, uri=None):
+        cue = super().__call__(id=id)
+
+        if uri is not None:
+            cue.media.element('UriInput').uri = uri
+
+        return cue
+
+
+class CaptureAudioCueFactory(GstCueFactory):
+    def __init__(self, base_pipeline):
+        super().__init__(base_pipeline)
+        self.input = 'AutoSrc'

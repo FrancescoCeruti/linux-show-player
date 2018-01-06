@@ -1,0 +1,54 @@
+{
+    "_version_": "0.6dev.1",
+    "Cue": {
+        "FadeActionDuration": 3,
+        "FadeActionType": "Linear",
+        "InterruptFade": 3,
+        "InterruptFadeType": "Linear"
+    },
+    "Theme": {
+        "Theme": "Dark",
+        "Icons": "numix"
+    },
+    "Backend": {
+        "Default": "gst"
+    },
+    "Layout": {
+        "Default": "NoDefault",
+        "StopAllFade": false,
+        "PauseAllFade": false,
+        "ResumeAllFade": false,
+        "InterruptAllFade": true
+    },
+    "Actions": {
+        "MaxStackSize": 0
+    },
+    "CartLayout": {
+        "GridColumns": 7,
+        "GridRows": 4,
+        "ShowSeek": false,
+        "ShowDbMeters": false,
+        "ShowAccurate": false,
+        "ShowVolume": false,
+        "Countdown": true,
+        "AutoAddPage": true
+    },
+    "ListLayout": {
+        "ShowDbMeters": true,
+        "ShowSeek": true,
+        "ShowAccurate": false,
+        "ShowPlaying": true,
+        "AutoContinue": true,
+        "EndList": "Stop",
+        "GoKey": "Space",
+        "StopCueFade": true,
+        "PauseCueFade": true,
+        "ResumeCueFade": true,
+        "InterruptCueFade": true
+    },
+    "DbMeter": {
+        "dBMax": 0,
+        "dbMin": -60,
+        "dbClip": 0
+    }
+}

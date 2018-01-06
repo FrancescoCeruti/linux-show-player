@@ -106,6 +106,7 @@ def get_lan_ip():
         ip = '127.0.0.1'
     finally:
         s.close()
+
     return ip
 
 

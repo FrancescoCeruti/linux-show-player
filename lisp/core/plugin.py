@@ -17,32 +17,28 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+from lisp.core.configuration import DummyConfiguration
 
+
+# TODO: add possible additional metadata (Icon, Version, ...)
+# TODO: implement some kind of plugin status
 class Plugin:
-    """Interface for plugins.
-
-    The "reset" and "init" functions are called respectively before the session
-    layout is created (reset) and after (init).
-    """
+    """Base class for plugins."""
 
     Name = 'Plugin'
+    Depends = ()
+    OptDepends = ()
+    Authors = ('None',)
+    Description = 'No Description'
+    Config = DummyConfiguration()
 
-    def init(self):
-        """Initialize the session-related components of the plugin."""
+    def __init__(self, app):
+        self.__app = app
 
-    def reset(self):
-        """Reset the session-related components of plugin."""
+    @property
+    def app(self):
+        """:rtype: lisp.application.Application"""
+        return self.__app
 
-    def settings(self):
-        """Return the plugin settings.
-
-        :rtype: dict
-        """
-        return {}
-
-    def load_settings(self, settings):
-        """Load the plugin settings.
-
-        :param settings: the settings to be loaded
-        :type settings: dict
-        """
+    def finalize(self):
+        """Called when the application is getting closed."""

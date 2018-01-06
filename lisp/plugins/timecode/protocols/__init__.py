@@ -33,11 +33,10 @@ def get_protocol(name):
     """
     :param name: protocol name
     :type name: str
-    :return: instance of a TimecodeProtocol
-    :rtype: TimecodeProtocol
+    :rtype: type[TimecodeProtocol]
     """
-    if name in __PROTOCOLS and callable(__PROTOCOLS[name]):
-        return __PROTOCOLS[name]()
+    if name in __PROTOCOLS:
+        return __PROTOCOLS[name]
     else:
         raise AttributeError('Timecode-Protocol not found', name)
 
@@ -47,4 +46,4 @@ def list_protocols():
     :return: list of protocol names
     :rtype: list
     """
-    return __PROTOCOLS
+    return list(__PROTOCOLS.keys())

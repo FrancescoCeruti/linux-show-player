@@ -17,7 +17,6 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from lisp.application import Application
 from lisp.core.has_properties import Property
 from lisp.core.plugin import Plugin
 from lisp.cues.cue import Cue, CueAction
@@ -29,9 +28,14 @@ from lisp.ui.settings.cue_settings import CueSettingsRegistry
 class Controller(Plugin):
 
     Name = 'Controller'
+    Authors = ('Francesco Ceruti', 'Thomas Achtner')
+    Depends = ('Midi', 'Osc')
+    Description = 'Allow to control cues via external commands with multiple ' \
+                  'protocols'
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, app):
+        super().__init__(app)
+
         self.__map = {}
         self.__actions_map = {}
         self.__protocols = {}
@@ -39,20 +43,25 @@ class Controller(Plugin):
         # Register a new Cue property to store settings
         Cue.register_property('controller', Property(default={}))
 
+        # On session created/destroy
+        self.app.session_created.connect(self.session_init)
+        self.app.session_before_finalize.connect(self.session_reset)
+
         # Listen cue_model changes
-        Application().cue_model.item_added.connect(self.__cue_added)
-        Application().cue_model.item_removed.connect(self.__cue_removed)
+        self.app.cue_model.item_added.connect(self.__cue_added)
+        self.app.cue_model.item_removed.connect(self.__cue_removed)
 
         # Register settings-page
         CueSettingsRegistry().add_item(ControllerSettings)
+
         # Load available protocols
         self.__load_protocols()
 
-    def init(self):
+    def session_init(self):
         for protocol in self.__protocols.values():
             protocol.init()
 
-    def reset(self):
+    def session_reset(self):
         self.__map.clear()
         self.__actions_map.clear()
 

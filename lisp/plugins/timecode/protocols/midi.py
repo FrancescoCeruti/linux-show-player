@@ -21,10 +21,9 @@
 from mido import Message
 
 from lisp.core.util import time_tuple
-from lisp.modules.midi.midi_output import MIDIOutput
-from lisp.plugins.timecode.timecode_common import TcFormat
-from lisp.plugins.timecode.timecode_protocol import TimecodeProtocol
-
+from lisp.plugins import get_plugin
+from lisp.plugins.timecode.cue_tracker import TcFormat
+from lisp.plugins.timecode.protocol import TimecodeProtocol
 
 MIDI_FORMATS = {
     TcFormat.FILM: 0,
@@ -52,29 +51,37 @@ class Midi(TimecodeProtocol):
         super().__init__()
         self.__last_time = -1
         self.__last_frame = -1
-        if not MIDIOutput().is_open():
-            MIDIOutput().open()
+        self.__midi = None
 
-    def status(self):
-        return MIDIOutput().is_open()
+        try:
+            self.__midi = get_plugin('Midi')
+        except Exception:
+            raise RuntimeError('Midi plugin is not available')
 
     def __send_full(self, fmt, hours, minutes, seconds, frame):
         """Sends fullframe timecode message.
         
         Used in case timecode is non continuous (repositioning, rewind).
         """
-        hh = (MIDI_FORMATS[fmt] << 5) + hours
-        msg = Message('sysex', data=[0x7f, 0x7f, 0x01, 0x01, hh, minutes,
-                                     seconds, frame])
-        MIDIOutput().send(msg)
+        message = Message(
+            'sysex', data=[
+                0x7f, 0x7f, 0x01, 0x01,
+                (MIDI_FORMATS[fmt] << 5) + hours, minutes, seconds, frame
+            ]
+        )
+
+        if self.__midi is not None:
+            self.__midi.output.send(message)
 
     def __send_quarter(self, frame_type, fmt, hours, minutes, seconds, frame):
         """Send quarterframe midi message."""
-        msg = Message('quarter_frame')
-        msg.frame_type = frame_type
-        msg.frame_value = FRAME_VALUES[frame_type](
+        messsage = Message('quarter_frame')
+        messsage.frame_type = frame_type
+        messsage.frame_value = FRAME_VALUES[frame_type](
             hours, minutes, seconds, frame, MIDI_FORMATS[fmt])
-        MIDIOutput().send(msg)
+
+        if self.__midi is not None:
+            self.__midi.send(messsage)
 
     def send(self, format, time, track=-1):
         # Split the time in its components
@@ -110,6 +117,6 @@ class Midi(TimecodeProtocol):
 
         return True
 
-    def stop(self, rclient=False):
+    def finalize(self):
         self.__last_time = -1
         self.__last_frame = -1

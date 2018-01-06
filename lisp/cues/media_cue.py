@@ -21,7 +21,7 @@ from threading import Lock
 
 from PyQt5.QtCore import QT_TRANSLATE_NOOP
 
-from lisp.core.configuration import config
+from lisp.core.configuration import AppConfig
 from lisp.core.decorators import async
 from lisp.core.fade_functions import FadeInType, FadeOutType
 from lisp.core.fader import Fader
@@ -207,8 +207,9 @@ class MediaCue(Cue):
 
     def _on_stop_fade(self, interrupt=False):
         if interrupt:
-            duration = config['Cue'].getfloat('InterruptFade')
-            fade_type = config['Cue'].get('InterruptFadeType')
+            duration = AppConfig().getfloat('Cue', 'InterruptFade', 0)
+            fade_type = AppConfig().get(
+                'Cue', 'InterruptFadeType', FadeOutType.Linear.name)
         else:
             duration = self.fadeout_duration
             fade_type = self.fadeout_type

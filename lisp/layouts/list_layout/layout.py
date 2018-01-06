@@ -24,7 +24,7 @@ from PyQt5.QtGui import QKeySequence
 from PyQt5.QtWidgets import QWidget, QAction, qApp, QGridLayout, \
     QPushButton, QSizePolicy
 
-from lisp.core.configuration import config
+from lisp.core.configuration import AppConfig
 from lisp.core.signal import Connection
 from lisp.cues.cue import Cue, CueAction
 from lisp.cues.media_cue import MediaCue
@@ -40,7 +40,7 @@ from lisp.ui.mainwindow import MainWindow
 from lisp.ui.settings.app_settings import AppSettings
 from lisp.ui.ui_utils import translate
 
-AppSettings.register_settings_widget(ListLayoutSettings)
+AppSettings.register_settings_widget(ListLayoutSettings, AppConfig())
 
 
 class EndListBehavior(Enum):
@@ -75,19 +75,16 @@ class ListLayout(QWidget, CueLayout):
         self._context_item = None
         self._next_cue_index = 0
 
-        self._show_dbmeter = config['ListLayout'].getboolean('ShowDbMeters')
-        self._seek_visible = config['ListLayout'].getboolean('ShowSeek')
-        self._accurate_time = config['ListLayout'].getboolean('ShowAccurate')
-        self._auto_continue = config['ListLayout'].getboolean('AutoContinue')
-        self._show_playing = config['ListLayout'].getboolean('ShowPlaying')
-        self._go_key = config['ListLayout']['GoKey']
+        self._show_dbmeter = AppConfig()['ListLayout']['ShowDbMeters']
+        self._seek_visible = AppConfig()['ListLayout']['ShowSeek']
+        self._accurate_time = AppConfig()['ListLayout']['ShowAccurate']
+        self._auto_continue = AppConfig()['ListLayout']['AutoContinue']
+        self._show_playing = AppConfig()['ListLayout']['ShowPlaying']
+        self._go_key = AppConfig()['ListLayout']['GoKey']
         self._go_key_sequence = QKeySequence(self._go_key,
                                              QKeySequence.NativeText)
 
-        try:
-            self._end_list = EndListBehavior(config['ListLayout']['EndList'])
-        except ValueError:
-            self._end_list = EndListBehavior.Stop
+        self._end_list = EndListBehavior(AppConfig()['ListLayout']['EndList'])
 
         # Add layout-specific menus
         self.showPlayingAction = QAction(self)

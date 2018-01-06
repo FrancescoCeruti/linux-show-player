@@ -17,70 +17,129 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-import os
-from configparser import ConfigParser
+from collections import Mapping
+from os import path
 from shutil import copyfile
 
-DEFAULT_CFG_PATH = os.path.join(os.path.dirname(__file__), '../default.cfg')
-CFG_DIR = os.path.expanduser("~") + '/.linux_show_player'
-CFG_PATH = CFG_DIR + '/config.cfg'
+import json
 
-config = ConfigParser()
+from lisp.core.util import deep_update
 
+from lisp import USER_APP_CONFIG, DEFAULT_APP_CONFIG
+from lisp.core.singleton import Singleton
 
-def load_config():
-    # Check if the current user configuration is up-to-date
-    check_user_config()
-    # Read the user configuration
-    config.read(CFG_PATH)
+# Used to indicate the default behaviour when a specific option is not found to
+# raise an exception. Created to enable `None' as a valid fallback value.
+_UNSET = object()
 
 
-def write_config():
-    with open(CFG_PATH, 'w') as f:
-        config.write(f)
+class Configuration:
+    """Allow to read/write json based configuration files.
+
+    Two path must be provided on creation, user-path and default-path,
+    the first one is used to read/write, the second is copied over when the
+    first is not available or the version value is different.
+
+    While the default-path can (and should) be read-only, the user-path must
+    be writeable by the application.
+
+    The version value should be located at "_version_", the value can be
+    anything. If the default and user value are different or missing the default
+    configuration is copied over.
+    """
+
+    def __init__(self, user_path, default_path, read=True):
+        self.__config = {}
+
+        self.user_path = user_path
+        self.default_path = default_path
+
+        if read:
+            self.read()
+
+    def read(self):
+        self.check()
+        self.__config = self._read_json(self.user_path)
+
+    def write(self):
+        with open(self.user_path, 'w') as f:
+            json.dump(self.__config, f, indent=True)
+
+    def check(self):
+        if path.exists(self.user_path):
+            # Read default configuration
+            default = self._read_json(self.default_path)
+            default = default.get('_version_', object())
+
+            # Read user configuration
+            user = self._read_json(self.user_path)
+            user = user.get('_version_', object())
+
+            # if the user and default version aren't the same
+            if user != default:
+                # Copy the new configuration
+                copyfile(self.default_path, self.user_path)
+        else:
+            copyfile(self.default_path, self.user_path)
+
+    @staticmethod
+    def _read_json(path):
+        with open(path, 'r') as f:
+            return json.load(f)
+
+    def get(self, *path, default=_UNSET):
+        value = self.__config
+        for key in path:
+            if isinstance(value, Mapping):
+                try:
+                    value = value[key]
+                except KeyError:
+                    if default is _UNSET:
+                        raise
+                    return default
+            else:
+                break
+
+        return value
+
+    def copy(self):
+        return self.__config.copy()
+
+    def update(self, update_dict):
+        deep_update(self.__config, update_dict)
+
+    def __getitem__(self, item):
+        return self.__config.__getitem__(item)
+
+    def __setitem__(self, key, value):
+        return self.__config.__setitem__(key, value)
+
+    def __contains__(self, key):
+        return self.__config.__contains__(key)
 
 
-def check_user_config():
-    update = True
+class DummyConfiguration(Configuration):
+    """Configuration without read/write capabilities.
 
-    if not os.path.exists(CFG_DIR):
-        os.makedirs(CFG_DIR)
-    elif os.path.exists(CFG_PATH):
-        default = ConfigParser()
-        default.read(DEFAULT_CFG_PATH)
+    Can be used for uninitialized component.
+    """
 
-        current = ConfigParser()
-        current.read(CFG_PATH)
+    def __init__(self):
+        super().__init__('', '', False)
 
-        current_version = current['Version']['Number']
-        update = current_version != default['Version']['Number']
+    def read(self):
+        pass
 
-        if update:
-            copyfile(CFG_PATH, CFG_PATH + '.old')
-            print('Configuration file backup: {}.old'.format(CFG_PATH))
+    def write(self):
+        pass
 
-    if update:
-        copyfile(DEFAULT_CFG_PATH, CFG_PATH)
-        print('Create new configuration file: {}'.format(CFG_PATH))
+    def check(self):
+        pass
 
 
-def config_to_dict():
-    conf_dict = {}
+# TODO: move into Application?
+class AppConfig(Configuration, metaclass=Singleton):
+    """Provide access to the application configuration (singleton)"""
 
-    for section in config.keys():
-        conf_dict[section] = {}
-        for option in config[section].keys():
-            conf_dict[section][option] = config[section][option]
-
-    return conf_dict
-
-
-def update_config_from_dict(conf):
-    for section in conf.keys():
-        for option in conf[section].keys():
-            config[section][option] = conf[section][option]
-
-    write_config()
-
-# Load configuration
-load_config()
+    def __init__(self):
+        super().__init__(USER_APP_CONFIG, DEFAULT_APP_CONFIG)

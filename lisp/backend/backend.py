@@ -17,12 +17,10 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from abc import abstractmethod
-
-from lisp.core.singleton import ABCSingleton
+from abc import abstractmethod, ABCMeta
 
 
-class Backend(metaclass=ABCSingleton):
+class Backend(metaclass=ABCMeta):
     """Common interface that any backend must provide.
 
     An __init__() method can be defined if the backend require initialization.

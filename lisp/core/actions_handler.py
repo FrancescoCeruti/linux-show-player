@@ -20,7 +20,6 @@
 import logging
 from collections import deque
 
-from lisp.core import configuration as cfg
 from lisp.core.action import Action
 from lisp.core.signal import Signal
 
@@ -28,9 +27,7 @@ from lisp.core.signal import Signal
 class ActionsHandler:
     """Provide a classic undo/redo mechanism based on stacks."""
 
-    MaxStackSize = int(cfg.config['Actions']['MaxStackSize'])
-
-    def __init__(self):
+    def __init__(self, stack_size=-1):
         super().__init__()
 
         self.action_done = Signal()
@@ -39,9 +36,10 @@ class ActionsHandler:
 
         self._undo = deque()
         self._redo = deque()
-        if self.MaxStackSize > 0:
-            self._undo.maxlen = self.MaxStackSize
-            self._redo.maxlen = self.MaxStackSize
+
+        if stack_size > 0:
+            self._undo.maxlen = stack_size
+            self._redo.maxlen = stack_size
 
         self._saved_action = None
 

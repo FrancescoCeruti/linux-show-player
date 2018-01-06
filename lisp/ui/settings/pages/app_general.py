@@ -68,21 +68,20 @@ class AppGeneral(SettingsPage):
         conf = {'Layout': {}, 'Theme': {}}
 
         if self.startupDialogCheck.isChecked():
-            conf['Layout']['default'] = 'NoDefault'
+            conf['Layout']['Default'] = 'NoDefault'
         else:
-            conf['Layout']['default'] = self.layoutCombo.currentText()
+            conf['Layout']['Default'] = self.layoutCombo.currentText()
 
-        conf['Theme']['theme'] = self.themeCombo.currentText()
+        conf['Theme']['Theme'] = self.themeCombo.currentText()
         styles.apply_style(self.themeCombo.currentText())
 
         return conf
 
     def load_settings(self, settings):
-        if 'default' in settings['Layout']:
-            if settings['Layout']['default'].lower() == 'nodefault':
-                self.startupDialogCheck.setChecked(True)
-                self.layoutCombo.setEnabled(False)
-            else:
-                self.layoutCombo.setCurrentText(settings['Layout']['default'])
-        if 'theme' in settings['Theme']:
-            self.themeCombo.setCurrentText(settings['Theme']['theme'])
+        if settings['Layout']['Default'].lower() == 'nodefault':
+            self.startupDialogCheck.setChecked(True)
+            self.layoutCombo.setEnabled(False)
+        else:
+            self.layoutCombo.setCurrentText(settings['Layout']['Default'])
+
+        self.themeCombo.setCurrentText(settings['Theme']['Theme'])

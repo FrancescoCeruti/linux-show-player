@@ -20,18 +20,17 @@
 import argparse
 import logging
 import sys
-from itertools import chain
-from os import path
+import os
 
-from PyQt5.QtCore import QTranslator, QLocale, QLibraryInfo
+from PyQt5.QtCore import QLocale, QLibraryInfo
 from PyQt5.QtGui import QFont, QIcon
 from PyQt5.QtWidgets import QApplication
 
-from lisp import modules
-from lisp import plugins
+from lisp import plugins, USER_DIR
 from lisp.application import Application
-from lisp.core.configuration import config
+from lisp.core.configuration import AppConfig
 from lisp.ui.styles import styles
+from lisp.ui.ui_utils import install_translation
 
 
 def main():
@@ -63,6 +62,9 @@ def main():
         level=log
     )
 
+    # Create (if not present) user directory
+    os.makedirs(os.path.dirname(USER_DIR), exist_ok=True)
+
     # Create the QApplication
     qt_app = QApplication(sys.argv)
     qt_app.setApplicationName('Linux Show Player')
@@ -74,8 +76,8 @@ def main():
     qt_app.setFont(appFont)
     # Set icons and theme from the application configuration
     QIcon.setThemeSearchPaths(styles.IconsThemePaths)
-    QIcon.setThemeName(config['Theme']['icons'])
-    styles.apply_style(config['Theme']['theme'])
+    QIcon.setThemeName(AppConfig()['Theme']['Icons'])
+    styles.apply_style(AppConfig()['Theme']['Theme'])
 
     # Get/Set the locale
     locale = args.locale
@@ -84,44 +86,25 @@ def main():
 
     logging.info('Using {} locale'.format(QLocale().name()))
 
-    # Main app translations
-    translator = QTranslator()
-    translator.load(QLocale(), 'lisp', '_',
-                    path.join(path.dirname(path.realpath(__file__)), 'i18n'))
-
-    qt_app.installTranslator(translator)
-    ui_translators = [translator]
-
     # Qt platform translation
-    translator = QTranslator()
-    translator.load(QLocale(), 'qt', '_',
-                    QLibraryInfo.location(QLibraryInfo.TranslationsPath))
-
-    qt_app.installTranslator(translator)
-    ui_translators.append(translator)
-
-    # Modules and plugins translations
-    for tr_file in chain(modules.translations(),
-                         plugins.translations()):
-        translator = QTranslator()
-        translator.load(QLocale(), tr_file, '_')
-
-        qt_app.installTranslator(translator)
-        ui_translators.append(translator)
+    install_translation('qt', tr_path=QLibraryInfo.location(
+        QLibraryInfo.TranslationsPath))
+    # Main app translations
+    install_translation('lisp', tr_path=os.path.join(os.path.dirname(
+        os.path.realpath(__file__)), 'i18n'))
 
     # Create the application
     lisp_app = Application()
-    # Load modules and plugins
-    modules.load_modules()
-    plugins.load_plugins()
+    # Load plugins
+    plugins.load_plugins(lisp_app)
 
     # Start/Initialize LiSP Application
     lisp_app.start(session_file=args.file)
     # Start Qt Application (block until exit)
     exit_code = qt_app.exec_()
 
-    # Terminate the modules
-    modules.terminate_modules()
+    # Finalize plugins
+    plugins.finalize_plugins()
     # Finalize the application
     lisp_app.finalize()
     # Exit

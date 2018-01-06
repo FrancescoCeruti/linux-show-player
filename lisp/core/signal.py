@@ -178,11 +178,15 @@ class Signal:
             raise ValueError('invalid mode value: {0}'.format(mode))
 
         with self.__lock:
-            # Create a new Slot object, use a weakref for the callback
-            # to avoid cyclic references.
-            callback = weak_call_proxy(weakref.WeakMethod(self.__remove_slot))
-            self.__slots[slot_id(slot_callable)] = mode.new_slot(slot_callable,
-                                                                 callback)
+            sid = slot_id(slot_callable)
+            # If already connected do nothing
+            if sid not in self.__slots:
+                # Create a new Slot object, use a weakref for the callback
+                # to avoid cyclic references.
+                self.__slots[sid] = mode.new_slot(
+                    slot_callable,
+                    weak_call_proxy(weakref.WeakMethod(self.__remove_slot))
+                )
 
     def disconnect(self, slot=None):
         """Disconnect the given slot, or all if no slot is specified.

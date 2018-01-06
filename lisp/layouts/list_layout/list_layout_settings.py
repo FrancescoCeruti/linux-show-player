@@ -91,14 +91,14 @@ class ListLayoutSettings(SettingsPage):
         self.useFadeGroup.layout().addWidget(self.interruptCueFade, 3, 0)
 
         # all
-        self.stopAllFade = QCheckBox(self.useFadeGroup)
-        self.useFadeGroup.layout().addWidget(self.stopAllFade, 0, 1)
-        self.pauseAllFade = QCheckBox(self.useFadeGroup)
-        self.useFadeGroup.layout().addWidget(self.pauseAllFade, 1, 1)
-        self.resumeAllFade = QCheckBox(self.useFadeGroup)
-        self.useFadeGroup.layout().addWidget(self.resumeAllFade, 2, 1)
-        self.interruptAllFade = QCheckBox(self.useFadeGroup)
-        self.useFadeGroup.layout().addWidget(self.interruptAllFade, 3, 1)
+        #self.stopAllFade = QCheckBox(self.useFadeGroup)
+        #self.useFadeGroup.layout().addWidget(self.stopAllFade, 0, 1)
+        #self.pauseAllFade = QCheckBox(self.useFadeGroup)
+        #self.useFadeGroup.layout().addWidget(self.pauseAllFade, 1, 1)
+        #self.resumeAllFade = QCheckBox(self.useFadeGroup)
+        #self.useFadeGroup.layout().addWidget(self.resumeAllFade, 2, 1)
+        #self.interruptAllFade = QCheckBox(self.useFadeGroup)
+        #self.useFadeGroup.layout().addWidget(self.interruptAllFade, 3, 1)
 
         self.retranslateUi()
 
@@ -118,29 +118,30 @@ class ListLayoutSettings(SettingsPage):
         self.pauseCueFade.setText(translate('ListLayout', 'Pause Cue'))
         self.resumeCueFade.setText(translate('ListLayout', 'Resume Cue'))
         self.interruptCueFade.setText(translate('ListLayout', 'Interrupt Cue'))
-        self.stopAllFade.setText(translate('ListLayout', 'Stop All'))
-        self.pauseAllFade.setText(translate('ListLayout', 'Pause All'))
-        self.resumeAllFade.setText(translate('ListLayout', 'Resume All'))
-        self.interruptAllFade.setText(translate('ListLayout', 'Interrupt All'))
+
+        #self.stopAllFade.setText(translate('ListLayout', 'Stop All'))
+        #self.pauseAllFade.setText(translate('ListLayout', 'Pause All'))
+        #self.resumeAllFade.setText(translate('ListLayout', 'Resume All'))
+        #self.interruptAllFade.setText(translate('ListLayout', 'Interrupt All'))
 
     def get_settings(self):
         settings = {
-            'showplaying': str(self.showPlaying.isChecked()),
-            'showdbmeters': str(self.showDbMeters.isChecked()),
-            'showseek': str(self.showSeek.isChecked()),
-            'showaccurate': str(self.showAccurate.isChecked()),
-            'autocontinue': str(self.autoNext.isChecked()),
-            'endlist': str(self.endListBehavior.currentData()),
-            'gokey': self.goKeyEdit.keySequence().toString(
+            'ShowPlaying': self.showPlaying.isChecked(),
+            'ShowDbMeters': self.showDbMeters.isChecked(),
+            'ShowSeek': self.showSeek.isChecked(),
+            'ShowAccurate': self.showAccurate.isChecked(),
+            'AutoContinue': self.autoNext.isChecked(),
+            'EndList': self.endListBehavior.currentData(),
+            'GoKey': self.goKeyEdit.keySequence().toString(
                 QKeySequence.NativeText),
-            'stopcuefade': str(self.stopCueFade.isChecked()),
-            'pausecuefade': str(self.pauseCueFade.isChecked()),
-            'resumecuefade': str(self.resumeCueFade.isChecked()),
-            'interruptcuefade': str(self.interruptCueFade.isChecked()),
-            'stopallfade': str(self.stopAllFade.isChecked()),
-            'pauseallfade': str(self.pauseAllFade.isChecked()),
-            'resumeallfade': str(self.resumeAllFade.isChecked()),
-            'interruptallfade': str(self.interruptAllFade.isChecked()),
+            'StopCueFade': self.stopCueFade.isChecked(),
+            'PauseCueFade': self.pauseCueFade.isChecked(),
+            'ResumeCueFade': self.resumeCueFade.isChecked(),
+            'InterruptCueFade': self.interruptCueFade.isChecked(),
+            #'StopAllFade': self.stopAllFade.isChecked(),
+            #'PauseAllFade': self.pauseAllFade.isChecked(),
+            #'ResumeAllFade': self.resumeAllFade.isChecked(),
+            #'InterruptAllFade': self.interruptAllFade.isChecked(),
         }
 
         return {'ListLayout': settings}
@@ -148,25 +149,23 @@ class ListLayoutSettings(SettingsPage):
     def load_settings(self, settings):
         settings = settings.get('ListLayout', {})
 
-        self.showPlaying.setChecked(settings.get('showplaying') == 'True')
-        self.showDbMeters.setChecked(settings.get('showdbmeters') == 'True')
-        self.showAccurate.setChecked(settings.get('showaccurate') == 'True')
-        self.showSeek.setChecked(settings.get('showseek') == 'True')
-        self.autoNext.setChecked(settings.get('autocontinue') == 'True')
+        self.showPlaying.setChecked(settings['ShowPlaying'])
+        self.showDbMeters.setChecked(settings['ShowDbMeters'])
+        self.showAccurate.setChecked(settings['ShowAccurate'])
+        self.showSeek.setChecked(settings['ShowSeek'])
+        self.autoNext.setChecked(settings['AutoContinue'])
         self.endListBehavior.setCurrentText(
-            translate('ListLayout', settings.get('endlist', '')))
+            translate('ListLayout', settings.get('EndList', '')))
         self.goKeyEdit.setKeySequence(
-            QKeySequence(settings.get('gokey', 'Space'),
+            QKeySequence(settings.get('GoKey', 'Space'),
                          QKeySequence.NativeText))
 
-        self.stopCueFade.setChecked(settings.get('stopcuefade') == 'True')
-        self.pauseCueFade.setChecked(settings.get('pausecuefade') == 'True')
-        self.resumeCueFade.setChecked(settings.get('resumecuefade') == 'True')
-        self.interruptCueFade.setChecked(
-            settings.get('interruptcuefade') == 'True')
+        self.stopCueFade.setChecked(settings['StopCueFade'])
+        self.pauseCueFade.setChecked(settings['PauseCueFade'])
+        self.resumeCueFade.setChecked(settings['ResumeCueFade'])
+        self.interruptCueFade.setChecked(settings['InterruptCueFade'])
 
-        self.stopAllFade.setChecked(settings.get('stopallfade') == 'True')
-        self.pauseAllFade.setChecked(settings.get('pauseallfade') == 'True')
-        self.resumeAllFade.setChecked(settings.get('resumeallfade') == 'True')
-        self.interruptAllFade.setChecked(
-            settings.get('interruptallfade') == 'True')
+        #self.stopAllFade.setChecked(settings['StopAllFade'])
+        #self.pauseAllFade.setChecked(settings['PauseAllFade'])
+        #self.resumeAllFade.setChecked(settings['ResumeAllFade'])
+        #self.interruptAllFade.setChecked(settings['InterruptAllFade'])

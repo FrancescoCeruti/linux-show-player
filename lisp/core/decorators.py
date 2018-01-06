@@ -23,6 +23,7 @@ from functools import wraps, partial
 from threading import Thread, Lock, RLock
 
 
+# TODO: rename to ensure compatibility with Python 3.7
 def async(target):
     """Decorator. Make a function asynchronous.
 

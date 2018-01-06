@@ -1,0 +1,7 @@
+{
+    "_version_": "1",
+    "_enabled_": true,
+    "InPort": 9000,
+    "OutPort": 9001,
+    "Hostname": "localhost"
+}

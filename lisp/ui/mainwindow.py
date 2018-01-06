@@ -25,8 +25,8 @@ from PyQt5.QtGui import QKeySequence
 from PyQt5.QtWidgets import QMainWindow, QStatusBar, QMenuBar, QMenu, QAction, \
     qApp, QFileDialog, QDialog, QMessageBox, QVBoxLayout, QWidget
 
-from lisp.core import configuration
 from lisp.core.actions_handler import MainActionsHandler
+from lisp.core.configuration import AppConfig
 from lisp.core.singleton import QSingleton
 from lisp.cues.media_cue import MediaCue
 from lisp.ui import about
@@ -39,9 +39,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
     save_session = pyqtSignal(str)
     open_session = pyqtSignal(str)
 
-    TITLE = 'Linux Show Player'
-
-    def __init__(self):
+    def __init__(self, title='Linux Show Player'):
         super().__init__()
         self.setMinimumSize(500, 400)
         self.setCentralWidget(QWidget())
@@ -49,6 +47,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         self.centralWidget().layout().setContentsMargins(5, 5, 5, 5)
 
         self._cue_add_menu = {}
+        self._title = title
         self.session = None
 
         # Status Bar
@@ -141,11 +140,9 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
 
         # Set component text
         self.retranslateUi()
-        # The save file name
-        self.filename = ''
 
     def retranslateUi(self):
-        self.setWindowTitle(MainWindow.TITLE)
+        self.setWindowTitle(self._title)
         # menuFile
         self.menuFile.setTitle(translate('MainWindow', '&File'))
         self.newSessionAction.setText(translate('MainWindow', 'New session'))
@@ -218,13 +215,14 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
 
     def register_cue_menu_action(self, name, function, category='',
                                  shortcut=''):
-        '''Register a new-cue choice for the edit-menu
+        """Register a new-cue choice for the edit-menu
 
         param name: The name for the MenuAction
         param function: The function that add the new cue(s)
         param category: The optional menu where insert the MenuAction
         param shortcut: An optional shortcut for the MenuAction
-        '''
+        """
+
         action = QAction(self)
         action.setText(translate('MainWindow', name))
         action.triggered.connect(function)
@@ -242,7 +240,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
             self.menuEdit.insertAction(self.cueSeparator, action)
 
     def update_window_title(self):
-        tile = MainWindow.TITLE + ' - ' + self.session.name()
+        tile = self._title + ' - ' + self.session.name()
         if not MainActionsHandler.is_saved():
             tile = '*' + tile
 
@@ -279,11 +277,8 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
             self.save_session.emit(filename)
 
     def _show_preferences(self):
-        prefUi = AppSettings(configuration.config_to_dict(), parent=self)
+        prefUi = AppSettings(parent=self)
         prefUi.exec_()
-
-        if prefUi.result() == QDialog.Accepted:
-            configuration.update_config_from_dict(prefUi.get_configuraton())
 
     def _load_from_file(self):
         if self._check_saved():
@@ -292,7 +287,6 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
 
             if os.path.exists(path):
                 self.open_session.emit(path)
-                self.filename = path
 
     def _new_session(self):
         if self._check_saved():

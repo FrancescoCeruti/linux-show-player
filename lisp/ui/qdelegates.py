@@ -23,10 +23,10 @@ from PyQt5.QtWidgets import QStyledItemDelegate, QComboBox, QSpinBox, \
 
 from lisp.application import Application
 from lisp.cues.cue import CueAction
+from lisp.plugins.osc.osc_server import OscMessageType
 from lisp.ui.qmodels import CueClassRole
 from lisp.ui.ui_utils import translate
 from lisp.ui.widgets import CueActionComboBox
-from lisp.modules.osc.osc_common import OscMessageType
 
 
 class LabelDelegate(QStyledItemDelegate):

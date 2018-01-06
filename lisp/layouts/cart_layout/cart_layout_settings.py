@@ -95,33 +95,26 @@ class CartLayoutSettings(SettingsPage):
 
     def get_settings(self):
         conf = {
-            'gridcolumns': str(self.columnsSpin.value()),
-            'gridrows': str(self.rowsSpin.value()),
-            'showdbmeters': str(self.showDbMeters.isChecked()),
-            'showseek': str(self.showSeek.isChecked()),
-            'showaccurate': str(self.showAccurate.isChecked()),
-            'showvolume': str(self.showVolume.isChecked()),
-            'countdown': str(self.countdownMode.isChecked()),
-            'autoaddpage': str(self.autoAddPage.isChecked())
+            'GridColumns': self.columnsSpin.value(),
+            'GridRows': self.rowsSpin.value(),
+            'ShowDbMeters': self.showDbMeters.isChecked(),
+            'ShowSeek': self.showSeek.isChecked(),
+            'ShowAccurate': self.showAccurate.isChecked(),
+            'ShowVolume': self.showVolume.isChecked(),
+            'Countdown': self.countdownMode.isChecked(),
+            'AutoAddPage': self.autoAddPage.isChecked()
         }
 
         return {'CartLayout': conf}
 
     def load_settings(self, settings):
         settings = settings.get('CartLayout', {})
-        if 'gridcolumns' in settings:
-            self.columnsSpin.setValue(int(settings['gridcolumns']))
-        if 'gridrows' in settings:
-            self.rowsSpin.setValue(int(settings['gridrows']))
-        if 'showseek' in settings:
-            self.showSeek.setChecked(settings['showseek'] == 'True')
-        if 'showdbmeters' in settings:
-            self.showDbMeters.setChecked(settings['showdbmeters'] == 'True')
-        if 'showaccurate' in settings:
-            self.showAccurate.setChecked(settings['showaccurate'] == 'True')
-        if 'showvolume' in settings:
-            self.showVolume.setChecked(settings['showvolume'] == 'True')
-        if 'countdown' in settings:
-            self.countdownMode.setChecked(settings['countdown'] == 'True')
-        if 'autoaddpage' in settings:
-            self.autoAddPage.setChecked(settings['autoaddpage'] == 'True')
+
+        self.columnsSpin.setValue(settings['GridColumns'])
+        self.rowsSpin.setValue(settings['GridRows'])
+        self.showSeek.setChecked(settings['ShowSeek'])
+        self.showDbMeters.setChecked(settings['ShowDbMeters'])
+        self.showAccurate.setChecked(settings['ShowAccurate'])
+        self.showVolume.setChecked(settings['ShowVolume'])
+        self.countdownMode.setChecked(settings['Countdown'])
+        self.autoAddPage.setChecked(settings['AutoAddPage'])

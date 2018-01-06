@@ -1,0 +1,10 @@
+{
+    "_version_": "1",
+    "_enabled_": true,
+    "IP": "0.0.0.0",
+    "Port": 8070,
+    "Discovery": {
+        "Port": 50000,
+        "Magic": "L1SPR3m0t3"
+    }
+}

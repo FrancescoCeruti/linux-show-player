@@ -19,68 +19,94 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from lisp.application import Application
 from lisp.core.has_properties import Property
 from lisp.core.plugin import Plugin
 from lisp.core.signal import Connection
 from lisp.cues.cue import Cue
 from lisp.cues.media_cue import MediaCue
-from lisp.ui.settings.cue_settings import CueSettingsRegistry
+from lisp.plugins.timecode import protocols
+from lisp.plugins.timecode.cue_tracker import TimecodeCueTracker, TcFormat
+from lisp.plugins.timecode.protocol import TimecodeProtocol
+from lisp.plugins.timecode.settings import TimecodeAppSettings, \
+    TimecodeSettings
 from lisp.ui.settings.app_settings import AppSettings
-from lisp.plugins.timecode.timecode_common import TimecodeCommon
-from lisp.plugins.timecode.timecode_settings import TimecodeAppSettings, TimecodeSettings
+from lisp.ui.settings.cue_settings import CueSettingsRegistry
 
 
 class Timecode(Plugin):
-    Name = 'Timecode'
 
-    def __init__(self):
-        super().__init__()
-        self.__cues = set()
+    Name = 'Timecode'
+    Authors = ('Thomas Achtner', )
+    OptDepends = ('Midi', )
+    Description = 'Provide timecode via multiple protocols'
+
+    TC_PROPERTY = 'timecode'
+
+    def __init__(self, app):
+        super().__init__(app)
 
         # Register a new Cue property to store settings
-        Cue.register_property('timecode', Property(default={}))
+        Cue.register_property(Timecode.TC_PROPERTY, Property(default={}))
         # Register cue-settings-page
         CueSettingsRegistry().add_item(TimecodeSettings, MediaCue)
         # Register the settings widget
-        AppSettings.register_settings_widget(TimecodeAppSettings)
+        AppSettings.register_settings_widget(
+            TimecodeAppSettings, Timecode.Config)
+
+        # Load available protocols
+        protocols.load_protocols()
+
+        try:
+            protocol = protocols.get_protocol(Timecode.Config['Protocol'])()
+        except Exception:
+            # TODO: warn the user
+            # Use a dummy protocol in case of failure
+            protocol = TimecodeProtocol()
+
+        # Create the cue tracker object
+        self.__cue_tracker = TimecodeCueTracker(
+            protocol,
+            TcFormat[Timecode.Config['Format']]
+        )
+
+        # Cues with timecode-tracking enabled
+        self.__cues = set()
+
+        # Watch for session finalization(s)
+        self.app.session_before_finalize.connect(self.__session_finalize)
 
         # Watch cue-model changes
-        Application().cue_model.item_added.connect(self.__cue_added)
-        Application().cue_model.item_removed.connect(self.__cue_removed)
+        self.app.cue_model.item_added.connect(self.__cue_added)
+        self.app.cue_model.item_removed.connect(self.__cue_removed)
 
-    def init(self):
-        TimecodeCommon().init()
+    def finalize(self):
+        self.__cue_tracker.finalize()
 
-    def reset(self):
+    def __session_finalize(self):
+        self.__cue_tracker.untrack()
         self.__cues.clear()
-        TimecodeCommon().stop(rclient=True, rcue=True)
 
     def __cue_changed(self, cue, property_name, value):
-        if property_name == 'timecode':
+        if property_name == Timecode.TC_PROPERTY:
             if value.get('enabled', False):
-                if cue.id not in self.__cues:
-                    self.__cues.add(cue.id)
-                    cue.started.connect(TimecodeCommon().start,
-                                        Connection.QtQueued)
+                cue.started.connect(
+                    self.__cue_tracker.track, Connection.QtQueued)
             else:
-                self.__cue_removed(cue)
+                self.__disable_on_cue(cue)
 
     def __cue_added(self, cue):
         cue.property_changed.connect(self.__cue_changed)
-        self.__cue_changed(cue, 'timecode', cue.timecode)
+        # Check for current cue settings
+        self.__cue_changed(cue, Timecode.TC_PROPERTY, cue.timecode)
 
     def __cue_removed(self, cue):
-        try:
-            # Try removing the cue
-            self.__cues.remove(cue.id)
+        cue.property_changed.disconnect(self.__cue_changed)
+        self.__disable_on_cue(cue)
 
-            # If the cue is tracked, stop the tracking
-            if TimecodeCommon().cue is cue:
-                TimecodeCommon().stop(rcue=True)
+    def __disable_on_cue(self, cue):
+        # If it's not connected this does nothing
+        cue.started.disconnect(self.__cue_tracker.track)
 
-            # Disconnect signals
-            cue.started.disconnect(TimecodeCommon().start)
-            cue.property_changed.disconnect(self.__cue_changed)
-        except KeyError:
-            pass
+        # If the cue is tracked, stop the tracking
+        if self.__cue_tracker.cue is cue:
+            self.__cue_tracker.untrack()

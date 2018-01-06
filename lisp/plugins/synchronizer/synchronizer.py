@@ -18,7 +18,6 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import logging
-import socket
 import traceback
 
 from PyQt5.QtWidgets import QMenu, QAction, QMessageBox
@@ -33,40 +32,49 @@ from .peers_dialog import PeersDialog
 
 
 class Synchronizer(Plugin):
-    Name = 'Synchronizer'
 
-    def __init__(self):
+    Name = 'Synchronizer'
+    Authors = ('Francesco Ceruti', )
+    Depends = ('Remote', )
+    Description = 'Keep multiple sessions, on a network, synchronized'
+
+    def __init__(self, app):
+        super().__init__(app)
+
         self.syncMenu = QMenu(translate('Synchronizer', 'Synchronization'))
-        self.menu_action = MainWindow().menuTools.addMenu(self.syncMenu)
+        self.menu_action = self.app.window.menuTools.addMenu(self.syncMenu)
 
         self.addPeerAction = QAction(
-            translate('Synchronizer', 'Manage connected peers'), MainWindow())
+            translate('Synchronizer', 'Manage connected peers'), self.app.window)
         self.addPeerAction.triggered.connect(self.manage_peers)
         self.syncMenu.addAction(self.addPeerAction)
 
         self.showIpAction = QAction(
-            translate('Synchronizer', 'Show your IP'), MainWindow())
+            translate('Synchronizer', 'Show your IP'), self.app.window)
         self.showIpAction.triggered.connect(self.show_ip)
         self.syncMenu.addAction(self.showIpAction)
 
         self.peers = []
         self.cue_media = {}
 
-    def init(self):
-        Application().layout.cue_executed.connect(self.remote_execute,
-                                                  mode=Connection.Async)
+        self.app.session_created.connect(self.session_init)
+        self.app.session_before_finalize.connect(self.session_reset)
+
+    def session_init(self):
+        self.app.layout.cue_executed.connect(
+            self.remote_execute, mode=Connection.Async)
+
+    def session_reset(self):
+        self.peers.clear()
+        self.cue_media.clear()
 
     def manage_peers(self):
-        manager = PeersDialog(self.peers, parent=MainWindow())
+        manager = PeersDialog(self.peers, parent=self.app.window)
         manager.exec_()
 
     def show_ip(self):
         ip = translate('Synchronizer', 'Your IP is:') + ' ' + str(get_lan_ip())
-        QMessageBox.information(MainWindow(), ' ', ip)
-
-    def reset(self):
-        self.peers.clear()
-        self.cue_media.clear()
+        QMessageBox.information(self.app.window, ' ', ip)
 
     def remote_execute(self, cue):
         for peer in self.peers:

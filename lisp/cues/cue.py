@@ -20,7 +20,7 @@
 from threading import Lock
 from uuid import uuid4
 
-from lisp.core.configuration import config
+from lisp.core.configuration import AppConfig
 from lisp.core.decorators import async
 from lisp.core.fade_functions import FadeInType, FadeOutType
 from lisp.core.has_properties import HasProperties, Property, WriteOnceProperty
@@ -198,13 +198,17 @@ class Cue(HasProperties):
             elif action == CueAction.FadeOutPause:
                 self.pause(fade=self.fadeout_duration > 0)
             elif action == CueAction.FadeOut:
-                duration = config['Cue'].getfloat('FadeActionDuration')
-                fade_type = FadeOutType[config['Cue'].get('FadeActionType')]
-                self.fadeout(duration, fade_type)
+                duration = AppConfig().getfloat('Cue', 'FadeActionDuration', 0)
+                fade = AppConfig().get(
+                    'Cue', 'FadeActionType', FadeOutType.Linear.name)
+
+                self.fadeout(duration, FadeOutType[fade])
             elif action == CueAction.FadeIn:
-                duration = config['Cue'].getfloat('FadeActionDuration')
-                fade_type = FadeInType[config['Cue'].get('FadeActionType')]
-                self.fadein(duration, fade_type)
+                duration = AppConfig().getfloat('Cue', 'FadeActionDuration', 0)
+                fade = AppConfig().get(
+                    'Cue', 'FadeActionType', FadeInType.Linear.name)
+
+                self.fadein(duration, FadeInType[fade])
 
     @async
     def start(self, fade=False):

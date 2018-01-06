@@ -25,7 +25,7 @@ import subprocess
 import sys
 
 try:
-    from os import scandir
+    from os import scandir, getcwd
 except ImportError:
     from scandir import scandir
 
@@ -90,7 +90,6 @@ def create_pro_file(root, exclude=(), extensions=('py',)):
 
 
 def generate_for_submodules(path, qm=False):
-    # Here "modules" is used generically
     modules = [entry.path for entry in scandir(path) if entry.is_dir()]
     for module in modules:
         if os.path.exists(os.path.join(module, 'i18n')):
@@ -107,7 +106,7 @@ def generate_for_submodules(path, qm=False):
 
 
 print('>>> UPDATE TRANSLATIONS FOR APPLICATION')
-create_pro_file('lisp', exclude=('lisp/modules/', 'lisp/plugins/'))
+create_pro_file('lisp', exclude=('lisp/plugins/', ))
 if args.qm:
     subprocess.run(['lrelease', 'lisp/lisp.pro'],
                    stdout=sys.stdout,
@@ -116,9 +115,6 @@ else:
     subprocess.run(PYLUPDATE_CMD + ['lisp/lisp.pro'],
                    stdout=sys.stdout,
                    stderr=sys.stderr)
-
-print('>>> UPDATE TRANSLATIONS FOR MODULES')
-generate_for_submodules('lisp/modules', qm=args.qm)
 
 print('>>> UPDATE TRANSLATIONS FOR PLUGINS')
 generate_for_submodules('lisp/plugins', qm=args.qm)

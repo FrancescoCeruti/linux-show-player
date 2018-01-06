@@ -21,21 +21,20 @@ from PyQt5 import QtCore
 from PyQt5.QtGui import QLinearGradient, QColor, QPainter
 from PyQt5.QtWidgets import QWidget
 
-from lisp.core.configuration import config
 from lisp.core.decorators import suppress_exceptions
 
 
 class QDbMeter(QWidget):
-    DB_MIN = int(config["DbMeter"]["dbMin"])
-    DB_MAX = int(config["DbMeter"]["dbMax"])
-    DB_CLIP = int(config["DbMeter"]["dbClip"])
 
-    def __init__(self, parent):
+    def __init__(self, parent, min=-60, max=0, clip=0):
         super().__init__(parent)
+        self.db_min = min
+        self.db_max = max
+        self.db_clip = clip
 
-        db_range = abs(self.DB_MIN - self.DB_MAX)
-        yellow = abs(self.DB_MIN + 20) / db_range  # -20 db
-        red = abs(self.DB_MIN) / db_range          # 0 db
+        db_range = abs(self.db_min - self.db_max)
+        yellow = abs(self.db_min + 20) / db_range  # -20 db
+        red = abs(self.db_min) / db_range          # 0 db
 
         self.grad = QLinearGradient()
         self.grad.setColorAt(0, QColor(0, 255, 0))            # Green
@@ -45,9 +44,9 @@ class QDbMeter(QWidget):
         self.reset()
 
     def reset(self):
-        self.peaks = [self.DB_MIN, self.DB_MIN]
-        self.rmss = [self.DB_MIN, self.DB_MIN]
-        self.decPeak = [self.DB_MIN, self.DB_MIN]
+        self.peaks = [self.db_min, self.db_min]
+        self.rmss = [self.db_min, self.db_min]
+        self.decPeak = [self.db_min, self.db_min]
         self.clipping = {}
         self.repaint()
 
@@ -63,37 +62,37 @@ class QDbMeter(QWidget):
         if not self.visibleRegion().isEmpty():
             # Stretch factor
             mul = (self.height() - 4)
-            mul /= (self.DB_MAX - self.DB_MIN)
+            mul /= (self.db_max - self.db_min)
 
             peaks = []
             for n, peak in enumerate(self.peaks):
-                if peak > self.DB_CLIP:
+                if peak > self.db_clip:
                     self.clipping[n] = True
 
-                if peak < self.DB_MIN:
-                    peak = self.DB_MIN
-                elif peak > self.DB_MAX:
-                    peak = self.DB_MAX
+                if peak < self.db_min:
+                    peak = self.db_min
+                elif peak > self.db_max:
+                    peak = self.db_max
 
-                peaks.append(round((peak - self.DB_MIN) * mul))
+                peaks.append(round((peak - self.db_min) * mul))
 
             rmss = []
             for n, rms in enumerate(self.rmss):
-                if rms < self.DB_MIN:
-                    rms = self.DB_MIN
-                elif rms > self.DB_MAX:
-                    rms = self.DB_MAX
+                if rms < self.db_min:
+                    rms = self.db_min
+                elif rms > self.db_max:
+                    rms = self.db_max
 
-                rmss.append(round((rms - self.DB_MIN) * mul))
+                rmss.append(round((rms - self.db_min) * mul))
 
             dPeaks = []
             for dPeak in self.decPeak:
-                if dPeak < self.DB_MIN:
-                    dPeak = self.DB_MIN
-                elif dPeak > self.DB_MAX:
-                    dPeak = self.DB_MAX
+                if dPeak < self.db_min:
+                    dPeak = self.db_min
+                elif dPeak > self.db_max:
+                    dPeak = self.db_max
 
-                dPeaks.append(round((dPeak - self.DB_MIN) * mul))
+                dPeaks.append(round((dPeak - self.db_min) * mul))
 
             qp = QPainter()
             qp.begin(self)
@@ -103,7 +102,7 @@ class QDbMeter(QWidget):
             xdim = self.width() / len(peaks)
 
             for n, (peak, rms, dPeak) in enumerate(zip(peaks, rmss, dPeaks)):
-                # Maximum "peak-rect" size
+                # Maximum 'peak-rect' size
                 maxRect = QtCore.QRect(xpos, self.height() - 2, xdim - 2,
                                        2 - self.height())
 

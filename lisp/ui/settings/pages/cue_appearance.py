@@ -82,8 +82,7 @@ class Appearance(SettingsPage):
     def retranslateUi(self):
         self.cueNameGroup.setTitle(
             translate('CueAppearanceSettings', 'Cue name'))
-        self.cueNameEdit.setText(translate('CueAppearanceSettings',
-                                           'NoName'))
+        self.cueNameEdit.setText(translate('CueAppearanceSettings', 'NoName'))
         self.cueDescriptionGroup.setTitle(
             translate('CueAppearanceSettings', 'Description/Note'))
         self.fontSizeGroup.setTitle(

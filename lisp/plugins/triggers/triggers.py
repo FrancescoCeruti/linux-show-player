@@ -17,7 +17,6 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from lisp.application import Application
 from lisp.core.has_properties import Property
 from lisp.core.plugin import Plugin
 from lisp.cues.cue import Cue
@@ -27,10 +26,14 @@ from lisp.ui.settings.cue_settings import CueSettingsRegistry
 
 
 class Triggers(Plugin):
-    Name = 'Triggers'
 
-    def __init__(self):
-        super().__init__()
+    Name = 'Triggers'
+    Authors = ('Francesco Ceruti', )
+    Description = 'Allow cues to react to other-cues state changes'
+
+    def __init__(self, app):
+        super().__init__(app)
+
         self.__handlers = {}
 
         # Register a Cue property to store settings
@@ -40,10 +43,13 @@ class Triggers(Plugin):
         # Register SettingsPage
         CueSettingsRegistry().add_item(TriggersSettings)
 
-        Application().cue_model.item_added.connect(self.__cue_added)
-        Application().cue_model.item_removed.connect(self.__cue_removed)
+        # On session destroy
+        self.app.session_before_finalize.connect(self.session_reset)
 
-    def reset(self):
+        self.app.cue_model.item_added.connect(self.__cue_added)
+        self.app.cue_model.item_removed.connect(self.__cue_removed)
+
+    def session_reset(self):
         self.__handlers.clear()
 
     def __cue_changed(self, cue, property_name, value):
@@ -51,7 +57,7 @@ class Triggers(Plugin):
             if cue.id in self.__handlers:
                 self.__handlers[cue.id].triggers = cue.triggers
             else:
-                self.__handlers[cue.id] = CueHandler(cue, cue.triggers)
+                self.__handlers[cue.id] = CueHandler(self.app, cue, cue.triggers)
 
     def __cue_added(self, cue):
         cue.property_changed.connect(self.__cue_changed)

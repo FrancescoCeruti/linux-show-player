@@ -22,9 +22,11 @@ from os.path import exists
 
 from PyQt5.QtWidgets import QDialog, qApp
 
-from lisp import layouts, plugins
+from lisp.core.configuration import AppConfig
+from lisp.core.signal import Signal
+
+from lisp import layouts
 from lisp.core.actions_handler import MainActionsHandler
-from lisp.core.configuration import config
 from lisp.core.session import new_session
 from lisp.core.singleton import Singleton
 from lisp.cues.cue import Cue
@@ -41,17 +43,23 @@ from lisp.ui.settings.pages.cue_app_settings import CueAppSettings
 from lisp.ui.settings.pages.cue_appearance import Appearance
 from lisp.ui.settings.pages.cue_general import CueGeneralSettings
 from lisp.ui.settings.pages.media_cue_settings import MediaCueSettings
+from lisp.ui.settings.pages.plugins_settings import PluginsSettings
 
 
 class Application(metaclass=Singleton):
     def __init__(self):
+        self.session_created = Signal()
+        self.session_before_finalize = Signal()
+
         self.__main_window = MainWindow()
         self.__cue_model = CueModel()
         self.__session = None
 
         # Register general settings widget
-        AppSettings.register_settings_widget(AppGeneral)
-        AppSettings.register_settings_widget(CueAppSettings)
+        AppSettings.register_settings_widget(AppGeneral, AppConfig())
+        AppSettings.register_settings_widget(CueAppSettings, AppConfig())
+        AppSettings.register_settings_widget(PluginsSettings, AppConfig())
+
         # Register common cue-settings widgets
         CueSettingsRegistry().add_item(CueGeneralSettings, Cue)
         CueSettingsRegistry().add_item(MediaCueSettings, MediaCue)
@@ -70,6 +78,11 @@ class Application(metaclass=Singleton):
         return self.__session
 
     @property
+    def window(self):
+        """:rtype: lisp.ui.mainwindow.MainWindow"""
+        return self.__main_window
+
+    @property
     def layout(self):
         return self.session.layout
 
@@ -81,10 +94,13 @@ class Application(metaclass=Singleton):
     def start(self, session_file=''):
         if exists(session_file):
             self._load_from_file(session_file)
-        elif config['Layout']['Default'].lower() != 'nodefault':
-            self._new_session(layouts.get_layout(config['Layout']['Default']))
         else:
-            self._new_session_dialog()
+            layout = AppConfig().get('Layout', 'Default', default='nodefault')
+
+            if layout.lower() != 'nodefault':
+                self._new_session(layouts.get_layout(layout))
+            else:
+                self._new_session_dialog()
 
     def finalize(self):
         self._delete_session()
@@ -121,12 +137,13 @@ class Application(metaclass=Singleton):
         self.__session = new_session(layout(self.__cue_model))
         self.__main_window.set_session(self.__session)
 
-        plugins.init_plugins()
+        self.session_created.emit(self.__session)
 
     def _delete_session(self):
         if self.__session is not None:
             MainActionsHandler.clear()
-            plugins.reset_plugins()
+
+            self.session_before_finalize.emit(self.session)
 
             self.__session.finalize()
             self.__session = None

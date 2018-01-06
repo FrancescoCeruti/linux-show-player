@@ -34,13 +34,25 @@ class load_classes:
     The class name must be the same as the module name, optionally
     suffixes and prefixes lists can be provided.
 
+    Using a package __init__ module is possible to create sub-packages
+
     .. highlight::
 
-        modules
+        package
+        |
         ├── module1.py
+        |   |
         |   └──Module1
-        └── module_extra.py
-            └── ModuleExtra
+        |
+        ├──── module_extra.py
+        |     |
+        |     └── ModuleExtra
+        |
+        └──── sub_package
+              |
+              └── __init__.py
+                  |
+                  └──SubPackage
 
     """
 
@@ -81,7 +93,7 @@ class load_classes:
                 if not re.match('.py[cod]?', ext):
                     continue
 
-            # Exclude excluded ¯\_(ツ)_/¯
+            # Exclude excluded ¯\_(°^°)_/¯
             if mod_name in self.excluded:
                 continue
 
@@ -98,7 +110,7 @@ class load_classes:
                         cls = getattr(module, name)
                         yield (name, cls)
 
-            except ImportError:
+            except(ImportError, Exception):
                 logging.warning('Cannot load module: {0}'.format(mod_name))
                 logging.debug(traceback.format_exc())
 

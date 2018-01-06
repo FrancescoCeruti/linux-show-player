@@ -22,7 +22,7 @@ from PyQt5.QtWidgets import QVBoxLayout, QListWidget, QDialogButtonBox, \
     QListWidgetItem, QDialog
 
 from lisp.core.signal import Connection
-from lisp.modules.remote.discovery import Discoverer
+from lisp.plugins.remote.discovery import Discoverer
 from lisp.ui.ui_utils import translate
 
 

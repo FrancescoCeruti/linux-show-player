@@ -1,0 +1,5 @@
+{
+  "_version_": "0.1",
+  "_enabled_": true,
+  "Pipeline": ["Volume", "Equalizer10", "DbMeter", "AutoSink"]
+}

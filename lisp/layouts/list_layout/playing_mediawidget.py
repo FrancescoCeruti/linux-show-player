@@ -23,7 +23,7 @@ from PyQt5.QtWidgets import QWidget, QGridLayout, QLabel, QSizePolicy, \
     QLCDNumber, QHBoxLayout
 from lisp.cues.cue import CueAction
 
-from lisp.core.configuration import config
+from lisp.core.configuration import AppConfig
 from lisp.core.signal import Connection
 from lisp.core.util import strtime
 from lisp.cues.cue_time import CueTime
@@ -147,17 +147,17 @@ class RunningCueWidget(QWidget):
                                          accurate=self._accurate_time))
 
     def _pause(self):
-        self.cue.pause(fade=config['ListLayout'].getboolean('PauseCueFade'))
+        self.cue.pause(fade=AppConfig().getbool('ListLayout', 'PauseCueFade'))
 
     def _resume(self):
-        self.cue.resume(fade=config['ListLayout'].getboolean('ResumeCueFade'))
+        self.cue.resume(fade=AppConfig().getbool('ListLayout', 'ResumeCueFade'))
 
     def _stop(self):
-        self.cue.stop(fade=config['ListLayout'].getboolean('StopCueFade'))
+        self.cue.stop(fade=AppConfig().getbool('ListLayout', 'StopCueFade'))
 
     def _interrupt(self):
         self.cue.interrupt(
-            fade=config['ListLayout'].getboolean('InterruptCueFade'))
+            fade=AppConfig().getbool('ListLayout', 'InterruptCueFade'))
 
     def _fadeout(self):
         self.cue.execute(CueAction.FadeOut)

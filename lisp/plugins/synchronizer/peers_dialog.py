@@ -21,9 +21,9 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog, QHBoxLayout, QListWidget, QVBoxLayout, \
     QPushButton, QDialogButtonBox, QInputDialog, QMessageBox
 
-from lisp.core.configuration import config
+from lisp.core.configuration import AppConfig
 from lisp.core.util import compose_http_url
-from lisp.modules.remote.remote import RemoteController
+from lisp.plugins.remote.remote import RemoteController
 from lisp.ui import elogging
 from lisp.ui.ui_utils import translate
 from .peers_discovery_dialog import PeersDiscoveryDialog
@@ -97,7 +97,7 @@ class PeersDialog(QDialog):
             self._add_peer(ip)
 
     def _add_peer(self, ip):
-        port = config['Remote']['BindPort']
+        port = AppConfig()['Remote']['BindPort']
         uri = compose_http_url(ip, port)
 
         for peer in self.peers:
