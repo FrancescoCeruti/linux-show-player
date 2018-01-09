@@ -72,7 +72,7 @@ class Equalizer10Settings(SettingsPage):
             fLabel.setText(self.FREQ[n])
             self.groupBox.layout().addWidget(fLabel, 2, n)
 
-    def enable_check(self, enable):
+    def enable_check(self, enabled):
         self.groupBox.setCheckable(enable)
         self.groupBox.setChecked(False)
 

@@ -99,7 +99,7 @@ class AudioDynamicSettings(SettingsPage):
         self.thresholdLabel.setText(
             translate('AudioDynamicSettings', 'Threshold (dB)'))
 
-    def enable_check(self, enable):
+    def enable_check(self, enabled):
         self.groupBox.setCheckable(enable)
         self.groupBox.setChecked(False)
 

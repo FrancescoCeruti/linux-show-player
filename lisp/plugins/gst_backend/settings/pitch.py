@@ -66,7 +66,7 @@ class PitchSettings(SettingsPage):
         self.groupBox.setTitle(translate('PitchSettings', 'Pitch'))
         self.pitch_changed(0)
 
-    def enable_check(self, enable):
+    def enable_check(self, enabled):
         self.groupBox.setCheckable(enable)
         self.groupBox.setChecked(False)
 

@@ -56,7 +56,7 @@ class UserElementSettings(SettingsPage):
         self.warning.setText(
             translate('UserElementSettings', 'Only for advanced user!'))
 
-    def enable_check(self, enable):
+    def enable_check(self, enabled):
         self.groupBox.setCheckable(enable)
         self.groupBox.setChecked(False)
 

@@ -208,7 +208,7 @@ class CueGeneralSettings(CueSettingsPage):
         self.fadeOutEdit.setFadeType(settings.get('fadeout_type', ''))
         self.fadeOutEdit.setDuration(settings.get('fadeout_duration', 0))
 
-    def enable_check(self, enable):
+    def enable_check(self, enabled):
         self.startActionGroup.setCheckable(enable)
         self.startActionGroup.setChecked(False)
         self.stopActionGroup.setCheckable(enable)

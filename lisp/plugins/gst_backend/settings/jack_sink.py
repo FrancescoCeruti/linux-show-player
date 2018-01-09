@@ -72,7 +72,7 @@ class JackSinkSettings(SettingsPage):
     def load_settings(self, settings):
         self.connections = settings.get('connections', self.connections).copy()
 
-    def enable_check(self, enable):
+    def enable_check(self, enabled):
         self.jackGroup.setCheckable(enable)
         self.jackGroup.setChecked(False)
 

@@ -96,7 +96,7 @@ class UriInputSettings(SettingsPage):
     def load_settings(self, settings):
         self.filePath.setText(settings.get('uri', ''))
 
-    def enable_check(self, enable):
+    def enable_check(self, enabled):
         self.fileGroup.setCheckable(enable)
         self.fileGroup.setChecked(False)
 

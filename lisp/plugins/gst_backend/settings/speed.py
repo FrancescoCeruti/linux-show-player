@@ -64,7 +64,7 @@ class SpeedSettings(SettingsPage):
         self.groupBox.setTitle(translate('SpeedSettings', 'Speed'))
         self.speedLabel.setText('1.0')
 
-    def enable_check(self, enable):
+    def enable_check(self, enabled):
         self.groupBox.setCheckable(enable)
         self.groupBox.setChecked(False)
 

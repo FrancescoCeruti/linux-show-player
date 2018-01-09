@@ -40,7 +40,7 @@ class Property:
     """
 
     def __init__(self, default=None):
-        self.name = 'unnamed_property'
+        self.name = '_'
         self.default = default
 
     def __get__(self, instance, owner=None):

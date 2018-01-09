@@ -100,7 +100,7 @@ class MediaCueSettings(SettingsPage):
 
         return conf
 
-    def enable_check(self, enable):
+    def enable_check(self, enabled):
         self.startGroup.setCheckable(enable)
         self.startGroup.setChecked(False)
 

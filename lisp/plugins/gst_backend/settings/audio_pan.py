@@ -60,7 +60,7 @@ class AudioPanSettings(SettingsPage):
         self.panBox.setTitle(translate('AudioPanSettings', 'Audio Pan'))
         self.panLabel.setText(translate('AudioPanSettings', 'Center'))
 
-    def enable_check(self, enable):
+    def enable_check(self, enabled):
         self.panBox.setCheckable(enable)
         self.panBox.setChecked(False)
 

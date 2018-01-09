@@ -83,7 +83,7 @@ class VolumeSettings(SettingsPage):
         self.normalLabel.setText('0.0 dB')
         self.normalReset.setText(translate('VolumeSettings', 'Reset'))
 
-    def enable_check(self, enable):
+    def enable_check(self, enabled):
         for box in [self.normalBox, self.volumeBox]:
             box.setCheckable(enable)
             box.setChecked(False)

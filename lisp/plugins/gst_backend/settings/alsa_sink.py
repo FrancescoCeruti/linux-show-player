@@ -58,7 +58,7 @@ class AlsaSinkSettings(SettingsPage):
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.deviceGroup.layout().addWidget(self.label)
 
-    def enable_check(self, enable):
+    def enable_check(self, enabled):
         self.deviceGroup.setCheckable(enable)
         self.deviceGroup.setChecked(False)
 
