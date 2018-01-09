@@ -79,7 +79,7 @@ def main():
 
     # Set application icon (from the theme)
     qt_app.setWindowIcon(QIcon.fromTheme('linux-show-player'))
-    
+
     # Get/Set the locale
     locale = args.locale
     if locale:
