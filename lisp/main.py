@@ -77,6 +77,9 @@ def main():
     QIcon.setThemeName(config['Theme']['icons'])
     styles.apply_style(config['Theme']['theme'])
 
+    # Set application icon (from the theme)
+    qt_app.setWindowIcon(QIcon.fromTheme('linux-show-player'))
+
     # Get/Set the locale
     locale = args.locale
     if locale:
