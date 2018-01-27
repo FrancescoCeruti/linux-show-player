@@ -17,8 +17,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from lisp.core.has_properties import Property
 from lisp.core.plugin import Plugin
+from lisp.core.properties import Property
 from lisp.cues.cue import Cue, CueAction
 from lisp.plugins.controller import protocols
 from lisp.plugins.controller.controller_settings import ControllerSettings
@@ -41,7 +41,7 @@ class Controller(Plugin):
         self.__protocols = {}
 
         # Register a new Cue property to store settings
-        Cue.register_property('controller', Property(default={}))
+        Cue.controller = Property(default={})
 
         # On session created/destroy
         self.app.session_created.connect(self.session_init)

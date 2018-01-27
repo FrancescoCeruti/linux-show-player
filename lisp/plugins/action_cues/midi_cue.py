@@ -21,7 +21,7 @@ from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QGridLayout, QLabel, \
     QComboBox, QSpinBox, QFrame
 
-from lisp.core.has_properties import Property
+from lisp.core.properties import Property
 from lisp.cues.cue import Cue
 from lisp.plugins import get_plugin
 from lisp.plugins.midi.midi_utils import str_msg_to_dict, dict_msg_to_str

@@ -40,13 +40,6 @@ class MediaElement(HasProperties):
     """Base media-element class
 
     A MediaElement object control specific media's parameters (e.g. volume).
-    Every MediaElement provides two kind of properties:
-     1) The one defined via class:`HasProperties`;
-     2) runtime only properties, those are reset to the previous value at
-        playback end.
-
-    Runtime properties are defined using the following naming convention:
-    runtime_<property_name>.
     """
 
     ElementType = None

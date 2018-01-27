@@ -25,7 +25,7 @@ from PyQt5.QtCore import QT_TRANSLATE_NOOP
 from lisp.application import Application
 from lisp.backend.media_element import MediaType
 from lisp.core.decorators import async_in_pool
-from lisp.core.has_properties import Property
+from lisp.core.properties import Property
 from lisp.plugins.gst_backend.gi_repository import Gst
 from lisp.plugins.gst_backend.gst_element import GstProperty, \
     GstSrcElement

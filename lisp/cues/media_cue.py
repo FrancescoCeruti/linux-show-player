@@ -25,7 +25,7 @@ from lisp.core.configuration import AppConfig
 from lisp.core.decorators import async
 from lisp.core.fade_functions import FadeInType, FadeOutType
 from lisp.core.fader import Fader
-from lisp.core.has_properties import NestedProperties
+from lisp.core.properties import NestedProperties
 from lisp.cues.cue import Cue, CueAction, CueState
 
 
@@ -54,7 +54,7 @@ class MediaCue(Cue):
         self.__in_fadeout = False
 
         self.__volume = self.media.element('Volume')
-        self.__fader = Fader(self.__volume, 'current_volume')
+        self.__fader = Fader(self.__volume, 'live_volume')
         self.__fade_lock = Lock()
 
     def __elements_changed(self):

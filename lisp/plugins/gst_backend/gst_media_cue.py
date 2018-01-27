@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,13 +21,13 @@ from lisp.cues.media_cue import MediaCue
 from lisp.plugins.gst_backend.gst_media import GstMedia
 
 
-def gst_media_cue_factory(id=None, pipeline=None):
-    media = GstMedia()
+class GstMediaCue(MediaCue):
 
-    if pipeline is not None:
-        media.pipe = pipeline
+    def __init__(self, media, id=None, pipeline=None):
+        super().__init__(media, id=id)
 
-    return MediaCue(media, id=id)
+        if pipeline is not None:
+            media.pipe = pipeline
 
 
 class GstCueFactory:
@@ -37,22 +37,26 @@ class GstCueFactory:
         self.input = ''
 
     def __call__(self, id=None):
-        return gst_media_cue_factory(id=id, pipeline=self.pipeline())
+        return GstMediaCue(GstMedia(), id=id, pipeline=self.pipeline())
 
     def pipeline(self):
         return [self.input] + self.base_pipeline
 
 
 class UriAudioCueFactory(GstCueFactory):
+
     def __init__(self, base_pipeline):
         super().__init__(base_pipeline)
         self.input = 'UriInput'
 
     def __call__(self, id=None, uri=None):
-        cue = super().__call__(id=id)
+        cue = super()(id=id)
 
         if uri is not None:
-            cue.media.element('UriInput').uri = uri
+            try:
+                cue.media.elements.UriInput.uri = uri
+            except AttributeError:
+                pass
 
         return cue
 

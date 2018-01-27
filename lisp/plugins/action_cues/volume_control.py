@@ -28,7 +28,7 @@ from lisp.backend.audio_utils import MIN_VOLUME_DB, MAX_VOLUME_DB, \
 from lisp.core.decorators import async
 from lisp.core.fade_functions import FadeInType, FadeOutType
 from lisp.core.fader import Fader
-from lisp.core.has_properties import Property
+from lisp.core.properties import Property
 from lisp.cues.cue import Cue, CueAction
 from lisp.cues.media_cue import MediaCue
 from lisp.ui.cuelistdialog import CueSelectDialog
@@ -52,7 +52,7 @@ class VolumeControl(Cue):
         super().__init__(**kwargs)
         self.name = translate('CueName', self.Name)
 
-        self.__fader = Fader(None, 'current_volume')
+        self.__fader = Fader(None, 'live_volume')
         self.__init_fader()
 
     def __init_fader(self):

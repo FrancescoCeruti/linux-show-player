@@ -23,7 +23,7 @@ from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QPushButton, QLabel, \
     QHBoxLayout, QTimeEdit
 
 from lisp.application import Application
-from lisp.core.has_properties import Property
+from lisp.core.properties import Property
 from lisp.cues.cue import Cue
 from lisp.cues.media_cue import MediaCue
 from lisp.ui.cuelistdialog import CueSelectDialog

@@ -22,7 +22,7 @@ from PyQt5.QtCore import QT_TRANSLATE_NOOP
 from lisp.backend.media_element import ElementType, MediaType
 from lisp.plugins.gst_backend.gi_repository import Gst
 from lisp.plugins.gst_backend.gst_element import GstMediaElement, GstProperty, \
-    GstRuntimeProperty
+    GstLiveProperty
 
 
 class Volume(GstMediaElement):
@@ -35,8 +35,8 @@ class Volume(GstMediaElement):
     normal_volume = GstProperty('gst_normal_volume', default=1.0,
                                 gst_name='volume')
 
-    current_mute = GstRuntimeProperty('gst_volume', 'mute')
-    current_volume = GstRuntimeProperty('gst_volume', 'volume')
+    live_volume = GstLiveProperty('gst_volume', 'volume', type=float,
+                                  range=(0, 10))
 
     def __init__(self, pipe):
         super().__init__()
@@ -59,8 +59,7 @@ class Volume(GstMediaElement):
         return self.audio_convert
 
     def stop(self):
-        self.current_mute = self.mute
-        self.current_volume = self.volume
+        self.live_volume = self.volume
 
     def interrupt(self):
         self.stop()

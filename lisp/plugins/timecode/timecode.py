@@ -19,7 +19,7 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from lisp.core.has_properties import Property
+from lisp.core.properties import Property
 from lisp.core.plugin import Plugin
 from lisp.core.signal import Connection
 from lisp.cues.cue import Cue
@@ -40,13 +40,12 @@ class Timecode(Plugin):
     OptDepends = ('Midi', )
     Description = 'Provide timecode via multiple protocols'
 
-    TC_PROPERTY = 'timecode'
-
     def __init__(self, app):
         super().__init__(app)
 
         # Register a new Cue property to store settings
-        Cue.register_property(Timecode.TC_PROPERTY, Property(default={}))
+        Cue.timecode = Property(default={})
+
         # Register cue-settings-page
         CueSettingsRegistry().add_item(TimecodeSettings, MediaCue)
         # Register the settings widget
@@ -87,7 +86,7 @@ class Timecode(Plugin):
         self.__cues.clear()
 
     def __cue_changed(self, cue, property_name, value):
-        if property_name == Timecode.TC_PROPERTY:
+        if property_name == 'timecode':
             if value.get('enabled', False):
                 cue.started.connect(
                     self.__cue_tracker.track, Connection.QtQueued)
@@ -97,7 +96,7 @@ class Timecode(Plugin):
     def __cue_added(self, cue):
         cue.property_changed.connect(self.__cue_changed)
         # Check for current cue settings
-        self.__cue_changed(cue, Timecode.TC_PROPERTY, cue.timecode)
+        self.__cue_changed(cue, 'timecode', cue.timecode)
 
     def __cue_removed(self, cue):
         cue.property_changed.disconnect(self.__cue_changed)
