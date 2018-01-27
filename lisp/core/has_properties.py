@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -113,10 +113,10 @@ class HasProperties(metaclass=HasPropertiesMeta):
     def __setattr__(self, name, value):
         super().__setattr__(name, value)
 
-        if name in self.properties_names():
+        if name in self.__class__.__properties__:
             self.property_changed.emit(self, name, value)
             self.__emit_changed(name, value)
-        elif name in self.live_properties_names():
+        elif name in self.__class__.__live_properties__:
             self.__emit_changed(name, value)
 
     def __emit_changed(self, name, value):
@@ -131,19 +131,27 @@ class HasProperties(metaclass=HasPropertiesMeta):
 
         :param name: Property name
         :param prop: The property
-
-        _Deprecated: use normal attribute assignment for the class_
         """
         setattr(cls, name, prop)
+
+    @classmethod
+    def remove_property(cls, name):
+        """Remove the property with the given name.
+
+        :param name: Property name
+        """
+        delattr(cls, name)
 
     def changed(self, name):
         """
         :param name: The property name
-        :return: The property change-signal
+        :return: A signal that notify the given property changes
         :rtype: Signal
+
+        The signals returned by this method are created lazily and cached.
         """
-        if (name not in self.properties_names() and
-                name not in self.live_properties_names()):
+        if (name not in self.__class__.__properties__ and
+                name not in self.__class__.__live_properties__):
             raise ValueError('no property "{}" found'.format(name))
 
         signal = self._changed_signals.get(name)
@@ -154,24 +162,27 @@ class HasProperties(metaclass=HasPropertiesMeta):
 
         return signal
 
-    def properties(self, only_changed=False):
+    def properties(self, defaults=True):
         """
-        :param only_changed: when True only "changed" properties are collected
-        :type only_changed: bool
+        :param defaults: include/exclude properties equals to their default
+        :type defaults: bool
 
         :return: The properties as a dictionary {name: value}
         :rtype: dict
         """
-        if only_changed:
-            properties = {}
-            for name in self.properties_names():
-                changed, value = getattr(self.__class__, name).changed(self)
-                if changed:
+        properties = {}
+
+        for name in self.__class__.__properties__:
+            value = getattr(self, name)
+
+            if isinstance(value, HasProperties):
+                value = value.properties(defaults=defaults)
+                if defaults or value:
                     properties[name] = value
+            elif defaults or value != getattr(self.__class__, name).default:
+                properties[name] = value
 
-            return properties
-
-        return {name: getattr(self, name) for name in self.properties_names()}
+        return properties
 
     def update_properties(self, properties):
         """Set the given properties.
@@ -180,8 +191,12 @@ class HasProperties(metaclass=HasPropertiesMeta):
         :type properties: dict
         """
         for name, value in properties.items():
-            if name in self.properties_names():
-                setattr(self, name, value)
+            if name in self.__class__.__properties__:
+                current = getattr(self, name)
+                if isinstance(current, HasProperties):
+                    current.update_properties(value)
+                else:
+                    setattr(self, name, value)
 
     @classmethod
     def properties_defaults(cls):
@@ -198,8 +213,8 @@ class HasProperties(metaclass=HasPropertiesMeta):
         :return: A set containing the properties names
         :rtype: set[str]
         """
-        return cls.__properties__
+        return cls.__properties__.copy()
 
     @classmethod
     def live_properties_names(cls):
-        return cls.__live_properties__
+        return cls.__live_properties__.copy()

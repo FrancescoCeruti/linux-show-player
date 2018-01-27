@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -137,7 +137,7 @@ def natural_keys(text):
         l.sort(key=natural_keys) # sorts in human order
         ['something1', 'something4', 'something17']
     """
-    return [int(c) if c.isdigit() else c for c in re.split('(\d+)', text)]
+    return [int(c) if c.isdigit() else c for c in re.split('([0-9]+)', text)]
 
 
 def rhasattr(obj, attr):

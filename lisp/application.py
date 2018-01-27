@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2017 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -74,7 +74,7 @@ class Application(metaclass=Singleton):
 
     @property
     def session(self):
-        """:rtype: lisp.session.BaseSession"""
+        """:rtype: lisp.core.session.BaseSession"""
         return self.__session
 
     @property
@@ -156,7 +156,7 @@ class Application(metaclass=Singleton):
         session_dict = {"cues": []}
 
         for cue in self.__cue_model:
-            session_dict['cues'].append(cue.properties(only_changed=True))
+            session_dict['cues'].append(cue.properties(defaults=False))
         # Sort cues by index, allow sorted-models to load properly
         session_dict['cues'].sort(key=lambda cue: cue['index'])
 

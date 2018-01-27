@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@ def load():
 
 # Getter functions
 def inputs():
-    return __INPUTS
+    return __INPUTS.copy()
 
 
 def input_name(class_name):
@@ -47,7 +47,7 @@ def input_name(class_name):
 
 
 def outputs():
-    return __OUTPUTS
+    return __OUTPUTS.copy()
 
 
 def output_name(class_name):
@@ -55,8 +55,15 @@ def output_name(class_name):
 
 
 def plugins():
-    return __PLUGINS
+    return __PLUGINS.copy()
 
 
 def plugin_name(class_name):
     return __PLUGINS[class_name].Name
+
+
+def all_elements():
+    elements = inputs()
+    elements.update(plugins())
+    elements.update(outputs())
+    return elements

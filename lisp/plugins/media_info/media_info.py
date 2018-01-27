@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -49,12 +49,19 @@ class MediaInfo(Plugin):
         CueLayout.cm_registry.add_separator(MediaCue)
         CueLayout.cm_registry.add_item(self.menuAction, MediaCue)
 
-    def show_info(self, clicked):
+    def show_info(self):
         media_uri = self.app.layout.get_context_cue().media.input_uri()
-        if not media_uri:
-            QMessageBox.critical(MainWindow(), translate('MediaInfo', 'Error'),
-                                 translate('MediaInfo', 'No info to display'))
+
+        if media_uri is None:
+            QMessageBox.warning(
+                self.app.window,
+                translate('MediaInfo', 'Warning'),
+                translate('MediaInfo', 'No info to display')
+            )
         else:
+            if media_uri.startswith('file://'):
+                media_uri = 'file://' + self.app.session.abs_path(media_uri[7:])
+
             gst_info = gst_uri_metadata(media_uri)
             info = {'URI': unquote(gst_info.get_uri())}
 
@@ -78,22 +85,24 @@ class MediaInfo(Plugin):
                                            stream.get_framerate_denom()))
                 }
 
-            # Media tags
-            info['Tags'] = {}
+            # Tags
+            gst_tags = gst_info.get_tags()
+            tags = {}
 
-            tags = gst_info.get_tags()
-            if tags is not None:
-                tags = gst_parse_tags_list(tags)
-                for tag in tags:
-                    if type(tags[tag]).__str__ is not object.__str__:
-                        info['Tags'][tag.capitalize()] = str(tags[tag])
+            if gst_tags is not None:
+                for name, value in gst_parse_tags_list(gst_tags).items():
+                    tag_txt = str(value)
 
-            if not info['Tags']:
-                info.pop('Tags')
+                    # Include the value only if it's representation make sense
+                    if tag_txt != object.__str__(value):
+                        tags[name.capitalize()] = tag_txt
+
+                if tags:
+                    info['Tags'] = tags
 
             # Show the dialog
-            dialog = InfoDialog(MainWindow(), info,
-                                self.app.layout.get_context_cue().name)
+            dialog = InfoDialog(
+                self.app.window, info, self.app.layout.get_context_cue().name)
             dialog.exec_()
 
 
@@ -106,35 +115,33 @@ class InfoDialog(QDialog):
         self.setWindowModality(QtCore.Qt.ApplicationModal)
         self.setMinimumSize(550, 300)
         self.resize(550, 500)
-
-        self.vLayout = QVBoxLayout(self)
+        self.setLayout(QVBoxLayout(self))
 
         self.infoTree = QTreeWidget(self)
         self.infoTree.setColumnCount(2)
-        self.infoTree.setHeaderLabels([translate('MediaInfo', 'Info'),
-                                       translate('MediaInfo', 'Value')])
+        self.infoTree.setHeaderLabels(
+            [translate('MediaInfo', 'Info'), translate('MediaInfo', 'Value')])
         self.infoTree.setAlternatingRowColors(True)
         self.infoTree.setSelectionMode(QAbstractItemView.NoSelection)
         self.infoTree.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.infoTree.header().setStretchLastSection(False)
         self.infoTree.header().setSectionResizeMode(
             QHeaderView.ResizeToContents)
-        self.vLayout.addWidget(self.infoTree)
-
-        self.__generate_items(info)
-        self.infoTree.expandAll()
+        self.layout().addWidget(self.infoTree)
 
         self.buttonBox = QDialogButtonBox(self)
         self.buttonBox.setStandardButtons(QDialogButtonBox.Close)
-        self.vLayout.addWidget(self.buttonBox)
-
         self.buttonBox.rejected.connect(self.close)
+        self.layout().addWidget(self.buttonBox)
 
-    def __generate_items(self, info, parent=None):
+        self.populateTree(info)
+        self.infoTree.expandAll()
+
+    def populateTree(self, info, parent=None):
         for key in sorted(info.keys()):
             if isinstance(info[key], dict):
                 widget = QTreeWidgetItem([key])
-                self.__generate_items(info[key], widget)
+                self.populateTree(info[key], widget)
             else:
                 widget = QTreeWidgetItem([key, info[key]])
 

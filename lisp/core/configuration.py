@@ -33,6 +33,7 @@ from lisp.core.singleton import Singleton
 _UNSET = object()
 
 
+# TODO: HasProperties?
 class Configuration:
     """Allow to read/write json based configuration files.
 

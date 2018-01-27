@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2017 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -80,7 +80,7 @@ class Presets(Plugin):
 
         if name is not None:
             if not (preset_exists(name) and not check_override_dialog(name)):
-                preset = cue.properties(only_changed=True)
+                preset = cue.properties(defaults=False)
 
                 # Discard id and index
                 preset.pop('id')

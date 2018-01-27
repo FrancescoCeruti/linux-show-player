@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -73,7 +73,7 @@ class JackSinkSettings(SettingsPage):
         self.connections = settings.get('connections', self.connections).copy()
 
     def enable_check(self, enabled):
-        self.jackGroup.setCheckable(enable)
+        self.jackGroup.setCheckable(enabled)
         self.jackGroup.setChecked(False)
 
     def __edit_connections(self):

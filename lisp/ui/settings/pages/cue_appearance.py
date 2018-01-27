@@ -94,16 +94,16 @@ class Appearance(SettingsPage):
             translate('CueAppearanceSettings', 'Select font color'))
 
     def enable_check(self, enabled):
-        self.cueNameGroup.setCheckable(enable)
+        self.cueNameGroup.setCheckable(enabled)
         self.cueNameGroup.setChecked(False)
 
-        self.cueDescriptionGroup.setChecked(enable)
+        self.cueDescriptionGroup.setChecked(enabled)
         self.cueDescriptionGroup.setChecked(False)
 
-        self.fontSizeGroup.setCheckable(enable)
+        self.fontSizeGroup.setCheckable(enabled)
         self.fontSizeGroup.setChecked(False)
 
-        self.colorGroup.setCheckable(enable)
+        self.colorGroup.setCheckable(enabled)
         self.colorGroup.setChecked(False)
 
     def get_settings(self):

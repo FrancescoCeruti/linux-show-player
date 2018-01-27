@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2017 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,14 +25,14 @@ from lisp.core.configuration import AppConfig
 from lisp.core.decorators import async
 from lisp.core.fade_functions import FadeInType, FadeOutType
 from lisp.core.fader import Fader
-from lisp.core.properties import NestedProperties
+from lisp.core.properties import Property
 from lisp.cues.cue import Cue, CueAction, CueState
 
 
 class MediaCue(Cue):
     Name = QT_TRANSLATE_NOOP('CueName', 'Media Cue')
 
-    _media_ = NestedProperties('media', default={})
+    media = Property()
 
     CueActions = (CueAction.Default, CueAction.Start, CueAction.FadeInStart,
                   CueAction.Stop, CueAction.FadeOutStop, CueAction.Pause,

@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -59,7 +59,7 @@ class AlsaSinkSettings(SettingsPage):
         self.deviceGroup.layout().addWidget(self.label)
 
     def enable_check(self, enabled):
-        self.deviceGroup.setCheckable(enable)
+        self.deviceGroup.setCheckable(enabled)
         self.deviceGroup.setChecked(False)
 
     def load_settings(self, settings):
@@ -71,8 +71,8 @@ class AlsaSinkSettings(SettingsPage):
                 break
 
     def get_settings(self):
-        if not (
-            self.deviceGroup.isCheckable() and not self.deviceGroup.isChecked()):
+        if not (self.deviceGroup.isCheckable() and
+                not self.deviceGroup.isChecked()):
             return {'device': self.devices[self.device.currentText()]}
 
         return {}

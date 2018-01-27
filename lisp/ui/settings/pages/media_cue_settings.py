@@ -101,13 +101,13 @@ class MediaCueSettings(SettingsPage):
         return conf
 
     def enable_check(self, enabled):
-        self.startGroup.setCheckable(enable)
+        self.startGroup.setCheckable(enabled)
         self.startGroup.setChecked(False)
 
-        self.stopGroup.setCheckable(enable)
+        self.stopGroup.setCheckable(enabled)
         self.stopGroup.setChecked(False)
 
-        self.loopGroup.setCheckable(enable)
+        self.loopGroup.setCheckable(enabled)
         self.loopGroup.setChecked(False)
 
     def load_settings(self, settings):

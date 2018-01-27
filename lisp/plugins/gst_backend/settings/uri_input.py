@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -97,7 +97,7 @@ class UriInputSettings(SettingsPage):
         self.filePath.setText(settings.get('uri', ''))
 
     def enable_check(self, enabled):
-        self.fileGroup.setCheckable(enable)
+        self.fileGroup.setCheckable(enabled)
         self.fileGroup.setChecked(False)
 
     def select_file(self):

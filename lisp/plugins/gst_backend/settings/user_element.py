@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -57,7 +57,7 @@ class UserElementSettings(SettingsPage):
             translate('UserElementSettings', 'Only for advanced user!'))
 
     def enable_check(self, enabled):
-        self.groupBox.setCheckable(enable)
+        self.groupBox.setCheckable(enabled)
         self.groupBox.setChecked(False)
 
     def load_settings(self, settings):

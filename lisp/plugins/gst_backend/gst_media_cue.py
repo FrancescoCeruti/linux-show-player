@@ -40,7 +40,8 @@ class GstCueFactory:
         return GstMediaCue(GstMedia(), id=id, pipeline=self.pipeline())
 
     def pipeline(self):
-        return [self.input] + self.base_pipeline
+        if self.base_pipeline and self.input:
+            return [self.input] + self.base_pipeline
 
 
 class UriAudioCueFactory(GstCueFactory):
@@ -50,7 +51,7 @@ class UriAudioCueFactory(GstCueFactory):
         self.input = 'UriInput'
 
     def __call__(self, id=None, uri=None):
-        cue = super()(id=id)
+        cue = super().__call__(id=id)
 
         if uri is not None:
             try:

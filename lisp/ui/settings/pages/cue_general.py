@@ -209,21 +209,21 @@ class CueGeneralSettings(CueSettingsPage):
         self.fadeOutEdit.setDuration(settings.get('fadeout_duration', 0))
 
     def enable_check(self, enabled):
-        self.startActionGroup.setCheckable(enable)
+        self.startActionGroup.setCheckable(enabled)
         self.startActionGroup.setChecked(False)
-        self.stopActionGroup.setCheckable(enable)
+        self.stopActionGroup.setCheckable(enabled)
         self.stopActionGroup.setChecked(False)
 
-        self.preWaitGroup.setCheckable(enable)
+        self.preWaitGroup.setCheckable(enabled)
         self.preWaitGroup.setChecked(False)
-        self.postWaitGroup.setCheckable(enable)
+        self.postWaitGroup.setCheckable(enabled)
         self.postWaitGroup.setChecked(False)
-        self.nextActionGroup.setCheckable(enable)
+        self.nextActionGroup.setCheckable(enabled)
         self.nextActionGroup.setChecked(False)
 
-        self.fadeInGroup.setCheckable(enable)
+        self.fadeInGroup.setCheckable(enabled)
         self.fadeInGroup.setChecked(False)
-        self.fadeOutGroup.setCheckable(enable)
+        self.fadeOutGroup.setCheckable(enabled)
         self.fadeOutGroup.setChecked(False)
 
     def get_settings(self):

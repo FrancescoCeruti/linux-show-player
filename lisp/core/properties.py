@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2017 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -70,13 +70,6 @@ class Property:
             if value != instance.__dict__.get(self.name, self.default):
                 instance.__dict__[self.name] = value
 
-    def changed(self, instance):
-        if instance is not None:
-            value = self.__get__(instance)
-            return value != self.default, value
-
-        return False, self.default
-
 
 class WriteOnceProperty(Property):
     """Property that can be modified only once.
@@ -88,43 +81,3 @@ class WriteOnceProperty(Property):
     def __set__(self, instance, value):
         if self.__get__(instance) == self.default:
             super().__set__(instance, value)
-
-
-class NestedProperties(Property):
-    """Simplify retrieving the properties of nested objects.
-
-    The goal is to avoid the reimplementation of `properties()` and
-    `update_properties()` functions.
-
-    ..note::
-        When getting or setting a single property of the nested object is better
-        to access it directly instead that using the nested-property.
-
-        Because of this is suggested to use a "special" name for the
-        nested-property, for example use "_media_" instead of "media".
-    """
-
-    def __init__(self, provider_name, default=None, **meta):
-        super().__init__(default=default, **meta)
-        self.provider_name = provider_name
-
-    def __get__(self, instance, owner=None):
-        if instance is None:
-            return self
-        else:
-            return self.provider(instance).properties()
-
-    def __set__(self, instance, value):
-        if instance is not None:
-            self.provider(instance).update_properties(value)
-
-    def changed(self, instance):
-        if instance is not None:
-            properties = self.provider(instance).properties(only_changed=True)
-            # If no properties is changed (empty dict) return false
-            return bool(properties), properties
-
-        return False, {}
-
-    def provider(self, instance):
-        return instance.__dict__.get(self.provider_name)

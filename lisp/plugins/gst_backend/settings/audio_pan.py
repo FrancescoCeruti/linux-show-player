@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -61,7 +61,7 @@ class AudioPanSettings(SettingsPage):
         self.panLabel.setText(translate('AudioPanSettings', 'Center'))
 
     def enable_check(self, enabled):
-        self.panBox.setCheckable(enable)
+        self.panBox.setCheckable(enabled)
         self.panBox.setChecked(False)
 
     def get_settings(self):

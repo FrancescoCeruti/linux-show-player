@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -48,35 +48,36 @@ class Media(HasProperties):
     duration = Property(default=0)
     start_time = Property(default=0)
     stop_time = Property(default=0)
+    elements = Property(default={})
 
     def __init__(self):
         super().__init__()
 
         self.paused = Signal()
-        """Emitted when paused (self)"""
+        # Emitted when paused (self)
         self.played = Signal()
-        """Emitted when played (self)"""
+        # Emitted when played (self)
         self.stopped = Signal()
-        """Emitted when stopped (self)"""
+        # Emitted when stopped (self)
         self.interrupted = Signal()
-        """Emitted after interruption (self)"""
+        # Emitted after interruption (self)
         self.eos = Signal()
-        """End-of-Stream (self)"""
+        # End-of-Stream (self)
 
         self.on_play = Signal()
-        """Emitted before play (self)"""
+        # Emitted before play (self)
         self.on_stop = Signal()
-        """Emitted before stop (self)"""
+        # Emitted before stop (self)
         self.on_pause = Signal()
-        """Emitted before pause (self)"""
+        # Emitted before pause (self)
 
         self.sought = Signal()
-        """Emitted after a seek (self, position)"""
+        # Emitted after a seek (self, position)
         self.error = Signal()
-        """Emitted when an error occurs (self, error, details)"""
+        # Emitted when an error occurs (self, error, details)
 
         self.elements_changed = Signal()
-        """Emitted when one or more elements are added/removed (self)"""
+        # Emitted when one or more elements are added/removed (self)
 
     @property
     @abstractmethod
@@ -101,20 +102,6 @@ class Media(HasProperties):
 
         :return: The element with the specified class-name or None
         :rtype: lisp.core.base.media_element.MediaElement
-        """
-
-    @abstractmethod
-    def elements(self):
-        """
-        :return: All the MediaElement(s) of the media
-        :rtype: list
-        """
-
-    @abstractmethod
-    def elements_properties(self):
-        """
-        :return: Media elements configurations
-        :rtype: dict
         """
 
     @abstractmethod
@@ -147,11 +134,3 @@ class Media(HasProperties):
     @abstractmethod
     def stop(self):
         """The media go in STOPPED state and stop the playback."""
-
-    @abstractmethod
-    def update_elements(self, settings):
-        """Update the elements configuration.
-
-        :param settings: Media-elements settings
-        :type settings: dict
-        """

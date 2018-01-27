@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,14 +20,15 @@
 import weakref
 
 from lisp.backend.media import Media, MediaState
-from lisp.core.properties import Property
-from lisp.plugins.gst_backend import elements
+from lisp.core.has_properties import HasProperties
+from lisp.core.properties import Property, WriteOnceProperty
+from lisp.plugins.gst_backend import elements as gst_elements
 from lisp.plugins.gst_backend.gi_repository import Gst
 
 
 def validate_pipeline(pipe, rebuild=False):
     # The first must be an input element
-    if pipe[0] not in elements.inputs().keys():
+    if pipe[0] not in gst_elements.inputs().keys():
         return False
 
     # The middle elements must be plugins elements
@@ -36,13 +37,13 @@ def validate_pipeline(pipe, rebuild=False):
             pipe = list(pipe)
 
         pipe[1:-1] = set(pipe[1:-1]).intersection(
-            set(elements.plugins().keys()))
+            set(gst_elements.plugins().keys()))
     else:
-        if len(set(pipe[1:-1]) - set(elements.plugins().keys())) != 0:
+        if len(set(pipe[1:-1]) - set(gst_elements.plugins().keys())) != 0:
             return False
 
     # The last must be an output element
-    if pipe[-1] not in elements.outputs().keys():
+    if pipe[-1] not in gst_elements.outputs().keys():
         return False
 
     return pipe if rebuild else True
@@ -52,15 +53,16 @@ class GstMedia(Media):
     """Media implementation based on the GStreamer framework."""
 
     pipe = Property(default=())
+    elements = Property(default=None)
 
     def __init__(self):
         super().__init__()
 
         self._state = MediaState.Null
-        self._elements = []
         self._old_pipe = ''
         self._loop_count = 0
 
+        self.elements = GstMediaElements()
         self._gst_pipe = Gst.Pipeline()
         self._gst_state = Gst.State.NULL
         self._time_query = Gst.Query.new_position(Gst.Format.TIME)
@@ -73,7 +75,7 @@ class GstMedia(Media):
         on_message = weakref.WeakMethod(self.__on_message)
         handler = bus.connect('message', lambda *args: on_message()(*args))
         weakref.finalize(self, self.__finalizer, self._gst_pipe, handler,
-                         self._elements)
+                         self.elements)
 
         self.changed('loop').connect(self.__prepare_loops)
         self.changed('pipe').connect(self.__prepare_pipe)
@@ -95,13 +97,13 @@ class GstMedia(Media):
                 raise ValueError('Invalid pipeline "{0}"'.format(pipe))
 
             # Build the pipeline
-            elements_properties = self.elements_properties()
+            ep_copy = self.elements.properties()
             self.__build_pipeline()
-            self.update_elements(elements_properties)
+            self.elements.update_properties(ep_copy)
 
-            self._elements[0].changed('duration').connect(
+            self.elements[0].changed('duration').connect(
                 self.__duration_changed)
-            self.__duration_changed(self._elements[0].duration)
+            self.__duration_changed(self.elements[0].duration)
 
     def current_time(self):
         ok, position = self._gst_pipe.query_position(Gst.Format.TIME)
@@ -111,7 +113,7 @@ class GstMedia(Media):
         if self.state == MediaState.Stopped or self.state == MediaState.Paused:
             self.on_play.emit(self)
 
-            for element in self._elements:
+            for element in self.elements:
                 element.play()
 
             self._state = MediaState.Playing
@@ -127,7 +129,7 @@ class GstMedia(Media):
         if self.state == MediaState.Playing:
             self.on_pause.emit(self)
 
-            for element in self._elements:
+            for element in self.elements:
                 element.pause()
 
             self._state = MediaState.Paused
@@ -142,7 +144,7 @@ class GstMedia(Media):
         if self.state == MediaState.Playing or self.state == MediaState.Paused:
             self.on_stop.emit(self)
 
-            for element in self._elements:
+            for element in self.elements:
                 element.stop()
 
             self.interrupt(emit=False)
@@ -184,31 +186,16 @@ class GstMedia(Media):
             self.sought.emit(self, position)
 
     def element(self, class_name):
-        for element in self._elements:
-            if type(element).__name__ == class_name:
-                return element
-
-    def elements(self):
-        return self._elements.copy()
-
-    def elements_properties(self, only_changed=False):
-        properties = {}
-
-        for element in self._elements:
-            e_properties = element.properties(only_changed)
-            if e_properties:
-                properties[type(element).__name__] = e_properties
-
-        return properties
+        return getattr(self.elements, class_name, None)
 
     def input_uri(self):
         try:
-            return self._elements[0].input_uri()
+            return self.elements[0].input_uri()
         except Exception:
             pass
 
     def interrupt(self, dispose=False, emit=True):
-        for element in self._elements:
+        for element in self.elements:
             element.interrupt()
 
         state = self._state
@@ -226,62 +213,32 @@ class GstMedia(Media):
                      state == MediaState.Paused):
             self.interrupted.emit(self)
 
-    def properties(self, only_changed=False):
-        properties = super().properties(only_changed).copy()
-        properties['elements'] = self.elements_properties(only_changed)
-        return properties
-
-    def update_elements(self, properties):
-        for element in self._elements:
-            if type(element).__name__ in properties:
-                element.update_properties(properties[type(element).__name__])
-
     def update_properties(self, properties):
-        elements_properties = properties.pop('elements', {})
-        super().update_properties(properties)
+        # In order to update the other properties we need the pipeline
+        pipe = properties.pop('pipe', None)
+        if pipe:
+            self.pipe = pipe
 
-        self.update_elements(elements_properties)
+        super().update_properties(properties)
 
         if self.state == MediaState.Null or self.state == MediaState.Error:
             self._state = MediaState.Stopped
 
-    @staticmethod
-    def _pipe_elements():
-        tmp = {}
-        tmp.update(elements.inputs())
-        tmp.update(elements.outputs())
-        tmp.update(elements.plugins())
-        return tmp
-
-    def __append_element(self, element):
-        if self._elements:
-            self._elements[-1].link(element)
-
-        self._elements.append(element)
-
-    def __remove_element(self, index):
-        if index > 0:
-            self._elements[index - 1].unlink(self._elements[index])
-        if index < len(self._elements) - 1:
-            self._elements[index - 1].link(self._elements[index + 1])
-            self._elements[index].unlink(self._elements[index])
-
-        self._elements.pop(index).dispose()
-
     def __build_pipeline(self):
         # Set to NULL the pipeline
         self.interrupt(dispose=True)
+
         # Remove all pipeline children
         for __ in range(self._gst_pipe.get_children_count()):
             self._gst_pipe.remove(self._gst_pipe.get_child_by_index(0))
+
         # Remove all the elements
-        for __ in range(len(self._elements)):
-            self.__remove_element(len(self._elements) - 1)
+        self.elements.clear()
 
         # Create all the new elements
-        pipe_elements = self._pipe_elements()
+        all_elements = gst_elements.all_elements()
         for element in self.pipe:
-            self.__append_element(pipe_elements[element](self._gst_pipe))
+            self.elements.append(all_elements[element](self._gst_pipe))
 
         # Set to Stopped/READY the pipeline
         self._state = MediaState.Stopped
@@ -326,5 +283,62 @@ class GstMedia(Media):
         bus.remove_signal_watch()
         bus.disconnect(connection_handler)
 
-        for element in media_elements:
-            element.dispose()
+        media_elements.clear()
+
+
+def GstMediaElements():
+    return type('GstMediaElements', (_GstMediaElements, ), {})()
+
+
+class _GstMediaElements(HasProperties):
+
+    def __init__(self):
+        super().__init__()
+        self.elements = []
+
+    def __getitem__(self, index):
+        return self.elements[index]
+
+    def __len__(self):
+        return len(self.elements)
+
+    def __contains__(self, item):
+        return item in self.elements
+
+    def __iter__(self):
+        return iter(self.elements)
+
+    def append(self, element):
+        """
+        :type element: lisp.backend.media_element.MediaElement
+        """
+        if self.elements:
+            self.elements[-1].link(element)
+        self.elements.append(element)
+
+        # Add a property for the new added element
+        self.register_property(
+            element.__class__.__name__,
+            WriteOnceProperty(default=None)
+        )
+        setattr(self, element.__class__.__name__, element)
+
+    def remove(self, element):
+        self.pop(self.elements.index(element))
+
+    def pop(self, index):
+        if index > 0:
+            self.elements[index - 1].unlink(self.elements[index])
+        if index < len(self.elements) - 1:
+            self.elements[index].unlink(self.elements[index + 1])
+            self.elements[index - 1].link(self.elements[index + 1])
+
+        element = self.elements.pop(index)
+        element.dispose()
+
+        # Remove the element corresponding property
+        self.remove_property(element.__class__.__name__)
+
+    def clear(self):
+        while self.elements:
+            self.pop(len(self.elements) - 1)

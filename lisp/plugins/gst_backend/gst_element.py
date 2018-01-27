@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -60,10 +60,12 @@ class GstLiveProperty(LiveProperty):
     def __set__(self, instance, value):
         if self.adapter is not None:
             value = self.adapter(value)
-        getattr(instance, self.element_name).set_property(self.property_name,
-                                                          value)
+
+        getattr(instance, self.element_name).set_property(
+            self.property_name, value)
 
 
+# TODO: base provide base implementation of __init__
 class GstMediaElement(MediaElement):
     """All the subclass must take the pipeline as first __init__ argument"""
 

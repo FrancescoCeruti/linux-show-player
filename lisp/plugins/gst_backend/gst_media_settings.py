@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -55,7 +55,7 @@ class GstMediaSettings(SettingsPage):
         self.pipeButton.clicked.connect(self.__edit_pipe)
 
     def load_settings(self, settings):
-        settings = settings.get('_media_', {})
+        settings = settings.get('media', {})
         # Create a local copy of the configuration
         self._settings = deepcopy(settings)
 
@@ -90,7 +90,7 @@ class GstMediaSettings(SettingsPage):
         if not self._check:
             settings['pipe'] = self._settings['pipe']
 
-        return {'_media_': settings}
+        return {'media': settings}
 
     def enable_check(self, enabled):
         self._check = enabled
@@ -111,7 +111,7 @@ class GstMediaSettings(SettingsPage):
 
     def __edit_pipe(self):
         # Backup the settings
-        self._settings = self.get_settings()['_media_']
+        self._settings = self.get_settings()['media']
 
         # Show the dialog
         dialog = GstPipeEditDialog(self._settings.get('pipe', ()), parent=self)
@@ -128,5 +128,5 @@ class GstMediaSettings(SettingsPage):
             # Reload with the new pipeline
             self._settings['pipe'] = dialog.get_pipe()
 
-            self.load_settings({'_media_': self._settings})
+            self.load_settings({'media': self._settings})
             self.enable_check(self._check)

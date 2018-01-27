@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -274,7 +274,7 @@ class CueWidget(QWidget):
         self.nameButton.setToolTip(description)
 
     def _change_volume(self, new_volume):
-        self._volume_element.current_volume = slider_to_fader(
+        self._volume_element.live_volume = slider_to_fader(
             new_volume / CueWidget.SLIDER_RANGE)
 
     def _clicked(self, event):
