@@ -21,15 +21,44 @@ import mido
 
 from lisp.core.configuration import config
 
+#: Define MIDI message attributes as {name : (min, max, default)}
+MIDI_ATTRIBUTES = {
+    'channel': (0, 15, 0),
+    'note': (0, 127, 0),
+    'velocity': (0, 127, 64),
+    'control': (0, 127, 0),
+    'program': (0, 127, 0),
+    'value': (0, 127, 0),
+    'song': (0, 127, 0),
+    'pitch': (-8192, 8191, 0),
+    'pos': (0, 16383, 0)
+}
+
+
+#: Define MIDI message types as {name : (attribute1, ..., attributeN)}
+MIDI_MESSAGES = {
+    'note_on': ('channel', 'note', 'velocity'),
+    'note_off': ('channel', 'note', 'velocity'),
+    'control_change': ('channel', 'control', 'value'),
+    'program_change': ('channel', 'program',),
+    'polytouch': ('channel', 'note', 'value'),
+    'pitchwheel': ('channel', 'pitch',),
+    'song_select': ('song',),
+    'songpos': ('pos',),
+    'start': (),
+    'stop': (),
+    'continue': (),
+}
+
 
 def str_msg_to_dict(str_message):
     message = mido.parse_string(str_message)
-    dict_msg = {'type': message.type}
+    dict_message = {'type': message.type}
 
-    for name in message._spec.arguments:
-        dict_msg[name] = getattr(message, name)
+    for name in MIDI_MESSAGES.get(message.type, ()):
+        dict_message[name] = getattr(message, name)
 
-    return dict_msg
+    return dict_message
 
 
 def dict_msg_to_str(dict_message):
