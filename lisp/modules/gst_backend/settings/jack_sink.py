@@ -20,7 +20,7 @@
 import jack
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPainter, QPolygon, QPainterPath
-from PyQt5.QtWidgets import QGroupBox, QLineEdit, QLabel, QWidget, \
+from PyQt5.QtWidgets import QGroupBox, QWidget, \
     QHBoxLayout, QTreeWidget, QTreeWidgetItem, QGridLayout, QDialog, \
     QDialogButtonBox, QPushButton, QVBoxLayout
 
@@ -46,7 +46,7 @@ class JackSinkSettings(SettingsPage):
         self.connectionsEdit.clicked.connect(self.__edit_connections)
         self.jackGroup.layout().addWidget(self.connectionsEdit)
 
-        self.__jack_client = jack.Client('LinuxShowPlayer_SettingsControl')
+        self.__jack_client = jack.Client('LiSP_SettingsControl')
         self.connections = JackSink.default_connections(self.__jack_client)
 
         self.retranlsateUi()
@@ -57,6 +57,8 @@ class JackSinkSettings(SettingsPage):
             translate('JackSinkSettings', 'Edit connections'))
 
     def closeEvent(self, event):
+        print('COLSE')
+        self.__jack_client.deactivate()
         self.__jack_client.close()
         super().closeEvent(event)
 
