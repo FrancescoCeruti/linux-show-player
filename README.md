@@ -16,12 +16,7 @@ For bugs/requests an issue can be open on the GitHub issues-tracker, for everyth
 You can download an [AppImage](http://appimage.org/) bundle of LiSP from the release page, once downloaded make the file executable.
 Now you should be able to run LiSP by double-clicking the file.
 
-Tested on the following systems *(it should work on newer versions)*:
- * Debian 8
- * Ubuntu 16.04
- * Fedora 24
-
-<br />Otherwise follow the instructions on the [wiki](https://github.com/FrancescoCeruti/linux-show-player/wiki/Install) 
+<br />Otherwise follow the instructions on the [wiki](https://github.com/FrancescoCeruti/linux-show-player/wiki/Install) to install it manually
 
 ---
 
