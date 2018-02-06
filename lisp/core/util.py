@@ -25,6 +25,7 @@ from os import listdir
 from os.path import isdir, exists, join
 
 import functools
+from uuid import uuid4
 
 
 def deep_update(d1, d2):
@@ -237,3 +238,15 @@ class FunctionProxy:
 
     def __call__(self, *args, **kwargs):
         return self.function(*args, **kwargs)
+
+
+class InstanceOfSubclassMeta(type):
+    """Some horrible black magic here"""
+    _MAGIC = str(uuid4())
+
+    def __call__(cls, *args, **kwargs):
+        if kwargs.pop(cls._MAGIC, False):
+            return super().__call__(*args, **kwargs)
+
+        kwargs.update({cls._MAGIC: True})
+        return type(cls.__name__, (cls, ), {})(*args, **kwargs)

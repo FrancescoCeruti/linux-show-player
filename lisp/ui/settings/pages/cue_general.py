@@ -52,7 +52,9 @@ class CueGeneralSettings(CueSettingsPage):
             {
                 CueAction.Start,
                 CueAction.FadeInStart
-            }.intersection(cue_class.CueActions),
+            }.intersection(cue_class.CueActions).union({
+                CueAction.DoNothing
+            }),
             mode=CueActionComboBox.Mode.Value,
             parent=self.startActionGroup
         )
@@ -74,7 +76,9 @@ class CueGeneralSettings(CueSettingsPage):
                 CueAction.Pause,
                 CueAction.FadeOutStop,
                 CueAction.FadeOutPause
-            }.intersection(cue_class.CueActions),
+            }.intersection(cue_class.CueActions).union({
+                CueAction.DoNothing
+            }),
             mode=CueActionComboBox.Mode.Value,
             parent=self.stopActionGroup
         )

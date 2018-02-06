@@ -60,6 +60,7 @@ class CueAction(EqEnum):
     Start = 'Start'
     Stop = 'Stop'
     Pause = 'Pause'
+    DoNothing = 'DoNothing'
 
 
 class CueNextAction(EqEnum):
@@ -99,6 +100,8 @@ class Cue(HasProperties):
     A cue should declare CueAction.Default as supported only if CueAction.Start
     and CueAction.Stop are both supported.
     If CueAction.Stop is supported, CueAction.Interrupt should be supported.
+    CueAction.DoNothing doesn't need to be declared, it should always be
+    considered as supported.
 
     .. Note::
         If 'next_action' is AutoFollow or DoNothing, the postwait is not
@@ -181,30 +184,32 @@ class Cue(HasProperties):
             else:
                 action = CueAction(self.default_start_action)
 
-        if action is CueAction.Interrupt:
-            self.interrupt()
-        elif action is CueAction.FadeOutInterrupt:
-            self.interrupt(fade=True)
-        elif action in self.CueActions:
-            if action == CueAction.Start:
+        if action is CueAction.DoNothing:
+            return
+        if action in self.CueActions:
+            if action is CueAction.Interrupt:
+                self.interrupt()
+            elif action is CueAction.FadeOutInterrupt:
+                self.interrupt(fade=True)
+            if action is CueAction.Start:
                 self.start()
-            elif action == CueAction.FadeInStart:
+            elif action is CueAction.FadeInStart:
                 self.start(fade=self.fadein_duration > 0)
-            elif action == CueAction.Stop:
+            elif action is CueAction.Stop:
                 self.stop()
-            elif action == CueAction.FadeOutStop:
+            elif action is CueAction.FadeOutStop:
                 self.stop(fade=self.fadeout_duration > 0)
-            elif action == CueAction.Pause:
+            elif action is CueAction.Pause:
                 self.pause()
-            elif action == CueAction.FadeOutPause:
+            elif action is CueAction.FadeOutPause:
                 self.pause(fade=self.fadeout_duration > 0)
-            elif action == CueAction.FadeOut:
+            elif action is CueAction.FadeOut:
                 duration = AppConfig().get('Cue', 'FadeActionDuration', 0)
                 fade = AppConfig().get(
                     'Cue', 'FadeActionType', FadeOutType.Linear.name)
 
                 self.fadeout(duration, FadeOutType[fade])
-            elif action == CueAction.FadeIn:
+            elif action is CueAction.FadeIn:
                 duration = AppConfig().get('Cue', 'FadeActionDuration', 0)
                 fade = AppConfig().get(
                     'Cue', 'FadeActionType', FadeInType.Linear.name)
