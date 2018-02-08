@@ -95,26 +95,26 @@ class CartLayoutSettings(SettingsPage):
 
     def get_settings(self):
         conf = {
-            'GridColumns': self.columnsSpin.value(),
-            'GridRows': self.rowsSpin.value(),
-            'ShowDbMeters': self.showDbMeters.isChecked(),
-            'ShowSeek': self.showSeek.isChecked(),
-            'ShowAccurate': self.showAccurate.isChecked(),
-            'ShowVolume': self.showVolume.isChecked(),
-            'Countdown': self.countdownMode.isChecked(),
-            'AutoAddPage': self.autoAddPage.isChecked()
+            'gridColumns': self.columnsSpin.value(),
+            'gridRows': self.rowsSpin.value(),
+            'showDbMeters': self.showDbMeters.isChecked(),
+            'showSeek': self.showSeek.isChecked(),
+            'showAccurate': self.showAccurate.isChecked(),
+            'showVolume': self.showVolume.isChecked(),
+            'countdown': self.countdownMode.isChecked(),
+            'autoAddPage': self.autoAddPage.isChecked()
         }
 
-        return {'CartLayout': conf}
+        return {'cartLayout': conf}
 
     def load_settings(self, settings):
-        settings = settings.get('CartLayout', {})
+        settings = settings.get('cartLayout', {})
 
-        self.columnsSpin.setValue(settings['GridColumns'])
-        self.rowsSpin.setValue(settings['GridRows'])
-        self.showSeek.setChecked(settings['ShowSeek'])
-        self.showDbMeters.setChecked(settings['ShowDbMeters'])
-        self.showAccurate.setChecked(settings['ShowAccurate'])
-        self.showVolume.setChecked(settings['ShowVolume'])
-        self.countdownMode.setChecked(settings['Countdown'])
-        self.autoAddPage.setChecked(settings['AutoAddPage'])
+        self.columnsSpin.setValue(settings['gridColumns'])
+        self.rowsSpin.setValue(settings['gridRows'])
+        self.showSeek.setChecked(settings['showSeek'])
+        self.showDbMeters.setChecked(settings['showDbMeters'])
+        self.showAccurate.setChecked(settings['showAccurate'])
+        self.showVolume.setChecked(settings['showVolume'])
+        self.countdownMode.setChecked(settings['countdown'])
+        self.autoAddPage.setChecked(settings['autoAddPage'])

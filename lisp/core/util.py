@@ -81,9 +81,12 @@ def strtime(time, accurate=False):
         return '{:02}:{:02}.00'.format(*time[1:3])
 
 
-def compose_http_url(url, port, directory='/'):
+def compose_http_url(address, port, path='/'):
     """Compose an http URL."""
-    return 'http://' + url + ':' + str(port) + directory
+    if not path.startswith('/'):
+        path = '/' + path
+
+    return 'http://{}:{}{}'.format(address, port, path)
 
 
 def greatest_common_superclass(instances):
@@ -101,7 +104,7 @@ def get_lan_ip():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     try:
         # Doesn't have to be reachable
-        s.connect(('10.255.255.255', 0))
+        s.connect(('10.10.10.10', 0))
         ip = s.getsockname()[0]
     except:
         ip = '127.0.0.1'
@@ -241,7 +244,11 @@ class FunctionProxy:
 
 
 class InstanceOfSubclassMeta(type):
-    """Some horrible black magic here"""
+    """Some horrible black magic here
+
+    When creating an object from a class using this metaclass,
+    an instance of a subclass created on-the-fly will be returned.
+    """
     _MAGIC = str(uuid4())
 
     def __call__(cls, *args, **kwargs):

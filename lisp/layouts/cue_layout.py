@@ -94,22 +94,22 @@ class CueLayout:
         """
 
     def stop_all(self):
-        fade = AppConfig().get('Layout', 'StopAllFade')
+        fade = AppConfig().get('layout.stopAllFade', False)
         for cue in self.model_adapter:
             cue.stop(fade=fade)
 
     def interrupt_all(self):
-        fade = AppConfig().get('Layout','InterruptAllFade')
+        fade = AppConfig().get('layout.interruptAllFade', False)
         for cue in self.model_adapter:
             cue.interrupt(fade=fade)
 
     def pause_all(self):
-        fade = AppConfig().get('Layout','PauseAllFade')
+        fade = AppConfig().get('layout.pauseAllFade', False)
         for cue in self.model_adapter:
             cue.pause(fade=fade)
 
     def resume_all(self):
-        fade = AppConfig().get('Layout','ResumeAllFade')
+        fade = AppConfig().get('layout.resumeAllFade', True)
         for cue in self.model_adapter:
             cue.resume(fade=fade)
 

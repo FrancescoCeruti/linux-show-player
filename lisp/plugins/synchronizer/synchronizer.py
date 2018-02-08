@@ -69,7 +69,8 @@ class Synchronizer(Plugin):
         self.cue_media.clear()
 
     def manage_peers(self):
-        manager = PeersDialog(self.peers, parent=self.app.window)
+        manager = PeersDialog(
+            self.peers, Synchronizer.Config, parent=self.app.window)
         manager.exec_()
 
     def show_ip(self):

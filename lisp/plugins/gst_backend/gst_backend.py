@@ -111,7 +111,7 @@ class GstBackend(Plugin, BaseBackend):
         QApplication.setOverrideCursor(QCursor(Qt.WaitCursor))
 
         # Create media cues, and add them to the Application cue_model
-        factory = UriAudioCueFactory(GstBackend.Config['Pipeline'])
+        factory = UriAudioCueFactory(GstBackend.Config['pipeline'])
 
         for file in files:
             file = self.app.session.rel_path(file)

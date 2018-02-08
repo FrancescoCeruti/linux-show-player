@@ -27,7 +27,7 @@ from lisp.ui.ui_utils import translate
 
 
 class PeersDiscoveryDialog(QDialog):
-    def __init__(self, **kwargs):
+    def __init__(self, config, **kwargs):
         super().__init__(**kwargs)
 
         self.setWindowModality(Qt.ApplicationModal)
@@ -48,7 +48,9 @@ class PeersDiscoveryDialog(QDialog):
 
         self.retranslateUi()
 
-        self._discoverer = Discoverer()
+        self._discoverer = Discoverer(
+            config['ip'], config['discovery.port'], config['discovery.magic']
+        )
         self._discoverer.discovered.connect(self._new_peer, Connection.QtQueued)
 
     def retranslateUi(self):

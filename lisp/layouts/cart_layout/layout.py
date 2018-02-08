@@ -56,17 +56,17 @@ class CartLayout(QTabWidget, CueLayout):
         super().__init__(cue_model=cue_model, **kwargs)
         self.tabBar().setObjectName('CartTabBar')
 
-        self.__columns = AppConfig()['CartLayout']['GridColumns']
-        self.__rows = AppConfig()['CartLayout']['GridRows']
+        self.__columns = AppConfig()['cartLayout.gridColumns']
+        self.__rows = AppConfig()['cartLayout.gridRows']
         self.__pages = []
         self.__context_widget = None
 
-        self._show_seek = AppConfig()['CartLayout']['ShowSeek']
-        self._show_dbmeter = AppConfig()['CartLayout']['ShowDbMeters']
-        self._show_volume = AppConfig()['CartLayout']['ShowVolume']
-        self._accurate_timing = AppConfig()['CartLayout']['ShowAccurate']
-        self._countdown_mode = AppConfig()['CartLayout']['Countdown']
-        self._auto_add_page = AppConfig()['CartLayout']['AutoAddPage']
+        self._show_seek = AppConfig()['cartLayout.showSeek']
+        self._show_dbmeter = AppConfig()['cartLayout.showDbMeters']
+        self._show_volume = AppConfig()['cartLayout.showVolume']
+        self._accurate_timing = AppConfig()['cartLayout.showAccurate']
+        self._countdown_mode = AppConfig()['cartLayout.countdown']
+        self._auto_add_page = AppConfig()['cartLayout.autoAddPage']
 
         self._model_adapter = CueCartModel(cue_model, self.__rows, self.__columns)
         self._model_adapter.item_added.connect(self.__cue_added, Connection.QtQueued)

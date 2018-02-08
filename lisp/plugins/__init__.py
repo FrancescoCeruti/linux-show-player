@@ -21,7 +21,7 @@ import inspect
 from os import path
 
 from lisp import USER_DIR
-from lisp.core.configuration import Configuration
+from lisp.core.configuration import JSONFileConfiguration
 from lisp.core.loading import load_classes
 from lisp.ui import elogging
 from lisp.ui.ui_utils import install_translation
@@ -47,7 +47,7 @@ def load_plugins(application):
                 default_config_path = FALLBACK_CONFIG_PATH
 
             # Load plugin configuration
-            config = Configuration(
+            config = JSONFileConfiguration(
                 path.join(USER_DIR, mod_name + '.json'),
                 default_config_path
             )

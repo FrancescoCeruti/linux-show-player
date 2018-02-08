@@ -46,7 +46,7 @@ class GstSettings(SettingsPage):
         self.pipeGroup.setTitle(translate('GstSettings', 'Pipeline'))
 
     def get_settings(self):
-        return {'Pipeline': list(self.pipeEdit.get_pipe())}
+        return {'pipeline': list(self.pipeEdit.get_pipe())}
 
     def load_settings(self, settings):
-        self.pipeEdit.set_pipe(settings['Pipeline'])
+        self.pipeEdit.set_pipe(settings['pipeline'])

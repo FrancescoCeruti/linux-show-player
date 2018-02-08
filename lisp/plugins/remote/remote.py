@@ -33,20 +33,16 @@ class Remote(Plugin):
         super().__init__(app)
 
         self._controller = RemoteController(
-            app, Remote.Config['IP'], Remote.Config['Port'])
+            app, Remote.Config['ip'], Remote.Config['port'])
         self._controller.start()
 
         self._announcer = Announcer(
-            Remote.Config['IP'],
-            Remote.Config['Discovery']['Port'],
-            Remote.Config['Discovery']['Magic']
+            Remote.Config['ip'],
+            Remote.Config['discovery.port'],
+            Remote.Config['discovery.magic']
         )
         self._announcer.start()
 
     def terminate(self):
         self._controller.stop()
         self._announcer.stop()
-
-
-def compose_uri(url, port, directory='/'):
-    return 'http://' + url + ':' + str(port) + directory

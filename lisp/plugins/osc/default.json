@@ -1,7 +1,7 @@
 {
-    "_version_": "1",
+    "_version_": "2",
     "_enabled_": true,
-    "InPort": 9000,
-    "OutPort": 9001,
-    "Hostname": "localhost"
+    "inPort": 9000,
+    "outPort": 9001,
+    "hostname": "localhost"
 }

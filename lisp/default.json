@@ -1,54 +1,49 @@
 {
-    "_version_": "0.6dev.1",
-    "Cue": {
-        "FadeActionDuration": 3,
-        "FadeActionType": "Linear",
-        "InterruptFade": 3,
-        "InterruptFadeType": "Linear"
+    "_version_": "0.6dev.3",
+    "cue": {
+        "fadeActionDuration": 3,
+        "fadeActionType": "Linear",
+        "interruptFade": 3,
+        "interruptFadeType": "Linear"
     },
-    "Theme": {
-        "Theme": "Dark",
-        "Icons": "numix"
+    "theme": {
+        "theme": "Dark",
+        "icons": "numix"
     },
-    "Backend": {
-        "Default": "gst"
+    "backend": {
+        "default": "gst"
     },
-    "Layout": {
-        "Default": "NoDefault",
-        "StopAllFade": false,
-        "PauseAllFade": false,
-        "ResumeAllFade": false,
-        "InterruptAllFade": true
+    "layout": {
+        "default": "NoDefault",
+        "stopAllFade": false,
+        "pauseAllFade": false,
+        "resumeAllFade": false,
+        "interruptAllFade": true
     },
-    "Actions": {
-        "MaxStackSize": 0
+    "actions": {
+        "maxStackSize": 0
     },
-    "CartLayout": {
-        "GridColumns": 7,
-        "GridRows": 4,
-        "ShowSeek": false,
-        "ShowDbMeters": false,
-        "ShowAccurate": false,
-        "ShowVolume": false,
-        "Countdown": true,
-        "AutoAddPage": true
+    "cartLayout": {
+        "gridColumns": 7,
+        "gridRows": 4,
+        "showSeek": false,
+        "showDbMeters": false,
+        "showAccurate": false,
+        "showVolume": false,
+        "countdown": true,
+        "autoAddPage": true
     },
-    "ListLayout": {
-        "ShowDbMeters": true,
-        "ShowSeek": true,
-        "ShowAccurate": false,
-        "ShowPlaying": true,
-        "AutoContinue": true,
-        "EndList": "Stop",
-        "GoKey": "Space",
-        "StopCueFade": true,
-        "PauseCueFade": true,
-        "ResumeCueFade": true,
-        "InterruptCueFade": true
-    },
-    "DbMeter": {
-        "dBMax": 0,
-        "dbMin": -60,
-        "dbClip": 0
+    "listLayout": {
+        "showDbMeters": true,
+        "showSeek": true,
+        "showAccurate": false,
+        "showPlaying": true,
+        "autoContinue": true,
+        "endList": "Stop",
+        "goKey": "Space",
+        "stopCueFade": true,
+        "pauseCueFade": true,
+        "resumeCueFade": true,
+        "interruptCueFade": true
     }
 }

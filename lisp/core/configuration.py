@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2017 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,25 +17,115 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from collections import Mapping
+# Used to indicate the default behaviour when a specific option is not found to
+# raise an exception. Created to enable `None' as a valid fallback value.
+
+import json
+from abc import ABCMeta, abstractmethod
+from copy import deepcopy
 from os import path
 from shutil import copyfile
 
-import json
-
-from lisp.core.util import deep_update
-
-from lisp import USER_APP_CONFIG, DEFAULT_APP_CONFIG
-from lisp.core.singleton import Singleton
+from lisp import DEFAULT_APP_CONFIG, USER_APP_CONFIG
+from lisp.core.signal import Signal
 
 # Used to indicate the default behaviour when a specific option is not found to
 # raise an exception. Created to enable `None' as a valid fallback value.
+from lisp.core.singleton import ABCSingleton
+
 _UNSET = object()
 
 
-# TODO: HasProperties?
-class Configuration:
-    """Allow to read/write json based configuration files.
+class Configuration(metaclass=ABCMeta):
+    """ABC for a configuration object.
+
+    Subclasses need to implement `read`, `write` methods.
+
+    Keep in mind that the `set` and `update` methods ignores non-existing keys.
+    """
+
+    def __init__(self):
+        self._root = {}
+        self.changed = Signal()
+
+    @abstractmethod
+    def read(self):
+        pass
+
+    @abstractmethod
+    def write(self):
+        pass
+
+    def get(self, path, default=_UNSET):
+        try:
+            node, key = self.__traverse(path.split('.'), self._root)
+            return node[key]
+        except (KeyError, TypeError) as e:
+            if default is not _UNSET:
+                return default
+
+            raise e
+
+    def set(self, path, value):
+        try:
+            node, key = self.__traverse(path.split('.'), self._root)
+            old, node[key] = node[key], value
+
+            self.changed.emit(path, old, value)
+        except (KeyError, TypeError):
+            pass
+
+    def __traverse(self, keys, root):
+        next_step = keys.pop(0)
+
+        if keys:
+            return self.__traverse(keys, root[next_step])
+
+        return root, next_step
+
+    def update(self, new_conf):
+        self.__update(self._root, new_conf)
+
+    def __update(self, root, new_conf, _path=''):
+        for key, value in new_conf.items():
+            if key in root:
+                _path += '.' + key
+
+                if isinstance(root[key], dict):
+                    self.__update(root[key], value, _path)
+                else:
+                    old, root[key] = root[key], value
+                    self.changed.emit(_path[1:], old, value)
+
+    def copy(self):
+        return deepcopy(self._root)
+
+    def __getitem__(self, path):
+        return self.get(path)
+
+    def __setitem__(self, path, value):
+        self.set(path, value)
+
+    def __contains__(self, path):
+        try:
+            node, key = self.__traverse(path.split('.'), self._root)
+            return key in node
+        except (KeyError, TypeError):
+            return False
+
+
+class DummyConfiguration(Configuration):
+    """Configuration without read/write capabilities."""
+
+    def read(self):
+        pass
+
+    def write(self):
+        pass
+
+
+class JSONFileConfiguration(Configuration):
+    """Read/Write configurations from/to a JSON file.
 
     Two path must be provided on creation, user-path and default-path,
     the first one is used to read/write, the second is copied over when the
@@ -50,7 +140,7 @@ class Configuration:
     """
 
     def __init__(self, user_path, default_path, read=True):
-        self.__config = {}
+        super().__init__()
 
         self.user_path = user_path
         self.default_path = default_path
@@ -59,14 +149,15 @@ class Configuration:
             self.read()
 
     def read(self):
-        self.check()
-        self.__config = self._read_json(self.user_path)
+        self._check()
+        self._root = self._read_json(self.user_path)
 
     def write(self):
         with open(self.user_path, 'w') as f:
-            json.dump(self.__config, f, indent=True)
+            json.dump(self._root, f, indent=True)
 
-    def check(self):
+    def _check(self):
+        """Ensure the last configuration is present at the user-path position"""
         if path.exists(self.user_path):
             # Read default configuration
             default = self._read_json(self.default_path)
@@ -88,58 +179,9 @@ class Configuration:
         with open(path, 'r') as f:
             return json.load(f)
 
-    def get(self, *path, default=_UNSET):
-        value = self.__config
-        for key in path:
-            if isinstance(value, Mapping):
-                try:
-                    value = value[key]
-                except KeyError:
-                    if default is _UNSET:
-                        raise
-                    return default
-            else:
-                break
-
-        return value
-
-    def copy(self):
-        return self.__config.copy()
-
-    def update(self, update_dict):
-        deep_update(self.__config, update_dict)
-
-    def __getitem__(self, item):
-        return self.__config.__getitem__(item)
-
-    def __setitem__(self, key, value):
-        return self.__config.__setitem__(key, value)
-
-    def __contains__(self, key):
-        return self.__config.__contains__(key)
-
-
-class DummyConfiguration(Configuration):
-    """Configuration without read/write capabilities.
-
-    Can be used for uninitialized component.
-    """
-
-    def __init__(self):
-        super().__init__('', '', False)
-
-    def read(self):
-        pass
-
-    def write(self):
-        pass
-
-    def check(self):
-        pass
-
 
 # TODO: we should remove this in favor of a non-singleton
-class AppConfig(Configuration, metaclass=Singleton):
+class AppConfig(JSONFileConfiguration, metaclass=ABCSingleton):
     """Provide access to the application configuration (singleton)"""
 
     def __init__(self):

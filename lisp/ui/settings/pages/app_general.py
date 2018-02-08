@@ -65,23 +65,23 @@ class AppGeneral(SettingsPage):
         self.themeGroup.layout().addWidget(self.themeCombo)
 
     def get_settings(self):
-        conf = {'Layout': {}, 'Theme': {}}
+        conf = {'layout': {}, 'theme': {}}
 
         if self.startupDialogCheck.isChecked():
-            conf['Layout']['Default'] = 'NoDefault'
+            conf['layout']['default'] = 'NoDefault'
         else:
-            conf['Layout']['Default'] = self.layoutCombo.currentText()
+            conf['layout']['default'] = self.layoutCombo.currentText()
 
-        conf['Theme']['Theme'] = self.themeCombo.currentText()
+        conf['theme']['theme'] = self.themeCombo.currentText()
         styles.apply_style(self.themeCombo.currentText())
 
         return conf
 
     def load_settings(self, settings):
-        if settings['Layout']['Default'].lower() == 'nodefault':
+        if settings['layout']['default'].lower() == 'nodefault':
             self.startupDialogCheck.setChecked(True)
             self.layoutCombo.setEnabled(False)
         else:
-            self.layoutCombo.setCurrentText(settings['Layout']['Default'])
+            self.layoutCombo.setCurrentText(settings['layout']['default'])
 
-        self.themeCombo.setCurrentText(settings['Theme']['Theme'])
+        self.themeCombo.setCurrentText(settings['theme']['theme'])

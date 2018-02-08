@@ -41,9 +41,9 @@ class Osc(Plugin):
 
         # Create a server instance
         self.__server = OscServer(
-            Osc.Config['Hostname'],
-            Osc.Config['InPort'],
-            Osc.Config['OutPort']
+            Osc.Config['hostname'],
+            Osc.Config['inPort'],
+            Osc.Config['outPort']
         )
 
     @property

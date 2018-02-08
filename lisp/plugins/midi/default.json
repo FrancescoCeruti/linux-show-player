@@ -1,7 +1,7 @@
 {
-  "_version_": "0.1",
+  "_version_": "2",
   "_enabled_": true,
-  "Backend": "mido.backends.rtmidi",
-  "InputDevice": "",
-  "OutputDevice": ""
+  "backend": "mido.backends.rtmidi",
+  "inputDevice": "",
+  "outputDevice": ""
 }

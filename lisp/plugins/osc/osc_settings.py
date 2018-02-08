@@ -69,12 +69,12 @@ class OscSettings(SettingsPage):
 
     def get_settings(self):
         return {
-            'InPort': self.inportBox.value(),
-            'OutPort': self.outportBox.value(),
-            'Hostname': self.hostnameEdit.text(),
+            'inPort': self.inportBox.value(),
+            'outPort': self.outportBox.value(),
+            'hostname': self.hostnameEdit.text(),
         }
 
     def load_settings(self, settings):
-        self.inportBox.setValue(settings['InPort'])
-        self.outportBox.setValue(settings['OutPort'])
-        self.hostnameEdit.setText(settings['Hostname'])
+        self.inportBox.setValue(settings['inPort'])
+        self.outportBox.setValue(settings['outPort'])
+        self.hostnameEdit.setText(settings['hostname'])

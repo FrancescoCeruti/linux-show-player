@@ -143,21 +143,24 @@ class RunningCueWidget(QWidget):
             self._update_timers(time)
 
     def _update_timers(self, time):
-        self.timeDisplay.display(strtime(self.cue.duration - time,
-                                         accurate=self._accurate_time))
+        self.timeDisplay.display(
+            strtime(self.cue.duration - time, accurate=self._accurate_time))
 
     def _pause(self):
-        self.cue.pause(fade=AppConfig().get('ListLayout', 'PauseCueFade'))
+        self.cue.pause(
+            fade=AppConfig().get('listLayout.pauseCueFade', True))
 
     def _resume(self):
-        self.cue.resume(fade=AppConfig().get('ListLayout', 'ResumeCueFade'))
+        self.cue.resume(
+            fade=AppConfig().get('listLayout.resumeCueFade', True))
 
     def _stop(self):
-        self.cue.stop(fade=AppConfig().get('ListLayout', 'StopCueFade'))
+        self.cue.stop(
+            fade=AppConfig().get('listLayout.stopCueFade', True))
 
     def _interrupt(self):
         self.cue.interrupt(
-            fade=AppConfig().get('ListLayout', 'InterruptCueFade'))
+            fade=AppConfig().get('listLayout.interruptCueFade', True))
 
     def _fadeout(self):
         self.cue.execute(CueAction.FadeOut)

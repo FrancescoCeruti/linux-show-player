@@ -21,7 +21,6 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog, QHBoxLayout, QListWidget, QVBoxLayout, \
     QPushButton, QDialogButtonBox, QInputDialog, QMessageBox
 
-from lisp.core.configuration import AppConfig
 from lisp.core.util import compose_http_url
 from lisp.plugins.remote.remote import RemoteController
 from lisp.ui import elogging
@@ -30,9 +29,10 @@ from .peers_discovery_dialog import PeersDiscoveryDialog
 
 
 class PeersDialog(QDialog):
-    def __init__(self, peers, **kwargs):
+    def __init__(self, peers, config, **kwargs):
         super().__init__(**kwargs)
         self.peers = peers
+        self.config = config
 
         self.setWindowModality(Qt.ApplicationModal)
         self.setMaximumSize(500, 200)
@@ -90,22 +90,22 @@ class PeersDialog(QDialog):
             translate('SyncPeerDialog', 'Remove all peers'))
 
     def add_peer(self):
-        ip, ok = QInputDialog.getText(self,
-                                      translate('SyncPeerDialog', 'Address'),
-                                      translate('SyncPeerDialog', 'Peer IP'))
+        ip, ok = QInputDialog.getText(
+            self,
+            translate('SyncPeerDialog', 'Address'),
+            translate('SyncPeerDialog', 'Peer IP'))
         if ok:
             self._add_peer(ip)
 
     def _add_peer(self, ip):
-        port = AppConfig()['Remote']['BindPort']
-        uri = compose_http_url(ip, port)
+        uri = compose_http_url(ip, self.config['port'])
 
         for peer in self.peers:
             if peer['uri'] == uri:
-                QMessageBox.critical(self,
-                                     translate('SyncPeerDialog', 'Error'),
-                                     translate('SyncPeerDialog',
-                                               'Already connected'))
+                QMessageBox.critical(
+                    self,
+                    translate('SyncPeerDialog', 'Error'),
+                    translate('SyncPeerDialog', 'Already connected'))
                 return
 
         try:
@@ -113,17 +113,17 @@ class PeersDialog(QDialog):
             self.peers.append(peer)
             self.listWidget.addItem(peer['uri'])
         except Exception as e:
-            elogging.exception(translate('SyncPeerDialog', 'Cannot add peer'),
-                               str(e))
+            elogging.exception(
+                translate('SyncPeerDialog', 'Cannot add peer'), str(e))
 
     def discover_peers(self):
-        dialog = PeersDiscoveryDialog(parent=self)
+        dialog = PeersDiscoveryDialog(self.config, parent=self)
         if dialog.exec_() == dialog.Accepted:
             for peer in dialog.get_peers():
                 self._add_peer(peer)
 
     def remove_peer(self):
-        if len(self.listWidget.selectedIndexes()) != 0:
+        if self.listWidget.selectedIndexes():
             self.peers.pop(self.current_index())
             self.listWidget.takeItem(self.current_index())
 

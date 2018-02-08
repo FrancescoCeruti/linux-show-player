@@ -50,16 +50,17 @@ class EndListBehavior(Enum):
 
 class ListLayout(QWidget, CueLayout):
     NAME = 'List Layout'
-    DESCRIPTION = QT_TRANSLATE_NOOP('LayoutDescription',
-                                    'Organize the cues in a list')
+    DESCRIPTION = QT_TRANSLATE_NOOP(
+        'LayoutDescription', 'Organize the cues in a list')
     DETAILS = [
-        QT_TRANSLATE_NOOP('LayoutDetails',
-                          'SHIFT + Space or Double-Click to edit a cue'),
-        QT_TRANSLATE_NOOP('LayoutDetails',
-                          'CTRL + Left Click to select cues'),
-        QT_TRANSLATE_NOOP('LayoutDetails',
-                          'To copy cues drag them while pressing CTRL'),
-        QT_TRANSLATE_NOOP('LayoutDetails', 'To move cues drag them')
+        QT_TRANSLATE_NOOP(
+            'LayoutDetails', 'SHIFT + Space or Double-Click to edit a cue'),
+        QT_TRANSLATE_NOOP(
+            'LayoutDetails', 'CTRL + Left Click to select cues'),
+        QT_TRANSLATE_NOOP(
+            'LayoutDetails', 'To copy cues drag them while pressing CTRL'),
+        QT_TRANSLATE_NOOP(
+            'LayoutDetails', 'To move cues drag them')
     ]
 
     def __init__(self, cue_model, **kwargs):
@@ -75,16 +76,16 @@ class ListLayout(QWidget, CueLayout):
         self._context_item = None
         self._next_cue_index = 0
 
-        self._show_dbmeter = AppConfig()['ListLayout']['ShowDbMeters']
-        self._seek_visible = AppConfig()['ListLayout']['ShowSeek']
-        self._accurate_time = AppConfig()['ListLayout']['ShowAccurate']
-        self._auto_continue = AppConfig()['ListLayout']['AutoContinue']
-        self._show_playing = AppConfig()['ListLayout']['ShowPlaying']
-        self._go_key = AppConfig()['ListLayout']['GoKey']
-        self._go_key_sequence = QKeySequence(self._go_key,
-                                             QKeySequence.NativeText)
+        self._show_dbmeter = AppConfig()['listLayout.showDbMeters']
+        self._seek_visible = AppConfig()['listLayout.showSeek']
+        self._accurate_time = AppConfig()['listLayout.showAccurate']
+        self._auto_continue = AppConfig()['listLayout.autoContinue']
+        self._show_playing = AppConfig()['listLayout.showPlaying']
+        self._go_key = AppConfig()['listLayout.goKey']
+        self._go_key_sequence = QKeySequence(
+            self._go_key, QKeySequence.NativeText)
 
-        self._end_list = EndListBehavior(AppConfig()['ListLayout']['EndList'])
+        self._end_list = EndListBehavior(AppConfig()['listLayout.endList'])
 
         # Add layout-specific menus
         self.showPlayingAction = QAction(self)

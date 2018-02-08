@@ -65,7 +65,7 @@ class Timecode(Plugin):
         # Create the cue tracker object
         self.__cue_tracker = TimecodeCueTracker(
             protocol,
-            TcFormat[Timecode.Config['Format']]
+            TcFormat[Timecode.Config['format']]
         )
 
         # Cues with timecode-tracking enabled

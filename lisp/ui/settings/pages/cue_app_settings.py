@@ -57,17 +57,17 @@ class CueAppSettings(SettingsPage):
 
     def load_settings(self, settings):
         # Interrupt
-        self.interruptFadeEdit.setDuration(settings['Cue']['InterruptFade'])
-        self.interruptFadeEdit.setFadeType(settings['Cue']['InterruptFadeType'])
+        self.interruptFadeEdit.setDuration(settings['cue']['interruptFade'])
+        self.interruptFadeEdit.setFadeType(settings['cue']['interruptFadeType'])
 
         # FadeAction
-        self.fadeActionEdit.setDuration(settings['Cue']['FadeActionDuration'])
-        self.fadeActionEdit.setFadeType(settings['Cue']['FadeActionType'])
+        self.fadeActionEdit.setDuration(settings['cue']['fadeActionDuration'])
+        self.fadeActionEdit.setFadeType(settings['cue']['fadeActionType'])
 
     def get_settings(self):
-        return {'Cue': {
-            'InterruptFade': self.interruptFadeEdit.duration(),
-            'InterruptFadeType': self.interruptFadeEdit.fadeType(),
-            'FadeActionDuration': self.fadeActionEdit.duration(),
-            'FadeActionType': self.fadeActionEdit.fadeType()
+        return {'cue': {
+            'interruptFade': self.interruptFadeEdit.duration(),
+            'interruptFadeType': self.interruptFadeEdit.fadeType(),
+            'fadeActionDuration': self.fadeActionEdit.duration(),
+            'fadeActionType': self.fadeActionEdit.fadeType()
         }}

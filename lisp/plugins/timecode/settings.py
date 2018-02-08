@@ -135,10 +135,10 @@ class TimecodeAppSettings(SettingsPage):
 
     def get_settings(self):
         return {
-            'Format': self.formatBox.currentText(),
-            'Protocol': self.protocolCombo.currentText()
+            'format': self.formatBox.currentText(),
+            'protocol': self.protocolCombo.currentText()
         }
 
     def load_settings(self, settings):
-        self.formatBox.setCurrentText(settings.get('Format', ''))
-        self.protocolCombo.setCurrentText(settings.get('Protocol', ''))
+        self.formatBox.setCurrentText(settings.get('format', ''))
+        self.protocolCombo.setCurrentText(settings.get('protocol', ''))

@@ -76,8 +76,8 @@ def main():
     qt_app.setFont(appFont)
     # Set icons and theme from the application configuration
     QIcon.setThemeSearchPaths(styles.IconsThemePaths)
-    QIcon.setThemeName(AppConfig()['Theme']['Icons'])
-    styles.apply_style(AppConfig()['Theme']['Theme'])
+    QIcon.setThemeName(AppConfig()['theme.icons'])
+    styles.apply_style(AppConfig()['theme.theme'])
 
     # Get/Set the locale
     locale = args.locale

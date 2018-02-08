@@ -40,16 +40,16 @@ class Midi(Plugin):
         AppSettings.register_settings_widget(MIDISettings, Midi.Config)
 
         # Load the backend and set it as current mido backend
-        self.backend = mido.Backend(Midi.Config['Backend'], load=True)
+        self.backend = mido.Backend(Midi.Config['backend'], load=True)
         mido.set_backend(self.backend)
 
         # Create default I/O and open the ports/devices
         self.__input = MIDIInput(
-            self._input_name(Midi.Config['InputDevice']))
+            self._input_name(Midi.Config['inputDevice']))
         self.__input.open()
 
         self.__output = MIDIOutput(
-            self._output_name(Midi.Config['OutputDevice']))
+            self._output_name(Midi.Config['outputDevice']))
         self.__output.open()
 
     def _input_name(self, port_name):

@@ -95,7 +95,7 @@ class Application(metaclass=Singleton):
         if exists(session_file):
             self._load_from_file(session_file)
         else:
-            layout = AppConfig().get('Layout', 'Default', default='nodefault')
+            layout = AppConfig().get('layout.default', 'nodefault')
 
             if layout.lower() != 'nodefault':
                 self._new_session(layouts.get_layout(layout))

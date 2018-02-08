@@ -21,8 +21,6 @@ from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QComboBox, QGridLayout, \
     QLabel
 
-from lisp.plugins.midi.midi_input import MIDIInput
-from lisp.plugins.midi.midi_output import MIDIOutput
 from lisp.plugins.midi.midi_utils import mido_backend
 from lisp.ui.settings.settings_page import SettingsPage
 from lisp.ui.ui_utils import translate
@@ -42,14 +40,14 @@ class MIDISettings(SettingsPage):
         self.midiGroup.setLayout(QGridLayout())
         self.layout().addWidget(self.midiGroup)
 
-        self.inputLabel = QLabel(translate('MIDISettings', 'Input'),
-                                 self.midiGroup)
+        self.inputLabel = QLabel(
+            translate('MIDISettings', 'Input'), self.midiGroup)
         self.midiGroup.layout().addWidget(self.inputLabel, 0, 0)
         self.inputCombo = QComboBox(self.midiGroup)
         self.midiGroup.layout().addWidget(self.inputCombo, 0, 1)
 
-        self.outputLabel = QLabel(translate('MIDISettings', 'Output'),
-                                  self.midiGroup)
+        self.outputLabel = QLabel(
+            translate('MIDISettings', 'Output'), self.midiGroup)
         self.midiGroup.layout().addWidget(self.outputLabel, 1, 0)
         self.outputCombo = QComboBox(self.midiGroup)
         self.midiGroup.layout().addWidget(self.outputCombo, 1, 1)
@@ -68,23 +66,23 @@ class MIDISettings(SettingsPage):
         if self.isEnabled():
             input = self.inputCombo.currentText()
             if input == 'Default':
-                conf['InputDevice'] = ""
+                conf['inputDevice'] = ''
             else:
-                conf['InputDevice'] = input
+                conf['inputDevice'] = input
 
             output = self.outputCombo.currentText()
             if output == 'Default':
-                conf['OutputDevice'] = ""
+                conf['outputDevice'] = ''
             else:
-                conf['OutputDevice'] = output
+                conf['outputDevice'] = output
 
         return conf
 
     def load_settings(self, settings):
         self.inputCombo.setCurrentText('Default')
-        self.inputCombo.setCurrentText(settings['InputDevice'])
+        self.inputCombo.setCurrentText(settings['inputDevice'])
         self.outputCombo.setCurrentText('Default')
-        self.outputCombo.setCurrentText(settings['OutputDevice'])
+        self.outputCombo.setCurrentText(settings['outputDevice'])
 
     def _load_devices(self):
         backend = mido_backend()
