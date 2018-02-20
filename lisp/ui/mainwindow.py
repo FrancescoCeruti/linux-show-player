@@ -26,10 +26,9 @@ from PyQt5.QtWidgets import QMainWindow, QStatusBar, QMenuBar, QMenu, QAction, \
     qApp, QFileDialog, QDialog, QMessageBox, QVBoxLayout, QWidget
 
 from lisp.core.actions_handler import MainActionsHandler
-from lisp.core.configuration import AppConfig
 from lisp.core.singleton import QSingleton
 from lisp.cues.media_cue import MediaCue
-from lisp.ui import about
+from lisp.ui.about import About
 from lisp.ui.settings.app_settings import AppSettings
 from lisp.ui.ui_utils import translate
 
@@ -129,7 +128,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
 
         # menuAbout
         self.actionAbout = QAction(self)
-        self.actionAbout.triggered.connect(about.About(self).show)
+        self.actionAbout.triggered.connect(self._show_about)
 
         self.actionAbout_Qt = QAction(self)
         self.actionAbout_Qt.triggered.connect(qApp.aboutQt)
@@ -318,6 +317,9 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
             self.showFullScreen()
         else:
             self.showMaximized()
+
+    def _show_about(self):
+        About(self).show()
 
     def _exit(self):
         if self._check_saved():

@@ -22,12 +22,10 @@ from os.path import exists
 
 from PyQt5.QtWidgets import QDialog, qApp
 
-from lisp.core.configuration import AppConfig
-from lisp.core.signal import Signal
-
 from lisp import layouts
 from lisp.core.actions_handler import MainActionsHandler
 from lisp.core.session import new_session
+from lisp.core.signal import Signal
 from lisp.core.singleton import Singleton
 from lisp.cues.cue import Cue
 from lisp.cues.cue_factory import CueFactory
@@ -47,7 +45,9 @@ from lisp.ui.settings.pages.plugins_settings import PluginsSettings
 
 
 class Application(metaclass=Singleton):
-    def __init__(self):
+    def __init__(self, app_conf):
+        self.conf = app_conf
+
         self.session_created = Signal()
         self.session_before_finalize = Signal()
 
@@ -56,9 +56,9 @@ class Application(metaclass=Singleton):
         self.__session = None
 
         # Register general settings widget
-        AppSettings.register_settings_widget(AppGeneral, AppConfig())
-        AppSettings.register_settings_widget(CueAppSettings, AppConfig())
-        AppSettings.register_settings_widget(PluginsSettings, AppConfig())
+        AppSettings.register_settings_widget(AppGeneral, self.conf)
+        AppSettings.register_settings_widget(CueAppSettings, self.conf)
+        AppSettings.register_settings_widget(PluginsSettings, self.conf)
 
         # Register common cue-settings widgets
         CueSettingsRegistry().add_item(CueGeneralSettings, Cue)
@@ -95,7 +95,7 @@ class Application(metaclass=Singleton):
         if exists(session_file):
             self._load_from_file(session_file)
         else:
-            layout = AppConfig().get('layout.default', 'nodefault')
+            layout = self.conf.get('layout.default', 'nodefault')
 
             if layout.lower() != 'nodefault':
                 self._new_session(layouts.get_layout(layout))
@@ -134,7 +134,7 @@ class Application(metaclass=Singleton):
     def _new_session(self, layout):
         self._delete_session()
 
-        self.__session = new_session(layout(self.__cue_model))
+        self.__session = new_session(layout(application=self))
         self.__main_window.set_session(self.__session)
 
         self.session_created.emit(self.__session)
@@ -153,7 +153,7 @@ class Application(metaclass=Singleton):
         self.session.session_file = session_file
 
         # Add the cues
-        session_dict = {"cues": []}
+        session_dict = {'cues': []}
 
         for cue in self.__cue_model:
             session_dict['cues'].append(cue.properties(defaults=False))

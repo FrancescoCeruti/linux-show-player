@@ -18,12 +18,12 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QDialog, QGridLayout, QComboBox, QListWidget, \
     QAbstractItemView, QVBoxLayout, QPushButton, QDialogButtonBox, QWidget, \
     QListWidgetItem
 
 from lisp.plugins.gst_backend import elements
+from lisp.ui.themes.theme import IconTheme
 from lisp.ui.ui_utils import translate
 
 
@@ -61,13 +61,13 @@ class GstPipeEdit(QWidget):
         self.layout().setAlignment(self.buttonsLayout, Qt.AlignHCenter)
 
         self.addButton = QPushButton(self)
-        self.addButton.setIcon(QIcon.fromTheme('go-previous'))
+        self.addButton.setIcon(IconTheme.get('go-previous'))
         self.addButton.clicked.connect(self.__add_plugin)
         self.buttonsLayout.addWidget(self.addButton)
         self.buttonsLayout.setAlignment(self.addButton, Qt.AlignHCenter)
 
         self.delButton = QPushButton(self)
-        self.delButton.setIcon(QIcon.fromTheme('go-next'))
+        self.delButton.setIcon(IconTheme.get('go-next'))
         self.delButton.clicked.connect(self.__remove_plugin)
         self.buttonsLayout.addWidget(self.delButton)
         self.buttonsLayout.setAlignment(self.delButton, Qt.AlignHCenter)

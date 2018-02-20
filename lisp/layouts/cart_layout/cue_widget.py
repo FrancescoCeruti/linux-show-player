@@ -29,7 +29,7 @@ from lisp.cues.cue import CueState
 from lisp.cues.cue_time import CueTime
 from lisp.cues.media_cue import MediaCue
 from lisp.layouts.cart_layout.page_widget import PageWidget
-from lisp.ui.ui_utils import pixmap_from_icon
+from lisp.ui.themes.theme import IconTheme
 from lisp.ui.widgets import QClickLabel, QClickSlider, QDbMeter,\
     QDetailedMessageBox
 
@@ -76,7 +76,7 @@ class CueWidget(QWidget):
         self.statusIcon = QLabel(self.nameButton)
         self.statusIcon.setStyleSheet('background-color: transparent')
         self.statusIcon.setPixmap(
-            pixmap_from_icon('led-off', CueWidget.ICON_SIZE))
+            IconTheme.get('led-off').pixmap(CueWidget.ICON_SIZE))
 
         self.seekSlider = QClickSlider(self.nameButton)
         self.seekSlider.setOrientation(Qt.Horizontal)
@@ -308,24 +308,24 @@ class CueWidget(QWidget):
 
     def _status_stopped(self):
         self.statusIcon.setPixmap(
-            pixmap_from_icon('led-off', CueWidget.ICON_SIZE))
+            IconTheme.get('led-off').pixmap(CueWidget.ICON_SIZE))
         self.volumeSlider.setEnabled(False)
         self._update_time(0, True)
         self.reset_volume()
 
     def _status_playing(self):
         self.statusIcon.setPixmap(
-            pixmap_from_icon('led-running', CueWidget.ICON_SIZE))
+            IconTheme.get('led-running').pixmap(CueWidget.ICON_SIZE))
         self.volumeSlider.setEnabled(True)
 
     def _status_paused(self):
         self.statusIcon.setPixmap(
-            pixmap_from_icon('led-pause', CueWidget.ICON_SIZE))
+            IconTheme.get('led-pause').pixmap(CueWidget.ICON_SIZE))
         self.volumeSlider.setEnabled(False)
 
     def _status_error(self, cue, error, details):
         self.statusIcon.setPixmap(
-            pixmap_from_icon('led-error', CueWidget.ICON_SIZE))
+            IconTheme.get('led-off').pixmap(CueWidget.ICON_SIZE))
         self.volumeSlider.setEnabled(False)
         self.reset_volume()
 

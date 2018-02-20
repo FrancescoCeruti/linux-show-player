@@ -18,11 +18,12 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
-from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QCheckBox, QComboBox
+from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QCheckBox, QComboBox, \
+    QGridLayout, QLabel
 
 from lisp import layouts
-from lisp.ui.styles import styles
 from lisp.ui.settings.settings_page import SettingsPage
+from lisp.ui.themes import THEMES, ICON_THEMES
 from lisp.ui.ui_utils import translate
 
 
@@ -57,12 +58,26 @@ class AppGeneral(SettingsPage):
         self.themeGroup = QGroupBox(self)
         self.themeGroup.setTitle(
             translate('AppGeneralSettings', 'Application theme'))
-        self.themeGroup.setLayout(QVBoxLayout())
+        self.themeGroup.setLayout(QGridLayout())
         self.layout().addWidget(self.themeGroup)
 
+        self.themeLabel = QLabel(self.themeGroup)
+        self.themeLabel.setText(
+            translate('AppGeneralSettings', 'Theme'))
+        self.themeGroup.layout().addWidget(self.themeLabel, 0, 0)
+
         self.themeCombo = QComboBox(self.themeGroup)
-        self.themeCombo.addItems(styles.styles())
-        self.themeGroup.layout().addWidget(self.themeCombo)
+        self.themeCombo.addItems(THEMES.keys())
+        self.themeGroup.layout().addWidget(self.themeCombo, 0, 1)
+
+        self.iconsLabel = QLabel(self.themeGroup)
+        self.iconsLabel.setText(
+            translate('AppGeneralSettings', 'Icons'))
+        self.themeGroup.layout().addWidget(self.iconsLabel, 1, 0)
+
+        self.iconsCombo = QComboBox(self.themeGroup)
+        self.iconsCombo.addItems(ICON_THEMES.keys())
+        self.themeGroup.layout().addWidget(self.iconsCombo, 1, 1)
 
     def get_settings(self):
         conf = {'layout': {}, 'theme': {}}
@@ -73,7 +88,7 @@ class AppGeneral(SettingsPage):
             conf['layout']['default'] = self.layoutCombo.currentText()
 
         conf['theme']['theme'] = self.themeCombo.currentText()
-        styles.apply_style(self.themeCombo.currentText())
+        conf['theme']['icons'] = self.iconsCombo.currentText()
 
         return conf
 
@@ -85,3 +100,4 @@ class AppGeneral(SettingsPage):
             self.layoutCombo.setCurrentText(settings['layout']['default'])
 
         self.themeCombo.setCurrentText(settings['theme']['theme'])
+        self.iconsCombo.setCurrentText(settings['theme']['icons'])

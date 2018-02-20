@@ -104,7 +104,7 @@ class RenameUi(QDialog):
 
         # Help button
         self.helpButton = QPushButton()
-        self.helpButton.setIcon(QIcon.fromTheme('help-info'))
+        self.helpButton.setIcon(IconTheme.get('help-info'))
         self.helpButton.setIconSize(QSize(32, 32))
         self.layout().addWidget(self.helpButton, 3, 4, 2, 1)
         self.helpButton.clicked.connect(self.onHelpButtonClicked)

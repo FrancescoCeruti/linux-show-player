@@ -21,11 +21,11 @@ from collections import OrderedDict
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
-from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QDialog, QGridLayout, QLabel, QWidget, QTabWidget, \
     QTextBrowser, QDialogButtonBox
 
 import lisp
+from lisp.ui.themes.theme import IconTheme
 from lisp.ui.ui_utils import translate
 
 
@@ -81,7 +81,7 @@ class About(QDialog):
 
         self.iconLabel = QLabel(self)
         self.iconLabel.setPixmap(
-            QIcon.fromTheme('linux-show-player').pixmap(100, 100))
+            IconTheme.get('linux-show-player').pixmap(100, 100))
         self.layout().addWidget(self.iconLabel, 0, 0)
 
         self.shortInfo = QLabel(self)

@@ -18,9 +18,9 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import Qt, QSize
-from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QWidget, QGridLayout, QSizePolicy
 
+from lisp.ui.themes.theme import IconTheme
 from lisp.ui.ui_utils import translate
 from lisp.ui.widgets.qiconpushbutton import QIconPushButton
 
@@ -33,25 +33,23 @@ class ShowControlButtons(QWidget):
         self.layout().setSpacing(5)
 
         # Row 0
-        self.pauseButton = self.newButton(
-            QIcon.fromTheme('media-playback-pause'))
+        self.pauseButton = self.newButton(IconTheme.get('cue-pause'))
         self.layout().addWidget(self.pauseButton, 0, 0)
 
-        self.stopButton = self.newButton(QIcon.fromTheme('media-playback-stop'))
+        self.stopButton = self.newButton(IconTheme.get('cue-stop'))
         self.layout().addWidget(self.stopButton, 0, 1)
 
-        self.interruptButton = self.newButton(QIcon.fromTheme('window-close'))
+        self.interruptButton = self.newButton(IconTheme.get('cue-interrupt'))
         self.layout().addWidget(self.interruptButton, 0, 2)
 
         # Row 1
-        self.resumeButton = self.newButton(
-            QIcon.fromTheme('media-playback-start'))
+        self.resumeButton = self.newButton(IconTheme.get('cue-start'))
         self.layout().addWidget(self.resumeButton, 1, 0)
 
-        self.fadeOutButton = self.newButton(QIcon.fromTheme('fadeout-generic'))
+        self.fadeOutButton = self.newButton(IconTheme.get('fadeout-generic'))
         self.layout().addWidget(self.fadeOutButton, 1, 1)
 
-        self.fadeInButton = self.newButton(QIcon.fromTheme('fadein-generic'))
+        self.fadeInButton = self.newButton(IconTheme.get('fadein-generic'))
         self.layout().addWidget(self.fadeInButton, 1, 2)
 
         self.retranslateUi()
@@ -84,27 +82,24 @@ class CueControlButtons(QWidget):
         self.layout().setSpacing(2)
 
         # Start/Pause
-        self.pauseButton = self.newButton(
-            QIcon.fromTheme('media-playback-pause'))
+        self.pauseButton = self.newButton(IconTheme.get('cue-pause'))
         self.layout().addWidget(self.pauseButton, 0, 0, 2, 1)
 
-        self.startButton = self.newButton(
-            QIcon.fromTheme('media-playback-start'))
+        self.startButton = self.newButton(IconTheme.get('cue-start'))
         self.startButton.hide()
 
         # Row 0
-        self.stopButton = self.newButton(
-            QIcon.fromTheme('media-playback-stop'))
+        self.stopButton = self.newButton(IconTheme.get('cue-stop'))
         self.layout().addWidget(self.stopButton, 0, 1)
 
-        self.interruptButton = self.newButton(QIcon.fromTheme('window-close'))
+        self.interruptButton = self.newButton(IconTheme.get('cue-interrupt'))
         self.layout().addWidget(self.interruptButton, 0, 2)
 
         # Row 1
-        self.fadeOutButton = self.newButton(QIcon.fromTheme('fadeout-generic'))
+        self.fadeOutButton = self.newButton(IconTheme.get('fadeout-generic'))
         self.layout().addWidget(self.fadeOutButton, 1, 1)
 
-        self.fadeInButton = self.newButton(QIcon.fromTheme('fadein-generic'))
+        self.fadeInButton = self.newButton(IconTheme.get('fadein-generic'))
         self.layout().addWidget(self.fadeInButton, 1, 2)
 
         self.layout().setColumnStretch(0, 3)

@@ -18,12 +18,12 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import QT_TRANSLATE_NOOP, Qt, QSize
-from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QListWidget, QListWidgetItem, \
-    QTextBrowser, QVBoxLayout
+from PyQt5.QtWidgets import QListWidget, QListWidgetItem, QTextBrowser, \
+    QVBoxLayout
 
 from lisp import plugins
 from lisp.ui.settings.settings_page import SettingsPage
+from lisp.ui.themes.theme import IconTheme
 
 
 # TODO: just a proof-of concept
@@ -46,11 +46,11 @@ class PluginsSettings(SettingsPage):
         for name, plugin in plugins.PLUGINS.items():
             item = QListWidgetItem(plugin.Name)
             if plugins.is_loaded(name):
-                item.setIcon(QIcon().fromTheme('led-running'))
+                item.setIcon(IconTheme.get('led-running'))
             elif not plugin.Config['_enabled_']:
-                item.setIcon(QIcon().fromTheme('led-pause'))
+                item.setIcon(IconTheme.get('led-pause'))
             else:
-                item.setIcon(QIcon().fromTheme('led-error'))
+                item.setIcon(IconTheme.get('led-error'))
 
             item.setData(Qt.UserRole, plugin)
 

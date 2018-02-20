@@ -20,10 +20,10 @@
 from enum import Enum
 
 from PyQt5.QtCore import QT_TRANSLATE_NOOP, Qt
-from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QComboBox, QStyledItemDelegate, QWidget, \
     QGridLayout, QDoubleSpinBox, QLabel
 
+from lisp.ui.themes.theme import IconTheme
 from lisp.ui.ui_utils import translate
 
 QT_TRANSLATE_NOOP('Fade', 'Linear')
@@ -33,15 +33,15 @@ QT_TRANSLATE_NOOP('Fade', 'Quadratic2')
 
 class FadeComboBox(QComboBox):
     FadeOutIcons = {
-        'Linear': QIcon.fromTheme('fadeout-linear'),
-        'Quadratic': QIcon.fromTheme('fadeout-quadratic'),
-        'Quadratic2': QIcon.fromTheme('fadeout-quadratic2')
+        'Linear': 'fadeout-linear',
+        'Quadratic': 'fadeout-quadratic',
+        'Quadratic2': 'fadeout-quadratic2'
     }
 
     FadeInIcons = {
-        'Linear': QIcon.fromTheme('fadein-linear'),
-        'Quadratic': QIcon.fromTheme('fadein-quadratic'),
-        'Quadratic2': QIcon.fromTheme('fadein-quadratic2')
+        'Linear': 'fadein-linear',
+        'Quadratic': 'fadein-quadratic',
+        'Quadratic2': 'fadein-quadratic2'
     }
 
     class Mode(Enum):
@@ -58,7 +58,7 @@ class FadeComboBox(QComboBox):
             items = self.FadeOutIcons
 
         for key in sorted(items.keys()):
-            self.addItem(items[key], translate('Fade', key), key)
+            self.addItem(IconTheme.get(items[key]), translate('Fade', key), key)
 
     def setCurrentType(self, type):
         self.setCurrentText(translate('Fade', type))

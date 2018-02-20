@@ -35,8 +35,6 @@ from lisp.ui.mainwindow import MainWindow
 from lisp.ui.settings.app_settings import AppSettings
 from lisp.ui.ui_utils import translate
 
-AppSettings.register_settings_widget(CartLayoutSettings, AppConfig())
-
 
 class CartLayout(QTabWidget, CueLayout):
     NAME = 'Cart Layout'
@@ -52,27 +50,34 @@ class CartLayout(QTabWidget, CueLayout):
                           'To copy cues drag them while pressing SHIFT')
     ]
 
-    def __init__(self, cue_model, **kwargs):
-        super().__init__(cue_model=cue_model, **kwargs)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        AppSettings.register_settings_widget(CartLayoutSettings, self.app.conf)
+
         self.tabBar().setObjectName('CartTabBar')
 
-        self.__columns = AppConfig()['cartLayout.gridColumns']
-        self.__rows = AppConfig()['cartLayout.gridRows']
+        self.__columns = self.app.conf['cartLayout.gridColumns']
+        self.__rows = self.app.conf['cartLayout.gridRows']
         self.__pages = []
         self.__context_widget = None
 
-        self._show_seek = AppConfig()['cartLayout.showSeek']
-        self._show_dbmeter = AppConfig()['cartLayout.showDbMeters']
-        self._show_volume = AppConfig()['cartLayout.showVolume']
-        self._accurate_timing = AppConfig()['cartLayout.showAccurate']
-        self._countdown_mode = AppConfig()['cartLayout.countdown']
-        self._auto_add_page = AppConfig()['cartLayout.autoAddPage']
+        self._show_seek = self.app.conf['cartLayout.showSeek']
+        self._show_dbmeter = self.app.conf['cartLayout.showDbMeters']
+        self._show_volume = self.app.conf['cartLayout.showVolume']
+        self._accurate_timing = self.app.conf['cartLayout.showAccurate']
+        self._countdown_mode = self.app.conf['cartLayout.countdown']
+        self._auto_add_page = self.app.conf['cartLayout.autoAddPage']
 
-        self._model_adapter = CueCartModel(cue_model, self.__rows, self.__columns)
-        self._model_adapter.item_added.connect(self.__cue_added, Connection.QtQueued)
-        self._model_adapter.item_removed.connect(self.__cue_removed, Connection.QtQueued)
-        self._model_adapter.item_moved.connect(self.__cue_moved, Connection.QtQueued)
-        self._model_adapter.model_reset.connect(self.__model_reset)
+        self._model_adapter = CueCartModel(
+            self.cue_model, self.__rows, self.__columns)
+        self._model_adapter.item_added.connect(
+            self.__cue_added, Connection.QtQueued)
+        self._model_adapter.item_removed.connect(
+            self.__cue_removed, Connection.QtQueued)
+        self._model_adapter.item_moved.connect(
+            self.__cue_moved, Connection.QtQueued)
+        self._model_adapter.model_reset.connect(
+            self.__model_reset)
 
         # Add layout-specific menus
         self.new_page_action = QAction(self)

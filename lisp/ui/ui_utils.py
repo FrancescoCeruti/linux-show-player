@@ -16,42 +16,15 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
+
 import logging
 from itertools import chain
 from os import path
 
 from PyQt5.QtCore import QTranslator, QLocale
-from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QApplication
 
-import lisp
-from lisp.core.decorators import memoize
-
-DEFAULT_I18N_PATH = path.join(path.dirname(lisp.__file__), 'i18n')
-TRANSLATORS = []
-
-@memoize
-def load_icon(icon_name):
-    """Return a QIcon from the icon theme.
-
-    The loaded icons are cached.
-
-    .. warning:
-        QIcons should be loaded only from the QT main loop.
-    """
-    return QIcon.fromTheme(icon_name)
-
-
-@memoize
-def pixmap_from_icon(icon_name, size):
-    """Return a QPixmap of "size x size" pixels from the icon theme.
-
-    The returned pixmaps are cached.
-
-    .. warning:
-        QPixmap should be created only from the QT main loop.
-    """
-    return load_icon(icon_name).pixmap(size, size)
+from lisp import I18N_PATH
 
 
 def qfile_filters(extensions, allexts=True, anyfile=True):
@@ -85,16 +58,22 @@ def qfile_filters(extensions, allexts=True, anyfile=True):
     return ';;'.join(filters)
 
 
-def install_translation(name, tr_path=DEFAULT_I18N_PATH):
+# Keep a reference of translators objects
+_TRANSLATORS = []
+
+
+def install_translation(name, tr_path=I18N_PATH):
     tr_file = path.join(tr_path, name)
 
     translator = QTranslator()
     translator.load(QLocale(), tr_file, '_')
 
-    TRANSLATORS.append(translator)
-
     if QApplication.installTranslator(translator):
+        # Keep a reference, QApplication does not
+        _TRANSLATORS.append(translator)
         logging.debug('Installed translation: {}'.format(tr_file))
+    else:
+        logging.debug('No translation for: {}'.format(tr_file))
 
 
 def translate(context, text, disambiguation=None, n=-1):
@@ -119,4 +98,4 @@ def tr_sorted(context, iterable, key=None, reverse=False):
         def tr_key(item):
             translate(context, item)
 
-    return sorted(iterable, key=tr_key, reverse=reverse)\
+    return sorted(iterable, key=tr_key, reverse=reverse)

@@ -19,17 +19,18 @@
 
 import argparse
 import logging
-import sys
 import os
+import sys
+import traceback
 
 from PyQt5.QtCore import QLocale, QLibraryInfo
-from PyQt5.QtGui import QFont, QIcon
 from PyQt5.QtWidgets import QApplication
 
-from lisp import plugins, USER_DIR
+from lisp import USER_DIR, DEFAULT_APP_CONFIG, USER_APP_CONFIG, plugins, \
+    I18N_PATH
 from lisp.application import Application
-from lisp.core.configuration import AppConfig
-from lisp.ui.styles import styles
+from lisp.core.configuration import JSONFileConfiguration
+from lisp.ui import themes
 from lisp.ui.ui_utils import install_translation
 
 
@@ -59,25 +60,19 @@ def main():
     logging.basicConfig(
         format='%(asctime)s.%(msecs)03d %(levelname)s:: %(message)s',
         datefmt='%H:%M:%S',
-        level=log
+        level=log,
     )
 
     # Create (if not present) user directory
     os.makedirs(os.path.dirname(USER_DIR), exist_ok=True)
 
+    # Load application configuration
+    app_conf = JSONFileConfiguration(USER_APP_CONFIG, DEFAULT_APP_CONFIG)
+
     # Create the QApplication
     qt_app = QApplication(sys.argv)
     qt_app.setApplicationName('Linux Show Player')
     qt_app.setQuitOnLastWindowClosed(True)
-
-    # Force light font, for environment with "bad" QT support.
-    appFont = qt_app.font()
-    appFont.setWeight(QFont.Light)
-    qt_app.setFont(appFont)
-    # Set icons and theme from the application configuration
-    QIcon.setThemeSearchPaths(styles.IconsThemePaths)
-    QIcon.setThemeName(AppConfig()['theme.icons'])
-    styles.apply_style(AppConfig()['theme.theme'])
 
     # Get/Set the locale
     locale = args.locale
@@ -87,14 +82,32 @@ def main():
     logging.info('Using {} locale'.format(QLocale().name()))
 
     # Qt platform translation
-    install_translation('qt', tr_path=QLibraryInfo.location(
-        QLibraryInfo.TranslationsPath))
+    install_translation(
+        'qt', tr_path=QLibraryInfo.location(QLibraryInfo.TranslationsPath))
     # Main app translations
-    install_translation('lisp', tr_path=os.path.join(os.path.dirname(
-        os.path.realpath(__file__)), 'i18n'))
+    install_translation('lisp', tr_path=I18N_PATH)
+
+    # Set UI theme
+    try:
+        theme = app_conf['theme.theme']
+        themes.THEMES[theme].apply(qt_app)
+        logging.info('Using "{}" theme'.format(theme))
+    except Exception:
+        logging.error('Unable to load theme')
+        logging.debug(traceback.format_exc())
+
+    # Set the global IconTheme
+    try:
+        icon_theme_name = app_conf['theme.icons']
+        icon_theme = themes.ICON_THEMES[icon_theme_name]
+        icon_theme.set_theme(icon_theme)
+        logging.info('Using "{}" icon theme'.format(icon_theme_name))
+    except Exception:
+        logging.error('Unable to load icon theme')
+        logging.debug(traceback.format_exc())
 
     # Create the application
-    lisp_app = Application()
+    lisp_app = Application(app_conf)
     # Load plugins
     plugins.load_plugins(lisp_app)
 

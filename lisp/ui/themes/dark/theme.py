@@ -17,16 +17,26 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtGui import QColor
-from PyQt5.QtGui import QPalette
-from PyQt5.QtWidgets import qApp
+import os
 
+from PyQt5.QtGui import QColor, QPalette
+
+from lisp.ui.themes.theme import Theme
 # Import resources
 # noinspection PyUnresolvedReferences
-from lisp.ui.styles.dark import assetes
+from . import assetes
 
-# Change link color
-palette = qApp.palette()
-palette.setColor(QPalette.Link, QColor(65, 155, 230))
-palette.setColor(QPalette.LinkVisited, QColor(43, 103, 153))
-qApp.setPalette(palette)
+
+class DarkTheme(Theme):
+    QssPath = os.path.join(os.path.dirname(__file__), 'theme.qss')
+    Name = 'Dark'
+
+    def apply(self, qt_app):
+        with open(DarkTheme.QssPath, mode='r', encoding='utf-8') as f:
+            qt_app.setStyleSheet(f.read())
+
+        # Change link color
+        palette = qt_app.palette()
+        palette.setColor(QPalette.Link, QColor(65, 155, 230))
+        palette.setColor(QPalette.LinkVisited, QColor(43, 103, 153))
+        qt_app.setPalette(palette)

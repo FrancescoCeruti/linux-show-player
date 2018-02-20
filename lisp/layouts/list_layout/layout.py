@@ -24,7 +24,6 @@ from PyQt5.QtGui import QKeySequence
 from PyQt5.QtWidgets import QWidget, QAction, qApp, QGridLayout, \
     QPushButton, QSizePolicy
 
-from lisp.core.configuration import AppConfig
 from lisp.core.signal import Connection
 from lisp.cues.cue import Cue, CueAction
 from lisp.cues.media_cue import MediaCue
@@ -39,8 +38,6 @@ from lisp.layouts.list_layout.playing_list_widget import RunningCuesListWidget
 from lisp.ui.mainwindow import MainWindow
 from lisp.ui.settings.app_settings import AppSettings
 from lisp.ui.ui_utils import translate
-
-AppSettings.register_settings_widget(ListLayoutSettings, AppConfig())
 
 
 class EndListBehavior(Enum):
@@ -63,29 +60,31 @@ class ListLayout(QWidget, CueLayout):
             'LayoutDetails', 'To move cues drag them')
     ]
 
-    def __init__(self, cue_model, **kwargs):
-        super().__init__(cue_model=cue_model, **kwargs)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        AppSettings.register_settings_widget(ListLayoutSettings, self.app.conf)
+
         self.setLayout(QGridLayout())
         self.layout().setContentsMargins(0, 0, 0, 0)
 
-        self._model_adapter = CueListModel(self._cue_model)
+        self._model_adapter = CueListModel(self.cue_model)
         self._model_adapter.item_added.connect(self.__cue_added)
         self._model_adapter.item_removed.connect(self.__cue_removed)
 
-        self._playing_model = RunningCueModel(self._cue_model)
+        self._playing_model = RunningCueModel(self.cue_model)
         self._context_item = None
         self._next_cue_index = 0
 
-        self._show_dbmeter = AppConfig()['listLayout.showDbMeters']
-        self._seek_visible = AppConfig()['listLayout.showSeek']
-        self._accurate_time = AppConfig()['listLayout.showAccurate']
-        self._auto_continue = AppConfig()['listLayout.autoContinue']
-        self._show_playing = AppConfig()['listLayout.showPlaying']
-        self._go_key = AppConfig()['listLayout.goKey']
+        self._show_dbmeter = self.app.conf['listLayout.showDbMeters']
+        self._seek_visible = self.app.conf['listLayout.showSeek']
+        self._accurate_time = self.app.conf['listLayout.showAccurate']
+        self._auto_continue = self.app.conf['listLayout.autoContinue']
+        self._show_playing = self.app.conf['listLayout.showPlaying']
+        self._go_key = self.app.conf['listLayout.goKey']
         self._go_key_sequence = QKeySequence(
             self._go_key, QKeySequence.NativeText)
 
-        self._end_list = EndListBehavior(AppConfig()['listLayout.endList'])
+        self._end_list = EndListBehavior(self.app.conf['listLayout.endList'])
 
         # Add layout-specific menus
         self.showPlayingAction = QAction(self)

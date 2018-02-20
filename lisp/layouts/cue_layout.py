@@ -22,17 +22,16 @@ from abc import abstractmethod
 from PyQt5.QtWidgets import QAction, QMenu, qApp
 
 from lisp.core.actions_handler import MainActionsHandler
-from lisp.core.configuration import AppConfig
 from lisp.core.signal import Signal
 from lisp.core.util import greatest_common_superclass
 from lisp.cues.cue import Cue, CueAction
-from lisp.cues.cue_actions import UpdateCueAction, \
-    UpdateCuesAction
+from lisp.cues.cue_actions import UpdateCueAction, UpdateCuesAction
 from lisp.layouts.cue_menu_registry import CueMenuRegistry
 from lisp.ui.mainwindow import MainWindow
 from lisp.ui.settings.cue_settings import CueSettings
 
 
+# TODO: split widget and "controller"
 class CueLayout:
     # Layout name
     NAME = 'Base'
@@ -43,8 +42,11 @@ class CueLayout:
 
     cm_registry = CueMenuRegistry()
 
-    def __init__(self, cue_model):
-        self._cue_model = cue_model
+    def __init__(self, application=None):
+        """
+        :type application: lisp.application.Application
+        """
+        self.app = application
 
         self.cue_executed = Signal()    # After a cue is executed
         self.focus_changed = Signal()   # After the focused cue is changed
@@ -53,7 +55,7 @@ class CueLayout:
     @property
     def cue_model(self):
         """:rtype: lisp.core.cue_model.CueModel"""
-        return self._cue_model
+        return self.app.cue_model
 
     @property
     @abstractmethod
@@ -94,22 +96,22 @@ class CueLayout:
         """
 
     def stop_all(self):
-        fade = AppConfig().get('layout.stopAllFade', False)
+        fade = self.app.conf.get('layout.stopAllFade', False)
         for cue in self.model_adapter:
             cue.stop(fade=fade)
 
     def interrupt_all(self):
-        fade = AppConfig().get('layout.interruptAllFade', False)
+        fade = self.app.conf.get('layout.interruptAllFade', False)
         for cue in self.model_adapter:
             cue.interrupt(fade=fade)
 
     def pause_all(self):
-        fade = AppConfig().get('layout.pauseAllFade', False)
+        fade = self.app.conf.get('layout.pauseAllFade', False)
         for cue in self.model_adapter:
             cue.pause(fade=fade)
 
     def resume_all(self):
-        fade = AppConfig().get('layout.resumeAllFade', True)
+        fade = self.app.conf.get('layout.resumeAllFade', True)
         for cue in self.model_adapter:
             cue.resume(fade=fade)
 

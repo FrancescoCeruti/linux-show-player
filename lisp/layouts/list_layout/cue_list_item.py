@@ -21,7 +21,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QTreeWidgetItem
 
 from lisp.core.signal import Connection
-from lisp.ui.ui_utils import load_icon
+from lisp.ui.themes.theme import IconTheme
 
 
 class CueListItem(QTreeWidgetItem):
@@ -35,8 +35,7 @@ class CueListItem(QTreeWidgetItem):
 
         self._selected = False
 
-        self.cue.changed('name').connect(
-            self._update_name, Connection.QtQueued)
+        self.cue.changed('name').connect(self._update_name, Connection.QtQueued)
         self.cue.changed('index').connect(
             self._update_index, Connection.QtQueued)
 
@@ -52,7 +51,7 @@ class CueListItem(QTreeWidgetItem):
     @selected.setter
     def selected(self, value):
         self._selected = value
-        self.setIcon(0, load_icon('mark-location' if value else ''))
+        self.setIcon(0, IconTheme.get('mark-location' if value else ''))
 
     def _update_index(self, index):
         self.setText(self.num_column, str(index))

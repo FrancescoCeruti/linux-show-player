@@ -24,7 +24,7 @@ from lisp.core.signal import Connection
 from lisp.core.util import strtime
 from lisp.cues.cue import CueNextAction, CueState
 from lisp.cues.cue_time import CueTime, CueWaitTime
-from lisp.ui.ui_utils import pixmap_from_icon
+from lisp.ui.themes.theme import IconTheme
 
 
 class CueStatusIcon(QLabel):
@@ -44,16 +44,16 @@ class CueStatusIcon(QLabel):
         self.cue.end.connect(self._stop, Connection.QtQueued)
 
     def _start(self):
-        self.setPixmap(pixmap_from_icon('led-running', self.SIZE))
+        self.setPixmap(IconTheme.get('led-running').pixmap(self.SIZE))
 
     def _pause(self):
-        self.setPixmap(pixmap_from_icon('led-pause', self.SIZE))
+        self.setPixmap(IconTheme.get('led-pause',).pixmap(self.SIZE))
 
     def _error(self, *args):
-        self.setPixmap(pixmap_from_icon('led-error', self.SIZE))
+        self.setPixmap(IconTheme.get('led-error').pixmap(self.SIZE))
 
     def _stop(self):
-        self.setPixmap(pixmap_from_icon('', self.SIZE))
+        self.setPixmap(IconTheme.get('').pixmap(self.SIZE))
 
     def sizeHint(self):
         return QSize(self.SIZE, self.SIZE)
@@ -75,13 +75,13 @@ class NextActionIcon(QLabel):
 
     def _update_icon(self, next_action):
         next_action = CueNextAction(next_action)
-        pixmap = pixmap_from_icon('', self.SIZE)
+        pixmap = IconTheme.get('').pixmap(self.SIZE)
 
         if next_action == CueNextAction.AutoNext:
-            pixmap = pixmap_from_icon('auto-next', self.SIZE)
+            pixmap = IconTheme.get('auto-next').pixmap(self.SIZE)
             self.setToolTip(CueNextAction.AutoNext.value)
         elif next_action == CueNextAction.AutoFollow:
-            pixmap = pixmap_from_icon('auto-follow', self.SIZE)
+            pixmap = IconTheme.get('auto-follow').pixmap(self.SIZE)
             self.setToolTip(CueNextAction.AutoFollow.value)
         else:
             self.setToolTip('')

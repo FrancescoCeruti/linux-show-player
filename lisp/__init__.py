@@ -26,8 +26,13 @@ __license__ = 'GPLv3'
 __version__ = '0.6dev'
 
 # Application wide "constants"
+APP_DIR = path.dirname(__file__)
 
 USER_DIR = path.join(path.expanduser("~"), '.linux_show_player')
 
-DEFAULT_APP_CONFIG = path.join(path.dirname(__file__), 'default.json')
+DEFAULT_APP_CONFIG = path.join(APP_DIR, 'default.json')
 USER_APP_CONFIG = path.join(USER_DIR, 'lisp.json')
+
+I18N_PATH = path.join(APP_DIR, 'i18n')
+
+ICON_THEMES_DIR = path.join(APP_DIR, 'ui', 'themes', 'icons')

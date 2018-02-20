@@ -17,8 +17,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QPushButton
+
+from lisp.ui.themes.theme import IconTheme
 
 
 class QMuteButton(QPushButton):
@@ -39,6 +40,6 @@ class QMuteButton(QPushButton):
 
     def onToggle(self):
         if self.isChecked():
-            self.setIcon(QIcon.fromTheme('audio-volume-muted'))
+            self.setIcon(IconTheme.get('audio-volume-muted'))
         else:
-            self.setIcon(QIcon.fromTheme('audio-volume-high'))
+            self.setIcon(IconTheme.get('audio-volume-high'))

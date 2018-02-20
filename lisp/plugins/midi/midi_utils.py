@@ -19,8 +19,6 @@
 
 import mido
 
-from lisp.core.configuration import AppConfig
-
 
 def str_msg_to_dict(str_message):
     message = mido.parse_string(str_message)

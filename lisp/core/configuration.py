@@ -21,6 +21,7 @@
 # raise an exception. Created to enable `None' as a valid fallback value.
 
 import json
+import logging
 from abc import ABCMeta, abstractmethod
 from copy import deepcopy
 from os import path
@@ -30,17 +31,16 @@ from lisp import DEFAULT_APP_CONFIG, USER_APP_CONFIG
 from lisp.core.signal import Signal
 
 # Used to indicate the default behaviour when a specific option is not found to
-# raise an exception. Created to enable `None' as a valid fallback value.
+# raise an exception. Created to enable `None` as a valid fallback value.
 from lisp.core.singleton import ABCSingleton
 
 _UNSET = object()
 
 
 class Configuration(metaclass=ABCMeta):
-    """ABC for a configuration object.
+    """ABC for a dictionary-based configuration object.
 
-    Subclasses need to implement `read`, `write` methods.
-
+    Subclasses need to implement `read` and `write` methods.
     Keep in mind that the `set` and `update` methods ignores non-existing keys.
     """
 
@@ -62,6 +62,10 @@ class Configuration(metaclass=ABCMeta):
             return node[key]
         except (KeyError, TypeError) as e:
             if default is not _UNSET:
+                logging.warning(
+                    'CONFIG: invalid key "{}" in get operation, default used.'
+                        .format(path)
+                )
                 return default
 
             raise e
@@ -73,7 +77,10 @@ class Configuration(metaclass=ABCMeta):
 
             self.changed.emit(path, old, value)
         except (KeyError, TypeError):
-            pass
+            logging.warning(
+                'CONFIG: invalid key "{}" in set operation, ignored.'
+                    .format(path)
+            )
 
     def __traverse(self, keys, root):
         next_step = keys.pop(0)
@@ -84,12 +91,18 @@ class Configuration(metaclass=ABCMeta):
         return root, next_step
 
     def update(self, new_conf):
+        """Update the current configuration using the given dictionary.
+
+        :param new_conf: the new configuration (can be partial)
+        :type new_conf: dict
+        """
         self.__update(self._root, new_conf)
 
     def __update(self, root, new_conf, _path=''):
+        """Recursively update the current configuration."""
         for key, value in new_conf.items():
             if key in root:
-                _path += '.' + key
+                _path = self.jp(_path, key)
 
                 if isinstance(root[key], dict):
                     self.__update(root[key], value, _path)
@@ -98,7 +111,15 @@ class Configuration(metaclass=ABCMeta):
                     self.changed.emit(_path[1:], old, value)
 
     def copy(self):
+        """Return a deep-copy of the internal dictionary.
+
+        :rtype: dict
+        """
         return deepcopy(self._root)
+
+    @staticmethod
+    def jp(*paths):
+        return '.'.join(*paths)
 
     def __getitem__(self, path):
         return self.get(path)
@@ -149,14 +170,14 @@ class JSONFileConfiguration(Configuration):
             self.read()
 
     def read(self):
-        self._check()
+        self._check_file()
         self._root = self._read_json(self.user_path)
 
     def write(self):
         with open(self.user_path, 'w') as f:
             json.dump(self._root, f, indent=True)
 
-    def _check(self):
+    def _check_file(self):
         """Ensure the last configuration is present at the user-path position"""
         if path.exists(self.user_path):
             # Read default configuration
@@ -167,12 +188,15 @@ class JSONFileConfiguration(Configuration):
             user = self._read_json(self.user_path)
             user = user.get('_version_', object())
 
-            # if the user and default version aren't the same
-            if user != default:
-                # Copy the new configuration
-                copyfile(self.default_path, self.user_path)
-        else:
-            copyfile(self.default_path, self.user_path)
+            # if the user and default version are the same we are good
+            if user == default:
+                return
+
+        # Copy the new configuration
+        copyfile(self.default_path, self.user_path)
+        logging.info('CONFIG: new configuration installed at {}'.format(
+            self.user_path
+        ))
 
     @staticmethod
     def _read_json(path):
