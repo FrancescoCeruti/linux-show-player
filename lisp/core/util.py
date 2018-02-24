@@ -241,19 +241,3 @@ class FunctionProxy:
 
     def __call__(self, *args, **kwargs):
         return self.function(*args, **kwargs)
-
-
-class InstanceOfSubclassMeta(type):
-    """Some horrible black magic here
-
-    When creating an object from a class using this metaclass,
-    an instance of a subclass created on-the-fly will be returned.
-    """
-    _MAGIC = str(uuid4())
-
-    def __call__(cls, *args, **kwargs):
-        if kwargs.pop(cls._MAGIC, False):
-            return super().__call__(*args, **kwargs)
-
-        kwargs.update({cls._MAGIC: True})
-        return type(cls.__name__, (cls, ), {})(*args, **kwargs)
