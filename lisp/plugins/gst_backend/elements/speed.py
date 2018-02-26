@@ -76,12 +76,12 @@ class Speed(GstMediaElement):
             self.__change_speed()
 
     def __change_speed(self):
-        current_position = self.scale_tempo.query_position(Gst.Format.TIME)[1]
-
-        self.scale_tempo.seek(self.speed,
-                              Gst.Format.TIME,
-                              Gst.SeekFlags.FLUSH | Gst.SeekFlags.ACCURATE,
-                              Gst.SeekType.SET,
-                              current_position,
-                              Gst.SeekType.NONE,
-                              0)
+        self.scale_tempo.seek(
+            self.speed,
+            Gst.Format.TIME,
+            Gst.SeekFlags.FLUSH | Gst.SeekFlags.ACCURATE,
+            Gst.SeekType.SET,
+            self.scale_tempo.query_position(Gst.Format.TIME)[1],
+            Gst.SeekType.NONE,
+            0
+        )

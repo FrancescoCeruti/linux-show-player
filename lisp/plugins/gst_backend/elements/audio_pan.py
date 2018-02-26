@@ -29,7 +29,7 @@ class AudioPan(GstMediaElement):
     MediaType = MediaType.Audio
     Name = QT_TRANSLATE_NOOP('MediaElementName', 'Audio Pan')
 
-    pan = GstProperty('panorama', default=.0, gst_name='panorama')
+    pan = GstProperty('panorama', 'panorama', default=.0)
 
     def __init__(self, pipe):
         super().__init__()

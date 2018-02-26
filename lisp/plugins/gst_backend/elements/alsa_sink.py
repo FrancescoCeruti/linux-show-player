@@ -29,7 +29,7 @@ class AlsaSink(GstMediaElement):
     MediaType = MediaType.Audio
     Name = QT_TRANSLATE_NOOP('MediaElementName', 'ALSA Out')
 
-    device = GstProperty('alsa_sink', default='')
+    device = GstProperty('alsa_sink', 'device', default='')
 
     def __init__(self, pipe):
         super().__init__()

@@ -68,7 +68,7 @@ class GstMediaSettings(SettingsPage):
                 page = page(parent=self)
                 page.load_settings(
                     settings.get('elements', {})
-                        .get(element, page.ELEMENT.properties_defaults()))
+                        .get(element, page.ELEMENT.class_defaults()))
                 page.setVisible(False)
                 self._pages.append(page)
 

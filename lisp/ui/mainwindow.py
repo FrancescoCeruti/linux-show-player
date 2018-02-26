@@ -201,12 +201,11 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         self.centralWidget().layout().addWidget(layout)
         layout.show()
 
-        self.multiEdit.triggered.connect(layout.edit_selected_cues)
-        self.selectAll.triggered.connect(lambda: layout.select_all())
-        self.invertSelection.triggered.connect(layout.invert_selection)
-        self.deselectAll.triggered.connect(lambda: layout.deselect_all())
-        self.selectAllMedia.triggered.connect(
-            lambda: layout.select_all(MediaCue))
+        self.multiEdit.triggered.connect(self._edit_selected_cue)
+        self.selectAll.triggered.connect(self._select_all)
+        self.invertSelection.triggered.connect(self._invert_selection)
+        self.deselectAll.triggered.connect(self._deselect_all)
+        self.selectAllMedia.triggered.connect(self._select_all_media)
 
     def closeEvent(self, event):
         self._exit()
@@ -324,3 +323,18 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
     def _exit(self):
         if self._check_saved():
             qApp.quit()
+
+    def _edit_selected_cue(self):
+        self.session.layout.edit_selected_cues()
+
+    def _select_all(self):
+        self.session.layout.select_all()
+
+    def _invert_selection(self):
+        self.session.layout.invert_selection()
+
+    def _deselect_all(self):
+        self.session.layout.deselect_all()
+
+    def _select_all_media(self):
+        self.session.layout.select_all(cue_class=MediaCue)

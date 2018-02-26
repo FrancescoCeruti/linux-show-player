@@ -29,7 +29,7 @@ class Pitch(GstMediaElement):
     MediaType = MediaType.Audio
     Name = QT_TRANSLATE_NOOP('MediaElementName', 'Pitch')
 
-    pitch = GstProperty('gst_pitch', gst_name='pitch', default=1.0)
+    pitch = GstProperty('gst_pitch', 'pitch', default=1.0)
 
     def __init__(self, pipe):
         super().__init__()

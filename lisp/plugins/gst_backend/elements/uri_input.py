@@ -19,6 +19,7 @@
 
 from concurrent.futures import ThreadPoolExecutor
 from os import path
+from urllib.parse import quote as urlquote, unquote as urlunquote
 
 from PyQt5.QtCore import QT_TRANSLATE_NOOP
 
@@ -32,24 +33,28 @@ from lisp.plugins.gst_backend.gst_element import GstProperty, \
 from lisp.plugins.gst_backend.gst_utils import gst_uri_duration
 
 
-def abs_uri(uri):
-    protocol, path_ = uri.split('://')
-    if protocol == 'file':
-        return 'file://' + Application().session.abs_path(path_)
-    else:
-        return uri
+def abs_path(path_):
+    return Application().session.abs_path(path_)
+
+
+def uri_split(uri):
+    return uri.split('://')
+
+
+def uri_adapter(uri):
+    scheme, path = uri_split(uri)
+    return scheme + '://' + urlquote(abs_path(path))
 
 
 class UriInput(GstSrcElement):
     MediaType = MediaType.Audio
     Name = QT_TRANSLATE_NOOP('MediaElementName', 'URI Input')
 
-    uri = GstProperty('decoder', default='', adapter=abs_uri)
-    download = GstProperty('decoder', default=False)
-    buffer_size = GstProperty('decoder', default=-1, gst_name='buffer-size')
-    use_buffering = GstProperty('decoder', default=False,
-                                gst_name='use-buffering')
     _mtime = Property(default=-1)
+    uri = GstProperty('decoder', 'uri', default='', adapter=uri_adapter)
+    download = GstProperty('decoder', 'download', default=False)
+    buffer_size = GstProperty('decoder', 'buffer-size', default=-1)
+    use_buffering = GstProperty('decoder', 'use-buffering', default=False)
 
     def __init__(self, pipe):
         super().__init__()
@@ -80,9 +85,11 @@ class UriInput(GstSrcElement):
     def __uri_changed(self, uri):
         # Save the current mtime (file flag for last-change time)
         mtime = self._mtime
-        # If the uri is a file, then update the current mtime
-        protocol, path_ = abs_uri(uri).split('://')
-        if protocol == 'file':
+
+        # If the uri is a file update the current mtime
+        scheme, path_ = uri_split(uri)
+        if scheme == 'file':
+            path_ = abs_path(path_)
             if path.exists(path_):
                 self._mtime = path.getmtime(path_)
         else:
@@ -94,9 +101,11 @@ class UriInput(GstSrcElement):
 
     @async_in_pool(pool=ThreadPoolExecutor(1))
     def __duration(self):
-        self.duration = gst_uri_duration(abs_uri(self.uri))
+        scheme, path = uri_split(self.uri)
+        self.duration = gst_uri_duration(scheme + '://' + abs_path(path))
 
     def __session_moved(self, _):
-        protocol, old_path = self.decoder.get_property('uri').split('://')
-        if protocol == 'file':
-            self.uri = 'file://' + Application().session.rel_path(old_path)
+        scheme, path_ = uri_split(self.decoder.get_property('uri'))
+        if scheme == 'file':
+            path_ = urlunquote(path_)
+            self.uri = 'file://' + Application().session.rel_path(path_)

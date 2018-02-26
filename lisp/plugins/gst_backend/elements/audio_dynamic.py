@@ -35,16 +35,19 @@ class AudioDynamic(GstMediaElement):
         Compressor = 'compressor'
         Expander = 'expander'
 
-
     class Characteristics(Enum):
         HardKnee = 'hard-knee'
         SoftKnee = 'soft-knee'
 
-    mode = GstProperty('audio_dynamic', default=Mode.Compressor.value)
-    characteristics = GstProperty('audio_dynamic',
-                                 default=Characteristics.HardKnee.value)
-    ratio = GstProperty('audio_dynamic', default=1)
-    threshold = GstProperty('audio_dynamic', default=0)
+    mode = GstProperty(
+        'audio_dynamic', 'mode', default=Mode.Compressor.value)
+    ratio = GstProperty('audio_dynamic', 'ratio', default=1)
+    threshold = GstProperty('audio_dynamic', 'threshold', default=0)
+    characteristics = GstProperty(
+        'audio_dynamic',
+        'characteristics',
+        default=Characteristics.HardKnee.value
+    )
 
     def __init__(self, pipe):
         super().__init__()

@@ -20,8 +20,8 @@
 import weakref
 
 from lisp.backend.media import Media, MediaState
-from lisp.core.has_properties import HasProperties
-from lisp.core.properties import Property, WriteOnceProperty
+from lisp.core.has_properties import HasInstanceProperties
+from lisp.core.properties import Property, InstanceProperty
 from lisp.plugins.gst_backend import elements as gst_elements
 from lisp.plugins.gst_backend.gi_repository import Gst
 
@@ -286,11 +286,7 @@ class GstMedia(Media):
         media_elements.clear()
 
 
-def GstMediaElements():
-    return type('GstMediaElements', (_GstMediaElements, ), {})()
-
-
-class _GstMediaElements(HasProperties):
+class GstMediaElements(HasInstanceProperties):
 
     def __init__(self):
         super().__init__()
@@ -317,11 +313,9 @@ class _GstMediaElements(HasProperties):
         self.elements.append(element)
 
         # Add a property for the new added element
-        self.register_property(
-            element.__class__.__name__,
-            WriteOnceProperty(default=None)
-        )
-        setattr(self, element.__class__.__name__, element)
+        element_name = element.__class__.__name__
+        setattr(self, element_name, InstanceProperty(default=None))
+        setattr(self, element_name, element)
 
     def remove(self, element):
         self.pop(self.elements.index(element))
@@ -337,7 +331,7 @@ class _GstMediaElements(HasProperties):
         element.dispose()
 
         # Remove the element corresponding property
-        self.remove_property(element.__class__.__name__)
+        delattr(self, element.__class__.__name__)
 
     def clear(self):
         while self.elements:

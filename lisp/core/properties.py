@@ -18,26 +18,7 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from copy import deepcopy
-
-
-class LiveProperty:
-    """Descriptor used to define live-properties.
-
-    Live-properties allow to manipulate parameters in a live context, without
-    touching the values stored inside `Property` descriptors.
-
-    This class doesn't implement any behavior, but it must be extended in order
-    to correctly register live-properties.
-    """
-    def __init__(self, **meta):
-        self.name = '_'
-        self.meta = meta
-
-    def __get__(self, instance, owner=None):
-        pass
-
-    def __set__(self, instance, value):
-        pass
+from weakref import WeakKeyDictionary
 
 
 class Property:
@@ -46,38 +27,65 @@ class Property:
     Properties allow to define "special" attributes for objects, to provide
     custom behaviors in a simple and reusable manner.
 
-    .. warning::
+    Should be used in combination with an HasProperties object.
+
+    As default value list, dict and likely can be used, since the default value
+    is (deep)copied.
+
+    Warning:
         To be able to save properties into a session, the stored value
         MUST be JSON-serializable.
+
+    Note:
+        Internally a WeakKeyDictionary is used, to avoid keeping objects
+        references alive
     """
 
     def __init__(self, default=None, **meta):
-        self.name = '_'
+        self._values = WeakKeyDictionary()
+
         self.default = default
         self.meta = meta
 
     def __get__(self, instance, owner=None):
         if instance is None:
             return self
-        elif self.name not in instance.__dict__:
-            instance.__dict__[self.name] = deepcopy(self.default)
+        elif instance not in self._values:
+            self._values[instance] = deepcopy(self.default)
 
-        return instance.__dict__.get(self.name)
+        return self._values[instance]
 
     def __set__(self, instance, value):
         if instance is not None:
-            # Only change the value if different
-            if value != instance.__dict__.get(self.name, self.default):
-                instance.__dict__[self.name] = value
+            self._values[instance] = value
 
 
 class WriteOnceProperty(Property):
     """Property that can be modified only once.
 
-    Obviously this is not really "write-once", but if used as normal attribute
-    will ignore any change when the stored value is different from default.
+    Obviously this is not really "write-once", but when used as normal attribute
+    will ignore any change when the stored value is different than the default.
     """
 
     def __set__(self, instance, value):
         if self.__get__(instance) == self.default:
             super().__set__(instance, value)
+
+
+class InstanceProperty:
+    """Per-instance property, not a descriptor.
+
+    To be of any use an InstanceProperty should be used in combination
+    of an HasInstanceProperties object.
+    """
+    __slots__ = ('value', 'default')
+
+    def __init__(self, default=None):
+        self.value = default
+        self.default = default
+
+    def __pget__(self):
+        return self.value
+
+    def __pset__(self, value):
+        self.value = value

@@ -19,16 +19,12 @@
 
 import os
 
-from lisp.core.signal import Signal
-from lisp.core.has_properties import HasProperties, Property
+from lisp.core.has_properties import Property, HasInstanceProperties
 from lisp.core.memento_model import MementoModelAdapter
+from lisp.core.signal import Signal
 
 
-def new_session(layout):
-    return type('Session', (BaseSession, ), {})(layout)
-
-
-class BaseSession(HasProperties):
+class Session(HasInstanceProperties):
     layout_type = Property(default='')
     session_file = Property(default='')
 
@@ -36,7 +32,7 @@ class BaseSession(HasProperties):
         super().__init__()
         self.finalized = Signal()
 
-        self.layout_type = layout.__class__.__name__
+        self.layout_type = type(layout).__name__
 
         self.__layout = layout
         self.__cue_model = layout.cue_model
@@ -57,24 +53,28 @@ class BaseSession(HasProperties):
         return self.__layout
 
     def name(self):
+        """Return the name of session, depending on the session-file."""
         if self.session_file:
             return os.path.splitext(os.path.basename(self.session_file))[0]
         else:
             return 'Untitled'
 
     def path(self):
+        """Return the current session-file path."""
         if self.session_file:
             return os.path.dirname(self.session_file)
         else:
             return os.path.expanduser('~')
 
     def abs_path(self, rel_path):
+        """Return an absolute version of the given path."""
         if not os.path.isabs(rel_path):
             return os.path.normpath(os.path.join(self.path(), rel_path))
 
         return rel_path
 
     def rel_path(self, abs_path):
+        """Return a relative (to the session-file) version of the given path."""
         return os.path.relpath(abs_path, start=self.path())
 
     def finalize(self):

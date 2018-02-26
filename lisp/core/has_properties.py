@@ -19,148 +19,123 @@
 
 from abc import ABCMeta
 
-from lisp.core.properties import Property, LiveProperty
+from lisp.core.properties import Property, InstanceProperty
 from lisp.core.signal import Signal
-from lisp.core.util import subclasses
 
 
 class HasPropertiesMeta(ABCMeta):
-    """Metaclass for HasProperties classes.
+    """Metaclass for defining HasProperties classes.
 
-    This metaclass manage the "propagation" of the properties in all subclasses.
+    Use this metaclass to create an HasProperties. This metaclass takes care
+    of keeping an update register of all the properties in the class and
+    to propagate the changes in all the hierarchy.
 
-    ..note::
+    On it's own this metaclass it's not very useful, look at the HasProperty
+    class for a comprehensive implementation.
+
+    Note:
         This metaclass is derived form :class:`abc.ABCMeta`, so abstract
         classes can be created without using an intermediate metaclass
     """
 
-    def __init__(cls, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        cls.__properties__ = set()
-        cls.__live_properties__ = set()
+    def __new__(mcls, name, bases, namespace, **kwargs):
+        cls = super().__new__(mcls, name, bases, namespace, **kwargs)
 
-        # Populate with the existing properties
-        for name, attribute in vars(cls).items():
-            if isinstance(attribute, Property):
-                cls.__properties__.add(name)
-                attribute.name = name
-            elif isinstance(attribute, LiveProperty):
-                cls.__live_properties__.add(name)
-                attribute.name = name
+        # Compute the set of property names
+        cls.__pro__ = {
+            name
+            for name, value in namespace.items()
+            if isinstance(value, Property)
+        }
 
-        for base in cls.__bases__:
+        # Update the set from "proper" base classes
+        for base in bases:
             if isinstance(base, HasPropertiesMeta):
-                cls.__properties__.update(base.__properties__)
-                cls.__live_properties__.update(base.__live_properties__)
+                cls.__pro__.update(base.__pro__)
+
+        return cls
 
     def __setattr__(cls, name, value):
         super().__setattr__(name, value)
 
         if isinstance(value, Property):
-            cls.__properties__.add(name)
-            value.name = name
-
-            for subclass in subclasses(cls):
-                subclass.__properties__.add(name)
-        elif isinstance(value, LiveProperty):
-            cls.__live_properties__.add(name)
-            value.name = name
-
-            for subclass in subclasses(cls):
-                subclass.__live_properties__.add(name)
+            cls._add_property(name)
 
     def __delattr__(cls, name):
         super().__delattr__(name)
 
-        cls.__properties__.discard(name)
-        cls.__live_properties__.discard(name)
+        if name in cls.__pro__:
+            cls._del_property(name)
 
-        for subclass in subclasses(cls):
-            subclass.__properties__.discard(name)
-            subclass.__live_properties__.discard(name)
+    def _add_property(cls, name):
+        cls.__pro__.add(name)
+        for subclass in cls.__subclasses__():
+            subclass._add_property(name)
+
+    def _del_property(cls, name):
+        cls.__pro__.discard(name)
+        for subclass in cls.__subclasses__():
+            subclass._del_property(name)
 
 
 class HasProperties(metaclass=HasPropertiesMeta):
-    """Base class providing a simple way to mange object properties.
+    """Base class which allow to use Property and InstanceProperty.
 
-    Using the Property descriptor, subclasses, can specify a set of
-    properties, that can be easily retrieved and updated via :func:`properties`
-    and :func:`update_properties`.
+    Using the Property descriptor subclasses can specify a set of properties
+    that can be easily retrieved and updated via a series of provided functions.
 
-    When using LiveProperty those should be named as the "non-live" counterpart
-    prefixed by "live_".
+    HasProperties objects can be nested, using a property that keep an
+    HasProperties object as value.
 
-    .. Usage::
+    Usage:
 
-        class MyClass(HasProperties):
-            prop1 = Property(default=100)
-            prop2 = Property()
-
-            live_prop1 = ConcreteLiveProperty()
-    """
-
-    __properties__ = set()
-    __live_properties__ = set()
+        class DeepThought(HasProperties):
+            the_answer = Property(default=42)
+            nested = Property(default=AnotherThought.class_defaults())
+   """
 
     def __init__(self):
-        self._changed_signals = {}
+        self.__changed_signals = {}
         # Contains signals that are emitted after the associated property is
         # changed, the signal are create only when requested the first time.
 
         self.property_changed = Signal()
         # Emitted after property change (self, name, value)
 
-    def __setattr__(self, name, value):
-        super().__setattr__(name, value)
+    def properties_names(self):
+        return self.__class__.__pro__
 
-        if name in self.__class__.__properties__:
-            self.property_changed.emit(self, name, value)
-            self.__emit_changed(name, value)
-        elif name in self.__class__.__live_properties__:
-            self.__emit_changed(name, value)
+    def properties_defaults(self):
+        """Instance properties defaults.
 
-    def __emit_changed(self, name, value):
-        try:
-            self._changed_signals[name].emit(value)
-        except KeyError:
-            pass
+        Differently from `class_defaults` this works on instances, and it might
+        give different results with some subclass.
+
+        :return: The default properties as a dictionary {name: default_value}
+        :rtype: dict
+        """
+        defaults = {}
+
+        for name in self.properties_names():
+            value = self._pro(name).default
+            if isinstance(value, HasProperties):
+                value = value.properties_defaults()
+
+            defaults[name] = value
+
+        return defaults
 
     @classmethod
-    def register_property(cls, name, prop):
-        """Register a new property with the given name.
+    def class_defaults(cls):
+        """Class properties defaults.
 
-        :param name: Property name
-        :param prop: The property
+        :return: The default properties as a dictionary {name: default_value}
+        :rtype: dict
         """
-        setattr(cls, name, prop)
-
-    @classmethod
-    def remove_property(cls, name):
-        """Remove the property with the given name.
-
-        :param name: Property name
-        """
-        delattr(cls, name)
-
-    def changed(self, name):
-        """
-        :param name: The property name
-        :return: A signal that notify the given property changes
-        :rtype: Signal
-
-        The signals returned by this method are created lazily and cached.
-        """
-        if (name not in self.__class__.__properties__ and
-                name not in self.__class__.__live_properties__):
-            raise ValueError('no property "{}" found'.format(name))
-
-        signal = self._changed_signals.get(name)
-
-        if signal is None:
-            signal = Signal()
-            self._changed_signals[name] = signal
-
-        return signal
+        return {
+            name: getattr(cls, name).default
+            for name in cls.__pro__
+        }
 
     def properties(self, defaults=True):
         """
@@ -172,49 +147,109 @@ class HasProperties(metaclass=HasPropertiesMeta):
         """
         properties = {}
 
-        for name in self.__class__.__properties__:
+        for name in self.properties_names():
             value = getattr(self, name)
 
             if isinstance(value, HasProperties):
                 value = value.properties(defaults=defaults)
                 if defaults or value:
                     properties[name] = value
-            elif defaults or value != getattr(self.__class__, name).default:
+            elif defaults or value != self._pro(name).default:
                 properties[name] = value
 
         return properties
 
     def update_properties(self, properties):
-        """Set the given properties.
+        """Update the current properties using the given dict.
 
         :param properties: The element properties
         :type properties: dict
         """
         for name, value in properties.items():
-            if name in self.__class__.__properties__:
+            if name in self.properties_names():
                 current = getattr(self, name)
                 if isinstance(current, HasProperties):
                     current.update_properties(value)
                 else:
                     setattr(self, name, value)
 
-    @classmethod
-    def properties_defaults(cls):
+    def changed(self, name):
         """
-        :return: The default properties as a dictionary {name: default_value}
-        :rtype: dict
+        :param name: The property name
+        :return: A signal that notify the given property changes
+        :rtype: Signal
+
+        The signals returned by this method are created lazily and cached.
         """
-        return {name: getattr(cls, name).default for name in cls.__properties__}
+        if name not in self.properties_names():
+            raise ValueError('no property "{}" found'.format(name))
 
-    @classmethod
-    def properties_names(cls):
-        """Retrieve properties names from the class
+        signal = self.__changed_signals.get(name)
+        if signal is None:
+            signal = Signal()
+            self.__changed_signals[name] = signal
 
-        :return: A set containing the properties names
-        :rtype: set[str]
-        """
-        return cls.__properties__.copy()
+        return signal
 
-    @classmethod
-    def live_properties_names(cls):
-        return cls.__live_properties__.copy()
+    def __setattr__(self, name, value):
+        super().__setattr__(name, value)
+        if name in self.properties_names():
+            self._emit_changed(name, value)
+
+    def _emit_changed(self, name, value):
+        self.property_changed.emit(self, name, value)
+        try:
+            self.__changed_signals[name].emit(value)
+        except KeyError:
+            pass
+
+    def _pro(self, name):
+        if name in self.__class__.__pro__:
+            return getattr(self.__class__, name)
+
+        # TODO: PropertyError ??
+        raise AttributeError(
+            "'{}' object has no property '{}'".format(
+                type(self).__name__, name)
+        )
+
+
+class HasInstanceProperties(HasProperties):
+    # Fallback __init__
+    __ipro__ = set()
+
+    def __init__(self):
+        super().__init__()
+        self.__ipro__ = set()
+        # Registry to keep track of instance-properties
+
+    def properties_names(self):
+        return super().properties_names().union(self.__ipro__)
+
+    def __getattribute__(self, name):
+        attribute = super().__getattribute__(name)
+        if isinstance(attribute, InstanceProperty):
+            return attribute.__pget__()
+
+        return attribute
+
+    def __setattr__(self, name, value):
+        if isinstance(value, InstanceProperty):
+            super().__setattr__(name, value)
+            self.__ipro__.add(name)
+        elif name in self.__ipro__:
+            property = super().__getattribute__(name)
+            property.__pset__(value)
+            self._emit_changed(name, value)
+        else:
+            super().__setattr__(name, value)
+
+    def __delattr__(self, name):
+        super().__delattr__(name)
+        self.__ipro__.discard(name)
+
+    def _pro(self, name):
+        if name in self.__ipro__:
+            return self._getattribute(name)
+
+        return super()._pro(name)

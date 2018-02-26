@@ -119,7 +119,7 @@ class Configuration(metaclass=ABCMeta):
 
     @staticmethod
     def jp(*paths):
-        return '.'.join(*paths)
+        return '.'.join(paths)
 
     def __getitem__(self, path):
         return self.get(path)

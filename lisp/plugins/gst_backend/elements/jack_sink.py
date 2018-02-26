@@ -140,10 +140,9 @@ class JackSink(GstMediaElement):
     def __on_message(self, bus, message):
         if message.src == self.jack_sink:
             if message.type == Gst.MessageType.STATE_CHANGED:
-                change = message.parse_state_changed()
+                change = tuple(message.parse_state_changed())[0:2]
 
                 # The jack ports are available when the the jackaudiosink
                 # change from READY to PAUSED state
-                if (change[0] == Gst.State.READY and
-                        change[1] == Gst.State.PAUSED):
+                if change == (Gst.State.READY, Gst.State.PAUSED):
                     self.__jack_connect()

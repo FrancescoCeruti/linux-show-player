@@ -30,10 +30,9 @@ class Volume(GstMediaElement):
     MediaType = MediaType.Audio
     Name = QT_TRANSLATE_NOOP('MediaElementName', 'Volume')
 
-    mute = GstProperty('gst_volume', default=False)
-    volume = GstProperty('gst_volume', default=1.0)
-    normal_volume = GstProperty(
-        'gst_normal_volume', default=1.0, gst_name='volume')
+    mute = GstProperty('gst_volume', 'mute', default=False)
+    volume = GstProperty('gst_volume', 'volume', default=1.0)
+    normal_volume = GstProperty('gst_normal_volume', 'volume', default=1.0)
 
     live_volume = GstLiveProperty(
         'gst_volume', 'volume', type=float, range=(0, 10))

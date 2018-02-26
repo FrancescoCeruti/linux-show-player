@@ -20,11 +20,12 @@
 import json
 from os.path import exists
 
+import objgraph as objgraph
 from PyQt5.QtWidgets import QDialog, qApp
 
 from lisp import layouts
 from lisp.core.actions_handler import MainActionsHandler
-from lisp.core.session import new_session
+from lisp.core.session import Session
 from lisp.core.signal import Signal
 from lisp.core.singleton import Singleton
 from lisp.cues.cue import Cue
@@ -134,7 +135,7 @@ class Application(metaclass=Singleton):
     def _new_session(self, layout):
         self._delete_session()
 
-        self.__session = new_session(layout(application=self))
+        self.__session = Session(layout(application=self))
         self.__main_window.set_session(self.__session)
 
         self.session_created.emit(self.__session)
