@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,6 +26,8 @@ from xmlrpc.server import SimpleXMLRPCServer
 from lisp.core.decorators import async
 from lisp.plugins.remote.dispatcher import RemoteDispatcher
 
+logger = logging.getLogger(__name__)
+
 
 class TimeoutTransport(Transport):
     timeout = 2.0
@@ -41,29 +43,25 @@ class RemoteController:
     """Provide control over a SimpleXMLRPCServer."""
 
     def __init__(self, app, ip, port):
-        try:
-            self.server = SimpleXMLRPCServer(
-                (ip, port), allow_none=True, logRequests=False)
-        except OSError as error:
-            # If address already in use
-            if error.errno == 98:
-                raise Exception(
-                    "Only one application instance can use this module")
-            else:
-                raise error
+        self.server = SimpleXMLRPCServer(
+            (ip, port), allow_none=True, logRequests=False)
 
         self.server.register_introspection_functions()
         self.server.register_instance(RemoteDispatcher(app))
 
     @async
     def start(self):
-        logging.info(
-            'REMOTE: Session started at ' + str(self.server.server_address))
+        logger.info(
+            'Remote network session started: IP="{}" Port="{}"'.format(
+                self.server.server_address[0],
+                self.server.server_address[1]
+            )
+        )
 
         # Blocking call
         self.server.serve_forever()
 
-        logging.info('REMOTE: Session ended')
+        logger.info('Remote network session ended.')
 
     def stop(self):
         self.server.shutdown()

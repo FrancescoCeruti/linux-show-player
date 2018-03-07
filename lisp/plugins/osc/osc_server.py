@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2017 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
 # Copyright 2012-2016 Thomas Achtner <info@offtools.de>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
@@ -92,6 +92,8 @@ GLOBAL_CALLBACKS = [
     ['/lisp/list/interrupt', None, callback_interrupt]
 ]'''
 
+logger = logging.getLogger(__name__)
+
 
 class OscMessageType(Enum):
     Int = 'Integer'
@@ -122,10 +124,10 @@ class OscServer:
 
             self.__listening = True
 
-            logging.info('OSC: Server started at {}'.format(self.__srv.url))
+            logger.info('Server started at {}'.format(self.__srv.url))
         except ServerError:
-            logging.error('OSC: Cannot start sever')
-            logging.debug(traceback.format_exc())
+            logger.error('Cannot start sever')
+            logger.debug(traceback.format_exc())
 
     def stop(self):
         if self.__srv is not None:
@@ -134,7 +136,7 @@ class OscServer:
                 self.__listening = False
 
             self.__srv.free()
-            logging.info('OSC: Server stopped')
+            logger.info('Server stopped')
 
     @property
     def listening(self):

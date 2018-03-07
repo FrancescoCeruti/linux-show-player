@@ -33,6 +33,8 @@ from lisp.core.util import weak_call_proxy
 
 __all__ = ['Signal', 'Connection']
 
+logger = logging.getLogger(__name__)
+
 
 def slot_id(slot_callable):
     """Return the id of the given slot_callable.
@@ -72,7 +74,7 @@ class Slot:
                 else:
                     self._reference()(*args, **kwargs)
         except Exception:
-            logging.error(traceback.format_exc())
+            logger.warning('An error occurred.', exc_info=True)
 
     def is_alive(self):
         return self._reference() is not None

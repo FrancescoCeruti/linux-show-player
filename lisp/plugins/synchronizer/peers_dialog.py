@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,13 +17,14 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+import logging
+
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog, QHBoxLayout, QListWidget, QVBoxLayout, \
     QPushButton, QDialogButtonBox, QInputDialog, QMessageBox
 
 from lisp.core.util import compose_http_url
 from lisp.plugins.remote.remote import RemoteController
-from lisp.ui import elogging
 from lisp.ui.ui_utils import translate
 from .peers_discovery_dialog import PeersDiscoveryDialog
 
@@ -112,9 +113,8 @@ class PeersDialog(QDialog):
             peer = {'proxy': RemoteController.connect_to(uri), 'uri': uri}
             self.peers.append(peer)
             self.listWidget.addItem(peer['uri'])
-        except Exception as e:
-            elogging.exception(
-                translate('SyncPeerDialog', 'Cannot add peer'), str(e))
+        except Exception:
+            logging.exception(translate('SyncPeerDialog', 'Cannot add peer.'))
 
     def discover_peers(self):
         dialog = PeersDiscoveryDialog(self.config, parent=self)

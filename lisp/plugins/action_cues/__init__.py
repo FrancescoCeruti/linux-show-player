@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,11 +26,12 @@ from lisp.core.plugin import Plugin
 from lisp.cues.cue_factory import CueFactory
 from lisp.ui.ui_utils import translate
 
+logger = logging.getLogger(__name__)
+
 
 class ActionCues(Plugin):
-
     Name = 'Action Cues'
-    Authors = ('Francesco Ceruti', )
+    Authors = ('Francesco Ceruti',)
     Description = 'Provide a collection of cues for different purposes'
 
     def __init__(self, app):
@@ -41,22 +42,21 @@ class ActionCues(Plugin):
             CueFactory.register_factory(cue.__name__, cue)
 
             # Register the menu action for adding the action-cue
-            add_function = self.create_add_action_cue_function(cue)
             self.app.window.register_cue_menu_action(
                 translate('CueName', cue.Name),
-                add_function, 'Action cues')
+                self._new_cue_factory(cue),
+                'Action cues'
+            )
 
-            logging.debug('ACTION-CUES: Loaded "' + name + '"')
+            logger.debug('Loaded "' + name + '"')
 
-    def create_add_action_cue_function(self, cue_class):
-        def function():
+    def _new_cue_factory(self, cue_class):
+        def cue_factory():
             try:
                 cue = CueFactory.create_cue(cue_class.__name__)
                 self.app.cue_model.add(cue)
             except Exception:
-                # TODO: Display a message to the user
-                import logging, traceback
-                logging.error('Cannot create cue {}', cue_class.__name__)
-                logging.debug(traceback.format_exc())
+                logger.exception(
+                    'Cannot create cue {}'.format(cue_class.__name__))
 
-        return function
+        return cue_factory

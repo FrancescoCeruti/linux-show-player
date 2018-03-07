@@ -25,7 +25,6 @@ from ola.OlaClient import OlaClient, OLADNotRunningException
 from lisp.core.util import time_tuple
 from lisp.plugins.timecode.cue_tracker import TcFormat
 from lisp.plugins.timecode.protocol import TimecodeProtocol
-from lisp.ui import elogging
 from lisp.ui.ui_utils import translate
 
 ARTNET_FORMATS = {
@@ -33,6 +32,8 @@ ARTNET_FORMATS = {
     TcFormat.EBU: OlaClient.TIMECODE_EBU,
     TcFormat.SMPTE: OlaClient.TIMECODE_SMPTE
 }
+
+logger = logging.getLogger(__name__)
 
 
 class Artnet(TimecodeProtocol):
@@ -44,7 +45,7 @@ class Artnet(TimecodeProtocol):
         try:
             self.__client = OlaClient()
         except OLADNotRunningException as e:
-            raise  e
+            raise e
 
         self.__last_time = -1
 
@@ -61,13 +62,12 @@ class Artnet(TimecodeProtocol):
             self.__client.SendTimeCode(
                 ARTNET_FORMATS[fmt], hours, minutes, seconds, frame)
         except OLADNotRunningException:
-            elogging.error(
-                translate('Timecode', 'Cannot send timecode.'),
-                details=translate('Timecode', 'OLA has stopped.'))
+            logger.error(
+                translate(
+                    'Timecode', 'Cannot send timecode. \nOLA has stopped.'))
             return False
-        except Exception as e:
-            logging.error('TIMECODE: Cannot send timecode')
-            logging.debug('TIMECODE: {}'.format(e))
+        except Exception:
+            logger.exception(translate('Timecode', 'Cannot send timecode.'))
             return False
 
         self.__last_time = time

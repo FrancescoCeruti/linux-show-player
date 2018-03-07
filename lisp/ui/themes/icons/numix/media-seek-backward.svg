@@ -1,7 +1,1 @@
-<svg width="24" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24">
-<g transform="translate(1 1)">
-<path style="fill:#268bd2" d="M 21,1 21,21 8,11 z"/>
-<path style="fill-opacity:.1" d="M 21,1 21,21 8,11 z"/>
-<path style="fill:#268bd2" d="M 14,1 14,21 1,11 z"/>
-</g>
-</svg>
+<svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><g transform="translate(1 1)"><path d="M 21 1 L 21 21 L 8 11 z" fill="#268bd2"/><path d="M 21 1 L 21 21 L 8 11 z" fill-opacity=".1"/><path d="M 14 1 L 14 21 L 1 11 z" fill="#268bd2"/></g></svg>

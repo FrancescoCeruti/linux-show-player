@@ -37,6 +37,8 @@ class MementoModel(ReadOnlyProxyModel):
 
     def __init__(self, model, handler=None):
         super().__init__(model)
+        self._add_action = AddItemAction
+        self._remove_action = RemoveItemAction
 
         if handler is None:
             handler = MainActionsHandler
@@ -46,11 +48,11 @@ class MementoModel(ReadOnlyProxyModel):
 
     def _item_added(self, item):
         if not self._locked:
-            self._handler.do_action(AddItemAction(self, self.model, item))
+            self._handler.do_action(self._add_action(self, self.model, item))
 
     def _item_removed(self, item):
         if not self._locked:
-            self._handler.do_action(RemoveItemAction(self, self.model, item))
+            self._handler.do_action(self._remove_action(self, self.model, item))
 
     def lock(self):
         self._locked = True
@@ -67,9 +69,11 @@ class MementoModelAdapter(MementoModel):
 
     def __init__(self, model_adapter, handler=None):
         super().__init__(model_adapter, handler)
+        self._move_action = MoveItemAction
+
         self.model.item_moved.connect(self._item_moved)
 
     def _item_moved(self, old_index, new_index):
         if not self._locked:
-            self._handler.do_action(MoveItemAction(self, self.model, old_index,
-                                                   new_index))
+            self._handler.do_action(
+                self._move_action(self, self.model, old_index, new_index))

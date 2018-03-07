@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,18 +18,20 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import inspect
+import logging
 from os import path
 
 from lisp import USER_DIR
 from lisp.core.configuration import JSONFileConfiguration
 from lisp.core.loading import load_classes
-from lisp.ui import elogging
 from lisp.ui.ui_utils import install_translation
 
 PLUGINS = {}
 LOADED = {}
 
 FALLBACK_CONFIG_PATH = path.join(path.dirname(__file__), 'default.json')
+
+logger = logging.getLogger(__name__)
 
 
 def load_plugins(application):
@@ -56,8 +58,8 @@ def load_plugins(application):
             # Load plugin translations
             install_translation(mod_name)
             install_translation(mod_name, tr_path=path.join(mod_path, 'i18n'))
-        except Exception as e:
-            elogging.exception('PLUGINS: Failed "{}" load'.format(name), e)
+        except Exception:
+            logger.exception('PLUGINS: Failed "{}" load'.format(name))
 
     __init_plugins(application)
 
@@ -79,11 +81,10 @@ def __init_plugins(application):
             # We've go through all the not loaded plugins and weren't able
             # to resolve their dependencies, which means there are cyclic or
             # missing/disabled dependencies
-            elogging.warning(
-                'PLUGINS: Cyclic or missing/disabled dependencies detected.',
-                dialog=False
+            logger.warning(
+                'Cannot satisfy some plugin dependencies: {}'.format(
+                    ', '.join(pending))
             )
-            elogging.debug('PLUGINS: Skip: {}'.format(list(pending.keys())))
 
             return
 
@@ -118,15 +119,12 @@ def __load_plugins(plugins, application, optionals=True):
                 if plugin.Config.get('_enabled_', False):
                     # Create an instance of the plugin and save it
                     LOADED[name] = plugin(application)
-                    elogging.debug('PLUGINS: Loaded "{}"'.format(name))
+                    logger.info('Plugin loaded: "{}"'.format(name))
                 else:
-                    elogging.debug(
-                        'PLUGINS: Skip "{}", disabled in configuration'
-                            .format(name)
-                    )
-            except Exception as e:
-                elogging.exception(
-                    'PLUGINS: Failed "{}" load'.format(name), e)
+                    logger.debug(
+                        'Plugin disabled in configuration: "{}"'.format(name))
+            except Exception:
+                logger.exception('Failed to load plugin: "{}"'.format(name))
 
     return resolved
 
@@ -136,9 +134,9 @@ def finalize_plugins():
     for plugin in LOADED:
         try:
             LOADED[plugin].finalize()
-            elogging.debug('PLUGINS: Reset "{}"'.format(plugin))
-        except Exception as e:
-            elogging.exception('PLUGINS: Failed "{}" reset'.format(plugin), e)
+            logger.info('Plugin terminated: "{}"'.format(plugin))
+        except Exception:
+            logger.exception('Failed to terminate plugin: "{}"'.format(plugin))
 
 
 def is_loaded(plugin_name):

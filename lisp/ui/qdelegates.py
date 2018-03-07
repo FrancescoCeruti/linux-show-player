@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,11 +19,10 @@
 
 from PyQt5.QtCore import Qt, QEvent
 from PyQt5.QtWidgets import QStyledItemDelegate, QComboBox, QSpinBox, \
-    QLineEdit, QStyle, QDialog, QCheckBox, QDoubleSpinBox
+    QLineEdit, QStyle, QDialog, QCheckBox
 
 from lisp.application import Application
 from lisp.cues.cue import CueAction
-from lisp.plugins.osc.osc_server import OscMessageType
 from lisp.ui.qmodels import CueClassRole
 from lisp.ui.ui_utils import translate
 from lisp.ui.widgets import CueActionComboBox
@@ -160,69 +159,6 @@ class LineEditDelegate(QStyledItemDelegate):
 
     def updateEditorGeometry(self, editor, option, index):
         editor.setGeometry(option.rect)
-
-
-class OscArgumentDelegate(QStyledItemDelegate):
-    MIN = -1000000
-    MAX = 1000000
-    DECIMALS = 4
-
-    def __init__(self, tag=OscMessageType.Int, **kwargs):
-        super().__init__(**kwargs)
-        self.tag = tag
-
-    def createEditor(self, parent, option, index):
-        if self.tag is OscMessageType.Int:
-            editor = QSpinBox(parent)
-            editor.setRange(self.MIN, self.MAX)
-            editor.setSingleStep(1)
-        elif self.tag is OscMessageType.Float:
-            editor = QDoubleSpinBox(parent)
-            editor.setRange(self.MIN, self.MAX)
-            editor.setDecimals(3)
-            editor.setSingleStep(0.01)
-        elif self.tag is OscMessageType.Bool:
-            editor = QCheckBox(parent)
-        elif self.tag is OscMessageType.String:
-            editor = QLineEdit(parent)
-            editor.setFrame(False)
-        else:
-            editor = None
-
-        return editor
-
-    def setEditorData(self, widget, index):
-        value = index.model().data(index, Qt.EditRole)
-
-        if self.tag is OscMessageType.Int:
-            if isinstance(value, int):
-                widget.setValue(value)
-        elif self.tag is OscMessageType.Float:
-            if isinstance(value, float):
-                widget.setValue(value)
-        elif self.tag is OscMessageType.Bool:
-            if isinstance(value, bool):
-                widget.setChecked(value)
-        else:
-            widget.setText(str(value))
-
-    def setModelData(self, widget, model, index):
-        if self.tag is OscMessageType.Int or self.tag is OscMessageType.Float:
-            widget.interpretText()
-            model.setData(index, widget.value(), Qt.EditRole)
-        elif self.tag is OscMessageType.Bool:
-            model.setData(index, widget.isChecked(), Qt.EditRole)
-        else:
-            model.setData(index, widget.text(), Qt.EditRole)
-
-    def updateEditorGeometry(self, editor, option, index):
-        editor.setGeometry(option.rect)
-
-    def updateEditor(self, tag=None):
-        if isinstance(tag, OscMessageType):
-            self.tag = tag
-        else:
-            self.tag = None
 
 
 class CueActionDelegate(LabelDelegate):

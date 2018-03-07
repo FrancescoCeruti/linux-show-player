@@ -26,6 +26,8 @@ from lisp.core.clock import Clock
 from lisp.core.signal import Connection
 from lisp.cues.cue_time import CueTime
 
+logger = logging.getLogger(__name__)
+
 
 class TcFormat(Enum):
     FILM = 1000 / 24
@@ -113,8 +115,7 @@ class TimecodeCueTracker:
         if self.__lock.acquire(blocking=False):
             try:
                 if not self.__protocol.send(self.format, time, self.__track):
-                    logging.error(
-                        'TIMECODE: cannot send timecode, untracking cue')
+                    logger.warning('Cannot send timecode, untracking cue')
                     self.untrack()
             except Exception:
                 self.__lock.release()

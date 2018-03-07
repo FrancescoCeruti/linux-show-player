@@ -36,6 +36,8 @@ from lisp.core.singleton import ABCSingleton
 
 _UNSET = object()
 
+logger = logging.getLogger(__name__)
+
 
 class Configuration(metaclass=ABCMeta):
     """ABC for a dictionary-based configuration object.
@@ -62,8 +64,8 @@ class Configuration(metaclass=ABCMeta):
             return node[key]
         except (KeyError, TypeError) as e:
             if default is not _UNSET:
-                logging.warning(
-                    'CONFIG: invalid key "{}" in get operation, default used.'
+                logger.warning(
+                    'Invalid key "{}" in get operation, default used.'
                         .format(path)
                 )
                 return default
@@ -77,8 +79,8 @@ class Configuration(metaclass=ABCMeta):
 
             self.changed.emit(path, old, value)
         except (KeyError, TypeError):
-            logging.warning(
-                'CONFIG: invalid key "{}" in set operation, ignored.'
+            logger.warning(
+                'Invalid key "{}" in set operation, ignored.'
                     .format(path)
             )
 
@@ -194,9 +196,8 @@ class JSONFileConfiguration(Configuration):
 
         # Copy the new configuration
         copyfile(self.default_path, self.user_path)
-        logging.info('CONFIG: new configuration installed at {}'.format(
-            self.user_path
-        ))
+        logger.info(
+            'New configuration installed at {}'.format(self.user_path))
 
     @staticmethod
     def _read_json(path):

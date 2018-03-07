@@ -22,10 +22,16 @@ from collections import deque
 
 from lisp.core.action import Action
 from lisp.core.signal import Signal
+from lisp.ui.ui_utils import translate
+
+logger = logging.getLogger(__name__)
 
 
 class ActionsHandler:
     """Provide a classic undo/redo mechanism based on stacks."""
+    DO_ACTION_STR = '{}'
+    UNDO_ACTION_STR = translate('Actions', 'Undo: {}')
+    REDO_ACTION_STR = translate('Actions', 'Redo: {}')
 
     def __init__(self, stack_size=-1):
         super().__init__()
@@ -44,7 +50,7 @@ class ActionsHandler:
         self._saved_action = None
 
     def clear(self):
-        """Clear the `undo` and `redo` stacks."""
+        """Clear the `undo`, `redo` stacks and the save status."""
         self._undo.clear()
         self._redo.clear()
         self._saved_action = None
@@ -53,6 +59,7 @@ class ActionsHandler:
         """Execute the action, and add it the `undo` stack.
 
         When an action is executed:
+         * the `do()` method is called
          * is logged
          * is appended to the `undo` stack
          * the `redo` stack is cleared to maintain consistency
@@ -60,7 +67,7 @@ class ActionsHandler:
         """
         action.do()
 
-        self._logging(action, 'Last action: ')
+        self._logging(action, ActionsHandler.DO_ACTION_STR)
         self._undo.append(action)
         # Clean the redo stack for maintain consistency
         self._redo.clear()
@@ -72,6 +79,7 @@ class ActionsHandler:
 
         When an action is undone:
          * is removed from the `undo` stack
+         * the `undo` method is called
          * is logged
          * is appended to the `redo` stack
          * the signal `action_undone` is emitted
@@ -80,7 +88,7 @@ class ActionsHandler:
             action = self._undo.pop()
             action.undo()
 
-            self._logging(action, 'Undo: ')
+            self._logging(action, ActionsHandler.UNDO_ACTION_STR)
             self._redo.append(action)
 
             self.action_undone.emit(action)
@@ -90,6 +98,7 @@ class ActionsHandler:
 
         When an action is redone:
          * is remove from the `redo` stack
+         * the `redo` method is called
          * is logged
          * is added to the `undo` stack
          * the `action_redone` signal is emitted
@@ -98,7 +107,7 @@ class ActionsHandler:
             action = self._redo.pop()
             action.redo()
 
-            self._logging(action, 'Redo: ')
+            self._logging(action, ActionsHandler.REDO_ACTION_STR)
             self._undo.append(action)
 
             self.action_redone.emit(action)
@@ -114,16 +123,15 @@ class ActionsHandler:
         """
         if self._undo:
             return self._undo[-1] is self._saved_action
-        else:
-            return True
+
+        return True
 
     @staticmethod
-    def _logging(action: Action, pre: str):
+    def _logging(action: Action, action_str: str):
         message = action.log()
-        if message.strip() == '':
-            message = type(action).__name__
-
-        logging.info(pre + message)
+        if message:
+            logger.info(action_str.format(message))
 
 
+# TODO: remove this
 MainActionsHandler = ActionsHandler()  # "global" action-handler

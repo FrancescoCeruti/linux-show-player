@@ -27,6 +27,8 @@ from lisp.core.properties import Property
 from lisp.plugins.gst_backend.gi_repository import Gst
 from lisp.plugins.gst_backend.gst_element import GstMediaElement
 
+logger = logging.getLogger(__name__)
+
 
 class JackSink(GstMediaElement):
     ElementType = ElementType.Output
@@ -99,7 +101,7 @@ class JackSink(GstMediaElement):
 
     def __prepare_connections(self, value):
         if (self.pipeline.current_state == Gst.State.PLAYING or
-                    self.pipeline.current_state == Gst.State.PAUSED):
+                self.pipeline.current_state == Gst.State.PAUSED):
             self.__jack_connect()
 
     @classmethod
@@ -123,8 +125,9 @@ class JackSink(GstMediaElement):
             for conn_port in JackSink._ControlClient.get_all_connections(port):
                 try:
                     JackSink._ControlClient.disconnect(port, conn_port)
-                except jack.JackError as e:
-                    logging.error('GST: JACK-SINK: {}'.format(e))
+                except jack.JackError:
+                    logger.exception(
+                        'An error occurred while disconnection Jack ports')
 
         for output, in_ports in enumerate(self.connections):
             for input_name in in_ports:
@@ -132,8 +135,9 @@ class JackSink(GstMediaElement):
                     try:
                         JackSink._ControlClient.connect(out_ports[output],
                                                         input_name)
-                    except jack.JackError as e:
-                        logging.error('GST: JACK-SINK: {}'.format(e))
+                    except jack.JackError:
+                        logger.exception(
+                            'An error occurred while connecting Jack ports')
                 else:
                     break
 

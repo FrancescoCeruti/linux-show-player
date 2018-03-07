@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,8 +20,6 @@
 from PyQt5 import QtCore
 from PyQt5.QtGui import QLinearGradient, QColor, QPainter
 from PyQt5.QtWidgets import QWidget
-
-from lisp.core.decorators import suppress_exceptions
 
 
 class QDbMeter(QWidget):
@@ -57,7 +55,6 @@ class QDbMeter(QWidget):
 
         self.repaint()
 
-    @suppress_exceptions
     def paintEvent(self, e):
         if not self.visibleRegion().isEmpty():
             # Stretch factor
@@ -69,7 +66,8 @@ class QDbMeter(QWidget):
                 if peak > self.db_clip:
                     self.clipping[n] = True
 
-                if peak < self.db_min:
+                # Checks also for NaN values
+                if peak < self.db_min or peak != peak:
                     peak = self.db_min
                 elif peak > self.db_max:
                     peak = self.db_max
@@ -77,8 +75,9 @@ class QDbMeter(QWidget):
                 peaks.append(round((peak - self.db_min) * mul))
 
             rmss = []
-            for n, rms in enumerate(self.rmss):
-                if rms < self.db_min:
+            for rms in self.rmss:
+                # Checks also for NaN values
+                if rms < self.db_min or rms != rms:
                     rms = self.db_min
                 elif rms > self.db_max:
                     rms = self.db_max
@@ -87,7 +86,8 @@ class QDbMeter(QWidget):
 
             dPeaks = []
             for dPeak in self.decPeak:
-                if dPeak < self.db_min:
+                # Checks also for NaN values
+                if dPeak < self.db_min or dPeak != dPeak:
                     dPeak = self.db_min
                 elif dPeak > self.db_max:
                     dPeak = self.db_max

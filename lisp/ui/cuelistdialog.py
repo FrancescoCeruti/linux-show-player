@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,8 +20,6 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog, QTreeWidget, QHeaderView, QVBoxLayout, \
     QDialogButtonBox, QTreeWidgetItem
-
-from lisp.ui import elogging
 
 
 class CueSelectDialog(QDialog):
@@ -65,11 +63,7 @@ class CueSelectDialog(QDialog):
         item.setTextAlignment(0, Qt.AlignCenter)
 
         for n, prop in enumerate(self._properties):
-            try:
-                item.setData(n, Qt.DisplayRole, getattr(cue, prop, 'Undefined'))
-            except Exception as e:
-                elogging.exception('Cannot display {0} property'.format(prop), e,
-                                   dialog=False)
+            item.setData(n, Qt.DisplayRole, getattr(cue, prop, 'Undefined'))
 
         self._cues[cue] = item
         item.setData(0, Qt.UserRole, cue)

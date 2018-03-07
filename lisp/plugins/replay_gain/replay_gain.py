@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,14 +18,11 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import logging
-from concurrent.futures import ThreadPoolExecutor, \
-    as_completed as futures_completed
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from math import pow
 from threading import Thread, Lock
 
 import gi
-
-from lisp.ui.ui_utils import translate
 
 gi.require_version('Gst', '1.0')
 from gi.repository import Gst
@@ -36,23 +33,26 @@ from lisp.core.actions_handler import MainActionsHandler
 from lisp.core.plugin import Plugin
 from lisp.core.signal import Signal, Connection
 from lisp.cues.media_cue import MediaCue
+from lisp.ui.ui_utils import translate
 from .gain_ui import GainUi, GainProgressDialog
+
+logger = logging.getLogger(__name__)
 
 
 class ReplayGain(Plugin):
-
     Name = 'ReplayGain / Normalization'
-    Authors = ('Francesco Ceruti', )
+    Authors = ('Francesco Ceruti',)
     Description = 'Allow to normalize cues volume'
+
+    RESET_VALUE = 1.0
 
     def __init__(self, app):
         super().__init__(app)
-
         self._gain_thread = None
 
         # Entry in mainWindow menu
-        self.menu = QMenu(translate('ReplayGain',
-                                    'ReplayGain / Normalization'))
+        self.menu = QMenu(
+            translate('ReplayGain', 'ReplayGain / Normalization'))
         self.menu_action = self.app.window.menuTools.addMenu(self.menu)
 
         self.actionGain = QAction(self.app.window)
@@ -76,32 +76,40 @@ class ReplayGain(Plugin):
         gainUi.exec_()
 
         if gainUi.result() == QDialog.Accepted:
-
-            files = {}
             if gainUi.only_selected():
                 cues = self.app.layout.get_selected_cues(MediaCue)
             else:
                 cues = self.app.cue_model.filter(MediaCue)
 
+            # Extract single uri(s), this way if a uri is used in more than
+            # one place, the gain is only calculated once.
+            files = {}
             for cue in cues:
                 media = cue.media
                 uri = media.input_uri()
+
                 if uri is not None:
+                    if uri[:7] == 'file://':
+                        uri = 'file://' + self.app.session.abs_path(uri[7:])
+
                     if uri not in files:
                         files[uri] = [media]
                     else:
                         files[uri].append(media)
 
             # Gain (main) thread
-            self._gain_thread = GainMainThread(files, gainUi.threads(),
-                                               gainUi.mode(),
-                                               gainUi.ref_level(),
-                                               gainUi.norm_level())
+            self._gain_thread = GainMainThread(
+                files,
+                gainUi.threads(),
+                gainUi.mode(),
+                gainUi.ref_level(),
+                gainUi.norm_level()
+            )
 
             # Progress dialog
             self._progress = GainProgressDialog(len(files))
-            self._gain_thread.on_progress.connect(self._progress.on_progress,
-                                                  mode=Connection.QtQueued)
+            self._gain_thread.on_progress.connect(
+                self._progress.on_progress, mode=Connection.QtQueued)
 
             self._progress.show()
             self._gain_thread.start()
@@ -118,12 +126,13 @@ class ReplayGain(Plugin):
         self._reset(self.app.cue_model.filter(MediaCue))
 
     def _reset_selected(self):
-        self._reset(self.app.cue_model.filter(MediaCue))
+        self._reset(self.app.layout.get_selected_cues(MediaCue))
 
     def _reset(self, cues):
         action = GainAction()
         for cue in cues:
-            action.add_media(cue.media, 1.0)
+            action.add_media(cue.media, ReplayGain.RESET_VALUE)
+
         MainActionsHandler.do_action(action)
 
 
@@ -158,12 +167,10 @@ class GainAction(Action):
         self.do()
 
     def log(self):
-        return 'Replay gain volume adjusted'
+        return 'Replay gain volume adjusted.'
 
 
 class GainMainThread(Thread):
-    MAX_GAIN = 20  # dB
-
     def __init__(self, files, threads, mode, ref_level, norm_level):
         super().__init__()
         self.setDaemon(True)
@@ -195,65 +202,74 @@ class GainMainThread(Thread):
                 gain = GstGain(file, self.ref_level)
                 self._futures[executor.submit(gain.gain)] = gain
 
-            for future in futures_completed(self._futures):
+            for future in as_completed(self._futures):
                 if self._running:
                     try:
-                        self._post_process(*future.result())
+                        self._post_process(future.result())
                     except Exception:
-                        # Call with the value stored in the GstGain object
-                        self._post_process(*self._futures[future].result)
+                        logger.exception(
+                            'An error occurred while processing gain results.')
+                    finally:
+                        self.on_progress.emit(1)
                 else:
                     break
 
         if self._running:
             MainActionsHandler.do_action(self._action)
         else:
-            logging.info('REPLY-GAIN:: Stopped by user')
+            logger.info('Gain processing stopped by user.')
 
         self.on_progress.emit(-1)
         self.on_progress.disconnect()
 
-    def _post_process(self, gained, gain, peak, uri):
-        if gained:
-            if gain > self.MAX_GAIN:
-                gain = self.MAX_GAIN
-
+    def _post_process(self, gain):
+        """
+        :type gain: GstGain
+        """
+        if gain.completed:
             if self.mode == 0:
-                volume = min(1 / peak, pow(10, gain / 20))
+                volume = pow(10, gain.gain_value / 20)
             else:  # (self.mode == 1)
-                volume = 1 / peak * pow(10, self.norm_level / 20)
+                volume = 1 / gain.peak_value * pow(10, self.norm_level / 20)
 
-            for media in self.files[uri]:
+            for media in self.files[gain.uri]:
                 self._action.add_media(media, volume)
 
-            logging.info('REPLY-GAIN:: completed ' + uri)
+            logger.debug('Applied gain for: {}'.format(gain.uri))
         else:
-            logging.error('REPLY-GAIN:: failed  ' + uri)
-
-        self.on_progress.emit(1)
+            logger.debug('Discarded gain for: {}'.format(gain.uri))
 
 
 class GstGain:
+    PIPELINE = 'uridecodebin uri="{0}" ! audioconvert ! rganalysis ' \
+               'reference-level={1} ! fakesink'
+
     def __init__(self, uri, ref_level):
         self.__lock = Lock()
 
         self.uri = uri
         self.ref_level = ref_level
-        self.result = (False, 0, 0, uri)
         self.gain_pipe = None
+
+        # Result attributes
+        self.gain_value = 0
+        self.peak_value = 0
+        self.completed = False
 
     # Create a pipeline with a fake audio output and get the gain levels
     def gain(self):
-        pipe = 'uridecodebin uri="{0}" ! audioconvert ! rganalysis \
-                reference-level={1} ! fakesink'.format(self.uri, self.ref_level)
-        self.gain_pipe = Gst.parse_launch(pipe)
+        self.gain_pipe = Gst.parse_launch(
+            GstGain.PIPELINE.format(self.uri, self.ref_level))
 
         gain_bus = self.gain_pipe.get_bus()
         gain_bus.add_signal_watch()
-        gain_bus.connect('message', self._on_message)
+        # Connect only the messages we want
+        gain_bus.connect('message::eos', self._on_message)
+        gain_bus.connect('message::tag', self._on_message)
+        gain_bus.connect('message::error', self._on_message)
 
-        logging.info('REPLY-GAIN:: started ' + str(self.uri))
         self.gain_pipe.set_state(Gst.State.PLAYING)
+        logger.info('Started gain calculation for: {}'.format(self.uri))
 
         # Block here until EOS
         self.__lock.acquire(False)
@@ -263,7 +279,7 @@ class GstGain:
         self.gain_pipe = None
 
         # Return the computation result
-        return self.result
+        return self
 
     def stop(self):
         if self.gain_pipe is not None:
@@ -271,8 +287,8 @@ class GstGain:
 
     def _on_message(self, bus, message):
         try:
-            if message.type == Gst.MessageType.EOS and self.__lock.locked():
-                self.__lock.release()
+            if message.type == Gst.MessageType.EOS:
+                self.__release()
             elif message.type == Gst.MessageType.TAG:
                 tags = message.parse_tag()
                 tag = tags.get_double(Gst.TAG_TRACK_GAIN)
@@ -280,17 +296,24 @@ class GstGain:
 
                 if tag[0] and peak[0]:
                     self.gain_pipe.set_state(Gst.State.NULL)
-                    self.result = (True, tag[1], peak[1], self.uri)
+                    # Save the gain results
+                    self.gain_value = tag[1]
+                    self.peak_value = peak[1]
 
-                    if self.__lock.locked():
-                        self.__lock.release()
+                    logger.info('Gain calculated for: {}'.format(self.uri))
+                    self.completed = True
+                    self.__release()
             elif message.type == Gst.MessageType.ERROR:
-                logging.debug('REPLY-GAIN:: ' + str(message.parse_error()))
-
+                error, _ = message.parse_error()
                 self.gain_pipe.set_state(Gst.State.NULL)
 
-                if self.__lock.locked():
-                    self.__lock.release()
+                logger.error(
+                    'GStreamer: {}'.format(error.message), exc_info=error)
+                self.__release()
         except Exception:
-            if self.__lock.locked():
-                self.__lock.release()
+            logger.exception('An error occurred during gain calculation.')
+            self.__release()
+
+    def __release(self):
+        if self.__lock.locked():
+            self.__lock.release()

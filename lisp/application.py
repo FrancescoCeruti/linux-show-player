@@ -18,9 +18,9 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import json
+import logging
 from os.path import exists
 
-import objgraph as objgraph
 from PyQt5.QtWidgets import QDialog, qApp
 
 from lisp import layouts
@@ -32,7 +32,6 @@ from lisp.cues.cue import Cue
 from lisp.cues.cue_factory import CueFactory
 from lisp.cues.cue_model import CueModel
 from lisp.cues.media_cue import MediaCue
-from lisp.ui import elogging
 from lisp.ui.layoutselect import LayoutSelect
 from lisp.ui.mainwindow import MainWindow
 from lisp.ui.settings.app_settings import AppSettings
@@ -44,6 +43,8 @@ from lisp.ui.settings.pages.cue_general import CueGeneralSettings
 from lisp.ui.settings.pages.media_cue_settings import MediaCueSettings
 from lisp.ui.settings.pages.plugins_settings import PluginsSettings
 
+logger = logging.getLogger(__name__)
+
 
 class Application(metaclass=Singleton):
     def __init__(self, app_conf):
@@ -52,7 +53,7 @@ class Application(metaclass=Singleton):
         self.session_created = Signal()
         self.session_before_finalize = Signal()
 
-        self.__main_window = MainWindow()
+        self.__main_window = MainWindow(self.conf)
         self.__cue_model = CueModel()
         self.__session = None
 
@@ -70,8 +71,6 @@ class Application(metaclass=Singleton):
         self.__main_window.new_session.connect(self._new_session_dialog)
         self.__main_window.save_session.connect(self._save_to_file)
         self.__main_window.open_session.connect(self._load_from_file)
-        # Show the mainWindow maximized
-        self.__main_window.showMaximized()
 
     @property
     def session(self):
@@ -93,6 +92,9 @@ class Application(metaclass=Singleton):
         return self.__cue_model
 
     def start(self, session_file=''):
+        # Show the mainWindow maximized
+        self.__main_window.showMaximized()
+
         if exists(session_file):
             self._load_from_file(session_file)
         else:
@@ -127,8 +129,8 @@ class Application(metaclass=Singleton):
                     self.finalize()
                     qApp.quit()
                     exit(0)
-        except Exception as e:
-            elogging.exception('Startup error', e)
+        except Exception:
+            logger.critical('Startup error', exc_info=True)
             qApp.quit()
             exit(-1)
 
@@ -193,11 +195,15 @@ class Application(metaclass=Singleton):
                     cue = CueFactory.create_cue(cue_type, cue_id=cue_id)
                     cue.update_properties(cues_dict)
                     self.__cue_model.add(cue)
-                except Exception as e:
-                    elogging.exception('Unable to create the cue', e)
+                except Exception:
+                    name = cues_dict.get('name', 'No name')
+                    logging.exception(
+                        'Unable to create the cue "{}"'.format(name))
 
             MainActionsHandler.set_saved()
             self.__main_window.update_window_title()
-        except Exception as e:
-            elogging.exception('Error during file reading', e)
+        except Exception:
+            logging.exception(
+                'Error while reading the session file "{}"'
+                    .format(session_file))
             self._new_session_dialog()

@@ -18,6 +18,7 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import QSize
+from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QLabel, QProgressBar
 
 from lisp.core.signal import Connection
@@ -99,6 +100,9 @@ class TimeWidget(QProgressBar):
         self.setObjectName('ListTimeWidget')
         self.setValue(0)
         self.setTextVisible(True)
+        font = QFont('Monospace')
+        font.setStyleHint(QFont.Monospace)
+        self.setFont(font)
 
         self.show_zero_duration = False
         self.accurate_time = True

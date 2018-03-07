@@ -156,7 +156,7 @@ def suppress_exceptions(target=None, *, log=True):
         try:
             return target(*args, **kwargs)
         except Exception:
-            logging.warning('Exception suppressed:\n' + traceback.format_exc())
+            logging.warning('Exception suppressed.', exc_info=True)
 
     return wrapped
 

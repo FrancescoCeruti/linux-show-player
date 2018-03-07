@@ -17,6 +17,7 @@ def find_files(directory, regex='.*', rel=''):
                 paths.append(file_path[len(rel):])
     return paths
 
+
 # List the directories with icons to be installed
 lisp_icons = find_files('lisp/ui/styles/icons', rel='lisp/ui/styles/')
 
@@ -30,6 +31,8 @@ setup(
     url=lisp.__email__,
     description='Cue player for live shows',
     install_requires=[
+        'PyQt5',
+        'PyGobject',
         'sortedcontainers',
         'mido',
         'python-rtmidi',

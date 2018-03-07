@@ -16,6 +16,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
+
 from lisp.core.model import Model
 from lisp.cues.cue import Cue
 

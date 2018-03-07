@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,18 +17,24 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+import logging
 import os
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtGui import QKeySequence
 from PyQt5.QtWidgets import QMainWindow, QStatusBar, QMenuBar, QMenu, QAction, \
-    qApp, QFileDialog, QDialog, QMessageBox, QVBoxLayout, QWidget
+    qApp, QFileDialog, QMessageBox, QVBoxLayout, QWidget
 
 from lisp.core.actions_handler import MainActionsHandler
 from lisp.core.singleton import QSingleton
 from lisp.cues.media_cue import MediaCue
 from lisp.ui.about import About
+from lisp.ui.logging.dialog import LogDialogs
+from lisp.ui.logging.handler import LogModelHandler
+from lisp.ui.logging.models import log_model_factory
+from lisp.ui.logging.status import LogStatusView
+from lisp.ui.logging.viewer import LogViewer
 from lisp.ui.settings.app_settings import AppSettings
 from lisp.ui.ui_utils import translate
 
@@ -38,8 +44,8 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
     save_session = pyqtSignal(str)
     open_session = pyqtSignal(str)
 
-    def __init__(self, title='Linux Show Player'):
-        super().__init__()
+    def __init__(self, conf, title='Linux Show Player', **kwargs):
+        super().__init__(**kwargs)
         self.setMinimumSize(500, 400)
         self.setCentralWidget(QWidget())
         self.centralWidget().setLayout(QVBoxLayout())
@@ -47,11 +53,14 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
 
         self._cue_add_menu = {}
         self._title = title
+
+        self.conf = conf
         self.session = None
 
         # Status Bar
-        self.statusBar = QStatusBar(self)
-        self.setStatusBar(self.statusBar)
+        self.setStatusBar(QStatusBar(self))
+
+        # Changes
         MainActionsHandler.action_done.connect(self._action_done)
         MainActionsHandler.action_undone.connect(self._action_undone)
         MainActionsHandler.action_redone.connect(self._action_redone)
@@ -136,6 +145,23 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         self.menuAbout.addAction(self.actionAbout)
         self.menuAbout.addSeparator()
         self.menuAbout.addAction(self.actionAbout_Qt)
+
+        # Logging model
+        self.logModel = log_model_factory(self.conf)
+        # Handler to populate the model
+        self.logHandler = LogModelHandler(self.logModel)
+        logging.getLogger().addHandler(self.logHandler)
+
+        # Logging
+        self.logViewer = LogViewer(self.logModel, self.conf)
+
+        # Logging status widget
+        self.logStatus = LogStatusView(self.logModel)
+        self.logStatus.double_clicked.connect(self.logViewer.show)
+        self.statusBar().addPermanentWidget(self.logStatus)
+
+        # Logging dialogs for errors
+        self.logDialogs = LogDialogs(self.logModel, logging.ERROR)
 
         # Set component text
         self.retranslateUi()
@@ -245,17 +271,12 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         self.setWindowTitle(tile)
 
     def _action_done(self, action):
-        self.statusBar.showMessage(action.log())
         self.update_window_title()
 
     def _action_undone(self, action):
-        self.statusBar.showMessage(
-            translate('MainWindow', 'Undone: ') + action.log())
         self.update_window_title()
 
     def _action_redone(self, action):
-        self.statusBar.showMessage(
-            translate('MainWindow', 'Redone: ') + action.log())
         self.update_window_title()
 
     def _save(self):

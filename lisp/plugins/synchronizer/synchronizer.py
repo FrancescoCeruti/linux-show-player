@@ -18,24 +18,22 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import logging
-import traceback
 
 from PyQt5.QtWidgets import QMenu, QAction, QMessageBox
 
-from lisp.application import Application
 from lisp.core.plugin import Plugin
 from lisp.core.signal import Connection
 from lisp.core.util import get_lan_ip
-from lisp.ui.mainwindow import MainWindow
 from lisp.ui.ui_utils import translate
 from .peers_dialog import PeersDialog
 
+logger = logging.getLogger(__name__)
+
 
 class Synchronizer(Plugin):
-
     Name = 'Synchronizer'
-    Authors = ('Francesco Ceruti', )
-    Depends = ('Remote', )
+    Authors = ('Francesco Ceruti',)
+    Depends = ('Remote',)
     Description = 'Keep multiple sessions, on a network, synchronized'
 
     def __init__(self, app):
@@ -82,5 +80,4 @@ class Synchronizer(Plugin):
             try:
                 peer['proxy'].execute(cue.index)
             except Exception:
-                logging.error('REMOTE: remote control failed')
-                logging.debug('REMOTE: ' + traceback.format_exc())
+                logger.warning('Remote control failed.', exc_info=True)

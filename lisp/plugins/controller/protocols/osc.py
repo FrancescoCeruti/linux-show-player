@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2017 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
 # Copyright 2012-2016 Thomas Achtner <info@offtools.de>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
@@ -24,13 +24,13 @@ import ast
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import QGroupBox, QPushButton, QVBoxLayout, \
     QTableView, QTableWidget, QHeaderView, QGridLayout, QLabel, \
-    QDialog, QDialogButtonBox, QLineEdit
+    QDialog, QDialogButtonBox, QLineEdit, QMessageBox
 
 from lisp.plugins import get_plugin
 from lisp.plugins.controller.protocols.protocol import Protocol
+from lisp.plugins.osc.osc_delegate import OscArgumentDelegate
 from lisp.plugins.osc.osc_server import OscMessageType
-from lisp.ui import elogging
-from lisp.ui.qdelegates import OscArgumentDelegate, ComboBoxDelegate, \
+from lisp.ui.qdelegates import ComboBoxDelegate, \
     LineEditDelegate
 from lisp.ui.qmodels import SimpleTableModel
 from lisp.ui.settings.settings_page import CueSettingsPage
@@ -325,10 +325,10 @@ class OscSettings(CueSettingsPage):
         if dialog.exec_() == dialog.Accepted:
             path = dialog.pathEdit.text()
             if len(path) < 2 or path[0] is not '/':
-                elogging.warning(
-                    'OSC: Osc path seems not valid,'
-                    '\ndo not forget to edit the path later.',
-                    dialog=True
+                QMessageBox.warning(
+                    None, 'Warning',
+                    'Osc path seems not valid, \ndo not forget to edit the '
+                    'path later.',
                 )
 
             types = ''
@@ -367,11 +367,12 @@ class OscView(QTableView):
         super().__init__(**kwargs)
 
         cue_actions = [action.name for action in cue_class.CueActions]
-        self.delegates = [LineEditDelegate(),
-                          LineEditDelegate(),
-                          LineEditDelegate(),
-                          ComboBoxDelegate(options=cue_actions,
-                                           tr_context='CueAction')]
+        self.delegates = [
+            LineEditDelegate(),
+            LineEditDelegate(),
+            LineEditDelegate(),
+            ComboBoxDelegate(options=cue_actions, tr_context='CueAction')
+        ]
 
         self.setSelectionBehavior(QTableWidget.SelectRows)
         self.setSelectionMode(QTableView.SingleSelection)

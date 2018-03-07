@@ -569,6 +569,10 @@ QToolButton:hover {
     background-color: #3A3A3A;
 }
 
+QToolButton::menu-indicator {
+    image: none;
+}
+
 QCheckBox, QRadioButton {
     background-color: transparent;
 }

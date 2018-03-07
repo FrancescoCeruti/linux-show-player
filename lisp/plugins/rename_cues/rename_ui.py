@@ -3,7 +3,7 @@
 # This file is part of Linux Show Player
 #
 # Copyright 2016-2017 Aurelien Cibrario <aurelien.cibrario@gmail.com>
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,14 +22,14 @@ import logging
 import re
 
 from PyQt5.QtCore import Qt, QSize
-from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QDialog, QDialogButtonBox, QGridLayout, QLineEdit, \
     QTreeWidget, QAbstractItemView, QTreeWidgetItem, QPushButton, QSpacerItem, \
     QMessageBox
 
-from lisp.application import MainActionsHandler
-from lisp.plugins.rename_cues.rename_action import RenameCueAction
+from lisp.ui.themes import IconTheme
 from lisp.ui.ui_utils import translate
+
+logger = logging.getLogger(__name__)
 
 
 class RenameUi(QDialog):
@@ -117,7 +117,6 @@ class RenameUi(QDialog):
 
         self.dialogButtons.accepted.connect(self.accept)
         self.dialogButtons.rejected.connect(self.reject)
-
 
         # This list store infos on cues with dicts
         self.cues_list = []
@@ -225,7 +224,7 @@ class RenameUi(QDialog):
         try:
             regex = re.compile(pattern)
         except re.error:
-            logging.debug("Regex error : not a valid pattern")
+            logger.debug("Regex error: invalid pattern")
         else:
             for cue in self.cues_list:
                 result = regex.search(cue['cue_name'])
@@ -247,10 +246,14 @@ class RenameUi(QDialog):
                 for n in range(len(cue['regex_groups'])):
                     pattern = f"\${n}"
                     try:
-                        out_string = re.sub(pattern,
-                                            cue['regex_groups'][n], out_string)
+                        out_string = re.sub(
+                            pattern,
+                            cue['regex_groups'][n],
+                            out_string
+                        )
                     except IndexError:
-                        logging.debug("Regex error : Catch with () before display with $n")
+                        logger.debug(
+                            "Regex error: catch with () before display with $n")
                 if cue['selected']:
                     cue['cue_preview'] = out_string
 

@@ -20,12 +20,13 @@
 import logging
 import os.path
 import re
-import traceback
 
 try:
     from os import scandir
 except ImportError:
     from scandir import scandir
+
+logger = logging.getLogger(__name__)
 
 
 class load_classes:
@@ -109,10 +110,9 @@ class load_classes:
                     if hasattr(module, name):
                         cls = getattr(module, name)
                         yield (name, cls)
-
-            except(ImportError, Exception):
-                logging.warning('Cannot load module: {0}'.format(mod_name))
-                logging.debug(traceback.format_exc())
+            except Exception:
+                logger.warning(
+                    'Cannot load module: {0}'.format(mod_name), exc_info=True)
 
 
 def module_to_class_name(mod_name, pre='', suf=''):

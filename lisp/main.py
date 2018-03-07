@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -58,10 +58,11 @@ def main():
         log = logging.WARNING
 
     logging.basicConfig(
-        format='%(asctime)s.%(msecs)03d %(levelname)s:: %(message)s',
+        format='%(asctime)s.%(msecs)03d\t%(name)s\t%(levelname)s\t%(message)s',
         datefmt='%H:%M:%S',
         level=log,
     )
+    logger = logging.getLogger(__name__)
 
     # Create (if not present) user directory
     os.makedirs(os.path.dirname(USER_DIR), exist_ok=True)
@@ -79,7 +80,7 @@ def main():
     if locale:
         QLocale().setDefault(QLocale(locale))
 
-    logging.info('Using {} locale'.format(QLocale().name()))
+    logger.info('Using {} locale'.format(QLocale().name()))
 
     # Qt platform translation
     install_translation(
@@ -91,20 +92,18 @@ def main():
     try:
         theme = app_conf['theme.theme']
         themes.THEMES[theme].apply(qt_app)
-        logging.info('Using "{}" theme'.format(theme))
+        logger.info('Using "{}" theme'.format(theme))
     except Exception:
-        logging.error('Unable to load theme')
-        logging.debug(traceback.format_exc())
+        logger.exception('Unable to load theme.')
 
     # Set the global IconTheme
     try:
         icon_theme_name = app_conf['theme.icons']
         icon_theme = themes.ICON_THEMES[icon_theme_name]
         icon_theme.set_theme(icon_theme)
-        logging.info('Using "{}" icon theme'.format(icon_theme_name))
+        logger.info('Using "{}" icon theme'.format(icon_theme_name))
     except Exception:
-        logging.error('Unable to load icon theme')
-        logging.debug(traceback.format_exc())
+        logger.exception('Unable to load icon theme.')
 
     # Create the application
     lisp_app = Application(app_conf)

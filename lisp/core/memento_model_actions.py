@@ -60,45 +60,45 @@ class MementoAction(Action):
 
 class AddItemAction(MementoAction):
 
-    __slots__ = '__item'
+    __slots__ = '_item'
 
     def __init__(self, m_model, model, item):
         super().__init__(m_model, model)
-        self.__item = item
+        self._item = item
 
     def __undo__(self):
-        self._model.remove(self.__item)
+        self._model.remove(self._item)
 
     def __redo__(self):
-        self._model.add(self.__item)
+        self._model.add(self._item)
 
 
 class RemoveItemAction(MementoAction):
 
-    __slots__ = '__item'
+    __slots__ = '_item'
 
     def __init__(self, m_model, model, item):
         super().__init__(m_model, model)
-        self.__item = item
+        self._item = item
 
     def __undo__(self):
-        self._model.add(self.__item)
+        self._model.add(self._item)
 
     def __redo__(self):
-        self._model.remove(self.__item)
+        self._model.remove(self._item)
 
 
 class MoveItemAction(MementoAction):
 
-    __slots__ = ('__old_index', '__new_index')
+    __slots__ = ('_old_index', '_new_index')
 
     def __init__(self, m_model, model_adapter, old_index, new_index):
         super().__init__(m_model, model_adapter)
-        self.__old_index = old_index
-        self.__new_index = new_index
+        self._old_index = old_index
+        self._new_index = new_index
 
     def __undo__(self):
-        self._model.move(self.__new_index, self.__old_index)
+        self._model.move(self._new_index, self._old_index)
 
     def __redo__(self):
-        self._model.move(self.__old_index, self.__new_index)
+        self._model.move(self._old_index, self._new_index)

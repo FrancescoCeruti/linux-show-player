@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
 # Copyright 2012-2016 Thomas Achtner <info@offtools.de>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
@@ -23,7 +23,7 @@ import logging
 from PyQt5 import QtCore
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QGridLayout, QLineEdit, \
-    QTableView, QTableWidget, QHeaderView, QPushButton, QLabel, QDoubleSpinBox
+    QTableView, QTableWidget, QHeaderView, QPushButton, QLabel, QDoubleSpinBox, QMessageBox
 
 from lisp.core.decorators import async
 from lisp.core.fade_functions import FadeInType, FadeOutType
@@ -32,13 +32,16 @@ from lisp.core.has_properties import Property
 from lisp.cues.cue import Cue, CueAction
 from lisp.plugins import get_plugin
 from lisp.plugins.osc.osc_server import OscMessageType
-from lisp.ui import elogging
-from lisp.ui.qdelegates import ComboBoxDelegate, OscArgumentDelegate, \
-    CheckBoxDelegate
+from lisp.ui.qdelegates import ComboBoxDelegate, CheckBoxDelegate
+from lisp.plugins.osc.osc_delegate import OscArgumentDelegate
 from lisp.ui.qmodels import SimpleTableModel
 from lisp.ui.settings.cue_settings import CueSettingsRegistry, SettingsPage
 from lisp.ui.ui_utils import translate
-from lisp.ui.widgets import FadeComboBox
+from lisp.ui.widgets import FadeComboBox, QDetailedMessageBox
+
+# TODO: a lot of refactoring
+
+logger = logging.getLogger(__name__)
 
 COL_TYPE = 0
 COL_START_VAL = 1
@@ -125,7 +128,7 @@ class OscCue(Cue):
                                             arg['start'],
                                             0])
         except KeyError:
-            elogging.error("OSC: could not parse argument list, nothing sent")
+            logger.error('Could not parse argument list, nothing sent')
             return False
 
         # set fade type, based on the first argument, which will have a fade
@@ -164,7 +167,7 @@ class OscCue(Cue):
             else:
                 self._position = 1
         else:
-            logging.error("OSC: Error while parsing arguments, nothing sent")
+            logger.error('Error while parsing arguments, nothing sent')
 
         return False
 
@@ -287,7 +290,7 @@ class OscCueSettings(SettingsPage):
 
         if not (checkable and not self.oscGroup.isChecked()):
             if not test_path(self.pathEdit.text()):
-                elogging.error("OSC: Error parsing osc path, message will be unable to send")
+                logger.error('Error parsing OSC path, message will be unable to send')
 
         if not (checkable and not self.oscGroup.isChecked()):
             try:
@@ -305,7 +308,7 @@ class OscCueSettings(SettingsPage):
 
                 conf['args'] = args_list
             except ValueError:
-                elogging.error("OSC: Error parsing osc arguments, message will be unable to send")
+                logger.error('Error parsing OSC arguments, message will be unable to send')
 
         if not (checkable and not self.fadeGroup.isCheckable()):
             conf['duration'] = self.fadeSpin.value() * 1000
@@ -342,9 +345,11 @@ class OscCueSettings(SettingsPage):
         path = self.pathEdit.text()
 
         if not test_path(path):
-            elogging.warning("OSC: no valid path for OSC message - nothing sent",
-                             details="Path should start with a '/' followed by a name.",
-                             dialog=True)
+            QDetailedMessageBox.dwarning(
+                'Warning',
+                'No valid path for OSC message - nothing sent',
+                "Path should start with a '/' followed by a name."
+            )
             return
 
         try:
@@ -360,7 +365,8 @@ class OscCueSettings(SettingsPage):
             except KeyError:
                 pass
         except ValueError:
-            elogging.error("OSC: Error on parsing argument list - nothing sent")
+            QMessageBox.critical(
+                None, 'Error', 'Error on parsing argument list - nothing sent')
 
     def __argument_changed(self, index_topleft, index_bottomright, roles):
         if not (Qt.EditRole in roles):
@@ -412,11 +418,14 @@ class OscView(QTableView):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        self.delegates = [ComboBoxDelegate(options=[i.value for i in OscMessageType],
-                                           tr_context='OscMessageType'),
-                          OscArgumentDelegate(),
-                          OscArgumentDelegate(),
-                          CheckBoxDelegate()]
+        self.delegates = [
+            ComboBoxDelegate(
+                options=[i.value for i in OscMessageType],
+                tr_context='OscMessageType'),
+            OscArgumentDelegate(),
+            OscArgumentDelegate(),
+            CheckBoxDelegate()
+        ]
 
         self.setSelectionBehavior(QTableWidget.SelectRows)
         self.setSelectionMode(QTableView.SingleSelection)

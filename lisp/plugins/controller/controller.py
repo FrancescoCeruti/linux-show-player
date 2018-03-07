@@ -17,6 +17,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+import logging
+
 from lisp.core.plugin import Plugin
 from lisp.core.properties import Property
 from lisp.cues.cue import Cue, CueAction
@@ -24,9 +26,10 @@ from lisp.plugins.controller import protocols
 from lisp.plugins.controller.controller_settings import ControllerSettings
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
 
+logger = logging.getLogger(__name__)
+
 
 class Controller(Plugin):
-
     Name = 'Controller'
     Authors = ('Francesco Ceruti', 'Thomas Achtner')
     OptDepends = ('Midi', 'Osc')
@@ -106,10 +109,7 @@ class Controller(Plugin):
                 protocol.protocol_event.connect(self.perform_action)
 
                 self.__protocols[protocol_class.__name__.lower()] = protocol
-            except Exception as e:
-                import logging
-                import traceback
-
-                logging.error('CONTROLLER: cannot setup protocol "{}"'.format(
-                    protocol_class.__name__))
-                logging.debug(traceback.format_exc())
+            except Exception:
+                logger.exception(
+                    'Cannot setup controller protocol "{}"'.format(
+                        protocol_class.__name__))

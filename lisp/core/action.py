@@ -28,7 +28,7 @@ class Action:
     An action could provide, via the "log" function, a simple log message.
 
     .. warning::
-        Actions may reference external objects, preventing gc.
+        Actions may keep reference to external objects.
     """
 
     __slots__ = ()
@@ -49,9 +49,13 @@ class Action:
         self.do()
 
     def log(self):
-        """Used for logging
+        """Return a short message to describe what the action does.
 
-        :return: A log message
+        The method should return a message that can be used for do/undo/redo
+        generically, an handler will care about adding context to the message.
+
+        The log message should be user-friendly and localized.
+
         :rtype: str
         """
         return ''

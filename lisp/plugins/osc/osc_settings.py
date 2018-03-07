@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2017 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
 # Copyright 2012-2016 Thomas Achtner <info@offtools.de>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
@@ -26,7 +26,6 @@ from lisp.ui.settings.settings_page import SettingsPage
 from lisp.ui.ui_utils import translate
 
 
-# FIXME
 class OscSettings(SettingsPage):
     Name = QT_TRANSLATE_NOOP('SettingsPageName', 'OSC settings')
 

@@ -26,6 +26,8 @@ from PyQt5.QtWidgets import QApplication
 
 from lisp import I18N_PATH
 
+logger = logging.getLogger(__name__)
+
 
 def qfile_filters(extensions, allexts=True, anyfile=True):
     """Create a filter-string for a FileChooser.
@@ -71,9 +73,9 @@ def install_translation(name, tr_path=I18N_PATH):
     if QApplication.installTranslator(translator):
         # Keep a reference, QApplication does not
         _TRANSLATORS.append(translator)
-        logging.debug('Installed translation: {}'.format(tr_file))
+        logger.debug('Installed translation: {}'.format(tr_file))
     else:
-        logging.debug('No translation for: {}'.format(tr_file))
+        logger.debug('No translation for: {}'.format(tr_file))
 
 
 def translate(context, text, disambiguation=None, n=-1):
