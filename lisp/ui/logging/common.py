@@ -41,7 +41,6 @@ LOG_ATTRIBUTES = {
     'name': QT_TRANSLATE_NOOP('Logging', 'Logger name'),
     'levelname': QT_TRANSLATE_NOOP('Logging', 'Level'),
     'message': QT_TRANSLATE_NOOP('Logging', 'Message'),
-    #'exc_info': QT_TRANSLATE_NOOP('Logging', 'Traceback'),
     'funcName': QT_TRANSLATE_NOOP('Logging', 'Function'),
     'pathname': QT_TRANSLATE_NOOP('Logging', 'Path name'),
     'filename': QT_TRANSLATE_NOOP('Logging', 'File name'),

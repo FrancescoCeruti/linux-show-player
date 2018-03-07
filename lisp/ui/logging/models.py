@@ -20,9 +20,8 @@
 from collections import deque
 
 from PyQt5.QtCore import QModelIndex, Qt, QSortFilterProxyModel, \
-    QAbstractListModel, QAbstractTableModel
+    QAbstractTableModel
 from PyQt5.QtGui import QFont, QColor
-from logging import Formatter
 
 from lisp.ui.logging.common import LogRecordRole, LOG_ATTRIBUTES, LogAttributeRole
 
@@ -69,7 +68,7 @@ class LogRecordModel(QAbstractTableModel):
             if role == Qt.DisplayRole:
                 try:
                     return getattr(record, self._columns[index.column()])
-                except Exception:
+                except AttributeError:
                     pass
             elif role == Qt.BackgroundColorRole:
                 return self._backgrounds.get(record.levelname)
@@ -144,8 +143,6 @@ class LogRecordFilterModel(QSortFilterProxyModel):
 def log_model_factory(config):
     # Get logging configuration
     limit = config.get('logging.limit', 0)
-    msg_format = config.get('logging.msg_format', None)
-    date_format = config.get('logging.date_format', None)
     levels_background = {
         level: QColor(*color)
         for level, color
@@ -156,9 +153,6 @@ def log_model_factory(config):
         for level, color
         in config.get('logging.foregrounds', {}).items()
     }
-
-    # Formatter to display log messages
-    #formatter = Formatter(fmt=msg_format, datefmt=date_format)
 
     # Return a new model to store logging records
     return LogRecordModel(
