@@ -148,12 +148,13 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
 
         # Logging model
         self.logModel = log_model_factory(self.conf)
+
         # Handler to populate the model
         self.logHandler = LogModelHandler(self.logModel)
         logging.getLogger().addHandler(self.logHandler)
 
         # Logging
-        self.logViewer = LogViewer(self.logModel, self.conf)
+        self.logViewer = LogViewer(self.logModel, self.conf, parent=self)
 
         # Logging status widget
         self.logStatus = LogStatusView(self.logModel)

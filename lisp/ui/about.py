@@ -25,7 +25,7 @@ from PyQt5.QtWidgets import QDialog, QGridLayout, QLabel, QWidget, QTabWidget, \
     QTextBrowser, QDialogButtonBox
 
 import lisp
-from lisp.ui.themes.theme import IconTheme
+from lisp.ui.icons import IconTheme
 from lisp.ui.ui_utils import translate
 
 

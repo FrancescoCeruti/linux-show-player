@@ -17,6 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+import logging
 import weakref
 
 from lisp.backend.media import Media, MediaState
@@ -24,6 +25,8 @@ from lisp.core.has_properties import HasInstanceProperties
 from lisp.core.properties import Property, InstanceProperty
 from lisp.plugins.gst_backend import elements as gst_elements
 from lisp.plugins.gst_backend.gi_repository import Gst
+
+logger = logging.getLogger(__name__)
 
 
 def validate_pipeline(pipe, rebuild=False):
@@ -257,10 +260,13 @@ class GstMedia(Media):
                 self._gst_pipe.set_state(Gst.State.PLAYING)
 
         if message.type == Gst.MessageType.ERROR:
-            err, debug = message.parse_error()
+            error, _ = message.parse_error()
+            logger.error('GStreamer: {}'.format(error.message), exc_info=error)
+
             self._state = MediaState.Error
             self.interrupt(dispose=True, emit=False)
-            self.error.emit(self, str(err), str(debug))
+
+            self.error.emit(self)
 
     def __on_eos(self):
         if self._loop_count != 0:

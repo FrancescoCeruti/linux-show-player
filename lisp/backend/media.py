@@ -74,7 +74,7 @@ class Media(HasProperties):
         self.sought = Signal()
         # Emitted after a seek (self, position)
         self.error = Signal()
-        # Emitted when an error occurs (self, error, details)
+        # Emitted when an error occurs (self)
 
         self.elements_changed = Signal()
         # Emitted when one or more elements are added/removed (self)

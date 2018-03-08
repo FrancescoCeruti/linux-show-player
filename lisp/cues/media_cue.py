@@ -185,15 +185,15 @@ class MediaCue(Cue):
     def _duration_change(self, value):
         self.duration = value
 
-    def _on_eos(self, *args):
+    def _on_eos(self):
         with self._st_lock:
             self.__fader.stop()
             self._ended()
 
-    def _on_error(self, media, message, details):
+    def _on_error(self):
         with self._st_lock:
             self.__fader.stop()
-            self._error(message, details)
+            self._error()
 
     def _can_fade(self, duration):
         return self.__volume is not None and duration > 0

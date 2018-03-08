@@ -121,7 +121,7 @@ class RunningCueModel(ReadOnlyProxyModel):
             self.__playing.append(cue)
             self.item_added.emit(cue)
 
-    def _remove(self, cue, *args):
+    def _remove(self, cue):
         try:
             self.__playing.remove(cue)
             self.item_removed.emit(cue)

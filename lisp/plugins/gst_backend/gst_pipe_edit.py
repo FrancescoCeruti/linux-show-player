@@ -23,7 +23,7 @@ from PyQt5.QtWidgets import QDialog, QGridLayout, QComboBox, QListWidget, \
     QListWidgetItem
 
 from lisp.plugins.gst_backend import elements
-from lisp.ui.themes.theme import IconTheme
+from lisp.ui.icons import IconTheme
 from lisp.ui.ui_utils import translate
 
 

@@ -24,7 +24,7 @@ from PyQt5.QtWidgets import QDialog, QGridLayout, QLabel, QDialogButtonBox, \
     QSizePolicy, QPushButton, QTextEdit
 
 from lisp.ui.logging.common import LOG_LEVELS, LOG_ICONS_NAMES
-from lisp.ui.themes import IconTheme
+from lisp.ui.icons import IconTheme
 from lisp.ui.ui_utils import translate
 
 

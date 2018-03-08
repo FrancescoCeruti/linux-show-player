@@ -22,7 +22,7 @@ import logging
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtWidgets import QLabel, QWidget, QHBoxLayout, QFrame
 
-from lisp.ui.themes import IconTheme
+from lisp.ui.icons import IconTheme
 
 
 class LogStatusView(QWidget):
@@ -72,10 +72,12 @@ class LogStatusView(QWidget):
         self.double_clicked.emit()
 
     def _new_rows(self, parent, start, end):
-        last_record = self._log_model.record(self._log_model.rowCount() - 1)
+        # Take the last record in the model
+        record = self._log_model.record(self._log_model.rowCount() - 1)
 
-        if last_record.levelno >= logging.INFO:
-            self.messageLabel.setText(last_record.message)
+        if record.levelno >= logging.INFO:
+            # Display only the fist line of text
+            self.messageLabel.setText(record.message.split('\n')[0])
 
         for n in range(start, end + 1):
             level = self._log_model.record(n).levelno

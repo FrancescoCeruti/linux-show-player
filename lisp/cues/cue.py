@@ -161,7 +161,7 @@ class Cue(HasProperties):
         self.started = Signal()         # self
         self.stopped = Signal()         # self
         self.paused = Signal()          # self
-        self.error = Signal()           # self, error, details
+        self.error = Signal()           # self
         self.next = Signal()            # self
         self.end = Signal()             # self
 
@@ -489,7 +489,7 @@ class Cue(HasProperties):
         if locked:
             self._st_lock.release()
 
-    def _error(self, message, details):
+    def _error(self):
         """Remove Running/Pause/Stop state and add Error state."""
         locked = self._st_lock.acquire(blocking=False)
 
@@ -499,7 +499,7 @@ class Cue(HasProperties):
             (self._state ^ CueState.Stop)
         ) | CueState.Error
 
-        self.error.emit(self, message, details)
+        self.error.emit(self)
 
         if locked:
             self._st_lock.release()

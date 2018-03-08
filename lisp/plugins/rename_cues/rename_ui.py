@@ -26,7 +26,7 @@ from PyQt5.QtWidgets import QDialog, QDialogButtonBox, QGridLayout, QLineEdit, \
     QTreeWidget, QAbstractItemView, QTreeWidgetItem, QPushButton, QSpacerItem, \
     QMessageBox
 
-from lisp.ui.themes import IconTheme
+from lisp.ui.icons import IconTheme
 from lisp.ui.ui_utils import translate
 
 logger = logging.getLogger(__name__)
@@ -98,13 +98,13 @@ class RenameUi(QDialog):
         self.layout().addWidget(self.outRegexLine, 3, 3)
 
         self.regexLine = QLineEdit()
-        self.regexLine.setPlaceholderText(translate('RenameCues', 'Type your regex here :'))
+        self.regexLine.setPlaceholderText(translate('RenameCues', 'Type your regex here: '))
         self.regexLine.textChanged.connect(self.onRegexLineChanged)
         self.layout().addWidget(self.regexLine, 4, 3)
 
         # Help button
         self.helpButton = QPushButton()
-        self.helpButton.setIcon(IconTheme.get('help-info'))
+        self.helpButton.setIcon(IconTheme.get('help-about'))
         self.helpButton.setIconSize(QSize(32, 32))
         self.layout().addWidget(self.helpButton, 3, 4, 2, 1)
         self.helpButton.clicked.connect(self.onHelpButtonClicked)

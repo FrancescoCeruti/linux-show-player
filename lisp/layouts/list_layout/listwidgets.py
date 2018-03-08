@@ -25,7 +25,7 @@ from lisp.core.signal import Connection
 from lisp.core.util import strtime
 from lisp.cues.cue import CueNextAction, CueState
 from lisp.cues.cue_time import CueTime, CueWaitTime
-from lisp.ui.themes.theme import IconTheme
+from lisp.ui.icons import IconTheme
 
 
 class CueStatusIcon(QLabel):
@@ -50,7 +50,7 @@ class CueStatusIcon(QLabel):
     def _pause(self):
         self.setPixmap(IconTheme.get('led-pause',).pixmap(self.SIZE))
 
-    def _error(self, *args):
+    def _error(self):
         self.setPixmap(IconTheme.get('led-error').pixmap(self.SIZE))
 
     def _stop(self):

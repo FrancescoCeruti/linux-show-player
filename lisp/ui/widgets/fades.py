@@ -23,7 +23,7 @@ from PyQt5.QtCore import QT_TRANSLATE_NOOP, Qt
 from PyQt5.QtWidgets import QComboBox, QStyledItemDelegate, QWidget, \
     QGridLayout, QDoubleSpinBox, QLabel
 
-from lisp.ui.themes.theme import IconTheme
+from lisp.ui.icons import IconTheme
 from lisp.ui.ui_utils import translate
 
 QT_TRANSLATE_NOOP('Fade', 'Linear')

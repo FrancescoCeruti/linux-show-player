@@ -22,8 +22,9 @@ from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QCheckBox, QComboBox, \
     QGridLayout, QLabel
 
 from lisp import layouts
+from lisp.ui.icons import icon_themes_names
 from lisp.ui.settings.settings_page import SettingsPage
-from lisp.ui.themes import THEMES, ICON_THEMES
+from lisp.ui.themes import themes_names
 from lisp.ui.ui_utils import translate
 
 
@@ -67,7 +68,7 @@ class AppGeneral(SettingsPage):
         self.themeGroup.layout().addWidget(self.themeLabel, 0, 0)
 
         self.themeCombo = QComboBox(self.themeGroup)
-        self.themeCombo.addItems(THEMES.keys())
+        self.themeCombo.addItems(themes_names())
         self.themeGroup.layout().addWidget(self.themeCombo, 0, 1)
 
         self.iconsLabel = QLabel(self.themeGroup)
@@ -76,7 +77,7 @@ class AppGeneral(SettingsPage):
         self.themeGroup.layout().addWidget(self.iconsLabel, 1, 0)
 
         self.iconsCombo = QComboBox(self.themeGroup)
-        self.iconsCombo.addItems(ICON_THEMES.keys())
+        self.iconsCombo.addItems(icon_themes_names())
         self.themeGroup.layout().addWidget(self.iconsCombo, 1, 1)
 
     def get_settings(self):

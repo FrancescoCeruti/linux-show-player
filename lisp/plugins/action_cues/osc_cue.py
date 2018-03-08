@@ -185,19 +185,16 @@ class OscCue(Cue):
     def __fade(self, fade_type):
         try:
             self.__fader.prepare()
-            ended = self.__fader.fade(round(self.duration / 1000, 2),
-                                      1,
-                                      fade_type)
+            ended = self.__fader.fade(
+                round(self.duration / 1000, 2), 1, fade_type)
 
             # to avoid approximation problems
             self._position = 1
             if ended:
                 self._ended()
-        except Exception as e:
-            self._error(
-                translate('OscCue', 'Error during cue execution'),
-                str(e)
-            )
+        except Exception:
+            logger.exception(translate('OscCue', 'Error during cue execution.'))
+            self._error()
 
     def current_time(self):
         return self.__fader.current_time()

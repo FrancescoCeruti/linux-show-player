@@ -19,7 +19,7 @@
 
 from PyQt5.QtWidgets import QPushButton
 
-from lisp.ui.themes.theme import IconTheme
+from lisp.ui.icons import IconTheme
 
 
 class QMuteButton(QPushButton):

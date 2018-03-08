@@ -21,16 +21,17 @@ import argparse
 import logging
 import os
 import sys
-import traceback
 
 from PyQt5.QtCore import QLocale, QLibraryInfo
 from PyQt5.QtWidgets import QApplication
+from logging.handlers import RotatingFileHandler
 
 from lisp import USER_DIR, DEFAULT_APP_CONFIG, USER_APP_CONFIG, plugins, \
-    I18N_PATH
+    I18N_PATH, LOGS_DIR
 from lisp.application import Application
 from lisp.core.configuration import JSONFileConfiguration
 from lisp.ui import themes
+from lisp.ui.icons import IconTheme
 from lisp.ui.ui_utils import install_translation
 
 
@@ -45,27 +46,41 @@ def main():
 
     args = parser.parse_args()
 
-    # Set the logging level
-    if args.log == 'debug':
-        log = logging.DEBUG
+    # Make sure the application user directory exists
+    os.makedirs(USER_DIR, exist_ok=True)
 
+    # Get logging level for the console
+    if args.log == 'debug':
+        console_log_level = logging.DEBUG
         # If something bad happen at low-level (e.g. segfault) print the stack
         import faulthandler
         faulthandler.enable()
     elif args.log == 'info':
-        log = logging.INFO
+        console_log_level = logging.INFO
     else:
-        log = logging.WARNING
+        console_log_level = logging.WARNING
 
-    logging.basicConfig(
-        format='%(asctime)s.%(msecs)03d\t%(name)s\t%(levelname)s\t%(message)s',
-        datefmt='%H:%M:%S',
-        level=log,
+    # Setup the root logger
+    default_formatter = logging.Formatter(
+        '%(asctime)s.%(msecs)03d\t%(name)s\t%(levelname)s\t%(message)s',
+        datefmt='%Y-%m-%d %H:%M:%S'
     )
-    logger = logging.getLogger(__name__)
+    root_logger = logging.getLogger()
+    root_logger.setLevel(logging.DEBUG)
 
-    # Create (if not present) user directory
-    os.makedirs(os.path.dirname(USER_DIR), exist_ok=True)
+    # Create the console handler
+    stream_handler = logging.StreamHandler()
+    stream_handler.setFormatter(default_formatter)
+    stream_handler.setLevel(console_log_level)
+    root_logger.addHandler(stream_handler)
+
+    # Make sure the logs directory exists
+    os.makedirs(LOGS_DIR, exist_ok=True)
+    # Create the file handler
+    file_handler = RotatingFileHandler(
+        os.path.join(LOGS_DIR, 'lisp.log'), maxBytes=10*(2**20), backupCount=5)
+    file_handler.setFormatter(default_formatter)
+    root_logger.addHandler(file_handler)
 
     # Load application configuration
     app_conf = JSONFileConfiguration(USER_APP_CONFIG, DEFAULT_APP_CONFIG)
@@ -80,7 +95,7 @@ def main():
     if locale:
         QLocale().setDefault(QLocale(locale))
 
-    logger.info('Using {} locale'.format(QLocale().name()))
+    logging.info('Using {} locale'.format(QLocale().name()))
 
     # Qt platform translation
     install_translation(
@@ -90,36 +105,31 @@ def main():
 
     # Set UI theme
     try:
-        theme = app_conf['theme.theme']
-        themes.THEMES[theme].apply(qt_app)
-        logger.info('Using "{}" theme'.format(theme))
+        theme_name = app_conf['theme.theme']
+        themes.get_theme(theme_name).apply(qt_app)
+        logging.info('Using "{}" theme'.format(theme_name))
     except Exception:
-        logger.exception('Unable to load theme.')
+        logging.exception('Unable to load theme.')
 
-    # Set the global IconTheme
+    # Set LiSP icon theme (not the Qt one)
     try:
-        icon_theme_name = app_conf['theme.icons']
-        icon_theme = themes.ICON_THEMES[icon_theme_name]
-        icon_theme.set_theme(icon_theme)
-        logger.info('Using "{}" icon theme'.format(icon_theme_name))
+        icon_theme = app_conf['theme.icons']
+        IconTheme.set_theme_name(icon_theme)
+        logging.info('Using "{}" icon theme'.format(icon_theme))
     except Exception:
-        logger.exception('Unable to load icon theme.')
+        logging.exception('Unable to load icon theme.')
 
-    # Create the application
+    # Initialize the application
     lisp_app = Application(app_conf)
-    # Load plugins
     plugins.load_plugins(lisp_app)
 
-    # Start/Initialize LiSP Application
+    # Start the application
     lisp_app.start(session_file=args.file)
-    # Start Qt Application (block until exit)
-    exit_code = qt_app.exec_()
+    exit_code = qt_app.exec_()  # block until exit
 
-    # Finalize plugins
+    # Finalize all and exit
     plugins.finalize_plugins()
-    # Finalize the application
     lisp_app.finalize()
-    # Exit
     sys.exit(exit_code)
 
 

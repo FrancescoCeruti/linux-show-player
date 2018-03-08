@@ -29,7 +29,7 @@ from lisp.cues.cue import CueState
 from lisp.cues.cue_time import CueTime
 from lisp.cues.media_cue import MediaCue
 from lisp.layouts.cart_layout.page_widget import PageWidget
-from lisp.ui.themes.theme import IconTheme
+from lisp.ui.icons import IconTheme
 from lisp.ui.widgets import QClickLabel, QClickSlider, QDbMeter,\
     QDetailedMessageBox
 
@@ -323,13 +323,11 @@ class CueWidget(QWidget):
             IconTheme.get('led-pause').pixmap(CueWidget.ICON_SIZE))
         self.volumeSlider.setEnabled(False)
 
-    def _status_error(self, cue, error, details):
+    def _status_error(self):
         self.statusIcon.setPixmap(
-            IconTheme.get('led-off').pixmap(CueWidget.ICON_SIZE))
+            IconTheme.get('led-error').pixmap(CueWidget.ICON_SIZE))
         self.volumeSlider.setEnabled(False)
         self.reset_volume()
-
-        QDetailedMessageBox.dcritical(self.cue.name, error, details)
 
     def _update_duration(self, duration):
         # Update the maximum values of seek-slider and time progress-bar

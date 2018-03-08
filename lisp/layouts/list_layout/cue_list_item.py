@@ -21,7 +21,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QTreeWidgetItem
 
 from lisp.core.signal import Connection
-from lisp.ui.themes.theme import IconTheme
+from lisp.ui.icons import IconTheme
 
 
 class CueListItem(QTreeWidgetItem):

@@ -20,7 +20,7 @@
 from PyQt5.QtCore import Qt, QSize
 from PyQt5.QtWidgets import QWidget, QGridLayout, QSizePolicy
 
-from lisp.ui.themes.theme import IconTheme
+from lisp.ui.icons import IconTheme
 from lisp.ui.ui_utils import translate
 from lisp.ui.widgets.qiconpushbutton import QIconPushButton
 
