@@ -48,7 +48,7 @@ class CueStatusIcon(QLabel):
         self.setPixmap(IconTheme.get('led-running').pixmap(self.SIZE))
 
     def _pause(self):
-        self.setPixmap(IconTheme.get('led-pause',).pixmap(self.SIZE))
+        self.setPixmap(IconTheme.get('led-pause').pixmap(self.SIZE))
 
     def _error(self):
         self.setPixmap(IconTheme.get('led-error').pixmap(self.SIZE))
