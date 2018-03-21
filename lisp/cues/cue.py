@@ -204,13 +204,13 @@ class Cue(HasProperties):
             elif action is CueAction.FadeOutPause:
                 self.pause(fade=self.fadeout_duration > 0)
             elif action is CueAction.FadeOut:
-                duration = AppConfig().get('cue.fadeActionDuration', 0)
+                duration = AppConfig().get('cue.fadeAction', 0)
                 fade = AppConfig().get(
                     'cue.fadeActionType', FadeOutType.Linear.name)
 
                 self.fadeout(duration, FadeOutType[fade])
             elif action is CueAction.FadeIn:
-                duration = AppConfig().get('cue.fadeActionDuration', 0)
+                duration = AppConfig().get('cue.fadeAction', 0)
                 fade = AppConfig().get(
                     'cue.fadeActionType', FadeInType.Linear.name)
 

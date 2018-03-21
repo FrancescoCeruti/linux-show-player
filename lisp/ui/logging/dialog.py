@@ -29,7 +29,7 @@ from lisp.ui.ui_utils import translate
 
 
 class LogDialogs:
-    def __init__(self, log_model, level=logging.ERROR):
+    def __init__(self, log_model, level=logging.ERROR, parent=None):
         """
         :type log_model: lisp.ui.logging.models.LogRecordModel
         """
@@ -37,7 +37,7 @@ class LogDialogs:
         self._log_model = log_model
         self._log_model.rowsInserted.connect(self._new_rows)
 
-        self._mmbox = MultiMessagesBox()
+        self._mmbox = MultiMessagesBox(parent=parent)
 
     def _new_rows(self, parent, start, end):
         for n in range(start, end + 1):

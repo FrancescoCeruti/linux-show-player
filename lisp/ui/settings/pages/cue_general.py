@@ -197,7 +197,7 @@ class CueGeneralSettings(CueSettingsPage):
         self.fadeInGroup.setTitle(translate('FadeSettings', 'Fade In'))
         self.fadeOutGroup.setTitle(translate('FadeSettings', 'Fade Out'))
 
-    def load_settings(self, settings):
+    def loadSettings(self, settings):
         self.startActionCombo.setCurrentAction(
             settings.get('default_start_action', ''))
         self.stopActionCombo.setCurrentAction(
@@ -212,7 +212,7 @@ class CueGeneralSettings(CueSettingsPage):
         self.fadeOutEdit.setFadeType(settings.get('fadeout_type', ''))
         self.fadeOutEdit.setDuration(settings.get('fadeout_duration', 0))
 
-    def enable_check(self, enabled):
+    def enableCheck(self, enabled):
         self.startActionGroup.setCheckable(enabled)
         self.startActionGroup.setChecked(False)
         self.stopActionGroup.setCheckable(enabled)
@@ -230,7 +230,7 @@ class CueGeneralSettings(CueSettingsPage):
         self.fadeOutGroup.setCheckable(enabled)
         self.fadeOutGroup.setChecked(False)
 
-    def get_settings(self):
+    def getSettings(self):
         conf = {}
         checkable = self.preWaitGroup.isCheckable()
 

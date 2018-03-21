@@ -192,7 +192,7 @@ class VolumeSettings(SettingsPage):
                 self.cue_id = cue.id
                 self.cueLabel.setText(cue.name)
 
-    def enable_check(self, enabled):
+    def enableCheck(self, enabled):
         self.cueGroup.setCheckable(enabled)
         self.cueGroup.setChecked(False)
 
@@ -202,7 +202,7 @@ class VolumeSettings(SettingsPage):
         self.fadeGroup.setCheckable(enabled)
         self.volumeGroup.setChecked(False)
 
-    def get_settings(self):
+    def getSettings(self):
         conf = {}
         checkable = self.cueGroup.isCheckable()
 
@@ -216,7 +216,7 @@ class VolumeSettings(SettingsPage):
 
         return conf
 
-    def load_settings(self, settings):
+    def loadSettings(self, settings):
         cue = Application().cue_model.get(settings.get('target_id', ''))
         if cue is not None:
             self.cue_id = settings['target_id']

@@ -130,7 +130,7 @@ class CommandCueSettings(SettingsPage):
         self.killCheckBox.setText(
             translate('CommandCue', 'Kill instead of terminate'))
 
-    def enable_check(self, enabled):
+    def enableCheck(self, enabled):
         self.group.setCheckable(enabled)
         self.group.setChecked(False)
 
@@ -146,13 +146,13 @@ class CommandCueSettings(SettingsPage):
         if enabled:
             self.killCheckBox.setCheckState(Qt.PartiallyChecked)
 
-    def load_settings(self, settings):
+    def loadSettings(self, settings):
         self.commandLineEdit.setText(settings.get('command', ''))
         self.noOutputCheckBox.setChecked(settings.get('no_output', True))
         self.noErrorCheckBox.setChecked(settings.get('no_error', True))
         self.killCheckBox.setChecked(settings.get('kill', False))
 
-    def get_settings(self):
+    def getSettings(self):
         settings = {}
 
         if not (self.group.isCheckable() and not self.group.isChecked()):

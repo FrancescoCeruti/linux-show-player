@@ -49,11 +49,11 @@ class PresetSrcSettings(SettingsPage):
         self.functionDuration.setDisplayFormat('HH.mm.ss.zzz')
         self.functionGroup.layout().addWidget(self.functionDuration)
 
-    def enable_check(self, enabled):
+    def enableCheck(self, enabled):
         self.functionGroup.setCheckable(enabled)
         self.functionGroup.setChecked(False)
 
-    def get_settings(self):
+    def getSettings(self):
         if not (self.functionGroup.isCheckable() and not self.functionGroup.isChecked()):
             return {'preset': self.functionCombo.currentText(),
                     'duration': self.functionDuration.time().
@@ -61,7 +61,7 @@ class PresetSrcSettings(SettingsPage):
 
         return {}
 
-    def load_settings(self, settings):
+    def loadSettings(self, settings):
         self.functionCombo.setCurrentText(settings.get('preset', ''))
         self.functionDuration.setTime(
             QTime.fromMSecsSinceStartOfDay(settings.get('duration', 0)))

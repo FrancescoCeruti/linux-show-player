@@ -256,11 +256,11 @@ class OscSettings(CueSettingsPage):
         self.removeButton.setText(translate('ControllerOscSettings', 'Remove'))
         self.oscCapture.setText(translate('ControllerOscSettings', 'Capture'))
 
-    def enable_check(self, enabled):
+    def enableCheck(self, enabled):
         self.oscGroup.setCheckable(enabled)
         self.oscGroup.setChecked(False)
 
-    def get_settings(self):
+    def getSettings(self):
         settings = {}
 
         messages = []
@@ -274,7 +274,7 @@ class OscSettings(CueSettingsPage):
 
         return settings
 
-    def load_settings(self, settings):
+    def loadSettings(self, settings):
         if 'osc' in settings:
             for options in settings['osc']:
                 key = Osc.message_from_key(options[0])

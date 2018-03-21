@@ -60,7 +60,7 @@ class JackSinkSettings(SettingsPage):
         self.__jack_client.close()
         super().closeEvent(event)
 
-    def get_settings(self):
+    def getSettings(self):
         settings = {}
 
         if not (self.jackGroup.isCheckable() and
@@ -69,10 +69,10 @@ class JackSinkSettings(SettingsPage):
 
         return settings
 
-    def load_settings(self, settings):
+    def loadSettings(self, settings):
         self.connections = settings.get('connections', self.connections).copy()
 
-    def enable_check(self, enabled):
+    def enableCheck(self, enabled):
         self.jackGroup.setCheckable(enabled)
         self.jackGroup.setChecked(False)
 

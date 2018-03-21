@@ -81,13 +81,13 @@ class CollectionCueSettings(SettingsPage):
             translate('CollectionCue', 'Remove'), QDialogButtonBox.ActionRole)
         self.delButton.clicked.connect(self._remove_selected)
 
-    def load_settings(self, settings):
+    def loadSettings(self, settings):
         for target_id, action in settings.get('targets', []):
             target = Application().cue_model.get(target_id)
             if target is not None:
                 self._add_cue(target, CueAction(action))
 
-    def get_settings(self):
+    def getSettings(self):
         targets = []
         for target_id, action in self.collectionModel.rows:
             targets.append((target_id, action.value))

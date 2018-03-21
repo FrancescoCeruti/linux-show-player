@@ -21,16 +21,16 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QCheckBox, QGridLayout, \
     QSpinBox, QLabel
 
-from lisp.ui.settings.settings_page import SettingsPage
+from lisp.ui.settings.settings_page import ConfigurationPage
 from lisp.ui.ui_utils import translate
 
 
-class CartLayoutSettings(SettingsPage):
+class CartLayoutSettings(ConfigurationPage):
 
     Name = 'Cart Layout'
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    def __init__(self, config, **kwargs):
+        super().__init__(config, **kwargs)
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
@@ -79,6 +79,16 @@ class CartLayoutSettings(SettingsPage):
 
         self.retranslateUi()
 
+        # Load data
+        self.columnsSpin.setValue(config['cartLayout.gridColumns'])
+        self.rowsSpin.setValue(config['cartLayout.gridRows'])
+        self.showSeek.setChecked(config['cartLayout.showSeek'])
+        self.showDbMeters.setChecked(config['cartLayout.showDbMeters'])
+        self.showAccurate.setChecked(config['cartLayout.showAccurate'])
+        self.showVolume.setChecked(config['cartLayout.showVolume'])
+        self.countdownMode.setChecked(config['cartLayout.countdown'])
+        self.autoAddPage.setChecked(config['cartLayout.autoAddPage'])
+
     def retranslateUi(self):
         self.behaviorsGroup.setTitle(
             translate('CartLayout', 'Default behaviors'))
@@ -93,28 +103,14 @@ class CartLayoutSettings(SettingsPage):
         self.columnsLabel.setText(translate('CartLayout', 'Number of columns'))
         self.rowsLabel.setText(translate('CartLayout', 'Number of rows'))
 
-    def get_settings(self):
-        conf = {
-            'gridColumns': self.columnsSpin.value(),
-            'gridRows': self.rowsSpin.value(),
-            'showDbMeters': self.showDbMeters.isChecked(),
-            'showSeek': self.showSeek.isChecked(),
-            'showAccurate': self.showAccurate.isChecked(),
-            'showVolume': self.showVolume.isChecked(),
-            'countdown': self.countdownMode.isChecked(),
-            'autoAddPage': self.autoAddPage.isChecked()
-        }
+    def applySettings(self):
+        self.config['cartLayout.gridColumns'] = self.columnsSpin.value()
+        self.config['cartLayout.gridRows'] = self.rowsSpin.value()
+        self.config['cartLayout.showDbMeters'] = self.showDbMeters.isChecked()
+        self.config['cartLayout.showSeek'] = self.showSeek.isChecked()
+        self.config['cartLayout.showAccurate'] = self.showAccurate.isChecked()
+        self.config['cartLayout.showVolume'] = self.showVolume.isChecked()
+        self.config['cartLayout.countdown'] = self.countdownMode.isChecked()
+        self.config['cartLayout.autoAddPage'] = self.autoAddPage.isChecked()
 
-        return {'cartLayout': conf}
-
-    def load_settings(self, settings):
-        settings = settings.get('cartLayout', {})
-
-        self.columnsSpin.setValue(settings['gridColumns'])
-        self.rowsSpin.setValue(settings['gridRows'])
-        self.showSeek.setChecked(settings['showSeek'])
-        self.showDbMeters.setChecked(settings['showDbMeters'])
-        self.showAccurate.setChecked(settings['showAccurate'])
-        self.showVolume.setChecked(settings['showVolume'])
-        self.countdownMode.setChecked(settings['countdown'])
-        self.autoAddPage.setChecked(settings['autoAddPage'])
+        self.config.write()

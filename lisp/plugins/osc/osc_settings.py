@@ -22,15 +22,15 @@ from PyQt5.QtCore import QT_TRANSLATE_NOOP, Qt
 from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QLabel, \
     QHBoxLayout, QSpinBox, QLineEdit
 
-from lisp.ui.settings.settings_page import SettingsPage
+from lisp.ui.settings.settings_page import ConfigurationPage
 from lisp.ui.ui_utils import translate
 
 
-class OscSettings(SettingsPage):
+class OscSettings(ConfigurationPage):
     Name = QT_TRANSLATE_NOOP('SettingsPageName', 'OSC settings')
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    def __init__(self, config, **kwargs):
+        super().__init__(config, **kwargs)
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
@@ -66,14 +66,16 @@ class OscSettings(SettingsPage):
         hbox.layout().addWidget(self.hostnameEdit)
         self.groupBox.layout().addLayout(hbox)
 
-    def get_settings(self):
-        return {
-            'inPort': self.inportBox.value(),
-            'outPort': self.outportBox.value(),
-            'hostname': self.hostnameEdit.text(),
-        }
+        self.loadConfiguration()
 
-    def load_settings(self, settings):
-        self.inportBox.setValue(settings['inPort'])
-        self.outportBox.setValue(settings['outPort'])
-        self.hostnameEdit.setText(settings['hostname'])
+    def applySettings(self):
+        self.config['inPort'] = self.inportBox.value()
+        self.config['outPort'] = self.outportBox.value()
+        self.config['hostname'] = self.hostnameEdit.text()
+
+        self.config.write()
+
+    def loadConfiguration(self):
+        self.inportBox.setValue(self.config['inPort'])
+        self.outportBox.setValue(self.config['outPort'])
+        self.hostnameEdit.setText(self.config['hostname'])

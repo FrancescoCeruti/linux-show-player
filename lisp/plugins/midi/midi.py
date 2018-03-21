@@ -37,7 +37,8 @@ class Midi(Plugin):
         super().__init__(app)
 
         # Register the settings widget
-        AppSettings.register_settings_widget(MIDISettings, Midi.Config)
+        AppSettings.registerSettingsWidget(
+            'plugins.midi', MIDISettings, Midi.Config)
 
         # Load the backend and set it as current mido backend
         self.backend = mido.Backend(Midi.Config['backend'], load=True)

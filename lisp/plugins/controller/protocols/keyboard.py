@@ -78,11 +78,11 @@ class KeyboardSettings(CueSettingsPage):
         self.addButton.setText(translate('ControllerSettings', 'Add'))
         self.removeButton.setText(translate('ControllerSettings', 'Remove'))
 
-    def enable_check(self, enabled):
+    def enableCheck(self, enabled):
         self.keyGroup.setCheckable(enabled)
         self.keyGroup.setChecked(False)
 
-    def get_settings(self):
+    def getSettings(self):
         settings = {}
 
         if not (self.keyGroup.isCheckable() and not self.keyGroup.isChecked()):
@@ -90,7 +90,7 @@ class KeyboardSettings(CueSettingsPage):
 
         return settings
 
-    def load_settings(self, settings):
+    def loadSettings(self, settings):
         for key, action in settings.get('keyboard', []):
             self.keyboardModel.appendRow(key, action)
 

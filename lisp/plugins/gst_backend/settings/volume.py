@@ -83,12 +83,12 @@ class VolumeSettings(SettingsPage):
         self.normalLabel.setText('0.0 dB')
         self.normalReset.setText(translate('VolumeSettings', 'Reset'))
 
-    def enable_check(self, enabled):
+    def enableCheck(self, enabled):
         for box in [self.normalBox, self.volumeBox]:
             box.setCheckable(enabled)
             box.setChecked(False)
 
-    def get_settings(self):
+    def getSettings(self):
         settings = {}
         checkable = self.volumeBox.isCheckable()
 
@@ -105,7 +105,7 @@ class VolumeSettings(SettingsPage):
 
         return settings
 
-    def load_settings(self, settings):
+    def loadSettings(self, settings):
         self.volume.setValue(linear_to_db(settings.get('volume', 1)) * 10)
         self.muteButton.setMute(settings.get('mute', False))
         self.normal = settings.get('normal_volume', 1)

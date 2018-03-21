@@ -85,7 +85,7 @@ class MediaCueSettings(SettingsPage):
             translate('MediaCueSettings', 'Repetition after first play '
                                           '(-1 = infinite)'))
 
-    def get_settings(self):
+    def getSettings(self):
         conf = {'_media_': {}}
         checkable = self.startGroup.isCheckable()
 
@@ -100,7 +100,7 @@ class MediaCueSettings(SettingsPage):
 
         return conf
 
-    def enable_check(self, enabled):
+    def enableCheck(self, enabled):
         self.startGroup.setCheckable(enabled)
         self.startGroup.setChecked(False)
 
@@ -110,7 +110,7 @@ class MediaCueSettings(SettingsPage):
         self.loopGroup.setCheckable(enabled)
         self.loopGroup.setChecked(False)
 
-    def load_settings(self, settings):
+    def loadSettings(self, settings):
         if '_media_' in settings:
             if 'loop' in settings['_media_']:
                 self.spinLoop.setValue(settings['_media_']['loop'])

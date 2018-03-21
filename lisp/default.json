@@ -1,7 +1,7 @@
 {
-    "_version_": "0.6dev.9",
+    "_version_": "0.6dev.10",
     "cue": {
-        "fadeActionDuration": 3,
+        "fadeAction": 3,
         "fadeActionType": "Linear",
         "interruptFade": 3,
         "interruptFadeType": "Linear"

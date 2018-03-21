@@ -79,7 +79,7 @@ class UriInputSettings(SettingsPage):
         self.bufferSizeLabel.setText(
             translate('UriInputSettings', 'Buffer size (-1 default value)'))
 
-    def get_settings(self):
+    def getSettings(self):
         settings = {}
 
         checkable = self.fileGroup.isCheckable()
@@ -93,10 +93,10 @@ class UriInputSettings(SettingsPage):
 
         return settings
 
-    def load_settings(self, settings):
+    def loadSettings(self, settings):
         self.filePath.setText(settings.get('uri', ''))
 
-    def enable_check(self, enabled):
+    def enableCheck(self, enabled):
         self.fileGroup.setCheckable(enabled)
         self.fileGroup.setChecked(False)
 

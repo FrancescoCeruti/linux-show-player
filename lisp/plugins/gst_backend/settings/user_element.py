@@ -56,14 +56,14 @@ class UserElementSettings(SettingsPage):
         self.warning.setText(
             translate('UserElementSettings', 'Only for advanced user!'))
 
-    def enable_check(self, enabled):
+    def enableCheck(self, enabled):
         self.groupBox.setCheckable(enabled)
         self.groupBox.setChecked(False)
 
-    def load_settings(self, settings):
+    def loadSettings(self, settings):
         self.textEdit.setPlainText(settings.get('bin', ''))
 
-    def get_settings(self):
+    def getSettings(self):
         if not (self.groupBox.isCheckable() and not self.groupBox.isChecked()):
             return {'bin': self.textEdit.toPlainText().strip()}
 

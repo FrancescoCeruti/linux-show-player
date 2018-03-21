@@ -29,26 +29,123 @@ from shutil import copyfile
 
 from lisp import DEFAULT_APP_CONFIG, USER_APP_CONFIG
 from lisp.core.signal import Signal
-
-# Used to indicate the default behaviour when a specific option is not found to
-# raise an exception. Created to enable `None` as a valid fallback value.
 from lisp.core.singleton import ABCSingleton
-
-_UNSET = object()
+from lisp.core.util import deep_update
 
 logger = logging.getLogger(__name__)
 
+_UNSET = object()
 
-class Configuration(metaclass=ABCMeta):
-    """ABC for a dictionary-based configuration object.
+
+class ConfDictError(Exception):
+    pass
+
+
+class ConfDict:
+    """Allow to access nested-dictionaries values using "paths"."""
+
+    def __init__(self, root=None, sep='.'):
+        if not sep:
+            raise ValueError('ConfDict separator cannot be empty')
+        if not isinstance(sep, str):
+            raise TypeError(
+                'ConfDict separator must be a str, not {}'.format(
+                    type(sep).__name__)
+            )
+
+        self._sep = sep
+
+        if root is None:
+            self._root = {}
+        elif isinstance(root, dict):
+            self._root = root
+        else:
+            raise TypeError(
+                'ConfDict root must be a dict, not {}'.format(
+                    type(root).__name__)
+            )
+
+    def get(self, path, default=_UNSET):
+        try:
+            node, key = self.__traverse(self.sp(path), self._root)
+            return node[key]
+        except (KeyError, TypeError):
+            if default is not _UNSET:
+                logger.debug('Invalid path, return default: {}'.format(path))
+                return default
+
+            raise ConfDictError('invalid path')
+
+    def set(self, path, value):
+        try:
+            node, key = self.__traverse(self.sp(path), self._root, set_=True)
+            node[key] = value
+        except (KeyError, TypeError):
+            raise ConfDictError('invalid path')
+
+    def pop(self, path):
+        try:
+            node, key = self.__traverse(self.sp(path), self._root)
+            return node.pop(key)
+        except (KeyError, TypeError):
+            raise ConfDictError('invalid path')
+
+    def update(self, new_conf):
+        """Update the ConfDict using the given dictionary.
+
+        :param new_conf: a dict containing the new values
+        :type new_conf: dict
+        """
+        deep_update(self._root, new_conf)
+
+    def deep_copy(self):
+        """Return a deep-copy of the internal dictionary."""
+        return deepcopy(self._root)
+
+    def jp(self, *paths):
+        return self._sep.join(paths)
+
+    def sp(self, path):
+        return path.split(self._sep)
+
+    def __traverse(self, keys, root, set_=False):
+        next_step = keys.pop(0)
+
+        if keys:
+            if set_ and next_step not in root:
+                root[next_step] = {}
+
+            return self.__traverse(keys, root[next_step])
+
+        return root, next_step
+
+    def __getitem__(self, path):
+        return self.get(path)
+
+    def __setitem__(self, path, value):
+        self.set(path, value)
+
+    def __delitem__(self, path):
+        self.pop(path)
+
+    def __contains__(self, path):
+        try:
+            node, key = self.__traverse(path.split(self._sep), self._root)
+            return key in node
+        except (KeyError, TypeError):
+            return False
+
+
+class Configuration(ConfDict, metaclass=ABCMeta):
+    """ABC for configuration objects.
 
     Subclasses need to implement `read` and `write` methods.
-    Keep in mind that the `set` and `update` methods ignores non-existing keys.
     """
 
-    def __init__(self):
-        self._root = {}
+    def __init__(self, root=None):
+        super().__init__(root=root)
         self.changed = Signal()
+        self.updated = Signal()
 
     @abstractmethod
     def read(self):
@@ -58,83 +155,13 @@ class Configuration(metaclass=ABCMeta):
     def write(self):
         pass
 
-    def get(self, path, default=_UNSET):
-        try:
-            node, key = self.__traverse(path.split('.'), self._root)
-            return node[key]
-        except (KeyError, TypeError) as e:
-            if default is not _UNSET:
-                logger.warning(
-                    'Invalid key "{}" in get operation, default used.'
-                        .format(path)
-                )
-                return default
-
-            raise e
-
     def set(self, path, value):
-        try:
-            node, key = self.__traverse(path.split('.'), self._root)
-            old, node[key] = node[key], value
-
-            self.changed.emit(path, old, value)
-        except (KeyError, TypeError):
-            logger.warning(
-                'Invalid key "{}" in set operation, ignored.'
-                    .format(path)
-            )
-
-    def __traverse(self, keys, root):
-        next_step = keys.pop(0)
-
-        if keys:
-            return self.__traverse(keys, root[next_step])
-
-        return root, next_step
+        super().set(path, value)
+        self.changed.emit(path, value)
 
     def update(self, new_conf):
-        """Update the current configuration using the given dictionary.
-
-        :param new_conf: the new configuration (can be partial)
-        :type new_conf: dict
-        """
-        self.__update(self._root, new_conf)
-
-    def __update(self, root, new_conf, _path=''):
-        """Recursively update the current configuration."""
-        for key, value in new_conf.items():
-            if key in root:
-                _path = self.jp(_path, key)
-
-                if isinstance(root[key], dict):
-                    self.__update(root[key], value, _path)
-                else:
-                    old, root[key] = root[key], value
-                    self.changed.emit(_path[1:], old, value)
-
-    def copy(self):
-        """Return a deep-copy of the internal dictionary.
-
-        :rtype: dict
-        """
-        return deepcopy(self._root)
-
-    @staticmethod
-    def jp(*paths):
-        return '.'.join(paths)
-
-    def __getitem__(self, path):
-        return self.get(path)
-
-    def __setitem__(self, path, value):
-        self.set(path, value)
-
-    def __contains__(self, path):
-        try:
-            node, key = self.__traverse(path.split('.'), self._root)
-            return key in node
-        except (KeyError, TypeError):
-            return False
+        super().update(new_conf)
+        self.updated.emit()
 
 
 class DummyConfiguration(Configuration):
@@ -178,6 +205,9 @@ class JSONFileConfiguration(Configuration):
     def write(self):
         with open(self.user_path, 'w') as f:
             json.dump(self._root, f, indent=True)
+
+        logger.debug(
+            'Configuration written at {}'.format(self.user_path))
 
     def _check_file(self):
         """Ensure the last configuration is present at the user-path position"""

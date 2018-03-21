@@ -120,14 +120,14 @@ class IndexActionCueSettings(SettingsPage):
         self.suggestionGroup.setTitle(
             translate('IndexActionCue', 'Suggested cue name'))
 
-    def enable_check(self, enabled):
+    def enableCheck(self, enabled):
         self.indexGroup.setChecked(enabled)
         self.indexGroup.setChecked(False)
 
         self.actionGroup.setCheckable(enabled)
         self.actionGroup.setChecked(False)
 
-    def get_settings(self):
+    def getSettings(self):
         conf = {}
         checkable = self.actionGroup.isCheckable()
 
@@ -139,7 +139,7 @@ class IndexActionCueSettings(SettingsPage):
 
         return conf
 
-    def load_settings(self, settings):
+    def loadSettings(self, settings):
         self._cue_index = settings.get('index', -1)
 
         self.relativeCheck.setChecked(settings.get('relative', True))

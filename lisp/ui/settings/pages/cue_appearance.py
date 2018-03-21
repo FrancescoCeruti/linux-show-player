@@ -93,7 +93,7 @@ class Appearance(SettingsPage):
         self.colorFButton.setText(
             translate('CueAppearanceSettings', 'Select font color'))
 
-    def enable_check(self, enabled):
+    def enableCheck(self, enabled):
         self.cueNameGroup.setCheckable(enabled)
         self.cueNameGroup.setChecked(False)
 
@@ -106,7 +106,7 @@ class Appearance(SettingsPage):
         self.colorGroup.setCheckable(enabled)
         self.colorGroup.setChecked(False)
 
-    def get_settings(self):
+    def getSettings(self):
         conf = {}
         style = {}
         checkable = self.cueNameGroup.isCheckable()
@@ -128,7 +128,7 @@ class Appearance(SettingsPage):
 
         return conf
 
-    def load_settings(self, settings):
+    def loadSettings(self, settings):
         if 'name' in settings:
             self.cueNameEdit.setText(settings['name'])
         if 'description' in settings:

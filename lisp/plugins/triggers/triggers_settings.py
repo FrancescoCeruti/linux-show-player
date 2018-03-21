@@ -74,7 +74,7 @@ class TriggersSettings(SettingsPage):
     def _remove_trigger(self):
         self.triggersModel.removeRow(self.triggersView.currentIndex().row())
 
-    def load_settings(self, settings):
+    def loadSettings(self, settings):
         # Remove the edited cue from the list of possible targets
         edited_cue = Application().cue_model.get(settings.get('id'))
         if edited_cue:
@@ -87,7 +87,7 @@ class TriggersSettings(SettingsPage):
                     self.triggersModel.appendRow(target.__class__, trigger,
                                                  target.id, CueAction(action))
 
-    def get_settings(self):
+    def getSettings(self):
         triggers = {}
         for trigger, target, action in self.triggersModel.rows:
             action = action.value

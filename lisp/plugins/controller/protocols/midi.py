@@ -109,11 +109,11 @@ class MidiSettings(CueSettingsPage):
         self.removeButton.setText(translate('ControllerSettings', 'Remove'))
         self.midiCapture.setText(translate('ControllerMidiSettings', 'Capture'))
 
-    def enable_check(self, enabled):
+    def enableCheck(self, enabled):
         self.midiGroup.setCheckable(enabled)
         self.midiGroup.setChecked(False)
 
-    def get_settings(self):
+    def getSettings(self):
         settings = {}
         checkable = self.midiGroup.isCheckable()
 
@@ -129,7 +129,7 @@ class MidiSettings(CueSettingsPage):
 
         return settings
 
-    def load_settings(self, settings):
+    def loadSettings(self, settings):
         if 'midi' in settings:
             for options in settings['midi']:
                 m_type, channel, note = Midi.from_string(options[0])

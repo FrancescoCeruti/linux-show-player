@@ -49,8 +49,8 @@ class Timecode(Plugin):
         # Register cue-settings-page
         CueSettingsRegistry().add_item(TimecodeSettings, MediaCue)
         # Register the settings widget
-        AppSettings.register_settings_widget(
-            TimecodeAppSettings, Timecode.Config)
+        AppSettings.registerSettingsWidget(
+            'plugins.timecode', TimecodeAppSettings, Timecode.Config)
 
         # Load available protocols
         protocols.load_protocols()

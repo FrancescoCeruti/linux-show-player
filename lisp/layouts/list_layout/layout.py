@@ -62,7 +62,8 @@ class ListLayout(QWidget, CueLayout):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        AppSettings.register_settings_widget(ListLayoutSettings, self.app.conf)
+        AppSettings.registerSettingsWidget(
+            'list_layout', ListLayoutSettings, self.app.conf)
 
         self.setLayout(QGridLayout())
         self.layout().setContentsMargins(0, 0, 0, 0)

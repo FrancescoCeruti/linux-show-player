@@ -54,7 +54,7 @@ class GstMediaSettings(SettingsPage):
         self.listWidget.currentItemChanged.connect(self.__change_page)
         self.pipeButton.clicked.connect(self.__edit_pipe)
 
-    def load_settings(self, settings):
+    def loadSettings(self, settings):
         settings = settings.get('media', {})
         # Create a local copy of the configuration
         self._settings = deepcopy(settings)
@@ -66,7 +66,7 @@ class GstMediaSettings(SettingsPage):
 
             if page is not None and issubclass(page, SettingsPage):
                 page = page(parent=self)
-                page.load_settings(
+                page.loadSettings(
                     settings.get('elements', {})
                         .get(element, page.ELEMENT.class_defaults()))
                 page.setVisible(False)
@@ -77,11 +77,11 @@ class GstMediaSettings(SettingsPage):
 
             self.listWidget.setCurrentRow(0)
 
-    def get_settings(self):
+    def getSettings(self):
         settings = {'elements': {}}
 
         for page in self._pages:
-            page_settings = page.get_settings()
+            page_settings = page.getSettings()
 
             if page_settings:
                 settings['elements'][page.ELEMENT.__name__] = page_settings
@@ -92,10 +92,10 @@ class GstMediaSettings(SettingsPage):
 
         return {'media': settings}
 
-    def enable_check(self, enabled):
+    def enableCheck(self, enabled):
         self._check = enabled
         for page in self._pages:
-            page.enable_check(enabled)
+            page.enableCheck(enabled)
 
     def __change_page(self, current, previous):
         if current is None:
@@ -111,7 +111,7 @@ class GstMediaSettings(SettingsPage):
 
     def __edit_pipe(self):
         # Backup the settings
-        self._settings = self.get_settings()['media']
+        self._settings = self.getSettings()['media']
 
         # Show the dialog
         dialog = GstPipeEditDialog(self._settings.get('pipe', ()), parent=self)
@@ -128,5 +128,5 @@ class GstMediaSettings(SettingsPage):
             # Reload with the new pipeline
             self._settings['pipe'] = dialog.get_pipe()
 
-            self.load_settings({'media': self._settings})
-            self.enable_check(self._check)
+            self.loadSettings({'media': self._settings})
+            self.enableCheck(self._check)

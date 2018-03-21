@@ -33,11 +33,11 @@ from lisp.ui.ui_utils import translate
 class CueSettingsRegistry(ClassBasedRegistry, metaclass=Singleton):
     def add_item(self, item, ref_class=Cue):
         if not issubclass(item, SettingsPage):
-            raise TypeError('item must be a SettingPage subclass, '
-                            'not {0}'.format(item.__name__))
+            raise TypeError(
+                'item must be a SettingPage, not {0}'.format(item.__name__))
         if not issubclass(ref_class, Cue):
-            raise TypeError('ref_class must be Cue or a subclass, not {0}'
-                            .format(ref_class.__name__))
+            raise TypeError(
+                'ref_class must be a Cue, not {0}'.format(ref_class.__name__))
 
         return super().add_item(item, ref_class)
 
@@ -86,8 +86,8 @@ class CueSettings(QDialog):
             else:
                 settings_widget = widget()
 
-            settings_widget.load_settings(cue_properties)
-            settings_widget.enable_check(cue is None)
+            settings_widget.loadSettings(cue_properties)
+            settings_widget.enableCheck(cue is None)
             self.sections.addTab(settings_widget,
                                  translate('SettingsPageName',
                                            settings_widget.Name))

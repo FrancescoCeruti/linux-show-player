@@ -58,9 +58,11 @@ class Application(metaclass=Singleton):
         self.__session = None
 
         # Register general settings widget
-        AppSettings.register_settings_widget(AppGeneral, self.conf)
-        AppSettings.register_settings_widget(CueAppSettings, self.conf)
-        AppSettings.register_settings_widget(PluginsSettings, self.conf)
+        AppSettings.registerSettingsWidget('general', AppGeneral, self.conf)
+        AppSettings.registerSettingsWidget(
+            'general.cue', CueAppSettings, self.conf)
+        AppSettings.registerSettingsWidget(
+            'plugins', PluginsSettings, self.conf)
 
         # Register common cue-settings widgets
         CueSettingsRegistry().add_item(CueGeneralSettings, Cue)
@@ -115,7 +117,7 @@ class Application(metaclass=Singleton):
         """Show the layout-selection dialog"""
         try:
             # Prompt the user for a new layout
-            dialog = LayoutSelect()
+            dialog = LayoutSelect(parent=self.__main_window)
             if dialog.exec_() == QDialog.Accepted:
                 # If a valid file is selected load it, otherwise load the layout
                 if exists(dialog.filepath):

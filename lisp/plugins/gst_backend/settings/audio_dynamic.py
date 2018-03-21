@@ -99,11 +99,11 @@ class AudioDynamicSettings(SettingsPage):
         self.thresholdLabel.setText(
             translate('AudioDynamicSettings', 'Threshold (dB)'))
 
-    def enable_check(self, enabled):
+    def enableCheck(self, enabled):
         self.groupBox.setCheckable(enabled)
         self.groupBox.setChecked(False)
 
-    def get_settings(self):
+    def getSettings(self):
         settings = {}
 
         if not (self.groupBox.isCheckable() and not self.groupBox.isChecked()):
@@ -116,7 +116,7 @@ class AudioDynamicSettings(SettingsPage):
 
         return settings
 
-    def load_settings(self, settings):
+    def loadSettings(self, settings):
         self.modeComboBox.setCurrentText(
             translate('AudioDynamicSettings',
                       settings.get('mode', 'compressor')))

@@ -19,20 +19,18 @@
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QKeySequence
-from PyQt5.QtWidgets import QDoubleSpinBox
 from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QCheckBox, QComboBox, \
     QHBoxLayout, QLabel, QKeySequenceEdit, QGridLayout
 
-from lisp.ui.settings.settings_page import SettingsPage
+from lisp.ui.settings.settings_page import ConfigurationPage
 from lisp.ui.ui_utils import translate
-from lisp.ui.widgets import FadeComboBox
 
 
-class ListLayoutSettings(SettingsPage):
+class ListLayoutSettings(ConfigurationPage):
     Name = 'List Layout'
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    def __init__(self, config, **kwargs):
+        super().__init__(config, **kwargs)
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
@@ -60,9 +58,6 @@ class ListLayoutSettings(SettingsPage):
         self.endListLabel = QLabel(self.behaviorsGroup)
         self.endListLayout.addWidget(self.endListLabel)
         self.endListBehavior = QComboBox(self.behaviorsGroup)
-        self.endListBehavior.addItem(translate('ListLayout', 'Stop'), 'Stop')
-        self.endListBehavior.addItem(translate('ListLayout', 'Restart'),
-                                     'Restart')
         self.endListLayout.addWidget(self.endListBehavior)
         self.endListLayout.setStretch(0, 2)
         self.endListLayout.setStretch(1, 5)
@@ -102,6 +97,22 @@ class ListLayoutSettings(SettingsPage):
 
         self.retranslateUi()
 
+        # Load configuration
+        self.showPlaying.setChecked(config['listLayout.showPlaying'])
+        self.showDbMeters.setChecked(config['listLayout.showDbMeters'])
+        self.showAccurate.setChecked(config['listLayout.showAccurate'])
+        self.showSeek.setChecked(config['listLayout.showSeek'])
+        self.autoNext.setChecked(config['listLayout.autoContinue'])
+        self.endListBehavior.setCurrentText(
+            translate('ListLayout', config['listLayout.endList']))
+        self.goKeyEdit.setKeySequence(
+            QKeySequence(config['listLayout.goKey'], QKeySequence.NativeText))
+
+        self.stopCueFade.setChecked(config['listLayout.stopCueFade'])
+        self.pauseCueFade.setChecked(config['listLayout.pauseCueFade'])
+        self.resumeCueFade.setChecked(config['listLayout.resumeCueFade'])
+        self.interruptCueFade.setChecked(config['listLayout.interruptCueFade'])
+
     def retranslateUi(self):
         self.behaviorsGroup.setTitle(
             translate('ListLayout', 'Default behaviors'))
@@ -111,6 +122,9 @@ class ListLayoutSettings(SettingsPage):
         self.showSeek.setText(translate('ListLayout', 'Show seek-bars'))
         self.autoNext.setText(translate('ListLayout', 'Auto-select next cue'))
         self.endListLabel.setText(translate('ListLayout', 'At list end:'))
+        self.endListBehavior.addItem(translate('ListLayout', 'Stop'), 'Stop')
+        self.endListBehavior.addItem(
+            translate('ListLayout', 'Restart'), 'Restart')
         self.goKeyLabel.setText(translate('ListLayout', 'Go key:'))
 
         self.useFadeGroup.setTitle(translate('ListLayout', 'Use fade'))
@@ -124,48 +138,18 @@ class ListLayoutSettings(SettingsPage):
         #self.resumeAllFade.setText(translate('ListLayout', 'Resume All'))
         #self.interruptAllFade.setText(translate('ListLayout', 'Interrupt All'))
 
-    def get_settings(self):
-        settings = {
-            'showPlaying': self.showPlaying.isChecked(),
-            'showDbMeters': self.showDbMeters.isChecked(),
-            'showSeek': self.showSeek.isChecked(),
-            'showAccurate': self.showAccurate.isChecked(),
-            'autoContinue': self.autoNext.isChecked(),
-            'endList': self.endListBehavior.currentData(),
-            'goKey': self.goKeyEdit.keySequence().toString(
-                QKeySequence.NativeText),
-            'stopCueFade': self.stopCueFade.isChecked(),
-            'pauseCueFade': self.pauseCueFade.isChecked(),
-            'resumeCueFade': self.resumeCueFade.isChecked(),
-            'interruptCueFade': self.interruptCueFade.isChecked(),
-            #'StopAllFade': self.stopAllFade.isChecked(),
-            #'PauseAllFade': self.pauseAllFade.isChecked(),
-            #'ResumeAllFade': self.resumeAllFade.isChecked(),
-            #'InterruptAllFade': self.interruptAllFade.isChecked(),
-        }
+    def applySettings(self):
+        self.config['listLayout.showPlaying'] = self.showPlaying.isChecked()
+        self.config['listLayout.showDbMeters'] = self.showDbMeters.isChecked()
+        self.config['listLayout.showSeek'] = self.showSeek.isChecked()
+        self.config['listLayout.showAccurate'] = self.showAccurate.isChecked()
+        self.config['listLayout.autoContinue'] = self.autoNext.isChecked()
+        self.config['listLayout.endList'] = self.endListBehavior.currentData()
+        self.config['listLayout.goKey'] = self.goKeyEdit.keySequence().toString(
+            QKeySequence.NativeText)
+        self.config['listLayout.stopCueFade'] = self.stopCueFade.isChecked()
+        self.config['listLayout.pauseCueFade'] = self.pauseCueFade.isChecked()
+        self.config['listLayout.resumeCueFade'] = self.resumeCueFade.isChecked()
+        self.config['listLayout.interruptCueFade'] = self.interruptCueFade.isChecked()
 
-        return {'listLayout': settings}
-
-    def load_settings(self, settings):
-        settings = settings.get('listLayout', {})
-
-        self.showPlaying.setChecked(settings['showPlaying'])
-        self.showDbMeters.setChecked(settings['showDbMeters'])
-        self.showAccurate.setChecked(settings['showAccurate'])
-        self.showSeek.setChecked(settings['showSeek'])
-        self.autoNext.setChecked(settings['autoContinue'])
-        self.endListBehavior.setCurrentText(
-            translate('ListLayout', settings.get('endList', '')))
-        self.goKeyEdit.setKeySequence(
-            QKeySequence(settings.get('goKey', 'Space'),
-                         QKeySequence.NativeText))
-
-        self.stopCueFade.setChecked(settings['stopCueFade'])
-        self.pauseCueFade.setChecked(settings['pauseCueFade'])
-        self.resumeCueFade.setChecked(settings['resumeCueFade'])
-        self.interruptCueFade.setChecked(settings['interruptCueFade'])
-
-        #self.stopAllFade.setChecked(settings['StopAllFade'])
-        #self.pauseAllFade.setChecked(settings['PauseAllFade'])
-        #self.resumeAllFade.setChecked(settings['ResumeAllFade'])
-        #self.interruptAllFade.setChecked(settings['InterruptAllFade'])
+        self.config.write()

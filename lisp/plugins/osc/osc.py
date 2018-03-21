@@ -37,7 +37,8 @@ class Osc(Plugin):
         super().__init__(app)
 
         # Register the settings widget
-        AppSettings.register_settings_widget(OscSettings, Osc.Config)
+        AppSettings.registerSettingsWidget(
+            'plugins.osc', OscSettings, Osc.Config)
 
         # Create a server instance
         self.__server = OscServer(

@@ -20,7 +20,8 @@
 import os
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QDialog, QComboBox, QPushButton, QFrame, QTextBrowser, QFileDialog, QGridLayout
+from PyQt5.QtWidgets import QDialog, QComboBox, QPushButton, QFrame,\
+    QTextBrowser, QFileDialog, QGridLayout
 
 from lisp import layouts
 from lisp.ui.ui_utils import translate
@@ -78,7 +79,7 @@ class LayoutSelect(QDialog):
     def selected(self):
         return self.layoutCombo.currentData()
 
-    def show_description(self, index):
+    def show_description(self):
         layout = self.layoutCombo.currentData()
 
         details = '<ul>'
@@ -87,12 +88,15 @@ class LayoutSelect(QDialog):
         details += '</ul>'
 
         self.description.setHtml(
-            '<center><h2>' + layout.NAME + '</h2>'
-            '<i><h4>' + translate('LayoutDescription', layout.DESCRIPTION) +
-            '</h4></i></center>' + details)
+            '<center><h2>{}</h2><i><h4>{}</h4></i></center>{}'.format(
+                layout.NAME,
+                translate('LayoutDescription', layout.DESCRIPTION),
+                details
+            )
+        )
 
     def open_file(self):
-        path, _ = QFileDialog.getOpenFileName(self, filter='*.lsp',
-                                              directory=os.getenv('HOME'))
+        path, _ = QFileDialog.getOpenFileName(
+            self, filter='*.lsp', directory=os.getenv('HOME'))
         self.filepath = path
         self.accept()

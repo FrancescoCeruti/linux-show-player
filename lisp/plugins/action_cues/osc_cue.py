@@ -274,14 +274,14 @@ class OscCueSettings(SettingsPage):
         self.fadeLabel.setText(translate('OscCue', 'Time (sec)'))
         self.fadeCurveLabel.setText(translate('OscCue', 'Curve'))
 
-    def enable_check(self, enabled):
+    def enableCheck(self, enabled):
         self.oscGroup.setCheckable(enabled)
         self.oscGroup.setChecked(False)
 
         self.fadeGroup.setCheckable(enabled)
         self.fadeGroup.setChecked(False)
 
-    def get_settings(self):
+    def getSettings(self):
         conf = {}
         checkable = self.oscGroup.isCheckable()
 
@@ -312,7 +312,7 @@ class OscCueSettings(SettingsPage):
             conf['fade_type'] = self.fadeCurveCombo.currentType()
         return conf
 
-    def load_settings(self, settings):
+    def loadSettings(self, settings):
         if 'path' in settings:
             path = settings.get('path', '')
             self.pathEdit.setText(path)

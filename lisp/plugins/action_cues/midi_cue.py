@@ -127,7 +127,7 @@ class MidiCueSettings(SettingsPage):
                 spin.setRange(
                     *self.ATTRIBUTES_RANGE.get(attr_name, (0, 0, 0))[0:2])
 
-    def get_settings(self):
+    def getSettings(self):
         msg_type = self.msgTypeCombo.currentText()
         msg_dict = {'type': msg_type}
 
@@ -143,7 +143,7 @@ class MidiCueSettings(SettingsPage):
                                        self.MSGS_ATTRIBUTES[msg_type]):
             yield label, spin, attr
 
-    def load_settings(self, settings):
+    def loadSettings(self, settings):
         str_msg = settings.get('message', '')
         if str_msg:
             dict_msg = str_msg_to_dict(str_msg)

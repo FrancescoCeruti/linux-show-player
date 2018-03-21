@@ -22,12 +22,12 @@ from PyQt5.QtWidgets import QListWidget, QListWidgetItem, QTextBrowser, \
     QVBoxLayout
 
 from lisp import plugins
-from lisp.ui.settings.settings_page import SettingsPage
 from lisp.ui.icons import IconTheme
+from lisp.ui.settings.settings_page import ABCSettingsPage
 
 
 # TODO: just a proof-of concept
-class PluginsSettings(SettingsPage):
+class PluginsSettings(ABCSettingsPage):
     Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Plugins')
 
     def __init__(self, **kwargs):
@@ -78,3 +78,6 @@ class PluginsSettings(SettingsPage):
         else:
             self.pluginDescription.setHtml(
                 '<b>Description: </b><br /><br /><b>Authors: </b>')
+
+    def applySettings(self):
+        pass

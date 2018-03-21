@@ -21,7 +21,6 @@ from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import QTabWidget, QAction, QInputDialog, qApp, \
     QMessageBox
 
-from lisp.core.configuration import AppConfig
 from lisp.core.signal import Connection
 from lisp.cues.cue import Cue
 from lisp.cues.cue_factory import CueFactory
@@ -52,7 +51,8 @@ class CartLayout(QTabWidget, CueLayout):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        AppSettings.register_settings_widget(CartLayoutSettings, self.app.conf)
+        AppSettings.registerSettingsWidget(
+            'cart_layout', CartLayoutSettings, self.app.conf)
 
         self.tabBar().setObjectName('CartTabBar')
 

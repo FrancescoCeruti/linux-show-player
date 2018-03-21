@@ -85,12 +85,12 @@ class DbMeterSettings(SettingsPage):
         self.falloffLabel.setText(
             translate('DbMeterSettings', 'Peak falloff (dB/sec)'))
 
-    def load_settings(self, settings):
+    def loadSettings(self, settings):
         self.intervalSpin.setValue(settings.get('interval', 50) / Gst.MSECOND)
         self.ttlSpin.setValue(settings.get('peak_ttl', 500) / Gst.MSECOND)
         self.falloffSpin.setValue(settings.get('peak_falloff', 20))
 
-    def get_settings(self):
+    def getSettings(self):
         settings = {}
 
         if not (self.groupBox.isCheckable() and not self.groupBox.isChecked()):

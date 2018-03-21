@@ -72,11 +72,11 @@ class Equalizer10Settings(SettingsPage):
             fLabel.setText(self.FREQ[n])
             self.groupBox.layout().addWidget(fLabel, 2, n)
 
-    def enable_check(self, enabled):
+    def enableCheck(self, enabled):
         self.groupBox.setCheckable(enabled)
         self.groupBox.setChecked(False)
 
-    def get_settings(self):
+    def getSettings(self):
         settings = {}
 
         if not (self.groupBox.isCheckable() and not self.groupBox.isChecked()):
@@ -85,6 +85,6 @@ class Equalizer10Settings(SettingsPage):
 
         return settings
 
-    def load_settings(self, settings):
+    def loadSettings(self, settings):
         for band in self.sliders:
             self.sliders[band].setValue(settings.get(band, 0))

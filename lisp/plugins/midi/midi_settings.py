@@ -22,15 +22,15 @@ from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QComboBox, QGridLayout, \
     QLabel
 
 from lisp.plugins.midi.midi_utils import mido_backend
-from lisp.ui.settings.settings_page import SettingsPage
+from lisp.ui.settings.settings_page import ConfigurationPage
 from lisp.ui.ui_utils import translate
 
 
-class MIDISettings(SettingsPage):
+class MIDISettings(ConfigurationPage):
     Name = QT_TRANSLATE_NOOP('SettingsPageName', 'MIDI settings')
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    def __init__(self, conf, **kwargs):
+        super().__init__(conf, **kwargs)
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
@@ -56,35 +56,33 @@ class MIDISettings(SettingsPage):
         self.midiGroup.layout().setColumnStretch(1, 3)
 
         try:
-            self._load_devices()
+            self._loadDevices()
         except Exception:
             self.setEnabled(False)
 
-    def get_settings(self):
-        conf = {}
-
-        if self.isEnabled():
-            input = self.inputCombo.currentText()
-            if input == 'Default':
-                conf['inputDevice'] = ''
-            else:
-                conf['inputDevice'] = input
-
-            output = self.outputCombo.currentText()
-            if output == 'Default':
-                conf['outputDevice'] = ''
-            else:
-                conf['outputDevice'] = output
-
-        return conf
-
-    def load_settings(self, settings):
+        # TODO: instead of forcing 'Default' add a warning label
         self.inputCombo.setCurrentText('Default')
-        self.inputCombo.setCurrentText(settings['inputDevice'])
+        self.inputCombo.setCurrentText(conf['inputDevice'])
         self.outputCombo.setCurrentText('Default')
-        self.outputCombo.setCurrentText(settings['outputDevice'])
+        self.outputCombo.setCurrentText(conf['outputDevice'])
 
-    def _load_devices(self):
+    def applySettings(self):
+        if self.isEnabled():
+            inputDevice = self.inputCombo.currentText()
+            if inputDevice == 'Default':
+                self.config['inputDevice'] = ''
+            else:
+                self.config['inputDevice'] = inputDevice
+
+            outputDevice = self.outputCombo.currentText()
+            if outputDevice == 'Default':
+                self.config['outputDevice'] = ''
+            else:
+                self.config['outputDevice'] = outputDevice
+
+            self.config.write()
+
+    def _loadDevices(self):
         backend = mido_backend()
 
         self.inputCombo.clear()

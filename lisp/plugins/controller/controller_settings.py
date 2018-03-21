@@ -46,19 +46,19 @@ class ControllerSettings(CueSettingsPage):
 
         self.tabWidget.setCurrentIndex(0)
 
-    def enable_check(self, enabled):
+    def enableCheck(self, enabled):
         for page in self._pages:
-            page.enable_check(enabled)
+            page.enableCheck(enabled)
 
-    def get_settings(self):
+    def getSettings(self):
         settings = {}
         for page in self._pages:
-            settings.update(page.get_settings())
+            settings.update(page.getSettings())
 
         return {'controller': settings}
 
-    def load_settings(self, settings):
+    def loadSettings(self, settings):
         settings = settings.get('controller', {})
 
         for page in self._pages:
-            page.load_settings(settings)
+            page.loadSettings(settings)

@@ -58,11 +58,11 @@ class AlsaSinkSettings(SettingsPage):
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.deviceGroup.layout().addWidget(self.label)
 
-    def enable_check(self, enabled):
+    def enableCheck(self, enabled):
         self.deviceGroup.setCheckable(enabled)
         self.deviceGroup.setChecked(False)
 
-    def load_settings(self, settings):
+    def loadSettings(self, settings):
         device = settings.get('device', 'default')
 
         for name, dev_name in self.devices.items():
@@ -70,7 +70,7 @@ class AlsaSinkSettings(SettingsPage):
                 self.device.setCurrentText(name)
                 break
 
-    def get_settings(self):
+    def getSettings(self):
         if not (self.deviceGroup.isCheckable() and
                 not self.deviceGroup.isChecked()):
             return {'device': self.devices[self.device.currentText()]}

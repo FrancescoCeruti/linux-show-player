@@ -17,78 +17,87 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5 import QtCore
-from PyQt5.QtWidgets import QDialog, QListWidget, QStackedWidget, \
-    QDialogButtonBox
+import logging
+from collections import namedtuple
 
+from PyQt5 import QtCore
+from PyQt5.QtCore import QModelIndex
+
+from lisp.core.dicttree import DictNode
+from lisp.ui.settings.pages_tree import TreeMultiSettingsPage, TreeSettingsModel
+from lisp.ui.settings.settings_page import SettingsDialog, ConfigurationPage
 from lisp.ui.ui_utils import translate
 
+logger = logging.getLogger(__name__)
 
-class AppSettings(QDialog):
+PageEntry = namedtuple('PageEntry', ('widget', 'config'))
 
-    SettingsWidgets = {}
+
+class AppSettings(SettingsDialog):
+    PagesRegistry = DictNode()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.setWindowTitle(translate('AppSettings', 'LiSP preferences'))
+        self.setWindowModality(QtCore.Qt.WindowModal)
 
-        self.setWindowModality(QtCore.Qt.ApplicationModal)
-        self.setMaximumSize(635, 530)
-        self.setMinimumSize(635, 530)
-        self.resize(635, 530)
+    def _buildMainPage(self):
+        self.model = TreeSettingsModel()
+        mainPage = TreeMultiSettingsPage(self.model)
 
-        self.listWidget = QListWidget(self)
-        self.listWidget.setGeometry(QtCore.QRect(5, 10, 185, 470))
+        for r_node in AppSettings.PagesRegistry.children:
+            self._populateModel(QModelIndex(), r_node)
 
-        self.sections = QStackedWidget(self)
-        self.sections.setGeometry(QtCore.QRect(200, 10, 430, 470))
+        mainPage.selectFirst()
+        return mainPage
 
-        for widget, config in self.SettingsWidgets.items():
-            widget = widget(parent=self)
-            widget.resize(430, 465)
-            widget.load_settings(config.copy())
+    def _populateModel(self, m_parent, r_parent):
+        if r_parent.value is not None:
+            widget = r_parent.value.widget
+            config = r_parent.value.config
+        else:
+            widget = None
+            config = None
 
-            self.listWidget.addItem(translate('SettingsPageName', widget.Name))
-            self.sections.addWidget(widget)
+        try:
+            if widget is None:
+                # The current node have no widget, use the parent model-index
+                # as parent for it's children
+                mod_index = m_parent
+            elif issubclass(widget, ConfigurationPage):
+                mod_index = self.model.addPage(widget(config), parent=m_parent)
+            else:
+                mod_index = self.model.addPage(widget(), parent=m_parent)
+        except Exception:
+            if not isinstance(widget, type):
+                page_name = 'NoPage'
+            elif issubclass(widget, ConfigurationPage):
+                page_name = widget.Name
+            else:
+                page_name = widget.__name__
 
-        if self.SettingsWidgets:
-            self.listWidget.setCurrentRow(0)
+            logger.warning(
+                'Cannot load configuration page: "{}" ({})'.format(
+                    page_name, r_parent.path()), exc_info=True)
+        else:
+            for r_node in r_parent.children:
+                self._populateModel(mod_index, r_node)
 
-        self.listWidget.currentItemChanged.connect(self._change_page)
-
-        self.dialogButtons = QDialogButtonBox(self)
-        self.dialogButtons.setGeometry(10, 495, 615, 30)
-        self.dialogButtons.setStandardButtons(QDialogButtonBox.Cancel |
-                                              QDialogButtonBox.Ok)
-
-        self.dialogButtons.rejected.connect(self.reject)
-        self.dialogButtons.accepted.connect(self.accept)
-
-    def accept(self):
-        for n in range(self.sections.count()):
-            widget = self.sections.widget(n)
-
-            config = AppSettings.SettingsWidgets[widget.__class__]
-            config.update(widget.get_settings())
-            config.write()
-
-        return super().accept()
-
-    @classmethod
-    def register_settings_widget(cls, widget, configuration):
+    @staticmethod
+    def registerSettingsWidget(path, widget, config):
         """
+        :param path: indicate the widget "position": 'category.sub.key'
+        :type path: str
         :type widget: Type[lisp.ui.settings.settings_page.SettingsPage]
-        :type configuration: lisp.core.configuration.Configuration
+        :type config: lisp.core.configuration.Configuration
         """
-        if widget not in cls.SettingsWidgets:
-            cls.SettingsWidgets[widget] = configuration
+        AppSettings.PagesRegistry.set(
+            path, PageEntry(widget=widget, config=config))
 
-    @classmethod
-    def unregister_settings_widget(cls, widget):
-        cls.SettingsWidgets.pop(widget, None)
-
-    def _change_page(self, current, previous):
-        if not current:
-            current = previous
-
-        self.sections.setCurrentIndex(self.listWidget.row(current))
+    @staticmethod
+    def unregisterSettingsWidget(path):
+        """
+        :param path: indicate the widget "position": 'category.sub.key'
+        :type path: str
+        """
+        AppSettings.PagesRegistry.pop(path)

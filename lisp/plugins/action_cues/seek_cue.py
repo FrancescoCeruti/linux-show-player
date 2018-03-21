@@ -106,18 +106,18 @@ class SeekCueSettings(SettingsPage):
                     QTime.fromMSecsSinceStartOfDay(cue.media.duration))
                 self.cueLabel.setText(cue.name)
 
-    def enable_check(self, enabled):
+    def enableCheck(self, enabled):
         self.cueGroup.setCheckable(enabled)
         self.cueGroup.setChecked(False)
 
         self.seekGroup.setCheckable(enabled)
         self.seekGroup.setChecked(False)
 
-    def get_settings(self):
+    def getSettings(self):
         return {'target_id': self.cue_id,
                 'time': self.seekEdit.time().msecsSinceStartOfDay()}
 
-    def load_settings(self, settings):
+    def loadSettings(self, settings):
         if settings is not None:
             cue = Application().cue_model.get(settings.get('target_id'))
             if cue is not None:

@@ -85,11 +85,11 @@ class StopAllSettings(SettingsPage):
     def retranslateUi(self):
         self.group.setTitle(translate('StopAll', 'Stop Action'))
 
-    def enable_check(self, enabled):
+    def enableCheck(self, enabled):
         self.group.setCheckable(enabled)
         self.group.setChecked(False)
 
-    def get_settings(self):
+    def getSettings(self):
         conf = {}
 
         if not (self.group.isCheckable() and not self.group.isChecked()):
@@ -97,7 +97,7 @@ class StopAllSettings(SettingsPage):
 
         return conf
 
-    def load_settings(self, settings):
+    def loadSettings(self, settings):
         self.actionCombo.setCurrentText(
             translate('CueAction', settings.get('action', '')))
 

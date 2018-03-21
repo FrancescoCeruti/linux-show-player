@@ -56,7 +56,8 @@ class GstBackend(Plugin, BaseBackend):
         Gst.init(None)
 
         # Register GStreamer settings widgets
-        AppSettings.register_settings_widget(GstSettings, GstBackend.Config)
+        AppSettings.registerSettingsWidget(
+            'plugins.gst', GstSettings, GstBackend.Config)
         # Add MediaCue settings widget to the CueLayout
         CueSettingsRegistry().add_item(GstMediaSettings, MediaCue)
 

@@ -154,7 +154,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         logging.getLogger().addHandler(self.logHandler)
 
         # Logging
-        self.logViewer = LogViewer(self.logModel, self.conf, parent=self)
+        self.logViewer = LogViewer(self.logModel, self.conf)
 
         # Logging status widget
         self.logStatus = LogStatusView(self.logModel)
@@ -162,7 +162,8 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         self.statusBar().addPermanentWidget(self.logStatus)
 
         # Logging dialogs for errors
-        self.logDialogs = LogDialogs(self.logModel, logging.ERROR)
+        self.logDialogs = LogDialogs(
+            self.logModel, level=logging.ERROR, parent=self)
 
         # Set component text
         self.retranslateUi()
