@@ -29,7 +29,7 @@ from lisp.plugins.timecode.cue_tracker import TimecodeCueTracker, TcFormat
 from lisp.plugins.timecode.protocol import TimecodeProtocol
 from lisp.plugins.timecode.settings import TimecodeAppSettings, \
     TimecodeSettings
-from lisp.ui.settings.app_settings import AppSettings
+from lisp.ui.settings.app_configuration import AppConfigurationDialog
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
 
 
@@ -49,7 +49,7 @@ class Timecode(Plugin):
         # Register cue-settings-page
         CueSettingsRegistry().add_item(TimecodeSettings, MediaCue)
         # Register the settings widget
-        AppSettings.registerSettingsWidget(
+        AppConfigurationDialog.registerSettingsWidget(
             'plugins.timecode', TimecodeAppSettings, Timecode.Config)
 
         # Load available protocols

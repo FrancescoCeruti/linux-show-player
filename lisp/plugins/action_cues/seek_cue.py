@@ -28,7 +28,7 @@ from lisp.cues.cue import Cue
 from lisp.cues.media_cue import MediaCue
 from lisp.ui.cuelistdialog import CueSelectDialog
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
-from lisp.ui.settings.settings_page import SettingsPage
+from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.ui_utils import translate
 
 

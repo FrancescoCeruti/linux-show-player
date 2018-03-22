@@ -21,7 +21,7 @@ from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import QVBoxLayout, QGroupBox
 
 from lisp.plugins.gst_backend.gst_pipe_edit import GstPipeEdit
-from lisp.ui.settings.settings_page import ConfigurationPage
+from lisp.ui.settings.pages import ConfigurationPage
 from lisp.ui.ui_utils import translate
 
 

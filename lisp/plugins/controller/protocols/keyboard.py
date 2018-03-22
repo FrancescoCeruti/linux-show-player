@@ -26,7 +26,7 @@ from lisp.plugins.controller.protocols.protocol import Protocol
 from lisp.ui.qdelegates import LineEditDelegate, \
     CueActionDelegate
 from lisp.ui.qmodels import SimpleTableModel
-from lisp.ui.settings.settings_page import CueSettingsPage
+from lisp.ui.settings.pages import CueSettingsPage
 from lisp.ui.ui_utils import translate
 
 
@@ -46,8 +46,8 @@ class Keyboard(Protocol):
 class KeyboardSettings(CueSettingsPage):
     Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Keyboard Shortcuts')
 
-    def __init__(self, cue_class, **kwargs):
-        super().__init__(cue_class, **kwargs)
+    def __init__(self, cue_type, **kwargs):
+        super().__init__(cue_type, **kwargs)
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
@@ -59,7 +59,7 @@ class KeyboardSettings(CueSettingsPage):
             translate('ControllerKeySettings', 'Key'),
             translate('ControllerKeySettings', 'Action')])
 
-        self.keyboardView = KeyboardView(cue_class, parent=self.keyGroup)
+        self.keyboardView = KeyboardView(cue_type, parent=self.keyGroup)
         self.keyboardView.setModel(self.keyboardModel)
         self.keyGroup.layout().addWidget(self.keyboardView, 0, 0, 1, 2)
 
@@ -95,7 +95,7 @@ class KeyboardSettings(CueSettingsPage):
             self.keyboardModel.appendRow(key, action)
 
     def __new_key(self):
-        self.keyboardModel.appendRow('', self._cue_class.CueActions[0].name)
+        self.keyboardModel.appendRow('', self.cue_type.CueActions[0].name)
 
     def __remove_key(self):
         self.keyboardModel.removeRow(self.keyboardView.currentIndex().row())

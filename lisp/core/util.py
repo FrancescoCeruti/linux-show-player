@@ -17,28 +17,28 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+import functools
 import re
 import socket
-from collections import Mapping
+from collections import Mapping, MutableMapping
 from enum import Enum
 from os import listdir
 from os.path import isdir, exists, join
 
-import functools
-from uuid import uuid4
 
+def dict_merge(dct, merge_dct):
+    """Recursively merge the second dict into the first
 
-def deep_update(d1, d2):
-    """Recursively update d1 with d2"""
-    for key in d2:
-        if key not in d1:
-            d1[key] = d2[key]
-        elif isinstance(d2[key], Mapping) and isinstance(d1[key], Mapping):
-            d1[key] = deep_update(d1[key], d2[key])
+    :type dct: MutableMapping
+    :type merge_dct: Mapping
+    """
+    for key, value in merge_dct.items():
+        if (key in dct and
+                isinstance(dct[key], MutableMapping) and
+                isinstance(value, Mapping)):
+            dict_merge(dct[key], value)
         else:
-            d1[key] = d2[key]
-
-    return d1
+            dct[key] = value
 
 
 def find_packages(path='.'):
@@ -236,6 +236,7 @@ class FunctionProxy:
 
     Can be useful in enum.Enum (Python enumeration) to have callable values.
     """
+
     def __init__(self, function):
         self.function = function
 

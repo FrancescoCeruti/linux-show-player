@@ -20,7 +20,7 @@
 from os.path import dirname
 
 from lisp.core.loading import load_classes
-from lisp.ui.settings.settings_page import SettingsPage
+from lisp.ui.settings.pages import SettingsPage
 
 Protocols = []
 ProtocolsSettingsPages = []

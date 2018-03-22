@@ -35,7 +35,7 @@ from lisp.ui.logging.handler import LogModelHandler
 from lisp.ui.logging.models import log_model_factory
 from lisp.ui.logging.status import LogStatusView
 from lisp.ui.logging.viewer import LogViewer
-from lisp.ui.settings.app_settings import AppSettings
+from lisp.ui.settings.app_configuration import AppConfigurationDialog
 from lisp.ui.ui_utils import translate
 
 
@@ -298,7 +298,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
             self.save_session.emit(filename)
 
     def _show_preferences(self):
-        prefUi = AppSettings(parent=self)
+        prefUi = AppConfigurationDialog(parent=self)
         prefUi.exec_()
 
     def _load_from_file(self):

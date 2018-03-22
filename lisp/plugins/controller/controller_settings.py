@@ -18,47 +18,22 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import QT_TRANSLATE_NOOP
-from PyQt5.QtWidgets import QHBoxLayout, QTabWidget
 
 from lisp.plugins.controller import protocols
-from lisp.ui.settings.settings_page import CueSettingsPage
-from lisp.ui.ui_utils import translate
+from lisp.ui.settings.pages import TabsMultiSettingsPage, CuePageMixin
 
 
-class ControllerSettings(CueSettingsPage):
+class ControllerSettings(TabsMultiSettingsPage, CuePageMixin):
     Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Cue Control')
 
-    def __init__(self, cue_class, **kwargs):
-        super().__init__(cue_class, **kwargs)
-        self.setLayout(QHBoxLayout())
-
-        self._pages = []
-
-        self.tabWidget = QTabWidget(self)
-        self.layout().addWidget(self.tabWidget)
+    def __init__(self, cue_type, **kwargs):
+        super().__init__(cue_type=cue_type, **kwargs)
 
         for page in protocols.ProtocolsSettingsPages:
-            page_widget = page(cue_class, parent=self)
-
-            self.tabWidget.addTab(page_widget,
-                                  translate('SettingsPageName', page.Name))
-            self._pages.append(page_widget)
-
-        self.tabWidget.setCurrentIndex(0)
-
-    def enableCheck(self, enabled):
-        for page in self._pages:
-            page.enableCheck(enabled)
+            self.addPage(page(cue_type, parent=self))
 
     def getSettings(self):
-        settings = {}
-        for page in self._pages:
-            settings.update(page.getSettings())
-
-        return {'controller': settings}
+        return {'controller': super().getSettings()}
 
     def loadSettings(self, settings):
-        settings = settings.get('controller', {})
-
-        for page in self._pages:
-            page.loadSettings(settings)
+        super().loadSettings(settings.get('controller', {}))

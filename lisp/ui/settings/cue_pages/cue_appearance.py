@@ -21,7 +21,7 @@ from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QHBoxLayout, QTextEdit, \
     QSpinBox, QLabel, QLineEdit
 
-from lisp.ui.settings.settings_page import SettingsPage
+from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.widgets import QColorButton
 from lisp.ui.ui_utils import translate
 
@@ -107,14 +107,14 @@ class Appearance(SettingsPage):
         self.colorGroup.setChecked(False)
 
     def getSettings(self):
-        conf = {}
+        settings = {}
         style = {}
         checkable = self.cueNameGroup.isCheckable()
 
         if not (checkable and not self.cueNameGroup.isChecked()):
-            conf['name'] = self.cueNameEdit.text()
+            settings['name'] = self.cueNameEdit.text()
         if not (checkable and not self.cueDescriptionGroup.isChecked()):
-            conf['description'] = self.cueDescriptionEdit.toPlainText()
+            settings['description'] = self.cueDescriptionEdit.toPlainText()
         if not (checkable and not self.colorGroup.isChecked()):
             if self.colorBButton.color() is not None:
                 style['background'] = self.colorBButton.color()
@@ -124,9 +124,9 @@ class Appearance(SettingsPage):
             style['font-size'] = str(self.fontSizeSpin.value()) + 'pt'
 
         if style:
-            conf['stylesheet'] = dict_to_css(style)
+            settings['stylesheet'] = dict_to_css(style)
 
-        return conf
+        return settings
 
     def loadSettings(self, settings):
         if 'name' in settings:
@@ -152,7 +152,7 @@ def css_to_dict(css):
         try:
             name, value = attribute.split(':')
             dict[name.strip()] = value.strip()
-        except:
+        except Exception:
             pass
 
     return dict

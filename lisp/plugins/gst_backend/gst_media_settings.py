@@ -25,7 +25,7 @@ from PyQt5.QtWidgets import QGridLayout, QListWidget, QPushButton, \
 
 from lisp.plugins.gst_backend.gst_pipe_edit import GstPipeEditDialog
 from lisp.plugins.gst_backend.settings import pages_by_element
-from lisp.ui.settings.settings_page import SettingsPage
+from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.ui_utils import translate
 
 

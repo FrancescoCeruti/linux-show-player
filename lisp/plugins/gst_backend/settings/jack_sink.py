@@ -25,7 +25,7 @@ from PyQt5.QtWidgets import QGroupBox, QWidget, \
     QDialogButtonBox, QPushButton, QVBoxLayout
 
 from lisp.plugins.gst_backend.elements.jack_sink import JackSink
-from lisp.ui.settings.settings_page import SettingsPage
+from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.ui_utils import translate
 
 

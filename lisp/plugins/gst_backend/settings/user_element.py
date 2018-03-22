@@ -22,7 +22,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QPlainTextEdit, QLabel
 
 from lisp.plugins.gst_backend.elements.user_element import UserElement
-from lisp.ui.settings.settings_page import SettingsPage
+from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.ui_utils import translate
 
 

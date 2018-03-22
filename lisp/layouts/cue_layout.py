@@ -28,7 +28,7 @@ from lisp.cues.cue import Cue, CueAction
 from lisp.cues.cue_actions import UpdateCueAction, UpdateCuesAction
 from lisp.layouts.cue_menu_registry import CueMenuRegistry
 from lisp.ui.mainwindow import MainWindow
-from lisp.ui.settings.cue_settings import CueSettings
+from lisp.ui.settings.cue_settings import CueSettingsDialog
 
 
 # TODO: split widget and "controller"
@@ -124,13 +124,13 @@ class CueLayout:
             cue.execute(CueAction.FadeOut)
 
     def edit_cue(self, cue):
-        edit_ui = CueSettings(cue, parent=MainWindow())
+        edit_ui = CueSettingsDialog(cue, parent=MainWindow())
 
         def on_apply(settings):
             action = UpdateCueAction(settings, cue)
             MainActionsHandler.do_action(action)
 
-        edit_ui.on_apply.connect(on_apply)
+        edit_ui.onApply.connect(on_apply)
         edit_ui.exec_()
 
     def edit_selected_cues(self):
@@ -138,13 +138,13 @@ class CueLayout:
 
         if cues:
             # Use the greatest common superclass between the selected cues
-            edit_ui = CueSettings(cue_class=greatest_common_superclass(cues))
+            edit_ui = CueSettingsDialog(cue_class=greatest_common_superclass(cues))
 
             def on_apply(settings):
                 action = UpdateCuesAction(settings, cues)
                 MainActionsHandler.do_action(action)
 
-            edit_ui.on_apply.connect(on_apply)
+            edit_ui.onApply.connect(on_apply)
             edit_ui.exec_()
 
     @abstractmethod

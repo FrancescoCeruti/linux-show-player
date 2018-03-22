@@ -22,7 +22,7 @@ from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QComboBox, QGridLayout, \
     QLabel
 
 from lisp.plugins.midi.midi_utils import mido_backend
-from lisp.ui.settings.settings_page import ConfigurationPage
+from lisp.ui.settings.pages import ConfigurationPage
 from lisp.ui.ui_utils import translate
 
 

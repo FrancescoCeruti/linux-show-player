@@ -21,7 +21,7 @@ from PyQt5.QtCore import Qt, QTime
 from PyQt5.QtWidgets import QGroupBox, QComboBox, QVBoxLayout, QTimeEdit
 
 from lisp.plugins.gst_backend.elements.preset_src import PresetSrc
-from lisp.ui.settings.settings_page import SettingsPage
+from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.ui_utils import translate
 
 

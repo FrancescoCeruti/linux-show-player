@@ -23,7 +23,7 @@ from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QCheckBox, QComboBox, \
 
 from lisp import layouts
 from lisp.ui.icons import icon_themes_names
-from lisp.ui.settings.settings_page import ConfigurationPage
+from lisp.ui.settings.pages import ConfigurationPage
 from lisp.ui.themes import themes_names
 from lisp.ui.ui_utils import translate
 

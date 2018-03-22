@@ -21,7 +21,7 @@ from PyQt5.QtCore import QTime, Qt
 from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QTimeEdit, QLabel, \
     QSpinBox, QVBoxLayout
 
-from lisp.ui.settings.settings_page import SettingsPage
+from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.ui_utils import translate
 
 
@@ -86,19 +86,19 @@ class MediaCueSettings(SettingsPage):
                                           '(-1 = infinite)'))
 
     def getSettings(self):
-        conf = {'_media_': {}}
+        settings = {}
         checkable = self.startGroup.isCheckable()
 
         if not (checkable and not self.startGroup.isChecked()):
             time = self.startEdit.time().msecsSinceStartOfDay()
-            conf['_media_']['start_time'] = time
+            settings['start_time'] = time
         if not (checkable and not self.stopGroup.isChecked()):
             time = self.stopEdit.time().msecsSinceStartOfDay()
-            conf['_media_']['stop_time'] = time
+            settings['stop_time'] = time
         if not (checkable and not self.loopGroup.isChecked()):
-            conf['_media_']['loop'] = self.spinLoop.value()
+            settings['loop'] = self.spinLoop.value()
 
-        return conf
+        return {'media': settings}
 
     def enableCheck(self, enabled):
         self.startGroup.setCheckable(enabled)
@@ -111,19 +111,20 @@ class MediaCueSettings(SettingsPage):
         self.loopGroup.setChecked(False)
 
     def loadSettings(self, settings):
-        if '_media_' in settings:
-            if 'loop' in settings['_media_']:
-                self.spinLoop.setValue(settings['_media_']['loop'])
-            if 'start_time' in settings['_media_']:
-                t = self._to_qtime(settings['_media_']['start_time'])
-                self.startEdit.setTime(t)
-            if 'stop_time' in settings['_media_']:
-                t = self._to_qtime(settings['_media_']['stop_time'])
-                self.stopEdit.setTime(t)
+        settings = settings.get('media', {})
 
-            t = self._to_qtime(settings['_media_'].get('duration', 0))
-            self.startEdit.setMaximumTime(t)
-            self.stopEdit.setMaximumTime(t)
+        if 'loop' in settings:
+            self.spinLoop.setValue(settings['loop'])
+        if 'start_time' in settings:
+            time = self._to_qtime(settings['start_time'])
+            self.startEdit.setTime(time)
+        if 'stop_time' in settings:
+            time = self._to_qtime(settings['stop_time'])
+            self.stopEdit.setTime(time)
+
+        time = self._to_qtime(settings.get('duration', 0))
+        self.startEdit.setMaximumTime(time)
+        self.stopEdit.setMaximumTime(time)
 
     def _to_qtime(self, m_seconds):
         return QTime.fromMSecsSinceStartOfDay(m_seconds)

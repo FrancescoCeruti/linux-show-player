@@ -31,7 +31,7 @@ from lisp.layouts.cart_layout.cue_widget import CueWidget
 from lisp.layouts.cart_layout.page_widget import PageWidget
 from lisp.layouts.cue_layout import CueLayout
 from lisp.ui.mainwindow import MainWindow
-from lisp.ui.settings.app_settings import AppSettings
+from lisp.ui.settings.app_configuration import AppConfigurationDialog
 from lisp.ui.ui_utils import translate
 
 
@@ -51,7 +51,7 @@ class CartLayout(QTabWidget, CueLayout):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        AppSettings.registerSettingsWidget(
+        AppConfigurationDialog.registerSettingsWidget(
             'cart_layout', CartLayoutSettings, self.app.conf)
 
         self.tabBar().setObjectName('CartTabBar')

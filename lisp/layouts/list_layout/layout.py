@@ -36,7 +36,7 @@ from lisp.layouts.list_layout.info_panel import InfoPanel
 from lisp.layouts.list_layout.list_layout_settings import ListLayoutSettings
 from lisp.layouts.list_layout.playing_list_widget import RunningCuesListWidget
 from lisp.ui.mainwindow import MainWindow
-from lisp.ui.settings.app_settings import AppSettings
+from lisp.ui.settings.app_configuration import AppConfigurationDialog
 from lisp.ui.ui_utils import translate
 
 
@@ -62,7 +62,7 @@ class ListLayout(QWidget, CueLayout):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        AppSettings.registerSettingsWidget(
+        AppConfigurationDialog.registerSettingsWidget(
             'list_layout', ListLayoutSettings, self.app.conf)
 
         self.setLayout(QGridLayout())

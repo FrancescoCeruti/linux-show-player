@@ -23,7 +23,7 @@ from lisp.core.plugin import Plugin
 from lisp.plugins.midi.midi_input import MIDIInput
 from lisp.plugins.midi.midi_output import MIDIOutput
 from lisp.plugins.midi.midi_settings import MIDISettings
-from lisp.ui.settings.app_settings import AppSettings
+from lisp.ui.settings.app_configuration import AppConfigurationDialog
 
 
 class Midi(Plugin):
@@ -37,7 +37,7 @@ class Midi(Plugin):
         super().__init__(app)
 
         # Register the settings widget
-        AppSettings.registerSettingsWidget(
+        AppConfigurationDialog.registerSettingsWidget(
             'plugins.midi', MIDISettings, Midi.Config)
 
         # Load the backend and set it as current mido backend

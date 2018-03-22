@@ -22,7 +22,7 @@
 from lisp.core.plugin import Plugin
 from lisp.plugins.osc.osc_server import OscServer
 from lisp.plugins.osc.osc_settings import OscSettings
-from lisp.ui.settings.app_settings import AppSettings
+from lisp.ui.settings.app_configuration import AppConfigurationDialog
 
 
 # TODO: layout-controls in external plugin (now disabled, see osc_server.py)
@@ -37,7 +37,7 @@ class Osc(Plugin):
         super().__init__(app)
 
         # Register the settings widget
-        AppSettings.registerSettingsWidget(
+        AppConfigurationDialog.registerSettingsWidget(
             'plugins.osc', OscSettings, Osc.Config)
 
         # Create a server instance

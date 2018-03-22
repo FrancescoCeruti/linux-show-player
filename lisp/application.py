@@ -34,14 +34,14 @@ from lisp.cues.cue_model import CueModel
 from lisp.cues.media_cue import MediaCue
 from lisp.ui.layoutselect import LayoutSelect
 from lisp.ui.mainwindow import MainWindow
-from lisp.ui.settings.app_settings import AppSettings
+from lisp.ui.settings.app_configuration import AppConfigurationDialog
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
-from lisp.ui.settings.pages.app_general import AppGeneral
-from lisp.ui.settings.pages.cue_app_settings import CueAppSettings
-from lisp.ui.settings.pages.cue_appearance import Appearance
-from lisp.ui.settings.pages.cue_general import CueGeneralSettings
-from lisp.ui.settings.pages.media_cue_settings import MediaCueSettings
-from lisp.ui.settings.pages.plugins_settings import PluginsSettings
+from lisp.ui.settings.app_pages.app_general import AppGeneral
+from lisp.ui.settings.app_pages.cue_app_settings import CueAppSettings
+from lisp.ui.settings.cue_pages.cue_appearance import Appearance
+from lisp.ui.settings.cue_pages.cue_general import CueGeneralSettings
+from lisp.ui.settings.cue_pages.media_cue_settings import MediaCueSettings
+from lisp.ui.settings.app_pages.plugins_settings import PluginsSettings
 
 logger = logging.getLogger(__name__)
 
@@ -58,10 +58,11 @@ class Application(metaclass=Singleton):
         self.__session = None
 
         # Register general settings widget
-        AppSettings.registerSettingsWidget('general', AppGeneral, self.conf)
-        AppSettings.registerSettingsWidget(
+        AppConfigurationDialog.registerSettingsWidget(
+            'general', AppGeneral, self.conf)
+        AppConfigurationDialog.registerSettingsWidget(
             'general.cue', CueAppSettings, self.conf)
-        AppSettings.registerSettingsWidget(
+        AppConfigurationDialog.registerSettingsWidget(
             'plugins', PluginsSettings, self.conf)
 
         # Register common cue-settings widgets
@@ -206,6 +207,6 @@ class Application(metaclass=Singleton):
             self.__main_window.update_window_title()
         except Exception:
             logging.exception(
-                'Error while reading the session file "{}"'
-                    .format(session_file))
+                'Error while reading the session file "{}"'.format(
+                    session_file))
             self._new_session_dialog()

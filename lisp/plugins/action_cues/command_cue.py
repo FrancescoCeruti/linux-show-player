@@ -17,6 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+import logging
 import subprocess
 
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
@@ -26,8 +27,10 @@ from lisp.core.decorators import async
 from lisp.core.properties import Property
 from lisp.cues.cue import Cue, CueAction
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
-from lisp.ui.settings.settings_page import SettingsPage
+from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.ui_utils import translate
+
+logger = logging.getLogger(__name__)
 
 
 class CommandCue(Cue):
@@ -71,14 +74,16 @@ class CommandCue(Cue):
             # If terminate normally, killed or in no-error mode
             if not self.__stopped:
                 self._ended()
-
-            self.__process = None
-            self.__stopped = False
         elif not self.no_error:
             # If an error occurs and not in no-error mode
-            self._error(
-                translate('CommandCue', 'Process ended with an error status.'),
-                translate('CommandCue', 'Exit code: ') + str(rcode))
+            logger.error(translate(
+                'CommandCue',
+                'Command cue ended with an error status. '
+                'Exit code: {}').format(rcode))
+            self._error()
+
+        self.__process = None
+        self.__stopped = False
 
     def __stop__(self, fade=False):
         if self.__process is not None:

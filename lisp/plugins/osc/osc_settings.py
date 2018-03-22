@@ -22,7 +22,7 @@ from PyQt5.QtCore import QT_TRANSLATE_NOOP, Qt
 from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QLabel, \
     QHBoxLayout, QSpinBox, QLineEdit
 
-from lisp.ui.settings.settings_page import ConfigurationPage
+from lisp.ui.settings.pages import ConfigurationPage
 from lisp.ui.ui_utils import translate
 
 

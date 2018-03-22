@@ -25,15 +25,15 @@ from PyQt5.QtWidgets import QGridLayout, QVBoxLayout, QGroupBox, \
 
 from lisp.plugins.timecode import protocols
 from lisp.plugins.timecode.cue_tracker import TcFormat
-from lisp.ui.settings.settings_page import SettingsPage, CueSettingsPage, ConfigurationPage
+from lisp.ui.settings.pages import SettingsPage, CueSettingsPage, ConfigurationPage
 from lisp.ui.ui_utils import translate
 
 
 class TimecodeSettings(CueSettingsPage):
     Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Timecode')
 
-    def __init__(self, cue_class, **kwargs):
-        super().__init__(cue_class, **kwargs)
+    def __init__(self, cue_type, **kwargs):
+        super().__init__(cue_type, **kwargs)
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 

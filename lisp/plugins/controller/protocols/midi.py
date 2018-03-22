@@ -26,7 +26,7 @@ from lisp.plugins.controller.protocols.protocol import Protocol
 from lisp.ui.qdelegates import ComboBoxDelegate, SpinBoxDelegate, \
     CueActionDelegate
 from lisp.ui.qmodels import SimpleTableModel
-from lisp.ui.settings.settings_page import CueSettingsPage
+from lisp.ui.settings.pages import CueSettingsPage
 from lisp.ui.ui_utils import translate
 
 
@@ -58,8 +58,8 @@ class Midi(Protocol):
 class MidiSettings(CueSettingsPage):
     Name = QT_TRANSLATE_NOOP('SettingsPageName', 'MIDI Controls')
 
-    def __init__(self, cue_class, **kwargs):
-        super().__init__(cue_class, **kwargs)
+    def __init__(self, cue_type, **kwargs):
+        super().__init__(cue_type, **kwargs)
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
@@ -75,7 +75,7 @@ class MidiSettings(CueSettingsPage):
             translate('ControllerMidiSettings', 'Note'),
             translate('ControllerMidiSettings', 'Action')])
 
-        self.midiView = MidiView(cue_class, parent=self.midiGroup)
+        self.midiView = MidiView(cue_type, parent=self.midiGroup)
         self.midiView.setModel(self.midiModel)
         self.midiGroup.layout().addWidget(self.midiView, 0, 0, 1, 2)
 
@@ -102,7 +102,7 @@ class MidiSettings(CueSettingsPage):
 
         self.retranslateUi()
 
-        self._default_action = self._cue_class.CueActions[0].name
+        self._default_action = self.cue_type.CueActions[0].name
 
     def retranslateUi(self):
         self.addButton.setText(translate('ControllerSettings', 'Add'))

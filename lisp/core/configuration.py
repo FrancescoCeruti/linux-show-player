@@ -30,7 +30,7 @@ from shutil import copyfile
 from lisp import DEFAULT_APP_CONFIG, USER_APP_CONFIG
 from lisp.core.signal import Signal
 from lisp.core.singleton import ABCSingleton
-from lisp.core.util import deep_update
+from lisp.core.util import dict_merge
 
 logger = logging.getLogger(__name__)
 
@@ -96,7 +96,7 @@ class ConfDict:
         :param new_conf: a dict containing the new values
         :type new_conf: dict
         """
-        deep_update(self._root, new_conf)
+        dict_merge(self._root, new_conf)
 
     def deep_copy(self):
         """Return a deep-copy of the internal dictionary."""

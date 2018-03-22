@@ -30,7 +30,7 @@ from lisp.plugins.presets.lib import preset_exists, export_presets, \
     PresetImportError, scan_presets, delete_preset, write_preset, \
     rename_preset, load_preset, load_on_cues
 from lisp.ui.mainwindow import MainWindow
-from lisp.ui.settings.cue_settings import CueSettings, CueSettingsRegistry
+from lisp.ui.settings.cue_settings import CueSettingsDialog, CueSettingsRegistry
 from lisp.ui.ui_utils import translate
 from lisp.ui.widgets import QDetailedMessageBox
 
@@ -275,10 +275,10 @@ class PresetsDialog(QDialog):
                     except Exception:
                         cue_class = Cue
 
-                    edit_dialog = CueSettings(cue_class=cue_class)
-                    edit_dialog.load_settings(preset)
+                    edit_dialog = CueSettingsDialog(cue_class=cue_class)
+                    edit_dialog.loadSettings(preset)
                     if edit_dialog.exec_() == edit_dialog.Accepted:
-                        preset.update(edit_dialog.get_settings())
+                        preset.update(edit_dialog.getSettings())
                         try:
                             write_preset(item.text(), preset)
                         except OSError as e:

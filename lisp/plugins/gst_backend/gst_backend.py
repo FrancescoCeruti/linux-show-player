@@ -38,7 +38,7 @@ from lisp.plugins.gst_backend.gst_media_settings import GstMediaSettings
 from lisp.plugins.gst_backend.gst_settings import GstSettings
 from lisp.plugins.gst_backend.gst_utils import gst_parse_tags_list, \
     gst_uri_metadata, gst_mime_types, gst_uri_duration
-from lisp.ui.settings.app_settings import AppSettings
+from lisp.ui.settings.app_configuration import AppConfigurationDialog
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
 
 
@@ -56,7 +56,7 @@ class GstBackend(Plugin, BaseBackend):
         Gst.init(None)
 
         # Register GStreamer settings widgets
-        AppSettings.registerSettingsWidget(
+        AppConfigurationDialog.registerSettingsWidget(
             'plugins.gst', GstSettings, GstBackend.Config)
         # Add MediaCue settings widget to the CueLayout
         CueSettingsRegistry().add_item(GstMediaSettings, MediaCue)

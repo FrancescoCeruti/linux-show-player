@@ -23,7 +23,7 @@ from PyQt5.QtWidgets import QListWidget, QListWidgetItem, QTextBrowser, \
 
 from lisp import plugins
 from lisp.ui.icons import IconTheme
-from lisp.ui.settings.settings_page import ABCSettingsPage
+from lisp.ui.settings.pages import ABCSettingsPage
 
 
 # TODO: just a proof-of concept

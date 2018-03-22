@@ -28,7 +28,7 @@ from lisp.ui.cuelistdialog import CueSelectDialog
 from lisp.ui.qdelegates import ComboBoxDelegate, CueActionDelegate, \
     CueSelectionDelegate
 from lisp.ui.qmodels import CueClassRole, SimpleCueListModel
-from lisp.ui.settings.settings_page import SettingsPage
+from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.ui_utils import translate
 
 

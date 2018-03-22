@@ -33,7 +33,7 @@ from lisp.plugins.osc.osc_server import OscMessageType
 from lisp.ui.qdelegates import ComboBoxDelegate, \
     LineEditDelegate
 from lisp.ui.qmodels import SimpleTableModel
-from lisp.ui.settings.settings_page import CueSettingsPage
+from lisp.ui.settings.pages import CueSettingsPage
 from lisp.ui.ui_utils import translate
 
 
@@ -194,8 +194,8 @@ class OscArgumentView(QTableView):
 class OscSettings(CueSettingsPage):
     Name = QT_TRANSLATE_NOOP('SettingsPageName', 'OSC Controls')
 
-    def __init__(self, cue_class, **kwargs):
-        super().__init__(cue_class, **kwargs)
+    def __init__(self, cue_type, **kwargs):
+        super().__init__(cue_type, **kwargs)
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
@@ -210,7 +210,7 @@ class OscSettings(CueSettingsPage):
             translate('ControllerOscSettings', 'Arguments'),
             translate('ControllerOscSettings', 'Actions')])
 
-        self.OscView = OscView(cue_class, parent=self.oscGroup)
+        self.OscView = OscView(cue_type, parent=self.oscGroup)
         self.OscView.setModel(self.oscModel)
         self.oscGroup.layout().addWidget(self.OscView, 0, 0, 1, 2)
 
@@ -249,7 +249,7 @@ class OscSettings(CueSettingsPage):
 
         self.retranslateUi()
 
-        self._default_action = self._cue_class.CueActions[0].name
+        self._default_action = self.cue_type.CueActions[0].name
 
     def retranslateUi(self):
         self.addButton.setText(translate('ControllerOscSettings', 'Add'))

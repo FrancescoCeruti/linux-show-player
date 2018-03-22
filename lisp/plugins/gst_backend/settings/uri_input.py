@@ -22,7 +22,7 @@ from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QPushButton, QLineEdit, \
     QGridLayout, QCheckBox, QSpinBox, QLabel, QFileDialog, QVBoxLayout
 
 from lisp.plugins.gst_backend.elements.uri_input import UriInput
-from lisp.ui.settings.settings_page import SettingsPage
+from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.ui_utils import translate
 
 

@@ -16,6 +16,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
+
 import logging
 
 from PyQt5 import QtCore
@@ -34,7 +35,7 @@ from lisp.cues.cue import Cue, CueAction
 from lisp.cues.media_cue import MediaCue
 from lisp.ui.cuelistdialog import CueSelectDialog
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
-from lisp.ui.settings.settings_page import SettingsPage
+from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.ui_utils import translate
 from lisp.ui.widgets import FadeEdit
 
@@ -77,14 +78,14 @@ class VolumeControl(Cue):
                 return True
 
             if self.duration > 0:
-                if self.__fader.target.current_volume > self.volume:
+                if self.__fader.target.live_volume > self.volume:
                     self.__fade(FadeOutType[self.fade_type])
                     return True
-                elif self.__fader.target.current_volume < self.volume:
+                elif self.__fader.target.live_volume < self.volume:
                     self.__fade(FadeInType[self.fade_type])
                     return True
             else:
-                self.__fader.target.current_volume = self.volume
+                self.__fader.target.live_volume = self.volume
 
         return False
 
@@ -107,7 +108,7 @@ class VolumeControl(Cue):
 
             if ended:
                 # to avoid approximation problems
-                self.__fader.target.current_volume = self.volume
+                self.__fader.target.live_volume = self.volume
                 self._ended()
         except Exception:
             logger.exception(translate('OscCue', 'Error during cue execution.'))

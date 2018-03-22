@@ -22,7 +22,7 @@ from PyQt5.QtGui import QKeySequence
 from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QCheckBox, QComboBox, \
     QHBoxLayout, QLabel, QKeySequenceEdit, QGridLayout
 
-from lisp.ui.settings.settings_page import ConfigurationPage
+from lisp.ui.settings.pages import ConfigurationPage
 from lisp.ui.ui_utils import translate
 
 

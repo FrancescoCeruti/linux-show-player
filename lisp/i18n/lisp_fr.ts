@@ -79,7 +79,7 @@
     </message>
 </context>
 <context>
-    <name>AppSettings</name>
+    <name>AppConfiguration</name>
     <message>
         <location filename="../ui/settings/app_settings.py" line="36"/>
         <source>LiSP preferences</source>

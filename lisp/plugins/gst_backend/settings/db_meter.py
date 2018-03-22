@@ -24,7 +24,7 @@ from PyQt5.QtWidgets import QGroupBox, QGridLayout, QSpinBox, QLabel, \
 
 from lisp.plugins.gst_backend.elements.db_meter import DbMeter
 from lisp.plugins.gst_backend.gi_repository import Gst
-from lisp.ui.settings.settings_page import SettingsPage
+from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.ui_utils import translate
 
 
