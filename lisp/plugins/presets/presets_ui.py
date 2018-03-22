@@ -275,7 +275,7 @@ class PresetsDialog(QDialog):
                     except Exception:
                         cue_class = Cue
 
-                    edit_dialog = CueSettingsDialog(cue_class=cue_class)
+                    edit_dialog = CueSettingsDialog(cue_class)
                     edit_dialog.loadSettings(preset)
                     if edit_dialog.exec_() == edit_dialog.Accepted:
                         preset.update(edit_dialog.getSettings())

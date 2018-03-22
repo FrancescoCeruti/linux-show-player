@@ -29,12 +29,12 @@ from lisp.ui.ui_utils import translate
 
 
 class CueSettingsRegistry(ClassBasedRegistry, metaclass=Singleton):
-    def add_item(self, item, target=Cue):
+    def add_item(self, item, ref_class=Cue):
         if not issubclass(item, SettingsPage):
             raise TypeError(
                 'item must be a SettingPage, not {}'.format(item.__name__))
 
-        return super().add_item(item, target)
+        return super().add_item(item, ref_class)
 
     def filter(self, ref_class=Cue):
         return super().filter(ref_class)
@@ -59,8 +59,10 @@ class CueSettingsDialog(QDialog):
         self.setLayout(QVBoxLayout())
 
         if isinstance(cue, type):
-            if isinstance(cue, Cue):
+            if issubclass(cue, Cue):
                 cue_properties = cue.class_defaults()
+                import pprint
+                pprint.pprint(cue_properties)
                 cue_class = cue
             else:
                 raise TypeError(

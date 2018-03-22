@@ -138,7 +138,7 @@ class CueLayout:
 
         if cues:
             # Use the greatest common superclass between the selected cues
-            edit_ui = CueSettingsDialog(cue_class=greatest_common_superclass(cues))
+            edit_ui = CueSettingsDialog(greatest_common_superclass(cues))
 
             def on_apply(settings):
                 action = UpdateCuesAction(settings, cues)

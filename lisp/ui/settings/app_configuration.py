@@ -23,11 +23,11 @@ from collections import namedtuple
 from PyQt5 import QtCore
 from PyQt5.QtCore import QModelIndex
 from PyQt5.QtWidgets import QVBoxLayout, QDialogButtonBox, QDialog, QTreeView, \
-    QHBoxLayout, QWidget, QSizePolicy
+    QHBoxLayout, QWidget
 
 from lisp.core.dicttree import DictNode
-from lisp.ui.settings.pages_tree_model import SettingsPagesTreeModel
 from lisp.ui.settings.pages import ConfigurationPage
+from lisp.ui.settings.pages_tree_model import SettingsPagesTreeModel
 from lisp.ui.ui_utils import translate
 
 logger = logging.getLogger(__name__)

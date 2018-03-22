@@ -17,11 +17,13 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+from lisp.core.properties import Property
 from lisp.cues.media_cue import MediaCue
 from lisp.plugins.gst_backend.gst_media import GstMedia
 
 
 class GstMediaCue(MediaCue):
+    media = Property(default=GstMedia.class_defaults())
 
     def __init__(self, media, id=None, pipeline=None):
         super().__init__(media, id=id)

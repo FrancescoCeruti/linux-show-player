@@ -67,8 +67,8 @@ class GstMediaSettings(SettingsPage):
             if page is not None and issubclass(page, SettingsPage):
                 page = page(parent=self)
                 page.loadSettings(
-                    settings.get('elements', {})
-                        .get(element, page.ELEMENT.class_defaults()))
+                    settings.get('elements', {}).get(
+                        element, page.ELEMENT.class_defaults()))
                 page.setVisible(False)
                 self._pages.append(page)
 

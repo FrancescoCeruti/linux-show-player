@@ -21,10 +21,10 @@ import logging
 import weakref
 
 from lisp.backend.media import Media, MediaState
-from lisp.core.has_properties import HasInstanceProperties
-from lisp.core.properties import Property, InstanceProperty
+from lisp.core.properties import Property
 from lisp.plugins.gst_backend import elements as gst_elements
 from lisp.plugins.gst_backend.gi_repository import Gst
+from lisp.plugins.gst_backend.gst_element import GstMediaElements
 
 logger = logging.getLogger(__name__)
 
@@ -56,7 +56,7 @@ class GstMedia(Media):
     """Media implementation based on the GStreamer framework."""
 
     pipe = Property(default=())
-    elements = Property(default=None)
+    elements = Property(default=GstMediaElements.class_defaults())
 
     def __init__(self):
         super().__init__()
@@ -290,55 +290,3 @@ class GstMedia(Media):
         bus.disconnect(connection_handler)
 
         media_elements.clear()
-
-
-class GstMediaElements(HasInstanceProperties):
-
-    def __init__(self):
-        super().__init__()
-        self.elements = []
-
-    def __getitem__(self, index):
-        return self.elements[index]
-
-    def __len__(self):
-        return len(self.elements)
-
-    def __contains__(self, item):
-        return item in self.elements
-
-    def __iter__(self):
-        return iter(self.elements)
-
-    def append(self, element):
-        """
-        :type element: lisp.backend.media_element.MediaElement
-        """
-        if self.elements:
-            self.elements[-1].link(element)
-        self.elements.append(element)
-
-        # Add a property for the new added element
-        element_name = element.__class__.__name__
-        setattr(self, element_name, InstanceProperty(default=None))
-        setattr(self, element_name, element)
-
-    def remove(self, element):
-        self.pop(self.elements.index(element))
-
-    def pop(self, index):
-        if index > 0:
-            self.elements[index - 1].unlink(self.elements[index])
-        if index < len(self.elements) - 1:
-            self.elements[index].unlink(self.elements[index + 1])
-            self.elements[index - 1].link(self.elements[index + 1])
-
-        element = self.elements.pop(index)
-        element.dispose()
-
-        # Remove the element corresponding property
-        delattr(self, element.__class__.__name__)
-
-    def clear(self):
-        while self.elements:
-            self.pop(len(self.elements) - 1)
