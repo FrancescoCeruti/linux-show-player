@@ -13,10 +13,18 @@ For bugs/requests an issue can be open on the GitHub issues-tracker, for everyth
 
 ### Installation
 
+#### AppImage
+
 You can download an [AppImage](http://appimage.org/) bundle of LiSP from the release page, once downloaded make the file executable.
 Now you should be able to run LiSP by double-clicking the file.
 
-<br />Otherwise follow the instructions on the [wiki](https://github.com/FrancescoCeruti/linux-show-player/wiki/Install) to install it manually
+#### Distro Repository
+
+[![Packaging status](https://repology.org/badge/vertical-allrepos/linux-show-player.svg)](https://repology.org/metapackage/linux-show-player)
+
+#### Manually
+
+Otherwise follow the instructions on the [wiki](https://github.com/FrancescoCeruti/linux-show-player/wiki/Install) to install it manually
 
 ---
 
