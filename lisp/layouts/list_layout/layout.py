@@ -62,7 +62,7 @@ class ListLayout(QWidget, CueLayout):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        AppConfigurationDialog.registerSettingsWidget(
+        AppConfigurationDialog.registerSettingsPage(
             'list_layout', ListLayoutSettings, self.app.conf)
 
         self.setLayout(QGridLayout())
@@ -362,7 +362,7 @@ class ListLayout(QWidget, CueLayout):
 
     def __cue_removed(self, cue):
         if isinstance(cue, MediaCue):
-            cue.media.interrupt()
+            cue.interrupt()
         else:
             cue.stop()
 

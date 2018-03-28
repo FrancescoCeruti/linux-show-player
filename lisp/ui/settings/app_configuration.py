@@ -22,17 +22,16 @@ from collections import namedtuple
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import QModelIndex
-from PyQt5.QtWidgets import QVBoxLayout, QDialogButtonBox, QDialog, QTreeView, \
-    QHBoxLayout, QWidget
+from PyQt5.QtWidgets import QVBoxLayout, QDialogButtonBox, QDialog
 
 from lisp.core.dicttree import DictNode
-from lisp.ui.settings.pages import ConfigurationPage
-from lisp.ui.settings.pages_tree_model import SettingsPagesTreeModel
+from lisp.ui.settings.pages import ConfigurationPage, TreeMultiConfigurationWidget
+from lisp.ui.settings.pages_tree_model import PagesTreeModel
 from lisp.ui.ui_utils import translate
 
 logger = logging.getLogger(__name__)
 
-PageEntry = namedtuple('PageEntry', ('widget', 'config'))
+PageEntry = namedtuple('PageEntry', ('page', 'config'))
 
 
 class AppConfigurationDialog(QDialog):
@@ -47,11 +46,11 @@ class AppConfigurationDialog(QDialog):
         self.resize(640, 510)
         self.setLayout(QVBoxLayout())
 
-        self.model = SettingsPagesTreeModel()
+        self.model = PagesTreeModel()
         for r_node in AppConfigurationDialog.PagesRegistry.children:
             self._populateModel(QModelIndex(), r_node)
 
-        self.mainPage = TreeMultiSettingsWidget(self.model)
+        self.mainPage = TreeMultiConfigurationWidget(self.model)
         self.mainPage.selectFirst()
         self.layout().addWidget(self.mainPage)
 
@@ -75,28 +74,28 @@ class AppConfigurationDialog(QDialog):
 
     def _populateModel(self, m_parent, r_parent):
         if r_parent.value is not None:
-            widget = r_parent.value.widget
+            page = r_parent.value.page
             config = r_parent.value.config
         else:
-            widget = None
+            page = None
             config = None
 
         try:
-            if widget is None:
-                # The current node have no widget, use the parent model-index
+            if page is None:
+                # The current node have no page, use the parent model-index
                 # as parent for it's children
                 mod_index = m_parent
-            elif issubclass(widget, ConfigurationPage):
-                mod_index = self.model.addPage(widget(config), parent=m_parent)
+            elif issubclass(page, ConfigurationPage):
+                mod_index = self.model.addPage(page(config), parent=m_parent)
             else:
-                mod_index = self.model.addPage(widget(), parent=m_parent)
+                mod_index = self.model.addPage(page(), parent=m_parent)
         except Exception:
-            if not isinstance(widget, type):
+            if not isinstance(page, type):
                 page_name = 'NoPage'
-            elif issubclass(widget, ConfigurationPage):
-                page_name = widget.Name
+            elif issubclass(page, ConfigurationPage):
+                page_name = page.Name
             else:
-                page_name = widget.__name__
+                page_name = page.__name__
 
             logger.warning(
                 'Cannot load configuration page: "{}" ({})'.format(
@@ -110,69 +109,26 @@ class AppConfigurationDialog(QDialog):
         self.accept()
 
     @staticmethod
-    def registerSettingsWidget(path, widget, config):
+    def registerSettingsPage(path, page, config):
         """
-        :param path: indicate the widget "position": 'category.sub.key'
+        :param path: indicate the page "position": 'category.sub.key'
         :type path: str
-        :type widget: Type[lisp.ui.settings.settings_page.SettingsPage]
+        :type page: Type[lisp.ui.settings.settings_page.ConfigurationPage]
         :type config: lisp.core.configuration.Configuration
         """
-        AppConfigurationDialog.PagesRegistry.set(
-            path, PageEntry(widget=widget, config=config))
+        if issubclass(page, ConfigurationPage):
+            AppConfigurationDialog.PagesRegistry.set(
+                path, PageEntry(page=page, config=config))
+        else:
+            raise TypeError(
+                'AppConfiguration pages must be ConfigurationPage(s), not {}'
+                    .format(type(page).__name__)
+            )
 
     @staticmethod
-    def unregisterSettingsWidget(path):
+    def unregisterSettingsPage(path):
         """
-        :param path: indicate the widget "position": 'category.sub.key'
+        :param path: indicate the page "position": 'category.sub.key'
         :type path: str
         """
         AppConfigurationDialog.PagesRegistry.pop(path)
-
-
-class TreeMultiSettingsWidget(QWidget):
-    def __init__(self, navModel, **kwargs):
-        """
-        :param navModel: The model that keeps all the pages-hierarchy
-        :type navModel: SettingsPagesTreeModel
-        """
-        super().__init__(**kwargs)
-        self.setLayout(QHBoxLayout())
-        self.layout().setSpacing(0)
-        self.layout().setContentsMargins(0, 0, 0, 0)
-        self.navModel = navModel
-
-        self.navWidget = QTreeView()
-        self.navWidget.setHeaderHidden(True)
-        self.navWidget.setModel(self.navModel)
-        self.layout().addWidget(self.navWidget)
-
-        self._currentWidget = QWidget()
-        self.layout().addWidget(self._currentWidget)
-
-        self.layout().setStretch(0, 2)
-        self.layout().setStretch(1, 5)
-
-        self.navWidget.selectionModel().selectionChanged.connect(
-            self._changePage)
-
-    def selectFirst(self):
-        self.navWidget.setCurrentIndex(self.navModel.index(0, 0, QModelIndex()))
-
-    def currentWidget(self):
-        return self._currentWidget
-
-    def applySettings(self):
-        root = self.navModel.node(QModelIndex())
-        for node in root.walk():
-            if node.widget is not None:
-                node.widget.applySettings()
-
-    def _changePage(self, selected):
-        if selected.indexes():
-            self.layout().removeWidget(self._currentWidget)
-            self._currentWidget.hide()
-            self._currentWidget = selected.indexes()[0].internalPointer().widget
-            self._currentWidget.show()
-            self.layout().addWidget(self._currentWidget)
-            self.layout().setStretch(0, 2)
-            self.layout().setStretch(1, 5)

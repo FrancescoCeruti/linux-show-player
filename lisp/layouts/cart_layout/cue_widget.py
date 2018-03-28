@@ -30,8 +30,7 @@ from lisp.cues.cue_time import CueTime
 from lisp.cues.media_cue import MediaCue
 from lisp.layouts.cart_layout.page_widget import PageWidget
 from lisp.ui.icons import IconTheme
-from lisp.ui.widgets import QClickLabel, QClickSlider, QDbMeter,\
-    QDetailedMessageBox
+from lisp.ui.widgets import QClickLabel, QClickSlider, QDbMeter
 
 
 class CueWidget(QWidget):
@@ -286,8 +285,8 @@ class CueWidget(QWidget):
                 elif event.modifiers() == Qt.ControlModifier:
                     self.selected = not self.selected
                 else:
-                    self.cue_executed.emit(self.cue)
                     self.cue.execute()
+                    self.cue_executed.emit(self.cue)
 
     def _update_style(self, stylesheet):
         stylesheet += 'text-decoration: underline;' if self.selected else ''

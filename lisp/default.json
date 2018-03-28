@@ -1,5 +1,5 @@
 {
-    "_version_": "0.6dev.10",
+    "_version_": "0.6dev.11",
     "cue": {
         "fadeAction": 3,
         "fadeActionType": "Linear",
@@ -10,10 +10,11 @@
         "theme": "Dark",
         "icons": "numix"
     },
+    "session": {
+        "minSave": true
+    },
     "logging": {
         "limit": 10000,
-        "msg_format": "%(asctime)s.%(msecs)03d\t%(name)s\t%(levelname)s\t%(message)s",
-        "date_format": "%H:%M:%S",
         "backgrounds": {
             "DEBUG": [230, 230, 230, 200],
             "INFO": [80, 255, 65, 200],

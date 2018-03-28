@@ -22,6 +22,7 @@ import weakref
 
 from lisp.backend.media import Media, MediaState
 from lisp.core.properties import Property
+from lisp.core.util import weak_call_proxy
 from lisp.plugins.gst_backend import elements as gst_elements
 from lisp.plugins.gst_backend.gi_repository import Gst
 from lisp.plugins.gst_backend.gst_element import GstMediaElements
@@ -29,27 +30,30 @@ from lisp.plugins.gst_backend.gst_element import GstMediaElements
 logger = logging.getLogger(__name__)
 
 
-def validate_pipeline(pipe, rebuild=False):
-    # The first must be an input element
-    if pipe[0] not in gst_elements.inputs().keys():
-        return False
+GST_TO_MEDIA_STATE = {
+    Gst.State.NULL: MediaState.Null,
+    Gst.State.READY: MediaState.Ready,
+    Gst.State.PAUSED: MediaState.Paused,
+    Gst.State.PLAYING: MediaState.Playing
+}
 
-    # The middle elements must be plugins elements
-    if rebuild:
-        if not isinstance(pipe, list):
-            pipe = list(pipe)
 
-        pipe[1:-1] = set(pipe[1:-1]).intersection(
-            set(gst_elements.plugins().keys()))
-    else:
-        if len(set(pipe[1:-1]) - set(gst_elements.plugins().keys())) != 0:
-            return False
+def media_finalizer(pipeline, message_handler, media_elements):
+    # Allow pipeline resources to be released
+    pipeline.set_state(Gst.State.NULL)
 
-    # The last must be an output element
-    if pipe[-1] not in gst_elements.outputs().keys():
-        return False
+    # Disconnect message handler
+    bus = pipeline.get_bus()
+    bus.remove_signal_watch()
+    bus.disconnect(message_handler)
 
-    return pipe if rebuild else True
+    # Dispose all the elements
+    media_elements.clear()
+
+
+class GstError(Exception):
+    """Used to wrap GStreamer debug messages for the logging system."""
+    pass
 
 
 class GstMedia(Media):
@@ -60,68 +64,44 @@ class GstMedia(Media):
 
     def __init__(self):
         super().__init__()
-
-        self._state = MediaState.Null
-        self._old_pipe = ''
-        self._loop_count = 0
-
         self.elements = GstMediaElements()
-        self._gst_pipe = Gst.Pipeline()
-        self._gst_state = Gst.State.NULL
-        self._time_query = Gst.Query.new_position(Gst.Format.TIME)
 
-        bus = self._gst_pipe.get_bus()
-        bus.add_signal_watch()
+        self.__pipeline = None
+        self.__finalizer = None
+        self.__loop = 0  # current number of loops left to do
+        self.__current_pipe = None  # A copy of the pipe property
 
-        # Use a weakref instead of the method or the object will not be
-        # garbage-collected
-        on_message = weakref.WeakMethod(self.__on_message)
-        handler = bus.connect('message', lambda *args: on_message()(*args))
-        weakref.finalize(self, self.__finalizer, self._gst_pipe, handler,
-                         self.elements)
-
-        self.changed('loop').connect(self.__prepare_loops)
-        self.changed('pipe').connect(self.__prepare_pipe)
+        self.changed('loop').connect(self.__on_loops_changed)
+        self.changed('pipe').connect(self.__on_pipe_changed)
 
     @Media.state.getter
     def state(self):
-        return self._state
+        if self.__pipeline is None:
+            return MediaState.Null
 
-    def __prepare_loops(self, loops):
-        self._loop_count = loops
-
-    def __prepare_pipe(self, pipe):
-        if pipe != self._old_pipe:
-            self._old_pipe = pipe
-
-            # If the pipeline is invalid raise an error
-            pipe = validate_pipeline(pipe, rebuild=True)
-            if not pipe:
-                raise ValueError('Invalid pipeline "{0}"'.format(pipe))
-
-            # Build the pipeline
-            ep_copy = self.elements.properties()
-            self.__build_pipeline()
-            self.elements.update_properties(ep_copy)
-
-            self.elements[0].changed('duration').connect(
-                self.__duration_changed)
-            self.__duration_changed(self.elements[0].duration)
+        return GST_TO_MEDIA_STATE.get(
+            self.__pipeline.get_state(Gst.MSECOND)[1], MediaState.Null)
 
     def current_time(self):
-        ok, position = self._gst_pipe.query_position(Gst.Format.TIME)
-        return position // Gst.MSECOND if ok else 0
+        if self.__pipeline is not None:
+            ok, position = self.__pipeline.query_position(Gst.Format.TIME)
+            return position // Gst.MSECOND if ok else 0
+
+        return 0
 
     def play(self):
-        if self.state == MediaState.Stopped or self.state == MediaState.Paused:
+        if self.state == MediaState.Null:
+            self.__init_pipeline()
+
+        if self.state == MediaState.Ready or self.state == MediaState.Paused:
             self.on_play.emit(self)
 
             for element in self.elements:
                 element.play()
 
             self._state = MediaState.Playing
-            self._gst_pipe.set_state(Gst.State.PLAYING)
-            self._gst_pipe.get_state(Gst.SECOND)
+            self.__pipeline.set_state(Gst.State.PLAYING)
+            self.__pipeline.get_state(Gst.SECOND)
 
             if self.start_time > 0 or self.stop_time > 0:
                 self.seek(self.start_time)
@@ -135,11 +115,9 @@ class GstMedia(Media):
             for element in self.elements:
                 element.pause()
 
-            self._state = MediaState.Paused
-            self._gst_pipe.set_state(Gst.State.PAUSED)
-            self._gst_pipe.get_state(Gst.SECOND)
-
-            # FIXME: the pipeline is not flushed (fucking GStreamer)
+            self.__pipeline.set_state(Gst.State.PAUSED)
+            self.__pipeline.get_state(Gst.SECOND)
+            # FIXME: the pipeline is not flushed
 
             self.paused.emit(self)
 
@@ -150,39 +128,11 @@ class GstMedia(Media):
             for element in self.elements:
                 element.stop()
 
-            self.interrupt(emit=False)
+            self.__pipeline.set_state(Gst.State.READY)
+            self.__pipeline.get_state(Gst.SECOND)
+            self.__reset_media()
+
             self.stopped.emit(self)
-
-    def __seek(self, position):
-        if self.state == MediaState.Playing or self.state == MediaState.Paused:
-            max_position = self.duration
-            if 0 < self.stop_time < self.duration:
-                max_position = self.stop_time
-
-            if position < max_position:
-                # Query segment info for the playback rate
-                query = Gst.Query.new_segment(Gst.Format.TIME)
-                self._gst_pipe.query(query)
-                rate = Gst.Query.parse_segment(query)[0]
-
-                # Check stop_position value
-                stop_type = Gst.SeekType.NONE
-                if self.stop_time > 0:
-                    stop_type = Gst.SeekType.SET
-
-                # Seek the pipeline
-                result = self._gst_pipe.seek(
-                    rate if rate > 0 else 1,
-                    Gst.Format.TIME,
-                    Gst.SeekFlags.FLUSH,
-                    Gst.SeekType.SET,
-                    position * Gst.MSECOND,
-                    stop_type,
-                    self.stop_time * Gst.MSECOND)
-
-                return result
-
-        return False
 
     def seek(self, position):
         if self.__seek(position):
@@ -197,96 +147,129 @@ class GstMedia(Media):
         except Exception:
             pass
 
-    def interrupt(self, dispose=False, emit=True):
-        for element in self.elements:
-            element.interrupt()
-
-        state = self._state
-
-        self._gst_pipe.set_state(Gst.State.NULL)
-        if dispose:
-            self._state = MediaState.Null
-        else:
-            self._gst_pipe.set_state(Gst.State.READY)
-            self._state = MediaState.Stopped
-
-        self._loop_count = self.loop
-
-        if emit and (state == MediaState.Playing or
-                     state == MediaState.Paused):
-            self.interrupted.emit(self)
-
     def update_properties(self, properties):
-        # In order to update the other properties we need the pipeline
-        pipe = properties.pop('pipe', None)
+        # In order to update the other properties we need the pipeline first
+        pipe = properties.pop('pipe', ())
         if pipe:
             self.pipe = pipe
 
         super().update_properties(properties)
 
-        if self.state == MediaState.Null or self.state == MediaState.Error:
-            self._state = MediaState.Stopped
+    def __reset_media(self):
+        self.__loop = self.loop
 
-    def __build_pipeline(self):
-        # Set to NULL the pipeline
-        self.interrupt(dispose=True)
+    def __seek(self, position):
+        if self.state == MediaState.Playing or self.state == MediaState.Paused:
+            max_position = self.duration
+            if 0 < self.stop_time < self.duration:
+                max_position = self.stop_time
 
-        # Remove all pipeline children
-        for __ in range(self._gst_pipe.get_children_count()):
-            self._gst_pipe.remove(self._gst_pipe.get_child_by_index(0))
+            if position < max_position:
+                # Query segment info for the playback rate
+                query = Gst.Query.new_segment(Gst.Format.TIME)
+                self.__pipeline.query(query)
+                rate = Gst.Query.parse_segment(query)[0]
 
-        # Remove all the elements
-        self.elements.clear()
+                # Check stop_position value
+                stop_type = Gst.SeekType.NONE
+                if self.stop_time > 0:
+                    stop_type = Gst.SeekType.SET
+
+                # Seek the pipeline
+                result = self.__pipeline.seek(
+                    rate if rate > 0 else 1,
+                    Gst.Format.TIME,
+                    Gst.SeekFlags.FLUSH,
+                    Gst.SeekType.SET,
+                    position * Gst.MSECOND,
+                    stop_type,
+                    self.stop_time * Gst.MSECOND)
+
+                return result
+
+        return False
+
+    def __on_loops_changed(self, loops):
+        self.__loop = loops
+
+    def __on_pipe_changed(self, new_pipe):
+        # Rebuild the pipeline only if something is changed
+        if new_pipe != self.__current_pipe:
+            self.__current_pipe = new_pipe
+            self.__init_pipeline()
+
+    def __init_pipeline(self):
+        # Make a copy of the current elements properties
+        elements_properties = self.elements.properties()
+
+        # Call the current media-finalizer, if any
+        if self.__finalizer is not None:
+            # Set pipeline to NULL, finalize bus-handler and elements
+            self.__finalizer()
+
+        self.__pipeline = Gst.Pipeline()
+        # Add a callback to watch for pipeline bus-messages
+        bus = self.__pipeline.get_bus()
+        bus.add_signal_watch()
+        # Use a weakref or GStreamer will hold a reference of the callback
+        handler = bus.connect(
+            'message', weak_call_proxy(weakref.WeakMethod(self.__on_message)))
 
         # Create all the new elements
         all_elements = gst_elements.all_elements()
         for element in self.pipe:
-            self.elements.append(all_elements[element](self._gst_pipe))
+            try:
+                self.elements.append(all_elements[element](self.__pipeline))
+            except KeyError:
+                logger.warning('Invalid pipeline element: {}'.format(element))
 
-        # Set to Stopped/READY the pipeline
-        self._state = MediaState.Stopped
-        self._gst_pipe.set_state(Gst.State.READY)
+        # Reload the elements properties
+        self.elements.update_properties(elements_properties)
+
+        # The source element should provide the duration
+        self.elements[0].changed('duration').connect(self.__duration_changed)
+        self.duration = self.elements[0].duration
+
+        # Create a new finalizer object to free the pipeline when the media
+        # is dereferenced
+        self.__finalizer = weakref.finalize(
+            self, media_finalizer, self.__pipeline, handler, self.elements)
+
+        # Set the pipeline to READY
+        self.__pipeline.set_state(Gst.State.READY)
+        self.__pipeline.get_state(Gst.SECOND)
 
         self.elements_changed.emit(self)
 
     def __on_message(self, bus, message):
-        if message.src == self._gst_pipe:
-            if message.type == Gst.MessageType.STATE_CHANGED:
-                self._gst_state = message.parse_state_changed()[1]
-            elif message.type == Gst.MessageType.EOS:
-                self.__on_eos()
+        if message.src == self.__pipeline:
+            if message.type == Gst.MessageType.EOS:
+                if self.__loop != 0:
+                    # If we still have loops to do then seek to begin
+                    # FIXME: this is not seamless
+                    self.__loop -= 1
+                    self.seek(self.start_time)
+                else:
+                    # Otherwise go in READY state
+                    self.__pipeline.set_state(Gst.State.READY)
+                    self.__pipeline.get_state(Gst.SECOND)
+                    self.__reset_media()
+                    self.eos.emit(self)
             elif message.type == Gst.MessageType.CLOCK_LOST:
-                self._gst_pipe.set_state(Gst.State.PAUSED)
-                self._gst_pipe.set_state(Gst.State.PLAYING)
+                self.__pipeline.set_state(Gst.State.PAUSED)
+                self.__pipeline.set_state(Gst.State.PLAYING)
 
         if message.type == Gst.MessageType.ERROR:
-            error, _ = message.parse_error()
-            logger.error('GStreamer: {}'.format(error.message), exc_info=error)
+            error, debug = message.parse_error()
+            logger.error(
+                'GStreamer: {}'.format(error.message), exc_info=GstError(debug))
 
-            self._state = MediaState.Error
-            self.interrupt(dispose=True, emit=False)
+            # Set the pipeline to NULL
+            self.__pipeline.set_state(Gst.State.NULL)
+            self.__pipeline.get_state(Gst.SECOND)
+            self.__reset_media()
 
             self.error.emit(self)
 
-    def __on_eos(self):
-        if self._loop_count != 0:
-            self._loop_count -= 1
-            self.seek(self.start_time)
-        else:
-            self._state = MediaState.Stopped
-            self.eos.emit(self)
-            self.interrupt(emit=False)
-
     def __duration_changed(self, duration):
         self.duration = duration
-
-    @staticmethod
-    def __finalizer(pipeline, connection_handler, media_elements):
-        # Allow pipeline resources to be released
-        pipeline.set_state(Gst.State.NULL)
-
-        bus = pipeline.get_bus()
-        bus.remove_signal_watch()
-        bus.disconnect(connection_handler)
-
-        media_elements.clear()

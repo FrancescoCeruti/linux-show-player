@@ -34,22 +34,27 @@ from lisp.ui.settings.cue_settings import CueSettingsRegistry
 
 
 class Timecode(Plugin):
-
     Name = 'Timecode'
-    Authors = ('Thomas Achtner', )
-    OptDepends = ('Midi', )
+    Authors = ('Thomas Achtner',)
+    OptDepends = ('Midi',)
     Description = 'Provide timecode via multiple protocols'
 
     def __init__(self, app):
         super().__init__(app)
 
         # Register a new Cue property to store settings
-        Cue.timecode = Property(default={})
+        Cue.timecode = Property(
+            default={
+                'enabled': False,
+                'replace_hours': False,
+                'track': 0
+            }
+        )
 
         # Register cue-settings-page
         CueSettingsRegistry().add_item(TimecodeSettings, MediaCue)
         # Register the settings widget
-        AppConfigurationDialog.registerSettingsWidget(
+        AppConfigurationDialog.registerSettingsPage(
             'plugins.timecode', TimecodeAppSettings, Timecode.Config)
 
         # Load available protocols

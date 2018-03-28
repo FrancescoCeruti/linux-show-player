@@ -102,21 +102,44 @@ class HasProperties(metaclass=HasPropertiesMeta):
         self.property_changed = Signal()
         # Emitted after property change (self, name, value)
 
-    def properties_names(self):
-        return self.__class__.__pro__
+    def properties_names(self, filter=None):
+        """
+        To work as intended `filter` must be a function that take a set as
+        parameter and return a set with the properties names filtered by
+        some custom rule, the given set can be modified in-place.
 
-    def properties_defaults(self):
+        :param filter: a function to filter the returned properties, or None
+        :rtype: set
+        :return: The object `Properties` names
+        """
+        if callable(filter):
+            return filter(self._properties_names())
+        else:
+            return self._properties_names()
+
+    def _properties_names(self):
+        """Return a set of properties names, intended for internal usage.
+
+        The returned set is a copy of the internal one, so it can be modified
+        in-place.
+
+        :rtype: set
+        """
+        return self.__class__.__pro__.copy()
+
+    def properties_defaults(self, filter=None):
         """Instance properties defaults.
 
         Differently from `class_defaults` this works on instances, and it might
         give different results with some subclass.
 
+        :param filter: filter the properties, see `properties_names`
         :return: The default properties as a dictionary {name: default_value}
         :rtype: dict
         """
         defaults = {}
 
-        for name in self.properties_names():
+        for name in self.properties_names(filter=filter):
             value = self._pro(name).default
             if isinstance(value, HasProperties):
                 value = value.properties_defaults()
@@ -126,19 +149,30 @@ class HasProperties(metaclass=HasPropertiesMeta):
         return defaults
 
     @classmethod
-    def class_defaults(cls):
+    def class_defaults(cls, filter=None):
         """Class properties defaults.
 
+        This function will not go into nested properties, the default
+        value should already be set to a suitable value.
+
+        :param filter: filter the properties, see `properties_names`
         :return: The default properties as a dictionary {name: default_value}
         :rtype: dict
         """
-        return {
-            name: getattr(cls, name).default
-            for name in cls.__pro__
-        }
+        if callable(filter):
+            return {
+                name: getattr(cls, name).default
+                for name in filter(cls.__pro__.copy())
+            }
+        else:
+            return {
+                name: getattr(cls, name).default
+                for name in cls.__pro__
+            }
 
-    def properties(self, defaults=True):
+    def properties(self, defaults=True, filter=None):
         """
+        :param filter: filter the properties, see `properties_names`
         :param defaults: include/exclude properties equals to their default
         :type defaults: bool
 
@@ -147,11 +181,11 @@ class HasProperties(metaclass=HasPropertiesMeta):
         """
         properties = {}
 
-        for name in self.properties_names():
+        for name in self.properties_names(filter=filter):
             value = getattr(self, name)
 
             if isinstance(value, HasProperties):
-                value = value.properties(defaults=defaults)
+                value = value.properties(defaults=defaults, filter=filter)
                 if defaults or value:
                     properties[name] = value
             elif defaults or value != self._pro(name).default:
@@ -223,8 +257,8 @@ class HasInstanceProperties(HasProperties):
         self.__ipro__ = set()
         # Registry to keep track of instance-properties
 
-    def properties_names(self):
-        return super().properties_names().union(self.__ipro__)
+    def _properties_names(self):
+        return super()._properties_names().union(self.__ipro__)
 
     def __getattribute__(self, name):
         attribute = super().__getattribute__(name)

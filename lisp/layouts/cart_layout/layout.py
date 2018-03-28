@@ -51,10 +51,11 @@ class CartLayout(QTabWidget, CueLayout):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        AppConfigurationDialog.registerSettingsWidget(
+        AppConfigurationDialog.registerSettingsPage(
             'cart_layout', CartLayoutSettings, self.app.conf)
 
         self.tabBar().setObjectName('CartTabBar')
+        self.setFocusPolicy(Qt.StrongFocus)
 
         self.__columns = self.app.conf['cartLayout.gridColumns']
         self.__rows = self.app.conf['cartLayout.gridRows']
@@ -422,7 +423,7 @@ class CartLayout(QTabWidget, CueLayout):
 
     def __cue_removed(self, cue):
         if isinstance(cue, MediaCue):
-            cue.media.interrupt()
+            cue.interrupt()
         else:
             cue.stop()
 

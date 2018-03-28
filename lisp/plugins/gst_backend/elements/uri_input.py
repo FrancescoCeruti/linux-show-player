@@ -28,8 +28,7 @@ from lisp.backend.media_element import MediaType
 from lisp.core.decorators import async_in_pool
 from lisp.core.properties import Property
 from lisp.plugins.gst_backend.gi_repository import Gst
-from lisp.plugins.gst_backend.gst_element import GstProperty, \
-    GstSrcElement
+from lisp.plugins.gst_backend.gst_element import GstProperty, GstSrcElement
 from lisp.plugins.gst_backend.gst_utils import gst_uri_duration
 
 
@@ -56,15 +55,15 @@ class UriInput(GstSrcElement):
     buffer_size = GstProperty('decoder', 'buffer-size', default=-1)
     use_buffering = GstProperty('decoder', 'use-buffering', default=False)
 
-    def __init__(self, pipe):
-        super().__init__()
+    def __init__(self, pipeline):
+        super().__init__(pipeline)
 
         self.decoder = Gst.ElementFactory.make("uridecodebin", None)
         self.audio_convert = Gst.ElementFactory.make("audioconvert", None)
         self._handler = self.decoder.connect("pad-added", self.__on_pad_added)
 
-        pipe.add(self.decoder)
-        pipe.add(self.audio_convert)
+        self.pipeline.add(self.decoder)
+        self.pipeline.add(self.audio_convert)
 
         self.changed('uri').connect(self.__uri_changed)
         Application().session.changed('session_file').connect(

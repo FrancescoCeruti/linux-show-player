@@ -49,14 +49,14 @@ class AudioDynamic(GstMediaElement):
         default=Characteristics.HardKnee.value
     )
 
-    def __init__(self, pipe):
-        super().__init__()
+    def __init__(self, pipeline):
+        super().__init__(pipeline)
 
         self.audio_dynamic = Gst.ElementFactory.make('audiodynamic', None)
         self.audio_converter = Gst.ElementFactory.make('audioconvert', None)
 
-        pipe.add(self.audio_dynamic)
-        pipe.add(self.audio_converter)
+        self.pipeline.add(self.audio_dynamic)
+        self.pipeline.add(self.audio_converter)
 
         self.audio_dynamic.link(self.audio_converter)
 

@@ -18,7 +18,6 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import logging
-import traceback
 from functools import wraps, partial
 from threading import Thread, Lock, RLock
 

@@ -21,10 +21,10 @@ import argparse
 import logging
 import os
 import sys
+from logging.handlers import RotatingFileHandler
 
 from PyQt5.QtCore import QLocale, QLibraryInfo
 from PyQt5.QtWidgets import QApplication
-from logging.handlers import RotatingFileHandler
 
 from lisp import USER_DIR, DEFAULT_APP_CONFIG, USER_APP_CONFIG, plugins, \
     I18N_PATH, LOGS_DIR

@@ -17,21 +17,21 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import QT_TRANSLATE_NOOP, Qt, QSize
+from PyQt5.QtCore import QT_TRANSLATE_NOOP, Qt, QSize, QModelIndex
 from PyQt5.QtWidgets import QListWidget, QListWidgetItem, QTextBrowser, \
     QVBoxLayout
 
 from lisp import plugins
 from lisp.ui.icons import IconTheme
-from lisp.ui.settings.pages import ABCSettingsPage
+from lisp.ui.settings.pages import ConfigurationPage
 
 
 # TODO: just a proof-of concept
-class PluginsSettings(ABCSettingsPage):
+class PluginsSettings(ConfigurationPage):
     Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Plugins')
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    def __init__(self, config, **kwargs):
+        super().__init__(config, **kwargs)
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
@@ -63,7 +63,8 @@ class PluginsSettings(ABCSettingsPage):
         self.layout().setStretch(0, 3)
         self.layout().setStretch(1, 1)
 
-        self.__selection_changed()
+        if self.pluginsList.count():
+            self.pluginsList.setCurrentRow(0)
 
     def __selection_changed(self):
         item = self.pluginsList.currentItem()

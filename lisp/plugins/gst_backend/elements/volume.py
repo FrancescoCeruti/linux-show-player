@@ -37,16 +37,16 @@ class Volume(GstMediaElement):
     live_volume = GstLiveProperty(
         'gst_volume', 'volume', type=float, range=(0, 10))
 
-    def __init__(self, pipe):
-        super().__init__()
+    def __init__(self, pipeline):
+        super().__init__(pipeline)
 
         self.gst_volume = Gst.ElementFactory.make("volume", None)
         self.gst_normal_volume = Gst.ElementFactory.make("volume", None)
         self.audio_convert = Gst.ElementFactory.make("audioconvert", None)
 
-        pipe.add(self.gst_normal_volume)
-        pipe.add(self.gst_volume)
-        pipe.add(self.audio_convert)
+        self.pipeline.add(self.gst_normal_volume)
+        self.pipeline.add(self.gst_volume)
+        self.pipeline.add(self.audio_convert)
 
         self.gst_volume.link(self.gst_normal_volume)
         self.gst_normal_volume.link(self.audio_convert)

@@ -29,11 +29,11 @@ class AutoSink(GstMediaElement):
     MediaType = MediaType.Audio
     Name = QT_TRANSLATE_NOOP('MediaElementName', 'System Out')
 
-    def __init__(self, pipe):
-        super().__init__()
+    def __init__(self, pipeline):
+        super().__init__(pipeline)
 
         self.auto_sink = Gst.ElementFactory.make('autoaudiosink', 'sink')
-        pipe.add(self.auto_sink)
+        self.pipeline.add(self.auto_sink)
 
     def sink(self):
         return self.auto_sink

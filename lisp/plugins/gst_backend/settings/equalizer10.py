@@ -31,8 +31,8 @@ class Equalizer10Settings(SettingsPage):
     ELEMENT = Equalizer10
     Name = ELEMENT.Name
 
-    FREQ = ['30Hz', '60Hz', '120Hz', '240Hz', '475Hz', '950Hz', '1900Hz',
-            '3800Hz', '7525Hz', '15KHz']
+    FREQ = ['30', '60', '120', '240', '475', '950', '1900', '3800', '7525',
+            '15K']
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

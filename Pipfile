@@ -1,21 +1,18 @@
 [[source]]
-
 url = "https://pypi.python.org/simple"
 verify_ssl = true
 name = "pypi"
 
-
 [packages]
-
 sortedcontainers = "*"
 mido = "*"
 python-rtmidi = "*"
-jack-client = "*"
+JACK-Client = "*"
 pyliblo = "*"
-"pyqt5" = "*"
-pygobject = "*"
-
+"PyQt5" = "*"
+PyGObject = "*"
 
 [dev-packages]
-
-cython = "*"
+Cython = "*"
+pycallgraph = "*"
+objgraph = "*"

@@ -41,10 +41,10 @@ class JackSink(GstMediaElement):
     _ControlClient = None
     _clients = []
 
-    connections = Property(default=[[] for _ in range(8)])
+    connections = Property(default=[])
 
     def __init__(self, pipeline):
-        super().__init__()
+        super().__init__(pipeline)
 
         if JackSink._ControlClient is None:
             JackSink._ControlClient = jack.Client('LinuxShowPlayer_Control')
@@ -89,8 +89,8 @@ class JackSink(GstMediaElement):
 
         if isinstance(client, jack.Client):
             # Search for default input ports
-            input_ports = client.get_ports(name_pattern='^system:',
-                                           is_audio=True, is_input=True)
+            input_ports = client.get_ports(
+                name_pattern='^system:', is_audio=True, is_input=True)
             for n, port in enumerate(input_ports):
                 if n < len(connections):
                     connections[n].append(port.name)
@@ -133,8 +133,8 @@ class JackSink(GstMediaElement):
             for input_name in in_ports:
                 if output < len(out_ports):
                     try:
-                        JackSink._ControlClient.connect(out_ports[output],
-                                                        input_name)
+                        JackSink._ControlClient.connect(
+                            out_ports[output], input_name)
                     except jack.JackError:
                         logger.exception(
                             'An error occurred while connecting Jack ports')

@@ -31,14 +31,14 @@ class Pitch(GstMediaElement):
 
     pitch = GstProperty('gst_pitch', 'pitch', default=1.0)
 
-    def __init__(self, pipe):
-        super().__init__()
+    def __init__(self, pipeline):
+        super().__init__(pipeline)
 
         self.gst_pitch = Gst.ElementFactory.make('pitch', None)
         self.audio_converter = Gst.ElementFactory.make('audioconvert', None)
 
-        pipe.add(self.gst_pitch)
-        pipe.add(self.audio_converter)
+        self.pipeline.add(self.gst_pitch)
+        self.pipeline.add(self.audio_converter)
 
         self.gst_pitch.link(self.audio_converter)
 

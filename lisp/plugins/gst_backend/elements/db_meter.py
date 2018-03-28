@@ -35,7 +35,7 @@ class DbMeter(GstMediaElement):
     peak_falloff = GstProperty('level', 'peak-falloff', default=20)
 
     def __init__(self, pipeline):
-        super().__init__()
+        super().__init__(pipeline)
         self.level_ready = Signal()
 
         self.pipeline = pipeline

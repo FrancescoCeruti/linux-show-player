@@ -27,11 +27,10 @@ from lisp.core.signal import Signal
 
 class MediaState(Enum):
     """Identify the current media state"""
-    Error = -1
     Null = 0
     Playing = 1
     Paused = 2
-    Stopped = 3
+    Ready = 3
 
 
 class Media(HasProperties):
@@ -59,8 +58,6 @@ class Media(HasProperties):
         # Emitted when played (self)
         self.stopped = Signal()
         # Emitted when stopped (self)
-        self.interrupted = Signal()
-        # Emitted after interruption (self)
         self.eos = Signal()
         # End-of-Stream (self)
 
@@ -112,16 +109,12 @@ class Media(HasProperties):
         """
 
     @abstractmethod
-    def interrupt(self):
-        """Interrupt the playback (no fade) and go in STOPPED state."""
-
-    @abstractmethod
     def pause(self):
-        """The media go in PAUSED state and pause the playback."""
+        """The media go in PAUSED state (pause the playback)."""
 
     @abstractmethod
     def play(self):
-        """The media go in PLAYING state and starts the playback."""
+        """The media go in PLAYING state (starts the playback)."""
 
     @abstractmethod
     def seek(self, position):
@@ -133,4 +126,4 @@ class Media(HasProperties):
 
     @abstractmethod
     def stop(self):
-        """The media go in STOPPED state and stop the playback."""
+        """The media go in READY state (stop the playback)."""

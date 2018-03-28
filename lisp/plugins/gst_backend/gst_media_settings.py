@@ -21,7 +21,7 @@ from copy import deepcopy
 
 from PyQt5.QtCore import QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import QGridLayout, QListWidget, QPushButton, \
-    QListWidgetItem
+    QListWidgetItem, QSizePolicy
 
 from lisp.plugins.gst_backend.gst_pipe_edit import GstPipeEditDialog
 from lisp.plugins.gst_backend.settings import pages_by_element
@@ -66,6 +66,7 @@ class GstMediaSettings(SettingsPage):
 
             if page is not None and issubclass(page, SettingsPage):
                 page = page(parent=self)
+                page.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
                 page.loadSettings(
                     settings.get('elements', {}).get(
                         element, page.ELEMENT.class_defaults()))

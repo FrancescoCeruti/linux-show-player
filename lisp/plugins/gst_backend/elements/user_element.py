@@ -33,7 +33,7 @@ class UserElement(GstMediaElement):
     bin = Property(default='')
 
     def __init__(self, pipeline):
-        super().__init__()
+        super().__init__(pipeline)
 
         self.pipeline = pipeline
         self.audio_convert_sink = Gst.ElementFactory.make("audioconvert", None)
@@ -42,9 +42,9 @@ class UserElement(GstMediaElement):
         self.gst_bin.set_property("signal-handoffs", False)
         self.audio_convert_src = Gst.ElementFactory.make("audioconvert", None)
 
-        pipeline.add(self.audio_convert_sink)
-        pipeline.add(self.gst_bin)
-        pipeline.add(self.audio_convert_src)
+        self.pipeline.add(self.audio_convert_sink)
+        self.pipeline.add(self.gst_bin)
+        self.pipeline.add(self.audio_convert_src)
 
         self.audio_convert_sink.link(self.gst_bin)
         self.gst_bin.link(self.audio_convert_src)

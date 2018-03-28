@@ -22,14 +22,14 @@ from PyQt5.QtCore import QAbstractItemModel, Qt, QModelIndex
 from lisp.ui.settings.pages import ABCSettingsPage
 
 
-class SettingsPageNode:
+class PageNode:
     """
-    :type parent: SettingsPageNode
-    :type _children: list[SettingsPageNode]
+    :type parent: PageNode
+    :type _children: list[PageNode]
     """
     def __init__(self, page):
         self.parent = None
-        self.widget = page
+        self.page = page
 
         self._children = []
 
@@ -64,12 +64,12 @@ class SettingsPageNode:
             yield from child.walk()
 
 
-class SettingsPagesTreeModel(QAbstractItemModel):
+class PagesTreeModel(QAbstractItemModel):
     PageRole = Qt.UserRole + 1
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self._root = SettingsPageNode(None)
+        self._root = PageNode(None)
 
     def rowCount(self, parent=QModelIndex()):
         if parent.isValid():
@@ -84,9 +84,9 @@ class SettingsPagesTreeModel(QAbstractItemModel):
         if index.isValid():
             node = index.internalPointer()
             if role == Qt.DisplayRole:
-                return node.widget.Name
-            elif role == SettingsPagesTreeModel.PageRole:
-                return node.widget
+                return node.page.Name
+            elif role == PagesTreeModel.PageRole:
+                return node.page
 
     def headerData(self, section, orientation, role=Qt.DisplayRole):
         return None
@@ -119,7 +119,7 @@ class SettingsPagesTreeModel(QAbstractItemModel):
     def pageIndex(self, page, parent=QModelIndex()):
         parentNode = self.node(parent)
         for row in range(parentNode.childCount()):
-            if parentNode.child(row).widget is page:
+            if parentNode.child(row).page is page:
                 return self.index(row, 0, parent)
 
         return QModelIndex()
@@ -130,7 +130,7 @@ class SettingsPagesTreeModel(QAbstractItemModel):
             position = parentNode.childCount()
 
             self.beginInsertRows(parent, position, position)
-            node = SettingsPageNode(page)
+            node = PageNode(page)
             parentNode.addChild(node)
             self.endInsertRows()
 

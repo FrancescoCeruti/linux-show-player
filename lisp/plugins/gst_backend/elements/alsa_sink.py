@@ -31,11 +31,11 @@ class AlsaSink(GstMediaElement):
 
     device = GstProperty('alsa_sink', 'device', default='')
 
-    def __init__(self, pipe):
-        super().__init__()
+    def __init__(self, pipeline):
+        super().__init__(pipeline)
 
         self.alsa_sink = Gst.ElementFactory.make('alsasink', 'sink')
-        pipe.add(self.alsa_sink)
+        self.pipeline.add(self.alsa_sink)
 
     def sink(self):
         return self.alsa_sink

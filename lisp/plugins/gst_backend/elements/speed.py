@@ -33,7 +33,7 @@ class Speed(GstMediaElement):
     speed = Property(default=1.0)
 
     def __init__(self, pipeline):
-        super().__init__()
+        super().__init__(pipeline)
 
         self.pipeline = pipeline
         self.scale_tempo = Gst.ElementFactory.make("scaletempo", None)

@@ -29,13 +29,13 @@ class PulseSink(GstMediaElement):
     MediaType = MediaType.Audio
     Name = QT_TRANSLATE_NOOP('MediaElementName', 'PulseAudio Out')
 
-    def __init__(self, pipe):
-        super().__init__()
+    def __init__(self, pipeline):
+        super().__init__(pipeline)
 
         self.pulse_sink = Gst.ElementFactory.make('pulsesink', 'sink')
         self.pulse_sink.set_property('client-name', 'Linux Show Player')
 
-        pipe.add(self.pulse_sink)
+        self.pipeline.add(self.pulse_sink)
 
     def sink(self):
         return self.pulse_sink

@@ -40,14 +40,14 @@ class Equalizer10(GstMediaElement):
     band8 = GstProperty('equalizer', 'band8', default=0)
     band9 = GstProperty('equalizer', 'band9', default=0)
 
-    def __init__(self, pipe):
-        super().__init__()
+    def __init__(self, pipeline):
+        super().__init__(pipeline)
 
         self.equalizer = Gst.ElementFactory.make("equalizer-10bands", None)
         self.audio_converter = Gst.ElementFactory.make("audioconvert", None)
 
-        pipe.add(self.equalizer)
-        pipe.add(self.audio_converter)
+        self.pipeline.add(self.equalizer)
+        self.pipeline.add(self.audio_converter)
 
         self.equalizer.link(self.audio_converter)
 

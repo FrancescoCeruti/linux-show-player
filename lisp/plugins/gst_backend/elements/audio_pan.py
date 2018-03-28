@@ -31,14 +31,14 @@ class AudioPan(GstMediaElement):
 
     pan = GstProperty('panorama', 'panorama', default=.0)
 
-    def __init__(self, pipe):
-        super().__init__()
+    def __init__(self, pipeline):
+        super().__init__(pipeline)
 
         self.panorama = Gst.ElementFactory.make("audiopanorama", None)
         self.audio_convert = Gst.ElementFactory.make("audioconvert", None)
 
-        pipe.add(self.panorama)
-        pipe.add(self.audio_convert)
+        self.pipeline.add(self.panorama)
+        self.pipeline.add(self.audio_convert)
 
         self.panorama.link(self.audio_convert)
 

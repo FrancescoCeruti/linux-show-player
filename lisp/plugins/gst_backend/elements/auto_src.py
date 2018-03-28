@@ -28,11 +28,11 @@ class AutoSrc(GstSrcElement):
     MediaType = MediaType.Audio
     Name = QT_TRANSLATE_NOOP('MediaElementName', 'System Input')
 
-    def __init__(self, pipe):
-        super().__init__()
+    def __init__(self, pipeline):
+        super().__init__(pipeline)
 
         self.auto_src = Gst.ElementFactory.make("autoaudiosrc", "src")
-        pipe.add(self.auto_src)
+        self.pipeline.add(self.auto_src)
 
     def src(self):
         return self.auto_src

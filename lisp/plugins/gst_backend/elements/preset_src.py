@@ -47,8 +47,8 @@ class PresetSrc(GstSrcElement):
 
     preset = Property(default='The 42 melody')
 
-    def __init__(self, pipe):
-        super().__init__()
+    def __init__(self, pipeline):
+        super().__init__(pipeline)
         self.n_sample = 0
         self.caps = 'audio/x-raw,format=U8,channels=1,layout=interleaved,' \
                     'rate=' + str(PresetSrc.FREQ)
@@ -62,8 +62,8 @@ class PresetSrc(GstSrcElement):
 
         self.audio_converter = Gst.ElementFactory.make('audioconvert', None)
 
-        pipe.add(self.app_src)
-        pipe.add(self.audio_converter)
+        self.pipeline.add(self.app_src)
+        self.pipeline.add(self.audio_converter)
 
         self.app_src.link(self.audio_converter)
 

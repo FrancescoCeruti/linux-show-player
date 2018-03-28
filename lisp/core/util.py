@@ -201,6 +201,16 @@ def rgetattr(obj, attr, default=rgetattr_sentinel):
     return functools.reduce(_getattr, attr.split('.'), obj)
 
 
+def filter_live_properties(properties):
+    """Can be used to exclude "standard" live properties.
+
+    :param properties: The properties set
+    :type properties: set
+    :return:
+    """
+    return set(p for p in properties if not p.startswith('live_'))
+
+
 class EqEnum(Enum):
     """Value-comparable Enum.
 

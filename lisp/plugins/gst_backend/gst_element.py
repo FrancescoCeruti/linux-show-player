@@ -27,7 +27,6 @@ class GstProperty(Property):
     def __init__(self, element_name, property_name, default=None, adapter=None,
                  **meta):
         super().__init__(default=default, **meta)
-
         self.element_name = element_name
         self.property_name = property_name
         self.adapter = adapter
@@ -39,8 +38,8 @@ class GstProperty(Property):
             if self.adapter is not None:
                 value = self.adapter(value)
 
-            getattr(instance, self.element_name).set_property(
-                self.property_name, value)
+            element = getattr(instance, self.element_name)
+            element.set_property(self.property_name, value)
 
 
 class GstLiveProperty(Property):
@@ -62,13 +61,16 @@ class GstLiveProperty(Property):
         if self.adapter is not None:
             value = self.adapter(value)
 
-        getattr(instance, self.element_name).set_property(
-            self.property_name, value)
+        element = getattr(instance, self.element_name)
+        element.set_property(self.property_name, value)
 
 
-# TODO: base provide base implementation of __init__
 class GstMediaElement(MediaElement):
     """All the subclass must take the pipeline as first __init__ argument"""
+
+    def __init__(self, pipeline):
+        super().__init__()
+        self.pipeline = pipeline
 
     def interrupt(self):
         """Called before Media interrupt"""

@@ -28,6 +28,7 @@ from lisp.core.actions_handler import MainActionsHandler
 from lisp.core.session import Session
 from lisp.core.signal import Signal
 from lisp.core.singleton import Singleton
+from lisp.core.util import filter_live_properties
 from lisp.cues.cue import Cue
 from lisp.cues.cue_factory import CueFactory
 from lisp.cues.cue_model import CueModel
@@ -58,11 +59,11 @@ class Application(metaclass=Singleton):
         self.__session = None
 
         # Register general settings widget
-        AppConfigurationDialog.registerSettingsWidget(
+        AppConfigurationDialog.registerSettingsPage(
             'general', AppGeneral, self.conf)
-        AppConfigurationDialog.registerSettingsWidget(
+        AppConfigurationDialog.registerSettingsPage(
             'general.cue', CueAppSettings, self.conf)
-        AppConfigurationDialog.registerSettingsWidget(
+        AppConfigurationDialog.registerSettingsPage(
             'plugins', PluginsSettings, self.conf)
 
         # Register common cue-settings widgets
@@ -162,7 +163,8 @@ class Application(metaclass=Singleton):
         session_dict = {'cues': []}
 
         for cue in self.__cue_model:
-            session_dict['cues'].append(cue.properties(defaults=False))
+            session_dict['cues'].append(
+                cue.properties(defaults=False, filter=filter_live_properties))
         # Sort cues by index, allow sorted-models to load properly
         session_dict['cues'].sort(key=lambda cue: cue['index'])
 
@@ -173,7 +175,10 @@ class Application(metaclass=Singleton):
 
         # Write to a file the json-encoded dictionary
         with open(session_file, mode='w', encoding='utf-8') as file:
-            file.write(json.dumps(session_dict, sort_keys=True, indent=4))
+            if self.conf['session.minSave']:
+                file.write(json.dumps(session_dict, separators=(',', ':')))
+            else:
+                file.write(json.dumps(session_dict, sort_keys=True, indent=4))
 
         MainActionsHandler.set_saved()
         self.__main_window.update_window_title()
