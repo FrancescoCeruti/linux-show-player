@@ -25,7 +25,7 @@ from lisp.plugins.osc.osc_settings import OscSettings
 from lisp.ui.settings.app_configuration import AppConfigurationDialog
 
 
-# TODO: layout-controls in external plugin (now disabled, see osc_server.py)
+# TODO: layout-controls in external plugin
 class Osc(Plugin):
     """Provide OSC I/O functionality"""
 
@@ -46,6 +46,10 @@ class Osc(Plugin):
             Osc.Config['inPort'],
             Osc.Config['outPort']
         )
+        self.__server.start()
+
+        Osc.Config.changed.connect(self.__config_change)
+        Osc.Config.updated.connect(self.__config_update)
 
     @property
     def server(self):
@@ -53,3 +57,15 @@ class Osc(Plugin):
 
     def terminate(self):
         self.__server.stop()
+
+    def __config_change(self, key, value):
+        if key == 'hostname':
+            self.__server.hostname = value
+        elif key == 'inPort':
+            self.__server.in_port = value
+        elif key == 'outPort':
+            self.__server.out_port = value
+
+    def __config_update(self, diff):
+        for key, value in diff.items():
+            self.__config_change(key, value)

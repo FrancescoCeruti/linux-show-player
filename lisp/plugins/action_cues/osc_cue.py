@@ -82,6 +82,8 @@ class OscCue(Cue):
         super().__init__(**kwargs)
         self.name = translate('CueName', self.Name)
 
+        self.__osc = get_plugin('Osc')
+
         self.__fader = Fader(self, '_position')
         self.__value = 0
         self.__fadein = True
@@ -102,10 +104,7 @@ class OscCue(Cue):
             else:
                 args.append(row[COL_BASE_VAL])
 
-        try:
-            get_plugin('Osc').server.send(self.path, *args)
-        except KeyError:
-            pass
+        self.__osc.server.send(self.path, *args)
 
     _position = property(__get_position, __set_position)
 
@@ -357,10 +356,7 @@ class OscCueSettings(SettingsPage):
                 else:
                     args.append(row[COL_START_VAL])
 
-            try:
-                get_plugin('Osc').server.send(self.path, *args)
-            except KeyError:
-                pass
+            self.__osc.server.send(self.path, *args)
         except ValueError:
             QMessageBox.critical(
                 None, 'Error', 'Error on parsing argument list - nothing sent')

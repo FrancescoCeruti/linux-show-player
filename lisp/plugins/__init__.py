@@ -34,6 +34,10 @@ FALLBACK_CONFIG_PATH = path.join(path.dirname(__file__), 'default.json')
 logger = logging.getLogger(__name__)
 
 
+class PluginNotLoadedError(Exception):
+    pass
+
+
 def load_plugins(application):
     """Load and instantiate available plugins."""
     for name, plugin in load_classes(__package__, path.dirname(__file__)):
@@ -144,4 +148,8 @@ def is_loaded(plugin_name):
 
 
 def get_plugin(plugin_name):
-    return LOADED[plugin_name]
+    if is_loaded(plugin_name):
+        return LOADED[plugin_name]
+    else:
+        raise PluginNotLoadedError(
+            'the requested plugin is not loaded: {}'.format(plugin_name))

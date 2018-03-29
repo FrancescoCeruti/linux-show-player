@@ -21,7 +21,7 @@ from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import QGroupBox, QPushButton, QComboBox, QVBoxLayout, \
     QMessageBox, QTableView, QTableWidget, QHeaderView, QGridLayout
 
-from lisp.plugins import get_plugin
+from lisp.plugins import get_plugin, PluginNotLoadedError
 from lisp.plugins.controller.protocols.protocol import Protocol
 from lisp.ui.qdelegates import ComboBoxDelegate, SpinBoxDelegate, \
     CueActionDelegate
@@ -103,6 +103,10 @@ class MidiSettings(CueSettingsPage):
         self.retranslateUi()
 
         self._default_action = self.cue_type.CueActions[0].name
+        try:
+            self.__midi = get_plugin('Midi').input
+        except PluginNotLoadedError:
+            self.setEnabled(False)
 
     def retranslateUi(self):
         self.addButton.setText(translate('ControllerSettings', 'Add'))
@@ -136,13 +140,14 @@ class MidiSettings(CueSettingsPage):
                 self.midiModel.appendRow(m_type, channel+1, note, options[1])
 
     def capture_message(self):
-        handler = get_plugin('Midi').input
+        handler = self.__midi.input
         handler.alternate_mode = True
         handler.new_message_alt.connect(self.__add_message)
 
-        QMessageBox.information(self, '',
-                                translate('ControllerMidiSettings',
-                                          'Listening MIDI messages ...'))
+        QMessageBox.information(
+            self, '', translate(
+                'ControllerMidiSettings', 'Listening MIDI messages ...')
+        )
 
         handler.new_message_alt.disconnect(self.__add_message)
         handler.alternate_mode = False

@@ -25,6 +25,7 @@ from lisp.cues.cue import Cue, CueAction
 from lisp.plugins.controller import protocols
 from lisp.plugins.controller.controller_settings import ControllerSettings
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
+from lisp.ui.ui_utils import translate
 
 logger = logging.getLogger(__name__)
 
@@ -111,5 +112,7 @@ class Controller(Plugin):
                 self.__protocols[protocol_class.__name__.lower()] = protocol
             except Exception:
                 logger.exception(
-                    'Cannot setup controller protocol "{}"'.format(
-                        protocol_class.__name__))
+                    translate(
+                        'Controller', 'Cannot load controller protocol: "{}"'
+                    ).format(protocol_class.__name__)
+                )

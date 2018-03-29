@@ -53,6 +53,19 @@ class Midi(Plugin):
             self._output_name(Midi.Config['outputDevice']))
         self.__output.open()
 
+        Midi.Config.changed.connect(self.__config_change)
+        Midi.Config.updated.connect(self.__config_update)
+
+    def __config_change(self, key, value):
+        if key == 'inputDevice':
+            self.__input.change_port(self._input_name(value))
+        elif key == 'outputDevice':
+            self.__output.change_port(self._output_name(value))
+
+    def __config_update(self, diff):
+        for key, value in diff.items():
+            self.__config_change(key, value)
+
     def _input_name(self, port_name):
         """Check if port_name exists as an input port for the current backend.
 

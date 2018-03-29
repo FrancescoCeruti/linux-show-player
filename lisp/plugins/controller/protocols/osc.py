@@ -26,12 +26,11 @@ from PyQt5.QtWidgets import QGroupBox, QPushButton, QVBoxLayout, \
     QTableView, QTableWidget, QHeaderView, QGridLayout, QLabel, \
     QDialog, QDialogButtonBox, QLineEdit, QMessageBox
 
-from lisp.plugins import get_plugin
+from lisp.plugins import get_plugin, PluginNotLoadedError
 from lisp.plugins.controller.protocols.protocol import Protocol
 from lisp.plugins.osc.osc_delegate import OscArgumentDelegate
 from lisp.plugins.osc.osc_server import OscMessageType
-from lisp.ui.qdelegates import ComboBoxDelegate, \
-    LineEditDelegate
+from lisp.ui.qdelegates import ComboBoxDelegate, LineEditDelegate
 from lisp.ui.qmodels import SimpleTableModel
 from lisp.ui.settings.pages import CueSettingsPage
 from lisp.ui.ui_utils import translate
@@ -41,11 +40,7 @@ class Osc(Protocol):
     def __init__(self):
         super().__init__()
 
-        try:
-            osc = get_plugin('Osc')
-        except KeyError:
-            raise RuntimeError('Osc plugin is not available.')
-
+        osc = get_plugin('Osc')
         osc.server.new_message.connect(self.__new_message)
 
     def __new_message(self, path, args, types):
@@ -250,6 +245,10 @@ class OscSettings(CueSettingsPage):
         self.retranslateUi()
 
         self._default_action = self.cue_type.CueActions[0].name
+        try:
+            self.__osc = get_plugin('Osc')
+        except PluginNotLoadedError:
+            self.setEnabled(False)
 
     def retranslateUi(self):
         self.addButton.setText(translate('ControllerOscSettings', 'Add'))
@@ -286,13 +285,7 @@ class OscSettings(CueSettingsPage):
                 )
 
     def capture_message(self):
-        try:
-            osc = get_plugin('Osc')
-        except KeyError:
-            # TODO: non silent failure / disable option
-            return
-
-        osc.server.new_message.connect(self.__show_message)
+        self.__osc.server.new_message.connect(self.__show_message)
 
         result = self.captureDialog.exec()
         if result == QDialog.Accepted and self.capturedMessage['path']:
@@ -304,7 +297,7 @@ class OscSettings(CueSettingsPage):
                 self._default_action
         )
 
-        osc.server.new_message.disconnect(self.__show_message)
+        self.__osc.server.new_message.disconnect(self.__show_message)
 
         self.captureLabel.setText('Waiting for message:')
 

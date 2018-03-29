@@ -35,10 +35,7 @@ def get_protocol(name):
     :type name: str
     :rtype: type[TimecodeProtocol]
     """
-    if name in __PROTOCOLS:
-        return __PROTOCOLS[name]
-    else:
-        raise AttributeError('Timecode-Protocol not found', name)
+    return __PROTOCOLS[name]
 
 
 def list_protocols():

@@ -41,6 +41,33 @@ def dict_merge(dct, merge_dct):
             dct[key] = value
 
 
+def dict_merge_diff(dct, cmp_dct):
+    """Return the (merge) difference between two dicts
+
+    Can be considered the "complement" version of dict_merge, the return will
+    be a dictionary that contains all the keys/values that will change if
+    using `dict_merge` on the given dictionaries (in the same order).
+
+    :type dct: Mapping
+    :type cmp_dct: Mapping
+    """
+    diff = {}
+
+    for key, cmp_value in cmp_dct.items():
+        if key in dct:
+            value = dct[key]
+            if isinstance(value, Mapping) and isinstance(cmp_value, Mapping):
+                sub_diff = dict_merge_diff(value, cmp_value)
+                if sub_diff:
+                    diff[key] = sub_diff
+            elif value != cmp_value:
+                diff[key] = cmp_value
+        else:
+            diff[key] = cmp_value
+
+    return diff
+
+
 def find_packages(path='.'):
     """List the python packages in the given directory."""
 

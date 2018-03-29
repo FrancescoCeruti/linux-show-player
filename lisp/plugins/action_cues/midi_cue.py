@@ -16,6 +16,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
+import logging
 
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QGridLayout, QLabel, \
@@ -23,11 +24,13 @@ from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QGridLayout, QLabel, \
 
 from lisp.core.properties import Property
 from lisp.cues.cue import Cue
-from lisp.plugins import get_plugin
+from lisp.plugins import get_plugin, PluginNotLoadedError
 from lisp.plugins.midi.midi_utils import str_msg_to_dict, dict_msg_to_str
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
 from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.ui_utils import translate
+
+logger = logging.getLogger(__name__)
 
 
 class MidiCue(Cue):
@@ -38,11 +41,11 @@ class MidiCue(Cue):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.name = translate('CueName', self.Name)
-        self._output = get_plugin('Midi').output
+        self.__midi = get_plugin('Midi')
 
     def __start__(self, fade=False):
         if self.message:
-            self._output.send_from_str(self.message)
+            self.__midi.output.send_from_str(self.message)
 
         return False
 

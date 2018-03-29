@@ -51,12 +51,7 @@ class Midi(TimecodeProtocol):
         super().__init__()
         self.__last_time = -1
         self.__last_frame = -1
-        self.__midi = None
-
-        try:
-            self.__midi = get_plugin('Midi')
-        except Exception:
-            raise RuntimeError('Midi plugin is not available')
+        self.__midi = get_plugin('Midi')
 
     def __send_full(self, fmt, hours, minutes, seconds, frame):
         """Sends fullframe timecode message.

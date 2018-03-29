@@ -21,7 +21,8 @@
 import logging
 import traceback
 from enum import Enum
-from liblo import ServerThread, Address, ServerError
+from liblo import ServerThread, ServerError
+from threading import Lock
 
 from lisp.core.signal import Signal
 
@@ -103,45 +104,75 @@ class OscMessageType(Enum):
 
 
 class OscServer:
-    def __init__(self, hostname, iport, oport):
+    def __init__(self, hostname, in_port, out_port):
+        self.__in_port = in_port
         self.__hostname = hostname
-        self.__iport = iport
-        self.__oport = oport
+        self.__out_port = out_port
 
         self.__srv = None
-        self.__listening = False
+        self.__running = False
+        self.__lock = Lock()
 
         self.new_message = Signal()
 
+    @property
+    def out_port(self):
+        return self.__out_port
+
+    @out_port.setter
+    def out_port(self, port):
+        with self.__lock:
+            self.__out_port = port
+
+    @property
+    def hostname(self):
+        return self.__hostname
+
+    @hostname.setter
+    def hostname(self, hostname):
+        with self.__lock:
+            self.__hostname = hostname
+
+    @property
+    def in_port(self):
+        return self.__in_port
+
+    @in_port.setter
+    def in_port(self, port):
+        self.__in_port = port
+        self.stop()
+        self.start()
+
+    def is_running(self):
+        return self.__running
+
     def start(self):
-        if self.__listening:
+        if self.__running:
             return
 
         try:
-            self.__srv = ServerThread(self.__iport)
+            self.__srv = ServerThread(self.__in_port)
             self.__srv.add_method(None, None, self.new_message.emit)
             self.__srv.start()
 
-            self.__listening = True
+            self.__running = True
 
-            logger.info('Server started at {}'.format(self.__srv.url))
+            logger.info('OSC server started at {}'.format(self.__srv.url))
         except ServerError:
-            logger.error('Cannot start sever')
+            logger.error('Cannot start OSC sever')
             logger.debug(traceback.format_exc())
 
     def stop(self):
         if self.__srv is not None:
-            if self.__listening:
-                self.__srv.stop()
-                self.__listening = False
+            with self.__lock:
+                if self.__running:
+                    self.__srv.stop()
+                    self.__running = False
 
             self.__srv.free()
-            logger.info('Server stopped')
-
-    @property
-    def listening(self):
-        return self.__listening
+            logger.info('OSC server stopped')
 
     def send(self, path, *args):
-        if self.__listening:
-            self.__srv.send(Address(self.__hostname, self.__oport), path, *args)
+        with self.__lock:
+            if self.__running:
+                self.__srv.send((self.__hostname, self.__out_port), path, *args)

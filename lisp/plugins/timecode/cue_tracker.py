@@ -104,11 +104,12 @@ class TimecodeCueTracker:
 
     def untrack(self):
         """Stop tracking the current cue"""
-        if self.__cue is not None:
-            self.__cue_time.notify.disconnect(self.send)
+        with self.__lock:
+            if self.__cue is not None:
+                self.__cue_time.notify.disconnect(self.send)
 
-            self.__cue_time = None
-            self.__cue = None
+                self.__cue_time = None
+                self.__cue = None
 
     def send(self, time):
         """Send time as timecode"""

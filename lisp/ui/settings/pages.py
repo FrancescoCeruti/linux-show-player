@@ -20,7 +20,7 @@
 from abc import abstractmethod
 
 from PyQt5.QtCore import QModelIndex, Qt
-from PyQt5.QtWidgets import QWidget, QTabWidget, QVBoxLayout, QTreeView, QHBoxLayout, QGridLayout, QSizePolicy
+from PyQt5.QtWidgets import QWidget, QTabWidget, QVBoxLayout, QTreeView, QGridLayout, QSizePolicy
 
 from lisp.core.qmeta import QABCMeta
 from lisp.core.util import dict_merge

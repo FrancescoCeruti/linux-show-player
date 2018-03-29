@@ -30,7 +30,7 @@ from shutil import copyfile
 from lisp import DEFAULT_APP_CONFIG, USER_APP_CONFIG
 from lisp.core.signal import Signal
 from lisp.core.singleton import ABCSingleton
-from lisp.core.util import dict_merge
+from lisp.core.util import dict_merge, dict_merge_diff
 
 logger = logging.getLogger(__name__)
 
@@ -79,7 +79,11 @@ class ConfDict:
     def set(self, path, value):
         try:
             node, key = self.__traverse(self.sp(path), self._root, set_=True)
-            node[key] = value
+            if node.get(key, _UNSET) != value:
+                node[key] = value
+                return True
+
+            return False
         except (KeyError, TypeError):
             raise ConfDictError('invalid path')
 
@@ -96,7 +100,7 @@ class ConfDict:
         :param new_conf: a dict containing the new values
         :type new_conf: dict
         """
-        dict_merge(self._root, new_conf)
+        dict_merge(self._root, deepcopy(new_conf))
 
     def deep_copy(self):
         """Return a deep-copy of the internal dictionary."""
@@ -156,12 +160,17 @@ class Configuration(ConfDict, metaclass=ABCMeta):
         pass
 
     def set(self, path, value):
-        super().set(path, value)
-        self.changed.emit(path, value)
+        changed = super().set(path, value)
+        if changed:
+            self.changed.emit(path, value)
+
+        return changed
 
     def update(self, new_conf):
-        super().update(new_conf)
-        self.updated.emit()
+        diff = dict_merge_diff(self._root, new_conf)
+        if diff:
+            super().update(diff)
+            self.updated.emit(diff)
 
 
 class DummyConfiguration(Configuration):
