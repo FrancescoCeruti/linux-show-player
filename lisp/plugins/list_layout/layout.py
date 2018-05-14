@@ -240,14 +240,14 @@ class ListLayout(QWidget, CueLayout):
         # Remove reference cycle
         del self._edit_actions_group
 
-    def select_all(self, cue_class=Cue):
+    def select_all(self, cue_type=Cue):
         for index in range(self.listView.topLevelItemCount()):
-            if isinstance(self._list_model.item(index), cue_class):
+            if isinstance(self._list_model.item(index), cue_type):
                 self.listView.topLevelItem(index).setSelected(True)
 
-    def deselect_all(self, cue_class=Cue):
+    def deselect_all(self, cue_type=Cue):
         for index in range(self.listView.topLevelItemCount()):
-            if isinstance(self._list_model.item(index), cue_class):
+            if isinstance(self._list_model.item(index), cue_type):
                 self.listView.topLevelItem(index).setSelected(False)
 
     def invert_selection(self):

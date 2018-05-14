@@ -26,7 +26,6 @@ from lisp.core.util import greatest_common_superclass
 from lisp.cues.cue import Cue, CueAction
 from lisp.cues.cue_actions import UpdateCueAction, UpdateCuesAction
 from lisp.layout.cue_menu import CueContextMenu
-from lisp.ui.mainwindow import MainWindow
 from lisp.ui.settings.cue_settings import CueSettingsDialog
 from lisp.ui.ui_utils import adjust_widget_position
 
@@ -171,9 +170,8 @@ class CueLayout(metaclass=QABCMeta):
         for cue in self.cues():
             cue.execute(CueAction.FadeOut)
 
-    @staticmethod
-    def edit_cue(cue):
-        dialog = CueSettingsDialog(cue, parent=MainWindow())
+    def edit_cue(self, cue):
+        dialog = CueSettingsDialog(cue, parent=self.app.window)
 
         def on_apply(settings):
             action = UpdateCueAction(settings, cue)
@@ -182,11 +180,11 @@ class CueLayout(metaclass=QABCMeta):
         dialog.onApply.connect(on_apply)
         dialog.exec_()
 
-    @staticmethod
-    def edit_cues(cues):
+    def edit_cues(self, cues):
         if cues:
             # Use the greatest common superclass between the selected cues
-            dialog = CueSettingsDialog(greatest_common_superclass(cues))
+            dialog = CueSettingsDialog(
+                greatest_common_superclass(cues), parent=self.app.window)
 
             def on_apply(settings):
                 action = UpdateCuesAction(settings, cues)
@@ -195,9 +193,8 @@ class CueLayout(metaclass=QABCMeta):
             dialog.onApply.connect(on_apply)
             dialog.exec_()
 
-    @staticmethod
-    def show_context_menu(position):
-        menu = MainWindow().menuEdit
+    def show_context_menu(self, position):
+        menu = self.app.window.menuEdit
         menu.move(position)
         menu.show()
 

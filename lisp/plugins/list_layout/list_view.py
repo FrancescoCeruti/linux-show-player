@@ -17,7 +17,6 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5 import QtCore
 from PyQt5.QtCore import pyqtSignal, Qt, QDataStream, QIODevice, \
     QT_TRANSLATE_NOOP
 from PyQt5.QtGui import QKeyEvent, QContextMenuEvent, QBrush, QColor
@@ -138,7 +137,7 @@ class CueListView(QTreeWidget):
             row = stream.readInt()
             # Skip column and data
             stream.readInt()
-            for i in range(stream.readInt()):
+            for _ in range(stream.readInt()):
                 stream.readInt()
                 stream.readQVariant()
 

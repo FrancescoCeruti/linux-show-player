@@ -191,24 +191,24 @@ class CartLayout(CueLayout):
     def cue_at(self, index):
         return self._cart_model.item(index)
 
-    def cues(self, cue_class=Cue):
+    def cues(self, cue_type=Cue):
         for cue in self._cart_model:
-            if isinstance(cue, cue_class):
+            if isinstance(cue, cue_type):
                 yield cue
 
-    def selected_cues(self, cue_class=Cue):
+    def selected_cues(self, cue_type=Cue):
         for widget in self._widgets():
-            if widget.selected and isinstance(widget.cue, cue_class):
+            if widget.selected and isinstance(widget.cue, cue_type):
                 yield widget.cue
 
-    def select_all(self, cue_class=Cue):
+    def select_all(self, cue_type=Cue):
         for widget in self._widgets():
-            if isinstance(widget.cue, cue_class):
+            if isinstance(widget.cue, cue_type):
                 widget.selected = True
 
-    def deselect_all(self, cue_class=Cue):
+    def deselect_all(self, cue_type=Cue):
         for widget in self._widgets():
-            if isinstance(widget.cue, cue_class):
+            if isinstance(widget.cue, cue_type):
                 widget.selected = False
 
     def invert_selection(self):

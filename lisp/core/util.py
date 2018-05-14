@@ -123,8 +123,8 @@ def greatest_common_superclass(instances):
             return x
 
 
-def typename(object):
-    return object.__class__.__name__
+def typename(obj):
+    return obj.__class__.__name__
 
 
 def get_lan_ip():

@@ -35,13 +35,13 @@ class MenuAction:
     def __init__(self, priority=MENU_PRIORITY_NONE):
         self.priority = priority
 
-    def show(self, items):
+    def show(self, cues):
         return False
 
-    def text(self, items):
+    def text(self, cues):
         pass
 
-    def action(self, items):
+    def action(self, cues):
         pass
 
 

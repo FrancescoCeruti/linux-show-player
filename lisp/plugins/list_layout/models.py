@@ -96,21 +96,21 @@ class RunningCueModel(ReadOnlyProxyModel):
         super().__init__(model)
         self.__playing = []
 
-    def _item_added(self, cue):
-        cue.end.connect(self._remove)
-        cue.started.connect(self._add)
-        cue.error.connect(self._remove)
-        cue.stopped.connect(self._remove)
-        cue.interrupted.connect(self._remove)
+    def _item_added(self, item):
+        item.end.connect(self._remove)
+        item.started.connect(self._add)
+        item.error.connect(self._remove)
+        item.stopped.connect(self._remove)
+        item.interrupted.connect(self._remove)
 
-    def _item_removed(self, cue):
-        cue.end.disconnect(self._remove)
-        cue.started.disconnect(self._add)
-        cue.error.disconnect(self._remove)
-        cue.stopped.disconnect(self._remove)
-        cue.interrupted.disconnect(self._remove)
+    def _item_removed(self, item):
+        item.end.disconnect(self._remove)
+        item.started.disconnect(self._add)
+        item.error.disconnect(self._remove)
+        item.stopped.disconnect(self._remove)
+        item.interrupted.disconnect(self._remove)
 
-        self._remove(cue)
+        self._remove(item)
 
     def _model_reset(self):
         for cue in self.model:

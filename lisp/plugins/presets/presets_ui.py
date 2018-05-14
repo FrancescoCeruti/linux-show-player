@@ -321,7 +321,7 @@ class PresetsDialog(QDialog):
                 if cues:
                     load_on_cues(preset_name, cues)
             except OSError as e:
-                load_preset_error(e, preset_name, parent=MainWindow())
+                load_preset_error(e, preset_name, parent=self)
 
     def __export_presets(self):
         names = [item.text() for item in self.presetsList.selectedItems()]
