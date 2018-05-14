@@ -44,14 +44,13 @@ class RenameCues(Plugin):
 
     def rename(self):
         # Test if some cues are selected, else select all cues
-        if self.app.layout.get_selected_cues():
-            selected_cues = self.app.layout.get_selected_cues()
-        else:
+        selected_cues = list(self.app.layout.selected_cues())
+        if not selected_cues:
             # TODO : implement dialog box if/when QSettings is implemented
             # the dialog should inform the user that rename_module load only selected cues if needed
             # but it will bother more than being useful if we can't provide a "Don't show again"
             # Could be provided by QErrorMessage if QSettings is supported
-            selected_cues = self.app.cue_model
+            selected_cues = list(self.app.cue_model)
 
         # Initiate rename windows
         renameUi = RenameUi(self.app.window, selected_cues)

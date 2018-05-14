@@ -19,6 +19,7 @@
 
 from PyQt5.QtCore import QAbstractItemModel, Qt, QModelIndex
 
+from lisp.core.util import typename
 from lisp.ui.settings.pages import ABCSettingsPage
 
 
@@ -138,7 +139,7 @@ class PagesTreeModel(QAbstractItemModel):
         else:
             raise TypeError(
                 'SettingsPagesTreeModel page must be an ABCSettingsPage, not {}'
-                    .format(type(page).__name__)
+                    .format(typename(page))
             )
 
     def removePage(self, row, parent=QModelIndex()):

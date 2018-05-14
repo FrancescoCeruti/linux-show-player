@@ -22,14 +22,16 @@ import os
 from PyQt5.QtWidgets import QAction
 
 from lisp.core.plugin import Plugin
-from lisp.layouts.cue_layout import CueLayout
-from lisp.plugins.presets.lib import PRESETS_DIR, load_on_cue, preset_exists
+from lisp.layout.cue_layout import CueLayout
+from lisp.layout.cue_menu import MenuActionsGroup, SimpleMenuAction, MENU_PRIORITY_PLUGIN
+from lisp.plugins.presets.lib import PRESETS_DIR, load_on_cue, preset_exists, load_on_cues
 from lisp.plugins.presets.presets_ui import select_preset_dialog, \
     PresetsDialog, save_preset_dialog, check_override_dialog, write_preset, \
     load_preset_error, write_preset_error
 from lisp.ui.ui_utils import translate
 
 
+# TODO: use logging to report errors
 class Presets(Plugin):
 
     Name = 'Preset'
@@ -49,33 +51,48 @@ class Presets(Plugin):
 
         self.menu_action = self.app.window.menuTools.addAction(self.manageAction)
 
-        self.loadOnCueAction = QAction(None)
-        self.loadOnCueAction.triggered.connect(self.__load_on_cue)
-        self.loadOnCueAction.setText(translate('Presets', 'Load preset'))
+        # Cue menu (context-action)
+        self.cueActionsGroup = MenuActionsGroup(
+            submenu=True,
+            text=translate('Presets', 'Presets'),
+            priority=MENU_PRIORITY_PLUGIN,
+        )
+        self.cueActionsGroup.add(
+            SimpleMenuAction(
+                translate('Presets', 'Load on cue'),
+                self.__load_on_cue,
+                translate('Presets', 'Load on selected cues'),
+                self.__load_on_cues
+            ),
+            SimpleMenuAction(
+                translate('Presets', 'Save as preset'),
+                self.__create_from_cue
+            )
+        )
 
-        self.createFromCueAction = QAction(None)
-        self.createFromCueAction.triggered.connect(self.__create_from_cue)
-        self.createFromCueAction.setText(translate('Presets', 'Save as preset'))
-
-        CueLayout.cm_registry.add_separator()
-        CueLayout.cm_registry.add_item(self.loadOnCueAction)
-        CueLayout.cm_registry.add_item(self.createFromCueAction)
-        CueLayout.cm_registry.add_separator()
+        CueLayout.CuesMenu.add(self.cueActionsGroup)
 
     def __edit_presets(self):
         ui = PresetsDialog(self.app, parent=self.app.window)
         ui.show()
 
-    def __load_on_cue(self):
+    def __load_on_cue(self, cue):
         preset_name = select_preset_dialog()
         if preset_name is not None:
             try:
-                load_on_cue(preset_name, self.app.layout.get_context_cue())
+                load_on_cue(preset_name, cue)
             except OSError as e:
                 load_preset_error(e, preset_name, parent=self.app.window)
 
-    def __create_from_cue(self):
-        cue = self.app.layout.get_context_cue()
+    def __load_on_cues(self, cues):
+        preset_name = select_preset_dialog()
+        if preset_name is not None:
+            try:
+                load_on_cues(preset_name, cues)
+            except OSError as e:
+                load_preset_error(e, preset_name, parent=self.app.window)
+
+    def __create_from_cue(self, cue):
         name = save_preset_dialog(cue.name)
 
         if name is not None:

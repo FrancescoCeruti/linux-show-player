@@ -105,7 +105,10 @@ def check_override_dialog(preset_name):
     answer = QMessageBox.question(
         MainWindow(),
         translate('Presets', 'Presets'),
-        translate('Presets', 'Preset already exists, overwrite?'),
+        translate(
+            'Presets', 'Preset "{}" already exists, overwrite?'
+                .format(preset_name)
+        ),
         buttons=QMessageBox.Yes | QMessageBox.Cancel
     )
 

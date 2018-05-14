@@ -21,7 +21,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QListWidget, QListWidgetItem
 
 from lisp.core.signal import Connection
-from lisp.layouts.list_layout.playing_mediawidget import get_running_widget
+from lisp.plugins.list_layout.playing_widgets import get_running_widget
 
 
 class RunningCuesListWidget(QListWidget):

@@ -20,7 +20,7 @@
 from abc import abstractmethod
 
 
-class MIDICommon():
+class MIDICommon:
     def __init__(self, port_name=None):
         """
         :param port_name: the port name

@@ -45,4 +45,4 @@ class CueRemoveAction(RemoveItemAction):
 class CueMoveAction(MoveItemAction):
     def log(self):
         return 'Move cue from "{}" to "{}"'.format(
-            self._old_index, self._new_index)
+            self._old_index + 1, self._new_index + 1)

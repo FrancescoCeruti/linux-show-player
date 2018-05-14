@@ -62,7 +62,8 @@ class CueListModel(ModelAdapter):
         self.model_reset.emit()
 
     def _item_added(self, item):
-        if not isinstance(item.index, int) or not 0 <= item.index <= len(self.__cues):
+        if (not isinstance(item.index, int) or
+                not 0 <= item.index <= len(self.__cues)):
             item.index = len(self.__cues)
 
         self.__cues.insert(item.index, item)
@@ -85,7 +86,8 @@ class CueListModel(ModelAdapter):
             self.__cues[index].index = index
 
     def __iter__(self):
-        return self.__cues.__iter__()
+        for cue in self.__cues:
+            yield cue
 
 
 class RunningCueModel(ReadOnlyProxyModel):

@@ -80,14 +80,14 @@ class CartLayoutSettings(ConfigurationPage):
         self.retranslateUi()
 
         # Load data
-        self.columnsSpin.setValue(config['cartLayout.gridColumns'])
-        self.rowsSpin.setValue(config['cartLayout.gridRows'])
-        self.showSeek.setChecked(config['cartLayout.showSeek'])
-        self.showDbMeters.setChecked(config['cartLayout.showDbMeters'])
-        self.showAccurate.setChecked(config['cartLayout.showAccurate'])
-        self.showVolume.setChecked(config['cartLayout.showVolume'])
-        self.countdownMode.setChecked(config['cartLayout.countdown'])
-        self.autoAddPage.setChecked(config['cartLayout.autoAddPage'])
+        self.columnsSpin.setValue(config['grid.columns'])
+        self.rowsSpin.setValue(config['grid.rows'])
+        self.showSeek.setChecked(config['show.seekSliders'])
+        self.showDbMeters.setChecked(config['show.dBMeters'])
+        self.showAccurate.setChecked(config['show.accurateTime'])
+        self.showVolume.setChecked(config['show.volumeControls'])
+        self.countdownMode.setChecked(config['countdownMode'])
+        self.autoAddPage.setChecked(config['autoAddPage'])
 
     def retranslateUi(self):
         self.behaviorsGroup.setTitle(
@@ -104,13 +104,13 @@ class CartLayoutSettings(ConfigurationPage):
         self.rowsLabel.setText(translate('CartLayout', 'Number of rows'))
 
     def applySettings(self):
-        self.config['cartLayout.gridColumns'] = self.columnsSpin.value()
-        self.config['cartLayout.gridRows'] = self.rowsSpin.value()
-        self.config['cartLayout.showDbMeters'] = self.showDbMeters.isChecked()
-        self.config['cartLayout.showSeek'] = self.showSeek.isChecked()
-        self.config['cartLayout.showAccurate'] = self.showAccurate.isChecked()
-        self.config['cartLayout.showVolume'] = self.showVolume.isChecked()
-        self.config['cartLayout.countdown'] = self.countdownMode.isChecked()
-        self.config['cartLayout.autoAddPage'] = self.autoAddPage.isChecked()
+        self.config['grid.columns'] = self.columnsSpin.value()
+        self.config['grid.rows'] = self.rowsSpin.value()
+        self.config['show.dBMeters'] = self.showDbMeters.isChecked()
+        self.config['show.seekSliders'] = self.showSeek.isChecked()
+        self.config['show.accurateTime'] = self.showAccurate.isChecked()
+        self.config['show.volumeControls'] = self.showVolume.isChecked()
+        self.config['countdownMode'] = self.countdownMode.isChecked()
+        self.config['autoAddPage'] = self.autoAddPage.isChecked()
 
         self.config.write()

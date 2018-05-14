@@ -26,7 +26,7 @@ from lisp.ui.icons import IconTheme
 from lisp.ui.settings.pages import ConfigurationPage
 
 
-# TODO: just a proof-of concept
+# TODO: add Enable/Disable options for plugins
 class PluginsSettings(ConfigurationPage):
     Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Plugins')
 

@@ -130,4 +130,4 @@ class SeekCueSettings(SettingsPage):
                 QTime.fromMSecsSinceStartOfDay(settings.get('time', 0)))
 
 
-CueSettingsRegistry().add_item(SeekCueSettings, SeekCue)
+CueSettingsRegistry().add(SeekCueSettings, SeekCue)

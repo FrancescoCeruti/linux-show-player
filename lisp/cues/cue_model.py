@@ -18,7 +18,7 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from lisp.core.model import Model
-from lisp.cues.cue import Cue
+from lisp.cues.cue import Cue, CueAction
 
 
 class CueModel(Model):
@@ -43,12 +43,24 @@ class CueModel(Model):
         self.pop(cue.id)
 
     def pop(self, cue_id):
+        """:rtype: Cue"""
         cue = self.__cues.pop(cue_id)
+
+        # Try to interrupt/stop the cue
+        if CueAction.Interrupt in cue.CueActions:
+            cue.interrupt()
+        elif CueAction.Stop in cue.CueActions:
+            cue.stop()
+
         self.item_removed.emit(cue)
 
         return cue
 
     def get(self, cue_id, default=None):
+        """Return the cue with the given id, or the default value.
+
+        :rtype: Cue
+        """
         return self.__cues.get(cue_id, default)
 
     def items(self):

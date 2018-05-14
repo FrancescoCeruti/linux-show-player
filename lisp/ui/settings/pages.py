@@ -23,7 +23,7 @@ from PyQt5.QtCore import QModelIndex, Qt
 from PyQt5.QtWidgets import QWidget, QTabWidget, QVBoxLayout, QTreeView, QGridLayout, QSizePolicy
 
 from lisp.core.qmeta import QABCMeta
-from lisp.core.util import dict_merge
+from lisp.core.util import dict_merge, typename
 from lisp.ui.ui_utils import translate
 
 
@@ -118,7 +118,7 @@ class TabsMultiPage(QWidget):
             raise TypeError(
                 'page must be an {}, not {}'.format(
                     self._PagesBaseClass.__name__,
-                    type(page).__name__)
+                    typename(page))
             )
 
     def removePage(self, index):

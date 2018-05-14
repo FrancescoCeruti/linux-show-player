@@ -56,7 +56,7 @@ class Timecode(Plugin):
         )
 
         # Register cue-settings-page
-        CueSettingsRegistry().add_item(TimecodeSettings, MediaCue)
+        CueSettingsRegistry().add(TimecodeSettings, MediaCue)
         # Register the settings widget
         AppConfigurationDialog.registerSettingsPage(
             'plugins.timecode', TimecodeAppSettings, Timecode.Config)

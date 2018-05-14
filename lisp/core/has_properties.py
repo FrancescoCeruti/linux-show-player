@@ -21,6 +21,7 @@ from abc import ABCMeta
 
 from lisp.core.properties import Property, InstanceProperty
 from lisp.core.signal import Signal
+from lisp.core.util import typename
 
 
 class HasPropertiesMeta(ABCMeta):
@@ -243,8 +244,7 @@ class HasProperties(metaclass=HasPropertiesMeta):
 
         # TODO: PropertyError ??
         raise AttributeError(
-            "'{}' object has no property '{}'".format(
-                type(self).__name__, name)
+            "'{}' object has no property '{}'".format(typename(self), name)
         )
 
 

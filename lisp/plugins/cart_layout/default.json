@@ -1,0 +1,16 @@
+{
+    "_version_": "1",
+    "_enabled_": true,
+    "autoAddPage": true,
+    "countdownMode": true,
+    "grid": {
+        "columns": 7,
+        "rows": 4
+    },
+    "show": {
+        "accurateTime": false,
+        "seekSliders": false,
+        "dBMeters": false,
+        "volumeControls": false
+    }
+}

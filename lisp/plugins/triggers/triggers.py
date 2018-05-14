@@ -41,7 +41,7 @@ class Triggers(Plugin):
         # Cue.triggers -> {trigger: [(target_id, action), ...]}
 
         # Register SettingsPage
-        CueSettingsRegistry().add_item(TriggersSettings)
+        CueSettingsRegistry().add(TriggersSettings)
 
         # On session destroy
         self.app.session_before_finalize.connect(self.session_reset)

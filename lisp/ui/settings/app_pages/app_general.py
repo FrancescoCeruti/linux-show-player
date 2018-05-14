@@ -21,7 +21,7 @@ from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QCheckBox, QComboBox, \
     QGridLayout, QLabel
 
-from lisp import layouts
+from lisp import layout
 from lisp.ui.icons import icon_themes_names
 from lisp.ui.settings.pages import ConfigurationPage
 from lisp.ui.themes import themes_names
@@ -45,8 +45,8 @@ class AppGeneral(ConfigurationPage):
         self.layoutGroup.layout().addWidget(self.startupDialogCheck)
 
         self.layoutCombo = QComboBox(self.layoutGroup)
-        for layout in layouts.get_layouts():
-            self.layoutCombo.addItem(layout.NAME, layout.__name__)
+        for lay in layout.get_layouts():
+            self.layoutCombo.addItem(lay.NAME, lay.__name__)
         self.layoutGroup.layout().addWidget(self.layoutCombo)
 
         self.startupDialogCheck.stateChanged.connect(

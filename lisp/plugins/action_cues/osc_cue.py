@@ -359,7 +359,7 @@ class OscCueSettings(SettingsPage):
             self.__osc.server.send(self.path, *args)
         except ValueError:
             QMessageBox.critical(
-                None, 'Error', 'Error on parsing argument list - nothing sent')
+                self, 'Error', 'Error on parsing argument list - nothing sent')
 
     def __argument_changed(self, index_topleft, index_bottomright, roles):
         if not (Qt.EditRole in roles):
@@ -437,4 +437,4 @@ class OscView(QTableView):
             self.setItemDelegateForColumn(column, delegate)
 
 
-CueSettingsRegistry().add_item(OscCueSettings, OscCue)
+CueSettingsRegistry().add(OscCueSettings, OscCue)

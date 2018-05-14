@@ -1,0 +1,16 @@
+{
+    "_version_": "1.1",
+    "_enabled_": true,
+    "show": {
+        "dBMeters": true,
+        "seekSliders": true,
+        "accurateTime": false,
+        "playingCues": true
+    },
+    "autoContinue": true,
+    "goKey": "Space",
+    "stopCueFade": true,
+    "pauseCueFade": true,
+    "resumeCueFade": true,
+    "interruptCueFade": true
+}

@@ -20,9 +20,8 @@
 import os
 
 from lisp.core.has_properties import Property, HasInstanceProperties
-from lisp.core.memento_model import MementoModelAdapter
 from lisp.core.signal import Signal
-from lisp.cues.cue_memento_model import CueMementoAdapter
+from lisp.core.util import typename
 
 
 class Session(HasInstanceProperties):
@@ -33,11 +32,11 @@ class Session(HasInstanceProperties):
         super().__init__()
         self.finalized = Signal()
 
-        self.layout_type = type(layout).__name__
+        self.layout_type = typename(layout)
 
         self.__layout = layout
         self.__cue_model = layout.cue_model
-        self.__memento_model = CueMementoAdapter(layout.model_adapter)
+        #self.__memento_model = CueMementoAdapter(layout.model_adapter)
 
     @property
     def cue_model(self):

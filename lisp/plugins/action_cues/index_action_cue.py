@@ -200,4 +200,4 @@ class IndexActionCueSettings(SettingsPage):
             return None
 
 
-CueSettingsRegistry().add_item(IndexActionCueSettings, IndexActionCue)
+CueSettingsRegistry().add(IndexActionCueSettings, IndexActionCue)

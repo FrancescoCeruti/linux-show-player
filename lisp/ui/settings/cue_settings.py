@@ -22,6 +22,7 @@ from PyQt5.QtWidgets import QDialog, QDialogButtonBox, QVBoxLayout
 
 from lisp.core.class_based_registry import ClassBasedRegistry
 from lisp.core.singleton import Singleton
+from lisp.core.util import typename
 from lisp.cues.cue import Cue
 from lisp.ui.settings.pages import SettingsPage, CuePageMixin, \
     TabsMultiSettingsPage
@@ -29,12 +30,12 @@ from lisp.ui.ui_utils import translate
 
 
 class CueSettingsRegistry(ClassBasedRegistry, metaclass=Singleton):
-    def add_item(self, item, ref_class=Cue):
+    def add(self, item, ref_class=Cue):
         if not issubclass(item, SettingsPage):
             raise TypeError(
                 'item must be a SettingPage, not {}'.format(item.__name__))
 
-        return super().add_item(item, ref_class)
+        return super().add(item, ref_class)
 
     def filter(self, ref_class=Cue):
         return super().filter(ref_class)
@@ -61,8 +62,6 @@ class CueSettingsDialog(QDialog):
         if isinstance(cue, type):
             if issubclass(cue, Cue):
                 cue_properties = cue.class_defaults()
-                import pprint
-                pprint.pprint(cue_properties)
                 cue_class = cue
             else:
                 raise TypeError(
@@ -76,7 +75,7 @@ class CueSettingsDialog(QDialog):
         else:
             raise TypeError(
                 'invalid cue type, must be a Cue subclass or a Cue object, '
-                'not {}'.format(type(cue).__name__)
+                'not {}'.format(typename(cue))
             )
 
         self.mainPage = TabsMultiSettingsPage(parent=self)

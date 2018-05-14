@@ -1,5 +1,5 @@
 {
-    "_version_": "0.6dev.11",
+    "_version_": "0.6dev.12",
     "cue": {
         "fadeAction": 3,
         "fadeActionType": "Linear",
@@ -46,28 +46,5 @@
     },
     "actions": {
         "maxStackSize": 0
-    },
-    "cartLayout": {
-        "gridColumns": 7,
-        "gridRows": 4,
-        "showSeek": false,
-        "showDbMeters": false,
-        "showAccurate": false,
-        "showVolume": false,
-        "countdown": true,
-        "autoAddPage": true
-    },
-    "listLayout": {
-        "showDbMeters": true,
-        "showSeek": true,
-        "showAccurate": false,
-        "showPlaying": true,
-        "autoContinue": true,
-        "endList": "Stop",
-        "goKey": "Space",
-        "stopCueFade": true,
-        "pauseCueFade": true,
-        "resumeCueFade": true,
-        "interruptCueFade": true
     }
 }

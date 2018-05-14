@@ -23,6 +23,7 @@ from PyQt5.QtCore import QModelIndex, Qt, QSortFilterProxyModel, \
     QAbstractTableModel
 from PyQt5.QtGui import QFont, QColor
 
+from lisp.core.util import typename
 from lisp.ui.logging.common import LogRecordRole, LOG_ATTRIBUTES, LogAttributeRole
 
 
@@ -129,7 +130,7 @@ class LogRecordFilterModel(QSortFilterProxyModel):
         else:
             raise TypeError(
                 'LogRecordFilterModel source must be LogRecordModel, not {}'
-                    .format(type(source_model).__name__)
+                    .format(typename(source_model))
             )
 
     def filterAcceptsRow(self, source_row, source_parent):

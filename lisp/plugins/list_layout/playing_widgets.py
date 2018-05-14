@@ -28,7 +28,7 @@ from lisp.core.signal import Connection
 from lisp.core.util import strtime
 from lisp.cues.cue_time import CueTime
 from lisp.cues.media_cue import MediaCue
-from lisp.layouts.list_layout.control_buttons import CueControlButtons
+from lisp.plugins.list_layout.control_buttons import CueControlButtons
 from lisp.ui.widgets import QClickSlider, QDbMeter
 
 

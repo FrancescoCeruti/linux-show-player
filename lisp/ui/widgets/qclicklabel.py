@@ -29,5 +29,5 @@ class QClickLabel(QLabel):
         super().__init__(parent)
 
     def mouseReleaseEvent(self, e):
-        if(self.contentsRect().contains(e.pos())):
+        if self.contentsRect().contains(e.pos()):
             self.clicked.emit(e)

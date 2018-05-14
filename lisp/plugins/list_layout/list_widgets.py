@@ -17,9 +17,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import QSize
-from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import QLabel, QProgressBar
+from PyQt5.QtCore import QRect, Qt
+from PyQt5.QtGui import QFont, QPainter, QBrush, QColor, QPen, QPainterPath
+from PyQt5.QtWidgets import QLabel, QProgressBar, QWidget
 
 from lisp.core.signal import Connection
 from lisp.core.util import strtime
@@ -28,53 +28,120 @@ from lisp.cues.cue_time import CueTime, CueWaitTime
 from lisp.ui.icons import IconTheme
 
 
-class CueStatusIcon(QLabel):
-    STYLESHEET = 'background: transparent; padding-left: 20px;'
-    SIZE = 16
+class IndexWidget(QLabel):
+    def __init__(self, item, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.setAttribute(Qt.WA_TranslucentBackground)
+        self.setAlignment(Qt.AlignCenter)
 
-    def __init__(self, cue, *args):
+        item.cue.changed('index').connect(self.__update, Connection.QtQueued)
+        self.__update(item.cue.index)
+
+    def __update(self, newIndex):
+        self.setText(str(newIndex + 1))
+
+
+class NameWidget(QLabel):
+    def __init__(self, item, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.setAttribute(Qt.WA_TranslucentBackground)
+
+        item.cue.changed('name').connect(self.__update, Connection.QtQueued)
+        self.__update(item.cue.name)
+
+    def __update(self, newName):
+        self.setText(newName)
+
+
+class CueStatusIcons(QWidget):
+    MARGIN = 6
+
+    def __init__(self, item, *args):
         super().__init__(*args)
-        self.setStyleSheet(CueStatusIcon.STYLESHEET)
+        self._statusPixmap = None
 
-        self.cue = cue
-        self.cue.interrupted.connect(self._stop, Connection.QtQueued)
-        self.cue.started.connect(self._start, Connection.QtQueued)
-        self.cue.stopped.connect(self._stop, Connection.QtQueued)
-        self.cue.paused.connect(self._pause, Connection.QtQueued)
-        self.cue.error.connect(self._error, Connection.QtQueued)
-        self.cue.end.connect(self._stop, Connection.QtQueued)
+        self.item = item
+        self.item.cue.interrupted.connect(self._stop, Connection.QtQueued)
+        self.item.cue.started.connect(self._start, Connection.QtQueued)
+        self.item.cue.stopped.connect(self._stop, Connection.QtQueued)
+        self.item.cue.paused.connect(self._pause, Connection.QtQueued)
+        self.item.cue.error.connect(self._error, Connection.QtQueued)
+        self.item.cue.end.connect(self._stop, Connection.QtQueued)
+
+    def setPixmap(self, pixmap):
+        self._statusPixmap = pixmap
+        self.update()
+
+    def _standbyChange(self):
+        self.update()
 
     def _start(self):
-        self.setPixmap(IconTheme.get('led-running').pixmap(self.SIZE))
+        self.setPixmap(IconTheme.get('led-running').pixmap(self._size()))
 
     def _pause(self):
-        self.setPixmap(IconTheme.get('led-pause').pixmap(self.SIZE))
+        self.setPixmap(IconTheme.get('led-pause').pixmap(self._size()))
 
     def _error(self):
-        self.setPixmap(IconTheme.get('led-error').pixmap(self.SIZE))
+        self.setPixmap(IconTheme.get('led-error').pixmap(self._size()))
 
     def _stop(self):
-        self.setPixmap(IconTheme.get('').pixmap(self.SIZE))
+        self.setPixmap(None)
 
-    def sizeHint(self):
-        return QSize(self.SIZE, self.SIZE)
+    def _size(self):
+        return self.height() - CueStatusIcons.MARGIN * 2
+
+    def paintEvent(self, event):
+        qp = QPainter()
+        qp.begin(self)
+        qp.setRenderHint(QPainter.HighQualityAntialiasing, True)
+
+        status_size = self._size()
+        indicator_height = self.height()
+        indicator_width = indicator_height // 2
+
+        if self.item.current:
+            # Draw something like this
+            # |‾\
+            # |  \
+            # |  /
+            # |_/
+            path = QPainterPath()
+            path.moveTo(0, 1)
+            path.lineTo(0, indicator_height - 1)
+            path.lineTo(indicator_width // 3, indicator_height - 1)
+            path.lineTo(indicator_width, indicator_width)
+            path.lineTo(indicator_width // 3, 0)
+            path.lineTo(0, 1)
+
+            qp.setPen(QPen(QBrush(QColor(0, 0, 0)), 2))
+            qp.setBrush(QBrush(QColor(250, 220, 0)))
+            qp.drawPath(path)
+        if self._statusPixmap is not None:
+            qp.drawPixmap(
+                QRect(
+                    indicator_width + CueStatusIcons.MARGIN,
+                    CueStatusIcons.MARGIN,
+                    status_size, status_size
+                ),
+                self._statusPixmap
+            )
+
+        qp.end()
 
 
 class NextActionIcon(QLabel):
     STYLESHEET = 'background: transparent; padding-left: 1px'
     SIZE = 16
 
-    def __init__(self, cue, *args):
+    def __init__(self, item, *args):
         super().__init__(*args)
         self.setStyleSheet(self.STYLESHEET)
 
-        self.cue = cue
-        self.cue.changed('next_action').connect(
-            self._update_icon, Connection.QtQueued)
+        item.cue.changed('next_action').connect(
+            self.__update, Connection.QtQueued)
+        self.__update(item.cue.next_action)
 
-        self._update_icon(self.cue.next_action)
-
-    def _update_icon(self, next_action):
+    def __update(self, next_action):
         next_action = CueNextAction(next_action)
         pixmap = IconTheme.get('').pixmap(self.SIZE)
 
@@ -89,13 +156,10 @@ class NextActionIcon(QLabel):
 
         self.setPixmap(pixmap)
 
-    def sizeHint(self):
-        return QSize(self.SIZE + 2, self.SIZE)
-
 
 class TimeWidget(QProgressBar):
 
-    def __init__(self, cue, *args):
+    def __init__(self, item, *args):
         super().__init__(*args)
         self.setObjectName('ListTimeWidget')
         self.setValue(0)
@@ -106,7 +170,7 @@ class TimeWidget(QProgressBar):
 
         self.show_zero_duration = False
         self.accurate_time = True
-        self.cue = cue
+        self.cue = item.cue
 
     def _update_time(self, time):
         self.setValue(time)
@@ -127,7 +191,6 @@ class TimeWidget(QProgressBar):
         self.setProperty('state', state)
         self.style().unpolish(self)
         self.style().polish(self)
-        self.update()
 
     def _running(self):
         self._update_style('running')
@@ -147,8 +210,8 @@ class TimeWidget(QProgressBar):
 
 class CueTimeWidget(TimeWidget):
 
-    def __init__(self, cue, *args):
-        super().__init__(cue, *args)
+    def __init__(self, *args):
+        super().__init__(*args)
 
         self.cue.interrupted.connect(self._stop, Connection.QtQueued)
         self.cue.started.connect(self._running, Connection.QtQueued)
@@ -162,11 +225,11 @@ class CueTimeWidget(TimeWidget):
         self.cue_time = CueTime(self.cue)
         self.cue_time.notify.connect(self._update_time, Connection.QtQueued)
 
-        if cue.state & CueState.Running:
+        if self.cue.state & CueState.Running:
             self._running()
-        elif cue.state & CueState.Pause:
+        elif self.cue.state & CueState.Pause:
             self._pause()
-        elif cue.state & CueState.Error:
+        elif self.cue.state & CueState.Error:
             self._error()
         else:
             self._stop()
@@ -178,8 +241,8 @@ class CueTimeWidget(TimeWidget):
 
 class PreWaitWidget(TimeWidget):
 
-    def __init__(self, cue, *args):
-        super().__init__(cue, *args)
+    def __init__(self, *args):
+        super().__init__(*args)
         self.show_zero_duration = True
 
         self.cue.prewait_start.connect(self._running, Connection.QtQueued)
@@ -205,8 +268,8 @@ class PreWaitWidget(TimeWidget):
 
 class PostWaitWidget(TimeWidget):
 
-    def __init__(self, cue, *args):
-        super().__init__(cue, *args)
+    def __init__(self, *args):
+        super().__init__(*args)
         self.show_zero_duration = True
 
         self.cue.changed('next_action').connect(

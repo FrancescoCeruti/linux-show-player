@@ -56,7 +56,7 @@ class Controller(Plugin):
         self.app.cue_model.item_removed.connect(self.__cue_removed)
 
         # Register settings-page
-        CueSettingsRegistry().add_item(ControllerSettings)
+        CueSettingsRegistry().add(ControllerSettings)
 
         # Load available protocols
         self.__load_protocols()

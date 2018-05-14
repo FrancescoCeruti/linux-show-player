@@ -19,14 +19,17 @@
 
 import math
 
-from PyQt5.QtCore import pyqtSignal, Qt
-from PyQt5.QtWidgets import QWidget, QGridLayout, QSizePolicy, qApp
+from PyQt5.QtCore import pyqtSignal, Qt, QPoint
+from PyQt5.QtWidgets import QWidget, QGridLayout, QSizePolicy
 from sortedcontainers import SortedDict
 
+from lisp.core.util import typename
 
-class PageWidget(QWidget):
-    move_drop_event = pyqtSignal(object, int, int)
-    copy_drop_event = pyqtSignal(object, int, int)
+
+class CartPageWidget(QWidget):
+    contextMenuRequested = pyqtSignal(QPoint)
+    moveWidgetRequested = pyqtSignal(object, int, int)
+    copyWidgetRequested = pyqtSignal(object, int, int)
 
     DRAG_MAGIC = 'LiSP_Drag&Drop'
 
@@ -40,9 +43,9 @@ class PageWidget(QWidget):
 
         self.setLayout(QGridLayout())
         self.layout().setContentsMargins(4, 4, 4, 4)
-        self.init_layout()
+        self.initLayout()
 
-    def init_layout(self):
+    def initLayout(self):
         for row in range(0, self.__rows):
             self.layout().setRowStretch(row, 1)
             # item = QSpacerItem(0, 0, QSizePolicy.Minimum, QSizePolicy.Expanding)
@@ -53,8 +56,8 @@ class PageWidget(QWidget):
             # item = QSpacerItem(0, 0, QSizePolicy.Expanding, QSizePolicy.Minimum)
             # self.layout().addItem(item, 0, column)
 
-    def add_widget(self, widget, row, column):
-        self._check_index(row, column)
+    def addWidget(self, widget, row, column):
+        self._checkIndex(row, column)
         if (row, column) not in self.__widgets:
             widget.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
             self.__widgets[(row, column)] = widget
@@ -63,8 +66,8 @@ class PageWidget(QWidget):
         else:
             raise IndexError('cell {} already used'.format((row, column)))
 
-    def take_widget(self, row, column):
-        self._check_index(row, column)
+    def takeWidget(self, row, column):
+        self._checkIndex(row, column)
         if (row, column) in self.__widgets:
             widget = self.__widgets.pop((row, column))
             widget.hide()
@@ -73,15 +76,15 @@ class PageWidget(QWidget):
         else:
             raise IndexError('cell {} is empty'.format((row, column)))
 
-    def move_widget(self, o_row, o_column, n_row, n_column):
-        widget = self.take_widget(o_row, o_column)
-        self.add_widget(widget, n_row, n_column)
+    def moveWidget(self, o_row, o_column, n_row, n_column):
+        widget = self.takeWidget(o_row, o_column)
+        self.addWidget(widget, n_row, n_column)
 
     def widget(self, row, column):
-        self._check_index(row, column)
+        self._checkIndex(row, column)
         return self.__widgets.get((row, column))
 
-    def index(self, widget):
+    def indexOf(self, widget):
         for index, f_widget in self.__widgets.items():
             if widget is f_widget:
                 return index
@@ -94,51 +97,23 @@ class PageWidget(QWidget):
     def reset(self):
         self.__widgets.clear()
 
-    def dragEnterEvent(self, event):
-        if event.mimeData().hasText():
-            if event.mimeData().text() == PageWidget.DRAG_MAGIC:
-                event.accept()
-            else:
-                event.ignore()
-        else:
-            event.ignore()
+    def contextMenuEvent(self, event):
+        self.contextMenuRequested.emit(event.globalPos())
 
-    def dragLeaveEvent(self, event):
-        event.ignore()
+    def dragEnterEvent(self, event):
+        if event.mimeData().text() == CartPageWidget.DRAG_MAGIC:
+            event.accept()
 
     def dropEvent(self, event):
-        row, column = self._event_index(event)
+        row, column = self.indexAt(event.pos())
+
         if self.layout().itemAtPosition(row, column) is None:
-            if qApp.keyboardModifiers() == Qt.ControlModifier:
-                event.setDropAction(Qt.MoveAction)
-                event.accept()
-                self.move_drop_event.emit(event.source(), row, column)
-            elif qApp.keyboardModifiers() == Qt.ShiftModifier:
-                event.setDropAction(Qt.CopyAction)
-                self.copy_drop_event.emit(event.source(), row, column)
-                event.accept()
+            if event.proposedAction() == Qt.MoveAction:
+                self.moveWidgetRequested.emit(event.source(), row, column)
+            elif event.proposedAction() == Qt.CopyAction:
+                self.copyWidgetRequested.emit(event.source(), row, column)
 
-        event.ignore()
-
-    def dragMoveEvent(self, event):
-        row, column = self._event_index(event)
-        if self.layout().itemAtPosition(row, column) is None:
-            event.accept()
-        else:
-            event.ignore()
-
-    def _check_index(self, row, column):
-        if not isinstance(row, int):
-            raise TypeError('rows index must be integers, not {}'
-                            .format(row.__class__.__name__))
-        if not isinstance(column, int):
-            raise TypeError('columns index must be integers, not {}'
-                            .format(column.__class__.__name__))
-
-        if not 0 <= row < self.__rows or not 0 <= column < self.__columns:
-            raise IndexError('index out of bound {}'.format((row, column)))
-
-    def _event_index(self, event):
+    def indexAt(self, pos):
         # Margins and spacings are equals
         space = self.layout().horizontalSpacing()
         margin = self.layout().contentsMargins().right()
@@ -146,7 +121,22 @@ class PageWidget(QWidget):
         r_size = (self.height() + margin * 2) // self.__rows + space
         c_size = (self.width() + margin * 2) // self.__columns + space
 
-        row = math.ceil(event.pos().y() / r_size) - 1
-        column = math.ceil(event.pos().x() / c_size) - 1
+        row = math.ceil(pos.y() / r_size) - 1
+        column = math.ceil(pos.x() / c_size) - 1
 
         return row, column
+
+    def widgetAt(self, pos):
+        return self.widget(*self.indexAt(pos))
+
+    def _checkIndex(self, row, column):
+        if not isinstance(row, int):
+            raise TypeError(
+                'rows index must be integers, not {}'.format(typename(row)))
+        if not isinstance(column, int):
+            raise TypeError(
+                'columns index must be integers, not {}'.format(
+                    typename(column)))
+
+        if not 0 <= row < self.__rows or not 0 <= column < self.__columns:
+            raise IndexError('index out of bound {}'.format((row, column)))

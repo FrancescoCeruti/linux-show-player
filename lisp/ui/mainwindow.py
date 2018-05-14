@@ -119,10 +119,15 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         self.actionRedo = QAction(self)
         self.actionRedo.triggered.connect(MainActionsHandler.redo_action)
         self.multiEdit = QAction(self)
+        self.multiEdit.triggered.connect(self._edit_selected_cue)
         self.selectAll = QAction(self)
+        self.selectAll.triggered.connect(self._select_all)
         self.selectAllMedia = QAction(self)
+        self.selectAllMedia.triggered.connect(self._select_all_media)
         self.deselectAll = QAction(self)
+        self.deselectAll.triggered.connect(self._deselect_all)
         self.invertSelection = QAction(self)
+        self.invertSelection.triggered.connect(self._invert_selection)
 
         self.cueSeparator = self.menuEdit.addSeparator()
         self.menuEdit.addAction(self.actionUndo)
@@ -214,26 +219,13 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
 
     def set_session(self, session):
         if self.session is not None:
-            layout = self.session.layout
-            self.centralWidget().layout().removeWidget(layout)
-
-            self.multiEdit.triggered.disconnect()
-            self.selectAll.triggered.disconnect()
-            self.selectAllMedia.triggered.disconnect()
-            self.deselectAll.triggered.disconnect()
-            self.invertSelection.triggered.disconnect()
+            self.centralWidget().layout().removeWidget(self.session.layout.view())
+            # Remove ownership, this allow the widget to be deleted
+            self.session.layout.view().setParent(None)
 
         self.session = session
-        layout = self.session.layout
-
-        self.centralWidget().layout().addWidget(layout)
-        layout.show()
-
-        self.multiEdit.triggered.connect(self._edit_selected_cue)
-        self.selectAll.triggered.connect(self._select_all)
-        self.invertSelection.triggered.connect(self._invert_selection)
-        self.deselectAll.triggered.connect(self._deselect_all)
-        self.selectAllMedia.triggered.connect(self._select_all_media)
+        self.session.layout.view().show()
+        self.centralWidget().layout().addWidget(self.session.layout.view())
 
     def closeEvent(self, event):
         self._exit()

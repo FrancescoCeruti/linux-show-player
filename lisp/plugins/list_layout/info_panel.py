@@ -29,7 +29,7 @@ class InfoPanel(QWidget):
         self.setLayout(QVBoxLayout())
         self.layout().setContentsMargins(0, 0, 0, 0)
 
-        self.__cue = None
+        self._item = None
 
         # cue name
         self.cueName = QLineEdit(self)
@@ -52,25 +52,30 @@ class InfoPanel(QWidget):
         self.cueDescription.setPlaceholderText(
             translate('ListLayoutInfoPanel', 'Cue description'))
 
-    def cue_changed(self, cue):
-        if self.__cue is not None:
-            self.__cue.changed('name').disconnect(self.__name_changed)
-            self.__cue.changed('description').disconnect(self.__descr_changed)
+    @property
+    def item(self):
+        return self._item
 
-        self.__cue = cue
+    @item.setter
+    def item(self, item):
+        if self._item is not None:
+            self._item.cue.changed('name').disconnect(self._name_changed)
+            self._item.cue.changed('description').disconnect(self._desc_changed)
 
-        if self.__cue is not None:
-            self.__cue.changed('name').connect(self.__name_changed)
-            self.__cue.changed('description').connect(self.__descr_changed)
+        self._item = item
 
-            self.__name_changed(self.__cue.name)
-            self.__descr_changed(self.__cue.description)
+        if self._item is not None:
+            self._item.cue.changed('name').connect(self._name_changed)
+            self._item.cue.changed('description').connect(self._desc_changed)
+
+            self._name_changed(self._item.cue.name)
+            self._desc_changed(self._item.cue.description)
         else:
             self.cueName.clear()
             self.cueDescription.clear()
 
-    def __name_changed(self, name):
-        self.cueName.setText(str(self.__cue.index) + ' - ' + name)
+    def _name_changed(self, name):
+        self.cueName.setText(str(self.item.index + 1) + ' → ' + name)
 
-    def __descr_changed(self, description):
+    def _desc_changed(self, description):
         self.cueDescription.setText(description)

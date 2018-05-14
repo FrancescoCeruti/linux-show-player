@@ -23,7 +23,7 @@ from os.path import exists
 
 from PyQt5.QtWidgets import QDialog, qApp
 
-from lisp import layouts
+from lisp import layout
 from lisp.core.actions_handler import MainActionsHandler
 from lisp.core.session import Session
 from lisp.core.signal import Signal
@@ -36,6 +36,7 @@ from lisp.cues.media_cue import MediaCue
 from lisp.ui.layoutselect import LayoutSelect
 from lisp.ui.mainwindow import MainWindow
 from lisp.ui.settings.app_configuration import AppConfigurationDialog
+from lisp.ui.settings.app_pages.layouts_settings import LayoutsSettings
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
 from lisp.ui.settings.app_pages.app_general import AppGeneral
 from lisp.ui.settings.app_pages.cue_app_settings import CueAppSettings
@@ -64,12 +65,14 @@ class Application(metaclass=Singleton):
         AppConfigurationDialog.registerSettingsPage(
             'general.cue', CueAppSettings, self.conf)
         AppConfigurationDialog.registerSettingsPage(
+            'layouts', LayoutsSettings, self.conf)
+        AppConfigurationDialog.registerSettingsPage(
             'plugins', PluginsSettings, self.conf)
 
         # Register common cue-settings widgets
-        CueSettingsRegistry().add_item(CueGeneralSettings, Cue)
-        CueSettingsRegistry().add_item(MediaCueSettings, MediaCue)
-        CueSettingsRegistry().add_item(Appearance)
+        CueSettingsRegistry().add(CueGeneralSettings, Cue)
+        CueSettingsRegistry().add(MediaCueSettings, MediaCue)
+        CueSettingsRegistry().add(Appearance)
 
         # Connect mainWindow actions
         self.__main_window.new_session.connect(self._new_session_dialog)
@@ -105,7 +108,7 @@ class Application(metaclass=Singleton):
             layout = self.conf.get('layout.default', 'nodefault')
 
             if layout.lower() != 'nodefault':
-                self._new_session(layouts.get_layout(layout))
+                self._new_session(layout.get_layout(layout))
             else:
                 self._new_session_dialog()
 
@@ -191,7 +194,7 @@ class Application(metaclass=Singleton):
 
             # New session
             self._new_session(
-                layouts.get_layout(session_dict['session']['layout_type']))
+                layout.get_layout(session_dict['session']['layout_type']))
             self.__session.update_properties(session_dict['session'])
             self.__session.session_file = session_file
 

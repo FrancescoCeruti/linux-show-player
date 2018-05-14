@@ -123,6 +123,10 @@ def greatest_common_superclass(instances):
             return x
 
 
+def typename(object):
+    return object.__class__.__name__
+
+
 def get_lan_ip():
     """Return active interface LAN IP, or localhost if no address is assigned.
 
@@ -133,7 +137,7 @@ def get_lan_ip():
         # Doesn't have to be reachable
         s.connect(('10.10.10.10', 0))
         ip = s.getsockname()[0]
-    except:
+    except OSError:
         ip = '127.0.0.1'
     finally:
         s.close()

@@ -102,4 +102,4 @@ class StopAllSettings(SettingsPage):
             translate('CueAction', settings.get('action', '')))
 
 
-CueSettingsRegistry().add_item(StopAllSettings, StopAll)
+CueSettingsRegistry().add(StopAllSettings, StopAll)

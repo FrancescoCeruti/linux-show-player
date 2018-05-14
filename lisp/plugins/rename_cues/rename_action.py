@@ -20,6 +20,7 @@
 
 from lisp.core.action import Action
 
+
 class RenameCueAction(Action):
 
     # Store names for undo/redo in a dict like that : {'id': name}

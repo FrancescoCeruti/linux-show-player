@@ -244,4 +244,4 @@ class VolumeSettings(SettingsPage):
                 self.__v_edit_flag = False
 
 
-CueSettingsRegistry().add_item(VolumeSettings, VolumeControl)
+CueSettingsRegistry().add(VolumeSettings, VolumeControl)

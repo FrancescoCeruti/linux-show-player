@@ -29,7 +29,7 @@ class CueTriggers(Enum):
     Started = QT_TRANSLATE_NOOP('CueTriggers', 'Started')
     Paused = QT_TRANSLATE_NOOP('CueTriggers', 'Paused')
     Stopped = QT_TRANSLATE_NOOP('CueTriggers', 'Stopped')
-    Ended = QT_TRANSLATE_NOOP('CueTriggers','Ended')
+    Ended = QT_TRANSLATE_NOOP('CueTriggers', 'Ended')
 
 
 class CueHandler:

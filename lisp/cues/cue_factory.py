@@ -19,6 +19,8 @@
 
 from copy import deepcopy
 
+from lisp.core.util import typename
+
 
 class CueFactory:
     """Provide a generic factory to build different cues types.
@@ -89,7 +91,7 @@ class CueFactory:
         properties = deepcopy(cue.properties())
         properties.pop('id')
 
-        cue = cls.create_cue(cue.__class__.__name__)
+        cue = cls.create_cue(typename(cue))
         cue.update_properties(properties)
 
         return cue

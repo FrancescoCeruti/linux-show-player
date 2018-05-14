@@ -27,8 +27,8 @@ class ClassBasedRegistry:
     .. highlight::
 
         reg = ClassBasedRegistry()
-        reg.add_item('Object-Item', object)
-        reg.add_item('List-Item', list)
+        reg.add('Object-Item', object)
+        reg.add('List-Item', list)
 
         list(reg.filter(object))  # ['Object-Item', 'List-Item']
         list(reg.filter(list))    # ['List-Item']
@@ -37,14 +37,14 @@ class ClassBasedRegistry:
     def __init__(self):
         self._registry = {}
 
-    def add_item(self, item, ref_class=object):
+    def add(self, item, ref_class=object):
         """Register a item for ref_class."""
         if ref_class not in self._registry:
             self._registry[ref_class] = [item]
         elif item not in self._registry[ref_class]:
             self._registry[ref_class].append(item)
 
-    def remove_item(self, item):
+    def remove(self, item):
         """Remove all the occurrences of the given item."""
         for ref_class in self._registry:
             try:

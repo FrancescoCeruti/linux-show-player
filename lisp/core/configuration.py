@@ -30,7 +30,7 @@ from shutil import copyfile
 from lisp import DEFAULT_APP_CONFIG, USER_APP_CONFIG
 from lisp.core.signal import Signal
 from lisp.core.singleton import ABCSingleton
-from lisp.core.util import dict_merge, dict_merge_diff
+from lisp.core.util import dict_merge, dict_merge_diff, typename
 
 logger = logging.getLogger(__name__)
 
@@ -50,7 +50,7 @@ class ConfDict:
         if not isinstance(sep, str):
             raise TypeError(
                 'ConfDict separator must be a str, not {}'.format(
-                    type(sep).__name__)
+                    typename(sep))
             )
 
         self._sep = sep
@@ -62,7 +62,7 @@ class ConfDict:
         else:
             raise TypeError(
                 'ConfDict root must be a dict, not {}'.format(
-                    type(root).__name__)
+                    typename(root))
             )
 
     def get(self, path, default=_UNSET):

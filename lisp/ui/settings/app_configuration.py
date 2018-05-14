@@ -25,6 +25,7 @@ from PyQt5.QtCore import QModelIndex
 from PyQt5.QtWidgets import QVBoxLayout, QDialogButtonBox, QDialog
 
 from lisp.core.dicttree import DictNode
+from lisp.core.util import typename
 from lisp.ui.settings.pages import ConfigurationPage, TreeMultiConfigurationWidget
 from lisp.ui.settings.pages_tree_model import PagesTreeModel
 from lisp.ui.ui_utils import translate
@@ -122,7 +123,7 @@ class AppConfigurationDialog(QDialog):
         else:
             raise TypeError(
                 'AppConfiguration pages must be ConfigurationPage(s), not {}'
-                    .format(type(page).__name__)
+                    .format(typename(page))
             )
 
     @staticmethod

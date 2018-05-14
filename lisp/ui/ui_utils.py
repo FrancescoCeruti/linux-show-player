@@ -22,11 +22,35 @@ from itertools import chain
 from os import path
 
 from PyQt5.QtCore import QTranslator, QLocale
-from PyQt5.QtWidgets import QApplication
+from PyQt5.QtWidgets import QApplication, qApp
 
 from lisp import I18N_PATH
 
 logger = logging.getLogger(__name__)
+
+
+def adjust_widget_position(widget):
+    """Adjust the widget position to ensure it's in the desktop.
+
+    :type widget: PyQt5.QtWidgets.QWidget
+    """
+    widget.setGeometry(adjust_position(widget.geometry()))
+
+
+def adjust_position(rect):
+    """Adjust the given rect to ensure it's in the desktop space.
+
+    :type widget: PyQt5.QtCore.QRect
+    :return: PyQt5.QtCore.QRect
+    """
+    desktop = qApp.desktop().availableGeometry()
+
+    if rect.bottom() > desktop.bottom():
+        rect.moveTo(rect.x(), rect.y() - rect.height())
+    if rect.right() > desktop.right():
+        rect.moveTo(rect.x() - rect.width(), rect.y())
+
+    return rect
 
 
 def qfile_filters(extensions, allexts=True, anyfile=True):

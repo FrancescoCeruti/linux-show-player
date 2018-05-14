@@ -22,41 +22,24 @@ from abc import abstractmethod
 from lisp.core.model import Model, ModelException
 
 
-class ProxyModel(Model):
-    """Proxy that wrap a more generic model to extend its functionality.
-
-    The add, remove, __iter__, __len__ and __contains__ default implementations
-    use the the model ones.
-
-    .. note:
-        The base model cannot be changed.
-        Any ProxyModel could provide it's own methods/signals.
-    """
-
+class ABCProxyModel(Model):
     def __init__(self, model):
         super().__init__()
 
         if not isinstance(model, Model):
-            raise TypeError('ProxyModel model must be a Model object, not {0}'
-                            .format(model.__class__.__name__))
+            raise TypeError(
+                'ProxyModel model must be a Model object, not {0}'.format(
+                    typename(model))
+            )
 
-        self.__model = model
-        self.__model.item_added.connect(self._item_added)
-        self.__model.item_removed.connect(self._item_removed)
-        self.__model.model_reset.connect(self._model_reset)
-
-    def add(self, item):
-        self.__model.add(item)
-
-    def remove(self, item):
-        self.__model.remove(item)
-
-    def reset(self):
-        self.__model.reset()
+        self._model = model
+        self._model.item_added.connect(self._item_added)
+        self._model.item_removed.connect(self._item_removed)
+        self._model.model_reset.connect(self._model_reset)
 
     @property
     def model(self):
-        return self.__model
+        return self._model
 
     @abstractmethod
     def _model_reset(self):
@@ -70,14 +53,35 @@ class ProxyModel(Model):
     def _item_removed(self, item):
         pass
 
+
+class ProxyModel(ABCProxyModel):
+    """Proxy that wrap a more generic model to extend its functionality.
+
+    The add, remove, __iter__, __len__ and __contains__ default implementations
+    use the the model ones.
+
+    .. note:
+        The base model cannot be changed.
+        Any ProxyModel could provide it's own methods/signals.
+    """
+
+    def add(self, item):
+        self._model.add(item)
+
+    def remove(self, item):
+        self._model.remove(item)
+
+    def reset(self):
+        self._model.reset()
+
     def __iter__(self):
-        return self.__model.__iter__()
+        return self._model.__iter__()
 
     def __len__(self):
-        return len(self.__model)
+        return len(self._model)
 
     def __contains__(self, item):
-        return item in self.__model
+        return item in self._model
 
 
 class ReadOnlyProxyModel(ProxyModel):

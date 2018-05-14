@@ -23,7 +23,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog, QComboBox, QPushButton, QFrame,\
     QTextBrowser, QFileDialog, QGridLayout
 
-from lisp import layouts
+from lisp import layout
 from lisp.ui.ui_utils import translate
 
 
@@ -67,7 +67,7 @@ class LayoutSelect(QDialog):
         self.description = QTextBrowser(self)
         self.layout().addWidget(self.description, 2, 0, 1, 3)
 
-        for layout_class in layouts.get_layouts():
+        for layout_class in layout.get_layouts():
             self.layoutCombo.addItem(layout_class.NAME, layout_class)
 
         if self.layoutCombo.count() == 0:

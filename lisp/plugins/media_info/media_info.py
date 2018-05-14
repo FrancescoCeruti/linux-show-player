@@ -20,16 +20,16 @@
 from urllib.request import unquote
 
 from PyQt5 import QtCore
-from PyQt5.QtWidgets import QAction, QMessageBox, QDialog, QVBoxLayout, \
+from PyQt5.QtWidgets import QMessageBox, QDialog, QVBoxLayout, \
     QTreeWidget, QAbstractItemView, QDialogButtonBox, QTreeWidgetItem, \
     QHeaderView
 
 from lisp.core.plugin import Plugin
 from lisp.cues.media_cue import MediaCue
-from lisp.layouts.cue_layout import CueLayout
+from lisp.layout.cue_layout import CueLayout
+from lisp.layout.cue_menu import MenuActionsGroup, SimpleMenuAction, MENU_PRIORITY_PLUGIN
 from lisp.plugins.gst_backend.gst_utils import gst_uri_metadata, \
     gst_parse_tags_list
-from lisp.ui.mainwindow import MainWindow
 from lisp.ui.ui_utils import translate
 
 
@@ -42,15 +42,19 @@ class MediaInfo(Plugin):
     def __init__(self, app):
         super().__init__(app)
 
-        self.menuAction = QAction(None)
-        self.menuAction.triggered.connect(self.show_info)
-        self.menuAction.setText(translate('MediaInfo', 'Media Info'))
+        self.cue_action_group = MenuActionsGroup(
+            priority=MENU_PRIORITY_PLUGIN)
+        self.cue_action_group.add(
+            SimpleMenuAction(
+                translate('MediaInfo', 'Media Info'),
+                self._show_info,
+            )
+        )
 
-        CueLayout.cm_registry.add_separator(MediaCue)
-        CueLayout.cm_registry.add_item(self.menuAction, MediaCue)
+        CueLayout.CuesMenu.add(self.cue_action_group, MediaCue)
 
-    def show_info(self):
-        media_uri = self.app.layout.get_context_cue().media.input_uri()
+    def _show_info(self, cue):
+        media_uri = cue.media.input_uri()
 
         if media_uri is None:
             QMessageBox.warning(
@@ -101,8 +105,7 @@ class MediaInfo(Plugin):
                     info['Tags'] = tags
 
             # Show the dialog
-            dialog = InfoDialog(
-                self.app.window, info, self.app.layout.get_context_cue().name)
+            dialog = InfoDialog(self.app.window, info, cue.name)
             dialog.exec_()
 
 
@@ -113,8 +116,8 @@ class InfoDialog(QDialog):
         self.setWindowTitle(
             translate('MediaInfo', 'Media Info') + ' - ' + title)
         self.setWindowModality(QtCore.Qt.ApplicationModal)
-        self.setMinimumSize(550, 300)
-        self.resize(550, 500)
+        self.setMinimumSize(600, 300)
+        self.resize(600, 300)
         self.setLayout(QVBoxLayout(self))
 
         self.infoTree = QTreeWidget(self)

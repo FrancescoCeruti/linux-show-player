@@ -21,7 +21,7 @@ from threading import Event
 
 from lisp.core.decorators import locked_method
 from lisp.core.fade_functions import ntime, FadeInType, FadeOutType
-from lisp.core.util import rsetattr, rgetattr
+from lisp.core.util import rsetattr, rgetattr, typename
 
 
 class Fader:
@@ -100,7 +100,7 @@ class Fader:
         if not isinstance(fade_type, (FadeInType, FadeOutType)):
             raise AttributeError(
                 'fade_type must be one of FadeInType or FadeOutType members,'
-                'not {}'.format(fade_type.__class__.__name__))
+                'not {}'.format(typename(fade_type)))
 
         try:
             self._time = 0

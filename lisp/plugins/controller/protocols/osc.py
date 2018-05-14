@@ -295,7 +295,7 @@ class OscSettings(CueSettingsPage):
                 self.capturedMessage['types'],
                 args,
                 self._default_action
-        )
+            )
 
         self.__osc.server.new_message.disconnect(self.__show_message)
 
@@ -319,7 +319,7 @@ class OscSettings(CueSettingsPage):
             path = dialog.pathEdit.text()
             if len(path) < 2 or path[0] is not '/':
                 QMessageBox.warning(
-                    None, 'Warning',
+                    self, 'Warning',
                     'Osc path seems not valid, \ndo not forget to edit the '
                     'path later.',
                 )

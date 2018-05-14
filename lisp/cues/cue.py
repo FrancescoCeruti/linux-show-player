@@ -27,7 +27,7 @@ from lisp.core.has_properties import HasProperties
 from lisp.core.properties import Property, WriteOnceProperty
 from lisp.core.rwait import RWait
 from lisp.core.signal import Signal
-from lisp.core.util import EqEnum
+from lisp.core.util import EqEnum, typename
 
 
 class CueState:
@@ -131,7 +131,7 @@ class Cue(HasProperties):
     def __init__(self, id=None):
         super().__init__()
         self.id = str(uuid4()) if id is None else id
-        self._type_ = self.__class__.__name__
+        self._type_ = typename(self)
 
         self._st_lock = Lock()
         self._state = CueState.Stop

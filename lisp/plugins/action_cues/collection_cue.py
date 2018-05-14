@@ -156,4 +156,4 @@ class CollectionModel(SimpleCueListModel):
         return result
 
 
-CueSettingsRegistry().add_item(CollectionCueSettings, CollectionCue)
+CueSettingsRegistry().add(CollectionCueSettings, CollectionCue)

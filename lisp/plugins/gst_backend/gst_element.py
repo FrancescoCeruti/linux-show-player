@@ -20,6 +20,7 @@
 from lisp.backend.media_element import MediaElement, ElementType
 from lisp.core.has_properties import HasInstanceProperties
 from lisp.core.properties import Property, InstanceProperty
+from lisp.core.util import typename
 
 
 class GstProperty(Property):
@@ -147,7 +148,7 @@ class GstMediaElements(HasInstanceProperties):
         self.elements.append(element)
 
         # Add a property for the new added element
-        element_name = element.__class__.__name__
+        element_name = typename(element)
         setattr(self, element_name, InstanceProperty(default=None))
         setattr(self, element_name, element)
 
@@ -165,7 +166,7 @@ class GstMediaElements(HasInstanceProperties):
         element.dispose()
 
         # Remove the element corresponding property
-        delattr(self, element.__class__.__name__)
+        delattr(self, typename(element))
 
     def clear(self):
         while self.elements:

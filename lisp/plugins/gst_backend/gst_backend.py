@@ -59,7 +59,7 @@ class GstBackend(Plugin, BaseBackend):
         AppConfigurationDialog.registerSettingsPage(
             'plugins.gst', GstSettings, GstBackend.Config)
         # Add MediaCue settings widget to the CueLayout
-        CueSettingsRegistry().add_item(GstMediaSettings, MediaCue)
+        CueSettingsRegistry().add(GstMediaSettings, MediaCue)
 
         # Register GstMediaCue factory
         CueFactory.register_factory('GstMediaCue', GstCueFactory(tuple()))

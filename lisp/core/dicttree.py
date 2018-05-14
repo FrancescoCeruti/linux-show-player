@@ -19,6 +19,7 @@
 
 # Used to indicate the default behaviour when a specific option is not found to
 # raise an exception. Created to enable `None` as a valid fallback value.
+from lisp.core.util import typename
 
 _UNSET = object()
 
@@ -45,12 +46,12 @@ class DictNode:
         if not isinstance(node, DictNode):
             raise TypeError(
                 'DictNode children must be a DictNode, not {}'.format(
-                    type(node).__name__)
+                    typename(node))
             )
         if not isinstance(name, str):
             raise TypeError(
                 'DictNode name must be a str, not {}'.format(
-                    type(node).__name__)
+                    typename(node))
             )
         if self.Sep in name:
             raise DictTreeError(
