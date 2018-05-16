@@ -19,9 +19,7 @@
 
 import logging
 from threading import Thread
-from wsgiref.simple_server import make_server
-
-from lisp.core.decorators import async
+from wsgiref.simple_server import make_server, WSGIRequestHandler
 
 logger = logging.getLogger(__name__)
 
@@ -29,12 +27,13 @@ logger = logging.getLogger(__name__)
 class APIServerThread(Thread):
     def __init__(self, host, port, api):
         super().__init__(daemon=True)
-        self.wsgi_server = make_server(host, port, api)
+        self.wsgi_server = make_server(
+            host, port, api, handler_class=APIRequestHandler)
 
     def run(self):
         try:
             logger.info(
-                'Start serving remote API at: Host="{}" Port="{}"'.format(
+                'Start serving network API at: http://{}:{}/'.format(
                     self.wsgi_server.server_address[0],
                     self.wsgi_server.server_address[1],
                 )
@@ -42,12 +41,18 @@ class APIServerThread(Thread):
 
             self.wsgi_server.serve_forever()
 
-            logger.info('Stop serving remote API')
+            logger.info('Stop serving network API')
         except Exception:
-            logger.exception('Remote API server stopped working.')
+            logger.exception('Network API server stopped working.')
 
     def stop(self):
         self.wsgi_server.shutdown()
         self.wsgi_server.server_close()
 
         self.join()
+
+
+class APIRequestHandler(WSGIRequestHandler):
+
+    def log_message(self, format, *args):
+        logger.debug(format % args)

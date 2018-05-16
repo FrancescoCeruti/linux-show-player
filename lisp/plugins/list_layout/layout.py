@@ -137,6 +137,8 @@ class ListLayout(QWidget, CueLayout):
         # CONTROL-BUTTONS (top-right)
         self.controlButtons = ShowControlButtons(parent=self)
         self.controlButtons.setFixedHeight(100)
+
+        # TODO execute_all
         self.controlButtons.stopButton.clicked.connect(self.stop_all)
         self.controlButtons.pauseButton.clicked.connect(self.pause_all)
         self.controlButtons.fadeInButton.clicked.connect(self.fadein_all)
