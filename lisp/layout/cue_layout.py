@@ -49,6 +49,8 @@ class CueLayout(metaclass=QABCMeta):
         self.app = application
 
         self.cue_executed = Signal()    # After a cue is executed
+        self.all_executed = Signal()    # After execute_all is called
+
         self.key_pressed = Signal()     # After a key is pressed
 
     @property
@@ -132,16 +134,21 @@ class CueLayout(metaclass=QABCMeta):
         :rtype: lisp.cues.cue.Cue
         """
 
-    def execute_all(self, action):
+    def execute_all(self, action, quiet=False):
         """Execute the given action on all the layout cues
 
         :param action: The action to be executed
         :type action: CueAction
+        :param quiet: If True `all_executed` is not emitted
+        :type quiet: bool
         """
         for cue in self.cues():
             cue.execute(action)
 
-    # TODO: replace usage with execute_all(action)
+        if not quiet:
+            self.all_executed.emit(action)
+
+    # TODO: replace usage with execute_all(action) and remove
     def stop_all(self):
         fade = self.app.conf.get('layout.stopAllFade', False)
         for cue in self.cues():

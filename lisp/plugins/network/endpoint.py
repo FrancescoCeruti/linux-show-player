@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2017 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,13 +18,11 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class API:
+class EndPoint:
     UriTemplate = ''
 
-    @classmethod
-    def route_to_app(cls, app):
+    def __init__(self, application):
         """
-        :param app: The app to add the route to
-        :type app: falcon.API
+        :type application: lisp.application.Application
         """
-        app.add_route(cls.UriTemplate, cls())
+        self.app = application

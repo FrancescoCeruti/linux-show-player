@@ -108,12 +108,12 @@ def strtime(time, accurate=False):
         return '{:02}:{:02}.00'.format(*time[1:3])
 
 
-def compose_http_url(address, port, path='/'):
-    """Compose an http URL."""
+def compose_url(protocol, host, port, path='/'):
+    """Compose a URL."""
     if not path.startswith('/'):
         path = '/' + path
 
-    return 'http://{}:{}{}'.format(address, port, path)
+    return '{}://{}:{}{}'.format(protocol, host, port, path)
 
 
 def greatest_common_superclass(instances):

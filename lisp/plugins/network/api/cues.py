@@ -21,66 +21,70 @@ import json
 
 import falcon
 
-from lisp.application import Application
 from lisp.cues.cue import CueAction
-from .api import API
+from lisp.plugins.network.endpoint import EndPoint
 
 
-def resolve_cue(req, resp, resource, params):
-    cue_id = params.pop('cue_id', None)
-    cue = Application().cue_model.get(cue_id)
+def resolve_cue(app, cue_id):
+    cue = app.cue_model.get(cue_id)
 
     if cue is None:
         raise falcon.HTTPNotFound()
 
-    params['cue'] = cue
+    return cue
 
 
-class API_CuesList(API):
+class CuesListEndPoint(EndPoint):
     UriTemplate = '/cues'
 
-    def on_get(self, req, resp):
-        resp.status = falcon.HTTP_OK
-        resp.body = json.dumps({
-            'cues': tuple(Application().cue_model.keys())
+    def on_get(self, request, response):
+        response.status = falcon.HTTP_OK
+        response.body = json.dumps({
+            'cues': tuple(self.app.cue_model.keys())
         })
 
 
-@falcon.before(resolve_cue)
-class API_Cue(API):
+class CueEndPoint(EndPoint):
     UriTemplate = '/cues/{cue_id}'
 
-    def on_get(self, req, resp, cue):
-        resp.status = falcon.HTTP_OK
-        resp.body = json.dumps(cue.properties())
+    def on_get(self, request, response, cue_id):
+        cue = resolve_cue(self.app, cue_id)
+
+        response.status = falcon.HTTP_OK
+        response.body = json.dumps(cue.properties())
 
 
-@falcon.before(resolve_cue)
-class API_CueAction(API):
+class CueActionEndPoint(EndPoint):
     UriTemplate = '/cues/{cue_id}/action'
 
-    def on_post(self, req, resp, cue):
+    def on_post(self, request, response, cue_id):
+        cue = resolve_cue(self.app, cue_id)
+
         try:
-            data = json.load(req.stream)
+            data = json.load(request.stream)
             action = CueAction(data['action'])
 
             cue.execute(action=action)
-            resp.status = falcon.HTTP_CREATED
+            response.status = falcon.HTTP_CREATED
         except(KeyError, json.JSONDecodeError):
-            resp.status = falcon.HTTP_BAD_REQUEST
+            response.status = falcon.HTTP_BAD_REQUEST
 
 
-@falcon.before(resolve_cue)
-class API_CueState(API):
+class CueStateEndPoint(EndPoint):
     UriTemplate = '/cues/{cue_id}/state'
 
-    def on_get(self, req, resp, cue):
-        resp.status = falcon.HTTP_OK
-        resp.body = json.dumps({
+    def on_get(self, request, response, cue_id):
+        cue = resolve_cue(self.app, cue_id)
+
+        response.status = falcon.HTTP_OK
+        response.body = json.dumps({
             'state': cue.state,
             'current_time': cue.current_time(),
             'prewait_time': cue.prewait_time(),
             'postwait_time': cue.postwait_time()
         })
 
-API_EXPORT = (API_Cue, API_CueAction, API_CuesList, API_CueState)
+
+__endpoints__ = (
+    CueEndPoint, CueActionEndPoint, CuesListEndPoint, CueStateEndPoint
+)

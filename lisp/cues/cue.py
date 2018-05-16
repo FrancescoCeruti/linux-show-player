@@ -53,13 +53,15 @@ class CueAction(EqEnum):
     FadeIn = 'FadeIn'
     FadeOut = 'FadeOut'
     FadeInStart = 'FadeInStart'
-    FadeOutStop = 'FadeOutStop'
+    FadeInResume = 'FadeInResume'
     FadeOutPause = 'FadeOutPause'
+    FadeOutStop = 'FadeOutStop'
     FadeOutInterrupt = 'FadeOutInterrupt'
     Interrupt = 'Interrupt'
     Start = 'Start'
-    Stop = 'Stop'
+    Resume = 'Resume'
     Pause = 'Pause'
+    Stop = 'Stop'
     DoNothing = 'DoNothing'
 
 
@@ -178,7 +180,7 @@ class Cue(HasProperties):
         :param action: the action to be performed
         :type action: CueAction
         """
-        if action == CueAction.Default:
+        if action is CueAction.Default:
             if self._state & CueState.IsRunning:
                 action = CueAction(self.default_stop_action)
             else:
@@ -191,7 +193,7 @@ class Cue(HasProperties):
                 self.interrupt()
             elif action is CueAction.FadeOutInterrupt:
                 self.interrupt(fade=True)
-            if action is CueAction.Start:
+            elif action is CueAction.Start:
                 self.start()
             elif action is CueAction.FadeInStart:
                 self.start(fade=self.fadein_duration > 0)
@@ -203,6 +205,10 @@ class Cue(HasProperties):
                 self.pause()
             elif action is CueAction.FadeOutPause:
                 self.pause(fade=self.fadeout_duration > 0)
+            elif action is CueAction.Resume:
+                self.resume()
+            elif action is CueAction.FadeInResume:
+                self.resume(fade=self.fadein_duration > 0)
             elif action is CueAction.FadeOut:
                 duration = AppConfig().get('cue.fadeAction', 0)
                 fade = AppConfig().get(

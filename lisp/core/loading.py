@@ -29,7 +29,52 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 
-class load_classes:
+class ModulesLoader:
+    def __init__(self, pkg, pkg_path, exclude=()):
+        """
+        :param pkg: dotted name of the package
+        :param pkg_path: path of the package to scan
+        :param exclude: iterable of excluded modules names
+        """
+        self.pkg = pkg
+        self.excluded = exclude
+        self.pkg_path = pkg_path
+
+    def __iter__(self):
+        return self.load_modules()
+
+    def load_modules(self):
+        """Generate lists of tuples (class-name, class-object)."""
+        for entry in scandir(self.pkg_path):
+
+            # Exclude __init__, __pycache__ and likely
+            if re.match('^__.*', entry.name):
+                continue
+
+            mod_name = entry.name
+            if entry.is_file():
+                # Split filename and extension
+                mod_name, ext = os.path.splitext(entry.name)
+
+                # Exclude all non-python files
+                if not re.match('.py[cod]?', ext):
+                    continue
+
+            # Exclude excluded ¯\_(°^°)_/¯
+            if mod_name in self.excluded:
+                continue
+
+            mod_path = self.pkg + '.' + mod_name
+
+            try:
+                # Import module
+                yield mod_name, import_module(mod_path)
+            except Exception:
+                logger.warning(
+                    'Cannot load module: {0}'.format(mod_name), exc_info=True)
+
+
+class ClassLoader:
     """Generator for iterating over classes in a package.
 
     The class name must be the same as the module name, optionally
@@ -68,51 +113,33 @@ class load_classes:
         `pre` and `suf` must have the same length to work correctly, if some of
         the classes to load have no prefix/suffix an empty one should be used.
         """
-        self.pkg = pkg
         self.prefixes = pre
         self.suffixes = suf
-        self.excluded = exclude
-        self.pkg_path = pkg_path
+
+        self._mods_loader = ModulesLoader(pkg, pkg_path, exclude)
 
     def __iter__(self):
-        return self.load()
+        return self.load_classes()
 
-    def load(self):
-        """Generate lists of tuples (class-name, class-object)."""
-        for entry in scandir(self.pkg_path):
+    def load_classes(self):
+        for mod_name, module in self._mods_loader:
+            # Load classes from imported module
+            for prefix, suffix in zip(self.prefixes, self.suffixes):
+                cls_name = 'undefined'
+                try:
+                    cls_name = module_to_class_name(mod_name, prefix, suffix)
+                    if hasattr(module, cls_name):
+                        cls = getattr(module, cls_name)
+                        yield cls_name, cls
+                except Exception:
+                    logger.warning(
+                        'Cannot load class: {0}'.format(cls_name),
+                        exc_info=True
+                    )
 
-            # Exclude __init__, __pycache__ and likely
-            if re.match('^__.*', entry.name):
-                continue
 
-            mod_name = entry.name
-            if entry.is_file():
-                # Split filename and extension
-                mod_name, ext = os.path.splitext(entry.name)
-
-                # Exclude all non-python files
-                if not re.match('.py[cod]?', ext):
-                    continue
-
-            # Exclude excluded ¯\_(°^°)_/¯
-            if mod_name in self.excluded:
-                continue
-
-            mod_path = self.pkg + '.' + mod_name
-
-            try:
-                # Import module
-                module = import_module(mod_path)
-
-                # Load class from imported module
-                for prefix, suffix in zip(self.prefixes, self.suffixes):
-                    name = module_to_class_name(mod_name, prefix, suffix)
-                    if hasattr(module, name):
-                        cls = getattr(module, name)
-                        yield (name, cls)
-            except Exception:
-                logger.warning(
-                    'Cannot load module: {0}'.format(mod_name), exc_info=True)
+def load_classes(pkg, pkg_path, pre=('',), suf=('',), exclude=()):
+    return ClassLoader(pkg, pkg_path, pre, suf, exclude)
 
 
 def module_to_class_name(mod_name, pre='', suf=''):

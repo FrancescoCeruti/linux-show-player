@@ -29,13 +29,15 @@ from lisp.ui.ui_utils import translate
 CueActionsStrings = {
     CueAction.Default: QT_TRANSLATE_NOOP('CueAction', 'Default'),
     CueAction.FadeInStart: QT_TRANSLATE_NOOP('CueAction', 'Faded Start'),
-    CueAction.FadeOutStop: QT_TRANSLATE_NOOP('CueAction', 'Faded Stop'),
+    CueAction.FadeInResume: QT_TRANSLATE_NOOP('CueAction', 'Faded Resume'),
     CueAction.FadeOutPause: QT_TRANSLATE_NOOP('CueAction', 'Faded Pause'),
-    CueAction.FadeOutInterrupt: QT_TRANSLATE_NOOP(
-        'CueAction', 'Faded Interrupt'),
+    CueAction.FadeOutStop: QT_TRANSLATE_NOOP('CueAction', 'Faded Stop'),
+    CueAction.FadeOutInterrupt:
+        QT_TRANSLATE_NOOP('CueAction', 'Faded Interrupt'),
     CueAction.Start: QT_TRANSLATE_NOOP('CueAction', 'Start'),
-    CueAction.Stop: QT_TRANSLATE_NOOP('CueAction', 'Stop'),
+    CueAction.Resume: QT_TRANSLATE_NOOP('CueAction', 'Resume'),
     CueAction.Pause: QT_TRANSLATE_NOOP('CueAction', 'Pause'),
+    CueAction.Stop: QT_TRANSLATE_NOOP('CueAction', 'Stop'),
     CueAction.DoNothing: QT_TRANSLATE_NOOP('CueAction', 'Do Nothing'),
 }
 

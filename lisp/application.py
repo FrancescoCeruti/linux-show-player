@@ -81,7 +81,7 @@ class Application(metaclass=Singleton):
 
     @property
     def session(self):
-        """:rtype: lisp.core.session.BaseSession"""
+        """:rtype: lisp.core.session.Session"""
         return self.__session
 
     @property

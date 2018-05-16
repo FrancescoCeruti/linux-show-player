@@ -36,10 +36,15 @@ class MediaCue(Cue):
     default_start_action = Property(default=CueAction.FadeInStart.value)
     default_stop_action = Property(default=CueAction.FadeOutStop.value)
 
-    CueActions = (CueAction.Default, CueAction.Start, CueAction.FadeInStart,
-                  CueAction.Stop, CueAction.FadeOutStop, CueAction.Pause,
-                  CueAction.FadeOut, CueAction.FadeIn, CueAction.FadeOutPause,
-                  CueAction.Interrupt, CueAction.FadeOutInterrupt)
+    CueActions = (
+        CueAction.Default,
+        CueAction.Start, CueAction.FadeInStart,
+        CueAction.Resume, CueAction.FadeInResume,
+        CueAction.Stop, CueAction.FadeOutStop,
+        CueAction.Pause, CueAction.FadeOutPause,
+        CueAction.FadeOut, CueAction.FadeIn,
+        CueAction.Interrupt, CueAction.FadeOutInterrupt
+    )
 
     def __init__(self, media, id=None):
         super().__init__(id=id)

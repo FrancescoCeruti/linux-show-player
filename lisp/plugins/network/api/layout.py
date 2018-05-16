@@ -21,33 +21,22 @@ import json
 
 import falcon
 
-from lisp.application import Application
-from .api import API
+from lisp.cues.cue import CueAction
+from lisp.plugins.network.endpoint import EndPoint
 
 
-class API_LayoutAction(API):
+class LayoutActionEndPoint(EndPoint):
     UriTemplate = '/layout/action'
 
     def on_post(self, req, resp):
         try:
             data = json.load(req.stream)
-            action = data['action']
+            action = CueAction(data['action'])
 
+            self.app.layout.execute_all(action, quiet=True)
             resp.status = falcon.HTTP_CREATED
-
-            if action == 'GO':
-                Application().layout.go()
-            elif action == 'STOP_ALL':
-                Application().layout.stop_all()
-            elif action == 'PAUSE_ALL':
-                Application().layout.pause_all()
-            elif action == 'RESUME_ALL':
-                Application().layout.resume_all()
-            else:
-                resp.status = falcon.HTTP_BAD_REQUEST
-
         except(KeyError, json.JSONDecodeError):
             resp.status = falcon.HTTP_BAD_REQUEST
 
 
-API_EXPORT = (API_LayoutAction, )
+__endpoints__ = (LayoutActionEndPoint, )

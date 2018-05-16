@@ -36,7 +36,6 @@ class Session(HasInstanceProperties):
 
         self.__layout = layout
         self.__cue_model = layout.cue_model
-        #self.__memento_model = CueMementoAdapter(layout.model_adapter)
 
     @property
     def cue_model(self):
@@ -48,7 +47,7 @@ class Session(HasInstanceProperties):
     @property
     def layout(self):
         """
-        :rtype: lisp.layouts.cue_layout.CueLayout
+        :rtype: lisp.layout.cue_layout.CueLayout
         """
         return self.__layout
 

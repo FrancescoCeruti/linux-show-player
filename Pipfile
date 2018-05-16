@@ -11,6 +11,8 @@ JACK-Client = "*"
 pyliblo = "*"
 "PyQt5" = "*"
 PyGObject = "*"
+falcon = "*"
+requests = "*"
 
 [dev-packages]
 Cython = "*"
