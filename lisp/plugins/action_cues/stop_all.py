@@ -38,30 +38,16 @@ class StopAll(Cue):
         self.name = translate('CueName', self.Name)
 
     def __start__(self, fade=False):
-        for cue in Application().cue_model:
-            action = self.__adjust_action(cue, CueAction(self.action))
-            if action:
-                cue.execute(action=action)
-
-        return False
-
-    def __adjust_action(self, cue, action, fade=False):
-        if action in cue.CueActions:
-            return action
-        elif action is CueAction.FadeOutPause:
-            return self.__adjust_action(cue, CueAction.Pause, True)
-        elif action is CueAction.Pause and fade:
-            return self.__adjust_action(cue, CueAction.FadeOutStop)
-        elif action is CueAction.FadeOutInterrupt:
-            return self.__adjust_action(cue, CueAction.Interrupt)
-        elif action is CueAction.FadeOutStop:
-            return self.__adjust_action(cue, CueAction.Stop)
-
-        return None
+        Application().layout.execute_all(action=self.action, quiet=True)
 
 
 class StopAllSettings(SettingsPage):
     Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Stop Settings')
+
+    SupportedActions = [
+        CueAction.Stop, CueAction.FadeOutStop, CueAction.Pause,
+        CueAction.FadeOutPause, CueAction.Interrupt, CueAction.FadeOutInterrupt
+    ]
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -73,9 +59,7 @@ class StopAllSettings(SettingsPage):
         self.layout().addWidget(self.group)
 
         self.actionCombo = QComboBox(self.group)
-        for action in [CueAction.Stop, CueAction.FadeOutStop, CueAction.Pause,
-                       CueAction.FadeOutPause, CueAction.Interrupt,
-                       CueAction.FadeOutInterrupt]:
+        for action in StopAllSettings.SupportedActions:
             self.actionCombo.addItem(
                 translate('CueAction', action.name), action.value)
         self.group.layout().addWidget(self.actionCombo)

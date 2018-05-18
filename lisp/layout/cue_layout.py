@@ -148,34 +148,35 @@ class CueLayout(metaclass=QABCMeta):
         if not quiet:
             self.all_executed.emit(action)
 
-    # TODO: replace usage with execute_all(action) and remove
     def stop_all(self):
-        fade = self.app.conf.get('layout.stopAllFade', False)
-        for cue in self.cues():
-            cue.stop(fade=fade)
+        if self.app.conf.get('layout.stopAllFade', False):
+            self.execute_all(CueAction.FadeOutStop)
+        else:
+            self.execute_all(CueAction.Stop)
 
     def interrupt_all(self):
-        fade = self.app.conf.get('layout.interruptAllFade', False)
-        for cue in self.cues():
-            cue.interrupt(fade=fade)
+        if self.app.conf.get('layout.interruptAllFade', False):
+            self.execute_all(CueAction.FadeOutInterrupt)
+        else:
+            self.execute_all(CueAction.Interrupt)
 
     def pause_all(self):
-        fade = self.app.conf.get('layout.pauseAllFade', False)
-        for cue in self.cues():
-            cue.pause(fade=fade)
+        if self.app.conf.get('layout.pauseAllFade', False):
+            self.execute_all(CueAction.FadeOutPause)
+        else:
+            self.execute_all(CueAction.FadeOut)
 
     def resume_all(self):
-        fade = self.app.conf.get('layout.resumeAllFade', True)
-        for cue in self.cues():
-            cue.resume(fade=fade)
+        if self.app.conf.get('layout.resumeAllFade', True):
+            self.execute_all(CueAction.FadeInResume)
+        else:
+            self.execute_all(CueAction.Resume)
 
     def fadein_all(self):
-        for cue in self.cues():
-            cue.execute(CueAction.FadeIn)
+        self.execute_all(CueAction.FadeIn)
 
     def fadeout_all(self):
-        for cue in self.cues():
-            cue.execute(CueAction.FadeOut)
+        self.execute_all(CueAction.FadeOut)
 
     def edit_cue(self, cue):
         dialog = CueSettingsDialog(cue, parent=self.app.window)
