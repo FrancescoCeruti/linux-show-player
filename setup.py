@@ -44,7 +44,7 @@ setup(
     ],
     packages=find_packages(),
     package_data={
-        '': ['i18n/*.qm', '*.qss', '*.cfg'],
+        '': ['i18n/*.qm', '*.qss', '*.json'],
         'lisp.ui.styles': lisp_icons,
     },
     scripts=['linux-show-player']
