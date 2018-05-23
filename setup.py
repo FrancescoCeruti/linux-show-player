@@ -19,7 +19,7 @@ def find_files(directory, regex='.*', rel=''):
 
 
 # List the directories with icons to be installed
-lisp_icons = find_files('lisp/ui/styles/icons', rel='lisp/ui/styles/')
+lisp_icons = find_files('lisp/ui/icons', rel='lisp/ui/icons/')
 
 # Setup function
 setup(
@@ -45,7 +45,7 @@ setup(
     packages=find_packages(),
     package_data={
         '': ['i18n/*.qm', '*.qss', '*.json'],
-        'lisp.ui.styles': lisp_icons,
+        'lisp.ui.icons': lisp_icons,
     },
     scripts=['linux-show-player']
 )
