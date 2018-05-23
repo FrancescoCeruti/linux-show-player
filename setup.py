@@ -38,9 +38,9 @@ setup(
         'python-rtmidi',
         'JACK-Client',
         'pyliblo',
-        'flacon',
+        'falcon',
         'requests',
-        'scandir;python_version<"3.5"', 'falcon'
+        'scandir;python_version<"3.5"',
     ],
     packages=find_packages(),
     package_data={
