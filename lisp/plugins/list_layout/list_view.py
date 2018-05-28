@@ -169,10 +169,7 @@ class CueListView(QTreeWidget):
                 to_index += 1
 
     def contextMenuEvent(self, event):
-        if self.itemAt(event.pos()) is not None:
-            self.contextMenuInvoked.emit(event)
-        else:
-            super().contextMenuEvent(event)
+        self.contextMenuInvoked.emit(event)
 
     def keyPressEvent(self, event):
         event.ignore()

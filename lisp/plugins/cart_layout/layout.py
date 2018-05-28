@@ -21,6 +21,7 @@ from PyQt5.QtCore import QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import QAction, QInputDialog, QMessageBox
 
 from lisp.core.configuration import DummyConfiguration
+from lisp.core.properties import ProxyProperty
 from lisp.core.signal import Connection
 from lisp.cues.cue import Cue
 from lisp.cues.cue_factory import CueFactory
@@ -35,7 +36,6 @@ from lisp.plugins.cart_layout.tab_widget import CartTabWidget
 from lisp.ui.ui_utils import translate
 
 
-# TODO: custom tabs names
 class CartLayout(CueLayout):
     NAME = 'Cart Layout'
     DESCRIPTION = translate(
@@ -52,21 +52,22 @@ class CartLayout(CueLayout):
 
     Config = DummyConfiguration()
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    tabs = ProxyProperty()
+    seek_sliders_visible = ProxyProperty()
+    volume_control_visible = ProxyProperty()
+    dbmeters_visible = ProxyProperty()
+    accurate_time = ProxyProperty()
+    countdown_mode = ProxyProperty()
+
+    def __init__(self, application):
+        super().__init__(application)
 
         self.__columns = CartLayout.Config['grid.columns']
         self.__rows = CartLayout.Config['grid.rows']
 
-        self._show_seek = CartLayout.Config['show.seekSliders']
-        self._show_dbmeter = CartLayout.Config['show.dBMeters']
-        self._show_volume = CartLayout.Config['show.volumeControls']
-        self._accurate_timing = CartLayout.Config['show.accurateTime']
-        self._countdown_mode = CartLayout.Config['countdownMode']
-        self._auto_add_page = CartLayout.Config['autoAddPage']
-
         self._cart_model = CueCartModel(
             self.cue_model, self.__rows, self.__columns)
+        # TODO: move this logic in CartTabWidget ?
         self._cart_model.item_added.connect(
             self.__cue_added, Connection.QtQueued)
         self._cart_model.item_removed.connect(
@@ -96,34 +97,38 @@ class CartLayout(CueLayout):
 
         layout_menu.addSeparator()
 
-        self.countdown_mode = QAction(parent=layout_menu)
-        self.countdown_mode.setCheckable(True)
-        self.countdown_mode.setChecked(self._countdown_mode)
-        self.countdown_mode.triggered.connect(self.set_countdown_mode)
-        layout_menu.addAction(self.countdown_mode)
+        self.countdown_mode_action = QAction(parent=layout_menu)
+        self.countdown_mode_action.setCheckable(True)
+        self.countdown_mode_action.setChecked(
+            CartLayout.Config['countdownMode'])
+        self.countdown_mode_action.triggered.connect(self._set_countdown_mode)
+        layout_menu.addAction(self.countdown_mode_action)
 
         self.show_seek_action = QAction(parent=layout_menu)
         self.show_seek_action.setCheckable(True)
-        self.show_seek_action.setChecked(self._show_seek)
-        self.show_seek_action.triggered.connect(self.set_seek_visible)
+        self.show_seek_action.setChecked(
+            CartLayout.Config['show.seekSliders'])
+        self.show_seek_action.triggered.connect(self._set_seek_bars_visible)
         layout_menu.addAction(self.show_seek_action)
 
         self.show_dbmeter_action = QAction(parent=layout_menu)
         self.show_dbmeter_action.setCheckable(True)
-        self.show_dbmeter_action.setChecked(self._show_dbmeter)
-        self.show_dbmeter_action.triggered.connect(self.set_dbmeter_visible)
+        self.show_dbmeter_action.setChecked(CartLayout.Config['show.dBMeters'])
+        self.show_dbmeter_action.triggered.connect(self._set_dbmeters_visible)
         layout_menu.addAction(self.show_dbmeter_action)
 
         self.show_volume_action = QAction(parent=layout_menu)
         self.show_volume_action.setCheckable(True)
-        self.show_volume_action.setChecked(self._show_volume)
-        self.show_volume_action.triggered.connect(self.set_volume_visible)
+        self.show_volume_action.setChecked(
+            CartLayout.Config['show.volumeControls'])
+        self.show_volume_action.triggered.connect(self._set_volume_controls_visible)
         layout_menu.addAction(self.show_volume_action)
 
         self.show_accurate_action = QAction(parent=layout_menu)
         self.show_accurate_action.setCheckable(True)
-        self.show_accurate_action.setChecked(self._accurate_timing)
-        self.show_accurate_action.triggered.connect(self.set_accurate)
+        self.show_accurate_action.setChecked(
+            CartLayout.Config['show.accurateTime'])
+        self.show_accurate_action.triggered.connect(self._set_accurate_time)
         layout_menu.addAction(self.show_accurate_action)
 
         # Context menu actions
@@ -177,7 +182,7 @@ class CartLayout(CueLayout):
         self.new_pages_action.setText(translate('CartLayout', 'Add pages'))
         self.rm_current_page_action.setText(
             translate('CartLayout', 'Remove current page'))
-        self.countdown_mode.setText(translate('CartLayout', 'Countdown mode'))
+        self.countdown_mode_action.setText(translate('CartLayout', 'Countdown mode'))
         self.show_seek_action.setText(translate('CartLayout', 'Show seek-bars'))
         self.show_dbmeter_action.setText(
             translate('CartLayout', 'Show dB-meters'))
@@ -246,8 +251,8 @@ class CartLayout(CueLayout):
     def remove_page(self, index):
         if self._cart_view.count() > index >= 0:
             page = self._page(index)
-            page.moveDropEvent.disconnect()
-            page.copyDropEvent.disconnect()
+            page.moveWidgetRequested.disconnect()
+            page.copyWidgetRequested.disconnect()
 
             self._cart_model.remove_page(index)
             self._cart_view.removeTab(index)
@@ -259,30 +264,68 @@ class CartLayout(CueLayout):
             for n in range(index, self._cart_view.count()):
                 self._cart_view.setTabText(n, text.format(number=n + 1))
 
-    def set_countdown_mode(self, mode):
-        self._countdown_mode = mode
-        for widget in self._widgets():
-            widget.setCountdownMode(mode)
+    @tabs.get
+    def _get_tabs(self):
+        return self._cart_view.tabTexts()
 
-    def set_accurate(self, enable):
-        self._accurate_timing = enable
+    @tabs.set
+    def _set_tabs(self, texts):
+        missing = len(texts) - self._cart_view.count()
+        if missing > 0:
+            for _ in range(missing):
+                self.add_page()
+
+        self._cart_view.setTabTexts(texts)
+
+    @countdown_mode.set
+    def _set_countdown_mode(self, enable):
+        self.countdown_mode_action.setChecked(enable)
+        for widget in self._widgets():
+            widget.setCountdownMode(enable)
+
+    @countdown_mode.get
+    def _get_countdown_mode(self):
+        return self.countdown_mode_action.isChecked()
+
+    @accurate_time.set
+    def _set_accurate_time(self, enable):
+        self.show_accurate_action.setChecked(enable)
         for widget in self._widgets():
             widget.showAccurateTiming(enable)
 
-    def set_seek_visible(self, visible):
-        self._show_seek = visible
+    @accurate_time.get
+    def _get_accurate_time(self):
+        return self.show_accurate_action.isChecked()
+
+    @seek_sliders_visible.set
+    def _set_seek_bars_visible(self, visible):
+        self.show_seek_action.setChecked(visible)
         for widget in self._widgets():
             widget.showSeekSlider(visible)
 
-    def set_dbmeter_visible(self, visible):
-        self._show_dbmeter = visible
+    @seek_sliders_visible.get
+    def _get_seek_bars_visible(self):
+        return self.show_seek_action.isChecked()
+
+    @dbmeters_visible.set
+    def _set_dbmeters_visible(self, visible):
+        self.show_dbmeter_action.setChecked(visible)
         for widget in self._widgets():
             widget.showDBMeters(visible)
 
-    def set_volume_visible(self, visible):
-        self._show_volume = visible
+    @dbmeters_visible.get
+    def _get_dbmeters_visible(self):
+        return self.show_dbmeter_action.isChecked()
+
+    @volume_control_visible.set
+    def _set_volume_controls_visible(self, visible):
+        self.show_volume_action.setChecked(visible)
         for widget in self._widgets():
             widget.showVolumeSlider(visible)
+
+    @volume_control_visible.get
+    def _get_volume_controls_visible(self):
+        return self.show_volume_action.isChecked()
 
     def to_3d_index(self, index):
         page_size = self.__rows * self.__columns
@@ -363,11 +406,11 @@ class CartLayout(CueLayout):
         widget.cueExecuted.connect(self.cue_executed.emit)
         widget.editRequested.connect(self.edit_cue)
 
-        widget.showAccurateTiming(self._accurate_timing)
-        widget.setCountdownMode(self._countdown_mode)
-        widget.showVolumeSlider(self._show_volume)
-        widget.showDBMeters(self._show_dbmeter)
-        widget.showSeekSlider(self._show_seek)
+        widget.showAccurateTiming(self.accurate_time)
+        widget.setCountdownMode(self.countdown_mode)
+        widget.showVolumeSlider(self.volume_control_visible)
+        widget.showDBMeters(self.dbmeters_visible)
+        widget.showSeekSlider(self.seek_sliders_visible)
 
         page, row, column = self.to_3d_index(cue.index)
         if page >= self._cart_view.count():

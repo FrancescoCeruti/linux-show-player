@@ -26,6 +26,8 @@ from lisp.core.util import typename
 
 class Session(HasInstanceProperties):
     layout_type = Property(default='')
+    layout = Property(default={})
+
     session_file = Property(default='')
 
     def __init__(self, layout):
@@ -33,23 +35,9 @@ class Session(HasInstanceProperties):
         self.finalized = Signal()
 
         self.layout_type = typename(layout)
+        self.layout = layout
 
-        self.__layout = layout
-        self.__cue_model = layout.cue_model
-
-    @property
-    def cue_model(self):
-        """
-        :rtype: lisp.cues.cue_model.CueModel
-        """
-        return self.__cue_model
-
-    @property
-    def layout(self):
-        """
-        :rtype: lisp.layout.cue_layout.CueLayout
-        """
-        return self.__layout
+        self.cue_model = layout.cue_model
 
     def name(self):
         """Return the name of session, depending on the session-file."""
@@ -77,7 +65,7 @@ class Session(HasInstanceProperties):
         return os.path.relpath(abs_path, start=self.path())
 
     def finalize(self):
-        self.__layout.finalize()
-        self.__cue_model.reset()
+        self.layout.finalize()
+        self.cue_model.reset()
 
         self.finalized.emit()

@@ -162,6 +162,7 @@ class Application(metaclass=Singleton):
         """Save the current session into a file."""
         self.session.session_file = session_file
 
+        # TODO: move cues into session ?
         # Add the cues
         session_dict = {'cues': []}
 

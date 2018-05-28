@@ -20,13 +20,18 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QTabWidget
 
+from lisp.ui.widgets.qeditabletabbar import QEditableTabBar
+
 
 class CartTabWidget(QTabWidget):
     DRAG_MAGIC = 'LiSP_Drag&Drop'
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.setTabBar(QEditableTabBar(self))
+        self.tabBar().setDrawBase(False)
         self.tabBar().setObjectName('CartTabBar')
+
         self.setFocusPolicy(Qt.StrongFocus)
         self.setAcceptDrops(True)
 
@@ -41,6 +46,17 @@ class CartTabWidget(QTabWidget):
 
     def dropEvent(self, event):
         event.ignore()
+
+    def tabTexts(self):
+        texts = []
+        for i in range(self.tabBar().count()):
+            texts.append(self.tabBar().tabText(i))
+
+        return texts
+
+    def setTabTexts(self, texts):
+        for i, text in enumerate(texts):
+            self.tabBar().setTabText(i, text)
 
     def pages(self):
         for index in range(self.count()):

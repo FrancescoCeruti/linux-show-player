@@ -17,12 +17,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from enum import Enum
-
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtGui import QKeySequence
-from PyQt5.QtWidgets import QWidget, QAction, qApp, QGridLayout, \
-    QPushButton, QSizePolicy
+from PyQt5.QtWidgets import QAction
 
 from lisp.core.configuration import DummyConfiguration
 from lisp.core.signal import Connection
@@ -30,20 +27,13 @@ from lisp.cues.cue import Cue, CueAction
 from lisp.cues.cue_memento_model import CueMementoAdapter
 from lisp.layout.cue_layout import CueLayout
 from lisp.layout.cue_menu import SimpleMenuAction, MENU_PRIORITY_CUE, MenuActionsGroup
-from lisp.plugins.list_layout.control_buttons import ShowControlButtons
-from lisp.plugins.list_layout.info_panel import InfoPanel
 from lisp.plugins.list_layout.list_view import CueListView
 from lisp.plugins.list_layout.models import CueListModel, RunningCueModel
-from lisp.plugins.list_layout.playing_view import RunningCuesListWidget
+from lisp.plugins.list_layout.view import ListLayoutView
 from lisp.ui.ui_utils import translate
 
 
-class EndListBehavior(Enum):
-    Stop = 'Stop'
-    Restart = 'Restart'
-
-
-class ListLayout(QWidget, CueLayout):
+class ListLayout(CueLayout):
     NAME = 'List Layout'
     DESCRIPTION = QT_TRANSLATE_NOOP(
         'LayoutDescription', 'Organize the cues in a list')
@@ -51,34 +41,44 @@ class ListLayout(QWidget, CueLayout):
         QT_TRANSLATE_NOOP(
             'LayoutDetails', 'SHIFT + Space or Double-Click to edit a cue'),
         QT_TRANSLATE_NOOP(
-            'LayoutDetails', 'CTRL + Left Click to select cues'),
-        QT_TRANSLATE_NOOP(
             'LayoutDetails', 'To copy cues drag them while pressing CTRL'),
         QT_TRANSLATE_NOOP(
             'LayoutDetails', 'To move cues drag them')
     ]
     Config = DummyConfiguration()
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.setLayout(QGridLayout())
-        self.layout().setContentsMargins(0, 0, 0, 0)
-
+    def __init__(self, application):
+        super().__init__(application)
         self._list_model = CueListModel(self.cue_model)
         self._list_model.item_added.connect(self.__cue_added)
         self._memento_model = CueMementoAdapter(self._list_model)
+        self._running_model = RunningCueModel(self.cue_model)
 
-        self._playing_model = RunningCueModel(self.cue_model)
-        self._current_index = -1
-        self._context_item = None
-
-        self._show_dbmeter = ListLayout.Config['show.dBMeters']
-        self._show_playing = ListLayout.Config['show.playingCues']
-        self._show_seekslider = ListLayout.Config['show.seekSliders']
-        self._accurate_time = ListLayout.Config['show.accurateTime']
         self._auto_continue = ListLayout.Config['autoContinue']
         self._go_key_sequence = QKeySequence(
             ListLayout.Config['goKey'], QKeySequence.NativeText)
+
+        self._view = ListLayoutView(self._list_model, self._running_model)
+        # GO button
+        self._view.goButton.clicked.connect(self.__go_slot)
+        # Global actions
+        self._view.controlButtons.stopButton.clicked.connect(self.stop_all)
+        self._view.controlButtons.pauseButton.clicked.connect(self.pause_all)
+        self._view.controlButtons.fadeInButton.clicked.connect(self.fadein_all)
+        self._view.controlButtons.fadeOutButton.clicked.connect(self.fadeout_all)
+        self._view.controlButtons.resumeButton.clicked.connect(self.resume_all)
+        self._view.controlButtons.interruptButton.clicked.connect(self.interrupt_all)
+        # Cue list
+        self._view.listView.itemDoubleClicked.connect(self._double_clicked)
+        self._view.listView.contextMenuInvoked.connect(self._context_invoked)
+        self._view.listView.keyPressed.connect(self._key_pressed)
+
+        # TODO: session values
+        self._set_running_visible(ListLayout.Config['show.playingCues'])
+        self._set_dbmeters_visible(ListLayout.Config['show.dBMeters'])
+        self._set_seeksliders_visible(ListLayout.Config['show.seekSliders'])
+        self._set_accurate_time(ListLayout.Config['show.accurateTime'])
+        self._set_selection_mode(False)
 
         # Layout menu
         menuLayout = self.app.window.menuLayout
@@ -86,18 +86,18 @@ class ListLayout(QWidget, CueLayout):
         self.showPlayingAction = QAction(parent=menuLayout)
         self.showPlayingAction.setCheckable(True)
         self.showPlayingAction.setChecked(self._show_playing)
-        self.showPlayingAction.triggered.connect(self._set_playing_visible)
+        self.showPlayingAction.triggered.connect(self._set_running_visible)
         menuLayout.addAction(self.showPlayingAction)
 
         self.showDbMeterAction = QAction(parent=menuLayout)
         self.showDbMeterAction.setCheckable(True)
         self.showDbMeterAction.setChecked(self._show_dbmeter)
-        self.showDbMeterAction.triggered.connect(self._set_dbmeter_visible)
+        self.showDbMeterAction.triggered.connect(self._set_dbmeters_visible)
         menuLayout.addAction(self.showDbMeterAction)
 
         self.showSeekAction = QAction(parent=menuLayout)
         self.showSeekAction.setCheckable(True)
-        self.showSeekAction.setChecked(self._show_seekslider)
+        self.showSeekAction.setChecked(self._seeksliders_visible)
         self.showSeekAction.triggered.connect(self._set_seeksliders_visible)
         menuLayout.addAction(self.showSeekAction)
 
@@ -119,52 +119,6 @@ class ListLayout(QWidget, CueLayout):
         self.selectionModeAction.triggered.connect(self._set_selection_mode)
         menuLayout.addAction(self.selectionModeAction)
 
-        # GO-BUTTON (top-left)
-        self.goButton = QPushButton('GO', self)
-        self.goButton.setFocusPolicy(Qt.NoFocus)
-        self.goButton.setFixedWidth(120)
-        self.goButton.setFixedHeight(100)
-        self.goButton.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
-        self.goButton.setStyleSheet('font-size: 48pt;')
-        self.goButton.clicked.connect(self.__go_slot)
-        self.layout().addWidget(self.goButton, 0, 0)
-
-        # INFO PANEL (top center)
-        self.infoPanel = InfoPanel()
-        self.infoPanel.setFixedHeight(100)
-        self.layout().addWidget(self.infoPanel, 0, 1)
-
-        # CONTROL-BUTTONS (top-right)
-        self.controlButtons = ShowControlButtons(parent=self)
-        self.controlButtons.setFixedHeight(100)
-
-        self.controlButtons.stopButton.clicked.connect(self.stop_all)
-        self.controlButtons.pauseButton.clicked.connect(self.pause_all)
-        self.controlButtons.fadeInButton.clicked.connect(self.fadein_all)
-        self.controlButtons.fadeOutButton.clicked.connect(self.fadeout_all)
-        self.controlButtons.resumeButton.clicked.connect(self.resume_all)
-        self.controlButtons.interruptButton.clicked.connect(self.interrupt_all)
-        self.layout().addWidget(self.controlButtons, 0, 2)
-
-        # CUE VIEW (center left)
-        self.listView = CueListView(self._list_model, self)
-        self.listView.setSelectionMode(CueListView.NoSelection)
-        self.listView.itemDoubleClicked.connect(self._double_clicked)
-        self.listView.contextMenuInvoked.connect(self._context_invoked)
-        self.listView.keyPressed.connect(self._key_press_event)
-        self.layout().addWidget(self.listView, 1, 0, 1, 2)
-
-        # PLAYING VIEW (center right)
-        self.playView = RunningCuesListWidget(self._playing_model, parent=self)
-        self.playView.dbmeter_visible = self._show_dbmeter
-        self.playView.accurate_time = self._accurate_time
-        self.playView.seek_visible = self._show_seekslider
-        self.playView.setMinimumWidth(300)
-        self.playView.setMaximumWidth(300)
-        self.layout().addWidget(self.playView, 1, 2)
-
-        self._set_playing_visible(self._show_playing)
-
         # Context menu actions
         self._edit_actions_group = MenuActionsGroup(priority=MENU_PRIORITY_CUE)
         self._edit_actions_group.add(
@@ -184,9 +138,9 @@ class ListLayout(QWidget, CueLayout):
 
         self.CuesMenu.add(self._edit_actions_group)
 
-        self.retranslateUi()
+        self.retranslate()
 
-    def retranslateUi(self):
+    def retranslate(self):
         self.showPlayingAction.setText(
             translate('ListLayout', 'Show playing cues'))
         self.showDbMeterAction.setText(
@@ -203,13 +157,13 @@ class ListLayout(QWidget, CueLayout):
         yield from self._list_model
 
     def view(self):
-        return self
+        return self._view
 
     def standby_index(self):
-        return self.listView.standbyIndex()
+        return self._view.listView.standbyIndex()
 
     def set_standby_index(self, index):
-        self.listView.setStandbyIndex(index)
+        self._view.listView.setStandbyIndex(index)
 
     def go(self, action=CueAction.Default, advance=1):
         standby_cue = self.standby_cue()
@@ -223,40 +177,35 @@ class ListLayout(QWidget, CueLayout):
     def cue_at(self, index):
         return self._list_model.item(index)
 
-    def contextMenuEvent(self, event):
-        if self.listView.geometry().contains(event.pos()):
-            self.show_context_menu(event.globalPos())
-
     def selected_cues(self, cue_type=Cue):
-        for item in self.listView.selectedItems():
-            yield self._list_model.item(self.listView.indexOfTopLevelItem(item))
+        for item in self._view.listView.selectedItems():
+            yield self._list_model.item(
+                self._view.listView.indexOfTopLevelItem(item))
 
     def finalize(self):
         # Clean layout menu
         self.app.window.menuLayout.clear()
-
         # Clean context-menu
         self.CuesMenu.remove(self._edit_actions_group)
-
         # Remove reference cycle
         del self._edit_actions_group
 
     def select_all(self, cue_type=Cue):
-        for index in range(self.listView.topLevelItemCount()):
+        for index in range(self._view.listView.topLevelItemCount()):
             if isinstance(self._list_model.item(index), cue_type):
-                self.listView.topLevelItem(index).setSelected(True)
+                self._view.listView.topLevelItem(index).setSelected(True)
 
     def deselect_all(self, cue_type=Cue):
-        for index in range(self.listView.topLevelItemCount()):
+        for index in range(self._view.listView.topLevelItemCount()):
             if isinstance(self._list_model.item(index), cue_type):
-                self.listView.topLevelItem(index).setSelected(False)
+                self._view.listView.topLevelItem(index).setSelected(False)
 
     def invert_selection(self):
-        for index in range(self.listView.topLevelItemCount()):
-            item = self.listView.topLevelItem(index)
+        for index in range(self._view.listView.topLevelItemCount()):
+            item = self._view.listView.topLevelItem(index)
             item.setSelected(not item.isSelected())
 
-    def _key_press_event(self, event):
+    def _key_pressed(self, event):
         event.ignore()
 
         if not event.isAutoRepeat():
@@ -276,7 +225,7 @@ class ListLayout(QWidget, CueLayout):
                 event.accept()
                 self.go()
             elif event.key() == Qt.Key_Space:
-                if qApp.keyboardModifiers() == Qt.ShiftModifier:
+                if event.modifiers() == Qt.ShiftModifier:
                     event.accept()
 
                     cue = self.standby_cue()
@@ -285,30 +234,30 @@ class ListLayout(QWidget, CueLayout):
 
     def _set_accurate_time(self, accurate):
         self._accurate_time = accurate
-        self.playView.accurate_time = accurate
+        self._view.runView.accurate_time = accurate
 
     def _set_auto_next(self, enable):
         self._auto_continue = enable
 
     def _set_seeksliders_visible(self, visible):
-        self._show_seekslider = visible
-        self.playView.seek_visible = visible
+        self._seeksliders_visible = visible
+        self._view.runView.seek_visible = visible
 
-    def _set_dbmeter_visible(self, visible):
+    def _set_dbmeters_visible(self, visible):
         self._show_dbmeter = visible
-        self.playView.dbmeter_visible = visible
+        self._view.runView.dbmeter_visible = visible
 
-    def _set_playing_visible(self, visible):
+    def _set_running_visible(self, visible):
         self._show_playing = visible
-        self.playView.setVisible(visible)
-        self.controlButtons.setVisible(visible)
+        self._view.runView.setVisible(visible)
+        self._view.controlButtons.setVisible(visible)
 
     def _set_selection_mode(self, enable):
         if enable:
-            self.listView.setSelectionMode(self.listView.ExtendedSelection)
+            self._view.listView.setSelectionMode(CueListView.ExtendedSelection)
         else:
             self.deselect_all()
-            self.listView.setSelectionMode(self.listView.NoSelection)
+            self._view.listView.setSelectionMode(CueListView.NoSelection)
 
     def _double_clicked(self):
         cue = self.standby_cue()
@@ -316,15 +265,19 @@ class ListLayout(QWidget, CueLayout):
             self.edit_cue(cue)
 
     def _context_invoked(self, event):
-        cues = list(self.selected_cues())
-        if not cues:
-            context_index = self.listView.indexAt(event.pos())
-            if context_index.isValid():
-                cues.append(self._list_model.item(context_index.row()))
-            else:
-                return
+        # This is called in response to CueListView context-events
+        if self._view.listView.itemAt(event.pos()) is not None:
+            cues = list(self.selected_cues())
+            if not cues:
+                context_index = self._view.listView.indexAt(event.pos())
+                if context_index.isValid():
+                    cues.append(self._list_model.item(context_index.row()))
+                else:
+                    return
 
-        self.show_cue_context_menu(cues, event.globalPos())
+            self.show_cue_context_menu(cues, event.globalPos())
+        else:
+            self.show_context_menu(event.globalPos())
 
     def __go_slot(self):
         self.go()

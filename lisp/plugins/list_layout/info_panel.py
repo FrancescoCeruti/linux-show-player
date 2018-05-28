@@ -24,12 +24,12 @@ from lisp.ui.ui_utils import translate
 
 
 class InfoPanel(QWidget):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    def __init__(self, *args):
+        super().__init__(*args)
         self.setLayout(QVBoxLayout())
         self.layout().setContentsMargins(0, 0, 0, 0)
 
-        self._item = None
+        self._cue = None
 
         # cue name
         self.cueName = QLineEdit(self)
@@ -53,29 +53,29 @@ class InfoPanel(QWidget):
             translate('ListLayoutInfoPanel', 'Cue description'))
 
     @property
-    def item(self):
-        return self._item
+    def cue(self):
+        return self._cue
 
-    @item.setter
-    def item(self, item):
-        if self._item is not None:
-            self._item.cue.changed('name').disconnect(self._name_changed)
-            self._item.cue.changed('description').disconnect(self._desc_changed)
+    @cue.setter
+    def cue(self, item):
+        if self._cue is not None:
+            self._cue.changed('name').disconnect(self._name_changed)
+            self._cue.changed('description').disconnect(self._desc_changed)
 
-        self._item = item
+        self._cue = item
 
-        if self._item is not None:
-            self._item.cue.changed('name').connect(self._name_changed)
-            self._item.cue.changed('description').connect(self._desc_changed)
+        if self._cue is not None:
+            self._cue.changed('name').connect(self._name_changed)
+            self._cue.changed('description').connect(self._desc_changed)
 
-            self._name_changed(self._item.cue.name)
-            self._desc_changed(self._item.cue.description)
+            self._name_changed(self._cue.name)
+            self._desc_changed(self._cue.description)
         else:
             self.cueName.clear()
             self.cueDescription.clear()
 
     def _name_changed(self, name):
-        self.cueName.setText(str(self.item.index + 1) + ' → ' + name)
+        self.cueName.setText(str(self.cue.index + 1) + ' → ' + name)
 
     def _desc_changed(self, description):
         self.cueDescription.setText(description)

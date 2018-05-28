@@ -20,7 +20,7 @@
 from abc import abstractmethod
 
 from lisp.core.actions_handler import MainActionsHandler
-from lisp.core.qmeta import QABCMeta
+from lisp.core.has_properties import HasProperties
 from lisp.core.signal import Signal
 from lisp.core.util import greatest_common_superclass
 from lisp.cues.cue import Cue, CueAction
@@ -30,9 +30,7 @@ from lisp.ui.settings.cue_settings import CueSettingsDialog
 from lisp.ui.ui_utils import adjust_widget_position
 
 
-# TODO: split "view" and "controller"
-# TODO: make an HasProperties (will go into Session objects)
-class CueLayout(metaclass=QABCMeta):
+class CueLayout(HasProperties):
     # Layout name
     NAME = 'Base'
     # Layout short description
@@ -42,15 +40,17 @@ class CueLayout(metaclass=QABCMeta):
 
     CuesMenu = CueContextMenu()
 
-    def __init__(self, application=None):
+    def __init__(self, application):
         """
         :type application: lisp.application.Application
         """
+        super().__init__()
         self.app = application
 
         self.cue_executed = Signal()    # After a cue is executed
         self.all_executed = Signal()    # After execute_all is called
 
+        # TODO: self.standby_changed = Signal()
         self.key_pressed = Signal()     # After a key is pressed
 
     @property

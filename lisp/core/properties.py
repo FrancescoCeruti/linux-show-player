@@ -50,7 +50,7 @@ class Property:
     def __get__(self, instance, owner=None):
         if instance is None:
             return self
-        elif instance not in self._values:
+        if instance not in self._values:
             self._values[instance] = deepcopy(self.default)
 
         return self._values[instance]
@@ -72,11 +72,39 @@ class WriteOnceProperty(Property):
             super().__set__(instance, value)
 
 
+class ProxyProperty(Property):
+    """Property that use custom getter/setter, similar to builtin `property`"""
+
+    def __init__(self, fget=None, fset=None, default=None, **meta):
+        super().__init__(default=default, **meta)
+        self._fget = fget
+        self._fset = fset
+
+    def get(self, getter):
+        """Set the getter function (can be used as decorator)."""
+        self._fget = getter
+        return getter
+
+    def set(self, setter):
+        """Set the setter function (can be used as decorator)."""
+        self._fset = setter
+        return setter
+
+    def __get__(self, instance, owner=None):
+        if instance is None:
+            return self
+        return self._fget(instance)
+
+    def __set__(self, instance, value):
+        if instance is not None:
+            self._fset(instance, value)
+
+
 class InstanceProperty:
     """Per-instance property, not a descriptor.
 
-    To be of any use an InstanceProperty should be used in combination
-    of an HasInstanceProperties object.
+    To be used an InstanceProperty should be used in combination of an
+    HasInstanceProperties object.
     """
     __slots__ = ('value', 'default')
 

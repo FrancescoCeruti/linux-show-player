@@ -150,7 +150,7 @@ class CueWidget(QWidget):
 
     def setCountdownMode(self, mode):
         self._countdownMode = mode
-        self._updateTime(self._cue.current_time())
+        self._updateTime(self._cue.current_time(), True)
 
     def showAccurateTiming(self, enable):
         self._accurateTiming = enable

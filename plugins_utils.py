@@ -48,7 +48,7 @@ def create_plugin(name: str):
 
     print('>>> CREATE DEFAULT SETTINGS FILE')
     copyfile(os.path.join(PLUGINS_DIRECTORY, 'default.json'),
-             os.path.join(plugin_path, name + '.json'))
+             os.path.join(plugin_path, 'default.json'))
 
     print('>>> CREATE DEFAULT INIT FILE')
     with open(os.path.join(plugin_path, '__init__.py'), 'w') as init_file:

@@ -26,8 +26,8 @@ from lisp.ui.widgets.qiconpushbutton import QIconPushButton
 
 
 class ShowControlButtons(QWidget):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    def __init__(self, *args):
+        super().__init__(*args)
         self.setLayout(QGridLayout())
         self.layout().setContentsMargins(0, 0, 0, 0)
         self.layout().setSpacing(5)
