@@ -1,0 +1,40 @@
+language: generic
+sudo: required
+
+services:
+  - docker
+
+branches:
+  only:
+    - develop
+    - master
+
+before_install:
+  - docker pull francescoceruti/flatpack
+
+script:
+  - cd dist/Flatpak
+  # Patch the flatpak manifest to work with travis
+  - python3 travis_flatpak.py
+  # Run the build in a container, mounting the current directory
+  # FIXME: if this fails at any stage the cache is not committed by travis
+  - docker run --privileged -v ${PWD}:/src -i francescoceruti/flatpack src/build.sh $TRAVIS_BRANCH
+  # Return into the build-dir
+  - cd $TRAVIS_BUILD_DIR
+
+cache:
+  directories:
+    # Flatpak build cache, avoid rebuilding unchanged modules
+    - $TRAVIS_BUILD_DIR/dist/Flatpak/.flatpak-builder
+
+before_deploy:
+  - python3 dist/travis_bintray.py
+
+deploy:
+  provider: bintray
+  file: dist/bintray.json
+  user: "francescoceruti"
+  key: $BINTRAY_API_KEY
+  skip_cleanup: true # since we are building inside the working-directory
+  on:
+    all_branches: true
