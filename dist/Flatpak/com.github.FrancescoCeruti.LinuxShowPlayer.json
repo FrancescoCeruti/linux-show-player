@@ -32,7 +32,7 @@
 				{
 					"type": "archive",
 					"url": "https://dl.bintray.com/francescoceruti/flatpak-builds/py3.6.5-freedesktop1.6.tar.gz",
-					"sha256": "623043582870b2c92a5d423d157113a1e8e3acc4f605e2c3df859ca43a45183a"
+					"sha256": "d55bea2a7e62f90df90c2a8069d5efbd7a1bb6698b0293db5947f874eaa243be"
 				}
 			]
 		},
