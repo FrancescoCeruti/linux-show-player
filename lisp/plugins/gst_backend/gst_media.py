@@ -99,7 +99,6 @@ class GstMedia(Media):
             for element in self.elements:
                 element.play()
 
-            self._state = MediaState.Playing
             self.__pipeline.set_state(Gst.State.PLAYING)
             self.__pipeline.get_state(Gst.SECOND)
 

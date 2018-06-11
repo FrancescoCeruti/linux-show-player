@@ -18,6 +18,7 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import jack
+import logging
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPainter, QPolygon, QPainterPath
 from PyQt5.QtWidgets import QGroupBox, QWidget, \
@@ -27,6 +28,9 @@ from PyQt5.QtWidgets import QGroupBox, QWidget, \
 from lisp.plugins.gst_backend.elements.jack_sink import JackSink
 from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.ui_utils import translate
+
+
+logger = logging.getLogger(__name__)
 
 
 class JackSinkSettings(SettingsPage):
@@ -46,7 +50,17 @@ class JackSinkSettings(SettingsPage):
         self.connectionsEdit.clicked.connect(self.__edit_connections)
         self.jackGroup.layout().addWidget(self.connectionsEdit)
 
-        self.__jack_client = jack.Client('LinuxShowPlayer_SettingsControl')
+        self.__jack_client = None
+        try:
+            self.__jack_client = jack.Client(
+                'LinuxShowPlayer_SettingsControl', no_start_server=True)
+        except jack.JackError:
+            # Disable the widget
+            self.setEnabled(False)
+            logger.error(
+                'Cannot connect with a running Jack server.', exc_info=True)
+
+        # if __jack_client is None this will return a default value
         self.connections = JackSink.default_connections(self.__jack_client)
 
         self.retranlsateUi()
@@ -57,7 +71,8 @@ class JackSinkSettings(SettingsPage):
             translate('JackSinkSettings', 'Edit connections'))
 
     def closeEvent(self, event):
-        self.__jack_client.close()
+        if self.__jack_client is not None:
+            self.__jack_client.close()
         super().closeEvent(event)
 
     def getSettings(self):

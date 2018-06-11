@@ -2,6 +2,4 @@
   create an ad-hoc repository to produce a wheel file like the ones distributed from pypi
 - We should avoid using pip, see the "upgrade-pip" module
 
-- Avoid crashes because of "missing" jackd binaries
-
 (╯°□°）╯︵ ┻━┻

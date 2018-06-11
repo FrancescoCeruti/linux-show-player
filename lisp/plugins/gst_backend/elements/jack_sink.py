@@ -47,7 +47,8 @@ class JackSink(GstMediaElement):
         super().__init__(pipeline)
 
         if JackSink._ControlClient is None:
-            JackSink._ControlClient = jack.Client('LinuxShowPlayer_Control')
+            JackSink._ControlClient = jack.Client(
+                'LinuxShowPlayer_Control', no_start_server=True)
 
         self.pipeline = pipeline
         self.audio_resample = Gst.ElementFactory.make('audioresample')

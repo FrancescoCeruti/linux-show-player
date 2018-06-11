@@ -73,8 +73,8 @@ class Slot:
                     self._reference()()
                 else:
                     self._reference()(*args, **kwargs)
-        except Exception:
-            logger.warning('Error in callback method.', exc_info=True)
+        except Exception as e:
+            logger.warning(str(e), exc_info=True)
 
     def is_alive(self):
         return self._reference() is not None
