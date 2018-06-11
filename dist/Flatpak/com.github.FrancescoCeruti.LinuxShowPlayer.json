@@ -24,18 +24,15 @@
 	"modules": [
 		{
 			"name": "cpython",
-			"build-options": {
-				"strip": false
-			},
-			"config-opts": [
-				"--enable-shared",
-				"--enable-optimizations"
+			"buildsystem": "simple",
+			"build-commands": [
+				"cp -r bin/ include/ lib/ share/ /app"
 			],
 			"sources": [
 				{
 					"type": "archive",
-					"url": "https://www.python.org/ftp/python/3.6.5/Python-3.6.5.tar.xz",
-					"sha256": "f434053ba1b5c8a5cc597e966ead3c5143012af827fd3f0697d21450bb8d87a6"
+					"url": "https://bintray.com/francescoceruti/flatpak-builds/download_file?file_path=py3.6.5-freedesktop1.6.tar.gz",
+					"sha256": "623043582870b2c92a5d423d157113a1e8e3acc4f605e2c3df859ca43a45183a"
 				}
 			]
 		},
