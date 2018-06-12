@@ -52,7 +52,9 @@ DESC_PATH = os.path.join(DIR, DESC_FILE)
 BRANCH = os.environ['TRAVIS_BRANCH']
 COMMIT = os.environ['TRAVIS_COMMIT']
 TAG = os.environ.get('TRAVIS_TAG', '')
-VERSION = '{}_{}'.format(TODAY.replace('-', ''), COMMIT[:7])
+
+VERSION = datetime.datetime.now().strftime('%Y%m%d_%H%M')
+VERSION += '_{}'.format(TAG if TAG else COMMIT[:7])
 
 print('Creating "{}" ...'.format(DESC_FILE))
 
@@ -61,16 +63,14 @@ TEMPLATE['package']['name'] = BRANCH
 print('>>> Package name:    {}'.format(BRANCH))
 
 # Version
-if TAG:
-    TEMPLATE['version']['name'] = TAG
-    TEMPLATE['version']['vcs_tag'] = TAG
-    print('>>> Version name:    {}'.format(TAG))
-else:
-    TEMPLATE['version']['name'] = VERSION
-    print('>>> Version name:    {}'.format(VERSION))
+TEMPLATE['version']['name'] = VERSION
+print('>>> Version name:    {}'.format(VERSION))
 
 TEMPLATE['version']['released'] = TODAY
 print('>>> Version date:    {}'.format(TODAY))
+
+if TAG:
+    TEMPLATE['version']['vcs_tag'] = TAG
 
 # Files
 TEMPLATE['files'].append(
