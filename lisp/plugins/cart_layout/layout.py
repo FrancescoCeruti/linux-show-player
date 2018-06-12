@@ -99,37 +99,35 @@ class CartLayout(CueLayout):
 
         self.countdown_mode_action = QAction(parent=layout_menu)
         self.countdown_mode_action.setCheckable(True)
-        self.countdown_mode_action.setChecked(
-            CartLayout.Config['countdownMode'])
         self.countdown_mode_action.triggered.connect(self._set_countdown_mode)
         layout_menu.addAction(self.countdown_mode_action)
 
         self.show_seek_action = QAction(parent=layout_menu)
         self.show_seek_action.setCheckable(True)
-        self.show_seek_action.setChecked(
-            CartLayout.Config['show.seekSliders'])
         self.show_seek_action.triggered.connect(self._set_seek_bars_visible)
         layout_menu.addAction(self.show_seek_action)
 
         self.show_dbmeter_action = QAction(parent=layout_menu)
         self.show_dbmeter_action.setCheckable(True)
-        self.show_dbmeter_action.setChecked(CartLayout.Config['show.dBMeters'])
         self.show_dbmeter_action.triggered.connect(self._set_dbmeters_visible)
         layout_menu.addAction(self.show_dbmeter_action)
 
         self.show_volume_action = QAction(parent=layout_menu)
         self.show_volume_action.setCheckable(True)
-        self.show_volume_action.setChecked(
-            CartLayout.Config['show.volumeControls'])
         self.show_volume_action.triggered.connect(self._set_volume_controls_visible)
         layout_menu.addAction(self.show_volume_action)
 
         self.show_accurate_action = QAction(parent=layout_menu)
         self.show_accurate_action.setCheckable(True)
-        self.show_accurate_action.setChecked(
-            CartLayout.Config['show.accurateTime'])
         self.show_accurate_action.triggered.connect(self._set_accurate_time)
         layout_menu.addAction(self.show_accurate_action)
+
+        self._set_countdown_mode(CartLayout.Config['countdownMode'])
+        self._set_dbmeters_visible(CartLayout.Config['show.dBMeters'])
+        self._set_accurate_time(CartLayout.Config['show.accurateTime'])
+        self._set_seek_bars_visible(CartLayout.Config['show.seekSliders'])
+        self._set_volume_controls_visible(
+            CartLayout.Config['show.volumeControls'])
 
         # Context menu actions
         self._edit_actions_group = MenuActionsGroup(priority=MENU_PRIORITY_CUE)

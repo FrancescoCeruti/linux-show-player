@@ -53,6 +53,9 @@ class ListLayoutSettings(ConfigurationPage):
         self.autoNext = QCheckBox(self.behaviorsGroup)
         self.behaviorsGroup.layout().addWidget(self.autoNext)
 
+        self.selectionMode = QCheckBox(self.behaviorsGroup)
+        self.behaviorsGroup.layout().addWidget(self.selectionMode)
+
         self.goKeyLayout = QHBoxLayout()
         self.behaviorsGroup.layout().addLayout(self.goKeyLayout)
         self.goKeyLabel = QLabel(self.behaviorsGroup)
@@ -87,6 +90,8 @@ class ListLayoutSettings(ConfigurationPage):
         self.showAccurate.setText(translate('ListLayout', 'Show accurate time'))
         self.showSeek.setText(translate('ListLayout', 'Show seek-bars'))
         self.autoNext.setText(translate('ListLayout', 'Auto-select next cue'))
+        self.selectionMode.setText(
+            translate('ListLayout', 'Enable selection mode'))
         self.goKeyLabel.setText(translate('ListLayout', 'Go key:'))
 
         self.useFadeGroup.setTitle(
@@ -102,6 +107,7 @@ class ListLayoutSettings(ConfigurationPage):
         self.showAccurate.setChecked(self.config['show.accurateTime'])
         self.showSeek.setChecked(self.config['show.seekSliders'])
         self.autoNext.setChecked(self.config['autoContinue'])
+        self.selectionMode.setChecked(self.config['selectionMode'])
         self.goKeyEdit.setKeySequence(
             QKeySequence(self.config['goKey'], QKeySequence.NativeText))
 
@@ -116,6 +122,7 @@ class ListLayoutSettings(ConfigurationPage):
         self.config['show.dBMeters'] = self.showDbMeters.isChecked()
         self.config['show.seekBars'] = self.showSeek.isChecked()
         self.config['autoContinue'] = self.autoNext.isChecked()
+        self.config['selectionMode'] = self.selectionMode.isChecked()
 
         self.config['goKey'] = self.goKeyEdit.keySequence().toString(
             QKeySequence.NativeText)

@@ -22,6 +22,7 @@ from PyQt5.QtGui import QKeySequence
 from PyQt5.QtWidgets import QAction
 
 from lisp.core.configuration import DummyConfiguration
+from lisp.core.properties import ProxyProperty
 from lisp.core.signal import Connection
 from lisp.cues.cue import Cue, CueAction
 from lisp.cues.cue_memento_model import CueMementoAdapter
@@ -47,16 +48,19 @@ class ListLayout(CueLayout):
     ]
     Config = DummyConfiguration()
 
+    auto_continue = ProxyProperty()
+    running_visible = ProxyProperty()
+    dbmeters_visible = ProxyProperty()
+    seek_sliders_visible = ProxyProperty()
+    accurate_time = ProxyProperty()
+    selection_mode = ProxyProperty()
+
     def __init__(self, application):
         super().__init__(application)
         self._list_model = CueListModel(self.cue_model)
         self._list_model.item_added.connect(self.__cue_added)
         self._memento_model = CueMementoAdapter(self._list_model)
         self._running_model = RunningCueModel(self.cue_model)
-
-        self._auto_continue = ListLayout.Config['autoContinue']
-        self._go_key_sequence = QKeySequence(
-            ListLayout.Config['goKey'], QKeySequence.NativeText)
 
         self._view = ListLayoutView(self._list_model, self._running_model)
         # GO button
@@ -73,51 +77,48 @@ class ListLayout(CueLayout):
         self._view.listView.contextMenuInvoked.connect(self._context_invoked)
         self._view.listView.keyPressed.connect(self._key_pressed)
 
-        # TODO: session values
-        self._set_running_visible(ListLayout.Config['show.playingCues'])
-        self._set_dbmeters_visible(ListLayout.Config['show.dBMeters'])
-        self._set_seeksliders_visible(ListLayout.Config['show.seekSliders'])
-        self._set_accurate_time(ListLayout.Config['show.accurateTime'])
-        self._set_selection_mode(False)
-
         # Layout menu
-        menuLayout = self.app.window.menuLayout
+        layout_menu = self.app.window.menuLayout
 
-        self.showPlayingAction = QAction(parent=menuLayout)
-        self.showPlayingAction.setCheckable(True)
-        self.showPlayingAction.setChecked(self._show_playing)
-        self.showPlayingAction.triggered.connect(self._set_running_visible)
-        menuLayout.addAction(self.showPlayingAction)
+        self.show_running_action = QAction(parent=layout_menu)
+        self.show_running_action.setCheckable(True)
+        self.show_running_action.triggered.connect(self._set_running_visible)
+        layout_menu.addAction(self.show_running_action)
 
-        self.showDbMeterAction = QAction(parent=menuLayout)
-        self.showDbMeterAction.setCheckable(True)
-        self.showDbMeterAction.setChecked(self._show_dbmeter)
-        self.showDbMeterAction.triggered.connect(self._set_dbmeters_visible)
-        menuLayout.addAction(self.showDbMeterAction)
+        self.show_dbmeter_action = QAction(parent=layout_menu)
+        self.show_dbmeter_action.setCheckable(True)
+        self.show_dbmeter_action.triggered.connect(self._set_dbmeters_visible)
+        layout_menu.addAction(self.show_dbmeter_action)
 
-        self.showSeekAction = QAction(parent=menuLayout)
-        self.showSeekAction.setCheckable(True)
-        self.showSeekAction.setChecked(self._seeksliders_visible)
-        self.showSeekAction.triggered.connect(self._set_seeksliders_visible)
-        menuLayout.addAction(self.showSeekAction)
+        self.show_seek_action = QAction(parent=layout_menu)
+        self.show_seek_action.setCheckable(True)
+        self.show_seek_action.triggered.connect(self._set_seeksliders_visible)
+        layout_menu.addAction(self.show_seek_action)
 
-        self.accurateTimingAction = QAction(parent=menuLayout)
-        self.accurateTimingAction.setCheckable(True)
-        self.accurateTimingAction.setChecked(self._accurate_time)
-        self.accurateTimingAction.triggered.connect(self._set_accurate_time)
-        menuLayout.addAction(self.accurateTimingAction)
+        self.show_accurate_action = QAction(parent=layout_menu)
+        self.show_accurate_action.setCheckable(True)
+        self.show_accurate_action.triggered.connect(self._set_accurate_time)
+        layout_menu.addAction(self.show_accurate_action)
 
-        self.autoNextAction = QAction(parent=menuLayout)
-        self.autoNextAction.setCheckable(True)
-        self.autoNextAction.setChecked(self._auto_continue)
-        self.autoNextAction.triggered.connect(self._set_auto_next)
-        menuLayout.addAction(self.autoNextAction)
+        self.auto_continue_action = QAction(parent=layout_menu)
+        self.auto_continue_action.setCheckable(True)
+        self.auto_continue_action.triggered.connect(self._set_auto_continue)
+        layout_menu.addAction(self.auto_continue_action)
 
-        self.selectionModeAction = QAction(parent=menuLayout)
-        self.selectionModeAction.setCheckable(True)
-        self.selectionModeAction.setChecked(False)
-        self.selectionModeAction.triggered.connect(self._set_selection_mode)
-        menuLayout.addAction(self.selectionModeAction)
+        self.selection_mode_action = QAction(parent=layout_menu)
+        self.selection_mode_action.setCheckable(True)
+        self.selection_mode_action.triggered.connect(self._set_selection_mode)
+        layout_menu.addAction(self.selection_mode_action)
+
+        # Load settings
+        self._go_key_sequence = QKeySequence(
+            ListLayout.Config['goKey'], QKeySequence.NativeText)
+        self._set_seeksliders_visible(ListLayout.Config['show.seekSliders'])
+        self._set_running_visible(ListLayout.Config['show.playingCues'])
+        self._set_accurate_time(ListLayout.Config['show.accurateTime'])
+        self._set_dbmeters_visible(ListLayout.Config['show.dBMeters'])
+        self._set_selection_mode(ListLayout.Config['selectionMode'])
+        self._set_auto_continue(ListLayout.Config['autoContinue'])
 
         # Context menu actions
         self._edit_actions_group = MenuActionsGroup(priority=MENU_PRIORITY_CUE)
@@ -141,16 +142,16 @@ class ListLayout(CueLayout):
         self.retranslate()
 
     def retranslate(self):
-        self.showPlayingAction.setText(
+        self.show_running_action.setText(
             translate('ListLayout', 'Show playing cues'))
-        self.showDbMeterAction.setText(
+        self.show_dbmeter_action.setText(
             translate('ListLayout', 'Show dB-meters'))
-        self.showSeekAction.setText(translate('ListLayout', 'Show seek-bars'))
-        self.accurateTimingAction.setText(
+        self.show_seek_action.setText(translate('ListLayout', 'Show seek-bars'))
+        self.show_accurate_action.setText(
             translate('ListLayout', 'Show accurate time'))
-        self.autoNextAction.setText(
+        self.auto_continue_action.setText(
             translate('ListLayout', 'Auto-select next cue'))
-        self.selectionModeAction.setText(
+        self.selection_mode_action.setText(
             translate('ListLayout', 'Selection mode'))
 
     def cues(self, cue_type=Cue):
@@ -171,7 +172,7 @@ class ListLayout(CueLayout):
             standby_cue.execute(action)
             self.cue_executed.emit(standby_cue)
 
-            if self._auto_continue:
+            if self.auto_continue:
                 self.set_standby_index(self.standby_index() + advance)
 
     def cue_at(self, index):
@@ -232,32 +233,63 @@ class ListLayout(CueLayout):
                     if cue is not None:
                         self.edit_cue(cue)
 
+    @accurate_time.set
     def _set_accurate_time(self, accurate):
-        self._accurate_time = accurate
+        self.show_accurate_action.setChecked(accurate)
         self._view.runView.accurate_time = accurate
 
-    def _set_auto_next(self, enable):
-        self._auto_continue = enable
+    @accurate_time.get
+    def _get_accurate_time(self):
+        return self.show_accurate_action.isChecked()
 
+    @auto_continue.set
+    def _set_auto_continue(self, enable):
+        self.auto_continue_action.setChecked(enable)
+
+    @auto_continue.get
+    def _get_auto_select_next(self):
+        return self.auto_continue_action.isChecked()
+
+    @seek_sliders_visible.set
     def _set_seeksliders_visible(self, visible):
-        self._seeksliders_visible = visible
+        self.show_seek_action.setChecked(visible)
         self._view.runView.seek_visible = visible
 
+    @seek_sliders_visible.get
+    def _get_seeksliders_visible(self):
+        return self.show_seek_action.isChecked()
+
+    @dbmeters_visible.set
     def _set_dbmeters_visible(self, visible):
-        self._show_dbmeter = visible
+        self.show_dbmeter_action.setChecked(visible)
         self._view.runView.dbmeter_visible = visible
 
+    @dbmeters_visible.get
+    def _get_dbmeters_visible(self):
+        return self.show_dbmeter_action.isChecked()
+
+    @running_visible.set
     def _set_running_visible(self, visible):
-        self._show_playing = visible
+        self.show_running_action.setChecked(visible)
         self._view.runView.setVisible(visible)
         self._view.controlButtons.setVisible(visible)
 
+    @running_visible.get
+    def _get_running_visible(self):
+        return self.show_running_action.isChecked()
+
+    @selection_mode.set
     def _set_selection_mode(self, enable):
+        self.selection_mode_action.setChecked(enable)
         if enable:
             self._view.listView.setSelectionMode(CueListView.ExtendedSelection)
         else:
             self.deselect_all()
             self._view.listView.setSelectionMode(CueListView.NoSelection)
+
+    @selection_mode.get
+    def _get_selection_mode(self):
+        return self.selection_mode_action.isChecked()
 
     def _double_clicked(self):
         cue = self.standby_cue()
@@ -292,7 +324,7 @@ class ListLayout(CueLayout):
                 next_cue = self._list_model.item(next_index)
                 next_cue.cue.execute()
 
-                if self._auto_continue and next_cue is self.standby_cue():
+                if self.auto_continue and next_cue is self.standby_cue():
                     self.set_standby_index(next_index + 1)
         except(IndexError, KeyError):
             pass
