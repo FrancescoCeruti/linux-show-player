@@ -35,7 +35,8 @@ TEMPLATE = {
 
     "version": {
         "name": "",
-        "released": ""
+        "released": "",
+        "desc": ""
     },
 
     "files": [
@@ -51,6 +52,7 @@ DESC_PATH = os.path.join(DIR, DESC_FILE)
 
 BRANCH = os.environ['TRAVIS_BRANCH']
 COMMIT = os.environ['TRAVIS_COMMIT']
+COMMIT_MSG = os.environ['TRAVIS_COMMIT_MESSAGE']
 TAG = os.environ.get('TRAVIS_TAG', '')
 
 VERSION = datetime.datetime.now().strftime('%Y%m%d_%H%M')
@@ -68,6 +70,8 @@ print('>>> Version name:    {}'.format(VERSION))
 
 TEMPLATE['version']['released'] = TODAY
 print('>>> Version date:    {}'.format(TODAY))
+
+TEMPLATE['version']['desc'] = COMMIT_MSG
 
 if TAG:
     TEMPLATE['version']['vcs_tag'] = TAG

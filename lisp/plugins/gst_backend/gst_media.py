@@ -221,6 +221,11 @@ class GstMedia(Media):
                 self.elements.append(all_elements[element](self.__pipeline))
             except KeyError:
                 logger.warning('Invalid pipeline element: {}'.format(element))
+            except Exception:
+                logger.warning(
+                    'Cannot create pipeline element: {}'.format(element),
+                    exc_info=True
+                )
 
         # Reload the elements properties
         self.elements.update_properties(elements_properties)

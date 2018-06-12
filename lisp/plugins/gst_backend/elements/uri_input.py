@@ -37,7 +37,12 @@ def abs_path(path_):
 
 
 def uri_split(uri):
-    return uri.split('://')
+    try:
+        scheme, path = uri.split('://')
+    except ValueError:
+        scheme = path = ''
+
+    return scheme, path
 
 
 def uri_adapter(uri):
