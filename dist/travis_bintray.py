@@ -55,7 +55,7 @@ COMMIT = os.environ['TRAVIS_COMMIT']
 COMMIT_MSG = os.environ['TRAVIS_COMMIT_MESSAGE']
 TAG = os.environ.get('TRAVIS_TAG', '')
 
-VERSION = datetime.datetime.now().strftime('%Y%m%d_%H%M')
+VERSION = datetime.datetime.now().strftime('%Y.%m.%d_%H:%M')
 VERSION += '_{}'.format(TAG if TAG else COMMIT[:7])
 
 print('Creating "{}" ...'.format(DESC_FILE))

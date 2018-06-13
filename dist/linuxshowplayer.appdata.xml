@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<component type="desktop-application">
-    <id>com.github.FrancescoCeruti.LinuxShowPlayer</id>
-    <launchable type="desktop-id">linuxshowplayer.desktop</launchable>
+<component type="desktop">
+    <id>com.github.FrancescoCeruti.LinuxShowPlayer.desktop</id>
     <metadata_license>CC-BY-3.0</metadata_license>
     <project_license>GPL-3.0+</project_license>
     <name>Linux Show Player</name>

@@ -13,6 +13,7 @@ before_install:
   - docker pull francescoceruti/flatpack
 
 script:
+  # Enter the flatpak buid directory
   - cd dist/Flatpak
   # Patch the flatpak manifest to work with travis
   - python3 travis_flatpak.py
