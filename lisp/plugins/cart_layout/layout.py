@@ -79,6 +79,7 @@ class CartLayout(CueLayout):
         self._memento_model = CueMementoAdapter(self._cart_model)
 
         self._cart_view = CartTabWidget()
+        self._cart_view.keyPressed.connect(self._key_pressed)
 
         # Layout menu
         layout_menu = self.app.window.menuLayout
@@ -324,6 +325,9 @@ class CartLayout(CueLayout):
     @volume_control_visible.get
     def _get_volume_controls_visible(self):
         return self.show_volume_action.isChecked()
+
+    def _key_pressed(self, event):
+        self.key_pressed.emit(event)
 
     def to_3d_index(self, index):
         page_size = self.__rows * self.__columns

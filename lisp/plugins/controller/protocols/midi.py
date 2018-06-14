@@ -104,7 +104,7 @@ class MidiSettings(CueSettingsPage):
 
         self._default_action = self.cue_type.CueActions[0].name
         try:
-            self.__midi = get_plugin('Midi').input
+            self.__midi = get_plugin('Midi')
         except PluginNotLoadedError:
             self.setEnabled(False)
 

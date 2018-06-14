@@ -232,6 +232,9 @@ class ListLayout(CueLayout):
                     cue = self.standby_cue()
                     if cue is not None:
                         self.edit_cue(cue)
+            else:
+                self.key_pressed.emit(event)
+                event.ignore()
 
     @accurate_time.set
     def _set_accurate_time(self, accurate):

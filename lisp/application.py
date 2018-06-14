@@ -91,6 +91,7 @@ class Application(metaclass=Singleton):
 
     @property
     def layout(self):
+        """:rtype: lisp.layout.cue_layout.CueLayout"""
         return self.session.layout
 
     @property

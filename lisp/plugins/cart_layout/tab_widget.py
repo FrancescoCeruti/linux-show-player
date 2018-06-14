@@ -17,7 +17,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, pyqtSignal
+from PyQt5.QtGui import QKeyEvent
 from PyQt5.QtWidgets import QTabWidget
 
 from lisp.ui.widgets.qeditabletabbar import QEditableTabBar
@@ -25,6 +26,8 @@ from lisp.ui.widgets.qeditabletabbar import QEditableTabBar
 
 class CartTabWidget(QTabWidget):
     DRAG_MAGIC = 'LiSP_Drag&Drop'
+
+    keyPressed = pyqtSignal(QKeyEvent)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -46,6 +49,12 @@ class CartTabWidget(QTabWidget):
 
     def dropEvent(self, event):
         event.ignore()
+
+    def keyPressEvent(self, event):
+        if not event.isAutoRepeat():
+            self.keyPressed.emit(event)
+
+        super().keyPressEvent(event)
 
     def tabTexts(self):
         texts = []

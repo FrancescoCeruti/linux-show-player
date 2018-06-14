@@ -49,7 +49,7 @@ class Presets(Plugin):
         self.manageAction.triggered.connect(self.__edit_presets)
         self.manageAction.setText(translate('Presets', 'Presets'))
 
-        self.menu_action = self.app.window.menuTools.addAction(self.manageAction)
+        self.app.window.menuTools.addAction(self.manageAction)
 
         # Cue menu (context-action)
         self.cueActionsGroup = MenuActionsGroup(

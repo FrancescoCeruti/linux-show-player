@@ -173,13 +173,11 @@ class CueListView(QTreeWidget):
 
     def keyPressEvent(self, event):
         event.ignore()
-
+        self.keyPressed.emit(event)
+        # If the event object has been accepted during the `keyPressed`
+        # emission don't call the base implementation
         if not event.isAccepted():
-            self.keyPressed.emit(event)
-            # If the event object has been accepted during the `keyPressed`
-            # emission don't call the base implementation
-            if not event.isAccepted():
-                super().keyPressEvent(event)
+            super().keyPressEvent(event)
 
     def mousePressEvent(self, event):
         if (not event.buttons() & Qt.RightButton or
