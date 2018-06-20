@@ -34,9 +34,6 @@
             "visibleColumns": ["asctime", "name", "message"]
         }
     },
-    "backend": {
-        "default": "gst"
-    },
     "layout": {
         "default": "NoDefault",
         "stopAllFade": false,

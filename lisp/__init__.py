@@ -35,7 +35,7 @@ LOGS_DIR = path.join(USER_DIR, 'logs')
 DEFAULT_APP_CONFIG = path.join(APP_DIR, 'default.json')
 USER_APP_CONFIG = path.join(USER_DIR, 'lisp.json')
 
-I18N_PATH = path.join(APP_DIR, 'i18n')
+I18N_PATH = path.join(APP_DIR, 'i18n', 'qm')
 
 ICON_THEMES_DIR = path.join(APP_DIR, 'ui', 'icons')
 ICON_THEME_COMMON = 'lisp'

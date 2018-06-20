@@ -44,10 +44,12 @@ class About(QDialog):
     </p>
     '''
 
-    DESCRIPTION = QT_TRANSLATE_NOOP('AboutDialog',
-        'Linux Show Player is a cue-player designed for stage productions.')
+    DESCRIPTION = QT_TRANSLATE_NOOP(
+        'AboutDialog',
+        'Linux Show Player is a cue-player designed for stage productions.'
+    )
     WEB_SITE = 'http://linux-show-player.sourceforge.net'
-    USER_GROUP = 'http://groups.google.com/group/linux-show-player---users'
+    DISCUSSION = 'https://gitter.im/linux-show-player/linux-show-player'
     SOURCE_CODE = 'https://github.com/FrancescoCeruti/linux-show-player'
 
     CONTRIBUTORS = OrderedDict({
@@ -57,14 +59,14 @@ class About(QDialog):
         QT_TRANSLATE_NOOP('About', 'Contributors'): [
             ('Yinameah', 'https://github.com/Yinameah'),
             ('nodiscc', 'https://github.com/nodiscc'),
-            ('Thomas Achtner', 'info@offtools.de')
+            ('Thomas Achtner', 'https://github.com/offtools')
         ],
         QT_TRANSLATE_NOOP('About', 'Translators'): [
-            ('aroomthedoomed', 'https://github.com/aroomthedoomed'),
-            ('fri', 'https://www.transifex.com/user/profile/fri'),
-            ('Luis García-Tornel', 'tornel@gmail.com'),
-            ('miharix', 'https://github.com/miharix'),
-            ('Olivier Humbert', 'https://github.com/trebmuh')
+            ('fri', 'https://www.transifex.com/user/profile/fri', 'Czech'),
+            ('Olivier Humbert', 'https://github.com/trebmuh', 'French'),
+            ('aroomthedoomed', 'https://github.com/aroomthedoomed', 'French'),
+            ('Luis García-Tornel', 'tornel@gmail.com', 'Spanish'),
+            ('miharix', 'https://github.com/miharix', 'Slovenian'),
         ],
     })
 
@@ -86,9 +88,10 @@ class About(QDialog):
 
         self.shortInfo = QLabel(self)
         self.shortInfo.setAlignment(Qt.AlignCenter)
-        self.shortInfo.setText('<h2>Linux Show Player   {0}</h2>'
-                               'Copyright © Francesco Ceruti'
-                               .format(str(lisp.__version__)))
+        self.shortInfo.setText(
+            '<h2>Linux Show Player   {0}</h2>Copyright © Francesco Ceruti'
+                .format(str(lisp.__version__))
+        )
         self.layout().addWidget(self.shortInfo, 0, 1)
 
         self.layout().addWidget(QWidget(), 1, 0, 1, 2)
@@ -106,7 +109,7 @@ class About(QDialog):
             <a href="{5}">{6}</a><br /><center>'''.format(
             translate('AboutDialog', self.DESCRIPTION),
             self.WEB_SITE, translate('AboutDialog', 'Web site'),
-            self.USER_GROUP, translate('AboutDialog', 'Users  group'),
+            self.DISCUSSION, translate('AboutDialog', 'Discussion'),
             self.SOURCE_CODE, translate('AboutDialog', 'Source code'))
         )
         self.tabWidget.addTab(self.info, translate('AboutDialog', 'Info'))
@@ -141,8 +144,9 @@ class About(QDialog):
     def __contributors(self):
         text = ''
         for section, people in self.CONTRIBUTORS.items():
-            text += '<u><b>{0}:</b></u><br />'.format(translate('About',
-                                                                section))
+            text += '<u><b>{0}:</b></u><br />'.format(
+                translate('About', section)
+            )
 
             for person in people:
                 text += person[0]
@@ -151,6 +155,10 @@ class About(QDialog):
                         person[1], person[1][person[1].index('://')+3:])
                 elif person[1]:
                     text += ' - <a href="mailto:{0}">{0}</a>'.format(person[1])
+
+                if len(person) >= 3:
+                    text += ' ({})'.format(person[2])
+
                 text += '<br />'
 
             text += '<br />'
