@@ -6,47 +6,47 @@
     <message>
       <location filename="../gain_ui.py" line="101"/>
       <source>ReplayGain / Normalization</source>
-      <translation type="unfinished">ReplayGain / Normalization</translation>
+      <translation>Gain de lecture / normalisation</translation>
     </message>
     <message>
       <location filename="../replay_gain.py" line="163"/>
       <source>Calculate</source>
-      <translation type="unfinished">Calculate</translation>
+      <translation>Calculer</translation>
     </message>
     <message>
       <location filename="../replay_gain.py" line="168"/>
       <source>Reset all</source>
-      <translation type="unfinished">Reset all</translation>
+      <translation>Tout r&#xE9;initialiser</translation>
     </message>
     <message>
       <location filename="../replay_gain.py" line="173"/>
       <source>Reset selected</source>
-      <translation type="unfinished">Reset selected</translation>
+      <translation>R&#xE9;initialiser la s&#xE9;l&#xE9;ction</translation>
     </message>
     <message>
       <location filename="../gain_ui.py" line="103"/>
       <source>Threads number</source>
-      <translation type="unfinished">Threads number</translation>
+      <translation>Nombre de fils</translation>
     </message>
     <message>
       <location filename="../gain_ui.py" line="104"/>
       <source>Apply only to selected media</source>
-      <translation type="unfinished">Apply only to selected media</translation>
+      <translation>Ne s&apos;applique seulement au m&#xE9;dia s&#xE9;lectionn&#xE9;</translation>
     </message>
     <message>
       <location filename="../gain_ui.py" line="106"/>
       <source>ReplayGain to (dB SPL)</source>
-      <translation type="unfinished">ReplayGain to (dB SPL)</translation>
+      <translation>Gain de lecture &#xE0; (dB SPL)</translation>
     </message>
     <message>
       <location filename="../gain_ui.py" line="108"/>
       <source>Normalize to (dB)</source>
-      <translation type="unfinished">Normalize to (dB)</translation>
+      <translation>Normaliser &#xE0; (dB)</translation>
     </message>
     <message>
       <location filename="../gain_ui.py" line="132"/>
       <source>Processing files ...</source>
-      <translation type="unfinished">Processing files ...</translation>
+      <translation>Fichier en cours de traitement ...</translation>
     </message>
   </context>
 </TS>
