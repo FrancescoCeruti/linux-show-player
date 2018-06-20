@@ -2,6 +2,7 @@
     "_version_": "1",
     "_enabled_": true,
     "countdownMode": true,
+    "autoAddPage": true,
     "grid": {
         "columns": 7,
         "rows": 4
