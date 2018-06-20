@@ -6,27 +6,27 @@
     <message>
       <location filename="../media_info.py" line="97"/>
       <source>Media Info</source>
-      <translation type="unfinished">Media Info</translation>
+      <translation>Podrobnosti o mediju</translation>
     </message>
     <message>
       <location filename="../media_info.py" line="51"/>
       <source>Error</source>
-      <translation type="unfinished">Error</translation>
+      <translation>Napaka</translation>
     </message>
     <message>
       <location filename="../media_info.py" line="51"/>
       <source>No info to display</source>
-      <translation type="unfinished">No info to display</translation>
+      <translation>Brez podrobnosti za prikaz</translation>
     </message>
     <message>
       <location filename="../media_info.py" line="107"/>
       <source>Info</source>
-      <translation type="unfinished">Info</translation>
+      <translation>Podrobnosti</translation>
     </message>
     <message>
       <location filename="../media_info.py" line="107"/>
       <source>Value</source>
-      <translation type="unfinished">Value</translation>
+      <translation>Vrednost</translation>
     </message>
   </context>
 </TS>
