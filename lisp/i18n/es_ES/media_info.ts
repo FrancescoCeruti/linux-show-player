@@ -6,7 +6,7 @@
     <message>
       <location filename="../media_info.py" line="97"/>
       <source>Media Info</source>
-      <translation type="unfinished">Media Info</translation>
+      <translation>Informaci&#xF3;n del Media</translation>
     </message>
     <message>
       <location filename="../media_info.py" line="51"/>
@@ -16,17 +16,17 @@
     <message>
       <location filename="../media_info.py" line="51"/>
       <source>No info to display</source>
-      <translation type="unfinished">No info to display</translation>
+      <translation>Ninguna informaci&#xF3;n para mostrar</translation>
     </message>
     <message>
       <location filename="../media_info.py" line="107"/>
       <source>Info</source>
-      <translation type="unfinished">Info</translation>
+      <translation>Informaci&#xF3;n</translation>
     </message>
     <message>
       <location filename="../media_info.py" line="107"/>
       <source>Value</source>
-      <translation type="unfinished">Value</translation>
+      <translation>Valor</translation>
     </message>
   </context>
 </TS>
