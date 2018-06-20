@@ -341,7 +341,7 @@
     <message>
       <location filename="../settings/user_element.py" line="54"/>
       <source>User defined elements</source>
-      <translation>Elementi definiti dall&apos;utente</translation>
+      <translation>Elementi definiti dall'utente</translation>
     </message>
     <message>
       <location filename="../settings/user_element.py" line="56"/>
