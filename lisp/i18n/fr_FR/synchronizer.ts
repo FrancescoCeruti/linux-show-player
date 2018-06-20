@@ -6,52 +6,52 @@
     <message>
       <location filename="../peers_dialog.py" line="81"/>
       <source>Manage connected peers</source>
-      <translation type="unfinished">Manage connected peers</translation>
+      <translation>Gestion des paires connect&#xE9;es</translation>
     </message>
     <message>
       <location filename="../peers_dialog.py" line="83"/>
       <source>Discover peers</source>
-      <translation type="unfinished">Discover peers</translation>
+      <translation>D&#xE9;couvrir les paires</translation>
     </message>
     <message>
       <location filename="../peers_dialog.py" line="85"/>
       <source>Manually add a peer</source>
-      <translation type="unfinished">Manually add a peer</translation>
+      <translation>Ajouter manuelement une paire</translation>
     </message>
     <message>
       <location filename="../peers_dialog.py" line="87"/>
       <source>Remove selected peer</source>
-      <translation type="unfinished">Remove selected peer</translation>
+      <translation>Retirer la paire s&#xE9;l&#xE9;ctionn&#xE9;e</translation>
     </message>
     <message>
       <location filename="../peers_dialog.py" line="89"/>
       <source>Remove all peers</source>
-      <translation type="unfinished">Remove all peers</translation>
+      <translation>Retirer toutes les paires</translation>
     </message>
     <message>
       <location filename="../peers_dialog.py" line="93"/>
       <source>Address</source>
-      <translation type="unfinished">Address</translation>
+      <translation>Adresses</translation>
     </message>
     <message>
       <location filename="../peers_dialog.py" line="93"/>
       <source>Peer IP</source>
-      <translation type="unfinished">Peer IP</translation>
+      <translation>IP de la paire</translation>
     </message>
     <message>
       <location filename="../peers_dialog.py" line="105"/>
       <source>Error</source>
-      <translation type="unfinished">Error</translation>
+      <translation>Erreur</translation>
     </message>
     <message>
       <location filename="../peers_dialog.py" line="105"/>
       <source>Already connected</source>
-      <translation type="unfinished">Already connected</translation>
+      <translation>D&#xE9;j&#xE0; connect&#xE9;</translation>
     </message>
     <message>
       <location filename="../peers_dialog.py" line="116"/>
       <source>Cannot add peer</source>
-      <translation type="unfinished">Cannot add peer</translation>
+      <translation>Impossible d&apos;ajouter une paire</translation>
     </message>
   </context>
   <context>
@@ -59,27 +59,27 @@
     <message>
       <location filename="../synchronizer.py" line="38"/>
       <source>Synchronization</source>
-      <translation type="unfinished">Synchronization</translation>
+      <translation>Synchronisation</translation>
     </message>
     <message>
       <location filename="../synchronizer.py" line="41"/>
       <source>Manage connected peers</source>
-      <translation type="unfinished">Manage connected peers</translation>
+      <translation>G&#xE9;rer les paiers connect&#xE9;es</translation>
     </message>
     <message>
       <location filename="../synchronizer.py" line="46"/>
       <source>Show your IP</source>
-      <translation type="unfinished">Show your IP</translation>
+      <translation>Afficher votre IP</translation>
     </message>
     <message>
       <location filename="../synchronizer.py" line="63"/>
       <source>Your IP is:</source>
-      <translation type="unfinished">Your IP is:</translation>
+      <translation>Votre IP est : </translation>
     </message>
     <message>
       <location filename="../peers_discovery_dialog.py" line="55"/>
       <source>Discovering peers ...</source>
-      <translation type="unfinished">Discovering peers ...</translation>
+      <translation>D&#xE9;couverte des paires ...</translation>
     </message>
   </context>
 </TS>
