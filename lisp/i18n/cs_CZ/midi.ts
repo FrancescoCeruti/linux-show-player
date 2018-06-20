@@ -6,17 +6,17 @@
     <message>
       <location filename="../midi_settings.py" line="40"/>
       <source>MIDI default devices</source>
-      <translation type="unfinished">MIDI default devices</translation>
+      <translation>V&#xFD;choz&#xED; za&#x159;&#xED;zen&#xED; MIDI</translation>
     </message>
     <message>
       <location filename="../midi_settings.py" line="45"/>
       <source>Input</source>
-      <translation type="unfinished">Input</translation>
+      <translation>Vstup</translation>
     </message>
     <message>
       <location filename="../midi_settings.py" line="51"/>
       <source>Output</source>
-      <translation type="unfinished">Output</translation>
+      <translation>V&#xFD;stup</translation>
     </message>
   </context>
   <context>
@@ -24,7 +24,7 @@
     <message>
       <location filename="../midi_settings.py" line="32"/>
       <source>MIDI settings</source>
-      <translation type="unfinished">MIDI settings</translation>
+      <translation>Nastaven&#xED; MIDI</translation>
     </message>
   </context>
 </TS>
