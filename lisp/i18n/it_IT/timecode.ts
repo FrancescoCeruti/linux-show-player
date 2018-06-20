@@ -42,7 +42,7 @@
     <message>
       <location filename="../timecode_settings.py" line="67"/>
       <source>High-Resolution Timecode</source>
-      <translation>Timecode ad alta risoluzione.</translation>
+      <translation>Timecode ad alta risoluzione</translation>
     </message>
     <message>
       <location filename="../timecode_settings.py" line="69"/>
@@ -57,12 +57,12 @@
     <message>
       <location filename="../timecode_settings.py" line="78"/>
       <source>OLA is not running - start the OLA daemon.</source>
-      <translation>OLA non &#xE8; in esecuzione - avvia il demone OLA</translation>
+      <translation>OLA non &#xE8; in esecuzione - avvia il demone OLA.</translation>
     </message>
     <message>
       <location filename="../timecode_settings.py" line="145"/>
       <source>Replace HOURS by a static track number</source>
-      <translation>Sostiture &quot;ORE&quot; con un numero di traccia statico</translation>
+      <translation>Sostituire ORE con un numero di traccia statico</translation>
     </message>
     <message>
       <location filename="../timecode_settings.py" line="148"/>
