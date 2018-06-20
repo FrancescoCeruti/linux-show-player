@@ -106,10 +106,10 @@ class Application(metaclass=Singleton):
         if exists(session_file):
             self._load_from_file(session_file)
         else:
-            layout = self.conf.get('layout.default', 'nodefault')
+            layout_name = self.conf.get('layout.default', 'nodefault')
 
-            if layout.lower() != 'nodefault':
-                self._new_session(layout.get_layout(layout))
+            if layout_name.lower() != 'nodefault':
+                self._new_session(layout.get_layout(layout_name))
             else:
                 self._new_session_dialog()
 
