@@ -6,12 +6,12 @@
     <message>
       <location filename="../timecode_settings.py" line="35"/>
       <source>Timecode Settings</source>
-      <translation type="unfinished">Timecode Settings</translation>
+      <translation>Nastavitve &#x10D;asovnega zapisa</translation>
     </message>
     <message>
       <location filename="../timecode_settings.py" line="103"/>
       <source>Timecode</source>
-      <translation type="unfinished">Timecode</translation>
+      <translation>&#x10C;asovni zapis</translation>
     </message>
   </context>
   <context>
@@ -19,12 +19,12 @@
     <message>
       <location filename="../timecode.py" line="146"/>
       <source>Cannot send timecode.</source>
-      <translation type="unfinished">Cannot send timecode.</translation>
+      <translation>Ne morem poslat &#x10D;asovnega zapisa</translation>
     </message>
     <message>
       <location filename="../timecode.py" line="146"/>
       <source>OLA has stopped.</source>
-      <translation type="unfinished">OLA has stopped.</translation>
+      <translation>OLA se je zaustavil</translation>
     </message>
   </context>
   <context>
@@ -32,52 +32,52 @@
     <message>
       <location filename="../timecode_settings.py" line="64"/>
       <source>OLA Timecode Settings</source>
-      <translation type="unfinished">OLA Timecode Settings</translation>
+      <translation>Nastavitve OLA  &#x10D;asovnega zapisa</translation>
     </message>
     <message>
       <location filename="../timecode_settings.py" line="66"/>
       <source>Enable Plugin</source>
-      <translation type="unfinished">Enable Plugin</translation>
+      <translation>Omogo&#x10D;i vti&#x10D;nik</translation>
     </message>
     <message>
       <location filename="../timecode_settings.py" line="67"/>
       <source>High-Resolution Timecode</source>
-      <translation type="unfinished">High-Resolution Timecode</translation>
+      <translation>Zelo podobni &#x10D;asovni zapis</translation>
     </message>
     <message>
       <location filename="../timecode_settings.py" line="69"/>
       <source>Timecode Format:</source>
-      <translation type="unfinished">Timecode Format:</translation>
+      <translation>Format &#x10D;asovnega zapisa:</translation>
     </message>
     <message>
       <location filename="../timecode_settings.py" line="78"/>
       <source>OLA status</source>
-      <translation type="unfinished">OLA status</translation>
+      <translation>OLA stanje</translation>
     </message>
     <message>
       <location filename="../timecode_settings.py" line="78"/>
       <source>OLA is not running - start the OLA daemon.</source>
-      <translation type="unfinished">OLA is not running - start the OLA daemon.</translation>
+      <translation>OLA ni zagnan - za&#x17E;enite OLA daemon.</translation>
     </message>
     <message>
       <location filename="../timecode_settings.py" line="145"/>
       <source>Replace HOURS by a static track number</source>
-      <translation type="unfinished">Replace HOURS by a static track number</translation>
+      <translation>Zamenjaj URE s stati&#x10D;no &#x161;tevilko sledi</translation>
     </message>
     <message>
       <location filename="../timecode_settings.py" line="148"/>
       <source>Enable ArtNet Timecode</source>
-      <translation type="unfinished">Enable ArtNet Timecode</translation>
+      <translation>Omogo&#x10D;i ArtNet &#x10D;asovni zapis</translation>
     </message>
     <message>
       <location filename="../timecode_settings.py" line="150"/>
       <source>Track number</source>
-      <translation type="unfinished">Track number</translation>
+      <translation>&#x160;tevilka sledi</translation>
     </message>
     <message>
       <location filename="../timecode_settings.py" line="152"/>
       <source>To send ArtNet Timecode you need to setup a running OLA session!</source>
-      <translation type="unfinished">To send ArtNet Timecode you need to setup a running OLA session!</translation>
+      <translation>Za po&#x161;iljanje ArtNet &#x10D;asovnega zapisa, rabite nastavit aktivno OLA sejo!</translation>
     </message>
   </context>
 </TS>
