@@ -34,7 +34,7 @@
     <message>
       <location filename="../command_cue.py" line="79"/>
       <source>Exit code: </source>
-      <translation>Codice di uscita:</translation>
+      <translation>Codice di uscita: </translation>
     </message>
     <message>
       <location filename="../command_cue.py" line="123"/>
@@ -49,7 +49,7 @@
     <message>
       <location filename="../command_cue.py" line="126"/>
       <source>Discard command output</source>
-      <translation>Scarta l&apos;output del comando</translation>
+      <translation>Scarta l'output del comando</translation>
     </message>
     <message>
       <location filename="../command_cue.py" line="128"/>
@@ -151,7 +151,7 @@
     <message>
       <location filename="../seek_cue.py" line="95"/>
       <source>Not selected</source>
-      <translation>Non slezionata</translation>
+      <translation>Non selezionata</translation>
     </message>
     <message>
       <location filename="../seek_cue.py" line="96"/>
@@ -215,7 +215,7 @@
     <message>
       <location filename="../volume_control.py" line="112"/>
       <source>Error during cue execution</source>
-      <translation>Errore durante l&apos;esecuzione della cue</translation>
+      <translation>Errore durante l'esecuzione della cue</translation>
     </message>
     <message>
       <location filename="../volume_control.py" line="182"/>
@@ -230,7 +230,7 @@
     <message>
       <location filename="../volume_control.py" line="184"/>
       <source>Not selected</source>
-      <translation>Non slezionata</translation>
+      <translation>Non selezionata</translation>
     </message>
     <message>
       <location filename="../volume_control.py" line="185"/>
