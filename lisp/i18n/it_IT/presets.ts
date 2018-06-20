@@ -39,7 +39,7 @@
     <message>
       <location filename="../presets_ui.py" line="60"/>
       <source>Error while deleting preset &quot;{}&quot;</source>
-      <translation>Errore durate l&apos;eliminazione del preset &quot;{}&quot;</translation>
+      <translation>Errore durate l'eliminazione del preset "{}";</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="68"/>
@@ -119,7 +119,7 @@
     <message>
       <location filename="../presets_ui.py" line="339"/>
       <source>Cannot export correctly.</source>
-      <translation>Impossibile esportare correttamente</translation>
+      <translation>Impossibile esportare correttamente.</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="351"/>
