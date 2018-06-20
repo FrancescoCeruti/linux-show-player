@@ -6,37 +6,37 @@
     <message>
       <location filename="../peers_dialog.py" line="81"/>
       <source>Manage connected peers</source>
-      <translation type="unfinished">Manage connected peers</translation>
+      <translation>Gestionar peers conectados</translation>
     </message>
     <message>
       <location filename="../peers_dialog.py" line="83"/>
       <source>Discover peers</source>
-      <translation type="unfinished">Discover peers</translation>
+      <translation>Descubrir peers</translation>
     </message>
     <message>
       <location filename="../peers_dialog.py" line="85"/>
       <source>Manually add a peer</source>
-      <translation type="unfinished">Manually add a peer</translation>
+      <translation>A&#xF1;adir un peer manualmente</translation>
     </message>
     <message>
       <location filename="../peers_dialog.py" line="87"/>
       <source>Remove selected peer</source>
-      <translation type="unfinished">Remove selected peer</translation>
+      <translation>Eliminar el peer seleccionado</translation>
     </message>
     <message>
       <location filename="../peers_dialog.py" line="89"/>
       <source>Remove all peers</source>
-      <translation type="unfinished">Remove all peers</translation>
+      <translation>Eliminar todos los peers</translation>
     </message>
     <message>
       <location filename="../peers_dialog.py" line="93"/>
       <source>Address</source>
-      <translation type="unfinished">Address</translation>
+      <translation>Direcci&#xF3;n</translation>
     </message>
     <message>
       <location filename="../peers_dialog.py" line="93"/>
       <source>Peer IP</source>
-      <translation type="unfinished">Peer IP</translation>
+      <translation>IP del peer</translation>
     </message>
     <message>
       <location filename="../peers_dialog.py" line="105"/>
@@ -46,12 +46,12 @@
     <message>
       <location filename="../peers_dialog.py" line="105"/>
       <source>Already connected</source>
-      <translation type="unfinished">Already connected</translation>
+      <translation>Ya est&#xE1; conectado</translation>
     </message>
     <message>
       <location filename="../peers_dialog.py" line="116"/>
       <source>Cannot add peer</source>
-      <translation type="unfinished">Cannot add peer</translation>
+      <translation>Imposible a&#xF1;adir peer</translation>
     </message>
   </context>
   <context>
@@ -59,27 +59,27 @@
     <message>
       <location filename="../synchronizer.py" line="38"/>
       <source>Synchronization</source>
-      <translation type="unfinished">Synchronization</translation>
+      <translation>Sincronizaci&#xF3;n</translation>
     </message>
     <message>
       <location filename="../synchronizer.py" line="41"/>
       <source>Manage connected peers</source>
-      <translation type="unfinished">Manage connected peers</translation>
+      <translation>Gestionar peers conectados</translation>
     </message>
     <message>
       <location filename="../synchronizer.py" line="46"/>
       <source>Show your IP</source>
-      <translation type="unfinished">Show your IP</translation>
+      <translation>Mostrar su IP</translation>
     </message>
     <message>
       <location filename="../synchronizer.py" line="63"/>
       <source>Your IP is:</source>
-      <translation type="unfinished">Your IP is:</translation>
+      <translation>Su IP es:</translation>
     </message>
     <message>
       <location filename="../peers_discovery_dialog.py" line="55"/>
       <source>Discovering peers ...</source>
-      <translation type="unfinished">Discovering peers ...</translation>
+      <translation>Descubriendo peers ...</translation>
     </message>
   </context>
 </TS>
