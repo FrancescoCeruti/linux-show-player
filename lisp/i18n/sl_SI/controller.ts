@@ -6,17 +6,17 @@
     <message>
       <location filename="../protocols/keyboard.py" line="58"/>
       <source>Key</source>
-      <translation type="unfinished">Key</translation>
+      <translation>Klju&#x10D;</translation>
     </message>
     <message>
       <location filename="../protocols/keyboard.py" line="58"/>
       <source>Action</source>
-      <translation type="unfinished">Action</translation>
+      <translation>Akcija</translation>
     </message>
     <message>
       <location filename="../protocols/keyboard.py" line="77"/>
       <source>Shortcuts</source>
-      <translation type="unfinished">Shortcuts</translation>
+      <translation>Bli&#x17E;njica</translation>
     </message>
   </context>
   <context>
@@ -29,42 +29,42 @@
     <message>
       <location filename="../protocols/midi.py" line="76"/>
       <source>Type</source>
-      <translation type="unfinished">Type</translation>
+      <translation>Tip</translation>
     </message>
     <message>
       <location filename="../protocols/midi.py" line="76"/>
       <source>Channel</source>
-      <translation type="unfinished">Channel</translation>
+      <translation>Kanal</translation>
     </message>
     <message>
       <location filename="../protocols/midi.py" line="76"/>
       <source>Note</source>
-      <translation type="unfinished">Note</translation>
+      <translation>Bele&#x17E;ka</translation>
     </message>
     <message>
       <location filename="../protocols/midi.py" line="76"/>
       <source>Action</source>
-      <translation type="unfinished">Action</translation>
+      <translation>Akcija</translation>
     </message>
     <message>
       <location filename="../protocols/midi.py" line="99"/>
       <source>Filter &quot;note on&quot;</source>
-      <translation type="unfinished">Filter &quot;note on&quot;</translation>
+      <translation>Filter &quot;Bele&#x17E;ka aktivna&quot;</translation>
     </message>
     <message>
       <location filename="../protocols/midi.py" line="102"/>
       <source>Filter &quot;note off&quot;</source>
-      <translation type="unfinished">Filter &quot;note off&quot;</translation>
+      <translation>Filter &quot;Bele&#x17E;ka neaktivna&quot;</translation>
     </message>
     <message>
       <location filename="../protocols/midi.py" line="114"/>
       <source>Capture</source>
-      <translation type="unfinished">Capture</translation>
+      <translation>Zajemi</translation>
     </message>
     <message>
       <location filename="../protocols/midi.py" line="147"/>
       <source>Listening MIDI messages ...</source>
-      <translation type="unfinished">Listening MIDI messages ...</translation>
+      <translation>Poslu&#x161;am MIDI sporo&#x10D;ila ...</translation>
     </message>
   </context>
   <context>
@@ -72,12 +72,12 @@
     <message>
       <location filename="../protocols/keyboard.py" line="78"/>
       <source>Add</source>
-      <translation type="unfinished">Add</translation>
+      <translation>Dodaj</translation>
     </message>
     <message>
       <location filename="../protocols/keyboard.py" line="79"/>
       <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
+      <translation>Odstrani</translation>
     </message>
   </context>
   <context>
@@ -85,17 +85,17 @@
     <message>
       <location filename="../controller_settings.py" line="29"/>
       <source>Cue Control</source>
-      <translation type="unfinished">Cue Control</translation>
+      <translation>Krmiljenje vrste</translation>
     </message>
     <message>
       <location filename="../protocols/midi.py" line="63"/>
       <source>MIDI Controls</source>
-      <translation type="unfinished">MIDI Controls</translation>
+      <translation>Krmiljenje MIDI</translation>
     </message>
     <message>
       <location filename="../protocols/keyboard.py" line="47"/>
       <source>Keyboard Shortcuts</source>
-      <translation type="unfinished">Keyboard Shortcuts</translation>
+      <translation>Bli&#x17E;njice na tipkovnici</translation>
     </message>
   </context>
 </TS>
