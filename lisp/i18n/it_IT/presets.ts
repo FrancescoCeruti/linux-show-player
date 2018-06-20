@@ -6,12 +6,12 @@
     <message>
       <location filename="../presets_ui.py" line="215"/>
       <source>Create Cue</source>
-      <translation type="unfinished">Create Cue</translation>
+      <translation>Crea Cue</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="216"/>
       <source>Load on selected Cues</source>
-      <translation type="unfinished">Load on selected Cues</translation>
+      <translation>Carica sulle cue selezionate</translation>
     </message>
   </context>
   <context>
@@ -19,122 +19,122 @@
     <message>
       <location filename="../presets_ui.py" line="364"/>
       <source>Presets</source>
-      <translation type="unfinished">Presets</translation>
+      <translation>Preset</translation>
     </message>
     <message>
       <location filename="../presets.py" line="52"/>
       <source>Load preset</source>
-      <translation type="unfinished">Load preset</translation>
+      <translation>Carica preset</translation>
     </message>
     <message>
       <location filename="../presets.py" line="56"/>
       <source>Save as preset</source>
-      <translation type="unfinished">Save as preset</translation>
+      <translation>Salva come preset</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="52"/>
       <source>Cannot scan presets</source>
-      <translation type="unfinished">Cannot scan presets</translation>
+      <translation>Impossibile cercare i preset</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="60"/>
       <source>Error while deleting preset &quot;{}&quot;</source>
-      <translation type="unfinished">Error while deleting preset &quot;{}&quot;</translation>
+      <translation>Errore durate l&apos;eliminazione del preset &quot;{}&quot;</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="68"/>
       <source>Cannot load preset &quot;{}&quot;</source>
-      <translation type="unfinished">Cannot load preset &quot;{}&quot;</translation>
+      <translation>Impossible caricare il preset &quot;{}&quot;</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="76"/>
       <source>Cannot save preset &quot;{}&quot;</source>
-      <translation type="unfinished">Cannot save preset &quot;{}&quot;</translation>
+      <translation>Impossibile salvare il preset &quot;{}&quot;</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="84"/>
       <source>Cannot rename preset &quot;{}&quot;</source>
-      <translation type="unfinished">Cannot rename preset &quot;{}&quot;</translation>
+      <translation>Impossible rinominare il preset &quot;{}&quot;</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="96"/>
       <source>Select Preset</source>
-      <translation type="unfinished">Select Preset</translation>
+      <translation>Seleziona Preset</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="109"/>
       <source>Preset already exists, overwrite?</source>
-      <translation type="unfinished">Preset already exists, overwrite?</translation>
+      <translation>Preset esistente, sovrascrivere?</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="419"/>
       <source>Preset name</source>
-      <translation type="unfinished">Preset name</translation>
+      <translation>Nome preset</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="211"/>
       <source>Add</source>
-      <translation type="unfinished">Add</translation>
+      <translation>Aggiungi</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="212"/>
       <source>Rename</source>
-      <translation type="unfinished">Rename</translation>
+      <translation>Rinomina</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="213"/>
       <source>Edit</source>
-      <translation type="unfinished">Edit</translation>
+      <translation>Modifica</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="214"/>
       <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
+      <translation>Rimuovi</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="217"/>
       <source>Export selected</source>
-      <translation type="unfinished">Export selected</translation>
+      <translation>Esporta selezionati</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="218"/>
       <source>Import</source>
-      <translation type="unfinished">Import</translation>
+      <translation>Importa</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="301"/>
       <source>Warning</source>
-      <translation type="unfinished">Warning</translation>
+      <translation>Avviso</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="256"/>
       <source>The same name is already used!</source>
-      <translation type="unfinished">The same name is already used!</translation>
+      <translation>Lo stesso nome &#xE8; gi&#xE0; in uso!</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="301"/>
       <source>Cannot create a cue from this preset: {}</source>
-      <translation type="unfinished">Cannot create a cue from this preset: {}</translation>
+      <translation>Impossibile creare cue da questo preset: {}</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="339"/>
       <source>Cannot export correctly.</source>
-      <translation type="unfinished">Cannot export correctly.</translation>
+      <translation>Impossibile esportare correttamente</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="351"/>
       <source>Some presets already exists, overwrite?</source>
-      <translation type="unfinished">Some presets already exists, overwrite?</translation>
+      <translation>Alcuni preset esistono gi&#xE0;, sovrascriverli?</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="364"/>
       <source>Cannot import correctly.</source>
-      <translation type="unfinished">Cannot import correctly.</translation>
+      <translation>Impossible importare correttamente.</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="420"/>
       <source>Cue type</source>
-      <translation type="unfinished">Cue type</translation>
+      <translation>Tipo di cue</translation>
     </message>
   </context>
 </TS>
