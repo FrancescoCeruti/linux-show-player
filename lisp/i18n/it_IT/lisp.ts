@@ -93,7 +93,7 @@
     <message>
       <location filename="../layouts/cart_layout/layout.py" line="171"/>
       <source>Add page</source>
-      <translation>Aggungi pagina</translation>
+      <translation>Aggiungi pagina</translation>
     </message>
     <message>
       <location filename="../layouts/cart_layout/layout.py" line="196"/>
@@ -272,7 +272,7 @@
     <message>
       <location filename="../ui/settings/pages/cue_appearance.py" line="74"/>
       <source>The appearance depends on the layout</source>
-      <translation>L&apos;aspetto dipende dal layout</translation>
+      <translation>L'aspetto dipende dal layout</translation>
     </message>
     <message>
       <location filename="../ui/settings/pages/cue_appearance.py" line="83"/>
@@ -328,7 +328,7 @@
     <message>
       <location filename="../ui/settings/pages/cue_general.py" line="178"/>
       <source>Wait before cue execution</source>
-      <translation>Attesa prima dell&apos;esecuzione della cue</translation>
+      <translation>Attesa prima dell'esecuzione della cue</translation>
     </message>
     <message>
       <location filename="../ui/settings/pages/cue_general.py" line="181"/>
@@ -338,7 +338,7 @@
     <message>
       <location filename="../ui/settings/pages/cue_general.py" line="182"/>
       <source>Wait after cue execution</source>
-      <translation>Attesa dopo l&apos;esecuzione della cue</translation>
+      <translation>Attesa dopo l'esecuzione della cue</translation>
     </message>
     <message>
       <location filename="../ui/settings/pages/cue_general.py" line="185"/>
@@ -373,12 +373,12 @@
     <message>
       <location filename="../ui/settings/pages/cue_general.py" line="166"/>
       <source>Start action</source>
-      <translation>Azione d&apos;avvio</translation>
+      <translation>Azione d'avvio</translation>
     </message>
     <message>
       <location filename="../ui/settings/pages/cue_general.py" line="168"/>
       <source>Default action to start the cue</source>
-      <translation>Azione standard per avviare la cue </translation>
+      <translation>Azione standard per avviare la cue</translation>
     </message>
     <message>
       <location filename="../ui/settings/pages/cue_general.py" line="171"/>
@@ -388,7 +388,7 @@
     <message>
       <location filename="../ui/settings/pages/cue_general.py" line="173"/>
       <source>Default action to stop the cue</source>
-      <translation>Azione standard per arrestare la cue </translation>
+      <translation>Azione standard per arrestare la cue</translation>
     </message>
   </context>
   <context>
@@ -453,7 +453,7 @@
     <message>
       <location filename="../layouts/cart_layout/layout.py" line="50"/>
       <source>Click a cue to run it</source>
-      <translation>Clicca una cue per eseguirla </translation>
+      <translation>Clicca una cue per eseguirla</translation>
     </message>
     <message>
       <location filename="../layouts/cart_layout/layout.py" line="51"/>
@@ -468,7 +468,7 @@
     <message>
       <location filename="../layouts/list_layout/layout.py" line="60"/>
       <source>SHIFT + Space or Double-Click to edit a cue</source>
-      <translation>SHIFT + Spazio o Doppio Click per modifcare una cue</translation>
+      <translation>SHIFT + Spazio o Doppio Click per modificare una cue</translation>
     </message>
     <message>
       <location filename="../layouts/list_layout/layout.py" line="64"/>
@@ -589,7 +589,7 @@
     <message>
       <location filename="../layouts/list_layout/list_layout_settings.py" line="114"/>
       <source>Go key:</source>
-      <translation>Tasto &quot;Go&quot;:</translation>
+      <translation>Tasto "Go":</translation>
     </message>
     <message>
       <location filename="../layouts/list_layout/control_buttons.py" line="63"/>
@@ -685,7 +685,7 @@
     <message>
       <location filename="../layouts/list_layout/info_panel.py" line="52"/>
       <source>Cue description</source>
-      <translation>Descrizone della cue</translation>
+      <translation>Descrizione della cue</translation>
     </message>
   </context>
   <context>
@@ -826,7 +826,7 @@
     <message>
       <location filename="../ui/mainwindow.py" line="184"/>
       <source>Edit selection</source>
-      <translation>Modifica slezionati</translation>
+      <translation>Modifica selezionati</translation>
     </message>
     <message>
       <location filename="../ui/mainwindow.py" line="186"/>
