@@ -6,22 +6,22 @@
     <message>
       <location filename="../ui/about.py" line="53"/>
       <source>Authors</source>
-      <translation type="unfinished">Authors</translation>
+      <translation>Auto&#x159;i</translation>
     </message>
     <message>
       <location filename="../ui/about.py" line="53"/>
       <source>Contributors</source>
-      <translation type="unfinished">Contributors</translation>
+      <translation>P&#x159;isp&#x11B;vatel&#xE9;</translation>
     </message>
     <message>
       <location filename="../ui/about.py" line="53"/>
       <source>Translators</source>
-      <translation type="unfinished">Translators</translation>
+      <translation>P&#x159;ekladatel&#xE9;</translation>
     </message>
     <message>
       <location filename="../ui/about.py" line="75"/>
       <source>About Linux Show Player</source>
-      <translation type="unfinished">About Linux Show Player</translation>
+      <translation>O programu Linux Show Player</translation>
     </message>
   </context>
   <context>
@@ -29,37 +29,37 @@
     <message>
       <location filename="../ui/about.py" line="47"/>
       <source>Linux Show Player is a cue-player designed for stage productions.</source>
-      <translation type="unfinished">Linux Show Player is a cue-player designed for stage productions.</translation>
+      <translation>Linux Show Player je p&#x159;ehr&#xE1;va&#x10D; z&#xE1;znam&#x16F; s nar&#xE1;&#x17E;kami navr&#x17E;en&#xFD; pro v&#xFD;robu sc&#xE9;n.</translation>
     </message>
     <message>
       <location filename="../ui/about.py" line="102"/>
       <source>Web site</source>
-      <translation type="unfinished">Web site</translation>
+      <translation>Str&#xE1;nky</translation>
     </message>
     <message>
       <location filename="../ui/about.py" line="102"/>
       <source>Users  group</source>
-      <translation type="unfinished">Users  group</translation>
+      <translation>U&#x17E;ivatelsk&#xE1; skupina</translation>
     </message>
     <message>
       <location filename="../ui/about.py" line="102"/>
       <source>Source code</source>
-      <translation type="unfinished">Source code</translation>
+      <translation>Zdrojov&#xFD; k&#xF3;d</translation>
     </message>
     <message>
       <location filename="../ui/about.py" line="112"/>
       <source>Info</source>
-      <translation type="unfinished">Info</translation>
+      <translation>Informace</translation>
     </message>
     <message>
       <location filename="../ui/about.py" line="117"/>
       <source>License</source>
-      <translation type="unfinished">License</translation>
+      <translation>Licence</translation>
     </message>
     <message>
       <location filename="../ui/about.py" line="123"/>
       <source>Contributors</source>
-      <translation type="unfinished">Contributors</translation>
+      <translation>P&#x159;isp&#x11B;vatel&#xE9;</translation>
     </message>
   </context>
   <context>
@@ -67,17 +67,17 @@
     <message>
       <location filename="../ui/settings/pages/app_general.py" line="39"/>
       <source>Startup layout</source>
-      <translation type="unfinished">Startup layout</translation>
+      <translation>Rozvr&#x17E;en&#xED; p&#x159;i spu&#x161;t&#x11B;n&#xED;</translation>
     </message>
     <message>
       <location filename="../ui/settings/pages/app_general.py" line="45"/>
       <source>Use startup dialog</source>
-      <translation type="unfinished">Use startup dialog</translation>
+      <translation>Pou&#x17E;&#xED;t dialog p&#x159;i spu&#x161;t&#x11B;n&#xED;</translation>
     </message>
     <message>
       <location filename="../ui/settings/pages/app_general.py" line="58"/>
       <source>Application theme</source>
-      <translation type="unfinished">Application theme</translation>
+      <translation>Motiv programu</translation>
     </message>
   </context>
   <context>
@@ -85,7 +85,7 @@
     <message>
       <location filename="../ui/settings/app_settings.py" line="36"/>
       <source>LiSP preferences</source>
-      <translation type="unfinished">LiSP preferences</translation>
+      <translation>Nastaven&#xED; LiSP</translation>
     </message>
   </context>
   <context>
@@ -93,127 +93,127 @@
     <message>
       <location filename="../layouts/cart_layout/layout.py" line="171"/>
       <source>Add page</source>
-      <translation type="unfinished">Add page</translation>
+      <translation>P&#x159;idat stranu</translation>
     </message>
     <message>
       <location filename="../layouts/cart_layout/layout.py" line="196"/>
       <source>Add pages</source>
-      <translation type="unfinished">Add pages</translation>
+      <translation>P&#x159;idat strany</translation>
     </message>
     <message>
       <location filename="../layouts/cart_layout/layout.py" line="173"/>
       <source>Remove current page</source>
-      <translation type="unfinished">Remove current page</translation>
+      <translation>Odstranit nyn&#x11B;j&#x161;&#xED; stranu</translation>
     </message>
     <message>
       <location filename="../layouts/cart_layout/cart_layout_settings.py" line="85"/>
       <source>Countdown mode</source>
-      <translation type="unfinished">Countdown mode</translation>
+      <translation>Re&#x17E;im odpo&#x10D;&#xED;t&#xE1;v&#xE1;n&#xED;</translation>
     </message>
     <message>
       <location filename="../layouts/cart_layout/cart_layout_settings.py" line="86"/>
       <source>Show seek-bars</source>
-      <translation type="unfinished">Show seek-bars</translation>
+      <translation>Uk&#xE1;zat prohled&#xE1;vac&#xED; pruhy</translation>
     </message>
     <message>
       <location filename="../layouts/cart_layout/cart_layout_settings.py" line="87"/>
       <source>Show dB-meters</source>
-      <translation type="unfinished">Show dB-meters</translation>
+      <translation>Uk&#xE1;zat m&#x11B;&#x159;idla decibel&#x16F;</translation>
     </message>
     <message>
       <location filename="../layouts/cart_layout/cart_layout_settings.py" line="89"/>
       <source>Show volume</source>
-      <translation type="unfinished">Show volume</translation>
+      <translation>Uk&#xE1;zat hlasitost</translation>
     </message>
     <message>
       <location filename="../layouts/cart_layout/cart_layout_settings.py" line="88"/>
       <source>Show accurate time</source>
-      <translation type="unfinished">Show accurate time</translation>
+      <translation>Uk&#xE1;zat p&#x159;esn&#xFD; &#x10D;as</translation>
     </message>
     <message>
       <location filename="../layouts/cart_layout/layout.py" line="183"/>
       <source>Edit cue</source>
-      <translation type="unfinished">Edit cue</translation>
+      <translation>Upravit nar&#xE1;&#x17E;ku</translation>
     </message>
     <message>
       <location filename="../layouts/cart_layout/layout.py" line="184"/>
       <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
+      <translation>Odstranit</translation>
     </message>
     <message>
       <location filename="../layouts/cart_layout/layout.py" line="185"/>
       <source>Select</source>
-      <translation type="unfinished">Select</translation>
+      <translation>Vybrat</translation>
     </message>
     <message>
       <location filename="../layouts/cart_layout/layout.py" line="186"/>
       <source>Play</source>
-      <translation type="unfinished">Play</translation>
+      <translation>P&#x159;ehr&#xE1;t</translation>
     </message>
     <message>
       <location filename="../layouts/cart_layout/layout.py" line="187"/>
       <source>Pause</source>
-      <translation type="unfinished">Pause</translation>
+      <translation>Pozastavit</translation>
     </message>
     <message>
       <location filename="../layouts/cart_layout/layout.py" line="188"/>
       <source>Stop</source>
-      <translation type="unfinished">Stop</translation>
+      <translation>Zastavit</translation>
     </message>
     <message>
       <location filename="../layouts/cart_layout/layout.py" line="189"/>
       <source>Reset volume</source>
-      <translation type="unfinished">Reset volume</translation>
+      <translation>Nastavit znovu hlasitost</translation>
     </message>
     <message>
       <location filename="../layouts/cart_layout/layout.py" line="196"/>
       <source>Number of Pages:</source>
-      <translation type="unfinished">Number of Pages:</translation>
+      <translation>Po&#x10D;et stran:</translation>
     </message>
     <message>
       <location filename="../layouts/cart_layout/layout.py" line="276"/>
       <source>Warning</source>
-      <translation type="unfinished">Warning</translation>
+      <translation>Varov&#xE1;n&#xED;</translation>
     </message>
     <message>
       <location filename="../layouts/cart_layout/layout.py" line="277"/>
       <source>Every cue in the page will be lost.</source>
-      <translation type="unfinished">Every cue in the page will be lost.</translation>
+      <translation>Ka&#x17E;d&#xE1; nar&#xE1;&#x17E;ka na stran&#x11B; bude ztracena.</translation>
     </message>
     <message>
       <location filename="../layouts/cart_layout/layout.py" line="279"/>
       <source>Are you sure to continue?</source>
-      <translation type="unfinished">Are you sure to continue?</translation>
+      <translation>Jste si jist&#xFD;, &#x17E;e chcete pokra&#x10D;ovat?</translation>
     </message>
     <message>
       <location filename="../layouts/cart_layout/layout.py" line="298"/>
       <source>Page</source>
-      <translation type="unfinished">Page</translation>
+      <translation>Strana</translation>
     </message>
     <message>
       <location filename="../layouts/cart_layout/cart_layout_settings.py" line="83"/>
       <source>Default behaviors</source>
-      <translation type="unfinished">Default behaviors</translation>
+      <translation>V&#xFD;choz&#xED; chov&#xE1;n&#xED;</translation>
     </message>
     <message>
       <location filename="../layouts/cart_layout/cart_layout_settings.py" line="90"/>
       <source>Automatically add new page</source>
-      <translation type="unfinished">Automatically add new page</translation>
+      <translation>Automaticky p&#x159;idat novou stranu</translation>
     </message>
     <message>
       <location filename="../layouts/cart_layout/cart_layout_settings.py" line="92"/>
       <source>Grid size</source>
-      <translation type="unfinished">Grid size</translation>
+      <translation>Velikost m&#x159;&#xED;&#x17E;ky</translation>
     </message>
     <message>
       <location filename="../layouts/cart_layout/cart_layout_settings.py" line="93"/>
       <source>Number of columns</source>
-      <translation type="unfinished">Number of columns</translation>
+      <translation>Po&#x10D;et sloupc&#x16F;</translation>
     </message>
     <message>
       <location filename="../layouts/cart_layout/cart_layout_settings.py" line="94"/>
       <source>Number of rows</source>
-      <translation type="unfinished">Number of rows</translation>
+      <translation>Po&#x10D;et &#x159;&#xE1;dk&#x16F;</translation>
     </message>
   </context>
   <context>
@@ -221,37 +221,37 @@
     <message>
       <location filename="../ui/widgets/cueaction_combobox.py" line="28"/>
       <source>Default</source>
-      <translation type="unfinished">Default</translation>
+      <translation>V&#xFD;choz&#xED;</translation>
     </message>
     <message>
       <location filename="../ui/widgets/cueaction_combobox.py" line="34"/>
       <source>Pause</source>
-      <translation type="unfinished">Pause</translation>
+      <translation>Pozastavit</translation>
     </message>
     <message>
       <location filename="../ui/widgets/cueaction_combobox.py" line="32"/>
       <source>Start</source>
-      <translation type="unfinished">Start</translation>
+      <translation>Spustit</translation>
     </message>
     <message>
       <location filename="../ui/widgets/cueaction_combobox.py" line="33"/>
       <source>Stop</source>
-      <translation type="unfinished">Stop</translation>
+      <translation>Zastavit</translation>
     </message>
     <message>
       <location filename="../ui/widgets/cueaction_combobox.py" line="29"/>
       <source>FadeInStart</source>
-      <translation type="unfinished">FadeInStart</translation>
+      <translation>Za&#x10D;&#xE1;tek postupn&#xE9;ho zes&#xED;len&#xED;</translation>
     </message>
     <message>
       <location filename="../ui/widgets/cueaction_combobox.py" line="30"/>
       <source>FadeOutStop</source>
-      <translation type="unfinished">FadeOutStop</translation>
+      <translation>Konec postupn&#xE9;ho zeslaben&#xED;</translation>
     </message>
     <message>
       <location filename="../ui/widgets/cueaction_combobox.py" line="31"/>
       <source>FadeOutPause</source>
-      <translation type="unfinished">FadeOutPause</translation>
+      <translation>Pozastaven&#xED; postupn&#xE9;ho zeslaben&#xED;</translation>
     </message>
   </context>
   <context>
@@ -259,12 +259,12 @@
     <message>
       <location filename="../cues/cue_actions.py" line="48"/>
       <source>Cue settings changed: &quot;{}&quot;</source>
-      <translation type="unfinished">Cue settings changed: &quot;{}&quot;</translation>
+      <translation>Nastaven&#xED; nar&#xE1;&#x17E;ky zm&#x11B;n&#x11B;na: &quot;{}&quot;</translation>
     </message>
     <message>
       <location filename="../cues/cue_actions.py" line="76"/>
       <source>Cues settings changed.</source>
-      <translation type="unfinished">Cues settings changed.</translation>
+      <translation>Nastaven&#xED; nar&#xE1;&#x17E;ky zm&#x11B;n&#x11B;na.</translation>
     </message>
   </context>
   <context>
@@ -272,42 +272,42 @@
     <message>
       <location filename="../ui/settings/pages/cue_appearance.py" line="74"/>
       <source>The appearance depends on the layout</source>
-      <translation type="unfinished">The appearance depends on the layout</translation>
+      <translation>Vzhled z&#xE1;vis&#xED; na rozvr&#x17E;en&#xED;</translation>
     </message>
     <message>
       <location filename="../ui/settings/pages/cue_appearance.py" line="83"/>
       <source>Cue name</source>
-      <translation type="unfinished">Cue name</translation>
+      <translation>N&#xE1;zev nar&#xE1;&#x17E;ky</translation>
     </message>
     <message>
       <location filename="../ui/settings/pages/cue_appearance.py" line="85"/>
       <source>NoName</source>
-      <translation type="unfinished">NoName</translation>
+      <translation>Bez n&#xE1;zvu</translation>
     </message>
     <message>
       <location filename="../ui/settings/pages/cue_appearance.py" line="87"/>
       <source>Description/Note</source>
-      <translation type="unfinished">Description/Note</translation>
+      <translation>Popis/Pozn&#xE1;mka</translation>
     </message>
     <message>
       <location filename="../ui/settings/pages/cue_appearance.py" line="89"/>
       <source>Set Font Size</source>
-      <translation type="unfinished">Set Font Size</translation>
+      <translation>Nastavit velikost p&#xED;sma</translation>
     </message>
     <message>
       <location filename="../ui/settings/pages/cue_appearance.py" line="91"/>
       <source>Color</source>
-      <translation type="unfinished">Color</translation>
+      <translation>Barva</translation>
     </message>
     <message>
       <location filename="../ui/settings/pages/cue_appearance.py" line="92"/>
       <source>Select background color</source>
-      <translation type="unfinished">Select background color</translation>
+      <translation>Vybrat barvu pozad&#xED;</translation>
     </message>
     <message>
       <location filename="../ui/settings/pages/cue_appearance.py" line="94"/>
       <source>Select font color</source>
-      <translation type="unfinished">Select font color</translation>
+      <translation>Vybrat barvu p&#xED;sma</translation>
     </message>
   </context>
   <context>
@@ -315,7 +315,7 @@
     <message>
       <location filename="../cues/media_cue.py" line="33"/>
       <source>Media Cue</source>
-      <translation type="unfinished">Media Cue</translation>
+      <translation>Nar&#xE1;&#x17E;ka v z&#xE1;znamu</translation>
     </message>
   </context>
   <context>
@@ -323,72 +323,72 @@
     <message>
       <location filename="../ui/settings/pages/cue_general.py" line="177"/>
       <source>Pre wait</source>
-      <translation type="unfinished">Pre wait</translation>
+      <translation>&#x10C;ek&#xE1;n&#xED; p&#x159;ed</translation>
     </message>
     <message>
       <location filename="../ui/settings/pages/cue_general.py" line="178"/>
       <source>Wait before cue execution</source>
-      <translation type="unfinished">Wait before cue execution</translation>
+      <translation>&#x10C;ekat p&#x159;ed proveden&#xED;m nar&#xE1;&#x17E;ky</translation>
     </message>
     <message>
       <location filename="../ui/settings/pages/cue_general.py" line="181"/>
       <source>Post wait</source>
-      <translation type="unfinished">Post wait</translation>
+      <translation>&#x10C;ek&#xE1;n&#xED; po</translation>
     </message>
     <message>
       <location filename="../ui/settings/pages/cue_general.py" line="182"/>
       <source>Wait after cue execution</source>
-      <translation type="unfinished">Wait after cue execution</translation>
+      <translation>&#x10C;ekat po proveden&#xED; nar&#xE1;&#x17E;ky</translation>
     </message>
     <message>
       <location filename="../ui/settings/pages/cue_general.py" line="185"/>
       <source>Next action</source>
-      <translation type="unfinished">Next action</translation>
+      <translation>Dal&#x161;&#xED; &#x10D;innost</translation>
     </message>
     <message>
       <location filename="../ui/settings/pages/cue_app_settings.py" line="55"/>
       <source>Interrupt Fade</source>
-      <translation type="unfinished">Interrupt Fade</translation>
+      <translation>Prol&#xED;n&#xE1;n&#xED; p&#x159;eru&#x161;en&#xED;</translation>
     </message>
     <message>
       <location filename="../ui/settings/pages/cue_app_settings.py" line="56"/>
       <source>Fade Action</source>
-      <translation type="unfinished">Fade Action</translation>
+      <translation>&#x10C;innost  prol&#xED;n&#xE1;n&#xED;</translation>
     </message>
     <message>
       <location filename="../ui/settings/pages/cue_general.py" line="161"/>
       <source>Behaviours</source>
-      <translation type="unfinished">Behaviours</translation>
+      <translation>Chov&#xE1;n&#xED;</translation>
     </message>
     <message>
       <location filename="../ui/settings/pages/cue_general.py" line="162"/>
       <source>Pre/Post Wait</source>
-      <translation type="unfinished">Pre/Post Wait</translation>
+      <translation>&#x10C;ek&#xE1;n&#xED; p&#x159;ed/po</translation>
     </message>
     <message>
       <location filename="../ui/settings/pages/cue_general.py" line="163"/>
       <source>Fade In/Out</source>
-      <translation type="unfinished">Fade In/Out</translation>
+      <translation>Postupn&#xE9; zes&#xED;len&#xED;/zeslaben&#xED; sign&#xE1;lu</translation>
     </message>
     <message>
       <location filename="../ui/settings/pages/cue_general.py" line="166"/>
       <source>Start action</source>
-      <translation type="unfinished">Start action</translation>
+      <translation>&#x10C;innost spu&#x161;t&#x11B;n&#xED;</translation>
     </message>
     <message>
       <location filename="../ui/settings/pages/cue_general.py" line="168"/>
       <source>Default action to start the cue</source>
-      <translation type="unfinished">Default action to start the cue</translation>
+      <translation>V&#xFD;choz&#xED; &#x10D;innost pro spu&#x161;t&#x11B;n&#xED; nar&#xE1;&#x17E;ky</translation>
     </message>
     <message>
       <location filename="../ui/settings/pages/cue_general.py" line="171"/>
       <source>Stop action</source>
-      <translation type="unfinished">Stop action</translation>
+      <translation>&#x10C;innost zastaven&#xED;</translation>
     </message>
     <message>
       <location filename="../ui/settings/pages/cue_general.py" line="173"/>
       <source>Default action to stop the cue</source>
-      <translation type="unfinished">Default action to stop the cue</translation>
+      <translation>V&#xFD;choz&#xED; &#x10D;innost pro zastaven&#xED; nar&#xE1;&#x17E;ky</translation>
     </message>
   </context>
   <context>
@@ -396,17 +396,17 @@
     <message>
       <location filename="../ui/widgets/fade_combobox.py" line="28"/>
       <source>Linear</source>
-      <translation type="unfinished">Linear</translation>
+      <translation>Line&#xE1;rn&#xED;</translation>
     </message>
     <message>
       <location filename="../ui/widgets/fade_combobox.py" line="29"/>
       <source>Quadratic</source>
-      <translation type="unfinished">Quadratic</translation>
+      <translation>Kvadratick&#xFD;</translation>
     </message>
     <message>
       <location filename="../ui/widgets/fade_combobox.py" line="30"/>
       <source>Quadratic2</source>
-      <translation type="unfinished">Quadratic2</translation>
+      <translation>Kvadratick&#xFD; 2</translation>
     </message>
   </context>
   <context>
@@ -414,12 +414,12 @@
     <message>
       <location filename="../ui/widgets/fade_edit.py" line="51"/>
       <source>Duration (sec)</source>
-      <translation type="unfinished">Duration (sec)</translation>
+      <translation>Doba trv&#xE1;n&#xED; (s)</translation>
     </message>
     <message>
       <location filename="../ui/widgets/fade_edit.py" line="52"/>
       <source>Curve</source>
-      <translation type="unfinished">Curve</translation>
+      <translation>K&#x159;ivka</translation>
     </message>
   </context>
   <context>
@@ -427,12 +427,12 @@
     <message>
       <location filename="../ui/settings/pages/cue_general.py" line="188"/>
       <source>Fade In</source>
-      <translation type="unfinished">Fade In</translation>
+      <translation>Postupn&#xE9; zes&#xED;len&#xED; sign&#xE1;lu</translation>
     </message>
     <message>
       <location filename="../ui/settings/pages/cue_general.py" line="189"/>
       <source>Fade Out</source>
-      <translation type="unfinished">Fade Out</translation>
+      <translation>Postupn&#xE9; zeslaben&#xED; sign&#xE1;lu</translation>
     </message>
   </context>
   <context>
@@ -440,12 +440,12 @@
     <message>
       <location filename="../layouts/cart_layout/layout.py" line="47"/>
       <source>Organize cues in grid like pages</source>
-      <translation type="unfinished">Organize cues in grid like pages</translation>
+      <translation>Uspo&#x159;&#xE1;dat nar&#xE1;&#x17E;ky v m&#x159;&#xED;&#x17E;ce jako strany</translation>
     </message>
     <message>
       <location filename="../layouts/list_layout/layout.py" line="57"/>
       <source>Organize the cues in a list</source>
-      <translation type="unfinished">Organize the cues in a list</translation>
+      <translation>Uspo&#x159;&#xE1;dat nar&#xE1;&#x17E;ky v seznamu</translation>
     </message>
   </context>
   <context>
@@ -453,42 +453,42 @@
     <message>
       <location filename="../layouts/cart_layout/layout.py" line="50"/>
       <source>Click a cue to run it</source>
-      <translation type="unfinished">Click a cue to run it</translation>
+      <translation>Klepnout na nar&#xE1;&#x17E;ku pro jej&#xED; spu&#x161;t&#x11B;n&#xED;</translation>
     </message>
     <message>
       <location filename="../layouts/cart_layout/layout.py" line="51"/>
       <source>SHIFT + Click to edit a cue</source>
-      <translation type="unfinished">SHIFT + Click to edit a cue</translation>
+      <translation>Shift + klepnut&#xED; pro upraven&#xED; nar&#xE1;&#x17E;ky</translation>
     </message>
     <message>
       <location filename="../layouts/cart_layout/layout.py" line="52"/>
       <source>CTRL + Click to select a cue</source>
-      <translation type="unfinished">CTRL + Click to select a cue</translation>
+      <translation>Ctrl + klepnut&#xED; pro vybr&#xE1;n&#xED; nar&#xE1;&#x17E;ky</translation>
     </message>
     <message>
       <location filename="../layouts/list_layout/layout.py" line="60"/>
       <source>SHIFT + Space or Double-Click to edit a cue</source>
-      <translation type="unfinished">SHIFT + Space or Double-Click to edit a cue</translation>
+      <translation>Shift + mezern&#xED;k nebo dvojit&#xE9; klepnut&#xED; pro upraven&#xED; nar&#xE1;&#x17E;ky</translation>
     </message>
     <message>
       <location filename="../layouts/list_layout/layout.py" line="64"/>
       <source>To copy cues drag them while pressing CTRL</source>
-      <translation type="unfinished">To copy cues drag them while pressing CTRL</translation>
+      <translation>Pro zkop&#xED;rov&#xE1;n&#xED; nar&#xE1;&#x17E;ek je t&#xE1;hn&#x11B;te za sou&#x10D;asn&#xE9;ho dr&#x17E;en&#xED; kl&#xE1;vesy Ctrl</translation>
     </message>
     <message>
       <location filename="../layouts/cart_layout/layout.py" line="55"/>
       <source>To copy cues drag them while pressing SHIFT</source>
-      <translation type="unfinished">To copy cues drag them while pressing SHIFT</translation>
+      <translation>Pro zkop&#xED;rov&#xE1;n&#xED; nar&#xE1;&#x17E;ek je t&#xE1;hn&#x11B;te za sou&#x10D;asn&#xE9;ho dr&#x17E;en&#xED; kl&#xE1;vesy Shift</translation>
     </message>
     <message>
       <location filename="../layouts/list_layout/layout.py" line="62"/>
       <source>CTRL + Left Click to select cues</source>
-      <translation type="unfinished">CTRL + Left Click to select cues</translation>
+      <translation>Ctrl + klepnut&#xED; lev&#xFD;m tla&#x10D;&#xED;tkem my&#x161;i pro vybr&#xE1;n&#xED; nar&#xE1;&#x17E;ky</translation>
     </message>
     <message>
       <location filename="../layouts/list_layout/layout.py" line="66"/>
       <source>To move cues drag them</source>
-      <translation type="unfinished">To move cues drag them</translation>
+      <translation>Pro p&#x159;esunut&#xED; nar&#xE1;&#x17E;ek je t&#xE1;hn&#x11B;te</translation>
     </message>
   </context>
   <context>
@@ -496,17 +496,17 @@
     <message>
       <location filename="../ui/layoutselect.py" line="38"/>
       <source>Layout selection</source>
-      <translation type="unfinished">Layout selection</translation>
+      <translation>V&#xFD;b&#x11B;r rozvr&#x17E;en&#xED;</translation>
     </message>
     <message>
       <location filename="../ui/layoutselect.py" line="51"/>
       <source>Select layout</source>
-      <translation type="unfinished">Select layout</translation>
+      <translation>Vybrat rozvr&#x17E;en&#xED;</translation>
     </message>
     <message>
       <location filename="../ui/layoutselect.py" line="55"/>
       <source>Open file</source>
-      <translation type="unfinished">Open file</translation>
+      <translation>Otev&#x159;&#xED;t soubor</translation>
     </message>
   </context>
   <context>
@@ -514,142 +514,142 @@
     <message>
       <location filename="../layouts/list_layout/list_layout_settings.py" line="108"/>
       <source>Show playing cues</source>
-      <translation type="unfinished">Show playing cues</translation>
+      <translation>Uk&#xE1;zat p&#x159;ehr&#xE1;van&#xE9; nar&#xE1;&#x17E;ky</translation>
     </message>
     <message>
       <location filename="../layouts/list_layout/list_layout_settings.py" line="109"/>
       <source>Show dB-meters</source>
-      <translation type="unfinished">Show dB-meters</translation>
+      <translation>Uk&#xE1;zat m&#x11B;&#x159;idla decibel&#x16F;</translation>
     </message>
     <message>
       <location filename="../layouts/list_layout/list_layout_settings.py" line="111"/>
       <source>Show seek-bars</source>
-      <translation type="unfinished">Show seek-bars</translation>
+      <translation>Uk&#xE1;zat prohled&#xE1;vac&#xED; pruhy</translation>
     </message>
     <message>
       <location filename="../layouts/list_layout/list_layout_settings.py" line="110"/>
       <source>Show accurate time</source>
-      <translation type="unfinished">Show accurate time</translation>
+      <translation>Uk&#xE1;zat p&#x159;esn&#xFD; &#x10D;as</translation>
     </message>
     <message>
       <location filename="../layouts/list_layout/list_layout_settings.py" line="112"/>
       <source>Auto-select next cue</source>
-      <translation type="unfinished">Auto-select next cue</translation>
+      <translation>Vybrat dal&#x161;&#xED; nar&#xE1;&#x17E;ku automaticky</translation>
     </message>
     <message>
       <location filename="../layouts/list_layout/layout.py" line="208"/>
       <source>Edit cue</source>
-      <translation type="unfinished">Edit cue</translation>
+      <translation>Upravit nar&#xE1;&#x17E;ku</translation>
     </message>
     <message>
       <location filename="../layouts/list_layout/layout.py" line="209"/>
       <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
+      <translation>Odstranit</translation>
     </message>
     <message>
       <location filename="../layouts/list_layout/layout.py" line="210"/>
       <source>Select</source>
-      <translation type="unfinished">Select</translation>
+      <translation>Vybrat</translation>
     </message>
     <message>
       <location filename="../layouts/list_layout/control_buttons.py" line="62"/>
       <source>Stop all</source>
-      <translation type="unfinished">Stop all</translation>
+      <translation>Zastavit v&#x161;e</translation>
     </message>
     <message>
       <location filename="../layouts/list_layout/control_buttons.py" line="61"/>
       <source>Pause all</source>
-      <translation type="unfinished">Pause all</translation>
+      <translation>Pozastavit v&#x161;e</translation>
     </message>
     <message>
       <location filename="../layouts/list_layout/control_buttons.py" line="66"/>
       <source>Restart all</source>
-      <translation type="unfinished">Restart all</translation>
+      <translation>Spustit v&#x161;e znovu</translation>
     </message>
     <message>
       <location filename="../layouts/list_layout/list_layout_settings.py" line="63"/>
       <source>Stop</source>
-      <translation type="unfinished">Stop</translation>
+      <translation>Zastavit</translation>
     </message>
     <message>
       <location filename="../layouts/list_layout/list_layout_settings.py" line="64"/>
       <source>Restart</source>
-      <translation type="unfinished">Restart</translation>
+      <translation>Nastavit znovu na v&#xFD;choz&#xED;</translation>
     </message>
     <message>
       <location filename="../layouts/list_layout/list_layout_settings.py" line="106"/>
       <source>Default behaviors</source>
-      <translation type="unfinished">Default behaviors</translation>
+      <translation>V&#xFD;choz&#xED; chov&#xE1;n&#xED;</translation>
     </message>
     <message>
       <location filename="../layouts/list_layout/list_layout_settings.py" line="113"/>
       <source>At list end:</source>
-      <translation type="unfinished">At list end:</translation>
+      <translation>Na konci seznamu:</translation>
     </message>
     <message>
       <location filename="../layouts/list_layout/list_layout_settings.py" line="114"/>
       <source>Go key:</source>
-      <translation type="unfinished">Go key:</translation>
+      <translation>Kl&#xE1;vesa pro p&#x159;echod:</translation>
     </message>
     <message>
       <location filename="../layouts/list_layout/control_buttons.py" line="63"/>
       <source>Interrupt all</source>
-      <translation type="unfinished">Interrupt all</translation>
+      <translation>P&#x159;eru&#x161;it v&#x161;e</translation>
     </message>
     <message>
       <location filename="../layouts/list_layout/control_buttons.py" line="67"/>
       <source>Fade-Out all</source>
-      <translation type="unfinished">Fade-Out all</translation>
+      <translation>Postupn&#x11B; zeslabit v&#x161;e</translation>
     </message>
     <message>
       <location filename="../layouts/list_layout/control_buttons.py" line="68"/>
       <source>Fade-In all</source>
-      <translation type="unfinished">Fade-In all</translation>
+      <translation>Postupn&#x11B; zes&#xED;lit v&#x161;e</translation>
     </message>
     <message>
       <location filename="../layouts/list_layout/list_layout_settings.py" line="116"/>
       <source>Use fade</source>
-      <translation type="unfinished">Use fade</translation>
+      <translation>Pou&#x17E;&#xED;t prol&#xED;n&#xE1;n&#xED;</translation>
     </message>
     <message>
       <location filename="../layouts/list_layout/list_layout_settings.py" line="117"/>
       <source>Stop Cue</source>
-      <translation type="unfinished">Stop Cue</translation>
+      <translation>Nar&#xE1;&#x17E;ka pro zastaven&#xED;</translation>
     </message>
     <message>
       <location filename="../layouts/list_layout/list_layout_settings.py" line="118"/>
       <source>Pause Cue</source>
-      <translation type="unfinished">Pause Cue</translation>
+      <translation>Nar&#xE1;&#x17E;ka pro pozastaven&#xED;</translation>
     </message>
     <message>
       <location filename="../layouts/list_layout/list_layout_settings.py" line="119"/>
       <source>Restart Cue</source>
-      <translation type="unfinished">Restart Cue</translation>
+      <translation>Nar&#xE1;&#x17E;ka pro op&#x11B;tovn&#xE9; spu&#x161;t&#x11B;n&#xED;</translation>
     </message>
     <message>
       <location filename="../layouts/list_layout/list_layout_settings.py" line="120"/>
       <source>Interrupt Cue</source>
-      <translation type="unfinished">Interrupt Cue</translation>
+      <translation>Nar&#xE1;&#x17E;ka pro p&#x159;eru&#x161;en&#xED;</translation>
     </message>
     <message>
       <location filename="../layouts/list_layout/list_layout_settings.py" line="121"/>
       <source>Stop All</source>
-      <translation type="unfinished">Stop All</translation>
+      <translation>Zastavit v&#x161;e</translation>
     </message>
     <message>
       <location filename="../layouts/list_layout/list_layout_settings.py" line="122"/>
       <source>Pause All</source>
-      <translation type="unfinished">Pause All</translation>
+      <translation>Pozastavit v&#x161;e</translation>
     </message>
     <message>
       <location filename="../layouts/list_layout/list_layout_settings.py" line="123"/>
       <source>Restart All</source>
-      <translation type="unfinished">Restart All</translation>
+      <translation>Spustit v&#x161;e znovu</translation>
     </message>
     <message>
       <location filename="../layouts/list_layout/list_layout_settings.py" line="124"/>
       <source>Interrupt All</source>
-      <translation type="unfinished">Interrupt All</translation>
+      <translation>P&#x159;eru&#x161;it v&#x161;e</translation>
     </message>
   </context>
   <context>
@@ -657,22 +657,22 @@
     <message>
       <location filename="../layouts/list_layout/cue_list_view.py" line="46"/>
       <source>Cue</source>
-      <translation type="unfinished">Cue</translation>
+      <translation>Nar&#xE1;&#x17E;ka</translation>
     </message>
     <message>
       <location filename="../layouts/list_layout/cue_list_view.py" line="47"/>
       <source>Pre wait</source>
-      <translation type="unfinished">Pre wait</translation>
+      <translation>&#x10C;ek&#xE1;n&#xED; p&#x159;ed</translation>
     </message>
     <message>
       <location filename="../layouts/list_layout/cue_list_view.py" line="48"/>
       <source>Action</source>
-      <translation type="unfinished">Action</translation>
+      <translation>&#x10C;innost</translation>
     </message>
     <message>
       <location filename="../layouts/list_layout/cue_list_view.py" line="49"/>
       <source>Post wait</source>
-      <translation type="unfinished">Post wait</translation>
+      <translation>&#x10C;ek&#xE1;n&#xED; po</translation>
     </message>
   </context>
   <context>
@@ -680,12 +680,12 @@
     <message>
       <location filename="../layouts/list_layout/info_panel.py" line="50"/>
       <source>Cue name</source>
-      <translation type="unfinished">Cue name</translation>
+      <translation>N&#xE1;zev nar&#xE1;&#x17E;ky</translation>
     </message>
     <message>
       <location filename="../layouts/list_layout/info_panel.py" line="52"/>
       <source>Cue description</source>
-      <translation type="unfinished">Cue description</translation>
+      <translation>Popis nar&#xE1;&#x17E;ky</translation>
     </message>
   </context>
   <context>
@@ -693,27 +693,27 @@
     <message>
       <location filename="../ui/elogging.py" line="35"/>
       <source>Information</source>
-      <translation type="unfinished">Information</translation>
+      <translation>Informace</translation>
     </message>
     <message>
       <location filename="../ui/elogging.py" line="42"/>
       <source>Debug</source>
-      <translation type="unfinished">Debug</translation>
+      <translation>Lad&#x11B;n&#xED;</translation>
     </message>
     <message>
       <location filename="../ui/elogging.py" line="49"/>
       <source>Warning</source>
-      <translation type="unfinished">Warning</translation>
+      <translation>Varov&#xE1;n&#xED;</translation>
     </message>
     <message>
       <location filename="../ui/elogging.py" line="63"/>
       <source>Error</source>
-      <translation type="unfinished">Error</translation>
+      <translation>Chyba</translation>
     </message>
     <message>
       <location filename="../ui/elogging.py" line="69"/>
       <source>Details:</source>
-      <translation type="unfinished">Details:</translation>
+      <translation>Podrobnosti:</translation>
     </message>
   </context>
   <context>
@@ -721,82 +721,82 @@
     <message>
       <location filename="../ui/mainwindow.py" line="149"/>
       <source>&amp;File</source>
-      <translation type="unfinished">&amp;File</translation>
+      <translation>&amp;Soubor</translation>
     </message>
     <message>
       <location filename="../ui/mainwindow.py" line="150"/>
       <source>New session</source>
-      <translation type="unfinished">New session</translation>
+      <translation>Nov&#xE9; sezen&#xED;</translation>
     </message>
     <message>
       <location filename="../ui/mainwindow.py" line="152"/>
       <source>Open</source>
-      <translation type="unfinished">Open</translation>
+      <translation>Otev&#x159;&#xED;t</translation>
     </message>
     <message>
       <location filename="../ui/mainwindow.py" line="154"/>
       <source>Save session</source>
-      <translation type="unfinished">Save session</translation>
+      <translation>Ulo&#x17E;it sezen&#xED;</translation>
     </message>
     <message>
       <location filename="../ui/mainwindow.py" line="156"/>
       <source>Preferences</source>
-      <translation type="unfinished">Preferences</translation>
+      <translation>Nastaven&#xED;</translation>
     </message>
     <message>
       <location filename="../ui/mainwindow.py" line="158"/>
       <source>Save as</source>
-      <translation type="unfinished">Save as</translation>
+      <translation>Ulo&#x17E;it jako</translation>
     </message>
     <message>
       <location filename="../ui/mainwindow.py" line="160"/>
       <source>Full Screen</source>
-      <translation type="unfinished">Full Screen</translation>
+      <translation>Na celou obrazovku</translation>
     </message>
     <message>
       <location filename="../ui/mainwindow.py" line="162"/>
       <source>Exit</source>
-      <translation type="unfinished">Exit</translation>
+      <translation>Ukon&#x10D;it</translation>
     </message>
     <message>
       <location filename="../ui/mainwindow.py" line="164"/>
       <source>&amp;Edit</source>
-      <translation type="unfinished">&amp;Edit</translation>
+      <translation>&#xDA;p&amp;ravy</translation>
     </message>
     <message>
       <location filename="../ui/mainwindow.py" line="165"/>
       <source>Undo</source>
-      <translation type="unfinished">Undo</translation>
+      <translation>Zp&#x11B;t</translation>
     </message>
     <message>
       <location filename="../ui/mainwindow.py" line="167"/>
       <source>Redo</source>
-      <translation type="unfinished">Redo</translation>
+      <translation>Znovu</translation>
     </message>
     <message>
       <location filename="../ui/mainwindow.py" line="169"/>
       <source>Select all</source>
-      <translation type="unfinished">Select all</translation>
+      <translation>Vybrat v&#x161;e</translation>
     </message>
     <message>
       <location filename="../ui/mainwindow.py" line="170"/>
       <source>Select all media cues</source>
-      <translation type="unfinished">Select all media cues</translation>
+      <translation>Vybrat v&#x161;echny nar&#xE1;&#x17E;ky v z&#xE1;znamu</translation>
     </message>
     <message>
       <location filename="../ui/mainwindow.py" line="173"/>
       <source>Deselect all</source>
-      <translation type="unfinished">Deselect all</translation>
+      <translation>Odzna&#x10D;it v&#x161;echny nar&#xE1;&#x17E;ky</translation>
     </message>
     <message>
       <location filename="../ui/mainwindow.py" line="174"/>
       <source>CTRL+SHIFT+A</source>
-      <translation type="unfinished">CTRL+SHIFT+A</translation>
+      <translation>Ctrl+Shift+A</translation>
     </message>
     <message>
       <location filename="../ui/mainwindow.py" line="175"/>
       <source>Invert selection</source>
-      <translation type="unfinished">Invert selection</translation>
+      <translation>Obr&#xE1;tit v&#xFD;b&#x11B;r</translation>
     </message>
     <message>
       <location filename="../ui/mainwindow.py" line="177"/>
@@ -806,67 +806,67 @@
     <message>
       <location filename="../ui/mainwindow.py" line="178"/>
       <source>Edit selected</source>
-      <translation type="unfinished">Edit selected</translation>
+      <translation>Upravit vybran&#xE9;</translation>
     </message>
     <message>
       <location filename="../ui/mainwindow.py" line="179"/>
       <source>CTRL+SHIFT+E</source>
-      <translation type="unfinished">CTRL+SHIFT+E</translation>
+      <translation>Ctrl+Shift+E</translation>
     </message>
     <message>
       <location filename="../ui/mainwindow.py" line="181"/>
       <source>&amp;Layout</source>
-      <translation type="unfinished">&amp;Layout</translation>
+      <translation>&amp;Rozvr&#x17E;en&#xED;</translation>
     </message>
     <message>
       <location filename="../ui/mainwindow.py" line="183"/>
       <source>&amp;Tools</source>
-      <translation type="unfinished">&amp;Tools</translation>
+      <translation>&amp;N&#xE1;stroje</translation>
     </message>
     <message>
       <location filename="../ui/mainwindow.py" line="184"/>
       <source>Edit selection</source>
-      <translation type="unfinished">Edit selection</translation>
+      <translation>Upravit v&#xFD;b&#x11B;r</translation>
     </message>
     <message>
       <location filename="../ui/mainwindow.py" line="186"/>
       <source>&amp;About</source>
-      <translation type="unfinished">&amp;About</translation>
+      <translation>&amp;O programu</translation>
     </message>
     <message>
       <location filename="../ui/mainwindow.py" line="187"/>
       <source>About</source>
-      <translation type="unfinished">About</translation>
+      <translation>O programu</translation>
     </message>
     <message>
       <location filename="../ui/mainwindow.py" line="188"/>
       <source>About Qt</source>
-      <translation type="unfinished">About Qt</translation>
+      <translation>O Qt</translation>
     </message>
     <message>
       <location filename="../ui/mainwindow.py" line="253"/>
       <source>Undone: </source>
-      <translation type="unfinished">Undone: </translation>
+      <translation>Vr&#xE1;ceno zp&#x11B;t: </translation>
     </message>
     <message>
       <location filename="../ui/mainwindow.py" line="258"/>
       <source>Redone: </source>
-      <translation type="unfinished">Redone: </translation>
+      <translation>Ud&#x11B;l&#xE1;no znovu: </translation>
     </message>
     <message>
       <location filename="../ui/mainwindow.py" line="302"/>
       <source>Close session</source>
-      <translation type="unfinished">Close session</translation>
+      <translation>Zav&#x159;&#xED;t sezen&#xED;</translation>
     </message>
     <message>
       <location filename="../ui/mainwindow.py" line="303"/>
       <source>The current session is not saved.</source>
-      <translation type="unfinished">The current session is not saved.</translation>
+      <translation>Nyn&#x11B;j&#x161;&#xED; sezen&#xED; nen&#xED; ulo&#x17E;eno.</translation>
     </message>
     <message>
       <location filename="../ui/mainwindow.py" line="305"/>
       <source>Discard the changes?</source>
-      <translation type="unfinished">Discard the changes?</translation>
+      <translation>Zahodit zm&#x11B;ny?</translation>
     </message>
   </context>
   <context>
@@ -874,12 +874,12 @@
     <message>
       <location filename="../modules/media_cue_menus.py" line="38"/>
       <source>Audio cue (from file)</source>
-      <translation type="unfinished">Audio cue (from file)</translation>
+      <translation>Zvukov&#xE1; nar&#xE1;&#x17E;ka (ze souboru)</translation>
     </message>
     <message>
       <location filename="../modules/media_cue_menus.py" line="59"/>
       <source>Select media files</source>
-      <translation type="unfinished">Select media files</translation>
+      <translation>Vybrat soubory se z&#xE1;znamy</translation>
     </message>
   </context>
   <context>
@@ -887,32 +887,32 @@
     <message>
       <location filename="../ui/settings/pages/media_cue_settings.py" line="77"/>
       <source>Start time</source>
-      <translation type="unfinished">Start time</translation>
+      <translation>&#x10C;as spu&#x161;t&#x11B;n&#xED;</translation>
     </message>
     <message>
       <location filename="../ui/settings/pages/media_cue_settings.py" line="78"/>
       <source>Stop position of the media</source>
-      <translation type="unfinished">Stop position of the media</translation>
+      <translation>Poloha zastaven&#xED; z&#xE1;znamu</translation>
     </message>
     <message>
       <location filename="../ui/settings/pages/media_cue_settings.py" line="80"/>
       <source>Stop time</source>
-      <translation type="unfinished">Stop time</translation>
+      <translation>&#x10C;as zastaven&#xED;</translation>
     </message>
     <message>
       <location filename="../ui/settings/pages/media_cue_settings.py" line="81"/>
       <source>Start position of the media</source>
-      <translation type="unfinished">Start position of the media</translation>
+      <translation>Poloha spu&#x161;t&#x11B;n&#xED; z&#xE1;znamu</translation>
     </message>
     <message>
       <location filename="../ui/settings/pages/media_cue_settings.py" line="83"/>
       <source>Loop</source>
-      <translation type="unfinished">Loop</translation>
+      <translation>Smy&#x10D;ka</translation>
     </message>
     <message>
       <location filename="../ui/settings/pages/media_cue_settings.py" line="84"/>
       <source>Repetition after first play (-1 = infinite)</source>
-      <translation type="unfinished">Repetition after first play (-1 = infinite)</translation>
+      <translation>Opakov&#xE1;n&#xED; po prvn&#xED;m p&#x159;ehr&#xE1;n&#xED; (-1 = po nekone&#x10D;nou dobu)</translation>
     </message>
   </context>
   <context>
@@ -920,7 +920,7 @@
     <message>
       <location filename="../ui/widgets/qcolorbutton.py" line="40"/>
       <source>Right click to reset</source>
-      <translation type="unfinished">Right click to reset</translation>
+      <translation>Klepnut&#xED; prav&#xFD;m tla&#x10D;&#xED;tkem my&#x161;i pro nastaven&#xED; na v&#xFD;choz&#xED; hodnotu</translation>
     </message>
   </context>
   <context>
@@ -928,22 +928,22 @@
     <message>
       <location filename="../ui/settings/pages/cue_appearance.py" line="30"/>
       <source>Appearance</source>
-      <translation type="unfinished">Appearance</translation>
+      <translation>Vzhled</translation>
     </message>
     <message>
       <location filename="../ui/settings/pages/app_general.py" line="30"/>
       <source>General</source>
-      <translation type="unfinished">General</translation>
+      <translation>Obecn&#xE9;</translation>
     </message>
     <message>
       <location filename="../ui/settings/pages/cue_general.py" line="32"/>
       <source>Cue</source>
-      <translation type="unfinished">Cue</translation>
+      <translation>Nar&#xE1;&#x17E;ka</translation>
     </message>
     <message>
       <location filename="../ui/settings/pages/cue_app_settings.py" line="29"/>
       <source>Cue Settings</source>
-      <translation type="unfinished">Cue Settings</translation>
+      <translation>Nastaven&#xED; nar&#xE1;&#x17E;ky</translation>
     </message>
   </context>
 </TS>
