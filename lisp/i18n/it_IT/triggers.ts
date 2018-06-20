@@ -6,22 +6,22 @@
     <message>
       <location filename="../triggers_handler.py" line="30"/>
       <source>Started</source>
-      <translation type="unfinished">Started</translation>
+      <translation>Avviata</translation>
     </message>
     <message>
       <location filename="../triggers_handler.py" line="31"/>
       <source>Paused</source>
-      <translation type="unfinished">Paused</translation>
+      <translation>Sospesa</translation>
     </message>
     <message>
       <location filename="../triggers_handler.py" line="32"/>
       <source>Stopped</source>
-      <translation type="unfinished">Stopped</translation>
+      <translation>Fermata</translation>
     </message>
     <message>
       <location filename="../triggers_handler.py" line="33"/>
       <source>Ended</source>
-      <translation type="unfinished">Ended</translation>
+      <translation>Finita</translation>
     </message>
   </context>
   <context>
@@ -37,17 +37,17 @@
     <message>
       <location filename="../triggers_settings.py" line="56"/>
       <source>Add</source>
-      <translation type="unfinished">Add</translation>
+      <translation>Aggiungi</translation>
     </message>
     <message>
       <location filename="../triggers_settings.py" line="60"/>
       <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
+      <translation>Rimuovi</translation>
     </message>
     <message>
       <location filename="../triggers_settings.py" line="136"/>
       <source>Trigger</source>
-      <translation type="unfinished">Trigger</translation>
+      <translation>Evento</translation>
     </message>
     <message>
       <location filename="../triggers_settings.py" line="136"/>
@@ -57,7 +57,7 @@
     <message>
       <location filename="../triggers_settings.py" line="136"/>
       <source>Action</source>
-      <translation type="unfinished">Action</translation>
+      <translation>Azione</translation>
     </message>
   </context>
 </TS>
