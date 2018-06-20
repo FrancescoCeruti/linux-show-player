@@ -6,17 +6,17 @@
     <message>
       <location filename="../protocols/keyboard.py" line="58"/>
       <source>Key</source>
-      <translation type="unfinished">Key</translation>
+      <translation>Kl&#xE1;vesa</translation>
     </message>
     <message>
       <location filename="../protocols/keyboard.py" line="58"/>
       <source>Action</source>
-      <translation type="unfinished">Action</translation>
+      <translation>&#x10C;innost</translation>
     </message>
     <message>
       <location filename="../protocols/keyboard.py" line="77"/>
       <source>Shortcuts</source>
-      <translation type="unfinished">Shortcuts</translation>
+      <translation>Kl&#xE1;vesov&#xE9; zkratky</translation>
     </message>
   </context>
   <context>
@@ -29,42 +29,42 @@
     <message>
       <location filename="../protocols/midi.py" line="76"/>
       <source>Type</source>
-      <translation type="unfinished">Type</translation>
+      <translation>Typ</translation>
     </message>
     <message>
       <location filename="../protocols/midi.py" line="76"/>
       <source>Channel</source>
-      <translation type="unfinished">Channel</translation>
+      <translation>Kan&#xE1;l</translation>
     </message>
     <message>
       <location filename="../protocols/midi.py" line="76"/>
       <source>Note</source>
-      <translation type="unfinished">Note</translation>
+      <translation>Nota</translation>
     </message>
     <message>
       <location filename="../protocols/midi.py" line="76"/>
       <source>Action</source>
-      <translation type="unfinished">Action</translation>
+      <translation>&#x10C;innost</translation>
     </message>
     <message>
       <location filename="../protocols/midi.py" line="99"/>
       <source>Filter &quot;note on&quot;</source>
-      <translation type="unfinished">Filter &quot;note on&quot;</translation>
+      <translation>Filtr &quot;nota zapnuta&quot;</translation>
     </message>
     <message>
       <location filename="../protocols/midi.py" line="102"/>
       <source>Filter &quot;note off&quot;</source>
-      <translation type="unfinished">Filter &quot;note off&quot;</translation>
+      <translation>Filtr (nota vypnuta&quot;</translation>
     </message>
     <message>
       <location filename="../protocols/midi.py" line="114"/>
       <source>Capture</source>
-      <translation type="unfinished">Capture</translation>
+      <translation>Zachyt&#xE1;v&#xE1;n&#xED;</translation>
     </message>
     <message>
       <location filename="../protocols/midi.py" line="147"/>
       <source>Listening MIDI messages ...</source>
-      <translation type="unfinished">Listening MIDI messages ...</translation>
+      <translation>Naslouch&#xE1; se zpr&#xE1;v&#xE1;m MIDI...</translation>
     </message>
   </context>
   <context>
@@ -72,12 +72,12 @@
     <message>
       <location filename="../protocols/keyboard.py" line="78"/>
       <source>Add</source>
-      <translation type="unfinished">Add</translation>
+      <translation>P&#x159;idat</translation>
     </message>
     <message>
       <location filename="../protocols/keyboard.py" line="79"/>
       <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
+      <translation>Odstranit</translation>
     </message>
   </context>
   <context>
@@ -85,17 +85,17 @@
     <message>
       <location filename="../controller_settings.py" line="29"/>
       <source>Cue Control</source>
-      <translation type="unfinished">Cue Control</translation>
+      <translation>Ovl&#xE1;d&#xE1;n&#xED; nar&#xE1;&#x17E;ky</translation>
     </message>
     <message>
       <location filename="../protocols/midi.py" line="63"/>
       <source>MIDI Controls</source>
-      <translation type="unfinished">MIDI Controls</translation>
+      <translation>Ovl&#xE1;d&#xE1;n&#xED; MIDI</translation>
     </message>
     <message>
       <location filename="../protocols/keyboard.py" line="47"/>
       <source>Keyboard Shortcuts</source>
-      <translation type="unfinished">Keyboard Shortcuts</translation>
+      <translation>Kl&#xE1;vesov&#xE9; zkratky</translation>
     </message>
   </context>
 </TS>
