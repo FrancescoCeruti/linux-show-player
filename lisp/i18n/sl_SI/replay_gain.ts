@@ -6,47 +6,47 @@
     <message>
       <location filename="../gain_ui.py" line="101"/>
       <source>ReplayGain / Normalization</source>
-      <translation type="unfinished">ReplayGain / Normalization</translation>
+      <translation>Oja&#x10D;anje predvajanja / Normalizacija</translation>
     </message>
     <message>
       <location filename="../replay_gain.py" line="163"/>
       <source>Calculate</source>
-      <translation type="unfinished">Calculate</translation>
+      <translation>Izra&#x10D;unaj</translation>
     </message>
     <message>
       <location filename="../replay_gain.py" line="168"/>
       <source>Reset all</source>
-      <translation type="unfinished">Reset all</translation>
+      <translation>Ponastavi vse</translation>
     </message>
     <message>
       <location filename="../replay_gain.py" line="173"/>
       <source>Reset selected</source>
-      <translation type="unfinished">Reset selected</translation>
+      <translation>Ponastavi izbrano</translation>
     </message>
     <message>
       <location filename="../gain_ui.py" line="103"/>
       <source>Threads number</source>
-      <translation type="unfinished">Threads number</translation>
+      <translation>&#x160;tevilo niti</translation>
     </message>
     <message>
       <location filename="../gain_ui.py" line="104"/>
       <source>Apply only to selected media</source>
-      <translation type="unfinished">Apply only to selected media</translation>
+      <translation>Uveljavi samo na izbranih medijih</translation>
     </message>
     <message>
       <location filename="../gain_ui.py" line="106"/>
       <source>ReplayGain to (dB SPL)</source>
-      <translation type="unfinished">ReplayGain to (dB SPL)</translation>
+      <translation>Oja&#x10D;aj predvajanje na (dB SPL)</translation>
     </message>
     <message>
       <location filename="../gain_ui.py" line="108"/>
       <source>Normalize to (dB)</source>
-      <translation type="unfinished">Normalize to (dB)</translation>
+      <translation>Normaliziraj na (dB)</translation>
     </message>
     <message>
       <location filename="../gain_ui.py" line="132"/>
       <source>Processing files ...</source>
-      <translation type="unfinished">Processing files ...</translation>
+      <translation>Procesiram datoteke ...</translation>
     </message>
   </context>
 </TS>
