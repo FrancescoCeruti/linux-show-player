@@ -6,17 +6,17 @@
     <message>
       <location filename="../protocols/keyboard.py" line="58"/>
       <source>Key</source>
-      <translation type="unfinished">Key</translation>
+      <translation>Tasto</translation>
     </message>
     <message>
       <location filename="../protocols/keyboard.py" line="58"/>
       <source>Action</source>
-      <translation type="unfinished">Action</translation>
+      <translation>Azione</translation>
     </message>
     <message>
       <location filename="../protocols/keyboard.py" line="77"/>
       <source>Shortcuts</source>
-      <translation type="unfinished">Shortcuts</translation>
+      <translation>Scorciatoie</translation>
     </message>
   </context>
   <context>
@@ -29,42 +29,42 @@
     <message>
       <location filename="../protocols/midi.py" line="76"/>
       <source>Type</source>
-      <translation type="unfinished">Type</translation>
+      <translation>Tipo</translation>
     </message>
     <message>
       <location filename="../protocols/midi.py" line="76"/>
       <source>Channel</source>
-      <translation type="unfinished">Channel</translation>
+      <translation>Canale</translation>
     </message>
     <message>
       <location filename="../protocols/midi.py" line="76"/>
       <source>Note</source>
-      <translation type="unfinished">Note</translation>
+      <translation>Nota</translation>
     </message>
     <message>
       <location filename="../protocols/midi.py" line="76"/>
       <source>Action</source>
-      <translation type="unfinished">Action</translation>
+      <translation>Azione</translation>
     </message>
     <message>
       <location filename="../protocols/midi.py" line="99"/>
       <source>Filter &quot;note on&quot;</source>
-      <translation type="unfinished">Filter &quot;note on&quot;</translation>
+      <translation>Filtro &quot;note on&quot;</translation>
     </message>
     <message>
       <location filename="../protocols/midi.py" line="102"/>
       <source>Filter &quot;note off&quot;</source>
-      <translation type="unfinished">Filter &quot;note off&quot;</translation>
+      <translation>Filtro &quot;note off&quot;</translation>
     </message>
     <message>
       <location filename="../protocols/midi.py" line="114"/>
       <source>Capture</source>
-      <translation type="unfinished">Capture</translation>
+      <translation>Cattura</translation>
     </message>
     <message>
       <location filename="../protocols/midi.py" line="147"/>
       <source>Listening MIDI messages ...</source>
-      <translation type="unfinished">Listening MIDI messages ...</translation>
+      <translation>Ascoltando messaggi MIDI ...</translation>
     </message>
   </context>
   <context>
@@ -72,12 +72,12 @@
     <message>
       <location filename="../protocols/keyboard.py" line="78"/>
       <source>Add</source>
-      <translation type="unfinished">Add</translation>
+      <translation>Aggiungi</translation>
     </message>
     <message>
       <location filename="../protocols/keyboard.py" line="79"/>
       <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
+      <translation>Rimuovi</translation>
     </message>
   </context>
   <context>
@@ -85,17 +85,17 @@
     <message>
       <location filename="../controller_settings.py" line="29"/>
       <source>Cue Control</source>
-      <translation type="unfinished">Cue Control</translation>
+      <translation>Controllo Cue</translation>
     </message>
     <message>
       <location filename="../protocols/midi.py" line="63"/>
       <source>MIDI Controls</source>
-      <translation type="unfinished">MIDI Controls</translation>
+      <translation>Controlli MIDI</translation>
     </message>
     <message>
       <location filename="../protocols/keyboard.py" line="47"/>
       <source>Keyboard Shortcuts</source>
-      <translation type="unfinished">Keyboard Shortcuts</translation>
+      <translation>Scorciatoie Tastiera</translation>
     </message>
   </context>
 </TS>
