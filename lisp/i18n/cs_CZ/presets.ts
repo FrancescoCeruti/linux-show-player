@@ -6,12 +6,12 @@
     <message>
       <location filename="../presets_ui.py" line="215"/>
       <source>Create Cue</source>
-      <translation type="unfinished">Create Cue</translation>
+      <translation>Vytvo&#x159;it nar&#xE1;&#x17E;ku</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="216"/>
       <source>Load on selected Cues</source>
-      <translation type="unfinished">Load on selected Cues</translation>
+      <translation>Nahr&#xE1;t na vybran&#xFD;ch nar&#xE1;&#x17E;k&#xE1;ch</translation>
     </message>
   </context>
   <context>
@@ -19,122 +19,122 @@
     <message>
       <location filename="../presets_ui.py" line="364"/>
       <source>Presets</source>
-      <translation type="unfinished">Presets</translation>
+      <translation>P&#x159;ednastaven&#xED;</translation>
     </message>
     <message>
       <location filename="../presets.py" line="52"/>
       <source>Load preset</source>
-      <translation type="unfinished">Load preset</translation>
+      <translation>Nahr&#xE1;t p&#x159;ednastaven&#xED;</translation>
     </message>
     <message>
       <location filename="../presets.py" line="56"/>
       <source>Save as preset</source>
-      <translation type="unfinished">Save as preset</translation>
+      <translation>Ulo&#x17E;it jako p&#x159;ednastaven&#xED;</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="52"/>
       <source>Cannot scan presets</source>
-      <translation type="unfinished">Cannot scan presets</translation>
+      <translation>Nelze prohledat p&#x159;ednastaven&#xED;</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="60"/>
       <source>Error while deleting preset &quot;{}&quot;</source>
-      <translation type="unfinished">Error while deleting preset &quot;{}&quot;</translation>
+      <translation>Chyba p&#x159;i maz&#xE1;n&#xED; p&#x159;ednastaven&#xED; &quot;{}&quot;</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="68"/>
       <source>Cannot load preset &quot;{}&quot;</source>
-      <translation type="unfinished">Cannot load preset &quot;{}&quot;</translation>
+      <translation>Nelze nahr&#xE1;t p&#x159;ednastaven&#xED; &quot;{}&quot;</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="76"/>
       <source>Cannot save preset &quot;{}&quot;</source>
-      <translation type="unfinished">Cannot save preset &quot;{}&quot;</translation>
+      <translation>Nelze ulo&#x17E;it p&#x159;ednastaven&#xED; &quot;{}&quot;</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="84"/>
       <source>Cannot rename preset &quot;{}&quot;</source>
-      <translation type="unfinished">Cannot rename preset &quot;{}&quot;</translation>
+      <translation>Nelze p&#x159;ejmenovat p&#x159;ednastaven&#xED; &quot;{}&quot;</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="96"/>
       <source>Select Preset</source>
-      <translation type="unfinished">Select Preset</translation>
+      <translation>Vybrat p&#x159;ednastaven&#xED;</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="109"/>
       <source>Preset already exists, overwrite?</source>
-      <translation type="unfinished">Preset already exists, overwrite?</translation>
+      <translation>P&#x159;ednastaven&#xED; ji&#x17E; existuje. P&#x159;epsat?</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="419"/>
       <source>Preset name</source>
-      <translation type="unfinished">Preset name</translation>
+      <translation>N&#xE1;zev p&#x159;ednastaven&#xED;</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="211"/>
       <source>Add</source>
-      <translation type="unfinished">Add</translation>
+      <translation>P&#x159;idat</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="212"/>
       <source>Rename</source>
-      <translation type="unfinished">Rename</translation>
+      <translation>P&#x159;ejmenovat</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="213"/>
       <source>Edit</source>
-      <translation type="unfinished">Edit</translation>
+      <translation>Upravit</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="214"/>
       <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
+      <translation>Odstranit</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="217"/>
       <source>Export selected</source>
-      <translation type="unfinished">Export selected</translation>
+      <translation>Vybr&#xE1;no vyveden&#xED;</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="218"/>
       <source>Import</source>
-      <translation type="unfinished">Import</translation>
+      <translation>Vyveden&#xED;</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="301"/>
       <source>Warning</source>
-      <translation type="unfinished">Warning</translation>
+      <translation>Varov&#xE1;n&#xED;</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="256"/>
       <source>The same name is already used!</source>
-      <translation type="unfinished">The same name is already used!</translation>
+      <translation>Stejn&#xFD; n&#xE1;zev se ji&#x17E; pou&#x17E;&#xED;v&#xE1;!</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="301"/>
       <source>Cannot create a cue from this preset: {}</source>
-      <translation type="unfinished">Cannot create a cue from this preset: {}</translation>
+      <translation>Nelze vytvo&#x159;it nar&#xE1;&#x17E;ku z tohoto p&#x159;ednastaven&#xED;: &quot;{}&quot;</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="339"/>
       <source>Cannot export correctly.</source>
-      <translation type="unfinished">Cannot export correctly.</translation>
+      <translation>Nelze vyv&#xE9;st spr&#xE1;vn&#x11B;.</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="351"/>
       <source>Some presets already exists, overwrite?</source>
-      <translation type="unfinished">Some presets already exists, overwrite?</translation>
+      <translation>N&#x11B;kter&#xE1; p&#x159;ednastaven&#xED; ji&#x17E; existuj&#xED;. P&#x159;epsat?</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="364"/>
       <source>Cannot import correctly.</source>
-      <translation type="unfinished">Cannot import correctly.</translation>
+      <translation>Nelze zav&#xE9;st spr&#xE1;vn&#x11B;.</translation>
     </message>
     <message>
       <location filename="../presets_ui.py" line="420"/>
       <source>Cue type</source>
-      <translation type="unfinished">Cue type</translation>
+      <translation>Typ nar&#xE1;&#x17E;ky</translation>
     </message>
   </context>
 </TS>
