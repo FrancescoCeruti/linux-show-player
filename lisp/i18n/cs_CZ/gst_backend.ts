@@ -6,12 +6,12 @@
     <message>
       <location filename="../settings/alsa_sink.py" line="56"/>
       <source>ALSA device</source>
-      <translation type="unfinished">ALSA device</translation>
+      <translation>Za&#x159;&#xED;zen&#xED; ALSA</translation>
     </message>
     <message>
       <location filename="../settings/alsa_sink.py" line="51"/>
       <source>ALSA devices, as defined in an asound configuration file</source>
-      <translation type="unfinished">ALSA devices, as defined in an asound configuration file</translation>
+      <translation>Za&#x159;&#xED;zen&#xED; ALSA, jak jsou stanovena v souboru s nastaven&#xED;m asound</translation>
     </message>
   </context>
   <context>
@@ -19,47 +19,47 @@
     <message>
       <location filename="../settings/audio_dynamic.py" line="50"/>
       <source>Compressor</source>
-      <translation type="unfinished">Compressor</translation>
+      <translation>Stla&#x10D;ova&#x10D;</translation>
     </message>
     <message>
       <location filename="../settings/audio_dynamic.py" line="52"/>
       <source>Expander</source>
-      <translation type="unfinished">Expander</translation>
+      <translation>Rozp&#xED;na&#x10D;</translation>
     </message>
     <message>
       <location filename="../settings/audio_dynamic.py" line="62"/>
       <source>Soft Knee</source>
-      <translation type="unfinished">Soft Knee</translation>
+      <translation>M&#x11B;kk&#xE9; koleno</translation>
     </message>
     <message>
       <location filename="../settings/audio_dynamic.py" line="64"/>
       <source>Hard Knee</source>
-      <translation type="unfinished">Hard Knee</translation>
+      <translation>Tvrd&#xE9; koleno</translation>
     </message>
     <message>
       <location filename="../settings/audio_dynamic.py" line="94"/>
       <source>Compressor/Expander</source>
-      <translation type="unfinished">Compressor/Expander</translation>
+      <translation>Stla&#x10D;ova&#x10D;/Rozp&#xED;na&#x10D;</translation>
     </message>
     <message>
       <location filename="../settings/audio_dynamic.py" line="96"/>
       <source>Type</source>
-      <translation type="unfinished">Type</translation>
+      <translation>Typ</translation>
     </message>
     <message>
       <location filename="../settings/audio_dynamic.py" line="97"/>
       <source>Curve Shape</source>
-      <translation type="unfinished">Curve Shape</translation>
+      <translation>Tvar k&#x159;ivky</translation>
     </message>
     <message>
       <location filename="../settings/audio_dynamic.py" line="98"/>
       <source>Ratio</source>
-      <translation type="unfinished">Ratio</translation>
+      <translation>Pom&#x11B;r</translation>
     </message>
     <message>
       <location filename="../settings/audio_dynamic.py" line="99"/>
       <source>Threshold (dB)</source>
-      <translation type="unfinished">Threshold (dB)</translation>
+      <translation>Pr&#xE1;h (dB)</translation>
     </message>
   </context>
   <context>
@@ -67,22 +67,22 @@
     <message>
       <location filename="../settings/audio_pan.py" line="60"/>
       <source>Audio Pan</source>
-      <translation type="unfinished">Audio Pan</translation>
+      <translation>Vyv&#xE1;&#x17E;en&#xED; zvuku</translation>
     </message>
     <message>
       <location filename="../settings/audio_pan.py" line="82"/>
       <source>Center</source>
-      <translation type="unfinished">Center</translation>
+      <translation>Na st&#x159;ed</translation>
     </message>
     <message>
       <location filename="../settings/audio_pan.py" line="78"/>
       <source>Left</source>
-      <translation type="unfinished">Left</translation>
+      <translation>Vlevo</translation>
     </message>
     <message>
       <location filename="../settings/audio_pan.py" line="80"/>
       <source>Right</source>
-      <translation type="unfinished">Right</translation>
+      <translation>Vpravo</translation>
     </message>
   </context>
   <context>
@@ -90,22 +90,22 @@
     <message>
       <location filename="../settings/db_meter.py" line="81"/>
       <source>DbMeter settings</source>
-      <translation type="unfinished">DbMeter settings</translation>
+      <translation>Nastaven&#xED; m&#x11B;&#x159;idla decibel&#x16F;</translation>
     </message>
     <message>
       <location filename="../settings/db_meter.py" line="82"/>
       <source>Time between levels (ms)</source>
-      <translation type="unfinished">Time between levels (ms)</translation>
+      <translation>&#x10C;as mezi hladinami (ms)</translation>
     </message>
     <message>
       <location filename="../settings/db_meter.py" line="84"/>
       <source>Peak ttl (ms)</source>
-      <translation type="unfinished">Peak ttl (ms)</translation>
+      <translation>Ttl vrcholu (ms)</translation>
     </message>
     <message>
       <location filename="../settings/db_meter.py" line="85"/>
       <source>Peak falloff (dB/sec)</source>
-      <translation type="unfinished">Peak falloff (dB/sec)</translation>
+      <translation>Opad&#xE1;v&#xE1;n&#xED; vrcholu (dB/s)</translation>
     </message>
   </context>
   <context>
@@ -113,7 +113,7 @@
     <message>
       <location filename="../settings/equalizer10.py" line="44"/>
       <source>10 Bands Equalizer (IIR)</source>
-      <translation type="unfinished">10 Bands Equalizer (IIR)</translation>
+      <translation>Desetip&#xE1;smov&#xFD; ekvaliz&#xE9;r (IIR)</translation>
     </message>
   </context>
   <context>
@@ -121,7 +121,7 @@
     <message>
       <location filename="../gst_media_settings.py" line="47"/>
       <source>Change Pipeline</source>
-      <translation type="unfinished">Change Pipeline</translation>
+      <translation>Zm&#x11B;nit komunika&#x10D;n&#xED; spojen&#xED;</translation>
     </message>
   </context>
   <context>
@@ -129,7 +129,7 @@
     <message>
       <location filename="../gst_pipe_edit.py" line="155"/>
       <source>Edit Pipeline</source>
-      <translation type="unfinished">Edit Pipeline</translation>
+      <translation>Upravit komunika&#x10D;n&#xED; spojen&#xED;</translation>
     </message>
   </context>
   <context>
@@ -137,7 +137,7 @@
     <message>
       <location filename="../gst_settings.py" line="46"/>
       <source>Pipeline</source>
-      <translation type="unfinished">Pipeline</translation>
+      <translation>Komunika&#x10D;n&#xED; spojen&#xED;</translation>
     </message>
   </context>
   <context>
@@ -145,32 +145,32 @@
     <message>
       <location filename="../settings/jack_sink.py" line="55"/>
       <source>Connections</source>
-      <translation type="unfinished">Connections</translation>
+      <translation>Spojen&#xED;</translation>
     </message>
     <message>
       <location filename="../settings/jack_sink.py" line="56"/>
       <source>Edit connections</source>
-      <translation type="unfinished">Edit connections</translation>
+      <translation>Upravit spojen&#xED;</translation>
     </message>
     <message>
       <location filename="../settings/jack_sink.py" line="242"/>
       <source>Output ports</source>
-      <translation type="unfinished">Output ports</translation>
+      <translation>V&#xFD;stupn&#xED; p&#x159;&#xED;pojky</translation>
     </message>
     <message>
       <location filename="../settings/jack_sink.py" line="244"/>
       <source>Input ports</source>
-      <translation type="unfinished">Input ports</translation>
+      <translation>Vstupn&#xED; p&#x159;&#xED;pojky</translation>
     </message>
     <message>
       <location filename="../settings/jack_sink.py" line="300"/>
       <source>Connect</source>
-      <translation type="unfinished">Connect</translation>
+      <translation>Spojit</translation>
     </message>
     <message>
       <location filename="../settings/jack_sink.py" line="296"/>
       <source>Disconnect</source>
-      <translation type="unfinished">Disconnect</translation>
+      <translation>Odpojit</translation>
     </message>
   </context>
   <context>
@@ -178,77 +178,77 @@
     <message>
       <location filename="../elements/audio_dynamic.py" line="32"/>
       <source>Compressor/Expander</source>
-      <translation type="unfinished">Compressor/Expander</translation>
+      <translation>Stla&#x10D;ova&#x10D;/Rozp&#xED;na&#x10D;</translation>
     </message>
     <message>
       <location filename="../elements/audio_pan.py" line="30"/>
       <source>Audio Pan</source>
-      <translation type="unfinished">Audio Pan</translation>
+      <translation>Vyv&#xE1;&#x17E;en&#xED; zvuku</translation>
     </message>
     <message>
       <location filename="../elements/pulse_sink.py" line="30"/>
       <source>PulseAudio Out</source>
-      <translation type="unfinished">PulseAudio Out</translation>
+      <translation>V&#xFD;stup PulseAudio</translation>
     </message>
     <message>
       <location filename="../elements/volume.py" line="31"/>
       <source>Volume</source>
-      <translation type="unfinished">Volume</translation>
+      <translation>Hlasitost</translation>
     </message>
     <message>
       <location filename="../elements/db_meter.py" line="31"/>
       <source>dB Meter</source>
-      <translation type="unfinished">dB Meter</translation>
+      <translation>M&#x11B;&#x159;idlo decibel&#x16F;</translation>
     </message>
     <message>
       <location filename="../elements/auto_src.py" line="29"/>
       <source>System Input</source>
-      <translation type="unfinished">System Input</translation>
+      <translation>Vstup syst&#xE9;mu</translation>
     </message>
     <message>
       <location filename="../elements/alsa_sink.py" line="30"/>
       <source>ALSA Out</source>
-      <translation type="unfinished">ALSA Out</translation>
+      <translation>V&#xFD;stup ALSA</translation>
     </message>
     <message>
       <location filename="../elements/jack_sink.py" line="33"/>
       <source>JACK Out</source>
-      <translation type="unfinished">JACK Out</translation>
+      <translation>V&#xFD;stup JACK</translation>
     </message>
     <message>
       <location filename="../elements/user_element.py" line="31"/>
       <source>Custom Element</source>
-      <translation type="unfinished">Custom Element</translation>
+      <translation>Vlastn&#xED; prvek</translation>
     </message>
     <message>
       <location filename="../elements/auto_sink.py" line="30"/>
       <source>System Out</source>
-      <translation type="unfinished">System Out</translation>
+      <translation>V&#xFD;stup syst&#xE9;mu</translation>
     </message>
     <message>
       <location filename="../elements/pitch.py" line="30"/>
       <source>Pitch</source>
-      <translation type="unfinished">Pitch</translation>
+      <translation>V&#xFD;&#x161;ka t&#xF3;nu</translation>
     </message>
     <message>
       <location filename="../elements/uri_input.py" line="36"/>
       <source>URI Input</source>
-      <translation type="unfinished">URI Input</translation>
+      <translation>Vstup URI</translation>
     </message>
     <message>
       <location filename="../elements/equalizer10.py" line="30"/>
       <source>10 Bands Equalizer</source>
-      <translation type="unfinished">10 Bands Equalizer</translation>
+      <translation>Desetip&#xE1;smov&#xFD; ekvaliz&#xE9;r</translation>
     </message>
     <message>
       <location filename="../elements/speed.py" line="31"/>
       <source>Speed</source>
-      <translation type="unfinished">Speed</translation>
+      <translation>Rychlost</translation>
     </message>
     <message>
       <location filename="../elements/preset_src.py" line="32"/>
       <source>Preset Input</source>
-      <translation type="unfinished">Preset Input</translation>
+      <translation>Vstup p&#x159;ednastaven&#xED;</translation>
     </message>
   </context>
   <context>
@@ -256,12 +256,12 @@
     <message>
       <location filename="../settings/pitch.py" line="66"/>
       <source>Pitch</source>
-      <translation type="unfinished">Pitch</translation>
+      <translation>V&#xFD;&#x161;ka t&#xF3;nu</translation>
     </message>
     <message>
       <location filename="../settings/pitch.py" line="84"/>
       <source>{0:+} semitones</source>
-      <translation type="unfinished">{0:+} semitones</translation>
+      <translation>P&#x16F;lt&#xF3;ny {0:+}</translation>
     </message>
   </context>
   <context>
@@ -269,7 +269,7 @@
     <message>
       <location filename="../settings/preset_src.py" line="38"/>
       <source>Presets</source>
-      <translation type="unfinished">Presets</translation>
+      <translation>P&#x159;ednastaven&#xED;</translation>
     </message>
   </context>
   <context>
@@ -277,12 +277,12 @@
     <message>
       <location filename="../gst_settings.py" line="29"/>
       <source>GStreamer settings</source>
-      <translation type="unfinished">GStreamer settings</translation>
+      <translation>Nastaven&#xED; pro GStreamer</translation>
     </message>
     <message>
       <location filename="../gst_media_settings.py" line="33"/>
       <source>Media Settings</source>
-      <translation type="unfinished">Media Settings</translation>
+      <translation>Nastaven&#xED; m&#xE9;di&#xED;</translation>
     </message>
   </context>
   <context>
@@ -290,7 +290,7 @@
     <message>
       <location filename="../settings/speed.py" line="64"/>
       <source>Speed</source>
-      <translation type="unfinished">Speed</translation>
+      <translation>Rychlost</translation>
     </message>
   </context>
   <context>
@@ -298,42 +298,42 @@
     <message>
       <location filename="../settings/uri_input.py" line="72"/>
       <source>Source</source>
-      <translation type="unfinished">Source</translation>
+      <translation>Zdroj</translation>
     </message>
     <message>
       <location filename="../settings/uri_input.py" line="73"/>
       <source>Find File</source>
-      <translation type="unfinished">Find File</translation>
+      <translation>Naj&#xED;t soubor</translation>
     </message>
     <message>
       <location filename="../settings/uri_input.py" line="74"/>
       <source>Buffering</source>
-      <translation type="unfinished">Buffering</translation>
+      <translation>Ukl&#xE1;d&#xE1;n&#xED; do vyrovn&#xE1;vac&#xED; pam&#x11B;ti</translation>
     </message>
     <message>
       <location filename="../settings/uri_input.py" line="75"/>
       <source>Use Buffering</source>
-      <translation type="unfinished">Use Buffering</translation>
+      <translation>Pou&#x17E;&#xED;t ukl&#xE1;d&#xE1;n&#xED; do vyrovn&#xE1;vac&#xED; pam&#x11B;ti</translation>
     </message>
     <message>
       <location filename="../settings/uri_input.py" line="77"/>
       <source>Attempt download on network streams</source>
-      <translation type="unfinished">Attempt download on network streams</translation>
+      <translation>Pokusit se o sta&#x17E;en&#xED; na s&#xED;&#x165;ov&#xFD;ch proudech</translation>
     </message>
     <message>
       <location filename="../settings/uri_input.py" line="79"/>
       <source>Buffer size (-1 default value)</source>
-      <translation type="unfinished">Buffer size (-1 default value)</translation>
+      <translation>Velikost vyrovn&#xE1;vac&#xED; pam&#x11B;ti (-1 v&#xFD;choz&#xED; hodnota)</translation>
     </message>
     <message>
       <location filename="../settings/uri_input.py" line="105"/>
       <source>Choose file</source>
-      <translation type="unfinished">Choose file</translation>
+      <translation>Vybrat soubor</translation>
     </message>
     <message>
       <location filename="../settings/uri_input.py" line="105"/>
       <source>All files</source>
-      <translation type="unfinished">All files</translation>
+      <translation>V&#x161;echny soubory</translation>
     </message>
   </context>
   <context>
@@ -341,12 +341,12 @@
     <message>
       <location filename="../settings/user_element.py" line="54"/>
       <source>User defined elements</source>
-      <translation type="unfinished">User defined elements</translation>
+      <translation>U&#x17E;ivatelem stanoven&#xE9; prvky</translation>
     </message>
     <message>
       <location filename="../settings/user_element.py" line="56"/>
       <source>Only for advanced user!</source>
-      <translation type="unfinished">Only for advanced user!</translation>
+      <translation>Jen pro pokro&#x10D;il&#xE9;ho u&#x17E;ivatele!</translation>
     </message>
   </context>
   <context>
@@ -354,17 +354,17 @@
     <message>
       <location filename="../settings/volume.py" line="79"/>
       <source>Volume</source>
-      <translation type="unfinished">Volume</translation>
+      <translation>Hlasitost</translation>
     </message>
     <message>
       <location filename="../settings/volume.py" line="81"/>
       <source>Normalized volume</source>
-      <translation type="unfinished">Normalized volume</translation>
+      <translation>Normalizovan&#xE1; hlasitost</translation>
     </message>
     <message>
       <location filename="../settings/volume.py" line="84"/>
       <source>Reset</source>
-      <translation type="unfinished">Reset</translation>
+      <translation>Nastavit znovu</translation>
     </message>
   </context>
 </TS>
