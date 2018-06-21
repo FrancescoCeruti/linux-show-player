@@ -1,30 +1,37 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="es" version="2.0">
-<context>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="es-ES" sourcelanguage="en">
+  <context>
     <name>MediaInfo</name>
     <message>
-        <location filename="../media_info.py" line="97"/>
-        <source>Media Info</source>
-        <translation>Información del Media</translation>
+      <location filename="../../../plugins/media_info/media_info.py" line="116"/>
+      <source>Media Info</source>
+      <translation>Información del Media</translation>
     </message>
     <message>
-        <location filename="../media_info.py" line="51"/>
-        <source>Error</source>
-        <translation>Error</translation>
+      <location filename="../media_info.py" line="51"/>
+      <source>Error</source>
+      <translation type="unfinished">Error</translation>
     </message>
     <message>
-        <location filename="../media_info.py" line="51"/>
-        <source>No info to display</source>
-        <translation>Ninguna información para mostrar</translation>
+      <location filename="../../../plugins/media_info/media_info.py" line="60"/>
+      <source>No info to display</source>
+      <translation>Ninguna información para mostrar</translation>
     </message>
     <message>
-        <location filename="../media_info.py" line="107"/>
-        <source>Info</source>
-        <translation>Información</translation>
+      <location filename="../../../plugins/media_info/media_info.py" line="125"/>
+      <source>Info</source>
+      <translation>Información</translation>
     </message>
     <message>
-        <location filename="../media_info.py" line="107"/>
-        <source>Value</source>
-        <translation>Valor</translation>
+      <location filename="../../../plugins/media_info/media_info.py" line="125"/>
+      <source>Value</source>
+      <translation>Valor</translation>
     </message>
-</context>
+    <message>
+      <location filename="../../../plugins/media_info/media_info.py" line="60"/>
+      <source>Warning</source>
+      <translation type="unfinished">Warning</translation>
+    </message>
+  </context>
 </TS>
