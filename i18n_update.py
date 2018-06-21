@@ -47,9 +47,10 @@ if args.noobsolete:
 
 
 def existing_locales():
-    for entry in scandir('lisp/i18n'):
-        if entry.name.startswith('lisp_') and entry.name.endswith('.ts'):
-            yield entry.name[5:-3]
+    for entry in scandir('lisp/i18n/ts/'):
+        if entry.is_dir():
+            yield entry.name
+
 
 # Locales of which generate translations files
 LOCALES = args.locales
@@ -77,9 +78,12 @@ def search_files(root, exclude=(), extensions=()):
 
 def create_pro_file(root, exclude=(), extensions=('py',)):
     base_name = os.path.basename(os.path.normpath(root))
+    back = '../' * (len(root.split('/')) - 1)
+
     translations = 'TRANSLATIONS = '
-    for local in LOCALES:
-        translations += os.path.join('i18n', base_name + '_' + local + '.ts ')
+    for locale in LOCALES:
+        translations += os.path.join(
+            back, 'i18n/ts/', locale, base_name + '.ts ')
 
     files = 'SOURCES = ' + ' '.join(search_files(root, exclude, extensions))
 
@@ -92,17 +96,21 @@ def create_pro_file(root, exclude=(), extensions=('py',)):
 def generate_for_submodules(path, qm=False):
     modules = [entry.path for entry in scandir(path) if entry.is_dir()]
     for module in modules:
-        if os.path.exists(os.path.join(module, 'i18n')):
+        if '__pycache__' not in module:
             create_pro_file(module)
             p_file = os.path.join(module, os.path.basename(module) + '.pro')
             if qm:
-                subprocess.run(['lrelease', p_file],
-                               stdout=sys.stdout,
-                               stderr=sys.stderr)
+                subprocess.run(
+                    ['lrelease', p_file],
+                    stdout=sys.stdout,
+                    stderr=sys.stderr
+                )
             else:
-                subprocess.run(PYLUPDATE_CMD + [p_file],
-                               stdout=sys.stdout,
-                               stderr=sys.stderr)
+                subprocess.run(
+                    PYLUPDATE_CMD + [p_file],
+                    stdout=sys.stdout,
+                    stderr=sys.stderr
+                )
 
 
 print('>>> UPDATE TRANSLATIONS FOR APPLICATION')

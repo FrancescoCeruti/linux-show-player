@@ -1,18 +1,19 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="en" version="2.0">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS><TS version="2.0" language="en" sourcelanguage="">
 <context>
     <name>MIDISettings</name>
     <message>
-        <location filename="../midi_settings.py" line="40"/>
+        <location filename="../../../plugins/midi/midi_settings.py" line="38"/>
         <source>MIDI default devices</source>
         <translation>MIDI default devices</translation>
     </message>
     <message>
-        <location filename="../midi_settings.py" line="45"/>
+        <location filename="../../../plugins/midi/midi_settings.py" line="43"/>
         <source>Input</source>
         <translation>Input</translation>
     </message>
     <message>
-        <location filename="../midi_settings.py" line="51"/>
+        <location filename="../../../plugins/midi/midi_settings.py" line="49"/>
         <source>Output</source>
         <translation>Output</translation>
     </message>
@@ -20,7 +21,7 @@
 <context>
     <name>SettingsPageName</name>
     <message>
-        <location filename="../midi_settings.py" line="32"/>
+        <location filename="../../../plugins/midi/midi_settings.py" line="30"/>
         <source>MIDI settings</source>
         <translation>MIDI settings</translation>
     </message>
