@@ -160,17 +160,17 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="135"/>
       <source>Edit selected cues</source>
-      <translation type="unfinished">Edit selected cues</translation>
+      <translation>Modifica cue selezionate</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="135"/>
       <source>Remove cue</source>
-      <translation type="unfinished">Remove cue</translation>
+      <translation>Rimuovi cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="135"/>
       <source>Remove selected cues</source>
-      <translation type="unfinished">Remove selected cues</translation>
+      <translation>Rimuovi cue selezionate</translation>
     </message>
   </context>
 </TS>
