@@ -125,12 +125,12 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="256"/>
       <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
+      <translation>Eliminar</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="257"/>
       <source>Capture</source>
-      <translation type="unfinished">Capture</translation>
+      <translation>Capturar</translation>
     </message>
   </context>
   <context>
@@ -151,12 +151,12 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="88"/>
       <source>Type</source>
-      <translation type="unfinished">Type</translation>
+      <translation>Tipo</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="88"/>
       <source>Argument</source>
-      <translation type="unfinished">Argument</translation>
+      <translation>Argumento</translation>
     </message>
   </context>
   <context>
@@ -164,12 +164,12 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="158"/>
       <source>Add</source>
-      <translation type="unfinished">Add</translation>
+      <translation>Añadir</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="159"/>
       <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
+      <translation>Eliminar</translation>
     </message>
   </context>
   <context>
@@ -192,7 +192,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="191"/>
       <source>OSC Controls</source>
-      <translation type="unfinished">OSC Controls</translation>
+      <translation>Controles OSC</translation>
     </message>
   </context>
 </TS>
