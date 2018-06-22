@@ -6,42 +6,42 @@
     <message>
       <location filename="../../../plugins/rename_cues/rename_cues.py" line="39"/>
       <source>Rename Cues</source>
-      <translation type="unfinished">Rename Cues</translation>
+      <translation>Renombrar cues</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="39"/>
       <source>Rename cues</source>
-      <translation type="unfinished">Rename cues</translation>
+      <translation>Renombrar cues</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="48"/>
       <source>Current</source>
-      <translation type="unfinished">Current</translation>
+      <translation>Actual</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="48"/>
       <source>Preview</source>
-      <translation type="unfinished">Preview</translation>
+      <translation>Vista previa</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="61"/>
       <source>Capitalize</source>
-      <translation type="unfinished">Capitalize</translation>
+      <translation>En mayúsculas</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="66"/>
       <source>Lowercase</source>
-      <translation type="unfinished">Lowercase</translation>
+      <translation>Minúsculas</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="71"/>
       <source>Uppercase</source>
-      <translation type="unfinished">Uppercase</translation>
+      <translation>Mayúsculas</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="76"/>
       <source>Remove Numbers</source>
-      <translation type="unfinished">Remove Numbers</translation>
+      <translation>Eliminar números</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="81"/>
