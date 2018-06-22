@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="99"/>
       <source>Timecode Settings</source>
-      <translation>Ajustes de Código de Tiemo</translation>
+      <translation>Ajustes de Código de Tiempo</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="33"/>
@@ -19,24 +19,24 @@
     <message>
       <location filename="../../../plugins/timecode/protocols/artnet.py" line="70"/>
       <source>Cannot send timecode.</source>
-      <translation>No se puede mandar Código de Tiempo</translation>
+      <translation>No se puede mandar Código de Tiempo.</translation>
     </message>
     <message>
       <location filename="../timecode.py" line="146"/>
       <source>OLA has stopped.</source>
-      <translation>OLA se ha detenido</translation>
+      <translation>OLA se ha detenido.</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/timecode.py" line="103"/>
       <source>Cannot load timecode protocol: &quot;{}&quot;</source>
-      <translation type="unfinished">Cannot load timecode protocol: &quot;{}&quot;</translation>
+      <translation>No se puede cargar el Código de Tiempo: &quot;{}&quot;</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/protocols/artnet.py" line="65"/>
       <source>Cannot send timecode. 
 OLA has stopped.</source>
-      <translation type="unfinished">Cannot send timecode. 
-OLA has stopped.</translation>
+      <translation>No se puede enviar Código de Tiempo.
+OLA se ha detenido.</translation>
     </message>
   </context>
   <context>
@@ -59,7 +59,7 @@ OLA has stopped.</translation>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="132"/>
       <source>Timecode Format:</source>
-      <translation>Formato del Código de Tiempò</translation>
+      <translation>Formato del Código de Tiempo:</translation>
     </message>
     <message>
       <location filename="../timecode_settings.py" line="78"/>
@@ -69,7 +69,7 @@ OLA has stopped.</translation>
     <message>
       <location filename="../timecode_settings.py" line="78"/>
       <source>OLA is not running - start the OLA daemon.</source>
-      <translation>OLA no se está ejecutanto - iniciar el daemon OLA</translation>
+      <translation>OLA no se está ejecutando - iniciar el daemon OLA.</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="75"/>
@@ -94,17 +94,17 @@ OLA has stopped.</translation>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="78"/>
       <source>Enable Timecode</source>
-      <translation type="unfinished">Enable Timecode</translation>
+      <translation>Habilitar Código de Tiempo</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="130"/>
       <source>Timecode Settings</source>
-      <translation type="unfinished">Timecode Settings</translation>
+      <translation>Ajustes de Código de Tiempo</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="134"/>
       <source>Timecode Protocol:</source>
-      <translation type="unfinished">Timecode Protocol:</translation>
+      <translation>Protocolo de Código de Tiempo:</translation>
     </message>
   </context>
 </TS>
