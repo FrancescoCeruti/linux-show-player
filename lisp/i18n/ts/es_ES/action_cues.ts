@@ -16,7 +16,7 @@
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="143"/>
       <source>Cue</source>
-      <translation type="unfinished">Cue</translation>
+      <translation>Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="143"/>
@@ -64,7 +64,7 @@
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="79"/>
       <source>Command cue ended with an error status. Exit code: {}</source>
-      <translation type="unfinished">Command cue ended with an error status. Exit code: {}</translation>
+      <translation>Cue de comando terminó con un estado de error. Código de Salida: {}</translation>
     </message>
   </context>
   <context>
@@ -72,7 +72,7 @@
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="203"/>
       <source>OSC Settings</source>
-      <translation type="unfinished">OSC Settings</translation>
+      <translation>Configuración de OSC</translation>
     </message>
   </context>
   <context>
@@ -115,7 +115,7 @@
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="72"/>
       <source>OSC Cue</source>
-      <translation type="unfinished">OSC Cue</translation>
+      <translation>Cue OSC</translation>
     </message>
   </context>
   <context>
