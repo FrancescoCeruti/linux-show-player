@@ -299,27 +299,27 @@
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="31"/>
       <source>Faded Start</source>
-      <translation type="unfinished">Faded Start</translation>
+      <translation>Avvio con dissolvenza</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="32"/>
       <source>Faded Resume</source>
-      <translation type="unfinished">Faded Resume</translation>
+      <translation>Riavvio con dissolvenza</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="33"/>
       <source>Faded Pause</source>
-      <translation type="unfinished">Faded Pause</translation>
+      <translation>Pausa con dissolvenza</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="34"/>
       <source>Faded Stop</source>
-      <translation type="unfinished">Faded Stop</translation>
+      <translation>Ferma con dissolvenza</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="36"/>
       <source>Faded Interrupt</source>
-      <translation type="unfinished">Faded Interrupt</translation>
+      <translation>Interrompi con dissolvenza</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="38"/>
