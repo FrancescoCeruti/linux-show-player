@@ -121,12 +121,12 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_backend.py" line="68"/>
       <source>Audio cue (from file)</source>
-      <translation type="unfinished">Audio cue (from file)</translation>
+      <translation>Cue audio (da file)</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/gst_backend.py" line="105"/>
       <source>Select media files</source>
-      <translation type="unfinished">Select media files</translation>
+      <translation>Seleziona file multimediali</translation>
     </message>
   </context>
   <context>
@@ -150,7 +150,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_settings.py" line="46"/>
       <source>Pipeline</source>
-      <translation type="unfinished">Pipeline</translation>
+      <translation>Pipeline</translation>
     </message>
   </context>
   <context>
@@ -196,7 +196,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/elements/audio_pan.py" line="30"/>
       <source>Audio Pan</source>
-      <translation type="unfinished">Audio Pan</translation>
+      <translation>Bilanciamento</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/elements/pulse_sink.py" line="30"/>
@@ -206,7 +206,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/elements/volume.py" line="31"/>
       <source>Volume</source>
-      <translation type="unfinished">Volume</translation>
+      <translation>Volume</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/elements/db_meter.py" line="31"/>
@@ -300,7 +300,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_settings.py" line="29"/>
       <source>GStreamer</source>
-      <translation type="unfinished">GStreamer</translation>
+      <translation>GStreamer</translation>
     </message>
   </context>
   <context>
@@ -326,7 +326,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="74"/>
       <source>Buffering</source>
-      <translation type="unfinished">Buffering</translation>
+      <translation>Pre-Caricamento</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="75"/>
@@ -372,7 +372,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/volume.py" line="79"/>
       <source>Volume</source>
-      <translation type="unfinished">Volume</translation>
+      <translation>Volume</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/volume.py" line="81"/>
