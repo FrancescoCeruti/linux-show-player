@@ -299,12 +299,12 @@
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="31"/>
       <source>Faded Start</source>
-      <translation>Avvio con dissolvenza</translation>
+      <translation>Avvia con dissolvenza</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="32"/>
       <source>Faded Resume</source>
-      <translation>Riavvio con dissolvenza</translation>
+      <translation>Riprendi con dissolvenza</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="33"/>
@@ -324,12 +324,12 @@
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="38"/>
       <source>Resume</source>
-      <translation type="unfinished">Resume</translation>
+      <translation>Riprendi</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="41"/>
       <source>Do Nothing</source>
-      <translation type="unfinished">Do Nothing</translation>
+      <translation>Non fare nulla</translation>
     </message>
   </context>
   <context>
@@ -360,7 +360,7 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="85"/>
       <source>NoName</source>
-      <translation type="unfinished">NoName</translation>
+      <translation>NoName</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="86"/>
@@ -401,7 +401,7 @@
     <message>
       <location filename="../../../ui/widgets/cue_next_actions.py" line="28"/>
       <source>Do Nothing</source>
-      <translation type="unfinished">Do Nothing</translation>
+      <translation>Non fare nulla</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_next_actions.py" line="30"/>
