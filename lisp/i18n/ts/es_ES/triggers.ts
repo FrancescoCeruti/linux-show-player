@@ -52,7 +52,7 @@
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="136"/>
       <source>Cue</source>
-      <translation type="unfinished">Cue</translation>
+      <translation>Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="136"/>
