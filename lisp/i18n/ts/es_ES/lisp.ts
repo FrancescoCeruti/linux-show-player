@@ -29,7 +29,7 @@
     <message>
       <location filename="../../../ui/about.py" line="47"/>
       <source>Linux Show Player is a cue-player designed for stage productions.</source>
-      <translation>Linux Show Player es un reproductor de Cues diseñado para producciones escénicas</translation>
+      <translation>Linux Show Player es un reproductor de Cues diseñado para producciones escénicas.</translation>
     </message>
     <message>
       <location filename="../../../ui/about.py" line="105"/>
@@ -221,7 +221,7 @@
     <message>
       <location filename="../layouts/cart_layout/layout.py" line="277"/>
       <source>Every cue in the page will be lost.</source>
-      <translation>Todos los cues en la página se perderán</translation>
+      <translation>Todos los cues en la página se perderán.</translation>
     </message>
     <message>
       <location filename="../layouts/cart_layout/layout.py" line="279"/>
@@ -289,7 +289,7 @@
     <message>
       <location filename="../ui/widgets/cueaction_combobox.py" line="30"/>
       <source>FadeOutStop</source>
-      <translation>Denener fundido de salida</translation>
+      <translation>Detener fundido de salida</translation>
     </message>
     <message>
       <location filename="../ui/widgets/cueaction_combobox.py" line="31"/>
@@ -309,17 +309,17 @@
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="33"/>
       <source>Faded Pause</source>
-      <translation type="unfinished">Faded Pause</translation>
+      <translation>Pausar con fundido</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="34"/>
       <source>Faded Stop</source>
-      <translation type="unfinished">Faded Stop</translation>
+      <translation>Detener con fundido</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="36"/>
       <source>Faded Interrupt</source>
-      <translation type="unfinished">Faded Interrupt</translation>
+      <translation>Interrupción con fundido</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="38"/>
@@ -342,7 +342,7 @@
     <message>
       <location filename="../../../cues/cue_actions.py" line="76"/>
       <source>Cues settings changed.</source>
-      <translation>Ajustes de Cue han cambiado</translation>
+      <translation>Ajustes de Cue han cambiado.</translation>
     </message>
   </context>
   <context>
@@ -695,7 +695,7 @@
     <message>
       <location filename="../layouts/list_layout/list_layout_settings.py" line="114"/>
       <source>Go key:</source>
-      <translation>Tecla de GO</translation>
+      <translation>Tecla de Go:</translation>
     </message>
     <message>
       <location filename="../layouts/list_layout/control_buttons.py" line="63"/>
@@ -914,17 +914,17 @@
     <message>
       <location filename="../../../ui/logging/common.py" line="50"/>
       <source>Process name</source>
-      <translation type="unfinished">Process name</translation>
+      <translation>Nombre del proceso</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="51"/>
       <source>Thread ID</source>
-      <translation type="unfinished">Thread ID</translation>
+      <translation>ID del hilo</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="52"/>
       <source>Thread name</source>
-      <translation type="unfinished">Thread name</translation>
+      <translation>Nombre del hilo</translation>
     </message>
   </context>
   <context>
@@ -1002,7 +1002,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="204"/>
       <source>CTRL+SHIFT+A</source>
-      <translation type="unfinished">CTRL+SHIFT+A</translation>
+      <translation>CTRL + SHIFT + A</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="205"/>
@@ -1012,7 +1012,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="207"/>
       <source>CTRL+I</source>
-      <translation type="unfinished">CTRL+I</translation>
+      <translation>CTRL + I</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="208"/>
@@ -1022,12 +1022,12 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="209"/>
       <source>CTRL+SHIFT+E</source>
-      <translation type="unfinished">CTRL+SHIFT+E</translation>
+      <translation>CTRL + SHIFT + E</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="211"/>
       <source>&amp;Layout</source>
-      <translation type="unfinished">&amp;Layout</translation>
+      <translation>&amp;Layout</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="213"/>
@@ -1052,17 +1052,17 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="218"/>
       <source>About Qt</source>
-      <translation>Acerca de QT</translation>
+      <translation>Acerca de Qt</translation>
     </message>
     <message>
       <location filename="../ui/mainwindow.py" line="253"/>
       <source>Undone: </source>
-      <translation>Deshacer</translation>
+      <translation>Deshacer: </translation>
     </message>
     <message>
       <location filename="../ui/mainwindow.py" line="258"/>
       <source>Redone: </source>
-      <translation>Rehacer</translation>
+      <translation>Rehacer: </translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="312"/>
@@ -1072,7 +1072,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="313"/>
       <source>The current session is not saved.</source>
-      <translation>La sección actual no se ha guardado</translation>
+      <translation>La sección actual no se ha guardado.</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="315"/>
@@ -1123,7 +1123,7 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/media_cue_settings.py" line="84"/>
       <source>Repetition after first play (-1 = infinite)</source>
-      <translation>Repeticiones despues de la primera ejecución (-1 = infinito)</translation>
+      <translation>Repeticiones después de la primera ejecución (-1 = infinito)</translation>
     </message>
   </context>
   <context>
@@ -1144,12 +1144,12 @@
     <message>
       <location filename="../../../ui/settings/app_pages/app_general.py" line="32"/>
       <source>General</source>
-      <translation type="unfinished">General</translation>
+      <translation>General</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="32"/>
       <source>Cue</source>
-      <translation type="unfinished">Cue</translation>
+      <translation>Cue</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/cue_app_settings.py" line="29"/>
@@ -1159,22 +1159,22 @@
     <message>
       <location filename="../../../ui/settings/app_pages/plugins_settings.py" line="31"/>
       <source>Plugins</source>
-      <translation type="unfinished">Plugins</translation>
+      <translation>Plugins</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="42"/>
       <source>Behaviours</source>
-      <translation type="unfinished">Behaviours</translation>
+      <translation>Comportamientos</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="142"/>
       <source>Pre/Post Wait</source>
-      <translation type="unfinished">Pre/Post Wait</translation>
+      <translation>Pre/Post Espera</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="225"/>
       <source>Fade In/Out</source>
-      <translation type="unfinished">Fade In/Out</translation>
+      <translation>Fundido de Ingreso/Salida</translation>
     </message>
   </context>
 </TS>
