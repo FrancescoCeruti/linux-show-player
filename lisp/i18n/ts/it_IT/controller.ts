@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/controller/controller.py" line="114"/>
       <source>Cannot load controller protocol: &quot;{}&quot;</source>
-      <translation type="unfinished">Cannot load controller protocol: &quot;{}&quot;</translation>
+      <translation>Impossibile caricare il protocollo: "{}"</translation>
     </message>
   </context>
   <context>
@@ -32,7 +32,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="67"/>
       <source>MIDI</source>
-      <translation type="unfinished">MIDI</translation>
+      <translation>MIDI</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="72"/>
@@ -80,57 +80,57 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="153"/>
       <source>OSC Message</source>
-      <translation type="unfinished">OSC Message</translation>
+      <translation>Messaggio OSC</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="155"/>
       <source>OSC Path: (example: &quot;/path/to/something&quot;)</source>
-      <translation type="unfinished">OSC Path: (example: &quot;/path/to/something&quot;)</translation>
+      <translation>Percorso OSC: (esempio: "/percorso/per/qualcosa")</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="199"/>
       <source>OSC</source>
-      <translation type="unfinished">OSC</translation>
+      <translation>OSC</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="203"/>
       <source>Path</source>
-      <translation type="unfinished">Path</translation>
+      <translation>Percorso</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="203"/>
       <source>Types</source>
-      <translation type="unfinished">Types</translation>
+      <translation>Tipi</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="203"/>
       <source>Arguments</source>
-      <translation type="unfinished">Arguments</translation>
+      <translation>Argomenti</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="203"/>
       <source>Actions</source>
-      <translation type="unfinished">Actions</translation>
+      <translation>Azioni</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="229"/>
       <source>OSC Capture</source>
-      <translation type="unfinished">OSC Capture</translation>
+      <translation>Acquisisci OSC</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="255"/>
       <source>Add</source>
-      <translation type="unfinished">Add</translation>
+      <translation>Aggiungi</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="256"/>
       <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
+      <translation>Rimuovi</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="257"/>
       <source>Capture</source>
-      <translation type="unfinished">Capture</translation>
+      <translation>Acquisisci</translation>
     </message>
   </context>
   <context>
@@ -151,12 +151,12 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="88"/>
       <source>Type</source>
-      <translation type="unfinished">Type</translation>
+      <translation>Tipo</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="88"/>
       <source>Argument</source>
-      <translation type="unfinished">Argument</translation>
+      <translation>Argomento</translation>
     </message>
   </context>
   <context>
@@ -164,12 +164,12 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="158"/>
       <source>Add</source>
-      <translation type="unfinished">Add</translation>
+      <translation>Aggiungi</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="159"/>
       <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
+      <translation>Rimuovi</translation>
     </message>
   </context>
   <context>
@@ -192,7 +192,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="191"/>
       <source>OSC Controls</source>
-      <translation type="unfinished">OSC Controls</translation>
+      <translation>Controlli OSC</translation>
     </message>
   </context>
 </TS>
