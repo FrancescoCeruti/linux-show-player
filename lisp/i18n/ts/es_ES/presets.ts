@@ -19,7 +19,7 @@
     <message>
       <location filename="../../../plugins/presets/presets.py" line="55"/>
       <source>Presets</source>
-      <translation type="unfinished">Presets</translation>
+      <translation>Preajustes</translation>
     </message>
     <message>
       <location filename="../presets.py" line="52"/>
@@ -139,12 +139,12 @@
     <message>
       <location filename="../../../plugins/presets/presets.py" line="60"/>
       <source>Load on cue</source>
-      <translation type="unfinished">Load on cue</translation>
+      <translation>Cargar en cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets.py" line="60"/>
       <source>Load on selected cues</source>
-      <translation type="unfinished">Load on selected cues</translation>
+      <translation>Cargar en cues seleccionados</translation>
     </message>
   </context>
 </TS>
