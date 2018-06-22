@@ -324,12 +324,12 @@
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="38"/>
       <source>Resume</source>
-      <translation type="unfinished">Resume</translation>
+      <translation>Reanudar</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="41"/>
       <source>Do Nothing</source>
-      <translation type="unfinished">Do Nothing</translation>
+      <translation>No hacer nada</translation>
     </message>
   </context>
   <context>
@@ -375,7 +375,7 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="90"/>
       <source>Color</source>
-      <translation type="unfinished">Color</translation>
+      <translation>Color</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="91"/>
@@ -401,17 +401,17 @@
     <message>
       <location filename="../../../ui/widgets/cue_next_actions.py" line="28"/>
       <source>Do Nothing</source>
-      <translation type="unfinished">Do Nothing</translation>
+      <translation>No hacer nada</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_next_actions.py" line="30"/>
       <source>Auto Follow</source>
-      <translation type="unfinished">Auto Follow</translation>
+      <translation>Auto seguir</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_next_actions.py" line="32"/>
       <source>Auto Next</source>
-      <translation type="unfinished">Auto Next</translation>
+      <translation>Auto Siguiente</translation>
     </message>
   </context>
   <context>
@@ -419,7 +419,7 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="187"/>
       <source>Pre wait</source>
-      <translation type="unfinished">Pre wait</translation>
+      <translation>Pre Espera</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="188"/>
@@ -429,7 +429,7 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="191"/>
       <source>Post wait</source>
-      <translation type="unfinished">Post wait</translation>
+      <translation>Post Espera</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="192"/>
@@ -459,7 +459,7 @@
     <message>
       <location filename="../ui/settings/pages/cue_general.py" line="162"/>
       <source>Pre/Post Wait</source>
-      <translation type="unfinished">Pre/Post Wait</translation>
+      <translation>Pre/Post Espera</translation>
     </message>
     <message>
       <location filename="../ui/settings/pages/cue_general.py" line="163"/>
@@ -489,12 +489,12 @@
     <message>
       <location filename="../../../ui/settings/app_pages/cue_app_settings.py" line="56"/>
       <source>Interrupt fade</source>
-      <translation type="unfinished">Interrupt fade</translation>
+      <translation>Interrumpir Fundido</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/cue_app_settings.py" line="57"/>
       <source>Fade actions</source>
-      <translation type="unfinished">Fade actions</translation>
+      <translation>Acciones de Fundido</translation>
     </message>
   </context>
   <context>
@@ -502,7 +502,7 @@
     <message>
       <location filename="../../../ui/widgets/fades.py" line="29"/>
       <source>Linear</source>
-      <translation type="unfinished">Linear</translation>
+      <translation>Lineal</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/fades.py" line="30"/>
@@ -760,12 +760,12 @@
     <message>
       <location filename="../../../ui/settings/app_pages/layouts_settings.py" line="54"/>
       <source>Use fade (global actions)</source>
-      <translation type="unfinished">Use fade (global actions)</translation>
+      <translation>Usar Fundido (acciones globales)</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/layouts_settings.py" line="58"/>
       <source>Resume All</source>
-      <translation type="unfinished">Resume All</translation>
+      <translation>Reanudar todo</translation>
     </message>
   </context>
   <context>
@@ -773,12 +773,12 @@
     <message>
       <location filename="../layouts/list_layout/cue_list_view.py" line="46"/>
       <source>Cue</source>
-      <translation type="unfinished">Cue</translation>
+      <translation>Cue</translation>
     </message>
     <message>
       <location filename="../layouts/list_layout/cue_list_view.py" line="47"/>
       <source>Pre wait</source>
-      <translation type="unfinished">Pre wait</translation>
+      <translation>Pre espera</translation>
     </message>
     <message>
       <location filename="../layouts/list_layout/cue_list_view.py" line="48"/>
@@ -788,7 +788,7 @@
     <message>
       <location filename="../layouts/list_layout/cue_list_view.py" line="49"/>
       <source>Post wait</source>
-      <translation type="unfinished">Post wait</translation>
+      <translation>Post espera</translation>
     </message>
   </context>
   <context>
@@ -824,7 +824,7 @@
     <message>
       <location filename="../../../ui/logging/common.py" line="26"/>
       <source>Error</source>
-      <translation type="unfinished">Error</translation>
+      <translation>Error</translation>
     </message>
     <message>
       <location filename="../ui/elogging.py" line="69"/>
@@ -834,82 +834,82 @@
     <message>
       <location filename="../../../ui/logging/dialog.py" line="73"/>
       <source>Dismiss all</source>
-      <translation type="unfinished">Dismiss all</translation>
+      <translation>Descartar todo</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/dialog.py" line="80"/>
       <source>Show details</source>
-      <translation type="unfinished">Show details</translation>
+      <translation>Mostrar detalles</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/viewer.py" line="42"/>
       <source>Linux Show Player - Log Viewer</source>
-      <translation type="unfinished">Linux Show Player - Log Viewer</translation>
+      <translation>Linux Show Player - Visor de registro</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="24"/>
       <source>Info</source>
-      <translation type="unfinished">Info</translation>
+      <translation>Información</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="27"/>
       <source>Critical</source>
-      <translation type="unfinished">Critical</translation>
+      <translation>Crítico</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="39"/>
       <source>Time</source>
-      <translation type="unfinished">Time</translation>
+      <translation>Tiempo</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="40"/>
       <source>Milliseconds</source>
-      <translation type="unfinished">Milliseconds</translation>
+      <translation>Milisegundos</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="41"/>
       <source>Logger name</source>
-      <translation type="unfinished">Logger name</translation>
+      <translation>Número de Logger</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="42"/>
       <source>Level</source>
-      <translation type="unfinished">Level</translation>
+      <translation>Nivel</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="43"/>
       <source>Message</source>
-      <translation type="unfinished">Message</translation>
+      <translation>Mensaje</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="44"/>
       <source>Function</source>
-      <translation type="unfinished">Function</translation>
+      <translation>Función</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="45"/>
       <source>Path name</source>
-      <translation type="unfinished">Path name</translation>
+      <translation>Nombre de la ruta</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="46"/>
       <source>File name</source>
-      <translation type="unfinished">File name</translation>
+      <translation>Nombre del archivo</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="47"/>
       <source>Line no.</source>
-      <translation type="unfinished">Line no.</translation>
+      <translation>Línea no.</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="48"/>
       <source>Module</source>
-      <translation type="unfinished">Module</translation>
+      <translation>Módulo</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="49"/>
       <source>Process ID</source>
-      <translation type="unfinished">Process ID</translation>
+      <translation>ID del proceso</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="50"/>
