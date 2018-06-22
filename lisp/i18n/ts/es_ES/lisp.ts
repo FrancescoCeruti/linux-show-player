@@ -284,27 +284,27 @@
     <message>
       <location filename="../ui/widgets/cueaction_combobox.py" line="29"/>
       <source>FadeInStart</source>
-      <translation type="unfinished">FadeInStart</translation>
+      <translation>Inicio Fundido de entrada</translation>
     </message>
     <message>
       <location filename="../ui/widgets/cueaction_combobox.py" line="30"/>
       <source>FadeOutStop</source>
-      <translation type="unfinished">FadeOutStop</translation>
+      <translation>Denener fundido de salida</translation>
     </message>
     <message>
       <location filename="../ui/widgets/cueaction_combobox.py" line="31"/>
       <source>FadeOutPause</source>
-      <translation type="unfinished">FadeOutPause</translation>
+      <translation>Pausar fundido de salida</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="31"/>
       <source>Faded Start</source>
-      <translation type="unfinished">Faded Start</translation>
+      <translation>Iniciar con fundido</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="32"/>
       <source>Faded Resume</source>
-      <translation type="unfinished">Faded Resume</translation>
+      <translation>Reanudar con fundido</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="33"/>
