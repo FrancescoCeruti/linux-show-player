@@ -64,7 +64,7 @@
     <message>
       <location filename="../../../ui/about.py" line="105"/>
       <source>Discussion</source>
-      <translation type="unfinished">Discussion</translation>
+      <translation>Discusión</translation>
     </message>
   </context>
   <context>
@@ -72,12 +72,12 @@
     <message>
       <location filename="../../../core/actions_handler.py" line="33"/>
       <source>Undo: {}</source>
-      <translation type="unfinished">Undo: {}</translation>
+      <translation>Deshacer: {}</translation>
     </message>
     <message>
       <location filename="../../../core/actions_handler.py" line="34"/>
       <source>Redo: {}</source>
-      <translation type="unfinished">Redo: {}</translation>
+      <translation>Rehacer: {}</translation>
     </message>
   </context>
   <context>
@@ -108,27 +108,27 @@
     <message>
       <location filename="../../../ui/settings/app_pages/app_general.py" line="78"/>
       <source>Default layout</source>
-      <translation type="unfinished">Default layout</translation>
+      <translation>Diseño por defecto</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/app_general.py" line="80"/>
       <source>Enable startup layout selector</source>
-      <translation type="unfinished">Enable startup layout selector</translation>
+      <translation>Activar a selector de diseño de inicio</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/app_general.py" line="82"/>
       <source>Application themes</source>
-      <translation type="unfinished">Application themes</translation>
+      <translation>Temas de la Aplicación</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/app_general.py" line="84"/>
       <source>UI theme</source>
-      <translation type="unfinished">UI theme</translation>
+      <translation>Tema de interfaz de usuario</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/app_general.py" line="86"/>
       <source>Icons theme</source>
-      <translation type="unfinished">Icons theme</translation>
+      <translation>Tema de iconos</translation>
     </message>
   </context>
   <context>
