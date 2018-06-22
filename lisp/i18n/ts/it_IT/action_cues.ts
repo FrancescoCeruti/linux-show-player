@@ -16,7 +16,7 @@
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="143"/>
       <source>Cue</source>
-      <translation type="unfinished">Cue</translation>
+      <translation>Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="143"/>
@@ -64,7 +64,7 @@
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="79"/>
       <source>Command cue ended with an error status. Exit code: {}</source>
-      <translation type="unfinished">Command cue ended with an error status. Exit code: {}</translation>
+      <translation>Cue comando terminata con un codice di errore. Codice di uscita: {}</translation>
     </message>
   </context>
   <context>
@@ -72,7 +72,7 @@
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="203"/>
       <source>OSC Settings</source>
-      <translation type="unfinished">OSC Settings</translation>
+      <translation>Impostazioni OSC</translation>
     </message>
   </context>
   <context>
@@ -95,7 +95,7 @@
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="36"/>
       <source>Seek Cue</source>
-      <translation type="unfinished">Seek Cue</translation>
+      <translation>Cue di Riposizionamento</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="36"/>
@@ -115,7 +115,7 @@
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="72"/>
       <source>OSC Cue</source>
-      <translation type="unfinished">OSC Cue</translation>
+      <translation>Cue OSC</translation>
     </message>
   </context>
   <context>
@@ -143,12 +143,12 @@
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="61"/>
       <source>No suggestion</source>
-      <translation type="unfinished">No suggestion</translation>
+      <translation>Nessun suggerimento</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="120"/>
       <source>Suggested cue name</source>
-      <translation type="unfinished">Suggested cue name</translation>
+      <translation>Nome suggerito per la cue</translation>
     </message>
   </context>
   <context>
@@ -169,22 +169,22 @@
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="220"/>
       <source>Type</source>
-      <translation type="unfinished">Type</translation>
+      <translation>Tipo</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="220"/>
       <source>Argument</source>
-      <translation type="unfinished">Argument</translation>
+      <translation>Argomento</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="220"/>
       <source>FadeTo</source>
-      <translation type="unfinished">FadeTo</translation>
+      <translation>Dissolvi a</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="220"/>
       <source>Fade</source>
-      <translation type="unfinished">Fade</translation>
+      <translation>Dissolvenza</translation>
     </message>
   </context>
   <context>
@@ -192,47 +192,47 @@
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="195"/>
       <source>Error during cue execution.</source>
-      <translation type="unfinished">Error during cue execution.</translation>
+      <translation>Errore durante l'esecuzione della cue.</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="267"/>
       <source>OSC Message</source>
-      <translation type="unfinished">OSC Message</translation>
+      <translation>Messaggio OSC</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="268"/>
       <source>Add</source>
-      <translation type="unfinished">Add</translation>
+      <translation>Aggiungi</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="269"/>
       <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
+      <translation>Rimuovi</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="270"/>
       <source>Test</source>
-      <translation type="unfinished">Test</translation>
+      <translation>Testa</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="271"/>
       <source>OSC Path: (example: &quot;/path/to/something&quot;)</source>
-      <translation type="unfinished">OSC Path: (example: &quot;/path/to/something&quot;)</translation>
+      <translation>Percorso OSC: (esempio: "/percorso/per/qualcosa")</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="272"/>
       <source>Fade</source>
-      <translation type="unfinished">Fade</translation>
+      <translation>Dissolvenza</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="273"/>
       <source>Time (sec)</source>
-      <translation type="unfinished">Time (sec)</translation>
+      <translation>Tempo (sec)</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="274"/>
       <source>Curve</source>
-      <translation type="unfinished">Curve</translation>
+      <translation>Curva</translation>
     </message>
   </context>
   <context>
@@ -240,7 +240,7 @@
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="93"/>
       <source>Cue</source>
-      <translation type="unfinished">Cue</translation>
+      <translation>Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="94"/>
@@ -319,7 +319,7 @@
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="182"/>
       <source>Cue</source>
-      <translation type="unfinished">Cue</translation>
+      <translation>Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="183"/>
