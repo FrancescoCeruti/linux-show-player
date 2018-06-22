@@ -121,12 +121,12 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_backend.py" line="68"/>
       <source>Audio cue (from file)</source>
-      <translation type="unfinished">Audio cue (from file)</translation>
+      <translation>Cue de audio (desde archivo)</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/gst_backend.py" line="105"/>
       <source>Select media files</source>
-      <translation type="unfinished">Select media files</translation>
+      <translation>Seleccionar archivos de medios</translation>
     </message>
   </context>
   <context>
@@ -150,7 +150,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_settings.py" line="46"/>
       <source>Pipeline</source>
-      <translation type="unfinished">Pipeline</translation>
+      <translation>Pipeline</translation>
     </message>
   </context>
   <context>
@@ -282,7 +282,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/preset_src.py" line="38"/>
       <source>Presets</source>
-      <translation type="unfinished">Presets</translation>
+      <translation>Preajustes</translation>
     </message>
   </context>
   <context>
@@ -300,7 +300,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_settings.py" line="29"/>
       <source>GStreamer</source>
-      <translation type="unfinished">GStreamer</translation>
+      <translation>GStreamer</translation>
     </message>
   </context>
   <context>
@@ -326,7 +326,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="74"/>
       <source>Buffering</source>
-      <translation type="unfinished">Buffering</translation>
+      <translation>Pre-Carga</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="75"/>
