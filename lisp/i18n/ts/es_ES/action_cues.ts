@@ -29,12 +29,12 @@
     <message>
       <location filename="../command_cue.py" line="79"/>
       <source>Process ended with an error status.</source>
-      <translation>El proceso terminó con un estado de error</translation>
+      <translation>El proceso terminó con un estado de error.</translation>
     </message>
     <message>
       <location filename="../command_cue.py" line="79"/>
       <source>Exit code: </source>
-      <translation>Código de salida:</translation>
+      <translation>Código de salida: </translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="128"/>
@@ -44,7 +44,7 @@
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="129"/>
       <source>Command to execute, as in a shell</source>
-      <translation>Comando a ejecutar, como en una línea de comandos</translation>
+      <translation>Comando a ejecutar, como en una línea de comando</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="131"/>
@@ -54,7 +54,7 @@
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="133"/>
       <source>Ignore command errors</source>
-      <translation>Ignorar errores de comandos</translation>
+      <translation>Ignorar errores de comando</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="135"/>
@@ -105,7 +105,7 @@
     <message>
       <location filename="../../../plugins/action_cues/stop_all.py" line="32"/>
       <source>Stop-All</source>
-      <translation>Deterner Todo</translation>
+      <translation>Detener Todo</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="34"/>
