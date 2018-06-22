@@ -11,7 +11,7 @@
     <message>
       <location filename="../media_info.py" line="51"/>
       <source>Error</source>
-      <translation type="unfinished">Error</translation>
+      <translation>Error</translation>
     </message>
     <message>
       <location filename="../../../plugins/media_info/media_info.py" line="60"/>
@@ -31,7 +31,7 @@
     <message>
       <location filename="../../../plugins/media_info/media_info.py" line="60"/>
       <source>Warning</source>
-      <translation type="unfinished">Warning</translation>
+      <translation>Advertencia</translation>
     </message>
   </context>
 </TS>
