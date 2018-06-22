@@ -86,7 +86,7 @@ Insertar expresiones capturadas con regexes en la línea abajo con $0 para el pr
 En la segunda línea, puede usar Regexes Python estándard para igualar expresiones en los nombres originales de los cues. Use paréntesis para capturar partes de una expresión igualada.
 
 Ejemplo: 
-^[a-z]([0-9]+) encontará un carácter en minúsculas, seguido por uno o más números.
+^[a-z]([0-9]+) encontrará un carácter en minúsculas ([a-z]), seguido por uno o más números.
 Solo los números están entre paréntesis y serán usados con $0 en la primera línea.
 
 Para mas información acerca de Regexes, consultar la documentación de Python</translation>
