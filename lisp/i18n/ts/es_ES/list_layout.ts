@@ -102,52 +102,52 @@
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="125"/>
       <source>Edit selected cues</source>
-      <translation type="unfinished">Edit selected cues</translation>
+      <translation>Editar los cues seleccionados</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="125"/>
       <source>Remove cue</source>
-      <translation type="unfinished">Remove cue</translation>
+      <translation>Eliminar cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="125"/>
       <source>Remove selected cues</source>
-      <translation type="unfinished">Remove selected cues</translation>
+      <translation>Eliminar los cues seleccionados</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="154"/>
       <source>Selection mode</source>
-      <translation type="unfinished">Selection mode</translation>
+      <translation>Modo de selección</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/control_buttons.py" line="59"/>
       <source>Pause all</source>
-      <translation type="unfinished">Pause all</translation>
+      <translation>Pausar todo</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/control_buttons.py" line="60"/>
       <source>Stop all</source>
-      <translation type="unfinished">Stop all</translation>
+      <translation>Detener todo</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/control_buttons.py" line="61"/>
       <source>Interrupt all</source>
-      <translation type="unfinished">Interrupt all</translation>
+      <translation>Interrumpir todo</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/control_buttons.py" line="64"/>
       <source>Resume all</source>
-      <translation type="unfinished">Resume all</translation>
+      <translation>Continuar todas</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/control_buttons.py" line="65"/>
       <source>Fade-Out all</source>
-      <translation type="unfinished">Fade-Out all</translation>
+      <translation>Fundido de Salida para Todo</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/control_buttons.py" line="66"/>
       <source>Fade-In all</source>
-      <translation type="unfinished">Fade-In all</translation>
+      <translation>Fundido de Entrada para Todo</translation>
     </message>
   </context>
   <context>
@@ -155,22 +155,22 @@
     <message>
       <location filename="../../../plugins/list_layout/list_view.py" line="63"/>
       <source>Cue</source>
-      <translation type="unfinished">Cue</translation>
+      <translation>Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/list_view.py" line="68"/>
       <source>Pre wait</source>
-      <translation type="unfinished">Pre wait</translation>
+      <translation>Pre Espera</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/list_view.py" line="72"/>
       <source>Action</source>
-      <translation type="unfinished">Action</translation>
+      <translation>Acción</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/list_view.py" line="76"/>
       <source>Post wait</source>
-      <translation type="unfinished">Post wait</translation>
+      <translation>Post Espera</translation>
     </message>
   </context>
   <context>
@@ -178,12 +178,12 @@
     <message>
       <location filename="../../../plugins/list_layout/info_panel.py" line="50"/>
       <source>Cue name</source>
-      <translation type="unfinished">Cue name</translation>
+      <translation>Nombre del Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/info_panel.py" line="52"/>
       <source>Cue description</source>
-      <translation type="unfinished">Cue description</translation>
+      <translation>Descripción del cue</translation>
     </message>
   </context>
 </TS>
