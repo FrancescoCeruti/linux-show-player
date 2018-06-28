@@ -53,9 +53,6 @@ class CartLayoutSettings(ConfigurationPage):
         self.showVolume = QCheckBox(self.behaviorsGroup)
         self.behaviorsGroup.layout().addWidget(self.showVolume)
 
-        self.autoAddPage = QCheckBox(self.behaviorsGroup)
-        self.behaviorsGroup.layout().addWidget(self.autoAddPage)
-
         self.gridSizeGroup = QGroupBox(self)
         self.gridSizeGroup.setLayout(QGridLayout())
         self.layout().addWidget(self.gridSizeGroup)
@@ -87,7 +84,6 @@ class CartLayoutSettings(ConfigurationPage):
         self.showAccurate.setChecked(config['show.accurateTime'])
         self.showVolume.setChecked(config['show.volumeControls'])
         self.countdownMode.setChecked(config['countdownMode'])
-        self.autoAddPage.setChecked(config['autoAddPage'])
 
     def retranslateUi(self):
         self.behaviorsGroup.setTitle(
@@ -97,8 +93,6 @@ class CartLayoutSettings(ConfigurationPage):
         self.showDbMeters.setText(translate('CartLayout', 'Show dB-meters'))
         self.showAccurate.setText(translate('CartLayout', 'Show accurate time'))
         self.showVolume.setText(translate('CartLayout', 'Show volume'))
-        self.autoAddPage.setText(
-            translate('CartLayout', 'Automatically add new page'))
         self.gridSizeGroup.setTitle(translate('CartLayout', 'Grid size'))
         self.columnsLabel.setText(translate('CartLayout', 'Number of columns'))
         self.rowsLabel.setText(translate('CartLayout', 'Number of rows'))
@@ -111,6 +105,5 @@ class CartLayoutSettings(ConfigurationPage):
         self.config['show.accurateTime'] = self.showAccurate.isChecked()
         self.config['show.volumeControls'] = self.showVolume.isChecked()
         self.config['countdownMode'] = self.countdownMode.isChecked()
-        self.config['autoAddPage'] = self.autoAddPage.isChecked()
 
         self.config.write()
