@@ -216,6 +216,9 @@ class Application(metaclass=Singleton):
             self.session.update_properties(session_dict["session"])
             self.session.session_file = abspath(session_file)
 
+            for plugin_name, plugin_config in session_dict['session']['plugins'].items():
+                self.__session.set_plugin_session_config(plugin_name, plugin_config)
+
             # Load cues
             for cues_dict in session_dict.get("cues", {}):
                 cue_type = cues_dict.pop("_type_", "Undefined")

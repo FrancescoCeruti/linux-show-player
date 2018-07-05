@@ -87,7 +87,7 @@ class PluginsManager:
             mod_path = path.dirname(inspect.getfile(plugin))
             mod_name = plugin.__module__.split(".")[-1]
 
-            # Load plugin configuration
+            # Load plugin (app-level) configuration
             user_config_path = path.join(
                 app_dirs.user_config_dir, mod_name + ".json"
             )
