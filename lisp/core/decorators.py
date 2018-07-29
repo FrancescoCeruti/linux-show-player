@@ -1,3 +1,4 @@
+
 # -*- coding: utf-8 -*-
 #
 # This file is part of Linux Show Player
@@ -23,7 +24,7 @@ from functools import wraps, partial
 from threading import Thread, Lock, RLock
 
 
-def async(target):
+def async_function(target):
     """Decorator. Make a function asynchronous.
 
     The decorated function is executed in a differed thread.
