@@ -23,7 +23,7 @@ from http.client import HTTPConnection
 from xmlrpc.client import ServerProxy, Fault, Transport
 from xmlrpc.server import SimpleXMLRPCServer
 
-from lisp.core.decorators import async
+from lisp.core.decorators import async_function
 from lisp.core.singleton import Singleton
 from lisp.modules.remote.discovery import Announcer
 from lisp.modules.remote.dispatcher import RemoteDispatcher
@@ -60,7 +60,7 @@ class RemoteController(metaclass=Singleton):
         self.server.register_introspection_functions()
         self.server.register_instance(RemoteDispatcher())
 
-    @async
+    @async_function
     def start(self):
         logging.info('REMOTE: Session started at ' +
                      str(self.server.server_address))

@@ -1,3 +1,4 @@
+
 # -*- coding: utf-8 -*-
 #
 # This file is part of Linux Show Player
@@ -25,7 +26,7 @@ from PyQt5.QtWidgets import QVBoxLayout, QLabel, QHBoxLayout, QGroupBox, \
 from lisp.application import Application
 from lisp.backend.audio_utils import MIN_VOLUME_DB, MAX_VOLUME_DB, \
     linear_to_db, db_to_linear
-from lisp.core.decorators import async
+from lisp.core.decorators import async_function
 from lisp.core.fade_functions import FadeInType, FadeOutType
 from lisp.core.fader import Fader
 from lisp.core.has_properties import Property
@@ -96,7 +97,7 @@ class VolumeControl(Cue):
 
     __interrupt__ = __stop__
 
-    @async
+    @async_function
     def __fade(self, fade_type):
         try:
             self.__fader.prepare()
