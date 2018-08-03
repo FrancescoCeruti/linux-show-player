@@ -22,8 +22,7 @@ from functools import wraps, partial
 from threading import Thread, Lock, RLock
 
 
-# TODO: rename to ensure compatibility with Python 3.7
-def async(target):
+def async_function(target):
     """Decorator. Make a function asynchronous.
 
     The decorated function is executed in a differed thread.

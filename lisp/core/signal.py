@@ -28,7 +28,7 @@ from types import MethodType, BuiltinMethodType
 from PyQt5.QtCore import QEvent, QObject
 from PyQt5.QtWidgets import QApplication
 
-from lisp.core.decorators import async
+from lisp.core.decorators import async_function
 from lisp.core.util import weak_call_proxy
 
 __all__ = ['Signal', 'Connection']
@@ -86,7 +86,7 @@ class Slot:
 class AsyncSlot(Slot):
     """Asynchronous slot, NOT queued, any call is performed in a new thread."""
 
-    @async
+    @async_function
     def call(self, *args, **kwargs):
         super().call(*args, **kwargs)
 

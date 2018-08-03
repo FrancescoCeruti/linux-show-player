@@ -21,7 +21,7 @@ from threading import Lock
 from uuid import uuid4
 
 from lisp.core.configuration import AppConfig
-from lisp.core.decorators import async
+from lisp.core.decorators import async_function
 from lisp.core.fade_functions import FadeInType, FadeOutType
 from lisp.core.has_properties import HasProperties
 from lisp.core.properties import Property, WriteOnceProperty
@@ -222,7 +222,7 @@ class Cue(HasProperties):
 
                 self.fadein(duration, FadeInType[fade])
 
-    @async
+    @async_function
     def start(self, fade=False):
         """Start the cue."""
 
@@ -307,7 +307,7 @@ class Cue(HasProperties):
         """
         return False
 
-    @async
+    @async_function
     def stop(self, fade=False):
         """Stop the cue."""
 
@@ -365,7 +365,7 @@ class Cue(HasProperties):
         """
         return False
 
-    @async
+    @async_function
     def pause(self, fade=False):
         """Pause the cue."""
 
@@ -419,7 +419,7 @@ class Cue(HasProperties):
         """
         return False
 
-    @async
+    @async_function
     def interrupt(self, fade=False):
         """Interrupt the cue.
 

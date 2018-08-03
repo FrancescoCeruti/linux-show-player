@@ -25,7 +25,7 @@ from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QGridLayout, QLineEdit, \
     QTableView, QTableWidget, QHeaderView, QPushButton, QLabel, QDoubleSpinBox, QMessageBox
 
-from lisp.core.decorators import async
+from lisp.core.decorators import async_function
 from lisp.core.fade_functions import FadeInType, FadeOutType
 from lisp.core.fader import Fader
 from lisp.core.has_properties import Property
@@ -180,7 +180,7 @@ class OscCue(Cue):
 
     __interrupt__ = __stop__
 
-    @async
+    @async_function
     def __fade(self, fade_type):
         try:
             self.__fader.prepare()

@@ -22,7 +22,7 @@ from threading import Lock
 from PyQt5.QtCore import QT_TRANSLATE_NOOP
 
 from lisp.core.configuration import AppConfig
-from lisp.core.decorators import async
+from lisp.core.decorators import async_function
 from lisp.core.fade_functions import FadeInType, FadeOutType
 from lisp.core.fader import Fader
 from lisp.core.properties import Property
@@ -117,7 +117,7 @@ class MediaCue(Cue):
 
         self.media.stop()
 
-    @async
+    @async_function
     def fadein(self, duration, fade_type):
         if not self._st_lock.acquire(timeout=0.1):
             return
@@ -135,7 +135,7 @@ class MediaCue(Cue):
 
         self._st_lock.release()
 
-    @async
+    @async_function
     def fadeout(self, duration, fade_type):
         if not self._st_lock.acquire(timeout=0.1):
             return
@@ -202,7 +202,7 @@ class MediaCue(Cue):
     def _can_fade(self, duration):
         return self.__volume is not None and duration > 0
 
-    @async
+    @async_function
     def _on_start_fade(self):
         if self.__volume is not None:
             self.__fadein(

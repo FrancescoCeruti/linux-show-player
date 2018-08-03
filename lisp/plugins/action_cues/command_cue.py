@@ -23,7 +23,7 @@ import subprocess
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QLineEdit, QCheckBox
 
-from lisp.core.decorators import async
+from lisp.core.decorators import async_function
 from lisp.core.properties import Property
 from lisp.cues.cue import Cue, CueAction
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
@@ -58,7 +58,7 @@ class CommandCue(Cue):
         self.__exec_command()
         return True
 
-    @async
+    @async_function
     def __exec_command(self):
         if not self.command.strip():
             return

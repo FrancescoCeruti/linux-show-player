@@ -54,7 +54,7 @@ class Osc(Protocol):
 
     @staticmethod
     def key_from_values(path, types, args):
-        if not len(types):
+        if not types:
             return "OSC['{0}', '{1}']".format(path, types)
         else:
             return "OSC['{0}', '{1}', {2}]".format(path, types, args)
