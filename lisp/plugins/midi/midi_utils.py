@@ -19,21 +19,12 @@
 
 import mido
 
-
 def str_msg_to_dict(str_message):
-    message = mido.parse_string(str_message)
-    dict_msg = {'type': message.type}
-
-    for name in message._spec.arguments:
-        dict_msg[name] = getattr(message, name)
-
-    return dict_msg
+    return mido.parse_string(str_message).dict()
 
 
 def dict_msg_to_str(dict_message):
-    msg_type = dict_message.pop('type')
-    message = mido.Message(msg_type, **dict_message)
-
+    message = mido.Message.from_dict(dict_message)
     return mido.format_as_string(message, include_time=False)
 
 
