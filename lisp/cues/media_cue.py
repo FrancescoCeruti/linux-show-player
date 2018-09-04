@@ -64,6 +64,10 @@ class MediaCue(Cue):
     def __start__(self, fade=False):
         if fade and self._can_fade(self.fadein_duration):
             self.__volume.current_volume = 0
+        else:
+            # If we know there won't be a fade-in: restore the volume,
+            # just in case we're resuming after a fade-out-and-pause.
+            self.__volume.current_volume = self.__volume.volume
 
         self.media.play()
         if fade:
