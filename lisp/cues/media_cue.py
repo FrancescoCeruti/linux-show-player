@@ -69,6 +69,11 @@ class MediaCue(Cue):
         if fade:
             self._on_start_fade()
 
+        # If there was a fade-down, but there wasn't a fade-up - either
+        # because the fade-up was disabled, or because it had a duration
+        # of zero - restore the volume.
+        self.__volume.current_volume = self.__volume.volume
+
         return True
 
     def __stop__(self, fade=False):
