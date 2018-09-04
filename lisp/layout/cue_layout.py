@@ -164,7 +164,7 @@ class CueLayout(HasProperties):
         if self.app.conf.get('layout.pauseAllFade', False):
             self.execute_all(CueAction.FadeOutPause)
         else:
-            self.execute_all(CueAction.FadeOut)
+            self.execute_all(CueAction.Pause)
 
     def resume_all(self):
         if self.app.conf.get('layout.resumeAllFade', True):
