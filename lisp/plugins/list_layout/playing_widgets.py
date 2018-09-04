@@ -48,6 +48,7 @@ class RunningCueWidget(QWidget):
         self.layout().setContentsMargins(0, 0, 0, 1)
 
         self._accurate_time = False
+        self._config = get_plugin('ListLayout').Config
 
         self.cue = cue
         self.cue_time = CueTime(cue)
@@ -148,19 +149,19 @@ class RunningCueWidget(QWidget):
 
     def _pause(self):
         self.cue.pause(
-            fade=get_plugin('ListLayout').Config.get('pauseCueFade', True))
+            fade=self._config.get('pauseCueFade', True))
 
     def _resume(self):
         self.cue.resume(
-            fade=get_plugin('ListLayout').Config.get('resumeCueFade', True))
+            fade=self._config.get('resumeCueFade', True))
 
     def _stop(self):
         self.cue.stop(
-            fade=get_plugin('ListLayout').Config.get('stopCueFade', True))
+            fade=self._config.get('stopCueFade', True))
 
     def _interrupt(self):
         self.cue.interrupt(
-            fade=get_plugin('ListLayout').Config.get('interruptCueFade', True))
+            fade=self._config.get('interruptCueFade', True))
 
     def _fadeout(self):
         self.cue.execute(CueAction.FadeOut)
