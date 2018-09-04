@@ -23,11 +23,11 @@ from PyQt5.QtWidgets import QWidget, QGridLayout, QLabel, QSizePolicy, \
     QLCDNumber, QHBoxLayout
 from lisp.cues.cue import CueAction
 
-from lisp.core.configuration import AppConfig
 from lisp.core.signal import Connection
 from lisp.core.util import strtime
 from lisp.cues.cue_time import CueTime
 from lisp.cues.media_cue import MediaCue
+from lisp.plugins import get_plugin
 from lisp.plugins.list_layout.control_buttons import CueControlButtons
 from lisp.ui.widgets import QClickSlider, QDbMeter
 
@@ -148,19 +148,19 @@ class RunningCueWidget(QWidget):
 
     def _pause(self):
         self.cue.pause(
-            fade=AppConfig().get('listLayout.pauseCueFade', True))
+            fade=get_plugin('ListLayout').Config.get('pauseCueFade', True))
 
     def _resume(self):
         self.cue.resume(
-            fade=AppConfig().get('listLayout.resumeCueFade', True))
+            fade=get_plugin('ListLayout').Config.get('resumeCueFade', True))
 
     def _stop(self):
         self.cue.stop(
-            fade=AppConfig().get('listLayout.stopCueFade', True))
+            fade=get_plugin('ListLayout').Config.get('stopCueFade', True))
 
     def _interrupt(self):
         self.cue.interrupt(
-            fade=AppConfig().get('listLayout.interruptCueFade', True))
+            fade=get_plugin('ListLayout').Config.get('interruptCueFade', True))
 
     def _fadeout(self):
         self.cue.execute(CueAction.FadeOut)
