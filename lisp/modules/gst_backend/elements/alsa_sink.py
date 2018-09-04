@@ -31,8 +31,9 @@ class AlsaSink(GstMediaElement):
 
     device = GstProperty('alsa_sink', default='')
 
-    def __init__(self, pipeline):
-        super().__init__(pipeline)
+    def __init__(self, pipe):
+        super().__init__()
+        self.pipeline = pipe
 
         self.audio_resample = Gst.ElementFactory.make('audioresample', None)
         self.alsa_sink = Gst.ElementFactory.make('alsasink', 'sink')
