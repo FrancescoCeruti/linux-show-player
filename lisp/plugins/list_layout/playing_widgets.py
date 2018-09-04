@@ -27,20 +27,19 @@ from lisp.core.signal import Connection
 from lisp.core.util import strtime
 from lisp.cues.cue_time import CueTime
 from lisp.cues.media_cue import MediaCue
-from lisp.plugins import get_plugin
 from lisp.plugins.list_layout.control_buttons import CueControlButtons
 from lisp.ui.widgets import QClickSlider, QDbMeter
 
 
-def get_running_widget(cue, **kwargs):
+def get_running_widget(cue, config, **kwargs):
     if isinstance(cue, MediaCue):
-        return RunningMediaCueWidget(cue, **kwargs)
+        return RunningMediaCueWidget(cue, config, **kwargs)
     else:
-        return RunningCueWidget(cue, **kwargs)
+        return RunningCueWidget(cue, config, **kwargs)
 
 
 class RunningCueWidget(QWidget):
-    def __init__(self, cue, **kwargs):
+    def __init__(self, cue, config, **kwargs):
         super().__init__(**kwargs)
         self.setGeometry(0, 0, self.parent().viewport().width(), 80)
         self.setFocusPolicy(Qt.NoFocus)
@@ -48,7 +47,7 @@ class RunningCueWidget(QWidget):
         self.layout().setContentsMargins(0, 0, 0, 1)
 
         self._accurate_time = False
-        self._config = get_plugin('ListLayout').Config
+        self._config = config
 
         self.cue = cue
         self.cue_time = CueTime(cue)
@@ -171,8 +170,8 @@ class RunningCueWidget(QWidget):
 
 
 class RunningMediaCueWidget(RunningCueWidget):
-    def __init__(self, cue, **kwargs):
-        super().__init__(cue, **kwargs)
+    def __init__(self, cue, config, **kwargs):
+        super().__init__(cue, config, **kwargs)
         self.setGeometry(0, 0, self.width(), 110)
 
         self._dbmeter_element = None

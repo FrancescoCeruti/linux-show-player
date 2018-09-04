@@ -26,11 +26,13 @@ from lisp.plugins.list_layout.playing_widgets import get_running_widget
 
 class RunningCuesListWidget(QListWidget):
 
-    def __init__(self, running_model, **kwargs):
+    def __init__(self, running_model, config, **kwargs):
         super().__init__(**kwargs)
         self.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.setFocusPolicy(Qt.NoFocus)
         self.setSelectionMode(self.NoSelection)
+
+        self._config = config
 
         self._running_cues = {}
         self._running_model = running_model
@@ -82,7 +84,7 @@ class RunningCuesListWidget(QListWidget):
             self.itemWidget(item).set_accurate_time(accurate)
 
     def _item_added(self, cue):
-        widget = get_running_widget(cue, parent=self)
+        widget = get_running_widget(cue, self._config, parent=self)
         widget.set_accurate_time(self.__accurate_time)
         try:
             widget.set_dbmeter_visible(self.__dbmeter_visible)

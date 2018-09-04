@@ -62,7 +62,7 @@ class ListLayout(CueLayout):
         self._memento_model = CueMementoAdapter(self._list_model)
         self._running_model = RunningCueModel(self.cue_model)
 
-        self._view = ListLayoutView(self._list_model, self._running_model)
+        self._view = ListLayoutView(self._list_model, self._running_model, self.Config)
         # GO button
         self._view.goButton.clicked.connect(self.__go_slot)
         # Global actions
