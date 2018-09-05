@@ -49,6 +49,7 @@ class LayoutsSettings(ConfigurationPage):
         self.useFadeGroup.layout().addWidget(self.interruptAllFade, 3, 1)
 
         self.retranslateUi()
+        self.loadSettings()
 
     def retranslateUi(self):
         self.useFadeGroup.setTitle(
@@ -69,5 +70,4 @@ class LayoutsSettings(ConfigurationPage):
         self.config['layout.pauseAllFade'] = self.pauseAllFade.isChecked()
         self.config['layout.resumeAllFade'] = self.resumeAllFade.isChecked()
         self.config['layout.interruptAllFade'] = self.interruptAllFade.isChecked()
-
         self.config.write()

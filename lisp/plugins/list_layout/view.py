@@ -27,7 +27,7 @@ from .info_panel import InfoPanel
 
 
 class ListLayoutView(QWidget):
-    def __init__(self, listModel, runModel, *args):
+    def __init__(self, listModel, runModel, config, *args):
         super().__init__(*args)
         self.setLayout(QGridLayout())
         self.layout().setContentsMargins(0, 0, 0, 0)
@@ -59,7 +59,7 @@ class ListLayoutView(QWidget):
         self.layout().addWidget(self.listView, 1, 0, 1, 2)
 
         # PLAYING VIEW (center right)
-        self.runView = RunningCuesListWidget(runModel, parent=self)
+        self.runView = RunningCuesListWidget(runModel, config, parent=self)
         self.runView.setMinimumWidth(300)
         self.runView.setMaximumWidth(300)
         self.layout().addWidget(self.runView, 1, 2)
