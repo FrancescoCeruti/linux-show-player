@@ -27,42 +27,14 @@ from PyQt5.QtWidgets import QGroupBox, QPushButton, QVBoxLayout, \
     QDialog, QDialogButtonBox, QLineEdit, QMessageBox
 
 from lisp.plugins import get_plugin, PluginNotLoadedError
+from lisp.plugins.controller.common import LayoutAction, tr_layout_action
 from lisp.plugins.controller.protocols.protocol import Protocol
 from lisp.plugins.osc.osc_delegate import OscArgumentDelegate
 from lisp.plugins.osc.osc_server import OscMessageType
-from lisp.ui.qdelegates import ComboBoxDelegate, LineEditDelegate
+from lisp.ui.qdelegates import ComboBoxDelegate, LineEditDelegate, CueActionDelegate, EnumComboBoxDelegate
 from lisp.ui.qmodels import SimpleTableModel
-from lisp.ui.settings.pages import CueSettingsPage
+from lisp.ui.settings.pages import CueSettingsPage, SettingsPage, CuePageMixin
 from lisp.ui.ui_utils import translate
-
-
-class Osc(Protocol):
-    def __init__(self):
-        super().__init__()
-
-        osc = get_plugin('Osc')
-        osc.server.new_message.connect(self.__new_message)
-
-    def __new_message(self, path, args, types):
-        key = self.key_from_message(path, types, args)
-        self.protocol_event.emit(key)
-
-    @staticmethod
-    def key_from_message(path, types, args):
-        key = [path, types, *args]
-        return 'OSC{}'.format(key)
-
-    @staticmethod
-    def key_from_values(path, types, args):
-        if not types:
-            return "OSC['{0}', '{1}']".format(path, types)
-        else:
-            return "OSC['{0}', '{1}', {2}]".format(path, types, args)
-
-    @staticmethod
-    def message_from_key(key):
-        key = ast.literal_eval(key[3:])
-        return key
 
 
 class OscMessageDialog(QDialog):
@@ -186,11 +158,11 @@ class OscArgumentView(QTableView):
             self.setItemDelegateForColumn(column, delegate)
 
 
-class OscSettings(CueSettingsPage):
+class OscSettings(SettingsPage):
     Name = QT_TRANSLATE_NOOP('SettingsPageName', 'OSC Controls')
 
-    def __init__(self, cue_type, **kwargs):
-        super().__init__(cue_type, **kwargs)
+    def __init__(self, actionDelegate, **kwargs):
+        super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
@@ -205,7 +177,7 @@ class OscSettings(CueSettingsPage):
             translate('ControllerOscSettings', 'Arguments'),
             translate('ControllerOscSettings', 'Actions')])
 
-        self.OscView = OscView(cue_type, parent=self.oscGroup)
+        self.OscView = OscView(actionDelegate, parent=self.oscGroup)
         self.OscView.setModel(self.oscModel)
         self.oscGroup.layout().addWidget(self.OscView, 0, 0, 1, 2)
 
@@ -244,7 +216,7 @@ class OscSettings(CueSettingsPage):
 
         self.retranslateUi()
 
-        self._default_action = self.cue_type.CueActions[0].name
+        self._defaultAction = None
         try:
             self.__osc = get_plugin('Osc')
         except PluginNotLoadedError:
@@ -294,7 +266,7 @@ class OscSettings(CueSettingsPage):
                 self.capturedMessage['path'],
                 self.capturedMessage['types'],
                 args,
-                self._default_action
+                self._defaultAction
             )
 
         self.__osc.server.new_message.disconnect(self.__show_message)
@@ -347,7 +319,7 @@ class OscSettings(CueSettingsPage):
                 path,
                 types,
                 '{}'.format(arguments)[1:-1],
-                self._default_action
+                self._defaultAction
             )
 
     def __remove_message(self):
@@ -355,16 +327,40 @@ class OscSettings(CueSettingsPage):
             self.oscModel.removeRow(self.OscView.currentIndex().row())
 
 
+class OscCueSettings(OscSettings, CuePageMixin):
+    def __init__(self, cueType, **kwargs):
+        super().__init__(
+            actionDelegate=CueActionDelegate(
+                cue_class=cueType,
+                mode=CueActionDelegate.Mode.Name),
+            cueType=cueType,
+            **kwargs
+        )
+        self._defaultAction = self.cueType.CueActions[0].name
+
+
+class OscLayoutSettings(OscSettings):
+    def __init__(self, **kwargs):
+        super().__init__(
+            actionDelegate=EnumComboBoxDelegate(
+                LayoutAction,
+                mode=EnumComboBoxDelegate.Mode.Name,
+                trItem=tr_layout_action
+            ),
+            **kwargs
+        )
+        self._defaultAction = LayoutAction.Go.name
+
+
 class OscView(QTableView):
-    def __init__(self, cue_class, **kwargs):
+    def __init__(self, actionDelegate, **kwargs):
         super().__init__(**kwargs)
 
-        cue_actions = [action.name for action in cue_class.CueActions]
         self.delegates = [
             LineEditDelegate(),
             LineEditDelegate(),
             LineEditDelegate(),
-            ComboBoxDelegate(options=cue_actions, tr_context='CueAction')
+            actionDelegate
         ]
 
         self.setSelectionBehavior(QTableWidget.SelectRows)
@@ -382,3 +378,35 @@ class OscView(QTableView):
 
         for column, delegate in enumerate(self.delegates):
             self.setItemDelegateForColumn(column, delegate)
+
+
+class Osc(Protocol):
+    CueSettings = OscCueSettings
+    LayoutSettings = OscLayoutSettings
+
+    def __init__(self):
+        super().__init__()
+
+        osc = get_plugin('Osc')
+        osc.server.new_message.connect(self.__new_message)
+
+    def __new_message(self, path, args, types, *_, **__):
+        key = self.key_from_message(path, types, args)
+        self.protocol_event.emit(key)
+
+    @staticmethod
+    def key_from_message(path, types, args):
+        key = [path, types, *args]
+        return 'OSC{}'.format(key)
+
+    @staticmethod
+    def key_from_values(path, types, args):
+        if not types:
+            return "OSC['{0}', '{1}']".format(path, types)
+        else:
+            return "OSC['{0}', '{1}', {2}]".format(path, types, args)
+
+    @staticmethod
+    def message_from_key(key):
+        key = ast.literal_eval(key[3:])
+        return key

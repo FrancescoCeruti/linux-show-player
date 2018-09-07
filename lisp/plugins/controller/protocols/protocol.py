@@ -31,9 +31,10 @@ class Protocol:
 
     To be loaded correctly the class should follow the ClassesLoader
     specification.
-    To define the settings, only define a class with same name plus 'Settings'
-    as suffix (e.g. Protocol -> ProtocolSettings), in the same file.
     """
+
+    CueSettings = None
+    LayoutSettings = None
 
     def __init__(self):
         self.protocol_event = Signal()

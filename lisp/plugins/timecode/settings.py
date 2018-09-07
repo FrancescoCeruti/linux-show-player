@@ -32,8 +32,8 @@ from lisp.ui.ui_utils import translate
 class TimecodeSettings(CueSettingsPage):
     Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Timecode')
 
-    def __init__(self, cue_type, **kwargs):
-        super().__init__(cue_type, **kwargs)
+    def __init__(self, cueType, **kwargs):
+        super().__init__(cueType, **kwargs)
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 

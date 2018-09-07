@@ -21,6 +21,8 @@ import argparse
 import logging
 import os
 import sys
+
+import signal
 from logging.handlers import RotatingFileHandler
 
 from PyQt5.QtCore import QLocale, QLibraryInfo
@@ -32,7 +34,7 @@ from lisp.application import Application
 from lisp.core.configuration import JSONFileConfiguration
 from lisp.ui import themes
 from lisp.ui.icons import IconTheme
-from lisp.ui.ui_utils import install_translation
+from lisp.ui.ui_utils import install_translation, PyQtUnixSignalHandler
 
 
 def main():
@@ -123,13 +125,22 @@ def main():
     lisp_app = Application(app_conf)
     plugins.load_plugins(lisp_app)
 
-    # Start the application
-    lisp_app.start(session_file=args.file)
-    exit_code = qt_app.exec_()  # block until exit
+    # Handle SIGTERM and SIGINT by quitting the QApplication
+    def handle_quit_signal(*_):
+        qt_app.quit()
 
-    # Finalize all and exit
-    plugins.finalize_plugins()
-    lisp_app.finalize()
+    signal.signal(signal.SIGTERM, handle_quit_signal)
+    signal.signal(signal.SIGINT, handle_quit_signal)
+
+    with PyQtUnixSignalHandler():
+        # Start the application
+        lisp_app.start(session_file=args.file)
+        exit_code = qt_app.exec_()  # block until exit
+
+        # Finalize all and exit
+        plugins.finalize_plugins()
+        lisp_app.finalize()
+
     sys.exit(exit_code)
 
 

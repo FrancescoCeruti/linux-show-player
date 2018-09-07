@@ -21,6 +21,7 @@ from threading import Lock
 
 from PyQt5.QtCore import QT_TRANSLATE_NOOP
 
+from lisp.backend.audio_utils import MIN_VOLUME
 from lisp.core.configuration import AppConfig
 from lisp.core.decorators import async_function
 from lisp.core.fade_functions import FadeInType, FadeOutType
@@ -148,7 +149,7 @@ class MediaCue(Cue):
                     self.__volume.live_volume = 0
                 else:
                     self._st_lock.release()
-                    self.__fadeout(duration, 0, fade_type)
+                    self.__fadeout(duration, MIN_VOLUME, fade_type)
                     return
 
         self._st_lock.release()

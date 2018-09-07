@@ -22,44 +22,20 @@ from PyQt5.QtWidgets import QGroupBox, QPushButton, QComboBox, QVBoxLayout, \
     QMessageBox, QTableView, QTableWidget, QHeaderView, QGridLayout
 
 from lisp.plugins import get_plugin, PluginNotLoadedError
+from lisp.plugins.controller.common import LayoutAction, tr_layout_action
 from lisp.plugins.controller.protocols.protocol import Protocol
 from lisp.ui.qdelegates import ComboBoxDelegate, SpinBoxDelegate, \
-    CueActionDelegate
+    CueActionDelegate, EnumComboBoxDelegate
 from lisp.ui.qmodels import SimpleTableModel
-from lisp.ui.settings.pages import CueSettingsPage
+from lisp.ui.settings.pages import CuePageMixin, SettingsPage
 from lisp.ui.ui_utils import translate
 
 
-class Midi(Protocol):
-    def __init__(self):
-        super().__init__()
-
-        # Install callback for new MIDI messages
-        get_plugin('Midi').input.new_message.connect(self.__new_message)
-
-    def __new_message(self, message):
-        if message.type == 'note_on' or message.type == 'note_off':
-            self.protocol_event.emit(Midi.str_from_message(message))
-
-    @staticmethod
-    def str_from_message(message):
-        return Midi.str_from_values(message.type, message.channel, message.note)
-
-    @staticmethod
-    def str_from_values(m_type, channel, note):
-        return '{} {} {}'.format(m_type, channel, note)
-
-    @staticmethod
-    def from_string(message_str):
-        m_type, channel, note = message_str.split()
-        return m_type, int(channel), int(note)
-
-
-class MidiSettings(CueSettingsPage):
+class MidiSettings(SettingsPage):
     Name = QT_TRANSLATE_NOOP('SettingsPageName', 'MIDI Controls')
 
-    def __init__(self, cue_type, **kwargs):
-        super().__init__(cue_type, **kwargs)
+    def __init__(self, actionDelegate, **kwargs):
+        super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
@@ -75,7 +51,7 @@ class MidiSettings(CueSettingsPage):
             translate('ControllerMidiSettings', 'Note'),
             translate('ControllerMidiSettings', 'Action')])
 
-        self.midiView = MidiView(cue_type, parent=self.midiGroup)
+        self.midiView = MidiView(actionDelegate, parent=self.midiGroup)
         self.midiView.setModel(self.midiModel)
         self.midiGroup.layout().addWidget(self.midiView, 0, 0, 1, 2)
 
@@ -102,7 +78,7 @@ class MidiSettings(CueSettingsPage):
 
         self.retranslateUi()
 
-        self._default_action = self.cue_type.CueActions[0].name
+        self._defaultAction = None
         try:
             self.__midi = get_plugin('Midi')
         except PluginNotLoadedError:
@@ -144,9 +120,8 @@ class MidiSettings(CueSettingsPage):
         handler.alternate_mode = True
         handler.new_message_alt.connect(self.__add_message)
 
-        QMessageBox.information(
-            self, '', translate(
-                'ControllerMidiSettings', 'Listening MIDI messages ...')
+        QMessageBox.information(self, '', translate(
+            'ControllerMidiSettings', 'Listening MIDI messages ...')
         )
 
         handler.new_message_alt.disconnect(self.__add_message)
@@ -154,27 +129,51 @@ class MidiSettings(CueSettingsPage):
 
     def __add_message(self, msg):
         if self.msgTypeCombo.currentData(Qt.UserRole) == msg.type:
-            self.midiModel.appendRow(msg.type, msg.channel+1, msg.note,
-                                     self._default_action)
+            self.midiModel.appendRow(
+                msg.type, msg.channel+1, msg.note, self._defaultAction)
 
     def __new_message(self):
         message_type = self.msgTypeCombo.currentData(Qt.UserRole)
-        self.midiModel.appendRow(message_type, 1, 0, self._default_action)
+        self.midiModel.appendRow(message_type, 1, 0, self._defaultAction)
 
     def __remove_message(self):
         self.midiModel.removeRow(self.midiView.currentIndex().row())
 
 
+class MidiCueSettings(MidiSettings, CuePageMixin):
+    def __init__(self, cueType, **kwargs):
+        super().__init__(
+            actionDelegate=CueActionDelegate(
+                cue_class=cueType,
+                mode=CueActionDelegate.Mode.Name),
+            cueType=cueType,
+            **kwargs
+        )
+        self._defaultAction = self.cueType.CueActions[0].name
+
+
+class MidiLayoutSettings(MidiSettings):
+    def __init__(self, **kwargs):
+        super().__init__(
+            actionDelegate=EnumComboBoxDelegate(
+                LayoutAction,
+                mode=EnumComboBoxDelegate.Mode.Name,
+                trItem=tr_layout_action
+            ),
+            **kwargs
+        )
+        self._defaultAction = LayoutAction.Go.name
+
+
 class MidiView(QTableView):
-    def __init__(self, cue_class, **kwargs):
+    def __init__(self, actionDelegate, **kwargs):
         super().__init__(**kwargs)
 
         self.delegates = [
             ComboBoxDelegate(options=['note_on', 'note_off']),
             SpinBoxDelegate(minimum=1, maximum=16),
             SpinBoxDelegate(minimum=0, maximum=127),
-            CueActionDelegate(cue_class=cue_class,
-                              mode=CueActionDelegate.Mode.Name)
+            actionDelegate
         ]
 
         self.setSelectionBehavior(QTableWidget.SelectRows)
@@ -192,3 +191,30 @@ class MidiView(QTableView):
 
         for column, delegate in enumerate(self.delegates):
             self.setItemDelegateForColumn(column, delegate)
+
+
+class Midi(Protocol):
+    CueSettings = MidiCueSettings
+    LayoutSettings = MidiLayoutSettings
+
+    def __init__(self):
+        super().__init__()
+        # Install callback for new MIDI messages
+        get_plugin('Midi').input.new_message.connect(self.__new_message)
+
+    def __new_message(self, message):
+        if message.type == 'note_on' or message.type == 'note_off':
+            self.protocol_event.emit(Midi.str_from_message(message))
+
+    @staticmethod
+    def str_from_message(message):
+        return Midi.str_from_values(message.type, message.channel, message.note)
+
+    @staticmethod
+    def str_from_values(m_type, channel, note):
+        return '{} {} {}'.format(m_type, channel, note)
+
+    @staticmethod
+    def from_string(message_str):
+        m_type, channel, note = message_str.split()
+        return m_type, int(channel), int(note)

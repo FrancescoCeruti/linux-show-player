@@ -31,18 +31,18 @@ from lisp.ui.widgets import FadeComboBox, CueActionComboBox, \
 class CueGeneralSettings(TabsMultiSettingsPage, CuePageMixin):
     Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Cue')
 
-    def __init__(self, cue_type, **kwargs):
-        super().__init__(cue_type=cue_type, **kwargs)
-        self.addPage(CueBehavioursPage(self.cue_type))
-        self.addPage(CueWaitsPage(self.cue_type))
-        self.addPage(CueFadePage(self.cue_type))
+    def __init__(self, cueType, **kwargs):
+        super().__init__(cueType=cueType, **kwargs)
+        self.addPage(CueBehavioursPage(self.cueType))
+        self.addPage(CueWaitsPage(self.cueType))
+        self.addPage(CueFadePage(self.cueType))
 
 
 class CueBehavioursPage(CueSettingsPage):
     Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Behaviours')
 
-    def __init__(self, cue_type, **kwargs):
-        super().__init__(cue_type, **kwargs)
+    def __init__(self, cueType, **kwargs):
+        super().__init__(cueType, **kwargs)
         self.setLayout(QVBoxLayout())
 
         # Start-Action
@@ -54,7 +54,7 @@ class CueBehavioursPage(CueSettingsPage):
             {
                 CueAction.Start,
                 CueAction.FadeInStart
-            }.intersection(self.cue_type.CueActions).union({
+            }.intersection(self.cueType.CueActions).union({
                 CueAction.DoNothing
             }),
             mode=CueActionComboBox.Mode.Value,
@@ -78,7 +78,7 @@ class CueBehavioursPage(CueSettingsPage):
                 CueAction.Pause,
                 CueAction.FadeOutStop,
                 CueAction.FadeOutPause
-            }.intersection(self.cue_type.CueActions).union({
+            }.intersection(self.cueType.CueActions).union({
                 CueAction.DoNothing
             }),
             mode=CueActionComboBox.Mode.Value,
@@ -124,25 +124,25 @@ class CueBehavioursPage(CueSettingsPage):
 
         if ((not checkable or self.startActionGroup.isChecked()) and
                 self.startActionCombo.isEnabled()):
-            settings['default_start_action'] = self.startActionCombo.currentAction()
+            settings['default_start_action'] = self.startActionCombo.currentItem()
         if ((not checkable or self.stopActionGroup.isChecked()) and
                 self.stopActionCombo.isEnabled()):
-            settings['default_stop_action'] = self.stopActionCombo.currentAction()
+            settings['default_stop_action'] = self.stopActionCombo.currentItem()
 
         return settings
 
     def loadSettings(self, settings):
-        self.startActionCombo.setCurrentAction(
+        self.startActionCombo.setCurrentItem(
             settings.get('default_start_action', ''))
-        self.stopActionCombo.setCurrentAction(
+        self.stopActionCombo.setCurrentItem(
             settings.get('default_stop_action', ''))
 
 
 class CueWaitsPage(CueSettingsPage):
     Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Pre/Post Wait')
 
-    def __init__(self, cue_type, **kwargs):
-        super().__init__(cue_type=cue_type, **kwargs)
+    def __init__(self, cueType, **kwargs):
+        super().__init__(cueType=cueType, **kwargs)
         self.setLayout(QVBoxLayout())
 
         # Pre wait
@@ -224,14 +224,14 @@ class CueWaitsPage(CueSettingsPage):
 class CueFadePage(CueSettingsPage):
     Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Fade In/Out')
 
-    def __init__(self, cue_type, **kwargs):
-        super().__init__(cue_type, **kwargs)
+    def __init__(self, cueType, **kwargs):
+        super().__init__(cueType, **kwargs)
         self.setLayout(QVBoxLayout())
 
         # FadeIn
         self.fadeInGroup = QGroupBox(self)
         self.fadeInGroup.setEnabled(
-            CueAction.FadeInStart in cue_type.CueActions
+            CueAction.FadeInStart in cueType.CueActions
         )
         self.fadeInGroup.setLayout(QHBoxLayout())
         self.layout().addWidget(self.fadeInGroup)
@@ -243,8 +243,8 @@ class CueFadePage(CueSettingsPage):
         # FadeOut
         self.fadeOutGroup = QGroupBox(self)
         self.fadeOutGroup.setEnabled(
-            CueAction.FadeOutPause in cue_type.CueActions or
-            CueAction.FadeOutStop in cue_type.CueActions
+            CueAction.FadeOutPause in cueType.CueActions or
+            CueAction.FadeOutStop in cueType.CueActions
         )
         self.fadeOutGroup.setLayout(QHBoxLayout())
         self.layout().addWidget(self.fadeOutGroup)

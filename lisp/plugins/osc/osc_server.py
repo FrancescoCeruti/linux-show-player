@@ -26,73 +26,6 @@ from threading import Lock
 
 from lisp.core.signal import Signal
 
-'''def callback_go(_, args, types):
-    if not isinstance(Application().layout, ListLayout):
-        return
-
-    if (types == 'i' and args[0] == 1) or types == '':
-        Application().layout.go()
-
-
-def callback_reset(_, args, types):
-    if not isinstance(Application().layout, ListLayout):
-        return
-
-    if (types == 'i' and args[0] == 1) or types == '':
-        Application().layout.interrupt_all()
-        Application().layout.set_current_index(0)
-
-
-def callback_restart(_, args, types):
-    if not isinstance(Application().layout, ListLayout):
-        return
-
-    if (types == 'i' and args[0] == 1) or types == '':
-        Application().layout.resume_all()
-
-
-def callback_pause(_, args, types):
-    if not isinstance(Application().layout, ListLayout):
-        return
-
-    if (types == 'i' and args[0] == 1) or types == '':
-        Application().layout.pause_all()
-
-
-def callback_stop(_, args, types):
-    if not isinstance(Application().layout, ListLayout):
-        return
-
-    if (types == 'i' and args[0] == 1) or types == '':
-        Application().layout.stop_all()
-
-
-def callback_select(_, args, types):
-    if not isinstance(Application().layout, ListLayout):
-        return
-
-    if types == 'i' and args[0] > -1:
-        Application().layout.set_current_index(args[0])
-
-
-def callback_interrupt(_, args, types):
-    if not isinstance(Application().layout, ListLayout):
-        return
-
-    if (types == 'i' and args[0] == 1) or types == '':
-        Application().layout.interrupt_all()
-
-
-GLOBAL_CALLBACKS = [
-    ['/lisp/list/go', None, callback_go],
-    ['/lisp/list/reset', None, callback_reset],
-    ['/lisp/list/select', 'i', callback_select],
-    ['/lisp/list/pause', None, callback_pause],
-    ['/lisp/list/restart', None, callback_restart],
-    ['/lisp/list/stop', None, callback_stop],
-    ['/lisp/list/interrupt', None, callback_interrupt]
-]'''
-
 logger = logging.getLogger(__name__)
 
 
@@ -152,6 +85,7 @@ class OscServer:
 
         try:
             self.__srv = ServerThread(self.__in_port)
+            self.__srv.add_method(None, None, self.__log_message)
             self.__srv.add_method(None, None, self.new_message.emit)
             self.__srv.start()
 
@@ -176,3 +110,10 @@ class OscServer:
         with self.__lock:
             if self.__running:
                 self.__srv.send((self.__hostname, self.__out_port), path, *args)
+
+    def __log_message(self, path, args, types, src, user_data):
+        logger.debug(
+            'Message from {} -> path: "{}" args: {}'.format(
+                src.get_url(), path, args
+            )
+        )

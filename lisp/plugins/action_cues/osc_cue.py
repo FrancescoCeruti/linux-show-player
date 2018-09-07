@@ -35,7 +35,8 @@ from lisp.plugins.osc.osc_server import OscMessageType
 from lisp.ui.qdelegates import ComboBoxDelegate, CheckBoxDelegate
 from lisp.plugins.osc.osc_delegate import OscArgumentDelegate
 from lisp.ui.qmodels import SimpleTableModel
-from lisp.ui.settings.cue_settings import CueSettingsRegistry, SettingsPage
+from lisp.ui.settings.cue_settings import CueSettingsRegistry
+from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.ui_utils import translate
 from lisp.ui.widgets import FadeComboBox, QDetailedMessageBox
 

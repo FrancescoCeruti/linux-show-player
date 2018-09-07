@@ -19,9 +19,8 @@
 
 import json
 import logging
-from os.path import exists
-
 from PyQt5.QtWidgets import QDialog, qApp
+from os.path import exists
 
 from lisp import layout
 from lisp.core.actions_handler import MainActionsHandler
@@ -36,14 +35,14 @@ from lisp.cues.media_cue import MediaCue
 from lisp.ui.layoutselect import LayoutSelect
 from lisp.ui.mainwindow import MainWindow
 from lisp.ui.settings.app_configuration import AppConfigurationDialog
-from lisp.ui.settings.app_pages.layouts_settings import LayoutsSettings
-from lisp.ui.settings.cue_settings import CueSettingsRegistry
 from lisp.ui.settings.app_pages.app_general import AppGeneral
 from lisp.ui.settings.app_pages.cue_app_settings import CueAppSettings
+from lisp.ui.settings.app_pages.layouts_settings import LayoutsSettings
+from lisp.ui.settings.app_pages.plugins_settings import PluginsSettings
 from lisp.ui.settings.cue_pages.cue_appearance import Appearance
 from lisp.ui.settings.cue_pages.cue_general import CueGeneralSettings
 from lisp.ui.settings.cue_pages.media_cue_settings import MediaCueSettings
-from lisp.ui.settings.app_pages.plugins_settings import PluginsSettings
+from lisp.ui.settings.cue_settings import CueSettingsRegistry
 
 logger = logging.getLogger(__name__)
 
@@ -140,7 +139,6 @@ class Application(metaclass=Singleton):
         except Exception:
             logger.critical('Startup error', exc_info=True)
             qApp.quit()
-            exit(-1)
 
     def _new_session(self, layout):
         self._delete_session()
@@ -163,7 +161,6 @@ class Application(metaclass=Singleton):
         """Save the current session into a file."""
         self.session.session_file = session_file
 
-        # TODO: move cues into session ?
         # Add the cues
         session_dict = {'cues': []}
 

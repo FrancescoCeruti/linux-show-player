@@ -17,14 +17,11 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from enum import Enum
-
 from PyQt5.QtCore import QT_TRANSLATE_NOOP
-from PyQt5.QtWidgets import QComboBox
 
 from lisp.cues.cue import CueAction
 from lisp.ui.ui_utils import translate
-
+from lisp.ui.widgets.qenumcombobox import QEnumComboBox
 
 CueActionsStrings = {
     CueAction.Default: QT_TRANSLATE_NOOP('CueAction', 'Default'),
@@ -54,40 +51,6 @@ def tr_action(action):
         'CueAction', CueActionsStrings.get(action, action.name))
 
 
-class CueActionComboBox(QComboBox):
-    class Mode(Enum):
-        Action = 0
-        Value = 1
-        Name = 2
-
-    def __init__(self, actions, mode=Mode.Action, **kwargs):
-        super().__init__(**kwargs)
-        self.mode = mode
-        self.rebuild(actions)
-
-    def rebuild(self, actions):
-        self.clear()
-
-        for action in actions:
-            if self.mode is CueActionComboBox.Mode.Value:
-                value = action.value
-            elif self.mode is CueActionComboBox.Mode.Name:
-                value = action.name
-            else:
-                value = action
-
-            self.addItem(tr_action(action), value)
-
-    def currentAction(self):
-        return self.currentData()
-
-    def setCurrentAction(self, action):
-        try:
-            if self.mode is CueActionComboBox.Mode.Value:
-                action = CueAction(action)
-            elif self.mode is CueActionComboBox.Mode.Name:
-                action = CueAction[action]
-
-            self.setCurrentText(tr_action(action))
-        except(ValueError, KeyError):
-            pass
+class CueActionComboBox(QEnumComboBox):
+    def __init__(self, actions=(), **kwargs):
+        super().__init__(CueAction, items=actions, trItem=tr_action, **kwargs)

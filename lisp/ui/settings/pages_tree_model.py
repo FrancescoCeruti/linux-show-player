@@ -20,7 +20,7 @@
 from PyQt5.QtCore import QAbstractItemModel, Qt, QModelIndex
 
 from lisp.core.util import typename
-from lisp.ui.settings.pages import ABCSettingsPage
+from lisp.ui.settings.pages import ABCPage
 
 
 class PageNode:
@@ -126,21 +126,15 @@ class PagesTreeModel(QAbstractItemModel):
         return QModelIndex()
 
     def addPage(self, page, parent=QModelIndex()):
-        if isinstance(page, ABCSettingsPage):
-            parentNode = self.node(parent)
-            position = parentNode.childCount()
+        parentNode = self.node(parent)
+        position = parentNode.childCount()
 
-            self.beginInsertRows(parent, position, position)
-            node = PageNode(page)
-            parentNode.addChild(node)
-            self.endInsertRows()
+        self.beginInsertRows(parent, position, position)
+        node = PageNode(page)
+        parentNode.addChild(node)
+        self.endInsertRows()
 
-            return self.index(position, 0, parent)
-        else:
-            raise TypeError(
-                'SettingsPagesTreeModel page must be an ABCSettingsPage, not {}'
-                    .format(typename(page))
-            )
+        return self.index(position, 0, parent)
 
     def removePage(self, row, parent=QModelIndex()):
         parentNode = self.node(parent)

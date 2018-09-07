@@ -20,19 +20,21 @@
 from abc import abstractmethod
 
 from PyQt5.QtCore import QModelIndex, Qt
-from PyQt5.QtWidgets import QWidget, QTabWidget, QVBoxLayout, QTreeView, QGridLayout, QSizePolicy
+from PyQt5.QtWidgets import QWidget, QTabWidget, QVBoxLayout, QTreeView, \
+    QGridLayout, QSizePolicy
 
 from lisp.core.qmeta import QABCMeta
 from lisp.core.util import dict_merge, typename
 from lisp.ui.ui_utils import translate
 
 
-class ABCSettingsPage(QWidget, metaclass=QABCMeta):
-    Name = 'ABCSettingPage'
+class ABCPage(QWidget, metaclass=QABCMeta):
+    Name = 'PageName'
 
 
-class SettingsPage(ABCSettingsPage):
-    Name = 'SettingsPage'
+class SettingsPage(ABCPage):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
     @abstractmethod
     def loadSettings(self, settings):
@@ -66,15 +68,13 @@ class SettingsPage(ABCSettingsPage):
         """
 
 
-class ConfigurationPage(ABCSettingsPage):
-    Name = 'ConfigurationPage'
-
-    def __init__(self, config, **kwargs):
+class ConfigurationPage(ABCPage):
+    def __init__(self, config, *args, **kwargs):
         """
         :param config: Configuration object to "edit"
         :type config: lisp.core.configuration.Configuration
         """
-        super().__init__(**kwargs)
+        super().__init__(*args, **kwargs)
         self.config = config
 
     @abstractmethod
@@ -83,19 +83,17 @@ class ConfigurationPage(ABCSettingsPage):
 
 
 class CuePageMixin:
-    Name = 'CueSettingsPage'
-
-    def __init__(self, cue_type):
-        self.cue_type = cue_type
-
-
-class CueSettingsPage(SettingsPage, CuePageMixin):
-
-    def __init__(self, cue_type, **kwargs):
-        super().__init__(cue_type=cue_type, **kwargs)
+    def __init__(self, cueType, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.cueType = cueType
 
 
-class TabsMultiPage(QWidget):
+class CueSettingsPage(CuePageMixin, SettingsPage):
+    def __init__(self, cueType, **kwargs):
+        super().__init__(cueType=cueType, **kwargs)
+
+
+class TabsMultiPage(ABCPage):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
@@ -110,16 +108,8 @@ class TabsMultiPage(QWidget):
         return self._pages[index]
 
     def addPage(self, page):
-        if isinstance(page, ABCSettingsPage):
-            self._pages.append(page)
-            self.tabWidget.addTab(
-                page, translate('SettingsPageName', page.Name))
-        else:
-            raise TypeError(
-                'page must be an {}, not {}'.format(
-                    self._PagesBaseClass.__name__,
-                    typename(page))
-            )
+        self._pages.append(page)
+        self.tabWidget.addTab(page, translate('SettingsPageName', page.Name))
 
     def removePage(self, index):
         self.tabWidget.removeTab(index)
@@ -132,7 +122,7 @@ class TabsMultiPage(QWidget):
         return self._pages.index(page)
 
 
-class TabsMultiSettingsPage(TabsMultiPage, SettingsPage):
+class TabsMultiSettingsPage(TabsMultiPage):
     def loadSettings(self, settings):
         for page in self._pages:
             page.loadSettings(settings)
@@ -149,14 +139,13 @@ class TabsMultiSettingsPage(TabsMultiPage, SettingsPage):
             page.enableCheck(enabled)
 
 
-class TabsMultiConfigurationPage(TabsMultiPage, ConfigurationPage):
+class TabsMultiConfigurationPage(TabsMultiPage):
     def applySettings(self):
         for page in self._pages:
             page.applySettings()
 
 
-class TreeMultiPagesWidget(QWidget):
-
+class TreeMultiPagesWidget(ABCPage):
     def __init__(self, navModel, **kwargs):
         """
         :param navModel: The model that keeps all the pages-hierarchy
@@ -231,4 +220,4 @@ class TreeMultiSettingsWidget(TreeMultiPagesWidget):
         root = self.navModel.node(QModelIndex())
         for node in root.walk():
             if node.page is not None:
-                node.page.enableCheck()
+                node.page.enableCheck(enabled)

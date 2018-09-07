@@ -34,8 +34,28 @@ class AlsaSink(GstMediaElement):
     def __init__(self, pipeline):
         super().__init__(pipeline)
 
+        self.audio_resample = Gst.ElementFactory.make('audioresample', None)
         self.alsa_sink = Gst.ElementFactory.make('alsasink', 'sink')
+
+        self.pipeline.add(self.audio_resample)
         self.pipeline.add(self.alsa_sink)
 
+        self.audio_resample.link(self.alsa_sink)
+
+        self.changed('device').connect(self._update_device)
+
     def sink(self):
-        return self.alsa_sink
+        return self.audio_resample
+
+    def _update_device(self, new_device):
+        # Remove and dispose element
+        self.audio_resample.unlink(self.alsa_sink)
+        self.pipeline.remove(self.alsa_sink)
+        self.alsa_sink.set_state(Gst.State.NULL)
+
+        # Create new element and add it to the pipeline
+        self.alsa_sink = Gst.ElementFactory.make('alsasink', 'sink')
+        self.alsa_sink.set_property('device', new_device)
+
+        self.pipeline.add(self.alsa_sink)
+        self.audio_resample.link(self.alsa_sink)

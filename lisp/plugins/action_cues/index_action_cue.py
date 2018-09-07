@@ -145,7 +145,7 @@ class IndexActionCueSettings(SettingsPage):
         self.relativeCheck.setChecked(settings.get('relative', True))
         self.targetIndexSpin.setValue(settings.get('target_index', 0))
         self._target_changed()  # Ensure that the correct options are displayed
-        self.actionCombo.setCurrentAction(settings.get('action', ''))
+        self.actionCombo.setCurrentItem(settings.get('action', ''))
 
     def _target_changed(self):
         target = self._current_target()
@@ -157,7 +157,7 @@ class IndexActionCueSettings(SettingsPage):
 
         if target_class is not self._target_class:
             self._target_class = target_class
-            self.actionCombo.rebuild(self._target_class.CueActions)
+            self.actionCombo.setItems(self._target_class.CueActions)
 
         self._update_suggestion()
 

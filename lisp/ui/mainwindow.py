@@ -340,7 +340,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
             qApp.quit()
 
     def _edit_selected_cue(self):
-        self.session.layout.edit_selected_cues()
+        self.session.layout.edit_cues(list(self.session.layout.selected_cues()))
 
     def _select_all(self):
         self.session.layout.select_all()

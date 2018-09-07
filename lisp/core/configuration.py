@@ -71,7 +71,8 @@ class ConfDict:
             return node[key]
         except (KeyError, TypeError):
             if default is not _UNSET:
-                logger.debug('Invalid path, return default: {}'.format(path))
+                logger.warning(
+                    'Invalid path "{}", return default.'.format(path))
                 return default
 
             raise ConfDictError('invalid path')
@@ -178,6 +179,35 @@ class DummyConfiguration(Configuration):
 
     def read(self):
         pass
+
+    def write(self):
+        pass
+
+
+class SubConfiguration(Configuration):
+    """Provide a view on a parent configuration "section"
+
+    If a parent configuration is reloaded all related SubConfiguration
+    should be reloaded, using the `read` method, or it may
+    (depending on the parent implementation) hold an invalid reference to the
+    parent "sub-section".
+
+    The `write` method is a no-op, you need to call the parent one to actually
+    do something.
+    """
+
+    def __init__(self, parent, root_path):
+        """
+        :param parent: The parent configuration
+        :type parent: Configuration
+        :param root_path: The path of the parent "section" that will be visible
+        """
+        super().__init__(root=parent.get(root_path))
+        self._root_path = root_path
+        self._parent = parent
+
+    def read(self):
+        self._root = self._parent.get(self._root_path)
 
     def write(self):
         pass

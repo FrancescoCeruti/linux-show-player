@@ -95,6 +95,9 @@ class UriInputSettings(SettingsPage):
 
     def loadSettings(self, settings):
         self.filePath.setText(settings.get('uri', ''))
+        self.useBuffering.setChecked(settings.get('use_buffering', False))
+        self.download.setChecked(settings.get('download', False))
+        self.bufferSize.setValue(settings.get('buffer_size', -1))
 
     def enableCheck(self, enabled):
         self.fileGroup.setCheckable(enabled)

@@ -26,6 +26,8 @@ from lisp.cues.cue import CueAction
 from lisp.ui.qmodels import CueClassRole
 from lisp.ui.ui_utils import translate
 from lisp.ui.widgets import CueActionComboBox
+from lisp.ui.widgets.cue_actions import tr_action
+from lisp.ui.widgets.qenumcombobox import QEnumComboBox
 
 
 class LabelDelegate(QStyledItemDelegate):
@@ -161,56 +163,70 @@ class LineEditDelegate(QStyledItemDelegate):
         editor.setGeometry(option.rect)
 
 
-class CueActionDelegate(LabelDelegate):
-    Mode = CueActionComboBox.Mode
+class EnumComboBoxDelegate(LabelDelegate):
+    Mode = QEnumComboBox.Mode
 
-    def __init__(self, cue_class=None, mode=Mode.Action, **kwargs):
+    def __init__(self, enum, mode=Mode.Enum, trItem=str, **kwargs):
         super().__init__(**kwargs)
-        self.cue_class = cue_class
+        self.enum = enum
         self.mode = mode
+        self.trItem = trItem
 
     def _text(self, painter, option, index):
-        value = index.data(Qt.EditRole)
-        if self.mode == CueActionDelegate.Mode.Action:
-            name = value.name
-        elif self.mode == CueActionDelegate.Mode.Name:
-            name = value
-        else:
-            name = CueAction(value).name
-
-        return translate('CueAction', name)
+        return self.trItem(self.itemFromData(index.data(Qt.EditRole)))
 
     def paint(self, painter, option, index):
         option.displayAlignment = Qt.AlignHCenter | Qt.AlignVCenter
         super().paint(painter, option, index)
 
     def createEditor(self, parent, option, index):
-        if self.cue_class is None:
-            self.cue_class = index.data(CueClassRole)
-
-        editor = CueActionComboBox(self.cue_class.CueActions,
-                                   mode=self.mode,
-                                   parent=parent)
+        editor = QEnumComboBox(
+            self.enum,
+            mode=self.mode,
+            trItem=self.trItem,
+            parent=parent
+        )
         editor.setFrame(False)
 
         return editor
 
-    def setEditorData(self, comboBox, index):
-        value = index.data(Qt.EditRole)
-        if self.mode == CueActionDelegate.Mode.Action:
-            action = value
-        elif self.mode == CueActionDelegate.Mode.Name:
-            action = CueAction[value]
-        else:
-            action = CueAction(value)
+    def setEditorData(self, editor, index):
+        editor.setCurrentItem(index.data(Qt.EditRole))
 
-        comboBox.setCurrentText(translate('CueAction', action.name))
-
-    def setModelData(self, comboBox, model, index):
-        model.setData(index, comboBox.currentData(), Qt.EditRole)
+    def setModelData(self, editor, model, index):
+        model.setData(index, editor.currentData(), Qt.EditRole)
 
     def updateEditorGeometry(self, editor, option, index):
         editor.setGeometry(option.rect)
+
+    def itemFromData(self, data):
+        if self.mode == EnumComboBoxDelegate.Mode.Name:
+            return self.enum[data]
+        elif self.mode == EnumComboBoxDelegate.Mode.Value:
+            return self.enum(data)
+
+        return data
+
+
+class CueActionDelegate(EnumComboBoxDelegate):
+    Mode = CueActionComboBox.Mode
+
+    def __init__(self, cue_class=None, **kwargs):
+        super().__init__(CueAction, trItem=tr_action, **kwargs)
+        self.cue_class = cue_class
+
+    def createEditor(self, parent, option, index):
+        if self.cue_class is None:
+            self.cue_class = index.data(CueClassRole)
+
+        editor = CueActionComboBox(
+            self.cue_class.CueActions,
+            mode=self.mode,
+            parent=parent
+        )
+        editor.setFrame(False)
+
+        return editor
 
 
 class CueSelectionDelegate(LabelDelegate):

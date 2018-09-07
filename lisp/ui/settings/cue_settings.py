@@ -24,17 +24,12 @@ from lisp.core.class_based_registry import ClassBasedRegistry
 from lisp.core.singleton import Singleton
 from lisp.core.util import typename
 from lisp.cues.cue import Cue
-from lisp.ui.settings.pages import SettingsPage, CuePageMixin, \
-    TabsMultiSettingsPage
+from lisp.ui.settings.pages import CuePageMixin, TabsMultiSettingsPage
 from lisp.ui.ui_utils import translate
 
 
 class CueSettingsRegistry(ClassBasedRegistry, metaclass=Singleton):
     def add(self, item, ref_class=Cue):
-        if not issubclass(item, SettingsPage):
-            raise TypeError(
-                'item must be a SettingPage, not {}'.format(item.__name__))
-
         return super().add(item, ref_class)
 
     def filter(self, ref_class=Cue):

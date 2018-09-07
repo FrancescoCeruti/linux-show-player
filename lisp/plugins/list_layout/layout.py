@@ -325,7 +325,7 @@ class ListLayout(CueLayout):
             next_index = cue.index + 1
             if next_index < len(self._list_model):
                 next_cue = self._list_model.item(next_index)
-                next_cue.cue.execute()
+                next_cue.execute()
 
                 if self.auto_continue and next_cue is self.standby_cue():
                     self.set_standby_index(next_index + 1)
