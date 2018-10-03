@@ -22,8 +22,10 @@ from PyQt5.QtGui import QKeySequence
 from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QCheckBox, QHBoxLayout, \
     QLabel, QKeySequenceEdit, QGridLayout
 
+from lisp.cues.cue import CueAction
 from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.ui_utils import translate
+from lisp.ui.widgets import CueActionComboBox
 
 
 class ListLayoutSettings(SettingsPage):
@@ -56,14 +58,23 @@ class ListLayoutSettings(SettingsPage):
         self.selectionMode = QCheckBox(self.behaviorsGroup)
         self.behaviorsGroup.layout().addWidget(self.selectionMode)
 
-        self.goKeyLayout = QHBoxLayout()
-        self.behaviorsGroup.layout().addLayout(self.goKeyLayout)
+        self.goLayout = QGridLayout()
+        self.goLayout.setColumnStretch(0, 2)
+        self.goLayout.setColumnStretch(1, 5)
+        self.behaviorsGroup.layout().addLayout(self.goLayout)
+
         self.goKeyLabel = QLabel(self.behaviorsGroup)
-        self.goKeyLayout.addWidget(self.goKeyLabel)
+        self.goLayout.addWidget(self.goKeyLabel, 0, 0)
         self.goKeyEdit = QKeySequenceEdit(self.behaviorsGroup)
-        self.goKeyLayout.addWidget(self.goKeyEdit)
-        self.goKeyLayout.setStretch(0, 2)
-        self.goKeyLayout.setStretch(1, 5)
+        self.goLayout.addWidget(self.goKeyEdit, 0, 1)
+
+        self.goActionLabel = QLabel(self.behaviorsGroup)
+        self.goLayout.addWidget(self.goActionLabel, 1, 0)
+        self.goActionCombo = CueActionComboBox(
+            actions=(CueAction.Default, CueAction.Start, CueAction.FadeInStart),
+            mode=CueActionComboBox.Mode.Value
+        )
+        self.goLayout.addWidget(self.goActionCombo, 1, 1)
 
         self.useFadeGroup = QGroupBox(self)
         self.useFadeGroup.setLayout(QGridLayout())
@@ -91,7 +102,9 @@ class ListLayoutSettings(SettingsPage):
         self.autoNext.setText(translate('ListLayout', 'Auto-select next cue'))
         self.selectionMode.setText(
             translate('ListLayout', 'Enable selection mode'))
+
         self.goKeyLabel.setText(translate('ListLayout', 'Go key:'))
+        self.goActionLabel.setText(translate('ListLayout', 'Go action'))
 
         self.useFadeGroup.setTitle(
             translate('ListLayout', 'Use fade (buttons)'))
@@ -107,8 +120,10 @@ class ListLayoutSettings(SettingsPage):
         self.showSeek.setChecked(settings['show']['seekSliders'])
         self.autoNext.setChecked(settings['autoContinue'])
         self.selectionMode.setChecked(settings['selectionMode'])
+
         self.goKeyEdit.setKeySequence(
             QKeySequence(settings['goKey'], QKeySequence.NativeText))
+        self.goActionCombo.setCurrentItem(settings['goAction'])
 
         self.stopCueFade.setChecked(settings['stopCueFade'])
         self.pauseCueFade.setChecked(settings['pauseCueFade'])
@@ -125,8 +140,10 @@ class ListLayoutSettings(SettingsPage):
             },
             'autoContinue': self.autoNext.isChecked(),
             'selectionMode': self.selectionMode.isChecked(),
+
             'goKey': self.goKeyEdit.keySequence().toString(
                 QKeySequence.NativeText),
+            'goAction': self.goActionCombo.currentItem(),
 
             'stopCueFade': self.stopCueFade.isChecked(),
             'pauseCueFade': self.pauseCueFade.isChecked(),

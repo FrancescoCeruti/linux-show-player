@@ -18,11 +18,9 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import os.path
-
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QCursor
 from PyQt5.QtWidgets import QFileDialog, QApplication
-from lisp.ui.ui_utils import translate, qfile_filters
 
 from lisp import backend
 from lisp.backend.backend import Backend as BaseBackend
@@ -40,6 +38,7 @@ from lisp.plugins.gst_backend.gst_utils import gst_parse_tags_list, \
     gst_uri_metadata, gst_mime_types, gst_uri_duration
 from lisp.ui.settings.app_configuration import AppConfigurationDialog
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
+from lisp.ui.ui_utils import translate, qfile_filters
 
 
 class GstBackend(Plugin, BaseBackend):
@@ -101,13 +100,19 @@ class GstBackend(Plugin, BaseBackend):
 
     def _add_uri_audio_cue(self):
         """Add audio MediaCue(s) form user-selected files"""
+        dir = GstBackend.Config.get('mediaLookupDir', '')
+        if not os.path.exists(dir):
+            dir = self.app.session.path()
 
         files, _ = QFileDialog.getOpenFileNames(
             self.app.window,
             translate('GstBackend', 'Select media files'),
-            self.app.session.path(),
+            dir,
             qfile_filters(self.supported_extensions(), anyfile=True)
         )
+        if files:
+            GstBackend.Config['mediaLookupDir'] = os.path.dirname(files[0])
+            GstBackend.Config.write()
 
         QApplication.setOverrideCursor(QCursor(Qt.WaitCursor))
 

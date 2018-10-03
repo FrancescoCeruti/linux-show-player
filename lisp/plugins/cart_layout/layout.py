@@ -80,6 +80,7 @@ class CartLayout(CueLayout):
 
         self._cart_view = CartTabWidget()
         self._cart_view.keyPressed.connect(self._key_pressed)
+        self._cart_view.currentChanged.connect(self._tab_changed)
 
         # Layout menu
         layout_menu = self.app.window.menuLayout
@@ -400,6 +401,9 @@ class CartLayout(CueLayout):
         widget = self._page(page).widget(row, column)
 
         widget.resetVolume()
+
+    def _tab_changed(self, index):
+        self._cart_model.current_page = index
 
     def __cue_added(self, cue):
         widget = CueWidget(cue)

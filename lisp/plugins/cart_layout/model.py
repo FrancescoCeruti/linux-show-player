@@ -24,8 +24,12 @@ from lisp.core.model_adapter import ModelAdapter
 
 
 class CueCartModel(ModelAdapter):
-    def __init__(self, model, rows, columns):
+    def __init__(self, model, rows, columns, current_page=0):
         super().__init__(model)
+
+        # Used in first empty, so we can insert cues in the page the user
+        # is visible while adding the cue
+        self.current_page = current_page
 
         self.__cues = SortedDict()
         self.__rows = rows
@@ -45,13 +49,20 @@ class CueCartModel(ModelAdapter):
             return index
 
     def first_empty(self):
-        """Return the first empty index."""
-        n = -1
-        for n, index in enumerate(self.__cues.keys()):
-            if n != index:
-                return n
+        """Return the first empty index, starting from the current page."""
+        offset = (self.__rows * self.__columns) * self.current_page
+        last_index = self.__cues.peekitem(-1)[0] if self.__cues else -1
 
-        return n + 1
+        if last_index > offset:
+            for n in range(offset, last_index):
+                if n not in self.__cues:  # O(1)
+                    return n
+
+            return last_index + 1
+        if last_index < offset:
+            return offset
+        else:
+            return offset + 1
 
     def item(self, index):
         index = self.flat(index)

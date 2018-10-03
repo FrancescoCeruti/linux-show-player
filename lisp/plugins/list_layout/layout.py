@@ -62,7 +62,8 @@ class ListLayout(CueLayout):
         self._memento_model = CueMementoAdapter(self._list_model)
         self._running_model = RunningCueModel(self.cue_model)
 
-        self._view = ListLayoutView(self._list_model, self._running_model, self.Config)
+        self._view = ListLayoutView(
+            self._list_model, self._running_model, self.Config)
         # GO button
         self._view.goButton.clicked.connect(self.__go_slot)
         # Global actions
@@ -224,7 +225,7 @@ class ListLayout(CueLayout):
 
             if QKeySequence(keys) in self._go_key_sequence:
                 event.accept()
-                self.go()
+                self.__go_slot()
             elif event.key() == Qt.Key_Space:
                 if event.modifiers() == Qt.ShiftModifier:
                     event.accept()
@@ -315,7 +316,8 @@ class ListLayout(CueLayout):
             self.show_context_menu(event.globalPos())
 
     def __go_slot(self):
-        self.go()
+        action = CueAction(ListLayout.Config.get('goAction'))
+        self.go(action=action)
 
     def __cue_added(self, cue):
         cue.next.connect(self.__cue_next, Connection.QtQueued)

@@ -43,7 +43,7 @@ class ListLayoutView(QWidget):
         self.goButton.setStyleSheet('font-size: 48pt;')
         self.layout().addWidget(self.goButton, 0, 0)
 
-        # INFO PANEL (top center)
+        # INFO PANEL (top-center)
         self.infoPanel = InfoPanel(self)
         self.infoPanel.setFixedHeight(120)
         self.layout().addWidget(self.infoPanel, 0, 1)
@@ -53,20 +53,21 @@ class ListLayoutView(QWidget):
         self.controlButtons.setFixedHeight(120)
         self.layout().addWidget(self.controlButtons, 0, 2)
 
-        # CUE VIEW (center left)
+        # CUE VIEW (center-left)
         self.listView = CueListView(listModel, self)
         self.listView.currentItemChanged.connect(self.__listViewCurrentChanged)
         self.layout().addWidget(self.listView, 1, 0, 1, 2)
 
-        # PLAYING VIEW (center right)
+        # PLAYING VIEW (center-right)
         self.runView = RunningCuesListWidget(runModel, config, parent=self)
         self.runView.setMinimumWidth(300)
         self.runView.setMaximumWidth(300)
         self.layout().addWidget(self.runView, 1, 2)
 
-    def __listViewCurrentChanged(self, current, previous):
+    def __listViewCurrentChanged(self, current, _):
+        cue = None
         if current is not None:
             index = self.listView.indexOfTopLevelItem(current)
-            self.infoPanel.cue = self.listModel.item(index)
-        else:
-            self.infoPanel.cue = None
+            cue = self.listModel.item(index)
+
+        self.infoPanel.cue = cue
