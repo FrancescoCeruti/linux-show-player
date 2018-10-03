@@ -22,15 +22,15 @@ from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QComboBox, QGridLayout, \
     QLabel
 
 from lisp.plugins.midi.midi_utils import mido_backend
-from lisp.ui.settings.pages import ConfigurationPage
+from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.ui_utils import translate
 
 
-class MIDISettings(ConfigurationPage):
+class MIDISettings(SettingsPage):
     Name = QT_TRANSLATE_NOOP('SettingsPageName', 'MIDI settings')
 
-    def __init__(self, conf, **kwargs):
-        super().__init__(conf, **kwargs)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
@@ -60,27 +60,24 @@ class MIDISettings(ConfigurationPage):
         except Exception:
             self.setEnabled(False)
 
-        # TODO: instead of forcing 'Default' add a warning label
+    def loadSettings(self, settings):
+        # TODO: instead of forcing 'Default' add a warning label and keep the invalid device as an option
         self.inputCombo.setCurrentText('Default')
-        self.inputCombo.setCurrentText(conf['inputDevice'])
+        self.inputCombo.setCurrentText(settings['inputDevice'])
         self.outputCombo.setCurrentText('Default')
-        self.outputCombo.setCurrentText(conf['outputDevice'])
+        self.outputCombo.setCurrentText(settings['outputDevice'])
 
-    def applySettings(self):
+    def getSettings(self):
         if self.isEnabled():
-            inputDevice = self.inputCombo.currentText()
-            if inputDevice == 'Default':
-                self.config['inputDevice'] = ''
-            else:
-                self.config['inputDevice'] = inputDevice
+            input = self.inputCombo.currentText()
+            output = self.outputCombo.currentText()
 
-            outputDevice = self.outputCombo.currentText()
-            if outputDevice == 'Default':
-                self.config['outputDevice'] = ''
-            else:
-                self.config['outputDevice'] = outputDevice
+            return {
+                'inputDevice': '' if input == 'Default' else input,
+                'outputDevice': '' if output == 'Default' else output
+            }
 
-            self.config.write()
+        return {}
 
     def _loadDevices(self):
         backend = mido_backend()

@@ -23,16 +23,16 @@ from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QCheckBox, QComboBox, \
 
 from lisp import layout
 from lisp.ui.icons import icon_themes_names
-from lisp.ui.settings.pages import ConfigurationPage
+from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.themes import themes_names
 from lisp.ui.ui_utils import translate
 
 
-class AppGeneral(ConfigurationPage):
+class AppGeneral(SettingsPage):
     Name = QT_TRANSLATE_NOOP('SettingsPageName', 'General')
 
-    def __init__(self, config, **kwargs):
-        super().__init__(config, **kwargs)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
@@ -72,7 +72,6 @@ class AppGeneral(ConfigurationPage):
         self.themeGroup.layout().addWidget(self.iconsCombo, 1, 1)
 
         self.retranslateUi()
-        self.loadConfiguration()
 
     def retranslateUi(self):
         self.layoutGroup.setTitle(
@@ -86,23 +85,29 @@ class AppGeneral(ConfigurationPage):
         self.iconsLabel.setText(
             translate('AppGeneralSettings', 'Icons theme'))
 
-    def applySettings(self):
+    def getSettings(self):
+        settings = {
+            'theme': {
+                'theme': self.themeCombo.currentText(),
+                'icons': self.iconsCombo.currentText()
+            },
+            'layout': {}
+        }
+
         if self.startupDialogCheck.isChecked():
-            self.config['layout.default'] = 'NoDefault'
+            settings['layout']['default'] = 'NoDefault'
         else:
-            self.config['layout.default'] = self.layoutCombo.currentData()
+            settings['layout']['default'] = self.layoutCombo.currentData()
 
-        self.config['theme.theme'] = self.themeCombo.currentText()
-        self.config['theme.icons'] = self.iconsCombo.currentText()
+        return settings
 
-        self.config.write()
-
-    def loadConfiguration(self):
-        layout_name = self.config.get('layout.default', 'nodefault')
+    def loadSettings(self, settings):
+        layout_name = settings['layout']['default']
         if layout_name.lower() == 'nodefault':
             self.startupDialogCheck.setChecked(True)
         else:
-            self.layoutCombo.setCurrentIndex(self.layoutCombo.findData(layout_name))
+            self.layoutCombo.setCurrentIndex(
+                self.layoutCombo.findData(layout_name))
 
-        self.themeCombo.setCurrentText(self.config.get('theme.theme', ''))
-        self.iconsCombo.setCurrentText(self.config.get('theme.icons', ''))
+        self.themeCombo.setCurrentText(settings['theme']['theme'])
+        self.iconsCombo.setCurrentText(settings['theme']['icons'])

@@ -35,13 +35,13 @@ from lisp.cues.media_cue import MediaCue
 from lisp.ui.layoutselect import LayoutSelect
 from lisp.ui.mainwindow import MainWindow
 from lisp.ui.settings.app_configuration import AppConfigurationDialog
-from lisp.ui.settings.app_pages.app_general import AppGeneral
-from lisp.ui.settings.app_pages.cue_app_settings import CueAppSettings
-from lisp.ui.settings.app_pages.layouts_settings import LayoutsSettings
-from lisp.ui.settings.app_pages.plugins_settings import PluginsSettings
+from lisp.ui.settings.app_pages.general import AppGeneral
+from lisp.ui.settings.app_pages.cue import CueAppSettings
+from lisp.ui.settings.app_pages.layouts import LayoutsSettings
+from lisp.ui.settings.app_pages.plugins import PluginsSettings
 from lisp.ui.settings.cue_pages.cue_appearance import Appearance
-from lisp.ui.settings.cue_pages.cue_general import CueGeneralSettings
-from lisp.ui.settings.cue_pages.media_cue_settings import MediaCueSettings
+from lisp.ui.settings.cue_pages.cue_general import CueGeneralSettingsPage
+from lisp.ui.settings.cue_pages.media_cue import MediaCueSettings
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
 
 logger = logging.getLogger(__name__)
@@ -69,7 +69,7 @@ class Application(metaclass=Singleton):
             'plugins', PluginsSettings, self.conf)
 
         # Register common cue-settings widgets
-        CueSettingsRegistry().add(CueGeneralSettings, Cue)
+        CueSettingsRegistry().add(CueGeneralSettingsPage, Cue)
         CueSettingsRegistry().add(MediaCueSettings, MediaCue)
         CueSettingsRegistry().add(Appearance)
 

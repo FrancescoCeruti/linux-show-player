@@ -25,7 +25,7 @@ from PyQt5.QtWidgets import QGridLayout, QVBoxLayout, QGroupBox, \
 
 from lisp.plugins.timecode import protocols
 from lisp.plugins.timecode.cue_tracker import TcFormat
-from lisp.ui.settings.pages import SettingsPage, CueSettingsPage, ConfigurationPage
+from lisp.ui.settings.pages import SettingsPage, CueSettingsPage
 from lisp.ui.ui_utils import translate
 
 
@@ -81,11 +81,13 @@ class TimecodeSettings(CueSettingsPage):
             translate('TimecodeSettings', 'Track number'))
 
     def getSettings(self):
-        return {'timecode': {
-            'enabled': self.enableTimecodeCheck.isChecked(),
-            'replace_hours': self.useHoursCheck.isChecked(),
-            'track': self.trackSpin.value()
-        }}
+        return {
+            'timecode': {
+                'enabled': self.enableTimecodeCheck.isChecked(),
+                'replace_hours': self.useHoursCheck.isChecked(),
+                'track': self.trackSpin.value()
+            }
+        }
 
     def loadSettings(self, settings):
         settings = settings.get('timecode', {})
@@ -95,11 +97,11 @@ class TimecodeSettings(CueSettingsPage):
         self.trackSpin.setValue(settings.get('track', 0))
 
 
-class TimecodeAppSettings(ConfigurationPage):
+class TimecodeAppSettings(SettingsPage):
     Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Timecode Settings')
 
-    def __init__(self, config, **kwargs):
-        super().__init__(config, **kwargs)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
@@ -124,7 +126,6 @@ class TimecodeAppSettings(ConfigurationPage):
         self.groupBox.layout().addWidget(self.protocolCombo, 1, 1)
 
         self.retranslateUi()
-        self.loadConfiguration()
 
     def retranslateUi(self):
         self.groupBox.setTitle(
@@ -134,11 +135,12 @@ class TimecodeAppSettings(ConfigurationPage):
         self.protocolLabel.setText(
             translate('TimecodeSettings', 'Timecode Protocol:'))
 
-    def applySettings(self):
-        self.config['format'] = self.formatBox.currentText()
-        self.config['protocol'] = self.protocolCombo.currentText()
-        self.config.write()
+    def getSettings(self):
+        return {
+            'format': self.formatBox.currentText(),
+            'protocol': self.protocolCombo.currentText()
+        }
 
-    def loadConfiguration(self):
-        self.formatBox.setCurrentText(self.config['format'])
-        self.protocolCombo.setCurrentText(self.config['protocol'])
+    def loadSettings(self, settings):
+        self.formatBox.setCurrentText(settings['format'])
+        self.protocolCombo.setCurrentText(settings['protocol'])

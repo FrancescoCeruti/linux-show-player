@@ -17,10 +17,57 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import QAbstractItemModel, Qt, QModelIndex
+from PyQt5.QtCore import QModelIndex, QAbstractItemModel, Qt
+from PyQt5.QtWidgets import QWidget, QGridLayout, QTreeView, QSizePolicy
 
-from lisp.core.util import typename
-from lisp.ui.settings.pages import ABCPage
+
+class PagesTreeWidget(QWidget):
+    def __init__(self, navModel, **kwargs):
+        """
+        :param navModel: The model that keeps all the pages-hierarchy
+        :type navModel: lisp.ui.widgets.pagestreewidget.PagesTreeModel
+        """
+        super().__init__(**kwargs)
+        self.setLayout(QGridLayout())
+        self.layout().setSpacing(0)
+        self.layout().setContentsMargins(0, 0, 0, 0)
+        self.navModel = navModel
+
+        self.navWidget = QTreeView()
+        self.navWidget.setHeaderHidden(True)
+        self.navWidget.setModel(self.navModel)
+        self.layout().addWidget(self.navWidget, 0, 0)
+
+        self._currentWidget = QWidget()
+        self.layout().addWidget(self._currentWidget, 0, 1)
+
+        self.navWidget.selectionModel().selectionChanged.connect(
+            self._changePage)
+
+        self._resetStretch()
+
+    def selectFirst(self):
+        if self.navModel.rowCount():
+            self.navWidget.setCurrentIndex(
+                self.navModel.index(0, 0, QModelIndex()))
+
+    def currentWidget(self):
+        return self._currentWidget
+
+    def _resetStretch(self):
+        self.layout().setColumnStretch(0, 2)
+        self.layout().setColumnStretch(1, 5)
+
+    def _changePage(self, selected):
+        if selected.indexes():
+            self.layout().removeWidget(self._currentWidget)
+            self._currentWidget.hide()
+            self._currentWidget = selected.indexes()[0].internalPointer().page
+            self._currentWidget.setSizePolicy(
+                QSizePolicy.Ignored, QSizePolicy.Ignored)
+            self._currentWidget.show()
+            self.layout().addWidget(self._currentWidget, 0, 1)
+            self._resetStretch()
 
 
 class PageNode:

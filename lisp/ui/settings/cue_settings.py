@@ -24,7 +24,7 @@ from lisp.core.class_based_registry import ClassBasedRegistry
 from lisp.core.singleton import Singleton
 from lisp.core.util import typename
 from lisp.cues.cue import Cue
-from lisp.ui.settings.pages import CuePageMixin, TabsMultiSettingsPage
+from lisp.ui.settings.pages import CuePageMixin, SettingsPagesTabWidget
 from lisp.ui.ui_utils import translate
 
 
@@ -53,6 +53,7 @@ class CueSettingsDialog(QDialog):
         self.setMinimumSize(640, 510)
         self.resize(640, 510)
         self.setLayout(QVBoxLayout())
+        #self.layout().setContentsMargins(5, 5, 5, 10)
 
         if isinstance(cue, type):
             if issubclass(cue, Cue):
@@ -73,7 +74,8 @@ class CueSettingsDialog(QDialog):
                 'not {}'.format(typename(cue))
             )
 
-        self.mainPage = TabsMultiSettingsPage(parent=self)
+        self.mainPage = SettingsPagesTabWidget(parent=self)
+        self.mainPage.layout().setContentsMargins(0, 0, 0, 0)
         self.layout().addWidget(self.mainPage)
 
         def sk(widget):

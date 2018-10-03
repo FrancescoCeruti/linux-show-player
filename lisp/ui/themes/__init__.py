@@ -8,9 +8,7 @@ _THEMES = {}
 
 def load_themes():
     if not _THEMES:
-        for name, theme in load_classes(__package__,
-                                        path.dirname(__file__),
-                                        exclude='theme'):
+        for name, theme in load_classes(__package__, path.dirname(__file__)):
             _THEMES[name] = theme()
 
 

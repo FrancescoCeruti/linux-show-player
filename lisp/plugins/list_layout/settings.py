@@ -19,18 +19,18 @@
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QKeySequence
-from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QCheckBox, QHBoxLayout,\
+from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QCheckBox, QHBoxLayout, \
     QLabel, QKeySequenceEdit, QGridLayout
 
-from lisp.ui.settings.pages import ConfigurationPage
+from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.ui_utils import translate
 
 
-class ListLayoutSettings(ConfigurationPage):
+class ListLayoutSettings(SettingsPage):
     Name = 'List Layout'
 
-    def __init__(self, config, **kwargs):
-        super().__init__(config, **kwargs)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
@@ -80,7 +80,6 @@ class ListLayoutSettings(ConfigurationPage):
         self.useFadeGroup.layout().addWidget(self.interruptCueFade, 3, 0)
 
         self.retranslateUi()
-        self.loadSettings()
 
     def retranslateUi(self):
         self.behaviorsGroup.setTitle(
@@ -101,35 +100,36 @@ class ListLayoutSettings(ConfigurationPage):
         self.resumeCueFade.setText(translate('ListLayout', 'Resume Cue'))
         self.interruptCueFade.setText(translate('ListLayout', 'Interrupt Cue'))
 
-    def loadSettings(self):
-        self.showPlaying.setChecked(self.config['show.playingCues'])
-        self.showDbMeters.setChecked(self.config['show.dBMeters'])
-        self.showAccurate.setChecked(self.config['show.accurateTime'])
-        self.showSeek.setChecked(self.config['show.seekSliders'])
-        self.autoNext.setChecked(self.config['autoContinue'])
-        self.selectionMode.setChecked(self.config['selectionMode'])
+    def loadSettings(self, settings):
+        self.showPlaying.setChecked(settings['show']['playingCues'])
+        self.showDbMeters.setChecked(settings['show']['dBMeters'])
+        self.showAccurate.setChecked(settings['show']['accurateTime'])
+        self.showSeek.setChecked(settings['show']['seekSliders'])
+        self.autoNext.setChecked(settings['autoContinue'])
+        self.selectionMode.setChecked(settings['selectionMode'])
         self.goKeyEdit.setKeySequence(
-            QKeySequence(self.config['goKey'], QKeySequence.NativeText))
+            QKeySequence(settings['goKey'], QKeySequence.NativeText))
 
-        self.stopCueFade.setChecked(self.config['stopCueFade'])
-        self.pauseCueFade.setChecked(self.config['pauseCueFade'])
-        self.resumeCueFade.setChecked(self.config['resumeCueFade'])
-        self.interruptCueFade.setChecked(self.config['interruptCueFade'])
+        self.stopCueFade.setChecked(settings['stopCueFade'])
+        self.pauseCueFade.setChecked(settings['pauseCueFade'])
+        self.resumeCueFade.setChecked(settings['resumeCueFade'])
+        self.interruptCueFade.setChecked(settings['interruptCueFade'])
 
-    def applySettings(self):
-        self.config['show.accurateTime'] = self.showAccurate.isChecked()
-        self.config['show.playingCues'] = self.showPlaying.isChecked()
-        self.config['show.dBMeters'] = self.showDbMeters.isChecked()
-        self.config['show.seekBars'] = self.showSeek.isChecked()
-        self.config['autoContinue'] = self.autoNext.isChecked()
-        self.config['selectionMode'] = self.selectionMode.isChecked()
+    def getSettings(self):
+        return {
+            'show': {
+                'accurateTime': self.showAccurate.isChecked(),
+                'playingCues': self.showPlaying.isChecked(),
+                'dBMeters': self.showDbMeters.isChecked(),
+                'seekBars': self.showSeek.isChecked()
+            },
+            'autoContinue': self.autoNext.isChecked(),
+            'selectionMode': self.selectionMode.isChecked(),
+            'goKey': self.goKeyEdit.keySequence().toString(
+                QKeySequence.NativeText),
 
-        self.config['goKey'] = self.goKeyEdit.keySequence().toString(
-            QKeySequence.NativeText)
-
-        self.config['stopCueFade'] = self.stopCueFade.isChecked()
-        self.config['pauseCueFade'] = self.pauseCueFade.isChecked()
-        self.config['resumeCueFade'] = self.resumeCueFade.isChecked()
-        self.config['interruptCueFade'] = self.interruptCueFade.isChecked()
-
-        self.config.write()
+            'stopCueFade': self.stopCueFade.isChecked(),
+            'pauseCueFade': self.pauseCueFade.isChecked(),
+            'resumeCueFade': self.resumeCueFade.isChecked(),
+            'interruptCueFade': self.interruptCueFade.isChecked()
+        }

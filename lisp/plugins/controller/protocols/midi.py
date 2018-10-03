@@ -23,7 +23,7 @@ from PyQt5.QtWidgets import QGroupBox, QPushButton, QComboBox, QVBoxLayout, \
 
 from lisp.plugins import get_plugin, PluginNotLoadedError
 from lisp.plugins.controller.common import LayoutAction, tr_layout_action
-from lisp.plugins.controller.protocols.protocol import Protocol
+from lisp.plugins.controller.protocol import Protocol
 from lisp.ui.qdelegates import ComboBoxDelegate, SpinBoxDelegate, \
     CueActionDelegate, EnumComboBoxDelegate
 from lisp.ui.qmodels import SimpleTableModel

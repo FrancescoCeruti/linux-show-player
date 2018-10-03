@@ -104,16 +104,17 @@
         },
         "pycparser": {
             "hashes": [
-                "sha256:99a8ca03e29851d96616ad0404b4aad7d9ee16f25c9f9708a11faf2810f7b226"
+                "sha256:a988718abfad80b6b157acce7bf130a30876d27603738ac39f140993246b25b3"
             ],
-            "version": "==2.18"
+            "markers": "python_version != '3.0.*' and python_version != '3.2.*' and python_version != '3.3.*' and python_version != '3.1.*' and python_version >= '2.7'",
+            "version": "==2.19"
         },
         "pygobject": {
             "hashes": [
-                "sha256:c5c888068b96d55aa8efcbf1253fe824c74462169d80c0333967e295aabbee5e"
+                "sha256:5e642a76cfddd3e488a32bcdf7cef189e29226522be8726bc0e050dd53fa2d1c"
             ],
             "index": "pypi",
-            "version": "==3.30.0"
+            "version": "==3.30.1"
         },
         "pyliblo": {
             "hashes": [

@@ -23,15 +23,15 @@ from PyQt5.QtWidgets import QListWidget, QListWidgetItem, QTextBrowser, \
 
 from lisp import plugins
 from lisp.ui.icons import IconTheme
-from lisp.ui.settings.pages import ConfigurationPage
+from lisp.ui.settings.pages import SettingsPage
 
 
 # TODO: add Enable/Disable options for plugins
-class PluginsSettings(ConfigurationPage):
+class PluginsSettings(SettingsPage):
     Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Plugins')
 
-    def __init__(self, config, **kwargs):
-        super().__init__(config, **kwargs)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
@@ -79,6 +79,3 @@ class PluginsSettings(ConfigurationPage):
         else:
             self.pluginDescription.setHtml(
                 '<b>Description: </b><br /><br /><b>Authors: </b>')
-
-    def applySettings(self):
-        pass

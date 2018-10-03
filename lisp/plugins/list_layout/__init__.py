@@ -16,4 +16,4 @@ class ListLayout(Plugin):
         _ListLayout.Config = ListLayout.Config
         register_layout(_ListLayout)
         AppConfigurationDialog.registerSettingsPage(
-            'layouts.layout_layout', ListLayoutSettings, ListLayout.Config)
+            'layouts.list_layout', ListLayoutSettings, ListLayout.Config)

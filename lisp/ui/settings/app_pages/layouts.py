@@ -20,15 +20,15 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QGridLayout, QCheckBox
 
-from lisp.ui.settings.pages import ConfigurationPage
+from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.ui_utils import translate
 
 
-class LayoutsSettings(ConfigurationPage):
+class LayoutsSettings(SettingsPage):
     Name = 'Layouts'
 
-    def __init__(self, config, **kwargs):
-        super().__init__(config, **kwargs)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
@@ -37,19 +37,18 @@ class LayoutsSettings(ConfigurationPage):
         self.layout().addWidget(self.useFadeGroup)
 
         self.stopAllFade = QCheckBox(self.useFadeGroup)
-        self.useFadeGroup.layout().addWidget(self.stopAllFade, 0, 1)
-
-        self.pauseAllFade = QCheckBox(self.useFadeGroup)
-        self.useFadeGroup.layout().addWidget(self.pauseAllFade, 1, 1)
-
-        self.resumeAllFade = QCheckBox(self.useFadeGroup)
-        self.useFadeGroup.layout().addWidget(self.resumeAllFade, 2, 1)
+        self.useFadeGroup.layout().addWidget(self.stopAllFade, 0, 0)
 
         self.interruptAllFade = QCheckBox(self.useFadeGroup)
-        self.useFadeGroup.layout().addWidget(self.interruptAllFade, 3, 1)
+        self.useFadeGroup.layout().addWidget(self.interruptAllFade, 0, 1)
+
+        self.pauseAllFade = QCheckBox(self.useFadeGroup)
+        self.useFadeGroup.layout().addWidget(self.pauseAllFade, 1, 0)
+
+        self.resumeAllFade = QCheckBox(self.useFadeGroup)
+        self.useFadeGroup.layout().addWidget(self.resumeAllFade, 1, 1)
 
         self.retranslateUi()
-        self.loadSettings()
 
     def retranslateUi(self):
         self.useFadeGroup.setTitle(
@@ -59,15 +58,18 @@ class LayoutsSettings(ConfigurationPage):
         self.resumeAllFade.setText(translate('ListLayout', 'Resume All'))
         self.interruptAllFade.setText(translate('ListLayout', 'Interrupt All'))
 
-    def loadSettings(self):
-        self.stopAllFade.setChecked(self.config['layout.stopAllFade'])
-        self.pauseAllFade.setChecked(self.config['layout.pauseAllFade'])
-        self.resumeAllFade.setChecked(self.config['layout.resumeAllFade'])
-        self.interruptAllFade.setChecked(self.config['layout.interruptAllFade'])
+    def loadSettings(self, settings):
+        self.stopAllFade.setChecked(settings['layout']['stopAllFade'])
+        self.pauseAllFade.setChecked(settings['layout']['pauseAllFade'])
+        self.resumeAllFade.setChecked(settings['layout']['resumeAllFade'])
+        self.interruptAllFade.setChecked(settings['layout']['interruptAllFade'])
 
-    def applySettings(self):
-        self.config['layout.stopAllFade'] = self.stopAllFade.isChecked()
-        self.config['layout.pauseAllFade'] = self.pauseAllFade.isChecked()
-        self.config['layout.resumeAllFade'] = self.resumeAllFade.isChecked()
-        self.config['layout.interruptAllFade'] = self.interruptAllFade.isChecked()
-        self.config.write()
+    def getSettings(self):
+        return {
+            'layout': {
+                'stopAllFade': self.stopAllFade.isChecked(),
+                'pauseAllFade': self.pauseAllFade.isChecked(),
+                'resumeAllFade': self.resumeAllFade.isChecked(),
+                'interruptAllFade': self.interruptAllFade.isChecked()
+            }
+        }

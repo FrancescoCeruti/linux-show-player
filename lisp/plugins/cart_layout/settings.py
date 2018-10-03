@@ -21,16 +21,16 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QCheckBox, QGridLayout, \
     QSpinBox, QLabel
 
-from lisp.ui.settings.pages import ConfigurationPage
+from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.ui_utils import translate
 
 
-class CartLayoutSettings(ConfigurationPage):
+class CartLayoutSettings(SettingsPage):
 
     Name = 'Cart Layout'
 
-    def __init__(self, config, **kwargs):
-        super().__init__(config, **kwargs)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
@@ -76,15 +76,6 @@ class CartLayoutSettings(ConfigurationPage):
 
         self.retranslateUi()
 
-        # Load data
-        self.columnsSpin.setValue(config['grid.columns'])
-        self.rowsSpin.setValue(config['grid.rows'])
-        self.showSeek.setChecked(config['show.seekSliders'])
-        self.showDbMeters.setChecked(config['show.dBMeters'])
-        self.showAccurate.setChecked(config['show.accurateTime'])
-        self.showVolume.setChecked(config['show.volumeControls'])
-        self.countdownMode.setChecked(config['countdownMode'])
-
     def retranslateUi(self):
         self.behaviorsGroup.setTitle(
             translate('CartLayout', 'Default behaviors'))
@@ -97,13 +88,26 @@ class CartLayoutSettings(ConfigurationPage):
         self.columnsLabel.setText(translate('CartLayout', 'Number of columns'))
         self.rowsLabel.setText(translate('CartLayout', 'Number of rows'))
 
-    def applySettings(self):
-        self.config['grid.columns'] = self.columnsSpin.value()
-        self.config['grid.rows'] = self.rowsSpin.value()
-        self.config['show.dBMeters'] = self.showDbMeters.isChecked()
-        self.config['show.seekSliders'] = self.showSeek.isChecked()
-        self.config['show.accurateTime'] = self.showAccurate.isChecked()
-        self.config['show.volumeControls'] = self.showVolume.isChecked()
-        self.config['countdownMode'] = self.countdownMode.isChecked()
+    def loadSettings(self, settings):
+        self.columnsSpin.setValue(settings['grid']['columns'])
+        self.rowsSpin.setValue(settings['grid']['rows'])
+        self.showSeek.setChecked(settings['show']['seekSliders'])
+        self.showDbMeters.setChecked(settings['show']['dBMeters'])
+        self.showAccurate.setChecked(settings['show']['accurateTime'])
+        self.showVolume.setChecked(settings['show']['volumeControls'])
+        self.countdownMode.setChecked(settings['countdownMode'])
 
-        self.config.write()
+    def getSettings(self):
+        return {
+            'grid': {
+                'columns': self.columnsSpin.value(),
+                'rows': self.rowsSpin.value()
+            },
+            'show': {
+                'dBMeters': self.showDbMeters.isChecked(),
+                'seekSliders': self.showSeek.isChecked(),
+                'accurateTime': self.showAccurate.isChecked(),
+                'volumeControls': self.showVolume.isChecked()
+            },
+            'countdownMode': self.countdownMode.isChecked()
+        }

@@ -191,6 +191,9 @@ QScrollBar:handle:vertical {
 
 QTextEdit[readOnly="true"] {
     background-color: #333;
+}
+
+QTextBrowser[readOnly="true"] {
     border: none;
 }
 
@@ -437,6 +440,10 @@ QTabBar::tab:selected:focus {
     border-top-color: #419BE6;
 }
 
+QTabBar QToolButton {
+    border: 1px solid #3A3A3A;
+}
+
 QDockWidget {
     color: white;
     titlebar-close-icon: url(:/assets/close.png);
@@ -504,7 +511,6 @@ QSlider {
 QSlider:disabled {
     background: none;
 }
-
 
 QSlider:groove {
     border: 1px solid #3A3A3A;
@@ -636,7 +642,7 @@ QRadioButton:indicator:checked:disabled {
 
 #CartTabBar::tab {
     height: 35px;
-    width: 100px;
+    min-width: 100px;
     font-size: 13pt;
     font-weight: bold;
     color: white;

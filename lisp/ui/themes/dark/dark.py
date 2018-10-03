@@ -18,16 +18,14 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
-
 from PyQt5.QtGui import QColor, QPalette
 
-from lisp.ui.themes.theme import Theme
 # Import resources
 # noinspection PyUnresolvedReferences
 from . import assetes
 
 
-class Dark(Theme):
+class Dark:
     QssPath = os.path.join(os.path.dirname(__file__), 'theme.qss')
 
     def apply(self, qt_app):

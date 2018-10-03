@@ -93,7 +93,7 @@ class OscServer:
 
             logger.info('OSC server started at {}'.format(self.__srv.url))
         except ServerError:
-            logger.error('Cannot start OSC sever')
+            logger.exception('Cannot start OSC sever')
             logger.debug(traceback.format_exc())
 
     def stop(self):

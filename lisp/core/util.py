@@ -273,7 +273,7 @@ class EqEnum(Enum):
 
 
 class FunctionProxy:
-    """Allow to mask a function as an Object.
+    """Encapsulate a function into an object.
 
     Can be useful in enum.Enum (Python enumeration) to have callable values.
     """

@@ -22,13 +22,13 @@ from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QLabel, QVBoxLayout, \
     QDoubleSpinBox
 
 from lisp.cues.cue import CueAction
-from lisp.ui.settings.pages import CueSettingsPage, TabsMultiSettingsPage, CuePageMixin
+from lisp.ui.settings.pages import CueSettingsPage, SettingsPagesTabWidget, CuePageMixin
 from lisp.ui.ui_utils import translate
 from lisp.ui.widgets import FadeComboBox, CueActionComboBox, \
     CueNextActionComboBox, FadeEdit
 
 
-class CueGeneralSettings(TabsMultiSettingsPage, CuePageMixin):
+class CueGeneralSettingsPage(SettingsPagesTabWidget, CuePageMixin):
     Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Cue')
 
     def __init__(self, cueType, **kwargs):

@@ -20,16 +20,16 @@
 from PyQt5.QtCore import QT_TRANSLATE_NOOP, Qt
 from PyQt5.QtWidgets import QVBoxLayout, QGroupBox
 
-from lisp.ui.settings.pages import ConfigurationPage
+from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.ui_utils import translate
 from lisp.ui.widgets import FadeEdit
 
 
-class CueAppSettings(ConfigurationPage):
+class CueAppSettings(SettingsPage):
     Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Cue Settings')
 
-    def __init__(self, config, **kwargs):
-        super().__init__(config, **kwargs)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
@@ -57,19 +57,18 @@ class CueAppSettings(ConfigurationPage):
         self.actionGroup.setTitle(translate('CueSettings', 'Fade actions'))
 
     def applySettings(self):
-        self.config['cue.interruptFade'] = self.interruptFadeEdit.duration()
-        self.config['cue.interruptFadeType'] = self.interruptFadeEdit.fadeType()
-        self.config['cue.fadeAction'] = self.fadeActionEdit.duration()
-        self.config['cue.fadeActionType'] = self.fadeActionEdit.fadeType()
+        return {
+            'cue': {
+                'interruptFade': self.interruptFadeEdit.duration(),
+                'interruptFadeType': self.interruptFadeEdit.fadeType(),
+                'fadeAction': self.fadeActionEdit.duration(),
+                'fadeActionType': self.fadeActionEdit.fadeType()
+            }
+        }
 
-        self.config.write()
+    def loadSettings(self, settings):
+        self.interruptFadeEdit.setDuration(settings['cue']['interruptFade'])
+        self.interruptFadeEdit.setFadeType(settings['cue']['interruptFadeType'])
 
-    def loadConfiguration(self):
-        self.interruptFadeEdit.setDuration(
-            self.config.get('cue.interruptFade', 0))
-        self.interruptFadeEdit.setFadeType(
-            self.config.get('cue.interruptFadeType', ''))
-
-        self.fadeActionEdit.setDuration(self.config.get('cue.fadeAction', 0))
-        self.fadeActionEdit.setFadeType(
-            self.config.get('cue.fadeActionType', ''))
+        self.fadeActionEdit.setDuration(settings['cue']['fadeAction'])
+        self.fadeActionEdit.setFadeType(settings['cue']['fadeActionType'])

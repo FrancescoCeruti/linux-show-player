@@ -23,7 +23,7 @@ from PyQt5.QtWidgets import QGroupBox, QGridLayout, QTableView, QHeaderView, \
 
 from lisp.application import Application
 from lisp.plugins.controller.common import LayoutAction, tr_layout_action
-from lisp.plugins.controller.protocols.protocol import Protocol
+from lisp.plugins.controller.protocol import Protocol
 from lisp.ui.qdelegates import LineEditDelegate, CueActionDelegate,\
     EnumComboBoxDelegate
 from lisp.ui.qmodels import SimpleTableModel

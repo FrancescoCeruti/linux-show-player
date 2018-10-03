@@ -163,7 +163,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
 
         # Logging status widget
         self.logStatus = LogStatusView(self.logModel)
-        self.logStatus.double_clicked.connect(self.logViewer.show)
+        self.logStatus.double_clicked.connect(self.logViewer.showMaximized)
         self.statusBar().addPermanentWidget(self.logStatus)
 
         # Logging dialogs for errors

@@ -24,7 +24,7 @@ from lisp.core.properties import Property
 from lisp.cues.cue import Cue, CueAction
 from lisp.plugins.controller import protocols
 from lisp.plugins.controller.common import LayoutAction
-from lisp.plugins.controller.controller_settings import CueControllerSettings, ControllerLayoutConfiguration
+from lisp.plugins.controller.controller_settings import CueControllerSettingsPage, ControllerLayoutConfiguration
 from lisp.ui.settings.app_configuration import AppConfigurationDialog
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
 from lisp.ui.ui_utils import translate
@@ -61,7 +61,7 @@ class Controller(Plugin):
         AppConfigurationDialog.registerSettingsPage(
             'plugins.controller', ControllerLayoutConfiguration, Controller.Config)
         # Register settings-page
-        CueSettingsRegistry().add(CueControllerSettings)
+        CueSettingsRegistry().add(CueControllerSettingsPage)
 
         # Load available protocols
         self.__load_protocols()

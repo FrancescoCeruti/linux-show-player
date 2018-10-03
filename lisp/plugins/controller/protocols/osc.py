@@ -20,7 +20,6 @@
 
 
 import ast
-
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import QGroupBox, QPushButton, QVBoxLayout, \
     QTableView, QTableWidget, QHeaderView, QGridLayout, QLabel, \
@@ -28,12 +27,12 @@ from PyQt5.QtWidgets import QGroupBox, QPushButton, QVBoxLayout, \
 
 from lisp.plugins import get_plugin, PluginNotLoadedError
 from lisp.plugins.controller.common import LayoutAction, tr_layout_action
-from lisp.plugins.controller.protocols.protocol import Protocol
+from lisp.plugins.controller.protocol import Protocol
 from lisp.plugins.osc.osc_delegate import OscArgumentDelegate
 from lisp.plugins.osc.osc_server import OscMessageType
 from lisp.ui.qdelegates import ComboBoxDelegate, LineEditDelegate, CueActionDelegate, EnumComboBoxDelegate
 from lisp.ui.qmodels import SimpleTableModel
-from lisp.ui.settings.pages import CueSettingsPage, SettingsPage, CuePageMixin
+from lisp.ui.settings.pages import SettingsPage, CuePageMixin
 from lisp.ui.ui_utils import translate
 
 

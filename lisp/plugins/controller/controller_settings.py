@@ -20,11 +20,10 @@
 from PyQt5.QtCore import QT_TRANSLATE_NOOP
 
 from lisp.plugins.controller import protocols
-from lisp.ui.settings.pages import TabsMultiSettingsPage, CuePageMixin, \
-    TabsMultiConfigurationPage, ConfigurationPage
+from lisp.ui.settings.pages import SettingsPagesTabWidget, CuePageMixin
 
 
-class CueControllerSettings(TabsMultiSettingsPage, CuePageMixin):
+class CueControllerSettingsPage(SettingsPagesTabWidget, CuePageMixin):
     Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Cue Control')
 
     def __init__(self, cueType, **kwargs):
@@ -40,21 +39,17 @@ class CueControllerSettings(TabsMultiSettingsPage, CuePageMixin):
         super().loadSettings(settings.get('controller', {}))
 
 
-class ControllerLayoutConfiguration(TabsMultiConfigurationPage, ConfigurationPage):
+class ControllerLayoutConfiguration(SettingsPagesTabWidget):
     Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Layout Controls')
 
-    def __init__(self, config, **kwargs):
-        super().__init__(config=config, **kwargs)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
 
         for page in protocols.LayoutSettingsPages:
-            newPage = page(parent=self)
-            newPage.loadSettings(config['protocols'])
-            self.addPage(newPage)
+            self.addPage(page(parent=self))
 
-    def applySettings(self):
-        protocolsConf = {}
-        for page in self.iterPages():
-            protocolsConf.update(page.getSettings())
+    def loadSettings(self, settings):
+        super().loadSettings(settings['protocols'])
 
-        self.config.update({'protocols': protocolsConf})
-        self.config.write()
+    def getSettings(self):
+        return {'protocols': super().getSettings()}

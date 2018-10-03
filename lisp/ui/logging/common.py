@@ -50,6 +50,7 @@ LOG_ATTRIBUTES = {
     'processName': QT_TRANSLATE_NOOP('Logging', 'Process name'),
     'thread': QT_TRANSLATE_NOOP('Logging', 'Thread ID'),
     'threadName': QT_TRANSLATE_NOOP('Logging', 'Thread name'),
+    'exc_info': QT_TRANSLATE_NOOP('Logging', 'Exception info')
 }
 
 LogRecordRole = Qt.UserRole
