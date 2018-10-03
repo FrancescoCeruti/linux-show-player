@@ -50,7 +50,6 @@ class CueAppSettings(SettingsPage):
         self.actionGroup.layout().addWidget(self.fadeActionEdit)
 
         self.retranslateUi()
-        self.loadConfiguration()
 
     def retranslateUi(self):
         self.interruptGroup.setTitle(translate('CueSettings', 'Interrupt fade'))

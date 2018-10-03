@@ -122,7 +122,7 @@ class Application(metaclass=Singleton):
         """Show the layout-selection dialog"""
         try:
             # Prompt the user for a new layout
-            dialog = LayoutSelect(parent=self.__main_window)
+            dialog = LayoutSelect(parent=self.window)
             if dialog.exec_() == QDialog.Accepted:
                 # If a valid file is selected load it, otherwise load the layout
                 if exists(dialog.filepath):

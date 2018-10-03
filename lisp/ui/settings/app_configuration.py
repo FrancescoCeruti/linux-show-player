@@ -118,7 +118,7 @@ class AppConfigurationDialog(QDialog):
         """
         :param path: indicate the page "position": 'category.sub.key'
         :type path: str
-        :type page: typing.Type[lisp.ui.settings.pages.SettingsPage]
+        :type page: type
         :type config: lisp.core.configuration.Configuration
         """
         AppConfigurationDialog.PagesRegistry.set(

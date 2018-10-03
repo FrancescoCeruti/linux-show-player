@@ -29,12 +29,11 @@ from lisp.ui.ui_utils import translate
 
 class LayoutSelect(QDialog):
 
-    def __init__(self, parent=None):
-        super().__init__(parent)
-
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.filepath = ''
 
-        self.setWindowModality(Qt.ApplicationModal)
+        self.setWindowModality(Qt.WindowModal)
         self.setWindowTitle(translate('LayoutSelect', 'Layout selection'))
         self.setMaximumSize(675, 300)
         self.setMinimumSize(675, 300)
