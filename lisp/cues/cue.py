@@ -67,8 +67,10 @@ class CueAction(EqEnum):
 
 class CueNextAction(EqEnum):
     DoNothing = 'DoNothing'
-    AutoNext = 'AutoNext'
-    AutoFollow = 'AutoFollow'
+    TriggerAfterWait = 'TriggerAfterWait'
+    TriggerAfterEnd = 'TriggerAfterEnd'
+    SelectAfterWait = 'SelectAfterWait'
+    SelectAfterEnd = 'SelectAfterEnd'
 
 
 class Cue(HasProperties):
@@ -265,7 +267,8 @@ class Cue(HasProperties):
             if state & (CueState.IsStopped |
                         CueState.PreWait_Pause |
                         CueState.PostWait_Pause):
-                if self.next_action == CueNextAction.AutoNext:
+                if (self.next_action == CueNextAction.TriggerAfterWait or
+                        self.next_action == CueNextAction.SelectAfterWait):
                     self._state |= CueState.PostWait
 
                     if self._postwait.wait(self.post_wait, lock=self._st_lock):
@@ -533,5 +536,6 @@ class Cue(HasProperties):
 
     def __next_action_changed(self, next_action):
         self.end.disconnect(self.next.emit)
-        if next_action == CueNextAction.AutoFollow:
+        if (next_action == CueNextAction.TriggerAfterEnd or
+                next_action == CueNextAction.SelectAfterEnd):
             self.end.connect(self.next.emit)

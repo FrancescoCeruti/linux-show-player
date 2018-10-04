@@ -61,6 +61,7 @@ class MultiMessagesBox(QDialog):
         self.layout().addWidget(self.iconLabel, 0, 0)
 
         self.messageLabel = QLabel(self)
+        self.messageLabel.setMinimumWidth(300)
         self.layout().addWidget(self.messageLabel, 0, 1)
 
         self.buttonBox = QDialogButtonBox(self)
@@ -113,6 +114,11 @@ class MultiMessagesBox(QDialog):
                 details = self._formatter.formatException(record.exc_info)
 
             self.detailsText.setText(details)
+
+            width = self.detailsText.document().idealWidth() +\
+                self.detailsText.contentsMargins().left() * 2
+            self.detailsText.setFixedWidth(width if width < 800 else 800)
+
             self.detailsButton.setVisible(bool(details))
             # If no details, than hide the widget, otherwise keep it's current
             # visibility unchanged

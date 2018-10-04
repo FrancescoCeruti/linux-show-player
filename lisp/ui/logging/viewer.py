@@ -19,7 +19,7 @@
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QAction, QToolBar, QMainWindow, QStatusBar, \
-    QLabel, QTableView, QVBoxLayout, QWidget
+    QLabel, QTableView, QVBoxLayout, QWidget, QSplitter
 
 from lisp.ui.icons import IconTheme
 from lisp.ui.logging.common import LOG_LEVELS, LogAttributeRole, \
@@ -44,8 +44,8 @@ class LogViewer(QMainWindow):
         self.setWindowTitle(
             translate('Logging', 'Linux Show Player - Log Viewer'))
         self.resize(800, 600)
-        self.setCentralWidget(QWidget())
-        self.centralWidget().setLayout(QVBoxLayout())
+        self.setCentralWidget(QSplitter())
+        self.centralWidget().setOrientation(Qt.Vertical)
         self.setStatusBar(QStatusBar(self))
 
         # Add a permanent label to the toolbar to display shown/filter records
@@ -80,14 +80,14 @@ class LogViewer(QMainWindow):
         self.logView.setSelectionMode(QTableView.SingleSelection)
         self.logView.setSelectionBehavior(QTableView.SelectRows)
         self.logView.horizontalHeader().setStretchLastSection(True)
-        self.centralWidget().layout().addWidget(self.logView)
+        self.centralWidget().addWidget(self.logView)
 
         # Display selected entry details
         self.detailsView = LogDetails(self)
-        self.centralWidget().layout().addWidget(self.detailsView)
+        self.centralWidget().addWidget(self.detailsView)
 
-        self.centralWidget().layout().setStretch(0, 5)
-        self.centralWidget().layout().setStretch(1, 2)
+        self.centralWidget().setStretchFactor(0, 3)
+        self.centralWidget().setStretchFactor(1, 2)
 
         # Setup visible columns
         for n in range(self.filterModel.columnCount()):

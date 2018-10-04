@@ -26,6 +26,7 @@ from lisp.core.util import strtime
 from lisp.cues.cue import CueNextAction, CueState
 from lisp.cues.cue_time import CueTime, CueWaitTime
 from lisp.ui.icons import IconTheme
+from lisp.ui.widgets.cue_next_actions import tr_next_action
 
 
 class IndexWidget(QLabel):
@@ -130,12 +131,13 @@ class CueStatusIcons(QWidget):
 
 
 class NextActionIcon(QLabel):
-    STYLESHEET = 'background: transparent; padding-left: 1px'
+    STYLESHEET = 'background: transparent;'
     SIZE = 16
 
     def __init__(self, item, *args):
         super().__init__(*args)
         self.setStyleSheet(self.STYLESHEET)
+        self.setAlignment(Qt.AlignCenter)
 
         item.cue.changed('next_action').connect(
             self.__update, Connection.QtQueued)
@@ -145,14 +147,14 @@ class NextActionIcon(QLabel):
         next_action = CueNextAction(next_action)
         pixmap = IconTheme.get('').pixmap(self.SIZE)
 
-        if next_action == CueNextAction.AutoNext:
-            pixmap = IconTheme.get('auto-next').pixmap(self.SIZE)
-            self.setToolTip(CueNextAction.AutoNext.value)
-        elif next_action == CueNextAction.AutoFollow:
-            pixmap = IconTheme.get('auto-follow').pixmap(self.SIZE)
-            self.setToolTip(CueNextAction.AutoFollow.value)
-        else:
-            self.setToolTip('')
+        if (next_action == CueNextAction.TriggerAfterWait or
+                next_action == CueNextAction.TriggerAfterEnd):
+            pixmap = IconTheme.get('cue-trigger-next').pixmap(self.SIZE)
+        elif (next_action == CueNextAction.SelectAfterWait or
+                next_action == CueNextAction.SelectAfterEnd):
+            pixmap = IconTheme.get('cue-select-next').pixmap(self.SIZE)
+
+        self.setToolTip(tr_next_action(next_action))
 
         self.setPixmap(pixmap)
 
@@ -281,7 +283,8 @@ class PostWaitWidget(TimeWidget):
         self._next_action_changed(self.cue.next_action)
 
     def _update_duration(self, duration):
-        if self.cue.next_action != CueNextAction.AutoFollow.value:
+        if (self.cue.next_action == CueNextAction.TriggerAfterWait or
+                self.cue.next_action == CueNextAction.SelectAfterWait):
             # The wait time is in seconds, we need milliseconds
             duration *= 1000
 
@@ -306,7 +309,8 @@ class PostWaitWidget(TimeWidget):
         self.cue.changed('post_wait').disconnect(self._update_duration)
         self.cue.changed('duration').disconnect(self._update_duration)
 
-        if next_action == CueNextAction.AutoFollow.value:
+        if (next_action == CueNextAction.TriggerAfterEnd or
+                next_action == CueNextAction.SelectAfterEnd):
             self.cue.interrupted.connect(self._stop, Connection.QtQueued)
             self.cue.started.connect(self._running, Connection.QtQueued)
             self.cue.stopped.connect(self._stop, Connection.QtQueued)
@@ -333,7 +337,8 @@ class PostWaitWidget(TimeWidget):
     def _stop(self):
         super()._stop()
 
-        if self.cue.next_action == CueNextAction.AutoFollow.value:
+        if (self.cue.next_action == CueNextAction.TriggerAfterEnd or
+                self.cue.next_action == CueNextAction.SelectAfterEnd):
             self._update_duration(self.cue.duration)
         else:
             self._update_duration(self.cue.post_wait)

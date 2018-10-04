@@ -24,7 +24,7 @@ from PyQt5.QtWidgets import QAction
 from lisp.core.configuration import DummyConfiguration
 from lisp.core.properties import ProxyProperty
 from lisp.core.signal import Connection
-from lisp.cues.cue import Cue, CueAction
+from lisp.cues.cue import Cue, CueAction, CueNextAction
 from lisp.cues.cue_memento_model import CueMementoAdapter
 from lisp.layout.cue_layout import CueLayout
 from lisp.layout.cue_menu import SimpleMenuAction, MENU_PRIORITY_CUE, MenuActionsGroup
@@ -326,10 +326,15 @@ class ListLayout(CueLayout):
         try:
             next_index = cue.index + 1
             if next_index < len(self._list_model):
-                next_cue = self._list_model.item(next_index)
-                next_cue.execute()
+                action = CueNextAction(cue.next_action)
+                if (action == CueNextAction.SelectAfterEnd or
+                        action == CueNextAction.SelectAfterWait):
+                    self.set_standby_index(next_index)
+                else:
+                    next_cue = self._list_model.item(next_index)
+                    next_cue.execute()
 
-                if self.auto_continue and next_cue is self.standby_cue():
-                    self.set_standby_index(next_index + 1)
+                    if self.auto_continue and next_cue is self.standby_cue():
+                        self.set_standby_index(next_index + 1)
         except(IndexError, KeyError):
             pass

@@ -27,9 +27,14 @@ from lisp.ui.ui_utils import translate
 CueNextActionsStrings = {
     CueNextAction.DoNothing: QT_TRANSLATE_NOOP(
         'CueNextAction', 'Do Nothing'),
-    CueNextAction.AutoFollow: QT_TRANSLATE_NOOP(
-        'CueNextAction', 'Auto Follow'),
-    CueNextAction.AutoNext: QT_TRANSLATE_NOOP('CueNextAction', 'Auto Next')
+    CueNextAction.TriggerAfterEnd: QT_TRANSLATE_NOOP(
+        'CueNextAction', 'Trigger after the end'),
+    CueNextAction.TriggerAfterWait: QT_TRANSLATE_NOOP(
+        'CueNextAction', 'Trigger after post wait'),
+    CueNextAction.SelectAfterEnd: QT_TRANSLATE_NOOP(
+        'CueNextAction', 'Select after the end'),
+    CueNextAction.SelectAfterWait: QT_TRANSLATE_NOOP(
+        'CueNextAction', 'Select after post wait')
 }
 
 
