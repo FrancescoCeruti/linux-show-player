@@ -17,7 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QGridLayout, QCheckBox
 
 from lisp.ui.settings.pages import SettingsPage
@@ -25,7 +25,7 @@ from lisp.ui.ui_utils import translate
 
 
 class LayoutsSettings(SettingsPage):
-    Name = 'Layouts'
+    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Layouts')
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

@@ -207,8 +207,10 @@ class GainMainThread(Thread):
                     try:
                         self._post_process(future.result())
                     except Exception:
-                        logger.exception(
-                            'An error occurred while processing gain results.')
+                        logger.exception(translate(
+                            'ReplayGainError',
+                            'An error occurred while processing gain results.'
+                        ))
                     finally:
                         self.on_progress.emit(1)
                 else:
@@ -217,7 +219,8 @@ class GainMainThread(Thread):
         if self._running:
             MainActionsHandler.do_action(self._action)
         else:
-            logger.info('Gain processing stopped by user.')
+            logger.info(translate(
+                'ReplayGainInfo', 'Gain processing stopped by user.'))
 
         self.on_progress.emit(-1)
         self.on_progress.disconnect()
@@ -235,9 +238,11 @@ class GainMainThread(Thread):
             for media in self.files[gain.uri]:
                 self._action.add_media(media, volume)
 
-            logger.debug('Applied gain for: {}'.format(gain.uri))
+            logger.debug(translate(
+                'ReplayGainDebug', 'Applied gain for: {}').format(gain.uri))
         else:
-            logger.debug('Discarded gain for: {}'.format(gain.uri))
+            logger.debug(translate(
+                'ReplayGainDebug', 'Discarded gain for: {}').format(gain.uri))
 
 
 class GstGain:
@@ -269,7 +274,10 @@ class GstGain:
         gain_bus.connect('message::error', self._on_message)
 
         self.gain_pipe.set_state(Gst.State.PLAYING)
-        logger.info('Started gain calculation for: {}'.format(self.uri))
+        logger.info(translate(
+            'ReplayGainInfo',
+            'Started gain calculation for: {}').format(self.uri)
+        )
 
         # Block here until EOS
         self.__lock.acquire(False)
@@ -300,7 +308,10 @@ class GstGain:
                     self.gain_value = tag[1]
                     self.peak_value = peak[1]
 
-                    logger.info('Gain calculated for: {}'.format(self.uri))
+                    logger.info(translate(
+                        'ReplayGainInfo',
+                        'Gain calculated for: {}').format(self.uri)
+                    )
                     self.completed = True
                     self.__release()
             elif message.type == Gst.MessageType.ERROR:
@@ -311,7 +322,10 @@ class GstGain:
                     'GStreamer: {}'.format(error.message), exc_info=error)
                 self.__release()
         except Exception:
-            logger.exception('An error occurred during gain calculation.')
+            logger.exception(translate(
+                'ReplayGainError',
+                'An error occurred during gain calculation.')
+            )
             self.__release()
 
     def __release(self):

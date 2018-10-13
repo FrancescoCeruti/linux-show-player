@@ -17,10 +17,10 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtGui import QKeySequence
-from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QCheckBox, QHBoxLayout, \
-    QLabel, QKeySequenceEdit, QGridLayout
+from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QCheckBox, QLabel, \
+    QKeySequenceEdit, QGridLayout
 
 from lisp.cues.cue import CueAction
 from lisp.ui.settings.pages import SettingsPage
@@ -29,7 +29,7 @@ from lisp.ui.widgets import CueActionComboBox
 
 
 class ListLayoutSettings(SettingsPage):
-    Name = 'List Layout'
+    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'List Layout')
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

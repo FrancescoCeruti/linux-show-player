@@ -35,7 +35,7 @@ from lisp.ui.ui_utils import translate
 
 
 class ListLayout(CueLayout):
-    NAME = 'List Layout'
+    NAME = QT_TRANSLATE_NOOP('LayoutName', 'List Layout')
     DESCRIPTION = QT_TRANSLATE_NOOP(
         'LayoutDescription', 'Organize the cues in a list')
     DETAILS = [

@@ -26,6 +26,7 @@ from lisp.core.util import weak_call_proxy
 from lisp.plugins.gst_backend import elements as gst_elements
 from lisp.plugins.gst_backend.gi_repository import Gst
 from lisp.plugins.gst_backend.gst_element import GstMediaElements
+from lisp.ui.ui_utils import translate
 
 logger = logging.getLogger(__name__)
 
@@ -220,10 +221,16 @@ class GstMedia(Media):
             try:
                 self.elements.append(all_elements[element](self.__pipeline))
             except KeyError:
-                logger.warning('Invalid pipeline element: {}'.format(element))
+                logger.warning(
+                    translate(
+                        'GstMediaWarning', 'Invalid pipeline element: "{}"'
+                    ).format(element)
+                )
             except Exception:
                 logger.warning(
-                    'Cannot create pipeline element: {}'.format(element),
+                    translate(
+                        'GstMediaError', 'Cannot create pipeline element: "{}"'
+                    ).format(element),
                     exc_info=True
                 )
 

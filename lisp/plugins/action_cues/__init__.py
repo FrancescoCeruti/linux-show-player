@@ -20,7 +20,6 @@
 import logging
 from os import path
 
-from lisp.application import Application
 from lisp.core.loading import load_classes
 from lisp.core.plugin import Plugin
 from lisp.cues.cue_factory import CueFactory
@@ -48,7 +47,8 @@ class ActionCues(Plugin):
                 'Action cues'
             )
 
-            logger.debug('Loaded "' + name + '"')
+            logger.debug(translate(
+                'ActionCuesDebug', 'Registered cue: "{}"').format(name))
 
     def _new_cue_factory(self, cue_class):
         def cue_factory():
@@ -56,7 +56,9 @@ class ActionCues(Plugin):
                 cue = CueFactory.create_cue(cue_class.__name__)
                 self.app.cue_model.add(cue)
             except Exception:
-                logger.exception(
-                    'Cannot create cue {}'.format(cue_class.__name__))
+                logger.exception(translate(
+                    'ActionsCuesError',
+                    'Cannot create cue {}').format(cue_class.__name__)
+                )
 
         return cue_factory

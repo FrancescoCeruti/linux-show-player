@@ -26,6 +26,7 @@ from lisp.backend.media_element import ElementType, MediaType
 from lisp.core.properties import Property
 from lisp.plugins.gst_backend.gi_repository import Gst
 from lisp.plugins.gst_backend.gst_element import GstMediaElement
+from lisp.ui.ui_utils import translate
 
 logger = logging.getLogger(__name__)
 
@@ -127,8 +128,10 @@ class JackSink(GstMediaElement):
                 try:
                     JackSink._ControlClient.disconnect(port, conn_port)
                 except jack.JackError:
-                    logger.exception(
+                    logger.exception(translate(
+                        'JackSinkError',
                         'An error occurred while disconnection Jack ports')
+                    )
 
         for output, in_ports in enumerate(self.connections):
             for input_name in in_ports:

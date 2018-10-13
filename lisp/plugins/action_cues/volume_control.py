@@ -111,7 +111,8 @@ class VolumeControl(Cue):
                 self.__fader.target.live_volume = self.volume
                 self._ended()
         except Exception:
-            logger.exception(translate('OscCue', 'Error during cue execution.'))
+            logger.exception(
+                translate('VolumeControlError', 'Error during cue execution.'))
             self._error()
 
     def current_time(self):

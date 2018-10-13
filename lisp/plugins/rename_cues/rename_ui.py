@@ -204,19 +204,22 @@ class RenameUi(QDialog):
         msg = QMessageBox()
         msg.setIcon(QMessageBox.Information)
         msg.setWindowTitle(translate('RenameCues', 'Regex help'))
-        msg.setText(translate('RenameCues',
-                              "You can use Regexes to rename your cues.\n\n"
-                              "Insert expressions captured with regexes in the "
-                              "line below with $0 for the first parenthesis, $1 for"
-                              "the second, etc...\n"
-                              "In the second line, you can use standard Python Regexes "
-                              "to match expressions in the original cues names. Use "
-                              "parenthesis to capture parts of the matched expression.\n\n"
-                              "Exemple : \n^[a-z]([0-9]+) will find a lower case character ([a-z]), "
-                              "followed by one or more number.\n"
-                              "Only the numbers are between parenthesis and will be usable with "
-                              "$0 in the first line.\n\n"
-                              "For more information about Regexes, consult python documentation"))
+        msg.setText(translate(
+            'RenameCues',
+            'You can use Regexes to rename your cues.\n\n'
+            'Insert expressions captured with regexes in the '
+            'line below with $0 for the first parenthesis, $1 for'
+            'the second, etc...\n'
+            'In the second line, you can use standard Python Regexes '
+            'to match expressions in the original cues names. Use '
+            'parenthesis to capture parts of the matched expression.\n\n'
+            'Exemple: \n^[a-z]([0-9]+) will find a lower case character'
+            '([a-z]), followed by one or more number.\n'
+            'Only the numbers are between parenthesis and will be usable with '
+            '$0 in the first line.\n\n'
+            'For more information about Regexes, consult python documentation '
+            'at: https://docs.python.org/3/howto/regex.html#regex-howto'
+        ))
         msg.exec_()
 
     def onRegexLineChanged(self):
@@ -224,7 +227,11 @@ class RenameUi(QDialog):
         try:
             regex = re.compile(pattern)
         except re.error:
-            logger.debug("Regex error: invalid pattern")
+            logger.debug(
+                translate(
+                    'RenameUiDebug', 'Regex error: Invalid pattern'),
+                exc_info=True
+            )
         else:
             for cue in self.cues_list:
                 result = regex.search(cue['cue_name'])
@@ -244,7 +251,7 @@ class RenameUi(QDialog):
             for cue in self.cues_list:
                 out_string = out_pattern
                 for n in range(len(cue['regex_groups'])):
-                    pattern = f"\${n}"
+                    pattern = rf'\${n}'
                     try:
                         out_string = re.sub(
                             pattern,
@@ -252,8 +259,10 @@ class RenameUi(QDialog):
                             out_string
                         )
                     except IndexError:
-                        logger.debug(
-                            "Regex error: catch with () before display with $n")
+                        logger.debug(translate(
+                            'RenameUiDebug',
+                            'Regex error: catch with () before display with $n')
+                        )
                 if cue['selected']:
                     cue['cue_preview'] = out_string
 

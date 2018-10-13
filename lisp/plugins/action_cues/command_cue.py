@@ -76,10 +76,12 @@ class CommandCue(Cue):
                 self._ended()
         elif not self.no_error:
             # If an error occurs and not in no-error mode
-            logger.error(translate(
-                'CommandCue',
-                'Command cue ended with an error status. '
-                'Exit code: {}').format(rcode))
+            logger.error(
+                translate(
+                    'CommandCue',
+                    'Command cue ended with an error status. Exit code: {}'
+                ).format(rcode)
+            )
             self._error()
 
         self.__process = None

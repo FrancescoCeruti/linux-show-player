@@ -103,8 +103,12 @@ class AppConfigurationDialog(QDialog):
                 page_name = getattr(page_class, 'Name', page_class.__name__)
 
             logger.warning(
-                'Cannot load configuration page: "{}" ({})'.format(
-                    page_name, r_parent.path()), exc_info=True)
+                translate(
+                    'AppConfigurationWarning',
+                    'Cannot load configuration page: "{}" ({})'
+                ).format(page_name, r_parent.path()),
+                exc_info=True
+            )
         else:
             for r_node in r_parent.children:
                 self._populateModel(mod_index, r_node)

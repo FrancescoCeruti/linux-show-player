@@ -21,6 +21,8 @@ import logging
 import os.path
 import re
 
+from lisp.ui.ui_utils import translate
+
 try:
     from os import scandir
 except ImportError:
@@ -71,7 +73,12 @@ class ModulesLoader:
                 yield mod_name, import_module(mod_path)
             except Exception:
                 logger.warning(
-                    'Cannot load module: {0}'.format(mod_name), exc_info=True)
+                    translate(
+                        'ModulesLoaderWarning',
+                        'Cannot load python module: "{0}"'
+                    ).format(mod_name),
+                    exc_info=True
+                )
 
 
 class ClassLoader:
@@ -133,7 +140,10 @@ class ClassLoader:
                         yield cls_name, cls
                 except Exception:
                     logger.warning(
-                        'Cannot load class: {0}'.format(cls_name),
+                        translate(
+                            'ClassLoaderWarning',
+                            'Cannot load python class: "{0}"'
+                        ).format(cls_name),
                         exc_info=True
                     )
 

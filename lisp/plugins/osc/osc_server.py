@@ -25,6 +25,7 @@ from liblo import ServerThread, ServerError
 from threading import Lock
 
 from lisp.core.signal import Signal
+from lisp.ui.ui_utils import translate
 
 logger = logging.getLogger(__name__)
 
@@ -91,10 +92,14 @@ class OscServer:
 
             self.__running = True
 
-            logger.info('OSC server started at {}'.format(self.__srv.url))
+            logger.info(
+                translate(
+                    'OscServerInfo', 'OSC server started at {}'
+                ).format(self.__srv.url)
+            )
         except ServerError:
-            logger.exception('Cannot start OSC sever')
-            logger.debug(traceback.format_exc())
+            logger.exception(
+                translate('OscServerError', 'Cannot start OSC sever'))
 
     def stop(self):
         if self.__srv is not None:
@@ -104,7 +109,7 @@ class OscServer:
                     self.__running = False
 
             self.__srv.free()
-            logger.info('OSC server stopped')
+            logger.info(translate('OscServerInfo', 'OSC server stopped'))
 
     def send(self, path, *args):
         with self.__lock:
@@ -113,7 +118,8 @@ class OscServer:
 
     def __log_message(self, path, args, types, src, user_data):
         logger.debug(
-            'Message from {} -> path: "{}" args: {}'.format(
-                src.get_url(), path, args
-            )
+            translate(
+                'OscServerDebug',
+                'Message from {} -> path: "{}" args: {}'
+            ).format(src.get_url(), path, args)
         )

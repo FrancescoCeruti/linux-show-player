@@ -37,7 +37,7 @@ from lisp.ui.ui_utils import translate
 
 
 class CartLayout(CueLayout):
-    NAME = 'Cart Layout'
+    NAME = QT_TRANSLATE_NOOP('LayoutName', 'Cart Layout')
     DESCRIPTION = translate(
         'LayoutDescription', 'Organize cues in grid like pages')
     DETAILS = [

@@ -101,8 +101,9 @@ class Timecode(Plugin):
             return protocols.get_protocol(protocol_name)()
         except Exception:
             logger.error(
-                translate('Timecode', 'Cannot load timecode protocol: "{}"')
-                    .format(protocol_name),
+                translate(
+                    'Timecode', 'Cannot load timecode protocol: "{}"'
+                ).format(protocol_name),
                 exc_info=True
             )
             # Use a dummy protocol in case of failure

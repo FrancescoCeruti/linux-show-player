@@ -43,6 +43,7 @@ from lisp.ui.settings.cue_pages.cue_appearance import Appearance
 from lisp.ui.settings.cue_pages.cue_general import CueGeneralSettingsPage
 from lisp.ui.settings.cue_pages.media_cue import MediaCueSettings
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
+from lisp.ui.ui_utils import translate
 
 logger = logging.getLogger(__name__)
 
@@ -137,7 +138,8 @@ class Application(metaclass=Singleton):
                     qApp.quit()
                     exit(0)
         except Exception:
-            logger.critical('Startup error', exc_info=True)
+            logger.critical(
+                translate('ApplicationError', 'Startup error'), exc_info=True)
             qApp.quit()
 
     def _new_session(self, layout):
@@ -207,13 +209,17 @@ class Application(metaclass=Singleton):
                     self.__cue_model.add(cue)
                 except Exception:
                     name = cues_dict.get('name', 'No name')
-                    logging.exception(
-                        'Unable to create the cue "{}"'.format(name))
+                    logger.exception(translate(
+                        'ApplicationError', 'Unable to create the cue "{}"'
+                            .format(name))
+                    )
 
             MainActionsHandler.set_saved()
             self.__main_window.update_window_title()
         except Exception:
-            logging.exception(
-                'Error while reading the session file "{}"'.format(
-                    session_file))
+            logger.exception(translate(
+                'ApplicationError',
+                'Error while reading the session file "{}"')
+                             .format(session_file)
+            )
             self._new_session_dialog()

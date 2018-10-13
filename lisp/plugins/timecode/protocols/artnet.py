@@ -62,12 +62,14 @@ class Artnet(TimecodeProtocol):
             self.__client.SendTimeCode(
                 ARTNET_FORMATS[fmt], hours, minutes, seconds, frame)
         except OLADNotRunningException:
-            logger.error(
-                translate(
-                    'Timecode', 'Cannot send timecode. \nOLA has stopped.'))
+            logger.error(translate(
+                'TimecodeError',
+                'Cannot send timecode. \nOLA daemon has stopped.')
+            )
             return False
         except Exception:
-            logger.exception(translate('Timecode', 'Cannot send timecode.'))
+            logger.exception(
+                translate('TimecodeError', 'Cannot send timecode.'))
             return False
 
         self.__last_time = time

@@ -24,7 +24,7 @@ from os import path
 from lisp import USER_DIR
 from lisp.core.configuration import JSONFileConfiguration
 from lisp.core.loading import load_classes
-from lisp.ui.ui_utils import install_translation
+from lisp.ui.ui_utils import install_translation, translate
 
 PLUGINS = {}
 LOADED = {}
@@ -63,7 +63,8 @@ def load_plugins(application):
             install_translation(mod_name)
             install_translation(mod_name, tr_path=path.join(mod_path, 'i18n'))
         except Exception:
-            logger.exception('PLUGINS: Failed "{}" load'.format(name))
+            logger.exception(
+                translate('PluginsError', 'Failed to load "{}"').format(name))
 
     __init_plugins(application)
 
@@ -85,9 +86,9 @@ def __init_plugins(application):
             # We've go through all the not loaded plugins and weren't able
             # to resolve their dependencies, which means there are cyclic or
             # missing/disabled dependencies
-            logger.warning(
-                'Cannot satisfy some plugin dependencies: {}'.format(
-                    ', '.join(pending))
+            logger.warning(translate(
+                'PluginsWarning', 'Cannot satisfy dependencies for: {}')
+                    .format(', '.join(pending))
             )
 
             return
@@ -99,7 +100,7 @@ def __load_plugins(plugins, application, optionals=True):
     otherwise leave it in the pending dict.
     If all of it's dependencies are satisfied then try to load it.
 
-    :type plugins: typing.MutableMapping[str, Type[lisp.core.plugin.Plugin]]
+    :type typing.MutableMapping[str, Type[lisp.core.plugin.Plugin]]
     :type application: lisp.application.Application
     :type optionals: bool
     :rtype: bool
@@ -123,12 +124,17 @@ def __load_plugins(plugins, application, optionals=True):
                 if plugin.Config.get('_enabled_', False):
                     # Create an instance of the plugin and save it
                     LOADED[name] = plugin(application)
-                    logger.info('Plugin loaded: "{}"'.format(name))
+                    logger.info(translate(
+                        'PluginsInfo', 'Plugin loaded: "{}"').format(name))
                 else:
-                    logger.debug(
-                        'Plugin disabled in configuration: "{}"'.format(name))
+                    logger.debug(translate(
+                        'PluginsDebug',
+                        'Plugin disabled in configuration: "{}"').format(name)
+                    )
             except Exception:
-                logger.exception('Failed to load plugin: "{}"'.format(name))
+                logger.exception(translate(
+                    'PluginsError', 'Failed to load plugin: "{}"'.format(name))
+                )
 
     return resolved
 
@@ -138,9 +144,13 @@ def finalize_plugins():
     for plugin in LOADED:
         try:
             LOADED[plugin].finalize()
-            logger.info('Plugin terminated: "{}"'.format(plugin))
+            logger.info(translate(
+                'PluginsInfo', 'Plugin terminated: "{}"').format(plugin))
         except Exception:
-            logger.exception('Failed to terminate plugin: "{}"'.format(plugin))
+            logger.exception(translate(
+                'PluginsError',
+                'Failed to terminate plugin: "{}"').format(plugin)
+            )
 
 
 def is_loaded(plugin_name):
@@ -151,5 +161,7 @@ def get_plugin(plugin_name):
     if is_loaded(plugin_name):
         return LOADED[plugin_name]
     else:
-        raise PluginNotLoadedError(
-            'the requested plugin is not loaded: {}'.format(plugin_name))
+        raise PluginNotLoadedError(translate(
+            'PluginsError',
+            'the requested plugin is not loaded: {}').format(plugin_name)
+        )

@@ -25,6 +25,7 @@ from threading import Lock
 from lisp.core.clock import Clock
 from lisp.core.signal import Connection
 from lisp.cues.cue_time import CueTime
+from lisp.ui.ui_utils import translate
 
 logger = logging.getLogger(__name__)
 
@@ -116,7 +117,10 @@ class TimecodeCueTracker:
         if self.__lock.acquire(blocking=False):
             try:
                 if not self.__protocol.send(self.format, time, self.__track):
-                    logger.warning('Cannot send timecode, untracking cue')
+                    logger.warning(translate(
+                        'TimecodeWarning',
+                        'Cannot send timecode, untracking cue')
+                    )
                     self.untrack()
             except Exception:
                 self.__lock.release()

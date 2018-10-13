@@ -128,7 +128,8 @@ class OscCue(Cue):
                                             arg['start'],
                                             0])
         except KeyError:
-            logger.error('Could not parse argument list, nothing sent')
+            logger.error(translate(
+                'OscCueError', 'Could not parse argument list, nothing sent'))
             return False
 
         # set fade type, based on the first argument, which will have a fade
@@ -167,7 +168,8 @@ class OscCue(Cue):
             else:
                 self._position = 1
         else:
-            logger.error('Error while parsing arguments, nothing sent')
+            logger.error(translate(
+                'OscCueError', 'Error while parsing arguments, nothing sent'))
 
         return False
 
@@ -193,7 +195,8 @@ class OscCue(Cue):
             if ended:
                 self._ended()
         except Exception:
-            logger.exception(translate('OscCue', 'Error during cue execution.'))
+            logger.exception(
+                translate('OscCueError', 'Error during cue execution.'))
             self._error()
 
     def current_time(self):
@@ -287,7 +290,10 @@ class OscCueSettings(SettingsPage):
 
         if not (checkable and not self.oscGroup.isChecked()):
             if not test_path(self.pathEdit.text()):
-                logger.error('Error parsing OSC path, message will be unable to send')
+                logger.error(translate(
+                    'OscCueError',
+                    'Error parsing OSC path, message will be unable to send')
+                )
 
         if not (checkable and not self.oscGroup.isChecked()):
             try:
@@ -305,7 +311,11 @@ class OscCueSettings(SettingsPage):
 
                 conf['args'] = args_list
             except ValueError:
-                logger.error('Error parsing OSC arguments, message will be unable to send')
+                logger.error(translate(
+                    'OscCueError',
+                    'Error parsing OSC arguments, '
+                    'message will be unable to send')
+                )
 
         if not (checkable and not self.fadeGroup.isCheckable()):
             conf['duration'] = self.fadeSpin.value() * 1000

@@ -104,7 +104,7 @@ def install_translation(name, tr_path=I18N_PATH):
         _TRANSLATORS.append(translator)
         logger.debug('Installed translation: {}'.format(tr_file))
     else:
-        logger.debug('No translation for: {}'.format(tr_file))
+        logger.debug('No translation at: {}'.format(tr_file))
 
 
 def translate(context, text, disambiguation=None, n=-1):

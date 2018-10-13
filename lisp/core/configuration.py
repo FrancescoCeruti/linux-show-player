@@ -31,6 +31,7 @@ from lisp import DEFAULT_APP_CONFIG, USER_APP_CONFIG
 from lisp.core.signal import Signal
 from lisp.core.singleton import ABCSingleton
 from lisp.core.util import dict_merge, dict_merge_diff, typename
+from lisp.ui.ui_utils import translate
 
 logger = logging.getLogger(__name__)
 
@@ -72,7 +73,11 @@ class ConfDict:
         except (KeyError, TypeError):
             if default is not _UNSET:
                 logger.warning(
-                    'Invalid path "{}", return default.'.format(path))
+                    translate(
+                        'ConfigurationWarning',
+                        'Invalid path "{}", return default.'
+                    ).format(path)
+                )
                 return default
 
             raise ConfDictError('invalid path')
@@ -217,7 +222,10 @@ class JSONFileConfiguration(Configuration):
             json.dump(self._root, f, indent=True)
 
         logger.debug(
-            'Configuration written at {}'.format(self.user_path))
+            translate(
+                'ConfigurationDebug', 'Configuration written at {}'
+            ).format(self.user_path)
+        )
 
     def _check_file(self):
         """Ensure the last configuration is present at the user-path position"""
@@ -237,7 +245,10 @@ class JSONFileConfiguration(Configuration):
         # Copy the new configuration
         copyfile(self.default_path, self.user_path)
         logger.info(
-            'New configuration installed at {}'.format(self.user_path))
+            translate(
+                'ConfigurationInfo', 'New configuration installed at {}'
+            ).format(self.user_path)
+        )
 
     @staticmethod
     def _read_json(path):
