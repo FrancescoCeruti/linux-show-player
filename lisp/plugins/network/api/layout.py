@@ -26,17 +26,17 @@ from lisp.plugins.network.endpoint import EndPoint
 
 
 class LayoutActionEndPoint(EndPoint):
-    UriTemplate = '/layout/action'
+    UriTemplate = "/layout/action"
 
     def on_post(self, req, resp):
         try:
             data = json.load(req.stream)
-            action = CueAction(data['action'])
+            action = CueAction(data["action"])
 
             self.app.layout.execute_all(action, quiet=True)
             resp.status = falcon.HTTP_CREATED
-        except(KeyError, json.JSONDecodeError):
+        except (KeyError, json.JSONDecodeError):
             resp.status = falcon.HTTP_BAD_REQUEST
 
 
-__endpoints__ = (LayoutActionEndPoint, )
+__endpoints__ = (LayoutActionEndPoint,)

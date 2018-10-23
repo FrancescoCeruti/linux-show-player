@@ -27,6 +27,7 @@ from lisp.core.signal import Signal
 
 class MediaState(Enum):
     """Identify the current media state"""
+
     Null = 0
     Playing = 1
     Paused = 2

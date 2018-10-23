@@ -32,11 +32,11 @@ from lisp.ui.ui_utils import adjust_widget_position
 
 class CueLayout(HasProperties):
     # Layout name
-    NAME = 'Base'
+    NAME = "Base"
     # Layout short description
-    DESCRIPTION = 'No description'
+    DESCRIPTION = "No description"
     # Layout details (some useful info)
-    DETAILS = ''
+    DETAILS = ""
 
     CuesMenu = CueContextMenu()
 
@@ -47,11 +47,11 @@ class CueLayout(HasProperties):
         super().__init__()
         self.app = application
 
-        self.cue_executed = Signal()    # After a cue is executed
-        self.all_executed = Signal()    # After execute_all is called
+        self.cue_executed = Signal()  # After a cue is executed
+        self.all_executed = Signal()  # After execute_all is called
 
         # TODO: self.standby_changed = Signal()
-        self.key_pressed = Signal()     # After a key is pressed
+        self.key_pressed = Signal()  # After a key is pressed
 
     @property
     def cue_model(self):
@@ -149,25 +149,25 @@ class CueLayout(HasProperties):
             self.all_executed.emit(action)
 
     def stop_all(self):
-        if self.app.conf.get('layout.stopAllFade', False):
+        if self.app.conf.get("layout.stopAllFade", False):
             self.execute_all(CueAction.FadeOutStop)
         else:
             self.execute_all(CueAction.Stop)
 
     def interrupt_all(self):
-        if self.app.conf.get('layout.interruptAllFade', False):
+        if self.app.conf.get("layout.interruptAllFade", False):
             self.execute_all(CueAction.FadeOutInterrupt)
         else:
             self.execute_all(CueAction.Interrupt)
 
     def pause_all(self):
-        if self.app.conf.get('layout.pauseAllFade', False):
+        if self.app.conf.get("layout.pauseAllFade", False):
             self.execute_all(CueAction.FadeOutPause)
         else:
             self.execute_all(CueAction.Pause)
 
     def resume_all(self):
-        if self.app.conf.get('layout.resumeAllFade', True):
+        if self.app.conf.get("layout.resumeAllFade", True):
             self.execute_all(CueAction.FadeInResume)
         else:
             self.execute_all(CueAction.Resume)
@@ -192,7 +192,8 @@ class CueLayout(HasProperties):
         if cues:
             # Use the greatest common superclass between the selected cues
             dialog = CueSettingsDialog(
-                greatest_common_superclass(cues), parent=self.app.window)
+                greatest_common_superclass(cues), parent=self.app.window
+            )
 
             def on_apply(settings):
                 action = UpdateCuesAction(settings, cues)

@@ -99,8 +99,9 @@ class Fader:
 
         if not isinstance(fade_type, (FadeInType, FadeOutType)):
             raise AttributeError(
-                'fade_type must be one of FadeInType or FadeOutType members,'
-                'not {}'.format(typename(fade_type)))
+                "fade_type must be one of FadeInType or FadeOutType members,"
+                "not {}".format(typename(fade_type))
+            )
 
         try:
             self._time = 0
@@ -114,11 +115,15 @@ class Fader:
                 return
 
             while self._time <= duration and not self._running.is_set():
-                rsetattr(self._target,
-                         self._attribute,
-                         functor(ntime(self._time, begin, duration),
-                                 value_diff,
-                                 base_value))
+                rsetattr(
+                    self._target,
+                    self._attribute,
+                    functor(
+                        ntime(self._time, begin, duration),
+                        value_diff,
+                        base_value,
+                    ),
+                )
 
                 self._time += 1
                 self._running.wait(0.01)

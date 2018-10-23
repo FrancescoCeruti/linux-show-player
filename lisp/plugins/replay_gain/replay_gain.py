@@ -24,7 +24,7 @@ from threading import Thread, Lock
 
 import gi
 
-gi.require_version('Gst', '1.0')
+gi.require_version("Gst", "1.0")
 from gi.repository import Gst
 from PyQt5.QtWidgets import QMenu, QAction, QDialog
 
@@ -40,9 +40,9 @@ logger = logging.getLogger(__name__)
 
 
 class ReplayGain(Plugin):
-    Name = 'ReplayGain / Normalization'
-    Authors = ('Francesco Ceruti',)
-    Description = 'Allow to normalize cues volume'
+    Name = "ReplayGain / Normalization"
+    Authors = ("Francesco Ceruti",)
+    Description = "Allow to normalize cues volume"
 
     RESET_VALUE = 1.0
 
@@ -51,24 +51,24 @@ class ReplayGain(Plugin):
         self._gain_thread = None
 
         # Entry in mainWindow menu
-        self.menu = QMenu(
-            translate('ReplayGain', 'ReplayGain / Normalization'))
+        self.menu = QMenu(translate("ReplayGain", "ReplayGain / Normalization"))
         self.menu_action = self.app.window.menuTools.addMenu(self.menu)
 
         self.actionGain = QAction(self.app.window)
         self.actionGain.triggered.connect(self.gain)
-        self.actionGain.setText(translate('ReplayGain', 'Calculate'))
+        self.actionGain.setText(translate("ReplayGain", "Calculate"))
         self.menu.addAction(self.actionGain)
 
         self.actionReset = QAction(self.app.window)
         self.actionReset.triggered.connect(self._reset_all)
-        self.actionReset.setText(translate('ReplayGain', 'Reset all'))
+        self.actionReset.setText(translate("ReplayGain", "Reset all"))
         self.menu.addAction(self.actionReset)
 
         self.actionResetSelected = QAction(self.app.window)
         self.actionResetSelected.triggered.connect(self._reset_selected)
-        self.actionResetSelected.setText(translate('ReplayGain',
-                                                   'Reset selected'))
+        self.actionResetSelected.setText(
+            translate("ReplayGain", "Reset selected")
+        )
         self.menu.addAction(self.actionResetSelected)
 
     def gain(self):
@@ -89,8 +89,8 @@ class ReplayGain(Plugin):
                 uri = media.input_uri()
 
                 if uri is not None:
-                    if uri[:7] == 'file://':
-                        uri = 'file://' + self.app.session.abs_path(uri[7:])
+                    if uri[:7] == "file://":
+                        uri = "file://" + self.app.session.abs_path(uri[7:])
 
                     if uri not in files:
                         files[uri] = [media]
@@ -103,13 +103,14 @@ class ReplayGain(Plugin):
                 gainUi.threads(),
                 gainUi.mode(),
                 gainUi.ref_level(),
-                gainUi.norm_level()
+                gainUi.norm_level(),
             )
 
             # Progress dialog
             self._progress = GainProgressDialog(len(files))
             self._gain_thread.on_progress.connect(
-                self._progress.on_progress, mode=Connection.QtQueued)
+                self._progress.on_progress, mode=Connection.QtQueued
+            )
 
             self._progress.show()
             self._gain_thread.start()
@@ -137,7 +138,7 @@ class ReplayGain(Plugin):
 
 
 class GainAction(Action):
-    __slots__ = ('__media_list', '__new_volumes', '__old_volumes')
+    __slots__ = ("__media_list", "__new_volumes", "__old_volumes")
 
     def __init__(self):
         self.__media_list = []
@@ -145,7 +146,7 @@ class GainAction(Action):
         self.__old_volumes = []
 
     def add_media(self, media, new_volume):
-        volume = media.element('Volume')
+        volume = media.element("Volume")
         if volume is not None:
             self.__media_list.append(media)
             self.__new_volumes.append(new_volume)
@@ -153,13 +154,13 @@ class GainAction(Action):
 
     def do(self):
         for n, media in enumerate(self.__media_list):
-            volume = media.element('Volume')
+            volume = media.element("Volume")
             if volume is not None:
                 volume.normal_volume = self.__new_volumes[n]
 
     def undo(self):
         for n, media in enumerate(self.__media_list):
-            volume = media.element('Volume')
+            volume = media.element("Volume")
             if volume is not None:
                 volume.normal_volume = self.__old_volumes[n]
 
@@ -167,7 +168,7 @@ class GainAction(Action):
         self.do()
 
     def log(self):
-        return 'Replay gain volume adjusted.'
+        return "Replay gain volume adjusted."
 
 
 class GainMainThread(Thread):
@@ -207,10 +208,12 @@ class GainMainThread(Thread):
                     try:
                         self._post_process(future.result())
                     except Exception:
-                        logger.exception(translate(
-                            'ReplayGainError',
-                            'An error occurred while processing gain results.'
-                        ))
+                        logger.exception(
+                            translate(
+                                "ReplayGainError",
+                                "An error occurred while processing gain results.",
+                            )
+                        )
                     finally:
                         self.on_progress.emit(1)
                 else:
@@ -219,8 +222,9 @@ class GainMainThread(Thread):
         if self._running:
             MainActionsHandler.do_action(self._action)
         else:
-            logger.info(translate(
-                'ReplayGainInfo', 'Gain processing stopped by user.'))
+            logger.info(
+                translate("ReplayGainInfo", "Gain processing stopped by user.")
+            )
 
         self.on_progress.emit(-1)
         self.on_progress.disconnect()
@@ -238,16 +242,24 @@ class GainMainThread(Thread):
             for media in self.files[gain.uri]:
                 self._action.add_media(media, volume)
 
-            logger.debug(translate(
-                'ReplayGainDebug', 'Applied gain for: {}').format(gain.uri))
+            logger.debug(
+                translate("ReplayGainDebug", "Applied gain for: {}").format(
+                    gain.uri
+                )
+            )
         else:
-            logger.debug(translate(
-                'ReplayGainDebug', 'Discarded gain for: {}').format(gain.uri))
+            logger.debug(
+                translate("ReplayGainDebug", "Discarded gain for: {}").format(
+                    gain.uri
+                )
+            )
 
 
 class GstGain:
-    PIPELINE = 'uridecodebin uri="{0}" ! audioconvert ! rganalysis ' \
-               'reference-level={1} ! fakesink'
+    PIPELINE = (
+        'uridecodebin uri="{0}" ! audioconvert ! rganalysis '
+        "reference-level={1} ! fakesink"
+    )
 
     def __init__(self, uri, ref_level):
         self.__lock = Lock()
@@ -264,19 +276,21 @@ class GstGain:
     # Create a pipeline with a fake audio output and get the gain levels
     def gain(self):
         self.gain_pipe = Gst.parse_launch(
-            GstGain.PIPELINE.format(self.uri, self.ref_level))
+            GstGain.PIPELINE.format(self.uri, self.ref_level)
+        )
 
         gain_bus = self.gain_pipe.get_bus()
         gain_bus.add_signal_watch()
         # Connect only the messages we want
-        gain_bus.connect('message::eos', self._on_message)
-        gain_bus.connect('message::tag', self._on_message)
-        gain_bus.connect('message::error', self._on_message)
+        gain_bus.connect("message::eos", self._on_message)
+        gain_bus.connect("message::tag", self._on_message)
+        gain_bus.connect("message::error", self._on_message)
 
         self.gain_pipe.set_state(Gst.State.PLAYING)
-        logger.info(translate(
-            'ReplayGainInfo',
-            'Started gain calculation for: {}').format(self.uri)
+        logger.info(
+            translate(
+                "ReplayGainInfo", "Started gain calculation for: {}"
+            ).format(self.uri)
         )
 
         # Block here until EOS
@@ -308,9 +322,10 @@ class GstGain:
                     self.gain_value = tag[1]
                     self.peak_value = peak[1]
 
-                    logger.info(translate(
-                        'ReplayGainInfo',
-                        'Gain calculated for: {}').format(self.uri)
+                    logger.info(
+                        translate(
+                            "ReplayGainInfo", "Gain calculated for: {}"
+                        ).format(self.uri)
                     )
                     self.completed = True
                     self.__release()
@@ -319,12 +334,15 @@ class GstGain:
                 self.gain_pipe.set_state(Gst.State.NULL)
 
                 logger.error(
-                    'GStreamer: {}'.format(error.message), exc_info=error)
+                    "GStreamer: {}".format(error.message), exc_info=error
+                )
                 self.__release()
         except Exception:
-            logger.exception(translate(
-                'ReplayGainError',
-                'An error occurred during gain calculation.')
+            logger.exception(
+                translate(
+                    "ReplayGainError",
+                    "An error occurred during gain calculation.",
+                )
             )
             self.__release()
 

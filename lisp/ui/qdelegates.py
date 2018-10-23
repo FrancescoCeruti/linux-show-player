@@ -18,8 +18,15 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import Qt, QEvent
-from PyQt5.QtWidgets import QStyledItemDelegate, QComboBox, QSpinBox, \
-    QLineEdit, QStyle, QDialog, QCheckBox
+from PyQt5.QtWidgets import (
+    QStyledItemDelegate,
+    QComboBox,
+    QSpinBox,
+    QLineEdit,
+    QStyle,
+    QDialog,
+    QCheckBox,
+)
 
 from lisp.application import Application
 from lisp.cues.cue import CueAction
@@ -32,15 +39,16 @@ from lisp.ui.widgets.qenumcombobox import QEnumComboBox
 
 class LabelDelegate(QStyledItemDelegate):
     def _text(self, painter, option, index):
-        return ''
+        return ""
 
     def paint(self, painter, option, index):
         # Add 4px of left an right padding
         option.rect.adjust(4, 0, 4, 0)
 
         text = self._text(painter, option, index)
-        text = option.fontMetrics.elidedText(text, Qt.ElideRight,
-                                             option.rect.width())
+        text = option.fontMetrics.elidedText(
+            text, Qt.ElideRight, option.rect.width()
+        )
 
         painter.save()
 
@@ -181,10 +189,7 @@ class EnumComboBoxDelegate(LabelDelegate):
 
     def createEditor(self, parent, option, index):
         editor = QEnumComboBox(
-            self.enum,
-            mode=self.mode,
-            trItem=self.trItem,
-            parent=parent
+            self.enum, mode=self.mode, trItem=self.trItem, parent=parent
         )
         editor.setFrame(False)
 
@@ -220,9 +225,7 @@ class CueActionDelegate(EnumComboBoxDelegate):
             self.cue_class = index.data(CueClassRole)
 
         editor = CueActionComboBox(
-            self.cue_class.CueActions,
-            mode=self.mode,
-            parent=parent
+            self.cue_class.CueActions, mode=self.mode, parent=parent
         )
         editor.setFrame(False)
 
@@ -237,9 +240,9 @@ class CueSelectionDelegate(LabelDelegate):
     def _text(self, painter, option, index):
         cue = Application().cue_model.get(index.data())
         if cue is not None:
-            return '{} | {}'.format(cue.index, cue.name)
+            return "{} | {}".format(cue.index, cue.name)
 
-        return 'UNDEF'
+        return "UNDEF"
 
     def editorEvent(self, event, model, option, index):
         if event.type() == QEvent.MouseButtonDblClick:

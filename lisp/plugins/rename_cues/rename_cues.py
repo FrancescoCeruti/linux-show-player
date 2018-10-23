@@ -28,16 +28,17 @@ from .rename_ui import RenameUi
 
 
 class RenameCues(Plugin):
-    Name = 'RenameCues'
-    Authors = ('Aurelien Cibrario',)
-    Description = 'Provide a dialog for batch renaming of cues'
+    Name = "RenameCues"
+    Authors = ("Aurelien Cibrario",)
+    Description = "Provide a dialog for batch renaming of cues"
 
     def __init__(self, app):
         super().__init__(app)
 
         # Entry in mainWindow menu
         self.menuAction = QAction(
-            translate('RenameCues', 'Rename Cues'), self.app.window)
+            translate("RenameCues", "Rename Cues"), self.app.window
+        )
         self.menuAction.triggered.connect(self.rename)
 
         self.app.window.menuTools.addAction(self.menuAction)

@@ -30,14 +30,15 @@ class APIServerThread(Thread):
     def __init__(self, host, port, api):
         super().__init__(daemon=True)
         self.wsgi_server = make_server(
-            host, port, api, handler_class=APIRequestHandler)
+            host, port, api, handler_class=APIRequestHandler
+        )
 
     def run(self):
         try:
             logger.info(
                 translate(
-                    'ApiServerInfo',
-                    'Start serving network API at: http://{}:{}/'
+                    "ApiServerInfo",
+                    "Start serving network API at: http://{}:{}/",
                 ).format(
                     self.wsgi_server.server_address[0],
                     self.wsgi_server.server_address[1],
@@ -46,10 +47,13 @@ class APIServerThread(Thread):
 
             self.wsgi_server.serve_forever()
 
-            logger.info(translate('APIServerInfo', 'Stop serving network API'))
+            logger.info(translate("APIServerInfo", "Stop serving network API"))
         except Exception:
-            logger.exception(translate(
-                'ApiServerError', 'Network API server stopped working.'))
+            logger.exception(
+                translate(
+                    "ApiServerError", "Network API server stopped working."
+                )
+            )
 
     def stop(self):
         self.wsgi_server.shutdown()

@@ -32,7 +32,8 @@ class MIDIInput(MIDICommon):
 
     def open(self):
         self._port = mido_backend().open_input(
-            name=self._port_name, callback=self.__new_message)
+            name=self._port_name, callback=self.__new_message
+        )
 
     def __new_message(self, message):
         if self.alternate_mode:

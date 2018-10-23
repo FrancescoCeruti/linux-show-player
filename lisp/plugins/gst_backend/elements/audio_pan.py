@@ -27,9 +27,9 @@ from lisp.plugins.gst_backend.gst_element import GstMediaElement, GstProperty
 class AudioPan(GstMediaElement):
     ElementType = ElementType.Plugin
     MediaType = MediaType.Audio
-    Name = QT_TRANSLATE_NOOP('MediaElementName', 'Audio Pan')
+    Name = QT_TRANSLATE_NOOP("MediaElementName", "Audio Pan")
 
-    pan = GstProperty('panorama', 'panorama', default=.0)
+    pan = GstProperty("panorama", "panorama", default=0.0)
 
     def __init__(self, pipeline):
         super().__init__(pipeline)

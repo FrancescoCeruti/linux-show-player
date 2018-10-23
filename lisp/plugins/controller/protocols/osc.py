@@ -21,16 +21,32 @@
 
 import ast
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
-from PyQt5.QtWidgets import QGroupBox, QPushButton, QVBoxLayout, \
-    QTableView, QTableWidget, QHeaderView, QGridLayout, QLabel, \
-    QDialog, QDialogButtonBox, QLineEdit, QMessageBox
+from PyQt5.QtWidgets import (
+    QGroupBox,
+    QPushButton,
+    QVBoxLayout,
+    QTableView,
+    QTableWidget,
+    QHeaderView,
+    QGridLayout,
+    QLabel,
+    QDialog,
+    QDialogButtonBox,
+    QLineEdit,
+    QMessageBox,
+)
 
 from lisp.plugins import get_plugin, PluginNotLoadedError
 from lisp.plugins.controller.common import LayoutAction, tr_layout_action
 from lisp.plugins.controller.protocol import Protocol
 from lisp.plugins.osc.osc_delegate import OscArgumentDelegate
 from lisp.plugins.osc.osc_server import OscMessageType
-from lisp.ui.qdelegates import ComboBoxDelegate, LineEditDelegate, CueActionDelegate, EnumComboBoxDelegate
+from lisp.ui.qdelegates import (
+    ComboBoxDelegate,
+    LineEditDelegate,
+    CueActionDelegate,
+    EnumComboBoxDelegate,
+)
 from lisp.ui.qmodels import SimpleTableModel
 from lisp.ui.settings.pages import SettingsPage, CuePageMixin
 from lisp.ui.ui_utils import translate
@@ -56,9 +72,9 @@ class OscMessageDialog(QDialog):
         self.pathEdit = QLineEdit()
         self.groupBox.layout().addWidget(self.pathEdit, 1, 0, 1, 2)
 
-        self.model = SimpleTableModel([
-            translate('Osc Cue', 'Type'),
-            translate('Osc Cue', 'Argument')])
+        self.model = SimpleTableModel(
+            [translate("Osc Cue", "Type"), translate("Osc Cue", "Argument")]
+        )
 
         self.model.dataChanged.connect(self.__argument_changed)
 
@@ -112,21 +128,25 @@ class OscMessageDialog(QDialog):
         osc_type = model_row[0]
 
         if curr_col == 0:
-            if osc_type == 'Integer' or osc_type == 'Float':
+            if osc_type == "Integer" or osc_type == "Float":
                 model_row[1] = 0
-            elif osc_type == 'Bool':
+            elif osc_type == "Bool":
                 model_row[1] = True
             else:
-                model_row[1] = ''
+                model_row[1] = ""
 
     def retranslateUi(self):
         self.groupBox.setTitle(
-            translate('ControllerOscSettings', 'OSC Message'))
+            translate("ControllerOscSettings", "OSC Message")
+        )
         self.pathLabel.setText(
-            translate('ControllerOscSettings',
-                      'OSC Path: (example: "/path/to/something")'))
-        self.addButton.setText(translate('OscCue', 'Add'))
-        self.removeButton.setText(translate('OscCue', 'Remove'))
+            translate(
+                "ControllerOscSettings",
+                'OSC Path: (example: "/path/to/something")',
+            )
+        )
+        self.addButton.setText(translate("OscCue", "Add"))
+        self.removeButton.setText(translate("OscCue", "Remove"))
 
 
 class OscArgumentView(QTableView):
@@ -136,8 +156,9 @@ class OscArgumentView(QTableView):
         self.delegates = [
             ComboBoxDelegate(
                 options=[i.value for i in OscMessageType],
-                tr_context='OscMessageType'),
-            OscArgumentDelegate()
+                tr_context="OscMessageType",
+            ),
+            OscArgumentDelegate(),
         ]
 
         self.setSelectionBehavior(QTableWidget.SelectRows)
@@ -158,7 +179,7 @@ class OscArgumentView(QTableView):
 
 
 class OscSettings(SettingsPage):
-    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'OSC Controls')
+    Name = QT_TRANSLATE_NOOP("SettingsPageName", "OSC Controls")
 
     def __init__(self, actionDelegate, **kwargs):
         super().__init__(**kwargs)
@@ -166,15 +187,18 @@ class OscSettings(SettingsPage):
         self.layout().setAlignment(Qt.AlignTop)
 
         self.oscGroup = QGroupBox(self)
-        self.oscGroup.setTitle(translate('ControllerOscSettings', 'OSC'))
+        self.oscGroup.setTitle(translate("ControllerOscSettings", "OSC"))
         self.oscGroup.setLayout(QGridLayout())
         self.layout().addWidget(self.oscGroup)
 
-        self.oscModel = SimpleTableModel([
-            translate('ControllerOscSettings', 'Path'),
-            translate('ControllerOscSettings', 'Types'),
-            translate('ControllerOscSettings', 'Arguments'),
-            translate('ControllerOscSettings', 'Actions')])
+        self.oscModel = SimpleTableModel(
+            [
+                translate("ControllerOscSettings", "Path"),
+                translate("ControllerOscSettings", "Types"),
+                translate("ControllerOscSettings", "Arguments"),
+                translate("ControllerOscSettings", "Actions"),
+            ]
+        )
 
         self.OscView = OscView(actionDelegate, parent=self.oscGroup)
         self.OscView.setModel(self.oscModel)
@@ -197,90 +221,84 @@ class OscSettings(SettingsPage):
         self.captureDialog.setMaximumSize(self.captureDialog.size())
         self.captureDialog.setMinimumSize(self.captureDialog.size())
         self.captureDialog.setWindowTitle(
-            translate('ControllerOscSettings', 'OSC Capture'))
+            translate("ControllerOscSettings", "OSC Capture")
+        )
         self.captureDialog.setModal(True)
-        self.captureLabel = QLabel('Waiting for message:')
+        self.captureLabel = QLabel("Waiting for message:")
         self.captureLabel.setAlignment(Qt.AlignCenter)
         self.captureDialog.setLayout(QVBoxLayout())
         self.captureDialog.layout().addWidget(self.captureLabel)
 
         self.buttonBox = QDialogButtonBox(
             QDialogButtonBox.Ok | QDialogButtonBox.Cancel,
-            Qt.Horizontal, self.captureDialog)
+            Qt.Horizontal,
+            self.captureDialog,
+        )
         self.buttonBox.accepted.connect(self.captureDialog.accept)
         self.buttonBox.rejected.connect(self.captureDialog.reject)
         self.captureDialog.layout().addWidget(self.buttonBox)
 
-        self.capturedMessage = {'path': None, 'types': None, 'args': None}
+        self.capturedMessage = {"path": None, "types": None, "args": None}
 
         self.retranslateUi()
 
         self._defaultAction = None
         try:
-            self.__osc = get_plugin('Osc')
+            self.__osc = get_plugin("Osc")
         except PluginNotLoadedError:
             self.setEnabled(False)
 
     def retranslateUi(self):
-        self.addButton.setText(translate('ControllerOscSettings', 'Add'))
-        self.removeButton.setText(translate('ControllerOscSettings', 'Remove'))
-        self.oscCapture.setText(translate('ControllerOscSettings', 'Capture'))
+        self.addButton.setText(translate("ControllerOscSettings", "Add"))
+        self.removeButton.setText(translate("ControllerOscSettings", "Remove"))
+        self.oscCapture.setText(translate("ControllerOscSettings", "Capture"))
 
     def enableCheck(self, enabled):
         self.oscGroup.setCheckable(enabled)
         self.oscGroup.setChecked(False)
 
     def getSettings(self):
-        settings = {}
-
-        messages = []
-
+        entries = []
         for row in self.oscModel.rows:
-            key = Osc.key_from_values(row[0], row[1], row[2])
-            messages.append((key, row[-1]))
+            message = Osc.key_from_values(row[0], row[1], row[2])
+            entries.append((message, row[-1]))
 
-        if messages:
-            settings['osc'] = messages
-
-        return settings
+        return {"osc": entries}
 
     def loadSettings(self, settings):
-        if 'osc' in settings:
-            for options in settings['osc']:
+        if "osc" in settings:
+            for options in settings["osc"]:
                 key = Osc.message_from_key(options[0])
                 self.oscModel.appendRow(
-                    key[0],
-                    key[1],
-                    '{}'.format(key[2:])[1:-1],
-                    options[1]
+                    key[0], key[1], "{}".format(key[2:])[1:-1], options[1]
                 )
 
     def capture_message(self):
         self.__osc.server.new_message.connect(self.__show_message)
 
         result = self.captureDialog.exec()
-        if result == QDialog.Accepted and self.capturedMessage['path']:
-            args = '{}'.format(self.capturedMessage['args'])[1:-1]
+        if result == QDialog.Accepted and self.capturedMessage["path"]:
+            args = "{}".format(self.capturedMessage["args"])[1:-1]
             self.oscModel.appendRow(
-                self.capturedMessage['path'],
-                self.capturedMessage['types'],
+                self.capturedMessage["path"],
+                self.capturedMessage["types"],
                 args,
-                self._defaultAction
+                self._defaultAction,
             )
 
         self.__osc.server.new_message.disconnect(self.__show_message)
 
-        self.captureLabel.setText('Waiting for message:')
+        self.captureLabel.setText("Waiting for message:")
 
     def __show_message(self, path, args, types):
-        self.capturedMessage['path'] = path
-        self.capturedMessage['types'] = types
-        self.capturedMessage['args'] = args
+        self.capturedMessage["path"] = path
+        self.capturedMessage["types"] = types
+        self.capturedMessage["args"] = args
         self.captureLabel.setText(
             'OSC: "{0}" "{1}" {2}'.format(
-                self.capturedMessage['path'],
-                self.capturedMessage['types'],
-                self.capturedMessage['args']
+                self.capturedMessage["path"],
+                self.capturedMessage["types"],
+                self.capturedMessage["args"],
             )
         )
 
@@ -288,37 +306,35 @@ class OscSettings(SettingsPage):
         dialog = OscMessageDialog(parent=self)
         if dialog.exec_() == dialog.Accepted:
             path = dialog.pathEdit.text()
-            if len(path) < 2 or path[0] is not '/':
+            if len(path) < 2 or path[0] is not "/":
                 QMessageBox.warning(
-                    self, 'Warning',
-                    'Osc path seems not valid, \ndo not forget to edit the '
-                    'path later.',
+                    self,
+                    "Warning",
+                    "Osc path seems not valid, \ndo not forget to edit the "
+                    "path later.",
                 )
 
-            types = ''
+            types = ""
             arguments = []
             for row in dialog.model.rows:
-                if row[0] == 'Bool':
+                if row[0] == "Bool":
                     if row[1] is True:
-                        types += 'T'
+                        types += "T"
                     if row[1] is True:
-                        types += 'F'
+                        types += "F"
                 else:
-                    if row[0] == 'Integer':
-                        types += 'i'
-                    elif row[0] == 'Float':
-                        types += 'f'
-                    elif row[0] == 'String':
-                        types += 's'
+                    if row[0] == "Integer":
+                        types += "i"
+                    elif row[0] == "Float":
+                        types += "f"
+                    elif row[0] == "String":
+                        types += "s"
                     else:
-                        raise TypeError('Unsupported Osc Type')
+                        raise TypeError("Unsupported Osc Type")
                     arguments.append(row[1])
 
             self.oscModel.appendRow(
-                path,
-                types,
-                '{}'.format(arguments)[1:-1],
-                self._defaultAction
+                path, types, "{}".format(arguments)[1:-1], self._defaultAction
             )
 
     def __remove_message(self):
@@ -330,10 +346,10 @@ class OscCueSettings(OscSettings, CuePageMixin):
     def __init__(self, cueType, **kwargs):
         super().__init__(
             actionDelegate=CueActionDelegate(
-                cue_class=cueType,
-                mode=CueActionDelegate.Mode.Name),
+                cue_class=cueType, mode=CueActionDelegate.Mode.Name
+            ),
             cueType=cueType,
-            **kwargs
+            **kwargs,
         )
         self._defaultAction = self.cueType.CueActions[0].name
 
@@ -344,9 +360,9 @@ class OscLayoutSettings(OscSettings):
             actionDelegate=EnumComboBoxDelegate(
                 LayoutAction,
                 mode=EnumComboBoxDelegate.Mode.Name,
-                trItem=tr_layout_action
+                trItem=tr_layout_action,
             ),
-            **kwargs
+            **kwargs,
         )
         self._defaultAction = LayoutAction.Go.name
 
@@ -359,7 +375,7 @@ class OscView(QTableView):
             LineEditDelegate(),
             LineEditDelegate(),
             LineEditDelegate(),
-            actionDelegate
+            actionDelegate,
         ]
 
         self.setSelectionBehavior(QTableWidget.SelectRows)
@@ -386,7 +402,7 @@ class Osc(Protocol):
     def __init__(self):
         super().__init__()
 
-        osc = get_plugin('Osc')
+        osc = get_plugin("Osc")
         osc.server.new_message.connect(self.__new_message)
 
     def __new_message(self, path, args, types, *_, **__):
@@ -396,7 +412,7 @@ class Osc(Protocol):
     @staticmethod
     def key_from_message(path, types, args):
         key = [path, types, *args]
-        return 'OSC{}'.format(key)
+        return "OSC{}".format(key)
 
     @staticmethod
     def key_from_values(path, types, args):

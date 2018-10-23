@@ -20,21 +20,27 @@
 import os
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QDialog, QComboBox, QPushButton, QFrame,\
-    QTextBrowser, QFileDialog, QGridLayout
+from PyQt5.QtWidgets import (
+    QDialog,
+    QComboBox,
+    QPushButton,
+    QFrame,
+    QTextBrowser,
+    QFileDialog,
+    QGridLayout,
+)
 
 from lisp import layout
 from lisp.ui.ui_utils import translate
 
 
 class LayoutSelect(QDialog):
-
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.filepath = ''
+        self.filepath = ""
 
         self.setWindowModality(Qt.WindowModal)
-        self.setWindowTitle(translate('LayoutSelect', 'Layout selection'))
+        self.setWindowTitle(translate("LayoutSelect", "Layout selection"))
         self.setMaximumSize(675, 300)
         self.setMinimumSize(675, 300)
         self.resize(675, 300)
@@ -47,11 +53,11 @@ class LayoutSelect(QDialog):
         self.layout().addWidget(self.layoutCombo, 0, 0)
 
         self.confirmButton = QPushButton(self)
-        self.confirmButton.setText(translate('LayoutSelect', 'Select layout'))
+        self.confirmButton.setText(translate("LayoutSelect", "Select layout"))
         self.layout().addWidget(self.confirmButton, 0, 1)
 
         self.fileButton = QPushButton(self)
-        self.fileButton.setText(translate('LayoutSelect', 'Open file'))
+        self.fileButton.setText(translate("LayoutSelect", "Open file"))
         self.layout().addWidget(self.fileButton, 0, 2)
 
         self.layout().setColumnStretch(0, 3)
@@ -70,7 +76,7 @@ class LayoutSelect(QDialog):
             self.layoutCombo.addItem(layout_class.NAME, layout_class)
 
         if self.layoutCombo.count() == 0:
-            raise Exception('No layout installed!')
+            raise Exception("No layout installed!")
 
         self.confirmButton.clicked.connect(self.accept)
         self.fileButton.clicked.connect(self.open_file)
@@ -81,21 +87,22 @@ class LayoutSelect(QDialog):
     def show_description(self):
         layout = self.layoutCombo.currentData()
 
-        details = '<ul>'
+        details = "<ul>"
         for detail in layout.DETAILS:
-            details += '<li>' + translate('LayoutDetails', detail)
-        details += '</ul>'
+            details += "<li>" + translate("LayoutDetails", detail)
+        details += "</ul>"
 
         self.description.setHtml(
-            '<center><h2>{}</h2><i><h4>{}</h4></i></center>{}'.format(
+            "<center><h2>{}</h2><i><h4>{}</h4></i></center>{}".format(
                 layout.NAME,
-                translate('LayoutDescription', layout.DESCRIPTION),
-                details
+                translate("LayoutDescription", layout.DESCRIPTION),
+                details,
             )
         )
 
     def open_file(self):
         path, _ = QFileDialog.getOpenFileName(
-            self, filter='*.lsp', directory=os.getenv('HOME'))
+            self, filter="*.lsp", directory=os.getenv("HOME")
+        )
         self.filepath = path
         self.accept()

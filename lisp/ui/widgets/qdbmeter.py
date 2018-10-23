@@ -23,7 +23,6 @@ from PyQt5.QtWidgets import QWidget
 
 
 class QDbMeter(QWidget):
-
     def __init__(self, parent, min=-60, max=0, clip=0):
         super().__init__(parent)
         self.db_min = min
@@ -32,12 +31,12 @@ class QDbMeter(QWidget):
 
         db_range = abs(self.db_min - self.db_max)
         yellow = abs(self.db_min + 20) / db_range  # -20 db
-        red = abs(self.db_min) / db_range          # 0 db
+        red = abs(self.db_min) / db_range  # 0 db
 
         self.grad = QLinearGradient()
-        self.grad.setColorAt(0, QColor(0, 255, 0))            # Green
-        self.grad.setColorAt(yellow, QColor(255, 255, 0))     # Yellow
-        self.grad.setColorAt(red, QColor(255, 0, 0))          # Red
+        self.grad.setColorAt(0, QColor(0, 255, 0))  # Green
+        self.grad.setColorAt(yellow, QColor(255, 255, 0))  # Yellow
+        self.grad.setColorAt(red, QColor(255, 0, 0))  # Red
 
         self.reset()
 
@@ -58,8 +57,8 @@ class QDbMeter(QWidget):
     def paintEvent(self, e):
         if not self.visibleRegion().isEmpty():
             # Stretch factor
-            mul = (self.height() - 4)
-            mul /= (self.db_max - self.db_min)
+            mul = self.height() - 4
+            mul /= self.db_max - self.db_min
 
             peaks = []
             for n, peak in enumerate(self.peaks):
@@ -103,8 +102,9 @@ class QDbMeter(QWidget):
 
             for n, (peak, rms, dPeak) in enumerate(zip(peaks, rmss, dPeaks)):
                 # Maximum 'peak-rect' size
-                maxRect = QtCore.QRect(xpos, self.height() - 2, xdim - 2,
-                                       2 - self.height())
+                maxRect = QtCore.QRect(
+                    xpos, self.height() - 2, xdim - 2, 2 - self.height()
+                )
 
                 # Set QLinearGradient start and final-stop position
                 self.grad.setStart(maxRect.topLeft())
@@ -121,8 +121,9 @@ class QDbMeter(QWidget):
                 qp.fillRect(rect, self.grad)
 
                 # Draw decay peak
-                decRect = QtCore.QRect(xpos, (self.height() - 3) - dPeak,
-                                       xdim - 2, 2)
+                decRect = QtCore.QRect(
+                    xpos, (self.height() - 3) - dPeak, xdim - 2, 2
+                )
                 qp.fillRect(decRect, self.grad)
 
                 # Draw Borders

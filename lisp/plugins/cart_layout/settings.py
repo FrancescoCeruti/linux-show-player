@@ -18,15 +18,21 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
-from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QCheckBox, QGridLayout, \
-    QSpinBox, QLabel
+from PyQt5.QtWidgets import (
+    QGroupBox,
+    QVBoxLayout,
+    QCheckBox,
+    QGridLayout,
+    QSpinBox,
+    QLabel,
+)
 
 from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.ui_utils import translate
 
 
 class CartLayoutSettings(SettingsPage):
-    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Cart Layout')
+    Name = QT_TRANSLATE_NOOP("SettingsPageName", "Cart Layout")
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -77,36 +83,37 @@ class CartLayoutSettings(SettingsPage):
 
     def retranslateUi(self):
         self.behaviorsGroup.setTitle(
-            translate('CartLayout', 'Default behaviors'))
-        self.countdownMode.setText(translate('CartLayout', 'Countdown mode'))
-        self.showSeek.setText(translate('CartLayout', 'Show seek-bars'))
-        self.showDbMeters.setText(translate('CartLayout', 'Show dB-meters'))
-        self.showAccurate.setText(translate('CartLayout', 'Show accurate time'))
-        self.showVolume.setText(translate('CartLayout', 'Show volume'))
-        self.gridSizeGroup.setTitle(translate('CartLayout', 'Grid size'))
-        self.columnsLabel.setText(translate('CartLayout', 'Number of columns'))
-        self.rowsLabel.setText(translate('CartLayout', 'Number of rows'))
+            translate("CartLayout", "Default behaviors")
+        )
+        self.countdownMode.setText(translate("CartLayout", "Countdown mode"))
+        self.showSeek.setText(translate("CartLayout", "Show seek-bars"))
+        self.showDbMeters.setText(translate("CartLayout", "Show dB-meters"))
+        self.showAccurate.setText(translate("CartLayout", "Show accurate time"))
+        self.showVolume.setText(translate("CartLayout", "Show volume"))
+        self.gridSizeGroup.setTitle(translate("CartLayout", "Grid size"))
+        self.columnsLabel.setText(translate("CartLayout", "Number of columns"))
+        self.rowsLabel.setText(translate("CartLayout", "Number of rows"))
 
     def loadSettings(self, settings):
-        self.columnsSpin.setValue(settings['grid']['columns'])
-        self.rowsSpin.setValue(settings['grid']['rows'])
-        self.showSeek.setChecked(settings['show']['seekSliders'])
-        self.showDbMeters.setChecked(settings['show']['dBMeters'])
-        self.showAccurate.setChecked(settings['show']['accurateTime'])
-        self.showVolume.setChecked(settings['show']['volumeControls'])
-        self.countdownMode.setChecked(settings['countdownMode'])
+        self.columnsSpin.setValue(settings["grid"]["columns"])
+        self.rowsSpin.setValue(settings["grid"]["rows"])
+        self.showSeek.setChecked(settings["show"]["seekSliders"])
+        self.showDbMeters.setChecked(settings["show"]["dBMeters"])
+        self.showAccurate.setChecked(settings["show"]["accurateTime"])
+        self.showVolume.setChecked(settings["show"]["volumeControls"])
+        self.countdownMode.setChecked(settings["countdownMode"])
 
     def getSettings(self):
         return {
-            'grid': {
-                'columns': self.columnsSpin.value(),
-                'rows': self.rowsSpin.value()
+            "grid": {
+                "columns": self.columnsSpin.value(),
+                "rows": self.rowsSpin.value(),
             },
-            'show': {
-                'dBMeters': self.showDbMeters.isChecked(),
-                'seekSliders': self.showSeek.isChecked(),
-                'accurateTime': self.showAccurate.isChecked(),
-                'volumeControls': self.showVolume.isChecked()
+            "show": {
+                "dBMeters": self.showDbMeters.isChecked(),
+                "seekSliders": self.showSeek.isChecked(),
+                "accurateTime": self.showAccurate.isChecked(),
+                "volumeControls": self.showVolume.isChecked(),
             },
-            'countdownMode': self.countdownMode.isChecked()
+            "countdownMode": self.countdownMode.isChecked(),
         }

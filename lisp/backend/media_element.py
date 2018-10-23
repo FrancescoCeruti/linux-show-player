@@ -24,6 +24,7 @@ from lisp.core.has_properties import HasProperties
 
 class ElementType(Enum):
     """The type of the media-element"""
+
     Input = 0
     Output = 1
     Plugin = 2
@@ -31,6 +32,7 @@ class ElementType(Enum):
 
 class MediaType(Enum):
     """The media-type that the element handle (Audio/Video)"""
+
     Audio = 0
     Video = 1
     AudioAndVideo = 2
@@ -44,4 +46,4 @@ class MediaElement(HasProperties):
 
     ElementType = None
     MediaType = None
-    Name = 'Undefined'
+    Name = "Undefined"

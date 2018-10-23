@@ -27,13 +27,13 @@ from lisp.plugins.gst_backend.gst_element import GstMediaElement
 class PulseSink(GstMediaElement):
     ElementType = ElementType.Output
     MediaType = MediaType.Audio
-    Name = QT_TRANSLATE_NOOP('MediaElementName', 'PulseAudio Out')
+    Name = QT_TRANSLATE_NOOP("MediaElementName", "PulseAudio Out")
 
     def __init__(self, pipeline):
         super().__init__(pipeline)
 
-        self.pulse_sink = Gst.ElementFactory.make('pulsesink', 'sink')
-        self.pulse_sink.set_property('client-name', 'Linux Show Player')
+        self.pulse_sink = Gst.ElementFactory.make("pulsesink", "sink")
+        self.pulse_sink.set_property("client-name", "Linux Show Player")
 
         self.pipeline.add(self.pulse_sink)
 

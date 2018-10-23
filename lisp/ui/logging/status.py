@@ -54,18 +54,19 @@ class LogStatusView(QWidget):
         self.layout().addWidget(self.line)
 
         self.iconWidget = QWidget(self)
-        self.iconWidget.setToolTip('Errors/Warnings')
+        self.iconWidget.setToolTip("Errors/Warnings")
         self.iconWidget.setLayout(QHBoxLayout())
         self.iconWidget.layout().setContentsMargins(0, 0, 0, 0)
         self.iconWidget.layout().setSpacing(5)
         self.layout().addWidget(self.iconWidget)
 
-        self.errorsCount = QLabel('0', self.iconWidget)
+        self.errorsCount = QLabel("0", self.iconWidget)
         self.iconWidget.layout().addWidget(self.errorsCount)
 
         self.errorIcon = QLabel(self.iconWidget)
         self.errorIcon.setPixmap(
-            IconTheme.get('dialog-error').pixmap(icons_size))
+            IconTheme.get("dialog-error").pixmap(icons_size)
+        )
         self.iconWidget.layout().addWidget(self.errorIcon)
 
     def mouseDoubleClickEvent(self, e):
@@ -77,7 +78,7 @@ class LogStatusView(QWidget):
 
         if record.levelno >= logging.INFO:
             # Display only the fist line of text
-            self.messageLabel.setText(record.message.split('\n')[0])
+            self.messageLabel.setText(record.message.split("\n")[0])
 
         for n in range(start, end + 1):
             level = self._log_model.record(n).levelno

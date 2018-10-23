@@ -28,8 +28,9 @@ class ABCProxyModel(Model):
 
         if not isinstance(model, Model):
             raise TypeError(
-                'ProxyModel model must be a Model object, not {0}'.format(
-                    typename(model))
+                "ProxyModel model must be a Model object, not {0}".format(
+                    typename(model)
+                )
             )
 
         self._model = model
@@ -86,10 +87,10 @@ class ProxyModel(ABCProxyModel):
 
 class ReadOnlyProxyModel(ProxyModel):
     def add(self, item):
-        raise ModelException('cannot add items into a read-only model')
+        raise ModelException("cannot add items into a read-only model")
 
     def remove(self, item):
-        raise ModelException('cannot remove items from a read-only model')
+        raise ModelException("cannot remove items from a read-only model")
 
     def reset(self):
-        raise ModelException('cannot reset read-only model')
+        raise ModelException("cannot reset read-only model")

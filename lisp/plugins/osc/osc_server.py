@@ -31,10 +31,10 @@ logger = logging.getLogger(__name__)
 
 
 class OscMessageType(Enum):
-    Int = 'Integer'
-    Float = 'Float'
-    Bool = 'Bool'
-    String = 'String'
+    Int = "Integer"
+    Float = "Float"
+    Bool = "Bool"
+    String = "String"
 
 
 class OscServer:
@@ -93,13 +93,14 @@ class OscServer:
             self.__running = True
 
             logger.info(
-                translate(
-                    'OscServerInfo', 'OSC server started at {}'
-                ).format(self.__srv.url)
+                translate("OscServerInfo", "OSC server started at {}").format(
+                    self.__srv.url
+                )
             )
         except ServerError:
             logger.exception(
-                translate('OscServerError', 'Cannot start OSC sever'))
+                translate("OscServerError", "Cannot start OSC sever")
+            )
 
     def stop(self):
         if self.__srv is not None:
@@ -109,7 +110,7 @@ class OscServer:
                     self.__running = False
 
             self.__srv.free()
-            logger.info(translate('OscServerInfo', 'OSC server stopped'))
+            logger.info(translate("OscServerInfo", "OSC server stopped"))
 
     def send(self, path, *args):
         with self.__lock:
@@ -119,7 +120,6 @@ class OscServer:
     def __log_message(self, path, args, types, src, user_data):
         logger.debug(
             translate(
-                'OscServerDebug',
-                'Message from {} -> path: "{}" args: {}'
+                "OscServerDebug", 'Message from {} -> path: "{}" args: {}'
             ).format(src.get_url(), path, args)
         )

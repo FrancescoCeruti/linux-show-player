@@ -30,7 +30,7 @@ try:
 except ImportError:
     from scandir import scandir
 
-PRESETS_DIR = os.path.join(USER_DIR, 'presets')
+PRESETS_DIR = os.path.join(USER_DIR, "presets")
 
 
 def preset_path(name):
@@ -72,8 +72,7 @@ def load_on_cue(preset_name, cue):
     :param cue: The cue on which load the preset
     :type cue: lisp.cue.Cue
     """
-    MainActionsHandler.do_action(
-        UpdateCueAction(load_preset(preset_name), cue))
+    MainActionsHandler.do_action(UpdateCueAction(load_preset(preset_name), cue))
 
 
 def load_on_cues(preset_name, cues):
@@ -86,7 +85,8 @@ def load_on_cues(preset_name, cues):
     :type cues: typing.Iterable[lisp.cue.Cue]
     """
     MainActionsHandler.do_action(
-        UpdateCuesAction(load_preset(preset_name), cues))
+        UpdateCuesAction(load_preset(preset_name), cues)
+    )
 
 
 def load_preset(name):
@@ -98,7 +98,7 @@ def load_preset(name):
     """
     path = preset_path(name)
 
-    with open(path, mode='r') as in_file:
+    with open(path, mode="r") as in_file:
         return json.load(in_file)
 
 
@@ -114,7 +114,7 @@ def write_preset(name, preset):
     """
     path = preset_path(name)
 
-    with open(path, mode='w') as out_file:
+    with open(path, mode="w") as out_file:
         json.dump(preset, out_file)
 
 
@@ -163,10 +163,10 @@ def export_presets(names, archive):
     """
     if names:
         try:
-            with ZipFile(archive, mode='w') as archive:
+            with ZipFile(archive, mode="w") as archive:
                 for name in names:
                     archive.write(preset_path(name), name)
-        except(OSError, BadZipFile) as e:
+        except (OSError, BadZipFile) as e:
             raise PresetExportError(str(e))
 
 
@@ -183,7 +183,7 @@ def import_presets(archive, overwrite=True):
             for member in archive.namelist():
                 if not (preset_exists(member) and not overwrite):
                     archive.extract(member, path=PRESETS_DIR)
-    except(OSError, BadZipFile) as e:
+    except (OSError, BadZipFile) as e:
         raise PresetImportError(str(e))
 
 
@@ -199,7 +199,7 @@ def import_has_conflicts(archive):
             for member in archive.namelist():
                 if preset_exists(member):
                     return True
-    except(OSError, BadZipFile) as e:
+    except (OSError, BadZipFile) as e:
         raise PresetImportError(str(e))
 
     return False
@@ -218,7 +218,7 @@ def import_conflicts(archive):
             for member in archive.namelist():
                 if preset_exists(member):
                     conflicts.append(member)
-    except(OSError, BadZipFile) as e:
+    except (OSError, BadZipFile) as e:
         raise PresetImportError(str(e))
 
     return conflicts

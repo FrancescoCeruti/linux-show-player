@@ -18,8 +18,12 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import QT_TRANSLATE_NOOP, Qt, QSize
-from PyQt5.QtWidgets import QListWidget, QListWidgetItem, QTextBrowser, \
-    QVBoxLayout
+from PyQt5.QtWidgets import (
+    QListWidget,
+    QListWidgetItem,
+    QTextBrowser,
+    QVBoxLayout,
+)
 
 from lisp import plugins
 from lisp.ui.icons import IconTheme
@@ -28,7 +32,7 @@ from lisp.ui.settings.pages import SettingsPage
 
 # TODO: add Enable/Disable options for plugins
 class PluginsSettings(SettingsPage):
-    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Plugins')
+    Name = QT_TRANSLATE_NOOP("SettingsPageName", "Plugins")
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -46,11 +50,11 @@ class PluginsSettings(SettingsPage):
         for name, plugin in plugins.PLUGINS.items():
             item = QListWidgetItem(plugin.Name)
             if plugins.is_loaded(name):
-                item.setIcon(IconTheme.get('led-running'))
-            elif not plugin.Config['_enabled_']:
-                item.setIcon(IconTheme.get('led-pause'))
+                item.setIcon(IconTheme.get("led-running"))
+            elif not plugin.Config["_enabled_"]:
+                item.setIcon(IconTheme.get("led-pause"))
             else:
-                item.setIcon(IconTheme.get('led-error'))
+                item.setIcon(IconTheme.get("led-error"))
 
             item.setData(Qt.UserRole, plugin)
 
@@ -71,11 +75,12 @@ class PluginsSettings(SettingsPage):
 
         if item is not None:
             plugin = item.data(Qt.UserRole)
-            html = '<b>Description: </b>{}'.format(plugin.Description)
-            html += '<br /><br />'
-            html += '<b>Authors: </b>{}'.format(', '.join(plugin.Authors))
+            html = "<b>Description: </b>{}".format(plugin.Description)
+            html += "<br /><br />"
+            html += "<b>Authors: </b>{}".format(", ".join(plugin.Authors))
 
             self.pluginDescription.setHtml(html)
         else:
             self.pluginDescription.setHtml(
-                '<b>Description: </b><br /><br /><b>Authors: </b>')
+                "<b>Description: </b><br /><br /><b>Authors: </b>"
+            )

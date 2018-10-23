@@ -25,10 +25,10 @@ from lisp.core.util import typename
 
 
 class Session(HasInstanceProperties):
-    layout_type = Property(default='')
+    layout_type = Property(default="")
     layout = Property(default={})
 
-    session_file = Property(default='')
+    session_file = Property(default="")
 
     def __init__(self, layout):
         super().__init__()
@@ -44,14 +44,14 @@ class Session(HasInstanceProperties):
         if self.session_file:
             return os.path.splitext(os.path.basename(self.session_file))[0]
         else:
-            return 'Untitled'
+            return "Untitled"
 
     def path(self):
         """Return the current session-file path."""
         if self.session_file:
             return os.path.dirname(self.session_file)
         else:
-            return os.path.expanduser('~')
+            return os.path.expanduser("~")
 
     def abs_path(self, rel_path):
         """Return an absolute version of the given path."""

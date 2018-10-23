@@ -19,16 +19,24 @@
 
 from collections import deque
 
-from PyQt5.QtCore import QModelIndex, Qt, QSortFilterProxyModel, \
-    QAbstractTableModel
+from PyQt5.QtCore import (
+    QModelIndex,
+    Qt,
+    QSortFilterProxyModel,
+    QAbstractTableModel,
+)
 from PyQt5.QtGui import QFont, QColor
 
 from lisp.core.util import typename
-from lisp.ui.logging.common import LogRecordRole, LOG_ATTRIBUTES, LogAttributeRole
+from lisp.ui.logging.common import (
+    LogRecordRole,
+    LOG_ATTRIBUTES,
+    LogAttributeRole,
+)
 
 
 class LogRecordModel(QAbstractTableModel):
-    Font = QFont('Monospace')
+    Font = QFont("Monospace")
     Font.setStyleHint(QFont.Monospace)
 
     def __init__(self, columns, bg, fg, limit=0, **kwargs):
@@ -129,8 +137,9 @@ class LogRecordFilterModel(QSortFilterProxyModel):
             super().setSourceModel(source_model)
         else:
             raise TypeError(
-                'LogRecordFilterModel source must be LogRecordModel, not {}'
-                    .format(typename(source_model))
+                "LogRecordFilterModel source must be LogRecordModel, not {}".format(
+                    typename(source_model)
+                )
             )
 
     def filterAcceptsRow(self, source_row, source_parent):
@@ -143,18 +152,17 @@ class LogRecordFilterModel(QSortFilterProxyModel):
 
 def log_model_factory(config):
     # Get logging configuration
-    limit = config.get('logging.limit', 0)
+    limit = config.get("logging.limit", 0)
     levels_background = {
         level: QColor(*color)
-        for level, color
-        in config.get('logging.backgrounds', {}).items()
+        for level, color in config.get("logging.backgrounds", {}).items()
     }
     levels_foreground = {
         level: QColor(*color)
-        for level, color
-        in config.get('logging.foregrounds', {}).items()
+        for level, color in config.get("logging.foregrounds", {}).items()
     }
 
     # Return a new model to store logging records
     return LogRecordModel(
-        LOG_ATTRIBUTES, levels_background, levels_foreground, limit=limit)
+        LOG_ATTRIBUTES, levels_background, levels_foreground, limit=limit
+    )

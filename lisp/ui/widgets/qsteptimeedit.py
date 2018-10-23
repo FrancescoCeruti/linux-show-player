@@ -21,7 +21,6 @@ from PyQt5.QtWidgets import QTimeEdit
 
 
 class QStepTimeEdit(QTimeEdit):
-
     def __init__(self, parent=None, **kwargs):
         super().__init__(parent, **kwargs)
 
@@ -29,9 +28,9 @@ class QStepTimeEdit(QTimeEdit):
 
     def setSectionStep(self, section, step):
         if not isinstance(section, QTimeEdit.Section):
-            raise AttributeError('Not a QTimeEdit.Section')
+            raise AttributeError("Not a QTimeEdit.Section")
         if step <= 0:
-            raise AttributeError('Step value must be >= 0')
+            raise AttributeError("Step value must be >= 0")
 
         self._sections_steps[section] = step
 

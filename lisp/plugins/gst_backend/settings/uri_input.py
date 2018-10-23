@@ -18,8 +18,18 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import QStandardPaths, Qt
-from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QPushButton, QLineEdit, \
-    QGridLayout, QCheckBox, QSpinBox, QLabel, QFileDialog, QVBoxLayout
+from PyQt5.QtWidgets import (
+    QGroupBox,
+    QHBoxLayout,
+    QPushButton,
+    QLineEdit,
+    QGridLayout,
+    QCheckBox,
+    QSpinBox,
+    QLabel,
+    QFileDialog,
+    QVBoxLayout,
+)
 
 from lisp.plugins.gst_backend.elements.uri_input import UriInput
 from lisp.ui.settings.pages import SettingsPage
@@ -42,7 +52,7 @@ class UriInputSettings(SettingsPage):
         self.buttonFindFile = QPushButton(self.fileGroup)
         self.fileGroup.layout().addWidget(self.buttonFindFile)
 
-        self.filePath = QLineEdit('file://', self.fileGroup)
+        self.filePath = QLineEdit("file://", self.fileGroup)
         self.fileGroup.layout().addWidget(self.filePath)
 
         self.bufferingGroup = QGroupBox(self)
@@ -56,7 +66,7 @@ class UriInputSettings(SettingsPage):
         self.bufferingGroup.layout().addWidget(self.download, 1, 0, 1, 2)
 
         self.bufferSize = QSpinBox(self.bufferingGroup)
-        self.bufferSize.setRange(-1, 2147483647)
+        self.bufferSize.setRange(-1, 2_147_483_647)
         self.bufferSize.setValue(-1)
         self.bufferingGroup.layout().addWidget(self.bufferSize, 2, 0)
 
@@ -69,15 +79,18 @@ class UriInputSettings(SettingsPage):
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.fileGroup.setTitle(translate('UriInputSettings', 'Source'))
-        self.buttonFindFile.setText(translate('UriInputSettings', 'Find File'))
-        self.bufferingGroup.setTitle(translate('UriInputSettings', 'Buffering'))
+        self.fileGroup.setTitle(translate("UriInputSettings", "Source"))
+        self.buttonFindFile.setText(translate("UriInputSettings", "Find File"))
+        self.bufferingGroup.setTitle(translate("UriInputSettings", "Buffering"))
         self.useBuffering.setText(
-            translate('UriInputSettings', 'Use Buffering'))
-        self.download.setText(translate('UriInputSettings',
-                                        'Attempt download on network streams'))
+            translate("UriInputSettings", "Use Buffering")
+        )
+        self.download.setText(
+            translate("UriInputSettings", "Attempt download on network streams")
+        )
         self.bufferSizeLabel.setText(
-            translate('UriInputSettings', 'Buffer size (-1 default value)'))
+            translate("UriInputSettings", "Buffer size (-1 default value)")
+        )
 
     def getSettings(self):
         settings = {}
@@ -85,19 +98,19 @@ class UriInputSettings(SettingsPage):
         checkable = self.fileGroup.isCheckable()
 
         if not (checkable and not self.fileGroup.isChecked()):
-            settings['uri'] = self.filePath.text()
+            settings["uri"] = self.filePath.text()
         if not (checkable and not self.bufferingGroup.isChecked()):
-            settings['use_buffering'] = self.useBuffering.isChecked()
-            settings['download'] = self.download.isChecked()
-            settings['buffer_size'] = self.bufferSize.value()
+            settings["use_buffering"] = self.useBuffering.isChecked()
+            settings["download"] = self.download.isChecked()
+            settings["buffer_size"] = self.bufferSize.value()
 
         return settings
 
     def loadSettings(self, settings):
-        self.filePath.setText(settings.get('uri', ''))
-        self.useBuffering.setChecked(settings.get('use_buffering', False))
-        self.download.setChecked(settings.get('download', False))
-        self.bufferSize.setValue(settings.get('buffer_size', -1))
+        self.filePath.setText(settings.get("uri", ""))
+        self.useBuffering.setChecked(settings.get("use_buffering", False))
+        self.download.setChecked(settings.get("download", False))
+        self.bufferSize.setValue(settings.get("buffer_size", -1))
 
     def enableCheck(self, enabled):
         self.fileGroup.setCheckable(enabled)
@@ -106,8 +119,11 @@ class UriInputSettings(SettingsPage):
     def select_file(self):
         path = QStandardPaths.writableLocation(QStandardPaths.MusicLocation)
         file, ok = QFileDialog.getOpenFileName(
-            self, translate('UriInputSettings', 'Choose file'),
-            path, translate('UriInputSettings', 'All files') + ' (*)')
+            self,
+            translate("UriInputSettings", "Choose file"),
+            path,
+            translate("UriInputSettings", "All files") + " (*)",
+        )
 
         if ok:
-            self.filePath.setText('file://' + file)
+            self.filePath.setText("file://" + file)

@@ -28,7 +28,12 @@ from lisp.cues.cue_factory import CueFactory
 from lisp.cues.cue_memento_model import CueMementoAdapter
 from lisp.cues.media_cue import MediaCue
 from lisp.layout.cue_layout import CueLayout
-from lisp.layout.cue_menu import SimpleMenuAction, MENU_PRIORITY_CUE, MenuActionsGroup, MENU_PRIORITY_LAYOUT
+from lisp.layout.cue_menu import (
+    SimpleMenuAction,
+    MENU_PRIORITY_CUE,
+    MenuActionsGroup,
+    MENU_PRIORITY_LAYOUT,
+)
 from lisp.plugins.cart_layout.cue_widget import CueWidget
 from lisp.plugins.cart_layout.model import CueCartModel
 from lisp.plugins.cart_layout.page_widget import CartPageWidget
@@ -37,17 +42,20 @@ from lisp.ui.ui_utils import translate
 
 
 class CartLayout(CueLayout):
-    NAME = QT_TRANSLATE_NOOP('LayoutName', 'Cart Layout')
+    NAME = QT_TRANSLATE_NOOP("LayoutName", "Cart Layout")
     DESCRIPTION = translate(
-        'LayoutDescription', 'Organize cues in grid like pages')
+        "LayoutDescription", "Organize cues in grid like pages"
+    )
     DETAILS = [
-        QT_TRANSLATE_NOOP('LayoutDetails', 'Click a cue to run it'),
-        QT_TRANSLATE_NOOP('LayoutDetails', 'SHIFT + Click to edit a cue'),
-        QT_TRANSLATE_NOOP('LayoutDetails', 'CTRL + Click to select a cue'),
+        QT_TRANSLATE_NOOP("LayoutDetails", "Click a cue to run it"),
+        QT_TRANSLATE_NOOP("LayoutDetails", "SHIFT + Click to edit a cue"),
+        QT_TRANSLATE_NOOP("LayoutDetails", "CTRL + Click to select a cue"),
         QT_TRANSLATE_NOOP(
-            'LayoutDetails', 'To copy cues drag them while pressing CTRL'),
+            "LayoutDetails", "To copy cues drag them while pressing CTRL"
+        ),
         QT_TRANSLATE_NOOP(
-            'LayoutDetails', 'To move cues drag them while pressing SHIFT')
+            "LayoutDetails", "To move cues drag them while pressing SHIFT"
+        ),
     ]
 
     Config = DummyConfiguration()
@@ -62,20 +70,23 @@ class CartLayout(CueLayout):
     def __init__(self, application):
         super().__init__(application)
 
-        self.__columns = CartLayout.Config['grid.columns']
-        self.__rows = CartLayout.Config['grid.rows']
+        self.__columns = CartLayout.Config["grid.columns"]
+        self.__rows = CartLayout.Config["grid.rows"]
 
         self._cart_model = CueCartModel(
-            self.cue_model, self.__rows, self.__columns)
+            self.cue_model, self.__rows, self.__columns
+        )
         # TODO: move this logic in CartTabWidget ?
         self._cart_model.item_added.connect(
-            self.__cue_added, Connection.QtQueued)
+            self.__cue_added, Connection.QtQueued
+        )
         self._cart_model.item_removed.connect(
-            self.__cue_removed, Connection.QtQueued)
+            self.__cue_removed, Connection.QtQueued
+        )
         self._cart_model.item_moved.connect(
-            self.__cue_moved, Connection.QtQueued)
-        self._cart_model.model_reset.connect(
-            self.__model_reset)
+            self.__cue_moved, Connection.QtQueued
+        )
+        self._cart_model.model_reset.connect(self.__model_reset)
         self._memento_model = CueMementoAdapter(self._cart_model)
 
         self._cart_view = CartTabWidget()
@@ -116,7 +127,9 @@ class CartLayout(CueLayout):
 
         self.show_volume_action = QAction(parent=layout_menu)
         self.show_volume_action.setCheckable(True)
-        self.show_volume_action.triggered.connect(self._set_volume_controls_visible)
+        self.show_volume_action.triggered.connect(
+            self._set_volume_controls_visible
+        )
         layout_menu.addAction(self.show_volume_action)
 
         self.show_accurate_action = QAction(parent=layout_menu)
@@ -124,53 +137,52 @@ class CartLayout(CueLayout):
         self.show_accurate_action.triggered.connect(self._set_accurate_time)
         layout_menu.addAction(self.show_accurate_action)
 
-        self._set_countdown_mode(CartLayout.Config['countdownMode'])
-        self._set_dbmeters_visible(CartLayout.Config['show.dBMeters'])
-        self._set_accurate_time(CartLayout.Config['show.accurateTime'])
-        self._set_seek_bars_visible(CartLayout.Config['show.seekSliders'])
+        self._set_countdown_mode(CartLayout.Config["countdownMode"])
+        self._set_dbmeters_visible(CartLayout.Config["show.dBMeters"])
+        self._set_accurate_time(CartLayout.Config["show.accurateTime"])
+        self._set_seek_bars_visible(CartLayout.Config["show.seekSliders"])
         self._set_volume_controls_visible(
-            CartLayout.Config['show.volumeControls'])
+            CartLayout.Config["show.volumeControls"]
+        )
 
         # Context menu actions
         self._edit_actions_group = MenuActionsGroup(priority=MENU_PRIORITY_CUE)
         self._edit_actions_group.add(
             SimpleMenuAction(
-                translate('ListLayout', 'Edit cue'),
+                translate("ListLayout", "Edit cue"),
                 self.edit_cue,
-                translate('ListLayout', 'Edit selected cues'),
+                translate("ListLayout", "Edit selected cues"),
                 self.edit_cues,
             ),
             SimpleMenuAction(
-                translate('ListLayout', 'Remove cue'),
+                translate("ListLayout", "Remove cue"),
                 self.cue_model.remove,
-                translate('ListLayout', 'Remove selected cues'),
-                self._remove_cues
-            )
+                translate("ListLayout", "Remove selected cues"),
+                self._remove_cues,
+            ),
         )
         self.CuesMenu.add(self._edit_actions_group)
 
         self._media_actions_group = MenuActionsGroup(
-            priority=MENU_PRIORITY_CUE + 1)
+            priority=MENU_PRIORITY_CUE + 1
+        )
         self._media_actions_group.add(
             SimpleMenuAction(
-                translate('CartLayout', 'Play'),
-                lambda cue: cue.start()
+                translate("CartLayout", "Play"), lambda cue: cue.start()
             ),
             SimpleMenuAction(
-                translate('CartLayout', 'Pause'),
-                lambda cue: cue.pause()
+                translate("CartLayout", "Pause"), lambda cue: cue.pause()
             ),
             SimpleMenuAction(
-                translate('CartLayout', 'Stop'),
-                lambda cue: cue.stop()
-            )
+                translate("CartLayout", "Stop"), lambda cue: cue.stop()
+            ),
         )
         self.CuesMenu.add(self._media_actions_group, MediaCue)
 
         self._reset_volume_action = SimpleMenuAction(
-            translate('CartLayout', 'Reset volume'),
+            translate("CartLayout", "Reset volume"),
             self._reset_cue_volume,
-            priority=MENU_PRIORITY_LAYOUT
+            priority=MENU_PRIORITY_LAYOUT,
         )
         self.CuesMenu.add(self._reset_volume_action, MediaCue)
 
@@ -178,17 +190,22 @@ class CartLayout(CueLayout):
         self.add_page()
 
     def retranslate(self):
-        self.new_page_action.setText(translate('CartLayout', 'Add page'))
-        self.new_pages_action.setText(translate('CartLayout', 'Add pages'))
+        self.new_page_action.setText(translate("CartLayout", "Add page"))
+        self.new_pages_action.setText(translate("CartLayout", "Add pages"))
         self.rm_current_page_action.setText(
-            translate('CartLayout', 'Remove current page'))
-        self.countdown_mode_action.setText(translate('CartLayout', 'Countdown mode'))
-        self.show_seek_action.setText(translate('CartLayout', 'Show seek-bars'))
+            translate("CartLayout", "Remove current page")
+        )
+        self.countdown_mode_action.setText(
+            translate("CartLayout", "Countdown mode")
+        )
+        self.show_seek_action.setText(translate("CartLayout", "Show seek-bars"))
         self.show_dbmeter_action.setText(
-            translate('CartLayout', 'Show dB-meters'))
-        self.show_volume_action.setText(translate('CartLayout', 'Show volume'))
+            translate("CartLayout", "Show dB-meters")
+        )
+        self.show_volume_action.setText(translate("CartLayout", "Show volume"))
         self.show_accurate_action.setText(
-            translate('CartLayout', 'Show accurate time'))
+            translate("CartLayout", "Show accurate time")
+        )
 
     def view(self):
         return self._cart_view
@@ -223,9 +240,11 @@ class CartLayout(CueLayout):
     def add_pages(self):
         pages, accepted = QInputDialog.getInt(
             self._cart_view,
-            translate('CartLayout', 'Add pages'),
-            translate('CartLayout', 'Number of Pages:'),
-            value=1, min=1, max=10
+            translate("CartLayout", "Add pages"),
+            translate("CartLayout", "Number of Pages:"),
+            value=1,
+            min=1,
+            max=10,
         )
 
         if accepted:
@@ -239,7 +258,8 @@ class CartLayout(CueLayout):
         page.copyWidgetRequested.connect(self._copy_widget)
 
         self._cart_view.addTab(
-            page, 'Page {}'.format(self._cart_view.count() + 1))
+            page, "Page {}".format(self._cart_view.count() + 1)
+        )
 
     def remove_current_page(self):
         if self._cart_view.count():
@@ -260,7 +280,7 @@ class CartLayout(CueLayout):
             page.deleteLater()
 
             # Rename every successive tab accordingly
-            text = translate('CartLayout', 'Page {number}')
+            text = translate("CartLayout", "Page {number}")
             for n in range(index, self._cart_view.count()):
                 self._cart_view.setTabText(n, text.format(number=n + 1))
 
@@ -345,7 +365,7 @@ class CartLayout(CueLayout):
             page *= self.__rows * self.__columns
             row *= self.__columns
             return page + row + column
-        except(TypeError, ValueError):
+        except (TypeError, ValueError):
             return -1
 
     def finalize(self):
@@ -371,12 +391,14 @@ class CartLayout(CueLayout):
 
     def _move_widget(self, widget, to_row, to_column):
         new_index = self.to_1d_index(
-            (self._cart_view.currentIndex(), to_row, to_column))
+            (self._cart_view.currentIndex(), to_row, to_column)
+        )
         self._cart_model.move(widget.cue.index, new_index)
 
     def _copy_widget(self, widget, to_row, to_column):
         new_index = self.to_1d_index(
-            (self._cart_view.currentIndex(), to_row, to_column))
+            (self._cart_view.currentIndex(), to_row, to_column)
+        )
         new_cue = CueFactory.clone_cue(widget.cue)
 
         self._cart_model.insert(new_cue, new_index)
@@ -455,11 +477,13 @@ class RemovePageConfirmBox(QMessageBox):
         super().__init__(*args)
 
         self.setIcon(self.Question)
-        self.setWindowTitle(translate('CartLayout', 'Warning'))
+        self.setWindowTitle(translate("CartLayout", "Warning"))
         self.setText(
-            translate('CartLayout', 'Every cue in the page will be lost.'))
+            translate("CartLayout", "Every cue in the page will be lost.")
+        )
         self.setInformativeText(
-            translate('CartLayout', 'Are you sure to continue?'))
+            translate("CartLayout", "Are you sure to continue?")
+        )
 
         self.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
         self.setDefaultButton(QMessageBox.No)

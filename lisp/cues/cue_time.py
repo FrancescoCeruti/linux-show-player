@@ -50,6 +50,7 @@ class CueTime(metaclass=MetaCueTime):
     .. note::
         The notify signal is emitted only when the cue is running.
     """
+
     _Clock = Clock_100
 
     def __init__(self, cue):
@@ -58,7 +59,7 @@ class CueTime(metaclass=MetaCueTime):
         self._clock = self._Clock
         self._active = False
         self._cue = cue
-        self._cue.changed('duration').connect(self.__init)
+        self._cue.changed("duration").connect(self.__init)
 
         self.__init()
 

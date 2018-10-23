@@ -31,7 +31,7 @@ class RenameCueAction(Action):
         self.app = app
 
         for renamed_cue in new_cue_list:
-            self.names[renamed_cue['id']] = renamed_cue['cue_preview']
+            self.names[renamed_cue["id"]] = renamed_cue["cue_preview"]
 
     def do(self):
         """Use stored name and exchange with current names"""

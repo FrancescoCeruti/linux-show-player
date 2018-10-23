@@ -24,35 +24,45 @@ from lisp.ui.ui_utils import translate
 
 
 class LayoutAction(Enum):
-    Go = 'Go'
-    Reset = 'Reset'
+    Go = "Go"
+    Reset = "Reset"
 
-    StopAll = 'StopAll'
-    PauseAll = 'PauseAll'
-    ResumeAll = 'ResumeAll'
-    InterruptAll = 'InterrupAll'
-    FadeOutAll = 'FadeOutAll'
-    FadeInAll = 'FadeInAll'
+    StopAll = "StopAll"
+    PauseAll = "PauseAll"
+    ResumeAll = "ResumeAll"
+    InterruptAll = "InterrupAll"
+    FadeOutAll = "FadeOutAll"
+    FadeInAll = "FadeInAll"
 
-    StandbyForward = 'StandbyForward'
-    StandbyBack = 'StandbyBack'
+    StandbyForward = "StandbyForward"
+    StandbyBack = "StandbyBack"
 
 
 LayoutActionsStrings = {
-    LayoutAction.Go: QT_TRANSLATE_NOOP('GlobalAction', 'Go'),
-    LayoutAction.Reset: QT_TRANSLATE_NOOP('GlobalAction', 'Reset'),
-    LayoutAction.StopAll: QT_TRANSLATE_NOOP('GlobalAction', 'Stop all cues'),
-    LayoutAction.PauseAll: QT_TRANSLATE_NOOP('GlobalAction', 'Pause all cues'),
-    LayoutAction.ResumeAll: QT_TRANSLATE_NOOP('GlobalAction', 'Resume all cues'),
-    LayoutAction.InterruptAll: QT_TRANSLATE_NOOP('GlobalAction', 'Interrupt all cues'),
-    LayoutAction.FadeOutAll: QT_TRANSLATE_NOOP('GlobalAction', 'Fade-out all cues'),
-    LayoutAction.FadeInAll: QT_TRANSLATE_NOOP('GlobalAction', 'Fade-in all cues'),
-    LayoutAction.StandbyForward: QT_TRANSLATE_NOOP('GlobalAction', 'Move standby forward'),
-    LayoutAction.StandbyBack: QT_TRANSLATE_NOOP('GlobalAction', 'Move standby back'),
+    LayoutAction.Go: QT_TRANSLATE_NOOP("GlobalAction", "Go"),
+    LayoutAction.Reset: QT_TRANSLATE_NOOP("GlobalAction", "Reset"),
+    LayoutAction.StopAll: QT_TRANSLATE_NOOP("GlobalAction", "Stop all cues"),
+    LayoutAction.PauseAll: QT_TRANSLATE_NOOP("GlobalAction", "Pause all cues"),
+    LayoutAction.ResumeAll: QT_TRANSLATE_NOOP(
+        "GlobalAction", "Resume all cues"
+    ),
+    LayoutAction.InterruptAll: QT_TRANSLATE_NOOP(
+        "GlobalAction", "Interrupt all cues"
+    ),
+    LayoutAction.FadeOutAll: QT_TRANSLATE_NOOP(
+        "GlobalAction", "Fade-out all cues"
+    ),
+    LayoutAction.FadeInAll: QT_TRANSLATE_NOOP(
+        "GlobalAction", "Fade-in all cues"
+    ),
+    LayoutAction.StandbyForward: QT_TRANSLATE_NOOP(
+        "GlobalAction", "Move standby forward"
+    ),
+    LayoutAction.StandbyBack: QT_TRANSLATE_NOOP(
+        "GlobalAction", "Move standby back"
+    ),
 }
 
 
 def tr_layout_action(action):
-    return translate(
-        'CueAction', LayoutActionsStrings.get(action, action.name)
-    )
+    return translate("CueAction", LayoutActionsStrings.get(action, action.name))

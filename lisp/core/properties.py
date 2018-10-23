@@ -106,7 +106,8 @@ class InstanceProperty:
     To be used an InstanceProperty should be used in combination of an
     HasInstanceProperties object.
     """
-    __slots__ = ('value', 'default')
+
+    __slots__ = ("value", "default")
 
     def __init__(self, default=None):
         self.value = default

@@ -19,8 +19,13 @@
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QGroupBox, QGridLayout, QSpinBox, QLabel, \
-    QVBoxLayout
+from PyQt5.QtWidgets import (
+    QGroupBox,
+    QGridLayout,
+    QSpinBox,
+    QLabel,
+    QVBoxLayout,
+)
 
 from lisp.plugins.gst_backend.elements.db_meter import DbMeter
 from lisp.plugins.gst_backend.gi_repository import Gst
@@ -78,24 +83,26 @@ class DbMeterSettings(SettingsPage):
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.groupBox.setTitle(translate('DbMeterSettings', 'DbMeter settings'))
+        self.groupBox.setTitle(translate("DbMeterSettings", "DbMeter settings"))
         self.intervalLabel.setText(
-            translate('DbMeterSettings', 'Time between levels (ms)'))
-        self.ttlLabel.setText(translate('DbMeterSettings', 'Peak ttl (ms)'))
+            translate("DbMeterSettings", "Time between levels (ms)")
+        )
+        self.ttlLabel.setText(translate("DbMeterSettings", "Peak ttl (ms)"))
         self.falloffLabel.setText(
-            translate('DbMeterSettings', 'Peak falloff (dB/sec)'))
+            translate("DbMeterSettings", "Peak falloff (dB/sec)")
+        )
 
     def loadSettings(self, settings):
-        self.intervalSpin.setValue(settings.get('interval', 50) / Gst.MSECOND)
-        self.ttlSpin.setValue(settings.get('peak_ttl', 500) / Gst.MSECOND)
-        self.falloffSpin.setValue(settings.get('peak_falloff', 20))
+        self.intervalSpin.setValue(settings.get("interval", 50) / Gst.MSECOND)
+        self.ttlSpin.setValue(settings.get("peak_ttl", 500) / Gst.MSECOND)
+        self.falloffSpin.setValue(settings.get("peak_falloff", 20))
 
     def getSettings(self):
         settings = {}
 
         if not (self.groupBox.isCheckable() and not self.groupBox.isChecked()):
-            settings['interval'] = self.intervalSpin.value() * Gst.MSECOND
-            settings['peak_ttl'] = self.ttlSpin.value() * Gst.MSECOND
-            settings['peak_falloff'] = self.falloffSpin.value()
+            settings["interval"] = self.intervalSpin.value() * Gst.MSECOND
+            settings["peak_ttl"] = self.ttlSpin.value() * Gst.MSECOND
+            settings["peak_falloff"] = self.falloffSpin.value()
 
         return settings

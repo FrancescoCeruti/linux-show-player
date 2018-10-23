@@ -20,8 +20,15 @@
 import logging
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QDialog, QGridLayout, QLabel, QDialogButtonBox, \
-    QSizePolicy, QPushButton, QTextEdit
+from PyQt5.QtWidgets import (
+    QDialog,
+    QGridLayout,
+    QLabel,
+    QDialogButtonBox,
+    QSizePolicy,
+    QPushButton,
+    QTextEdit,
+)
 
 from lisp.ui.logging.common import LOG_LEVELS, LOG_ICONS_NAMES
 from lisp.ui.icons import IconTheme
@@ -71,16 +78,17 @@ class MultiMessagesBox(QDialog):
         self.okButton.clicked.connect(self.nextRecord)
 
         self.dismissButton = QPushButton(self)
-        self.dismissButton.setText(translate('Logging', 'Dismiss all'))
+        self.dismissButton.setText(translate("Logging", "Dismiss all"))
         self.dismissButton.clicked.connect(self.dismissAll)
         self.dismissButton.hide()
         self.buttonBox.addButton(self.dismissButton, QDialogButtonBox.ResetRole)
 
         self.detailsButton = QPushButton(self)
         self.detailsButton.setCheckable(True)
-        self.detailsButton.setText(translate('Logging', 'Show details'))
+        self.detailsButton.setText(translate("Logging", "Show details"))
         self.buttonBox.addButton(
-            self.detailsButton, QDialogButtonBox.ActionRole)
+            self.detailsButton, QDialogButtonBox.ActionRole
+        )
 
         self.detailsText = QTextEdit(self)
         self.detailsText.setReadOnly(True)
@@ -100,23 +108,26 @@ class MultiMessagesBox(QDialog):
 
             self.messageLabel.setText(record.message)
             self.iconLabel.setPixmap(
-                IconTheme.get(LOG_ICONS_NAMES[record.levelname]).pixmap(32))
+                IconTheme.get(LOG_ICONS_NAMES[record.levelname]).pixmap(32)
+            )
             self.setWindowTitle(
-                '{} ({})'.format(
-                    translate('Logging', LOG_LEVELS[record.levelname]),
-                    len(self._records)
+                "{} ({})".format(
+                    translate("Logging", LOG_LEVELS[record.levelname]),
+                    len(self._records),
                 )
             )
 
             # Get record details (exception traceback)
-            details = ''
+            details = ""
             if record.exc_info is not None:
                 details = self._formatter.formatException(record.exc_info)
 
             self.detailsText.setText(details)
 
-            width = self.detailsText.document().idealWidth() +\
-                self.detailsText.contentsMargins().left() * 2
+            width = (
+                self.detailsText.document().idealWidth()
+                + self.detailsText.contentsMargins().left() * 2
+            )
             self.detailsText.setFixedWidth(width if width < 800 else 800)
 
             self.detailsButton.setVisible(bool(details))

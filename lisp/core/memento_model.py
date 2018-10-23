@@ -18,8 +18,11 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from lisp.core.actions_handler import MainActionsHandler
-from lisp.core.memento_model_actions import AddItemAction, RemoveItemAction, \
-    MoveItemAction
+from lisp.core.memento_model_actions import (
+    AddItemAction,
+    RemoveItemAction,
+    MoveItemAction,
+)
 from lisp.core.proxy_model import ReadOnlyProxyModel
 
 
@@ -76,4 +79,5 @@ class MementoModelAdapter(MementoModel):
     def _item_moved(self, old_index, new_index):
         if not self._locked:
             self._handler.do_action(
-                self._move_action(self, self.model, old_index, new_index))
+                self._move_action(self, self.model, old_index, new_index)
+            )

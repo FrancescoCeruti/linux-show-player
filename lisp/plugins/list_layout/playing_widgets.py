@@ -19,8 +19,14 @@
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor
-from PyQt5.QtWidgets import QWidget, QGridLayout, QLabel, QSizePolicy, \
-    QLCDNumber, QHBoxLayout
+from PyQt5.QtWidgets import (
+    QWidget,
+    QGridLayout,
+    QLabel,
+    QSizePolicy,
+    QLCDNumber,
+    QHBoxLayout,
+)
 from lisp.cues.cue import CueAction
 
 from lisp.core.signal import Connection
@@ -93,7 +99,7 @@ class RunningCueWidget(QWidget):
             self.controlButtons.interruptButton.setEnabled(False)
 
         self.timeDisplay = QLCDNumber(self.gridLayoutWidget)
-        self.timeDisplay.setStyleSheet('background-color: transparent')
+        self.timeDisplay.setStyleSheet("background-color: transparent")
         self.timeDisplay.setSegmentStyle(QLCDNumber.Flat)
         self.timeDisplay.setDigitCount(8)
         self.timeDisplay.display(strtime(cue.duration))
@@ -104,7 +110,7 @@ class RunningCueWidget(QWidget):
         self.gridLayout.setColumnStretch(0, 7)
         self.gridLayout.setColumnStretch(1, 5)
 
-        cue.changed('name').connect(self.name_changed, Connection.QtQueued)
+        cue.changed("name").connect(self.name_changed, Connection.QtQueued)
         cue.started.connect(self.controlButtons.pauseMode, Connection.QtQueued)
         cue.paused.connect(self.controlButtons.startMode, Connection.QtQueued)
 
@@ -144,23 +150,20 @@ class RunningCueWidget(QWidget):
 
     def _update_timers(self, time):
         self.timeDisplay.display(
-            strtime(self.cue.duration - time, accurate=self._accurate_time))
+            strtime(self.cue.duration - time, accurate=self._accurate_time)
+        )
 
     def _pause(self):
-        self.cue.pause(
-            fade=self._config.get('pauseCueFade', True))
+        self.cue.pause(fade=self._config.get("pauseCueFade", True))
 
     def _resume(self):
-        self.cue.resume(
-            fade=self._config.get('resumeCueFade', True))
+        self.cue.resume(fade=self._config.get("resumeCueFade", True))
 
     def _stop(self):
-        self.cue.stop(
-            fade=self._config.get('stopCueFade', True))
+        self.cue.stop(fade=self._config.get("stopCueFade", True))
 
     def _interrupt(self):
-        self.cue.interrupt(
-            fade=self._config.get('interruptCueFade', True))
+        self.cue.interrupt(fade=self._config.get("interruptCueFade", True))
 
     def _fadeout(self):
         self.cue.execute(CueAction.FadeOut)
@@ -187,8 +190,9 @@ class RunningMediaCueWidget(RunningCueWidget):
         self.dbmeter = QDbMeter(self.gridLayoutWidget)
         self.dbmeter.setVisible(False)
 
-        cue.changed('duration').connect(self._update_duration,
-                                        Connection.QtQueued)
+        cue.changed("duration").connect(
+            self._update_duration, Connection.QtQueued
+        )
 
     def set_seek_visible(self, visible):
         if visible and not self.seekSlider.isVisible():
@@ -206,7 +210,7 @@ class RunningMediaCueWidget(RunningCueWidget):
             self._dbmeter_element = None
 
         if visible:
-            self._dbmeter_element = self.cue.media.element('DbMeter')
+            self._dbmeter_element = self.cue.media.element("DbMeter")
             if self._dbmeter_element is not None:
                 self._dbmeter_element.level_ready.connect(self.dbmeter.plot)
 

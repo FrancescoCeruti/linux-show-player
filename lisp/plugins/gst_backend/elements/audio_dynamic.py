@@ -29,31 +29,30 @@ from lisp.plugins.gst_backend.gst_element import GstMediaElement, GstProperty
 class AudioDynamic(GstMediaElement):
     ElementType = ElementType.Plugin
     MediaType = MediaType.Audio
-    Name = QT_TRANSLATE_NOOP('MediaElementName', 'Compressor/Expander')
+    Name = QT_TRANSLATE_NOOP("MediaElementName", "Compressor/Expander")
 
     class Mode(Enum):
-        Compressor = 'compressor'
-        Expander = 'expander'
+        Compressor = "compressor"
+        Expander = "expander"
 
     class Characteristics(Enum):
-        HardKnee = 'hard-knee'
-        SoftKnee = 'soft-knee'
+        HardKnee = "hard-knee"
+        SoftKnee = "soft-knee"
 
-    mode = GstProperty(
-        'audio_dynamic', 'mode', default=Mode.Compressor.value)
-    ratio = GstProperty('audio_dynamic', 'ratio', default=1)
-    threshold = GstProperty('audio_dynamic', 'threshold', default=0)
+    mode = GstProperty("audio_dynamic", "mode", default=Mode.Compressor.value)
+    ratio = GstProperty("audio_dynamic", "ratio", default=1)
+    threshold = GstProperty("audio_dynamic", "threshold", default=0)
     characteristics = GstProperty(
-        'audio_dynamic',
-        'characteristics',
-        default=Characteristics.HardKnee.value
+        "audio_dynamic",
+        "characteristics",
+        default=Characteristics.HardKnee.value,
     )
 
     def __init__(self, pipeline):
         super().__init__(pipeline)
 
-        self.audio_dynamic = Gst.ElementFactory.make('audiodynamic', None)
-        self.audio_converter = Gst.ElementFactory.make('audioconvert', None)
+        self.audio_dynamic = Gst.ElementFactory.make("audiodynamic", None)
+        self.audio_converter = Gst.ElementFactory.make("audioconvert", None)
 
         self.pipeline.add(self.audio_dynamic)
         self.pipeline.add(self.audio_converter)

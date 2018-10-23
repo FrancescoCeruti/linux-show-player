@@ -35,12 +35,12 @@ class ListLayoutView(QWidget):
         self.listModel = listModel
 
         # GO-BUTTON (top-left)
-        self.goButton = QPushButton('GO', self)
+        self.goButton = QPushButton("GO", self)
         self.goButton.setFocusPolicy(Qt.NoFocus)
         self.goButton.setFixedWidth(120)
         self.goButton.setFixedHeight(100)
         self.goButton.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
-        self.goButton.setStyleSheet('font-size: 48pt;')
+        self.goButton.setStyleSheet("font-size: 48pt;")
         self.layout().addWidget(self.goButton, 0, 0)
 
         # INFO PANEL (top-center)

@@ -35,8 +35,9 @@ class QStyledSlider(QSlider):
         self.initStyleOption(option)
 
         tick = 5
-        handle = self.style().subControlRect(QStyle.CC_Slider, option,
-                                             QStyle.SC_SliderHandle)
+        handle = self.style().subControlRect(
+            QStyle.CC_Slider, option, QStyle.SC_SliderHandle
+        )
 
         # Draw tick marks
         # Do this manually because they are very badly behaved with stylesheets
@@ -56,17 +57,22 @@ class QStyledSlider(QSlider):
         if self.tickPosition() != QSlider.NoTicks:
             for i in range(self.minimum(), self.maximum() + 1, interval):
                 y = 0
-                x = round((i - self.minimum()) /
-                          slide_range *
-                          no_handle_size +
-                          handle_half_size
-                          ) - 1
+                x = (
+                    round(
+                        (i - self.minimum()) / slide_range * no_handle_size
+                        + handle_half_size
+                    )
+                    - 1
+                )
 
                 if self.orientation() == Qt.Vertical:
                     x, y = y, x
 
                 # QSlider.TicksAbove == QSlider.TicksLeft
-                if self.tickPosition() == QSlider.TicksBothSides or self.tickPosition() == QSlider.TicksAbove:
+                if (
+                    self.tickPosition() == QSlider.TicksBothSides
+                    or self.tickPosition() == QSlider.TicksAbove
+                ):
                     if self.orientation() == Qt.Horizontal:
                         y = self.rect().top()
                         painter.drawLine(x, y, x, y + tick)
@@ -75,7 +81,10 @@ class QStyledSlider(QSlider):
                         painter.drawLine(x, y, x + tick, y)
 
                 # QSlider.TicksBelow == QSlider.TicksRight
-                if self.tickPosition() == QSlider.TicksBothSides or self.tickPosition() == QSlider.TicksBelow:
+                if (
+                    self.tickPosition() == QSlider.TicksBothSides
+                    or self.tickPosition() == QSlider.TicksBelow
+                ):
                     if self.orientation() == Qt.Horizontal:
                         y = self.rect().bottom()
                         painter.drawLine(x, y, x, y - tick)

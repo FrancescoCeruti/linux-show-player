@@ -31,7 +31,7 @@ from lisp.cues.cue import Cue, CueAction, CueState
 
 
 class MediaCue(Cue):
-    Name = QT_TRANSLATE_NOOP('CueName', 'Media Cue')
+    Name = QT_TRANSLATE_NOOP("CueName", "Media Cue")
 
     media = Property()
     default_start_action = Property(default=CueAction.FadeInStart.value)
@@ -39,18 +39,24 @@ class MediaCue(Cue):
 
     CueActions = (
         CueAction.Default,
-        CueAction.Start, CueAction.FadeInStart,
-        CueAction.Resume, CueAction.FadeInResume,
-        CueAction.Stop, CueAction.FadeOutStop,
-        CueAction.Pause, CueAction.FadeOutPause,
-        CueAction.FadeOut, CueAction.FadeIn,
-        CueAction.Interrupt, CueAction.FadeOutInterrupt
+        CueAction.Start,
+        CueAction.FadeInStart,
+        CueAction.Resume,
+        CueAction.FadeInResume,
+        CueAction.Stop,
+        CueAction.FadeOutStop,
+        CueAction.Pause,
+        CueAction.FadeOutPause,
+        CueAction.FadeOut,
+        CueAction.FadeIn,
+        CueAction.Interrupt,
+        CueAction.FadeOutInterrupt,
     )
 
     def __init__(self, media, id=None):
         super().__init__(id=id)
         self.media = media
-        self.media.changed('duration').connect(self._duration_change)
+        self.media.changed("duration").connect(self._duration_change)
         self.media.elements_changed.connect(self.__elements_changed)
         self.media.error.connect(self._on_error)
         self.media.eos.connect(self._on_eos)
@@ -58,12 +64,12 @@ class MediaCue(Cue):
         self.__in_fadein = False
         self.__in_fadeout = False
 
-        self.__volume = self.media.element('Volume')
-        self.__fader = Fader(self.__volume, 'live_volume')
+        self.__volume = self.media.element("Volume")
+        self.__fader = Fader(self.__volume, "live_volume")
         self.__fade_lock = Lock()
 
     def __elements_changed(self):
-        self.__volume = self.media.element('Volume')
+        self.__volume = self.media.element("Volume")
         self.__fader.target = self.__volume
 
     def __start__(self, fade=False):
@@ -209,14 +215,15 @@ class MediaCue(Cue):
             self.__fadein(
                 self.fadein_duration,
                 self.__volume.volume,
-                FadeInType[self.fadein_type]
+                FadeInType[self.fadein_type],
             )
 
     def _on_stop_fade(self, interrupt=False):
         if interrupt:
-            duration = AppConfig().get('cue.interruptFade', 0)
+            duration = AppConfig().get("cue.interruptFade", 0)
             fade_type = AppConfig().get(
-                'cue.interruptFadeType', FadeOutType.Linear.name)
+                "cue.interruptFadeType", FadeOutType.Linear.name
+            )
         else:
             duration = self.fadeout_duration
             fade_type = self.fadeout_type

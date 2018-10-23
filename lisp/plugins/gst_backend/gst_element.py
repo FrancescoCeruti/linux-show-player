@@ -24,9 +24,9 @@ from lisp.core.util import typename
 
 
 class GstProperty(Property):
-
-    def __init__(self, element_name, property_name, default=None, adapter=None,
-                 **meta):
+    def __init__(
+        self, element_name, property_name, default=None, adapter=None, **meta
+    ):
         super().__init__(default=default, **meta)
         self.element_name = element_name
         self.property_name = property_name
@@ -44,7 +44,6 @@ class GstProperty(Property):
 
 
 class GstLiveProperty(Property):
-
     def __init__(self, element_name, property_name, adapter=None, **meta):
         super().__init__(**meta)
         self.element_name = element_name
@@ -122,7 +121,6 @@ class GstSrcElement(GstMediaElement):
 
 
 class GstMediaElements(HasInstanceProperties):
-
     def __init__(self):
         super().__init__()
         self.elements = []

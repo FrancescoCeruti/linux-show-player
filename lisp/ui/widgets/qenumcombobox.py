@@ -40,5 +40,5 @@ class QEnumComboBox(QComboBox):
                 item = self.enum[item]
 
             self.setCurrentText(self.trItem(item))
-        except(ValueError, KeyError):
+        except (ValueError, KeyError):
             pass

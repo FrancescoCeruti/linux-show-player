@@ -18,9 +18,18 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QDialog, QGridLayout, QComboBox, QListWidget, \
-    QAbstractItemView, QVBoxLayout, QPushButton, QDialogButtonBox, QWidget, \
-    QListWidgetItem
+from PyQt5.QtWidgets import (
+    QDialog,
+    QGridLayout,
+    QComboBox,
+    QListWidget,
+    QAbstractItemView,
+    QVBoxLayout,
+    QPushButton,
+    QDialogButtonBox,
+    QWidget,
+    QListWidgetItem,
+)
 
 from lisp.plugins.gst_backend import elements
 from lisp.ui.icons import IconTheme
@@ -61,13 +70,13 @@ class GstPipeEdit(QWidget):
         self.layout().setAlignment(self.buttonsLayout, Qt.AlignHCenter)
 
         self.addButton = QPushButton(self)
-        self.addButton.setIcon(IconTheme.get('go-previous'))
+        self.addButton.setIcon(IconTheme.get("go-previous"))
         self.addButton.clicked.connect(self.__add_plugin)
         self.buttonsLayout.addWidget(self.addButton)
         self.buttonsLayout.setAlignment(self.addButton, Qt.AlignHCenter)
 
         self.delButton = QPushButton(self)
-        self.delButton.setIcon(IconTheme.get('go-next'))
+        self.delButton.setIcon(IconTheme.get("go-next"))
         self.delButton.clicked.connect(self.__remove_plugin)
         self.buttonsLayout.addWidget(self.delButton)
         self.buttonsLayout.setAlignment(self.delButton, Qt.AlignHCenter)
@@ -79,10 +88,12 @@ class GstPipeEdit(QWidget):
         if pipe:
             if not self._app_mode:
                 self.inputBox.setCurrentText(
-                    translate('MediaElementName', elements.input_name(pipe[0])))
+                    translate("MediaElementName", elements.input_name(pipe[0]))
+                )
 
             self.outputBox.setCurrentText(
-                translate('MediaElementName', elements.output_name(pipe[-1])))
+                translate("MediaElementName", elements.output_name(pipe[-1]))
+            )
 
         self.__init_current_plugins(pipe)
         self.__init_available_plugins(pipe)
@@ -101,7 +112,7 @@ class GstPipeEdit(QWidget):
         else:
             inputs_by_name = {}
             for key, input in elements.inputs().items():
-                inputs_by_name[translate('MediaElementName', input.Name)] = key
+                inputs_by_name[translate("MediaElementName", input.Name)] = key
 
             for name in sorted(inputs_by_name):
                 self.inputBox.addItem(name, inputs_by_name[name])
@@ -111,7 +122,7 @@ class GstPipeEdit(QWidget):
     def __init_outputs(self):
         outputs_by_name = {}
         for key, output in elements.outputs().items():
-            outputs_by_name[translate('MediaElementName', output.Name)] = key
+            outputs_by_name[translate("MediaElementName", output.Name)] = key
 
         for name in sorted(outputs_by_name):
             self.outputBox.addItem(name, outputs_by_name[name])
@@ -126,7 +137,8 @@ class GstPipeEdit(QWidget):
         start = 0 if self._app_mode else 1
         for plugin in pipe[start:-1]:
             item = QListWidgetItem(
-                translate('MediaElementName', elements.plugin_name(plugin)))
+                translate("MediaElementName", elements.plugin_name(plugin))
+            )
             item.setData(Qt.UserRole, plugin)
             self.currentList.addItem(item)
 
@@ -136,7 +148,8 @@ class GstPipeEdit(QWidget):
         for plugin in elements.plugins():
             if plugin not in pipe:
                 item = QListWidgetItem(
-                    translate('MediaElementName', elements.plugin_name(plugin)))
+                    translate("MediaElementName", elements.plugin_name(plugin))
+                )
                 item.setData(Qt.UserRole, plugin)
                 self.availableList.addItem(item)
 
@@ -152,7 +165,7 @@ class GstPipeEdit(QWidget):
 class GstPipeEditDialog(QDialog):
     def __init__(self, pipe, app_mode=False, **kwargs):
         super().__init__(**kwargs)
-        self.setWindowTitle(translate('GstPipelineEdit', 'Edit Pipeline'))
+        self.setWindowTitle(translate("GstPipelineEdit", "Edit Pipeline"))
         self.setWindowModality(Qt.ApplicationModal)
         self.setMaximumSize(500, 400)
         self.setMinimumSize(500, 400)
@@ -165,8 +178,9 @@ class GstPipeEditDialog(QDialog):
 
         # Confirm/Cancel buttons
         self.dialogButtons = QDialogButtonBox(self)
-        self.dialogButtons.setStandardButtons(QDialogButtonBox.Cancel |
-                                              QDialogButtonBox.Ok)
+        self.dialogButtons.setStandardButtons(
+            QDialogButtonBox.Cancel | QDialogButtonBox.Ok
+        )
         self.layout().addWidget(self.dialogButtons)
 
         self.dialogButtons.accepted.connect(self.accept)

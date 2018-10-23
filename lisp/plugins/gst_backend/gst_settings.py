@@ -26,7 +26,7 @@ from lisp.ui.ui_utils import translate
 
 
 class GstSettings(SettingsPage):
-    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'GStreamer')
+    Name = QT_TRANSLATE_NOOP("SettingsPageName", "GStreamer")
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -37,17 +37,16 @@ class GstSettings(SettingsPage):
         self.pipeGroup.setLayout(QVBoxLayout())
         self.layout().addWidget(self.pipeGroup)
 
-        self.pipeEdit = GstPipeEdit('', app_mode=True)
+        self.pipeEdit = GstPipeEdit("", app_mode=True)
         self.pipeGroup.layout().addWidget(self.pipeEdit)
 
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.pipeGroup.setTitle(translate('GstSettings', 'Pipeline'))
+        self.pipeGroup.setTitle(translate("GstSettings", "Pipeline"))
 
     def loadSettings(self, settings):
-        self.pipeEdit.set_pipe(settings['pipeline'])
+        self.pipeEdit.set_pipe(settings["pipeline"])
 
     def getSettings(self):
-        return  {'pipeline': list(self.pipeEdit.get_pipe())}
-
+        return {"pipeline": list(self.pipeEdit.get_pipe())}

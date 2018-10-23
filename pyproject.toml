@@ -1,0 +1,12 @@
+[tool.black]
+line-length = 80
+py36 = true
+exclude = '''
+/(
+    \.git
+    | \.github
+    | \.tx
+    | dist
+    | docs
+)/
+'''

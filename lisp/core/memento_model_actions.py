@@ -25,7 +25,7 @@ from lisp.core.action import Action
 class MementoAction(Action):
     """Actions created by the MementoModel to register model changes."""
 
-    __slots__ = ('_m_model', '_model')
+    __slots__ = ("_m_model", "_model")
 
     def __init__(self, m_model, model):
         super().__init__()
@@ -60,7 +60,7 @@ class MementoAction(Action):
 
 class AddItemAction(MementoAction):
 
-    __slots__ = '_item'
+    __slots__ = "_item"
 
     def __init__(self, m_model, model, item):
         super().__init__(m_model, model)
@@ -75,7 +75,7 @@ class AddItemAction(MementoAction):
 
 class RemoveItemAction(MementoAction):
 
-    __slots__ = '_item'
+    __slots__ = "_item"
 
     def __init__(self, m_model, model, item):
         super().__init__(m_model, model)
@@ -90,7 +90,7 @@ class RemoveItemAction(MementoAction):
 
 class MoveItemAction(MementoAction):
 
-    __slots__ = ('_old_index', '_new_index')
+    __slots__ = ("_old_index", "_new_index")
 
     def __init__(self, m_model, model_adapter, old_index, new_index):
         super().__init__(m_model, model_adapter)

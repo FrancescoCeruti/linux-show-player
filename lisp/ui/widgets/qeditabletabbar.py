@@ -35,13 +35,11 @@ class QEditableTabBar(QTabBar):
         self._editor.installEventFilter(self)
 
     def eventFilter(self, widget, event):
-        clickOutside = (
-            event.type() == QEvent.MouseButtonPress and
-            not self._editor.geometry().contains(event.globalPos())
+        clickOutside = event.type() == QEvent.MouseButtonPress and not self._editor.geometry().contains(
+            event.globalPos()
         )
         escKey = (
-            event.type() == QEvent.KeyPress and
-            event.key() == Qt.Key_Escape
+            event.type() == QEvent.KeyPress and event.key() == Qt.Key_Escape
         )
 
         if clickOutside or escKey:

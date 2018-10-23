@@ -31,7 +31,7 @@ class CartPageWidget(QWidget):
     moveWidgetRequested = pyqtSignal(object, int, int)
     copyWidgetRequested = pyqtSignal(object, int, int)
 
-    DRAG_MAGIC = 'LiSP_Drag&Drop'
+    DRAG_MAGIC = "LiSP_Drag&Drop"
 
     def __init__(self, rows, columns, *args):
         super().__init__(*args)
@@ -64,7 +64,7 @@ class CartPageWidget(QWidget):
             self.layout().addWidget(widget, row, column)
             widget.show()
         else:
-            raise IndexError('cell {} already used'.format((row, column)))
+            raise IndexError("cell {} already used".format((row, column)))
 
     def takeWidget(self, row, column):
         self._checkIndex(row, column)
@@ -74,7 +74,7 @@ class CartPageWidget(QWidget):
             self.layout().removeWidget(widget)
             return widget
         else:
-            raise IndexError('cell {} is empty'.format((row, column)))
+            raise IndexError("cell {} is empty".format((row, column)))
 
     def moveWidget(self, o_row, o_column, n_row, n_column):
         widget = self.takeWidget(o_row, o_column)
@@ -132,11 +132,14 @@ class CartPageWidget(QWidget):
     def _checkIndex(self, row, column):
         if not isinstance(row, int):
             raise TypeError(
-                'rows index must be integers, not {}'.format(typename(row)))
+                "rows index must be integers, not {}".format(typename(row))
+            )
         if not isinstance(column, int):
             raise TypeError(
-                'columns index must be integers, not {}'.format(
-                    typename(column)))
+                "columns index must be integers, not {}".format(
+                    typename(column)
+                )
+            )
 
         if not 0 <= row < self.__rows or not 0 <= column < self.__columns:
-            raise IndexError('index out of bound {}'.format((row, column)))
+            raise IndexError("index out of bound {}".format((row, column)))

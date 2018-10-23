@@ -26,10 +26,10 @@ from . import assetes
 
 
 class Dark:
-    QssPath = os.path.join(os.path.dirname(__file__), 'theme.qss')
+    QssPath = os.path.join(os.path.dirname(__file__), "theme.qss")
 
     def apply(self, qt_app):
-        with open(Dark.QssPath, mode='r', encoding='utf-8') as f:
+        with open(Dark.QssPath, mode="r", encoding="utf-8") as f:
             qt_app.setStyleSheet(f.read())
 
         # Change link color

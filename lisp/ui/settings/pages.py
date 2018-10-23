@@ -26,7 +26,6 @@ from lisp.ui.widgets.pagestreewidget import PagesTreeWidget
 
 
 class SettingsPage(QWidget):
-
     def loadSettings(self, settings):
         """Load existing settings value into the widget
 
@@ -85,7 +84,7 @@ class SettingsPagesTabWidget(SettingsPage):
 
     def addPage(self, page):
         self._pages.append(page)
-        self.tabWidget.addTab(page, translate('SettingsPageName', page.Name))
+        self.tabWidget.addTab(page, translate("SettingsPageName", page.Name))
 
     def removePage(self, index):
         self.tabWidget.removeTab(index)

@@ -80,9 +80,11 @@ class SimpleTableModel(QAbstractTableModel):
         if index.isValid():
             if role == Qt.DisplayRole or role == Qt.EditRole:
                 self.rows[index.row()][index.column()] = value
-                self.dataChanged.emit(self.index(index.row(), 0),
-                                      self.index(index.row(), index.column()),
-                                      [Qt.DisplayRole, Qt.EditRole])
+                self.dataChanged.emit(
+                    self.index(index.row(), 0),
+                    self.index(index.row(), index.column()),
+                    [Qt.DisplayRole, Qt.EditRole],
+                )
                 return True
 
         return False

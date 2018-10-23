@@ -25,16 +25,19 @@ from lisp.ui.ui_utils import translate
 
 
 CueNextActionsStrings = {
-    CueNextAction.DoNothing: QT_TRANSLATE_NOOP(
-        'CueNextAction', 'Do Nothing'),
+    CueNextAction.DoNothing: QT_TRANSLATE_NOOP("CueNextAction", "Do Nothing"),
     CueNextAction.TriggerAfterEnd: QT_TRANSLATE_NOOP(
-        'CueNextAction', 'Trigger after the end'),
+        "CueNextAction", "Trigger after the end"
+    ),
     CueNextAction.TriggerAfterWait: QT_TRANSLATE_NOOP(
-        'CueNextAction', 'Trigger after post wait'),
+        "CueNextAction", "Trigger after post wait"
+    ),
     CueNextAction.SelectAfterEnd: QT_TRANSLATE_NOOP(
-        'CueNextAction', 'Select after the end'),
+        "CueNextAction", "Select after the end"
+    ),
     CueNextAction.SelectAfterWait: QT_TRANSLATE_NOOP(
-        'CueNextAction', 'Select after post wait')
+        "CueNextAction", "Select after post wait"
+    ),
 }
 
 
@@ -47,7 +50,8 @@ def tr_next_action(action):
     :rtype: str
     """
     return translate(
-        'CueNextAction', CueNextActionsStrings.get(action, action.name))
+        "CueNextAction", CueNextActionsStrings.get(action, action.name)
+    )
 
 
 class CueNextActionComboBox(QComboBox):

@@ -26,7 +26,7 @@ from lisp.ui.widgets import FadeEdit
 
 
 class CueAppSettings(SettingsPage):
-    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Cue Settings')
+    Name = QT_TRANSLATE_NOOP("SettingsPageName", "Cue Settings")
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -52,22 +52,22 @@ class CueAppSettings(SettingsPage):
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.interruptGroup.setTitle(translate('CueSettings', 'Interrupt fade'))
-        self.actionGroup.setTitle(translate('CueSettings', 'Fade actions'))
+        self.interruptGroup.setTitle(translate("CueSettings", "Interrupt fade"))
+        self.actionGroup.setTitle(translate("CueSettings", "Fade actions"))
 
     def applySettings(self):
         return {
-            'cue': {
-                'interruptFade': self.interruptFadeEdit.duration(),
-                'interruptFadeType': self.interruptFadeEdit.fadeType(),
-                'fadeAction': self.fadeActionEdit.duration(),
-                'fadeActionType': self.fadeActionEdit.fadeType()
+            "cue": {
+                "interruptFade": self.interruptFadeEdit.duration(),
+                "interruptFadeType": self.interruptFadeEdit.fadeType(),
+                "fadeAction": self.fadeActionEdit.duration(),
+                "fadeActionType": self.fadeActionEdit.fadeType(),
             }
         }
 
     def loadSettings(self, settings):
-        self.interruptFadeEdit.setDuration(settings['cue']['interruptFade'])
-        self.interruptFadeEdit.setFadeType(settings['cue']['interruptFadeType'])
+        self.interruptFadeEdit.setDuration(settings["cue"]["interruptFade"])
+        self.interruptFadeEdit.setFadeType(settings["cue"]["interruptFadeType"])
 
-        self.fadeActionEdit.setDuration(settings['cue']['fadeAction'])
-        self.fadeActionEdit.setFadeType(settings['cue']['fadeActionType'])
+        self.fadeActionEdit.setDuration(settings["cue"]["fadeAction"])
+        self.fadeActionEdit.setFadeType(settings["cue"]["fadeActionType"])

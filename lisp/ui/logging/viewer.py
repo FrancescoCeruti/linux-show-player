@@ -18,12 +18,25 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QAction, QToolBar, QMainWindow, QStatusBar, \
-    QLabel, QTableView, QVBoxLayout, QWidget, QSplitter
+from PyQt5.QtWidgets import (
+    QAction,
+    QToolBar,
+    QMainWindow,
+    QStatusBar,
+    QLabel,
+    QTableView,
+    QVBoxLayout,
+    QWidget,
+    QSplitter,
+)
 
 from lisp.ui.icons import IconTheme
-from lisp.ui.logging.common import LOG_LEVELS, LogAttributeRole, \
-    LOG_ICONS_NAMES, LogRecordRole
+from lisp.ui.logging.common import (
+    LOG_LEVELS,
+    LogAttributeRole,
+    LOG_ICONS_NAMES,
+    LogRecordRole,
+)
 from lisp.ui.logging.details import LogDetails
 from lisp.ui.logging.models import LogRecordFilterModel
 from lisp.ui.ui_utils import translate
@@ -42,7 +55,8 @@ class LogViewer(QMainWindow):
         """
         super().__init__(**kwargs)
         self.setWindowTitle(
-            translate('Logging', 'Linux Show Player - Log Viewer'))
+            translate("Logging", "Linux Show Player - Log Viewer")
+        )
         self.resize(800, 600)
         self.setCentralWidget(QSplitter())
         self.centralWidget().setOrientation(Qt.Vertical)
@@ -58,15 +72,12 @@ class LogViewer(QMainWindow):
         self.addToolBar(self.optionsToolBar)
         # Create level-toggle actions
         self.levelsActions = self._createActions(
-            self.optionsToolBar,
-            LOG_LEVELS,
-            LOG_ICONS_NAMES,
-            self._toggleLevel
+            self.optionsToolBar, LOG_LEVELS, LOG_ICONS_NAMES, self._toggleLevel
         )
 
         # Setup level filters and columns
-        visible_levels = config.get('logging.viewer.visibleLevels', ())
-        visible_columns = config.get('logging.viewer.visibleColumns', ())
+        visible_levels = config.get("logging.viewer.visibleLevels", ())
+        visible_columns = config.get("logging.viewer.visibleColumns", ())
         for level in visible_levels:
             self.levelsActions[level].setChecked(True)
 
@@ -92,7 +103,8 @@ class LogViewer(QMainWindow):
         # Setup visible columns
         for n in range(self.filterModel.columnCount()):
             column = self.filterModel.headerData(
-                n, Qt.Horizontal, LogAttributeRole)
+                n, Qt.Horizontal, LogAttributeRole
+            )
 
             self.logView.setColumnHidden(n, not column in visible_columns)
 
@@ -102,20 +114,23 @@ class LogViewer(QMainWindow):
         self.filterModel.modelReset.connect(self._rowsChanged)
 
         self.logView.selectionModel().selectionChanged.connect(
-            self._selectionChanged)
+            self._selectionChanged
+        )
 
     def _selectionChanged(self, selection):
         if selection.indexes():
             self.detailsView.setLogRecord(
-                self.filterModel.data(selection.indexes()[0], LogRecordRole))
+                self.filterModel.data(selection.indexes()[0], LogRecordRole)
+            )
         else:
             self.detailsView.setLogRecord(None)
 
     def _rowsChanged(self):
         self.statusLabel.setText(
-            'Showing {} of {} records'.format(
+            "Showing {} of {} records".format(
                 self.filterModel.rowCount(),
-                self.filterModel.sourceModel().rowCount())
+                self.filterModel.sourceModel().rowCount(),
+            )
         )
         self.logView.resizeColumnsToContents()
         # QT Misbehavior: we need to reset the flag
@@ -132,8 +147,7 @@ class LogViewer(QMainWindow):
         menu_actions = {}
         for key, name in actions.items():
             action = QAction(
-                IconTheme.get(icons.get(key)),
-                translate('Logging', name)
+                IconTheme.get(icons.get(key)), translate("Logging", name)
             )
             action.setCheckable(True)
             action.triggered.connect(self._actionSlot(trigger_slot, key))

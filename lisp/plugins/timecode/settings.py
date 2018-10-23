@@ -20,8 +20,15 @@
 
 
 from PyQt5.QtCore import QT_TRANSLATE_NOOP, Qt
-from PyQt5.QtWidgets import QGridLayout, QVBoxLayout, QGroupBox, \
-    QLabel, QCheckBox, QSpinBox, QComboBox
+from PyQt5.QtWidgets import (
+    QGridLayout,
+    QVBoxLayout,
+    QGroupBox,
+    QLabel,
+    QCheckBox,
+    QSpinBox,
+    QComboBox,
+)
 
 from lisp.plugins.timecode import protocols
 from lisp.plugins.timecode.cue_tracker import TcFormat
@@ -30,7 +37,7 @@ from lisp.ui.ui_utils import translate
 
 
 class TimecodeSettings(CueSettingsPage):
-    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Timecode')
+    Name = QT_TRANSLATE_NOOP("SettingsPageName", "Timecode")
 
     def __init__(self, cueType, **kwargs):
         super().__init__(cueType, **kwargs)
@@ -65,40 +72,42 @@ class TimecodeSettings(CueSettingsPage):
 
         self.warnLabel = QLabel(self)
         self.warnLabel.setAlignment(Qt.AlignCenter)
-        self.warnLabel.setStyleSheet('color: #FFA500; font-weight: bold')
+        self.warnLabel.setStyleSheet("color: #FFA500; font-weight: bold")
         self.layout().addWidget(self.warnLabel)
 
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.groupBox.setTitle('Timecode')
+        self.groupBox.setTitle("Timecode")
         self.useHoursCheck.setText(
-            translate('TimecodeSettings',
-                      'Replace HOURS by a static track number'))
+            translate(
+                "TimecodeSettings", "Replace HOURS by a static track number"
+            )
+        )
         self.enableTimecodeCheck.setText(
-            translate('TimecodeSettings', 'Enable Timecode'))
-        self.trackLabel.setText(
-            translate('TimecodeSettings', 'Track number'))
+            translate("TimecodeSettings", "Enable Timecode")
+        )
+        self.trackLabel.setText(translate("TimecodeSettings", "Track number"))
 
     def getSettings(self):
         return {
-            'timecode': {
-                'enabled': self.enableTimecodeCheck.isChecked(),
-                'replace_hours': self.useHoursCheck.isChecked(),
-                'track': self.trackSpin.value()
+            "timecode": {
+                "enabled": self.enableTimecodeCheck.isChecked(),
+                "replace_hours": self.useHoursCheck.isChecked(),
+                "track": self.trackSpin.value(),
             }
         }
 
     def loadSettings(self, settings):
-        settings = settings.get('timecode', {})
+        settings = settings.get("timecode", {})
 
-        self.enableTimecodeCheck.setChecked(settings.get('enabled', False))
-        self.useHoursCheck.setChecked(settings.get('replace_hours', False))
-        self.trackSpin.setValue(settings.get('track', 0))
+        self.enableTimecodeCheck.setChecked(settings.get("enabled", False))
+        self.useHoursCheck.setChecked(settings.get("replace_hours", False))
+        self.trackSpin.setValue(settings.get("track", 0))
 
 
 class TimecodeAppSettings(SettingsPage):
-    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Timecode Settings')
+    Name = QT_TRANSLATE_NOOP("SettingsPageName", "Timecode Settings")
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -129,18 +138,21 @@ class TimecodeAppSettings(SettingsPage):
 
     def retranslateUi(self):
         self.groupBox.setTitle(
-            translate('TimecodeSettings', 'Timecode Settings'))
+            translate("TimecodeSettings", "Timecode Settings")
+        )
         self.formatLabel.setText(
-            translate('TimecodeSettings', 'Timecode Format:'))
+            translate("TimecodeSettings", "Timecode Format:")
+        )
         self.protocolLabel.setText(
-            translate('TimecodeSettings', 'Timecode Protocol:'))
+            translate("TimecodeSettings", "Timecode Protocol:")
+        )
 
     def getSettings(self):
         return {
-            'format': self.formatBox.currentText(),
-            'protocol': self.protocolCombo.currentText()
+            "format": self.formatBox.currentText(),
+            "protocol": self.protocolCombo.currentText(),
         }
 
     def loadSettings(self, settings):
-        self.formatBox.setCurrentText(settings['format'])
-        self.protocolCombo.setCurrentText(settings['protocol'])
+        self.formatBox.setCurrentText(settings["format"])
+        self.protocolCombo.setCurrentText(settings["protocol"])

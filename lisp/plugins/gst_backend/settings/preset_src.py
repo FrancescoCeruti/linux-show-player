@@ -35,7 +35,7 @@ class PresetSrcSettings(SettingsPage):
         self.layout().setAlignment(Qt.AlignTop)
 
         self.functionGroup = QGroupBox(self)
-        self.functionGroup.setTitle(translate('PresetSrcSettings', 'Presets'))
+        self.functionGroup.setTitle(translate("PresetSrcSettings", "Presets"))
         self.functionGroup.setLayout(QVBoxLayout())
         self.layout().addWidget(self.functionGroup)
 
@@ -46,7 +46,7 @@ class PresetSrcSettings(SettingsPage):
             self.functionCombo.addItem(function)
 
         self.functionDuration = QTimeEdit(self.functionGroup)
-        self.functionDuration.setDisplayFormat('HH.mm.ss.zzz')
+        self.functionDuration.setDisplayFormat("HH.mm.ss.zzz")
         self.functionGroup.layout().addWidget(self.functionDuration)
 
     def enableCheck(self, enabled):
@@ -54,14 +54,19 @@ class PresetSrcSettings(SettingsPage):
         self.functionGroup.setChecked(False)
 
     def getSettings(self):
-        if not (self.functionGroup.isCheckable() and not self.functionGroup.isChecked()):
-            return {'preset': self.functionCombo.currentText(),
-                    'duration': self.functionDuration.time().
-                        msecsSinceStartOfDay()}
+        if not (
+            self.functionGroup.isCheckable()
+            and not self.functionGroup.isChecked()
+        ):
+            return {
+                "preset": self.functionCombo.currentText(),
+                "duration": self.functionDuration.time().msecsSinceStartOfDay(),
+            }
 
         return {}
 
     def loadSettings(self, settings):
-        self.functionCombo.setCurrentText(settings.get('preset', ''))
+        self.functionCombo.setCurrentText(settings.get("preset", ""))
         self.functionDuration.setTime(
-            QTime.fromMSecsSinceStartOfDay(settings.get('duration', 0)))
+            QTime.fromMSecsSinceStartOfDay(settings.get("duration", 0))
+        )

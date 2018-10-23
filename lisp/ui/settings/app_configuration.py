@@ -30,7 +30,7 @@ from lisp.ui.widgets.pagestreewidget import PagesTreeModel, PagesTreeWidget
 
 logger = logging.getLogger(__name__)
 
-PageEntry = namedtuple('PageEntry', ('page', 'config'))
+PageEntry = namedtuple("PageEntry", ("page", "config"))
 
 
 class AppConfigurationDialog(QDialog):
@@ -38,7 +38,7 @@ class AppConfigurationDialog(QDialog):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.setWindowTitle(translate('AppConfiguration', 'LiSP preferences'))
+        self.setWindowTitle(translate("AppConfiguration", "LiSP preferences"))
         self.setWindowModality(QtCore.Qt.WindowModal)
         self.setMaximumSize(800, 510)
         self.setMinimumSize(800, 510)
@@ -56,18 +56,21 @@ class AppConfigurationDialog(QDialog):
 
         self.dialogButtons = QDialogButtonBox(self)
         self.dialogButtons.setStandardButtons(
-            QDialogButtonBox.Cancel |
-            QDialogButtonBox.Apply |
-            QDialogButtonBox.Ok
+            QDialogButtonBox.Cancel
+            | QDialogButtonBox.Apply
+            | QDialogButtonBox.Ok
         )
         self.layout().addWidget(self.dialogButtons)
 
         self.dialogButtons.button(QDialogButtonBox.Cancel).clicked.connect(
-            self.reject)
+            self.reject
+        )
         self.dialogButtons.button(QDialogButtonBox.Apply).clicked.connect(
-            self.applySettings)
+            self.applySettings
+        )
         self.dialogButtons.button(QDialogButtonBox.Ok).clicked.connect(
-            self.__onOk)
+            self.__onOk
+        )
 
     def applySettings(self):
         for conf, pages in self._confsMap.items():
@@ -98,16 +101,16 @@ class AppConfigurationDialog(QDialog):
                 self._confsMap.setdefault(config, []).append(page_instance)
         except Exception:
             if not isinstance(page_class, type):
-                page_name = 'InvalidPage'
+                page_name = "InvalidPage"
             else:
-                page_name = getattr(page_class, 'Name', page_class.__name__)
+                page_name = getattr(page_class, "Name", page_class.__name__)
 
             logger.warning(
                 translate(
-                    'AppConfigurationWarning',
-                    'Cannot load configuration page: "{}" ({})'
+                    "AppConfigurationWarning",
+                    'Cannot load configuration page: "{}" ({})',
                 ).format(page_name, r_parent.path()),
-                exc_info=True
+                exc_info=True,
             )
         else:
             for r_node in r_parent.children:
@@ -126,7 +129,8 @@ class AppConfigurationDialog(QDialog):
         :type config: lisp.core.configuration.Configuration
         """
         AppConfigurationDialog.PagesRegistry.set(
-            path, PageEntry(page=page, config=config))
+            path, PageEntry(page=page, config=config)
+        )
 
     @staticmethod
     def unregisterSettingsPage(path):

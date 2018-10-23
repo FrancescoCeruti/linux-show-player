@@ -23,7 +23,6 @@ from PyQt5.QtWidgets import QLabel
 
 
 class QVerticalLabel(QLabel):
-
     def paintEvent(self, event):
         painter = QPainter(self)
         painter.rotate(-90)
@@ -35,7 +34,7 @@ class QVerticalLabel(QLabel):
 
         self.setMaximumWidth(hint.height())
         self.setMinimumWidth(0)
-        self.setMaximumHeight(16777215)
+        self.setMaximumHeight(16_777_215)
         self.setMinimumHeight(hint.width())
 
     def sizeHint(self):

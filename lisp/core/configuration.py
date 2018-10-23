@@ -45,13 +45,12 @@ class ConfDictError(Exception):
 class ConfDict:
     """Allow to access nested-dictionaries values using "paths"."""
 
-    def __init__(self, root=None, sep='.'):
+    def __init__(self, root=None, sep="."):
         if not sep:
-            raise ValueError('ConfDict separator cannot be empty')
+            raise ValueError("ConfDict separator cannot be empty")
         if not isinstance(sep, str):
             raise TypeError(
-                'ConfDict separator must be a str, not {}'.format(
-                    typename(sep))
+                "ConfDict separator must be a str, not {}".format(typename(sep))
             )
 
         self._sep = sep
@@ -62,8 +61,7 @@ class ConfDict:
             self._root = root
         else:
             raise TypeError(
-                'ConfDict root must be a dict, not {}'.format(
-                    typename(root))
+                "ConfDict root must be a dict, not {}".format(typename(root))
             )
 
     def get(self, path, default=_UNSET):
@@ -74,13 +72,13 @@ class ConfDict:
             if default is not _UNSET:
                 logger.warning(
                     translate(
-                        'ConfigurationWarning',
-                        'Invalid path "{}", return default.'
+                        "ConfigurationWarning",
+                        'Invalid path "{}", return default.',
                     ).format(path)
                 )
                 return default
 
-            raise ConfDictError('invalid path')
+            raise ConfDictError("invalid path")
 
     def set(self, path, value):
         try:
@@ -91,14 +89,14 @@ class ConfDict:
 
             return False
         except (KeyError, TypeError):
-            raise ConfDictError('invalid path')
+            raise ConfDictError("invalid path")
 
     def pop(self, path):
         try:
             node, key = self.__traverse(self.sp(path), self._root)
             return node.pop(key)
         except (KeyError, TypeError):
-            raise ConfDictError('invalid path')
+            raise ConfDictError("invalid path")
 
     def update(self, new_conf):
         """Update the ConfDict using the given dictionary.
@@ -218,12 +216,12 @@ class JSONFileConfiguration(Configuration):
         self._root = self._read_json(self.user_path)
 
     def write(self):
-        with open(self.user_path, 'w') as f:
+        with open(self.user_path, "w") as f:
             json.dump(self._root, f, indent=True)
 
         logger.debug(
             translate(
-                'ConfigurationDebug', 'Configuration written at {}'
+                "ConfigurationDebug", "Configuration written at {}"
             ).format(self.user_path)
         )
 
@@ -232,11 +230,11 @@ class JSONFileConfiguration(Configuration):
         if path.exists(self.user_path):
             # Read default configuration
             default = self._read_json(self.default_path)
-            default = default.get('_version_', object())
+            default = default.get("_version_", object())
 
             # Read user configuration
             user = self._read_json(self.user_path)
-            user = user.get('_version_', object())
+            user = user.get("_version_", object())
 
             # if the user and default version are the same we are good
             if user == default:
@@ -246,13 +244,13 @@ class JSONFileConfiguration(Configuration):
         copyfile(self.default_path, self.user_path)
         logger.info(
             translate(
-                'ConfigurationInfo', 'New configuration installed at {}'
+                "ConfigurationInfo", "New configuration installed at {}"
             ).format(self.user_path)
         )
 
     @staticmethod
     def _read_json(path):
-        with open(path, 'r') as f:
+        with open(path, "r") as f:
             return json.load(f)
 
 

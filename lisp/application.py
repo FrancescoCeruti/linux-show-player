@@ -61,13 +61,17 @@ class Application(metaclass=Singleton):
 
         # Register general settings widget
         AppConfigurationDialog.registerSettingsPage(
-            'general', AppGeneral, self.conf)
+            "general", AppGeneral, self.conf
+        )
         AppConfigurationDialog.registerSettingsPage(
-            'general.cue', CueAppSettings, self.conf)
+            "general.cue", CueAppSettings, self.conf
+        )
         AppConfigurationDialog.registerSettingsPage(
-            'layouts', LayoutsSettings, self.conf)
+            "layouts", LayoutsSettings, self.conf
+        )
         AppConfigurationDialog.registerSettingsPage(
-            'plugins', PluginsSettings, self.conf)
+            "plugins", PluginsSettings, self.conf
+        )
 
         # Register common cue-settings widgets
         CueSettingsRegistry().add(CueGeneralSettingsPage, Cue)
@@ -99,16 +103,16 @@ class Application(metaclass=Singleton):
         """:rtype: lisp.cues.cue_model.CueModel"""
         return self.__cue_model
 
-    def start(self, session_file=''):
+    def start(self, session_file=""):
         # Show the mainWindow maximized
         self.__main_window.showMaximized()
 
         if exists(session_file):
             self._load_from_file(session_file)
         else:
-            layout_name = self.conf.get('layout.default', 'nodefault')
+            layout_name = self.conf.get("layout.default", "nodefault")
 
-            if layout_name.lower() != 'nodefault':
+            if layout_name.lower() != "nodefault":
                 self._new_session(layout.get_layout(layout_name))
             else:
                 self._new_session_dialog()
@@ -139,7 +143,8 @@ class Application(metaclass=Singleton):
                     exit(0)
         except Exception:
             logger.critical(
-                translate('ApplicationError', 'Startup error'), exc_info=True)
+                translate("ApplicationError", "Startup error"), exc_info=True
+            )
             qApp.quit()
 
     def _new_session(self, layout):
@@ -164,23 +169,24 @@ class Application(metaclass=Singleton):
         self.session.session_file = session_file
 
         # Add the cues
-        session_dict = {'cues': []}
+        session_dict = {"cues": []}
 
         for cue in self.__cue_model:
-            session_dict['cues'].append(
-                cue.properties(defaults=False, filter=filter_live_properties))
+            session_dict["cues"].append(
+                cue.properties(defaults=False, filter=filter_live_properties)
+            )
         # Sort cues by index, allow sorted-models to load properly
-        session_dict['cues'].sort(key=lambda cue: cue['index'])
+        session_dict["cues"].sort(key=lambda cue: cue["index"])
 
         # Get session settings
-        session_dict['session'] = self.__session.properties()
+        session_dict["session"] = self.__session.properties()
         # Remove the 'session_file' property (not needed in the session file)
-        session_dict['session'].pop('session_file', None)
+        session_dict["session"].pop("session_file", None)
 
         # Write to a file the json-encoded dictionary
-        with open(session_file, mode='w', encoding='utf-8') as file:
-            if self.conf['session.minSave']:
-                file.write(json.dumps(session_dict, separators=(',', ':')))
+        with open(session_file, mode="w", encoding="utf-8") as file:
+            if self.conf["session.minSave"]:
+                file.write(json.dumps(session_dict, separators=(",", ":")))
             else:
                 file.write(json.dumps(session_dict, sort_keys=True, indent=4))
 
@@ -190,36 +196,40 @@ class Application(metaclass=Singleton):
     def _load_from_file(self, session_file):
         """ Load a saved session from file """
         try:
-            with open(session_file, mode='r', encoding='utf-8') as file:
+            with open(session_file, mode="r", encoding="utf-8") as file:
                 session_dict = json.load(file)
 
             # New session
             self._new_session(
-                layout.get_layout(session_dict['session']['layout_type']))
-            self.__session.update_properties(session_dict['session'])
+                layout.get_layout(session_dict["session"]["layout_type"])
+            )
+            self.__session.update_properties(session_dict["session"])
             self.__session.session_file = session_file
 
             # Load cues
-            for cues_dict in session_dict.get('cues', {}):
-                cue_type = cues_dict.pop('_type_', 'Undefined')
-                cue_id = cues_dict.pop('id')
+            for cues_dict in session_dict.get("cues", {}):
+                cue_type = cues_dict.pop("_type_", "Undefined")
+                cue_id = cues_dict.pop("id")
                 try:
                     cue = CueFactory.create_cue(cue_type, cue_id=cue_id)
                     cue.update_properties(cues_dict)
                     self.__cue_model.add(cue)
                 except Exception:
-                    name = cues_dict.get('name', 'No name')
-                    logger.exception(translate(
-                        'ApplicationError', 'Unable to create the cue "{}"'
-                            .format(name))
+                    name = cues_dict.get("name", "No name")
+                    logger.exception(
+                        translate(
+                            "ApplicationError",
+                            'Unable to create the cue "{}"'.format(name),
+                        )
                     )
 
             MainActionsHandler.set_saved()
             self.__main_window.update_window_title()
         except Exception:
-            logger.exception(translate(
-                'ApplicationError',
-                'Error while reading the session file "{}"')
-                             .format(session_file)
+            logger.exception(
+                translate(
+                    "ApplicationError",
+                    'Error while reading the session file "{}"',
+                ).format(session_file)
             )
             self._new_session_dialog()

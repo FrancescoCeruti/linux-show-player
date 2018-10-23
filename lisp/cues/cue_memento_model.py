@@ -18,8 +18,11 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from lisp.core.memento_model import MementoModelAdapter
-from lisp.core.memento_model_actions import AddItemAction, MoveItemAction, \
-    RemoveItemAction
+from lisp.core.memento_model_actions import (
+    AddItemAction,
+    MoveItemAction,
+    RemoveItemAction,
+)
 
 
 class CueMementoAdapter(MementoModelAdapter):
@@ -31,6 +34,7 @@ class CueMementoAdapter(MementoModelAdapter):
 
 
 # TODO: keep only the cue-properties for the cue-removed/added action ??
+
 
 class CueAddAction(AddItemAction):
     def log(self):
@@ -45,4 +49,5 @@ class CueRemoveAction(RemoveItemAction):
 class CueMoveAction(MoveItemAction):
     def log(self):
         return 'Move cue from "{}" to "{}"'.format(
-            self._old_index + 1, self._new_index + 1)
+            self._old_index + 1, self._new_index + 1
+        )

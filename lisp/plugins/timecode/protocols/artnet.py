@@ -30,14 +30,14 @@ from lisp.ui.ui_utils import translate
 ARTNET_FORMATS = {
     TcFormat.FILM: OlaClient.TIMECODE_FILM,
     TcFormat.EBU: OlaClient.TIMECODE_EBU,
-    TcFormat.SMPTE: OlaClient.TIMECODE_SMPTE
+    TcFormat.SMPTE: OlaClient.TIMECODE_SMPTE,
 }
 
 logger = logging.getLogger(__name__)
 
 
 class Artnet(TimecodeProtocol):
-    Name = 'ArtNet'
+    Name = "ArtNet"
 
     def __init__(self):
         super().__init__()
@@ -60,16 +60,20 @@ class Artnet(TimecodeProtocol):
 
         try:
             self.__client.SendTimeCode(
-                ARTNET_FORMATS[fmt], hours, minutes, seconds, frame)
+                ARTNET_FORMATS[fmt], hours, minutes, seconds, frame
+            )
         except OLADNotRunningException:
-            logger.error(translate(
-                'TimecodeError',
-                'Cannot send timecode. \nOLA daemon has stopped.')
+            logger.error(
+                translate(
+                    "TimecodeError",
+                    "Cannot send timecode. \nOLA daemon has stopped.",
+                )
             )
             return False
         except Exception:
             logger.exception(
-                translate('TimecodeError', 'Cannot send timecode.'))
+                translate("TimecodeError", "Cannot send timecode.")
+            )
             return False
 
         self.__last_time = time

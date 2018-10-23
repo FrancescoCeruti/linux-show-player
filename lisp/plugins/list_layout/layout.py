@@ -27,7 +27,11 @@ from lisp.core.signal import Connection
 from lisp.cues.cue import Cue, CueAction, CueNextAction
 from lisp.cues.cue_memento_model import CueMementoAdapter
 from lisp.layout.cue_layout import CueLayout
-from lisp.layout.cue_menu import SimpleMenuAction, MENU_PRIORITY_CUE, MenuActionsGroup
+from lisp.layout.cue_menu import (
+    SimpleMenuAction,
+    MENU_PRIORITY_CUE,
+    MenuActionsGroup,
+)
 from lisp.plugins.list_layout.list_view import CueListView
 from lisp.plugins.list_layout.models import CueListModel, RunningCueModel
 from lisp.plugins.list_layout.view import ListLayoutView
@@ -35,16 +39,18 @@ from lisp.ui.ui_utils import translate
 
 
 class ListLayout(CueLayout):
-    NAME = QT_TRANSLATE_NOOP('LayoutName', 'List Layout')
+    NAME = QT_TRANSLATE_NOOP("LayoutName", "List Layout")
     DESCRIPTION = QT_TRANSLATE_NOOP(
-        'LayoutDescription', 'Organize the cues in a list')
+        "LayoutDescription", "Organize the cues in a list"
+    )
     DETAILS = [
         QT_TRANSLATE_NOOP(
-            'LayoutDetails', 'SHIFT + Space or Double-Click to edit a cue'),
+            "LayoutDetails", "SHIFT + Space or Double-Click to edit a cue"
+        ),
         QT_TRANSLATE_NOOP(
-            'LayoutDetails', 'To copy cues drag them while pressing CTRL'),
-        QT_TRANSLATE_NOOP(
-            'LayoutDetails', 'To move cues drag them')
+            "LayoutDetails", "To copy cues drag them while pressing CTRL"
+        ),
+        QT_TRANSLATE_NOOP("LayoutDetails", "To move cues drag them"),
     ]
     Config = DummyConfiguration()
 
@@ -63,16 +69,21 @@ class ListLayout(CueLayout):
         self._running_model = RunningCueModel(self.cue_model)
 
         self._view = ListLayoutView(
-            self._list_model, self._running_model, self.Config)
+            self._list_model, self._running_model, self.Config
+        )
         # GO button
         self._view.goButton.clicked.connect(self.__go_slot)
         # Global actions
         self._view.controlButtons.stopButton.clicked.connect(self.stop_all)
         self._view.controlButtons.pauseButton.clicked.connect(self.pause_all)
         self._view.controlButtons.fadeInButton.clicked.connect(self.fadein_all)
-        self._view.controlButtons.fadeOutButton.clicked.connect(self.fadeout_all)
+        self._view.controlButtons.fadeOutButton.clicked.connect(
+            self.fadeout_all
+        )
         self._view.controlButtons.resumeButton.clicked.connect(self.resume_all)
-        self._view.controlButtons.interruptButton.clicked.connect(self.interrupt_all)
+        self._view.controlButtons.interruptButton.clicked.connect(
+            self.interrupt_all
+        )
         # Cue list
         self._view.listView.itemDoubleClicked.connect(self._double_clicked)
         self._view.listView.contextMenuInvoked.connect(self._context_invoked)
@@ -113,28 +124,29 @@ class ListLayout(CueLayout):
 
         # Load settings
         self._go_key_sequence = QKeySequence(
-            ListLayout.Config['goKey'], QKeySequence.NativeText)
-        self._set_seeksliders_visible(ListLayout.Config['show.seekSliders'])
-        self._set_running_visible(ListLayout.Config['show.playingCues'])
-        self._set_accurate_time(ListLayout.Config['show.accurateTime'])
-        self._set_dbmeters_visible(ListLayout.Config['show.dBMeters'])
-        self._set_selection_mode(ListLayout.Config['selectionMode'])
-        self._set_auto_continue(ListLayout.Config['autoContinue'])
+            ListLayout.Config["goKey"], QKeySequence.NativeText
+        )
+        self._set_seeksliders_visible(ListLayout.Config["show.seekSliders"])
+        self._set_running_visible(ListLayout.Config["show.playingCues"])
+        self._set_accurate_time(ListLayout.Config["show.accurateTime"])
+        self._set_dbmeters_visible(ListLayout.Config["show.dBMeters"])
+        self._set_selection_mode(ListLayout.Config["selectionMode"])
+        self._set_auto_continue(ListLayout.Config["autoContinue"])
 
         # Context menu actions
         self._edit_actions_group = MenuActionsGroup(priority=MENU_PRIORITY_CUE)
         self._edit_actions_group.add(
             SimpleMenuAction(
-                translate('ListLayout', 'Edit cue'),
+                translate("ListLayout", "Edit cue"),
                 self.edit_cue,
-                translate('ListLayout', 'Edit selected cues'),
+                translate("ListLayout", "Edit selected cues"),
                 self.edit_cues,
             ),
             SimpleMenuAction(
-                translate('ListLayout', 'Remove cue'),
+                translate("ListLayout", "Remove cue"),
                 self.cue_model.remove,
-                translate('ListLayout', 'Remove selected cues'),
-                self._remove_cues
+                translate("ListLayout", "Remove selected cues"),
+                self._remove_cues,
             ),
         )
 
@@ -144,16 +156,21 @@ class ListLayout(CueLayout):
 
     def retranslate(self):
         self.show_running_action.setText(
-            translate('ListLayout', 'Show playing cues'))
+            translate("ListLayout", "Show playing cues")
+        )
         self.show_dbmeter_action.setText(
-            translate('ListLayout', 'Show dB-meters'))
-        self.show_seek_action.setText(translate('ListLayout', 'Show seek-bars'))
+            translate("ListLayout", "Show dB-meters")
+        )
+        self.show_seek_action.setText(translate("ListLayout", "Show seek-bars"))
         self.show_accurate_action.setText(
-            translate('ListLayout', 'Show accurate time'))
+            translate("ListLayout", "Show accurate time")
+        )
         self.auto_continue_action.setText(
-            translate('ListLayout', 'Auto-select next cue'))
+            translate("ListLayout", "Auto-select next cue")
+        )
         self.selection_mode_action.setText(
-            translate('ListLayout', 'Selection mode'))
+            translate("ListLayout", "Selection mode")
+        )
 
     def cues(self, cue_type=Cue):
         yield from self._list_model
@@ -182,7 +199,8 @@ class ListLayout(CueLayout):
     def selected_cues(self, cue_type=Cue):
         for item in self._view.listView.selectedItems():
             yield self._list_model.item(
-                self._view.listView.indexOfTopLevelItem(item))
+                self._view.listView.indexOfTopLevelItem(item)
+            )
 
     def finalize(self):
         # Clean layout menu
@@ -316,7 +334,7 @@ class ListLayout(CueLayout):
             self.show_context_menu(event.globalPos())
 
     def __go_slot(self):
-        action = CueAction(ListLayout.Config.get('goAction'))
+        action = CueAction(ListLayout.Config.get("goAction"))
         self.go(action=action)
 
     def __cue_added(self, cue):
@@ -327,8 +345,10 @@ class ListLayout(CueLayout):
             next_index = cue.index + 1
             if next_index < len(self._list_model):
                 action = CueNextAction(cue.next_action)
-                if (action == CueNextAction.SelectAfterEnd or
-                        action == CueNextAction.SelectAfterWait):
+                if (
+                    action == CueNextAction.SelectAfterEnd
+                    or action == CueNextAction.SelectAfterWait
+                ):
                     self.set_standby_index(next_index)
                 else:
                     next_cue = self._list_model.item(next_index)
@@ -336,5 +356,5 @@ class ListLayout(CueLayout):
 
                     if self.auto_continue and next_cue is self.standby_cue():
                         self.set_standby_index(next_index + 1)
-        except(IndexError, KeyError):
+        except (IndexError, KeyError):
             pass

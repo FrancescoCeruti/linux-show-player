@@ -25,7 +25,7 @@ from lisp.ui.ui_utils import translate
 
 class UpdateCueAction(Action):
 
-    __slots__ = ('__cue', '__new', '__old')
+    __slots__ = ("__cue", "__new", "__old")
 
     def __init__(self, properties, cue):
         self.__cue = cue
@@ -45,13 +45,14 @@ class UpdateCueAction(Action):
         self.do()
 
     def log(self):
-        return translate('CueActionLog',
-                         'Cue settings changed: "{}"').format(self.__cue.name)
+        return translate("CueActionLog", 'Cue settings changed: "{}"').format(
+            self.__cue.name
+        )
 
 
 class UpdateCuesAction(Action):
 
-    __slots__ = ('__cues', '__new', '__old')
+    __slots__ = ("__cues", "__new", "__old")
 
     def __init__(self, properties, cues):
         self.__cues = cues
@@ -73,4 +74,4 @@ class UpdateCuesAction(Action):
         self.do()
 
     def log(self):
-        return translate('CueActionLog', 'Cues settings changed.')
+        return translate("CueActionLog", "Cues settings changed.")

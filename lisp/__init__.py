@@ -19,23 +19,23 @@
 
 from os import path
 
-__author__ = 'Francesco Ceruti'
-__email__ = 'ceppofrancy@gmail.com'
-__url__ = 'https://github.com/FrancescoCeruti/linux-show-player'
-__license__ = 'GPLv3'
-__version__ = '0.6dev'
+__author__ = "Francesco Ceruti"
+__email__ = "ceppofrancy@gmail.com"
+__url__ = "https://github.com/FrancescoCeruti/linux-show-player"
+__license__ = "GPLv3"
+__version__ = "0.6dev"
 
 # Application wide "constants"
 APP_DIR = path.dirname(__file__)
 
-USER_DIR = path.join(path.expanduser("~"), '.linux_show_player')
+USER_DIR = path.join(path.expanduser("~"), ".linux_show_player")
 
-LOGS_DIR = path.join(USER_DIR, 'logs')
+LOGS_DIR = path.join(USER_DIR, "logs")
 
-DEFAULT_APP_CONFIG = path.join(APP_DIR, 'default.json')
-USER_APP_CONFIG = path.join(USER_DIR, 'lisp.json')
+DEFAULT_APP_CONFIG = path.join(APP_DIR, "default.json")
+USER_APP_CONFIG = path.join(USER_DIR, "lisp.json")
 
-I18N_PATH = path.join(APP_DIR, 'i18n', 'qm')
+I18N_PATH = path.join(APP_DIR, "i18n", "qm")
 
-ICON_THEMES_DIR = path.join(APP_DIR, 'ui', 'icons')
-ICON_THEME_COMMON = 'lisp'
+ICON_THEMES_DIR = path.join(APP_DIR, "ui", "icons")
+ICON_THEME_COMMON = "lisp"

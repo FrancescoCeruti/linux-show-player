@@ -25,7 +25,7 @@ from lisp.ui.widgets.qeditabletabbar import QEditableTabBar
 
 
 class CartTabWidget(QTabWidget):
-    DRAG_MAGIC = 'LiSP_Drag&Drop'
+    DRAG_MAGIC = "LiSP_Drag&Drop"
 
     keyPressed = pyqtSignal(QKeyEvent)
 
@@ -33,7 +33,7 @@ class CartTabWidget(QTabWidget):
         super().__init__(**kwargs)
         self.setTabBar(QEditableTabBar(self))
         self.tabBar().setDrawBase(False)
-        self.tabBar().setObjectName('CartTabBar')
+        self.tabBar().setObjectName("CartTabBar")
 
         self.setFocusPolicy(Qt.StrongFocus)
         self.setAcceptDrops(True)

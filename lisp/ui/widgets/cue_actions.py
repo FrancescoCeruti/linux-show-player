@@ -24,18 +24,19 @@ from lisp.ui.ui_utils import translate
 from lisp.ui.widgets.qenumcombobox import QEnumComboBox
 
 CueActionsStrings = {
-    CueAction.Default: QT_TRANSLATE_NOOP('CueAction', 'Default'),
-    CueAction.FadeInStart: QT_TRANSLATE_NOOP('CueAction', 'Faded Start'),
-    CueAction.FadeInResume: QT_TRANSLATE_NOOP('CueAction', 'Faded Resume'),
-    CueAction.FadeOutPause: QT_TRANSLATE_NOOP('CueAction', 'Faded Pause'),
-    CueAction.FadeOutStop: QT_TRANSLATE_NOOP('CueAction', 'Faded Stop'),
-    CueAction.FadeOutInterrupt:
-        QT_TRANSLATE_NOOP('CueAction', 'Faded Interrupt'),
-    CueAction.Start: QT_TRANSLATE_NOOP('CueAction', 'Start'),
-    CueAction.Resume: QT_TRANSLATE_NOOP('CueAction', 'Resume'),
-    CueAction.Pause: QT_TRANSLATE_NOOP('CueAction', 'Pause'),
-    CueAction.Stop: QT_TRANSLATE_NOOP('CueAction', 'Stop'),
-    CueAction.DoNothing: QT_TRANSLATE_NOOP('CueAction', 'Do Nothing'),
+    CueAction.Default: QT_TRANSLATE_NOOP("CueAction", "Default"),
+    CueAction.FadeInStart: QT_TRANSLATE_NOOP("CueAction", "Faded Start"),
+    CueAction.FadeInResume: QT_TRANSLATE_NOOP("CueAction", "Faded Resume"),
+    CueAction.FadeOutPause: QT_TRANSLATE_NOOP("CueAction", "Faded Pause"),
+    CueAction.FadeOutStop: QT_TRANSLATE_NOOP("CueAction", "Faded Stop"),
+    CueAction.FadeOutInterrupt: QT_TRANSLATE_NOOP(
+        "CueAction", "Faded Interrupt"
+    ),
+    CueAction.Start: QT_TRANSLATE_NOOP("CueAction", "Start"),
+    CueAction.Resume: QT_TRANSLATE_NOOP("CueAction", "Resume"),
+    CueAction.Pause: QT_TRANSLATE_NOOP("CueAction", "Pause"),
+    CueAction.Stop: QT_TRANSLATE_NOOP("CueAction", "Stop"),
+    CueAction.DoNothing: QT_TRANSLATE_NOOP("CueAction", "Do Nothing"),
 }
 
 
@@ -47,8 +48,7 @@ def tr_action(action):
     :return: translated UI friendly string to indicate the action
     :rtype: str
     """
-    return translate(
-        'CueAction', CueActionsStrings.get(action, action.name))
+    return translate("CueAction", CueActionsStrings.get(action, action.name))
 
 
 class CueActionComboBox(QEnumComboBox):

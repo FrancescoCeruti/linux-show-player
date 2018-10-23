@@ -17,15 +17,27 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import pyqtSignal, Qt, QDataStream, QIODevice, \
-    QT_TRANSLATE_NOOP
+from PyQt5.QtCore import (
+    pyqtSignal,
+    Qt,
+    QDataStream,
+    QIODevice,
+    QT_TRANSLATE_NOOP,
+)
 from PyQt5.QtGui import QKeyEvent, QContextMenuEvent, QBrush, QColor
 from PyQt5.QtWidgets import QTreeWidget, QHeaderView, QTreeWidgetItem
 
 from lisp.core.signal import Connection
 from lisp.cues.cue_factory import CueFactory
-from lisp.plugins.list_layout.list_widgets import CueStatusIcons, NameWidget, \
-    PreWaitWidget, CueTimeWidget, NextActionIcon, PostWaitWidget, IndexWidget
+from lisp.plugins.list_layout.list_widgets import (
+    CueStatusIcons,
+    NameWidget,
+    PreWaitWidget,
+    CueTimeWidget,
+    NextActionIcon,
+    PostWaitWidget,
+    IndexWidget,
+)
 from lisp.ui.ui_utils import translate
 
 
@@ -39,7 +51,7 @@ class ListColumn:
 
     @property
     def name(self):
-        return translate('ListLayoutHeader', self.baseName)
+        return translate("ListLayoutHeader", self.baseName)
 
 
 class CueTreeWidgetItem(QTreeWidgetItem):
@@ -58,26 +70,23 @@ class CueListView(QTreeWidget):
     # TODO: add ability to show/hide
     # TODO: implement columns (cue-type / target / etc..)
     COLUMNS = [
-        ListColumn('', CueStatusIcons, QHeaderView.Fixed, width=45),
-        ListColumn('#', IndexWidget, QHeaderView.ResizeToContents),
+        ListColumn("", CueStatusIcons, QHeaderView.Fixed, width=45),
+        ListColumn("#", IndexWidget, QHeaderView.ResizeToContents),
         ListColumn(
-            QT_TRANSLATE_NOOP('ListLayoutHeader', 'Cue'),
+            QT_TRANSLATE_NOOP("ListLayoutHeader", "Cue"),
             NameWidget,
-            QHeaderView.Stretch
+            QHeaderView.Stretch,
         ),
         ListColumn(
-            QT_TRANSLATE_NOOP('ListLayoutHeader', 'Pre wait'),
-            PreWaitWidget
+            QT_TRANSLATE_NOOP("ListLayoutHeader", "Pre wait"), PreWaitWidget
         ),
         ListColumn(
-            QT_TRANSLATE_NOOP('ListLayoutHeader', 'Action'),
-            CueTimeWidget
+            QT_TRANSLATE_NOOP("ListLayoutHeader", "Action"), CueTimeWidget
         ),
         ListColumn(
-            QT_TRANSLATE_NOOP('ListLayoutHeader', 'Post wait'),
-            PostWaitWidget
+            QT_TRANSLATE_NOOP("ListLayoutHeader", "Post wait"), PostWaitWidget
         ),
-        ListColumn('', NextActionIcon, QHeaderView.Fixed, width=18)
+        ListColumn("", NextActionIcon, QHeaderView.Fixed, width=18),
     ]
 
     ITEM_DEFAULT_BG = QBrush(Qt.transparent)
@@ -124,7 +133,7 @@ class CueListView(QTreeWidget):
     def dropEvent(self, event):
         # Decode mimedata information about the drag&drop event, since only
         # internal movement are allowed we assume the data format is correct
-        data = event.mimeData().data('application/x-qabstractitemmodeldatalist')
+        data = event.mimeData().data("application/x-qabstractitemmodeldatalist")
         stream = QDataStream(data, QIODevice.ReadOnly)
 
         # Get the starting-item row
@@ -180,8 +189,10 @@ class CueListView(QTreeWidget):
             super().keyPressEvent(event)
 
     def mousePressEvent(self, event):
-        if (not event.buttons() & Qt.RightButton or
-                not self.selectionMode() == QTreeWidget.NoSelection):
+        if (
+            not event.buttons() & Qt.RightButton
+            or not self.selectionMode() == QTreeWidget.NoSelection
+        ):
             super().mousePressEvent(event)
 
     def standbyIndex(self):

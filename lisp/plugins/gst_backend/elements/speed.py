@@ -28,7 +28,7 @@ from lisp.plugins.gst_backend.gst_element import GstMediaElement
 class Speed(GstMediaElement):
     ElementType = ElementType.Plugin
     MediaType = MediaType.Audio
-    Name = QT_TRANSLATE_NOOP('MediaElementName', 'Speed')
+    Name = QT_TRANSLATE_NOOP("MediaElementName", "Speed")
 
     speed = Property(default=1.0)
 
@@ -49,7 +49,7 @@ class Speed(GstMediaElement):
         self._handler = bus.connect("message", self.__on_message)
 
         self._old_speed = self.speed
-        self.changed('speed').connect(self.__prepare_speed)
+        self.changed("speed").connect(self.__prepare_speed)
 
     def __prepare_speed(self, value):
         if self._old_speed != value:
@@ -70,9 +70,11 @@ class Speed(GstMediaElement):
         bus.disconnect(self._handler)
 
     def __on_message(self, bus, message):
-        if (message.type == Gst.MessageType.STATE_CHANGED and
-                    message.src == self.scale_tempo and
-                    message.parse_state_changed()[1] == Gst.State.PLAYING):
+        if (
+            message.type == Gst.MessageType.STATE_CHANGED
+            and message.src == self.scale_tempo
+            and message.parse_state_changed()[1] == Gst.State.PLAYING
+        ):
             self.__change_speed()
 
     def __change_speed(self):
@@ -83,5 +85,5 @@ class Speed(GstMediaElement):
             Gst.SeekType.SET,
             self.scale_tempo.query_position(Gst.Format.TIME)[1],
             Gst.SeekType.NONE,
-            0
+            0,
         )

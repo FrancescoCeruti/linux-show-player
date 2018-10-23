@@ -76,17 +76,18 @@ def qfile_filters(extensions, allexts=True, anyfile=True):
     filters = []
 
     for key in extensions:
-        filters.append(key.title() + ' (' + ' *.'.join(extensions[key]) + ')')
+        filters.append(key.title() + " (" + " *.".join(extensions[key]) + ")")
 
     filters.sort()
 
     if allexts:
-        filters.insert(0, 'All supported (' +
-                       ' *.'.join(chain(*extensions.values())) + ')')
+        filters.insert(
+            0, "All supported (" + " *.".join(chain(*extensions.values())) + ")"
+        )
     if anyfile:
-        filters.append('Any file (*)')
+        filters.append("Any file (*)")
 
-    return ';;'.join(filters)
+    return ";;".join(filters)
 
 
 # Keep a reference of translators objects
@@ -97,14 +98,14 @@ def install_translation(name, tr_path=I18N_PATH):
     tr_file = path.join(tr_path, name)
 
     translator = QTranslator()
-    translator.load(QLocale(), tr_file, '_')
+    translator.load(QLocale(), tr_file, "_")
 
     if QApplication.installTranslator(translator):
         # Keep a reference, QApplication does not
         _TRANSLATORS.append(translator)
-        logger.debug('Installed translation: {}'.format(tr_file))
+        logger.debug("Installed translation: {}".format(tr_file))
     else:
-        logger.debug('No translation at: {}'.format(tr_file))
+        logger.debug("No translation at: {}".format(tr_file))
 
 
 def translate(context, text, disambiguation=None, n=-1):
@@ -123,9 +124,12 @@ def tr_sorted(context, iterable, key=None, reverse=False):
     The sorting is done using translated versions of the iterable values.
     """
     if key is not None:
+
         def tr_key(item):
             translate(context, key(item))
+
     else:
+
         def tr_key(item):
             translate(context, item)
 

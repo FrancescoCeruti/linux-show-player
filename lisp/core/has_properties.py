@@ -166,10 +166,7 @@ class HasProperties(metaclass=HasPropertiesMeta):
                 for name in filter(cls.__pro__.copy())
             }
         else:
-            return {
-                name: getattr(cls, name).default
-                for name in cls.__pro__
-            }
+            return {name: getattr(cls, name).default for name in cls.__pro__}
 
     def properties(self, defaults=True, filter=None):
         """

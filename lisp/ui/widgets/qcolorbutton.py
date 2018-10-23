@@ -37,7 +37,7 @@ class QColorButton(QPushButton):
         super().__init__(*args)
         self._color = None
 
-        self.setToolTip(translate('QColorButton', 'Right click to reset'))
+        self.setToolTip(translate("QColorButton", "Right click to reset"))
         self.pressed.connect(self.onColorPicker)
 
     def setColor(self, color):
@@ -47,9 +47,10 @@ class QColorButton(QPushButton):
 
         if self._color is not None:
             self.setStyleSheet(
-                'QColorButton {{ background-color: {0}; }}'.format(self._color))
+                "QColorButton {{ background-color: {0}; }}".format(self._color)
+            )
         else:
-            self.setStyleSheet('')
+            self.setStyleSheet("")
 
     def color(self):
         return self._color

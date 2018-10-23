@@ -34,10 +34,10 @@ logger = logging.getLogger(__name__)
 class JackSink(GstMediaElement):
     ElementType = ElementType.Output
     MediaType = MediaType.Audio
-    Name = QT_TRANSLATE_NOOP('MediaElementName', 'JACK Out')
+    Name = QT_TRANSLATE_NOOP("MediaElementName", "JACK Out")
 
-    CLIENT_NAME = 'linux-show-player'
-    CONNECT_MODE = 'none'
+    CLIENT_NAME = "linux-show-player"
+    CONNECT_MODE = "none"
 
     _ControlClient = None
     _clients = []
@@ -49,16 +49,17 @@ class JackSink(GstMediaElement):
 
         if JackSink._ControlClient is None:
             JackSink._ControlClient = jack.Client(
-                'LinuxShowPlayer_Control', no_start_server=True)
+                "LinuxShowPlayer_Control", no_start_server=True
+            )
 
         self.pipeline = pipeline
-        self.audio_resample = Gst.ElementFactory.make('audioresample')
-        self.jack_sink = Gst.ElementFactory.make('jackaudiosink', 'sink')
+        self.audio_resample = Gst.ElementFactory.make("audioresample")
+        self.jack_sink = Gst.ElementFactory.make("jackaudiosink", "sink")
 
         self._client_id = JackSink.__register_client_id()
-        self._client_name = JackSink.CLIENT_NAME + '-' + str(self._client_id)
-        self.jack_sink.set_property('client-name', self._client_name)
-        self.jack_sink.set_property('connect', JackSink.CONNECT_MODE)
+        self._client_name = JackSink.CLIENT_NAME + "-" + str(self._client_id)
+        self.jack_sink.set_property("client-name", self._client_name)
+        self.jack_sink.set_property("connect", JackSink.CONNECT_MODE)
 
         self.pipeline.add(self.audio_resample)
         self.pipeline.add(self.jack_sink)
@@ -66,11 +67,11 @@ class JackSink(GstMediaElement):
         self.audio_resample.link(self.jack_sink)
 
         self.connections = self.default_connections(JackSink._ControlClient)
-        self.changed('connections').connect(self.__prepare_connections)
+        self.changed("connections").connect(self.__prepare_connections)
 
         bus = self.pipeline.get_bus()
         bus.add_signal_watch()
-        self._handler = bus.connect('message', self.__on_message)
+        self._handler = bus.connect("message", self.__on_message)
 
     def sink(self):
         return self.audio_resample
@@ -92,7 +93,8 @@ class JackSink(GstMediaElement):
         if isinstance(client, jack.Client):
             # Search for default input ports
             input_ports = client.get_ports(
-                name_pattern='^system:', is_audio=True, is_input=True)
+                name_pattern="^system:", is_audio=True, is_input=True
+            )
             for n, port in enumerate(input_ports):
                 if n < len(connections):
                     connections[n].append(port.name)
@@ -102,8 +104,10 @@ class JackSink(GstMediaElement):
         return connections
 
     def __prepare_connections(self, value):
-        if (self.pipeline.current_state == Gst.State.PLAYING or
-                self.pipeline.current_state == Gst.State.PAUSED):
+        if (
+            self.pipeline.current_state == Gst.State.PLAYING
+            or self.pipeline.current_state == Gst.State.PAUSED
+        ):
             self.__jack_connect()
 
     @classmethod
@@ -121,16 +125,19 @@ class JackSink(GstMediaElement):
 
     def __jack_connect(self):
         out_ports = JackSink._ControlClient.get_ports(
-            name_pattern='^' + self._client_name + ':.+', is_audio=True)
+            name_pattern="^" + self._client_name + ":.+", is_audio=True
+        )
 
         for port in out_ports:
             for conn_port in JackSink._ControlClient.get_all_connections(port):
                 try:
                     JackSink._ControlClient.disconnect(port, conn_port)
                 except jack.JackError:
-                    logger.exception(translate(
-                        'JackSinkError',
-                        'An error occurred while disconnection Jack ports')
+                    logger.exception(
+                        translate(
+                            "JackSinkError",
+                            "An error occurred while disconnection Jack ports",
+                        )
                     )
 
         for output, in_ports in enumerate(self.connections):
@@ -138,10 +145,12 @@ class JackSink(GstMediaElement):
                 if output < len(out_ports):
                     try:
                         JackSink._ControlClient.connect(
-                            out_ports[output], input_name)
+                            out_ports[output], input_name
+                        )
                     except jack.JackError:
                         logger.exception(
-                            'An error occurred while connecting Jack ports')
+                            "An error occurred while connecting Jack ports"
+                        )
                 else:
                     break
 

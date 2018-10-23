@@ -29,9 +29,9 @@ logger = logging.getLogger(__name__)
 
 
 class ActionCues(Plugin):
-    Name = 'Action Cues'
-    Authors = ('Francesco Ceruti',)
-    Description = 'Provide a collection of cues for different purposes'
+    Name = "Action Cues"
+    Authors = ("Francesco Ceruti",)
+    Description = "Provide a collection of cues for different purposes"
 
     def __init__(self, app):
         super().__init__(app)
@@ -42,13 +42,16 @@ class ActionCues(Plugin):
 
             # Register the menu action for adding the action-cue
             self.app.window.register_cue_menu_action(
-                translate('CueName', cue.Name),
+                translate("CueName", cue.Name),
                 self._new_cue_factory(cue),
-                'Action cues'
+                "Action cues",
             )
 
-            logger.debug(translate(
-                'ActionCuesDebug', 'Registered cue: "{}"').format(name))
+            logger.debug(
+                translate("ActionCuesDebug", 'Registered cue: "{}"').format(
+                    name
+                )
+            )
 
     def _new_cue_factory(self, cue_class):
         def cue_factory():
@@ -56,9 +59,10 @@ class ActionCues(Plugin):
                 cue = CueFactory.create_cue(cue_class.__name__)
                 self.app.cue_model.add(cue)
             except Exception:
-                logger.exception(translate(
-                    'ActionsCuesError',
-                    'Cannot create cue {}').format(cue_class.__name__)
+                logger.exception(
+                    translate(
+                        "ActionsCuesError", "Cannot create cue {}"
+                    ).format(cue_class.__name__)
                 )
 
         return cue_factory

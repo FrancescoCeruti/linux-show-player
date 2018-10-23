@@ -18,18 +18,31 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
-from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QLabel, QVBoxLayout, \
-    QDoubleSpinBox
+from PyQt5.QtWidgets import (
+    QGroupBox,
+    QHBoxLayout,
+    QLabel,
+    QVBoxLayout,
+    QDoubleSpinBox,
+)
 
 from lisp.cues.cue import CueAction
-from lisp.ui.settings.pages import CueSettingsPage, SettingsPagesTabWidget, CuePageMixin
+from lisp.ui.settings.pages import (
+    CueSettingsPage,
+    SettingsPagesTabWidget,
+    CuePageMixin,
+)
 from lisp.ui.ui_utils import translate
-from lisp.ui.widgets import FadeComboBox, CueActionComboBox, \
-    CueNextActionComboBox, FadeEdit
+from lisp.ui.widgets import (
+    FadeComboBox,
+    CueActionComboBox,
+    CueNextActionComboBox,
+    FadeEdit,
+)
 
 
 class CueGeneralSettingsPage(SettingsPagesTabWidget, CuePageMixin):
-    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Cue')
+    Name = QT_TRANSLATE_NOOP("SettingsPageName", "Cue")
 
     def __init__(self, cueType, **kwargs):
         super().__init__(cueType=cueType, **kwargs)
@@ -39,7 +52,7 @@ class CueGeneralSettingsPage(SettingsPagesTabWidget, CuePageMixin):
 
 
 class CueBehavioursPage(CueSettingsPage):
-    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Behaviours')
+    Name = QT_TRANSLATE_NOOP("SettingsPageName", "Behaviours")
 
     def __init__(self, cueType, **kwargs):
         super().__init__(cueType, **kwargs)
@@ -51,14 +64,11 @@ class CueBehavioursPage(CueSettingsPage):
         self.layout().addWidget(self.startActionGroup)
 
         self.startActionCombo = CueActionComboBox(
-            {
-                CueAction.Start,
-                CueAction.FadeInStart
-            }.intersection(self.cueType.CueActions).union({
-                CueAction.DoNothing
-            }),
+            {CueAction.Start, CueAction.FadeInStart}
+            .intersection(self.cueType.CueActions)
+            .union({CueAction.DoNothing}),
             mode=CueActionComboBox.Mode.Value,
-            parent=self.startActionGroup
+            parent=self.startActionGroup,
         )
         self.startActionCombo.setEnabled(self.startActionCombo.count() > 1)
         self.startActionGroup.layout().addWidget(self.startActionCombo)
@@ -77,12 +87,12 @@ class CueBehavioursPage(CueSettingsPage):
                 CueAction.Stop,
                 CueAction.Pause,
                 CueAction.FadeOutStop,
-                CueAction.FadeOutPause
-            }.intersection(self.cueType.CueActions).union({
-                CueAction.DoNothing
-            }),
+                CueAction.FadeOutPause,
+            }
+            .intersection(self.cueType.CueActions)
+            .union({CueAction.DoNothing}),
             mode=CueActionComboBox.Mode.Value,
-            parent=self.stopActionGroup
+            parent=self.stopActionGroup,
         )
         self.stopActionCombo.setEnabled(self.stopActionCombo.count() > 1)
         self.stopActionGroup.layout().addWidget(self.stopActionCombo)
@@ -93,24 +103,24 @@ class CueBehavioursPage(CueSettingsPage):
 
         self.layout().addSpacing(150)
         self.setEnabled(
-            self.stopActionCombo.isEnabled() and
-            self.startActionCombo.isEnabled()
+            self.stopActionCombo.isEnabled()
+            and self.startActionCombo.isEnabled()
         )
 
         self.retranslateUi()
 
     def retranslateUi(self):
         # Start-Action
-        self.startActionGroup.setTitle(
-            translate('CueSettings', 'Start action'))
+        self.startActionGroup.setTitle(translate("CueSettings", "Start action"))
         self.startActionLabel.setText(
-            translate('CueSettings', 'Default action to start the cue'))
+            translate("CueSettings", "Default action to start the cue")
+        )
 
         # Stop-Action
-        self.stopActionGroup.setTitle(
-            translate('CueSettings', 'Stop action'))
+        self.stopActionGroup.setTitle(translate("CueSettings", "Stop action"))
         self.stopActionLabel.setText(
-            translate('CueSettings', 'Default action to stop the cue'))
+            translate("CueSettings", "Default action to stop the cue")
+        )
 
     def enableCheck(self, enabled):
         self.startActionGroup.setCheckable(enabled)
@@ -122,24 +132,30 @@ class CueBehavioursPage(CueSettingsPage):
         settings = {}
         checkable = self.startActionGroup.isCheckable()
 
-        if ((not checkable or self.startActionGroup.isChecked()) and
-                self.startActionCombo.isEnabled()):
-            settings['default_start_action'] = self.startActionCombo.currentItem()
-        if ((not checkable or self.stopActionGroup.isChecked()) and
-                self.stopActionCombo.isEnabled()):
-            settings['default_stop_action'] = self.stopActionCombo.currentItem()
+        if (
+            not checkable or self.startActionGroup.isChecked()
+        ) and self.startActionCombo.isEnabled():
+            settings[
+                "default_start_action"
+            ] = self.startActionCombo.currentItem()
+        if (
+            not checkable or self.stopActionGroup.isChecked()
+        ) and self.stopActionCombo.isEnabled():
+            settings["default_stop_action"] = self.stopActionCombo.currentItem()
 
         return settings
 
     def loadSettings(self, settings):
         self.startActionCombo.setCurrentItem(
-            settings.get('default_start_action', ''))
+            settings.get("default_start_action", "")
+        )
         self.stopActionCombo.setCurrentItem(
-            settings.get('default_stop_action', ''))
+            settings.get("default_stop_action", "")
+        )
 
 
 class CueWaitsPage(CueSettingsPage):
-    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Pre/Post Wait')
+    Name = QT_TRANSLATE_NOOP("SettingsPageName", "Pre/Post Wait")
 
     def __init__(self, cueType, **kwargs):
         super().__init__(cueType=cueType, **kwargs)
@@ -177,22 +193,25 @@ class CueWaitsPage(CueSettingsPage):
         self.layout().addWidget(self.nextActionGroup)
 
         self.nextActionCombo = CueNextActionComboBox(
-            parent=self.nextActionGroup)
+            parent=self.nextActionGroup
+        )
         self.nextActionGroup.layout().addWidget(self.nextActionCombo)
 
         self.retranslateUi()
 
     def retranslateUi(self):
         # PreWait
-        self.preWaitGroup.setTitle(translate('CueSettings', 'Pre wait'))
+        self.preWaitGroup.setTitle(translate("CueSettings", "Pre wait"))
         self.preWaitLabel.setText(
-            translate('CueSettings', 'Wait before cue execution'))
+            translate("CueSettings", "Wait before cue execution")
+        )
         # PostWait
-        self.postWaitGroup.setTitle(translate('CueSettings', 'Post wait'))
+        self.postWaitGroup.setTitle(translate("CueSettings", "Post wait"))
         self.postWaitLabel.setText(
-            translate('CueSettings', 'Wait after cue execution'))
+            translate("CueSettings", "Wait after cue execution")
+        )
         # NextAction
-        self.nextActionGroup.setTitle(translate('CueSettings', 'Next action'))
+        self.nextActionGroup.setTitle(translate("CueSettings", "Next action"))
 
     def enableCheck(self, enabled):
         self.preWaitGroup.setCheckable(enabled)
@@ -203,26 +222,26 @@ class CueWaitsPage(CueSettingsPage):
         self.nextActionGroup.setChecked(False)
 
     def loadSettings(self, settings):
-        self.preWaitSpin.setValue(settings.get('pre_wait', 0))
-        self.postWaitSpin.setValue(settings.get('post_wait', 0))
-        self.nextActionCombo.setCurrentAction(settings.get('next_action', ''))
+        self.preWaitSpin.setValue(settings.get("pre_wait", 0))
+        self.postWaitSpin.setValue(settings.get("post_wait", 0))
+        self.nextActionCombo.setCurrentAction(settings.get("next_action", ""))
 
     def getSettings(self):
         settings = {}
         checkable = self.preWaitGroup.isCheckable()
 
         if not checkable or self.preWaitGroup.isChecked():
-            settings['pre_wait'] = self.preWaitSpin.value()
+            settings["pre_wait"] = self.preWaitSpin.value()
         if not checkable or self.postWaitGroup.isChecked():
-            settings['post_wait'] = self.postWaitSpin.value()
+            settings["post_wait"] = self.postWaitSpin.value()
         if not checkable or self.nextActionGroup.isChecked():
-            settings['next_action'] = self.nextActionCombo.currentData()
+            settings["next_action"] = self.nextActionCombo.currentData()
 
         return settings
 
 
 class CueFadePage(CueSettingsPage):
-    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Fade In/Out')
+    Name = QT_TRANSLATE_NOOP("SettingsPageName", "Fade In/Out")
 
     def __init__(self, cueType, **kwargs):
         super().__init__(cueType, **kwargs)
@@ -230,41 +249,41 @@ class CueFadePage(CueSettingsPage):
 
         # FadeIn
         self.fadeInGroup = QGroupBox(self)
-        self.fadeInGroup.setEnabled(
-            CueAction.FadeInStart in cueType.CueActions
-        )
+        self.fadeInGroup.setEnabled(CueAction.FadeInStart in cueType.CueActions)
         self.fadeInGroup.setLayout(QHBoxLayout())
         self.layout().addWidget(self.fadeInGroup)
 
-        self.fadeInEdit = FadeEdit(self.fadeInGroup,
-                                   mode=FadeComboBox.Mode.FadeIn)
+        self.fadeInEdit = FadeEdit(
+            self.fadeInGroup, mode=FadeComboBox.Mode.FadeIn
+        )
         self.fadeInGroup.layout().addWidget(self.fadeInEdit)
 
         # FadeOut
         self.fadeOutGroup = QGroupBox(self)
         self.fadeOutGroup.setEnabled(
-            CueAction.FadeOutPause in cueType.CueActions or
-            CueAction.FadeOutStop in cueType.CueActions
+            CueAction.FadeOutPause in cueType.CueActions
+            or CueAction.FadeOutStop in cueType.CueActions
         )
         self.fadeOutGroup.setLayout(QHBoxLayout())
         self.layout().addWidget(self.fadeOutGroup)
 
         self.fadeOutEdit = FadeEdit(
-            self.fadeOutGroup, mode=FadeComboBox.Mode.FadeOut)
+            self.fadeOutGroup, mode=FadeComboBox.Mode.FadeOut
+        )
         self.fadeOutGroup.layout().addWidget(self.fadeOutEdit)
 
         self.retranslateUi()
 
     def retranslateUi(self):
         # FadeIn/Out
-        self.fadeInGroup.setTitle(translate('FadeSettings', 'Fade In'))
-        self.fadeOutGroup.setTitle(translate('FadeSettings', 'Fade Out'))
+        self.fadeInGroup.setTitle(translate("FadeSettings", "Fade In"))
+        self.fadeOutGroup.setTitle(translate("FadeSettings", "Fade Out"))
 
     def loadSettings(self, settings):
-        self.fadeInEdit.setFadeType(settings.get('fadein_type', ''))
-        self.fadeInEdit.setDuration(settings.get('fadein_duration', 0))
-        self.fadeOutEdit.setFadeType(settings.get('fadeout_type', ''))
-        self.fadeOutEdit.setDuration(settings.get('fadeout_duration', 0))
+        self.fadeInEdit.setFadeType(settings.get("fadein_type", ""))
+        self.fadeInEdit.setDuration(settings.get("fadein_duration", 0))
+        self.fadeOutEdit.setFadeType(settings.get("fadeout_type", ""))
+        self.fadeOutEdit.setDuration(settings.get("fadeout_duration", 0))
 
     def enableCheck(self, enabled):
         self.fadeInGroup.setCheckable(enabled)
@@ -277,10 +296,10 @@ class CueFadePage(CueSettingsPage):
         checkable = self.fadeInGroup.isCheckable()
 
         if not checkable or self.fadeInGroup.isChecked():
-            settings['fadein_type'] = self.fadeInEdit.fadeType()
-            settings['fadein_duration'] = self.fadeInEdit.duration()
+            settings["fadein_type"] = self.fadeInEdit.fadeType()
+            settings["fadein_duration"] = self.fadeInEdit.duration()
         if not checkable or self.fadeInGroup.isChecked():
-            settings['fadeout_type'] = self.fadeOutEdit.fadeType()
-            settings['fadeout_duration'] = self.fadeOutEdit.duration()
+            settings["fadeout_type"] = self.fadeOutEdit.fadeType()
+            settings["fadeout_duration"] = self.fadeOutEdit.duration()
 
         return settings

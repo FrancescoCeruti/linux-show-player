@@ -32,4 +32,3 @@ def get_backend():
     :rtype: lisp.backends.base.backend.Backend
     """
     return __backend
-

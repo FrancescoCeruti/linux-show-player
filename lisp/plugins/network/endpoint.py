@@ -19,7 +19,7 @@
 
 
 class EndPoint:
-    UriTemplate = ''
+    UriTemplate = ""
 
     def __init__(self, application):
         """

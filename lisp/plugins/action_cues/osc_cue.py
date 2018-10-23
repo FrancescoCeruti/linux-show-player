@@ -22,8 +22,19 @@ import logging
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
-from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QGridLayout, QLineEdit, \
-    QTableView, QTableWidget, QHeaderView, QPushButton, QLabel, QDoubleSpinBox, QMessageBox
+from PyQt5.QtWidgets import (
+    QGroupBox,
+    QVBoxLayout,
+    QGridLayout,
+    QLineEdit,
+    QTableView,
+    QTableWidget,
+    QHeaderView,
+    QPushButton,
+    QLabel,
+    QDoubleSpinBox,
+    QMessageBox,
+)
 
 from lisp.core.decorators import async_function
 from lisp.core.fade_functions import FadeInType, FadeOutType
@@ -55,7 +66,7 @@ COL_DIFF_VAL = 2
 
 def test_path(path):
     if isinstance(path, str):
-        if len(path) > 1 and path[0] is '/':
+        if len(path) > 1 and path[0] is "/":
             return True
     return False
 
@@ -70,22 +81,26 @@ def type_can_fade(t):
 
 
 class OscCue(Cue):
-    Name = QT_TRANSLATE_NOOP('CueName', 'OSC Cue')
+    Name = QT_TRANSLATE_NOOP("CueName", "OSC Cue")
 
-    CueActions = (CueAction.Default, CueAction.Start, CueAction.Stop,
-                  CueAction.Pause)
+    CueActions = (
+        CueAction.Default,
+        CueAction.Start,
+        CueAction.Stop,
+        CueAction.Pause,
+    )
 
-    path = Property(default='')
+    path = Property(default="")
     args = Property(default=[])
     fade_type = Property(default=FadeInType.Linear.name)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.name = translate('CueName', self.Name)
+        self.name = translate("CueName", self.Name)
 
-        self.__osc = get_plugin('Osc')
+        self.__osc = get_plugin("Osc")
 
-        self.__fader = Fader(self, '_position')
+        self.__fader = Fader(self, "_position")
         self.__value = 0
         self.__fadein = True
 
@@ -101,7 +116,9 @@ class OscCue(Cue):
 
         for row in self.__arg_list:
             if row[COL_DIFF_VAL] > 0:
-                args.append(row[COL_BASE_VAL] + row[COL_DIFF_VAL] * self.__value)
+                args.append(
+                    row[COL_BASE_VAL] + row[COL_DIFF_VAL] * self.__value
+                )
             else:
                 args.append(row[COL_BASE_VAL])
 
@@ -119,17 +136,20 @@ class OscCue(Cue):
         self.__arg_list = []
         try:
             for arg in self.args:
-                if 'end' in arg and arg['fade']:
+                if "end" in arg and arg["fade"]:
                     self.__has_fade = True
-                    diff_value = arg['end'] - arg['start']
-                    self.__arg_list.append([arg['type'], arg['start'], diff_value])
+                    diff_value = arg["end"] - arg["start"]
+                    self.__arg_list.append(
+                        [arg["type"], arg["start"], diff_value]
+                    )
                 else:
-                    self.__arg_list.append([arg['type'],
-                                            arg['start'],
-                                            0])
+                    self.__arg_list.append([arg["type"], arg["start"], 0])
         except KeyError:
-            logger.error(translate(
-                'OscCueError', 'Could not parse argument list, nothing sent'))
+            logger.error(
+                translate(
+                    "OscCueError", "Could not parse argument list, nothing sent"
+                )
+            )
             return False
 
         # set fade type, based on the first argument, which will have a fade
@@ -168,8 +188,11 @@ class OscCue(Cue):
             else:
                 self._position = 1
         else:
-            logger.error(translate(
-                'OscCueError', 'Error while parsing arguments, nothing sent'))
+            logger.error(
+                translate(
+                    "OscCueError", "Error while parsing arguments, nothing sent"
+                )
+            )
 
         return False
 
@@ -188,7 +211,8 @@ class OscCue(Cue):
         try:
             self.__fader.prepare()
             ended = self.__fader.fade(
-                round(self.duration / 1000, 2), 1, fade_type)
+                round(self.duration / 1000, 2), 1, fade_type
+            )
 
             # to avoid approximation problems
             self._position = 1
@@ -196,7 +220,8 @@ class OscCue(Cue):
                 self._ended()
         except Exception:
             logger.exception(
-                translate('OscCueError', 'Error during cue execution.'))
+                translate("OscCueError", "Error during cue execution.")
+            )
             self._error()
 
     def current_time(self):
@@ -204,7 +229,7 @@ class OscCue(Cue):
 
 
 class OscCueSettings(SettingsPage):
-    Name = QT_TRANSLATE_NOOP('Cue Name', 'OSC Settings')
+    Name = QT_TRANSLATE_NOOP("Cue Name", "OSC Settings")
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -221,11 +246,14 @@ class OscCueSettings(SettingsPage):
         self.pathEdit = QLineEdit()
         self.oscGroup.layout().addWidget(self.pathEdit, 1, 0, 1, 2)
 
-        self.oscModel = SimpleTableModel([
-            translate('Osc Cue', 'Type'),
-            translate('Osc Cue', 'Argument'),
-            translate('Osc Cue', 'FadeTo'),
-            translate('Osc Cue', 'Fade')])
+        self.oscModel = SimpleTableModel(
+            [
+                translate("Osc Cue", "Type"),
+                translate("Osc Cue", "Argument"),
+                translate("Osc Cue", "FadeTo"),
+                translate("Osc Cue", "Fade"),
+            ]
+        )
 
         self.oscModel.dataChanged.connect(self.__argument_changed)
 
@@ -268,14 +296,16 @@ class OscCueSettings(SettingsPage):
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.oscGroup.setTitle(translate('OscCue', 'OSC Message'))
-        self.addButton.setText(translate('OscCue', 'Add'))
-        self.removeButton.setText(translate('OscCue', 'Remove'))
-        self.testButton.setText(translate('OscCue', 'Test'))
-        self.pathLabel.setText(translate('OscCue', 'OSC Path: (example: "/path/to/something")'))
-        self.fadeGroup.setTitle(translate('OscCue', 'Fade'))
-        self.fadeLabel.setText(translate('OscCue', 'Time (sec)'))
-        self.fadeCurveLabel.setText(translate('OscCue', 'Curve'))
+        self.oscGroup.setTitle(translate("OscCue", "OSC Message"))
+        self.addButton.setText(translate("OscCue", "Add"))
+        self.removeButton.setText(translate("OscCue", "Remove"))
+        self.testButton.setText(translate("OscCue", "Test"))
+        self.pathLabel.setText(
+            translate("OscCue", 'OSC Path: (example: "/path/to/something")')
+        )
+        self.fadeGroup.setTitle(translate("OscCue", "Fade"))
+        self.fadeLabel.setText(translate("OscCue", "Time (sec)"))
+        self.fadeCurveLabel.setText(translate("OscCue", "Curve"))
 
     def enableCheck(self, enabled):
         self.oscGroup.setCheckable(enabled)
@@ -290,57 +320,62 @@ class OscCueSettings(SettingsPage):
 
         if not (checkable and not self.oscGroup.isChecked()):
             if not test_path(self.pathEdit.text()):
-                logger.error(translate(
-                    'OscCueError',
-                    'Error parsing OSC path, message will be unable to send')
+                logger.error(
+                    translate(
+                        "OscCueError",
+                        "Error parsing OSC path, message will be unable to send",
+                    )
                 )
 
         if not (checkable and not self.oscGroup.isChecked()):
             try:
-                conf['path'] = self.pathEdit.text()
+                conf["path"] = self.pathEdit.text()
                 args_list = []
                 for row in self.oscModel.rows:
-                    arg = {'type': row[COL_TYPE],
-                           'start': row[COL_START_VAL]}
+                    arg = {"type": row[COL_TYPE], "start": row[COL_START_VAL]}
 
                     if row[COL_END_VAL] and row[COL_DO_FADE] is True:
-                        arg['end'] = row[COL_END_VAL]
+                        arg["end"] = row[COL_END_VAL]
 
-                    arg['fade'] = row[COL_DO_FADE]
+                    arg["fade"] = row[COL_DO_FADE]
                     args_list.append(arg)
 
-                conf['args'] = args_list
+                conf["args"] = args_list
             except ValueError:
-                logger.error(translate(
-                    'OscCueError',
-                    'Error parsing OSC arguments, '
-                    'message will be unable to send')
+                logger.error(
+                    translate(
+                        "OscCueError",
+                        "Error parsing OSC arguments, "
+                        "message will be unable to send",
+                    )
                 )
 
         if not (checkable and not self.fadeGroup.isCheckable()):
-            conf['duration'] = self.fadeSpin.value() * 1000
-            conf['fade_type'] = self.fadeCurveCombo.currentType()
+            conf["duration"] = self.fadeSpin.value() * 1000
+            conf["fade_type"] = self.fadeCurveCombo.currentType()
         return conf
 
     def loadSettings(self, settings):
-        if 'path' in settings:
-            path = settings.get('path', '')
+        if "path" in settings:
+            path = settings.get("path", "")
             self.pathEdit.setText(path)
 
-        if 'args' in settings:
+        if "args" in settings:
 
-            args = settings.get('args', '')
+            args = settings.get("args", "")
             for arg in args:
-                self.oscModel.appendRow(arg['type'],
-                                        arg['start'],
-                                        arg['end'] if 'end' in arg else None,
-                                        arg['fade'])
+                self.oscModel.appendRow(
+                    arg["type"],
+                    arg["start"],
+                    arg["end"] if "end" in arg else None,
+                    arg["fade"],
+                )
 
-        self.fadeSpin.setValue(settings.get('duration', 0) / 1000)
-        self.fadeCurveCombo.setCurrentType(settings.get('fade_type', ''))
+        self.fadeSpin.setValue(settings.get("duration", 0) / 1000)
+        self.fadeCurveCombo.setCurrentType(settings.get("fade_type", ""))
 
     def __new_argument(self):
-        self.oscModel.appendRow(OscMessageType.Int.value, 0, '', False)
+        self.oscModel.appendRow(OscMessageType.Int.value, 0, "", False)
 
     def __remove_argument(self):
         if self.oscModel.rowCount():
@@ -353,9 +388,9 @@ class OscCueSettings(SettingsPage):
 
         if not test_path(path):
             QDetailedMessageBox.dwarning(
-                'Warning',
-                'No valid path for OSC message - nothing sent',
-                "Path should start with a '/' followed by a name."
+                "Warning",
+                "No valid path for OSC message - nothing sent",
+                "Path should start with a '/' followed by a name.",
             )
             return
 
@@ -370,7 +405,8 @@ class OscCueSettings(SettingsPage):
             self.__osc.server.send(self.path, *args)
         except ValueError:
             QMessageBox.critical(
-                self, 'Error', 'Error on parsing argument list - nothing sent')
+                self, "Error", "Error on parsing argument list - nothing sent"
+            )
 
     def __argument_changed(self, index_topleft, index_bottomright, roles):
         if not (Qt.EditRole in roles):
@@ -389,22 +425,22 @@ class OscCueSettings(SettingsPage):
             delegate_start = self.oscView.itemDelegate(index_start)
             delegate_end = self.oscView.itemDelegate(index_end)
 
-            if osc_type == 'Integer':
+            if osc_type == "Integer":
                 delegate_start.updateEditor(OscMessageType.Int)
                 delegate_end.updateEditor(OscMessageType.Int)
                 model_row[COL_START_VAL] = 0
-            elif osc_type == 'Float':
+            elif osc_type == "Float":
                 delegate_start.updateEditor(OscMessageType.Float)
                 delegate_end.updateEditor(OscMessageType.Float)
                 model_row[COL_START_VAL] = 0
-            elif osc_type == 'Bool':
+            elif osc_type == "Bool":
                 delegate_start.updateEditor(OscMessageType.Bool)
                 delegate_end.updateEditor()
                 model_row[COL_START_VAL] = True
             else:
                 delegate_start.updateEditor(OscMessageType.String)
                 delegate_end.updateEditor()
-                model_row[COL_START_VAL] = 'None'
+                model_row[COL_START_VAL] = "None"
 
             model_row[COL_END_VAL] = None
             model_row[COL_DO_FADE] = False
@@ -425,10 +461,11 @@ class OscView(QTableView):
         self.delegates = [
             ComboBoxDelegate(
                 options=[i.value for i in OscMessageType],
-                tr_context='OscMessageType'),
+                tr_context="OscMessageType",
+            ),
             OscArgumentDelegate(),
             OscArgumentDelegate(),
-            CheckBoxDelegate()
+            CheckBoxDelegate(),
         ]
 
         self.setSelectionBehavior(QTableWidget.SelectRows)

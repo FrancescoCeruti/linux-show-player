@@ -42,14 +42,16 @@ class PagesTreeWidget(QWidget):
         self.layout().addWidget(self._currentWidget, 0, 1)
 
         self.navWidget.selectionModel().selectionChanged.connect(
-            self._changePage)
+            self._changePage
+        )
 
         self._resetStretch()
 
     def selectFirst(self):
         if self.navModel.rowCount():
             self.navWidget.setCurrentIndex(
-                self.navModel.index(0, 0, QModelIndex()))
+                self.navModel.index(0, 0, QModelIndex())
+            )
 
     def currentWidget(self):
         return self._currentWidget
@@ -64,7 +66,8 @@ class PagesTreeWidget(QWidget):
             self._currentWidget.hide()
             self._currentWidget = selected.indexes()[0].internalPointer().page
             self._currentWidget.setSizePolicy(
-                QSizePolicy.Ignored, QSizePolicy.Ignored)
+                QSizePolicy.Ignored, QSizePolicy.Ignored
+            )
             self._currentWidget.show()
             self.layout().addWidget(self._currentWidget, 0, 1)
             self._resetStretch()
@@ -75,6 +78,7 @@ class PageNode:
     :type parent: PageNode
     :type _children: list[PageNode]
     """
+
     def __init__(self, page):
         self.parent = None
         self.page = page

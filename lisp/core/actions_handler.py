@@ -29,9 +29,10 @@ logger = logging.getLogger(__name__)
 
 class ActionsHandler:
     """Provide a classic undo/redo mechanism based on stacks."""
-    DO_ACTION_STR = '{}'
-    UNDO_ACTION_STR = translate('Actions', 'Undo: {}')
-    REDO_ACTION_STR = translate('Actions', 'Redo: {}')
+
+    DO_ACTION_STR = "{}"
+    UNDO_ACTION_STR = translate("Actions", "Undo: {}")
+    REDO_ACTION_STR = translate("Actions", "Redo: {}")
 
     def __init__(self, stack_size=-1):
         super().__init__()

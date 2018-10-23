@@ -19,6 +19,7 @@
 
 import mido
 
+
 def str_msg_to_dict(str_message):
     return mido.parse_string(str_message).dict()
 
@@ -32,11 +33,10 @@ def mido_backend():
     """Return the current backend object, or None"""
     backend = None
 
-    if hasattr(mido, 'backend'):
+    if hasattr(mido, "backend"):
         backend = mido.backend
 
     if backend is None:
-        raise RuntimeError('MIDI backend not loaded')
+        raise RuntimeError("MIDI backend not loaded")
 
     return backend
-

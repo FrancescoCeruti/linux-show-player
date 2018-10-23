@@ -1,5 +1,14 @@
-# Linux Show Player [![GitHub release](https://img.shields.io/github/release/FrancescoCeruti/linux-show-player.svg?maxAge=2592000)](https://github.com/FrancescoCeruti/linux-show-player/releases) [![Github All Releases](https://img.shields.io/github/downloads/FrancescoCeruti/linux-show-player/total.svg?maxAge=2592000)](https://github.com/FrancescoCeruti/linux-show-player/releases/) [![Code Health](https://landscape.io/github/FrancescoCeruti/linux-show-player/master/landscape.svg?style=flat)](https://landscape.io/github/FrancescoCeruti/linux-show-player/master) [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg?maxAge=2592000)](https://gitter.im/linux-show-player/linux-show-player)
-Linux Show Player (LiSP) - Sound player designed for stage productions
+![Linux Show Player Logo](https://raw.githubusercontent.com/wiki/FrancescoCeruti/linux-show-player/media/site_logo.png)
+<h3 align="center"> Sound player designed for stage productions</h3>
+
+<p align="center">
+<a href="https://github.com/FrancescoCeruti/linux-show-player/blob/master/LICENSE"><img alt="License: GPL" src="https://img.shields.io/badge/license-GPL-blue.svg"></a>
+<a href="https://github.com/FrancescoCeruti/linux-show-player/releases/latest"><img src="https://img.shields.io/github/release/FrancescoCeruti/linux-show-player.svg?maxAge=2592000" alt="GitHub release" /></a>
+<a href="https://github.com/FrancescoCeruti/linux-show-player/releases"><img src="https://img.shields.io/github/downloads/FrancescoCeruti/linux-show-player/total.svg?maxAge=2592000" alt="Github All Releases" /></a>
+<a href="https://landscape.io/github/FrancescoCeruti/linux-show-player/master"><img src="https://landscape.io/github/FrancescoCeruti/linux-show-player/master/landscape.svg?style=flat" alt="Code Health" /></a>
+<a href="https://gitter.im/linux-show-player/linux-show-player"><img src="https://img.shields.io/gitter/room/nwjs/nw.js.svg?maxAge=2592000" alt="Gitter" /></a>
+<a href="https://github.com/ambv/black"><img src="https://img.shields.io/badge/code%20style-black-000000.svg" alt="Code style: black"></a>
+</p>
 
 ---
 

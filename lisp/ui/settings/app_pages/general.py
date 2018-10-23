@@ -18,8 +18,14 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
-from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QCheckBox, QComboBox, \
-    QGridLayout, QLabel
+from PyQt5.QtWidgets import (
+    QGroupBox,
+    QVBoxLayout,
+    QCheckBox,
+    QComboBox,
+    QGridLayout,
+    QLabel,
+)
 
 from lisp import layout
 from lisp.ui.icons import icon_themes_names
@@ -29,7 +35,7 @@ from lisp.ui.ui_utils import translate
 
 
 class AppGeneral(SettingsPage):
-    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'General')
+    Name = QT_TRANSLATE_NOOP("SettingsPageName", "General")
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -50,7 +56,8 @@ class AppGeneral(SettingsPage):
         self.layoutGroup.layout().addWidget(self.layoutCombo)
 
         self.startupDialogCheck.stateChanged.connect(
-            self.layoutCombo.setDisabled)
+            self.layoutCombo.setDisabled
+        )
 
         # Application theme
         self.themeGroup = QGroupBox(self)
@@ -75,39 +82,41 @@ class AppGeneral(SettingsPage):
 
     def retranslateUi(self):
         self.layoutGroup.setTitle(
-            translate('AppGeneralSettings', 'Default layout'))
+            translate("AppGeneralSettings", "Default layout")
+        )
         self.startupDialogCheck.setText(
-            translate('AppGeneralSettings', 'Enable startup layout selector'))
+            translate("AppGeneralSettings", "Enable startup layout selector")
+        )
         self.themeGroup.setTitle(
-            translate('AppGeneralSettings', 'Application themes'))
-        self.themeLabel.setText(
-            translate('AppGeneralSettings', 'UI theme'))
-        self.iconsLabel.setText(
-            translate('AppGeneralSettings', 'Icons theme'))
+            translate("AppGeneralSettings", "Application themes")
+        )
+        self.themeLabel.setText(translate("AppGeneralSettings", "UI theme"))
+        self.iconsLabel.setText(translate("AppGeneralSettings", "Icons theme"))
 
     def getSettings(self):
         settings = {
-            'theme': {
-                'theme': self.themeCombo.currentText(),
-                'icons': self.iconsCombo.currentText()
+            "theme": {
+                "theme": self.themeCombo.currentText(),
+                "icons": self.iconsCombo.currentText(),
             },
-            'layout': {}
+            "layout": {},
         }
 
         if self.startupDialogCheck.isChecked():
-            settings['layout']['default'] = 'NoDefault'
+            settings["layout"]["default"] = "NoDefault"
         else:
-            settings['layout']['default'] = self.layoutCombo.currentData()
+            settings["layout"]["default"] = self.layoutCombo.currentData()
 
         return settings
 
     def loadSettings(self, settings):
-        layout_name = settings['layout']['default']
-        if layout_name.lower() == 'nodefault':
+        layout_name = settings["layout"]["default"]
+        if layout_name.lower() == "nodefault":
             self.startupDialogCheck.setChecked(True)
         else:
             self.layoutCombo.setCurrentIndex(
-                self.layoutCombo.findData(layout_name))
+                self.layoutCombo.findData(layout_name)
+            )
 
-        self.themeCombo.setCurrentText(settings['theme']['theme'])
-        self.iconsCombo.setCurrentText(settings['theme']['icons'])
+        self.themeCombo.setCurrentText(settings["theme"]["theme"])
+        self.iconsCombo.setCurrentText(settings["theme"]["icons"])

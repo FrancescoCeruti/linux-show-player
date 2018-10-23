@@ -29,22 +29,21 @@ from lisp.ui.settings.app_configuration import AppConfigurationDialog
 class Osc(Plugin):
     """Provide OSC I/O functionality"""
 
-    Name = 'OSC'
-    Authors = ('Thomas Achtner', )
-    Description = 'Provide OSC I/O functionality'
+    Name = "OSC"
+    Authors = ("Thomas Achtner",)
+    Description = "Provide OSC I/O functionality"
 
     def __init__(self, app):
         super().__init__(app)
 
         # Register the settings widget
         AppConfigurationDialog.registerSettingsPage(
-            'plugins.osc', OscSettings, Osc.Config)
+            "plugins.osc", OscSettings, Osc.Config
+        )
 
         # Create a server instance
         self.__server = OscServer(
-            Osc.Config['hostname'],
-            Osc.Config['inPort'],
-            Osc.Config['outPort']
+            Osc.Config["hostname"], Osc.Config["inPort"], Osc.Config["outPort"]
         )
         self.__server.start()
 
@@ -59,11 +58,11 @@ class Osc(Plugin):
         self.__server.stop()
 
     def __config_change(self, key, value):
-        if key == 'hostname':
+        if key == "hostname":
             self.__server.hostname = value
-        elif key == 'inPort':
+        elif key == "inPort":
             self.__server.in_port = value
-        elif key == 'outPort':
+        elif key == "outPort":
             self.__server.out_port = value
 
     def __config_update(self, diff):

@@ -18,8 +18,13 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
-from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QComboBox, QGridLayout, \
-    QLabel
+from PyQt5.QtWidgets import (
+    QGroupBox,
+    QVBoxLayout,
+    QComboBox,
+    QGridLayout,
+    QLabel,
+)
 
 from lisp.plugins.midi.midi_utils import mido_backend
 from lisp.ui.settings.pages import SettingsPage
@@ -27,7 +32,7 @@ from lisp.ui.ui_utils import translate
 
 
 class MIDISettings(SettingsPage):
-    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'MIDI settings')
+    Name = QT_TRANSLATE_NOOP("SettingsPageName", "MIDI settings")
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -36,18 +41,21 @@ class MIDISettings(SettingsPage):
 
         self.midiGroup = QGroupBox(self)
         self.midiGroup.setTitle(
-            translate('MIDISettings', 'MIDI default devices'))
+            translate("MIDISettings", "MIDI default devices")
+        )
         self.midiGroup.setLayout(QGridLayout())
         self.layout().addWidget(self.midiGroup)
 
         self.inputLabel = QLabel(
-            translate('MIDISettings', 'Input'), self.midiGroup)
+            translate("MIDISettings", "Input"), self.midiGroup
+        )
         self.midiGroup.layout().addWidget(self.inputLabel, 0, 0)
         self.inputCombo = QComboBox(self.midiGroup)
         self.midiGroup.layout().addWidget(self.inputCombo, 0, 1)
 
         self.outputLabel = QLabel(
-            translate('MIDISettings', 'Output'), self.midiGroup)
+            translate("MIDISettings", "Output"), self.midiGroup
+        )
         self.midiGroup.layout().addWidget(self.outputLabel, 1, 0)
         self.outputCombo = QComboBox(self.midiGroup)
         self.midiGroup.layout().addWidget(self.outputCombo, 1, 1)
@@ -62,10 +70,10 @@ class MIDISettings(SettingsPage):
 
     def loadSettings(self, settings):
         # TODO: instead of forcing 'Default' add a warning label and keep the invalid device as an option
-        self.inputCombo.setCurrentText('Default')
-        self.inputCombo.setCurrentText(settings['inputDevice'])
-        self.outputCombo.setCurrentText('Default')
-        self.outputCombo.setCurrentText(settings['outputDevice'])
+        self.inputCombo.setCurrentText("Default")
+        self.inputCombo.setCurrentText(settings["inputDevice"])
+        self.outputCombo.setCurrentText("Default")
+        self.outputCombo.setCurrentText(settings["outputDevice"])
 
     def getSettings(self):
         if self.isEnabled():
@@ -73,8 +81,8 @@ class MIDISettings(SettingsPage):
             output = self.outputCombo.currentText()
 
             return {
-                'inputDevice': '' if input == 'Default' else input,
-                'outputDevice': '' if output == 'Default' else output
+                "inputDevice": "" if input == "Default" else input,
+                "outputDevice": "" if output == "Default" else output,
             }
 
         return {}
@@ -83,9 +91,9 @@ class MIDISettings(SettingsPage):
         backend = mido_backend()
 
         self.inputCombo.clear()
-        self.inputCombo.addItems(['Default'])
+        self.inputCombo.addItems(["Default"])
         self.inputCombo.addItems(backend.get_input_names())
 
         self.outputCombo.clear()
-        self.outputCombo.addItems(['Default'])
+        self.outputCombo.addItems(["Default"])
         self.outputCombo.addItems(backend.get_output_names())

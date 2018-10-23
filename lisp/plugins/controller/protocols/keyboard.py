@@ -18,21 +18,30 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
-from PyQt5.QtWidgets import QGroupBox, QGridLayout, QTableView, QHeaderView, \
-    QPushButton, QVBoxLayout
+from PyQt5.QtWidgets import (
+    QGroupBox,
+    QGridLayout,
+    QTableView,
+    QHeaderView,
+    QPushButton,
+    QVBoxLayout,
+)
 
 from lisp.application import Application
 from lisp.plugins.controller.common import LayoutAction, tr_layout_action
 from lisp.plugins.controller.protocol import Protocol
-from lisp.ui.qdelegates import LineEditDelegate, CueActionDelegate,\
-    EnumComboBoxDelegate
+from lisp.ui.qdelegates import (
+    LineEditDelegate,
+    CueActionDelegate,
+    EnumComboBoxDelegate,
+)
 from lisp.ui.qmodels import SimpleTableModel
 from lisp.ui.settings.pages import SettingsPage, CuePageMixin
 from lisp.ui.ui_utils import translate
 
 
 class KeyboardSettings(SettingsPage):
-    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Keyboard Shortcuts')
+    Name = QT_TRANSLATE_NOOP("SettingsPageName", "Keyboard Shortcuts")
 
     def __init__(self, actionDelegate, **kwargs):
         super().__init__(**kwargs)
@@ -43,9 +52,12 @@ class KeyboardSettings(SettingsPage):
         self.keyGroup.setLayout(QGridLayout())
         self.layout().addWidget(self.keyGroup)
 
-        self.keyboardModel = SimpleTableModel([
-            translate('ControllerKeySettings', 'Key'),
-            translate('ControllerKeySettings', 'Action')])
+        self.keyboardModel = SimpleTableModel(
+            [
+                translate("ControllerKeySettings", "Key"),
+                translate("ControllerKeySettings", "Action"),
+            ]
+        )
 
         self.keyboardView = KeyboardView(actionDelegate, parent=self.keyGroup)
         self.keyboardView.setModel(self.keyboardModel)
@@ -63,28 +75,23 @@ class KeyboardSettings(SettingsPage):
         self._defaultAction = None
 
     def retranslateUi(self):
-        self.keyGroup.setTitle(translate('ControllerKeySettings', 'Shortcuts'))
-        self.addButton.setText(translate('ControllerSettings', 'Add'))
-        self.removeButton.setText(translate('ControllerSettings', 'Remove'))
+        self.keyGroup.setTitle(translate("ControllerKeySettings", "Shortcuts"))
+        self.addButton.setText(translate("ControllerSettings", "Add"))
+        self.removeButton.setText(translate("ControllerSettings", "Remove"))
 
     def enableCheck(self, enabled):
         self.keyGroup.setCheckable(enabled)
         self.keyGroup.setChecked(False)
 
     def getSettings(self):
-        settings = {}
-
-        if not (self.keyGroup.isCheckable() and not self.keyGroup.isChecked()):
-            settings['keyboard'] = self.keyboardModel.rows
-
-        return settings
+        return {"keyboard": self.keyboardModel.rows}
 
     def loadSettings(self, settings):
-        for key, action in settings.get('keyboard', []):
+        for key, action in settings.get("keyboard", []):
             self.keyboardModel.appendRow(key, action)
 
     def _addEmpty(self):
-        self.keyboardModel.appendRow('', self._defaultAction)
+        self.keyboardModel.appendRow("", self._defaultAction)
 
     def _removeCurrent(self):
         self.keyboardModel.removeRow(self.keyboardView.currentIndex().row())
@@ -94,10 +101,10 @@ class KeyboardCueSettings(KeyboardSettings, CuePageMixin):
     def __init__(self, cueType, **kwargs):
         super().__init__(
             actionDelegate=CueActionDelegate(
-                cue_class=cueType,
-                mode=CueActionDelegate.Mode.Name),
+                cue_class=cueType, mode=CueActionDelegate.Mode.Name
+            ),
             cueType=cueType,
-            **kwargs
+            **kwargs,
         )
         self._defaultAction = self.cueType.CueActions[0].name
 
@@ -108,15 +115,14 @@ class KeyboardLayoutSettings(KeyboardSettings):
             actionDelegate=EnumComboBoxDelegate(
                 LayoutAction,
                 mode=EnumComboBoxDelegate.Mode.Name,
-                trItem=tr_layout_action
+                trItem=tr_layout_action,
             ),
-            **kwargs
+            **kwargs,
         )
         self._defaultAction = LayoutAction.Go.name
 
 
 class KeyboardView(QTableView):
-
     def __init__(self, actionDelegate, **kwargs):
         super().__init__(**kwargs)
 
@@ -150,5 +156,5 @@ class Keyboard(Protocol):
         Application().layout.key_pressed.disconnect(self.__key_pressed)
 
     def __key_pressed(self, key_event):
-        if not key_event.isAutoRepeat() and key_event.text() != '':
+        if not key_event.isAutoRepeat() and key_event.text() != "":
             self.protocol_event.emit(key_event.text())

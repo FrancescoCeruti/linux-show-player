@@ -69,7 +69,7 @@ class CueCartModel(ModelAdapter):
         try:
             return self.__cues[index]
         except KeyError:
-            raise IndexError('index out of range')
+            raise IndexError("index out of range")
 
     def insert(self, item, index):
         index = self.flat(index)
@@ -84,7 +84,7 @@ class CueCartModel(ModelAdapter):
         try:
             cue = self.__cues[index]
         except KeyError:
-            raise IndexError('index out of range')
+            raise IndexError("index out of range")
 
         self.model.remove(cue)
         return cue
@@ -98,7 +98,7 @@ class CueCartModel(ModelAdapter):
             self.__cues[new_index].index = new_index
             self.item_moved.emit(old_index, new_index)
         else:
-            raise ModelException('index already used {}'.format(new_index))
+            raise ModelException("index already used {}".format(new_index))
 
     def page_edges(self, page):
         start = self.flat((page, 0, 0))

@@ -53,5 +53,6 @@ class QClickSlider(QSlider):
         opt = QStyleOptionSlider()
         self.initStyleOption(opt)
 
-        return self.style().subControlRect(QStyle.CC_Slider, opt,
-                                           QStyle.SC_SliderHandle)
+        return self.style().subControlRect(
+            QStyle.CC_Slider, opt, QStyle.SC_SliderHandle
+        )

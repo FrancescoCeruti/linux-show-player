@@ -25,7 +25,6 @@ from lisp.plugins.list_layout.playing_widgets import get_running_widget
 
 
 class RunningCuesListWidget(QListWidget):
-
     def __init__(self, running_model, config, **kwargs):
         super().__init__(**kwargs)
         self.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
@@ -37,11 +36,14 @@ class RunningCuesListWidget(QListWidget):
         self._running_cues = {}
         self._running_model = running_model
         self._running_model.item_added.connect(
-            self._item_added, Connection.QtQueued)
+            self._item_added, Connection.QtQueued
+        )
         self._running_model.item_removed.connect(
-            self._item_removed, Connection.QtQueued)
+            self._item_removed, Connection.QtQueued
+        )
         self._running_model.model_reset.connect(
-            self._model_reset, Connection.QtQueued)
+            self._model_reset, Connection.QtQueued
+        )
 
         self.__dbmeter_visible = False
         self.__seek_visible = False

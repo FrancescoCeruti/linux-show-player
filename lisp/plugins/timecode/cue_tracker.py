@@ -95,8 +95,8 @@ class TimecodeCueTracker:
         # Setup new cue and options
         self.__cue = cue
         self.__cue_time = HRCueTime(cue)
-        self.__replace_hours = cue.timecode['replace_hours']
-        self.__track = cue.timecode['track'] if self.__replace_hours else -1
+        self.__replace_hours = cue.timecode["replace_hours"]
+        self.__track = cue.timecode["track"] if self.__replace_hours else -1
 
         # Send a "starting" time
         self.send(self.__cue.current_time())
@@ -117,9 +117,11 @@ class TimecodeCueTracker:
         if self.__lock.acquire(blocking=False):
             try:
                 if not self.__protocol.send(self.format, time, self.__track):
-                    logger.warning(translate(
-                        'TimecodeWarning',
-                        'Cannot send timecode, untracking cue')
+                    logger.warning(
+                        translate(
+                            "TimecodeWarning",
+                            "Cannot send timecode, untracking cue",
+                        )
                     )
                     self.untrack()
             except Exception:

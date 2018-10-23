@@ -35,17 +35,15 @@ def resolve_cue(app, cue_id):
 
 
 class CuesListEndPoint(EndPoint):
-    UriTemplate = '/cues'
+    UriTemplate = "/cues"
 
     def on_get(self, request, response):
         response.status = falcon.HTTP_OK
-        response.body = json.dumps({
-            'cues': tuple(self.app.cue_model.keys())
-        })
+        response.body = json.dumps({"cues": tuple(self.app.cue_model.keys())})
 
 
 class CueEndPoint(EndPoint):
-    UriTemplate = '/cues/{cue_id}'
+    UriTemplate = "/cues/{cue_id}"
 
     def on_get(self, request, response, cue_id):
         cue = resolve_cue(self.app, cue_id)
@@ -55,36 +53,41 @@ class CueEndPoint(EndPoint):
 
 
 class CueActionEndPoint(EndPoint):
-    UriTemplate = '/cues/{cue_id}/action'
+    UriTemplate = "/cues/{cue_id}/action"
 
     def on_post(self, request, response, cue_id):
         cue = resolve_cue(self.app, cue_id)
 
         try:
             data = json.load(request.stream)
-            action = CueAction(data['action'])
+            action = CueAction(data["action"])
 
             cue.execute(action=action)
             response.status = falcon.HTTP_CREATED
-        except(KeyError, json.JSONDecodeError):
+        except (KeyError, json.JSONDecodeError):
             response.status = falcon.HTTP_BAD_REQUEST
 
 
 class CueStateEndPoint(EndPoint):
-    UriTemplate = '/cues/{cue_id}/state'
+    UriTemplate = "/cues/{cue_id}/state"
 
     def on_get(self, request, response, cue_id):
         cue = resolve_cue(self.app, cue_id)
 
         response.status = falcon.HTTP_OK
-        response.body = json.dumps({
-            'state': cue.state,
-            'current_time': cue.current_time(),
-            'prewait_time': cue.prewait_time(),
-            'postwait_time': cue.postwait_time()
-        })
+        response.body = json.dumps(
+            {
+                "state": cue.state,
+                "current_time": cue.current_time(),
+                "prewait_time": cue.prewait_time(),
+                "postwait_time": cue.postwait_time(),
+            }
+        )
 
 
 __endpoints__ = (
-    CueEndPoint, CueActionEndPoint, CuesListEndPoint, CueStateEndPoint
+    CueEndPoint,
+    CueActionEndPoint,
+    CuesListEndPoint,
+    CueStateEndPoint,
 )

@@ -29,37 +29,38 @@ from lisp.ui.settings.app_configuration import AppConfigurationDialog
 class Midi(Plugin):
     """Provide MIDI I/O functionality"""
 
-    Name = 'MIDI'
-    Authors = ('Francesco Ceruti', )
-    Description = 'Provide MIDI I/O functionality'
+    Name = "MIDI"
+    Authors = ("Francesco Ceruti",)
+    Description = "Provide MIDI I/O functionality"
 
     def __init__(self, app):
         super().__init__(app)
 
         # Register the settings widget
         AppConfigurationDialog.registerSettingsPage(
-            'plugins.midi', MIDISettings, Midi.Config)
+            "plugins.midi", MIDISettings, Midi.Config
+        )
 
         # Load the backend and set it as current mido backend
-        self.backend = mido.Backend(Midi.Config['backend'], load=True)
+        self.backend = mido.Backend(Midi.Config["backend"], load=True)
         mido.set_backend(self.backend)
 
         # Create default I/O and open the ports/devices
-        self.__input = MIDIInput(
-            self._input_name(Midi.Config['inputDevice']))
+        self.__input = MIDIInput(self._input_name(Midi.Config["inputDevice"]))
         self.__input.open()
 
         self.__output = MIDIOutput(
-            self._output_name(Midi.Config['outputDevice']))
+            self._output_name(Midi.Config["outputDevice"])
+        )
         self.__output.open()
 
         Midi.Config.changed.connect(self.__config_change)
         Midi.Config.updated.connect(self.__config_update)
 
     def __config_change(self, key, value):
-        if key == 'inputDevice':
+        if key == "inputDevice":
             self.__input.change_port(self._input_name(value))
-        elif key == 'outputDevice':
+        elif key == "outputDevice":
             self.__output.change_port(self._output_name(value))
 
     def __config_update(self, diff):

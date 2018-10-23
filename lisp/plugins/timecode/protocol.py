@@ -21,7 +21,8 @@
 
 class TimecodeProtocol:
     """Base class for timecode protocols"""
-    Name = 'None'
+
+    Name = "None"
 
     def send(self, fmt, time, track=-1):
         """Send timecode, returns success for error handling"""

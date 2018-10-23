@@ -26,9 +26,9 @@ __PAGES = set()
 
 
 def load():
-    for _, page in load_classes(__package__,
-                                dirname(__file__),
-                                suf=('Settings', )):
+    for _, page in load_classes(
+        __package__, dirname(__file__), suf=("Settings",)
+    ):
         __PAGES.add(page)
 
 

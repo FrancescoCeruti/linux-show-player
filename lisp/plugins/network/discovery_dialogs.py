@@ -18,8 +18,16 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import Qt, QSize
-from PyQt5.QtWidgets import QVBoxLayout, QListWidget, QDialogButtonBox, \
-    QDialog, QHBoxLayout, QPushButton, QInputDialog, QListWidgetItem
+from PyQt5.QtWidgets import (
+    QVBoxLayout,
+    QListWidget,
+    QDialogButtonBox,
+    QDialog,
+    QHBoxLayout,
+    QPushButton,
+    QInputDialog,
+    QListWidgetItem,
+)
 
 from lisp.core.signal import Connection
 from lisp.plugins.network.discovery import Discoverer
@@ -58,11 +66,12 @@ class HostDiscoveryDialog(QDialog):
 
         self._discoverer = Discoverer(port, magic, max_attempts=10)
         self._discoverer.discovered.connect(
-            self._host_discovered, Connection.QtQueued)
+            self._host_discovered, Connection.QtQueued
+        )
         self._discoverer.ended.connect(self._search_ended, Connection.QtQueued)
 
     def retranslateUi(self):
-        self.setWindowTitle(translate('NetworkDiscovery', 'Host discovery'))
+        self.setWindowTitle(translate("NetworkDiscovery", "Host discovery"))
 
     def accept(self):
         self._discoverer.stop()
@@ -139,22 +148,26 @@ class HostManagementDialog(QDialog):
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.setWindowTitle(
-            translate('NetworkDiscovery', 'Manage hosts'))
+        self.setWindowTitle(translate("NetworkDiscovery", "Manage hosts"))
         self.discoverHostsButton.setText(
-            translate('NetworkDiscovery', 'Discover hosts'))
+            translate("NetworkDiscovery", "Discover hosts")
+        )
         self.addHostButton.setText(
-            translate('NetworkDiscovery', 'Manually add a host'))
+            translate("NetworkDiscovery", "Manually add a host")
+        )
         self.removeHostButton.setText(
-            translate('NetworkDiscovery', 'Remove selected host'))
+            translate("NetworkDiscovery", "Remove selected host")
+        )
         self.removeAllButton.setText(
-            translate('NetworkDiscovery', 'Remove all host'))
+            translate("NetworkDiscovery", "Remove all host")
+        )
 
     def addHostDialog(self):
         host, ok = QInputDialog.getText(
             self,
-            translate('NetworkDiscovery', 'Address'),
-            translate('NetworkDiscovery', 'Host IP'))
+            translate("NetworkDiscovery", "Address"),
+            translate("NetworkDiscovery", "Host IP"),
+        )
 
         if ok:
             self.addHost(host)
@@ -165,7 +178,8 @@ class HostManagementDialog(QDialog):
 
     def discoverHosts(self):
         dialog = HostDiscoveryDialog(
-            self.discovery_port, self.discovery_magic, parent=self)
+            self.discovery_port, self.discovery_magic, parent=self
+        )
 
         if dialog.exec_() == dialog.Accepted:
             for host in dialog.hosts():

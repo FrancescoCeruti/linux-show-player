@@ -25,7 +25,7 @@ from lisp.ui.ui_utils import translate
 
 
 class LayoutsSettings(SettingsPage):
-    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Layouts')
+    Name = QT_TRANSLATE_NOOP("SettingsPageName", "Layouts")
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -52,24 +52,25 @@ class LayoutsSettings(SettingsPage):
 
     def retranslateUi(self):
         self.useFadeGroup.setTitle(
-            translate('ListLayout', 'Use fade (global actions)'))
-        self.stopAllFade.setText(translate('ListLayout', 'Stop All'))
-        self.pauseAllFade.setText(translate('ListLayout', 'Pause All'))
-        self.resumeAllFade.setText(translate('ListLayout', 'Resume All'))
-        self.interruptAllFade.setText(translate('ListLayout', 'Interrupt All'))
+            translate("ListLayout", "Use fade (global actions)")
+        )
+        self.stopAllFade.setText(translate("ListLayout", "Stop All"))
+        self.pauseAllFade.setText(translate("ListLayout", "Pause All"))
+        self.resumeAllFade.setText(translate("ListLayout", "Resume All"))
+        self.interruptAllFade.setText(translate("ListLayout", "Interrupt All"))
 
     def loadSettings(self, settings):
-        self.stopAllFade.setChecked(settings['layout']['stopAllFade'])
-        self.pauseAllFade.setChecked(settings['layout']['pauseAllFade'])
-        self.resumeAllFade.setChecked(settings['layout']['resumeAllFade'])
-        self.interruptAllFade.setChecked(settings['layout']['interruptAllFade'])
+        self.stopAllFade.setChecked(settings["layout"]["stopAllFade"])
+        self.pauseAllFade.setChecked(settings["layout"]["pauseAllFade"])
+        self.resumeAllFade.setChecked(settings["layout"]["resumeAllFade"])
+        self.interruptAllFade.setChecked(settings["layout"]["interruptAllFade"])
 
     def getSettings(self):
         return {
-            'layout': {
-                'stopAllFade': self.stopAllFade.isChecked(),
-                'pauseAllFade': self.pauseAllFade.isChecked(),
-                'resumeAllFade': self.resumeAllFade.isChecked(),
-                'interruptAllFade': self.interruptAllFade.isChecked()
+            "layout": {
+                "stopAllFade": self.stopAllFade.isChecked(),
+                "pauseAllFade": self.pauseAllFade.isChecked(),
+                "resumeAllFade": self.resumeAllFade.isChecked(),
+                "interruptAllFade": self.interruptAllFade.isChecked(),
             }
         }

@@ -49,28 +49,28 @@ class CueState:
 
 
 class CueAction(EqEnum):
-    Default = 'Default'
-    FadeIn = 'FadeIn'
-    FadeOut = 'FadeOut'
-    FadeInStart = 'FadeInStart'
-    FadeInResume = 'FadeInResume'
-    FadeOutPause = 'FadeOutPause'
-    FadeOutStop = 'FadeOutStop'
-    FadeOutInterrupt = 'FadeOutInterrupt'
-    Interrupt = 'Interrupt'
-    Start = 'Start'
-    Resume = 'Resume'
-    Pause = 'Pause'
-    Stop = 'Stop'
-    DoNothing = 'DoNothing'
+    Default = "Default"
+    FadeIn = "FadeIn"
+    FadeOut = "FadeOut"
+    FadeInStart = "FadeInStart"
+    FadeInResume = "FadeInResume"
+    FadeOutPause = "FadeOutPause"
+    FadeOutStop = "FadeOutStop"
+    FadeOutInterrupt = "FadeOutInterrupt"
+    Interrupt = "Interrupt"
+    Start = "Start"
+    Resume = "Resume"
+    Pause = "Pause"
+    Stop = "Stop"
+    DoNothing = "DoNothing"
 
 
 class CueNextAction(EqEnum):
-    DoNothing = 'DoNothing'
-    TriggerAfterWait = 'TriggerAfterWait'
-    TriggerAfterEnd = 'TriggerAfterEnd'
-    SelectAfterWait = 'SelectAfterWait'
-    SelectAfterEnd = 'SelectAfterEnd'
+    DoNothing = "DoNothing"
+    TriggerAfterWait = "TriggerAfterWait"
+    TriggerAfterEnd = "TriggerAfterEnd"
+    SelectAfterWait = "SelectAfterWait"
+    SelectAfterEnd = "SelectAfterEnd"
 
 
 class Cue(HasProperties):
@@ -111,14 +111,15 @@ class Cue(HasProperties):
         If 'next_action' is AutoFollow or DoNothing, the postwait is not
         performed.
     """
-    Name = 'Cue'
+
+    Name = "Cue"
 
     _type_ = WriteOnceProperty()
     id = WriteOnceProperty()
-    name = Property(default='Untitled')
+    name = Property(default="Untitled")
     index = Property(default=-1)
-    description = Property(default='')
-    stylesheet = Property(default='')
+    description = Property(default="")
+    stylesheet = Property(default="")
     duration = Property(default=0)
     pre_wait = Property(default=0)
     post_wait = Property(default=0)
@@ -161,15 +162,15 @@ class Cue(HasProperties):
         self.fadeout_end = Signal()
 
         # Status signals
-        self.interrupted = Signal()     # self
-        self.started = Signal()         # self
-        self.stopped = Signal()         # self
-        self.paused = Signal()          # self
-        self.error = Signal()           # self
-        self.next = Signal()            # self
-        self.end = Signal()             # self
+        self.interrupted = Signal()  # self
+        self.started = Signal()  # self
+        self.stopped = Signal()  # self
+        self.paused = Signal()  # self
+        self.error = Signal()  # self
+        self.next = Signal()  # self
+        self.end = Signal()  # self
 
-        self.changed('next_action').connect(self.__next_action_changed)
+        self.changed("next_action").connect(self.__next_action_changed)
 
     def execute(self, action=CueAction.Default):
         """Execute the specified action, if supported.
@@ -212,15 +213,17 @@ class Cue(HasProperties):
             elif action is CueAction.FadeInResume:
                 self.resume(fade=self.fadein_duration > 0)
             elif action is CueAction.FadeOut:
-                duration = AppConfig().get('cue.fadeAction', 0)
+                duration = AppConfig().get("cue.fadeAction", 0)
                 fade = AppConfig().get(
-                    'cue.fadeActionType', FadeOutType.Linear.name)
+                    "cue.fadeActionType", FadeOutType.Linear.name
+                )
 
                 self.fadeout(duration, FadeOutType[fade])
             elif action is CueAction.FadeIn:
-                duration = AppConfig().get('cue.fadeAction', 0)
+                duration = AppConfig().get("cue.fadeAction", 0)
                 fade = AppConfig().get(
-                    'cue.fadeActionType', FadeInType.Linear.name)
+                    "cue.fadeActionType", FadeInType.Linear.name
+                )
 
                 self.fadein(duration, FadeInType[fade])
 
@@ -240,8 +243,9 @@ class Cue(HasProperties):
             state = self._state
 
             # PreWait
-            if self.pre_wait and state & (CueState.IsStopped |
-                                          CueState.PreWait_Pause):
+            if self.pre_wait and state & (
+                CueState.IsStopped | CueState.PreWait_Pause
+            ):
                 self._state = CueState.PreWait
                 # Start the wait, the lock is released during the wait and
                 # re-acquired after
@@ -252,9 +256,9 @@ class Cue(HasProperties):
                     return
 
             # Cue-Start (still locked), the __start__ function should not block
-            if state & (CueState.IsStopped |
-                        CueState.Pause |
-                        CueState.PreWait_Pause):
+            if state & (
+                CueState.IsStopped | CueState.Pause | CueState.PreWait_Pause
+            ):
 
                 running = self.__start__(fade)
                 self._state = CueState.Running
@@ -264,11 +268,15 @@ class Cue(HasProperties):
                     self._ended()
 
             # PostWait (still locked)
-            if state & (CueState.IsStopped |
-                        CueState.PreWait_Pause |
-                        CueState.PostWait_Pause):
-                if (self.next_action == CueNextAction.TriggerAfterWait or
-                        self.next_action == CueNextAction.SelectAfterWait):
+            if state & (
+                CueState.IsStopped
+                | CueState.PreWait_Pause
+                | CueState.PostWait_Pause
+            ):
+                if (
+                    self.next_action == CueNextAction.TriggerAfterWait
+                    or self.next_action == CueNextAction.SelectAfterWait
+                ):
                     self._state |= CueState.PostWait
 
                     if self._postwait.wait(self.post_wait, lock=self._st_lock):
@@ -327,9 +335,8 @@ class Cue(HasProperties):
                 # Stop PostWait
                 if self._state & (CueState.PostWait | CueState.PostWait_Pause):
                     # Remove PostWait or PostWait_Pause state
-                    self._state = (
-                        (self._state ^ CueState.PostWait) &
-                        (self._state ^ CueState.PostWait_Pause)
+                    self._state = (self._state ^ CueState.PostWait) & (
+                        self._state ^ CueState.PostWait_Pause
                     )
                     self._postwait.stop()
 
@@ -342,9 +349,8 @@ class Cue(HasProperties):
                         return
 
                     # Remove Running or Pause state
-                    self._state = (
-                        (self._state ^ CueState.Running) &
-                        (self._state ^ CueState.Pause)
+                    self._state = (self._state ^ CueState.Running) & (
+                        self._state ^ CueState.Pause
                     )
                     self._state |= CueState.Stop
                     self.stopped.emit(self)
@@ -438,9 +444,8 @@ class Cue(HasProperties):
                 # Stop PostWait
                 if self._state & (CueState.PostWait | CueState.PostWait_Pause):
                     # Remove PostWait or PostWait_Pause state
-                    self._state = (
-                        (self._state ^ CueState.PostWait) &
-                        (self._state ^ CueState.PostWait_Pause)
+                    self._state = (self._state ^ CueState.PostWait) & (
+                        self._state ^ CueState.PostWait_Pause
                     )
                     self._postwait.stop()
 
@@ -449,9 +454,8 @@ class Cue(HasProperties):
                     self.__interrupt__(fade)
 
                     # Remove Running or Pause state
-                    self._state = (
-                        (self._state ^ CueState.Running) &
-                        (self._state ^ CueState.Pause)
+                    self._state = (self._state ^ CueState.Running) & (
+                        self._state ^ CueState.Pause
                     )
                     self._state |= CueState.Stop
                     self.interrupted.emit(self)
@@ -503,9 +507,9 @@ class Cue(HasProperties):
         locked = self._st_lock.acquire(blocking=False)
 
         self._state = (
-            (self._state ^ CueState.Running) &
-            (self._state ^ CueState.Pause) &
-            (self._state ^ CueState.Stop)
+            (self._state ^ CueState.Running)
+            & (self._state ^ CueState.Pause)
+            & (self._state ^ CueState.Stop)
         ) | CueState.Error
 
         self.error.emit(self)
@@ -536,6 +540,8 @@ class Cue(HasProperties):
 
     def __next_action_changed(self, next_action):
         self.end.disconnect(self.next.emit)
-        if (next_action == CueNextAction.TriggerAfterEnd or
-                next_action == CueNextAction.SelectAfterEnd):
+        if (
+            next_action == CueNextAction.TriggerAfterEnd
+            or next_action == CueNextAction.SelectAfterEnd
+        ):
             self.end.connect(self.next.emit)

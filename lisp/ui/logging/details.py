@@ -32,23 +32,22 @@ class LogDetails(QTextEdit):
         self.setLineWrapMode(self.NoWrap)
         self.setReadOnly(True)
 
-        font = QFont('Monospace')
+        font = QFont("Monospace")
         font.setStyleHint(QFont.Monospace)
         self.setFont(font)
 
     def setLogRecord(self, record):
         self._record = record
-        text = ''
+        text = ""
         for attr, attr_text in LOG_ATTRIBUTES.items():
-            text += '⇨{}:\n    {}'.format(
-                attr_text, self.formatAttribute(attr))
+            text += "⇨{}:\n    {}".format(attr_text, self.formatAttribute(attr))
 
         self.setText(text)
 
     def formatAttribute(self, attribute):
         value = getattr(self._record, attribute, None)
-        if attribute == 'exc_info':
+        if attribute == "exc_info":
             if value is not None:
-                return '    '.join(traceback.format_exception(*value))
+                return "    ".join(traceback.format_exception(*value))
 
-        return str(value) + '\n'
+        return str(value) + "\n"

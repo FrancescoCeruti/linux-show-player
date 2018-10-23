@@ -18,15 +18,21 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import QTime, Qt
-from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QTimeEdit, QLabel, \
-    QSpinBox, QVBoxLayout
+from PyQt5.QtWidgets import (
+    QGroupBox,
+    QHBoxLayout,
+    QTimeEdit,
+    QLabel,
+    QSpinBox,
+    QVBoxLayout,
+)
 
 from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.ui_utils import translate
 
 
 class MediaCueSettings(SettingsPage):
-    Name = 'Media-Cue'
+    Name = "Media-Cue"
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -38,7 +44,7 @@ class MediaCueSettings(SettingsPage):
         self.layout().addWidget(self.startGroup)
 
         self.startEdit = QTimeEdit(self.startGroup)
-        self.startEdit.setDisplayFormat('HH.mm.ss.zzz')
+        self.startEdit.setDisplayFormat("HH.mm.ss.zzz")
         self.startGroup.layout().addWidget(self.startEdit)
 
         self.startLabel = QLabel(self.startGroup)
@@ -51,7 +57,7 @@ class MediaCueSettings(SettingsPage):
         self.layout().addWidget(self.stopGroup)
 
         self.stopEdit = QTimeEdit(self.stopGroup)
-        self.stopEdit.setDisplayFormat('HH.mm.ss.zzz')
+        self.stopEdit.setDisplayFormat("HH.mm.ss.zzz")
         self.stopGroup.layout().addWidget(self.stopEdit)
 
         self.stopLabel = QLabel(self.stopGroup)
@@ -64,7 +70,7 @@ class MediaCueSettings(SettingsPage):
         self.layout().addWidget(self.loopGroup)
 
         self.spinLoop = QSpinBox(self.loopGroup)
-        self.spinLoop.setRange(-1, 1000000)
+        self.spinLoop.setRange(-1, 1_000_000)
         self.loopGroup.layout().addWidget(self.spinLoop)
 
         self.loopLabel = QLabel(self.loopGroup)
@@ -74,16 +80,21 @@ class MediaCueSettings(SettingsPage):
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.startGroup.setTitle(translate('MediaCueSettings', 'Start time'))
+        self.startGroup.setTitle(translate("MediaCueSettings", "Start time"))
         self.stopLabel.setText(
-            translate('MediaCueSettings', 'Stop position of the media'))
-        self.stopGroup.setTitle(translate('MediaCueSettings', 'Stop time'))
+            translate("MediaCueSettings", "Stop position of the media")
+        )
+        self.stopGroup.setTitle(translate("MediaCueSettings", "Stop time"))
         self.startLabel.setText(
-            translate('MediaCueSettings', 'Start position of the media'))
-        self.loopGroup.setTitle(translate('MediaCueSettings', 'Loop'))
+            translate("MediaCueSettings", "Start position of the media")
+        )
+        self.loopGroup.setTitle(translate("MediaCueSettings", "Loop"))
         self.loopLabel.setText(
-            translate('MediaCueSettings', 'Repetition after first play '
-                                          '(-1 = infinite)'))
+            translate(
+                "MediaCueSettings",
+                "Repetition after first play " "(-1 = infinite)",
+            )
+        )
 
     def getSettings(self):
         settings = {}
@@ -91,14 +102,14 @@ class MediaCueSettings(SettingsPage):
 
         if not (checkable and not self.startGroup.isChecked()):
             time = self.startEdit.time().msecsSinceStartOfDay()
-            settings['start_time'] = time
+            settings["start_time"] = time
         if not (checkable and not self.stopGroup.isChecked()):
             time = self.stopEdit.time().msecsSinceStartOfDay()
-            settings['stop_time'] = time
+            settings["stop_time"] = time
         if not (checkable and not self.loopGroup.isChecked()):
-            settings['loop'] = self.spinLoop.value()
+            settings["loop"] = self.spinLoop.value()
 
-        return {'media': settings}
+        return {"media": settings}
 
     def enableCheck(self, enabled):
         self.startGroup.setCheckable(enabled)
@@ -111,18 +122,18 @@ class MediaCueSettings(SettingsPage):
         self.loopGroup.setChecked(False)
 
     def loadSettings(self, settings):
-        settings = settings.get('media', {})
+        settings = settings.get("media", {})
 
-        if 'loop' in settings:
-            self.spinLoop.setValue(settings['loop'])
-        if 'start_time' in settings:
-            time = self._to_qtime(settings['start_time'])
+        if "loop" in settings:
+            self.spinLoop.setValue(settings["loop"])
+        if "start_time" in settings:
+            time = self._to_qtime(settings["start_time"])
             self.startEdit.setTime(time)
-        if 'stop_time' in settings:
-            time = self._to_qtime(settings['stop_time'])
+        if "stop_time" in settings:
+            time = self._to_qtime(settings["stop_time"])
             self.stopEdit.setTime(time)
 
-        time = self._to_qtime(settings.get('duration', 0))
+        time = self._to_qtime(settings.get("duration", 0))
         self.startEdit.setMaximumTime(time)
         self.stopEdit.setMaximumTime(time)
 

@@ -27,22 +27,22 @@ from lisp.plugins.gst_backend.gst_element import GstMediaElement, GstProperty
 class AlsaSink(GstMediaElement):
     ElementType = ElementType.Output
     MediaType = MediaType.Audio
-    Name = QT_TRANSLATE_NOOP('MediaElementName', 'ALSA Out')
+    Name = QT_TRANSLATE_NOOP("MediaElementName", "ALSA Out")
 
-    device = GstProperty('alsa_sink', 'device', default='')
+    device = GstProperty("alsa_sink", "device", default="")
 
     def __init__(self, pipeline):
         super().__init__(pipeline)
 
-        self.audio_resample = Gst.ElementFactory.make('audioresample', None)
-        self.alsa_sink = Gst.ElementFactory.make('alsasink', 'sink')
+        self.audio_resample = Gst.ElementFactory.make("audioresample", None)
+        self.alsa_sink = Gst.ElementFactory.make("alsasink", "sink")
 
         self.pipeline.add(self.audio_resample)
         self.pipeline.add(self.alsa_sink)
 
         self.audio_resample.link(self.alsa_sink)
 
-        self.changed('device').connect(self._update_device)
+        self.changed("device").connect(self._update_device)
 
     def sink(self):
         return self.audio_resample
@@ -54,8 +54,8 @@ class AlsaSink(GstMediaElement):
         self.alsa_sink.set_state(Gst.State.NULL)
 
         # Create new element and add it to the pipeline
-        self.alsa_sink = Gst.ElementFactory.make('alsasink', 'sink')
-        self.alsa_sink.set_property('device', new_device)
+        self.alsa_sink = Gst.ElementFactory.make("alsasink", "sink")
+        self.alsa_sink.set_property("device", new_device)
 
         self.pipeline.add(self.alsa_sink)
         self.audio_resample.link(self.alsa_sink)

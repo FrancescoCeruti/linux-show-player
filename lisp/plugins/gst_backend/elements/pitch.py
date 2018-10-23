@@ -27,15 +27,15 @@ from lisp.plugins.gst_backend.gst_element import GstMediaElement, GstProperty
 class Pitch(GstMediaElement):
     ElementType = ElementType.Plugin
     MediaType = MediaType.Audio
-    Name = QT_TRANSLATE_NOOP('MediaElementName', 'Pitch')
+    Name = QT_TRANSLATE_NOOP("MediaElementName", "Pitch")
 
-    pitch = GstProperty('gst_pitch', 'pitch', default=1.0)
+    pitch = GstProperty("gst_pitch", "pitch", default=1.0)
 
     def __init__(self, pipeline):
         super().__init__(pipeline)
 
-        self.gst_pitch = Gst.ElementFactory.make('pitch', None)
-        self.audio_converter = Gst.ElementFactory.make('audioconvert', None)
+        self.gst_pitch = Gst.ElementFactory.make("pitch", None)
+        self.audio_converter = Gst.ElementFactory.make("audioconvert", None)
 
         self.pipeline.add(self.gst_pitch)
         self.pipeline.add(self.audio_converter)

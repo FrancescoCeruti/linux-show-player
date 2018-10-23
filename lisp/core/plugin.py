@@ -25,11 +25,11 @@ from lisp.core.configuration import DummyConfiguration
 class Plugin:
     """Base class for plugins."""
 
-    Name = 'Plugin'
+    Name = "Plugin"
     Depends = ()
     OptDepends = ()
-    Authors = ('None',)
-    Description = 'No Description'
+    Authors = ("None",)
+    Description = "No Description"
     Config = DummyConfiguration()
 
     def __init__(self, app):

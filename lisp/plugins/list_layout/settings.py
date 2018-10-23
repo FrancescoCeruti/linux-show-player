@@ -19,8 +19,14 @@
 
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtGui import QKeySequence
-from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QCheckBox, QLabel, \
-    QKeySequenceEdit, QGridLayout
+from PyQt5.QtWidgets import (
+    QGroupBox,
+    QVBoxLayout,
+    QCheckBox,
+    QLabel,
+    QKeySequenceEdit,
+    QGridLayout,
+)
 
 from lisp.cues.cue import CueAction
 from lisp.ui.settings.pages import SettingsPage
@@ -29,7 +35,7 @@ from lisp.ui.widgets import CueActionComboBox
 
 
 class ListLayoutSettings(SettingsPage):
-    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'List Layout')
+    Name = QT_TRANSLATE_NOOP("SettingsPageName", "List Layout")
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -72,7 +78,7 @@ class ListLayoutSettings(SettingsPage):
         self.goLayout.addWidget(self.goActionLabel, 1, 0)
         self.goActionCombo = CueActionComboBox(
             actions=(CueAction.Default, CueAction.Start, CueAction.FadeInStart),
-            mode=CueActionComboBox.Mode.Value
+            mode=CueActionComboBox.Mode.Value,
         )
         self.goLayout.addWidget(self.goActionCombo, 1, 1)
 
@@ -94,59 +100,62 @@ class ListLayoutSettings(SettingsPage):
 
     def retranslateUi(self):
         self.behaviorsGroup.setTitle(
-            translate('ListLayout', 'Default behaviors'))
-        self.showPlaying.setText(translate('ListLayout', 'Show playing cues'))
-        self.showDbMeters.setText(translate('ListLayout', 'Show dB-meters'))
-        self.showAccurate.setText(translate('ListLayout', 'Show accurate time'))
-        self.showSeek.setText(translate('ListLayout', 'Show seek-bars'))
-        self.autoNext.setText(translate('ListLayout', 'Auto-select next cue'))
+            translate("ListLayout", "Default behaviors")
+        )
+        self.showPlaying.setText(translate("ListLayout", "Show playing cues"))
+        self.showDbMeters.setText(translate("ListLayout", "Show dB-meters"))
+        self.showAccurate.setText(translate("ListLayout", "Show accurate time"))
+        self.showSeek.setText(translate("ListLayout", "Show seek-bars"))
+        self.autoNext.setText(translate("ListLayout", "Auto-select next cue"))
         self.selectionMode.setText(
-            translate('ListLayout', 'Enable selection mode'))
+            translate("ListLayout", "Enable selection mode")
+        )
 
-        self.goKeyLabel.setText(translate('ListLayout', 'Go key:'))
-        self.goActionLabel.setText(translate('ListLayout', 'Go action'))
+        self.goKeyLabel.setText(translate("ListLayout", "Go key:"))
+        self.goActionLabel.setText(translate("ListLayout", "Go action"))
 
         self.useFadeGroup.setTitle(
-            translate('ListLayout', 'Use fade (buttons)'))
-        self.stopCueFade.setText(translate('ListLayout', 'Stop Cue'))
-        self.pauseCueFade.setText(translate('ListLayout', 'Pause Cue'))
-        self.resumeCueFade.setText(translate('ListLayout', 'Resume Cue'))
-        self.interruptCueFade.setText(translate('ListLayout', 'Interrupt Cue'))
+            translate("ListLayout", "Use fade (buttons)")
+        )
+        self.stopCueFade.setText(translate("ListLayout", "Stop Cue"))
+        self.pauseCueFade.setText(translate("ListLayout", "Pause Cue"))
+        self.resumeCueFade.setText(translate("ListLayout", "Resume Cue"))
+        self.interruptCueFade.setText(translate("ListLayout", "Interrupt Cue"))
 
     def loadSettings(self, settings):
-        self.showPlaying.setChecked(settings['show']['playingCues'])
-        self.showDbMeters.setChecked(settings['show']['dBMeters'])
-        self.showAccurate.setChecked(settings['show']['accurateTime'])
-        self.showSeek.setChecked(settings['show']['seekSliders'])
-        self.autoNext.setChecked(settings['autoContinue'])
-        self.selectionMode.setChecked(settings['selectionMode'])
+        self.showPlaying.setChecked(settings["show"]["playingCues"])
+        self.showDbMeters.setChecked(settings["show"]["dBMeters"])
+        self.showAccurate.setChecked(settings["show"]["accurateTime"])
+        self.showSeek.setChecked(settings["show"]["seekSliders"])
+        self.autoNext.setChecked(settings["autoContinue"])
+        self.selectionMode.setChecked(settings["selectionMode"])
 
         self.goKeyEdit.setKeySequence(
-            QKeySequence(settings['goKey'], QKeySequence.NativeText))
-        self.goActionCombo.setCurrentItem(settings['goAction'])
+            QKeySequence(settings["goKey"], QKeySequence.NativeText)
+        )
+        self.goActionCombo.setCurrentItem(settings["goAction"])
 
-        self.stopCueFade.setChecked(settings['stopCueFade'])
-        self.pauseCueFade.setChecked(settings['pauseCueFade'])
-        self.resumeCueFade.setChecked(settings['resumeCueFade'])
-        self.interruptCueFade.setChecked(settings['interruptCueFade'])
+        self.stopCueFade.setChecked(settings["stopCueFade"])
+        self.pauseCueFade.setChecked(settings["pauseCueFade"])
+        self.resumeCueFade.setChecked(settings["resumeCueFade"])
+        self.interruptCueFade.setChecked(settings["interruptCueFade"])
 
     def getSettings(self):
         return {
-            'show': {
-                'accurateTime': self.showAccurate.isChecked(),
-                'playingCues': self.showPlaying.isChecked(),
-                'dBMeters': self.showDbMeters.isChecked(),
-                'seekBars': self.showSeek.isChecked()
+            "show": {
+                "accurateTime": self.showAccurate.isChecked(),
+                "playingCues": self.showPlaying.isChecked(),
+                "dBMeters": self.showDbMeters.isChecked(),
+                "seekBars": self.showSeek.isChecked(),
             },
-            'autoContinue': self.autoNext.isChecked(),
-            'selectionMode': self.selectionMode.isChecked(),
-
-            'goKey': self.goKeyEdit.keySequence().toString(
-                QKeySequence.NativeText),
-            'goAction': self.goActionCombo.currentItem(),
-
-            'stopCueFade': self.stopCueFade.isChecked(),
-            'pauseCueFade': self.pauseCueFade.isChecked(),
-            'resumeCueFade': self.resumeCueFade.isChecked(),
-            'interruptCueFade': self.interruptCueFade.isChecked()
+            "autoContinue": self.autoNext.isChecked(),
+            "selectionMode": self.selectionMode.isChecked(),
+            "goKey": self.goKeyEdit.keySequence().toString(
+                QKeySequence.NativeText
+            ),
+            "goAction": self.goActionCombo.currentItem(),
+            "stopCueFade": self.stopCueFade.isChecked(),
+            "pauseCueFade": self.pauseCueFade.isChecked(),
+            "resumeCueFade": self.resumeCueFade.isChecked(),
+            "interruptCueFade": self.interruptCueFade.isChecked(),
         }

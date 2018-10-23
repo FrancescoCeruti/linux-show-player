@@ -24,7 +24,10 @@ from lisp.core.properties import Property
 from lisp.cues.cue import Cue, CueAction
 from lisp.plugins.controller import protocols
 from lisp.plugins.controller.common import LayoutAction
-from lisp.plugins.controller.controller_settings import CueControllerSettingsPage, ControllerLayoutConfiguration
+from lisp.plugins.controller.controller_settings import (
+    CueControllerSettingsPage,
+    ControllerLayoutConfiguration,
+)
 from lisp.ui.settings.app_configuration import AppConfigurationDialog
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
 from lisp.ui.ui_utils import translate
@@ -33,11 +36,12 @@ logger = logging.getLogger(__name__)
 
 
 class Controller(Plugin):
-    Name = 'Controller'
-    Authors = ('Francesco Ceruti', 'Thomas Achtner')
-    OptDepends = ('Midi', 'Osc')
-    Description = 'Allow to control cues via external commands with multiple ' \
-                  'protocols'
+    Name = "Controller"
+    Authors = ("Francesco Ceruti", "Thomas Achtner")
+    OptDepends = ("Midi", "Osc")
+    Description = (
+        "Allow to control cues via external commands with multiple " "protocols"
+    )
 
     def __init__(self, app):
         super().__init__(app)
@@ -59,7 +63,10 @@ class Controller(Plugin):
 
         # Register the settings widget
         AppConfigurationDialog.registerSettingsPage(
-            'plugins.controller', ControllerLayoutConfiguration, Controller.Config)
+            "plugins.controller",
+            ControllerLayoutConfiguration,
+            Controller.Config,
+        )
         # Register settings-page
         CueSettingsRegistry().add(CueControllerSettingsPage)
 
@@ -84,13 +91,14 @@ class Controller(Plugin):
         # Here we just rebuild everything which is not the best solution
         # but is the easiest
         self.__global_map = {}
-        for protocol in Controller.Config['protocols'].values():
+        for protocol in Controller.Config["protocols"].values():
             for key, action in protocol:
                 self.__global_map.setdefault(key, set()).add(
-                    LayoutAction(action))
+                    LayoutAction(action)
+                )
 
     def cue_changed(self, cue, property_name, value):
-        if property_name == 'controller':
+        if property_name == "controller":
             self.delete_from_cue_map(cue)
 
             for protocol in self.__protocols:
@@ -99,12 +107,12 @@ class Controller(Plugin):
                     actions_map.setdefault(cue, set()).add(CueAction(action))
 
     def delete_from_cue_map(self, cue):
-        for actions_map in self.__cue_map:
+        for actions_map in self.__cue_map.values():
             actions_map.pop(cue)
 
     def perform_cue_action(self, key):
-        for actions_map in self.__cue_map.get(key, {}):
-            for cue, action in actions_map:
+        for cue, actions in self.__cue_map.get(key, {}).items():
+            for action in actions:
                 cue.execute(action)
 
     def perform_session_action(self, key):
@@ -128,16 +136,18 @@ class Controller(Plugin):
                 self.app.layout.fadeout_all()
             elif action is LayoutAction.StandbyForward:
                 self.app.layout.set_standby_index(
-                    self.app.layout.standby_index() + 1)
+                    self.app.layout.standby_index() + 1
+                )
             elif action is LayoutAction.StandbyBack:
                 self.app.layout.set_standby_index(
-                    self.app.layout.standby_index() - 1)
+                    self.app.layout.standby_index() - 1
+                )
             else:
                 self.app.finalize()
 
     def __cue_added(self, cue):
         cue.property_changed.connect(self.cue_changed)
-        self.cue_changed(cue, 'controller', cue.controller)
+        self.cue_changed(cue, "controller", cue.controller)
 
     def __cue_removed(self, cue):
         cue.property_changed.disconnect(self.cue_changed)
@@ -156,6 +166,6 @@ class Controller(Plugin):
             except Exception:
                 logger.exception(
                     translate(
-                        'Controller', 'Cannot load controller protocol: "{}"'
+                        "Controller", 'Cannot load controller protocol: "{}"'
                     ).format(protocol_class.__name__)
                 )

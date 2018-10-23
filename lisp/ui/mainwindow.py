@@ -23,8 +23,18 @@ import os
 from PyQt5 import QtCore
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtGui import QKeySequence
-from PyQt5.QtWidgets import QMainWindow, QStatusBar, QMenuBar, QMenu, QAction, \
-    qApp, QFileDialog, QMessageBox, QVBoxLayout, QWidget
+from PyQt5.QtWidgets import (
+    QMainWindow,
+    QStatusBar,
+    QMenuBar,
+    QMenu,
+    QAction,
+    qApp,
+    QFileDialog,
+    QMessageBox,
+    QVBoxLayout,
+    QWidget,
+)
 
 from lisp.core.actions_handler import MainActionsHandler
 from lisp.core.singleton import QSingleton
@@ -44,7 +54,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
     save_session = pyqtSignal(str)
     open_session = pyqtSignal(str)
 
-    def __init__(self, conf, title='Linux Show Player', **kwargs):
+    def __init__(self, conf, title="Linux Show Player", **kwargs):
         super().__init__(**kwargs)
         self.setMinimumSize(500, 400)
         self.setCentralWidget(QWidget())
@@ -168,7 +178,8 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
 
         # Logging dialogs for errors
         self.logDialogs = LogDialogs(
-            self.logModel, level=logging.ERROR, parent=self)
+            self.logModel, level=logging.ERROR, parent=self
+        )
 
         # Set component text
         self.retranslateUi()
@@ -176,50 +187,54 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
     def retranslateUi(self):
         self.setWindowTitle(self._title)
         # menuFile
-        self.menuFile.setTitle(translate('MainWindow', '&File'))
-        self.newSessionAction.setText(translate('MainWindow', 'New session'))
+        self.menuFile.setTitle(translate("MainWindow", "&File"))
+        self.newSessionAction.setText(translate("MainWindow", "New session"))
         self.newSessionAction.setShortcut(QKeySequence.New)
-        self.openSessionAction.setText(translate('MainWindow', 'Open'))
+        self.openSessionAction.setText(translate("MainWindow", "Open"))
         self.openSessionAction.setShortcut(QKeySequence.Open)
-        self.saveSessionAction.setText(translate('MainWindow', 'Save session'))
+        self.saveSessionAction.setText(translate("MainWindow", "Save session"))
         self.saveSessionAction.setShortcut(QKeySequence.Save)
-        self.editPreferences.setText(translate('MainWindow', 'Preferences'))
+        self.editPreferences.setText(translate("MainWindow", "Preferences"))
         self.editPreferences.setShortcut(QKeySequence.Preferences)
-        self.saveSessionWithName.setText(translate('MainWindow', 'Save as'))
+        self.saveSessionWithName.setText(translate("MainWindow", "Save as"))
         self.saveSessionWithName.setShortcut(QKeySequence.SaveAs)
-        self.fullScreenAction.setText(translate('MainWindow', 'Full Screen'))
+        self.fullScreenAction.setText(translate("MainWindow", "Full Screen"))
         self.fullScreenAction.setShortcut(QKeySequence.FullScreen)
-        self.exitAction.setText(translate('MainWindow', 'Exit'))
+        self.exitAction.setText(translate("MainWindow", "Exit"))
         # menuEdit
-        self.menuEdit.setTitle(translate('MainWindow', '&Edit'))
-        self.actionUndo.setText(translate('MainWindow', 'Undo'))
+        self.menuEdit.setTitle(translate("MainWindow", "&Edit"))
+        self.actionUndo.setText(translate("MainWindow", "Undo"))
         self.actionUndo.setShortcut(QKeySequence.Undo)
-        self.actionRedo.setText(translate('MainWindow', 'Redo'))
+        self.actionRedo.setText(translate("MainWindow", "Redo"))
         self.actionRedo.setShortcut(QKeySequence.Redo)
-        self.selectAll.setText(translate('MainWindow', 'Select all'))
+        self.selectAll.setText(translate("MainWindow", "Select all"))
         self.selectAllMedia.setText(
-            translate('MainWindow', 'Select all media cues'))
+            translate("MainWindow", "Select all media cues")
+        )
         self.selectAll.setShortcut(QKeySequence.SelectAll)
-        self.deselectAll.setText(translate('MainWindow', 'Deselect all'))
-        self.deselectAll.setShortcut(translate('MainWindow', 'CTRL+SHIFT+A'))
+        self.deselectAll.setText(translate("MainWindow", "Deselect all"))
+        self.deselectAll.setShortcut(translate("MainWindow", "CTRL+SHIFT+A"))
         self.invertSelection.setText(
-            translate('MainWindow', 'Invert selection'))
-        self.invertSelection.setShortcut(translate('MainWindow', 'CTRL+I'))
-        self.multiEdit.setText(translate('MainWindow', 'Edit selected'))
-        self.multiEdit.setShortcut(translate('MainWindow', 'CTRL+SHIFT+E'))
+            translate("MainWindow", "Invert selection")
+        )
+        self.invertSelection.setShortcut(translate("MainWindow", "CTRL+I"))
+        self.multiEdit.setText(translate("MainWindow", "Edit selected"))
+        self.multiEdit.setShortcut(translate("MainWindow", "CTRL+SHIFT+E"))
         # menuLayout
-        self.menuLayout.setTitle(translate('MainWindow', '&Layout'))
+        self.menuLayout.setTitle(translate("MainWindow", "&Layout"))
         # menuTools
-        self.menuTools.setTitle(translate('MainWindow', '&Tools'))
-        self.multiEdit.setText(translate('MainWindow', 'Edit selection'))
+        self.menuTools.setTitle(translate("MainWindow", "&Tools"))
+        self.multiEdit.setText(translate("MainWindow", "Edit selection"))
         # menuAbout
-        self.menuAbout.setTitle(translate('MainWindow', '&About'))
-        self.actionAbout.setText(translate('MainWindow', 'About'))
-        self.actionAbout_Qt.setText(translate('MainWindow', 'About Qt'))
+        self.menuAbout.setTitle(translate("MainWindow", "&About"))
+        self.actionAbout.setText(translate("MainWindow", "About"))
+        self.actionAbout_Qt.setText(translate("MainWindow", "About Qt"))
 
     def set_session(self, session):
         if self.session is not None:
-            self.centralWidget().layout().removeWidget(self.session.layout.view())
+            self.centralWidget().layout().removeWidget(
+                self.session.layout.view()
+            )
             # Remove ownership, this allow the widget to be deleted
             self.session.layout.view().setParent(None)
 
@@ -231,8 +246,9 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         self._exit()
         event.ignore()
 
-    def register_cue_menu_action(self, name, function, category='',
-                                 shortcut=''):
+    def register_cue_menu_action(
+        self, name, function, category="", shortcut=""
+    ):
         """Register a new-cue choice for the edit-menu
 
         param name: The name for the MenuAction
@@ -242,12 +258,12 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         """
 
         action = QAction(self)
-        action.setText(translate('MainWindow', name))
+        action.setText(translate("MainWindow", name))
         action.triggered.connect(function)
-        if shortcut != '':
-            action.setShortcut(translate('MainWindow', shortcut))
+        if shortcut != "":
+            action.setShortcut(translate("MainWindow", shortcut))
 
-        if category != '':
+        if category != "":
             if category not in self._cue_add_menu:
                 menu = QMenu(category, self)
                 self._cue_add_menu[category] = menu
@@ -258,9 +274,9 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
             self.menuEdit.insertAction(self.cueSeparator, action)
 
     def update_window_title(self):
-        tile = self._title + ' - ' + self.session.name()
+        tile = self._title + " - " + self.session.name()
         if not MainActionsHandler.is_saved():
-            tile = '*' + tile
+            tile = "*" + tile
 
         self.setWindowTitle(tile)
 
@@ -274,18 +290,19 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         self.update_window_title()
 
     def _save(self):
-        if self.session.session_file == '':
+        if self.session.session_file == "":
             self._save_with_name()
         else:
             self.save_session.emit(self.session.session_file)
 
     def _save_with_name(self):
         filename, ok = QFileDialog.getSaveFileName(
-            parent=self, filter='*.lsp', directory=self.session.path())
+            parent=self, filter="*.lsp", directory=self.session.path()
+        )
 
         if ok:
-            if not filename.endswith('.lsp'):
-                filename += '.lsp'
+            if not filename.endswith(".lsp"):
+                filename += ".lsp"
 
             self.save_session.emit(filename)
 
@@ -295,8 +312,9 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
 
     def _load_from_file(self):
         if self._check_saved():
-            path, _ = QFileDialog.getOpenFileName(self, filter='*.lsp',
-                                                  directory=os.getenv('HOME'))
+            path, _ = QFileDialog.getOpenFileName(
+                self, filter="*.lsp", directory=os.getenv("HOME")
+            )
 
             if os.path.exists(path):
                 self.open_session.emit(path)
@@ -309,13 +327,16 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         if not MainActionsHandler.is_saved():
             msgBox = QMessageBox(self)
             msgBox.setIcon(QMessageBox.Warning)
-            msgBox.setWindowTitle(translate('MainWindow', 'Close session'))
+            msgBox.setWindowTitle(translate("MainWindow", "Close session"))
             msgBox.setText(
-                translate('MainWindow', 'The current session is not saved.'))
+                translate("MainWindow", "The current session is not saved.")
+            )
             msgBox.setInformativeText(
-                translate('MainWindow', 'Discard the changes?'))
-            msgBox.setStandardButtons(QMessageBox.Save | QMessageBox.Discard |
-                                      QMessageBox.Cancel)
+                translate("MainWindow", "Discard the changes?")
+            )
+            msgBox.setStandardButtons(
+                QMessageBox.Save | QMessageBox.Discard | QMessageBox.Cancel
+            )
             msgBox.setDefaultButton(QMessageBox.Save)
 
             result = msgBox.exec_()

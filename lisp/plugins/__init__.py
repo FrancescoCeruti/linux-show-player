@@ -29,7 +29,7 @@ from lisp.ui.ui_utils import install_translation, translate
 PLUGINS = {}
 LOADED = {}
 
-FALLBACK_CONFIG_PATH = path.join(path.dirname(__file__), 'default.json')
+FALLBACK_CONFIG_PATH = path.join(path.dirname(__file__), "default.json")
 
 logger = logging.getLogger(__name__)
 
@@ -45,26 +45,26 @@ def load_plugins(application):
             PLUGINS[name] = plugin
 
             mod_path = path.dirname(inspect.getfile(plugin))
-            mod_name = plugin.__module__.split('.')[-1]
+            mod_name = plugin.__module__.split(".")[-1]
 
-            if path.exists(path.join(mod_path, 'default.json')):
-                default_config_path = path.join(mod_path, 'default.json')
+            if path.exists(path.join(mod_path, "default.json")):
+                default_config_path = path.join(mod_path, "default.json")
             else:
                 default_config_path = FALLBACK_CONFIG_PATH
 
             # Load plugin configuration
             config = JSONFileConfiguration(
-                path.join(USER_DIR, mod_name + '.json'),
-                default_config_path
+                path.join(USER_DIR, mod_name + ".json"), default_config_path
             )
             plugin.Config = config
 
             # Load plugin translations
             install_translation(mod_name)
-            install_translation(mod_name, tr_path=path.join(mod_path, 'i18n'))
+            install_translation(mod_name, tr_path=path.join(mod_path, "i18n"))
         except Exception:
             logger.exception(
-                translate('PluginsError', 'Failed to load "{}"').format(name))
+                translate("PluginsError", 'Failed to load "{}"').format(name)
+            )
 
     __init_plugins(application)
 
@@ -86,9 +86,10 @@ def __init_plugins(application):
             # We've go through all the not loaded plugins and weren't able
             # to resolve their dependencies, which means there are cyclic or
             # missing/disabled dependencies
-            logger.warning(translate(
-                'PluginsWarning', 'Cannot satisfy dependencies for: {}')
-                    .format(', '.join(pending))
+            logger.warning(
+                translate(
+                    "PluginsWarning", "Cannot satisfy dependencies for: {}"
+                ).format(", ".join(pending))
             )
 
             return
@@ -121,19 +122,27 @@ def __load_plugins(plugins, application, optionals=True):
 
             # Try to load the plugin, if enabled
             try:
-                if plugin.Config.get('_enabled_', False):
+                if plugin.Config.get("_enabled_", False):
                     # Create an instance of the plugin and save it
                     LOADED[name] = plugin(application)
-                    logger.info(translate(
-                        'PluginsInfo', 'Plugin loaded: "{}"').format(name))
+                    logger.info(
+                        translate("PluginsInfo", 'Plugin loaded: "{}"').format(
+                            name
+                        )
+                    )
                 else:
-                    logger.debug(translate(
-                        'PluginsDebug',
-                        'Plugin disabled in configuration: "{}"').format(name)
+                    logger.debug(
+                        translate(
+                            "PluginsDebug",
+                            'Plugin disabled in configuration: "{}"',
+                        ).format(name)
                     )
             except Exception:
-                logger.exception(translate(
-                    'PluginsError', 'Failed to load plugin: "{}"'.format(name))
+                logger.exception(
+                    translate(
+                        "PluginsError",
+                        'Failed to load plugin: "{}"'.format(name),
+                    )
                 )
 
     return resolved
@@ -144,12 +153,16 @@ def finalize_plugins():
     for plugin in LOADED:
         try:
             LOADED[plugin].finalize()
-            logger.info(translate(
-                'PluginsInfo', 'Plugin terminated: "{}"').format(plugin))
+            logger.info(
+                translate("PluginsInfo", 'Plugin terminated: "{}"').format(
+                    plugin
+                )
+            )
         except Exception:
-            logger.exception(translate(
-                'PluginsError',
-                'Failed to terminate plugin: "{}"').format(plugin)
+            logger.exception(
+                translate(
+                    "PluginsError", 'Failed to terminate plugin: "{}"'
+                ).format(plugin)
             )
 
 
@@ -161,7 +174,8 @@ def get_plugin(plugin_name):
     if is_loaded(plugin_name):
         return LOADED[plugin_name]
     else:
-        raise PluginNotLoadedError(translate(
-            'PluginsError',
-            'the requested plugin is not loaded: {}').format(plugin_name)
+        raise PluginNotLoadedError(
+            translate(
+                "PluginsError", "the requested plugin is not loaded: {}"
+            ).format(plugin_name)
         )

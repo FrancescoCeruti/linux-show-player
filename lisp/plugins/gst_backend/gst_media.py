@@ -16,6 +16,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
+from time import perf_counter
 
 import logging
 import weakref
@@ -35,7 +36,7 @@ GST_TO_MEDIA_STATE = {
     Gst.State.NULL: MediaState.Null,
     Gst.State.READY: MediaState.Ready,
     Gst.State.PAUSED: MediaState.Paused,
-    Gst.State.PLAYING: MediaState.Playing
+    Gst.State.PLAYING: MediaState.Playing,
 }
 
 
@@ -54,6 +55,7 @@ def media_finalizer(pipeline, message_handler, media_elements):
 
 class GstError(Exception):
     """Used to wrap GStreamer debug messages for the logging system."""
+
     pass
 
 
@@ -72,8 +74,8 @@ class GstMedia(Media):
         self.__loop = 0  # current number of loops left to do
         self.__current_pipe = None  # A copy of the pipe property
 
-        self.changed('loop').connect(self.__on_loops_changed)
-        self.changed('pipe').connect(self.__on_pipe_changed)
+        self.changed("loop").connect(self.__on_loops_changed)
+        self.changed("pipe").connect(self.__on_pipe_changed)
 
     @Media.state.getter
     def state(self):
@@ -81,7 +83,8 @@ class GstMedia(Media):
             return MediaState.Null
 
         return GST_TO_MEDIA_STATE.get(
-            self.__pipeline.get_state(Gst.MSECOND)[1], MediaState.Null)
+            self.__pipeline.get_state(Gst.MSECOND)[1], MediaState.Null
+        )
 
     def current_time(self):
         if self.__pipeline is not None:
@@ -100,11 +103,15 @@ class GstMedia(Media):
             for element in self.elements:
                 element.play()
 
+            if self.state != MediaState.Paused:
+                self.__pipeline.set_state(Gst.State.PAUSED)
+                self.__pipeline.get_state(Gst.SECOND)
+                self.__seek(self.start_time)
+            else:
+                self.__seek(self.current_time())
+
             self.__pipeline.set_state(Gst.State.PLAYING)
             self.__pipeline.get_state(Gst.SECOND)
-
-            if self.start_time > 0 or self.stop_time > 0:
-                self.seek(self.start_time)
 
             self.played.emit(self)
 
@@ -117,7 +124,9 @@ class GstMedia(Media):
 
             self.__pipeline.set_state(Gst.State.PAUSED)
             self.__pipeline.get_state(Gst.SECOND)
-            # FIXME: the pipeline is not flushed
+
+            # Flush the pipeline
+            self.__seek(self.current_time())
 
             self.paused.emit(self)
 
@@ -149,7 +158,7 @@ class GstMedia(Media):
 
     def update_properties(self, properties):
         # In order to update the other properties we need the pipeline first
-        pipe = properties.pop('pipe', ())
+        pipe = properties.pop("pipe", ())
         if pipe:
             self.pipe = pipe
 
@@ -179,11 +188,12 @@ class GstMedia(Media):
                 result = self.__pipeline.seek(
                     rate if rate > 0 else 1,
                     Gst.Format.TIME,
-                    Gst.SeekFlags.FLUSH,
+                    Gst.SeekFlags.FLUSH | Gst.SeekFlags.SKIP,
                     Gst.SeekType.SET,
                     position * Gst.MSECOND,
                     stop_type,
-                    self.stop_time * Gst.MSECOND)
+                    self.stop_time * Gst.MSECOND,
+                )
 
                 return result
 
@@ -213,7 +223,8 @@ class GstMedia(Media):
         bus.add_signal_watch()
         # Use a weakref or GStreamer will hold a reference of the callback
         handler = bus.connect(
-            'message', weak_call_proxy(weakref.WeakMethod(self.__on_message)))
+            "message", weak_call_proxy(weakref.WeakMethod(self.__on_message))
+        )
 
         # Create all the new elements
         all_elements = gst_elements.all_elements()
@@ -223,28 +234,29 @@ class GstMedia(Media):
             except KeyError:
                 logger.warning(
                     translate(
-                        'GstMediaWarning', 'Invalid pipeline element: "{}"'
+                        "GstMediaWarning", 'Invalid pipeline element: "{}"'
                     ).format(element)
                 )
             except Exception:
                 logger.warning(
                     translate(
-                        'GstMediaError', 'Cannot create pipeline element: "{}"'
+                        "GstMediaError", 'Cannot create pipeline element: "{}"'
                     ).format(element),
-                    exc_info=True
+                    exc_info=True,
                 )
 
         # Reload the elements properties
         self.elements.update_properties(elements_properties)
 
         # The source element should provide the duration
-        self.elements[0].changed('duration').connect(self.__duration_changed)
+        self.elements[0].changed("duration").connect(self.__duration_changed)
         self.duration = self.elements[0].duration
 
         # Create a new finalizer object to free the pipeline when the media
         # is dereferenced
         self.__finalizer = weakref.finalize(
-            self, media_finalizer, self.__pipeline, handler, self.elements)
+            self, media_finalizer, self.__pipeline, handler, self.elements
+        )
 
         # Set the pipeline to READY
         self.__pipeline.set_state(Gst.State.READY)
@@ -256,8 +268,8 @@ class GstMedia(Media):
         if message.src == self.__pipeline:
             if message.type == Gst.MessageType.EOS:
                 if self.__loop != 0:
-                    # If we still have loops to do then seek to begin
-                    # FIXME: this is not seamless
+                    # If we still have loops to do then seek to start
+                    # FIXME: this is not 100% seamless
                     self.__loop -= 1
                     self.seek(self.start_time)
                 else:
@@ -273,7 +285,8 @@ class GstMedia(Media):
         if message.type == Gst.MessageType.ERROR:
             error, debug = message.parse_error()
             logger.error(
-                'GStreamer: {}'.format(error.message), exc_info=GstError(debug))
+                "GStreamer: {}".format(error.message), exc_info=GstError(debug)
+            )
 
             # Set the pipeline to NULL
             self.__pipeline.set_state(Gst.State.NULL)

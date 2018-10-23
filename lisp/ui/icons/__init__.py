@@ -32,13 +32,16 @@ from lisp import ICON_THEMES_DIR, ICON_THEME_COMMON
 
 def icon_themes_names():
     for entry in scandir(path.dirname(__file__)):
-        if (entry.is_dir() and entry.name != ICON_THEME_COMMON
-                and entry.name[0] != '_'):
+        if (
+            entry.is_dir()
+            and entry.name != ICON_THEME_COMMON
+            and entry.name[0] != "_"
+        ):
             yield entry.name
 
 
 class IconTheme:
-    _SEARCH_PATTERN = '{}/**/{}.*'
+    _SEARCH_PATTERN = "{}/**/{}.*"
     _BLANK_ICON = QIcon()
     _GlobalCache = {}
     _GlobalTheme = None

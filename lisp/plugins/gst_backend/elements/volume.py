@@ -21,21 +21,25 @@ from PyQt5.QtCore import QT_TRANSLATE_NOOP
 
 from lisp.backend.media_element import ElementType, MediaType
 from lisp.plugins.gst_backend.gi_repository import Gst
-from lisp.plugins.gst_backend.gst_element import GstMediaElement, GstProperty, \
-    GstLiveProperty
+from lisp.plugins.gst_backend.gst_element import (
+    GstMediaElement,
+    GstProperty,
+    GstLiveProperty,
+)
 
 
 class Volume(GstMediaElement):
     ElementType = ElementType.Plugin
     MediaType = MediaType.Audio
-    Name = QT_TRANSLATE_NOOP('MediaElementName', 'Volume')
+    Name = QT_TRANSLATE_NOOP("MediaElementName", "Volume")
 
-    mute = GstProperty('gst_volume', 'mute', default=False)
-    volume = GstProperty('gst_volume', 'volume', default=1.0)
-    normal_volume = GstProperty('gst_normal_volume', 'volume', default=1.0)
+    mute = GstProperty("gst_volume", "mute", default=False)
+    volume = GstProperty("gst_volume", "volume", default=1.0)
+    normal_volume = GstProperty("gst_normal_volume", "volume", default=1.0)
 
     live_volume = GstLiveProperty(
-        'gst_volume', 'volume', type=float, range=(0, 10))
+        "gst_volume", "volume", type=float, range=(0, 10)
+    )
 
     def __init__(self, pipeline):
         super().__init__(pipeline)

@@ -22,7 +22,6 @@ from lisp.core.proxy_model import ReadOnlyProxyModel
 
 
 class CueListModel(ModelAdapter):
-
     def __init__(self, model):
         super().__init__(model)
         self.__cues = []
@@ -62,8 +61,9 @@ class CueListModel(ModelAdapter):
         self.model_reset.emit()
 
     def _item_added(self, item):
-        if (not isinstance(item.index, int) or
-                not 0 <= item.index <= len(self.__cues)):
+        if not isinstance(item.index, int) or not 0 <= item.index <= len(
+            self.__cues
+        ):
             item.index = len(self.__cues)
 
         self.__cues.insert(item.index, item)
@@ -91,7 +91,6 @@ class CueListModel(ModelAdapter):
 
 
 class RunningCueModel(ReadOnlyProxyModel):
-
     def __init__(self, model):
         super().__init__(model)
         self.__playing = []

@@ -58,4 +58,4 @@ class Action:
 
         :rtype: str
         """
-        return ''
+        return ""
