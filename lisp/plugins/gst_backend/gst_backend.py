@@ -127,11 +127,21 @@ class GstBackend(Plugin, BaseBackend):
         # Create media cues, and add them to the Application cue_model
         factory = UriAudioCueFactory(GstBackend.Config["pipeline"])
 
-        for file in files:
+        # Get the (last) index of the current selection
+        start_index = -1
+        layout_selection = list(self.app.layout.selected_cues())
+        if layout_selection:
+            start_index = layout_selection[-1].index + 1
+
+        for index, file in enumerate(files, start_index):
             file = self.app.session.rel_path(file)
             cue = factory(uri="file://" + file)
             # Use the filename without extension as cue name
             cue.name = os.path.splitext(os.path.basename(file))[0]
+            # Set the index (if something is selected)
+            if start_index != -1:
+                cue.index = index
+
             self.app.cue_model.add(cue)
 
         QApplication.restoreOverrideCursor()

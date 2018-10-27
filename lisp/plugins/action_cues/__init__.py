@@ -57,6 +57,12 @@ class ActionCues(Plugin):
         def cue_factory():
             try:
                 cue = CueFactory.create_cue(cue_class.__name__)
+
+                # Get the (last) index of the current selection
+                layout_selection = list(self.app.layout.selected_cues())
+                if layout_selection:
+                    cue.index = layout_selection[-1].index + 1
+
                 self.app.cue_model.add(cue)
             except Exception:
                 logger.exception(
