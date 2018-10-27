@@ -62,21 +62,22 @@ class AppGeneral(SettingsPage):
         # Application theme
         self.themeGroup = QGroupBox(self)
         self.themeGroup.setLayout(QGridLayout())
-        self.layout().addWidget(self.themeGroup)
 
+        self.layout().addWidget(self.themeGroup)
         self.themeLabel = QLabel(self.themeGroup)
         self.themeGroup.layout().addWidget(self.themeLabel, 0, 0)
-
         self.themeCombo = QComboBox(self.themeGroup)
         self.themeCombo.addItems(themes_names())
         self.themeGroup.layout().addWidget(self.themeCombo, 0, 1)
 
         self.iconsLabel = QLabel(self.themeGroup)
         self.themeGroup.layout().addWidget(self.iconsLabel, 1, 0)
-
         self.iconsCombo = QComboBox(self.themeGroup)
         self.iconsCombo.addItems(icon_themes_names())
         self.themeGroup.layout().addWidget(self.iconsCombo, 1, 1)
+
+        self.themeGroup.layout().setColumnStretch(0, 1)
+        self.themeGroup.layout().setColumnStretch(1, 1)
 
         self.retranslateUi()
 
@@ -90,8 +91,8 @@ class AppGeneral(SettingsPage):
         self.themeGroup.setTitle(
             translate("AppGeneralSettings", "Application themes")
         )
-        self.themeLabel.setText(translate("AppGeneralSettings", "UI theme"))
-        self.iconsLabel.setText(translate("AppGeneralSettings", "Icons theme"))
+        self.themeLabel.setText(translate("AppGeneralSettings", "UI theme:"))
+        self.iconsLabel.setText(translate("AppGeneralSettings", "Icons theme:"))
 
     def getSettings(self):
         settings = {

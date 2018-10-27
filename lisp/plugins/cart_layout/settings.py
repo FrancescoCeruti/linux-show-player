@@ -62,22 +62,20 @@ class CartLayoutSettings(SettingsPage):
         self.gridSizeGroup.setLayout(QGridLayout())
         self.layout().addWidget(self.gridSizeGroup)
 
+        self.columnsLabel = QLabel(self.gridSizeGroup)
+        self.gridSizeGroup.layout().addWidget(self.columnsLabel, 0, 0)
         self.columnsSpin = QSpinBox(self.gridSizeGroup)
         self.columnsSpin.setRange(1, 16)
-        self.gridSizeGroup.layout().addWidget(self.columnsSpin, 0, 0)
-
-        self.columnsLabel = QLabel(self.gridSizeGroup)
-        self.gridSizeGroup.layout().addWidget(self.columnsLabel, 0, 1)
-
-        self.rowsSpin = QSpinBox(self.gridSizeGroup)
-        self.rowsSpin.setRange(1, 16)
-        self.gridSizeGroup.layout().addWidget(self.rowsSpin, 1, 0)
+        self.gridSizeGroup.layout().addWidget(self.columnsSpin, 0, 1)
 
         self.rowsLabel = QLabel(self.gridSizeGroup)
-        self.gridSizeGroup.layout().addWidget(self.rowsLabel, 1, 1)
+        self.gridSizeGroup.layout().addWidget(self.rowsLabel, 1, 0)
+        self.rowsSpin = QSpinBox(self.gridSizeGroup)
+        self.rowsSpin.setRange(1, 16)
+        self.gridSizeGroup.layout().addWidget(self.rowsSpin, 1, 1)
 
-        self.gridSizeGroup.layout().setColumnStretch(0, 5)
-        self.gridSizeGroup.layout().setColumnStretch(1, 3)
+        self.gridSizeGroup.layout().setColumnStretch(0, 1)
+        self.gridSizeGroup.layout().setColumnStretch(1, 1)
 
         self.retranslateUi()
 
@@ -91,8 +89,8 @@ class CartLayoutSettings(SettingsPage):
         self.showAccurate.setText(translate("CartLayout", "Show accurate time"))
         self.showVolume.setText(translate("CartLayout", "Show volume"))
         self.gridSizeGroup.setTitle(translate("CartLayout", "Grid size"))
-        self.columnsLabel.setText(translate("CartLayout", "Number of columns"))
-        self.rowsLabel.setText(translate("CartLayout", "Number of rows"))
+        self.columnsLabel.setText(translate("CartLayout", "Number of columns:"))
+        self.rowsLabel.setText(translate("CartLayout", "Number of rows:"))
 
     def loadSettings(self, settings):
         self.columnsSpin.setValue(settings["grid"]["columns"])

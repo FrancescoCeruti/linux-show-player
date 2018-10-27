@@ -124,7 +124,7 @@
         },
         "pyqt5": {
             "hashes": [
-                "sha256:0e1b099e036ea5e851fb4475b714b2229947dc848022c77420e47f55b642b299",
+                "sha256:517e4339135c4874b799af0d484bc2e8c27b54850113a68eec40a0b56534f450",
                 "sha256:ac1eb5a114b6e7788e8be378be41c5e54b17d5158994504e85e43b5fca006a39",
                 "sha256:d2309296a5a79d0a1c0e6c387c30f0398b65523a6dcc8a19cc172e46b949e00d",
                 "sha256:e85936bae1581bcb908847d2038e5b34237a5e6acc03130099a78930770e7ead"
@@ -242,10 +242,10 @@
         },
         "graphviz": {
             "hashes": [
-                "sha256:310bacfb969f0ac7c872610500e017c3e82b24a8abd33d289e99af162de30cb8",
-                "sha256:865afa6ab9775cf29db03abd8e571a164042c726c35a1b3c1e2b8c4c645e2993"
+                "sha256:0e1744a45b0d707bc44f99c7b8e5f25dc22cf96b6aaf2432ac308ed9822a9cb6",
+                "sha256:d311be4fddfe832a56986ac5e1d6e8715d7fcb0208560da79d1bb0f72abef41f"
             ],
-            "version": "==0.9"
+            "version": "==0.10.1"
         },
         "objgraph": {
             "hashes": [

@@ -17,7 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
+from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP, QTimer
 from PyQt5.QtGui import QKeySequence
 from PyQt5.QtWidgets import QAction
 
@@ -67,6 +67,8 @@ class ListLayout(CueLayout):
         self._list_model.item_added.connect(self.__cue_added)
         self._memento_model = CueMementoAdapter(self._list_model)
         self._running_model = RunningCueModel(self.cue_model)
+        self._go_timer = QTimer()
+        self._go_timer.setSingleShot(True)
 
         self._view = ListLayoutView(
             self._list_model, self._running_model, self.Config
@@ -334,8 +336,12 @@ class ListLayout(CueLayout):
             self.show_context_menu(event.globalPos())
 
     def __go_slot(self):
-        action = CueAction(ListLayout.Config.get("goAction"))
-        self.go(action=action)
+        if not self._go_timer.isActive():
+            action = CueAction(ListLayout.Config.get("goAction"))
+            self.go(action=action)
+
+            self._go_timer.setInterval(ListLayout.Config.get("goDelay"))
+            self._go_timer.start()
 
     def __cue_added(self, cue):
         cue.next.connect(self.__cue_next, Connection.QtQueued)

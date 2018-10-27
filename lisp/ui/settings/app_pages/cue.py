@@ -55,7 +55,7 @@ class CueAppSettings(SettingsPage):
         self.interruptGroup.setTitle(translate("CueSettings", "Interrupt fade"))
         self.actionGroup.setTitle(translate("CueSettings", "Fade actions"))
 
-    def applySettings(self):
+    def getSettings(self):
         return {
             "cue": {
                 "interruptFade": self.interruptFadeEdit.duration(),

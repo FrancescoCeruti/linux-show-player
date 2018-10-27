@@ -26,6 +26,7 @@ from PyQt5.QtWidgets import (
     QLabel,
     QKeySequenceEdit,
     QGridLayout,
+    QSpinBox,
 )
 
 from lisp.cues.cue import CueAction
@@ -65,8 +66,8 @@ class ListLayoutSettings(SettingsPage):
         self.behaviorsGroup.layout().addWidget(self.selectionMode)
 
         self.goLayout = QGridLayout()
-        self.goLayout.setColumnStretch(0, 2)
-        self.goLayout.setColumnStretch(1, 5)
+        self.goLayout.setColumnStretch(0, 1)
+        self.goLayout.setColumnStretch(1, 1)
         self.behaviorsGroup.layout().addLayout(self.goLayout)
 
         self.goKeyLabel = QLabel(self.behaviorsGroup)
@@ -81,6 +82,12 @@ class ListLayoutSettings(SettingsPage):
             mode=CueActionComboBox.Mode.Value,
         )
         self.goLayout.addWidget(self.goActionCombo, 1, 1)
+
+        self.goDelayLabel = QLabel(self.behaviorsGroup)
+        self.goLayout.addWidget(self.goDelayLabel, 2, 0)
+        self.goDelaySpin = QSpinBox(self.behaviorsGroup)
+        self.goDelaySpin.setMaximum(10000)
+        self.goLayout.addWidget(self.goDelaySpin, 2, 1)
 
         self.useFadeGroup = QGroupBox(self)
         self.useFadeGroup.setLayout(QGridLayout())
@@ -111,8 +118,9 @@ class ListLayoutSettings(SettingsPage):
             translate("ListLayout", "Enable selection mode")
         )
 
-        self.goKeyLabel.setText(translate("ListLayout", "Go key:"))
-        self.goActionLabel.setText(translate("ListLayout", "Go action"))
+        self.goKeyLabel.setText(translate("ListLayout", "GO key:"))
+        self.goActionLabel.setText(translate("ListLayout", "GO action:"))
+        self.goDelayLabel.setText(translate("ListLayout", "GO delay (ms):"))
 
         self.useFadeGroup.setTitle(
             translate("ListLayout", "Use fade (buttons)")
@@ -134,6 +142,7 @@ class ListLayoutSettings(SettingsPage):
             QKeySequence(settings["goKey"], QKeySequence.NativeText)
         )
         self.goActionCombo.setCurrentItem(settings["goAction"])
+        self.goDelaySpin.setValue(settings["goDelay"])
 
         self.stopCueFade.setChecked(settings["stopCueFade"])
         self.pauseCueFade.setChecked(settings["pauseCueFade"])
@@ -154,6 +163,7 @@ class ListLayoutSettings(SettingsPage):
                 QKeySequence.NativeText
             ),
             "goAction": self.goActionCombo.currentItem(),
+            "goDelay": self.goDelaySpin.value(),
             "stopCueFade": self.stopCueFade.isChecked(),
             "pauseCueFade": self.pauseCueFade.isChecked(),
             "resumeCueFade": self.resumeCueFade.isChecked(),
