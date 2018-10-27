@@ -25,6 +25,7 @@ from lisp.core.configuration import DummyConfiguration
 from lisp.core.properties import ProxyProperty
 from lisp.core.signal import Connection
 from lisp.cues.cue import Cue, CueAction, CueNextAction
+from lisp.cues.cue_factory import CueFactory
 from lisp.cues.cue_memento_model import CueMementoAdapter
 from lisp.layout.cue_layout import CueLayout
 from lisp.layout.cue_menu import (
@@ -141,13 +142,19 @@ class ListLayout(CueLayout):
             SimpleMenuAction(
                 translate("ListLayout", "Edit cue"),
                 self.edit_cue,
-                translate("ListLayout", "Edit selected cues"),
+                translate("ListLayout", "Edit selected"),
                 self.edit_cues,
+            ),
+            SimpleMenuAction(
+                translate("ListLayout", "Clone cue"),
+                self._clone_cue,
+                translate("ListLayout", "Clone selected"),
+                self._clone_cues,
             ),
             SimpleMenuAction(
                 translate("ListLayout", "Remove cue"),
                 self.cue_model.remove,
-                translate("ListLayout", "Remove selected cues"),
+                translate("ListLayout", "Remove selected"),
                 self._remove_cues,
             ),
         )
@@ -335,6 +342,15 @@ class ListLayout(CueLayout):
         else:
             self.show_context_menu(event.globalPos())
 
+    def _clone_cue(self, cue):
+        self._clone_cues((cue, ))
+
+    def _clone_cues(self, cues):
+        for pos, cue in enumerate(cues, cues[-1].index + 1):
+            clone = CueFactory.clone_cue(cue)
+            clone.name = "Copy of {}".format(clone.name)
+            self._list_model.insert(clone, pos)
+
     def __go_slot(self):
         if not self._go_timer.isActive():
             action = CueAction(ListLayout.Config.get("goAction"))
@@ -352,8 +368,8 @@ class ListLayout(CueLayout):
             if next_index < len(self._list_model):
                 action = CueNextAction(cue.next_action)
                 if (
-                    action == CueNextAction.SelectAfterEnd
-                    or action == CueNextAction.SelectAfterWait
+                        action == CueNextAction.SelectAfterEnd
+                        or action == CueNextAction.SelectAfterWait
                 ):
                     self.set_standby_index(next_index)
                 else:
