@@ -12,6 +12,10 @@ branches:
 before_install:
   - docker pull francescoceruti/flatpack
 
+install:
+  # Required by travis_flatpak.py
+  - pip install html5lib
+
 script:
   # Enter the flatpak buid directory
   - cd dist/Flatpak
