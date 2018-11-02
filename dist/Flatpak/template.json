@@ -127,12 +127,12 @@
 			],
 			"sources": [
 				{
-					"type": "archive",
+					"type": "file",
 					"url": "https://files.pythonhosted.org/packages/67/4b/141a581104b1f6397bfa78ac9d43d8ad29a7ca43ea90a2d863fe3056e86a/six-1.11.0-py2.py3-none-any.whl",
 					"sha256": "832dc0e10feb1aa2c68dcc57dbb658f1c7e65b9b61af69048abc87a2db00a0eb"
 				},
 				{
-					"type": "archive",
+					"type": "file",
 					"url": "https://files.pythonhosted.org/packages/3a/30/289ead101f94998d88e8961a3548aea29417ae0057be23972483cddebf4f/protobuf-3.6.1-cp37-cp37m-manylinux1_x86_64.whl",
 					"sha256": "4b92e235a3afd42e7493b281c8b80c0c65cbef45de30f43d571d1ee40a1f77ef"
 				}
