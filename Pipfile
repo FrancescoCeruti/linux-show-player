@@ -4,17 +4,21 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-sortedcontainers = "*"
-mido = "*"
-python-rtmidi = "*"
-JACK-Client = "*"
-pyliblo = "*"
-"PyQt5" = "*"
-PyGObject = "*"
-falcon = "*"
-requests = "*"
+Cython = "==0.29.*"
+falcon = "==1.4.*"
+JACK-Client = "==0.4.*"
+mido = "==1.2.*"
+PyGObject = "==3.30.*"
+pyliblo = "==0.10.*"
+PyQt5 = "==5.11.*"
+python-rtmidi = "==1.1.*"
+requests = "==2.20.*"
+sortedcontainers = "==2.0.*"
 
 [dev-packages]
-Cython = "*"
-pycallgraph = "*"
 objgraph = "*"
+pycallgraph = "*"
+html5lib = "*"
+
+[requires]
+python_version = ">= 3.5"

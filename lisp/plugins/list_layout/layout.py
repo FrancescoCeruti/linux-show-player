@@ -343,7 +343,7 @@ class ListLayout(CueLayout):
             self.show_context_menu(event.globalPos())
 
     def _clone_cue(self, cue):
-        self._clone_cues((cue, ))
+        self._clone_cues((cue,))
 
     def _clone_cues(self, cues):
         for pos, cue in enumerate(cues, cues[-1].index + 1):
@@ -368,8 +368,8 @@ class ListLayout(CueLayout):
             if next_index < len(self._list_model):
                 action = CueNextAction(cue.next_action)
                 if (
-                        action == CueNextAction.SelectAfterEnd
-                        or action == CueNextAction.SelectAfterWait
+                    action == CueNextAction.SelectAfterEnd
+                    or action == CueNextAction.SelectAfterWait
                 ):
                     self.set_standby_index(next_index)
                 else:

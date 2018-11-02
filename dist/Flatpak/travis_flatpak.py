@@ -1,52 +1,58 @@
-# -*- coding: utf-8 -*-
-#
-# This file is part of Linux Show Player
-#
-# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
-#
-# Linux Show Player is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# Linux Show Player is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
-
-import os
 import json
+import urllib.parse
+import os
+
+import pipenv_flatpak
 
 DIR = os.path.dirname(__file__)
+BRANCH = os.environ["TRAVIS_BRANCH"]
+COMMIT = os.environ["TRAVIS_COMMIT"]
+
 APP_ID = "com.github.FrancescoCeruti.LinuxShowPlayer"
-MANIFEST = os.path.join(DIR, APP_ID + '.json')
-BRANCH = os.environ['TRAVIS_BRANCH']
-COMMIT = os.environ['TRAVIS_COMMIT']
+APP_MODULE = "linux-show-player"
+TEMPLATE = os.path.join(DIR, "template.json")
+DESTINATION = os.path.join(DIR, APP_ID + ".json")
 
-LiSP_MODULE = 'linux-show-player'
+LOCKFILE = "../../Pipfile.lock"
 
-# Load the manifest (as dictionary)
-with open(MANIFEST, mode='r') as template:
-    manifest = json.load(template)
+
+print(">>> Generating flatpak manifest ....\n")
+with open(TEMPLATE, mode="r") as f:
+    manifest = json.load(f)
 
 # Patch top-Level attributes
-manifest['branch'] = BRANCH
-if BRANCH != 'master':
-    manifest['desktop-file-name-suffix'] = ' ({})'.format(BRANCH)
+manifest["branch"] = BRANCH
+if BRANCH != "master":
+    manifest["desktop-file-name-suffix"] = " ({})".format(BRANCH)
 
-# Patch modules attributes
-source = {}
-for module in reversed(manifest['modules']):
-    if module['name'] == LiSP_MODULE:
-        source = module['sources'][0]
-        break
+py_version = None
+app_index = None
 
-source['branch'] = BRANCH
-source['commit'] = COMMIT
+# Get python version "major.minor" and patch the app-module to use the correct
+# branch
+for index, module in enumerate(manifest["modules"]):
+    if module["name"] == "cpython":
+        path = urllib.parse.urlsplit(module["sources"][0]["url"]).path
+        file = os.path.basename(path)
+        py_version = file[2:5]
+    elif module["name"] == APP_MODULE:
+        module["sources"][0]["branch"] = BRANCH
+        module["sources"][0]["commit"] = COMMIT
+        app_index = index
+
+# Generate python-modules from Pipfile.lock, insert them before the app-module
+for num, py_module in enumerate(
+    pipenv_flatpak.generate(
+        LOCKFILE,
+        py_version,
+        pipenv_flatpak.PLATFORMS_LINUX_x86_64,
+        pipenv_flatpak.PYPI_URL,
+    )
+):
+    manifest["modules"].insert((app_index - 1) + num, py_module)
 
 # Save the patched manifest
-with open(MANIFEST, mode='w') as out:
+with open(DESTINATION, mode="w") as out:
     json.dump(manifest, out, indent=4)
+
+print("\n>>> Done!")

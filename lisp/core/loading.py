@@ -18,15 +18,10 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import logging
-import os.path
+import os
 import re
 
 from lisp.ui.ui_utils import translate
-
-try:
-    from os import scandir
-except ImportError:
-    from scandir import scandir
 
 logger = logging.getLogger(__name__)
 
@@ -47,7 +42,7 @@ class ModulesLoader:
 
     def load_modules(self):
         """Generate lists of tuples (class-name, class-object)."""
-        for entry in scandir(self.pkg_path):
+        for entry in os.scandir(self.pkg_path):
 
             # Exclude __init__, __pycache__ and likely
             if re.match("^__.*", entry.name):

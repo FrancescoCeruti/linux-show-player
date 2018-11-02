@@ -18,12 +18,7 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import glob
-from os import path
-
-try:
-    from os import scandir
-except ImportError:
-    from scandir import scandir
+import os
 
 from PyQt5.QtGui import QIcon
 
@@ -31,7 +26,7 @@ from lisp import ICON_THEMES_DIR, ICON_THEME_COMMON
 
 
 def icon_themes_names():
-    for entry in scandir(path.dirname(__file__)):
+    for entry in os.scandir(os.path.dirname(__file__)):
         if (
             entry.is_dir()
             and entry.name != ICON_THEME_COMMON
@@ -47,7 +42,7 @@ class IconTheme:
     _GlobalTheme = None
 
     def __init__(self, *names):
-        self._lookup_dirs = [path.join(ICON_THEMES_DIR, d) for d in names]
+        self._lookup_dirs = [os.path.join(ICON_THEMES_DIR, d) for d in names]
 
     def __iter__(self):
         yield from self._lookup_dirs

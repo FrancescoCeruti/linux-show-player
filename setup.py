@@ -30,18 +30,6 @@ setup(
     license=lisp.__license__,
     url=lisp.__email__,
     description="Cue player for live shows",
-    install_requires=[
-        "PyQt5",
-        "PyGobject",
-        "sortedcontainers",
-        "mido",
-        "python-rtmidi",
-        "JACK-Client",
-        "pyliblo",
-        "falcon",
-        "requests",
-        'scandir;python_version<"3.5"',
-    ],
     packages=find_packages(),
     package_data={
         "": ["i18n/*.qm", "*.qss", "*.json"],

@@ -8,6 +8,7 @@
 <a href="https://landscape.io/github/FrancescoCeruti/linux-show-player/master"><img src="https://landscape.io/github/FrancescoCeruti/linux-show-player/master/landscape.svg?style=flat" alt="Code Health" /></a>
 <a href="https://gitter.im/linux-show-player/linux-show-player"><img src="https://img.shields.io/gitter/room/nwjs/nw.js.svg?maxAge=2592000" alt="Gitter" /></a>
 <a href="https://github.com/ambv/black"><img src="https://img.shields.io/badge/code%20style-black-000000.svg" alt="Code style: black"></a>
+<a href="https://saythanks.io/to/FrancescoCeruti"><img src="https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg" alt="Say Thanks!"></a>
 </p>
 
 ---
