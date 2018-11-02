@@ -170,6 +170,11 @@
 		{
 			"name": "linux-show-player",
 			"buildsystem": "simple",
+			"build-options": {
+				"build-args": [
+					"--share=network"
+				]
+			},
 			"build-commands": [
 				"pip3 install --no-deps --prefix=${FLATPAK_DEST} .",
 				"mkdir -p /app/share/applications/",
