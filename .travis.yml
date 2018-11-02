@@ -17,7 +17,7 @@ before_install:
 
 install:
   # Required by travis_flatpak.py
-  - pip3 install --user html5lib
+  - pip3 install html5lib
 
 script:
   # Enter the flatpak buid directory
