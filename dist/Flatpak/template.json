@@ -113,8 +113,8 @@
 			"sources": [
 				{
 					"type": "archive",
-					"url": "https://github.com/protocolbuffers/protobuf/releases/download/v3.6.1/protobuf-cpp-3.6.1.tar.gz",
-					"sha256": "b3732e471a9bb7950f090fd0457ebd2536a9ba0891b7f3785919c654fe2a2529"
+					"url": "https://github.com/protocolbuffers/protobuf/releases/download/v3.1.0/protobuf-cpp-3.1.0.tar.gz",
+					"sha256": "51ceea9957c875bdedeb1f64396b5b0f3864fe830eed6a2d9c066448373ea2d6"
 				}
 			]
 		},
@@ -123,7 +123,7 @@
 			"buildsystem": "simple",
 			"build-commands": [
 				"pip3 install --no-deps --prefix=${FLATPAK_DEST} six-1.11.0-py2.py3-none-any.whl",
-				"pip3 install --no-deps --prefix=${FLATPAK_DEST} protobuf-3.6.1-cp37-cp37m-manylinux1_x86_64.whl"
+				"pip3 install --no-deps --prefix=${FLATPAK_DEST} protobuf-3.1.0.post1-py2.py3-none-any.whl"
 			],
 			"sources": [
 				{
@@ -133,8 +133,8 @@
 				},
 				{
 					"type": "file",
-					"url": "https://files.pythonhosted.org/packages/3a/30/289ead101f94998d88e8961a3548aea29417ae0057be23972483cddebf4f/protobuf-3.6.1-cp37-cp37m-manylinux1_x86_64.whl",
-					"sha256": "4b92e235a3afd42e7493b281c8b80c0c65cbef45de30f43d571d1ee40a1f77ef"
+					"url": "https://files.pythonhosted.org/packages/a5/bb/11821bdc46cb9aad8e18618715e5e93eef44abb642ed862c4b080c474183/protobuf-3.1.0.post1-py2.py3-none-any.whl",
+					"sha256": "42315e73409eaefdcc11e216695ff21f87dc483ad0595c57999baddf7f841180"
 				}
 			]
 		},
@@ -154,10 +154,9 @@
 			],
 			"sources": [
 				{
-					"type": "git",
-					"url": "https://github.com/OpenLightingProject/ola.git",
-					"tag": "0.10.6",
-					"commit": "6e57342c414a72cdd721e8df5bc7967e17459647"
+					"type": "archive",
+					"url": "https://github.com/OpenLightingProject/ola/releases/download/0.10.7/ola-0.10.7.tar.gz",
+					"sha256": "8a65242d95e0622a3553df498e0db323a13e99eeb1accc63a8a2ca8913ab31a0"
 				},
 				{
 					"type": "script",

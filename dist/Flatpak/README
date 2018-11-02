@@ -53,6 +53,9 @@ support for flatpak.
 
 ------ NOTES ------
 
+- until OLA 0.11 we must use protobuf < 3.2, or it will not build,
+  if needed we may patch it, for now it's fine
+
 - pipenv_flatpak.py is quite generic, it could also be used in other places
 
 - The PyQt5 wheels from pypi are "all-inclusive" and quite big
