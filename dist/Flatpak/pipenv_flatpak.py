@@ -14,7 +14,7 @@ ARCHIVE_EXTENSIONS = (
     ZIP_EXTENSIONS + BZ2_EXTENSIONS + TAR_EXTENSIONS + XZ_EXTENSIONS
 )
 
-PLATFORMS_LINUX_x86_64 = ("linux_x86_64", "manylinux1_x86_64")
+PLATFORMS_LINUX_x86_64 = ("linux_x86_64", "manylinux1_x86_64", "any")
 PYPI_URL = "https://pypi.python.org/simple/"
 
 
@@ -50,8 +50,7 @@ def _wheel_versions(py_version):
     return {
         "py" + py_version.replace(".", ""),
         "py" + py_version[0],
-        "cp" + py_version.replace(".", ""),
-        "any",
+        "cp" + py_version.replace(".", "")
     }
 
 
