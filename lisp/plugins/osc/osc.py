@@ -18,9 +18,12 @@
 
 
 from lisp.core.plugin import Plugin
+from lisp.cues.cue_factory import CueFactory
+from lisp.plugins.osc.osc_cue import OscCue
 from lisp.plugins.osc.osc_server import OscServer
 from lisp.plugins.osc.osc_settings import OscSettings
 from lisp.ui.settings.app_configuration import AppConfigurationDialog
+from lisp.ui.ui_utils import translate
 
 
 # TODO: layout-controls in external plugin
@@ -38,6 +41,9 @@ class Osc(Plugin):
         AppConfigurationDialog.registerSettingsPage(
             "plugins.osc", OscSettings, Osc.Config
         )
+
+        # Register the OSC cue type
+        CueFactory.register_cue_type(self.app, OscCue, translate("CueCategory", "Protocol cues"))
 
         # Create a server instance
         self.__server = OscServer(

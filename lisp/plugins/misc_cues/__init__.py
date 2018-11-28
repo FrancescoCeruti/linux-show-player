@@ -1,6 +1,8 @@
+# -*- coding: utf-8 -*-
+#
 # This file is part of Linux Show Player
 #
-# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,14 +25,14 @@ from lisp.cues.cue_factory import CueFactory
 from lisp.ui.ui_utils import translate
 
 
-class ActionCues(Plugin):
-    Name = "Action Cues"
-    Authors = ("Francesco Ceruti",)
-    Description = "A collection of cues that act on other cues"
+class MiscCues(Plugin):
+    Name = "Miscellaneous Cues"
+    Authors = ("Various",)
+    Description = "A collection of cues that don't belong to specific plugins"
 
     def __init__(self, app):
         super().__init__(app)
 
-        # Register each action cue class with the cue-factory
         for name, cue in load_classes(__package__, path.dirname(__file__)):
-            CueFactory.register_cue_type(self.app, cue, translate("CueCategory", "Action cues"))
+            # Register the action-cue in the cue-factory
+            CueFactory.register_cue_type(self.app, cue)
