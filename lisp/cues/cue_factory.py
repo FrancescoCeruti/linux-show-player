@@ -37,29 +37,26 @@ class CueFactory:
     def register_cue_type(cls, app, cue_class, cue_category=None):
         cls.register_factory(cue_class.__name__, cue_class)
 
-        def _new_cue_factory(app, cue_class):
-            def cue_factory():
-                try:
-                    cue = CueFactory.create_cue(cue_class.__name__)
+        def __cue_factory():
+            try:
+                cue = CueFactory.create_cue(cue_class.__name__)
 
-                    # Get the (last) index of the current selection
-                    layout_selection = list(app.layout.selected_cues())
-                    if layout_selection:
-                        cue.index = layout_selection[-1].index + 1
+                # Get the (last) index of the current selection
+                layout_selection = list(app.layout.selected_cues())
+                if layout_selection:
+                    cue.index = layout_selection[-1].index + 1
 
-                    app.cue_model.add(cue)
-                except Exception:
-                    logger.exception(
-                        translate("CueFactory", "Cannot create cue {}").format(
-                            cue_class.__name__
-                        )
+                app.cue_model.add(cue)
+            except Exception:
+                logger.exception(
+                    translate("CueFactory", "Cannot create cue {}").format(
+                        cue_class.__name__
                     )
-
-            return cue_factory
+                )
 
         app.window.register_cue_menu_action(
             translate("CueName", cue_class.Name),
-            _new_cue_factory(app, cue_class),
+            __cue_factory,
             cue_category or translate("CueCategory", "Miscellaneous cues"),
         )
         
