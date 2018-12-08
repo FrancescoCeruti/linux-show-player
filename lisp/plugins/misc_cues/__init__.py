@@ -33,6 +33,6 @@ class MiscCues(Plugin):
     def __init__(self, app):
         super().__init__(app)
 
-        for name, cue in load_classes(__package__, path.dirname(__file__)):
-            # Register the action-cue in the cue-factory
+        # Register the action-cue in the cue-factory
+        for _, cue in load_classes(__package__, path.dirname(__file__)):
             CueFactory.register_cue_type(self.app, cue)

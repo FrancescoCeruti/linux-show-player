@@ -59,7 +59,7 @@ class CueFactory:
             __cue_factory,
             cue_category or translate("CueCategory", "Miscellaneous cues"),
         )
-        
+
         logger.debug(
             translate("CueFactory", 'Registered cue: "{}"').format(
                 cue_class.__name__
