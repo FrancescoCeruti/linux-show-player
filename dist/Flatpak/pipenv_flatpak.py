@@ -28,10 +28,7 @@ def _flatpak_module_template():
 
 
 def _is_like_archive(filename):
-    """Return whether the filename looks like an archive.
-
-    From pip project (https://github.com/pypa/pip)
-    """
+    """Return whether the filename looks like an archive."""
     for ext in ARCHIVE_EXTENSIONS:
         if filename.endswith(ext):
             return True, ext
@@ -50,12 +47,12 @@ def _wheel_versions(py_version):
     return {
         "py" + py_version.replace(".", ""),
         "py" + py_version[0],
-        "cp" + py_version.replace(".", "")
+        "cp" + py_version.replace(".", ""),
     }
 
 
 def _wheel_tags(filename):
-    """Get wheel tags form the filename, see pep-0425
+    """Get wheel tags from the filename, see pep-0425
 
     Returns:
         A tuple (version, set(python-tags), platform-tag)
@@ -148,7 +145,7 @@ def fetch_downloads_candidates(url_template, packages):
         for link in html.findall(".//a"):
             package["candidates"].append((link.text, link.attrib["href"]))
 
-    with ThreadPoolExecutor(max_workers=5) as executor:
+    with ThreadPoolExecutor(max_workers=10) as executor:
         wait(tuple(executor.submit(fetch, package) for package in packages))
 
     session.close()

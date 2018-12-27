@@ -23,7 +23,7 @@ __author__ = "Francesco Ceruti"
 __email__ = "ceppofrancy@gmail.com"
 __url__ = "https://github.com/FrancescoCeruti/linux-show-player"
 __license__ = "GPLv3"
-__version__ = "0.6dev"
+__version__ = "0.6.0.dev0"
 
 # Application wide "constants"
 APP_DIR = path.dirname(__file__)

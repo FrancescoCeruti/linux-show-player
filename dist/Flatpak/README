@@ -38,12 +38,12 @@ support for flatpak.
 
 - the python "protobuf" package is specified directly in the template, this for
   a few reasons:
-  - It's needed to "build" the OLA python package, which, can only be build by
+  - It's needed to "build" the OLA python package, which, can only be build
     with all the OLA framework (--enable-python-libs)
   - It's not specified in the Pipfile, for the reason above, without a complete
-    OLA installation you cannot have the python package, so we don't need it
+    OLA installation you cannot have the python package
 
-- protobuf requires "six" and "setuptools", we install the first, but we
+- protobuf requires "six" and "setuptools", we install the only first, we
   consider the second already shipped with the cpython packages
 
 - for python we favor pre-build "wheel" releases, which are faster to install
