@@ -22,12 +22,12 @@
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="83"/>
       <source>Add</source>
-      <translation type="unfinished">Add</translation>
+      <translation>Toevoegen</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="88"/>
       <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
+      <translation>Verwijderen </translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="149"/>
@@ -37,7 +37,7 @@
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="149"/>
       <source>Action</source>
-      <translation type="unfinished">Action</translation>
+      <translation>Actie</translation>
     </message>
   </context>
   <context>
@@ -45,27 +45,27 @@
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="129"/>
       <source>Command</source>
-      <translation type="unfinished">Command</translation>
+      <translation>Opdracht</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="130"/>
       <source>Command to execute, as in a shell</source>
-      <translation type="unfinished">Command to execute, as in a shell</translation>
+      <translation>Opdracht om uit te voeren, zoals in terminalvenster </translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="133"/>
       <source>Discard command output</source>
-      <translation type="unfinished">Discard command output</translation>
+      <translation>Verwerp opdracht resultaat </translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="136"/>
       <source>Ignore command errors</source>
-      <translation type="unfinished">Ignore command errors</translation>
+      <translation>Negeer opdracht fouten</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="139"/>
       <source>Kill instead of terminate</source>
-      <translation type="unfinished">Kill instead of terminate</translation>
+      <translation>Beëindig in plaats van af te sluiten</translation>
     </message>
   </context>
   <context>
@@ -81,7 +81,7 @@
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="40"/>
       <source>Command Cue</source>
-      <translation type="unfinished">Command Cue</translation>
+      <translation>Opdracht cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/midi_cue.py" line="35"/>
@@ -91,27 +91,27 @@
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="54"/>
       <source>Volume Control</source>
-      <translation type="unfinished">Volume Control</translation>
+      <translation>volumeregeling</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="40"/>
       <source>Seek Cue</source>
-      <translation type="unfinished">Seek Cue</translation>
+      <translation>Zoek cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="41"/>
       <source>Collection Cue</source>
-      <translation type="unfinished">Collection Cue</translation>
+      <translation>Groep cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/stop_all.py" line="30"/>
       <source>Stop-All</source>
-      <translation type="unfinished">Stop-All</translation>
+      <translation>Stop Alles</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="39"/>
       <source>Index Action</source>
-      <translation type="unfinished">Index Action</translation>
+      <translation>Index actie</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="82"/>
@@ -129,17 +129,17 @@
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="121"/>
       <source>Use a relative index</source>
-      <translation type="unfinished">Use a relative index</translation>
+      <translation>Gebruik relatieve index</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="124"/>
       <source>Target index</source>
-      <translation type="unfinished">Target index</translation>
+      <translation>Doelindex</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="127"/>
       <source>Action</source>
-      <translation type="unfinished">Action</translation>
+      <translation>Actie</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="66"/>
@@ -246,22 +246,22 @@
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="99"/>
       <source>Click to select</source>
-      <translation type="unfinished">Click to select</translation>
+      <translation>Klik om te selecteren</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="100"/>
       <source>Not selected</source>
-      <translation type="unfinished">Not selected</translation>
+      <translation>Niet geselecteerd </translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="101"/>
       <source>Seek</source>
-      <translation type="unfinished">Seek</translation>
+      <translation>Zoek</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="102"/>
       <source>Time to reach</source>
-      <translation type="unfinished">Time to reach</translation>
+      <translation>Gewenste tijd</translation>
     </message>
   </context>
   <context>
@@ -269,37 +269,37 @@
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="103"/>
       <source>Command</source>
-      <translation type="unfinished">Command</translation>
+      <translation>Opdracht</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/midi_cue.py" line="52"/>
       <source>MIDI Settings</source>
-      <translation type="unfinished">MIDI Settings</translation>
+      <translation>MIDI instellingen</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="138"/>
       <source>Volume Settings</source>
-      <translation type="unfinished">Volume Settings</translation>
+      <translation>Volume instellingen </translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="58"/>
       <source>Seek Settings</source>
-      <translation type="unfinished">Seek Settings</translation>
+      <translation>Zoek instellingen </translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="59"/>
       <source>Edit Collection</source>
-      <translation type="unfinished">Edit Collection</translation>
+      <translation>Bewerk groep </translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="64"/>
       <source>Action Settings</source>
-      <translation type="unfinished">Action Settings</translation>
+      <translation>Actie instellingen</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/stop_all.py" line="43"/>
       <source>Stop Settings</source>
-      <translation type="unfinished">Stop Settings</translation>
+      <translation>Stop instellingen</translation>
     </message>
   </context>
   <context>
@@ -307,7 +307,7 @@
     <message>
       <location filename="../../../plugins/action_cues/stop_all.py" line="73"/>
       <source>Stop Action</source>
-      <translation type="unfinished">Stop Action</translation>
+      <translation>Stop actie</translation>
     </message>
   </context>
   <context>
@@ -320,17 +320,17 @@
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="199"/>
       <source>Click to select</source>
-      <translation type="unfinished">Click to select</translation>
+      <translation>Klik om te selecteren</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="200"/>
       <source>Not selected</source>
-      <translation type="unfinished">Not selected</translation>
+      <translation>Niet geselecteerd </translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="201"/>
       <source>Volume to reach</source>
-      <translation type="unfinished">Volume to reach</translation>
+      <translation>Gewenste volume</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="202"/>
