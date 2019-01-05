@@ -130,17 +130,17 @@
     <message>
       <location filename="../../../plugins/midi/midi_settings.py" line="41"/>
       <source>MIDI default devices</source>
-      <translation type="unfinished">MIDI default devices</translation>
+      <translation>Standaard MIDI apparaat</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_settings.py" line="47"/>
       <source>Input</source>
-      <translation type="unfinished">Input</translation>
+      <translation>Ingang</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_settings.py" line="54"/>
       <source>Output</source>
-      <translation type="unfinished">Output</translation>
+      <translation>Uitgang</translation>
     </message>
   </context>
   <context>
@@ -148,7 +148,7 @@
     <message>
       <location filename="../../../plugins/midi/midi_settings.py" line="33"/>
       <source>MIDI settings</source>
-      <translation type="unfinished">MIDI settings</translation>
+      <translation>MIDI instellingen</translation>
     </message>
   </context>
 </TS>
