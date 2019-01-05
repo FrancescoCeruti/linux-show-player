@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/alsa_sink.py" line="62"/>
       <source>ALSA device</source>
-      <translation type="unfinished">ALSA device</translation>
+      <translation>ALSA Gerät</translation>
     </message>
   </context>
   <context>
@@ -14,7 +14,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_dynamic.py" line="54"/>
       <source>Compressor</source>
-      <translation type="unfinished">Compressor</translation>
+      <translation>Kompressor</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_dynamic.py" line="57"/>
@@ -34,17 +34,17 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_dynamic.py" line="102"/>
       <source>Compressor/Expander</source>
-      <translation type="unfinished">Compressor/Expander</translation>
+      <translation>Kompressor/Expander</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_dynamic.py" line="105"/>
       <source>Type</source>
-      <translation type="unfinished">Type</translation>
+      <translation>Typ</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_dynamic.py" line="106"/>
       <source>Curve Shape</source>
-      <translation type="unfinished">Curve Shape</translation>
+      <translation>Kurvenform</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_dynamic.py" line="107"/>
@@ -54,7 +54,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_dynamic.py" line="108"/>
       <source>Threshold (dB)</source>
-      <translation type="unfinished">Threshold (dB)</translation>
+      <translation>Threshhold (dB)</translation>
     </message>
   </context>
   <context>
@@ -85,12 +85,12 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/db_meter.py" line="84"/>
       <source>DbMeter settings</source>
-      <translation type="unfinished">DbMeter settings</translation>
+      <translation>DbMeter Einstellungen</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/db_meter.py" line="85"/>
       <source>Time between levels (ms)</source>
-      <translation type="unfinished">Time between levels (ms)</translation>
+      <translation>Zeit zwischen Pegeln(ms)</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/db_meter.py" line="88"/>
@@ -100,7 +100,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/db_meter.py" line="89"/>
       <source>Peak falloff (dB/sec)</source>
-      <translation type="unfinished">Peak falloff (dB/sec)</translation>
+      <translation>Peak fallof (dB/sek)</translation>
     </message>
   </context>
   <context>
@@ -108,7 +108,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/equalizer10.py" line="52"/>
       <source>10 Bands Equalizer (IIR)</source>
-      <translation type="unfinished">10 Bands Equalizer (IIR)</translation>
+      <translation>10Band Equalizer (IIR)</translation>
     </message>
   </context>
   <context>
@@ -137,7 +137,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_media_settings.py" line="50"/>
       <source>Change Pipeline</source>
-      <translation type="unfinished">Change Pipeline</translation>
+      <translation>Pipeline verändern</translation>
     </message>
   </context>
   <context>
@@ -153,7 +153,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_pipe_edit.py" line="166"/>
       <source>Edit Pipeline</source>
-      <translation type="unfinished">Edit Pipeline</translation>
+      <translation>Pipeline bearbeiten</translation>
     </message>
   </context>
   <context>
@@ -169,32 +169,32 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/jack_sink.py" line="78"/>
       <source>Connections</source>
-      <translation type="unfinished">Connections</translation>
+      <translation>Verbindungen</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/jack_sink.py" line="79"/>
       <source>Edit connections</source>
-      <translation type="unfinished">Edit connections</translation>
+      <translation>Verbindungen bearbeiten</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/jack_sink.py" line="275"/>
       <source>Output ports</source>
-      <translation type="unfinished">Output ports</translation>
+      <translation>Ausgangsports</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/jack_sink.py" line="278"/>
       <source>Input ports</source>
-      <translation type="unfinished">Input ports</translation>
+      <translation>Eingangsports</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/jack_sink.py" line="337"/>
       <source>Connect</source>
-      <translation type="unfinished">Connect</translation>
+      <translation>Verbinden</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/jack_sink.py" line="332"/>
       <source>Disconnect</source>
-      <translation type="unfinished">Disconnect</translation>
+      <translation>Trennen</translation>
     </message>
   </context>
   <context>
@@ -202,7 +202,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/elements/audio_dynamic.py" line="30"/>
       <source>Compressor/Expander</source>
-      <translation type="unfinished">Compressor/Expander</translation>
+      <translation>Kompressor/Expander</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/elements/audio_pan.py" line="28"/>
@@ -217,7 +217,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/elements/volume.py" line="32"/>
       <source>Volume</source>
-      <translation type="unfinished">Volume</translation>
+      <translation>Lautstärke</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/elements/db_meter.py" line="29"/>
@@ -237,12 +237,12 @@
     <message>
       <location filename="../../../plugins/gst_backend/elements/jack_sink.py" line="35"/>
       <source>JACK Out</source>
-      <translation type="unfinished">JACK Out</translation>
+      <translation>Jack Out</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/elements/user_element.py" line="29"/>
       <source>Custom Element</source>
-      <translation type="unfinished">Custom Element</translation>
+      <translation>angepasstes Element</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/elements/auto_sink.py" line="28"/>
@@ -262,12 +262,12 @@
     <message>
       <location filename="../../../plugins/gst_backend/elements/equalizer10.py" line="28"/>
       <source>10 Bands Equalizer</source>
-      <translation type="unfinished">10 Bands Equalizer</translation>
+      <translation>10Band Equalizer</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/elements/speed.py" line="29"/>
       <source>Speed</source>
-      <translation type="unfinished">Speed</translation>
+      <translation>Geschwindigkeit</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/elements/preset_src.py" line="30"/>
@@ -285,7 +285,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/pitch.py" line="83"/>
       <source>{0:+} semitones</source>
-      <translation type="unfinished">{0:+} semitones</translation>
+      <translation>{0:+} Halbtöne</translation>
     </message>
   </context>
   <context>
@@ -301,7 +301,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_media_settings.py" line="36"/>
       <source>Media Settings</source>
-      <translation type="unfinished">Media Settings</translation>
+      <translation>Medien Einstellungen</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/gst_settings.py" line="27"/>
@@ -314,7 +314,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/speed.py" line="62"/>
       <source>Speed</source>
-      <translation type="unfinished">Speed</translation>
+      <translation>Geschwindigkeit</translation>
     </message>
   </context>
   <context>
@@ -322,12 +322,12 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="80"/>
       <source>Source</source>
-      <translation type="unfinished">Source</translation>
+      <translation>Quelle</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="81"/>
       <source>Find File</source>
-      <translation type="unfinished">Find File</translation>
+      <translation>Finde Datei</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="82"/>
@@ -337,27 +337,27 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="83"/>
       <source>Use Buffering</source>
-      <translation type="unfinished">Use Buffering</translation>
+      <translation>Buffering benutzen</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="86"/>
       <source>Attempt download on network streams</source>
-      <translation type="unfinished">Attempt download on network streams</translation>
+      <translation>Versuche Download in Netzwerkstreams</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="89"/>
       <source>Buffer size (-1 default value)</source>
-      <translation type="unfinished">Buffer size (-1 default value)</translation>
+      <translation>Buffer Größe(-1 Standard Wert)</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="119"/>
       <source>Choose file</source>
-      <translation type="unfinished">Choose file</translation>
+      <translation>Datei auswählen</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="119"/>
       <source>All files</source>
-      <translation type="unfinished">All files</translation>
+      <translation>Alle Dateien</translation>
     </message>
   </context>
   <context>
@@ -365,12 +365,12 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/user_element.py" line="52"/>
       <source>User defined elements</source>
-      <translation type="unfinished">User defined elements</translation>
+      <translation>Benutzerdefinierte Elemente</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/user_element.py" line="55"/>
       <source>Only for advanced user!</source>
-      <translation type="unfinished">Only for advanced user!</translation>
+      <translation>Nur für fortgeschrittene Benutzer!</translation>
     </message>
   </context>
   <context>
@@ -378,17 +378,17 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/volume.py" line="83"/>
       <source>Volume</source>
-      <translation type="unfinished">Volume</translation>
+      <translation>Lautstärke</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/volume.py" line="85"/>
       <source>Normalized volume</source>
-      <translation type="unfinished">Normalized volume</translation>
+      <translation>Normalisierte Lautstärke</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/volume.py" line="89"/>
       <source>Reset</source>
-      <translation type="unfinished">Reset</translation>
+      <translation>Zurücksetzen</translation>
     </message>
   </context>
 </TS>
