@@ -6,22 +6,22 @@
     <message>
       <location filename="../../../plugins/synchronizer/synchronizer.py" line="43"/>
       <source>Synchronization</source>
-      <translation type="unfinished">Synchronization</translation>
+      <translation>Synchronisatie</translation>
     </message>
     <message>
       <location filename="../../../plugins/synchronizer/synchronizer.py" line="46"/>
       <source>Manage connected peers</source>
-      <translation type="unfinished">Manage connected peers</translation>
+      <translation>Beheer verbonden gebruikers</translation>
     </message>
     <message>
       <location filename="../../../plugins/synchronizer/synchronizer.py" line="52"/>
       <source>Show your IP</source>
-      <translation type="unfinished">Show your IP</translation>
+      <translation>geef mijn IP adres weer</translation>
     </message>
     <message>
       <location filename="../../../plugins/synchronizer/synchronizer.py" line="78"/>
       <source>Your IP is:</source>
-      <translation type="unfinished">Your IP is:</translation>
+      <translation>Uw IP adres is:</translation>
     </message>
   </context>
 </TS>
