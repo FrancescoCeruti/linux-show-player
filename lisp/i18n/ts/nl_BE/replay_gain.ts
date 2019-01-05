@@ -6,47 +6,47 @@
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="52"/>
       <source>ReplayGain / Normalization</source>
-      <translation type="unfinished">ReplayGain / Normalization</translation>
+      <translation>Afspeelvolume / Normalisatie </translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="57"/>
       <source>Calculate</source>
-      <translation type="unfinished">Calculate</translation>
+      <translation>Bereken</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="62"/>
       <source>Reset all</source>
-      <translation type="unfinished">Reset all</translation>
+      <translation>Reset alles</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="67"/>
       <source>Reset selected</source>
-      <translation type="unfinished">Reset selected</translation>
+      <translation>Reset selectie</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/gain_ui.py" line="113"/>
       <source>Threads number</source>
-      <translation type="unfinished">Threads number</translation>
+      <translation>Aantal processen</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/gain_ui.py" line="114"/>
       <source>Apply only to selected media</source>
-      <translation type="unfinished">Apply only to selected media</translation>
+      <translation>Pas enkel toe op selectie</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/gain_ui.py" line="117"/>
       <source>ReplayGain to (dB SPL)</source>
-      <translation type="unfinished">ReplayGain to (dB SPL)</translation>
+      <translation>Afspeelvolume (dB SPL)</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/gain_ui.py" line="120"/>
       <source>Normalize to (dB)</source>
-      <translation type="unfinished">Normalize to (dB)</translation>
+      <translation>Normaliseer tot  (dB)</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/gain_ui.py" line="145"/>
       <source>Processing files ...</source>
-      <translation type="unfinished">Processing files ...</translation>
+      <translation>Bezig met verwerken van bestanden ...</translation>
     </message>
   </context>
   <context>
