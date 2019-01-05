@@ -6,12 +6,12 @@
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="230"/>
       <source>Create Cue</source>
-      <translation type="unfinished">Create Cue</translation>
+      <translation>Cue erstellen</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="231"/>
       <source>Load on selected Cues</source>
-      <translation type="unfinished">Load on selected Cues</translation>
+      <translation>Last auf ausgewählten cues</translation>
     </message>
   </context>
   <context>
@@ -24,97 +24,97 @@
     <message>
       <location filename="../../../plugins/presets/presets.py" line="73"/>
       <source>Save as preset</source>
-      <translation type="unfinished">Save as preset</translation>
+      <translation>Als Preset speichern</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="66"/>
       <source>Cannot scan presets</source>
-      <translation type="unfinished">Cannot scan presets</translation>
+      <translation>Kann keine Presets scannen</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="72"/>
       <source>Error while deleting preset &quot;{}&quot;</source>
-      <translation type="unfinished">Error while deleting preset &quot;{}&quot;</translation>
+      <translation>Fehler beim Löschen des Preset &quot;{}&quot;</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="80"/>
       <source>Cannot load preset &quot;{}&quot;</source>
-      <translation type="unfinished">Cannot load preset &quot;{}&quot;</translation>
+      <translation>Kann Preset &quot;{}&quot; nicht laden</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="88"/>
       <source>Cannot save preset &quot;{}&quot;</source>
-      <translation type="unfinished">Cannot save preset &quot;{}&quot;</translation>
+      <translation>Kann Preset &quot;{}&quot; nicht speichern</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="96"/>
       <source>Cannot rename preset &quot;{}&quot;</source>
-      <translation type="unfinished">Cannot rename preset &quot;{}&quot;</translation>
+      <translation>Kann Preset &quot;{}&quot; nicht umbenennen</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="108"/>
       <source>Select Preset</source>
-      <translation type="unfinished">Select Preset</translation>
+      <translation>Preset Auswählen</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="443"/>
       <source>Preset name</source>
-      <translation type="unfinished">Preset name</translation>
+      <translation>Preset Name</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="226"/>
       <source>Add</source>
-      <translation type="unfinished">Add</translation>
+      <translation>Hinzufügen</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="227"/>
       <source>Rename</source>
-      <translation type="unfinished">Rename</translation>
+      <translation>Umbenennen</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="228"/>
       <source>Edit</source>
-      <translation type="unfinished">Edit</translation>
+      <translation>Bearbeiten</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="229"/>
       <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
+      <translation>Entfernen</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="234"/>
       <source>Export selected</source>
-      <translation type="unfinished">Export selected</translation>
+      <translation>Ausgewähltes exportieren</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="237"/>
       <source>Import</source>
-      <translation type="unfinished">Import</translation>
+      <translation>Importieren</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="320"/>
       <source>Warning</source>
-      <translation type="unfinished">Warning</translation>
+      <translation>Warnung</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="275"/>
       <source>The same name is already used!</source>
-      <translation type="unfinished">The same name is already used!</translation>
+      <translation>Der gleiche Name wird bereits verwendet</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="358"/>
       <source>Cannot export correctly.</source>
-      <translation type="unfinished">Cannot export correctly.</translation>
+      <translation>Kann nicht richtig exportieren</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="386"/>
       <source>Cannot import correctly.</source>
-      <translation type="unfinished">Cannot import correctly.</translation>
+      <translation>Kann nicht richtig eimportieren</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="444"/>
       <source>Cue type</source>
-      <translation type="unfinished">Cue type</translation>
+      <translation>Cue Typ</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets.py" line="73"/>
