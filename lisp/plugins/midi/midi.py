@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2017 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2019 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,8 +18,7 @@
 import mido
 
 from lisp.core.plugin import Plugin
-from lisp.plugins.midi.midi_input import MIDIInput
-from lisp.plugins.midi.midi_output import MIDIOutput
+from lisp.plugins.midi.midi_io import MIDIOutput, MIDIInput
 from lisp.plugins.midi.midi_settings import MIDISettings
 from lisp.ui.settings.app_configuration import AppConfigurationDialog
 

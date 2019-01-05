@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2019 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,6 +16,64 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import mido
+from PyQt5.QtCore import QT_TRANSLATE_NOOP
+
+
+MIDI_MSGS_SPEC = {
+    "note_on": ["channel", "note", "velocity"],
+    "note_off": ["channel", "note", "velocity"],
+    "polytouch": ["channel", "note", "value"],
+    "control_change": ["channel", "control", "value"],
+    "program_change": ["channel", "program", None],
+    "aftertouch": ["channel", "value", None],
+    "pitchwheel": ["channel", "pitch", None],
+    "song_select": ["song", None, None],
+    "songpos": ["pos", None, None],
+    "start": [None] * 3,
+    "stop": [None] * 3,
+    "continue": [None] * 3,
+}
+
+MIDI_ATTRS_SPEC = {
+    "channel": (1, 16, -1),
+    "note": (0, 127, 0),
+    "velocity": (0, 127, 0),
+    "control": (0, 127, 0),
+    "program": (0, 127, 0),
+    "value": (0, 127, 0),
+    "song": (0, 127, 0),
+    "pitch": (-8192, 8191, 0),
+    "pos": (0, 16383, 0),
+}
+
+MIDI_MSGS_NAME = {
+    "note_on": QT_TRANSLATE_NOOP("MIDIMessageType", "Note ON"),
+    "note_off": QT_TRANSLATE_NOOP("MIDIMessageType", "Note OFF"),
+    "polytouch": QT_TRANSLATE_NOOP("MIDIMessageType", "Polyphonic After-touch"),
+    "control_change": QT_TRANSLATE_NOOP(
+        "MIDIMessageType", "Control/Mode Change"
+    ),
+    "program_change": QT_TRANSLATE_NOOP("MIDIMessageType", "Program Change"),
+    "aftertouch": QT_TRANSLATE_NOOP("MIDIMessageType", "Channel After-touch"),
+    "pitchwheel": QT_TRANSLATE_NOOP("MIDIMessageType", "Pitch Bend Change"),
+    "song_select": QT_TRANSLATE_NOOP("MIDIMessageType", "Song Select"),
+    "songpos": QT_TRANSLATE_NOOP("MIDIMessageType", "Song Position"),
+    "start": QT_TRANSLATE_NOOP("MIDIMessageType", "Start"),
+    "stop": QT_TRANSLATE_NOOP("MIDIMessageType", "Stop"),
+    "continue": QT_TRANSLATE_NOOP("MIDIMessageType", "Continue"),
+}
+
+MIDI_ATTRS_NAME = {
+    "channel": QT_TRANSLATE_NOOP("MIDIMessageAttr", "Channel"),
+    "note": QT_TRANSLATE_NOOP("MIDIMessageAttr", "Note"),
+    "velocity": QT_TRANSLATE_NOOP("MIDIMessageAttr", "Velocity"),
+    "control": QT_TRANSLATE_NOOP("MIDIMessageAttr", "Control"),
+    "program": QT_TRANSLATE_NOOP("MIDIMessageAttr", "Program"),
+    "value": QT_TRANSLATE_NOOP("MIDIMessageAttr", "Value"),
+    "song": QT_TRANSLATE_NOOP("MIDIMessageAttr", "Song"),
+    "pitch": QT_TRANSLATE_NOOP("MIDIMessageAttr", "Pitch"),
+    "pos": QT_TRANSLATE_NOOP("MIDIMessageAttr", "Position"),
+}
 
 
 def str_msg_to_dict(str_message):
