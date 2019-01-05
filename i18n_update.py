@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2019 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -56,6 +56,8 @@ def existing_locales():
 # Locales of which generate translations files
 LOCALES = args.locales
 if not LOCALES:
+    LOCALES = ["en"]
+elif LOCALES == "*":
     LOCALES = list(existing_locales())
     print(">>> UPDATE EXISTING:", ", ".join(LOCALES))
 
