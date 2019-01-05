@@ -14,17 +14,17 @@
     <message>
       <location filename="../../../plugins/controller/protocols/keyboard.py" line="53"/>
       <source>Key</source>
-      <translation type="unfinished">Key</translation>
+      <translation>Toets</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/keyboard.py" line="53"/>
       <source>Action</source>
-      <translation type="unfinished">Action</translation>
+      <translation>Actie</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/keyboard.py" line="76"/>
       <source>Shortcuts</source>
-      <translation type="unfinished">Shortcuts</translation>
+      <translation>Snelkoppeling</translation>
     </message>
   </context>
   <context>
@@ -42,17 +42,17 @@
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="59"/>
       <source>Channel</source>
-      <translation type="unfinished">Channel</translation>
+      <translation>Kanaal</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="59"/>
       <source>Note</source>
-      <translation type="unfinished">Note</translation>
+      <translation>Notitie</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="59"/>
       <source>Action</source>
-      <translation type="unfinished">Action</translation>
+      <translation>Actie</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="85"/>
@@ -67,12 +67,12 @@
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="106"/>
       <source>Capture</source>
-      <translation type="unfinished">Capture</translation>
+      <translation>Neem over</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="131"/>
       <source>Listening MIDI messages ...</source>
-      <translation type="unfinished">Listening MIDI messages ...</translation>
+      <translation>Wacht op MIDI boodschap ...</translation>
     </message>
   </context>
   <context>
@@ -133,12 +133,12 @@
     <message>
       <location filename="../../../plugins/controller/protocols/keyboard.py" line="77"/>
       <source>Add</source>
-      <translation type="unfinished">Add</translation>
+      <translation>Toevoegen</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/keyboard.py" line="78"/>
       <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
+      <translation>Verwijder</translation>
     </message>
   </context>
   <context>
@@ -225,17 +225,17 @@
     <message>
       <location filename="../../../plugins/controller/controller_settings.py" line="25"/>
       <source>Cue Control</source>
-      <translation type="unfinished">Cue Control</translation>
+      <translation>Cue bediening</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="46"/>
       <source>MIDI Controls</source>
-      <translation type="unfinished">MIDI Controls</translation>
+      <translation>MIDI bediening</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/keyboard.py" line="42"/>
       <source>Keyboard Shortcuts</source>
-      <translation type="unfinished">Keyboard Shortcuts</translation>
+      <translation>Toetsenbord snelkoppeling</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="181"/>
