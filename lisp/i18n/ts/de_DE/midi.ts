@@ -130,7 +130,7 @@
     <message>
       <location filename="../../../plugins/midi/midi_settings.py" line="41"/>
       <source>MIDI default devices</source>
-      <translation type="unfinished">MIDI default devices</translation>
+      <translation>MIDI Standardgeräte</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_settings.py" line="47"/>
@@ -148,7 +148,7 @@
     <message>
       <location filename="../../../plugins/midi/midi_settings.py" line="33"/>
       <source>MIDI settings</source>
-      <translation type="unfinished">MIDI settings</translation>
+      <translation>MIDI Einstellungen</translation>
     </message>
   </context>
 </TS>
