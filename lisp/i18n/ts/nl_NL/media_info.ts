@@ -4,32 +4,27 @@
   <context>
     <name>MediaInfo</name>
     <message>
-      <location filename="../../../plugins/media_info/media_info.py" line="116"/>
+      <location filename="../../../plugins/media_info/media_info.py" line="129"/>
       <source>Media Info</source>
-      <translation type="unfinished">Media Info</translation>
+      <translation>Media-informatie</translation>
     </message>
     <message>
-      <location filename="../media_info.py" line="51"/>
-      <source>Error</source>
-      <translation type="unfinished">Error</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/media_info/media_info.py" line="60"/>
+      <location filename="../../../plugins/media_info/media_info.py" line="69"/>
       <source>No info to display</source>
-      <translation type="unfinished">No info to display</translation>
+      <translation>Er is geen weer te geven informatie</translation>
     </message>
     <message>
-      <location filename="../../../plugins/media_info/media_info.py" line="125"/>
+      <location filename="../../../plugins/media_info/media_info.py" line="139"/>
       <source>Info</source>
-      <translation type="unfinished">Info</translation>
+      <translation>Informatie</translation>
     </message>
     <message>
-      <location filename="../../../plugins/media_info/media_info.py" line="125"/>
+      <location filename="../../../plugins/media_info/media_info.py" line="139"/>
       <source>Value</source>
-      <translation type="unfinished">Value</translation>
+      <translation>Waarde</translation>
     </message>
     <message>
-      <location filename="../../../plugins/media_info/media_info.py" line="60"/>
+      <location filename="../../../plugins/media_info/media_info.py" line="69"/>
       <source>Warning</source>
       <translation type="unfinished">Warning</translation>
     </message>
