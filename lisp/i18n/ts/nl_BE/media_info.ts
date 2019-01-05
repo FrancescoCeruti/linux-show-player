@@ -6,12 +6,12 @@
     <message>
       <location filename="../../../plugins/media_info/media_info.py" line="129"/>
       <source>Media Info</source>
-      <translation type="unfinished">Media Info</translation>
+      <translation>Media info</translation>
     </message>
     <message>
       <location filename="../../../plugins/media_info/media_info.py" line="69"/>
       <source>No info to display</source>
-      <translation type="unfinished">No info to display</translation>
+      <translation>Geen informatie om weer te geven</translation>
     </message>
     <message>
       <location filename="../../../plugins/media_info/media_info.py" line="139"/>
@@ -21,7 +21,7 @@
     <message>
       <location filename="../../../plugins/media_info/media_info.py" line="139"/>
       <source>Value</source>
-      <translation type="unfinished">Value</translation>
+      <translation>Waarde</translation>
     </message>
     <message>
       <location filename="../../../plugins/media_info/media_info.py" line="69"/>
