@@ -6,22 +6,22 @@
     <message>
       <location filename="../../../plugins/media_info/media_info.py" line="129"/>
       <source>Media Info</source>
-      <translation type="unfinished">Media Info</translation>
+      <translation>Medien Information</translation>
     </message>
     <message>
       <location filename="../../../plugins/media_info/media_info.py" line="69"/>
       <source>No info to display</source>
-      <translation type="unfinished">No info to display</translation>
+      <translation>Keine Informationen zum darstellen</translation>
     </message>
     <message>
       <location filename="../../../plugins/media_info/media_info.py" line="139"/>
       <source>Info</source>
-      <translation type="unfinished">Info</translation>
+      <translation>Informationen</translation>
     </message>
     <message>
       <location filename="../../../plugins/media_info/media_info.py" line="139"/>
       <source>Value</source>
-      <translation type="unfinished">Value</translation>
+      <translation>Wert</translation>
     </message>
     <message>
       <location filename="../../../plugins/media_info/media_info.py" line="69"/>
