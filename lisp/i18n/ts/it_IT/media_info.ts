@@ -4,32 +4,27 @@
   <context>
     <name>MediaInfo</name>
     <message>
-      <location filename="../../../plugins/media_info/media_info.py" line="116"/>
+      <location filename="../../../plugins/media_info/media_info.py" line="129"/>
       <source>Media Info</source>
       <translation>Informazioni Media</translation>
     </message>
     <message>
-      <location filename="../media_info.py" line="51"/>
-      <source>Error</source>
-      <translation>Errore</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/media_info/media_info.py" line="60"/>
+      <location filename="../../../plugins/media_info/media_info.py" line="69"/>
       <source>No info to display</source>
       <translation>Nessuna informazione da mostrare</translation>
     </message>
     <message>
-      <location filename="../../../plugins/media_info/media_info.py" line="125"/>
+      <location filename="../../../plugins/media_info/media_info.py" line="139"/>
       <source>Info</source>
       <translation>Informazione</translation>
     </message>
     <message>
-      <location filename="../../../plugins/media_info/media_info.py" line="125"/>
+      <location filename="../../../plugins/media_info/media_info.py" line="139"/>
       <source>Value</source>
       <translation>Valore</translation>
     </message>
     <message>
-      <location filename="../../../plugins/media_info/media_info.py" line="60"/>
+      <location filename="../../../plugins/media_info/media_info.py" line="69"/>
       <source>Warning</source>
       <translation type="unfinished">Warning</translation>
     </message>
