@@ -6,22 +6,22 @@
     <message>
       <location filename="../../../plugins/triggers/triggers_handler.py" line="27"/>
       <source>Started</source>
-      <translation type="unfinished">Started</translation>
+      <translation>Gestartet</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_handler.py" line="28"/>
       <source>Paused</source>
-      <translation type="unfinished">Paused</translation>
+      <translation>Pausiert</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_handler.py" line="29"/>
       <source>Stopped</source>
-      <translation type="unfinished">Stopped</translation>
+      <translation>Gestoppt</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_handler.py" line="30"/>
       <source>Ended</source>
-      <translation type="unfinished">Ended</translation>
+      <translation>Beendet</translation>
     </message>
   </context>
   <context>
@@ -29,7 +29,7 @@
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="42"/>
       <source>Triggers</source>
-      <translation type="unfinished">Triggers</translation>
+      <translation>Trigger</translation>
     </message>
   </context>
   <context>
@@ -37,12 +37,12 @@
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="63"/>
       <source>Add</source>
-      <translation type="unfinished">Add</translation>
+      <translation>Hinzufügen</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="68"/>
       <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
+      <translation>Entfernen</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="148"/>
@@ -57,7 +57,7 @@
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="148"/>
       <source>Action</source>
-      <translation type="unfinished">Action</translation>
+      <translation>Aktion</translation>
     </message>
   </context>
 </TS>
