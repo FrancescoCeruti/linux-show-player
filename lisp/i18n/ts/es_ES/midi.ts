@@ -1,28 +1,30 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="es" version="2.0">
-<context>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="es-ES" sourcelanguage="en">
+  <context>
     <name>MIDISettings</name>
     <message>
-        <location filename="../midi_settings.py" line="40"/>
-        <source>MIDI default devices</source>
-        <translation>Dispositivos MIDI por defecto</translation>
+      <location filename="../../../plugins/midi/midi_settings.py" line="38"/>
+      <source>MIDI default devices</source>
+      <translation>Dispositivos MIDI por defecto</translation>
     </message>
     <message>
-        <location filename="../midi_settings.py" line="45"/>
-        <source>Input</source>
-        <translation>Entrada</translation>
+      <location filename="../../../plugins/midi/midi_settings.py" line="43"/>
+      <source>Input</source>
+      <translation>Entrada</translation>
     </message>
     <message>
-        <location filename="../midi_settings.py" line="51"/>
-        <source>Output</source>
-        <translation>Salida</translation>
+      <location filename="../../../plugins/midi/midi_settings.py" line="49"/>
+      <source>Output</source>
+      <translation>Salida</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>SettingsPageName</name>
     <message>
-        <location filename="../midi_settings.py" line="32"/>
-        <source>MIDI settings</source>
-        <translation>Ajustes MIDI</translation>
+      <location filename="../../../plugins/midi/midi_settings.py" line="30"/>
+      <source>MIDI settings</source>
+      <translation>Ajustes MIDI</translation>
     </message>
-</context>
+  </context>
 </TS>

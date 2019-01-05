@@ -1,99 +1,198 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="fr" version="2.0">
-<context>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="fr" sourcelanguage="en">
+  <context>
+    <name>Controller</name>
+    <message>
+      <location filename="../../../plugins/controller/controller.py" line="114"/>
+      <source>Cannot load controller protocol: &quot;{}&quot;</source>
+      <translation type="unfinished">Cannot load controller protocol: &quot;{}&quot;</translation>
+    </message>
+  </context>
+  <context>
     <name>ControllerKeySettings</name>
     <message>
-        <location filename="../protocols/keyboard.py" line="58"/>
-        <source>Key</source>
-        <translation>Touche</translation>
+      <location filename="../../../plugins/controller/protocols/keyboard.py" line="58"/>
+      <source>Key</source>
+      <translation>Touche</translation>
     </message>
     <message>
-        <location filename="../protocols/keyboard.py" line="58"/>
-        <source>Action</source>
-        <translation>Action</translation>
+      <location filename="../../../plugins/controller/protocols/keyboard.py" line="58"/>
+      <source>Action</source>
+      <translation type="unfinished">Action</translation>
     </message>
     <message>
-        <location filename="../protocols/keyboard.py" line="77"/>
-        <source>Shortcuts</source>
-        <translation>Raccourcis</translation>
+      <location filename="../../../plugins/controller/protocols/keyboard.py" line="77"/>
+      <source>Shortcuts</source>
+      <translation>Raccourcis</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>ControllerMidiSettings</name>
     <message>
-        <location filename="../protocols/midi.py" line="71"/>
-        <source>MIDI</source>
-        <translation>MIDI</translation>
+      <location filename="../../../plugins/controller/protocols/midi.py" line="67"/>
+      <source>MIDI</source>
+      <translation type="unfinished">MIDI</translation>
     </message>
     <message>
-        <location filename="../protocols/midi.py" line="76"/>
-        <source>Type</source>
-        <translation>Type</translation>
+      <location filename="../../../plugins/controller/protocols/midi.py" line="72"/>
+      <source>Type</source>
+      <translation type="unfinished">Type</translation>
     </message>
     <message>
-        <location filename="../protocols/midi.py" line="76"/>
-        <source>Channel</source>
-        <translation>Canal</translation>
+      <location filename="../../../plugins/controller/protocols/midi.py" line="72"/>
+      <source>Channel</source>
+      <translation>Canal</translation>
     </message>
     <message>
-        <location filename="../protocols/midi.py" line="76"/>
-        <source>Note</source>
-        <translation>Note</translation>
+      <location filename="../../../plugins/controller/protocols/midi.py" line="72"/>
+      <source>Note</source>
+      <translation type="unfinished">Note</translation>
     </message>
     <message>
-        <location filename="../protocols/midi.py" line="76"/>
-        <source>Action</source>
-        <translation>Action</translation>
+      <location filename="../../../plugins/controller/protocols/midi.py" line="72"/>
+      <source>Action</source>
+      <translation type="unfinished">Action</translation>
     </message>
     <message>
-        <location filename="../protocols/midi.py" line="99"/>
-        <source>Filter &quot;note on&quot;</source>
-        <translation>Filtrer les &quot;note on&quot;</translation>
+      <location filename="../../../plugins/controller/protocols/midi.py" line="95"/>
+      <source>Filter &quot;note on&quot;</source>
+      <translation>Filtrer les &quot;note on&quot;</translation>
     </message>
     <message>
-        <location filename="../protocols/midi.py" line="102"/>
-        <source>Filter &quot;note off&quot;</source>
-        <translation>Filtrer les &quot;note off&quot;</translation>
+      <location filename="../../../plugins/controller/protocols/midi.py" line="98"/>
+      <source>Filter &quot;note off&quot;</source>
+      <translation>Filtrer les &quot;note off&quot;</translation>
     </message>
     <message>
-        <location filename="../protocols/midi.py" line="114"/>
-        <source>Capture</source>
-        <translation>Capture</translation>
+      <location filename="../../../plugins/controller/protocols/midi.py" line="114"/>
+      <source>Capture</source>
+      <translation type="unfinished">Capture</translation>
     </message>
     <message>
-        <location filename="../protocols/midi.py" line="147"/>
-        <source>Listening MIDI messages ...</source>
-        <translation>Écoute des messages MIDI ...</translation>
+      <location filename="../../../plugins/controller/protocols/midi.py" line="147"/>
+      <source>Listening MIDI messages ...</source>
+      <translation>Écoute des messages MIDI ...</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
+    <name>ControllerOscSettings</name>
+    <message>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="153"/>
+      <source>OSC Message</source>
+      <translation type="unfinished">OSC Message</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="155"/>
+      <source>OSC Path: (example: &quot;/path/to/something&quot;)</source>
+      <translation type="unfinished">OSC Path: (example: &quot;/path/to/something&quot;)</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="199"/>
+      <source>OSC</source>
+      <translation type="unfinished">OSC</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="203"/>
+      <source>Path</source>
+      <translation type="unfinished">Path</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="203"/>
+      <source>Types</source>
+      <translation type="unfinished">Types</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="203"/>
+      <source>Arguments</source>
+      <translation type="unfinished">Arguments</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="203"/>
+      <source>Actions</source>
+      <translation type="unfinished">Actions</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="229"/>
+      <source>OSC Capture</source>
+      <translation type="unfinished">OSC Capture</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="255"/>
+      <source>Add</source>
+      <translation type="unfinished">Add</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="256"/>
+      <source>Remove</source>
+      <translation type="unfinished">Remove</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="257"/>
+      <source>Capture</source>
+      <translation type="unfinished">Capture</translation>
+    </message>
+  </context>
+  <context>
     <name>ControllerSettings</name>
     <message>
-        <location filename="../protocols/keyboard.py" line="78"/>
-        <source>Add</source>
-        <translation>Ajouter</translation>
+      <location filename="../../../plugins/controller/protocols/keyboard.py" line="78"/>
+      <source>Add</source>
+      <translation>Ajouter</translation>
     </message>
     <message>
-        <location filename="../protocols/keyboard.py" line="79"/>
-        <source>Remove</source>
-        <translation>Retirer</translation>
+      <location filename="../../../plugins/controller/protocols/keyboard.py" line="79"/>
+      <source>Remove</source>
+      <translation>Retirer</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
+    <name>Osc Cue</name>
+    <message>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="88"/>
+      <source>Type</source>
+      <translation type="unfinished">Type</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="88"/>
+      <source>Argument</source>
+      <translation type="unfinished">Argument</translation>
+    </message>
+  </context>
+  <context>
+    <name>OscCue</name>
+    <message>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="158"/>
+      <source>Add</source>
+      <translation type="unfinished">Add</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="159"/>
+      <source>Remove</source>
+      <translation type="unfinished">Remove</translation>
+    </message>
+  </context>
+  <context>
     <name>SettingsPageName</name>
     <message>
-        <location filename="../controller_settings.py" line="29"/>
-        <source>Cue Control</source>
-        <translation>Contrôle de la cue</translation>
+      <location filename="../../../plugins/controller/controller_settings.py" line="27"/>
+      <source>Cue Control</source>
+      <translation>Contrôle de la cue</translation>
     </message>
     <message>
-        <location filename="../protocols/midi.py" line="63"/>
-        <source>MIDI Controls</source>
-        <translation>Contrôles MIDI</translation>
+      <location filename="../../../plugins/controller/protocols/midi.py" line="59"/>
+      <source>MIDI Controls</source>
+      <translation>Contrôles MIDI</translation>
     </message>
     <message>
-        <location filename="../protocols/keyboard.py" line="47"/>
-        <source>Keyboard Shortcuts</source>
-        <translation>Raccourcis-clavier</translation>
+      <location filename="../../../plugins/controller/protocols/keyboard.py" line="47"/>
+      <source>Keyboard Shortcuts</source>
+      <translation>Raccourcis-clavier</translation>
     </message>
-</context>
+    <message>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="191"/>
+      <source>OSC Controls</source>
+      <translation type="unfinished">OSC Controls</translation>
+    </message>
+  </context>
 </TS>
