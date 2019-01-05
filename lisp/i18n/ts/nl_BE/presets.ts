@@ -6,12 +6,12 @@
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="230"/>
       <source>Create Cue</source>
-      <translation type="unfinished">Create Cue</translation>
+      <translation>Maak cue aan</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="231"/>
       <source>Load on selected Cues</source>
-      <translation type="unfinished">Load on selected Cues</translation>
+      <translation>Toepassen op geselecteerde cue</translation>
     </message>
   </context>
   <context>
@@ -24,92 +24,92 @@
     <message>
       <location filename="../../../plugins/presets/presets.py" line="73"/>
       <source>Save as preset</source>
-      <translation type="unfinished">Save as preset</translation>
+      <translation>Opslaan als preset</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="66"/>
       <source>Cannot scan presets</source>
-      <translation type="unfinished">Cannot scan presets</translation>
+      <translation>De presets kunnen niet doorzocht worden</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="72"/>
       <source>Error while deleting preset &quot;{}&quot;</source>
-      <translation type="unfinished">Error while deleting preset &quot;{}&quot;</translation>
+      <translation>Fout bij het verwijderen van preset &quot;{}&quot;</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="80"/>
       <source>Cannot load preset &quot;{}&quot;</source>
-      <translation type="unfinished">Cannot load preset &quot;{}&quot;</translation>
+      <translation>Kan preset &quot;{}&quot; niet laden</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="88"/>
       <source>Cannot save preset &quot;{}&quot;</source>
-      <translation type="unfinished">Cannot save preset &quot;{}&quot;</translation>
+      <translation>Kan preset &quot;{}&quot; niet opslaan </translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="96"/>
       <source>Cannot rename preset &quot;{}&quot;</source>
-      <translation type="unfinished">Cannot rename preset &quot;{}&quot;</translation>
+      <translation>Kan preset &quot;{}&quot; niet hernoemen</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="108"/>
       <source>Select Preset</source>
-      <translation type="unfinished">Select Preset</translation>
+      <translation>Selecteer Preset</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="443"/>
       <source>Preset name</source>
-      <translation type="unfinished">Preset name</translation>
+      <translation>Preset naam</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="226"/>
       <source>Add</source>
-      <translation type="unfinished">Add</translation>
+      <translation>Toevoegen </translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="227"/>
       <source>Rename</source>
-      <translation type="unfinished">Rename</translation>
+      <translation>Hernoemen</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="228"/>
       <source>Edit</source>
-      <translation type="unfinished">Edit</translation>
+      <translation>Bewerken</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="229"/>
       <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
+      <translation>Verwijderen</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="234"/>
       <source>Export selected</source>
-      <translation type="unfinished">Export selected</translation>
+      <translation>Exporteer selectie</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="237"/>
       <source>Import</source>
-      <translation type="unfinished">Import</translation>
+      <translation>Importeren</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="320"/>
       <source>Warning</source>
-      <translation type="unfinished">Warning</translation>
+      <translation>Waarschuwing</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="275"/>
       <source>The same name is already used!</source>
-      <translation type="unfinished">The same name is already used!</translation>
+      <translation>Deze naam is alreeds in gebruik!</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="358"/>
       <source>Cannot export correctly.</source>
-      <translation type="unfinished">Cannot export correctly.</translation>
+      <translation>Kan niet correct exporteren </translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="386"/>
       <source>Cannot import correctly.</source>
-      <translation type="unfinished">Cannot import correctly.</translation>
+      <translation>Kan niet correct importeren</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="444"/>
