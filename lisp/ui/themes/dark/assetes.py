@@ -1,4 +1,4 @@
- Resource object code
+# Resource object code
 #
 # Created by: The Resource Compiler for PyQt5 (Qt v5.5.1)
 #
