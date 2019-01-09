@@ -18,7 +18,7 @@
 import json
 import logging
 from PyQt5.QtWidgets import QDialog, qApp
-from os.path import exists
+from os.path import exists, dirname
 
 from lisp import layout
 from lisp.core.actions_handler import MainActionsHandler
@@ -26,6 +26,7 @@ from lisp.core.session import Session
 from lisp.core.signal import Signal
 from lisp.core.singleton import Singleton
 from lisp.core.util import filter_live_properties
+from lisp.core.configuration import AppConfig
 from lisp.cues.cue import Cue
 from lisp.cues.cue_factory import CueFactory
 from lisp.cues.cue_model import CueModel
@@ -165,6 +166,11 @@ class Application(metaclass=Singleton):
     def _save_to_file(self, session_file):
         """Save the current session into a file."""
         self.session.session_file = session_file
+
+        # Save session path
+        last_session_path = dirname(session_file)
+        AppConfig().set("session.last_path", last_session_path)
+        AppConfig().write()
 
         # Add the cues
         session_dict = {"cues": []}
