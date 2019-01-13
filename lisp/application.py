@@ -168,9 +168,8 @@ class Application(metaclass=Singleton):
         self.session.session_file = session_file
 
         # Save session path
-        last_session_path = dirname(session_file)
-        AppConfig().set("session.last_path", last_session_path)
-        AppConfig().write()
+        self.conf.set("session.last_path", dirname(session_file))
+        self.conf.write()
 
         # Add the cues
         session_dict = {"cues": []}
