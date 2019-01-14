@@ -26,7 +26,6 @@ from lisp.core.session import Session
 from lisp.core.signal import Signal
 from lisp.core.singleton import Singleton
 from lisp.core.util import filter_live_properties
-from lisp.core.configuration import AppConfig
 from lisp.cues.cue import Cue
 from lisp.cues.cue_factory import CueFactory
 from lisp.cues.cue_model import CueModel
