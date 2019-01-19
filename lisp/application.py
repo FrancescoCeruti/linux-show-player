@@ -259,7 +259,7 @@ class Application(metaclass=Singleton):
         self.window.register_cue_menu_action(
             translate("CueName", cue_class.Name),
             __cue_factory,
-            cue_category or translate("CueCategory", "Miscellaneous cues"),
+            cue_category or translate("CueCategory", "Misc cues"),
         )
 
         logger.debug(

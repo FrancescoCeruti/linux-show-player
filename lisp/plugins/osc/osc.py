@@ -42,7 +42,7 @@ class Osc(Plugin):
         )
 
         # Register the OSC cue type
-        app.register_cue_type(OscCue, translate("CueCategory", "Protocol cues"))
+        app.register_cue_type(OscCue, translate("CueCategory", "Integration cues"))
 
         # Create a server instance
         self.__server = OscServer(

@@ -39,7 +39,7 @@ class Midi(Plugin):
             "plugins.midi", MIDISettings, Midi.Config
         )
 
-        app.register_cue_type(MidiCue, translate("CueCategory", "Protocol cues"))
+        app.register_cue_type(MidiCue, translate("CueCategory", "Integration cues"))
 
         # Load the backend and set it as current mido backend
         self.backend = mido.Backend(Midi.Config["backend"], load=True)
