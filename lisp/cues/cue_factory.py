@@ -15,13 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-import logging
 from copy import deepcopy
 
 from lisp.core.util import typename
-from lisp.ui.ui_utils import translate
-
-logger = logging.getLogger(__name__)
 
 class CueFactory:
     """Provide a generic factory to build different cues types.
@@ -32,39 +28,6 @@ class CueFactory:
     __REGISTRY = {}
 
     # Register methods
-
-    @classmethod
-    def register_cue_type(cls, app, cue_class, cue_category=None):
-        cls.register_factory(cue_class.__name__, cue_class)
-
-        def __cue_factory():
-            try:
-                cue = CueFactory.create_cue(cue_class.__name__)
-
-                # Get the (last) index of the current selection
-                layout_selection = list(app.layout.selected_cues())
-                if layout_selection:
-                    cue.index = layout_selection[-1].index + 1
-
-                app.cue_model.add(cue)
-            except Exception:
-                logger.exception(
-                    translate("CueFactory", "Cannot create cue {}").format(
-                        cue_class.__name__
-                    )
-                )
-
-        app.window.register_cue_menu_action(
-            translate("CueName", cue_class.Name),
-            __cue_factory,
-            cue_category or translate("CueCategory", "Miscellaneous cues"),
-        )
-
-        logger.debug(
-            translate("CueFactory", 'Registered cue: "{}"').format(
-                cue_class.__name__
-            )
-        )
 
     @classmethod
     def register_factory(cls, cue_type, factory):

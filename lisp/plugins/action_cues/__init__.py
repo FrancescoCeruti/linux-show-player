@@ -19,7 +19,6 @@ from os import path
 
 from lisp.core.loading import load_classes
 from lisp.core.plugin import Plugin
-from lisp.cues.cue_factory import CueFactory
 from lisp.ui.ui_utils import translate
 
 
@@ -33,4 +32,4 @@ class ActionCues(Plugin):
 
         # Register each action cue class with the cue-factory
         for _, cue in load_classes(__package__, path.dirname(__file__)):
-            CueFactory.register_cue_type(self.app, cue, translate("CueCategory", "Action cues"))
+            app.register_cue_type(cue, translate("CueCategory", "Action cues"))
