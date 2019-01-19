@@ -18,7 +18,7 @@
 import json
 import logging
 from PyQt5.QtWidgets import QDialog, qApp
-from os.path import exists
+from os.path import exists, dirname
 
 from lisp import layout
 from lisp.core.actions_handler import MainActionsHandler
@@ -165,6 +165,10 @@ class Application(metaclass=Singleton):
     def _save_to_file(self, session_file):
         """Save the current session into a file."""
         self.session.session_file = session_file
+
+        # Save session path
+        self.conf.set("session.last_path", dirname(session_file))
+        self.conf.write()
 
         # Add the cues
         session_dict = {"cues": []}

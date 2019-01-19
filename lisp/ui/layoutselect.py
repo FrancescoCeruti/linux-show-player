@@ -30,6 +30,7 @@ from PyQt5.QtWidgets import (
 
 from lisp import layout
 from lisp.ui.ui_utils import translate
+from lisp.core.configuration import AppConfig
 
 
 class LayoutSelect(QDialog):
@@ -99,8 +100,13 @@ class LayoutSelect(QDialog):
         )
 
     def open_file(self):
+        app_config = AppConfig()
+        last_session_path = app_config.get("session.last_path", os.getenv("HOME"))
         path, _ = QFileDialog.getOpenFileName(
-            self, filter="*.lsp", directory=os.getenv("HOME")
+            self, filter="*.lsp", directory=last_session_path
         )
-        self.filepath = path
+        if path != "":
+            self.filepath = path
+            app_config.set("session.last_path", os.path.dirname(path))
+            app_config.write()
         self.accept()
