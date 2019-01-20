@@ -27,12 +27,11 @@ from PyQt5.QtCore import QLocale, QLibraryInfo
 from PyQt5.QtWidgets import QApplication
 
 from lisp import (
-    USER_DIR,
+    USER_DIRS,
     DEFAULT_APP_CONFIG,
     USER_APP_CONFIG,
     plugins,
     I18N_PATH,
-    LOGS_DIR,
 )
 from lisp.application import Application
 from lisp.core.configuration import JSONFileConfiguration
@@ -63,8 +62,9 @@ def main():
 
     args = parser.parse_args()
 
-    # Make sure the application user directory exists
-    os.makedirs(USER_DIR, exist_ok=True)
+    # Make sure the application user directories exist
+    os.makedirs(USER_DIRS.user_config_dir, exist_ok=True)
+    os.makedirs(USER_DIRS.user_data_dir, exist_ok=True)
 
     # Get logging level for the console
     if args.log == "debug":
@@ -93,10 +93,10 @@ def main():
     root_logger.addHandler(stream_handler)
 
     # Make sure the logs directory exists
-    os.makedirs(LOGS_DIR, exist_ok=True)
+    os.makedirs(USER_DIRS.user_log_dir, exist_ok=True)
     # Create the file handler
     file_handler = RotatingFileHandler(
-        os.path.join(LOGS_DIR, "lisp.log"),
+        os.path.join(USER_DIRS.user_log_dir, "lisp.log"),
         maxBytes=10 * (2 ** 20),
         backupCount=5,
     )
