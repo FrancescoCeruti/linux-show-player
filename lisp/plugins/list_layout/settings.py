@@ -116,9 +116,11 @@ class ListLayoutSettings(SettingsPage):
             translate("ListLayout", "Enable selection mode")
         )
 
-        self.goKeyLabel.setText(translate("ListLayout", "GO key:"))
-        self.goActionLabel.setText(translate("ListLayout", "GO action:"))
-        self.goDelayLabel.setText(translate("ListLayout", "GO delay (ms):"))
+        self.goKeyLabel.setText(translate("ListLayout", "GO Key:"))
+        self.goActionLabel.setText(translate("ListLayout", "GO Action:"))
+        self.goDelayLabel.setText(
+            translate("ListLayout", "GO minimum interval (ms):")
+        )
 
         self.useFadeGroup.setTitle(
             translate("ListLayout", "Use fade (buttons)")

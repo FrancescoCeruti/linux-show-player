@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2019 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
 
 import json
 import os
-from zipfile import ZipFile, BadZipFile
+from zipfile import ZipFile
 
 from lisp import USER_DIR
 from lisp.core.actions_handler import MainActionsHandler
@@ -134,18 +134,6 @@ def delete_preset(name):
         os.remove(path)
 
 
-class PresetImportError(Exception):
-    """
-    Raised when an error occur during presets import.
-    """
-
-
-class PresetExportError(Exception):
-    """
-    Raised when an error occur during presets export.
-    """
-
-
 def export_presets(names, archive):
     """Export presets-files into an archive.
 
@@ -155,12 +143,9 @@ def export_presets(names, archive):
     :type archive: str
     """
     if names:
-        try:
-            with ZipFile(archive, mode="w") as archive:
-                for name in names:
-                    archive.write(preset_path(name), name)
-        except (OSError, BadZipFile) as e:
-            raise PresetExportError(str(e))
+        with ZipFile(archive, mode="w") as archive:
+            for name in names:
+                archive.write(preset_path(name), name)
 
 
 def import_presets(archive, overwrite=True):
@@ -171,13 +156,10 @@ def import_presets(archive, overwrite=True):
     :param overwrite: Overwrite existing files
     :type overwrite: bool
     """
-    try:
-        with ZipFile(archive) as archive:
-            for member in archive.namelist():
-                if not (preset_exists(member) and not overwrite):
-                    archive.extract(member, path=PRESETS_DIR)
-    except (OSError, BadZipFile) as e:
-        raise PresetImportError(str(e))
+    with ZipFile(archive) as archive:
+        for member in archive.namelist():
+            if not (preset_exists(member) and not overwrite):
+                archive.extract(member, path=PRESETS_DIR)
 
 
 def import_has_conflicts(archive):
@@ -187,13 +169,10 @@ def import_has_conflicts(archive):
     :type archive: str
     :rtype: bool
     """
-    try:
-        with ZipFile(archive) as archive:
-            for member in archive.namelist():
-                if preset_exists(member):
-                    return True
-    except (OSError, BadZipFile) as e:
-        raise PresetImportError(str(e))
+    with ZipFile(archive) as archive:
+        for member in archive.namelist():
+            if preset_exists(member):
+                return True
 
     return False
 
@@ -206,12 +185,9 @@ def import_conflicts(archive):
     """
     conflicts = []
 
-    try:
-        with ZipFile(archive) as archive:
-            for member in archive.namelist():
-                if preset_exists(member):
-                    conflicts.append(member)
-    except (OSError, BadZipFile) as e:
-        raise PresetImportError(str(e))
+    with ZipFile(archive) as archive:
+        for member in archive.namelist():
+            if preset_exists(member):
+                conflicts.append(member)
 
     return conflicts

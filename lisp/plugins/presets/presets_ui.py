@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2019 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,6 +14,8 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
+
+import logging
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (
@@ -32,6 +34,7 @@ from PyQt5.QtWidgets import (
     QFileDialog,
     QHBoxLayout,
 )
+from zipfile import BadZipFile
 
 from lisp.core.util import natural_keys
 from lisp.cues.cue import Cue
@@ -41,8 +44,6 @@ from lisp.plugins.presets.lib import (
     export_presets,
     import_presets,
     import_has_conflicts,
-    PresetExportError,
-    PresetImportError,
     scan_presets,
     delete_preset,
     write_preset,
@@ -53,50 +54,41 @@ from lisp.plugins.presets.lib import (
 from lisp.ui.mainwindow import MainWindow
 from lisp.ui.settings.cue_settings import CueSettingsDialog, CueSettingsRegistry
 from lisp.ui.ui_utils import translate
-from lisp.ui.widgets import QDetailedMessageBox
+
+logger = logging.getLogger(__file__[:-3])
 
 
-def preset_error(exception, text, parent=None):
-    QDetailedMessageBox.dcritical(
-        translate("Presets", "Presets"), text, str(exception), parent=parent
-    )
+def preset_error(exception, text):
+    logger.error(text, exc_info=exception)
 
 
-def scan_presets_error(exception, parent=None):
-    preset_error(
-        exception, translate("Presets", "Cannot scan presets"), parent=parent
-    )
+def scan_presets_error(exception):
+    preset_error(exception, translate("Presets", "Cannot scan presets"))
 
 
-def delete_preset_error(exception, name, parent=None):
+def delete_preset_error(exception, name):
     preset_error(
         exception,
         translate("Presets", 'Error while deleting preset "{}"').format(name),
-        parent=parent,
     )
 
 
-def load_preset_error(exception, name, parent=None):
+def load_preset_error(exception, name):
     preset_error(
-        exception,
-        translate("Presets", 'Cannot load preset "{}"').format(name),
-        parent=parent,
+        exception, translate("Presets", 'Cannot load preset "{}"').format(name)
     )
 
 
-def write_preset_error(exception, name, parent=None):
+def write_preset_error(exception, name):
     preset_error(
-        exception,
-        translate("Presets", 'Cannot save preset "{}"').format(name),
-        parent=parent,
+        exception, translate("Presets", 'Cannot save preset "{}"').format(name)
     )
 
 
-def rename_preset_error(exception, name, parent=None):
+def rename_preset_error(exception, name):
     preset_error(
         exception,
         translate("Presets", 'Cannot rename preset "{}"').format(name),
-        parent=parent,
     )
 
 
@@ -112,7 +104,7 @@ def select_preset_dialog():
             if confirm:
                 return item
     except OSError as e:
-        scan_presets_error(e, parent=MainWindow())
+        scan_presets_error(e)
 
 
 def check_override_dialog(preset_name):
@@ -241,7 +233,7 @@ class PresetsDialog(QDialog):
         try:
             self.presetsList.addItems(scan_presets())
         except OSError as e:
-            scan_presets_error(e, parent=self)
+            scan_presets_error(e)
 
     def __remove_preset(self):
         for item in self.presetsList.selectedItems():
@@ -249,7 +241,7 @@ class PresetsDialog(QDialog):
                 delete_preset(item.text())
                 self.presetsList.takeItem(self.presetsList.currentRow())
             except OSError as e:
-                delete_preset_error(e, item.text(), parent=self)
+                delete_preset_error(e, item.text())
 
     def __add_preset(self):
         dialog = NewPresetDialog(parent=self)
@@ -264,7 +256,7 @@ class PresetsDialog(QDialog):
                     if not exists:
                         self.presetsList.addItem(preset_name)
                 except OSError as e:
-                    write_preset_error(e, preset_name, parent=self)
+                    write_preset_error(e, preset_name)
 
     def __rename_preset(self):
         item = self.presetsList.currentItem()
@@ -282,7 +274,7 @@ class PresetsDialog(QDialog):
                         rename_preset(item.text(), new_name)
                         item.setText(new_name)
                     except OSError as e:
-                        rename_preset_error(e, item.text(), parent=self)
+                        rename_preset_error(e, item.text())
 
     def __edit_preset(self):
         item = self.presetsList.currentItem()
@@ -303,9 +295,9 @@ class PresetsDialog(QDialog):
                         try:
                             write_preset(item.text(), preset)
                         except OSError as e:
-                            write_preset_error(e, item.text(), parent=self)
+                            write_preset_error(e, item.text())
             except OSError as e:
-                load_preset_error(e, item.text(), parent=self)
+                load_preset_error(e, item.text())
 
     def __cue_from_preset(self, preset_name):
         try:
@@ -326,7 +318,7 @@ class PresetsDialog(QDialog):
                         ).format(preset_name),
                     )
         except OSError as e:
-            load_preset_error(e, preset_name, parent=self)
+            load_preset_error(e, preset_name)
 
     def __cue_from_selected(self):
         for item in self.presetsList.selectedItems():
@@ -341,7 +333,7 @@ class PresetsDialog(QDialog):
                 if cues:
                     load_on_cues(preset_name, cues)
             except OSError as e:
-                load_preset_error(e, preset_name, parent=self)
+                load_preset_error(e, preset_name)
 
     def __export_presets(self):
         names = [item.text() for item in self.presetsList.selectedItems()]
@@ -354,12 +346,9 @@ class PresetsDialog(QDialog):
                 archive += ".presets"
             try:
                 export_presets(names, archive)
-            except PresetExportError as e:
-                QDetailedMessageBox.dcritical(
-                    translate("Presets", "Presets"),
-                    translate("Presets", "Cannot export correctly."),
-                    str(e),
-                    parent=self,
+            except (OSError, BadZipFile):
+                logger.exception(
+                    translate("Presets", "Cannot export correctly.")
                 )
 
     def __import_presets(self):
@@ -382,12 +371,9 @@ class PresetsDialog(QDialog):
 
                 import_presets(archive)
                 self.__populate()
-            except PresetImportError as e:
-                QDetailedMessageBox.dcritical(
-                    translate("Presets", "Presets"),
-                    translate("Presets", "Cannot import correctly."),
-                    str(e),
-                    parent=self,
+            except (OSError, BadZipFile):
+                logger.exception(
+                    translate("Presets", "Cannot import correctly.")
                 )
 
     def __selection_changed(self):

@@ -1,5 +1,5 @@
 # Python porting of qtractor fade functions
-## This file is part of Linux Show Player
+# This file is part of Linux Show Player
 #
 # Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #

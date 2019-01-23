@@ -116,12 +116,16 @@ def main():
     if locale:
         QLocale().setDefault(QLocale(locale))
 
-    logging.info("Using {} locale".format(QLocale().name()))
+    logging.info(
+        'Using "{}" locale -> {}'.format(
+            QLocale().name(), QLocale().uiLanguages()
+        )
+    )
 
     # Qt platform translation
-    install_translation(
-        "qt", tr_path=QLibraryInfo.location(QLibraryInfo.TranslationsPath)
-    )
+    qt_tr_path = QLibraryInfo.location(QLibraryInfo.TranslationsPath)
+    # install_translation("qt", tr_path=qt_tr_path)
+    install_translation("qtbase", tr_path=qt_tr_path)
     # Main app translations
     install_translation("lisp", tr_path=I18N_PATH)
 

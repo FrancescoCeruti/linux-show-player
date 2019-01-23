@@ -23,7 +23,6 @@ from lisp.plugins.osc.osc_settings import OscSettings
 from lisp.ui.settings.app_configuration import AppConfigurationDialog
 
 
-# TODO: layout-controls in external plugin
 class Osc(Plugin):
     """Provide OSC I/O functionality"""
 

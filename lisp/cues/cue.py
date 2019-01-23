@@ -305,7 +305,7 @@ class Cue(HasProperties):
 
         When called from `Cue.start()`, `_st_lock` is acquired.
 
-        If the execution is instantaneous should return False, otherwise
+        If the execution is instantaneous, should return False, otherwise
         return True and call the `_ended` function later.
 
         :param fade: True if a fade should be performed (when supported)

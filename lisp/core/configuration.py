@@ -252,7 +252,6 @@ class JSONFileConfiguration(Configuration):
             return json.load(f)
 
 
-# TODO: we should remove this in favor of a non-singleton
 class AppConfig(JSONFileConfiguration, metaclass=ABCSingleton):
     """Provide access to the application configuration (singleton)"""
 

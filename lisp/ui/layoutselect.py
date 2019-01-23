@@ -101,7 +101,9 @@ class LayoutSelect(QDialog):
 
     def open_file(self):
         app_config = AppConfig()
-        last_session_path = app_config.get("session.last_path", os.getenv("HOME"))
+        last_session_path = app_config.get(
+            "session.last_path", os.getenv("HOME")
+        )
         path, _ = QFileDialog.getOpenFileName(
             self, filter="*.lsp", directory=last_session_path
         )
