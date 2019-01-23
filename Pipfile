@@ -4,6 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+appdirs = ">=1.4.1"
 Cython = "~=0.29"
 falcon = "~=1.4"
 JACK-Client = "~=0.4"

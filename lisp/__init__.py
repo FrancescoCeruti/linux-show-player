@@ -16,6 +16,7 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from os import path
+from appdirs import AppDirs
 
 __author__ = "Francesco Ceruti"
 __email__ = "ceppofrancy@gmail.com"
@@ -26,12 +27,11 @@ __version__ = "0.6.0.dev0"
 # Application wide "constants"
 APP_DIR = path.dirname(__file__)
 
-USER_DIR = path.join(path.expanduser("~"), ".linux_show_player")
-
-LOGS_DIR = path.join(USER_DIR, "logs")
+# The version passed follows <major>.<minor>
+USER_DIRS = AppDirs("LinuxShowPlayer", version=".".join(__version__.split(".")[0:2]))
 
 DEFAULT_APP_CONFIG = path.join(APP_DIR, "default.json")
-USER_APP_CONFIG = path.join(USER_DIR, "lisp.json")
+USER_APP_CONFIG = path.join(USER_DIRS.user_config_dir, "lisp.json")
 
 I18N_PATH = path.join(APP_DIR, "i18n", "qm")
 
