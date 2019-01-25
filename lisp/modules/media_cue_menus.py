@@ -33,7 +33,10 @@ from lisp.ui.ui_utils import qfile_filters, translate
 
 class MediaCueMenus(Module):
     """Register menus to add MediaCue to layouts"""
-
+        
+    # Default path to system "music" folder
+    Path = QStandardPaths.writableLocation(QStandardPaths.MusicLocation)
+    
     def __init__(self):
         MainWindow().register_cue_menu_action(
             translate('MediaCueMenus', 'Audio cue (from file)'),
@@ -49,9 +52,6 @@ class MediaCueMenus(Module):
             QMessageBox.critical(MainWindow(), 'Error', 'Backend not loaded')
             return
 
-        # Default path to system "music" folder
-        path = QStandardPaths.writableLocation(QStandardPaths.MusicLocation)
-
         # Get the backend extensions and create a filter for the Qt file-dialog
         extensions = get_backend().supported_extensions()
         filters = qfile_filters(extensions, anyfile=False)
@@ -59,13 +59,14 @@ class MediaCueMenus(Module):
         files, _ = QFileDialog.getOpenFileNames(MainWindow(),
                                                 translate('MediaCueMenus',
                                                           'Select media files'),
-                                                path, filters)
+                                                MediaCueMenus.Path, filters)
 
         QApplication.setOverrideCursor(QCursor(Qt.WaitCursor))
 
         # Create media cues, and add them to the Application cue_model
         for file in files:
             cue = CueFactory.create_cue('URIAudioCue', uri='file://' + file)
+            MediaCueMenus.Path = os.path.split(file)[0]
             # Use the filename without extension as cue name
             cue.name = os.path.splitext(os.path.basename(file))[0]
             Application().cue_model.add(cue)
