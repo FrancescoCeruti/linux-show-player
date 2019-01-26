@@ -36,7 +36,6 @@ class MediaCueMenus(Module):
         
     # Default path to system "music" folder
     Path = QStandardPaths.writableLocation(QStandardPaths.MusicLocation)
-    
     def __init__(self):
         MainWindow().register_cue_menu_action(
             translate('MediaCueMenus', 'Audio cue (from file)'),
