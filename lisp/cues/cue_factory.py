@@ -19,7 +19,6 @@ from copy import deepcopy
 
 from lisp.core.util import typename
 
-
 class CueFactory:
     """Provide a generic factory to build different cues types.
 

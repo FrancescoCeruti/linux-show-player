@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2019 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,14 +22,14 @@ from lisp.core.plugin import Plugin
 from lisp.ui.ui_utils import translate
 
 
-class ActionCues(Plugin):
-    Name = "Action Cues"
+class SystemCommandCue(Plugin):
+    Name = "Command Cue"
     Authors = ("Francesco Ceruti",)
-    Description = "A collection of cues that act on other cues"
+    Description = "A cue that allows running an arbitrary shell command."
 
     def __init__(self, app):
         super().__init__(app)
 
-        # Register each action cue class with the cue-factory
+        # Register the cue in the cue-factory
         for _, cue in load_classes(__package__, path.dirname(__file__)):
-            app.register_cue_type(cue, translate("CueCategory", "Action cues"))
+            app.register_cue_type(cue, translate("CueCategory", "Integration cues"))

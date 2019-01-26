@@ -18,10 +18,11 @@
 import mido
 
 from lisp.core.plugin import Plugin
+from lisp.plugins.midi.midi_cue import MidiCue
 from lisp.plugins.midi.midi_io import MIDIOutput, MIDIInput
 from lisp.plugins.midi.midi_settings import MIDISettings
 from lisp.ui.settings.app_configuration import AppConfigurationDialog
-
+from lisp.ui.ui_utils import translate
 
 class Midi(Plugin):
     """Provide MIDI I/O functionality"""
@@ -37,6 +38,8 @@ class Midi(Plugin):
         AppConfigurationDialog.registerSettingsPage(
             "plugins.midi", MIDISettings, Midi.Config
         )
+
+        app.register_cue_type(MidiCue, translate("CueCategory", "Integration cues"))
 
         # Load the backend and set it as current mido backend
         self.backend = mido.Backend(Midi.Config["backend"], load=True)

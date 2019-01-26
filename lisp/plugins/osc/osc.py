@@ -18,9 +18,11 @@
 
 
 from lisp.core.plugin import Plugin
+from lisp.plugins.osc.osc_cue import OscCue
 from lisp.plugins.osc.osc_server import OscServer
 from lisp.plugins.osc.osc_settings import OscSettings
 from lisp.ui.settings.app_configuration import AppConfigurationDialog
+from lisp.ui.ui_utils import translate
 
 
 class Osc(Plugin):
@@ -37,6 +39,9 @@ class Osc(Plugin):
         AppConfigurationDialog.registerSettingsPage(
             "plugins.osc", OscSettings, Osc.Config
         )
+
+        # Register the OSC cue type
+        app.register_cue_type(OscCue, translate("CueCategory", "Integration cues"))
 
         # Create a server instance
         self.__server = OscServer(

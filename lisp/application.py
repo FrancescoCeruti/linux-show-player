@@ -235,3 +235,35 @@ class Application(metaclass=Singleton):
                 ).format(session_file)
             )
             self._new_session_dialog()
+
+    def register_cue_type(self, cue_class, cue_category=None):
+        CueFactory.register_factory(cue_class.__name__, cue_class)
+
+        def __cue_factory():
+            try:
+                cue = CueFactory.create_cue(cue_class.__name__)
+
+                # Get the (last) index of the current selection
+                layout_selection = list(self.layout.selected_cues())
+                if layout_selection:
+                    cue.index = layout_selection[-1].index + 1
+
+                self.cue_model.add(cue)
+            except Exception:
+                logger.exception(
+                    translate("ApplicationError", "Cannot create cue {}").format(
+                        cue_class.__name__
+                    )
+                )
+
+        self.window.register_cue_menu_action(
+            translate("CueName", cue_class.Name),
+            __cue_factory,
+            cue_category or translate("CueCategory", "Misc cues"),
+        )
+
+        logger.debug(
+            translate("ApplicationDebug", 'Registered cue: "{}"').format(
+                cue_class.__name__
+            )
+        )
