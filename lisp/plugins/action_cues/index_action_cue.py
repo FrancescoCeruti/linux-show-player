@@ -37,6 +37,7 @@ from lisp.ui.widgets import CueActionComboBox
 
 class IndexActionCue(Cue):
     Name = QT_TRANSLATE_NOOP("CueName", "Index Action")
+    Category = QT_TRANSLATE_NOOP("CueCategory", "Action cues")
 
     target_index = Property(default=0)
     relative = Property(default=True)

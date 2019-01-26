@@ -16,13 +16,15 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import mido
+from PyQt5.QtCore import QT_TRANSLATE_NOOP
 
 from lisp.core.plugin import Plugin
+from lisp.cues.cue_factory import CueFactory
 from lisp.plugins.midi.midi_cue import MidiCue
 from lisp.plugins.midi.midi_io import MIDIOutput, MIDIInput
 from lisp.plugins.midi.midi_settings import MIDISettings
 from lisp.ui.settings.app_configuration import AppConfigurationDialog
-from lisp.ui.ui_utils import translate
+
 
 class Midi(Plugin):
     """Provide MIDI I/O functionality"""
@@ -39,8 +41,6 @@ class Midi(Plugin):
             "plugins.midi", MIDISettings, Midi.Config
         )
 
-        app.register_cue_type(MidiCue, translate("CueCategory", "Integration cues"))
-
         # Load the backend and set it as current mido backend
         self.backend = mido.Backend(Midi.Config["backend"], load=True)
         mido.set_backend(self.backend)
@@ -56,6 +56,11 @@ class Midi(Plugin):
 
         Midi.Config.changed.connect(self.__config_change)
         Midi.Config.updated.connect(self.__config_update)
+
+        CueFactory.register_factory(MidiCue.__name__, MidiCue)
+        app.window.register_simple_cue_menu(
+            MidiCue, QT_TRANSLATE_NOOP("CueCategory", "Integration cues")
+        )
 
     def __config_change(self, key, value):
         if key == "inputDevice":

@@ -19,17 +19,18 @@ from os import path
 
 from lisp.core.loading import load_classes
 from lisp.core.plugin import Plugin
-from lisp.ui.ui_utils import translate
+from lisp.cues.cue_factory import CueFactory
 
 
 class ActionCues(Plugin):
     Name = "Action Cues"
     Authors = ("Francesco Ceruti",)
-    Description = "A collection of cues that act on other cues"
+    Description = "A collection of cues to extend base functions"
 
     def __init__(self, app):
         super().__init__(app)
 
-        # Register each action cue class with the cue-factory
-        for _, cue in load_classes(__package__, path.dirname(__file__)):
-            app.register_cue_type(cue, translate("CueCategory", "Action cues"))
+        # Register all the cue in the plugin
+        for _, cue_class in load_classes(__package__, path.dirname(__file__)):
+            CueFactory.register_factory(cue_class.__name__, cue_class)
+            app.window.register_simple_cue_menu(cue_class, cue_class.Category)

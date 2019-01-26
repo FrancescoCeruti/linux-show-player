@@ -68,9 +68,8 @@ class GstBackend(Plugin, BaseBackend):
 
         # Register GstMediaCue factory
         CueFactory.register_factory("GstMediaCue", GstCueFactory(tuple()))
-
         # Add Menu entry
-        self.app.window.register_cue_menu_action(
+        self.app.window.register_cue_menu(
             translate("GstBackend", "Audio cue (from file)"),
             self._add_uri_audio_cue,
             category="Media cues",

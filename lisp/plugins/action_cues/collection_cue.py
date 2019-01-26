@@ -39,6 +39,7 @@ from lisp.ui.ui_utils import translate
 
 class CollectionCue(Cue):
     Name = QT_TRANSLATE_NOOP("CueName", "Collection Cue")
+    Category = QT_TRANSLATE_NOOP("CueCategory", "Action cues")
 
     targets = Property(default=[])
 

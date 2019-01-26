@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2019 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,7 +17,6 @@
 
 import logging
 import os
-
 from PyQt5 import QtCore
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtGui import QKeySequence
@@ -36,6 +35,7 @@ from PyQt5.QtWidgets import (
 
 from lisp.core.actions_handler import MainActionsHandler
 from lisp.core.singleton import QSingleton
+from lisp.cues.cue_factory import CueFactory
 from lisp.cues.media_cue import MediaCue
 from lisp.ui.about import About
 from lisp.ui.logging.dialog import LogDialogs
@@ -45,6 +45,8 @@ from lisp.ui.logging.status import LogStatusView
 from lisp.ui.logging.viewer import LogViewer
 from lisp.ui.settings.app_configuration import AppConfigurationDialog
 from lisp.ui.ui_utils import translate
+
+logger = logging.getLogger(__name__)
 
 
 class MainWindow(QMainWindow, metaclass=QSingleton):
@@ -244,9 +246,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         self._exit()
         event.ignore()
 
-    def register_cue_menu_action(
-        self, name, function, category="", shortcut=""
-    ):
+    def register_cue_menu(self, name, function, category="", shortcut=""):
         """Register a new-cue choice for the edit-menu
 
         param name: The name for the MenuAction
@@ -256,10 +256,10 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         """
 
         action = QAction(self)
-        action.setText(translate("MainWindow", name))
+        action.setText(translate("CueName", name))
         action.triggered.connect(function)
         if shortcut != "":
-            action.setShortcut(translate("MainWindow", shortcut))
+            action.setShortcut(translate("CueCategory", shortcut))
 
         if category != "":
             if category not in self._cue_add_menu:
@@ -271,6 +271,34 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         else:
             self.menuEdit.insertAction(self.cueSeparator, action)
 
+        logger.debug(
+            translate("MainWindowDebug", 'Registered cue: "{}"').format(name)
+        )
+
+    def register_simple_cue_menu(self, cue_class, cue_category=""):
+        def menu_function():
+            try:
+                cue = CueFactory.create_cue(cue_class.__name__)
+
+                # Get the (last) index of the current selection
+                layout_selection = list(self.session.layout.selected_cues())
+                if layout_selection:
+                    cue.index = layout_selection[-1].index + 1
+
+                self.session.cue_model.add(cue)
+            except Exception:
+                logger.exception(
+                    translate("MainWindowError", "Cannot create cue {}").format(
+                        cue_class.__name__
+                    )
+                )
+
+        self.register_cue_menu(
+            translate("CueName", cue_class.Name),
+            menu_function,
+            cue_category or translate("CueCategory", "Misc cues"),
+        )
+
     def update_window_title(self):
         tile = self._title + " - " + self.session.name()
         if not MainActionsHandler.is_saved():
@@ -278,13 +306,13 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
 
         self.setWindowTitle(tile)
 
-    def _action_done(self, action):
+    def _action_done(self):
         self.update_window_title()
 
-    def _action_undone(self, action):
+    def _action_undone(self):
         self.update_window_title()
 
-    def _action_redone(self, action):
+    def _action_redone(self):
         self.update_window_title()
 
     def _save(self):

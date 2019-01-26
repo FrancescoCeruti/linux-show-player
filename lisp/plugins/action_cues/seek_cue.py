@@ -38,6 +38,7 @@ from lisp.ui.ui_utils import translate
 
 class SeekCue(Cue):
     Name = QT_TRANSLATE_NOOP("CueName", "Seek Cue")
+    Category = QT_TRANSLATE_NOOP("CueCategory", "Action cues")
 
     target_id = Property()
     time = Property(default=-1)

@@ -28,6 +28,7 @@ from lisp.ui.ui_utils import translate
 
 class StopAll(Cue):
     Name = QT_TRANSLATE_NOOP("CueName", "Stop-All")
+    Category = QT_TRANSLATE_NOOP("CueCategory", "Action cues")
 
     action = Property(default=CueAction.Stop.value)
 

@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2017 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2019 Francesco Ceruti <ceppofrancy@gmail.com>
 # Copyright 2016 Thomas Achtner <info@offtools.de>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
@@ -15,14 +15,14 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
-
+from PyQt5.QtCore import QT_TRANSLATE_NOOP
 
 from lisp.core.plugin import Plugin
+from lisp.cues.cue_factory import CueFactory
 from lisp.plugins.osc.osc_cue import OscCue
 from lisp.plugins.osc.osc_server import OscServer
 from lisp.plugins.osc.osc_settings import OscSettings
 from lisp.ui.settings.app_configuration import AppConfigurationDialog
-from lisp.ui.ui_utils import translate
 
 
 class Osc(Plugin):
@@ -40,9 +40,6 @@ class Osc(Plugin):
             "plugins.osc", OscSettings, Osc.Config
         )
 
-        # Register the OSC cue type
-        app.register_cue_type(OscCue, translate("CueCategory", "Integration cues"))
-
         # Create a server instance
         self.__server = OscServer(
             Osc.Config["hostname"], Osc.Config["inPort"], Osc.Config["outPort"]
@@ -51,6 +48,12 @@ class Osc(Plugin):
 
         Osc.Config.changed.connect(self.__config_change)
         Osc.Config.updated.connect(self.__config_update)
+
+        # Register the OSC cue type
+        CueFactory.register_factory(OscCue.__name__, OscCue)
+        app.window.register_simple_cue_menu(
+            OscCue, QT_TRANSLATE_NOOP("CueCategory", "Integration cues")
+        )
 
     @property
     def server(self):

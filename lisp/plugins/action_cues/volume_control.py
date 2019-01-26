@@ -52,6 +52,7 @@ logger = logging.getLogger(__name__)
 
 class VolumeControl(Cue):
     Name = QT_TRANSLATE_NOOP("CueName", "Volume Control")
+    Category = QT_TRANSLATE_NOOP("CueCategory", "Action cues")
 
     target_id = Property()
     fade_type = Property(default=FadeInType.Linear.name)
