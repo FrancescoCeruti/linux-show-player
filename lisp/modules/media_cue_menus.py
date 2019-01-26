@@ -33,7 +33,7 @@ from lisp.ui.ui_utils import qfile_filters, translate
 
 class MediaCueMenus(Module):
     """Register menus to add MediaCue to layouts"""
-        
+
     # Default path to system "music" folder
     Path = QStandardPaths.writableLocation(QStandardPaths.MusicLocation)
     def __init__(self):
