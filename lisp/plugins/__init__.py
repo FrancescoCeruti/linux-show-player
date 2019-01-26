@@ -52,7 +52,8 @@ def load_plugins(application):
 
             # Load plugin configuration
             config = JSONFileConfiguration(
-                path.join(USER_DIRS.user_config_dir, mod_name + ".json"), default_config_path
+                path.join(USER_DIRS.user_config_dir, mod_name + ".json"),
+                default_config_path,
             )
             plugin.Config = config
 

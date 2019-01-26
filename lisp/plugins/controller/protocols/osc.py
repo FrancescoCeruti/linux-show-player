@@ -318,7 +318,7 @@ class OscSettings(SettingsPage):
                 if row[0] == "Bool":
                     if row[1] is True:
                         types += "T"
-                    if row[1] is True:
+                    else:
                         types += "F"
                 else:
                     if row[0] == "Integer":

@@ -68,9 +68,9 @@ class ConfDict:
             return node[key]
         except (KeyError, TypeError):
             if default is not _UNSET:
-                logger.warning(
+                logger.info(
                     translate(
-                        "ConfigurationWarning",
+                        "ConfigurationInfo",
                         'Invalid path "{}", return default.',
                     ).format(path)
                 )

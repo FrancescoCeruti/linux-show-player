@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt, QEvent
+from PyQt5.QtCore import Qt, QEvent, QPoint
 from PyQt5.QtWidgets import (
     QStyledItemDelegate,
     QComboBox,
@@ -24,6 +24,8 @@ from PyQt5.QtWidgets import (
     QStyle,
     QDialog,
     QCheckBox,
+    QStyleOptionButton,
+    qApp,
 )
 
 from lisp.application import Application
@@ -122,23 +124,48 @@ class SpinBoxDelegate(QStyledItemDelegate):
         editor.setGeometry(option.rect)
 
 
-class CheckBoxDelegate(QStyledItemDelegate):
+class BoolCheckBoxDelegate(QStyledItemDelegate):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
     def createEditor(self, parent, option, index):
-        return QCheckBox(parent)
+        return None
 
-    def setEditorData(self, checkBox, index):
+    def _checkBoxRect(self, option):
+        cbRect = option.rect
+        cbSize = qApp.style().subElementRect(
+            QStyle.SE_ViewItemCheckIndicator, QStyleOptionButton(), QCheckBox()
+        )
+
+        # Center the checkbox (horizontally)
+        cbRect.moveLeft(
+            option.rect.left() + (option.rect.width() - cbSize.width()) / 2
+        )
+        return cbRect
+
+    def editorEvent(self, event, model, option, index):
+        # If the "checkbox" is left clicked change the current state
+        if event.type() == QEvent.MouseButtonRelease:
+            cbRect = self._checkBoxRect(option)
+            if event.button() == Qt.LeftButton and cbRect.contains(event.pos()):
+                value = bool(index.model().data(index, Qt.EditRole))
+                model.setData(index, not value, Qt.EditRole)
+
+                return True
+
+        return super().editorEvent(event, model, option, index)
+
+    def paint(self, painter, option, index):
         value = index.model().data(index, Qt.EditRole)
-        if isinstance(value, bool):
-            checkBox.setChecked(value)
+        cbOpt = QStyleOptionButton()
 
-    def setModelData(self, checkBox, model, index):
-        model.setData(index, checkBox.isChecked(), Qt.EditRole)
+        cbOpt.state = QStyle.State_Enabled
+        cbOpt.state |= QStyle.State_On if value else QStyle.State_Off
+        cbOpt.rect = self._checkBoxRect(option)
 
-    def updateEditorGeometry(self, editor, option, index):
-        editor.setGeometry(option.rect)
+        qApp.style().drawControl(
+            QStyle.CE_CheckBox, cbOpt, painter, QCheckBox()
+        )
 
 
 class LineEditDelegate(QStyledItemDelegate):

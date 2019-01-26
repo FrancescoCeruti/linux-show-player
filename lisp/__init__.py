@@ -28,7 +28,9 @@ __version__ = "0.6.0.dev0"
 APP_DIR = path.dirname(__file__)
 
 # The version passed follows <major>.<minor>
-USER_DIRS = AppDirs("LinuxShowPlayer", version=".".join(__version__.split(".")[0:2]))
+USER_DIRS = AppDirs(
+    "LinuxShowPlayer", version=".".join(__version__.split(".")[0:2])
+)
 
 DEFAULT_APP_CONFIG = path.join(APP_DIR, "default.json")
 USER_APP_CONFIG = path.join(USER_DIRS.user_config_dir, "lisp.json")

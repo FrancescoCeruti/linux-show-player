@@ -17,7 +17,6 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import logging
-
 from PyQt5 import QtCore
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import (
@@ -31,7 +30,7 @@ from PyQt5.QtWidgets import (
     QPushButton,
     QLabel,
     QDoubleSpinBox,
-    QMessageBox,
+    QStyledItemDelegate,
 )
 
 from lisp.core.decorators import async_function
@@ -41,38 +40,20 @@ from lisp.core.has_properties import Property
 from lisp.cues.cue import Cue, CueAction
 from lisp.plugins import get_plugin
 from lisp.plugins.osc.osc_server import OscMessageType
-from lisp.ui.qdelegates import ComboBoxDelegate, CheckBoxDelegate
-from lisp.plugins.osc.osc_delegate import OscArgumentDelegate
+from lisp.ui.qdelegates import ComboBoxDelegate, BoolCheckBoxDelegate
 from lisp.ui.qmodels import SimpleTableModel
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
 from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.ui_utils import translate
-from lisp.ui.widgets import FadeComboBox, QDetailedMessageBox
+from lisp.ui.widgets import FadeComboBox
 
-# TODO: a lot of refactoring
+# TODO: some of this should probably be moved into the osc module
 
 logger = logging.getLogger(__name__)
 
-COL_TYPE = 0
-COL_START_VAL = 1
-COL_END_VAL = 2
-COL_DO_FADE = 3
 
-COL_BASE_VAL = 1
-COL_DIFF_VAL = 2
-
-
-def test_path(path):
-    if isinstance(path, str):
-        if len(path) > 1 and path[0] is "/":
-            return True
-    return False
-
-
-def type_can_fade(t):
-    if t == OscMessageType.Int.value:
-        return True
-    elif t == OscMessageType.Float.value:
+def type_can_fade(osc_type):
+    if osc_type == OscMessageType.Int or osc_type == OscMessageType.Float:
         return True
     else:
         return False
@@ -98,99 +79,68 @@ class OscCue(Cue):
 
         self.__osc = get_plugin("Osc")
 
-        self.__fader = Fader(self, "_position")
-        self.__value = 0
-        self.__fadein = True
-
-        self.__arg_list = []
         self.__has_fade = False
+        self.__fadein = True
+        self.__fader = Fader(self, "position")
+        self.__position = 0
 
-    def __get_position(self):
-        return self.__value
+        self.changed("args").connect(self.__on_args_change)
 
-    def __set_position(self, value):
-        self.__value = value
+    @property
+    def position(self):
+        return self.__position
+
+    @position.setter
+    def position(self, value):
+        self.__position = value
         args = []
 
-        for row in self.__arg_list:
-            if row[COL_DIFF_VAL] > 0:
-                args.append(
-                    row[COL_BASE_VAL] + row[COL_DIFF_VAL] * self.__value
-                )
-            else:
-                args.append(row[COL_BASE_VAL])
-
-        self.__osc.server.send(self.path, *args)
-
-    _position = property(__get_position, __set_position)
-
-    def __init_arguments(self):
-        # check path
-        if not test_path(self.path):
-            return False
-
-        # arguments from the cue settings are converted and stored in a new list
-        # list: [ type, base_value, diff_value ]
-        self.__arg_list = []
         try:
             for arg in self.args:
-                if "end" in arg and arg["fade"]:
-                    self.__has_fade = True
-                    diff_value = arg["end"] - arg["start"]
-                    self.__arg_list.append(
-                        [arg["type"], arg["start"], diff_value]
-                    )
+                start = arg["start"]
+                if arg["fade"]:
+                    partial = (arg["end"] - start) * self.__position
+                    args.append(start + partial)
                 else:
-                    self.__arg_list.append([arg["type"], arg["start"], 0])
-        except KeyError:
-            logger.error(
+                    args.append(start)
+
+            self.__osc.server.send(self.path, *args)
+        except Exception:
+            self.interrupt()
+
+            logger.exception(
                 translate(
-                    "OscCueError", "Could not parse argument list, nothing sent"
+                    "OscCueError",
+                    "Cannot send OSC message, see error for details",
                 )
             )
-            return False
+            self._error()
 
-        # set fade type, based on the first argument, which will have a fade
-        if self.__has_fade:
-            for row in self.__arg_list:
-                if row[COL_DIFF_VAL] > 0:
-                    self.__fadein = True
-                    break
-                elif row[COL_DIFF_VAL] < 0:
-                    self.__fadein = False
-                    break
-                else:
-                    continue
-
-        # always fade from 0 to 1, reset value before start or restart fade
-        self.__value = 0
-
-        return True
+    def __on_args_change(self, new_args):
+        # Set fade type, based on the first argument that have a fade
+        for arg in new_args:
+            if arg["fade"]:
+                self.__has_fade = True
+                self.__fadein = arg["end"] > arg["start"]
+                break
 
     def has_fade(self):
-        return self.duration > 0 and self.__has_fade
+        return self.__has_fade and self.duration > 0
 
     def __start__(self, fade=False):
-        if self.__init_arguments():
-            if self.__fader.is_paused():
-                self.__fader.resume()
-                return True
+        if self.__fader.is_paused():
+            self.__fader.resume()
+            return True
 
-            if self.has_fade():
-                if not self.__fadein:
-                    self.__fade(FadeOutType[self.fade_type])
-                    return True
-                else:
-                    self.__fade(FadeInType[self.fade_type])
-                    return True
+        if self.has_fade():
+            if not self.__fadein:
+                self.__fade(FadeOutType[self.fade_type])
+                return True
             else:
-                self._position = 1
+                self.__fade(FadeInType[self.fade_type])
+                return True
         else:
-            logger.error(
-                translate(
-                    "OscCueError", "Error while parsing arguments, nothing sent"
-                )
-            )
+            self.position = 1
 
         return False
 
@@ -206,24 +156,24 @@ class OscCue(Cue):
 
     @async_function
     def __fade(self, fade_type):
-        try:
-            self.__fader.prepare()
-            ended = self.__fader.fade(
-                round(self.duration / 1000, 2), 1, fade_type
-            )
+        self.__position = 0
+        self.__fader.prepare()
+        ended = self.__fader.fade(round(self.duration / 1000, 2), 1, fade_type)
 
-            # to avoid approximation problems
-            self._position = 1
-            if ended:
-                self._ended()
-        except Exception:
-            logger.exception(
-                translate("OscCueError", "Error during cue execution.")
-            )
-            self._error()
+        if ended:
+            # Avoid approximation problems (if needed)
+            if self.position != 1:
+                self.position = 1
+            self._ended()
 
     def current_time(self):
         return self.__fader.current_time()
+
+
+COL_TYPE = 0
+COL_START_VALUE = 1
+COL_END_VALUE = 2
+COL_FADE = 3
 
 
 class OscCueSettings(SettingsPage):
@@ -246,14 +196,12 @@ class OscCueSettings(SettingsPage):
 
         self.oscModel = SimpleTableModel(
             [
-                translate("Osc Cue", "Type"),
-                translate("Osc Cue", "Argument"),
-                translate("Osc Cue", "FadeTo"),
-                translate("Osc Cue", "Fade"),
+                translate("OscCue", "Type"),
+                translate("OscCue", "Value"),
+                translate("OscCue", "FadeTo"),
+                translate("OscCue", "Fade"),
             ]
         )
-
-        self.oscModel.dataChanged.connect(self.__argument_changed)
 
         self.oscView = OscView(parent=self.oscGroup)
         self.oscView.setModel(self.oscModel)
@@ -266,10 +214,6 @@ class OscCueSettings(SettingsPage):
         self.removeButton = QPushButton(self.oscGroup)
         self.removeButton.clicked.connect(self.__remove_argument)
         self.oscGroup.layout().addWidget(self.removeButton, 3, 1)
-
-        self.testButton = QPushButton(self.oscGroup)
-        self.testButton.clicked.connect(self.__test_message)
-        self.oscGroup.layout().addWidget(self.testButton, 4, 0)
 
         # Fade
         self.fadeGroup = QGroupBox(self)
@@ -291,15 +235,26 @@ class OscCueSettings(SettingsPage):
         self.fadeCurveLabel.setAlignment(QtCore.Qt.AlignCenter)
         self.fadeGroup.layout().addWidget(self.fadeCurveLabel, 1, 1)
 
+        self.pathEdit.textEdited.connect(self.__fixPath)
+
         self.retranslateUi()
+
+    def __fixPath(self, text):
+        # Enforce ASCII
+        text = text.encode("ascii", errors="ignore").decode()
+        # Enforce heading "/" to the path
+        if text and text[0] != "/":
+            text = "/" + text
+
+        self.pathEdit.setText(text)
 
     def retranslateUi(self):
         self.oscGroup.setTitle(translate("OscCue", "OSC Message"))
         self.addButton.setText(translate("OscCue", "Add"))
         self.removeButton.setText(translate("OscCue", "Remove"))
-        self.testButton.setText(translate("OscCue", "Test"))
-        self.pathLabel.setText(
-            translate("OscCue", 'OSC Path: (example: "/path/to/something")')
+        self.pathLabel.setText(translate("OscCue", "OSC Path:"))
+        self.pathEdit.setPlaceholderText(
+            translate("OscCue", "/path/to/something")
         )
         self.fadeGroup.setTitle(translate("OscCue", "Fade"))
         self.fadeLabel.setText(translate("OscCue", "Time (sec)"))
@@ -317,139 +272,43 @@ class OscCueSettings(SettingsPage):
         checkable = self.oscGroup.isCheckable()
 
         if not (checkable and not self.oscGroup.isChecked()):
-            if not test_path(self.pathEdit.text()):
-                logger.error(
-                    translate(
-                        "OscCueError",
-                        "Error parsing OSC path, message will be unable to send",
-                    )
-                )
-
-        if not (checkable and not self.oscGroup.isChecked()):
-            try:
-                conf["path"] = self.pathEdit.text()
-                args_list = []
-                for row in self.oscModel.rows:
-                    arg = {"type": row[COL_TYPE], "start": row[COL_START_VAL]}
-
-                    if row[COL_END_VAL] and row[COL_DO_FADE] is True:
-                        arg["end"] = row[COL_END_VAL]
-
-                    arg["fade"] = row[COL_DO_FADE]
-                    args_list.append(arg)
-
-                conf["args"] = args_list
-            except ValueError:
-                logger.error(
-                    translate(
-                        "OscCueError",
-                        "Error parsing OSC arguments, "
-                        "message will be unable to send",
-                    )
-                )
+            conf["path"] = self.pathEdit.text()
+            conf["args"] = [
+                {
+                    "type": row[COL_TYPE],
+                    "start": row[COL_START_VALUE],
+                    "end": row[COL_END_VALUE],
+                    "fade": row[COL_FADE],
+                }
+                for row in self.oscModel.rows
+            ]
 
         if not (checkable and not self.fadeGroup.isCheckable()):
             conf["duration"] = self.fadeSpin.value() * 1000
             conf["fade_type"] = self.fadeCurveCombo.currentType()
+
         return conf
 
     def loadSettings(self, settings):
-        if "path" in settings:
-            path = settings.get("path", "")
-            self.pathEdit.setText(path)
+        self.pathEdit.setText(settings.get("path", ""))
 
-        if "args" in settings:
-
-            args = settings.get("args", "")
-            for arg in args:
-                self.oscModel.appendRow(
-                    arg["type"],
-                    arg["start"],
-                    arg["end"] if "end" in arg else None,
-                    arg["fade"],
-                )
+        for arg in settings.get("args", {}):
+            self.oscModel.appendRow(
+                arg.get("type", "Integer"),
+                arg.get("start", 0),
+                arg.get("end", None),
+                arg.get("fade", False),
+            )
 
         self.fadeSpin.setValue(settings.get("duration", 0) / 1000)
         self.fadeCurveCombo.setCurrentType(settings.get("fade_type", ""))
 
     def __new_argument(self):
-        self.oscModel.appendRow(OscMessageType.Int.value, 0, "", False)
+        self.oscModel.appendRow(OscMessageType.Int.value, 0, 0, False)
 
     def __remove_argument(self):
         if self.oscModel.rowCount():
             self.oscModel.removeRow(self.oscView.currentIndex().row())
-
-    def __test_message(self):
-        # TODO: check arguments for error
-
-        path = self.pathEdit.text()
-
-        if not test_path(path):
-            QDetailedMessageBox.dwarning(
-                "Warning",
-                "No valid path for OSC message - nothing sent",
-                "Path should start with a '/' followed by a name.",
-            )
-            return
-
-        try:
-            args = []
-            for row in self.oscModel.rows:
-                if row[COL_END_VAL] and row[COL_DO_FADE]:
-                    args.append(row[COL_END_VAL])
-                else:
-                    args.append(row[COL_START_VAL])
-
-            self.__osc.server.send(self.path, *args)
-        except ValueError:
-            QMessageBox.critical(
-                self, "Error", "Error on parsing argument list - nothing sent"
-            )
-
-    def __argument_changed(self, index_topleft, index_bottomright, roles):
-        if not (Qt.EditRole in roles):
-            return
-
-        model = index_bottomright.model()
-        curr_row = index_topleft.row()
-        model_row = model.rows[curr_row]
-        curr_col = index_bottomright.column()
-        osc_type = model_row[COL_TYPE]
-
-        # Type changed
-        if curr_col == COL_TYPE:
-            index_start = model.createIndex(curr_row, COL_START_VAL)
-            index_end = model.createIndex(curr_row, COL_END_VAL)
-            delegate_start = self.oscView.itemDelegate(index_start)
-            delegate_end = self.oscView.itemDelegate(index_end)
-
-            if osc_type == "Integer":
-                delegate_start.updateEditor(OscMessageType.Int)
-                delegate_end.updateEditor(OscMessageType.Int)
-                model_row[COL_START_VAL] = 0
-            elif osc_type == "Float":
-                delegate_start.updateEditor(OscMessageType.Float)
-                delegate_end.updateEditor(OscMessageType.Float)
-                model_row[COL_START_VAL] = 0
-            elif osc_type == "Bool":
-                delegate_start.updateEditor(OscMessageType.Bool)
-                delegate_end.updateEditor()
-                model_row[COL_START_VAL] = True
-            else:
-                delegate_start.updateEditor(OscMessageType.String)
-                delegate_end.updateEditor()
-                model_row[COL_START_VAL] = "None"
-
-            model_row[COL_END_VAL] = None
-            model_row[COL_DO_FADE] = False
-
-        if not type_can_fade(model_row[COL_TYPE]):
-            model_row[COL_END_VAL] = None
-            model_row[COL_DO_FADE] = False
-
-        if curr_col == COL_DO_FADE:
-            if model_row[COL_DO_FADE] is False:
-                model_row[COL_END_VAL] = None
 
 
 class OscView(QTableView):
@@ -461,9 +320,9 @@ class OscView(QTableView):
                 options=[i.value for i in OscMessageType],
                 tr_context="OscMessageType",
             ),
-            OscArgumentDelegate(),
-            OscArgumentDelegate(),
-            CheckBoxDelegate(),
+            QStyledItemDelegate(),
+            QStyledItemDelegate(),
+            BoolCheckBoxDelegate(),
         ]
 
         self.setSelectionBehavior(QTableWidget.SelectRows)
@@ -481,6 +340,79 @@ class OscView(QTableView):
 
         for column, delegate in enumerate(self.delegates):
             self.setItemDelegateForColumn(column, delegate)
+
+    def setModel(self, model):
+        if isinstance(model, SimpleTableModel):
+            if isinstance(self.model(), SimpleTableModel):
+                self.model().dataChanged.disconnect(self._dataChanged)
+
+            super().setModel(model)
+            model.dataChanged.connect(self._dataChanged)
+
+    def _toInt(self, modelRow):
+        start = modelRow[COL_START_VALUE]
+        end = modelRow[COL_END_VALUE]
+
+        modelRow[COL_END_VALUE] = 0
+        modelRow[COL_START_VALUE] = 0
+        # We try to covert the value, if possible
+        try:
+            modelRow[COL_START_VALUE] = int(start)
+            modelRow[COL_END_VALUE] = int(end)
+        except (ValueError, TypeError):
+            pass
+
+    def _toFloat(self, modelRow):
+        start = modelRow[COL_START_VALUE]
+        end = modelRow[COL_END_VALUE]
+
+        modelRow[COL_START_VALUE] = 0.0
+        modelRow[COL_END_VALUE] = 0.0
+        # We try to covert the value, if possible
+        # We also take care of "inf" and "-inf" values
+        try:
+            start = float(start)
+            if float("-inf") < start < float("inf"):
+                modelRow[COL_START_VALUE] = start
+
+            end = float(end)
+            if float("-inf") < end < float("inf"):
+                modelRow[COL_END_VALUE] = end
+        except (ValueError, TypeError):
+            pass
+
+    def _toBool(self, modelRow):
+        modelRow[COL_START_VALUE] = True
+
+    def _toString(self, modelRow):
+        modelRow[COL_START_VALUE] = "text"
+
+    def _dataChanged(self, _, bottom_right, roles):
+        if Qt.EditRole not in roles:
+            return
+
+        # NOTE: We assume one item will change at the time
+        column = bottom_right.column()
+        modelRow = self.model().rows[bottom_right.row()]
+        oscType = modelRow[COL_TYPE]
+
+        if column == COL_TYPE:
+            # Type changed, set a correct value
+            # The delegate will decide the correct editor to display
+            if oscType == OscMessageType.Int:
+                self._toInt(modelRow)
+            elif oscType == OscMessageType.Float:
+                self._toFloat(modelRow)
+            elif oscType == OscMessageType.Bool:
+                self._toBool(modelRow)
+            else:
+                # We assume OscMessageType.String
+                self._toString(modelRow)
+
+        if not type_can_fade(oscType):
+            # Cannot fade, keep columns cleans
+            modelRow[COL_FADE] = False
+            modelRow[COL_END_VALUE] = None
 
 
 CueSettingsRegistry().add(OscCueSettings, OscCue)
