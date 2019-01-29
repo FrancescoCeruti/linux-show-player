@@ -87,10 +87,10 @@ class SimpleTableModel(QAbstractTableModel):
             col = index.column()
             # Update only if value is different
             if self.rows[row][col] != value:
-                self.rows[index.row][col] = value
+                self.rows[row][col] = value
                 self.dataChanged.emit(
-                    self.index(index.row, 0),
-                    self.index(index.row, col),
+                    self.index(row, 0),
+                    self.index(row, col),
                     [Qt.DisplayRole, Qt.EditRole],
                 )
 

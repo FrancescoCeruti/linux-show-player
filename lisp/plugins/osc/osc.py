@@ -39,6 +39,11 @@ class Osc(Plugin):
         AppConfigurationDialog.registerSettingsPage(
             "plugins.osc", OscSettings, Osc.Config
         )
+        # Register the cue
+        CueFactory.register_factory(OscCue.__name__, OscCue)
+        app.window.register_simple_cue_menu(
+            OscCue, QT_TRANSLATE_NOOP("CueCategory", "Integration cues")
+        )
 
         # Create a server instance
         self.__server = OscServer(
@@ -48,12 +53,6 @@ class Osc(Plugin):
 
         Osc.Config.changed.connect(self.__config_change)
         Osc.Config.updated.connect(self.__config_update)
-
-        # Register the OSC cue type
-        CueFactory.register_factory(OscCue.__name__, OscCue)
-        app.window.register_simple_cue_menu(
-            OscCue, QT_TRANSLATE_NOOP("CueCategory", "Integration cues")
-        )
 
     @property
     def server(self):

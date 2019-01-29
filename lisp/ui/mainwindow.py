@@ -272,7 +272,9 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
             self.menuEdit.insertAction(self.cueSeparator, action)
 
         logger.debug(
-            translate("MainWindowDebug", 'Registered cue: "{}"').format(name)
+            translate("MainWindowDebug", 'Registered cue menu: "{}"').format(
+                name
+            )
         )
 
     def register_simple_cue_menu(self, cue_class, cue_category=""):

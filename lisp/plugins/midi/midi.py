@@ -40,6 +40,11 @@ class Midi(Plugin):
         AppConfigurationDialog.registerSettingsPage(
             "plugins.midi", MIDISettings, Midi.Config
         )
+        # Register cue
+        CueFactory.register_factory(MidiCue.__name__, MidiCue)
+        app.window.register_simple_cue_menu(
+            MidiCue, QT_TRANSLATE_NOOP("CueCategory", "Integration cues")
+        )
 
         # Load the backend and set it as current mido backend
         self.backend = mido.Backend(Midi.Config["backend"], load=True)
@@ -56,11 +61,6 @@ class Midi(Plugin):
 
         Midi.Config.changed.connect(self.__config_change)
         Midi.Config.updated.connect(self.__config_update)
-
-        CueFactory.register_factory(MidiCue.__name__, MidiCue)
-        app.window.register_simple_cue_menu(
-            MidiCue, QT_TRANSLATE_NOOP("CueCategory", "Integration cues")
-        )
 
     def __config_change(self, key, value):
         if key == "inputDevice":
