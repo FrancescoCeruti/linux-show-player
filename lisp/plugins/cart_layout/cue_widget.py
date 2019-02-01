@@ -76,7 +76,9 @@ class CueWidget(QWidget):
         self.nameButton.setAlignment(Qt.AlignCenter)
         self.nameButton.setFocusPolicy(Qt.NoFocus)
         self.nameButton.clicked.connect(self._clicked)
-        self.nameButton.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
+        self.nameButton.setSizePolicy(
+            QSizePolicy.Ignored, QSizePolicy.Preferred
+        )
         self.hLayout.addWidget(self.nameButton, 5)
 
         self.statusIcon = QLabel(self.nameButton)
@@ -115,7 +117,7 @@ class CueWidget(QWidget):
         self.timeDisplay.setDigitCount(8)
         self.timeDisplay.display("00:00:00")
         self.timeBar.layout().addWidget(self.timeDisplay)
-        self.timeBar.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
+        self.timeBar.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Fixed)
         self.timeBar.setVisible(False)
 
         self._setCue(cue)
