@@ -289,9 +289,11 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
 
     def _save(self):
         if self.session.session_file == "":
-            self._save_with_name()
-        else:
+            saved = self._save_with_name()
+
+        if saved:
             self.save_session.emit(self.session.session_file)
+        return saved
 
     def _save_with_name(self):
         filename, ok = QFileDialog.getSaveFileName(
@@ -303,6 +305,10 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
                 filename += ".lsp"
 
             self.save_session.emit(filename)
+            return True
+
+        else:
+            return False
 
     def _show_preferences(self):
         prefUi = AppConfigurationDialog(parent=self)
@@ -341,7 +347,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
             if result == QMessageBox.Cancel:
                 return False
             elif result == QMessageBox.Save:
-                self._save()
+                return self._save()
 
         return True
 
