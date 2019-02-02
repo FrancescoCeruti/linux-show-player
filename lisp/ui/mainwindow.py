@@ -289,11 +289,10 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
 
     def _save(self):
         if self.session.session_file == "":
-            saved = self._save_with_name()
-
-        if saved:
+            return self._save_with_name()
+        else:
             self.save_session.emit(self.session.session_file)
-        return saved
+            return True
 
     def _save_with_name(self):
         filename, ok = QFileDialog.getSaveFileName(
@@ -306,7 +305,6 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
 
             self.save_session.emit(filename)
             return True
-
         else:
             return False
 
