@@ -218,6 +218,9 @@ class CueLayout(HasProperties):
     def finalize(self):
         """Destroy all the layout elements"""
 
+    def _remove_cue(self, cue):
+        self.cue_model.remove(cue)
+
     def _remove_cues(self, cues):
         for cue in cues:
             self.cue_model.remove(cue)
