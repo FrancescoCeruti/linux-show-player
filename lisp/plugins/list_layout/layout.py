@@ -251,7 +251,7 @@ class ListLayout(CueLayout):
             if QKeySequence(keys) in self._go_key_sequence:
                 event.accept()
                 self.__go_slot()
-            elif event.key() == Qt.Key_Backspace:
+            elif event.key() == Qt.Key_Delete:
                 cue = self.standby_cue()
                 if cue is not None:
                     self._remove_cue(cue)
