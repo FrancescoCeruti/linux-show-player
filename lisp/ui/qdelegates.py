@@ -271,7 +271,7 @@ class CueSelectionDelegate(LabelDelegate):
 
     def editorEvent(self, event, model, option, index):
         if event.type() == QEvent.MouseButtonDblClick:
-            if self.cue_select.exec_() == QDialog.Accepted:
+            if self.cue_select.exec() == QDialog.Accepted:
                 cue = self.cue_select.selected_cue()
                 if cue is not None:
                     model.setData(index, cue.id, Qt.EditRole)

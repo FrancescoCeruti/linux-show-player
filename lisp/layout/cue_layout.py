@@ -184,7 +184,7 @@ class CueLayout(HasProperties):
             MainActionsHandler.do_action(action)
 
         dialog.onApply.connect(on_apply)
-        dialog.exec_()
+        dialog.exec()
 
     def edit_cues(self, cues):
         if cues:
@@ -198,7 +198,7 @@ class CueLayout(HasProperties):
                 MainActionsHandler.do_action(action)
 
             dialog.onApply.connect(on_apply)
-            dialog.exec_()
+            dialog.exec()
 
     def show_context_menu(self, position):
         menu = self.app.window.menuEdit

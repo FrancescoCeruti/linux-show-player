@@ -44,7 +44,7 @@ class Session(HasInstanceProperties):
         else:
             return "Untitled"
 
-    def path(self):
+    def dir(self):
         """Return the current session-file path."""
         if self.session_file:
             return os.path.dirname(self.session_file)
@@ -54,13 +54,13 @@ class Session(HasInstanceProperties):
     def abs_path(self, rel_path):
         """Return an absolute version of the given path."""
         if not os.path.isabs(rel_path):
-            return os.path.normpath(os.path.join(self.path(), rel_path))
+            return os.path.normpath(os.path.join(self.dir(), rel_path))
 
         return rel_path
 
     def rel_path(self, abs_path):
         """Return a relative (to the session-file) version of the given path."""
-        return os.path.relpath(abs_path, start=self.path())
+        return os.path.relpath(abs_path, start=self.dir())
 
     def finalize(self):
         self.layout.finalize()

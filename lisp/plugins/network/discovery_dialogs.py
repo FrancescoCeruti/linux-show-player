@@ -84,7 +84,7 @@ class HostDiscoveryDialog(QDialog):
         self.progressWheel.startAnimation()
 
         self._discoverer.start()
-        return super().exec_()
+        return super().exec()
 
     def hosts(self):
         return [item.text() for item in self.listWidget.selectedItems()]
@@ -179,7 +179,7 @@ class HostManagementDialog(QDialog):
             self.discovery_port, self.discovery_magic, parent=self
         )
 
-        if dialog.exec_() == dialog.Accepted:
+        if dialog.exec() == dialog.Accepted:
             for host in dialog.hosts():
                 self.addHost(host)
 

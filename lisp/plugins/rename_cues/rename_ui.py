@@ -248,7 +248,7 @@ class RenameUi(QDialog):
                 "at: https://docs.python.org/3/howto/regex.html#regex-howto",
             )
         )
-        msg.exec_()
+        msg.exec()
 
     def onRegexLineChanged(self):
         pattern = self.regexLine.text()

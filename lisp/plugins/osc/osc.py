@@ -41,7 +41,7 @@ class Osc(Plugin):
         )
         # Register the cue
         CueFactory.register_factory(OscCue.__name__, OscCue)
-        app.window.register_simple_cue_menu(
+        app.window.registerSimpleCueMenu(
             OscCue, QT_TRANSLATE_NOOP("CueCategory", "Integration cues")
         )
 

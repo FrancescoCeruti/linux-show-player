@@ -42,7 +42,7 @@ class Midi(Plugin):
         )
         # Register cue
         CueFactory.register_factory(MidiCue.__name__, MidiCue)
-        app.window.register_simple_cue_menu(
+        app.window.registerSimpleCueMenu(
             MidiCue, QT_TRANSLATE_NOOP("CueCategory", "Integration cues")
         )
 

@@ -103,7 +103,7 @@ class SeekCueSettings(SettingsPage):
         self.seekLabel.setText(translate("SeekCue", "Time to reach"))
 
     def select_cue(self):
-        if self.cueDialog.exec_() == self.cueDialog.Accepted:
+        if self.cueDialog.exec() == self.cueDialog.Accepted:
             cue = self.cueDialog.selected_cue()
 
             if cue is not None:

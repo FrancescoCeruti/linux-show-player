@@ -123,7 +123,7 @@ class GstMediaSettings(SettingsPage):
         # Show the dialog
         dialog = GstPipeEditDialog(self._settings.get("pipe", ()), parent=self)
 
-        if dialog.exec_() == dialog.Accepted:
+        if dialog.exec() == dialog.Accepted:
             # Reset the view
             self.listWidget.clear()
             if self._current_page is not None:

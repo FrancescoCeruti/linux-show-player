@@ -33,4 +33,4 @@ class ActionCues(Plugin):
         # Register all the cue in the plugin
         for _, cue_class in load_classes(__package__, path.dirname(__file__)):
             CueFactory.register_factory(cue_class.__name__, cue_class)
-            app.window.register_simple_cue_menu(cue_class, cue_class.Category)
+            app.window.registerSimpleCueMenu(cue_class, cue_class.Category)

@@ -245,7 +245,7 @@ class PresetsDialog(QDialog):
 
     def __add_preset(self):
         dialog = NewPresetDialog(parent=self)
-        if dialog.exec_() == QDialog.Accepted:
+        if dialog.exec() == QDialog.Accepted:
             preset_name = dialog.get_name()
             cue_type = dialog.get_type()
 
@@ -290,7 +290,7 @@ class PresetsDialog(QDialog):
 
                     edit_dialog = CueSettingsDialog(cue_class)
                     edit_dialog.loadSettings(preset)
-                    if edit_dialog.exec_() == edit_dialog.Accepted:
+                    if edit_dialog.exec() == edit_dialog.Accepted:
                         preset.update(edit_dialog.getSettings())
                         try:
                             write_preset(item.text(), preset)

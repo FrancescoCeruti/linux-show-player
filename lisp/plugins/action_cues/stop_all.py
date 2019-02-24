@@ -37,7 +37,9 @@ class StopAll(Cue):
         self.name = translate("CueName", self.Name)
 
     def __start__(self, fade=False):
-        Application().layout.execute_all(action=self.action, quiet=True)
+        Application().layout.execute_all(
+            action=CueAction(self.action), quiet=True
+        )
 
 
 class StopAllSettings(SettingsPage):

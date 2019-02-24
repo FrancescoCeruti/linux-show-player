@@ -109,7 +109,7 @@ class CollectionCueSettings(SettingsPage):
         self.cue_dialog.remove_cue(cue)
 
     def _add_dialog(self):
-        if self.cue_dialog.exec_() == QDialog.Accepted:
+        if self.cue_dialog.exec() == QDialog.Accepted:
             for target in self.cue_dialog.selected_cues():
                 self._add_cue(target, target.CueActions[0])
 

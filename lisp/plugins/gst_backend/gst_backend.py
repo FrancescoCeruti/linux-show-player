@@ -69,7 +69,7 @@ class GstBackend(Plugin, BaseBackend):
         # Register GstMediaCue factory
         CueFactory.register_factory("GstMediaCue", GstCueFactory(tuple()))
         # Add Menu entry
-        self.app.window.register_cue_menu(
+        self.app.window.registerCueMenu(
             translate("GstBackend", "Audio cue (from file)"),
             self._add_uri_audio_cue,
             category="Media cues",
@@ -107,7 +107,7 @@ class GstBackend(Plugin, BaseBackend):
         """Add audio MediaCue(s) form user-selected files"""
         dir = GstBackend.Config.get("mediaLookupDir", "")
         if not os.path.exists(dir):
-            dir = self.app.session.path()
+            dir = self.app.session.dir()
 
         files, _ = QFileDialog.getOpenFileNames(
             self.app.window,

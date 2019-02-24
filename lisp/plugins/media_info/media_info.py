@@ -120,7 +120,7 @@ class MediaInfo(Plugin):
 
             # Show the dialog
             dialog = InfoDialog(self.app.window, info, cue.name)
-            dialog.exec_()
+            dialog.exec()
 
 
 class InfoDialog(QDialog):

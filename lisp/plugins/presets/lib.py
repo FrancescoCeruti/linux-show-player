@@ -19,11 +19,11 @@ import json
 import os
 from zipfile import ZipFile
 
-from lisp import USER_DIRS
+from lisp import app_dirs
 from lisp.core.actions_handler import MainActionsHandler
 from lisp.cues.cue_actions import UpdateCueAction, UpdateCuesAction
 
-PRESETS_DIR = os.path.join(USER_DIRS.user_data_dir, "presets")
+PRESETS_DIR = os.path.join(app_dirs.user_data_dir, "presets")
 
 
 def preset_path(name):
