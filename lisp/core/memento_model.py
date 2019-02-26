@@ -15,6 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+from contextlib import contextmanager
+
 from lisp.core.actions_handler import MainActionsHandler
 from lisp.core.memento_model_actions import (
     AddItemAction,
@@ -55,14 +57,17 @@ class MementoModel(ReadOnlyProxyModel):
         if not self._locked:
             self._handler.do_action(self._remove_action(self, self.model, item))
 
+    def _model_reset(self):
+        """Reset cannot be reverted"""
+
+    @contextmanager
     def lock(self):
         self._locked = True
 
-    def unlock(self):
-        self._locked = False
-
-    def _model_reset(self):
-        """Reset cannot be reverted"""
+        try:
+            yield self
+        finally:
+            self._locked = False
 
 
 class MementoModelAdapter(MementoModel):

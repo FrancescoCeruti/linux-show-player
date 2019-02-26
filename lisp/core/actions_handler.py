@@ -32,19 +32,15 @@ class ActionsHandler:
     UNDO_ACTION_STR = translate("Actions", "Undo: {}")
     REDO_ACTION_STR = translate("Actions", "Redo: {}")
 
-    def __init__(self, stack_size=-1):
+    def __init__(self, stack_size=None):
         super().__init__()
 
         self.action_done = Signal()
         self.action_undone = Signal()
         self.action_redone = Signal()
 
-        self._undo = deque()
-        self._redo = deque()
-
-        if stack_size > 0:
-            self._undo.maxlen = stack_size
-            self._redo.maxlen = stack_size
+        self._undo = deque(maxlen=stack_size)
+        self._redo = deque(maxlen=stack_size)
 
         self._saved_action = None
 

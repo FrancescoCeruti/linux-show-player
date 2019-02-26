@@ -402,7 +402,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
                     "The current session contains changes that have not been saved.",
                 ),
                 QMessageBox.Save | QMessageBox.Discard | QMessageBox.Cancel,
-                self
+                self,
             )
             saveMessageBox.setInformativeText(
                 translate("MainWindow", "Do you want to save them now?")

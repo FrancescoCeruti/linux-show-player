@@ -18,6 +18,7 @@
 from abc import abstractmethod
 
 from lisp.core.model import Model, ModelException
+from lisp.core.util import typename
 
 
 class ABCProxyModel(Model):
