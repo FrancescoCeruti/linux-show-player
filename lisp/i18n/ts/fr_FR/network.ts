@@ -50,22 +50,22 @@
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="156"/>
       <source>Remove selected host</source>
-      <translation type="unfinished">Remove selected host</translation>
+      <translation>Retirer l'hôte sélectionné</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="159"/>
       <source>Remove all host</source>
-      <translation type="unfinished">Remove all host</translation>
+      <translation>Retirer tous les hôtes</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="164"/>
       <source>Address</source>
-      <translation type="unfinished">Address</translation>
+      <translation>Adresse</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="164"/>
       <source>Host IP</source>
-      <translation type="unfinished">Host IP</translation>
+      <translation>IP de l'hôte</translation>
     </message>
   </context>
 </TS>
