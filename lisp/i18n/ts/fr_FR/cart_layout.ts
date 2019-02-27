@@ -91,7 +91,7 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="479"/>
       <source>Every cue in the page will be lost.</source>
-      <translation type="unfinished">Every cue in the page will be lost.</translation>
+      <translation>Toutes les cues dans la page seront perdues.</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="482"/>
