@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/action_cues/__init__.py" line="48"/>
       <source>Registered cue: &quot;{}&quot;</source>
-      <translation type="unfinished">Registered cue: &quot;{}&quot;</translation>
+      <translation>Cue enregistrée: &quot;{}&quot;</translation>
     </message>
   </context>
   <context>
@@ -14,7 +14,7 @@
     <message>
       <location filename="../../../plugins/action_cues/__init__.py" line="66"/>
       <source>Cannot create cue {}</source>
-      <translation type="unfinished">Cannot create cue {}</translation>
+      <translation>Impossible de créer la cue {}</translation>
     </message>
   </context>
   <context>
@@ -32,12 +32,12 @@
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="149"/>
       <source>Cue</source>
-      <translation type="unfinished">Cue</translation>
+      <translation>Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="149"/>
       <source>Action</source>
-      <translation type="unfinished">Action</translation>
+      <translation>Action</translation>
     </message>
   </context>
   <context>
@@ -73,7 +73,7 @@
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="230"/>
       <source>OSC Settings</source>
-      <translation type="unfinished">OSC Settings</translation>
+      <translation>Paramètres OSC</translation>
     </message>
   </context>
   <context>
@@ -116,7 +116,7 @@
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="82"/>
       <source>OSC Cue</source>
-      <translation type="unfinished">OSC Cue</translation>
+      <translation>Cue OSC</translation>
     </message>
   </context>
   <context>
@@ -124,7 +124,7 @@
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="120"/>
       <source>Index</source>
-      <translation type="unfinished">Index</translation>
+      <translation>Index</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="121"/>
@@ -139,17 +139,17 @@
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="127"/>
       <source>Action</source>
-      <translation type="unfinished">Action</translation>
+      <translation>Action</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="66"/>
       <source>No suggestion</source>
-      <translation type="unfinished">No suggestion</translation>
+      <translation>Aucune suggestion</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="129"/>
       <source>Suggested cue name</source>
-      <translation type="unfinished">Suggested cue name</translation>
+      <translation>Nom de cue suggéré</translation>
     </message>
   </context>
   <context>
@@ -157,12 +157,12 @@
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="247"/>
       <source>Type</source>
-      <translation type="unfinished">Type</translation>
+      <translation>Type</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="247"/>
       <source>Argument</source>
-      <translation type="unfinished">Argument</translation>
+      <translation>Argument</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="247"/>
@@ -172,7 +172,7 @@
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="247"/>
       <source>Fade</source>
-      <translation type="unfinished">Fade</translation>
+      <translation>Fondu</translation>
     </message>
   </context>
   <context>
@@ -180,22 +180,22 @@
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="297"/>
       <source>OSC Message</source>
-      <translation type="unfinished">OSC Message</translation>
+      <translation>Message OSC</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="298"/>
       <source>Add</source>
-      <translation type="unfinished">Add</translation>
+      <translation>Ajouter</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="299"/>
       <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
+      <translation>Retirer</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="300"/>
       <source>Test</source>
-      <translation type="unfinished">Test</translation>
+      <translation>Test</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="301"/>
@@ -205,17 +205,17 @@
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="304"/>
       <source>Fade</source>
-      <translation type="unfinished">Fade</translation>
+      <translation>Fondu</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="305"/>
       <source>Time (sec)</source>
-      <translation type="unfinished">Time (sec)</translation>
+      <translation>Temps (sec)</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="306"/>
       <source>Curve</source>
-      <translation type="unfinished">Curve</translation>
+      <translation>Courbe</translation>
     </message>
   </context>
   <context>
@@ -223,17 +223,17 @@
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="146"/>
       <source>Could not parse argument list, nothing sent</source>
-      <translation type="unfinished">Could not parse argument list, nothing sent</translation>
+      <translation>Impossible d'analyser la liste des arguments, rien envoyé</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="189"/>
       <source>Error while parsing arguments, nothing sent</source>
-      <translation type="unfinished">Error while parsing arguments, nothing sent</translation>
+      <translation>Erreur lors de l'analyse des arguments, rien envoyé</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="220"/>
       <source>Error during cue execution.</source>
-      <translation type="unfinished">Error during cue execution.</translation>
+      <translation>Erreur lors de l'exécution de la cue.</translation>
     </message>
   </context>
   <context>
@@ -241,7 +241,7 @@
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="98"/>
       <source>Cue</source>
-      <translation type="unfinished">Cue</translation>
+      <translation>Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="99"/>
@@ -315,7 +315,7 @@
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="198"/>
       <source>Cue</source>
-      <translation type="unfinished">Cue</translation>
+      <translation>Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="199"/>
@@ -343,7 +343,7 @@
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="128"/>
       <source>Error during cue execution.</source>
-      <translation type="unfinished">Error during cue execution.</translation>
+      <translation>Erreur lors de l'exécution de la cue.</translation>
     </message>
   </context>
 </TS>
