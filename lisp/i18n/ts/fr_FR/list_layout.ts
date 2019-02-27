@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="42"/>
       <source>Organize the cues in a list</source>
-      <translation type="unfinished">Organize the cues in a list</translation>
+      <translation>Organiser les cues dans une liste</translation>
     </message>
   </context>
   <context>
@@ -14,17 +14,17 @@
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="46"/>
       <source>SHIFT + Space or Double-Click to edit a cue</source>
-      <translation type="unfinished">SHIFT + Space or Double-Click to edit a cue</translation>
+      <translation>SHIFT + Espace ou Double-Clic pour éditer une cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="49"/>
       <source>To copy cues drag them while pressing CTRL</source>
-      <translation type="unfinished">To copy cues drag them while pressing CTRL</translation>
+      <translation>Pour copier les cues, glissez-les en pressant CTRL</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="52"/>
       <source>To move cues drag them</source>
-      <translation type="unfinished">To move cues drag them</translation>
+      <translation>Pour déplacer les cues, glissez-les</translation>
     </message>
   </context>
   <context>
@@ -40,12 +40,12 @@
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="107"/>
       <source>Default behaviors</source>
-      <translation type="unfinished">Default behaviors</translation>
+      <translation>Comportements par défaut</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="165"/>
       <source>Show playing cues</source>
-      <translation type="unfinished">Show playing cues</translation>
+      <translation>Afficher les cues en cours</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="168"/>
@@ -55,7 +55,7 @@
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="172"/>
       <source>Show accurate time</source>
-      <translation type="unfinished">Show accurate time</translation>
+      <translation>Afficher le temps exact</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="171"/>
@@ -65,7 +65,7 @@
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="175"/>
       <source>Auto-select next cue</source>
-      <translation type="unfinished">Auto-select next cue</translation>
+      <translation>Auto-sélectionner la prochaine cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="115"/>
@@ -80,32 +80,32 @@
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="126"/>
       <source>Stop Cue</source>
-      <translation type="unfinished">Stop Cue</translation>
+      <translation>Arrêter la cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="127"/>
       <source>Pause Cue</source>
-      <translation type="unfinished">Pause Cue</translation>
+      <translation>Mettre la cue en pause</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="128"/>
       <source>Resume Cue</source>
-      <translation type="unfinished">Resume Cue</translation>
+      <translation>Reprendre la cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="129"/>
       <source>Interrupt Cue</source>
-      <translation type="unfinished">Interrupt Cue</translation>
+      <translation>Interrompre la cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="139"/>
       <source>Edit cue</source>
-      <translation type="unfinished">Edit cue</translation>
+      <translation>Éditer la cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="139"/>
       <source>Remove cue</source>
-      <translation type="unfinished">Remove cue</translation>
+      <translation>Retirer la cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="178"/>
@@ -115,22 +115,22 @@
     <message>
       <location filename="../../../plugins/list_layout/control_buttons.py" line="57"/>
       <source>Pause all</source>
-      <translation type="unfinished">Pause all</translation>
+      <translation>Tout mettre en pause</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/control_buttons.py" line="58"/>
       <source>Stop all</source>
-      <translation type="unfinished">Stop all</translation>
+      <translation>Tout arrêter</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/control_buttons.py" line="59"/>
       <source>Interrupt all</source>
-      <translation type="unfinished">Interrupt all</translation>
+      <translation>Tout interrompre</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/control_buttons.py" line="63"/>
       <source>Resume all</source>
-      <translation type="unfinished">Resume all</translation>
+      <translation>Tout reprendre</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/control_buttons.py" line="64"/>
@@ -160,22 +160,22 @@
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="139"/>
       <source>Edit selected</source>
-      <translation type="unfinished">Edit selected</translation>
+      <translation>Éditer la sélection</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="139"/>
       <source>Clone cue</source>
-      <translation type="unfinished">Clone cue</translation>
+      <translation>Cloner la cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="139"/>
       <source>Clone selected</source>
-      <translation type="unfinished">Clone selected</translation>
+      <translation>Cloner la selection</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="139"/>
       <source>Remove selected</source>
-      <translation type="unfinished">Remove selected</translation>
+      <translation>Retirer la selection</translation>
     </message>
   </context>
   <context>
@@ -183,7 +183,7 @@
     <message>
       <location filename="../../../plugins/list_layout/list_view.py" line="73"/>
       <source>Cue</source>
-      <translation type="unfinished">Cue</translation>
+      <translation>Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/list_view.py" line="78"/>
@@ -193,7 +193,7 @@
     <message>
       <location filename="../../../plugins/list_layout/list_view.py" line="81"/>
       <source>Action</source>
-      <translation type="unfinished">Action</translation>
+      <translation>Action</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/list_view.py" line="84"/>
@@ -206,12 +206,12 @@
     <message>
       <location filename="../../../plugins/list_layout/info_panel.py" line="48"/>
       <source>Cue name</source>
-      <translation type="unfinished">Cue name</translation>
+      <translation>Nom de la cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/info_panel.py" line="51"/>
       <source>Cue description</source>
-      <translation type="unfinished">Cue description</translation>
+      <translation>Description de la cue</translation>
     </message>
   </context>
   <context>
