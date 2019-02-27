@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/rename_cues/rename_cues.py" line="37"/>
       <source>Rename Cues</source>
-      <translation type="unfinished">Rename Cues</translation>
+      <translation>Renommer les cues</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="46"/>
