@@ -166,7 +166,7 @@
     <message>
       <location filename="../../../plugins/controller/common.py" line="44"/>
       <source>Resume all cues</source>
-      <translation type="unfinished">Resume all cues</translation>
+      <translation>Reprendre toutes les cues</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="47"/>
