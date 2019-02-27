@@ -112,17 +112,17 @@
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="61"/>
       <source>Start</source>
-      <translation type="unfinished">Start</translation>
+      <translation>Démarrer</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="62"/>
       <source>Stop</source>
-      <translation type="unfinished">Stop</translation>
+      <translation>Arrêter</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="63"/>
       <source>Continue</source>
-      <translation type="unfinished">Continue</translation>
+      <translation>Continuer</translation>
     </message>
   </context>
   <context>
