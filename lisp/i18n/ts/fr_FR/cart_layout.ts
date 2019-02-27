@@ -96,17 +96,17 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="482"/>
       <source>Are you sure to continue?</source>
-      <translation type="unfinished">Are you sure to continue?</translation>
+      <translation>Êtes-vous sûr de vouloir continuer?</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="90"/>
       <source>Number of columns:</source>
-      <translation type="unfinished">Number of columns:</translation>
+      <translation>Nombre de colonnes:</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="91"/>
       <source>Number of rows:</source>
-      <translation type="unfinished">Number of rows:</translation>
+      <translation>Nombre de lignes:</translation>
     </message>
   </context>
   <context>
@@ -114,7 +114,7 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="44"/>
       <source>Organize cues in grid like pages</source>
-      <translation type="unfinished">Organize cues in grid like pages</translation>
+      <translation>Organiser les cues en grille comme les pages</translation>
     </message>
   </context>
   <context>
@@ -122,27 +122,27 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="48"/>
       <source>Click a cue to run it</source>
-      <translation type="unfinished">Click a cue to run it</translation>
+      <translation>Cliquer sur une cue pour l'exécuter</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="49"/>
       <source>SHIFT + Click to edit a cue</source>
-      <translation type="unfinished">SHIFT + Click to edit a cue</translation>
+      <translation>SHIFT + Clic pour éditer une cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="50"/>
       <source>CTRL + Click to select a cue</source>
-      <translation type="unfinished">CTRL + Click to select a cue</translation>
+      <translation>CTRL + Clic pour sélectionner une cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="51"/>
       <source>To copy cues drag them while pressing CTRL</source>
-      <translation type="unfinished">To copy cues drag them while pressing CTRL</translation>
+      <translation>Pour copier les cues, glissez-les en pressant CTLR</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="54"/>
       <source>To move cues drag them while pressing SHIFT</source>
-      <translation type="unfinished">To move cues drag them while pressing SHIFT</translation>
+      <translation>Pour déplacer les cues, glissez-les en pressant SHIFT</translation>
     </message>
   </context>
   <context>
@@ -158,22 +158,22 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="148"/>
       <source>Edit cue</source>
-      <translation type="unfinished">Edit cue</translation>
+      <translation>Éditer la cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="148"/>
       <source>Edit selected cues</source>
-      <translation type="unfinished">Edit selected cues</translation>
+      <translation>Éditer les cues sélectionnées</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="148"/>
       <source>Remove cue</source>
-      <translation type="unfinished">Remove cue</translation>
+      <translation>Retirer la cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="148"/>
       <source>Remove selected cues</source>
-      <translation type="unfinished">Remove selected cues</translation>
+      <translation>Retirer les cues sélectionnées</translation>
     </message>
   </context>
   <context>
