@@ -40,7 +40,7 @@
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="80"/>
       <source>Replace HOURS by a static track number</source>
-      <translation>Remplace HOURS par un nombre de piste statique</translation>
+      <translation>Remplacer HOURS par un nombre de piste statique</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="88"/>
