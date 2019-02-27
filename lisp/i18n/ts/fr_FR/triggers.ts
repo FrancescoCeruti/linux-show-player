@@ -52,12 +52,12 @@
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="148"/>
       <source>Cue</source>
-      <translation type="unfinished">Cue</translation>
+      <translation>Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="148"/>
       <source>Action</source>
-      <translation type="unfinished">Action</translation>
+      <translation>Action</translation>
     </message>
   </context>
 </TS>
