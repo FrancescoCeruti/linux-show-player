@@ -14,7 +14,7 @@
     <message>
       <location filename="../../../plugins/osc/osc_server.py" line="99"/>
       <source>Cannot start OSC sever</source>
-      <translation type="unfinished">Cannot start OSC sever</translation>
+      <translation>Impossible de démarrer le serveur OSC</translation>
     </message>
   </context>
   <context>
@@ -27,7 +27,7 @@
     <message>
       <location filename="../../../plugins/osc/osc_server.py" line="111"/>
       <source>OSC server stopped</source>
-      <translation type="unfinished">OSC server stopped</translation>
+      <translation>Serveur OSC arrêté</translation>
     </message>
   </context>
   <context>
@@ -35,22 +35,22 @@
     <message>
       <location filename="../../../plugins/osc/osc_settings.py" line="43"/>
       <source>OSC Settings</source>
-      <translation type="unfinished">OSC Settings</translation>
+      <translation>Paramètres OSC</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_settings.py" line="50"/>
       <source>Input Port:</source>
-      <translation type="unfinished">Input Port:</translation>
+      <translation>Port d'entrée:</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_settings.py" line="59"/>
       <source>Output Port:</source>
-      <translation type="unfinished">Output Port:</translation>
+      <translation>Port de sortie:</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_settings.py" line="68"/>
       <source>Hostname:</source>
-      <translation type="unfinished">Hostname:</translation>
+      <translation>Nom d'hôte:</translation>
     </message>
   </context>
   <context>
@@ -58,7 +58,7 @@
     <message>
       <location filename="../../../plugins/osc/osc_settings.py" line="34"/>
       <source>OSC settings</source>
-      <translation type="unfinished">OSC settings</translation>
+      <translation>Paramètres OSC</translation>
     </message>
   </context>
 </TS>
