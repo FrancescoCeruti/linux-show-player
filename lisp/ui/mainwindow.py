@@ -58,6 +58,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
     def __init__(self, conf, title="Linux Show Player", **kwargs):
         super().__init__(**kwargs)
         self.setMinimumSize(500, 400)
+        self.setGeometry(qApp.desktop().availableGeometry(self))
         self.setCentralWidget(QWidget())
         self.centralWidget().setLayout(QVBoxLayout())
         self.centralWidget().layout().setContentsMargins(5, 5, 5, 5)

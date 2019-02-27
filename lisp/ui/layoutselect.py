@@ -99,4 +99,4 @@ class LayoutSelect(QDialog):
         path = self.application.window.getOpenSessionFile()
         if path is not None:
             self.sessionPath = path
-            self.accepted()
+            self.accept()

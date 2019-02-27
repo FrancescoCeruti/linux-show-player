@@ -71,7 +71,7 @@ class MementoModel(ReadOnlyProxyModel):
 
 
 class MementoModelAdapter(MementoModel):
-    """Extension of the MementoModel that use a ModelAdapter as a base-model"""
+    """Extension of the MementoModel that can handle ModelAdapter(s)."""
 
     def __init__(self, model_adapter, handler=None):
         super().__init__(model_adapter, handler)

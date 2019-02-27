@@ -190,7 +190,7 @@ class Cue(HasProperties):
         if action == CueAction.DoNothing:
             return
 
-        if action == self.CueActions:
+        if action in self.CueActions:
             if action == CueAction.Interrupt:
                 self.interrupt()
             elif action == CueAction.FadeOutInterrupt:
