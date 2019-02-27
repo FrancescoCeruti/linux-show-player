@@ -6,12 +6,12 @@
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="81"/>
       <source>Default behaviors</source>
-      <translation type="unfinished">Default behaviors</translation>
+      <translation>Comportements par défaut</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="196"/>
       <source>Countdown mode</source>
-      <translation type="unfinished">Countdown mode</translation>
+      <translation>Compte à rebours</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="199"/>
@@ -26,67 +26,67 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="204"/>
       <source>Show accurate time</source>
-      <translation type="unfinished">Show accurate time</translation>
+      <translation>Afficher le temps exact</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="203"/>
       <source>Show volume</source>
-      <translation type="unfinished">Show volume</translation>
+      <translation>Afficher le volume</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="89"/>
       <source>Grid size</source>
-      <translation type="unfinished">Grid size</translation>
+      <translation>Taille de la grille</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="167"/>
       <source>Play</source>
-      <translation type="unfinished">Play</translation>
+      <translation>Lecture</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="167"/>
       <source>Pause</source>
-      <translation type="unfinished">Pause</translation>
+      <translation>Pause</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="167"/>
       <source>Stop</source>
-      <translation type="unfinished">Stop</translation>
+      <translation>Stop</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="180"/>
       <source>Reset volume</source>
-      <translation type="unfinished">Reset volume</translation>
+      <translation>Réinitialisation du volume</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="191"/>
       <source>Add page</source>
-      <translation type="unfinished">Add page</translation>
+      <translation>Ajouter une page</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="239"/>
       <source>Add pages</source>
-      <translation type="unfinished">Add pages</translation>
+      <translation>Ajouter des pages</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="193"/>
       <source>Remove current page</source>
-      <translation type="unfinished">Remove current page</translation>
+      <translation>Retirer la page actuelle</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="239"/>
       <source>Number of Pages:</source>
-      <translation type="unfinished">Number of Pages:</translation>
+      <translation>Nombre de pages:</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="281"/>
       <source>Page {number}</source>
-      <translation type="unfinished">Page {number}</translation>
+      <translation>Page {number}</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="478"/>
       <source>Warning</source>
-      <translation type="unfinished">Warning</translation>
+      <translation>Attention</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="479"/>
