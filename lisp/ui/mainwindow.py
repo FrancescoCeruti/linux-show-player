@@ -18,7 +18,14 @@
 import logging
 import os
 from PyQt5 import QtCore
-from PyQt5.QtCore import pyqtSignal
+from PyQt5.QtCore import (
+		pyqtSignal,
+		QDate,
+		QTime,
+		QDateTime,
+		Qt,
+		QTimer
+)
 from PyQt5.QtGui import QKeySequence
 from PyQt5.QtWidgets import (
     QMainWindow,
@@ -31,6 +38,9 @@ from PyQt5.QtWidgets import (
     QMessageBox,
     QVBoxLayout,
     QWidget,
+    QApplication,
+    QLabel,
+    QVBoxLayout
 )
 from functools import partial
 
@@ -324,11 +334,27 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
                 filename += ".lsp"
 
             return filename
+            
+    def _updateTime(self):
+    		time = QTime.currentTime()
+    		text = time.toString('hh:mm')
+    		self.label.setText(text)
 
     def setFullScreen(self, enable):
+    		timer = QTimer(self)
         if enable:
+        		self.label = QLabel('')
+        		self._updateTime()
+        		self.centralWidget().layout().addWidget(self.label)
+        		
+        		timer.timeout.connect(self._updateTime)
+        		timer.start(1000)
+        		self._updateTime()
+        		
             self.showFullScreen()
         else:
+        		self.centralWidget().layout().removeWidget(self.label)
+        		timer.stop()
             self.showMaximized()
 
     def __simpleCueInsert(self, cueClass):
