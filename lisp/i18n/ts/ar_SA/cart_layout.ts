@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="81"/>
       <source>Default behaviors</source>
-      <translation type="unfinished">Default behaviors</translation>
+      <translation>السلوك الافتراضي</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="196"/>
@@ -36,7 +36,7 @@
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="89"/>
       <source>Grid size</source>
-      <translation type="unfinished">Grid size</translation>
+      <translation>حجم الشبكة</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="167"/>
@@ -101,12 +101,12 @@
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="90"/>
       <source>Number of columns:</source>
-      <translation type="unfinished">Number of columns:</translation>
+      <translation>عدد الأعمدة:</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="91"/>
       <source>Number of rows:</source>
-      <translation type="unfinished">Number of rows:</translation>
+      <translation>عدد الصفوف:</translation>
     </message>
   </context>
   <context>
