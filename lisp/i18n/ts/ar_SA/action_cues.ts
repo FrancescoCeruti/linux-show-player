@@ -91,7 +91,7 @@
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="54"/>
       <source>Volume Control</source>
-      <translation type="unfinished">Volume Control</translation>
+      <translation>التحكم بمستوى الصوت</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="40"/>
@@ -106,7 +106,7 @@
     <message>
       <location filename="../../../plugins/action_cues/stop_all.py" line="30"/>
       <source>Stop-All</source>
-      <translation type="unfinished">Stop-All</translation>
+      <translation>إيقاف الجميع</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="39"/>
