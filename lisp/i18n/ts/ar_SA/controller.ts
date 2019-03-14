@@ -199,12 +199,12 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="73"/>
       <source>Type</source>
-      <translation type="unfinished">Type</translation>
+      <translation>النوع</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="73"/>
       <source>Argument</source>
-      <translation type="unfinished">Argument</translation>
+      <translation>الحجج</translation>
     </message>
   </context>
   <context>
