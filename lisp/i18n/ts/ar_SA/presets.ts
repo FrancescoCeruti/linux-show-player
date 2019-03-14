@@ -69,12 +69,12 @@
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="227"/>
       <source>Rename</source>
-      <translation type="unfinished">Rename</translation>
+      <translation>إعادة التسمية</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="228"/>
       <source>Edit</source>
-      <translation type="unfinished">Edit</translation>
+      <translation>تعديل</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="229"/>
