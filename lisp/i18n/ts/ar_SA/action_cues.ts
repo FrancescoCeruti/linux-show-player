@@ -284,7 +284,7 @@
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="58"/>
       <source>Seek Settings</source>
-      <translation type="unfinished">Seek Settings</translation>
+      <translation>البحث عن إعدادات</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="59"/>
