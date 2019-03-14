@@ -361,7 +361,7 @@
     <message>
       <location filename="../../../ui/widgets/fades.py" line="96"/>
       <source>Duration (sec):</source>
-      <translation type="unfinished">Duration (sec):</translation>
+      <translation>Durée (sec):</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/fades.py" line="97"/>
@@ -425,7 +425,7 @@
     <message>
       <location filename="../../../ui/settings/app_pages/layouts.py" line="57"/>
       <source>Resume All</source>
-      <translation type="unfinished">Resume All</translation>
+      <translation>Reprendre tout</translation>
     </message>
   </context>
   <context>
@@ -453,7 +453,7 @@
     <message>
       <location filename="../../../ui/logging/dialog.py" line="86"/>
       <source>Show details</source>
-      <translation type="unfinished">Show details</translation>
+      <translation>Afficher les détails</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/viewer.py" line="55"/>
@@ -488,17 +488,17 @@
     <message>
       <location filename="../../../ui/logging/common.py" line="40"/>
       <source>Level</source>
-      <translation type="unfinished">Level</translation>
+      <translation>Niveau</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="41"/>
       <source>Message</source>
-      <translation type="unfinished">Message</translation>
+      <translation>Message</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="42"/>
       <source>Function</source>
-      <translation type="unfinished">Function</translation>
+      <translation>Fonction</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="43"/>
@@ -508,7 +508,7 @@
     <message>
       <location filename="../../../ui/logging/common.py" line="44"/>
       <source>File name</source>
-      <translation type="unfinished">File name</translation>
+      <translation>Nom du fichier</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="45"/>
@@ -518,17 +518,17 @@
     <message>
       <location filename="../../../ui/logging/common.py" line="46"/>
       <source>Module</source>
-      <translation type="unfinished">Module</translation>
+      <translation>Module</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="47"/>
       <source>Process ID</source>
-      <translation type="unfinished">Process ID</translation>
+      <translation>ID du processus</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="48"/>
       <source>Process name</source>
-      <translation type="unfinished">Process name</translation>
+      <translation>Nom du processus</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="49"/>
