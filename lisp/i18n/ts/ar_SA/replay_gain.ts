@@ -16,12 +16,12 @@
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="62"/>
       <source>Reset all</source>
-      <translation type="unfinished">Reset all</translation>
+      <translation>إعادة كل شيء إلى الوضع العادى</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="67"/>
       <source>Reset selected</source>
-      <translation type="unfinished">Reset selected</translation>
+      <translation>إعادة المحدد إلى الوضع العادى</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/gain_ui.py" line="113"/>
@@ -59,7 +59,7 @@
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="249"/>
       <source>Discarded gain for: {}</source>
-      <translation type="unfinished">Discarded gain for: {}</translation>
+      <translation>تجاهل الكسب: {}</translation>
     </message>
   </context>
   <context>
