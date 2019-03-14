@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/osc/osc_server.py" line="119"/>
       <source>Message from {} -&gt; path: &quot;{}&quot; args: {}</source>
-      <translation type="unfinished">Message from {} -&gt; path: &quot;{}&quot; args: {}</translation>
+      <translation>رسالة من {}--المسار&gt;: &quot; args&quot; {}: {}</translation>
     </message>
   </context>
   <context>
