@@ -37,7 +37,7 @@
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="149"/>
       <source>Action</source>
-      <translation type="unfinished">Action</translation>
+      <translation>الإجراءات</translation>
     </message>
   </context>
   <context>
@@ -144,7 +144,7 @@
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="66"/>
       <source>No suggestion</source>
-      <translation type="unfinished">No suggestion</translation>
+      <translation>لا توجد اقتراحات</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="129"/>
@@ -185,12 +185,12 @@
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="298"/>
       <source>Add</source>
-      <translation type="unfinished">Add</translation>
+      <translation>أضف</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="299"/>
       <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
+      <translation>احذف</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="300"/>
@@ -210,7 +210,7 @@
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="305"/>
       <source>Time (sec)</source>
-      <translation type="unfinished">Time (sec)</translation>
+      <translation>الزمن (ثانية)</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="306"/>
@@ -223,12 +223,12 @@
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="146"/>
       <source>Could not parse argument list, nothing sent</source>
-      <translation type="unfinished">Could not parse argument list, nothing sent</translation>
+      <translation>لا يمكن تحليل قائمة الحجج، لم يتم إرسال شيء</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="189"/>
       <source>Error while parsing arguments, nothing sent</source>
-      <translation type="unfinished">Error while parsing arguments, nothing sent</translation>
+      <translation>حدث خطأ أثناء تحليل الحجج، لم يتم إرسال شيء</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="220"/>
@@ -246,12 +246,12 @@
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="99"/>
       <source>Click to select</source>
-      <translation type="unfinished">Click to select</translation>
+      <translation>إضغط من أجل الإختيار</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="100"/>
       <source>Not selected</source>
-      <translation type="unfinished">Not selected</translation>
+      <translation>لم يتم اختياره</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="101"/>
@@ -269,7 +269,7 @@
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="103"/>
       <source>Command</source>
-      <translation type="unfinished">Command</translation>
+      <translation>الأوامر</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/midi_cue.py" line="52"/>
@@ -279,7 +279,7 @@
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="138"/>
       <source>Volume Settings</source>
-      <translation type="unfinished">Volume Settings</translation>
+      <translation>إعدادات مستوى الصوت</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="58"/>
@@ -325,7 +325,7 @@
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="200"/>
       <source>Not selected</source>
-      <translation type="unfinished">Not selected</translation>
+      <translation>لم يتم اختياره</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="201"/>
