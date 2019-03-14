@@ -6,22 +6,22 @@
     <message>
       <location filename="../../../plugins/triggers/triggers_handler.py" line="27"/>
       <source>Started</source>
-      <translation type="unfinished">Started</translation>
+      <translation>بدأت</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_handler.py" line="28"/>
       <source>Paused</source>
-      <translation type="unfinished">Paused</translation>
+      <translation>متوقف مؤقتا</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_handler.py" line="29"/>
       <source>Stopped</source>
-      <translation type="unfinished">Stopped</translation>
+      <translation>توقفت</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_handler.py" line="30"/>
       <source>Ended</source>
-      <translation type="unfinished">Ended</translation>
+      <translation>انتهت</translation>
     </message>
   </context>
   <context>
@@ -29,7 +29,7 @@
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="42"/>
       <source>Triggers</source>
-      <translation type="unfinished">Triggers</translation>
+      <translation>المشغلات</translation>
     </message>
   </context>
   <context>
@@ -47,17 +47,17 @@
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="148"/>
       <source>Trigger</source>
-      <translation type="unfinished">Trigger</translation>
+      <translation>مشغل</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="148"/>
       <source>Cue</source>
-      <translation type="unfinished">Cue</translation>
+      <translation>Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="148"/>
       <source>Action</source>
-      <translation type="unfinished">Action</translation>
+      <translation>الإجراءات</translation>
     </message>
   </context>
 </TS>
