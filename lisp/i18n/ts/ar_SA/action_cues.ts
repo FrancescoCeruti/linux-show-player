@@ -45,7 +45,7 @@
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="129"/>
       <source>Command</source>
-      <translation type="unfinished">Command</translation>
+      <translation>الأوامر</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="130"/>
@@ -129,7 +129,7 @@
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="121"/>
       <source>Use a relative index</source>
-      <translation type="unfinished">Use a relative index</translation>
+      <translation>استخدام مؤشر نسبي</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="124"/>
@@ -289,7 +289,7 @@
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="59"/>
       <source>Edit Collection</source>
-      <translation type="unfinished">Edit Collection</translation>
+      <translation>تعديل المجموعة</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="64"/>
@@ -320,7 +320,7 @@
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="199"/>
       <source>Click to select</source>
-      <translation type="unfinished">Click to select</translation>
+      <translation>إضغط من أجل الإختيار</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="200"/>
@@ -335,7 +335,7 @@
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="202"/>
       <source>Fade</source>
-      <translation type="unfinished">Fade</translation>
+      <translation>تلاشي</translation>
     </message>
   </context>
   <context>
