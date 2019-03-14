@@ -37,12 +37,12 @@
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="63"/>
       <source>Add</source>
-      <translation type="unfinished">Add</translation>
+      <translation>أضف</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="68"/>
       <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
+      <translation>احذف</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="148"/>
