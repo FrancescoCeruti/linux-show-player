@@ -11,22 +11,22 @@
     <message>
       <location filename="../../../plugins/media_info/media_info.py" line="69"/>
       <source>No info to display</source>
-      <translation type="unfinished">No info to display</translation>
+      <translation>لا توجد معلومات لعرضها</translation>
     </message>
     <message>
       <location filename="../../../plugins/media_info/media_info.py" line="139"/>
       <source>Info</source>
-      <translation type="unfinished">Info</translation>
+      <translation>معلومات</translation>
     </message>
     <message>
       <location filename="../../../plugins/media_info/media_info.py" line="139"/>
       <source>Value</source>
-      <translation type="unfinished">Value</translation>
+      <translation>القيمة</translation>
     </message>
     <message>
       <location filename="../../../plugins/media_info/media_info.py" line="69"/>
       <source>Warning</source>
-      <translation type="unfinished">Warning</translation>
+      <translation>تحذير</translation>
     </message>
   </context>
 </TS>
