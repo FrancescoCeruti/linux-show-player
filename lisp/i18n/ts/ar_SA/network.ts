@@ -30,27 +30,27 @@
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="72"/>
       <source>Host discovery</source>
-      <translation type="unfinished">Host discovery</translation>
+      <translation>اكتشاف المضيف</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="149"/>
       <source>Manage hosts</source>
-      <translation type="unfinished">Manage hosts</translation>
+      <translation>إدارة المضيفين</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="150"/>
       <source>Discover hosts</source>
-      <translation type="unfinished">Discover hosts</translation>
+      <translation>اكتشف المضيفين</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="153"/>
       <source>Manually add a host</source>
-      <translation type="unfinished">Manually add a host</translation>
+      <translation>إضافة مضيف يدوياً</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="156"/>
       <source>Remove selected host</source>
-      <translation type="unfinished">Remove selected host</translation>
+      <translation>إزالة المضيف المحدد</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="159"/>
