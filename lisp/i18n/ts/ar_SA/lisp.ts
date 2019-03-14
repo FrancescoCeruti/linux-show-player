@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../ui/about.py" line="60"/>
       <source>Authors</source>
-      <translation type="unfinished">Authors</translation>
+      <translation>المؤلفون</translation>
     </message>
     <message>
       <location filename="../../../ui/about.py" line="60"/>
@@ -16,12 +16,12 @@
     <message>
       <location filename="../../../ui/about.py" line="60"/>
       <source>Translators</source>
-      <translation type="unfinished">Translators</translation>
+      <translation>المترجمون</translation>
     </message>
     <message>
       <location filename="../../../ui/about.py" line="88"/>
       <source>About Linux Show Player</source>
-      <translation type="unfinished">About Linux Show Player</translation>
+      <translation>عن Linux Show Player</translation>
     </message>
   </context>
   <context>
@@ -29,7 +29,7 @@
     <message>
       <location filename="../../../ui/about.py" line="118"/>
       <source>Web site</source>
-      <translation type="unfinished">Web site</translation>
+      <translation>موقع ويب</translation>
     </message>
     <message>
       <location filename="../../../ui/about.py" line="118"/>
@@ -62,12 +62,12 @@
     <message>
       <location filename="../../../core/actions_handler.py" line="32"/>
       <source>Undo: {}</source>
-      <translation type="unfinished">Undo: {}</translation>
+      <translation>التراجع: {}</translation>
     </message>
     <message>
       <location filename="../../../core/actions_handler.py" line="33"/>
       <source>Redo: {}</source>
-      <translation type="unfinished">Redo: {}</translation>
+      <translation>الإعادة: {}</translation>
     </message>
   </context>
   <context>
@@ -135,22 +135,22 @@
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="25"/>
       <source>Default</source>
-      <translation type="unfinished">Default</translation>
+      <translation>الطبيعي</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="35"/>
       <source>Pause</source>
-      <translation type="unfinished">Pause</translation>
+      <translation>إيقاف مؤقت</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="33"/>
       <source>Start</source>
-      <translation type="unfinished">Start</translation>
+      <translation>بدء</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="36"/>
       <source>Stop</source>
-      <translation type="unfinished">Stop</translation>
+      <translation>إيقاف</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="26"/>
@@ -180,12 +180,12 @@
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="34"/>
       <source>Resume</source>
-      <translation type="unfinished">Resume</translation>
+      <translation>إستكمال</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="37"/>
       <source>Do Nothing</source>
-      <translation type="unfinished">Do Nothing</translation>
+      <translation>لا تفعل شيئا</translation>
     </message>
   </context>
   <context>
@@ -231,12 +231,12 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="101"/>
       <source>Color</source>
-      <translation type="unfinished">Color</translation>
+      <translation>اللون</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="102"/>
       <source>Select background color</source>
-      <translation type="unfinished">Select background color</translation>
+      <translation>اختر لون الخلفية</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="105"/>
@@ -257,7 +257,7 @@
     <message>
       <location filename="../../../ui/widgets/cue_next_actions.py" line="26"/>
       <source>Do Nothing</source>
-      <translation type="unfinished">Do Nothing</translation>
+      <translation>لا تفعل شيئا</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_next_actions.py" line="27"/>
