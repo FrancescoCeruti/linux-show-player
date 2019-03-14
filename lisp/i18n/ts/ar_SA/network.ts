@@ -60,7 +60,7 @@
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="164"/>
       <source>Address</source>
-      <translation type="unfinished">Address</translation>
+      <translation>العنوان</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="164"/>
