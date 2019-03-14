@@ -6,12 +6,12 @@
     <message>
       <location filename="../../../plugins/synchronizer/synchronizer.py" line="43"/>
       <source>Synchronization</source>
-      <translation type="unfinished">Synchronization</translation>
+      <translation>المزامنة</translation>
     </message>
     <message>
       <location filename="../../../plugins/synchronizer/synchronizer.py" line="46"/>
       <source>Manage connected peers</source>
-      <translation type="unfinished">Manage connected peers</translation>
+      <translation>إدارة الأقران متصل</translation>
     </message>
     <message>
       <location filename="../../../plugins/synchronizer/synchronizer.py" line="52"/>
