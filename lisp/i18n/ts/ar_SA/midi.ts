@@ -24,7 +24,7 @@
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="68"/>
       <source>Note</source>
-      <translation type="unfinished">Note</translation>
+      <translation>ملاحظة</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="69"/>
@@ -34,12 +34,12 @@
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="70"/>
       <source>Control</source>
-      <translation type="unfinished">Control</translation>
+      <translation>التحكم</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="71"/>
       <source>Program</source>
-      <translation type="unfinished">Program</translation>
+      <translation>البرنامج</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="72"/>
@@ -49,7 +49,7 @@
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="73"/>
       <source>Song</source>
-      <translation type="unfinished">Song</translation>
+      <translation>الأغنية</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="74"/>
