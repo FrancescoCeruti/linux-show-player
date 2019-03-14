@@ -22,7 +22,7 @@
     <message>
       <location filename="../../../plugins/network/api/__init__.py" line="14"/>
       <source>New end-point: {}</source>
-      <translation type="unfinished">New end-point: {}</translation>
+      <translation>نقطة النهاية الجديدة: {}</translation>
     </message>
   </context>
   <context>
@@ -55,7 +55,7 @@
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="159"/>
       <source>Remove all host</source>
-      <translation type="unfinished">Remove all host</translation>
+      <translation>إزالة جميع المضيفين</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="164"/>
@@ -65,7 +65,7 @@
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="164"/>
       <source>Host IP</source>
-      <translation type="unfinished">Host IP</translation>
+      <translation>IP المضيف</translation>
     </message>
   </context>
 </TS>
