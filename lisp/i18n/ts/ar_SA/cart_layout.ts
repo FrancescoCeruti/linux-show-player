@@ -86,7 +86,7 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="478"/>
       <source>Warning</source>
-      <translation type="unfinished">Warning</translation>
+      <translation>تحذير</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="479"/>
@@ -96,7 +96,7 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="482"/>
       <source>Are you sure to continue?</source>
-      <translation type="unfinished">Are you sure to continue?</translation>
+      <translation>هل أنت متأكد من أن تواصل؟</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="90"/>
