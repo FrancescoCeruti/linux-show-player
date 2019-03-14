@@ -39,7 +39,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_dynamic.py" line="105"/>
       <source>Type</source>
-      <translation type="unfinished">Type</translation>
+      <translation>النوع</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_dynamic.py" line="106"/>
@@ -72,12 +72,12 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_pan.py" line="76"/>
       <source>Left</source>
-      <translation type="unfinished">Left</translation>
+      <translation>اليسار</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_pan.py" line="78"/>
       <source>Right</source>
-      <translation type="unfinished">Right</translation>
+      <translation>اليمين</translation>
     </message>
   </context>
   <context>
