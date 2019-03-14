@@ -14,7 +14,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/keyboard.py" line="53"/>
       <source>Key</source>
-      <translation type="unfinished">Key</translation>
+      <translation>مفتاح</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/keyboard.py" line="53"/>
@@ -24,7 +24,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/keyboard.py" line="76"/>
       <source>Shortcuts</source>
-      <translation type="unfinished">Shortcuts</translation>
+      <translation>الاختصارات</translation>
     </message>
   </context>
   <context>
@@ -37,12 +37,12 @@
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="59"/>
       <source>Type</source>
-      <translation type="unfinished">Type</translation>
+      <translation>النوع</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="59"/>
       <source>Channel</source>
-      <translation type="unfinished">Channel</translation>
+      <translation>القناة</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="59"/>
