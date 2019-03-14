@@ -11,7 +11,7 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="196"/>
       <source>Countdown mode</source>
-      <translation type="unfinished">Countdown mode</translation>
+      <translation>وضع العد التنازلي</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="199"/>
@@ -41,17 +41,17 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="167"/>
       <source>Play</source>
-      <translation type="unfinished">Play</translation>
+      <translation>قراءة</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="167"/>
       <source>Pause</source>
-      <translation type="unfinished">Pause</translation>
+      <translation>إيقاف مؤقت</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="167"/>
       <source>Stop</source>
-      <translation type="unfinished">Stop</translation>
+      <translation>إيقاف</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="180"/>
@@ -61,27 +61,27 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="191"/>
       <source>Add page</source>
-      <translation type="unfinished">Add page</translation>
+      <translation>إضافة صفحة</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="239"/>
       <source>Add pages</source>
-      <translation type="unfinished">Add pages</translation>
+      <translation>إضافة صفحات</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="193"/>
       <source>Remove current page</source>
-      <translation type="unfinished">Remove current page</translation>
+      <translation>إزالة الصفحة الحالية</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="239"/>
       <source>Number of Pages:</source>
-      <translation type="unfinished">Number of Pages:</translation>
+      <translation>عدد الصفحات:</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="281"/>
       <source>Page {number}</source>
-      <translation type="unfinished">Page {number}</translation>
+      <translation>الصفحة{number}</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="478"/>
