@@ -11,7 +11,7 @@
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="57"/>
       <source>Calculate</source>
-      <translation type="unfinished">Calculate</translation>
+      <translation>إحسب</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="62"/>
