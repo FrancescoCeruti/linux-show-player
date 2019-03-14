@@ -64,7 +64,7 @@
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="226"/>
       <source>Add</source>
-      <translation type="unfinished">Add</translation>
+      <translation>أضف</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="227"/>
@@ -79,7 +79,7 @@
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="229"/>
       <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
+      <translation>احذف</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="234"/>
@@ -89,12 +89,12 @@
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="237"/>
       <source>Import</source>
-      <translation type="unfinished">Import</translation>
+      <translation>تحميل</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="320"/>
       <source>Warning</source>
-      <translation type="unfinished">Warning</translation>
+      <translation>تحذير</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="275"/>
