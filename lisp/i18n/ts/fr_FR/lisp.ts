@@ -39,7 +39,7 @@
     <message>
       <location filename="../../../ui/about.py" line="133"/>
       <source>Info</source>
-      <translation type="unfinished">Info</translation>
+      <translation>Informations</translation>
     </message>
     <message>
       <location filename="../../../ui/about.py" line="138"/>
@@ -54,7 +54,7 @@
     <message>
       <location filename="../../../ui/about.py" line="118"/>
       <source>Discussion</source>
-      <translation type="unfinished">Discussion</translation>
+      <translation>Discussion</translation>
     </message>
   </context>
   <context>
@@ -98,12 +98,12 @@
     <message>
       <location filename="../../../ui/settings/app_pages/general.py" line="92"/>
       <source>UI theme:</source>
-      <translation type="unfinished">UI theme:</translation>
+      <translation>Thème UI :</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/general.py" line="93"/>
       <source>Icons theme:</source>
-      <translation type="unfinished">Icons theme:</translation>
+      <translation>Thème des icônes :</translation>
     </message>
   </context>
   <context>
@@ -119,7 +119,7 @@
     <message>
       <location filename="../../../core/configuration.py" line="220"/>
       <source>Configuration written at {}</source>
-      <translation type="unfinished">Configuration written at {}</translation>
+      <translation>Configuration écrite à {}</translation>
     </message>
   </context>
   <context>
@@ -127,7 +127,7 @@
     <message>
       <location filename="../../../core/configuration.py" line="243"/>
       <source>New configuration installed at {}</source>
-      <translation type="unfinished">New configuration installed at {}</translation>
+      <translation>Nouvelle configuration installée à {}</translation>
     </message>
   </context>
   <context>
@@ -140,7 +140,7 @@
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="35"/>
       <source>Pause</source>
-      <translation type="unfinished">Pause</translation>
+      <translation>Suspendre</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="33"/>
@@ -150,7 +150,7 @@
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="36"/>
       <source>Stop</source>
-      <translation type="unfinished">Stop</translation>
+      <translation>Arrêter</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="26"/>
@@ -463,22 +463,22 @@
     <message>
       <location filename="../../../ui/logging/common.py" line="22"/>
       <source>Info</source>
-      <translation type="unfinished">Info</translation>
+      <translation>Informations</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="25"/>
       <source>Critical</source>
-      <translation type="unfinished">Critical</translation>
+      <translation>Critique</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="37"/>
       <source>Time</source>
-      <translation type="unfinished">Time</translation>
+      <translation>Temps</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="38"/>
       <source>Milliseconds</source>
-      <translation type="unfinished">Milliseconds</translation>
+      <translation>Millisecondes</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="39"/>
