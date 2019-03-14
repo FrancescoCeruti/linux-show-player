@@ -22,12 +22,12 @@
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="83"/>
       <source>Add</source>
-      <translation type="unfinished">Add</translation>
+      <translation>أضف</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="88"/>
       <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
+      <translation>احذف</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="149"/>
