@@ -44,7 +44,7 @@
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="72"/>
       <source>Value</source>
-      <translation type="unfinished">Value</translation>
+      <translation>القيمة</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="73"/>
