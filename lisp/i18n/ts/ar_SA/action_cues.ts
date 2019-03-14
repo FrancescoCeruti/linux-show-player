@@ -139,7 +139,7 @@
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="127"/>
       <source>Action</source>
-      <translation type="unfinished">Action</translation>
+      <translation>الإجراءات</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="66"/>
@@ -157,12 +157,12 @@
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="247"/>
       <source>Type</source>
-      <translation type="unfinished">Type</translation>
+      <translation>النوع</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="247"/>
       <source>Argument</source>
-      <translation type="unfinished">Argument</translation>
+      <translation>الحجج</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="247"/>
@@ -195,17 +195,17 @@
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="300"/>
       <source>Test</source>
-      <translation type="unfinished">Test</translation>
+      <translation>اختبار</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="301"/>
       <source>OSC Path: (example: &quot;/path/to/something&quot;)</source>
-      <translation type="unfinished">OSC Path: (example: &quot;/path/to/something&quot;)</translation>
+      <translation>مسار OSC: (مثال: &quot;/path/to/something&quot;)</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="304"/>
       <source>Fade</source>
-      <translation type="unfinished">Fade</translation>
+      <translation>تلاشي</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="305"/>
@@ -215,7 +215,7 @@
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="306"/>
       <source>Curve</source>
-      <translation type="unfinished">Curve</translation>
+      <translation>منحنى</translation>
     </message>
   </context>
   <context>
