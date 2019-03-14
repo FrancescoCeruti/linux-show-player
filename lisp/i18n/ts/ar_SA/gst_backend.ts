@@ -217,7 +217,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/elements/volume.py" line="32"/>
       <source>Volume</source>
-      <translation type="unfinished">Volume</translation>
+      <translation>مستوى الصوت</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/elements/db_meter.py" line="29"/>
@@ -267,7 +267,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/elements/speed.py" line="29"/>
       <source>Speed</source>
-      <translation type="unfinished">Speed</translation>
+      <translation>السرعة</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/elements/preset_src.py" line="30"/>
@@ -314,7 +314,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/speed.py" line="62"/>
       <source>Speed</source>
-      <translation type="unfinished">Speed</translation>
+      <translation>السرعة</translation>
     </message>
   </context>
   <context>
@@ -378,7 +378,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/volume.py" line="83"/>
       <source>Volume</source>
-      <translation type="unfinished">Volume</translation>
+      <translation>مستوى الصوت</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/volume.py" line="85"/>
