@@ -327,12 +327,12 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="81"/>
       <source>Find File</source>
-      <translation type="unfinished">Find File</translation>
+      <translation>إيجاد الملف</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="82"/>
       <source>Buffering</source>
-      <translation type="unfinished">Buffering</translation>
+      <translation>تخزين مؤقت</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="83"/>
@@ -352,12 +352,12 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="119"/>
       <source>Choose file</source>
-      <translation type="unfinished">Choose file</translation>
+      <translation>إختيار ملف</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="119"/>
       <source>All files</source>
-      <translation type="unfinished">All files</translation>
+      <translation>كل الملفات</translation>
     </message>
   </context>
   <context>
@@ -370,7 +370,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/user_element.py" line="55"/>
       <source>Only for advanced user!</source>
-      <translation type="unfinished">Only for advanced user!</translation>
+      <translation>فقط للمستخدمين المتقدمين!</translation>
     </message>
   </context>
   <context>
