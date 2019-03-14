@@ -35,22 +35,22 @@
     <message>
       <location filename="../../../plugins/osc/osc_settings.py" line="43"/>
       <source>OSC Settings</source>
-      <translation type="unfinished">OSC Settings</translation>
+      <translation>إعدادات OSC</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_settings.py" line="50"/>
       <source>Input Port:</source>
-      <translation type="unfinished">Input Port:</translation>
+      <translation>منفذ الإدخال:</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_settings.py" line="59"/>
       <source>Output Port:</source>
-      <translation type="unfinished">Output Port:</translation>
+      <translation>منفذ الإخراج:</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_settings.py" line="68"/>
       <source>Hostname:</source>
-      <translation type="unfinished">Hostname:</translation>
+      <translation>Hostname:</translation>
     </message>
   </context>
   <context>
@@ -58,7 +58,7 @@
     <message>
       <location filename="../../../plugins/osc/osc_settings.py" line="34"/>
       <source>OSC settings</source>
-      <translation type="unfinished">OSC settings</translation>
+      <translation>إعدادات OSC</translation>
     </message>
   </context>
 </TS>
