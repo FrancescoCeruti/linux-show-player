@@ -221,7 +221,7 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="95"/>
       <source>Description/Note</source>
-      <translation type="unfinished">Description/Note</translation>
+      <translation>وصف/ملاحظة</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="98"/>
@@ -305,12 +305,12 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="212"/>
       <source>Next action</source>
-      <translation type="unfinished">Next action</translation>
+      <translation>الإجراءت التالية</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="112"/>
       <source>Start action</source>
-      <translation type="unfinished">Start action</translation>
+      <translation>بدء الإجراء</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="113"/>
@@ -320,7 +320,7 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="118"/>
       <source>Stop action</source>
-      <translation type="unfinished">Stop action</translation>
+      <translation>توقف الإجراءت</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="119"/>
@@ -405,17 +405,17 @@
     <message>
       <location filename="../../../ui/settings/app_pages/layouts.py" line="55"/>
       <source>Stop All</source>
-      <translation type="unfinished">Stop All</translation>
+      <translation>إيقاف الكل</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/layouts.py" line="56"/>
       <source>Pause All</source>
-      <translation type="unfinished">Pause All</translation>
+      <translation>إيقاف مؤقت للكل</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/layouts.py" line="58"/>
       <source>Interrupt All</source>
-      <translation type="unfinished">Interrupt All</translation>
+      <translation>قطع كل</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/layouts.py" line="52"/>
@@ -425,7 +425,7 @@
     <message>
       <location filename="../../../ui/settings/app_pages/layouts.py" line="57"/>
       <source>Resume All</source>
-      <translation type="unfinished">Resume All</translation>
+      <translation>إستئناف الكل</translation>
     </message>
   </context>
   <context>
@@ -438,32 +438,32 @@
     <message>
       <location filename="../../../ui/logging/common.py" line="23"/>
       <source>Warning</source>
-      <translation type="unfinished">Warning</translation>
+      <translation>تحذير</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="24"/>
       <source>Error</source>
-      <translation type="unfinished">Error</translation>
+      <translation>خطأ</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/dialog.py" line="79"/>
       <source>Dismiss all</source>
-      <translation type="unfinished">Dismiss all</translation>
+      <translation>تجاهل الكل</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/dialog.py" line="86"/>
       <source>Show details</source>
-      <translation type="unfinished">Show details</translation>
+      <translation>إظهار التفاصيل</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/viewer.py" line="55"/>
       <source>Linux Show Player - Log Viewer</source>
-      <translation type="unfinished">Linux Show Player - Log Viewer</translation>
+      <translation>Linux Show Player--عارض السجل</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="22"/>
       <source>Info</source>
-      <translation type="unfinished">Info</translation>
+      <translation>معلومات</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="25"/>
@@ -473,7 +473,7 @@
     <message>
       <location filename="../../../ui/logging/common.py" line="37"/>
       <source>Time</source>
-      <translation type="unfinished">Time</translation>
+      <translation>الوقت</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="38"/>
@@ -488,27 +488,27 @@
     <message>
       <location filename="../../../ui/logging/common.py" line="40"/>
       <source>Level</source>
-      <translation type="unfinished">Level</translation>
+      <translation>المستوى</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="41"/>
       <source>Message</source>
-      <translation type="unfinished">Message</translation>
+      <translation>رسالة</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="42"/>
       <source>Function</source>
-      <translation type="unfinished">Function</translation>
+      <translation>الوظيفة</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="43"/>
       <source>Path name</source>
-      <translation type="unfinished">Path name</translation>
+      <translation>اسم المسار</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="44"/>
       <source>File name</source>
-      <translation type="unfinished">File name</translation>
+      <translation>إسم الملف</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="45"/>
@@ -543,7 +543,7 @@
     <message>
       <location filename="../../../ui/logging/common.py" line="51"/>
       <source>Exception info</source>
-      <translation type="unfinished">Exception info</translation>
+      <translation>معلومات الاستثناء</translation>
     </message>
   </context>
   <context>
@@ -551,22 +551,22 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="188"/>
       <source>&amp;File</source>
-      <translation type="unfinished">&amp;File</translation>
+      <translation>&amp;ملف</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="189"/>
       <source>New session</source>
-      <translation type="unfinished">New session</translation>
+      <translation>دورة جديدة</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="191"/>
       <source>Open</source>
-      <translation type="unfinished">Open</translation>
+      <translation>افتح</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="193"/>
       <source>Save session</source>
-      <translation type="unfinished">Save session</translation>
+      <translation>حفظ الدورة</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="195"/>
@@ -576,37 +576,37 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="197"/>
       <source>Save as</source>
-      <translation type="unfinished">Save as</translation>
+      <translation>حفظ كـ</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="199"/>
       <source>Full Screen</source>
-      <translation type="unfinished">Full Screen</translation>
+      <translation>كامل الشاشة</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="201"/>
       <source>Exit</source>
-      <translation type="unfinished">Exit</translation>
+      <translation>الخروج</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="203"/>
       <source>&amp;Edit</source>
-      <translation type="unfinished">&amp;Edit</translation>
+      <translation>&amp;تعديل</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="204"/>
       <source>Undo</source>
-      <translation type="unfinished">Undo</translation>
+      <translation>التراجع</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="206"/>
       <source>Redo</source>
-      <translation type="unfinished">Redo</translation>
+      <translation>الإعادة</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="208"/>
       <source>Select all</source>
-      <translation type="unfinished">Select all</translation>
+      <translation>اختيار الكل</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="209"/>
@@ -616,12 +616,12 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="213"/>
       <source>Deselect all</source>
-      <translation type="unfinished">Deselect all</translation>
+      <translation>إلغاء تحديد الكل</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="214"/>
       <source>CTRL+SHIFT+A</source>
-      <translation type="unfinished">CTRL+SHIFT+A</translation>
+      <translation>CTRL + SHIFT + A</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="215"/>
@@ -631,17 +631,17 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="218"/>
       <source>CTRL+I</source>
-      <translation type="unfinished">CTRL+I</translation>
+      <translation>CTRL + I</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="219"/>
       <source>Edit selected</source>
-      <translation type="unfinished">Edit selected</translation>
+      <translation>تعديل المحددة</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="220"/>
       <source>CTRL+SHIFT+E</source>
-      <translation type="unfinished">CTRL+SHIFT+E</translation>
+      <translation>CTRL + SHIFT + E</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="222"/>
@@ -651,27 +651,27 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="224"/>
       <source>&amp;Tools</source>
-      <translation type="unfinished">&amp;Tools</translation>
+      <translation>&amp;أدوات</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="225"/>
       <source>Edit selection</source>
-      <translation type="unfinished">Edit selection</translation>
+      <translation>تعديل المجموعة</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="227"/>
       <source>&amp;About</source>
-      <translation type="unfinished">&amp;About</translation>
+      <translation>&amp;حول</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="228"/>
       <source>About</source>
-      <translation type="unfinished">About</translation>
+      <translation>حول</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="229"/>
       <source>About Qt</source>
-      <translation type="unfinished">About Qt</translation>
+      <translation>حول Qt</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="329"/>
@@ -681,7 +681,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="330"/>
       <source>The current session is not saved.</source>
-      <translation type="unfinished">The current session is not saved.</translation>
+      <translation>لم يتم حفظ في الدورة الحالية.</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="333"/>
@@ -694,7 +694,7 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/media_cue.py" line="81"/>
       <source>Start time</source>
-      <translation type="unfinished">Start time</translation>
+      <translation>وقت البدء</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/media_cue.py" line="82"/>
@@ -704,7 +704,7 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/media_cue.py" line="85"/>
       <source>Stop time</source>
-      <translation type="unfinished">Stop time</translation>
+      <translation>وقت الإيقاف</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/media_cue.py" line="86"/>
@@ -769,12 +769,12 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="35"/>
       <source>Appearance</source>
-      <translation type="unfinished">Appearance</translation>
+      <translation>المظهر</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/general.py" line="36"/>
       <source>General</source>
-      <translation type="unfinished">General</translation>
+      <translation>إعدادات عامة</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="43"/>
@@ -789,12 +789,12 @@
     <message>
       <location filename="../../../ui/settings/app_pages/plugins.py" line="33"/>
       <source>Plugins</source>
-      <translation type="unfinished">Plugins</translation>
+      <translation>الإضافات</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="53"/>
       <source>Behaviours</source>
-      <translation type="unfinished">Behaviours</translation>
+      <translation>السلوك</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="156"/>
