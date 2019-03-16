@@ -285,7 +285,7 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="202"/>
       <source>Pre wait</source>
-      <translation type="unfinished">Pre wait</translation>
+      <translation>قبل الانتظار</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="203"/>
@@ -295,7 +295,7 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="207"/>
       <source>Post wait</source>
-      <translation type="unfinished">Post wait</translation>
+      <translation>بعد الانتظار</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="208"/>
@@ -366,7 +366,7 @@
     <message>
       <location filename="../../../ui/widgets/fades.py" line="97"/>
       <source>Curve:</source>
-      <translation type="unfinished">Curve:</translation>
+      <translation>منحنى:</translation>
     </message>
   </context>
   <context>
@@ -374,12 +374,12 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="277"/>
       <source>Fade In</source>
-      <translation type="unfinished">Fade In</translation>
+      <translation>ظهور تدريجي</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="278"/>
       <source>Fade Out</source>
-      <translation type="unfinished">Fade Out</translation>
+      <translation>تلاشي تدريجي</translation>
     </message>
   </context>
   <context>
@@ -397,7 +397,7 @@
     <message>
       <location filename="../../../ui/layoutselect.py" line="59"/>
       <source>Open file</source>
-      <translation type="unfinished">Open file</translation>
+      <translation>فتح الملف</translation>
     </message>
   </context>
   <context>
@@ -433,7 +433,7 @@
     <message>
       <location filename="../../../ui/logging/common.py" line="21"/>
       <source>Debug</source>
-      <translation type="unfinished">Debug</translation>
+      <translation>التنقيح</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="23"/>
@@ -779,12 +779,12 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="43"/>
       <source>Cue</source>
-      <translation type="unfinished">Cue</translation>
+      <translation>الأغنية</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/cue.py" line="27"/>
       <source>Cue Settings</source>
-      <translation type="unfinished">Cue Settings</translation>
+      <translation>إعدادات الأغنية</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/plugins.py" line="33"/>
