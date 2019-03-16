@@ -59,7 +59,7 @@
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="75"/>
       <source>Position</source>
-      <translation type="unfinished">Position</translation>
+      <translation>الموقع</translation>
     </message>
   </context>
   <context>
@@ -112,17 +112,17 @@
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="61"/>
       <source>Start</source>
-      <translation type="unfinished">Start</translation>
+      <translation>إبدء</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="62"/>
       <source>Stop</source>
-      <translation type="unfinished">Stop</translation>
+      <translation>توقف</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="63"/>
       <source>Continue</source>
-      <translation type="unfinished">Continue</translation>
+      <translation>إستمرار</translation>
     </message>
   </context>
   <context>
