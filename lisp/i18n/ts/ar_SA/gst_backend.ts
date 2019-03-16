@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/alsa_sink.py" line="62"/>
       <source>ALSA device</source>
-      <translation type="unfinished">ALSA device</translation>
+      <translation>ALSA الجهاز</translation>
     </message>
   </context>
   <context>
@@ -14,12 +14,12 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_dynamic.py" line="54"/>
       <source>Compressor</source>
-      <translation type="unfinished">Compressor</translation>
+      <translation>ضاغط</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_dynamic.py" line="57"/>
       <source>Expander</source>
-      <translation type="unfinished">Expander</translation>
+      <translation>موسع</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_dynamic.py" line="68"/>
@@ -34,7 +34,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_dynamic.py" line="102"/>
       <source>Compressor/Expander</source>
-      <translation type="unfinished">Compressor/Expander</translation>
+      <translation>ضاغط/موسع</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_dynamic.py" line="105"/>
@@ -44,12 +44,12 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_dynamic.py" line="106"/>
       <source>Curve Shape</source>
-      <translation type="unfinished">Curve Shape</translation>
+      <translation>شكل المنحنى</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_dynamic.py" line="107"/>
       <source>Ratio</source>
-      <translation type="unfinished">Ratio</translation>
+      <translation>النسبة</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_dynamic.py" line="108"/>
@@ -67,7 +67,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_pan.py" line="80"/>
       <source>Center</source>
-      <translation type="unfinished">Center</translation>
+      <translation>الوسط</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_pan.py" line="76"/>
@@ -169,12 +169,12 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/jack_sink.py" line="78"/>
       <source>Connections</source>
-      <translation type="unfinished">Connections</translation>
+      <translation>الاتصالات</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/jack_sink.py" line="79"/>
       <source>Edit connections</source>
-      <translation type="unfinished">Edit connections</translation>
+      <translation>تعديل الاتصالات</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/jack_sink.py" line="275"/>
@@ -189,12 +189,12 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/jack_sink.py" line="337"/>
       <source>Connect</source>
-      <translation type="unfinished">Connect</translation>
+      <translation>الاتصال</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/jack_sink.py" line="332"/>
       <source>Disconnect</source>
-      <translation type="unfinished">Disconnect</translation>
+      <translation>قطع الاتصال</translation>
     </message>
   </context>
   <context>
@@ -202,7 +202,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/elements/audio_dynamic.py" line="30"/>
       <source>Compressor/Expander</source>
-      <translation type="unfinished">Compressor/Expander</translation>
+      <translation>ضاغط/موسع</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/elements/audio_pan.py" line="28"/>
@@ -322,7 +322,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="80"/>
       <source>Source</source>
-      <translation type="unfinished">Source</translation>
+      <translation>المصدر</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="81"/>
@@ -388,7 +388,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/volume.py" line="89"/>
       <source>Reset</source>
-      <translation type="unfinished">Reset</translation>
+      <translation>إعادة ضبط</translation>
     </message>
   </context>
 </TS>
