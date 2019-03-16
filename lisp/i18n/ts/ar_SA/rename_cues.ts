@@ -46,12 +46,12 @@
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="92"/>
       <source>Add numbering</source>
-      <translation type="unfinished">Add numbering</translation>
+      <translation>إضافة أرقام</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="101"/>
       <source>Reset</source>
-      <translation type="unfinished">Reset</translation>
+      <translation>إعادة ضبط</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="120"/>
