@@ -16,32 +16,32 @@
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="55"/>
       <source>Current</source>
-      <translation type="unfinished">Current</translation>
+      <translation>الحالي</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="55"/>
       <source>Preview</source>
-      <translation type="unfinished">Preview</translation>
+      <translation>استعراض</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="72"/>
       <source>Capitalize</source>
-      <translation type="unfinished">Capitalize</translation>
+      <translation>كبّر الحروف</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="77"/>
       <source>Lowercase</source>
-      <translation type="unfinished">Lowercase</translation>
+      <translation>احرف صغيرة</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="82"/>
       <source>Uppercase</source>
-      <translation type="unfinished">Uppercase</translation>
+      <translation>أحرف كبيرة</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="87"/>
       <source>Remove Numbers</source>
-      <translation type="unfinished">Remove Numbers</translation>
+      <translation>إزالة الأرقام</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="92"/>
@@ -56,12 +56,12 @@
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="120"/>
       <source>Type your regex here: </source>
-      <translation type="unfinished">Type your regex here: </translation>
+      <translation>أدخل regex هنا: </translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="232"/>
       <source>Regex help</source>
-      <translation type="unfinished">Regex help</translation>
+      <translation>مساعدة regex</translation>
     </message>
   </context>
   <context>
