@@ -19,17 +19,17 @@
     <message>
       <location filename="../../../plugins/presets/presets.py" line="68"/>
       <source>Presets</source>
-      <translation type="unfinished">Presets</translation>
+      <translation>إعدادات مسبقة</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets.py" line="73"/>
       <source>Save as preset</source>
-      <translation type="unfinished">Save as preset</translation>
+      <translation>الحفظ كإعداد مسبق</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="66"/>
       <source>Cannot scan presets</source>
-      <translation type="unfinished">Cannot scan presets</translation>
+      <translation>لا يمكن تفحص إعدادات مسبقة</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="72"/>
@@ -54,7 +54,7 @@
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="108"/>
       <source>Select Preset</source>
-      <translation type="unfinished">Select Preset</translation>
+      <translation>حدّد ضبط مُسبق</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="443"/>
@@ -99,7 +99,7 @@
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="275"/>
       <source>The same name is already used!</source>
-      <translation type="unfinished">The same name is already used!</translation>
+      <translation>هذا الإسم مستعمل مسبقا!</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="358"/>
