@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/action_cues/__init__.py" line="48"/>
       <source>Registered cue: &quot;{}&quot;</source>
-      <translation type="unfinished">Registered cue: &quot;{}&quot;</translation>
+      <translation>الأغنية المسجلة: &quot;{}&quot;</translation>
     </message>
   </context>
   <context>
@@ -14,7 +14,7 @@
     <message>
       <location filename="../../../plugins/action_cues/__init__.py" line="66"/>
       <source>Cannot create cue {}</source>
-      <translation type="unfinished">Cannot create cue {}</translation>
+      <translation>لا يمكن إنشاء الأغنية{}</translation>
     </message>
   </context>
   <context>
@@ -32,7 +32,7 @@
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="149"/>
       <source>Cue</source>
-      <translation type="unfinished">Cue</translation>
+      <translation>الأغنية</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="149"/>
@@ -73,7 +73,7 @@
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="230"/>
       <source>OSC Settings</source>
-      <translation type="unfinished">OSC Settings</translation>
+      <translation>إعدادات OSC</translation>
     </message>
   </context>
   <context>
@@ -81,7 +81,7 @@
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="40"/>
       <source>Command Cue</source>
-      <translation type="unfinished">Command Cue</translation>
+      <translation>أمر الأغنية</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/midi_cue.py" line="35"/>
@@ -96,12 +96,12 @@
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="40"/>
       <source>Seek Cue</source>
-      <translation type="unfinished">Seek Cue</translation>
+      <translation>البحث عن الأغنية</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="41"/>
       <source>Collection Cue</source>
-      <translation type="unfinished">Collection Cue</translation>
+      <translation>مختارات الأغنية</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/stop_all.py" line="30"/>
@@ -116,7 +116,7 @@
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="82"/>
       <source>OSC Cue</source>
-      <translation type="unfinished">OSC Cue</translation>
+      <translation>OSC الأغنية</translation>
     </message>
   </context>
   <context>
@@ -180,7 +180,7 @@
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="297"/>
       <source>OSC Message</source>
-      <translation type="unfinished">OSC Message</translation>
+      <translation>رسالة OSC</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="298"/>
@@ -241,7 +241,7 @@
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="98"/>
       <source>Cue</source>
-      <translation type="unfinished">Cue</translation>
+      <translation>الأغنية</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="99"/>
@@ -294,7 +294,7 @@
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="64"/>
       <source>Action Settings</source>
-      <translation type="unfinished">Action Settings</translation>
+      <translation>إعدادات الإجراء</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/stop_all.py" line="43"/>
@@ -315,7 +315,7 @@
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="198"/>
       <source>Cue</source>
-      <translation type="unfinished">Cue</translation>
+      <translation>الأغنية</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="199"/>
@@ -343,7 +343,7 @@
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="128"/>
       <source>Error during cue execution.</source>
-      <translation type="unfinished">Error during cue execution.</translation>
+      <translation>حدث خطأ أثناء تنفيذ الأغنية.</translation>
     </message>
   </context>
 </TS>
