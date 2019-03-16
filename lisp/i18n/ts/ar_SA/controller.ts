@@ -90,7 +90,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="193"/>
       <source>Path</source>
-      <translation type="unfinished">Path</translation>
+      <translation>المسار</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="193"/>
@@ -156,7 +156,7 @@
     <message>
       <location filename="../../../plugins/controller/common.py" line="42"/>
       <source>Stop all cues</source>
-      <translation type="unfinished">Stop all cues</translation>
+      <translation>إيقاف كل الأغاني</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="43"/>
@@ -171,7 +171,7 @@
     <message>
       <location filename="../../../plugins/controller/common.py" line="47"/>
       <source>Interrupt all cues</source>
-      <translation type="unfinished">Interrupt all cues</translation>
+      <translation>قطع كل الأغاني</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="50"/>
@@ -225,7 +225,7 @@
     <message>
       <location filename="../../../plugins/controller/controller_settings.py" line="25"/>
       <source>Cue Control</source>
-      <translation type="unfinished">Cue Control</translation>
+      <translation>التحكم بالأغاني</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="46"/>
