@@ -72,12 +72,12 @@
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="288"/>
       <source>Started gain calculation for: {}</source>
-      <translation type="unfinished">Started gain calculation for: {}</translation>
+      <translation>بدأ حساب الربح عن: {}</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="323"/>
       <source>Gain calculated for: {}</source>
-      <translation type="unfinished">Gain calculated for: {}</translation>
+      <translation>حساب الربح بالنسبة: {}</translation>
     </message>
   </context>
 </TS>
