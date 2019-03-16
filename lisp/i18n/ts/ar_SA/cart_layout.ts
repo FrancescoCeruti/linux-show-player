@@ -31,7 +31,7 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="203"/>
       <source>Show volume</source>
-      <translation type="unfinished">Show volume</translation>
+      <translation>إظهار حجم الصوت</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="89"/>
@@ -56,7 +56,7 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="180"/>
       <source>Reset volume</source>
-      <translation type="unfinished">Reset volume</translation>
+      <translation>إعادة تعيين حجم الصوت</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="191"/>
@@ -91,7 +91,7 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="479"/>
       <source>Every cue in the page will be lost.</source>
-      <translation type="unfinished">Every cue in the page will be lost.</translation>
+      <translation>ستفقد كل أغنية في الصفحة.</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="482"/>
@@ -158,22 +158,22 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="148"/>
       <source>Edit cue</source>
-      <translation type="unfinished">Edit cue</translation>
+      <translation>تصحيح الاغنية</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="148"/>
       <source>Edit selected cues</source>
-      <translation type="unfinished">Edit selected cues</translation>
+      <translation>تصحيح الأغاني المحددة</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="148"/>
       <source>Remove cue</source>
-      <translation type="unfinished">Remove cue</translation>
+      <translation>إزالة الأغاني</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="148"/>
       <source>Remove selected cues</source>
-      <translation type="unfinished">Remove selected cues</translation>
+      <translation>إزالة الأغاني المحددة</translation>
     </message>
   </context>
   <context>
