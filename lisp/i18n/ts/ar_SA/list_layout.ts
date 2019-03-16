@@ -40,7 +40,7 @@
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="107"/>
       <source>Default behaviors</source>
-      <translation type="unfinished">Default behaviors</translation>
+      <translation>السلوك الافتراضي</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="165"/>
@@ -50,7 +50,7 @@
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="168"/>
       <source>Show dB-meters</source>
-      <translation type="unfinished">Show dB-meters</translation>
+      <translation>إظهار dB-متر</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="172"/>
@@ -60,12 +60,12 @@
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="171"/>
       <source>Show seek-bars</source>
-      <translation type="unfinished">Show seek-bars</translation>
+      <translation>اعرض أشرطة البحث</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="175"/>
       <source>Auto-select next cue</source>
-      <translation type="unfinished">Auto-select next cue</translation>
+      <translation>تحديد تلقائي الاغنية التالية</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="115"/>
@@ -80,7 +80,7 @@
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="126"/>
       <source>Stop Cue</source>
-      <translation type="unfinished">Stop Cue</translation>
+      <translation>توقف الاغنية</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="127"/>
@@ -90,17 +90,17 @@
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="128"/>
       <source>Resume Cue</source>
-      <translation type="unfinished">Resume Cue</translation>
+      <translation>إستئناف الاغنية</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="129"/>
       <source>Interrupt Cue</source>
-      <translation type="unfinished">Interrupt Cue</translation>
+      <translation>قطع الاغنية</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="139"/>
       <source>Edit cue</source>
-      <translation type="unfinished">Edit cue</translation>
+      <translation>تصحيح الاغنية</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="139"/>
@@ -188,7 +188,7 @@
     <message>
       <location filename="../../../plugins/list_layout/list_view.py" line="78"/>
       <source>Pre wait</source>
-      <translation type="unfinished">Pre wait</translation>
+      <translation>قبل الانتظار</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/list_view.py" line="81"/>
@@ -198,7 +198,7 @@
     <message>
       <location filename="../../../plugins/list_layout/list_view.py" line="84"/>
       <source>Post wait</source>
-      <translation type="unfinished">Post wait</translation>
+      <translation>بعد الانتظار</translation>
     </message>
   </context>
   <context>
@@ -206,12 +206,12 @@
     <message>
       <location filename="../../../plugins/list_layout/info_panel.py" line="48"/>
       <source>Cue name</source>
-      <translation type="unfinished">Cue name</translation>
+      <translation>اسم الأغنية</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/info_panel.py" line="51"/>
       <source>Cue description</source>
-      <translation type="unfinished">Cue description</translation>
+      <translation>تفاصيل الأغنية</translation>
     </message>
   </context>
   <context>
