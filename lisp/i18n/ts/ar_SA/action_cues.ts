@@ -124,7 +124,7 @@
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="120"/>
       <source>Index</source>
-      <translation type="unfinished">Index</translation>
+      <translation>القائمة</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="121"/>
@@ -172,7 +172,7 @@
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="247"/>
       <source>Fade</source>
-      <translation type="unfinished">Fade</translation>
+      <translation>التلاشي</translation>
     </message>
   </context>
   <context>
@@ -256,7 +256,7 @@
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="101"/>
       <source>Seek</source>
-      <translation type="unfinished">Seek</translation>
+      <translation>بحث</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="102"/>
@@ -299,7 +299,7 @@
     <message>
       <location filename="../../../plugins/action_cues/stop_all.py" line="43"/>
       <source>Stop Settings</source>
-      <translation type="unfinished">Stop Settings</translation>
+      <translation>إيقاف إعدادات</translation>
     </message>
   </context>
   <context>
@@ -307,7 +307,7 @@
     <message>
       <location filename="../../../plugins/action_cues/stop_all.py" line="73"/>
       <source>Stop Action</source>
-      <translation type="unfinished">Stop Action</translation>
+      <translation>التوقف عن العمل</translation>
     </message>
   </context>
   <context>
