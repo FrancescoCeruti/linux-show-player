@@ -11,7 +11,7 @@
     <message>
       <location filename="../../../plugins/midi/widgets.py" line="89"/>
       <source>Message type</source>
-      <translation type="unfinished">Message type</translation>
+      <translation>نوع الرسالة</translation>
     </message>
   </context>
   <context>
@@ -87,7 +87,7 @@
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="56"/>
       <source>Program Change</source>
-      <translation type="unfinished">Program Change</translation>
+      <translation>تغيير البرنامج</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="57"/>
@@ -102,7 +102,7 @@
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="59"/>
       <source>Song Select</source>
-      <translation type="unfinished">Song Select</translation>
+      <translation>حدد الأغنية</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="60"/>
@@ -135,12 +135,12 @@
     <message>
       <location filename="../../../plugins/midi/midi_settings.py" line="47"/>
       <source>Input</source>
-      <translation type="unfinished">Input</translation>
+      <translation>الإدخال</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_settings.py" line="54"/>
       <source>Output</source>
-      <translation type="unfinished">Output</translation>
+      <translation>المخرج</translation>
     </message>
   </context>
   <context>
