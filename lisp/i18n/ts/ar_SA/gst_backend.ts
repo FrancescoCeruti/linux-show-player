@@ -337,7 +337,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="83"/>
       <source>Use Buffering</source>
-      <translation type="unfinished">Use Buffering</translation>
+      <translation>استخدام التخزين المؤقت</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="86"/>
