@@ -16,12 +16,12 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="199"/>
       <source>Show seek-bars</source>
-      <translation type="unfinished">Show seek-bars</translation>
+      <translation>اعرض أشرطة البحث</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="200"/>
       <source>Show dB-meters</source>
-      <translation type="unfinished">Show dB-meters</translation>
+      <translation>إظهار dB-متر</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="204"/>
