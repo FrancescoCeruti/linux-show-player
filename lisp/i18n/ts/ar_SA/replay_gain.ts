@@ -46,7 +46,7 @@
     <message>
       <location filename="../../../plugins/replay_gain/gain_ui.py" line="145"/>
       <source>Processing files ...</source>
-      <translation type="unfinished">Processing files ...</translation>
+      <translation>معالجة الملفات...</translation>
     </message>
   </context>
   <context>
