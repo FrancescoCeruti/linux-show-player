@@ -105,12 +105,12 @@
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="139"/>
       <source>Remove cue</source>
-      <translation type="unfinished">Remove cue</translation>
+      <translation>إزالة الأغاني</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="178"/>
       <source>Selection mode</source>
-      <translation type="unfinished">Selection mode</translation>
+      <translation>وضع الإختيار</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/control_buttons.py" line="57"/>
@@ -183,7 +183,7 @@
     <message>
       <location filename="../../../plugins/list_layout/list_view.py" line="73"/>
       <source>Cue</source>
-      <translation type="unfinished">Cue</translation>
+      <translation>أغنية</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/list_view.py" line="78"/>
@@ -193,7 +193,7 @@
     <message>
       <location filename="../../../plugins/list_layout/list_view.py" line="81"/>
       <source>Action</source>
-      <translation type="unfinished">Action</translation>
+      <translation>الإجراءات</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/list_view.py" line="84"/>
