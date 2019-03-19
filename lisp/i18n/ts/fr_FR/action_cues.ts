@@ -167,7 +167,7 @@
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="247"/>
       <source>FadeTo</source>
-      <translation type="unfinished">FadeTo</translation>
+      <translation>Fondu vers</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="247"/>
@@ -200,7 +200,7 @@
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="301"/>
       <source>OSC Path: (example: &quot;/path/to/something&quot;)</source>
-      <translation type="unfinished">OSC Path: (example: &quot;/path/to/something&quot;)</translation>
+      <translation>Chemin OSC: (exemple: &quot;/chemin/vers/qqchose&quot;)</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="304"/>
