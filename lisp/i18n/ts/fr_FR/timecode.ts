@@ -27,7 +27,7 @@
     <message>
       <location filename="../../../plugins/timecode/protocols/artnet.py" line="72"/>
       <source>Cannot send timecode.</source>
-      <translation type="unfinished">Cannot send timecode.</translation>
+      <translation>Impossible d'envoyer un code temporel.</translation>
     </message>
   </context>
   <context>
@@ -50,7 +50,7 @@
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="85"/>
       <source>Enable Timecode</source>
-      <translation type="unfinished">Enable Timecode</translation>
+      <translation>Activer le code temporel</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="138"/>
