@@ -35,7 +35,7 @@
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="149"/>
       <source>Manage hosts</source>
-      <translation type="unfinished">Manage hosts</translation>
+      <translation>Gérer les hôtes</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="150"/>
@@ -45,7 +45,7 @@
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="153"/>
       <source>Manually add a host</source>
-      <translation type="unfinished">Manually add a host</translation>
+      <translation>Ajouter manuellement un hôte</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="156"/>
