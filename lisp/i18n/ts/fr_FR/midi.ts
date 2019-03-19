@@ -6,12 +6,12 @@
     <message>
       <location filename="../../../plugins/midi/widgets.py" line="88"/>
       <source>MIDI Message</source>
-      <translation type="unfinished">MIDI Message</translation>
+      <translation>Message MIDI</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/widgets.py" line="89"/>
       <source>Message type</source>
-      <translation type="unfinished">Message type</translation>
+      <translation>Type de message</translation>
     </message>
   </context>
   <context>
@@ -19,7 +19,7 @@
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="67"/>
       <source>Channel</source>
-      <translation type="unfinished">Channel</translation>
+      <translation>Canal</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="68"/>
@@ -39,17 +39,17 @@
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="71"/>
       <source>Program</source>
-      <translation type="unfinished">Program</translation>
+      <translation>Programme</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="72"/>
       <source>Value</source>
-      <translation type="unfinished">Value</translation>
+      <translation>Valeur</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="73"/>
       <source>Song</source>
-      <translation type="unfinished">Song</translation>
+      <translation>Musique</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="74"/>
@@ -59,7 +59,7 @@
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="75"/>
       <source>Position</source>
-      <translation type="unfinished">Position</translation>
+      <translation>Position</translation>
     </message>
   </context>
   <context>
@@ -102,12 +102,12 @@
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="59"/>
       <source>Song Select</source>
-      <translation type="unfinished">Song Select</translation>
+      <translation>Selection de musique</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="60"/>
       <source>Song Position</source>
-      <translation type="unfinished">Song Position</translation>
+      <translation>Position de musique</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="61"/>
