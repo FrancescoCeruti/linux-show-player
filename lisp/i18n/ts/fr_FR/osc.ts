@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/osc/osc_server.py" line="119"/>
       <source>Message from {} -&gt; path: &quot;{}&quot; args: {}</source>
-      <translation type="unfinished">Message from {} -&gt; path: &quot;{}&quot; args: {}</translation>
+      <translation>Message from {} -&gt; chemin: &quot;{}&quot; args: {}</translation>
     </message>
   </context>
   <context>
@@ -22,7 +22,7 @@
     <message>
       <location filename="../../../plugins/osc/osc_server.py" line="93"/>
       <source>OSC server started at {}</source>
-      <translation type="unfinished">OSC server started at {}</translation>
+      <translation>Serveur OSC démarré à {}</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_server.py" line="111"/>
