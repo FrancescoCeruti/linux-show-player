@@ -16,22 +16,22 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="199"/>
       <source>Show seek-bars</source>
-      <translation type="unfinished">Show seek-bars</translation>
+      <translation>Afficher barre de progression</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="200"/>
       <source>Show dB-meters</source>
-      <translation type="unfinished">Show dB-meters</translation>
+      <translation>Afficher dB mètres</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="204"/>
       <source>Show accurate time</source>
-      <translation>Afficher le temps exact</translation>
+      <translation>Afficher temps exact</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="203"/>
       <source>Show volume</source>
-      <translation>Afficher le volume</translation>
+      <translation>Afficher volume</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="89"/>
