@@ -30,6 +30,13 @@ from lisp.ui.icons import icon_themes_names
 from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.themes import themes_names
 from lisp.ui.ui_utils import translate
+import os
+import re
+
+try:
+    from os import scandir, getcwd
+except ImportError:
+    from scandir import scandir
 
 
 class AppGeneral(SettingsPage):
@@ -37,6 +44,12 @@ class AppGeneral(SettingsPage):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
+        languages = []
+        for entry in scandir("lisp/i18n/ts/"):
+            if entry.is_dir():
+                languages.append(entry.name[:2])
+
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
@@ -68,6 +81,12 @@ class AppGeneral(SettingsPage):
         self.themeCombo.addItems(themes_names())
         self.themeGroup.layout().addWidget(self.themeCombo, 0, 1)
 
+        self.languagesLabel = QLabel(self.themeGroup)
+        self.themeGroup.layout().addWidget(self.languagesLabel, 2, 0)
+        self.languagesCombo = QComboBox(self.themeGroup)
+        self.languagesCombo.addItems(languages)
+        self.themeGroup.layout().addWidget(self.languagesCombo, 2 ,1)
+
         self.iconsLabel = QLabel(self.themeGroup)
         self.themeGroup.layout().addWidget(self.iconsLabel, 1, 0)
         self.iconsCombo = QComboBox(self.themeGroup)
@@ -76,7 +95,6 @@ class AppGeneral(SettingsPage):
 
         self.themeGroup.layout().setColumnStretch(0, 1)
         self.themeGroup.layout().setColumnStretch(1, 1)
-
         self.retranslateUi()
 
     def retranslateUi(self):
@@ -91,6 +109,7 @@ class AppGeneral(SettingsPage):
         )
         self.themeLabel.setText(translate("AppGeneralSettings", "UI theme:"))
         self.iconsLabel.setText(translate("AppGeneralSettings", "Icons theme:"))
+        self.languagesLabel.setText(translate("AppGeneralSettings", "Languages:"))
 
     def getSettings(self):
         settings = {
@@ -98,6 +117,7 @@ class AppGeneral(SettingsPage):
                 "theme": self.themeCombo.currentText(),
                 "icons": self.iconsCombo.currentText(),
             },
+            "language": self.languagesCombo.currentText(),
             "layout": {},
         }
 
@@ -119,3 +139,4 @@ class AppGeneral(SettingsPage):
 
         self.themeCombo.setCurrentText(settings["theme"]["theme"])
         self.iconsCombo.setCurrentText(settings["theme"]["icons"])
+        self.languagesCombo.setCurrentText(settings["language"])
