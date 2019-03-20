@@ -16,8 +16,11 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import mido
+from PyQt5.QtCore import QT_TRANSLATE_NOOP
 
 from lisp.core.plugin import Plugin
+from lisp.cues.cue_factory import CueFactory
+from lisp.plugins.midi.midi_cue import MidiCue
 from lisp.plugins.midi.midi_io import MIDIOutput, MIDIInput
 from lisp.plugins.midi.midi_settings import MIDISettings
 from lisp.ui.settings.app_configuration import AppConfigurationDialog
@@ -36,6 +39,11 @@ class Midi(Plugin):
         # Register the settings widget
         AppConfigurationDialog.registerSettingsPage(
             "plugins.midi", MIDISettings, Midi.Config
+        )
+        # Register cue
+        CueFactory.register_factory(MidiCue.__name__, MidiCue)
+        app.window.registerSimpleCueMenu(
+            MidiCue, QT_TRANSLATE_NOOP("CueCategory", "Integration cues")
         )
 
         # Load the backend and set it as current mido backend

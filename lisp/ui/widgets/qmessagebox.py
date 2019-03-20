@@ -56,4 +56,4 @@ class QDetailedMessageBox(QMessageBox):
         messageBox.addButton(QMessageBox.Ok)
         messageBox.setDefaultButton(QMessageBox.Ok)
 
-        messageBox.exec_()
+        messageBox.exec()

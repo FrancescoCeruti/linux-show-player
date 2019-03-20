@@ -22,16 +22,19 @@ __author__ = "Francesco Ceruti"
 __email__ = "ceppofrancy@gmail.com"
 __url__ = "https://github.com/FrancescoCeruti/linux-show-player"
 __license__ = "GPLv3"
-__version__ = "0.6.0.dev0"
+__version_info__ = (0, 6, 0, "dev0")
+__version__ = ".".join(map(str, __version_info__))
+
+# The version passed follows <major>.<minor>
+app_dirs = AppDirs(
+    "LinuxShowPlayer", version="{}.{}".format(*__version_info__[0:2])
+)
 
 # Application wide "constants"
 APP_DIR = path.dirname(__file__)
 
-# The version passed follows <major>.<minor>
-USER_DIRS = AppDirs("LinuxShowPlayer", version=".".join(__version__.split(".")[0:2]))
-
 DEFAULT_APP_CONFIG = path.join(APP_DIR, "default.json")
-USER_APP_CONFIG = path.join(USER_DIRS.user_config_dir, "lisp.json")
+USER_APP_CONFIG = path.join(app_dirs.user_config_dir, "lisp.json")
 
 I18N_PATH = path.join(APP_DIR, "i18n", "qm")
 

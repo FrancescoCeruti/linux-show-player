@@ -16,19 +16,19 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-import logging
-import traceback
-from enum import Enum
 from liblo import ServerThread, ServerError
+
+import logging
 from threading import Lock
 
 from lisp.core.signal import Signal
+from lisp.core.util import EqEnum
 from lisp.ui.ui_utils import translate
 
 logger = logging.getLogger(__name__)
 
 
-class OscMessageType(Enum):
+class OscMessageType(EqEnum):
     Int = "Integer"
     Float = "Float"
     Bool = "Bool"

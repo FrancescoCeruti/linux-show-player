@@ -14,16 +14,13 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
+
 import fcntl
-
-import os
-
-import logging
 from itertools import chain
 
+import logging
+import os
 import signal
-from os import path
-
 from PyQt5.QtCore import QTranslator, QLocale, QSocketNotifier
 from PyQt5.QtWidgets import QApplication, qApp
 
@@ -35,7 +32,7 @@ logger = logging.getLogger(__name__)
 def adjust_widget_position(widget):
     """Adjust the widget position to ensure it's in the desktop.
 
-    :type widget: PyQt5.QtWidgets.QWidget
+    :type widget: PyQt5.QtWidgets.QWidget.QWidget
     """
     widget.setGeometry(adjust_position(widget.geometry()))
 
@@ -43,8 +40,8 @@ def adjust_widget_position(widget):
 def adjust_position(rect):
     """Adjust the given rect to ensure it's in the desktop space.
 
-    :type widget: PyQt5.QtCore.QRect
-    :return: PyQt5.QtCore.QRect
+    :type rect: PyQt5.QtCore.QRect.QRect
+    :return: PyQt5.QtCore.QRect.QRect
     """
     desktop = qApp.desktop().availableGeometry()
 
@@ -93,17 +90,17 @@ _TRANSLATORS = []
 
 
 def install_translation(name, tr_path=I18N_PATH):
-    tr_file = path.join(tr_path, name)
-
     translator = QTranslator()
-    translator.load(QLocale(), tr_file, "_")
+    translator.load(QLocale(), name, "_", tr_path)
 
     if QApplication.installTranslator(translator):
         # Keep a reference, QApplication does not
         _TRANSLATORS.append(translator)
-        logger.debug("Installed translation: {}".format(tr_file))
+        logger.debug(
+            'Installed translation for "{}" from {}'.format(name, tr_path)
+        )
     else:
-        logger.debug("No translation at: {}".format(tr_file))
+        logger.debug('No translation for "{}" in {}'.format(name, tr_path))
 
 
 def translate(context, text, disambiguation=None, n=-1):

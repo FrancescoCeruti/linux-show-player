@@ -49,6 +49,7 @@ class MediaInfo(Plugin):
     Name = "Media-Cue information dialog"
     Authors = ("Francesco Ceruti",)
     Description = "Provide a function to show information on media-cues source"
+    Depends = ("GstBackend",)
 
     def __init__(self, app):
         super().__init__(app)
@@ -119,7 +120,7 @@ class MediaInfo(Plugin):
 
             # Show the dialog
             dialog = InfoDialog(self.app.window, info, cue.name)
-            dialog.exec_()
+            dialog.exec()
 
 
 class InfoDialog(QDialog):

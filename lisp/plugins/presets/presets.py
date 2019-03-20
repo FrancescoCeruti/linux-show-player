@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2019 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -44,7 +44,6 @@ from lisp.plugins.presets.presets_ui import (
 from lisp.ui.ui_utils import translate
 
 
-# TODO: use logging to report errors
 class Presets(Plugin):
 
     Name = "Preset"
@@ -94,7 +93,7 @@ class Presets(Plugin):
             try:
                 load_on_cue(preset_name, cue)
             except OSError as e:
-                load_preset_error(e, preset_name, parent=self.app.window)
+                load_preset_error(e, preset_name)
 
     def __load_on_cues(self, cues):
         preset_name = select_preset_dialog()
@@ -102,7 +101,7 @@ class Presets(Plugin):
             try:
                 load_on_cues(preset_name, cues)
             except OSError as e:
-                load_preset_error(e, preset_name, parent=self.app.window)
+                load_preset_error(e, preset_name)
 
     def __create_from_cue(self, cue):
         name = save_preset_dialog(cue.name)
@@ -118,4 +117,4 @@ class Presets(Plugin):
                 try:
                     write_preset(name, preset)
                 except OSError as e:
-                    write_preset_error(e, name, parent=self.app.window)
+                    write_preset_error(e, name)

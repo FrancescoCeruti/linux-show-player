@@ -302,7 +302,7 @@ class OscSettings(SettingsPage):
 
     def __new_message(self):
         dialog = OscMessageDialog(parent=self)
-        if dialog.exec_() == dialog.Accepted:
+        if dialog.exec() == dialog.Accepted:
             path = dialog.pathEdit.text()
             if len(path) < 2 or path[0] is not "/":
                 QMessageBox.warning(
@@ -318,7 +318,7 @@ class OscSettings(SettingsPage):
                 if row[0] == "Bool":
                     if row[1] is True:
                         types += "T"
-                    if row[1] is True:
+                    else:
                         types += "F"
                 else:
                     if row[0] == "Integer":

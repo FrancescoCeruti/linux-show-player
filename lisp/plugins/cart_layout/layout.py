@@ -263,7 +263,7 @@ class CartLayout(CueLayout):
         if self._cart_view.count():
             confirm = RemovePageConfirmBox(self._cart_view)
 
-            if confirm.exec_() == QMessageBox.Yes:
+            if confirm.exec() == QMessageBox.Yes:
                 self.remove_page(self._cart_view.currentIndex())
 
     def remove_page(self, index):

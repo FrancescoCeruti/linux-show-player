@@ -34,18 +34,12 @@ class MementoAction(Action):
         pass
 
     def undo(self):
-        try:
-            self._m_model.lock()
+        with self._m_model.lock():
             self.__undo__()
-        finally:
-            self._m_model.unlock()
 
     def redo(self):
-        try:
-            self._m_model.lock()
+        with self._m_model.lock():
             self.__redo__()
-        finally:
-            self._m_model.unlock()
 
     @abstractmethod
     def __undo__(self):

@@ -70,7 +70,7 @@ class Synchronizer(Plugin):
             Synchronizer.Config["discovery.magic"],
             parent=self.app.window,
         )
-        manager.exec_()
+        manager.exec()
 
         self.peers = manager.hosts()
 

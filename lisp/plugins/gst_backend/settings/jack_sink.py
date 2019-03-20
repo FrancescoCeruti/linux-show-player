@@ -107,7 +107,7 @@ class JackSinkSettings(SettingsPage):
     def __edit_connections(self):
         dialog = JackConnectionsDialog(self.__jack_client, parent=self)
         dialog.set_connections(self.connections.copy())
-        dialog.exec_()
+        dialog.exec()
 
         if dialog.result() == dialog.Accepted:
             self.connections = dialog.connections

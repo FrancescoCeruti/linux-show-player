@@ -31,6 +31,7 @@ class Plugin:
     Config = DummyConfiguration()
 
     def __init__(self, app):
+        """:type app: lisp.application.Application"""
         self.__app = app
 
     @property

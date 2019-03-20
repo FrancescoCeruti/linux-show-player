@@ -98,7 +98,7 @@ def locked_function(target=None, *, lock=None, blocking=True, timeout=-1):
 
 
 def locked_method(target=None, *, blocking=True, timeout=-1):
-    """Decorator. Make a *method* synchronized.
+    """Decorator. Make a *method* "synchronized".
 
     Only one thread at time can access the decorated method.
 

@@ -33,8 +33,8 @@ from lisp.cues.media_cue import MediaCue
 from lisp.ui.layoutselect import LayoutSelect
 from lisp.ui.mainwindow import MainWindow
 from lisp.ui.settings.app_configuration import AppConfigurationDialog
-from lisp.ui.settings.app_pages.general import AppGeneral
 from lisp.ui.settings.app_pages.cue import CueAppSettings
+from lisp.ui.settings.app_pages.general import AppGeneral
 from lisp.ui.settings.app_pages.layouts import LayoutsSettings
 from lisp.ui.settings.app_pages.plugins import PluginsSettings
 from lisp.ui.settings.cue_pages.cue_appearance import Appearance
@@ -118,27 +118,25 @@ class Application(metaclass=Singleton):
     def finalize(self):
         self._delete_session()
 
-        self.__main_window = None
         self.__cue_model = None
+        self.__main_window = None
 
     def _new_session_dialog(self):
         """Show the layout-selection dialog"""
         try:
             # Prompt the user for a new layout
-            dialog = LayoutSelect(parent=self.window)
-            if dialog.exec_() == QDialog.Accepted:
-                # If a valid file is selected load it, otherwise load the layout
-                if exists(dialog.filepath):
-                    self._load_from_file(dialog.filepath)
+            dialog = LayoutSelect(self, parent=self.window)
+            if dialog.exec() == QDialog.Accepted:
+                # If a file is selected load it, otherwise load the layout
+                if dialog.sessionPath:
+                    self._load_from_file(dialog.sessionPath)
                 else:
                     self._new_session(dialog.selected())
             else:
                 if self.__session is None:
                     # If the user close the dialog, and no layout exists
                     # the application is closed
-                    self.finalize()
                     qApp.quit()
-                    exit(0)
         except Exception:
             logger.critical(
                 translate("ApplicationError", "Startup error"), exc_info=True
@@ -149,7 +147,7 @@ class Application(metaclass=Singleton):
         self._delete_session()
 
         self.__session = Session(layout(application=self))
-        self.__main_window.set_session(self.__session)
+        self.__main_window.setSession(self.__session)
 
         self.session_created.emit(self.__session)
 
@@ -167,7 +165,7 @@ class Application(metaclass=Singleton):
         self.session.session_file = session_file
 
         # Save session path
-        self.conf.set("session.last_path", dirname(session_file))
+        self.conf.set("session.last_dir", dirname(session_file))
         self.conf.write()
 
         # Add the cues
@@ -193,7 +191,7 @@ class Application(metaclass=Singleton):
                 file.write(json.dumps(session_dict, sort_keys=True, indent=4))
 
         MainActionsHandler.set_saved()
-        self.__main_window.update_window_title()
+        self.__main_window.updateWindowTitle()
 
     def _load_from_file(self, session_file):
         """ Load a saved session from file """
@@ -226,7 +224,7 @@ class Application(metaclass=Singleton):
                     )
 
             MainActionsHandler.set_saved()
-            self.__main_window.update_window_title()
+            self.__main_window.updateWindowTitle()
         except Exception:
             logger.exception(
                 translate(
