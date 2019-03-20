@@ -109,4 +109,4 @@ class LayoutSelect(QDialog):
             self.filepath = path
             app_config.set("session.last_path", os.path.dirname(path))
             app_config.write()
-        self.accept()
+            self.accept()
