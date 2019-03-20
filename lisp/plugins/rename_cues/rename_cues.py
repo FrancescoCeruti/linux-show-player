@@ -54,7 +54,7 @@ class RenameCues(Plugin):
         # Initiate rename windows
         renameUi = RenameUi(self.app.window, selected_cues)
 
-        renameUi.exec_()
+        renameUi.exec()
 
         if renameUi.result() == QDialog.Accepted:
             MainActionsHandler.do_action(

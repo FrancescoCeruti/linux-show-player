@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2019 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,7 +17,6 @@
 
 import logging
 import os
-
 from PyQt5 import QtCore
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtGui import QKeySequence
@@ -33,9 +32,11 @@ from PyQt5.QtWidgets import (
     QVBoxLayout,
     QWidget,
 )
+from functools import partial
 
 from lisp.core.actions_handler import MainActionsHandler
 from lisp.core.singleton import QSingleton
+from lisp.cues.cue_factory import CueFactory
 from lisp.cues.media_cue import MediaCue
 from lisp.ui.about import About
 from lisp.ui.logging.dialog import LogDialogs
@@ -46,6 +47,8 @@ from lisp.ui.logging.viewer import LogViewer
 from lisp.ui.settings.app_configuration import AppConfigurationDialog
 from lisp.ui.ui_utils import translate
 
+logger = logging.getLogger(__name__)
+
 
 class MainWindow(QMainWindow, metaclass=QSingleton):
     new_session = pyqtSignal()
@@ -55,11 +58,12 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
     def __init__(self, conf, title="Linux Show Player", **kwargs):
         super().__init__(**kwargs)
         self.setMinimumSize(500, 400)
+        self.setGeometry(qApp.desktop().availableGeometry(self))
         self.setCentralWidget(QWidget())
         self.centralWidget().setLayout(QVBoxLayout())
         self.centralWidget().layout().setContentsMargins(5, 5, 5, 5)
 
-        self._cue_add_menu = {}
+        self.__cueSubMenus = {}
         self._title = title
 
         self.conf = conf
@@ -69,9 +73,9 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         self.setStatusBar(QStatusBar(self))
 
         # Changes
-        MainActionsHandler.action_done.connect(self._action_done)
-        MainActionsHandler.action_undone.connect(self._action_undone)
-        MainActionsHandler.action_redone.connect(self._action_redone)
+        MainActionsHandler.action_done.connect(self.updateWindowTitle)
+        MainActionsHandler.action_undone.connect(self.updateWindowTitle)
+        MainActionsHandler.action_redone.connect(self.updateWindowTitle)
 
         # Menubar
         self.menubar = QMenuBar(self)
@@ -94,20 +98,20 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
 
         # menuFile
         self.newSessionAction = QAction(self)
-        self.newSessionAction.triggered.connect(self._new_session)
+        self.newSessionAction.triggered.connect(self.__newSession)
         self.openSessionAction = QAction(self)
-        self.openSessionAction.triggered.connect(self._load_from_file)
+        self.openSessionAction.triggered.connect(self.__openSession)
         self.saveSessionAction = QAction(self)
-        self.saveSessionAction.triggered.connect(self._save)
+        self.saveSessionAction.triggered.connect(self.__saveSession)
         self.saveSessionWithName = QAction(self)
-        self.saveSessionWithName.triggered.connect(self._save_with_name)
+        self.saveSessionWithName.triggered.connect(self.__saveWithName)
         self.editPreferences = QAction(self)
-        self.editPreferences.triggered.connect(self._show_preferences)
+        self.editPreferences.triggered.connect(self.__onEditPreferences)
         self.fullScreenAction = QAction(self)
-        self.fullScreenAction.triggered.connect(self._fullscreen)
+        self.fullScreenAction.triggered.connect(self.setFullScreen)
         self.fullScreenAction.setCheckable(True)
         self.exitAction = QAction(self)
-        self.exitAction.triggered.connect(self._exit)
+        self.exitAction.triggered.connect(self.close)
 
         self.menuFile.addAction(self.newSessionAction)
         self.menuFile.addAction(self.openSessionAction)
@@ -127,15 +131,15 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         self.actionRedo = QAction(self)
         self.actionRedo.triggered.connect(MainActionsHandler.redo_action)
         self.multiEdit = QAction(self)
-        self.multiEdit.triggered.connect(self._edit_selected_cue)
+        self.multiEdit.triggered.connect(self.__editSelectedCues)
         self.selectAll = QAction(self)
-        self.selectAll.triggered.connect(self._select_all)
+        self.selectAll.triggered.connect(self.__layoutSelectAll)
         self.selectAllMedia = QAction(self)
-        self.selectAllMedia.triggered.connect(self._select_all_media)
+        self.selectAllMedia.triggered.connect(self.__layoutSelectAllMediaCues)
         self.deselectAll = QAction(self)
-        self.deselectAll.triggered.connect(self._deselect_all)
+        self.deselectAll.triggered.connect(self._layoutDeselectAll)
         self.invertSelection = QAction(self)
-        self.invertSelection.triggered.connect(self._invert_selection)
+        self.invertSelection.triggered.connect(self.__layoutInvertSelection)
 
         self.cueSeparator = self.menuEdit.addSeparator()
         self.menuEdit.addAction(self.actionUndo)
@@ -150,7 +154,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
 
         # menuAbout
         self.actionAbout = QAction(self)
-        self.actionAbout.triggered.connect(self._show_about)
+        self.actionAbout.triggered.connect(self.__about)
 
         self.actionAbout_Qt = QAction(self)
         self.actionAbout_Qt.triggered.connect(qApp.aboutQt)
@@ -228,7 +232,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         self.actionAbout.setText(translate("MainWindow", "About"))
         self.actionAbout_Qt.setText(translate("MainWindow", "About Qt"))
 
-    def set_session(self, session):
+    def setSession(self, session):
         if self.session is not None:
             self.centralWidget().layout().removeWidget(
                 self.session.layout.view()
@@ -241,12 +245,13 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         self.centralWidget().layout().addWidget(self.session.layout.view())
 
     def closeEvent(self, event):
-        self._exit()
-        event.ignore()
+        if self.__checkSessionSaved():
+            qApp.quit()
+            event.accept()
+        else:
+            event.ignore()
 
-    def register_cue_menu_action(
-        self, name, function, category="", shortcut=""
-    ):
+    def registerCueMenu(self, name, function, category="", shortcut=""):
         """Register a new-cue choice for the edit-menu
 
         param name: The name for the MenuAction
@@ -256,123 +261,162 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         """
 
         action = QAction(self)
-        action.setText(translate("MainWindow", name))
+        action.setText(translate("CueName", name))
         action.triggered.connect(function)
         if shortcut != "":
-            action.setShortcut(translate("MainWindow", shortcut))
+            action.setShortcut(translate("CueCategory", shortcut))
 
-        if category != "":
-            if category not in self._cue_add_menu:
-                menu = QMenu(category, self)
-                self._cue_add_menu[category] = menu
-                self.menuEdit.insertMenu(self.cueSeparator, menu)
+        if category:
+            if category not in self.__cueSubMenus:
+                subMenu = QMenu(category, self)
+                self.__cueSubMenus[category] = subMenu
+                self.menuEdit.insertMenu(self.cueSeparator, subMenu)
 
-            self._cue_add_menu[category].addAction(action)
+            self.__cueSubMenus[category].addAction(action)
         else:
             self.menuEdit.insertAction(self.cueSeparator, action)
 
-    def update_window_title(self):
+        logger.debug(
+            translate("MainWindowDebug", 'Registered cue menu: "{}"').format(
+                name
+            )
+        )
+
+    def registerSimpleCueMenu(self, cueClass, category=""):
+        self.registerCueMenu(
+            translate("CueName", cueClass.Name),
+            partial(self.__simpleCueInsert, cueClass),
+            category or translate("CueCategory", "Misc cues"),
+        )
+
+    def updateWindowTitle(self):
         tile = self._title + " - " + self.session.name()
         if not MainActionsHandler.is_saved():
             tile = "*" + tile
 
         self.setWindowTitle(tile)
 
-    def _action_done(self, action):
-        self.update_window_title()
-
-    def _action_undone(self, action):
-        self.update_window_title()
-
-    def _action_redone(self, action):
-        self.update_window_title()
-
-    def _save(self):
-        if self.session.session_file == "":
-            return self._save_with_name()
-        else:
-            self.save_session.emit(self.session.session_file)
-            return True
-
-    def _save_with_name(self):
-        filename, ok = QFileDialog.getSaveFileName(
-            parent=self, filter="*.lsp", directory=self.session.path()
+    def getOpenSessionFile(self):
+        path, _ = QFileDialog.getOpenFileName(
+            self,
+            filter="*.lsp",
+            directory=self.conf.get("session.last_dir", os.getenv("HOME")),
         )
 
-        if ok:
+        if os.path.exists(path):
+            self.conf.set("session.last_dir", os.path.dirname(path))
+            self.conf.write()
+
+            return path
+
+    def getSaveSessionFile(self):
+        if self.session.session_file:
+            session_dir = self.session.dir()
+        else:
+            session_dir = self.conf.get("session.last_dir", os.getenv("HOME"))
+
+        filename, accepted = QFileDialog.getSaveFileName(
+            parent=self, filter="*.lsp", directory=session_dir
+        )
+
+        if accepted:
             if not filename.endswith(".lsp"):
                 filename += ".lsp"
 
-            self.save_session.emit(filename)
-            return True
-        else:
-            return False
+            return filename
 
-    def _show_preferences(self):
-        prefUi = AppConfigurationDialog(parent=self)
-        prefUi.exec_()
-
-    def _load_from_file(self):
-        if self._check_saved():
-            path, _ = QFileDialog.getOpenFileName(
-                self, filter="*.lsp", directory=os.getenv("HOME")
-            )
-
-            if os.path.exists(path):
-                self.open_session.emit(path)
-
-    def _new_session(self):
-        if self._check_saved():
-            self.new_session.emit()
-
-    def _check_saved(self):
-        if not MainActionsHandler.is_saved():
-            msgBox = QMessageBox(self)
-            msgBox.setIcon(QMessageBox.Warning)
-            msgBox.setWindowTitle(translate("MainWindow", "Close session"))
-            msgBox.setText(
-                translate("MainWindow", "The current session is not saved.")
-            )
-            msgBox.setInformativeText(
-                translate("MainWindow", "Discard the changes?")
-            )
-            msgBox.setStandardButtons(
-                QMessageBox.Save | QMessageBox.Discard | QMessageBox.Cancel
-            )
-            msgBox.setDefaultButton(QMessageBox.Save)
-
-            result = msgBox.exec_()
-            if result == QMessageBox.Cancel:
-                return False
-            elif result == QMessageBox.Save:
-                return self._save()
-
-        return True
-
-    def _fullscreen(self, enable):
+    def setFullScreen(self, enable):
         if enable:
             self.showFullScreen()
         else:
             self.showMaximized()
 
-    def _show_about(self):
-        About(self).show()
+    def __simpleCueInsert(self, cueClass):
+        try:
+            cue = CueFactory.create_cue(cueClass.__name__)
 
-    def _exit(self):
-        if self._check_saved():
-            qApp.quit()
+            # Get the (last) index of the current selection
+            layout_selection = list(self.session.layout.selected_cues())
+            if layout_selection:
+                cue.index = layout_selection[-1].index + 1
 
-    def _edit_selected_cue(self):
+            self.session.cue_model.add(cue)
+        except Exception:
+            logger.exception(
+                translate("MainWindowError", "Cannot create cue {}").format(
+                    cueClass.__name__
+                )
+            )
+
+    def __onEditPreferences(self):
+        prefUi = AppConfigurationDialog(parent=self)
+        prefUi.exec()
+
+    def __editSelectedCues(self):
         self.session.layout.edit_cues(list(self.session.layout.selected_cues()))
 
-    def _select_all(self):
+    def __layoutSelectAll(self):
         self.session.layout.select_all()
 
-    def _invert_selection(self):
+    def __layoutInvertSelection(self):
         self.session.layout.invert_selection()
 
-    def _deselect_all(self):
+    def _layoutDeselectAll(self):
         self.session.layout.deselect_all()
 
-    def _select_all_media(self):
+    def __layoutSelectAllMediaCues(self):
         self.session.layout.select_all(cue_class=MediaCue)
+
+    def __saveSession(self):
+        if self.session.session_file:
+            self.save_session.emit(self.session.session_file)
+            return True
+        else:
+            return self.__saveWithName()
+
+    def __saveWithName(self):
+        path = self.getSaveSessionFile()
+
+        if path is not None:
+            self.save_session.emit(path)
+            return True
+
+        return False
+
+    def __openSession(self):
+        path = self.getOpenSessionFile()
+
+        if path is not None:
+            self.open_session.emit(path)
+
+    def __newSession(self):
+        if self.__checkSessionSaved():
+            self.new_session.emit()
+
+    def __checkSessionSaved(self):
+        if not MainActionsHandler.is_saved():
+            saveMessageBox = QMessageBox(
+                QMessageBox.Warning,
+                translate("MainWindow", "Close session"),
+                translate(
+                    "MainWindow",
+                    "The current session contains changes that have not been saved.",
+                ),
+                QMessageBox.Save | QMessageBox.Discard | QMessageBox.Cancel,
+                self,
+            )
+            saveMessageBox.setInformativeText(
+                translate("MainWindow", "Do you want to save them now?")
+            )
+            saveMessageBox.setDefaultButton(QMessageBox.Save)
+
+            choice = saveMessageBox.exec()
+            if choice == QMessageBox.Save:
+                return self.__saveSession()
+            elif choice == QMessageBox.Cancel:
+                return False
+
+        return True
+
+    def __about(self):
+        About(self).show()

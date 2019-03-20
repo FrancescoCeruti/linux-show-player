@@ -19,7 +19,7 @@ import inspect
 import logging
 from os import path
 
-from lisp import USER_DIRS
+from lisp import app_dirs
 from lisp.core.configuration import JSONFileConfiguration
 from lisp.core.loading import load_classes
 from lisp.ui.ui_utils import install_translation, translate
@@ -52,7 +52,8 @@ def load_plugins(application):
 
             # Load plugin configuration
             config = JSONFileConfiguration(
-                path.join(USER_DIRS.user_config_dir, mod_name + ".json"), default_config_path
+                path.join(app_dirs.user_config_dir, mod_name + ".json"),
+                default_config_path,
             )
             plugin.Config = config
 

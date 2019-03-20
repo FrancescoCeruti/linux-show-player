@@ -38,6 +38,7 @@ class CommandCue(Cue):
     """
 
     Name = QT_TRANSLATE_NOOP("CueName", "Command Cue")
+    Category = None
     CueActions = (CueAction.Default, CueAction.Start, CueAction.Stop)
 
     command = Property(default="")

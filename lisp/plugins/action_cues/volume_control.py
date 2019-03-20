@@ -52,6 +52,7 @@ logger = logging.getLogger(__name__)
 
 class VolumeControl(Cue):
     Name = QT_TRANSLATE_NOOP("CueName", "Volume Control")
+    Category = QT_TRANSLATE_NOOP("CueCategory", "Action cues")
 
     target_id = Property()
     fade_type = Property(default=FadeInType.Linear.name)
@@ -202,7 +203,7 @@ class VolumeSettings(SettingsPage):
         self.fadeGroup.setTitle(translate("VolumeControl", "Fade"))
 
     def select_cue(self):
-        if self.cueDialog.exec_() == self.cueDialog.Accepted:
+        if self.cueDialog.exec() == self.cueDialog.Accepted:
             cue = self.cueDialog.selected_cue()
 
             if cue is not None:

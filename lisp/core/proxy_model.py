@@ -18,6 +18,7 @@
 from abc import abstractmethod
 
 from lisp.core.model import Model, ModelException
+from lisp.core.util import typename
 
 
 class ABCProxyModel(Model):
@@ -54,13 +55,13 @@ class ABCProxyModel(Model):
 
 
 class ProxyModel(ABCProxyModel):
-    """Proxy that wrap a more generic model to extend its functionality.
+    """Proxy that wrap another model to extend its functionality.
 
-    The add, remove, __iter__, __len__ and __contains__ default implementations
-    use the the model ones.
+    The default implementations of `add`, `remove`, `__iter__`, `__len__` and
+    `__contains__` fallback on the wrapped model.
 
     .. note:
-        The base model cannot be changed.
+        The wrapped model should not be changed.
         Any ProxyModel could provide it's own methods/signals.
     """
 

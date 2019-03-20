@@ -71,7 +71,7 @@ class ReplayGain(Plugin):
 
     def gain(self):
         gainUi = GainUi(self.app.window)
-        gainUi.exec_()
+        gainUi.exec()
 
         if gainUi.result() == QDialog.Accepted:
             if gainUi.only_selected():

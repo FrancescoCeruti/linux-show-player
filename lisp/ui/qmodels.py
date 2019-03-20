@@ -18,6 +18,7 @@
 from PyQt5.QtCore import QAbstractTableModel, QModelIndex, Qt
 
 from lisp.cues.cue import Cue
+from lisp.ui.ui_utils import translate
 
 # Application defined data-roles
 CueClassRole = Qt.UserRole + 1
@@ -69,20 +70,30 @@ class SimpleTableModel(QAbstractTableModel):
 
     def data(self, index, role=Qt.DisplayRole):
         if index.isValid():
-            if role == Qt.DisplayRole or role == Qt.EditRole:
+            if role == Qt.DisplayRole:
+                value = self.rows[index.row()][index.column()]
+                if type(value) == bool:
+                    return translate("QComboBox", str(value).title())
+                else:
+                    return value
+            elif role == Qt.EditRole:
                 return self.rows[index.row()][index.column()]
             elif role == Qt.TextAlignmentRole:
                 return Qt.AlignCenter
 
     def setData(self, index, value, role=Qt.DisplayRole):
-        if index.isValid():
-            if role == Qt.DisplayRole or role == Qt.EditRole:
-                self.rows[index.row()][index.column()] = value
+        if index.isValid() and (role == Qt.DisplayRole or role == Qt.EditRole):
+            row = index.row()
+            col = index.column()
+            # Update only if value is different
+            if self.rows[row][col] != value:
+                self.rows[row][col] = value
                 self.dataChanged.emit(
-                    self.index(index.row(), 0),
-                    self.index(index.row(), index.column()),
+                    self.index(row, 0),
+                    self.index(row, col),
                     [Qt.DisplayRole, Qt.EditRole],
                 )
+
                 return True
 
         return False

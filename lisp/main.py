@@ -21,13 +21,14 @@ import os
 import sys
 
 import signal
+from functools import partial
 from logging.handlers import RotatingFileHandler
 
-from PyQt5.QtCore import QLocale, QLibraryInfo
+from PyQt5.QtCore import QLocale, QLibraryInfo, QTimer
 from PyQt5.QtWidgets import QApplication
 
 from lisp import (
-    USER_DIRS,
+    app_dirs,
     DEFAULT_APP_CONFIG,
     USER_APP_CONFIG,
     plugins,
@@ -63,8 +64,8 @@ def main():
     args = parser.parse_args()
 
     # Make sure the application user directories exist
-    os.makedirs(USER_DIRS.user_config_dir, exist_ok=True)
-    os.makedirs(USER_DIRS.user_data_dir, exist_ok=True)
+    os.makedirs(app_dirs.user_config_dir, exist_ok=True)
+    os.makedirs(app_dirs.user_data_dir, exist_ok=True)
 
     # Get logging level for the console
     if args.log == "debug":
@@ -93,10 +94,10 @@ def main():
     root_logger.addHandler(stream_handler)
 
     # Make sure the logs directory exists
-    os.makedirs(USER_DIRS.user_log_dir, exist_ok=True)
+    os.makedirs(app_dirs.user_log_dir, exist_ok=True)
     # Create the file handler
     file_handler = RotatingFileHandler(
-        os.path.join(USER_DIRS.user_log_dir, "lisp.log"),
+        os.path.join(app_dirs.user_log_dir, "lisp.log"),
         maxBytes=10 * (2 ** 20),
         backupCount=5,
     )
@@ -115,13 +116,20 @@ def main():
     locale = args.locale
     if locale:
         QLocale().setDefault(QLocale(locale))
+    else:
+        locale = app_conf["language"]
+        QLocale().setDefault(QLocale(locale))
 
-    logging.info("Using {} locale".format(QLocale().name()))
+    logging.info(
+        'Using "{}" locale -> {}'.format(
+            QLocale().name(), QLocale().uiLanguages()
+        )
+    )
 
     # Qt platform translation
-    install_translation(
-        "qt", tr_path=QLibraryInfo.location(QLibraryInfo.TranslationsPath)
-    )
+    qt_tr_path = QLibraryInfo.location(QLibraryInfo.TranslationsPath)
+    # install_translation("qt", tr_path=qt_tr_path)
+    install_translation("qtbase", tr_path=qt_tr_path)
     # Main app translations
     install_translation("lisp", tr_path=I18N_PATH)
 
@@ -153,9 +161,10 @@ def main():
     signal.signal(signal.SIGINT, handle_quit_signal)
 
     with PyQtUnixSignalHandler():
-        # Start the application
-        lisp_app.start(session_file=args.file)
-        exit_code = qt_app.exec_()  # block until exit
+        # Defer application start when QT main-loop starts
+        QTimer.singleShot(0, partial(lisp_app.start, session_file=args.file))
+        # Start QT main-loop, blocks until exit
+        exit_code = qt_app.exec()
 
         # Finalize all and exit
         plugins.finalize_plugins()

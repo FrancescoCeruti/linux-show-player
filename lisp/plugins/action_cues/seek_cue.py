@@ -38,6 +38,7 @@ from lisp.ui.ui_utils import translate
 
 class SeekCue(Cue):
     Name = QT_TRANSLATE_NOOP("CueName", "Seek Cue")
+    Category = QT_TRANSLATE_NOOP("CueCategory", "Action cues")
 
     target_id = Property()
     time = Property(default=-1)
@@ -102,7 +103,7 @@ class SeekCueSettings(SettingsPage):
         self.seekLabel.setText(translate("SeekCue", "Time to reach"))
 
     def select_cue(self):
-        if self.cueDialog.exec_() == self.cueDialog.Accepted:
+        if self.cueDialog.exec() == self.cueDialog.Accepted:
             cue = self.cueDialog.selected_cue()
 
             if cue is not None:

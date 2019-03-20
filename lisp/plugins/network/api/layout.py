@@ -37,4 +37,12 @@ class LayoutActionEndPoint(EndPoint):
             resp.status = falcon.HTTP_BAD_REQUEST
 
 
-__endpoints__ = (LayoutActionEndPoint,)
+class GoEndPoint(EndPoint):
+    UriTemplate = "/layout/go"
+
+    def on_post(self, req, resp):
+        self.app.layout.go()
+        resp.status = falcon.HTTP_CREATED
+
+
+__endpoints__ = (LayoutActionEndPoint, GoEndPoint)

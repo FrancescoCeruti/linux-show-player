@@ -68,9 +68,9 @@ class ConfDict:
             return node[key]
         except (KeyError, TypeError):
             if default is not _UNSET:
-                logger.warning(
+                logger.info(
                     translate(
-                        "ConfigurationWarning",
+                        "ConfigurationInfo",
                         'Invalid path "{}", return default.',
                     ).format(path)
                 )
@@ -252,7 +252,6 @@ class JSONFileConfiguration(Configuration):
             return json.load(f)
 
 
-# TODO: we should remove this in favor of a non-singleton
 class AppConfig(JSONFileConfiguration, metaclass=ABCSingleton):
     """Provide access to the application configuration (singleton)"""
 

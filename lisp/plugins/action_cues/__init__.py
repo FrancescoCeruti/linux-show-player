@@ -15,58 +15,22 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-import logging
 from os import path
 
 from lisp.core.loading import load_classes
 from lisp.core.plugin import Plugin
 from lisp.cues.cue_factory import CueFactory
-from lisp.ui.ui_utils import translate
-
-logger = logging.getLogger(__name__)
 
 
 class ActionCues(Plugin):
     Name = "Action Cues"
     Authors = ("Francesco Ceruti",)
-    Description = "Provide a collection of cues for different purposes"
+    Description = "A collection of cues to extend base functions"
 
     def __init__(self, app):
         super().__init__(app)
 
-        for name, cue in load_classes(__package__, path.dirname(__file__)):
-            # Register the action-cue in the cue-factory
-            CueFactory.register_factory(cue.__name__, cue)
-
-            # Register the menu action for adding the action-cue
-            self.app.window.register_cue_menu_action(
-                translate("CueName", cue.Name),
-                self._new_cue_factory(cue),
-                "Action cues",
-            )
-
-            logger.debug(
-                translate("ActionCuesDebug", 'Registered cue: "{}"').format(
-                    name
-                )
-            )
-
-    def _new_cue_factory(self, cue_class):
-        def cue_factory():
-            try:
-                cue = CueFactory.create_cue(cue_class.__name__)
-
-                # Get the (last) index of the current selection
-                layout_selection = list(self.app.layout.selected_cues())
-                if layout_selection:
-                    cue.index = layout_selection[-1].index + 1
-
-                self.app.cue_model.add(cue)
-            except Exception:
-                logger.exception(
-                    translate(
-                        "ActionsCuesError", "Cannot create cue {}"
-                    ).format(cue_class.__name__)
-                )
-
-        return cue_factory
+        # Register all the cue in the plugin
+        for _, cue_class in load_classes(__package__, path.dirname(__file__)):
+            CueFactory.register_factory(cue_class.__name__, cue_class)
+            app.window.registerSimpleCueMenu(cue_class, cue_class.Category)

@@ -32,7 +32,7 @@ class CueModel(Model):
 
     def add(self, cue):
         if cue.id in self.__cues:
-            raise ValueError("the cue is already in the layout")
+            raise ValueError("the cue is already in the model")
 
         self.__cues[cue.id] = cue
         self.item_added.emit(cue)

@@ -121,6 +121,7 @@ class ListLayout(CueLayout):
         self.selection_mode_action = QAction(parent=layout_menu)
         self.selection_mode_action.setCheckable(True)
         self.selection_mode_action.triggered.connect(self._set_selection_mode)
+        self.selection_mode_action.setShortcut(QKeySequence("Ctrl+Alt+S"))
         layout_menu.addAction(self.selection_mode_action)
 
         # Load settings
@@ -218,9 +219,10 @@ class ListLayout(CueLayout):
         del self._edit_actions_group
 
     def select_all(self, cue_type=Cue):
-        for index in range(self._view.listView.topLevelItemCount()):
-            if isinstance(self._list_model.item(index), cue_type):
-                self._view.listView.topLevelItem(index).setSelected(True)
+        if self.selection_mode:
+            for index in range(self._view.listView.topLevelItemCount()):
+                if isinstance(self._list_model.item(index), cue_type):
+                    self._view.listView.topLevelItem(index).setSelected(True)
 
     def deselect_all(self, cue_type=Cue):
         for index in range(self._view.listView.topLevelItemCount()):
@@ -228,9 +230,10 @@ class ListLayout(CueLayout):
                 self._view.listView.topLevelItem(index).setSelected(False)
 
     def invert_selection(self):
-        for index in range(self._view.listView.topLevelItemCount()):
-            item = self._view.listView.topLevelItem(index)
-            item.setSelected(not item.isSelected())
+        if self.selection_mode:
+            for index in range(self._view.listView.topLevelItemCount()):
+                item = self._view.listView.topLevelItem(index)
+                item.setSelected(not item.isSelected())
 
     def _key_pressed(self, event):
         event.ignore()
@@ -248,13 +251,12 @@ class ListLayout(CueLayout):
             if modifiers & Qt.MetaModifier:
                 keys += Qt.META
 
-            if QKeySequence(keys) in self._go_key_sequence:
+            sequence = QKeySequence(keys)
+            if sequence in self._go_key_sequence:
                 event.accept()
                 self.__go_slot()
-            elif event.key() == Qt.Key_Delete:
-                cue = self.standby_cue()
-                if cue is not None:
-                    self._remove_cue(cue)
+            elif sequence == QKeySequence.Delete:
+                self._remove_cues(self.selected_cues())
             elif event.key() == Qt.Key_Space:
                 if event.modifiers() == Qt.ShiftModifier:
                     event.accept()
@@ -316,6 +318,10 @@ class ListLayout(CueLayout):
         self.selection_mode_action.setChecked(enable)
         if enable:
             self._view.listView.setSelectionMode(CueListView.ExtendedSelection)
+
+            standby = self.standby_index()
+            if standby >= 0:
+                self._view.listView.topLevelItem(standby).setSelected(True)
         else:
             self.deselect_all()
             self._view.listView.setSelectionMode(CueListView.NoSelection)
