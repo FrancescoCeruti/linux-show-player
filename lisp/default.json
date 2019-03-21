@@ -10,7 +10,7 @@
         "theme": "Dark",
         "icons": "numix"
     },
-    "language": "en",
+    "locale": "",
     "session": {
         "minSave": true
     },

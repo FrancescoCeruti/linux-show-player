@@ -30,14 +30,6 @@ from lisp.ui.icons import icon_themes_names
 from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.themes import themes_names
 from lisp.ui.ui_utils import translate
-import os
-import re
-
-try:
-    from os import scandir, getcwd
-except ImportError:
-    from scandir import scandir
-
 
 class AppGeneral(SettingsPage):
     Name = QT_TRANSLATE_NOOP("SettingsPageName", "General")
@@ -45,10 +37,19 @@ class AppGeneral(SettingsPage):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        languages = []
-        for entry in scandir("lisp/i18n/ts/"):
-            if entry.is_dir():
-                languages.append(entry.name[:2])
+        self.locales = {
+            "cs" : "český",
+            "de" : "Deutsche",
+            "fr" : "Français",
+            "es" : "Español",
+            "en" : "English",
+            "it" : "Italiano",
+            "nl" : "Nederlands (Belgique)",
+        }
+
+        self.languagesItem = []
+        for loc in self.locales:
+            self.languagesItem.append(self.locales[loc])
 
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
@@ -84,7 +85,7 @@ class AppGeneral(SettingsPage):
         self.languagesLabel = QLabel(self.themeGroup)
         self.themeGroup.layout().addWidget(self.languagesLabel, 2, 0)
         self.languagesCombo = QComboBox(self.themeGroup)
-        self.languagesCombo.addItems(languages)
+        self.languagesCombo.addItems(self.languagesItem)
         self.themeGroup.layout().addWidget(self.languagesCombo, 2 ,1)
 
         self.iconsLabel = QLabel(self.themeGroup)
@@ -117,7 +118,7 @@ class AppGeneral(SettingsPage):
                 "theme": self.themeCombo.currentText(),
                 "icons": self.iconsCombo.currentText(),
             },
-            "language": self.languagesCombo.currentText(),
+            "locale": list(self.locales.keys())[list(self.locales.values()).index(self.languagesCombo.currentText())],
             "layout": {},
         }
 
@@ -139,4 +140,4 @@ class AppGeneral(SettingsPage):
 
         self.themeCombo.setCurrentText(settings["theme"]["theme"])
         self.iconsCombo.setCurrentText(settings["theme"]["icons"])
-        self.languagesCombo.setCurrentText(settings["language"])
+        self.languagesCombo.setCurrentText(self.locales[settings["locale"]])

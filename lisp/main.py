@@ -117,8 +117,9 @@ def main():
     if locale:
         QLocale().setDefault(QLocale(locale))
     else:
-        locale = app_conf["language"]
-        QLocale().setDefault(QLocale(locale))
+        locale = app_conf["locale"]
+        if locale != "":
+            QLocale().setDefault(QLocale(locale))
 
     logging.info(
         'Using "{}" locale -> {}'.format(
