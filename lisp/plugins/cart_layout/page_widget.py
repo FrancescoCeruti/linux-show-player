@@ -112,15 +112,14 @@ class CartPageWidget(QWidget):
                 self.copyWidgetRequested.emit(event.source(), row, column)
 
     def indexAt(self, pos):
-        # Margins and spacings are equals
-        space = self.layout().horizontalSpacing()
+        # All four margins (left, right, top, bottom) of a cue widget are equal
         margin = self.layout().contentsMargins().right()
 
-        r_size = (self.height() + margin * 2) // self.__rows + space
-        c_size = (self.width() + margin * 2) // self.__columns + space
+        r_size = (self.height() + margin * 2) // self.__rows
+        c_size = (self.width() + margin * 2) // self.__columns
 
-        row = math.ceil(pos.y() / r_size) - 1
-        column = math.ceil(pos.x() / c_size) - 1
+        row = math.floor(pos.y() / r_size)
+        column = math.floor(pos.x() / c_size)
 
         return row, column
 
