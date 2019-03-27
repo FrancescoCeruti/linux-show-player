@@ -75,15 +75,9 @@ class CartLayout(CueLayout):
             self.cue_model, self.__rows, self.__columns
         )
         # TODO: move this logic in CartTabWidget ?
-        self._cart_model.item_added.connect(
-            self.__cue_added, Connection.QtQueued
-        )
-        self._cart_model.item_removed.connect(
-            self.__cue_removed, Connection.QtQueued
-        )
-        self._cart_model.item_moved.connect(
-            self.__cue_moved, Connection.QtQueued
-        )
+        self._cart_model.item_added.connect(self.__cue_added)
+        self._cart_model.item_removed.connect(self.__cue_removed)
+        self._cart_model.item_moved.connect(self.__cue_moved)
         self._cart_model.model_reset.connect(self.__model_reset)
         self._memento_model = CueMementoAdapter(self._cart_model)
 
@@ -278,6 +272,7 @@ class CartLayout(CueLayout):
             page.deleteLater()
 
             # Rename every successive tab accordingly
+            # TODO: check for "standard" naming using a regex
             text = translate("CartLayout", "Page {number}")
             for n in range(index, self._cart_view.count()):
                 self._cart_view.setTabText(n, text.format(number=n + 1))

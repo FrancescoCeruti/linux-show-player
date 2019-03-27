@@ -30,26 +30,14 @@ from lisp.ui.icons import icon_themes_names
 from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.themes import themes_names
 from lisp.ui.ui_utils import translate
+from PyQt5.QtCore import QLocale
+from lisp.ui.widgets import LocaleEdit
 
 class AppGeneral(SettingsPage):
     Name = QT_TRANSLATE_NOOP("SettingsPageName", "General")
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-
-        self.locales = {
-            "cs" : "český",
-            "de" : "Deutsche",
-            "fr" : "Français",
-            "es" : "Español",
-            "en" : "English",
-            "it" : "Italiano",
-            "nl" : "Nederlands (Belgique)",
-        }
-
-        self.languagesItem = []
-        for loc in self.locales:
-            self.languagesItem.append(self.locales[loc])
 
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
@@ -82,11 +70,9 @@ class AppGeneral(SettingsPage):
         self.themeCombo.addItems(themes_names())
         self.themeGroup.layout().addWidget(self.themeCombo, 0, 1)
 
-        self.languagesLabel = QLabel(self.themeGroup)
-        self.themeGroup.layout().addWidget(self.languagesLabel, 2, 0)
-        self.languagesCombo = QComboBox(self.themeGroup)
-        self.languagesCombo.addItems(self.languagesItem)
-        self.themeGroup.layout().addWidget(self.languagesCombo, 2 ,1)
+        self.locales = LocaleEdit(self.themeGroup)
+        self.themeGroup.layout().addWidget(self.locales.getLocaleLabel(), 2, 0)
+        self.themeGroup.layout().addWidget(self.locales.getLocaleCombo(), 2 ,1)
 
         self.iconsLabel = QLabel(self.themeGroup)
         self.themeGroup.layout().addWidget(self.iconsLabel, 1, 0)
@@ -110,7 +96,6 @@ class AppGeneral(SettingsPage):
         )
         self.themeLabel.setText(translate("AppGeneralSettings", "UI theme:"))
         self.iconsLabel.setText(translate("AppGeneralSettings", "Icons theme:"))
-        self.languagesLabel.setText(translate("AppGeneralSettings", "Languages:"))
 
     def getSettings(self):
         settings = {
@@ -118,7 +103,7 @@ class AppGeneral(SettingsPage):
                 "theme": self.themeCombo.currentText(),
                 "icons": self.iconsCombo.currentText(),
             },
-            "locale": list(self.locales.keys())[list(self.locales.values()).index(self.languagesCombo.currentText())],
+            "locale": self.locales.getCurrentText(),
             "layout": {},
         }
 
@@ -140,4 +125,4 @@ class AppGeneral(SettingsPage):
 
         self.themeCombo.setCurrentText(settings["theme"]["theme"])
         self.iconsCombo.setCurrentText(settings["theme"]["icons"])
-        self.languagesCombo.setCurrentText(self.locales[settings["locale"]])
+        self.locales.setLocale(self.locales.getLocales()[settings["locale"]])

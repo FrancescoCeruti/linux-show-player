@@ -365,7 +365,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         self.session.layout.deselect_all()
 
     def __layoutSelectAllMediaCues(self):
-        self.session.layout.select_all(cue_class=MediaCue)
+        self.session.layout.select_all(cue_type=MediaCue)
 
     def __saveSession(self):
         if self.session.session_file:

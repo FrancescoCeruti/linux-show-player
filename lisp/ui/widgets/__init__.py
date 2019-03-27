@@ -1,6 +1,7 @@
 from .cue_actions import CueActionComboBox
 from .cue_next_actions import CueNextActionComboBox
 from .fades import FadeComboBox, FadeEdit
+from .locales import LocaleEdit
 from .qclicklabel import QClickLabel
 from .qclickslider import QClickSlider
 from .qcolorbutton import QColorButton
