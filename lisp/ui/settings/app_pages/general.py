@@ -30,7 +30,6 @@ from lisp.ui.icons import icon_themes_names
 from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.themes import themes_names
 from lisp.ui.ui_utils import translate
-from PyQt5.QtCore import QLocale
 from lisp.ui.widgets import LocaleEdit
 
 class AppGeneral(SettingsPage):

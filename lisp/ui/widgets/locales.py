@@ -15,19 +15,13 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from enum import Enum
-
-from PyQt5.QtCore import QT_TRANSLATE_NOOP, Qt
 from PyQt5.QtWidgets import (
     QComboBox,
-    QStyledItemDelegate,
     QWidget,
     QGridLayout,
-    QDoubleSpinBox,
     QLabel,
 )
 
-from lisp.ui.icons import IconTheme
 from PyQt5.QtCore import QLocale
 from lisp.ui.ui_utils import translate
 
