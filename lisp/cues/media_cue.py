@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2023 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -46,6 +46,7 @@ class MediaCue(Cue):
         CueAction.FadeIn,
         CueAction.Interrupt,
         CueAction.FadeOutInterrupt,
+        CueAction.LoopRelease,
     )
 
     def __init__(self, app, media, id=None):
@@ -240,3 +241,6 @@ class MediaCue(Cue):
                 self.__volume.volume,
                 FadeInType[self.fadein_type],
             )
+
+    def loop_release(self):
+        self.media.loop_release()
