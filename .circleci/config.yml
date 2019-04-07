@@ -1,0 +1,130 @@
+version: 2
+jobs:
+  build:
+    machine:
+      image: ubuntu-1604:201903-01
+
+    working_directory: ~/repo
+
+    environment:
+      BUILD_BRANCH: $CIRCLE_BRANCH
+      BUILD_COMMIT: $CIRCLE_SHA1
+
+    steps:
+      - checkout
+
+      - run:
+          name: SYSTEM ⟹ Install flatpak & flatpak-builder
+          command: |
+            sudo apt-get -qq update
+            sudo apt-get install -y software-properties-common python3-software-properties
+            sudo add-apt-repository -y ppa:alexlarsson/flatpak
+            sudo apt-get -qq update
+            sudo apt-get install -y ostree flatpak flatpak-builder
+
+      - restore_cache:
+          name: PYENV ⟹ Restore cache
+          key: pyenv-python-3.6.8
+
+      - run:
+          name: PYENV ⟹ Install python 3.6.8
+          command: |
+            pyenv install --skip-existing 3.6.8
+            pyenv global 3.6.8
+
+      - save_cache:
+          name: PYENV ⟹ Save cache
+          key: pyenv-python-3.6.8
+          paths:
+            - ~/.pyenv/versions/3.6.8
+
+      - run:
+          name: FLATPAK ⟹ Install flathub Runtime & SDK
+          working_directory: ~/repo/scripts/Flatpak
+          command: source functions.sh && flatpak_install_runtime
+
+      - restore_cache:
+          name: PIP ⟹ Restore cache
+          keys:
+            - v3-pip-{{ checksum "scripts/Flatpak/requirements.txt" }}
+
+      - run:
+          name: FLATPAK ⟹ Generate flatpak manifest
+          working_directory: ~/repo/scripts/Flatpak
+          command: |
+            export BUILD_BRANCH=$CIRCLE_BRANCH
+            source functions.sh && flatpak_build_manifest
+
+      - save_cache:
+          name: PIP ⟹ Save cache
+          key: v3-pip-{{ checksum "scripts/Flatpak/requirements.txt" }}
+          paths:
+            - ~/repo/scripts/Flatpak/.venv
+
+      - restore_cache:
+          name: FLATPAK BUILD ⟹ Restore cache
+          keys:
+            - v2-flatpak-{{ checksum "scripts/Flatpak/com.github.FrancescoCeruti.LinuxShowPlayer.json" }}
+            - v2-flatpak-
+
+      - run:
+          name: FLATPAK BUILD ⟹ Build flatpak (no exit on error)
+          working_directory: ~/repo/scripts/Flatpak
+          command: source functions.sh && flatpak_build_noexit
+
+      - save_cache:
+          name: FLATPAK BUILD ⟹ Save cache
+          key: v2-flatpak-{{ checksum "scripts/Flatpak/com.github.FrancescoCeruti.LinuxShowPlayer.json" }}
+          paths:
+            - ~/repo/scripts/Flatpak/.flatpak-builder
+
+      - run:
+          name: FLATPAK BUILD ⟹ Check if build failed
+          working_directory: ~/repo/scripts/Flatpak
+          command: source functions.sh && flatpak_build_noexit_check
+
+      - run:
+          name: FLATPAK ⟹ Bundle flatpak
+          working_directory: ~/repo/scripts/Flatpak
+          command: |
+            export BUILD_BRANCH=$CIRCLE_BRANCH
+            source functions.sh && flatpak_bundle
+
+      - run:
+          name: BINTRAY ⟹ Upload bundle
+          working_directory: ~/repo/scripts/Flatpak
+          command: |
+            curl -fL https://getcli.jfrog.io | sh
+            chmod +x jfrog
+
+            PKG_VERSION=$(date '+%Y%m%d')-$CIRCLE_BRANCH-$CIRCLE_BUILD_NUM
+
+            ./jfrog bt config \
+              --interactive=false \
+              --user=francescoceruti \
+              --key=$BINTRAY_API_KEY \
+              --licenses=GPL-3.0
+
+            ./jfrog bt upload \
+              --publish \
+              --override \
+              out/linux-show-payer.flatpak \
+              francescoceruti/LinuxShowPlayer/ci/$PKG_VERSION \
+              linux-show-player_$PKG_VERSION.flatpak
+
+      - store_artifacts:
+          path: ~/repo/scripts/Flatpak/out
+          destination: build
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build:
+          context: Bintray
+          filters:
+            branches:
+              only:
+                - master
+                - develop
+                - building

@@ -311,19 +311,19 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
 
     def getSaveSessionFile(self):
         if self.session.session_file:
-            session_dir = self.session.dir()
+            directory = self.session.dir()
         else:
-            session_dir = self.conf.get("session.last_dir", os.getenv("HOME"))
+            directory = self.conf.get("session.last_dir", os.getenv("HOME"))
 
-        filename, accepted = QFileDialog.getSaveFileName(
-            parent=self, filter="*.lsp", directory=session_dir
+        path, _ = QFileDialog.getSaveFileName(
+            parent=self, filter="*.lsp", directory=directory
         )
 
-        if accepted:
-            if not filename.endswith(".lsp"):
-                filename += ".lsp"
+        if path:
+            if not path.endswith(".lsp"):
+                path += ".lsp"
 
-            return filename
+            return path
 
     def setFullScreen(self, enable):
         if enable:
@@ -336,9 +336,9 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
             cue = CueFactory.create_cue(cueClass.__name__)
 
             # Get the (last) index of the current selection
-            layout_selection = list(self.session.layout.selected_cues())
-            if layout_selection:
-                cue.index = layout_selection[-1].index + 1
+            layoutSelection = list(self.session.layout.selected_cues())
+            if layoutSelection:
+                cue.index = layoutSelection[-1].index + 1
 
             self.session.cue_model.add(cue)
         except Exception:

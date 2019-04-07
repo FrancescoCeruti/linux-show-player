@@ -14,6 +14,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
+import os
 
 from PyQt5.QtCore import QStandardPaths, Qt
 from PyQt5.QtWidgets import (
@@ -29,6 +30,8 @@ from PyQt5.QtWidgets import (
     QVBoxLayout,
 )
 
+from lisp.application import Application
+from lisp.plugins.gst_backend import GstBackend
 from lisp.plugins.gst_backend.elements.uri_input import UriInput
 from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.ui_utils import translate
@@ -115,13 +118,22 @@ class UriInputSettings(SettingsPage):
         self.fileGroup.setChecked(False)
 
     def select_file(self):
-        path = QStandardPaths.writableLocation(QStandardPaths.MusicLocation)
-        file, ok = QFileDialog.getOpenFileName(
+        directory = ""
+        current = self.filePath.text()
+
+        if current.startswith("file://"):
+            directory = Application().session.abs_path(current[7:])
+        if not os.path.exists(directory):
+            directory = GstBackend.Config.get("mediaLookupDir", "")
+        if not os.path.exists(directory):
+            directory = self.app.session.dir()
+
+        path, _ = QFileDialog.getOpenFileName(
             self,
             translate("UriInputSettings", "Choose file"),
-            path,
+            directory,
             translate("UriInputSettings", "All files") + " (*)",
         )
 
-        if ok:
-            self.filePath.setText("file://" + file)
+        if os.path.exists(path):
+            self.filePath.setText("file://" + path)

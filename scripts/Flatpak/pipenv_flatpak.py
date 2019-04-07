@@ -22,7 +22,9 @@ def _flatpak_module_template():
     return {
         "name": "",
         "buildsystem": "simple",
-        "build-commands": ["pip3 install --no-deps --prefix=${FLATPAK_DEST} "],
+        "build-commands": [
+            "pip3 --verbose install --no-index --no-deps --ignore-installed --no-build-isolation --prefix=${FLATPAK_DEST} "
+        ],
         "sources": [{"type": "file", "url": "", "sha256": ""}],
     }
 

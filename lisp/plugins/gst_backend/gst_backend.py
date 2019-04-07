@@ -105,14 +105,14 @@ class GstBackend(Plugin, BaseBackend):
 
     def _add_uri_audio_cue(self):
         """Add audio MediaCue(s) form user-selected files"""
-        dir = GstBackend.Config.get("mediaLookupDir", "")
-        if not os.path.exists(dir):
-            dir = self.app.session.dir()
+        directory = GstBackend.Config.get("mediaLookupDir", "")
+        if not os.path.exists(directory):
+            directory = self.app.session.dir()
 
         files, _ = QFileDialog.getOpenFileNames(
             self.app.window,
             translate("GstBackend", "Select media files"),
-            dir,
+            directory,
             qfile_filters(self.supported_extensions(), anyfile=True),
         )
         if files:
