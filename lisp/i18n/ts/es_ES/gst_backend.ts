@@ -114,12 +114,12 @@
   <context>
     <name>GstBackend</name>
     <message>
-      <location filename="../../../plugins/gst_backend/gst_backend.py" line="73"/>
+      <location filename="../../../plugins/gst_backend/gst_backend.py" line="72"/>
       <source>Audio cue (from file)</source>
       <translation>Cue de audio (desde archivo)</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/gst_backend.py" line="113"/>
+      <location filename="../../../plugins/gst_backend/gst_backend.py" line="112"/>
       <source>Select media files</source>
       <translation>Seleccionar archivos de medios</translation>
     </message>
@@ -255,7 +255,7 @@
       <translation>Tono</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/elements/uri_input.py" line="54"/>
+      <location filename="../../../plugins/gst_backend/elements/uri_input.py" line="53"/>
       <source>URI Input</source>
       <translation>Entrada URI</translation>
     </message>
