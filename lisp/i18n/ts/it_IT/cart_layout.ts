@@ -9,27 +9,27 @@
       <translation>Comportamenti predefiniti</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="196"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="190"/>
       <source>Countdown mode</source>
       <translation>Modalità countdown</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="199"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="193"/>
       <source>Show seek-bars</source>
       <translation>Mostra barre di avanzamento</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="200"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="194"/>
       <source>Show dB-meters</source>
       <translation>Mostra indicatori dB</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="204"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="198"/>
       <source>Show accurate time</source>
       <translation>Mostra tempo accurato</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="203"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="197"/>
       <source>Show volume</source>
       <translation>Mostra volume</translation>
     </message>
@@ -39,62 +39,62 @@
       <translation>Dimensione griglia</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="167"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="161"/>
       <source>Play</source>
       <translation>Riproduci</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="167"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="161"/>
       <source>Pause</source>
       <translation>Pausa</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="167"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="161"/>
       <source>Stop</source>
       <translation>Ferma</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="180"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="174"/>
       <source>Reset volume</source>
       <translation>Resetta volume</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="191"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="185"/>
       <source>Add page</source>
       <translation>Aggiungi pagina</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="239"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="233"/>
       <source>Add pages</source>
       <translation>Aggiungi pagine</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="193"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="187"/>
       <source>Remove current page</source>
       <translation>Rimuovi pagina corrente</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="239"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="233"/>
       <source>Number of Pages:</source>
       <translation>Numero di Pagine:</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="281"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="276"/>
       <source>Page {number}</source>
       <translation>Pagina {number}</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="478"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="473"/>
       <source>Warning</source>
       <translation>Attenzione</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="479"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="474"/>
       <source>Every cue in the page will be lost.</source>
       <translation>Ogni cue nella pagina sarà persa.</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="482"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="477"/>
       <source>Are you sure to continue?</source>
       <translation>Sei sicuro di voler continuare?</translation>
     </message>
@@ -156,22 +156,22 @@
   <context>
     <name>ListLayout</name>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="148"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="142"/>
       <source>Edit cue</source>
       <translation>Modifica Cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="148"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="142"/>
       <source>Edit selected cues</source>
       <translation>Modifica cue selezionate</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="148"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="142"/>
       <source>Remove cue</source>
       <translation>Rimuovi cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="148"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="142"/>
       <source>Remove selected cues</source>
       <translation>Rimuovi cue selezionate</translation>
     </message>
