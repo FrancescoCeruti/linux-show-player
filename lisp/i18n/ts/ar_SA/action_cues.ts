@@ -2,40 +2,24 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="ar" sourcelanguage="en">
   <context>
-    <name>ActionCuesDebug</name>
-    <message>
-      <location filename="../../../plugins/action_cues/__init__.py" line="48"/>
-      <source>Registered cue: &quot;{}&quot;</source>
-      <translation>الأغنية المسجلة: &quot;{}&quot;</translation>
-    </message>
-  </context>
-  <context>
-    <name>ActionsCuesError</name>
-    <message>
-      <location filename="../../../plugins/action_cues/__init__.py" line="66"/>
-      <source>Cannot create cue {}</source>
-      <translation>لا يمكن إنشاء الأغنية{}</translation>
-    </message>
-  </context>
-  <context>
     <name>CollectionCue</name>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="83"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="84"/>
       <source>Add</source>
       <translation>أضف</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="88"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="89"/>
       <source>Remove</source>
       <translation>احذف</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="149"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="150"/>
       <source>Cue</source>
       <translation>الأغنية</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="149"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="150"/>
       <source>Action</source>
       <translation>الإجراءات</translation>
     </message>
@@ -43,37 +27,37 @@
   <context>
     <name>CommandCue</name>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="129"/>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="130"/>
       <source>Command</source>
       <translation>الأوامر</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="130"/>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="131"/>
       <source>Command to execute, as in a shell</source>
       <translation type="unfinished">Command to execute, as in a shell</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="133"/>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="134"/>
       <source>Discard command output</source>
       <translation type="unfinished">Discard command output</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="136"/>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="137"/>
       <source>Ignore command errors</source>
       <translation type="unfinished">Ignore command errors</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="139"/>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="140"/>
       <source>Kill instead of terminate</source>
       <translation type="unfinished">Kill instead of terminate</translation>
     </message>
   </context>
   <context>
-    <name>Cue Name</name>
+    <name>CueCategory</name>
     <message>
-      <location filename="../../../plugins/action_cues/osc_cue.py" line="230"/>
-      <source>OSC Settings</source>
-      <translation>إعدادات OSC</translation>
+      <location filename="../../../plugins/action_cues/stop_all.py" line="31"/>
+      <source>Action cues</source>
+      <translation type="unfinished">Action cues</translation>
     </message>
   </context>
   <context>
@@ -113,41 +97,36 @@
       <source>Index Action</source>
       <translation type="unfinished">Index Action</translation>
     </message>
-    <message>
-      <location filename="../../../plugins/action_cues/osc_cue.py" line="82"/>
-      <source>OSC Cue</source>
-      <translation>OSC الأغنية</translation>
-    </message>
   </context>
   <context>
     <name>IndexActionCue</name>
     <message>
-      <location filename="../../../plugins/action_cues/index_action_cue.py" line="120"/>
+      <location filename="../../../plugins/action_cues/index_action_cue.py" line="121"/>
       <source>Index</source>
       <translation>القائمة</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/index_action_cue.py" line="121"/>
+      <location filename="../../../plugins/action_cues/index_action_cue.py" line="122"/>
       <source>Use a relative index</source>
       <translation>استخدام مؤشر نسبي</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/index_action_cue.py" line="124"/>
+      <location filename="../../../plugins/action_cues/index_action_cue.py" line="125"/>
       <source>Target index</source>
       <translation type="unfinished">Target index</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/index_action_cue.py" line="127"/>
+      <location filename="../../../plugins/action_cues/index_action_cue.py" line="128"/>
       <source>Action</source>
       <translation>الإجراءات</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/index_action_cue.py" line="66"/>
+      <location filename="../../../plugins/action_cues/index_action_cue.py" line="67"/>
       <source>No suggestion</source>
       <translation>لا توجد اقتراحات</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/index_action_cue.py" line="129"/>
+      <location filename="../../../plugins/action_cues/index_action_cue.py" line="130"/>
       <source>Suggested cue name</source>
       <translation type="unfinished">Suggested cue name</translation>
     </message>
@@ -156,32 +135,12 @@
     <name>Osc Cue</name>
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="247"/>
-      <source>Type</source>
-      <translation>النوع</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/action_cues/osc_cue.py" line="247"/>
-      <source>Argument</source>
-      <translation>الحجج</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/action_cues/osc_cue.py" line="247"/>
-      <source>FadeTo</source>
-      <translation type="unfinished">FadeTo</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/action_cues/osc_cue.py" line="247"/>
       <source>Fade</source>
       <translation>التلاشي</translation>
     </message>
   </context>
   <context>
     <name>OscCue</name>
-    <message>
-      <location filename="../../../plugins/action_cues/osc_cue.py" line="297"/>
-      <source>OSC Message</source>
-      <translation>رسالة OSC</translation>
-    </message>
     <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="298"/>
       <source>Add</source>
@@ -193,73 +152,35 @@
       <translation>احذف</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/osc_cue.py" line="300"/>
-      <source>Test</source>
-      <translation>اختبار</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/action_cues/osc_cue.py" line="301"/>
-      <source>OSC Path: (example: &quot;/path/to/something&quot;)</source>
-      <translation>مسار OSC: (مثال: &quot;/path/to/something&quot;)</translation>
-    </message>
-    <message>
       <location filename="../../../plugins/action_cues/osc_cue.py" line="304"/>
       <source>Fade</source>
       <translation>تلاشي</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/action_cues/osc_cue.py" line="305"/>
-      <source>Time (sec)</source>
-      <translation>الزمن (ثانية)</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/action_cues/osc_cue.py" line="306"/>
-      <source>Curve</source>
-      <translation>منحنى</translation>
-    </message>
-  </context>
-  <context>
-    <name>OscCueError</name>
-    <message>
-      <location filename="../../../plugins/action_cues/osc_cue.py" line="146"/>
-      <source>Could not parse argument list, nothing sent</source>
-      <translation>لا يمكن تحليل قائمة الحجج، لم يتم إرسال شيء</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/action_cues/osc_cue.py" line="189"/>
-      <source>Error while parsing arguments, nothing sent</source>
-      <translation>حدث خطأ أثناء تحليل الحجج، لم يتم إرسال شيء</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/action_cues/osc_cue.py" line="220"/>
-      <source>Error during cue execution.</source>
-      <translation type="unfinished">Error during cue execution.</translation>
     </message>
   </context>
   <context>
     <name>SeekCue</name>
     <message>
-      <location filename="../../../plugins/action_cues/seek_cue.py" line="98"/>
+      <location filename="../../../plugins/action_cues/seek_cue.py" line="99"/>
       <source>Cue</source>
       <translation>الأغنية</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/seek_cue.py" line="99"/>
+      <location filename="../../../plugins/action_cues/seek_cue.py" line="100"/>
       <source>Click to select</source>
       <translation>إضغط من أجل الإختيار</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/seek_cue.py" line="100"/>
+      <location filename="../../../plugins/action_cues/seek_cue.py" line="101"/>
       <source>Not selected</source>
       <translation>لم يتم اختياره</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/seek_cue.py" line="101"/>
+      <location filename="../../../plugins/action_cues/seek_cue.py" line="102"/>
       <source>Seek</source>
       <translation>بحث</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/seek_cue.py" line="102"/>
+      <location filename="../../../plugins/action_cues/seek_cue.py" line="103"/>
       <source>Time to reach</source>
       <translation type="unfinished">Time to reach</translation>
     </message>
@@ -267,7 +188,7 @@
   <context>
     <name>SettingsPageName</name>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="103"/>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="104"/>
       <source>Command</source>
       <translation>الأوامر</translation>
     </message>
@@ -277,27 +198,27 @@
       <translation type="unfinished">MIDI Settings</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/volume_control.py" line="138"/>
+      <location filename="../../../plugins/action_cues/volume_control.py" line="139"/>
       <source>Volume Settings</source>
       <translation>إعدادات مستوى الصوت</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/seek_cue.py" line="58"/>
+      <location filename="../../../plugins/action_cues/seek_cue.py" line="59"/>
       <source>Seek Settings</source>
       <translation>البحث عن إعدادات</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="59"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="60"/>
       <source>Edit Collection</source>
       <translation>تعديل المجموعة</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/index_action_cue.py" line="64"/>
+      <location filename="../../../plugins/action_cues/index_action_cue.py" line="65"/>
       <source>Action Settings</source>
       <translation>إعدادات الإجراء</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/stop_all.py" line="43"/>
+      <location filename="../../../plugins/action_cues/stop_all.py" line="46"/>
       <source>Stop Settings</source>
       <translation>إيقاف إعدادات</translation>
     </message>
@@ -305,7 +226,7 @@
   <context>
     <name>StopAll</name>
     <message>
-      <location filename="../../../plugins/action_cues/stop_all.py" line="73"/>
+      <location filename="../../../plugins/action_cues/stop_all.py" line="76"/>
       <source>Stop Action</source>
       <translation>التوقف عن العمل</translation>
     </message>
@@ -313,27 +234,27 @@
   <context>
     <name>VolumeControl</name>
     <message>
-      <location filename="../../../plugins/action_cues/volume_control.py" line="198"/>
+      <location filename="../../../plugins/action_cues/volume_control.py" line="199"/>
       <source>Cue</source>
       <translation>الأغنية</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/volume_control.py" line="199"/>
+      <location filename="../../../plugins/action_cues/volume_control.py" line="200"/>
       <source>Click to select</source>
       <translation>إضغط من أجل الإختيار</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/volume_control.py" line="200"/>
+      <location filename="../../../plugins/action_cues/volume_control.py" line="201"/>
       <source>Not selected</source>
       <translation>لم يتم اختياره</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/volume_control.py" line="201"/>
+      <location filename="../../../plugins/action_cues/volume_control.py" line="202"/>
       <source>Volume to reach</source>
       <translation type="unfinished">Volume to reach</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/volume_control.py" line="202"/>
+      <location filename="../../../plugins/action_cues/volume_control.py" line="203"/>
       <source>Fade</source>
       <translation>تلاشي</translation>
     </message>
@@ -341,7 +262,7 @@
   <context>
     <name>VolumeControlError</name>
     <message>
-      <location filename="../../../plugins/action_cues/volume_control.py" line="128"/>
+      <location filename="../../../plugins/action_cues/volume_control.py" line="129"/>
       <source>Error during cue execution.</source>
       <translation>حدث خطأ أثناء تنفيذ الأغنية.</translation>
     </message>
