@@ -9,27 +9,27 @@
       <translation>Comportements par défaut</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="196"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="190"/>
       <source>Countdown mode</source>
       <translation>Compte à rebours</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="199"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="193"/>
       <source>Show seek-bars</source>
       <translation>Afficher barre de progression</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="200"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="194"/>
       <source>Show dB-meters</source>
       <translation>Afficher dB mètres</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="204"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="198"/>
       <source>Show accurate time</source>
       <translation>Afficher temps exact</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="203"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="197"/>
       <source>Show volume</source>
       <translation>Afficher volume</translation>
     </message>
@@ -39,62 +39,62 @@
       <translation>Taille de la grille</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="167"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="161"/>
       <source>Play</source>
       <translation>Lecture</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="167"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="161"/>
       <source>Pause</source>
       <translation>Pause</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="167"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="161"/>
       <source>Stop</source>
       <translation>Stop</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="180"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="174"/>
       <source>Reset volume</source>
       <translation>Réinitialisation du volume</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="191"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="185"/>
       <source>Add page</source>
       <translation>Ajouter une page</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="239"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="233"/>
       <source>Add pages</source>
       <translation>Ajouter des pages</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="193"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="187"/>
       <source>Remove current page</source>
       <translation>Retirer la page actuelle</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="239"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="233"/>
       <source>Number of Pages:</source>
       <translation>Nombre de pages:</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="281"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="276"/>
       <source>Page {number}</source>
       <translation>Page {number}</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="478"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="473"/>
       <source>Warning</source>
       <translation>Attention</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="479"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="474"/>
       <source>Every cue in the page will be lost.</source>
       <translation>Toutes les cues dans la page seront perdues.</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="482"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="477"/>
       <source>Are you sure to continue?</source>
       <translation>Êtes-vous sûr de vouloir continuer?</translation>
     </message>
@@ -156,22 +156,22 @@
   <context>
     <name>ListLayout</name>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="148"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="142"/>
       <source>Edit cue</source>
       <translation>Éditer la cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="148"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="142"/>
       <source>Edit selected cues</source>
       <translation>Éditer les cues sélectionnées</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="148"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="142"/>
       <source>Remove cue</source>
       <translation>Retirer la cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="148"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="142"/>
       <source>Remove selected cues</source>
       <translation>Retirer les cues sélectionnées</translation>
     </message>
