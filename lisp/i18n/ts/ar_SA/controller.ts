@@ -78,52 +78,52 @@
   <context>
     <name>ControllerOscSettings</name>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="138"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="137"/>
       <source>OSC Message</source>
       <translation type="unfinished">OSC Message</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="189"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="188"/>
       <source>OSC</source>
       <translation>OSC</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="193"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="192"/>
       <source>Path</source>
       <translation>المسار</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="193"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="192"/>
       <source>Types</source>
       <translation>الأنواع</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="193"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="192"/>
       <source>Arguments</source>
       <translation>الحجج</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="193"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="192"/>
       <source>Actions</source>
       <translation>الاجراءت</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="222"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="221"/>
       <source>OSC Capture</source>
       <translation>التقاط OSC</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="251"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="250"/>
       <source>Add</source>
       <translation>أضف</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="252"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="251"/>
       <source>Remove</source>
       <translation>احذف</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="253"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="252"/>
       <source>Capture</source>
       <translation type="unfinished">Capture</translation>
     </message>
@@ -210,12 +210,12 @@
   <context>
     <name>OscCue</name>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="147"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="146"/>
       <source>Add</source>
       <translation>أضف</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="148"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="147"/>
       <source>Remove</source>
       <translation>احذف</translation>
     </message>
@@ -238,7 +238,7 @@
       <translation>اختصارات لوحة المفاتيح</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="181"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="180"/>
       <source>OSC Controls</source>
       <translation>ضوابط OSC</translation>
     </message>
