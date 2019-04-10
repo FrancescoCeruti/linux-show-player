@@ -1,6 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="2.0">
 <context>
+    <name>Cue Name</name>
+    <message>
+        <location filename="../../../plugins/osc/osc_cue.py" line="180"/>
+        <source>OSC Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CueCategory</name>
+    <message>
+        <location filename="../../../plugins/osc/osc.py" line="44"/>
+        <source>Integration cues</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CueName</name>
+    <message>
+        <location filename="../../../plugins/osc/osc_cue.py" line="63"/>
+        <source>OSC Cue</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>OscCue</name>
+    <message>
+        <location filename="../../../plugins/osc/osc_cue.py" line="197"/>
+        <source>Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../plugins/osc/osc_cue.py" line="197"/>
+        <source>Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../plugins/osc/osc_cue.py" line="197"/>
+        <source>FadeTo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../plugins/osc/osc_cue.py" line="259"/>
+        <source>Fade</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../plugins/osc/osc_cue.py" line="252"/>
+        <source>OSC Message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../plugins/osc/osc_cue.py" line="253"/>
+        <source>Add</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../plugins/osc/osc_cue.py" line="254"/>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../plugins/osc/osc_cue.py" line="255"/>
+        <source>OSC Path:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../plugins/osc/osc_cue.py" line="256"/>
+        <source>/path/to/something</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../plugins/osc/osc_cue.py" line="260"/>
+        <source>Time (sec)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../plugins/osc/osc_cue.py" line="261"/>
+        <source>Curve</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>OscServerDebug</name>
     <message>
         <location filename="../../../plugins/osc/osc_server.py" line="119"/>

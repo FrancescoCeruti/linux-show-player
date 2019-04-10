@@ -16,7 +16,7 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
-from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QGridLayout, QCheckBox
+from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QCheckBox
 
 from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.ui_utils import translate
@@ -31,31 +31,29 @@ class LayoutsSettings(SettingsPage):
         self.layout().setAlignment(Qt.AlignTop)
 
         self.useFadeGroup = QGroupBox(self)
-        self.useFadeGroup.setLayout(QGridLayout())
+        self.useFadeGroup.setLayout(QVBoxLayout())
         self.layout().addWidget(self.useFadeGroup)
 
         self.stopAllFade = QCheckBox(self.useFadeGroup)
-        self.useFadeGroup.layout().addWidget(self.stopAllFade, 0, 0)
+        self.useFadeGroup.layout().addWidget(self.stopAllFade)
 
         self.interruptAllFade = QCheckBox(self.useFadeGroup)
-        self.useFadeGroup.layout().addWidget(self.interruptAllFade, 0, 1)
+        self.useFadeGroup.layout().addWidget(self.interruptAllFade)
 
         self.pauseAllFade = QCheckBox(self.useFadeGroup)
-        self.useFadeGroup.layout().addWidget(self.pauseAllFade, 1, 0)
+        self.useFadeGroup.layout().addWidget(self.pauseAllFade)
 
         self.resumeAllFade = QCheckBox(self.useFadeGroup)
-        self.useFadeGroup.layout().addWidget(self.resumeAllFade, 1, 1)
+        self.useFadeGroup.layout().addWidget(self.resumeAllFade)
 
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.useFadeGroup.setTitle(
-            translate("ListLayout", "Use fade (global actions)")
-        )
-        self.stopAllFade.setText(translate("ListLayout", "Stop All"))
-        self.pauseAllFade.setText(translate("ListLayout", "Pause All"))
-        self.resumeAllFade.setText(translate("ListLayout", "Resume All"))
-        self.interruptAllFade.setText(translate("ListLayout", "Interrupt All"))
+        self.useFadeGroup.setTitle(translate("ListLayout", "Use fade"))
+        self.stopAllFade.setText(translate("ListLayout", "Stop all"))
+        self.pauseAllFade.setText(translate("ListLayout", "Pause all"))
+        self.resumeAllFade.setText(translate("ListLayout", "Resume all"))
+        self.interruptAllFade.setText(translate("ListLayout", "Interrupt all"))
 
     def loadSettings(self, settings):
         self.stopAllFade.setChecked(settings["layout"]["stopAllFade"])

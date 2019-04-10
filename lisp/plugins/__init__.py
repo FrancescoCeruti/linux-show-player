@@ -57,8 +57,7 @@ def load_plugins(application):
             )
             plugin.Config = config
 
-            # Load plugin translations
-            install_translation(mod_name)
+            # Load plugin (self-contained) translations
             install_translation(mod_name, tr_path=path.join(mod_path, "i18n"))
         except Exception:
             logger.exception(

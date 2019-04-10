@@ -1,5 +1,5 @@
 {
-    "_version_": "0.6dev.12",
+    "_version_": "0.6dev.13",
     "cue": {
         "fadeAction": 3,
         "fadeActionType": "Linear",
@@ -10,6 +10,7 @@
         "theme": "Dark",
         "icons": "numix"
     },
+    "locale": "",
     "session": {
         "minSave": true
     },

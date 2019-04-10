@@ -23,6 +23,7 @@ from PyQt5.QtWidgets import (
     QComboBox,
     QGridLayout,
     QLabel,
+    QHBoxLayout,
 )
 
 from lisp import layout
@@ -30,6 +31,7 @@ from lisp.ui.icons import icon_themes_names
 from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.themes import themes_names
 from lisp.ui.ui_utils import translate
+from lisp.ui.widgets import LocaleComboBox
 
 
 class AppGeneral(SettingsPage):
@@ -60,8 +62,8 @@ class AppGeneral(SettingsPage):
         # Application theme
         self.themeGroup = QGroupBox(self)
         self.themeGroup.setLayout(QGridLayout())
-
         self.layout().addWidget(self.themeGroup)
+
         self.themeLabel = QLabel(self.themeGroup)
         self.themeGroup.layout().addWidget(self.themeLabel, 0, 0)
         self.themeCombo = QComboBox(self.themeGroup)
@@ -76,6 +78,16 @@ class AppGeneral(SettingsPage):
 
         self.themeGroup.layout().setColumnStretch(0, 1)
         self.themeGroup.layout().setColumnStretch(1, 1)
+
+        # Locale
+        self.localeGroup = QGroupBox(self)
+        self.localeGroup.setLayout(QHBoxLayout())
+        self.layout().addWidget(self.localeGroup)
+
+        self.localeLabel = QLabel(self.localeGroup)
+        self.localeGroup.layout().addWidget(self.localeLabel)
+        self.localeCombo = LocaleComboBox(self.localeGroup)
+        self.localeGroup.layout().addWidget(self.localeCombo)
 
         self.retranslateUi()
 
@@ -92,12 +104,20 @@ class AppGeneral(SettingsPage):
         self.themeLabel.setText(translate("AppGeneralSettings", "UI theme:"))
         self.iconsLabel.setText(translate("AppGeneralSettings", "Icons theme:"))
 
+        self.localeGroup.setTitle(
+            translate(
+                "AppGeneralSettings", "Application language (require restart)"
+            )
+        )
+        self.localeLabel.setText(translate("AppGeneralSettings", "Language:"))
+
     def getSettings(self):
         settings = {
             "theme": {
                 "theme": self.themeCombo.currentText(),
                 "icons": self.iconsCombo.currentText(),
             },
+            "locale": self.localeCombo.currentLocale(),
             "layout": {},
         }
 
@@ -119,3 +139,4 @@ class AppGeneral(SettingsPage):
 
         self.themeCombo.setCurrentText(settings["theme"]["theme"])
         self.iconsCombo.setCurrentText(settings["theme"]["icons"])
+        self.localeCombo.setCurrentLocale(settings["locale"])

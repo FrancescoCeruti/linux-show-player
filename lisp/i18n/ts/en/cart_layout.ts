@@ -8,27 +8,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/cart_layout/layout.py" line="196"/>
+        <location filename="../../../plugins/cart_layout/layout.py" line="190"/>
         <source>Countdown mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/cart_layout/layout.py" line="199"/>
+        <location filename="../../../plugins/cart_layout/layout.py" line="193"/>
         <source>Show seek-bars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/cart_layout/layout.py" line="200"/>
+        <location filename="../../../plugins/cart_layout/layout.py" line="194"/>
         <source>Show dB-meters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/cart_layout/layout.py" line="204"/>
+        <location filename="../../../plugins/cart_layout/layout.py" line="198"/>
         <source>Show accurate time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/cart_layout/layout.py" line="203"/>
+        <location filename="../../../plugins/cart_layout/layout.py" line="197"/>
         <source>Show volume</source>
         <translation type="unfinished"></translation>
     </message>
@@ -38,62 +38,62 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/cart_layout/layout.py" line="167"/>
+        <location filename="../../../plugins/cart_layout/layout.py" line="161"/>
         <source>Play</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/cart_layout/layout.py" line="167"/>
+        <location filename="../../../plugins/cart_layout/layout.py" line="161"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/cart_layout/layout.py" line="167"/>
+        <location filename="../../../plugins/cart_layout/layout.py" line="161"/>
         <source>Stop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/cart_layout/layout.py" line="180"/>
+        <location filename="../../../plugins/cart_layout/layout.py" line="174"/>
         <source>Reset volume</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/cart_layout/layout.py" line="191"/>
+        <location filename="../../../plugins/cart_layout/layout.py" line="185"/>
         <source>Add page</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/cart_layout/layout.py" line="239"/>
+        <location filename="../../../plugins/cart_layout/layout.py" line="233"/>
         <source>Add pages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/cart_layout/layout.py" line="193"/>
+        <location filename="../../../plugins/cart_layout/layout.py" line="187"/>
         <source>Remove current page</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/cart_layout/layout.py" line="239"/>
+        <location filename="../../../plugins/cart_layout/layout.py" line="233"/>
         <source>Number of Pages:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/cart_layout/layout.py" line="281"/>
+        <location filename="../../../plugins/cart_layout/layout.py" line="276"/>
         <source>Page {number}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/cart_layout/layout.py" line="478"/>
+        <location filename="../../../plugins/cart_layout/layout.py" line="473"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/cart_layout/layout.py" line="479"/>
+        <location filename="../../../plugins/cart_layout/layout.py" line="474"/>
         <source>Every cue in the page will be lost.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/cart_layout/layout.py" line="482"/>
+        <location filename="../../../plugins/cart_layout/layout.py" line="477"/>
         <source>Are you sure to continue?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -155,22 +155,22 @@
 <context>
     <name>ListLayout</name>
     <message>
-        <location filename="../../../plugins/cart_layout/layout.py" line="148"/>
+        <location filename="../../../plugins/cart_layout/layout.py" line="142"/>
         <source>Edit cue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/cart_layout/layout.py" line="148"/>
+        <location filename="../../../plugins/cart_layout/layout.py" line="142"/>
         <source>Edit selected cues</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/cart_layout/layout.py" line="148"/>
+        <location filename="../../../plugins/cart_layout/layout.py" line="142"/>
         <source>Remove cue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/cart_layout/layout.py" line="148"/>
+        <location filename="../../../plugins/cart_layout/layout.py" line="142"/>
         <source>Remove selected cues</source>
         <translation type="unfinished"></translation>
     </message>

@@ -18,22 +18,15 @@
 import argparse
 import logging
 import os
-import sys
-
 import signal
+import sys
 from functools import partial
 from logging.handlers import RotatingFileHandler
 
 from PyQt5.QtCore import QLocale, QLibraryInfo, QTimer
 from PyQt5.QtWidgets import QApplication
 
-from lisp import (
-    app_dirs,
-    DEFAULT_APP_CONFIG,
-    USER_APP_CONFIG,
-    plugins,
-    I18N_PATH,
-)
+from lisp import app_dirs, DEFAULT_APP_CONFIG, USER_APP_CONFIG, plugins
 from lisp.application import Application
 from lisp.core.configuration import JSONFileConfiguration
 from lisp.ui import themes
@@ -116,6 +109,10 @@ def main():
     locale = args.locale
     if locale:
         QLocale().setDefault(QLocale(locale))
+    else:
+        locale = app_conf["locale"]
+        if locale != "":
+            QLocale().setDefault(QLocale(locale))
 
     logging.info(
         'Using "{}" locale -> {}'.format(
@@ -128,7 +125,7 @@ def main():
     # install_translation("qt", tr_path=qt_tr_path)
     install_translation("qtbase", tr_path=qt_tr_path)
     # Main app translations
-    install_translation("lisp", tr_path=I18N_PATH)
+    install_translation("base")
 
     # Set UI theme
     try:

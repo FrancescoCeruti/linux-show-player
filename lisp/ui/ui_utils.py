@@ -24,7 +24,7 @@ import signal
 from PyQt5.QtCore import QTranslator, QLocale, QSocketNotifier
 from PyQt5.QtWidgets import QApplication, qApp
 
-from lisp import I18N_PATH
+from lisp import I18N_DIR
 
 logger = logging.getLogger(__name__)
 
@@ -89,7 +89,14 @@ def qfile_filters(extensions, allexts=True, anyfile=True):
 _TRANSLATORS = []
 
 
-def install_translation(name, tr_path=I18N_PATH):
+def search_translations(prefix="base", tr_path=I18N_DIR):
+    for entry in os.scandir(tr_path):
+        name = entry.name
+        if entry.is_file() and name.endswith(".qm") and name.startswith(prefix):
+            yield os.path.splitext(name)[0][len(prefix) + 1 :]
+
+
+def install_translation(name, tr_path=I18N_DIR):
     translator = QTranslator()
     translator.load(QLocale(), name, "_", tr_path)
 
