@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2022 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 # Used to indicate the default behaviour when a specific option is not found to
 # raise an exception. Created to enable `None' as a valid fallback value.
 
+import inspect
 import json
 import logging
 from abc import ABCMeta, abstractmethod
@@ -254,3 +255,55 @@ class JSONFileConfiguration(Configuration):
     def _read_json(path):
         with open(path, "r") as f:
             return json.load(f)
+
+
+class PluginSessionConfig(Configuration):
+
+    def __init__(self, plugin):
+        super().__init__()
+        self._plugin = plugin
+
+    def get(self, path, default=_UNSET):
+        if not self._root:
+            self.read()
+        return super().get(path, default)
+
+    def set(self, path, value):
+        if not self._root:
+            self.read()
+        return super().set(path, value)
+
+    def read(self):
+        """Returns a plugin's session-specific config.
+
+        Falls back to a "session.json" file (much like the app-level config "default.json" file)
+        or, if that doesn't exist, returns the plugin's app-level config file.
+
+        This second fallback is for plugins that might wish to set defaults on an app-level,
+        but also permit the user to override those defaults in/for specific sessions.
+        """
+        if self._plugin.app.session is None:
+            return
+
+        plugin_name = self._plugin.__module__.split('.')[-1]
+
+        if plugin_name in self._plugin.app.session.plugins:
+            self._root = self._plugin.app.session.plugins[plugin_name]
+            return
+
+        plugin_path = path.join(
+            path.split(inspect.getfile(self._plugin.__class__))[0],
+            'session.json')
+
+        if path.exists(plugin_path):
+            self._root = JSONFileConfiguration._read_json(plugin_path)
+            return
+
+        self._root = deepcopy(self._plugin.Config._root)
+
+    def write(self):
+        """Writes the plugin's session-specific config to the active session.
+
+        When the user saves the showfile, it will then be written to disk.
+        """
+        self._plugin.app.session.set_plugin_session_config(self._plugin.__module__.split('.')[-1], self._root)

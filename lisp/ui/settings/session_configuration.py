@@ -2,7 +2,7 @@
 #
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2022 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -73,11 +73,10 @@ class SessionConfigurationDialog(QDialog):
             self.__onOk)
 
     def applySettings(self):
-        for plugin, config in self._confsMap.items():
-            settings = config['conf']
-            for page in config['pages']:
-                settings.update(page.getSettings())
-            plugin.WriteSessionConfig(settings)
+        for conf, pages in self._confsMap.items():
+            for page in pages:
+                conf.update(page.getSettings())
+            conf.write()
 
     def _populateModel(self, m_parent, r_parent):
         if r_parent.value is not None:
@@ -98,12 +97,8 @@ class SessionConfigurationDialog(QDialog):
                 mod_index = self.model.addPage(page_instance, parent=m_parent)
 
                 # Keep track of configurations and corresponding pages
-                self._confsMap.setdefault(r_parent.value.plugin,
-                                          {
-                                            "pages": [],
-                                            "conf": config
-                                          })
-                self._confsMap[r_parent.value.plugin]['pages'].append(page_instance)
+                self._confsMap.setdefault(config, []).append(page_instance)
+
         except Exception:
             if not isinstance(page_class, type):
                 page_name = 'InvalidPage'

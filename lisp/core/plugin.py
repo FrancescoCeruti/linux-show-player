@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2020 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2022 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,11 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-import inspect
 import logging
-from os import path
 
-from lisp.core.configuration import DummyConfiguration, JSONFileConfiguration
+from lisp.core.configuration import DummyConfiguration, PluginSessionConfig
 from lisp.ui.ui_utils import translate
 
 logger = logging.getLogger(__name__)
@@ -59,6 +57,9 @@ class Plugin:
         """:type app: lisp.application.Application"""
         self.__app = app
         self.__class__.State |= PluginState.Loaded
+        self.SessionConfig = None
+
+        app.session_created.connect(self._on_session_init)
 
     @property
     def app(self):
@@ -118,31 +119,6 @@ class Plugin:
 
         return translate("PluginsStatusText", "Plugin disabled. Enable to use.")
 
-    @property
-    def SessionConfig(self):
-        """Returns the plugin's session-specific config.
-
-        Fallsback to a "session.json" file (much like the app-level config "default.json" file)
-        or, if that doesn't exist, returns the plugin's app-level config file.
-
-        This second fallback is for plugins that might wish to set defaults on an app-level,
-        but also permit the user to override those defaults in/for specific sessions.
-        """
-        plugin_name = self.__module__.split('.')[-1]
-        if plugin_name in self.__app.session.plugins:
-            return self.__app.session.plugins[plugin_name]
-
-        plugin_path = path.join(
-            path.split(inspect.getfile(self.__class__))[0],
-            'session.json')
-        if path.exists(plugin_path):
-            return JSONFileConfiguration._read_json(plugin_path)
-
-        return self.Config
-
-    def WriteSessionConfig(self, config):
-        """Writes the plugin's session-specific config to the active session.
-
-        When the user saves the showfile, it will then be written to disk.
-        """
-        self.__app.session.set_plugin_session_config(self.__module__.split('.')[-1], config)
+    def _on_session_init(self):
+        """Called each time a session is initialised (eg. when a session is created or opened)."""
+        self.SessionConfig = PluginSessionConfig(self)
