@@ -4,22 +4,22 @@
   <context>
     <name>CollectionCue</name>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="84"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="88"/>
       <source>Add</source>
       <translation>Toevoegen</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="89"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="93"/>
       <source>Remove</source>
       <translation>Verwijderen</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="150"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="157"/>
       <source>Cue</source>
       <translation type="unfinished">Cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="150"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="157"/>
       <source>Action</source>
       <translation>Actie</translation>
     </message>
