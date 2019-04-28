@@ -114,12 +114,12 @@
   <context>
     <name>GstBackend</name>
     <message>
-      <location filename="../../../plugins/gst_backend/gst_backend.py" line="72"/>
+      <location filename="../../../plugins/gst_backend/gst_backend.py" line="73"/>
       <source>Audio cue (from file)</source>
       <translation type="unfinished">Audio cue (from file)</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/gst_backend.py" line="112"/>
+      <location filename="../../../plugins/gst_backend/gst_backend.py" line="113"/>
       <source>Select media files</source>
       <translation type="unfinished">Select media files</translation>
     </message>
@@ -320,42 +320,42 @@
   <context>
     <name>UriInputSettings</name>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="80"/>
+      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="83"/>
       <source>Source</source>
       <translation>Bron</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="81"/>
+      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="84"/>
       <source>Find File</source>
       <translation>Zoek bestand</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="82"/>
+      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="85"/>
       <source>Buffering</source>
       <translation type="unfinished">Buffering</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="83"/>
+      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="86"/>
       <source>Use Buffering</source>
       <translation>Gebruik Buffering</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="86"/>
+      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="89"/>
       <source>Attempt download on network streams</source>
       <translation>Poging tot download op netwerk streams</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="89"/>
+      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="92"/>
       <source>Buffer size (-1 default value)</source>
       <translation>Buffer grootte (-1 standaard waarde)</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="119"/>
+      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="131"/>
       <source>Choose file</source>
       <translation>Kies bestand</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="119"/>
+      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="131"/>
       <source>All files</source>
       <translation>Alle Bestanden</translation>
     </message>
