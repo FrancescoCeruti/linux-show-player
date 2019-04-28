@@ -57,7 +57,7 @@
       <translation>حدّد ضبط مُسبق</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="429"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="423"/>
       <source>Preset name</source>
       <translation type="unfinished">Preset name</translation>
     </message>
@@ -92,7 +92,7 @@
       <translation>تحميل</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="312"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="308"/>
       <source>Warning</source>
       <translation>تحذير</translation>
     </message>
@@ -102,17 +102,17 @@
       <translation>هذا الإسم مستعمل مسبقا!</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="350"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="344"/>
       <source>Cannot export correctly.</source>
       <translation type="unfinished">Cannot export correctly.</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="375"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="369"/>
       <source>Cannot import correctly.</source>
       <translation type="unfinished">Cannot import correctly.</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="430"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="424"/>
       <source>Cue type</source>
       <translation type="unfinished">Cue type</translation>
     </message>
