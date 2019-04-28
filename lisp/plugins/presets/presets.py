@@ -91,7 +91,7 @@ class Presets(Plugin):
         preset_name = select_preset_dialog()
         if preset_name is not None:
             try:
-                load_on_cue(preset_name, cue)
+                load_on_cue(self.app, preset_name, cue)
             except OSError as e:
                 load_preset_error(e, preset_name)
 
@@ -99,7 +99,7 @@ class Presets(Plugin):
         preset_name = select_preset_dialog()
         if preset_name is not None:
             try:
-                load_on_cues(preset_name, cues)
+                load_on_cues(self.app, preset_name, cues)
             except OSError as e:
                 load_preset_error(e, preset_name)
 

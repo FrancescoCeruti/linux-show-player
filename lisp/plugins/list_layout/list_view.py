@@ -25,7 +25,8 @@ from PyQt5.QtCore import (
 from PyQt5.QtGui import QKeyEvent, QContextMenuEvent, QBrush, QColor
 from PyQt5.QtWidgets import QTreeWidget, QHeaderView, QTreeWidgetItem
 
-from lisp.core.signal import Connection
+from lisp.application import Application
+from lisp.command.model import ModelMoveItemsCommand, ModelInsertItemsCommand
 from lisp.cues.cue_factory import CueFactory
 from lisp.plugins.list_layout.list_widgets import (
     CueStatusIcons,
@@ -101,9 +102,9 @@ class CueListView(QTreeWidget):
 
         # Watch for model changes
         self._model = listModel
-        self._model.item_added.connect(self.__cueAdded, Connection.QtQueued)
-        self._model.item_moved.connect(self.__cueMoved, Connection.QtQueued)
-        self._model.item_removed.connect(self.__cueRemoved, Connection.QtQueued)
+        self._model.item_added.connect(self.__cueAdded)
+        self._model.item_moved.connect(self.__cueMoved)
+        self._model.item_removed.connect(self.__cueRemoved)
         self._model.model_reset.connect(self.__modelReset)
 
         # Setup the columns headers
@@ -154,26 +155,17 @@ class CueListView(QTreeWidget):
             rows.append(row)
 
         if event.proposedAction() == Qt.MoveAction:
-            before = 0
-            after = 0
-            for row in sorted(rows):
-                if row < to_index:
-                    self._model.move(row - before, to_index)
-                    before += 1
-                elif row > to_index:
-                    # if we have already moved something we need to shift,
-                    # bool(before) is evaluated as 1 (True) or 0 (False)
-                    self._model.move(row, to_index + after + bool(before))
-                    after += 1
+            Application().commands_stack.do(
+                ModelMoveItemsCommand(self._model, rows, to_index)
+            )
         elif event.proposedAction() == Qt.CopyAction:
-            # TODO: add a copy/clone method to the model?
             new_cues = []
             for row in sorted(rows):
                 new_cues.append(CueFactory.clone_cue(self._model.item(row)))
 
-            for cue in new_cues:
-                self._model.insert(cue, to_index)
-                to_index += 1
+            Application().commands_stack.do(
+                ModelInsertItemsCommand(self._model, to_index, *new_cues)
+            )
 
     def contextMenuEvent(self, event):
         self.contextMenuInvoked.emit(event)

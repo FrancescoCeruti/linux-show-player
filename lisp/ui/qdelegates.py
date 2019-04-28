@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2019 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt, QEvent, QPoint
+from PyQt5.QtCore import Qt, QEvent, QPoint, QSize
 from PyQt5.QtWidgets import (
     QStyledItemDelegate,
     QComboBox,
@@ -28,7 +28,6 @@ from PyQt5.QtWidgets import (
     qApp,
 )
 
-from lisp.application import Application
 from lisp.cues.cue import CueAction
 from lisp.ui.qmodels import CueClassRole
 from lisp.ui.ui_utils import translate
@@ -37,9 +36,19 @@ from lisp.ui.widgets.cue_actions import tr_action
 from lisp.ui.widgets.qenumcombobox import QEnumComboBox
 
 
+class PaddedDelegate(QStyledItemDelegate):
+    def __init__(self, hPad=0, vPad=0, **kwargs):
+        super().__init__(**kwargs)
+        self.hPad = hPad
+        self.vPad = vPad
+
+    def sizeHint(self, option, index):
+        return super().sizeHint(option, index) + QSize(self.hPad, self.vPad)
+
+
 class LabelDelegate(QStyledItemDelegate):
     def _text(self, painter, option, index):
-        return ""
+        return index.data()
 
     def paint(self, painter, option, index):
         # Add 4px of left an right padding
@@ -258,12 +267,13 @@ class CueActionDelegate(EnumComboBoxDelegate):
 
 
 class CueSelectionDelegate(LabelDelegate):
-    def __init__(self, cue_select_dialog, **kwargs):
+    def __init__(self, cue_model, cue_select_dialog, **kwargs):
         super().__init__(**kwargs)
+        self.cue_model = cue_model
         self.cue_select = cue_select_dialog
 
     def _text(self, painter, option, index):
-        cue = Application().cue_model.get(index.data())
+        cue = self.cue_model.get(index.data())
         if cue is not None:
             return "{} | {}".format(cue.index, cue.name)
 

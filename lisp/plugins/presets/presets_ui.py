@@ -16,6 +16,7 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import logging
+from zipfile import BadZipFile
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (
@@ -34,7 +35,6 @@ from PyQt5.QtWidgets import (
     QFileDialog,
     QHBoxLayout,
 )
-from zipfile import BadZipFile
 
 from lisp.core.util import natural_keys
 from lisp.cues.cue import Cue
@@ -50,6 +50,7 @@ from lisp.plugins.presets.lib import (
     rename_preset,
     load_preset,
     load_on_cues,
+    insert_cue_from_preset,
 )
 from lisp.ui.mainwindow import MainWindow
 from lisp.ui.settings.cue_settings import CueSettingsDialog, CueSettingsRegistry
@@ -301,24 +302,17 @@ class PresetsDialog(QDialog):
 
     def __cue_from_preset(self, preset_name):
         try:
-            preset = load_preset(preset_name)
-            if preset is not None:
-                if CueFactory.has_factory(preset.get("_type_")):
-                    cue = CueFactory.create_cue(preset["_type_"])
-
-                    cue.update_properties(preset)
-                    self.app.cue_model.add(cue)
-                else:
-                    QMessageBox.warning(
-                        self,
-                        translate("Presets", "Warning"),
-                        translate(
-                            "Presets",
-                            "Cannot create a cue from this " "preset: {}",
-                        ).format(preset_name),
-                    )
+            insert_cue_from_preset(self.app, preset_name)
         except OSError as e:
             load_preset_error(e, preset_name)
+        except Exception as e:
+            QMessageBox.warning(
+                self,
+                translate("Presets", "Warning"),
+                translate(
+                    "Presets", "Cannot create a cue from this preset: {}"
+                ).format(preset_name),
+            )
 
     def __cue_from_selected(self):
         for item in self.presetsList.selectedItems():
@@ -331,7 +325,7 @@ class PresetsDialog(QDialog):
             try:
                 cues = self.app.layout.get_selected_cues()
                 if cues:
-                    load_on_cues(preset_name, cues)
+                    load_on_cues(self.app, preset_name, cues)
             except OSError as e:
                 load_preset_error(e, preset_name)
 

@@ -3,7 +3,7 @@
 <context>
     <name>RenameCues</name>
     <message>
-        <location filename="../../../plugins/rename_cues/rename_cues.py" line="37"/>
+        <location filename="../../../plugins/rename_cues/rename_cues.py" line="36"/>
         <source>Rename Cues</source>
         <translation type="unfinished"></translation>
     </message>
@@ -60,6 +60,14 @@
     <message>
         <location filename="../../../plugins/rename_cues/rename_ui.py" line="232"/>
         <source>Regex help</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RenameCuesCommand</name>
+    <message>
+        <location filename="../../../plugins/rename_cues/command.py" line="44"/>
+        <source>Renamed {number} cues</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

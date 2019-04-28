@@ -50,7 +50,9 @@ class TriggersSettings(SettingsPage):
 
         self.triggersModel = TriggersModel()
 
-        self.triggersView = TriggersView(self.cue_select, parent=self)
+        self.triggersView = TriggersView(
+            Application().cue_model, self.cue_select, parent=self
+        )
         self.triggersView.setModel(self.triggersModel)
         self.layout().addWidget(self.triggersView)
 
@@ -114,7 +116,7 @@ class TriggersSettings(SettingsPage):
 
 
 class TriggersView(QTableView):
-    def __init__(self, cue_select, **kwargs):
+    def __init__(self, cue_model, cue_select, **kwargs):
         super().__init__(**kwargs)
 
         self.setSelectionBehavior(QTableView.SelectRows)
@@ -134,7 +136,7 @@ class TriggersView(QTableView):
             ComboBoxDelegate(
                 options=[e.value for e in CueTriggers], tr_context="CueTriggers"
             ),
-            CueSelectionDelegate(cue_select),
+            CueSelectionDelegate(cue_model, cue_select),
             CueActionDelegate(),
         ]
 

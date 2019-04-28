@@ -65,3 +65,6 @@ class IconTheme:
     def set_theme_name(theme_name):
         IconTheme._GlobalCache.clear()
         IconTheme._GlobalTheme = IconTheme(theme_name, ICON_THEME_COMMON)
+
+        QIcon.setThemeSearchPaths([ICON_THEMES_DIR])
+        QIcon.setThemeName(theme_name)

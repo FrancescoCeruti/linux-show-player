@@ -26,8 +26,7 @@ gi.require_version("Gst", "1.0")
 from gi.repository import Gst
 from PyQt5.QtWidgets import QMenu, QAction, QDialog
 
-from lisp.core.action import Action
-from lisp.core.actions_handler import MainActionsHandler
+from lisp.command.command import Command
 from lisp.core.plugin import Plugin
 from lisp.core.signal import Signal, Connection
 from lisp.cues.media_cue import MediaCue
@@ -75,7 +74,7 @@ class ReplayGain(Plugin):
 
         if gainUi.result() == QDialog.Accepted:
             if gainUi.only_selected():
-                cues = self.app.layout.get_selected_cues(MediaCue)
+                cues = self.app.layout.selected_cues(MediaCue)
             else:
                 cues = self.app.cue_model.filter(MediaCue)
 
@@ -97,6 +96,7 @@ class ReplayGain(Plugin):
 
             # Gain (main) thread
             self._gain_thread = GainMainThread(
+                self.app.commands_stack,
                 files,
                 gainUi.threads(),
                 gainUi.mode(),
@@ -125,58 +125,58 @@ class ReplayGain(Plugin):
         self._reset(self.app.cue_model.filter(MediaCue))
 
     def _reset_selected(self):
-        self._reset(self.app.layout.get_selected_cues(MediaCue))
+        self._reset(self.app.layout.selected_cues(MediaCue))
 
     def _reset(self, cues):
-        action = GainAction()
+        action = UpdateGainCommand()
         for cue in cues:
             action.add_media(cue.media, ReplayGain.RESET_VALUE)
 
-        MainActionsHandler.do_action(action)
+        self.app.commands_stack.do(action)
 
 
-class GainAction(Action):
-    __slots__ = ("__media_list", "__new_volumes", "__old_volumes")
+class UpdateGainCommand(Command):
+    __slots__ = ("_media_list", "_new_volumes", "_old_volumes")
 
     def __init__(self):
-        self.__media_list = []
-        self.__new_volumes = []
-        self.__old_volumes = []
+        self._media_list = []
+        self._new_volumes = []
+        self._old_volumes = []
 
     def add_media(self, media, new_volume):
-        volume = media.element("Volume")
-        if volume is not None:
-            self.__media_list.append(media)
-            self.__new_volumes.append(new_volume)
-            self.__old_volumes.append(volume.normal_volume)
+        volume_element = media.element("Volume")
+        if volume_element is not None:
+            self._media_list.append(media)
+            self._new_volumes.append(new_volume)
+            self._old_volumes.append(volume_element.normal_volume)
 
     def do(self):
-        for n, media in enumerate(self.__media_list):
-            volume = media.element("Volume")
-            if volume is not None:
-                volume.normal_volume = self.__new_volumes[n]
+        self.__update(self._new_volumes)
 
     def undo(self):
-        for n, media in enumerate(self.__media_list):
-            volume = media.element("Volume")
-            if volume is not None:
-                volume.normal_volume = self.__old_volumes[n]
+        self.__update(self._old_volumes)
 
-    def redo(self):
-        self.do()
+    def __update(self, volumes):
+        for media, volume in zip(self._media_list, volumes):
+            volume_element = media.element("Volume")
+            if volume_element is not None:
+                volume_element.normal_volume = volume
 
     def log(self):
         return "Replay gain volume adjusted."
 
 
 class GainMainThread(Thread):
-    def __init__(self, files, threads, mode, ref_level, norm_level):
+    def __init__(
+        self, commands_stack, files, threads, mode, ref_level, norm_level
+    ):
         super().__init__()
         self.setDaemon(True)
 
-        self._futures = {}
+        self._commands_stack = commands_stack
+        self._update_command = UpdateGainCommand()
         self._running = False
-        self._action = GainAction()
+        self._futures = {}
 
         # file -> media {'filename1': [media1, media2], 'filename2': [media3]}
         self.files = files
@@ -218,7 +218,7 @@ class GainMainThread(Thread):
                     break
 
         if self._running:
-            MainActionsHandler.do_action(self._action)
+            self._commands_stack.do(self._update_command)
         else:
             logger.info(
                 translate("ReplayGainInfo", "Gain processing stopped by user.")
@@ -238,7 +238,7 @@ class GainMainThread(Thread):
                 volume = 1 / gain.peak_value * pow(10, self.norm_level / 20)
 
             for media in self.files[gain.uri]:
-                self._action.add_media(media, volume)
+                self._update_command.add_media(media, volume)
 
             logger.debug(
                 translate("ReplayGainDebug", "Applied gain for: {}").format(

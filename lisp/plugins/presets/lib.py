@@ -20,8 +20,9 @@ import os
 from zipfile import ZipFile
 
 from lisp import app_dirs
-from lisp.core.actions_handler import MainActionsHandler
-from lisp.cues.cue_actions import UpdateCueAction, UpdateCuesAction
+from lisp.command.layout import LayoutAutoInsertCuesCommand
+from lisp.command.cue import UpdateCueCommand, UpdateCuesCommand
+from lisp.cues.cue_factory import CueFactory
 
 PRESETS_DIR = os.path.join(app_dirs.user_data_dir, "presets")
 
@@ -55,31 +56,45 @@ def preset_exists(name):
     return os.path.exists(preset_path(name))
 
 
-def load_on_cue(preset_name, cue):
+def insert_cue_from_preset(app, preset_name):
+    """Insert a new cue using the given preset name.
+
+    :type app: lisp.application.Application
+    :param preset_name: The preset to be loaded in the new cue
+    :type preset_name: str
+    """
+    preset = load_preset(preset_name)
+    cue = CueFactory.create_cue(preset["_type_"])
+    cue.update_properties(preset)
+
+    app.commands_stack.do(LayoutAutoInsertCuesCommand(app.layout, cue))
+
+
+def load_on_cue(app, preset_name, cue):
     """Load the preset with the given name on cue.
 
     Use `UpdateCueAction`
 
+    :type app: lisp.application.Application
     :param preset_name: The preset to be loaded
     :type preset_name: str
     :param cue: The cue on which load the preset
     :type cue: lisp.cue.Cue
     """
-    MainActionsHandler.do_action(UpdateCueAction(load_preset(preset_name), cue))
+    app.commands_stack.do(UpdateCueCommand(load_preset(preset_name), cue))
 
 
-def load_on_cues(preset_name, cues):
+def load_on_cues(app, preset_name, cues):
     """
     Use `UpdateCuesAction`
 
+    :type app: lisp.application.Application
     :param preset_name: The preset to be loaded
     :type preset_name: str
     :param cues: The cues on which load the preset
     :type cues: typing.Iterable[lisp.cue.Cue]
     """
-    MainActionsHandler.do_action(
-        UpdateCuesAction(load_preset(preset_name), cues)
-    )
+    app.commands_stack.do(UpdateCuesCommand(load_preset(preset_name), cues))
 
 
 def load_preset(name):

@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2019 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,6 +18,8 @@
 from PyQt5.QtCore import QModelIndex, QAbstractItemModel, Qt
 from PyQt5.QtWidgets import QWidget, QGridLayout, QTreeView, QSizePolicy
 
+from lisp.ui.qdelegates import PaddedDelegate
+
 
 class PagesTreeWidget(QWidget):
     def __init__(self, navModel, **kwargs):
@@ -34,6 +36,7 @@ class PagesTreeWidget(QWidget):
         self.navWidget = QTreeView()
         self.navWidget.setHeaderHidden(True)
         self.navWidget.setModel(self.navModel)
+        self.navWidget.setItemDelegate(PaddedDelegate(vPad=10))
         self.layout().addWidget(self.navWidget, 0, 0)
 
         self._currentWidget = QWidget()
@@ -73,7 +76,7 @@ class PagesTreeWidget(QWidget):
 
 class PageNode:
     """
-    :type parent: PageNode
+    :type parent: PageNode | None
     :type _children: list[PageNode]
     """
 

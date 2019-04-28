@@ -15,15 +15,16 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+import re
+
 from PyQt5.QtCore import QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import QAction, QInputDialog, QMessageBox
 
+from lisp.command.model import ModelInsertItemsCommand, ModelMoveItemCommand
 from lisp.core.configuration import DummyConfiguration
 from lisp.core.properties import ProxyProperty
-from lisp.core.signal import Connection
 from lisp.cues.cue import Cue
 from lisp.cues.cue_factory import CueFactory
-from lisp.cues.cue_memento_model import CueMementoAdapter
 from lisp.cues.media_cue import MediaCue
 from lisp.layout.cue_layout import CueLayout
 from lisp.layout.cue_menu import (
@@ -79,7 +80,6 @@ class CartLayout(CueLayout):
         self._cart_model.item_removed.connect(self.__cue_removed)
         self._cart_model.item_moved.connect(self.__cue_moved)
         self._cart_model.model_reset.connect(self.__model_reset)
-        self._memento_model = CueMementoAdapter(self._cart_model)
 
         self._cart_view = CartTabWidget()
         self._cart_view.keyPressed.connect(self._key_pressed)
@@ -148,7 +148,7 @@ class CartLayout(CueLayout):
             ),
             SimpleMenuAction(
                 translate("ListLayout", "Remove cue"),
-                self.cue_model.remove,
+                self._remove_cue,
                 translate("ListLayout", "Remove selected cues"),
                 self._remove_cues,
             ),
@@ -199,6 +199,11 @@ class CartLayout(CueLayout):
             translate("CartLayout", "Show accurate time")
         )
 
+    @property
+    def model(self):
+        return self._cart_model
+
+    @property
     def view(self):
         return self._cart_view
 
@@ -272,10 +277,12 @@ class CartLayout(CueLayout):
             page.deleteLater()
 
             # Rename every successive tab accordingly
-            # TODO: check for "standard" naming using a regex
             text = translate("CartLayout", "Page {number}")
+            pattern = re.compile(text.format(number="[0-9]"))
             for n in range(index, self._cart_view.count()):
-                self._cart_view.setTabText(n, text.format(number=n + 1))
+                # Only rename the tabs which text match the default pattern
+                if pattern.fullmatch(self._cart_view.tabText(n)):
+                    self._cart_view.setTabText(n, text.format(number=n + 1))
 
     @tabs.get
     def _get_tabs(self):
@@ -386,7 +393,10 @@ class CartLayout(CueLayout):
         new_index = self.to_1d_index(
             (self._cart_view.currentIndex(), to_row, to_column)
         )
-        self._cart_model.move(widget.cue.index, new_index)
+
+        self.app.commands_stack.do(
+            ModelMoveItemCommand(self._cart_model, widget.cue.index, new_index)
+        )
 
     def _copy_widget(self, widget, to_row, to_column):
         new_index = self.to_1d_index(
@@ -394,7 +404,9 @@ class CartLayout(CueLayout):
         )
         new_cue = CueFactory.clone_cue(widget.cue)
 
-        self._cart_model.insert(new_cue, new_index)
+        self.app.commands_stack.do(
+            ModelInsertItemsCommand(self._cart_model, new_index, new_cue)
+        )
 
     def _cue_context_menu(self, position):
         current_page = self._cart_view.currentWidget()
@@ -407,9 +419,6 @@ class CartLayout(CueLayout):
             cues = [cue_widget.cue]
 
         self.show_cue_context_menu(cues, position)
-
-    def _remove_cue_action(self, cue):
-        self._cart_model.remove(cue)
 
     def _reset_cue_volume(self, cue):
         page, row, column = self.to_3d_index(cue.index)

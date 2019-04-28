@@ -17,11 +17,11 @@
 
 from ast import literal_eval
 
-from lisp.core.action import Action
+from lisp.command.command import Command
 from lisp.ui.ui_utils import translate
 
 
-class UpdateCueAction(Action):
+class UpdateCueCommand(Command):
 
     __slots__ = ("__cue", "__new", "__old")
 
@@ -43,12 +43,12 @@ class UpdateCueAction(Action):
         self.do()
 
     def log(self):
-        return translate("CueActionLog", 'Cue settings changed: "{}"').format(
+        return translate("CueCommandLog", 'Cue settings changed: "{}"').format(
             self.__cue.name
         )
 
 
-class UpdateCuesAction(Action):
+class UpdateCuesCommand(Command):
 
     __slots__ = ("__cues", "__new", "__old")
 
@@ -72,4 +72,4 @@ class UpdateCuesAction(Action):
         self.do()
 
     def log(self):
-        return translate("CueActionLog", "Cues settings changed.")
+        return translate("CueCommandLog", "Cues settings changed.")

@@ -135,7 +135,7 @@ def main():
     except Exception:
         logging.exception("Unable to load theme.")
 
-    # Set LiSP icon theme (not the Qt one)
+    # Set LiSP icon theme
     try:
         icon_theme = app_conf["theme.icons"]
         IconTheme.set_theme_name(icon_theme)

@@ -22,6 +22,7 @@ from PyQt5.QtWidgets import QFileDialog, QApplication
 
 from lisp import backend
 from lisp.backend.backend import Backend as BaseBackend
+from lisp.command.layout import LayoutAutoInsertCuesCommand
 from lisp.core.decorators import memoize
 from lisp.core.plugin import Plugin
 from lisp.cues.cue_factory import CueFactory
@@ -130,6 +131,7 @@ class GstBackend(Plugin, BaseBackend):
         if layout_selection:
             start_index = layout_selection[-1].index + 1
 
+        cues = []
         for index, file in enumerate(files, start_index):
             file = self.app.session.rel_path(file)
             cue = factory(uri="file://" + file)
@@ -139,6 +141,10 @@ class GstBackend(Plugin, BaseBackend):
             if start_index != -1:
                 cue.index = index
 
-            self.app.cue_model.add(cue)
+            cues.append(cue)
+
+        self.app.commands_stack.do(
+            LayoutAutoInsertCuesCommand(self.app.session.layout, *cues)
+        )
 
         QApplication.restoreOverrideCursor()

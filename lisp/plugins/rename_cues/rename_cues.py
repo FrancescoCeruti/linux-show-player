@@ -17,10 +17,9 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtWidgets import QAction, QDialog
-from lisp.core.actions_handler import MainActionsHandler
 
 from lisp.core.plugin import Plugin
-from lisp.plugins.rename_cues.rename_action import RenameCueAction
+from lisp.plugins.rename_cues.command import RenameCuesCommand
 from lisp.ui.ui_utils import translate
 from .rename_ui import RenameUi
 
@@ -57,8 +56,8 @@ class RenameCues(Plugin):
         renameUi.exec()
 
         if renameUi.result() == QDialog.Accepted:
-            MainActionsHandler.do_action(
-                RenameCueAction(self.app, renameUi.cues_list)
+            self.app.commands_stack.do(
+                RenameCuesCommand(self.app.cue_model, renameUi.cues_list)
             )
 
     def terminate(self):

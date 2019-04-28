@@ -17,7 +17,7 @@
 
 from enum import Enum
 
-from PyQt5.QtCore import QT_TRANSLATE_NOOP, Qt
+from PyQt5.QtCore import QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import (
     QComboBox,
     QStyledItemDelegate,

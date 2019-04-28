@@ -66,6 +66,7 @@ class ListLayoutView(QWidget):
         cue = None
         if current is not None:
             index = self.listView.indexOfTopLevelItem(current)
-            cue = self.listModel.item(index)
+            if index < len(self.listModel):
+                cue = self.listModel.item(index)
 
         self.infoPanel.cue = cue

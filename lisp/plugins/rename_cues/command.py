@@ -16,27 +16,31 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from lisp.core.action import Action
+from lisp.command.command import Command
+from lisp.ui.ui_utils import translate
 
 
-class RenameCueAction(Action):
+class RenameCuesCommand(Command):
+    __slots__ = ("_model", "_names")
 
-    # Store names for undo/redo in a dict like that : {'id': name}
-    names = {}
+    def __init__(self, model, rename_list):
+        self._model = model
+        self._names = {}
 
-    def __init__(self, app, new_cue_list):
-        """Store new names with id"""
-        self.app = app
-
-        for renamed_cue in new_cue_list:
-            self.names[renamed_cue["id"]] = renamed_cue["cue_preview"]
+        for renamed_cue in rename_list:
+            self._names[renamed_cue["id"]] = renamed_cue["cue_preview"]
 
     def do(self):
         """Use stored name and exchange with current names"""
-        for id in self.names:
-            cue = self.app.cue_model.get(id)
-            cue.name, self.names[id] = self.names[id], cue.name
+        for id in self._names:
+            cue = self._model.get(id)
+            cue.name, self._names[id] = self._names[id], cue.name
 
     def undo(self):
         """Restore previous names and save current for redo"""
         self.do()
+
+    def log(self) -> str:
+        return translate("RenameCuesCommand", "Renamed {number} cues").format(
+            number=len(self._names)
+        )

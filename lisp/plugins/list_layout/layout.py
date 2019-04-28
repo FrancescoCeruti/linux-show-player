@@ -19,12 +19,12 @@ from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP, QTimer
 from PyQt5.QtGui import QKeySequence
 from PyQt5.QtWidgets import QAction
 
+from lisp.command.model import ModelInsertItemsCommand
 from lisp.core.configuration import DummyConfiguration
 from lisp.core.properties import ProxyProperty
 from lisp.core.signal import Connection
 from lisp.cues.cue import Cue, CueAction, CueNextAction
 from lisp.cues.cue_factory import CueFactory
-from lisp.cues.cue_memento_model import CueMementoAdapter
 from lisp.layout.cue_layout import CueLayout
 from lisp.layout.cue_menu import (
     SimpleMenuAction,
@@ -64,7 +64,6 @@ class ListLayout(CueLayout):
         super().__init__(application)
         self._list_model = CueListModel(self.cue_model)
         self._list_model.item_added.connect(self.__cue_added)
-        self._memento_model = CueMementoAdapter(self._list_model)
         self._running_model = RunningCueModel(self.cue_model)
         self._go_timer = QTimer()
         self._go_timer.setSingleShot(True)
@@ -152,7 +151,7 @@ class ListLayout(CueLayout):
             ),
             SimpleMenuAction(
                 translate("ListLayout", "Remove cue"),
-                self.cue_model.remove,
+                self._remove_cue,
                 translate("ListLayout", "Remove selected"),
                 self._remove_cues,
             ),
@@ -180,11 +179,16 @@ class ListLayout(CueLayout):
             translate("ListLayout", "Selection mode")
         )
 
-    def cues(self, cue_type=Cue):
-        yield from self._list_model
+    @property
+    def model(self):
+        return self._list_model
 
+    @property
     def view(self):
         return self._view
+
+    def cues(self, cue_type=Cue):
+        yield from self._list_model
 
     def standby_index(self):
         return self._view.listView.standbyIndex()
@@ -356,8 +360,13 @@ class ListLayout(CueLayout):
     def _clone_cues(self, cues):
         for pos, cue in enumerate(cues, cues[-1].index + 1):
             clone = CueFactory.clone_cue(cue)
-            clone.name = "Copy of {}".format(clone.name)
-            self._list_model.insert(clone, pos)
+            clone.name = translate("ListLayout", "Copy of {}").format(
+                clone.name
+            )
+
+            self.app.commands_stack.do(
+                ModelInsertItemsCommand(self.model, pos, clone)
+            )
 
     def __go_slot(self):
         if not self._go_timer.isActive():

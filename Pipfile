@@ -17,4 +17,5 @@ requests = "~=2.20"
 sortedcontainers = "~=2.0"
 
 [dev-packages]
+pysnooper = "*"
 html5lib = "*"

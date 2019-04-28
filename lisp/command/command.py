@@ -15,18 +15,19 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from abc import abstractmethod
+from abc import ABC, abstractmethod
 
 
-class Action:
-    """Base class for actions.
+class Command(ABC):
+    """Base class for commands.
 
-    Action provides the ability to revert the changes done in the "do" method,
-    via "undo" method, and redo them via the "redo" method.
-    An action could provide, via the "log" function, a simple log message.
+    Commands provides the ability to revert the changes done in the "do" method,
+    via the "undo" method, and redo them via the "redo" method.
+
+    A command could provide, via the "log" function, a simple log message.
 
     .. warning::
-        Actions may keep reference to external objects.
+        Commands may keep reference to external objects.
     """
 
     __slots__ = ()
@@ -46,14 +47,12 @@ class Action:
         """
         self.do()
 
-    def log(self):
-        """Return a short message to describe what the action does.
+    def log(self) -> str:
+        """Return a short message to describe what the command does.
 
-        The method should return a message that can be used for do/undo/redo
-        generically, an handler will care about adding context to the message.
+        The method should return a message generic for do/undo/redo,
+        an handler will care about adding context to the message.
 
         The log message should be user-friendly and localized.
-
-        :rtype: str
         """
         return ""

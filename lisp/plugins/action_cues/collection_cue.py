@@ -69,7 +69,9 @@ class CollectionCueSettings(SettingsPage):
         )
 
         self.collectionModel = CollectionModel()
-        self.collectionView = CollectionView(self.cue_dialog, parent=self)
+        self.collectionView = CollectionView(
+            Application().cue_model, self.cue_dialog, parent=self
+        )
         self.collectionView.setModel(self.collectionModel)
         self.collectionView.setAlternatingRowColors(True)
         self.layout().addWidget(self.collectionView)
@@ -122,7 +124,7 @@ class CollectionCueSettings(SettingsPage):
 
 
 class CollectionView(QTableView):
-    def __init__(self, cue_select, **kwargs):
+    def __init__(self, cue_model, cue_select, **kwargs):
         super().__init__(**kwargs)
 
         self.setSelectionBehavior(QTableView.SelectRows)
@@ -138,7 +140,10 @@ class CollectionView(QTableView):
         self.verticalHeader().setDefaultSectionSize(26)
         self.verticalHeader().setHighlightSections(False)
 
-        self.delegates = [CueSelectionDelegate(cue_select), CueActionDelegate()]
+        self.delegates = [
+            CueSelectionDelegate(cue_model, cue_select),
+            CueActionDelegate(),
+        ]
 
         for column, delegate in enumerate(self.delegates):
             self.setItemDelegateForColumn(column, delegate)

@@ -17,12 +17,12 @@
 
 from abc import abstractmethod
 
-from lisp.core.actions_handler import MainActionsHandler
+from lisp.command.model import ModelRemoveItemsCommand
 from lisp.core.has_properties import HasProperties
 from lisp.core.signal import Signal
 from lisp.core.util import greatest_common_superclass
 from lisp.cues.cue import Cue, CueAction
-from lisp.cues.cue_actions import UpdateCueAction, UpdateCuesAction
+from lisp.command.cue import UpdateCueCommand, UpdateCuesCommand
 from lisp.layout.cue_menu import CueContextMenu
 from lisp.ui.settings.cue_settings import CueSettingsDialog
 from lisp.ui.ui_utils import adjust_widget_position
@@ -56,6 +56,13 @@ class CueLayout(HasProperties):
         """:rtype: lisp.cues.cue_model.CueModel"""
         return self.app.cue_model
 
+    @property
+    @abstractmethod
+    def model(self):
+        """:rtype: lisp.core.model_adapter.ModelAdapter"""
+        return None
+
+    @property
     @abstractmethod
     def view(self):
         """:rtype: PyQt5.QtWidgets.QWidget"""
@@ -180,8 +187,7 @@ class CueLayout(HasProperties):
         dialog = CueSettingsDialog(cue, parent=self.app.window)
 
         def on_apply(settings):
-            action = UpdateCueAction(settings, cue)
-            MainActionsHandler.do_action(action)
+            self.app.commands_stack.do(UpdateCueCommand(settings, cue))
 
         dialog.onApply.connect(on_apply)
         dialog.exec()
@@ -194,8 +200,7 @@ class CueLayout(HasProperties):
             )
 
             def on_apply(settings):
-                action = UpdateCuesAction(settings, cues)
-                MainActionsHandler.do_action(action)
+                self.app.commands_stack.do(UpdateCuesCommand(settings, cues))
 
             dialog.onApply.connect(on_apply)
             dialog.exec()
@@ -209,7 +214,7 @@ class CueLayout(HasProperties):
 
     def show_cue_context_menu(self, cues, position):
         if cues:
-            menu = self.CuesMenu.create_qmenu(cues, self.view())
+            menu = self.CuesMenu.create_qmenu(cues, self.view)
             menu.move(position)
             menu.show()
 
@@ -219,8 +224,9 @@ class CueLayout(HasProperties):
         """Destroy all the layout elements"""
 
     def _remove_cue(self, cue):
-        self.cue_model.remove(cue)
+        self._remove_cues((cue,))
 
     def _remove_cues(self, cues):
-        for cue in cues:
-            self.cue_model.remove(cue)
+        self.app.commands_stack.do(
+            ModelRemoveItemsCommand(self.cue_model, *cues)
+        )
