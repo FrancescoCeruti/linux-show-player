@@ -35,27 +35,27 @@
   <context>
     <name>TriggersSettings</name>
     <message>
-      <location filename="../../../plugins/triggers/triggers_settings.py" line="63"/>
+      <location filename="../../../plugins/triggers/triggers_settings.py" line="67"/>
       <source>Add</source>
       <translation>Dodaj</translation>
     </message>
     <message>
-      <location filename="../../../plugins/triggers/triggers_settings.py" line="68"/>
+      <location filename="../../../plugins/triggers/triggers_settings.py" line="72"/>
       <source>Remove</source>
       <translation>Odstrani</translation>
     </message>
     <message>
-      <location filename="../../../plugins/triggers/triggers_settings.py" line="148"/>
+      <location filename="../../../plugins/triggers/triggers_settings.py" line="152"/>
       <source>Trigger</source>
       <translation>Prožilec</translation>
     </message>
     <message>
-      <location filename="../../../plugins/triggers/triggers_settings.py" line="148"/>
+      <location filename="../../../plugins/triggers/triggers_settings.py" line="152"/>
       <source>Cue</source>
       <translation>Vrsta</translation>
     </message>
     <message>
-      <location filename="../../../plugins/triggers/triggers_settings.py" line="148"/>
+      <location filename="../../../plugins/triggers/triggers_settings.py" line="152"/>
       <source>Action</source>
       <translation>Akcija</translation>
     </message>
