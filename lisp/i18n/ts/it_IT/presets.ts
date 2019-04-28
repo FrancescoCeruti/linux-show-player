@@ -57,7 +57,7 @@
       <translation>Seleziona Preset</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="429"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="423"/>
       <source>Preset name</source>
       <translation>Nome preset</translation>
     </message>
@@ -92,7 +92,7 @@
       <translation>Importa</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="312"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="308"/>
       <source>Warning</source>
       <translation>Avviso</translation>
     </message>
@@ -102,17 +102,17 @@
       <translation>Lo stesso nome è già in uso!</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="350"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="344"/>
       <source>Cannot export correctly.</source>
       <translation>Impossibile esportare correttamente.</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="375"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="369"/>
       <source>Cannot import correctly.</source>
       <translation>Impossible importare correttamente.</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="430"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="424"/>
       <source>Cue type</source>
       <translation>Tipo di cue</translation>
     </message>
