@@ -64,7 +64,7 @@
       <translation>إضافة صفحة</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="233"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="238"/>
       <source>Add pages</source>
       <translation>إضافة صفحات</translation>
     </message>
@@ -74,27 +74,27 @@
       <translation>إزالة الصفحة الحالية</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="233"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="238"/>
       <source>Number of Pages:</source>
       <translation>عدد الصفحات:</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="276"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="280"/>
       <source>Page {number}</source>
       <translation>الصفحة{number}</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="473"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="482"/>
       <source>Warning</source>
       <translation>تحذير</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="474"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="483"/>
       <source>Every cue in the page will be lost.</source>
       <translation>ستفقد كل أغنية في الصفحة.</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="477"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="486"/>
       <source>Are you sure to continue?</source>
       <translation>هل أنت متأكد من أن تواصل؟</translation>
     </message>
@@ -112,7 +112,7 @@
   <context>
     <name>LayoutDescription</name>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="44"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="45"/>
       <source>Organize cues in grid like pages</source>
       <translation type="unfinished">Organize cues in grid like pages</translation>
     </message>
@@ -120,27 +120,27 @@
   <context>
     <name>LayoutDetails</name>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="48"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="49"/>
       <source>Click a cue to run it</source>
       <translation type="unfinished">Click a cue to run it</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="49"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="50"/>
       <source>SHIFT + Click to edit a cue</source>
       <translation type="unfinished">SHIFT + Click to edit a cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="50"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="51"/>
       <source>CTRL + Click to select a cue</source>
       <translation type="unfinished">CTRL + Click to select a cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="51"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="52"/>
       <source>To copy cues drag them while pressing CTRL</source>
       <translation type="unfinished">To copy cues drag them while pressing CTRL</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="54"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="55"/>
       <source>To move cues drag them while pressing SHIFT</source>
       <translation type="unfinished">To move cues drag them while pressing SHIFT</translation>
     </message>
@@ -148,7 +148,7 @@
   <context>
     <name>LayoutName</name>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="43"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="44"/>
       <source>Cart Layout</source>
       <translation type="unfinished">Cart Layout</translation>
     </message>
