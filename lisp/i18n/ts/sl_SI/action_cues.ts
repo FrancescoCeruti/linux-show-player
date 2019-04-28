@@ -4,22 +4,22 @@
   <context>
     <name>CollectionCue</name>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="84"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="88"/>
       <source>Add</source>
       <translation>Dodaj</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="89"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="93"/>
       <source>Remove</source>
       <translation>Odstrani</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="150"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="157"/>
       <source>Cue</source>
       <translation>Vrsta</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="150"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="157"/>
       <source>Action</source>
       <translation>Akcija</translation>
     </message>
