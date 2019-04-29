@@ -59,7 +59,9 @@ class Plugin:
         self.__class__.State |= PluginState.Loaded
         self.SessionConfig = None
 
-        app.session_created.connect(self._on_session_init)
+        app.session_created.connect(self._on_session_created)
+        app.session_initialised.connect(self._on_session_initialised)
+        app.session_before_finalize.connect(self._pre_session_deinitialisation)
 
     @property
     def app(self):
@@ -119,6 +121,33 @@ class Plugin:
 
         return translate("PluginsStatusText", "Plugin disabled. Enable to use.")
 
-    def _on_session_init(self):
-        """Called each time a session is initialised (eg. when a session is created or opened)."""
+    def _on_session_created(self, _):
+        """Called immediately after a session is created.
+
+        In the case of a file load, this gets called before the session
+        properties and cues are restored.
+        """
         self.SessionConfig = PluginSessionConfig(self)
+        self.SessionConfig.changed.connect(self._on_session_config_altered)
+        self.SessionConfig.updated.connect(self._on_session_config_altered)
+
+    def _on_session_initialised(self, _):
+        """Called once a session is fully initialised.
+
+        For new sessions, there is not much difference between this and `app.session_created`
+
+        For loaded sessions, this is called *after* the various showfile properties have
+        been set, but *before* the cues are restored.
+        """
+        pass
+
+    def _pre_session_deinitialisation(self, _):
+        """Called just before a session is deinitialised.
+
+        The session object still exists at this point, so may still be accessed.
+        """
+        pass
+
+    def _on_session_config_altered(self, _):
+        """Called whenever the session config is changed or updated in any way."""
+        pass

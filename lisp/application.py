@@ -52,6 +52,7 @@ logger = logging.getLogger(__name__)
 class Application(metaclass=Singleton):
     def __init__(self, app_conf=DummyConfiguration()):
         self.session_created = Signal()
+        self.session_initialised = Signal()
         self.session_loaded = Signal()
         self.session_before_finalize = Signal()
 
@@ -125,6 +126,7 @@ class Application(metaclass=Singleton):
 
             if layout_name.lower() != "nodefault":
                 self.__new_session(layout.get_layout(layout_name))
+                self.session_initialised.emit(self.session)
             else:
                 self.__new_session_dialog()
 
@@ -145,6 +147,7 @@ class Application(metaclass=Singleton):
                     self.__load_from_file(dialog.sessionPath)
                 else:
                     self.__new_session(dialog.selected())
+                    self.session_initialised.emit(self.session)
             else:
                 if self.__session is None:
                     # If the user close the dialog, and no layout exists
@@ -218,6 +221,8 @@ class Application(metaclass=Singleton):
 
             for plugin_name, plugin_config in session_dict['session']['plugins'].items():
                 self.__session.set_plugin_session_config(plugin_name, plugin_config)
+
+            self.session_initialised.emit(self.session)
 
             # Load cues
             for cues_dict in session_dict.get("cues", {}):
