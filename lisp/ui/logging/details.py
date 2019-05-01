@@ -16,7 +16,7 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import traceback
-from PyQt5.QtGui import QFont
+from PyQt5.QtGui import QFont, QFontDatabase
 from PyQt5.QtWidgets import QTextEdit
 
 from lisp.ui.logging.common import LOG_ATTRIBUTES
@@ -30,9 +30,7 @@ class LogDetails(QTextEdit):
         self.setLineWrapMode(self.NoWrap)
         self.setReadOnly(True)
 
-        font = QFont("Monospace")
-        font.setStyleHint(QFont.Monospace)
-        self.setFont(font)
+        self.setFont(QFontDatabase.systemFont(QFontDatabase.FixedFont))
 
     def setLogRecord(self, record):
         self._record = record

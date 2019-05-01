@@ -16,7 +16,7 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import QRect, Qt
-from PyQt5.QtGui import QFont, QPainter, QBrush, QColor, QPen, QPainterPath
+from PyQt5.QtGui import QFont, QPainter, QBrush, QColor, QPen, QPainterPath, QFontDatabase
 from PyQt5.QtWidgets import QLabel, QProgressBar, QWidget
 
 from lisp.core.signal import Connection
@@ -169,9 +169,7 @@ class TimeWidget(QProgressBar):
         self.setObjectName("ListTimeWidget")
         self.setValue(0)
         self.setTextVisible(True)
-        font = QFont("Monospace")
-        font.setStyleHint(QFont.Monospace)
-        self.setFont(font)
+        self.setFont(QFontDatabase.systemFont(QFontDatabase.FixedFont))
 
         self.show_zero_duration = False
         self.accurate_time = True

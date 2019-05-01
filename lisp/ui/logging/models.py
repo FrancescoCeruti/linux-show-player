@@ -148,7 +148,7 @@ class LogRecordFilterModel(QSortFilterProxyModel):
         return False
 
 
-def log_model_factory(config):
+def create_log_model(config):
     # Get logging configuration
     limit = config.get("logging.limit", 0)
     levels_background = {

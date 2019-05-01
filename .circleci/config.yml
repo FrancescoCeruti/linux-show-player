@@ -124,6 +124,8 @@ workflows:
           context: Bintray
           filters:
             branches:
+              ignore:
+                - /l10n_.*/
               only:
                 - master
                 - develop

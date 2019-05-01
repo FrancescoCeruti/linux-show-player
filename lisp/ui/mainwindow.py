@@ -18,7 +18,7 @@
 import logging
 import os
 from PyQt5 import QtCore
-from PyQt5.QtCore import pyqtSignal
+from PyQt5.QtCore import pyqtSignal, Qt
 from PyQt5.QtGui import QKeySequence
 from PyQt5.QtWidgets import (
     QMainWindow,
@@ -31,7 +31,7 @@ from PyQt5.QtWidgets import (
     QMessageBox,
     QVBoxLayout,
     QWidget,
-)
+    QFrame, QHBoxLayout, QSizePolicy)
 from functools import partial
 
 from lisp.command.layout import LayoutAutoInsertCuesCommand
@@ -41,11 +41,12 @@ from lisp.cues.media_cue import MediaCue
 from lisp.ui.about import About
 from lisp.ui.logging.dialog import LogDialogs
 from lisp.ui.logging.handler import LogModelHandler
-from lisp.ui.logging.models import log_model_factory
-from lisp.ui.logging.status import LogStatusView
+from lisp.ui.logging.models import create_log_model
+from lisp.ui.logging.status import LogStatusIcon, LogMessageWidget
 from lisp.ui.logging.viewer import LogViewer
 from lisp.ui.settings.app_configuration import AppConfigurationDialog
 from lisp.ui.ui_utils import translate
+from lisp.ui.widgets.qclock import QDigitalLabelClock
 
 logger = logging.getLogger(__name__)
 
@@ -165,25 +166,17 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         self.menuAbout.addSeparator()
         self.menuAbout.addAction(self.actionAbout_Qt)
 
-        # Logging model
-        self.logModel = log_model_factory(self._app.conf)
-
-        # Handler to populate the model
-        self.logHandler = LogModelHandler(self.logModel)
-        logging.getLogger().addHandler(self.logHandler)
-
         # Logging
+        self.logModel = create_log_model(self._app.conf)
+        self.logHandler = LogModelHandler(self.logModel)
         self.logViewer = LogViewer(self.logModel, self._app.conf)
-
-        # Logging status widget
-        self.logStatus = LogStatusView(self.logModel)
-        self.logStatus.double_clicked.connect(self.logViewer.showMaximized)
-        self.statusBar().addPermanentWidget(self.logStatus)
-
-        # Logging dialogs for errors
         self.logDialogs = LogDialogs(
             self.logModel, level=logging.ERROR, parent=self
         )
+        logging.getLogger().addHandler(self.logHandler)
+
+        # Status bar
+        self.statusBar().addPermanentWidget(MainStatusBar(self), 1)
 
         # Set component text
         self.retranslateUi()
@@ -423,3 +416,40 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
 
     def __about(self):
         About(self).show()
+
+
+class MainStatusBar(QWidget):
+    def __init__(self, mainWindow):
+        super().__init__(parent=mainWindow.statusBar())
+        self.setLayout(QHBoxLayout())
+        self.layout().setSpacing(10)
+        self.layout().setContentsMargins(5, 5, 5, 5)
+
+        # Clock
+        self.clock = QDigitalLabelClock(parent=self)
+        self.clock.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        self.addWidget(self.clock)
+        # ---------
+        self.addDivider()
+        # Logging Messages
+        self.logMessage = LogMessageWidget(mainWindow.logModel, parent=self)
+        self.addWidget(self.logMessage)
+        # ---------
+        self.addDivider()
+        # Logging StatusIcon
+        self.logStatus = LogStatusIcon(mainWindow.logModel, parent=self)
+        self.logStatus.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        self.logStatus.double_clicked.connect(
+            mainWindow.logViewer.showMaximized
+        )
+        self.addWidget(self.logStatus)
+
+    def addWidget(self, widget):
+        self.layout().addWidget(widget)
+
+    def addDivider(self):
+        divider = QFrame(self)
+        divider.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Minimum)
+        divider.setFrameShape(QFrame.VLine)
+        divider.setFrameShadow(QFrame.Sunken)
+        self.addWidget(divider)
