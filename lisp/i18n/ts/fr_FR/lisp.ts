@@ -66,9 +66,6 @@
     </message>
   </context>
   <context>
-    <name>Actions</name>
-  </context>
-  <context>
     <name>AlsaSinkSettings</name>
     <message>
       <location filename="../../../plugins/gst_backend/settings/alsa_sink.py" line="62"/>
@@ -320,22 +317,22 @@
   <context>
     <name>CollectionCue</name>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="88"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="86"/>
       <source>Add</source>
       <translation type="unfinished">Add</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="93"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="91"/>
       <source>Remove</source>
       <translation type="unfinished">Remove</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="157"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="155"/>
       <source>Cue</source>
       <translation type="unfinished">Cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="157"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="155"/>
       <source>Action</source>
       <translation type="unfinished">Action</translation>
     </message>
@@ -672,7 +669,7 @@
       <translation type="unfinished">Integration cues</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="269"/>
+      <location filename="../../../ui/mainwindow.py" line="262"/>
       <source>Misc cues</source>
       <translation type="unfinished">Misc cues</translation>
     </message>
@@ -1391,6 +1388,14 @@
     </message>
   </context>
   <context>
+    <name>LogStatusIcon</name>
+    <message>
+      <location filename="../../../ui/logging/status.py" line="36"/>
+      <source>Errors/Warnings</source>
+      <translation type="unfinished">Errors/Warnings</translation>
+    </message>
+  </context>
+  <context>
     <name>Logging</name>
     <message>
       <location filename="../../../ui/logging/common.py" line="21"/>
@@ -1653,132 +1658,132 @@
   <context>
     <name>MainWindow</name>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="194"/>
+      <location filename="../../../ui/mainwindow.py" line="187"/>
       <source>&amp;File</source>
       <translation>&amp;Fichier</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="195"/>
+      <location filename="../../../ui/mainwindow.py" line="188"/>
       <source>New session</source>
       <translation>Nouvelle session</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="197"/>
+      <location filename="../../../ui/mainwindow.py" line="190"/>
       <source>Open</source>
       <translation>Ouvrir</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="199"/>
+      <location filename="../../../ui/mainwindow.py" line="192"/>
       <source>Save session</source>
       <translation>Sauvegarder la session</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="201"/>
+      <location filename="../../../ui/mainwindow.py" line="194"/>
       <source>Preferences</source>
       <translation>Préférences</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="203"/>
+      <location filename="../../../ui/mainwindow.py" line="196"/>
       <source>Save as</source>
       <translation>Sauvegarder sous</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="205"/>
+      <location filename="../../../ui/mainwindow.py" line="198"/>
       <source>Full Screen</source>
       <translation>Plein écran</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="207"/>
+      <location filename="../../../ui/mainwindow.py" line="200"/>
       <source>Exit</source>
       <translation>Quitter</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="209"/>
+      <location filename="../../../ui/mainwindow.py" line="202"/>
       <source>&amp;Edit</source>
       <translation>Édit&amp;er</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="210"/>
+      <location filename="../../../ui/mainwindow.py" line="203"/>
       <source>Undo</source>
       <translation>Annuler</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="212"/>
+      <location filename="../../../ui/mainwindow.py" line="205"/>
       <source>Redo</source>
       <translation>Refaire</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="214"/>
+      <location filename="../../../ui/mainwindow.py" line="207"/>
       <source>Select all</source>
       <translation>Tout sélectionner</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="215"/>
+      <location filename="../../../ui/mainwindow.py" line="208"/>
       <source>Select all media cues</source>
       <translation>Sélectionner toutes les cues média</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="219"/>
+      <location filename="../../../ui/mainwindow.py" line="212"/>
       <source>Deselect all</source>
       <translation>Tout désélectionner </translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="220"/>
+      <location filename="../../../ui/mainwindow.py" line="213"/>
       <source>CTRL+SHIFT+A</source>
       <translation>CTRL+MAJ+A</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="221"/>
+      <location filename="../../../ui/mainwindow.py" line="214"/>
       <source>Invert selection</source>
       <translation>Inverser la sélection</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="224"/>
+      <location filename="../../../ui/mainwindow.py" line="217"/>
       <source>CTRL+I</source>
       <translation type="unfinished">CTRL+I</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="225"/>
+      <location filename="../../../ui/mainwindow.py" line="218"/>
       <source>Edit selected</source>
       <translation>Éditer la sélection</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="226"/>
+      <location filename="../../../ui/mainwindow.py" line="219"/>
       <source>CTRL+SHIFT+E</source>
       <translation>CTRL+MAJ+E</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="228"/>
+      <location filename="../../../ui/mainwindow.py" line="221"/>
       <source>&amp;Layout</source>
       <translation>É&amp;tat</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="230"/>
+      <location filename="../../../ui/mainwindow.py" line="223"/>
       <source>&amp;Tools</source>
       <translation>Ou&amp;tils</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="231"/>
+      <location filename="../../../ui/mainwindow.py" line="224"/>
       <source>Edit selection</source>
       <translation>Éditer la sélection</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="233"/>
+      <location filename="../../../ui/mainwindow.py" line="226"/>
       <source>&amp;About</source>
       <translation>À &amp;propos</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="234"/>
+      <location filename="../../../ui/mainwindow.py" line="227"/>
       <source>About</source>
       <translation>À propos</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="235"/>
+      <location filename="../../../ui/mainwindow.py" line="228"/>
       <source>About Qt</source>
       <translation>À propos de Qt</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="397"/>
+      <location filename="../../../ui/mainwindow.py" line="394"/>
       <source>Close session</source>
       <translation>Fermer la session</translation>
     </message>
@@ -1793,7 +1798,7 @@
       <translation>Annuler les changements ?</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="407"/>
+      <location filename="../../../ui/mainwindow.py" line="404"/>
       <source>Do you want to save them now?</source>
       <translation type="unfinished">Do you want to save them now?</translation>
     </message>
@@ -1801,7 +1806,7 @@
   <context>
     <name>MainWindowDebug</name>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="262"/>
+      <location filename="../../../ui/mainwindow.py" line="255"/>
       <source>Registered cue menu: &quot;{}&quot;</source>
       <translation type="unfinished">Registered cue menu: &quot;{}&quot;</translation>
     </message>
@@ -1809,7 +1814,7 @@
   <context>
     <name>MainWindowError</name>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="344"/>
+      <location filename="../../../ui/mainwindow.py" line="339"/>
       <source>Cannot create cue {}</source>
       <translation type="unfinished">Cannot create cue {}</translation>
     </message>
@@ -2177,12 +2182,12 @@
   <context>
     <name>Preset</name>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="222"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="223"/>
       <source>Create Cue</source>
       <translation type="unfinished">Create Cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="223"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="224"/>
       <source>Load on selected Cues</source>
       <translation type="unfinished">Load on selected Cues</translation>
     </message>
@@ -2198,32 +2203,32 @@
   <context>
     <name>Presets</name>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="66"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="67"/>
       <source>Cannot scan presets</source>
       <translation type="unfinished">Cannot scan presets</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="70"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="71"/>
       <source>Error while deleting preset &quot;{}&quot;</source>
       <translation type="unfinished">Error while deleting preset &quot;{}&quot;</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="77"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="78"/>
       <source>Cannot load preset &quot;{}&quot;</source>
       <translation type="unfinished">Cannot load preset &quot;{}&quot;</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="83"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="84"/>
       <source>Cannot save preset &quot;{}&quot;</source>
       <translation type="unfinished">Cannot save preset &quot;{}&quot;</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="89"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="90"/>
       <source>Cannot rename preset &quot;{}&quot;</source>
       <translation type="unfinished">Cannot rename preset &quot;{}&quot;</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="100"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="101"/>
       <source>Select Preset</source>
       <translation type="unfinished">Select Preset</translation>
     </message>
@@ -2238,42 +2243,42 @@
       <translation type="unfinished">Preset name</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="218"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="219"/>
       <source>Add</source>
       <translation type="unfinished">Add</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="219"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="220"/>
       <source>Rename</source>
       <translation type="unfinished">Rename</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="220"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="221"/>
       <source>Edit</source>
       <translation type="unfinished">Edit</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="221"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="222"/>
       <source>Remove</source>
       <translation type="unfinished">Remove</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="226"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="227"/>
       <source>Export selected</source>
       <translation type="unfinished">Export selected</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="229"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="230"/>
       <source>Import</source>
       <translation type="unfinished">Import</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="308"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="309"/>
       <source>Warning</source>
       <translation type="unfinished">Warning</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="267"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="268"/>
       <source>The same name is already used!</source>
       <translation type="unfinished">The same name is already used!</translation>
     </message>
@@ -2306,6 +2311,11 @@
       <location filename="../../../plugins/presets/presets.py" line="72"/>
       <source>Save as preset</source>
       <translation type="unfinished">Save as preset</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/presets/presets_ui.py" line="309"/>
+      <source>Cannot create a cue from this preset: {}</source>
+      <translation type="unfinished">Cannot create a cue from this preset: {}</translation>
     </message>
   </context>
   <context>
@@ -2446,12 +2456,12 @@
   <context>
     <name>ReplayGainDebug</name>
     <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="241"/>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="243"/>
       <source>Applied gain for: {}</source>
       <translation type="unfinished">Applied gain for: {}</translation>
     </message>
     <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="247"/>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="249"/>
       <source>Discarded gain for: {}</source>
       <translation type="unfinished">Discarded gain for: {}</translation>
     </message>
@@ -2459,17 +2469,17 @@
   <context>
     <name>ReplayGainInfo</name>
     <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="221"/>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="223"/>
       <source>Gain processing stopped by user.</source>
       <translation type="unfinished">Gain processing stopped by user.</translation>
     </message>
     <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="286"/>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="288"/>
       <source>Started gain calculation for: {}</source>
       <translation type="unfinished">Started gain calculation for: {}</translation>
     </message>
     <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="321"/>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="323"/>
       <source>Gain calculated for: {}</source>
       <translation type="unfinished">Gain calculated for: {}</translation>
     </message>
@@ -2746,27 +2756,27 @@
   <context>
     <name>TriggersSettings</name>
     <message>
-      <location filename="../../../plugins/triggers/triggers_settings.py" line="67"/>
+      <location filename="../../../plugins/triggers/triggers_settings.py" line="65"/>
       <source>Add</source>
       <translation type="unfinished">Add</translation>
     </message>
     <message>
-      <location filename="../../../plugins/triggers/triggers_settings.py" line="72"/>
+      <location filename="../../../plugins/triggers/triggers_settings.py" line="70"/>
       <source>Remove</source>
       <translation type="unfinished">Remove</translation>
     </message>
     <message>
-      <location filename="../../../plugins/triggers/triggers_settings.py" line="152"/>
+      <location filename="../../../plugins/triggers/triggers_settings.py" line="150"/>
       <source>Trigger</source>
       <translation type="unfinished">Trigger</translation>
     </message>
     <message>
-      <location filename="../../../plugins/triggers/triggers_settings.py" line="152"/>
+      <location filename="../../../plugins/triggers/triggers_settings.py" line="150"/>
       <source>Cue</source>
       <translation type="unfinished">Cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/triggers/triggers_settings.py" line="152"/>
+      <location filename="../../../plugins/triggers/triggers_settings.py" line="150"/>
       <source>Action</source>
       <translation type="unfinished">Action</translation>
     </message>
