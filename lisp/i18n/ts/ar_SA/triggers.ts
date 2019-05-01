@@ -35,27 +35,27 @@
   <context>
     <name>TriggersSettings</name>
     <message>
-      <location filename="../../../plugins/triggers/triggers_settings.py" line="67"/>
+      <location filename="../../../plugins/triggers/triggers_settings.py" line="65"/>
       <source>Add</source>
       <translation>أضف</translation>
     </message>
     <message>
-      <location filename="../../../plugins/triggers/triggers_settings.py" line="72"/>
+      <location filename="../../../plugins/triggers/triggers_settings.py" line="70"/>
       <source>Remove</source>
       <translation>احذف</translation>
     </message>
     <message>
-      <location filename="../../../plugins/triggers/triggers_settings.py" line="152"/>
+      <location filename="../../../plugins/triggers/triggers_settings.py" line="150"/>
       <source>Trigger</source>
       <translation>مشغل</translation>
     </message>
     <message>
-      <location filename="../../../plugins/triggers/triggers_settings.py" line="152"/>
+      <location filename="../../../plugins/triggers/triggers_settings.py" line="150"/>
       <source>Cue</source>
       <translation>Cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/triggers/triggers_settings.py" line="152"/>
+      <location filename="../../../plugins/triggers/triggers_settings.py" line="150"/>
       <source>Action</source>
       <translation>الإجراءات</translation>
     </message>
