@@ -27,8 +27,8 @@ from PyQt5.QtWidgets import (
 )
 
 from lisp.ui.settings.pages import SettingsPage
-from lisp.ui.widgets import QColorButton
 from lisp.ui.ui_utils import translate
+from lisp.ui.widgets import QColorButton
 
 
 class Appearance(SettingsPage):

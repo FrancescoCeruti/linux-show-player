@@ -19,8 +19,8 @@ import falcon
 
 from lisp.core.plugin import Plugin
 from lisp.plugins.network.api import route_all
-from lisp.plugins.network.server import APIServerThread
 from lisp.plugins.network.discovery import Announcer
+from lisp.plugins.network.server import APIServerThread
 
 
 class Network(Plugin):

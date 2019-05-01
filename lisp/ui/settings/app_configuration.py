@@ -15,9 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+import logging
 from collections import namedtuple
 
-import logging
 from PyQt5 import QtCore
 from PyQt5.QtCore import QModelIndex
 from PyQt5.QtWidgets import QVBoxLayout, QDialogButtonBox, QDialog

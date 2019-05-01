@@ -18,8 +18,8 @@
 
 import logging
 
-from lisp.core.properties import Property
 from lisp.core.plugin import Plugin
+from lisp.core.properties import Property
 from lisp.core.signal import Connection
 from lisp.cues.cue import Cue
 from lisp.cues.media_cue import MediaCue

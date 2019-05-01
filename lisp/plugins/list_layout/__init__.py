@@ -1,7 +1,7 @@
 from lisp.core.plugin import Plugin
 from lisp.layout import register_layout
-from lisp.plugins.list_layout.settings import ListLayoutSettings
 from lisp.plugins.list_layout.layout import ListLayout as _ListLayout
+from lisp.plugins.list_layout.settings import ListLayoutSettings
 from lisp.ui.settings.app_configuration import AppConfigurationDialog
 
 

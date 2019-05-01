@@ -16,7 +16,8 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import traceback
-from PyQt5.QtGui import QFont, QFontDatabase
+
+from PyQt5.QtGui import QFontDatabase
 from PyQt5.QtWidgets import QTextEdit
 
 from lisp.ui.logging.common import LOG_ATTRIBUTES

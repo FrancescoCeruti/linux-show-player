@@ -16,11 +16,11 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import fcntl
-from itertools import chain
-
 import logging
 import os
 import signal
+from itertools import chain
+
 from PyQt5.QtCore import QTranslator, QLocale, QSocketNotifier
 from PyQt5.QtWidgets import QApplication, qApp
 

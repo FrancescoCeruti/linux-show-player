@@ -15,8 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-import jack
 import logging
+
+import jack
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPainter, QPolygon, QPainterPath
 from PyQt5.QtWidgets import (
@@ -35,7 +36,6 @@ from PyQt5.QtWidgets import (
 from lisp.plugins.gst_backend.elements.jack_sink import JackSink
 from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.ui_utils import translate
-
 
 logger = logging.getLogger(__name__)
 

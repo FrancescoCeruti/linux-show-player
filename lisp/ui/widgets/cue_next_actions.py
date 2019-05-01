@@ -21,7 +21,6 @@ from PyQt5.QtWidgets import QComboBox
 from lisp.cues.cue import CueNextAction
 from lisp.ui.ui_utils import translate
 
-
 CueNextActionsStrings = {
     CueNextAction.DoNothing: QT_TRANSLATE_NOOP("CueNextAction", "Do Nothing"),
     CueNextAction.TriggerAfterEnd: QT_TRANSLATE_NOOP(

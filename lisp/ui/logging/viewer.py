@@ -23,8 +23,6 @@ from PyQt5.QtWidgets import (
     QStatusBar,
     QLabel,
     QTableView,
-    QVBoxLayout,
-    QWidget,
     QSplitter,
 )
 

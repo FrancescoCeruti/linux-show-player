@@ -3,22 +3,22 @@
 <context>
     <name>CollectionCue</name>
     <message>
-        <location filename="../../../plugins/action_cues/collection_cue.py" line="88"/>
+        <location filename="../../../plugins/action_cues/collection_cue.py" line="86"/>
         <source>Add</source>
         <translation>Add</translation>
     </message>
     <message>
-        <location filename="../../../plugins/action_cues/collection_cue.py" line="93"/>
+        <location filename="../../../plugins/action_cues/collection_cue.py" line="91"/>
         <source>Remove</source>
         <translation>Remove</translation>
     </message>
     <message>
-        <location filename="../../../plugins/action_cues/collection_cue.py" line="157"/>
+        <location filename="../../../plugins/action_cues/collection_cue.py" line="155"/>
         <source>Cue</source>
         <translation>Cue</translation>
     </message>
     <message>
-        <location filename="../../../plugins/action_cues/collection_cue.py" line="157"/>
+        <location filename="../../../plugins/action_cues/collection_cue.py" line="155"/>
         <source>Action</source>
         <translation>Action</translation>
     </message>

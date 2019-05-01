@@ -17,12 +17,12 @@
 
 import json
 import logging
-from PyQt5.QtWidgets import QDialog, qApp
 from os.path import exists, dirname
+
+from PyQt5.QtWidgets import QDialog, qApp
 
 from lisp import layout
 from lisp.command.stack import CommandsStack
-from lisp.session import Session
 from lisp.core.signal import Signal
 from lisp.core.singleton import Singleton
 from lisp.core.util import filter_live_properties
@@ -30,6 +30,7 @@ from lisp.cues.cue import Cue
 from lisp.cues.cue_factory import CueFactory
 from lisp.cues.cue_model import CueModel
 from lisp.cues.media_cue import MediaCue
+from lisp.session import Session
 from lisp.ui.layoutselect import LayoutSelect
 from lisp.ui.mainwindow import MainWindow
 from lisp.ui.settings.app_configuration import AppConfigurationDialog

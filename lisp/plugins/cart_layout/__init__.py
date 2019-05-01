@@ -1,7 +1,7 @@
 from lisp.core.plugin import Plugin
 from lisp.layout import register_layout
-from lisp.plugins.cart_layout.settings import CartLayoutSettings
 from lisp.plugins.cart_layout.layout import CartLayout as _CartLayout
+from lisp.plugins.cart_layout.settings import CartLayoutSettings
 from lisp.ui.settings.app_configuration import AppConfigurationDialog
 
 

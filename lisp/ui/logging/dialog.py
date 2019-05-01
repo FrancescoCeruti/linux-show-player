@@ -28,8 +28,8 @@ from PyQt5.QtWidgets import (
     QTextEdit,
 )
 
-from lisp.ui.logging.common import LOG_LEVELS, LOG_ICONS_NAMES
 from lisp.ui.icons import IconTheme
+from lisp.ui.logging.common import LOG_LEVELS, LOG_ICONS_NAMES
 from lisp.ui.ui_utils import translate
 
 

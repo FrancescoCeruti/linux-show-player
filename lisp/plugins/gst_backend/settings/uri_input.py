@@ -16,7 +16,7 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 import os
 
-from PyQt5.QtCore import QStandardPaths, Qt
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (
     QGroupBox,
     QHBoxLayout,

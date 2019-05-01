@@ -16,6 +16,7 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import logging
+
 import requests
 from PyQt5.QtWidgets import QMenu, QAction, QMessageBox
 

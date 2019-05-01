@@ -20,8 +20,8 @@ import os
 from zipfile import ZipFile
 
 from lisp import app_dirs
-from lisp.command.layout import LayoutAutoInsertCuesCommand
 from lisp.command.cue import UpdateCueCommand, UpdateCuesCommand
+from lisp.command.layout import LayoutAutoInsertCuesCommand
 from lisp.cues.cue_factory import CueFactory
 
 PRESETS_DIR = os.path.join(app_dirs.user_data_dir, "presets")

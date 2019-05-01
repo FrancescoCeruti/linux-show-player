@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt, QEvent, QPoint, QSize
+from PyQt5.QtCore import Qt, QEvent, QSize
 from PyQt5.QtWidgets import (
     QStyledItemDelegate,
     QComboBox,

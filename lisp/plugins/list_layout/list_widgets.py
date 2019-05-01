@@ -16,7 +16,14 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import QRect, Qt
-from PyQt5.QtGui import QFont, QPainter, QBrush, QColor, QPen, QPainterPath, QFontDatabase
+from PyQt5.QtGui import (
+    QPainter,
+    QBrush,
+    QColor,
+    QPen,
+    QPainterPath,
+    QFontDatabase,
+)
 from PyQt5.QtWidgets import QLabel, QProgressBar, QWidget
 
 from lisp.core.signal import Connection

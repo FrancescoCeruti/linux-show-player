@@ -67,7 +67,6 @@ class LogStatusIcon(QWidget):
 
 
 class LogMessageWidget(QLabel):
-
     def __init__(self, log_model, parent=None):
         """
         :type log_model: lisp.ui.logging.models.LogRecordModel

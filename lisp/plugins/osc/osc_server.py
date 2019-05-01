@@ -16,10 +16,10 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from liblo import ServerThread, ServerError
-
 import logging
 from threading import Lock
+
+from liblo import ServerThread, ServerError
 
 from lisp.core.signal import Signal
 from lisp.core.util import EqEnum

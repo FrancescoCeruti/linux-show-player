@@ -25,10 +25,10 @@ from PyQt5.QtWidgets import (
     QLCDNumber,
     QHBoxLayout,
 )
-from lisp.cues.cue import CueAction
 
 from lisp.core.signal import Connection
 from lisp.core.util import strtime
+from lisp.cues.cue import CueAction
 from lisp.cues.cue_time import CueTime
 from lisp.cues.media_cue import MediaCue
 from lisp.plugins.list_layout.control_buttons import CueControlButtons

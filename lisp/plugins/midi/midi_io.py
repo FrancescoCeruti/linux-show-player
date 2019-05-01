@@ -15,8 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-import mido
 from abc import ABC, abstractmethod
+
+import mido
 
 from lisp.core.signal import Signal
 from lisp.plugins.midi.midi_utils import mido_backend

@@ -17,12 +17,12 @@
 
 from abc import abstractmethod
 
+from lisp.command.cue import UpdateCueCommand, UpdateCuesCommand
 from lisp.command.model import ModelRemoveItemsCommand
 from lisp.core.has_properties import HasProperties
 from lisp.core.signal import Signal
 from lisp.core.util import greatest_common_superclass
 from lisp.cues.cue import Cue, CueAction
-from lisp.command.cue import UpdateCueCommand, UpdateCuesCommand
 from lisp.layout.cue_menu import CueContextMenu
 from lisp.ui.settings.cue_settings import CueSettingsDialog
 from lisp.ui.ui_utils import adjust_widget_position

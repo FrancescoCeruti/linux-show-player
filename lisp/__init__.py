@@ -16,6 +16,7 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from os import path
+
 from appdirs import AppDirs
 
 __author__ = "Francesco Ceruti"

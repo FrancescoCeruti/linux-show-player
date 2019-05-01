@@ -17,8 +17,10 @@
 
 import logging
 import os
+from functools import partial
+
 from PyQt5 import QtCore
-from PyQt5.QtCore import pyqtSignal, Qt
+from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtGui import QKeySequence
 from PyQt5.QtWidgets import (
     QMainWindow,
@@ -31,8 +33,10 @@ from PyQt5.QtWidgets import (
     QMessageBox,
     QVBoxLayout,
     QWidget,
-    QFrame, QHBoxLayout, QSizePolicy)
-from functools import partial
+    QFrame,
+    QHBoxLayout,
+    QSizePolicy,
+)
 
 from lisp.command.layout import LayoutAutoInsertCuesCommand
 from lisp.core.singleton import QSingleton
