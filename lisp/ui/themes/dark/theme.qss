@@ -303,8 +303,11 @@ QPushButton:pressed {
     background: #35393d;
 }
 
+
+QLineEdit:focus,
 QComboBox:focus,
-QPushButton:focus {
+QPushButton:focus
+QAbstractSpinBox:focus {
     border: 1px solid #419BE6;
 }
 

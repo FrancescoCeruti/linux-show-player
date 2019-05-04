@@ -20,7 +20,7 @@ from PyQt5.QtGui import QLinearGradient, QColor, QPainter
 from PyQt5.QtWidgets import QWidget
 
 
-class QDbMeter(QWidget):
+class DBMeter(QWidget):
     def __init__(self, parent, min=-60, max=0, clip=0):
         super().__init__(parent)
         self.db_min = min

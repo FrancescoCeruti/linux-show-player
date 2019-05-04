@@ -21,7 +21,7 @@ from PyQt5.QtGui import QFontDatabase
 from PyQt5.QtWidgets import QLabel
 
 
-class QDigitalLabelClock(QLabel):
+class DigitalLabelClock(QLabel):
     def __init__(self, resolution=1000, time_format="hh:mm", parent=None):
         super().__init__(parent)
         self.setFont(QFontDatabase.systemFont(QFontDatabase.FixedFont))

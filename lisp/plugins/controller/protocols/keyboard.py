@@ -14,8 +14,8 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
-
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
+from PyQt5.QtGui import QKeySequence
 from PyQt5.QtWidgets import (
     QGroupBox,
     QGridLayout,
@@ -36,6 +36,7 @@ from lisp.ui.qdelegates import (
 from lisp.ui.qmodels import SimpleTableModel
 from lisp.ui.settings.pages import SettingsPage, CuePageMixin
 from lisp.ui.ui_utils import translate
+from lisp.ui.widgets.keysequenceedit import keyEventKeySequence
 
 
 class KeyboardSettings(SettingsPage):
@@ -137,7 +138,8 @@ class KeyboardView(QTableView):
         self.verticalHeader().setDefaultSectionSize(24)
         self.verticalHeader().setHighlightSections(False)
 
-        self.delegates = [LineEditDelegate(max_length=1), actionDelegate]
+        # TODO: QKeySequenceDelegate
+        self.delegates = [LineEditDelegate(max_length=100), actionDelegate]
 
         for column, delegate in enumerate(self.delegates):
             self.setItemDelegateForColumn(column, delegate)
@@ -154,5 +156,10 @@ class Keyboard(Protocol):
         Application().layout.key_pressed.disconnect(self.__key_pressed)
 
     def __key_pressed(self, key_event):
-        if not key_event.isAutoRepeat() and key_event.text() != "":
-            self.protocol_event.emit(key_event.text())
+        if not key_event.isAutoRepeat():
+            sequence = keyEventKeySequence(key_event)
+            print(bool(sequence))
+            if sequence:
+                self.protocol_event.emit(
+                    sequence.toString(QKeySequence.NativeText)
+                )

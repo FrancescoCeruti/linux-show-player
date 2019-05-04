@@ -22,7 +22,7 @@ from PyQt5.QtWidgets import QPushButton, QColorDialog
 from lisp.ui.ui_utils import translate
 
 
-class QColorButton(QPushButton):
+class ColorButton(QPushButton):
     """Custom Qt Widget to show a chosen color.
 
     Left-clicking the button shows the color-chooser.
@@ -65,4 +65,4 @@ class QColorButton(QPushButton):
         if e.button() == Qt.RightButton:
             self.setColor(None)
 
-        return super(QColorButton, self).mousePressEvent(e)
+        return super(ColorButton, self).mousePressEvent(e)
