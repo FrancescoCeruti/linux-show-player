@@ -16,11 +16,13 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import Qt, QEvent, QSize
+from PyQt5.QtGui import QKeySequence
 from PyQt5.QtWidgets import (
     QStyledItemDelegate,
     QComboBox,
     QSpinBox,
     QLineEdit,
+    QKeySequenceEdit,
     QStyle,
     QDialog,
     QCheckBox,
@@ -200,6 +202,31 @@ class LineEditDelegate(QStyledItemDelegate):
 
     def setModelData(self, lineEdit, model, index):
         model.setData(index, lineEdit.text(), Qt.EditRole)
+
+    def updateEditorGeometry(self, editor, option, index):
+        editor.setGeometry(option.rect)
+
+
+class KeySequenceEditDelegate(QStyledItemDelegate):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def createEditor(self, parent, option, index):
+        editor = QKeySequenceEdit(parent)
+        return editor
+
+    def setEditorData(self, lineEdit, index):
+        value = index.model().data(index, Qt.EditRole)
+        lineEdit.setKeySequence(
+            QKeySequence(str(value), QKeySequence.NativeText)
+        )
+
+    def setModelData(self, lineEdit, model, index):
+        model.setData(
+            index,
+            lineEdit.keySequence().toString(QKeySequence.NativeText),
+            Qt.EditRole
+        )
 
     def updateEditorGeometry(self, editor, option, index):
         editor.setGeometry(option.rect)

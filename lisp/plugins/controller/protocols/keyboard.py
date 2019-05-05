@@ -16,11 +16,13 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
+from PyQt5.QtGui import QKeySequence
 from PyQt5.QtWidgets import (
     QGroupBox,
     QGridLayout,
     QTableView,
     QHeaderView,
+    QKeySequenceEdit,
     QPushButton,
     QVBoxLayout,
 )
@@ -29,7 +31,7 @@ from lisp.application import Application
 from lisp.plugins.controller.common import LayoutAction, tr_layout_action
 from lisp.plugins.controller.protocol import Protocol
 from lisp.ui.qdelegates import (
-    LineEditDelegate,
+    KeySequenceEditDelegate,
     CueActionDelegate,
     EnumComboBoxDelegate,
 )
@@ -137,7 +139,7 @@ class KeyboardView(QTableView):
         self.verticalHeader().setDefaultSectionSize(24)
         self.verticalHeader().setHighlightSections(False)
 
-        self.delegates = [LineEditDelegate(max_length=1), actionDelegate]
+        self.delegates = [KeySequenceEditDelegate(), actionDelegate]
 
         for column, delegate in enumerate(self.delegates):
             self.setItemDelegateForColumn(column, delegate)
@@ -154,5 +156,20 @@ class Keyboard(Protocol):
         Application().layout.key_pressed.disconnect(self.__key_pressed)
 
     def __key_pressed(self, key_event):
-        if not key_event.isAutoRepeat() and key_event.text() != "":
-            self.protocol_event.emit(key_event.text())
+        key_event.ignore()
+
+        if not key_event.isAutoRepeat():
+            keys = key_event.key()
+            modifiers = key_event.modifiers()
+
+            if modifiers & Qt.ShiftModifier:
+                keys += Qt.SHIFT
+            if modifiers & Qt.ControlModifier:
+                keys += Qt.CTRL
+            if modifiers & Qt.AltModifier:
+                keys += Qt.ALT
+            if modifiers & Qt.MetaModifier:
+                keys += Qt.META
+
+            sequence = QKeySequence(keys).toString(QKeySequence.NativeText)
+            self.protocol_event.emit(sequence)
