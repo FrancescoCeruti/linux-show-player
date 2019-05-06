@@ -38,6 +38,6 @@ class QMuteButton(QPushButton):
 
     def onToggle(self):
         if self.isChecked():
-            self.setIcon(IconTheme.get("audio-volume-muted"))
+            self.setIcon(IconTheme.get("audio-volume-muted-symbolic"))
         else:
-            self.setIcon(IconTheme.get("audio-volume-high"))
+            self.setIcon(IconTheme.get("audio-volume-high-symbolic"))

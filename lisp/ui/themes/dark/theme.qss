@@ -285,12 +285,16 @@ QToolBar:separator:vertical {
     image: url(:/assets/Vsepartoolbars.png);
 }
 
+QToolButton {
+    padding: 1px;
+}
+
 QPushButton {
     color: white;
     background-color: QLinearGradient( x1: 0, y1: 1, x2: 0, y2: 0, stop: 0 #333, stop: 1 #444);
-    border: 1px solid #262626;
+    border: 1px solid #202020;
     border-radius: 4px;
-    padding: 3px;
+    padding: 4px;
     padding-left: 5px;
     padding-right: 5px;
 }

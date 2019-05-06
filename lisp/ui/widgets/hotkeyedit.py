@@ -14,6 +14,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
+from functools import partial
 
 from PyQt5.QtCore import Qt, QEvent
 from PyQt5.QtGui import QKeySequence
@@ -23,10 +24,10 @@ from PyQt5.QtWidgets import (
     QSizePolicy,
     QHBoxLayout,
     QPushButton,
-)
+    QMenu, QAction, QToolButton)
 
 from lisp.ui.icons import IconTheme
-from lisp.ui.ui_utils import translate
+from lisp.ui.ui_utils import translate, adjust_widget_position
 
 KEYS_FILTER = {
     Qt.Key_Control,
@@ -57,8 +58,17 @@ def keyEventKeySequence(keyEvent) -> QKeySequence:
 
 
 class HotKeyEdit(QWidget):
+    SPECIAL_KEYS = [
+        QKeySequence(Qt.Key_Escape),
+        QKeySequence(Qt.Key_Return),
+        QKeySequence(Qt.Key_Tab),
+        QKeySequence(Qt.Key_Tab + Qt.SHIFT),
+        QKeySequence(Qt.Key_Tab + Qt.CTRL),
+        QKeySequence(Qt.Key_Tab + Qt.SHIFT + Qt.CTRL),
+    ]
+
     def __init__(
-        self, sequence=QKeySequence(), clearButton=True, parent=None, **kwargs
+        self, sequence=QKeySequence(), keysButton=True, clearButton=True, parent=None, **kwargs
     ):
         super().__init__(parent, **kwargs)
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
@@ -74,19 +84,39 @@ class HotKeyEdit(QWidget):
         self.previewEdit.setReadOnly(True)
         self.previewEdit.setFocusProxy(self)
         self.previewEdit.installEventFilter(self)
+        self.previewEdit.setContextMenuPolicy(Qt.NoContextMenu)
+        self.previewEdit.selectionChanged.connect(self.previewEdit.deselect)
         self.layout().addWidget(self.previewEdit)
 
+        self.specialMenu = QMenu()
+        for special in HotKeyEdit.SPECIAL_KEYS:
+            action = QAction(
+                IconTheme.get("list-add-symbolic"),
+                special.toString(QKeySequence.NativeText),
+                self.specialMenu
+            )
+            action.triggered.connect(partial(self.setKeySequence, special))
+            self.specialMenu.addAction(action)
+
+        if keysButton:
+            action = self.previewEdit.addAction(
+                IconTheme.get("input-keyboard-symbolic"),
+                QLineEdit.TrailingPosition
+            )
+            action.triggered.connect(self.onToolsAction)
+
         if clearButton:
-            self.clearButton = QPushButton(self)
-            self.clearButton.setIcon(IconTheme.get("edit-clear"))
-            self.clearButton.clicked.connect(self.clear)
-            self.layout().addWidget(self.clearButton)
+            action = self.previewEdit.addAction(
+                IconTheme.get("edit-clear-symbolic"),
+                QLineEdit.TrailingPosition
+            )
+            action.triggered.connect(self.clear)
 
         self.retranslateUi()
 
     def retranslateUi(self):
         self.previewEdit.setPlaceholderText(
-            translate("QKeyEdit", "Press shortcut")
+            translate("HotKeyEdit", "Press shortcut")
         )
 
     def keySequence(self) -> QKeySequence:
@@ -110,7 +140,16 @@ class HotKeyEdit(QWidget):
 
         return super().event(event)
 
+    def contextMenuEvent(self, event):
+        event.accept()
+        self.specialMenu.popup(event.globalPos())
+
     def keyPressEvent(self, event):
         sequence = keyEventKeySequence(event)
         if sequence:
             self.setKeySequence(sequence)
+
+    def onToolsAction(self):
+        self.specialMenu.popup(
+            self.previewEdit.mapToGlobal(self.previewEdit.geometry().topRight())
+        )
