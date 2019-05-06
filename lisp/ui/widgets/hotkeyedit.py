@@ -17,7 +17,13 @@
 
 from PyQt5.QtCore import Qt, QEvent
 from PyQt5.QtGui import QKeySequence
-from PyQt5.QtWidgets import QWidget, QLineEdit, QSizePolicy, QHBoxLayout, QPushButton
+from PyQt5.QtWidgets import (
+    QWidget,
+    QLineEdit,
+    QSizePolicy,
+    QHBoxLayout,
+    QPushButton,
+)
 
 from lisp.ui.icons import IconTheme
 from lisp.ui.ui_utils import translate
@@ -32,7 +38,7 @@ KEYS_FILTER = {
 }
 
 
-def keyEventKeySequence(keyEvent):
+def keyEventKeySequence(keyEvent) -> QKeySequence:
     key = keyEvent.key()
     if key not in KEYS_FILTER:
         modifiers = keyEvent.modifiers()
@@ -50,8 +56,10 @@ def keyEventKeySequence(keyEvent):
     return QKeySequence()
 
 
-class KeySequenceEdit(QWidget):
-    def __init__(self, parent, **kwargs):
+class HotKeyEdit(QWidget):
+    def __init__(
+        self, sequence=QKeySequence(), clearButton=True, parent=None, **kwargs
+    ):
         super().__init__(parent, **kwargs)
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         self.setFocusPolicy(Qt.StrongFocus)
@@ -60,18 +68,19 @@ class KeySequenceEdit(QWidget):
         self.setLayout(QHBoxLayout())
         self.layout().setContentsMargins(0, 0, 0, 0)
 
+        self._keySequence = sequence
+
         self.previewEdit = QLineEdit(self)
         self.previewEdit.setReadOnly(True)
         self.previewEdit.setFocusProxy(self)
         self.previewEdit.installEventFilter(self)
         self.layout().addWidget(self.previewEdit)
 
-        self.clearButton = QPushButton(self)
-        self.clearButton.setIcon(IconTheme.get("edit-clear"))
-        self.clearButton.clicked.connect(self.clear)
-        self.layout().addWidget(self.clearButton)
-
-        self._keySequence = QKeySequence()
+        if clearButton:
+            self.clearButton = QPushButton(self)
+            self.clearButton.setIcon(IconTheme.get("edit-clear"))
+            self.clearButton.clicked.connect(self.clear)
+            self.layout().addWidget(self.clearButton)
 
         self.retranslateUi()
 

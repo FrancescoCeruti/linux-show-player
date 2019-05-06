@@ -15,7 +15,10 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+from enum import Enum
+
 from PyQt5.QtCore import Qt, QEvent, QSize
+from PyQt5.QtGui import QKeySequence
 from PyQt5.QtWidgets import (
     QStyledItemDelegate,
     QComboBox,
@@ -31,7 +34,7 @@ from PyQt5.QtWidgets import (
 from lisp.cues.cue import CueAction
 from lisp.ui.qmodels import CueClassRole
 from lisp.ui.ui_utils import translate
-from lisp.ui.widgets import CueActionComboBox
+from lisp.ui.widgets import CueActionComboBox, HotKeyEdit
 from lisp.ui.widgets.cue_actions import tr_action
 from lisp.ui.widgets.qenumcombobox import QEnumComboBox
 
@@ -203,6 +206,53 @@ class LineEditDelegate(QStyledItemDelegate):
 
     def updateEditorGeometry(self, editor, option, index):
         editor.setGeometry(option.rect)
+
+
+class HotKeyEditDelegate(LabelDelegate):
+    class Mode(Enum):
+        KeySequence = 0
+        NativeText = 1
+        PortableText = 2
+
+    def __init__(self, mode=Mode.PortableText, **kwargs):
+        super().__init__(**kwargs)
+        self.mode = mode
+
+    def paint(self, painter, option, index):
+        option.displayAlignment = Qt.AlignHCenter | Qt.AlignVCenter
+        super().paint(painter, option, index)
+
+    def createEditor(self, parent, option, index):
+        return HotKeyEdit(sequence=self._sequence(index), parent=parent)
+
+    def setEditorData(self, editor: HotKeyEdit, index):
+        editor.setKeySequence(self._sequence(index))
+
+    def setModelData(self, editor: HotKeyEdit, model, index):
+        sequence = editor.keySequence()
+        if self.mode == HotKeyEditDelegate.Mode.NativeText:
+            data = sequence.toString(QKeySequence.NativeText)
+        elif self.mode == HotKeyEditDelegate.Mode.PortableText:
+            data = sequence.toString(QKeySequence.PortableText)
+        else:
+            data = sequence
+
+        model.setData(index, data, Qt.EditRole)
+
+    def updateEditorGeometry(self, editor, option, index):
+        editor.setGeometry(option.rect)
+
+    def _text(self, painter, option, index):
+        return self._sequence(index).toString(QKeySequence.NativeText)
+
+    def _sequence(self, index):
+        data = index.data(Qt.EditRole)
+        if self.mode == HotKeyEditDelegate.Mode.NativeText:
+            return QKeySequence(data, QKeySequence.NativeText)
+        elif self.mode == HotKeyEditDelegate.Mode.PortableText:
+            return QKeySequence(data, QKeySequence.PortableText)
+
+        return data
 
 
 class EnumComboBoxDelegate(LabelDelegate):

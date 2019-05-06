@@ -29,7 +29,7 @@ class LayoutAction(Enum):
     StopAll = "StopAll"
     PauseAll = "PauseAll"
     ResumeAll = "ResumeAll"
-    InterruptAll = "InterrupAll"
+    InterruptAll = "InterruptAll"
     FadeOutAll = "FadeOutAll"
     FadeInAll = "FadeInAll"
 

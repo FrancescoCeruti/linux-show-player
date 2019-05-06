@@ -4,7 +4,7 @@ from .cue_next_actions import CueNextActionComboBox
 from .dbmeter import DBMeter
 from .digitalclock import DigitalLabelClock
 from .fades import FadeComboBox, FadeEdit
-from .keysequenceedit import KeySequenceEdit
+from .hotkeyedit import HotKeyEdit
 from .locales import LocaleComboBox
 from .qclicklabel import QClickLabel
 from .qclickslider import QClickSlider
