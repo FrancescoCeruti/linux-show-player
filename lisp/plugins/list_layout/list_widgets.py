@@ -25,7 +25,6 @@ from PyQt5.QtGui import (
     QFontDatabase,
 )
 from PyQt5.QtWidgets import QLabel, QProgressBar, QWidget
-from pysnooper import pysnooper
 
 from lisp.core.signal import Connection
 from lisp.core.util import strtime
@@ -156,8 +155,8 @@ class NextActionIcon(QLabel):
         ):
             pixmap = IconTheme.get("cue-trigger-next").pixmap(self.SIZE)
         elif (
-                nextAction == CueNextAction.SelectAfterWait
-                or nextAction == CueNextAction.SelectAfterEnd
+            nextAction == CueNextAction.SelectAfterWait
+            or nextAction == CueNextAction.SelectAfterEnd
         ):
             pixmap = IconTheme.get("cue-select-next").pixmap(self.SIZE)
 
@@ -339,9 +338,7 @@ class PostWaitWidget(TimeWidget):
                 self._updateDuration, Connection.QtQueued
             )
 
-            self.waitTime.notify.connect(
-                self._updateTime, Connection.QtQueued
-            )
+            self.waitTime.notify.connect(self._updateTime, Connection.QtQueued)
             self._updateDuration(self.cue.post_wait)
 
     def _stop(self):

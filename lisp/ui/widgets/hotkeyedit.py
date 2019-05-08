@@ -14,6 +14,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
+
 from functools import partial
 
 from PyQt5.QtCore import Qt, QEvent
@@ -23,11 +24,12 @@ from PyQt5.QtWidgets import (
     QLineEdit,
     QSizePolicy,
     QHBoxLayout,
-    QPushButton,
-    QMenu, QAction, QToolButton)
+    QMenu,
+    QAction,
+)
 
 from lisp.ui.icons import IconTheme
-from lisp.ui.ui_utils import translate, adjust_widget_position
+from lisp.ui.ui_utils import translate
 
 KEYS_FILTER = {
     Qt.Key_Control,
@@ -68,7 +70,12 @@ class HotKeyEdit(QWidget):
     ]
 
     def __init__(
-        self, sequence=QKeySequence(), keysButton=True, clearButton=True, parent=None, **kwargs
+        self,
+        sequence=QKeySequence(),
+        keysButton=True,
+        clearButton=True,
+        parent=None,
+        **kwargs,
     ):
         super().__init__(parent, **kwargs)
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
@@ -93,7 +100,7 @@ class HotKeyEdit(QWidget):
             action = QAction(
                 IconTheme.get("list-add-symbolic"),
                 special.toString(QKeySequence.NativeText),
-                self.specialMenu
+                self.specialMenu,
             )
             action.triggered.connect(partial(self.setKeySequence, special))
             self.specialMenu.addAction(action)
@@ -101,14 +108,13 @@ class HotKeyEdit(QWidget):
         if keysButton:
             action = self.previewEdit.addAction(
                 IconTheme.get("input-keyboard-symbolic"),
-                QLineEdit.TrailingPosition
+                QLineEdit.TrailingPosition,
             )
             action.triggered.connect(self.onToolsAction)
 
         if clearButton:
             action = self.previewEdit.addAction(
-                IconTheme.get("edit-clear-symbolic"),
-                QLineEdit.TrailingPosition
+                IconTheme.get("edit-clear-symbolic"), QLineEdit.TrailingPosition
             )
             action.triggered.connect(self.clear)
 
