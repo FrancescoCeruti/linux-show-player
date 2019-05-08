@@ -256,6 +256,11 @@ class ListLayout(CueLayout):
                 keys += Qt.META
 
             sequence = QKeySequence(keys)
+            if self.selection_mode_action.isChecked() & (
+                (sequence == QKeySequence.MoveToPreviousLine)
+                | (sequence == QKeySequence.MoveToNextLine)
+            ):
+                return
             if sequence in self._go_key_sequence:
                 event.accept()
                 self.__go_slot()
