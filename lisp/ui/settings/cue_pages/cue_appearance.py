@@ -28,7 +28,7 @@ from PyQt5.QtWidgets import (
 
 from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.ui_utils import translate
-from lisp.ui.widgets import QColorButton
+from lisp.ui.widgets import ColorButton
 
 
 class Appearance(SettingsPage):
@@ -68,8 +68,8 @@ class Appearance(SettingsPage):
         self.colorGroup.setLayout(QHBoxLayout())
         self.layout().addWidget(self.colorGroup)
 
-        self.colorBButton = QColorButton(self.colorGroup)
-        self.colorFButton = QColorButton(self.colorGroup)
+        self.colorBButton = ColorButton(self.colorGroup)
+        self.colorFButton = ColorButton(self.colorGroup)
 
         self.colorGroup.layout().addWidget(self.colorBButton)
         self.colorGroup.layout().addWidget(self.colorFButton)

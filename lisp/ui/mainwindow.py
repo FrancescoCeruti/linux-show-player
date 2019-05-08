@@ -50,7 +50,7 @@ from lisp.ui.logging.status import LogStatusIcon, LogMessageWidget
 from lisp.ui.logging.viewer import LogViewer
 from lisp.ui.settings.app_configuration import AppConfigurationDialog
 from lisp.ui.ui_utils import translate
-from lisp.ui.widgets.qclock import QDigitalLabelClock
+from lisp.ui.widgets import DigitalLabelClock
 
 logger = logging.getLogger(__name__)
 
@@ -430,7 +430,7 @@ class MainStatusBar(QWidget):
         self.layout().setContentsMargins(5, 5, 5, 5)
 
         # Clock
-        self.clock = QDigitalLabelClock(parent=self)
+        self.clock = DigitalLabelClock(parent=self)
         self.clock.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         self.addWidget(self.clock)
         # ---------

@@ -1,45 +1,45 @@
 [Icon Theme]
 Name=Numix
-Comment=Numix icon theme
+Comment=Icon theme from the Numix project
 Inherits=hicolor
-Directories=standard/actions,standard/categories,standard/devices,standard/emblems,standard/places,standard/status
+Directories=actions,categories,devices,emblems,places,status
 
-[standard/actions]
+[actions]
 Size=16
 MinSize=16
 MaxSize=256
 Context=Actions
 Type=Scalable
 
-[standard/categories]
+[categories]
 Size=16
 MinSize=16
 MaxSize=256
 Context=Categories
 Type=Scalable
 
-[standard/devices]
+[devices]
 Size=16
 MinSize=16
 MaxSize=256
 Context=Devices
 Type=Scalable
 
-[standard/emblems]
+[emblems]
 Size=16
 MinSize=16
 MaxSize=256
 Context=Emblems
 Type=Scalable
 
-[standard/places]
+[places]
 Size=16
 MinSize=16
 MaxSize=256
 Context=Places
 Type=Scalable
 
-[standard/status]
+[status]
 Size=16
 MinSize=16
 MaxSize=256

@@ -35,7 +35,7 @@ from lisp.cues.cue_time import CueTime
 from lisp.cues.media_cue import MediaCue
 from lisp.plugins.cart_layout.page_widget import CartPageWidget
 from lisp.ui.icons import IconTheme
-from lisp.ui.widgets import QClickLabel, QClickSlider, QDbMeter
+from lisp.ui.widgets import QClickLabel, QClickSlider, DBMeter
 
 
 class CueWidget(QWidget):
@@ -103,7 +103,7 @@ class CueWidget(QWidget):
         )
         self.volumeSlider.setVisible(False)
 
-        self.dbMeter = QDbMeter(self)
+        self.dbMeter = DBMeter(self)
         self.dbMeter.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
         self.dbMeter.setVisible(False)
 

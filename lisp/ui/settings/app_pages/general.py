@@ -73,7 +73,7 @@ class AppGeneral(SettingsPage):
         self.iconsLabel = QLabel(self.themeGroup)
         self.themeGroup.layout().addWidget(self.iconsLabel, 1, 0)
         self.iconsCombo = QComboBox(self.themeGroup)
-        self.iconsCombo.addItems(icon_themes_names())
+        self.iconsCombo.addItems(sorted(icon_themes_names()))
         self.themeGroup.layout().addWidget(self.iconsCombo, 1, 1)
 
         self.themeGroup.layout().setColumnStretch(0, 1)

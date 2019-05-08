@@ -101,6 +101,11 @@ class ModelMoveItemsCommand(ModelCommand):
         self._before = 0
         self._after = 0
 
+        if self._new_index < 0:
+            self._new_index = 0
+        elif self._new_index >= len(model_adapter):
+            self._new_index = len(model_adapter) - 1
+
         for old_index in old_indexes:
             if old_index < new_index:
                 self._before += 1
@@ -112,7 +117,7 @@ class ModelMoveItemsCommand(ModelCommand):
         shift = bool(self._before)
 
         for index in self._old_indexes:
-            if index < self._new_index:
+            if index <= self._new_index:
                 self._model.move(index - before, self._new_index)
                 before += 1
             elif index > self._new_index:
@@ -125,7 +130,7 @@ class ModelMoveItemsCommand(ModelCommand):
         shift = bool(self._before)
 
         for old_index in self._old_indexes:
-            if old_index < self._new_index:
+            if old_index <= self._new_index:
                 before -= 1
                 self._model.move(self._new_index - before, old_index)
             elif old_index > self._new_index:

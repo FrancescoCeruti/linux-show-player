@@ -31,13 +31,14 @@ from lisp.application import Application
 from lisp.plugins.controller.common import LayoutAction, tr_layout_action
 from lisp.plugins.controller.protocol import Protocol
 from lisp.ui.qdelegates import (
-    KeySequenceEditDelegate,
     CueActionDelegate,
     EnumComboBoxDelegate,
+    HotKeyEditDelegate,
 )
 from lisp.ui.qmodels import SimpleTableModel
 from lisp.ui.settings.pages import SettingsPage, CuePageMixin
 from lisp.ui.ui_utils import translate
+from lisp.ui.widgets.hotkeyedit import keyEventKeySequence
 
 
 class KeyboardSettings(SettingsPage):
@@ -54,7 +55,7 @@ class KeyboardSettings(SettingsPage):
 
         self.keyboardModel = SimpleTableModel(
             [
-                translate("ControllerKeySettings", "Key"),
+                translate("ControllerKeySettings", "Shortcut"),
                 translate("ControllerKeySettings", "Action"),
             ]
         )
@@ -139,7 +140,7 @@ class KeyboardView(QTableView):
         self.verticalHeader().setDefaultSectionSize(24)
         self.verticalHeader().setHighlightSections(False)
 
-        self.delegates = [KeySequenceEditDelegate(), actionDelegate]
+        self.delegates = [HotKeyEditDelegate(), actionDelegate]
 
         for column, delegate in enumerate(self.delegates):
             self.setItemDelegateForColumn(column, delegate)
@@ -156,20 +157,9 @@ class Keyboard(Protocol):
         Application().layout.key_pressed.disconnect(self.__key_pressed)
 
     def __key_pressed(self, key_event):
-        key_event.ignore()
-
         if not key_event.isAutoRepeat():
-            keys = key_event.key()
-            modifiers = key_event.modifiers()
-
-            if modifiers & Qt.ShiftModifier:
-                keys += Qt.SHIFT
-            if modifiers & Qt.ControlModifier:
-                keys += Qt.CTRL
-            if modifiers & Qt.AltModifier:
-                keys += Qt.ALT
-            if modifiers & Qt.MetaModifier:
-                keys += Qt.META
-
-            sequence = QKeySequence(keys).toString(QKeySequence.NativeText)
-            self.protocol_event.emit(sequence)
+            sequence = keyEventKeySequence(key_event)
+            if sequence:
+                self.protocol_event.emit(
+                    sequence.toString(QKeySequence.PortableText)
+                )

@@ -68,13 +68,13 @@ class GstPipeEdit(QWidget):
         self.layout().setAlignment(self.buttonsLayout, Qt.AlignHCenter)
 
         self.addButton = QPushButton(self)
-        self.addButton.setIcon(IconTheme.get("go-previous"))
+        self.addButton.setIcon(IconTheme.get("go-previous-symbolic"))
         self.addButton.clicked.connect(self.__add_plugin)
         self.buttonsLayout.addWidget(self.addButton)
         self.buttonsLayout.setAlignment(self.addButton, Qt.AlignHCenter)
 
         self.delButton = QPushButton(self)
-        self.delButton.setIcon(IconTheme.get("go-next"))
+        self.delButton.setIcon(IconTheme.get("go-next-symbolic"))
         self.delButton.clicked.connect(self.__remove_plugin)
         self.buttonsLayout.addWidget(self.delButton)
         self.buttonsLayout.setAlignment(self.delButton, Qt.AlignHCenter)
