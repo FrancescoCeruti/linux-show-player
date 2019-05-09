@@ -58,6 +58,8 @@ class ListLayout(CueLayout):
     dbmeters_visible = ProxyProperty()
     seek_sliders_visible = ProxyProperty()
     accurate_time = ProxyProperty()
+    live_mode = ProxyProperty()
+    preparation_mode = ProxyProperty()
     selection_mode = ProxyProperty()
 
     def __init__(self, application):
@@ -117,6 +119,16 @@ class ListLayout(CueLayout):
         self.auto_continue_action.triggered.connect(self._set_auto_continue)
         layout_menu.addAction(self.auto_continue_action)
 
+        self.live_mode_action = QAction(parent=layout_menu)
+        self.live_mode_action.setCheckable(True)
+        self.live_mode_action.triggered.connect(self._set_live_mode)
+        layout_menu.addAction(self.live_mode_action)
+
+        self.preparation_mode_action = QAction(parent=layout_menu)
+        self.preparation_mode_action.setCheckable(True)
+        self.preparation_mode_action.triggered.connect(self._set_preparation_mode)
+        layout_menu.addAction(self.preparation_mode_action)
+
         self.selection_mode_action = QAction(parent=layout_menu)
         self.selection_mode_action.setCheckable(True)
         self.selection_mode_action.triggered.connect(self._set_selection_mode)
@@ -131,6 +143,8 @@ class ListLayout(CueLayout):
         self._set_running_visible(ListLayout.Config["show.playingCues"])
         self._set_accurate_time(ListLayout.Config["show.accurateTime"])
         self._set_dbmeters_visible(ListLayout.Config["show.dBMeters"])
+        self._set_live_mode(ListLayout.Config["liveMode"])
+        self._set_preparation_mode(ListLayout.Config["preparationMode"])
         self._set_selection_mode(ListLayout.Config["selectionMode"])
         self._set_auto_continue(ListLayout.Config["autoContinue"])
 
@@ -175,6 +189,12 @@ class ListLayout(CueLayout):
         self.auto_continue_action.setText(
             translate("ListLayout", "Auto-select next cue")
         )
+        self.live_mode_action.setText(
+            translate("ListLayout", "Live mode")
+        )
+        self.preparation_mode_action.setText(
+            translate("ListLayout", "Preparation mode")
+        )
         self.selection_mode_action.setText(
             translate("ListLayout", "Selection mode")
         )
@@ -189,6 +209,9 @@ class ListLayout(CueLayout):
 
     def cues(self, cue_type=Cue):
         yield from self._list_model
+
+    def running_cues(self, cue_type=Cue):
+        yield from self._running_model
 
     def standby_index(self):
         return self._view.listView.standbyIndex()
@@ -316,6 +339,32 @@ class ListLayout(CueLayout):
     @running_visible.get
     def _get_running_visible(self):
         return self.show_running_action.isChecked()
+
+    @live_mode.set
+    def _set_live_mode(self, enable):
+        self.live_mode_action.setChecked(enable)
+        if enable:
+            self._view.setEnabled(False)
+        else:
+            self._view.setEnabled(True)
+
+    @live_mode.get
+    def _get_live_mode(self):
+        return self.live_mode_action.isChecked()
+
+    @preparation_mode.set
+    def _set_preparation_mode(self, enable):
+        self.preparation_mode_action.setChecked(enable)
+        if enable:
+            for cue in self.running_cues():
+                self._view.listView.enabled_item(cue.index, True)
+        else:
+            for cue in self.running_cues():
+                self._view.listView.enabled_item(cue.index, False)
+
+    @preparation_mode.get
+    def _get_preparation_mode(self):
+        return self.preparation_mode_action.isChecked()
 
     @selection_mode.set
     def _set_selection_mode(self, enable):
