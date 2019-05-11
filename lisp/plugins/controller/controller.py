@@ -117,6 +117,14 @@ class Controller(Plugin):
         for action in self.__global_map.get(key, ()):
             if action is LayoutAction.Go:
                 self.app.layout.go()
+            elif action is LayoutAction.Edit:
+                self.app.layout.edit_cue(
+                    self.app.layout.standby_cue()
+                )
+            elif action is LayoutAction.Remove:
+                self.app.layout._remove_cues(
+                    self.app.layout.selected_cues()
+                )
             elif action is LayoutAction.Reset:
                 self.app.layout.interrupt_all()
                 self.app.layout.set_standby_index(0)

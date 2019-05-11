@@ -25,6 +25,8 @@ from lisp.ui.ui_utils import translate
 class LayoutAction(Enum):
     Go = "Go"
     Reset = "Reset"
+    Edit = "Edit"
+    Remove = "Remove"
 
     StopAll = "StopAll"
     PauseAll = "PauseAll"
@@ -40,6 +42,8 @@ class LayoutAction(Enum):
 LayoutActionsStrings = {
     LayoutAction.Go: QT_TRANSLATE_NOOP("GlobalAction", "Go"),
     LayoutAction.Reset: QT_TRANSLATE_NOOP("GlobalAction", "Reset"),
+    LayoutAction.Edit: QT_TRANSLATE_NOOP("GlobalAction", "Edit"),
+    LayoutAction.Remove: QT_TRANSLATE_NOOP("GlobalAction", "Remove"),
     LayoutAction.StopAll: QT_TRANSLATE_NOOP("GlobalAction", "Stop all cues"),
     LayoutAction.PauseAll: QT_TRANSLATE_NOOP("GlobalAction", "Pause all cues"),
     LayoutAction.ResumeAll: QT_TRANSLATE_NOOP(
