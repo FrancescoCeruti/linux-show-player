@@ -39,7 +39,7 @@
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="134"/>
       <source>Discard command output</source>
-      <translation type="unfinished">Discard command output</translation>
+      <translation>تجاهل إخراج الأمر</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="137"/>
@@ -182,7 +182,7 @@
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="103"/>
       <source>Time to reach</source>
-      <translation type="unfinished">Time to reach</translation>
+      <translation>الوقت للوصول</translation>
     </message>
   </context>
   <context>
@@ -251,7 +251,7 @@
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="202"/>
       <source>Volume to reach</source>
-      <translation type="unfinished">Volume to reach</translation>
+      <translation>الصوت للوصول</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="203"/>
