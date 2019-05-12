@@ -146,7 +146,7 @@
     <message>
       <location filename="../../../plugins/controller/common.py" line="40"/>
       <source>Go</source>
-      <translation type="unfinished">Go</translation>
+      <translation>إبدأ</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="41"/>
