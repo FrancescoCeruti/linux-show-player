@@ -21,7 +21,6 @@ from PyQt5.QtGui import QColor, QPalette
 
 # Import resources
 # noinspection PyUnresolvedReferences
-from . import assetes
 
 
 class Light:
