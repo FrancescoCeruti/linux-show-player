@@ -95,7 +95,7 @@
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="39"/>
       <source>Index Action</source>
-      <translation type="unfinished">Index Action</translation>
+      <translation>فهرس الأعمال</translation>
     </message>
   </context>
   <context>
