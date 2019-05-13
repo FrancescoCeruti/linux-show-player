@@ -1298,27 +1298,27 @@
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="178"/>
       <source>Selection mode</source>
-      <translation type="unfinished">Selection mode</translation>
+      <translation>Mode sélection</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/layouts.py" line="54"/>
       <source>Pause all</source>
-      <translation type="unfinished">Pause all</translation>
+      <translation>Tout mettre en pause</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/layouts.py" line="53"/>
       <source>Stop all</source>
-      <translation type="unfinished">Stop all</translation>
+      <translation>Tout stopper</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/layouts.py" line="56"/>
       <source>Interrupt all</source>
-      <translation type="unfinished">Interrupt all</translation>
+      <translation>Tout interrompre</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/layouts.py" line="55"/>
       <source>Resume all</source>
-      <translation type="unfinished">Resume all</translation>
+      <translation>Tout reprendre</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/control_buttons.py" line="64"/>
@@ -1333,22 +1333,22 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="142"/>
       <source>Edit selected cues</source>
-      <translation type="unfinished">Edit selected cues</translation>
+      <translation>Éditer les cues sélectionnées</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="142"/>
       <source>Remove selected cues</source>
-      <translation type="unfinished">Remove selected cues</translation>
+      <translation>Retirer les cues sélectionnées</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/layouts.py" line="52"/>
       <source>Use fade</source>
-      <translation type="unfinished">Use fade</translation>
+      <translation>Utiliser le fondu</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="363"/>
       <source>Copy of {}</source>
-      <translation type="unfinished">Copy of {}</translation>
+      <translation>Copie de {}</translation>
     </message>
   </context>
   <context>
@@ -1356,12 +1356,12 @@
     <message>
       <location filename="../../../plugins/list_layout/list_view.py" line="74"/>
       <source>Cue</source>
-      <translation type="unfinished">Cue</translation>
+      <translation>Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/list_view.py" line="79"/>
       <source>Pre wait</source>
-      <translation type="unfinished">Pre wait</translation>
+      <translation>Pré-attente</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/list_view.py" line="82"/>
