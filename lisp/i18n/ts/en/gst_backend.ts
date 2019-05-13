@@ -113,12 +113,12 @@
 <context>
     <name>GstBackend</name>
     <message>
-        <location filename="../../../plugins/gst_backend/gst_backend.py" line="73"/>
+        <location filename="../../../plugins/gst_backend/gst_backend.py" line="74"/>
         <source>Audio cue (from file)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/gst_backend/gst_backend.py" line="113"/>
+        <location filename="../../../plugins/gst_backend/gst_backend.py" line="114"/>
         <source>Select media files</source>
         <translation type="unfinished"></translation>
     </message>
@@ -126,7 +126,7 @@
 <context>
     <name>GstMediaError</name>
     <message>
-        <location filename="../../../plugins/gst_backend/gst_media.py" line="239"/>
+        <location filename="../../../plugins/gst_backend/gst_media.py" line="238"/>
         <source>Cannot create pipeline element: &quot;{}&quot;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -142,7 +142,7 @@
 <context>
     <name>GstMediaWarning</name>
     <message>
-        <location filename="../../../plugins/gst_backend/gst_media.py" line="233"/>
+        <location filename="../../../plugins/gst_backend/gst_media.py" line="232"/>
         <source>Invalid pipeline element: &quot;{}&quot;</source>
         <translation type="unfinished"></translation>
     </message>
