@@ -407,7 +407,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/keyboard.py" line="53"/>
       <source>Key</source>
-      <translation type="unfinished">Key</translation>
+      <translation>Touche</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/keyboard.py" line="53"/>
@@ -503,17 +503,17 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="221"/>
       <source>OSC Capture</source>
-      <translation type="unfinished">OSC Capture</translation>
+      <translation>Capture OSC</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="250"/>
       <source>Add</source>
-      <translation type="unfinished">Add</translation>
+      <translation>Ajouter</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="251"/>
       <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
+      <translation>Retirer</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="252"/>
@@ -526,12 +526,12 @@
     <message>
       <location filename="../../../plugins/controller/protocols/keyboard.py" line="77"/>
       <source>Add</source>
-      <translation type="unfinished">Add</translation>
+      <translation>Ajouter</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/keyboard.py" line="78"/>
       <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
+      <translation>Retirer</translation>
     </message>
   </context>
   <context>
@@ -539,7 +539,7 @@
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="180"/>
       <source>OSC Settings</source>
-      <translation type="unfinished">OSC Settings</translation>
+      <translation>Paramètres OSC</translation>
     </message>
   </context>
   <context>
@@ -597,7 +597,7 @@
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="37"/>
       <source>Do Nothing</source>
-      <translation type="unfinished">Do Nothing</translation>
+      <translation>Ne rien faire</translation>
     </message>
   </context>
   <context>
@@ -740,7 +740,7 @@
     <message>
       <location filename="../../../ui/widgets/cue_next_actions.py" line="26"/>
       <source>Do Nothing</source>
-      <translation type="unfinished">Do Nothing</translation>
+      <translation>Ne rien faire</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_next_actions.py" line="27"/>
@@ -826,22 +826,22 @@
     <message>
       <location filename="../../../plugins/triggers/triggers_handler.py" line="27"/>
       <source>Started</source>
-      <translation type="unfinished">Started</translation>
+      <translation>Démarré</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_handler.py" line="28"/>
       <source>Paused</source>
-      <translation type="unfinished">Paused</translation>
+      <translation>En pause</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_handler.py" line="29"/>
       <source>Stopped</source>
-      <translation type="unfinished">Stopped</translation>
+      <translation>Arrêté</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_handler.py" line="30"/>
       <source>Ended</source>
-      <translation type="unfinished">Ended</translation>
+      <translation>Terminé</translation>
     </message>
   </context>
   <context>
@@ -924,32 +924,32 @@
     <message>
       <location filename="../../../plugins/controller/common.py" line="40"/>
       <source>Go</source>
-      <translation type="unfinished">Go</translation>
+      <translation>Go</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="41"/>
       <source>Reset</source>
-      <translation type="unfinished">Reset</translation>
+      <translation>Réinitialiser</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="42"/>
       <source>Stop all cues</source>
-      <translation type="unfinished">Stop all cues</translation>
+      <translation>Arrêter toutes les cues</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="43"/>
       <source>Pause all cues</source>
-      <translation type="unfinished">Pause all cues</translation>
+      <translation>Mettre en pause toutes les cues</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="44"/>
       <source>Resume all cues</source>
-      <translation type="unfinished">Resume all cues</translation>
+      <translation>Reprendre toutes les cues</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="47"/>
       <source>Interrupt all cues</source>
-      <translation type="unfinished">Interrupt all cues</translation>
+      <translation>Interrompre toutes les cues</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="50"/>
@@ -1068,7 +1068,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/jack_sink.py" line="79"/>
       <source>Edit connections</source>
-      <translation type="unfinished">Edit connections</translation>
+      <translation>Éditer les connexions</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/jack_sink.py" line="275"/>
@@ -1083,12 +1083,12 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/jack_sink.py" line="337"/>
       <source>Connect</source>
-      <translation type="unfinished">Connect</translation>
+      <translation>Connecter</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/jack_sink.py" line="332"/>
       <source>Disconnect</source>
-      <translation type="unfinished">Disconnect</translation>
+      <translation>Déconnecter</translation>
     </message>
   </context>
   <context>
@@ -1096,12 +1096,12 @@
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="42"/>
       <source>Organize the cues in a list</source>
-      <translation type="unfinished">Organize the cues in a list</translation>
+      <translation>Organiser les cues dans une liste</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="45"/>
       <source>Organize cues in grid like pages</source>
-      <translation type="unfinished">Organize cues in grid like pages</translation>
+      <translation>Organiser les cues en grille comme les pages</translation>
     </message>
   </context>
   <context>
@@ -1109,37 +1109,37 @@
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="46"/>
       <source>SHIFT + Space or Double-Click to edit a cue</source>
-      <translation type="unfinished">SHIFT + Space or Double-Click to edit a cue</translation>
+      <translation>SHIFT + Espace ou Double-Clic pour éditer une cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="52"/>
       <source>To copy cues drag them while pressing CTRL</source>
-      <translation type="unfinished">To copy cues drag them while pressing CTRL</translation>
+      <translation>Pour copier les cues, glissez-les en pressant CTRL</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="52"/>
       <source>To move cues drag them</source>
-      <translation type="unfinished">To move cues drag them</translation>
+      <translation>Pour déplacer les cues, glissez-les</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="49"/>
       <source>Click a cue to run it</source>
-      <translation type="unfinished">Click a cue to run it</translation>
+      <translation>Cliquer sur une cue pour l'exécuter</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="50"/>
       <source>SHIFT + Click to edit a cue</source>
-      <translation type="unfinished">SHIFT + Click to edit a cue</translation>
+      <translation>MAJ + clic pour éditer une cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="51"/>
       <source>CTRL + Click to select a cue</source>
-      <translation type="unfinished">CTRL + Click to select a cue</translation>
+      <translation>CTRL + clic pour sélectionner une cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="55"/>
       <source>To move cues drag them while pressing SHIFT</source>
-      <translation type="unfinished">To move cues drag them while pressing SHIFT</translation>
+      <translation>Pour déplacer les cues, glissez-les en pressant SHIFT</translation>
     </message>
   </context>
   <context>
@@ -1193,12 +1193,12 @@
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="107"/>
       <source>Default behaviors</source>
-      <translation type="unfinished">Default behaviors</translation>
+      <translation>Comportements par défaut</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="165"/>
       <source>Show playing cues</source>
-      <translation type="unfinished">Show playing cues</translation>
+      <translation>Afficher les cues en cours</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="168"/>
@@ -1208,37 +1208,37 @@
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="172"/>
       <source>Show accurate time</source>
-      <translation type="unfinished">Show accurate time</translation>
+      <translation>Afficher le temps exact</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="171"/>
       <source>Show seek-bars</source>
-      <translation type="unfinished">Show seek-bars</translation>
+      <translation>Afficher la barre de progression</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="175"/>
       <source>Auto-select next cue</source>
-      <translation type="unfinished">Auto-select next cue</translation>
+      <translation>Auto-sélectionner la prochaine cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="115"/>
       <source>Enable selection mode</source>
-      <translation type="unfinished">Enable selection mode</translation>
+      <translation>Activer le mode sélection</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="119"/>
       <source>GO Key:</source>
-      <translation type="unfinished">GO Key:</translation>
+      <translation>Touche GO:</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="120"/>
       <source>GO Action:</source>
-      <translation type="unfinished">GO Action:</translation>
+      <translation>Action GO:</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="121"/>
       <source>GO minimum interval (ms):</source>
-      <translation type="unfinished">GO minimum interval (ms):</translation>
+      <translation>Intervalle minimum GO (ms):</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="125"/>
@@ -1248,27 +1248,27 @@
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="128"/>
       <source>Stop Cue</source>
-      <translation type="unfinished">Stop Cue</translation>
+      <translation>Arrêter la cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="129"/>
       <source>Pause Cue</source>
-      <translation type="unfinished">Pause Cue</translation>
+      <translation>Mettre la cue en pause</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="130"/>
       <source>Resume Cue</source>
-      <translation type="unfinished">Resume Cue</translation>
+      <translation>Reprendre la cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="131"/>
       <source>Interrupt Cue</source>
-      <translation type="unfinished">Interrupt Cue</translation>
+      <translation>Interrompre la cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="142"/>
       <source>Edit cue</source>
-      <translation type="unfinished">Edit cue</translation>
+      <translation>Éditer la cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="139"/>
