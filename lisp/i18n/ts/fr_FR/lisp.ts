@@ -124,7 +124,7 @@
     <message>
       <location filename="../../../ui/settings/app_pages/general.py" line="112"/>
       <source>Language:</source>
-      <translation>Langue:</translation>
+      <translation>Langue :</translation>
     </message>
   </context>
   <context>
@@ -370,12 +370,12 @@
     <message>
       <location filename="../../../command/stack.py" line="32"/>
       <source>Undo: {}</source>
-      <translation>Annuler: {}</translation>
+      <translation>Annuler : {}</translation>
     </message>
     <message>
       <location filename="../../../command/stack.py" line="33"/>
       <source>Redo: {}</source>
-      <translation>Refaire: {}</translation>
+      <translation>Refaire : {}</translation>
     </message>
   </context>
   <context>
