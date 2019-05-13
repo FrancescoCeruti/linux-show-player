@@ -2,6 +2,22 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="es-ES" sourcelanguage="en">
   <context>
+    <name>CueCategory</name>
+    <message>
+      <location filename="../../../plugins/midi/midi.py" line="45"/>
+      <source>Integration cues</source>
+      <translation type="unfinished">Integration cues</translation>
+    </message>
+  </context>
+  <context>
+    <name>CueName</name>
+    <message>
+      <location filename="../../../plugins/midi/midi_cue.py" line="36"/>
+      <source>MIDI Cue</source>
+      <translation type="unfinished">MIDI Cue</translation>
+    </message>
+  </context>
+  <context>
     <name>MIDICue</name>
     <message>
       <location filename="../../../plugins/midi/widgets.py" line="88"/>
@@ -149,6 +165,11 @@
       <location filename="../../../plugins/midi/midi_settings.py" line="33"/>
       <source>MIDI settings</source>
       <translation>Ajustes MIDI</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/midi/midi_cue.py" line="53"/>
+      <source>MIDI Settings</source>
+      <translation type="unfinished">MIDI Settings</translation>
     </message>
   </context>
 </TS>
