@@ -17,14 +17,19 @@
       <translation>Klávesa</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/keyboard.py" line="53"/>
+      <location filename="../../../plugins/controller/protocols/keyboard.py" line="55"/>
       <source>Action</source>
       <translation>Činnost</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/keyboard.py" line="76"/>
+      <location filename="../../../plugins/controller/protocols/keyboard.py" line="78"/>
       <source>Shortcuts</source>
       <translation>Klávesové zkratky</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/controller/protocols/keyboard.py" line="55"/>
+      <source>Shortcut</source>
+      <translation type="unfinished">Shortcut</translation>
     </message>
   </context>
   <context>
@@ -131,12 +136,12 @@
   <context>
     <name>ControllerSettings</name>
     <message>
-      <location filename="../../../plugins/controller/protocols/keyboard.py" line="77"/>
+      <location filename="../../../plugins/controller/protocols/keyboard.py" line="79"/>
       <source>Add</source>
       <translation>Přidat</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/keyboard.py" line="78"/>
+      <location filename="../../../plugins/controller/protocols/keyboard.py" line="80"/>
       <source>Remove</source>
       <translation>Odstranit</translation>
     </message>
@@ -144,52 +149,52 @@
   <context>
     <name>GlobalAction</name>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="40"/>
+      <location filename="../../../plugins/controller/common.py" line="41"/>
       <source>Go</source>
       <translation type="unfinished">Go</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="41"/>
+      <location filename="../../../plugins/controller/common.py" line="42"/>
       <source>Reset</source>
       <translation type="unfinished">Reset</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="42"/>
+      <location filename="../../../plugins/controller/common.py" line="43"/>
       <source>Stop all cues</source>
       <translation type="unfinished">Stop all cues</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="43"/>
+      <location filename="../../../plugins/controller/common.py" line="44"/>
       <source>Pause all cues</source>
       <translation type="unfinished">Pause all cues</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="44"/>
+      <location filename="../../../plugins/controller/common.py" line="45"/>
       <source>Resume all cues</source>
       <translation type="unfinished">Resume all cues</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="47"/>
+      <location filename="../../../plugins/controller/common.py" line="48"/>
       <source>Interrupt all cues</source>
       <translation type="unfinished">Interrupt all cues</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="50"/>
+      <location filename="../../../plugins/controller/common.py" line="51"/>
       <source>Fade-out all cues</source>
       <translation type="unfinished">Fade-out all cues</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="53"/>
+      <location filename="../../../plugins/controller/common.py" line="54"/>
       <source>Fade-in all cues</source>
       <translation type="unfinished">Fade-in all cues</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="56"/>
+      <location filename="../../../plugins/controller/common.py" line="57"/>
       <source>Move standby forward</source>
       <translation type="unfinished">Move standby forward</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="59"/>
+      <location filename="../../../plugins/controller/common.py" line="60"/>
       <source>Move standby back</source>
       <translation type="unfinished">Move standby back</translation>
     </message>
@@ -197,12 +202,12 @@
   <context>
     <name>Osc Cue</name>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="73"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="74"/>
       <source>Type</source>
       <translation type="unfinished">Type</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="73"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="74"/>
       <source>Argument</source>
       <translation type="unfinished">Argument</translation>
     </message>
@@ -233,7 +238,7 @@
       <translation>Ovládání MIDI</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/keyboard.py" line="42"/>
+      <location filename="../../../plugins/controller/protocols/keyboard.py" line="44"/>
       <source>Keyboard Shortcuts</source>
       <translation>Klávesové zkratky</translation>
     </message>
