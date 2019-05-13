@@ -2,6 +2,22 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="nl-BE" sourcelanguage="en">
   <context>
+    <name>CueCategory</name>
+    <message>
+      <location filename="../../../plugins/midi/midi.py" line="45"/>
+      <source>Integration cues</source>
+      <translation type="unfinished">Integration cues</translation>
+    </message>
+  </context>
+  <context>
+    <name>CueName</name>
+    <message>
+      <location filename="../../../plugins/midi/midi_cue.py" line="36"/>
+      <source>MIDI Cue</source>
+      <translation type="unfinished">MIDI Cue</translation>
+    </message>
+  </context>
+  <context>
     <name>MIDICue</name>
     <message>
       <location filename="../../../plugins/midi/widgets.py" line="88"/>
@@ -130,17 +146,17 @@
     <message>
       <location filename="../../../plugins/midi/midi_settings.py" line="41"/>
       <source>MIDI default devices</source>
-      <translation type="unfinished">MIDI default devices</translation>
+      <translation>Standaard MIDI apparaat</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_settings.py" line="47"/>
       <source>Input</source>
-      <translation type="unfinished">Input</translation>
+      <translation>Ingang</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_settings.py" line="54"/>
       <source>Output</source>
-      <translation type="unfinished">Output</translation>
+      <translation>Uitgang</translation>
     </message>
   </context>
   <context>
@@ -148,7 +164,12 @@
     <message>
       <location filename="../../../plugins/midi/midi_settings.py" line="33"/>
       <source>MIDI settings</source>
-      <translation type="unfinished">MIDI settings</translation>
+      <translation>MIDI instellingen</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/midi/midi_cue.py" line="53"/>
+      <source>MIDI Settings</source>
+      <translation type="unfinished">MIDI Settings</translation>
     </message>
   </context>
 </TS>
