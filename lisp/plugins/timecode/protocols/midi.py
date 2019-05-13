@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2017 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2017 Francesco Ceruti <ceppofrancy@gmail.com>
 # Copyright 2016-2017 Thomas Achtner <info@offtools.de>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
@@ -25,11 +23,7 @@ from lisp.plugins import get_plugin
 from lisp.plugins.timecode.cue_tracker import TcFormat
 from lisp.plugins.timecode.protocol import TimecodeProtocol
 
-MIDI_FORMATS = {
-    TcFormat.FILM: 0,
-    TcFormat.EBU: 1,
-    TcFormat.SMPTE: 3
-}
+MIDI_FORMATS = {TcFormat.FILM: 0, TcFormat.EBU: 1, TcFormat.SMPTE: 3}
 
 
 FRAME_VALUES = [
@@ -40,18 +34,18 @@ FRAME_VALUES = [
     lambda h, m, s, f, r: m & 15,
     lambda h, m, s, f, r: (m >> 4) & 3,
     lambda h, m, s, f, r: h & 15,
-    lambda h, m, s, f, r: (h >> 4 & 1) + (r << 1)
+    lambda h, m, s, f, r: (h >> 4 & 1) + (r << 1),
 ]
 
 
 class Midi(TimecodeProtocol):
-    Name = 'MIDI'
+    Name = "MIDI"
 
     def __init__(self):
         super().__init__()
         self.__last_time = -1
         self.__last_frame = -1
-        self.__midi = get_plugin('Midi')
+        self.__midi = get_plugin("Midi")
 
     def __send_full(self, fmt, hours, minutes, seconds, frame):
         """Sends fullframe timecode message.
@@ -59,10 +53,17 @@ class Midi(TimecodeProtocol):
         Used in case timecode is non continuous (repositioning, rewind).
         """
         message = Message(
-            'sysex', data=[
-                0x7f, 0x7f, 0x01, 0x01,
-                (MIDI_FORMATS[fmt] << 5) + hours, minutes, seconds, frame
-            ]
+            "sysex",
+            data=[
+                0x7F,
+                0x7F,
+                0x01,
+                0x01,
+                (MIDI_FORMATS[fmt] << 5) + hours,
+                minutes,
+                seconds,
+                frame,
+            ],
         )
 
         if self.__midi is not None:
@@ -70,10 +71,11 @@ class Midi(TimecodeProtocol):
 
     def __send_quarter(self, frame_type, fmt, hours, minutes, seconds, frame):
         """Send quarterframe midi message."""
-        messsage = Message('quarter_frame')
+        messsage = Message("quarter_frame")
         messsage.frame_type = frame_type
         messsage.frame_value = FRAME_VALUES[frame_type](
-            hours, minutes, seconds, frame, MIDI_FORMATS[fmt])
+            hours, minutes, seconds, frame, MIDI_FORMATS[fmt]
+        )
 
         if self.__midi is not None:
             self.__midi.send(messsage)
@@ -106,7 +108,8 @@ class Midi(TimecodeProtocol):
                     frame_type = 0
 
                 self.__send_quarter(
-                    frame_type, format, hours, minutes, seconds, frame)
+                    frame_type, format, hours, minutes, seconds, frame
+                )
 
             self.__last_frame = frame_type
 

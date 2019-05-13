@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2017 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2019 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,10 +16,12 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import mido
+from PyQt5.QtCore import QT_TRANSLATE_NOOP
 
 from lisp.core.plugin import Plugin
-from lisp.plugins.midi.midi_input import MIDIInput
-from lisp.plugins.midi.midi_output import MIDIOutput
+from lisp.cues.cue_factory import CueFactory
+from lisp.plugins.midi.midi_cue import MidiCue
+from lisp.plugins.midi.midi_io import MIDIOutput, MIDIInput
 from lisp.plugins.midi.midi_settings import MIDISettings
 from lisp.ui.settings.app_configuration import AppConfigurationDialog
 
@@ -29,37 +29,43 @@ from lisp.ui.settings.app_configuration import AppConfigurationDialog
 class Midi(Plugin):
     """Provide MIDI I/O functionality"""
 
-    Name = 'MIDI'
-    Authors = ('Francesco Ceruti', )
-    Description = 'Provide MIDI I/O functionality'
+    Name = "MIDI"
+    Authors = ("Francesco Ceruti",)
+    Description = "Provide MIDI I/O functionality"
 
     def __init__(self, app):
         super().__init__(app)
 
         # Register the settings widget
         AppConfigurationDialog.registerSettingsPage(
-            'plugins.midi', MIDISettings, Midi.Config)
+            "plugins.midi", MIDISettings, Midi.Config
+        )
+        # Register cue
+        CueFactory.register_factory(MidiCue.__name__, MidiCue)
+        app.window.registerSimpleCueMenu(
+            MidiCue, QT_TRANSLATE_NOOP("CueCategory", "Integration cues")
+        )
 
         # Load the backend and set it as current mido backend
-        self.backend = mido.Backend(Midi.Config['backend'], load=True)
+        self.backend = mido.Backend(Midi.Config["backend"], load=True)
         mido.set_backend(self.backend)
 
         # Create default I/O and open the ports/devices
-        self.__input = MIDIInput(
-            self._input_name(Midi.Config['inputDevice']))
+        self.__input = MIDIInput(self._input_name(Midi.Config["inputDevice"]))
         self.__input.open()
 
         self.__output = MIDIOutput(
-            self._output_name(Midi.Config['outputDevice']))
+            self._output_name(Midi.Config["outputDevice"])
+        )
         self.__output.open()
 
         Midi.Config.changed.connect(self.__config_change)
         Midi.Config.updated.connect(self.__config_update)
 
     def __config_change(self, key, value):
-        if key == 'inputDevice':
+        if key == "inputDevice":
             self.__input.change_port(self._input_name(value))
-        elif key == 'outputDevice':
+        elif key == "outputDevice":
             self.__output.change_port(self._output_name(value))
 
     def __config_update(self, diff):

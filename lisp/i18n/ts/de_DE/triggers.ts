@@ -6,22 +6,22 @@
     <message>
       <location filename="../../../plugins/triggers/triggers_handler.py" line="27"/>
       <source>Started</source>
-      <translation>Gestartet</translation>
+      <translation type="unfinished">Started</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_handler.py" line="28"/>
       <source>Paused</source>
-      <translation>Pausiert</translation>
+      <translation type="unfinished">Paused</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_handler.py" line="29"/>
       <source>Stopped</source>
-      <translation>Gestoppt</translation>
+      <translation type="unfinished">Stopped</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_handler.py" line="30"/>
       <source>Ended</source>
-      <translation>Beendet</translation>
+      <translation type="unfinished">Ended</translation>
     </message>
   </context>
   <context>
@@ -29,35 +29,35 @@
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="42"/>
       <source>Triggers</source>
-      <translation>Trigger</translation>
+      <translation type="unfinished">Triggers</translation>
     </message>
   </context>
   <context>
     <name>TriggersSettings</name>
     <message>
-      <location filename="../../../plugins/triggers/triggers_settings.py" line="65"/>
+      <location filename="../../../plugins/triggers/triggers_settings.py" line="63"/>
       <source>Add</source>
-      <translation>Hinzufügen</translation>
+      <translation type="unfinished">Add</translation>
     </message>
     <message>
-      <location filename="../../../plugins/triggers/triggers_settings.py" line="70"/>
+      <location filename="../../../plugins/triggers/triggers_settings.py" line="68"/>
       <source>Remove</source>
-      <translation>Entfernen</translation>
+      <translation type="unfinished">Remove</translation>
     </message>
     <message>
-      <location filename="../../../plugins/triggers/triggers_settings.py" line="150"/>
+      <location filename="../../../plugins/triggers/triggers_settings.py" line="148"/>
       <source>Trigger</source>
       <translation type="unfinished">Trigger</translation>
     </message>
     <message>
-      <location filename="../../../plugins/triggers/triggers_settings.py" line="150"/>
+      <location filename="../../../plugins/triggers/triggers_settings.py" line="148"/>
       <source>Cue</source>
       <translation type="unfinished">Cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/triggers/triggers_settings.py" line="150"/>
+      <location filename="../../../plugins/triggers/triggers_settings.py" line="148"/>
       <source>Action</source>
-      <translation>Aktion</translation>
+      <translation type="unfinished">Action</translation>
     </message>
   </context>
 </TS>

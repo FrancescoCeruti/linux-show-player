@@ -255,7 +255,7 @@
       <translation>Tonalità</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/elements/uri_input.py" line="53"/>
+      <location filename="../../../plugins/gst_backend/elements/uri_input.py" line="54"/>
       <source>URI Input</source>
       <translation>Ingresso URI</translation>
     </message>
@@ -320,42 +320,42 @@
   <context>
     <name>UriInputSettings</name>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="83"/>
+      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="80"/>
       <source>Source</source>
       <translation>Sorgente</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="84"/>
+      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="81"/>
       <source>Find File</source>
       <translation>Seleziona file</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="85"/>
+      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="82"/>
       <source>Buffering</source>
       <translation>Pre-Caricamento</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="86"/>
+      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="83"/>
       <source>Use Buffering</source>
       <translation>Usare buffering</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="89"/>
+      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="86"/>
       <source>Attempt download on network streams</source>
       <translation>Prova a scaricare con flussi di rete</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="92"/>
+      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="89"/>
       <source>Buffer size (-1 default value)</source>
       <translation>Dimensione buffer (-1 valore predefinito)</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="131"/>
+      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="119"/>
       <source>Choose file</source>
       <translation>Seleziona file</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="131"/>
+      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="119"/>
       <source>All files</source>
       <translation>Tutti i file</translation>
     </message>

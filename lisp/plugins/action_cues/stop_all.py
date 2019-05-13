@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -29,24 +27,31 @@ from lisp.ui.ui_utils import translate
 
 
 class StopAll(Cue):
-    Name = QT_TRANSLATE_NOOP('CueName', 'Stop-All')
+    Name = QT_TRANSLATE_NOOP("CueName", "Stop-All")
+    Category = QT_TRANSLATE_NOOP("CueCategory", "Action cues")
 
     action = Property(default=CueAction.Stop.value)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.name = translate('CueName', self.Name)
+        self.name = translate("CueName", self.Name)
 
     def __start__(self, fade=False):
-        Application().layout.execute_all(action=self.action, quiet=True)
+        Application().layout.execute_all(
+            action=CueAction(self.action), quiet=True
+        )
 
 
 class StopAllSettings(SettingsPage):
-    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Stop Settings')
+    Name = QT_TRANSLATE_NOOP("SettingsPageName", "Stop Settings")
 
     SupportedActions = [
-        CueAction.Stop, CueAction.FadeOutStop, CueAction.Pause,
-        CueAction.FadeOutPause, CueAction.Interrupt, CueAction.FadeOutInterrupt
+        CueAction.Stop,
+        CueAction.FadeOutStop,
+        CueAction.Pause,
+        CueAction.FadeOutPause,
+        CueAction.Interrupt,
+        CueAction.FadeOutInterrupt,
     ]
 
     def __init__(self, **kwargs):
@@ -61,13 +66,14 @@ class StopAllSettings(SettingsPage):
         self.actionCombo = QComboBox(self.group)
         for action in StopAllSettings.SupportedActions:
             self.actionCombo.addItem(
-                translate('CueAction', action.name), action.value)
+                translate("CueAction", action.name), action.value
+            )
         self.group.layout().addWidget(self.actionCombo)
 
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.group.setTitle(translate('StopAll', 'Stop Action'))
+        self.group.setTitle(translate("StopAll", "Stop Action"))
 
     def enableCheck(self, enabled):
         self.group.setCheckable(enabled)
@@ -77,13 +83,14 @@ class StopAllSettings(SettingsPage):
         conf = {}
 
         if not (self.group.isCheckable() and not self.group.isChecked()):
-            conf['action'] = self.actionCombo.currentData()
+            conf["action"] = self.actionCombo.currentData()
 
         return conf
 
     def loadSettings(self, settings):
         self.actionCombo.setCurrentText(
-            translate('CueAction', settings.get('action', '')))
+            translate("CueAction", settings.get("action", ""))
+        )
 
 
 CueSettingsRegistry().add(StopAllSettings, StopAll)

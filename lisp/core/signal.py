@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -28,10 +26,10 @@ from types import MethodType, BuiltinMethodType
 from PyQt5.QtCore import QEvent, QObject
 from PyQt5.QtWidgets import QApplication
 
-from lisp.core.decorators import async
+from lisp.core.decorators import async_function
 from lisp.core.util import weak_call_proxy
 
-__all__ = ['Signal', 'Connection']
+__all__ = ["Signal", "Connection"]
 
 logger = logging.getLogger(__name__)
 
@@ -59,7 +57,7 @@ class Slot:
         elif callable(slot_callable):
             self._reference = weakref.ref(slot_callable, self._expired)
         else:
-            raise TypeError('slot must be callable')
+            raise TypeError("slot must be callable")
 
         self._callback = callback
         self._slot_id = slot_id(slot_callable)
@@ -86,7 +84,7 @@ class Slot:
 class AsyncSlot(Slot):
     """Asynchronous slot, NOT queued, any call is performed in a new thread."""
 
-    @async
+    @async_function
     def call(self, *args, **kwargs):
         super().call(*args, **kwargs)
 
@@ -103,8 +101,9 @@ class QtSlot(Slot):
         self._invoker.customEvent = self._custom_event
 
     def call(self, *args, **kwargs):
-        QApplication.instance().sendEvent(self._invoker,
-                                          self._event(*args, **kwargs))
+        QApplication.instance().sendEvent(
+            self._invoker, self._event(*args, **kwargs)
+        )
 
     def _event(self, *args, **kwargs):
         return QSlotEvent(self._reference, *args, **kwargs)
@@ -117,8 +116,9 @@ class QtQueuedSlot(QtSlot):
     """Qt queued (safe) slot, execute the call inside the qt-event-loop."""
 
     def call(self, *args, **kwargs):
-        QApplication.instance().postEvent(self._invoker,
-                                          self._event(*args, **kwargs))
+        QApplication.instance().postEvent(
+            self._invoker, self._event(*args, **kwargs)
+        )
 
 
 class QSlotEvent(QEvent):
@@ -133,6 +133,7 @@ class QSlotEvent(QEvent):
 
 class Connection(Enum):
     """Available connection modes."""
+
     Direct = Slot
     Async = AsyncSlot
     QtDirect = QtSlot
@@ -177,7 +178,7 @@ class Signal:
         :raise ValueError: if mode not in Connection enum
         """
         if mode not in Connection:
-            raise ValueError('invalid mode value: {0}'.format(mode))
+            raise ValueError("invalid mode value: {0}".format(mode))
 
         with self.__lock:
             sid = slot_id(slot_callable)
@@ -187,7 +188,7 @@ class Signal:
                 # to avoid cyclic references.
                 self.__slots[sid] = mode.new_slot(
                     slot_callable,
-                    weak_call_proxy(weakref.WeakMethod(self.__remove_slot))
+                    weak_call_proxy(weakref.WeakMethod(self.__remove_slot)),
                 )
 
     def disconnect(self, slot=None):

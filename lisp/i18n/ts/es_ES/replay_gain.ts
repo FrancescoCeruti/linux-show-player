@@ -4,22 +4,22 @@
   <context>
     <name>ReplayGain</name>
     <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="51"/>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="52"/>
       <source>ReplayGain / Normalization</source>
       <translation>ReplayGain / Normalización</translation>
     </message>
     <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="56"/>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="57"/>
       <source>Calculate</source>
       <translation>Calcular</translation>
     </message>
     <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="61"/>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="62"/>
       <source>Reset all</source>
       <translation>Reestablecer todo</translation>
     </message>
     <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="66"/>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="67"/>
       <source>Reset selected</source>
       <translation>Reestablecer seleccionados</translation>
     </message>

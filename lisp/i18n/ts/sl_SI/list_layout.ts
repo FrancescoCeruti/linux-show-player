@@ -73,27 +73,27 @@
       <translation type="unfinished">Enable selection mode</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="125"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="123"/>
       <source>Use fade (buttons)</source>
       <translation type="unfinished">Use fade (buttons)</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="128"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="126"/>
       <source>Stop Cue</source>
       <translation type="unfinished">Stop Cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="129"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="127"/>
       <source>Pause Cue</source>
       <translation type="unfinished">Pause Cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="130"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="128"/>
       <source>Resume Cue</source>
       <translation type="unfinished">Resume Cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="131"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="129"/>
       <source>Interrupt Cue</source>
       <translation type="unfinished">Interrupt Cue</translation>
     </message>
@@ -143,6 +143,21 @@
       <translation type="unfinished">Fade-In all</translation>
     </message>
     <message>
+      <location filename="../../../plugins/list_layout/settings.py" line="119"/>
+      <source>GO key:</source>
+      <translation type="unfinished">GO key:</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/settings.py" line="120"/>
+      <source>GO action:</source>
+      <translation type="unfinished">GO action:</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/settings.py" line="121"/>
+      <source>GO delay (ms):</source>
+      <translation type="unfinished">GO delay (ms):</translation>
+    </message>
+    <message>
       <location filename="../../../plugins/list_layout/layout.py" line="139"/>
       <source>Edit selected</source>
       <translation type="unfinished">Edit selected</translation>
@@ -162,46 +177,26 @@
       <source>Remove selected</source>
       <translation type="unfinished">Remove selected</translation>
     </message>
-    <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="119"/>
-      <source>GO Key:</source>
-      <translation type="unfinished">GO Key:</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="120"/>
-      <source>GO Action:</source>
-      <translation type="unfinished">GO Action:</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="121"/>
-      <source>GO minimum interval (ms):</source>
-      <translation type="unfinished">GO minimum interval (ms):</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="363"/>
-      <source>Copy of {}</source>
-      <translation type="unfinished">Copy of {}</translation>
-    </message>
   </context>
   <context>
     <name>ListLayoutHeader</name>
     <message>
-      <location filename="../../../plugins/list_layout/list_view.py" line="74"/>
+      <location filename="../../../plugins/list_layout/list_view.py" line="73"/>
       <source>Cue</source>
       <translation type="unfinished">Cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/list_view.py" line="79"/>
+      <location filename="../../../plugins/list_layout/list_view.py" line="78"/>
       <source>Pre wait</source>
       <translation type="unfinished">Pre wait</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/list_view.py" line="82"/>
+      <location filename="../../../plugins/list_layout/list_view.py" line="81"/>
       <source>Action</source>
       <translation type="unfinished">Action</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/list_view.py" line="85"/>
+      <location filename="../../../plugins/list_layout/list_view.py" line="84"/>
       <source>Post wait</source>
       <translation type="unfinished">Post wait</translation>
     </message>

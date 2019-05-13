@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2017 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2017 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,7 +20,6 @@ from lisp.core.proxy_model import ReadOnlyProxyModel
 
 
 class CueListModel(ModelAdapter):
-
     def __init__(self, model):
         super().__init__(model)
         self.__cues = []
@@ -62,8 +59,9 @@ class CueListModel(ModelAdapter):
         self.model_reset.emit()
 
     def _item_added(self, item):
-        if (not isinstance(item.index, int) or
-                not 0 <= item.index <= len(self.__cues)):
+        if not isinstance(item.index, int) or not 0 <= item.index <= len(
+            self.__cues
+        ):
             item.index = len(self.__cues)
 
         self.__cues.insert(item.index, item)
@@ -91,7 +89,6 @@ class CueListModel(ModelAdapter):
 
 
 class RunningCueModel(ReadOnlyProxyModel):
-
     def __init__(self, model):
         super().__init__(model)
         self.__playing = []

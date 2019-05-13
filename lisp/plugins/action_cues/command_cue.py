@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,7 +21,7 @@ import subprocess
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QLineEdit, QCheckBox
 
-from lisp.core.decorators import async
+from lisp.core.decorators import async_function
 from lisp.core.properties import Property
 from lisp.cues.cue import Cue, CueAction
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
@@ -39,17 +37,18 @@ class CommandCue(Cue):
     Implemented using :class:`subprocess.Popen` with *shell=True*
     """
 
-    Name = QT_TRANSLATE_NOOP('CueName', 'Command Cue')
+    Name = QT_TRANSLATE_NOOP("CueName", "Command Cue")
+    Category = None
     CueActions = (CueAction.Default, CueAction.Start, CueAction.Stop)
 
-    command = Property(default='')
+    command = Property(default="")
     no_output = Property(default=True)
     no_error = Property(default=True)
     kill = Property(default=False)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.name = translate('CueName', self.Name)
+        self.name = translate("CueName", self.Name)
 
         self.__process = None
         self.__stopped = False
@@ -58,7 +57,7 @@ class CommandCue(Cue):
         self.__exec_command()
         return True
 
-    @async
+    @async_function
     def __exec_command(self):
         if not self.command.strip():
             return
@@ -66,8 +65,9 @@ class CommandCue(Cue):
         # If no_output is True, discard all the outputs
         std = subprocess.DEVNULL if self.no_output else None
         # Execute the command
-        self.__process = subprocess.Popen(self.command, shell=True,
-                                          stdout=std, stderr=std)
+        self.__process = subprocess.Popen(
+            self.command, shell=True, stdout=std, stderr=std
+        )
         rcode = self.__process.wait()
 
         if rcode == 0 or rcode == -9 or self.no_error:
@@ -76,10 +76,12 @@ class CommandCue(Cue):
                 self._ended()
         elif not self.no_error:
             # If an error occurs and not in no-error mode
-            logger.error(translate(
-                'CommandCue',
-                'Command cue ended with an error status. '
-                'Exit code: {}').format(rcode))
+            logger.error(
+                translate(
+                    "CommandCue",
+                    "Command cue ended with an error status. Exit code: {}",
+                ).format(rcode)
+            )
             self._error()
 
         self.__process = None
@@ -99,7 +101,7 @@ class CommandCue(Cue):
 
 
 class CommandCueSettings(SettingsPage):
-    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Command')
+    Name = QT_TRANSLATE_NOOP("SettingsPageName", "Command")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -125,15 +127,19 @@ class CommandCueSettings(SettingsPage):
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.group.setTitle(translate('CommandCue', 'Command'))
+        self.group.setTitle(translate("CommandCue", "Command"))
         self.commandLineEdit.setPlaceholderText(
-            translate('CommandCue', 'Command to execute, as in a shell'))
+            translate("CommandCue", "Command to execute, as in a shell")
+        )
         self.noOutputCheckBox.setText(
-            translate('CommandCue', 'Discard command output'))
+            translate("CommandCue", "Discard command output")
+        )
         self.noErrorCheckBox.setText(
-            translate('CommandCue', 'Ignore command errors'))
+            translate("CommandCue", "Ignore command errors")
+        )
         self.killCheckBox.setText(
-            translate('CommandCue', 'Kill instead of terminate'))
+            translate("CommandCue", "Kill instead of terminate")
+        )
 
     def enableCheck(self, enabled):
         self.group.setCheckable(enabled)
@@ -152,23 +158,23 @@ class CommandCueSettings(SettingsPage):
             self.killCheckBox.setCheckState(Qt.PartiallyChecked)
 
     def loadSettings(self, settings):
-        self.commandLineEdit.setText(settings.get('command', ''))
-        self.noOutputCheckBox.setChecked(settings.get('no_output', True))
-        self.noErrorCheckBox.setChecked(settings.get('no_error', True))
-        self.killCheckBox.setChecked(settings.get('kill', False))
+        self.commandLineEdit.setText(settings.get("command", ""))
+        self.noOutputCheckBox.setChecked(settings.get("no_output", True))
+        self.noErrorCheckBox.setChecked(settings.get("no_error", True))
+        self.killCheckBox.setChecked(settings.get("kill", False))
 
     def getSettings(self):
         settings = {}
 
         if not (self.group.isCheckable() and not self.group.isChecked()):
             if self.commandLineEdit.text().strip():
-                settings['command'] = self.commandLineEdit.text()
+                settings["command"] = self.commandLineEdit.text()
         if self.noOutputCheckBox.checkState() != Qt.PartiallyChecked:
-            settings['no_output'] = self.noOutputCheckBox.isChecked()
+            settings["no_output"] = self.noOutputCheckBox.isChecked()
         if self.noErrorCheckBox.checkState() != Qt.PartiallyChecked:
-            settings['no_error'] = self.noErrorCheckBox.isChecked()
+            settings["no_error"] = self.noErrorCheckBox.isChecked()
         if self.killCheckBox.checkState() != Qt.PartiallyChecked:
-            settings['kill'] = self.killCheckBox.isChecked()
+            settings["kill"] = self.killCheckBox.isChecked()
 
         return settings
 

@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,7 +25,7 @@ from .info_panel import InfoPanel
 
 
 class ListLayoutView(QWidget):
-    def __init__(self, listModel, runModel, *args):
+    def __init__(self, listModel, runModel, config, *args):
         super().__init__(*args)
         self.setLayout(QGridLayout())
         self.layout().setContentsMargins(0, 0, 0, 0)
@@ -35,15 +33,15 @@ class ListLayoutView(QWidget):
         self.listModel = listModel
 
         # GO-BUTTON (top-left)
-        self.goButton = QPushButton('GO', self)
+        self.goButton = QPushButton("GO", self)
         self.goButton.setFocusPolicy(Qt.NoFocus)
         self.goButton.setFixedWidth(120)
         self.goButton.setFixedHeight(100)
         self.goButton.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
-        self.goButton.setStyleSheet('font-size: 48pt;')
+        self.goButton.setStyleSheet("font-size: 48pt;")
         self.layout().addWidget(self.goButton, 0, 0)
 
-        # INFO PANEL (top center)
+        # INFO PANEL (top-center)
         self.infoPanel = InfoPanel(self)
         self.infoPanel.setFixedHeight(120)
         self.layout().addWidget(self.infoPanel, 0, 1)
@@ -53,20 +51,22 @@ class ListLayoutView(QWidget):
         self.controlButtons.setFixedHeight(120)
         self.layout().addWidget(self.controlButtons, 0, 2)
 
-        # CUE VIEW (center left)
+        # CUE VIEW (center-left)
         self.listView = CueListView(listModel, self)
         self.listView.currentItemChanged.connect(self.__listViewCurrentChanged)
         self.layout().addWidget(self.listView, 1, 0, 1, 2)
 
-        # PLAYING VIEW (center right)
-        self.runView = RunningCuesListWidget(runModel, parent=self)
+        # PLAYING VIEW (center-right)
+        self.runView = RunningCuesListWidget(runModel, config, parent=self)
         self.runView.setMinimumWidth(300)
         self.runView.setMaximumWidth(300)
         self.layout().addWidget(self.runView, 1, 2)
 
-    def __listViewCurrentChanged(self, current, previous):
+    def __listViewCurrentChanged(self, current, _):
+        cue = None
         if current is not None:
             index = self.listView.indexOfTopLevelItem(current)
-            self.infoPanel.cue = self.listModel.item(index)
-        else:
-            self.infoPanel.cue = None
+            if index < len(self.listModel):
+                cue = self.listModel.item(index)
+
+        self.infoPanel.cue = cue

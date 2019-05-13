@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2017 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2017 Francesco Ceruti <ceppofrancy@gmail.com>
 # Copyright 2016-2017 Thomas Achtner <info@offtools.de>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
@@ -21,7 +19,8 @@
 
 class TimecodeProtocol:
     """Base class for timecode protocols"""
-    Name = 'None'
+
+    Name = "None"
 
     def send(self, fmt, time, track=-1):
         """Send timecode, returns success for error handling"""

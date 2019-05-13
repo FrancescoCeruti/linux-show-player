@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -39,7 +37,7 @@ class InfoPanel(QWidget):
 
         # cue description
         self.cueDescription = QTextEdit(self)
-        self.cueDescription.setObjectName('InfoPanelDescription')
+        self.cueDescription.setObjectName("InfoPanelDescription")
         self.cueDescription.setFocusPolicy(Qt.NoFocus)
         self.cueDescription.setReadOnly(True)
         self.layout().addWidget(self.cueDescription)
@@ -48,9 +46,11 @@ class InfoPanel(QWidget):
 
     def retranslateUi(self):
         self.cueName.setPlaceholderText(
-            translate('ListLayoutInfoPanel', 'Cue name'))
+            translate("ListLayoutInfoPanel", "Cue name")
+        )
         self.cueDescription.setPlaceholderText(
-            translate('ListLayoutInfoPanel', 'Cue description'))
+            translate("ListLayoutInfoPanel", "Cue description")
+        )
 
     @property
     def cue(self):
@@ -59,14 +59,14 @@ class InfoPanel(QWidget):
     @cue.setter
     def cue(self, item):
         if self._cue is not None:
-            self._cue.changed('name').disconnect(self._name_changed)
-            self._cue.changed('description').disconnect(self._desc_changed)
+            self._cue.changed("name").disconnect(self._name_changed)
+            self._cue.changed("description").disconnect(self._desc_changed)
 
         self._cue = item
 
         if self._cue is not None:
-            self._cue.changed('name').connect(self._name_changed)
-            self._cue.changed('description').connect(self._desc_changed)
+            self._cue.changed("name").connect(self._name_changed)
+            self._cue.changed("description").connect(self._desc_changed)
 
             self._name_changed(self._cue.name)
             self._desc_changed(self._cue.description)
@@ -75,7 +75,7 @@ class InfoPanel(QWidget):
             self.cueDescription.clear()
 
     def _name_changed(self, name):
-        self.cueName.setText(str(self.cue.index + 1) + ' → ' + name)
+        self.cueName.setText(str(self.cue.index + 1) + " → " + name)
 
     def _desc_changed(self, description):
         self.cueDescription.setText(description)

@@ -4,7 +4,7 @@
   <context>
     <name>RenameCues</name>
     <message>
-      <location filename="../../../plugins/rename_cues/rename_cues.py" line="36"/>
+      <location filename="../../../plugins/rename_cues/rename_cues.py" line="37"/>
       <source>Rename Cues</source>
       <translation>Renombrar cues</translation>
     </message>
@@ -62,14 +62,6 @@
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="232"/>
       <source>Regex help</source>
       <translation>Ayuda de regex</translation>
-    </message>
-  </context>
-  <context>
-    <name>RenameCuesCommand</name>
-    <message>
-      <location filename="../../../plugins/rename_cues/command.py" line="44"/>
-      <source>Renamed {number} cues</source>
-      <translation type="unfinished">Renamed {number} cues</translation>
     </message>
   </context>
   <context>

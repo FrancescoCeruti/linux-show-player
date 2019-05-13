@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -35,13 +33,11 @@ class QEditableTabBar(QTabBar):
         self._editor.installEventFilter(self)
 
     def eventFilter(self, widget, event):
-        clickOutside = (
-            event.type() == QEvent.MouseButtonPress and
-            not self._editor.geometry().contains(event.globalPos())
+        clickOutside = event.type() == QEvent.MouseButtonPress and not self._editor.geometry().contains(
+            event.globalPos()
         )
         escKey = (
-            event.type() == QEvent.KeyPress and
-            event.key() == Qt.Key_Escape
+            event.type() == QEvent.KeyPress and event.key() == Qt.Key_Escape
         )
 
         if clickOutside or escKey:

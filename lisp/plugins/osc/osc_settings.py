@@ -1,9 +1,7 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
-# Copyright 2012-2016 Thomas Achtner <info@offtools.de>
+# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2016 Thomas Achtner <info@offtools.de>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,31 +17,37 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import QT_TRANSLATE_NOOP, Qt
-from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QLabel, \
-    QHBoxLayout, QSpinBox, QLineEdit
+from PyQt5.QtWidgets import (
+    QVBoxLayout,
+    QGroupBox,
+    QLabel,
+    QHBoxLayout,
+    QSpinBox,
+    QLineEdit,
+)
 
-from lisp.ui.settings.pages import ConfigurationPage
+from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.ui_utils import translate
 
 
-class OscSettings(ConfigurationPage):
-    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'OSC settings')
+class OscSettings(SettingsPage):
+    Name = QT_TRANSLATE_NOOP("SettingsPageName", "OSC settings")
 
-    def __init__(self, config, **kwargs):
-        super().__init__(config, **kwargs)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
         self.groupBox = QGroupBox(self)
         self.groupBox.setLayout(QVBoxLayout())
-        self.groupBox.setTitle(translate('OscSettings', 'OSC Settings'))
+        self.groupBox.setTitle(translate("OscSettings", "OSC Settings"))
         self.layout().addWidget(self.groupBox)
 
         hbox = QHBoxLayout()
         self.inportBox = QSpinBox(self)
         self.inportBox.setMinimum(1000)
         self.inportBox.setMaximum(99999)
-        label = QLabel(translate('OscSettings', 'Input Port:'))
+        label = QLabel(translate("OscSettings", "Input Port:"))
         hbox.layout().addWidget(label)
         hbox.layout().addWidget(self.inportBox)
         self.groupBox.layout().addLayout(hbox)
@@ -52,30 +56,28 @@ class OscSettings(ConfigurationPage):
         self.outportBox = QSpinBox(self)
         self.outportBox.setMinimum(1000)
         self.outportBox.setMaximum(99999)
-        label = QLabel(translate('OscSettings', 'Output Port:'))
+        label = QLabel(translate("OscSettings", "Output Port:"))
         hbox.layout().addWidget(label)
         hbox.layout().addWidget(self.outportBox)
         self.groupBox.layout().addLayout(hbox)
 
         hbox = QHBoxLayout()
         self.hostnameEdit = QLineEdit()
-        self.hostnameEdit.setText('localhost')
+        self.hostnameEdit.setText("localhost")
         self.hostnameEdit.setMaximumWidth(200)
-        label = QLabel(translate('OscSettings', 'Hostname:'))
+        label = QLabel(translate("OscSettings", "Hostname:"))
         hbox.layout().addWidget(label)
         hbox.layout().addWidget(self.hostnameEdit)
         self.groupBox.layout().addLayout(hbox)
 
-        self.loadConfiguration()
+    def getSettings(self):
+        return {
+            "inPort": self.inportBox.value(),
+            "outPort": self.outportBox.value(),
+            "hostname": self.hostnameEdit.text(),
+        }
 
-    def applySettings(self):
-        self.config['inPort'] = self.inportBox.value()
-        self.config['outPort'] = self.outportBox.value()
-        self.config['hostname'] = self.hostnameEdit.text()
-
-        self.config.write()
-
-    def loadConfiguration(self):
-        self.inportBox.setValue(self.config['inPort'])
-        self.outportBox.setValue(self.config['outPort'])
-        self.hostnameEdit.setText(self.config['hostname'])
+    def loadSettings(self, settings):
+        self.inportBox.setValue(settings["inPort"])
+        self.outportBox.setValue(settings["outPort"])
+        self.hostnameEdit.setText(settings["hostname"])

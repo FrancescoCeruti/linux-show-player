@@ -1,5 +1,5 @@
 {
-    "_version_": "1.2",
+    "_version_": "1.4",
     "_enabled_": true,
     "show": {
         "dBMeters": true,
@@ -10,6 +10,8 @@
     "selectionMode": false,
     "autoContinue": true,
     "goKey": "Space",
+    "goAction": "Default",
+    "goDelay": 100,
     "stopCueFade": true,
     "pauseCueFade": true,
     "resumeCueFade": true,

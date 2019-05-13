@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,8 +16,14 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QSlider, QLabel, QCheckBox, \
-    QVBoxLayout
+from PyQt5.QtWidgets import (
+    QGroupBox,
+    QHBoxLayout,
+    QSlider,
+    QLabel,
+    QCheckBox,
+    QVBoxLayout,
+)
 
 from lisp.backend.audio_utils import db_to_linear, linear_to_db
 from lisp.plugins.gst_backend.elements.volume import Volume
@@ -76,12 +80,13 @@ class VolumeSettings(SettingsPage):
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.volumeBox.setTitle(translate('VolumeSettings', 'Volume'))
-        self.volumeLabel.setText('0.0 dB')
+        self.volumeBox.setTitle(translate("VolumeSettings", "Volume"))
+        self.volumeLabel.setText("0.0 dB")
         self.normalBox.setTitle(
-            translate('VolumeSettings', 'Normalized volume'))
-        self.normalLabel.setText('0.0 dB')
-        self.normalReset.setText(translate('VolumeSettings', 'Reset'))
+            translate("VolumeSettings", "Normalized volume")
+        )
+        self.normalLabel.setText("0.0 dB")
+        self.normalReset.setText(translate("VolumeSettings", "Reset"))
 
     def enableCheck(self, enabled):
         for box in [self.normalBox, self.volumeBox]:
@@ -93,24 +98,25 @@ class VolumeSettings(SettingsPage):
         checkable = self.volumeBox.isCheckable()
 
         if not (checkable and not self.volumeBox.isChecked()):
-            settings['volume'] = db_to_linear(self.volume.value() / 10)
-            settings['mute'] = self.muteButton.isMute()
+            settings["volume"] = db_to_linear(self.volume.value() / 10)
+            settings["mute"] = self.muteButton.isMute()
         if not (checkable and not self.normalBox.isChecked()):
             if self.normalReset.isChecked():
-                settings['normal_volume'] = 1
+                settings["normal_volume"] = 1
                 # If the apply button is pressed, show the correct value
-                self.normalLabel.setText('0 dB')
+                self.normalLabel.setText("0 dB")
             else:
-                settings['normal_volume'] = self.normal
+                settings["normal_volume"] = self.normal
 
         return settings
 
     def loadSettings(self, settings):
-        self.volume.setValue(linear_to_db(settings.get('volume', 1)) * 10)
-        self.muteButton.setMute(settings.get('mute', False))
-        self.normal = settings.get('normal_volume', 1)
+        self.volume.setValue(linear_to_db(settings.get("volume", 1)) * 10)
+        self.muteButton.setMute(settings.get("mute", False))
+        self.normal = settings.get("normal_volume", 1)
         self.normalLabel.setText(
-            str(round(linear_to_db(self.normal), 3)) + ' dB')
+            str(round(linear_to_db(self.normal), 3)) + " dB"
+        )
 
     def volume_changed(self, value):
-        self.volumeLabel.setText(str(value / 10.0) + ' dB')
+        self.volumeLabel.setText(str(value / 10.0) + " dB")

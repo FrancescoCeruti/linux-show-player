@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,6 +19,8 @@ import logging
 from threading import Thread
 from wsgiref.simple_server import make_server, WSGIRequestHandler
 
+from lisp.ui.ui_utils import translate
+
 logger = logging.getLogger(__name__)
 
 
@@ -28,12 +28,16 @@ class APIServerThread(Thread):
     def __init__(self, host, port, api):
         super().__init__(daemon=True)
         self.wsgi_server = make_server(
-            host, port, api, handler_class=APIRequestHandler)
+            host, port, api, handler_class=APIRequestHandler
+        )
 
     def run(self):
         try:
             logger.info(
-                'Start serving network API at: http://{}:{}/'.format(
+                translate(
+                    "ApiServerInfo",
+                    "Start serving network API at: http://{}:{}/",
+                ).format(
                     self.wsgi_server.server_address[0],
                     self.wsgi_server.server_address[1],
                 )
@@ -41,9 +45,13 @@ class APIServerThread(Thread):
 
             self.wsgi_server.serve_forever()
 
-            logger.info('Stop serving network API')
+            logger.info(translate("APIServerInfo", "Stop serving network API"))
         except Exception:
-            logger.exception('Network API server stopped working.')
+            logger.exception(
+                translate(
+                    "ApiServerError", "Network API server stopped working."
+                )
+            )
 
     def stop(self):
         self.wsgi_server.shutdown()
@@ -53,6 +61,7 @@ class APIServerThread(Thread):
 
 
 class APIRequestHandler(WSGIRequestHandler):
+    """Implement custom logging."""
 
     def log_message(self, format, *args):
         logger.debug(format % args)

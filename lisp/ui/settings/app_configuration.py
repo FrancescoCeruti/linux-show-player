@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,14 +23,12 @@ from PyQt5.QtCore import QModelIndex
 from PyQt5.QtWidgets import QVBoxLayout, QDialogButtonBox, QDialog
 
 from lisp.core.dicttree import DictNode
-from lisp.core.util import typename
-from lisp.ui.settings.pages import ConfigurationPage, TreeMultiConfigurationWidget
-from lisp.ui.settings.pages_tree_model import PagesTreeModel
 from lisp.ui.ui_utils import translate
+from lisp.ui.widgets.pagestreewidget import PagesTreeModel, PagesTreeWidget
 
 logger = logging.getLogger(__name__)
 
-PageEntry = namedtuple('PageEntry', ('page', 'config'))
+PageEntry = namedtuple("PageEntry", ("page", "config"))
 
 
 class AppConfigurationDialog(QDialog):
@@ -40,67 +36,80 @@ class AppConfigurationDialog(QDialog):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.setWindowTitle(translate('AppConfiguration', 'LiSP preferences'))
+        self.setWindowTitle(translate("AppConfiguration", "LiSP preferences"))
         self.setWindowModality(QtCore.Qt.WindowModal)
-        self.setMaximumSize(640, 510)
-        self.setMinimumSize(640, 510)
-        self.resize(640, 510)
+        self.setMaximumSize(800, 510)
+        self.setMinimumSize(800, 510)
+        self.resize(800, 510)
         self.setLayout(QVBoxLayout())
 
+        self._confsMap = {}
         self.model = PagesTreeModel()
         for r_node in AppConfigurationDialog.PagesRegistry.children:
             self._populateModel(QModelIndex(), r_node)
 
-        self.mainPage = TreeMultiConfigurationWidget(self.model)
+        self.mainPage = PagesTreeWidget(self.model)
         self.mainPage.selectFirst()
         self.layout().addWidget(self.mainPage)
 
         self.dialogButtons = QDialogButtonBox(self)
         self.dialogButtons.setStandardButtons(
-            QDialogButtonBox.Cancel |
-            QDialogButtonBox.Apply |
-            QDialogButtonBox.Ok
+            QDialogButtonBox.Cancel
+            | QDialogButtonBox.Apply
+            | QDialogButtonBox.Ok
         )
         self.layout().addWidget(self.dialogButtons)
 
         self.dialogButtons.button(QDialogButtonBox.Cancel).clicked.connect(
-            self.reject)
+            self.reject
+        )
         self.dialogButtons.button(QDialogButtonBox.Apply).clicked.connect(
-            self.applySettings)
+            self.applySettings
+        )
         self.dialogButtons.button(QDialogButtonBox.Ok).clicked.connect(
-            self.__onOk)
+            self.__onOk
+        )
 
     def applySettings(self):
-        self.mainPage.applySettings()
+        for conf, pages in self._confsMap.items():
+            for page in pages:
+                conf.update(page.getSettings())
+
+            conf.write()
 
     def _populateModel(self, m_parent, r_parent):
         if r_parent.value is not None:
-            page = r_parent.value.page
+            page_class = r_parent.value.page
             config = r_parent.value.config
         else:
-            page = None
+            page_class = None
             config = None
 
         try:
-            if page is None:
+            if page_class is None:
                 # The current node have no page, use the parent model-index
                 # as parent for it's children
                 mod_index = m_parent
-            elif issubclass(page, ConfigurationPage):
-                mod_index = self.model.addPage(page(config), parent=m_parent)
             else:
-                mod_index = self.model.addPage(page(), parent=m_parent)
+                page_instance = page_class()
+                page_instance.loadSettings(config)
+                mod_index = self.model.addPage(page_instance, parent=m_parent)
+
+                # Keep track of configurations and corresponding pages
+                self._confsMap.setdefault(config, []).append(page_instance)
         except Exception:
-            if not isinstance(page, type):
-                page_name = 'NoPage'
-            elif issubclass(page, ConfigurationPage):
-                page_name = page.Name
+            if not isinstance(page_class, type):
+                page_name = "InvalidPage"
             else:
-                page_name = page.__name__
+                page_name = getattr(page_class, "Name", page_class.__name__)
 
             logger.warning(
-                'Cannot load configuration page: "{}" ({})'.format(
-                    page_name, r_parent.path()), exc_info=True)
+                translate(
+                    "AppConfigurationWarning",
+                    'Cannot load configuration page: "{}" ({})',
+                ).format(page_name, r_parent.path()),
+                exc_info=True,
+            )
         else:
             for r_node in r_parent.children:
                 self._populateModel(mod_index, r_node)
@@ -114,17 +123,12 @@ class AppConfigurationDialog(QDialog):
         """
         :param path: indicate the page "position": 'category.sub.key'
         :type path: str
-        :type page: Type[lisp.ui.settings.settings_page.ConfigurationPage]
+        :type page: type
         :type config: lisp.core.configuration.Configuration
         """
-        if issubclass(page, ConfigurationPage):
-            AppConfigurationDialog.PagesRegistry.set(
-                path, PageEntry(page=page, config=config))
-        else:
-            raise TypeError(
-                'AppConfiguration pages must be ConfigurationPage(s), not {}'
-                    .format(typename(page))
-            )
+        AppConfigurationDialog.PagesRegistry.set(
+            path, PageEntry(page=page, config=config)
+        )
 
     @staticmethod
     def unregisterSettingsPage(path):

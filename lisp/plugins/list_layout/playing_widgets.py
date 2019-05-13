@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2017 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2017 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,28 +17,33 @@
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor
-from PyQt5.QtWidgets import QWidget, QGridLayout, QLabel, QSizePolicy, \
-    QLCDNumber, QHBoxLayout
-from lisp.cues.cue import CueAction
+from PyQt5.QtWidgets import (
+    QWidget,
+    QGridLayout,
+    QLabel,
+    QSizePolicy,
+    QLCDNumber,
+    QHBoxLayout,
+)
 
-from lisp.core.configuration import AppConfig
 from lisp.core.signal import Connection
 from lisp.core.util import strtime
+from lisp.cues.cue import CueAction
 from lisp.cues.cue_time import CueTime
 from lisp.cues.media_cue import MediaCue
 from lisp.plugins.list_layout.control_buttons import CueControlButtons
-from lisp.ui.widgets import QClickSlider, QDbMeter
+from lisp.ui.widgets import QClickSlider, DBMeter
 
 
-def get_running_widget(cue, **kwargs):
+def get_running_widget(cue, config, **kwargs):
     if isinstance(cue, MediaCue):
-        return RunningMediaCueWidget(cue, **kwargs)
+        return RunningMediaCueWidget(cue, config, **kwargs)
     else:
-        return RunningCueWidget(cue, **kwargs)
+        return RunningCueWidget(cue, config, **kwargs)
 
 
 class RunningCueWidget(QWidget):
-    def __init__(self, cue, **kwargs):
+    def __init__(self, cue, config, **kwargs):
         super().__init__(**kwargs)
         self.setGeometry(0, 0, self.parent().viewport().width(), 80)
         self.setFocusPolicy(Qt.NoFocus)
@@ -48,6 +51,7 @@ class RunningCueWidget(QWidget):
         self.layout().setContentsMargins(0, 0, 0, 1)
 
         self._accurate_time = False
+        self._config = config
 
         self.cue = cue
         self.cue_time = CueTime(cue)
@@ -93,7 +97,7 @@ class RunningCueWidget(QWidget):
             self.controlButtons.interruptButton.setEnabled(False)
 
         self.timeDisplay = QLCDNumber(self.gridLayoutWidget)
-        self.timeDisplay.setStyleSheet('background-color: transparent')
+        self.timeDisplay.setStyleSheet("background-color: transparent")
         self.timeDisplay.setSegmentStyle(QLCDNumber.Flat)
         self.timeDisplay.setDigitCount(8)
         self.timeDisplay.display(strtime(cue.duration))
@@ -104,7 +108,7 @@ class RunningCueWidget(QWidget):
         self.gridLayout.setColumnStretch(0, 7)
         self.gridLayout.setColumnStretch(1, 5)
 
-        cue.changed('name').connect(self.name_changed, Connection.QtQueued)
+        cue.changed("name").connect(self.name_changed, Connection.QtQueued)
         cue.started.connect(self.controlButtons.pauseMode, Connection.QtQueued)
         cue.paused.connect(self.controlButtons.startMode, Connection.QtQueued)
 
@@ -144,23 +148,20 @@ class RunningCueWidget(QWidget):
 
     def _update_timers(self, time):
         self.timeDisplay.display(
-            strtime(self.cue.duration - time, accurate=self._accurate_time))
+            strtime(self.cue.duration - time, accurate=self._accurate_time)
+        )
 
     def _pause(self):
-        self.cue.pause(
-            fade=AppConfig().get('listLayout.pauseCueFade', True))
+        self.cue.pause(fade=self._config.get("pauseCueFade", True))
 
     def _resume(self):
-        self.cue.resume(
-            fade=AppConfig().get('listLayout.resumeCueFade', True))
+        self.cue.resume(fade=self._config.get("resumeCueFade", True))
 
     def _stop(self):
-        self.cue.stop(
-            fade=AppConfig().get('listLayout.stopCueFade', True))
+        self.cue.stop(fade=self._config.get("stopCueFade", True))
 
     def _interrupt(self):
-        self.cue.interrupt(
-            fade=AppConfig().get('listLayout.interruptCueFade', True))
+        self.cue.interrupt(fade=self._config.get("interruptCueFade", True))
 
     def _fadeout(self):
         self.cue.execute(CueAction.FadeOut)
@@ -170,8 +171,8 @@ class RunningCueWidget(QWidget):
 
 
 class RunningMediaCueWidget(RunningCueWidget):
-    def __init__(self, cue, **kwargs):
-        super().__init__(cue, **kwargs)
+    def __init__(self, cue, config, **kwargs):
+        super().__init__(cue, config, **kwargs)
         self.setGeometry(0, 0, self.width(), 110)
 
         self._dbmeter_element = None
@@ -184,11 +185,12 @@ class RunningMediaCueWidget(RunningCueWidget):
         self.seekSlider.sliderJumped.connect(self._seek)
         self.seekSlider.setVisible(False)
 
-        self.dbmeter = QDbMeter(self.gridLayoutWidget)
+        self.dbmeter = DBMeter(self.gridLayoutWidget)
         self.dbmeter.setVisible(False)
 
-        cue.changed('duration').connect(self._update_duration,
-                                        Connection.QtQueued)
+        cue.changed("duration").connect(
+            self._update_duration, Connection.QtQueued
+        )
 
     def set_seek_visible(self, visible):
         if visible and not self.seekSlider.isVisible():
@@ -206,7 +208,7 @@ class RunningMediaCueWidget(RunningCueWidget):
             self._dbmeter_element = None
 
         if visible:
-            self._dbmeter_element = self.cue.media.element('DbMeter')
+            self._dbmeter_element = self.cue.media.element("DbMeter")
             if self._dbmeter_element is not None:
                 self._dbmeter_element.level_ready.connect(self.dbmeter.plot)
 

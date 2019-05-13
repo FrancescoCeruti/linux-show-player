@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,20 +18,36 @@
 from PyQt5.QtCore import QT_TRANSLATE_NOOP
 
 from lisp.plugins.controller import protocols
-from lisp.ui.settings.pages import TabsMultiSettingsPage, CuePageMixin
+from lisp.ui.settings.pages import SettingsPagesTabWidget, CuePageMixin
 
 
-class ControllerSettings(TabsMultiSettingsPage, CuePageMixin):
-    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Cue Control')
+class CueControllerSettingsPage(SettingsPagesTabWidget, CuePageMixin):
+    Name = QT_TRANSLATE_NOOP("SettingsPageName", "Cue Control")
 
-    def __init__(self, cue_type, **kwargs):
-        super().__init__(cue_type=cue_type, **kwargs)
+    def __init__(self, cueType, **kwargs):
+        super().__init__(cueType=cueType, **kwargs)
 
-        for page in protocols.ProtocolsSettingsPages:
-            self.addPage(page(cue_type, parent=self))
+        for page in protocols.CueSettingsPages:
+            self.addPage(page(cueType, parent=self))
 
     def getSettings(self):
-        return {'controller': super().getSettings()}
+        return {"controller": super().getSettings()}
 
     def loadSettings(self, settings):
-        super().loadSettings(settings.get('controller', {}))
+        super().loadSettings(settings.get("controller", {}))
+
+
+class ControllerLayoutConfiguration(SettingsPagesTabWidget):
+    Name = QT_TRANSLATE_NOOP("SettingsPageName", "Layout Controls")
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        for page in protocols.LayoutSettingsPages:
+            self.addPage(page(parent=self))
+
+    def loadSettings(self, settings):
+        super().loadSettings(settings["protocols"])
+
+    def getSettings(self):
+        return {"protocols": super().getSettings()}

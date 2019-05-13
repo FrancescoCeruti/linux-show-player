@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2017 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2017 Francesco Ceruti <ceppofrancy@gmail.com>
 # Copyright 2016-2017 Thomas Achtner <info@offtools.de>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
@@ -30,14 +28,14 @@ from lisp.ui.ui_utils import translate
 ARTNET_FORMATS = {
     TcFormat.FILM: OlaClient.TIMECODE_FILM,
     TcFormat.EBU: OlaClient.TIMECODE_EBU,
-    TcFormat.SMPTE: OlaClient.TIMECODE_SMPTE
+    TcFormat.SMPTE: OlaClient.TIMECODE_SMPTE,
 }
 
 logger = logging.getLogger(__name__)
 
 
 class Artnet(TimecodeProtocol):
-    Name = 'ArtNet'
+    Name = "ArtNet"
 
     def __init__(self):
         super().__init__()
@@ -60,14 +58,20 @@ class Artnet(TimecodeProtocol):
 
         try:
             self.__client.SendTimeCode(
-                ARTNET_FORMATS[fmt], hours, minutes, seconds, frame)
+                ARTNET_FORMATS[fmt], hours, minutes, seconds, frame
+            )
         except OLADNotRunningException:
             logger.error(
                 translate(
-                    'Timecode', 'Cannot send timecode. \nOLA has stopped.'))
+                    "TimecodeError",
+                    "Cannot send timecode. \nOLA daemon has stopped.",
+                )
+            )
             return False
         except Exception:
-            logger.exception(translate('Timecode', 'Cannot send timecode.'))
+            logger.exception(
+                translate("TimecodeError", "Cannot send timecode.")
+            )
             return False
 
         self.__last_time = time

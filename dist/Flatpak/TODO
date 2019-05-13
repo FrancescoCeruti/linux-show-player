@@ -1,5 +1,0 @@
-- If we need custom build for "pyqt5" and "sip" the best approach is probably to
-  create an ad-hoc repository to produce a wheel file like the ones distributed from pypi
-- We should avoid using pip, see the "upgrade-pip" module
-
-(╯°□°）╯︵ ┻━┻

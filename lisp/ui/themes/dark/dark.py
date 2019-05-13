@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,17 +19,16 @@ import os
 
 from PyQt5.QtGui import QColor, QPalette
 
-from lisp.ui.themes.theme import Theme
 # Import resources
 # noinspection PyUnresolvedReferences
 from . import assetes
 
 
-class Dark(Theme):
-    QssPath = os.path.join(os.path.dirname(__file__), 'theme.qss')
+class Dark:
+    QssPath = os.path.join(os.path.dirname(__file__), "theme.qss")
 
     def apply(self, qt_app):
-        with open(Dark.QssPath, mode='r', encoding='utf-8') as f:
+        with open(Dark.QssPath, mode="r", encoding="utf-8") as f:
             qt_app.setStyleSheet(f.read())
 
         # Change link color

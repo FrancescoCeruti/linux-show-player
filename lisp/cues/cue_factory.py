@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -77,7 +75,8 @@ class CueFactory:
 
         if not callable(factory):
             raise Exception(
-                'Cue not available or badly registered: {}'.format(cue_type))
+                "Cue not available or badly registered: {}".format(cue_type)
+            )
 
         return factory(id=cue_id, **kwargs)
 
@@ -89,7 +88,7 @@ class CueFactory:
         :rtype: lisp.cues.cue.Cue
         """
         properties = deepcopy(cue.properties())
-        properties.pop('id')
+        properties.pop("id")
 
         cue = cls.create_cue(typename(cue))
         cue.update_properties(properties)

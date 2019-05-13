@@ -4,24 +4,24 @@
   <context>
     <name>RenameCues</name>
     <message>
-      <location filename="../../../plugins/rename_cues/rename_cues.py" line="36"/>
+      <location filename="../../../plugins/rename_cues/rename_cues.py" line="37"/>
       <source>Rename Cues</source>
-      <translation>Renommer les cues</translation>
+      <translation type="unfinished">Rename Cues</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="46"/>
       <source>Rename cues</source>
-      <translation>Renommer les cues</translation>
+      <translation type="unfinished">Rename cues</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="55"/>
       <source>Current</source>
-      <translation>Courant</translation>
+      <translation type="unfinished">Current</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="55"/>
       <source>Preview</source>
-      <translation>Aperçu</translation>
+      <translation type="unfinished">Preview</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="72"/>
@@ -31,17 +31,17 @@
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="77"/>
       <source>Lowercase</source>
-      <translation>Minuscule</translation>
+      <translation type="unfinished">Lowercase</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="82"/>
       <source>Uppercase</source>
-      <translation>Majuscule</translation>
+      <translation type="unfinished">Uppercase</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="87"/>
       <source>Remove Numbers</source>
-      <translation>Retirer les numéros</translation>
+      <translation type="unfinished">Remove Numbers</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="92"/>
@@ -51,25 +51,17 @@
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="101"/>
       <source>Reset</source>
-      <translation>Réinitialiser</translation>
+      <translation type="unfinished">Reset</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="120"/>
       <source>Type your regex here: </source>
-      <translation>Tapez votre regex ici: </translation>
+      <translation type="unfinished">Type your regex here: </translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="232"/>
       <source>Regex help</source>
-      <translation>Aide regex</translation>
-    </message>
-  </context>
-  <context>
-    <name>RenameCuesCommand</name>
-    <message>
-      <location filename="../../../plugins/rename_cues/command.py" line="44"/>
-      <source>Renamed {number} cues</source>
-      <translation type="unfinished">Renamed {number} cues</translation>
+      <translation type="unfinished">Regex help</translation>
     </message>
   </context>
   <context>
@@ -77,7 +69,7 @@
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="258"/>
       <source>Regex error: Invalid pattern</source>
-      <translation>Erreur Regex : Modèle invalide</translation>
+      <translation type="unfinished">Regex error: Invalid pattern</translation>
     </message>
   </context>
 </TS>

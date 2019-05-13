@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,36 +16,44 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
-from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QComboBox, QGridLayout, \
-    QLabel
+from PyQt5.QtWidgets import (
+    QGroupBox,
+    QVBoxLayout,
+    QComboBox,
+    QGridLayout,
+    QLabel,
+)
 
 from lisp.plugins.midi.midi_utils import mido_backend
-from lisp.ui.settings.pages import ConfigurationPage
+from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.ui_utils import translate
 
 
-class MIDISettings(ConfigurationPage):
-    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'MIDI settings')
+class MIDISettings(SettingsPage):
+    Name = QT_TRANSLATE_NOOP("SettingsPageName", "MIDI settings")
 
-    def __init__(self, conf, **kwargs):
-        super().__init__(conf, **kwargs)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
         self.midiGroup = QGroupBox(self)
         self.midiGroup.setTitle(
-            translate('MIDISettings', 'MIDI default devices'))
+            translate("MIDISettings", "MIDI default devices")
+        )
         self.midiGroup.setLayout(QGridLayout())
         self.layout().addWidget(self.midiGroup)
 
         self.inputLabel = QLabel(
-            translate('MIDISettings', 'Input'), self.midiGroup)
+            translate("MIDISettings", "Input"), self.midiGroup
+        )
         self.midiGroup.layout().addWidget(self.inputLabel, 0, 0)
         self.inputCombo = QComboBox(self.midiGroup)
         self.midiGroup.layout().addWidget(self.inputCombo, 0, 1)
 
         self.outputLabel = QLabel(
-            translate('MIDISettings', 'Output'), self.midiGroup)
+            translate("MIDISettings", "Output"), self.midiGroup
+        )
         self.midiGroup.layout().addWidget(self.outputLabel, 1, 0)
         self.outputCombo = QComboBox(self.midiGroup)
         self.midiGroup.layout().addWidget(self.outputCombo, 1, 1)
@@ -60,35 +66,32 @@ class MIDISettings(ConfigurationPage):
         except Exception:
             self.setEnabled(False)
 
-        # TODO: instead of forcing 'Default' add a warning label
-        self.inputCombo.setCurrentText('Default')
-        self.inputCombo.setCurrentText(conf['inputDevice'])
-        self.outputCombo.setCurrentText('Default')
-        self.outputCombo.setCurrentText(conf['outputDevice'])
+    def loadSettings(self, settings):
+        # TODO: instead of forcing 'Default' add a warning label and keep the invalid device as an option
+        self.inputCombo.setCurrentText("Default")
+        self.inputCombo.setCurrentText(settings["inputDevice"])
+        self.outputCombo.setCurrentText("Default")
+        self.outputCombo.setCurrentText(settings["outputDevice"])
 
-    def applySettings(self):
+    def getSettings(self):
         if self.isEnabled():
-            inputDevice = self.inputCombo.currentText()
-            if inputDevice == 'Default':
-                self.config['inputDevice'] = ''
-            else:
-                self.config['inputDevice'] = inputDevice
+            input = self.inputCombo.currentText()
+            output = self.outputCombo.currentText()
 
-            outputDevice = self.outputCombo.currentText()
-            if outputDevice == 'Default':
-                self.config['outputDevice'] = ''
-            else:
-                self.config['outputDevice'] = outputDevice
+            return {
+                "inputDevice": "" if input == "Default" else input,
+                "outputDevice": "" if output == "Default" else output,
+            }
 
-            self.config.write()
+        return {}
 
     def _loadDevices(self):
         backend = mido_backend()
 
         self.inputCombo.clear()
-        self.inputCombo.addItems(['Default'])
+        self.inputCombo.addItems(["Default"])
         self.inputCombo.addItems(backend.get_input_names())
 
         self.outputCombo.clear()
-        self.outputCombo.addItems(['Default'])
+        self.outputCombo.addItems(["Default"])
         self.outputCombo.addItems(backend.get_output_names())

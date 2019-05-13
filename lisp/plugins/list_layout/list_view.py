@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,15 +15,28 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import pyqtSignal, Qt, QDataStream, QIODevice, \
-    QT_TRANSLATE_NOOP
+from PyQt5.QtCore import (
+    pyqtSignal,
+    Qt,
+    QDataStream,
+    QIODevice,
+    QT_TRANSLATE_NOOP,
+)
 from PyQt5.QtGui import QKeyEvent, QContextMenuEvent, QBrush, QColor
 from PyQt5.QtWidgets import QTreeWidget, QHeaderView, QTreeWidgetItem
 
-from lisp.core.signal import Connection
+from lisp.application import Application
+from lisp.command.model import ModelMoveItemsCommand, ModelInsertItemsCommand
 from lisp.cues.cue_factory import CueFactory
-from lisp.plugins.list_layout.list_widgets import CueStatusIcons, NameWidget, \
-    PreWaitWidget, CueTimeWidget, NextActionIcon, PostWaitWidget, IndexWidget
+from lisp.plugins.list_layout.list_widgets import (
+    CueStatusIcons,
+    NameWidget,
+    PreWaitWidget,
+    CueTimeWidget,
+    NextActionIcon,
+    PostWaitWidget,
+    IndexWidget,
+)
 from lisp.ui.ui_utils import translate
 
 
@@ -39,7 +50,7 @@ class ListColumn:
 
     @property
     def name(self):
-        return translate('ListLayoutHeader', self.baseName)
+        return translate("ListLayoutHeader", self.baseName)
 
 
 class CueTreeWidgetItem(QTreeWidgetItem):
@@ -58,26 +69,23 @@ class CueListView(QTreeWidget):
     # TODO: add ability to show/hide
     # TODO: implement columns (cue-type / target / etc..)
     COLUMNS = [
-        ListColumn('', CueStatusIcons, QHeaderView.Fixed, width=45),
-        ListColumn('#', IndexWidget, QHeaderView.ResizeToContents),
+        ListColumn("", CueStatusIcons, QHeaderView.Fixed, width=45),
+        ListColumn("#", IndexWidget, QHeaderView.ResizeToContents),
         ListColumn(
-            QT_TRANSLATE_NOOP('ListLayoutHeader', 'Cue'),
+            QT_TRANSLATE_NOOP("ListLayoutHeader", "Cue"),
             NameWidget,
-            QHeaderView.Stretch
+            QHeaderView.Stretch,
         ),
         ListColumn(
-            QT_TRANSLATE_NOOP('ListLayoutHeader', 'Pre wait'),
-            PreWaitWidget
+            QT_TRANSLATE_NOOP("ListLayoutHeader", "Pre wait"), PreWaitWidget
         ),
         ListColumn(
-            QT_TRANSLATE_NOOP('ListLayoutHeader', 'Action'),
-            CueTimeWidget
+            QT_TRANSLATE_NOOP("ListLayoutHeader", "Action"), CueTimeWidget
         ),
         ListColumn(
-            QT_TRANSLATE_NOOP('ListLayoutHeader', 'Post wait'),
-            PostWaitWidget
+            QT_TRANSLATE_NOOP("ListLayoutHeader", "Post wait"), PostWaitWidget
         ),
-        ListColumn('', NextActionIcon, QHeaderView.Fixed, width=18)
+        ListColumn("", NextActionIcon, QHeaderView.Fixed, width=18),
     ]
 
     ITEM_DEFAULT_BG = QBrush(Qt.transparent)
@@ -94,9 +102,9 @@ class CueListView(QTreeWidget):
 
         # Watch for model changes
         self._model = listModel
-        self._model.item_added.connect(self.__cueAdded, Connection.QtQueued)
-        self._model.item_moved.connect(self.__cueMoved, Connection.QtQueued)
-        self._model.item_removed.connect(self.__cueRemoved, Connection.QtQueued)
+        self._model.item_added.connect(self.__cueAdded)
+        self._model.item_moved.connect(self.__cueMoved)
+        self._model.item_removed.connect(self.__cueRemoved)
         self._model.model_reset.connect(self.__modelReset)
 
         # Setup the columns headers
@@ -124,7 +132,7 @@ class CueListView(QTreeWidget):
     def dropEvent(self, event):
         # Decode mimedata information about the drag&drop event, since only
         # internal movement are allowed we assume the data format is correct
-        data = event.mimeData().data('application/x-qabstractitemmodeldatalist')
+        data = event.mimeData().data("application/x-qabstractitemmodeldatalist")
         stream = QDataStream(data, QIODevice.ReadOnly)
 
         # Get the starting-item row
@@ -147,26 +155,17 @@ class CueListView(QTreeWidget):
             rows.append(row)
 
         if event.proposedAction() == Qt.MoveAction:
-            before = 0
-            after = 0
-            for row in sorted(rows):
-                if row < to_index:
-                    self._model.move(row - before, to_index)
-                    before += 1
-                elif row > to_index:
-                    # if we have already moved something we need to shift,
-                    # bool(before) is evaluated as 1 (True) or 0 (False)
-                    self._model.move(row, to_index + after + bool(before))
-                    after += 1
+            Application().commands_stack.do(
+                ModelMoveItemsCommand(self._model, rows, to_index)
+            )
         elif event.proposedAction() == Qt.CopyAction:
-            # TODO: add a copy/clone method to the model?
             new_cues = []
             for row in sorted(rows):
                 new_cues.append(CueFactory.clone_cue(self._model.item(row)))
 
-            for cue in new_cues:
-                self._model.insert(cue, to_index)
-                to_index += 1
+            Application().commands_stack.do(
+                ModelInsertItemsCommand(self._model, to_index, *new_cues)
+            )
 
     def contextMenuEvent(self, event):
         self.contextMenuInvoked.emit(event)
@@ -180,8 +179,10 @@ class CueListView(QTreeWidget):
             super().keyPressEvent(event)
 
     def mousePressEvent(self, event):
-        if (not event.buttons() & Qt.RightButton or
-                not self.selectionMode() == QTreeWidget.NoSelection):
+        if (
+            not event.buttons() & Qt.RightButton
+            or not self.selectionMode() == QTreeWidget.NoSelection
+        ):
             super().mousePressEvent(event)
 
     def standbyIndex(self):

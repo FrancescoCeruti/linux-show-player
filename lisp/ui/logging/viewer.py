@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,10 +16,24 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QAction, QToolBar, \
-    QMainWindow, QStatusBar, QLabel, QTableView, QToolButton
+from PyQt5.QtWidgets import (
+    QAction,
+    QToolBar,
+    QMainWindow,
+    QStatusBar,
+    QLabel,
+    QTableView,
+    QSplitter,
+)
 
-from lisp.ui.logging.common import LOG_LEVELS, LogAttributeRole, LOG_ATTRIBUTES
+from lisp.ui.icons import IconTheme
+from lisp.ui.logging.common import (
+    LOG_LEVELS,
+    LogAttributeRole,
+    LOG_ICONS_NAMES,
+    LogRecordRole,
+)
+from lisp.ui.logging.details import LogDetails
 from lisp.ui.logging.models import LogRecordFilterModel
 from lisp.ui.ui_utils import translate
 
@@ -38,9 +50,12 @@ class LogViewer(QMainWindow):
         :type config: lisp.core.configuration.Configuration
         """
         super().__init__(**kwargs)
-        self.resize(700, 500)
         self.setWindowTitle(
-            translate('Logging', 'Linux Show Player - Log Viewer'))
+            translate("Logging", "Linux Show Player - Log Viewer")
+        )
+        self.resize(800, 600)
+        self.setCentralWidget(QSplitter())
+        self.centralWidget().setOrientation(Qt.Vertical)
         self.setStatusBar(QStatusBar(self))
 
         # Add a permanent label to the toolbar to display shown/filter records
@@ -49,24 +64,16 @@ class LogViewer(QMainWindow):
 
         # ToolBar
         self.optionsToolBar = QToolBar(self)
+        self.optionsToolBar.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
         self.addToolBar(self.optionsToolBar)
         # Create level-toggle actions
-        self.levelsActions = self._create_actions(
-            self.optionsToolBar, LOG_LEVELS, self._toggle_level)
-
-        self.columnsMenu = QToolButton()
-        self.columnsMenu.setText('Columns')
-        self.columnsMenu.setPopupMode(QToolButton.InstantPopup)
-        # Create column-toggle actions
-        self.columnsActions = self._create_actions(
-            self.columnsMenu, LOG_ATTRIBUTES, self._toggle_column)
-
-        self.optionsToolBar.addSeparator()
-        self.optionsToolBar.addWidget(self.columnsMenu)
+        self.levelsActions = self._createActions(
+            self.optionsToolBar, LOG_LEVELS, LOG_ICONS_NAMES, self._toggleLevel
+        )
 
         # Setup level filters and columns
-        visible_levels = config.get('logging.viewer.visibleLevels', ())
-        visible_columns = config.get('logging.viewer.visibleColumns', ())
+        visible_levels = config.get("logging.viewer.visibleLevels", ())
+        visible_columns = config.get("logging.viewer.visibleColumns", ())
         for level in visible_levels:
             self.levelsActions[level].setChecked(True)
 
@@ -74,42 +81,72 @@ class LogViewer(QMainWindow):
         self.filterModel = LogRecordFilterModel(visible_levels)
         self.filterModel.setSourceModel(log_model)
 
-        # List view to display the messages stored in the model
+        # View to display the messages stored in the model
         self.logView = QTableView(self)
         self.logView.setModel(self.filterModel)
-        self.logView.setSelectionMode(QTableView.NoSelection)
-        self.logView.setFocusPolicy(Qt.NoFocus)
-        self.setCentralWidget(self.logView)
+        self.logView.setSelectionMode(QTableView.SingleSelection)
+        self.logView.setSelectionBehavior(QTableView.SelectRows)
+        self.logView.horizontalHeader().setStretchLastSection(True)
+        self.centralWidget().addWidget(self.logView)
+
+        # Display selected entry details
+        self.detailsView = LogDetails(self)
+        self.centralWidget().addWidget(self.detailsView)
+
+        self.centralWidget().setStretchFactor(0, 3)
+        self.centralWidget().setStretchFactor(1, 2)
 
         # Setup visible columns
         for n in range(self.filterModel.columnCount()):
             column = self.filterModel.headerData(
-                n, Qt.Horizontal, LogAttributeRole)
-            visible = column in visible_columns
+                n, Qt.Horizontal, LogAttributeRole
+            )
 
-            self.columnsActions[column].setChecked(visible)
-            self.logView.setColumnHidden(n, not visible)
+            self.logView.setColumnHidden(n, not column in visible_columns)
 
         # When the filter model change, update the status-label
-        self.filterModel.rowsInserted.connect(self._rows_changed)
-        self.filterModel.rowsRemoved.connect(self._rows_changed)
-        self.filterModel.modelReset.connect(self._rows_changed)
+        self.filterModel.rowsInserted.connect(self._rowsChanged)
+        self.filterModel.rowsRemoved.connect(self._rowsChanged)
+        self.filterModel.modelReset.connect(self._rowsChanged)
 
-    def _rows_changed(self, *args):
+        self.logView.selectionModel().selectionChanged.connect(
+            self._selectionChanged
+        )
+
+    def _selectionChanged(self, selection):
+        if selection.indexes():
+            self.detailsView.setLogRecord(
+                self.filterModel.data(selection.indexes()[0], LogRecordRole)
+            )
+        else:
+            self.detailsView.setLogRecord(None)
+
+    def _rowsChanged(self):
         self.statusLabel.setText(
-            'Showing {} of {} records'.format(
+            "Showing {} of {} records".format(
                 self.filterModel.rowCount(),
-                self.filterModel.sourceModel().rowCount())
+                self.filterModel.sourceModel().rowCount(),
+            )
         )
         self.logView.resizeColumnsToContents()
-        self.logView.scrollToBottom()
+        # QT Misbehavior: we need to reset the flag
+        self.logView.horizontalHeader().setStretchLastSection(False)
+        self.logView.horizontalHeader().setStretchLastSection(True)
 
-    def _create_actions(self, menu, actions, trigger_slot):
+        self.logView.scrollToBottom()
+        # Select the last row (works also if the index is invalid)
+        self.logView.setCurrentIndex(
+            self.filterModel.index(self.filterModel.rowCount() - 1, 0)
+        )
+
+    def _createActions(self, menu, actions, icons, trigger_slot):
         menu_actions = {}
         for key, name in actions.items():
-            action = QAction(translate('Logging', name))
+            action = QAction(
+                IconTheme.get(icons.get(key)), translate("Logging", name)
+            )
             action.setCheckable(True)
-            action.triggered.connect(self._action_slot(trigger_slot, key))
+            action.triggered.connect(self._actionSlot(trigger_slot, key))
 
             menu.addAction(action)
             menu_actions[key] = action
@@ -117,24 +154,14 @@ class LogViewer(QMainWindow):
         return menu_actions
 
     @staticmethod
-    def _action_slot(target, attr):
+    def _actionSlot(target, attr):
         def slot(checked):
             target(attr, checked)
 
         return slot
 
-    def _toggle_level(self, level, toggle):
+    def _toggleLevel(self, level, toggle):
         if toggle:
             self.filterModel.showLevel(level)
         else:
             self.filterModel.hideLevel(level)
-
-    def _toggle_column(self, column, toggle):
-        for n in range(self.filterModel.columnCount()):
-            column_n = self.filterModel.headerData(
-                n, Qt.Horizontal, LogAttributeRole)
-
-            if column_n == column:
-                self.logView.setColumnHidden(n, not toggle)
-                self.logView.resizeColumnsToContents()
-                return

@@ -27,7 +27,7 @@
     <message>
       <location filename="../../../plugins/timecode/protocols/artnet.py" line="72"/>
       <source>Cannot send timecode.</source>
-      <translation>Impossible d'envoyer un code temporel.</translation>
+      <translation type="unfinished">Cannot send timecode.</translation>
     </message>
   </context>
   <context>
@@ -40,7 +40,7 @@
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="80"/>
       <source>Replace HOURS by a static track number</source>
-      <translation>Remplacer HOURS par un nombre de piste statique</translation>
+      <translation>Remplace HOURS par un nombre de piste statique</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="88"/>
@@ -50,7 +50,7 @@
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="85"/>
       <source>Enable Timecode</source>
-      <translation>Activer le code temporel</translation>
+      <translation type="unfinished">Enable Timecode</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="138"/>

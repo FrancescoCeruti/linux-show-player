@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -29,7 +27,7 @@ class DictTreeError(Exception):
 
 
 class DictNode:
-    Sep = '.'
+    Sep = "."
 
     def __init__(self, value=None, parent=None):
         self.parent = parent
@@ -45,17 +43,18 @@ class DictNode:
     def add_child(self, node, name):
         if not isinstance(node, DictNode):
             raise TypeError(
-                'DictNode children must be a DictNode, not {}'.format(
-                    typename(node))
+                "DictNode children must be a DictNode, not {}".format(
+                    typename(node)
+                )
             )
         if not isinstance(name, str):
             raise TypeError(
-                'DictNode name must be a str, not {}'.format(
-                    typename(node))
+                "DictNode name must be a str, not {}".format(typename(node))
             )
         if self.Sep in name:
             raise DictTreeError(
-                'DictNode name cannot contains the path separator')
+                "DictNode name cannot contains the path separator"
+            )
 
         # Set node name and parent
         node.name = name
@@ -77,7 +76,7 @@ class DictNode:
             if default is not _UNSET:
                 return default
 
-            raise DictTreeError('invalid path')
+            raise DictTreeError("invalid path")
 
     def set(self, path, value):
         if isinstance(path, str):
@@ -93,7 +92,7 @@ class DictNode:
             else:
                 self._children[child_key].value = value
         except (KeyError, TypeError):
-            raise DictTreeError('invalid path')
+            raise DictTreeError("invalid path")
 
     def pop(self, path):
         if isinstance(path, str):
@@ -106,7 +105,7 @@ class DictNode:
             else:
                 self._children.pop(child_key)
         except (KeyError, TypeError):
-            raise DictTreeError('Invalid path')
+            raise DictTreeError("Invalid path")
 
     def path(self):
         if self.parent is not None:
@@ -116,7 +115,7 @@ class DictNode:
             else:
                 return self.name
 
-        return ''
+        return ""
 
     @classmethod
     def jp(cls, *paths):

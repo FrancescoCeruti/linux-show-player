@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,9 +25,9 @@ from lisp.ui.settings.cue_settings import CueSettingsRegistry
 
 class Triggers(Plugin):
 
-    Name = 'Triggers'
-    Authors = ('Francesco Ceruti', )
-    Description = 'Allow cues to react to other-cues state changes'
+    Name = "Triggers"
+    Authors = ("Francesco Ceruti",)
+    Description = "Allow cues to react to other-cues state changes"
 
     def __init__(self, app):
         super().__init__(app)
@@ -53,15 +51,17 @@ class Triggers(Plugin):
         self.__handlers.clear()
 
     def __cue_changed(self, cue, property_name, value):
-        if property_name == 'triggers':
+        if property_name == "triggers":
             if cue.id in self.__handlers:
                 self.__handlers[cue.id].triggers = cue.triggers
             else:
-                self.__handlers[cue.id] = CueHandler(self.app, cue, cue.triggers)
+                self.__handlers[cue.id] = CueHandler(
+                    self.app, cue, cue.triggers
+                )
 
     def __cue_added(self, cue):
         cue.property_changed.connect(self.__cue_changed)
-        self.__cue_changed(cue, 'triggers', cue.triggers)
+        self.__cue_changed(cue, "triggers", cue.triggers)
 
     def __cue_removed(self, cue):
         cue.property_changed.disconnect(self.__cue_changed)

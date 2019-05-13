@@ -14,12 +14,12 @@
     <message>
       <location filename="../../../plugins/controller/protocols/keyboard.py" line="53"/>
       <source>Key</source>
-      <translation>Schlüssel</translation>
+      <translation type="unfinished">Key</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/keyboard.py" line="53"/>
       <source>Action</source>
-      <translation>Aktion</translation>
+      <translation type="unfinished">Action</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/keyboard.py" line="76"/>
@@ -37,12 +37,12 @@
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="59"/>
       <source>Type</source>
-      <translation>Typ</translation>
+      <translation type="unfinished">Type</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="59"/>
       <source>Channel</source>
-      <translation>Kanal</translation>
+      <translation type="unfinished">Channel</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="59"/>
@@ -52,17 +52,17 @@
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="59"/>
       <source>Action</source>
-      <translation>Aktion</translation>
+      <translation type="unfinished">Action</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="85"/>
       <source>Filter &quot;note on&quot;</source>
-      <translation>Filter &quot;Note an&quot;</translation>
+      <translation type="unfinished">Filter &quot;note on&quot;</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="89"/>
       <source>Filter &quot;note off&quot;</source>
-      <translation>Filter &quot;Note aus&quot;</translation>
+      <translation type="unfinished">Filter &quot;note off&quot;</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="106"/>
@@ -72,58 +72,58 @@
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="131"/>
       <source>Listening MIDI messages ...</source>
-      <translation>Höre MIDI Nachrichten</translation>
+      <translation type="unfinished">Listening MIDI messages ...</translation>
     </message>
   </context>
   <context>
     <name>ControllerOscSettings</name>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="137"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="138"/>
       <source>OSC Message</source>
       <translation type="unfinished">OSC Message</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="188"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="189"/>
       <source>OSC</source>
       <translation type="unfinished">OSC</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="192"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="193"/>
       <source>Path</source>
       <translation type="unfinished">Path</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="192"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="193"/>
       <source>Types</source>
       <translation type="unfinished">Types</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="192"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="193"/>
       <source>Arguments</source>
       <translation type="unfinished">Arguments</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="192"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="193"/>
       <source>Actions</source>
       <translation type="unfinished">Actions</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="221"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="222"/>
       <source>OSC Capture</source>
       <translation type="unfinished">OSC Capture</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="250"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="251"/>
       <source>Add</source>
       <translation type="unfinished">Add</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="251"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="252"/>
       <source>Remove</source>
       <translation type="unfinished">Remove</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="252"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="253"/>
       <source>Capture</source>
       <translation type="unfinished">Capture</translation>
     </message>
@@ -133,12 +133,12 @@
     <message>
       <location filename="../../../plugins/controller/protocols/keyboard.py" line="77"/>
       <source>Add</source>
-      <translation>Hinzufügen</translation>
+      <translation type="unfinished">Add</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/keyboard.py" line="78"/>
       <source>Remove</source>
-      <translation>Entfernen</translation>
+      <translation type="unfinished">Remove</translation>
     </message>
   </context>
   <context>
@@ -210,12 +210,12 @@
   <context>
     <name>OscCue</name>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="146"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="147"/>
       <source>Add</source>
       <translation type="unfinished">Add</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="147"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="148"/>
       <source>Remove</source>
       <translation type="unfinished">Remove</translation>
     </message>
@@ -235,10 +235,10 @@
     <message>
       <location filename="../../../plugins/controller/protocols/keyboard.py" line="42"/>
       <source>Keyboard Shortcuts</source>
-      <translation>Tastatur Shortcuts</translation>
+      <translation type="unfinished">Keyboard Shortcuts</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="180"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="181"/>
       <source>OSC Controls</source>
       <translation type="unfinished">OSC Controls</translation>
     </message>

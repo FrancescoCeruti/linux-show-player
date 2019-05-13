@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,8 +16,15 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
-from PyQt5.QtWidgets import QCheckBox, QGroupBox, QLabel, QSpinBox, \
-    QGridLayout, QVBoxLayout, QLineEdit
+from PyQt5.QtWidgets import (
+    QCheckBox,
+    QGroupBox,
+    QLabel,
+    QSpinBox,
+    QGridLayout,
+    QVBoxLayout,
+    QLineEdit,
+)
 
 from lisp.application import Application
 from lisp.core.properties import Property
@@ -31,7 +36,8 @@ from lisp.ui.widgets import CueActionComboBox
 
 
 class IndexActionCue(Cue):
-    Name = QT_TRANSLATE_NOOP('CueName', 'Index Action')
+    Name = QT_TRANSLATE_NOOP("CueName", "Index Action")
+    Category = QT_TRANSLATE_NOOP("CueCategory", "Action cues")
 
     target_index = Property(default=0)
     relative = Property(default=True)
@@ -39,7 +45,7 @@ class IndexActionCue(Cue):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.name = translate('CueName', self.Name)
+        self.name = translate("CueName", self.Name)
 
     def __start__(self, fade=False):
         if self.relative:
@@ -56,9 +62,9 @@ class IndexActionCue(Cue):
 
 
 class IndexActionCueSettings(SettingsPage):
-    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Action Settings')
+    Name = QT_TRANSLATE_NOOP("SettingsPageName", "Action Settings")
 
-    DEFAULT_SUGGESTION = translate('IndexActionCue', 'No suggestion')
+    DEFAULT_SUGGESTION = translate("IndexActionCue", "No suggestion")
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -92,7 +98,8 @@ class IndexActionCueSettings(SettingsPage):
         self.actionCombo = CueActionComboBox(
             self._target_class.CueActions,
             mode=CueActionComboBox.Mode.Value,
-            parent=self.actionGroup)
+            parent=self.actionGroup,
+        )
         self.actionGroup.layout().addWidget(self.actionCombo)
 
         self.suggestionGroup = QGroupBox(self)
@@ -102,7 +109,8 @@ class IndexActionCueSettings(SettingsPage):
         self.suggestionPreview = QLineEdit(self.suggestionGroup)
         self.suggestionPreview.setAlignment(Qt.AlignCenter)
         self.suggestionPreview.setText(
-            IndexActionCueSettings.DEFAULT_SUGGESTION)
+            IndexActionCueSettings.DEFAULT_SUGGESTION
+        )
         self.suggestionGroup.layout().addWidget(self.suggestionPreview)
 
         self.actionCombo.currentTextChanged.connect(self._update_suggestion)
@@ -110,15 +118,18 @@ class IndexActionCueSettings(SettingsPage):
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.indexGroup.setTitle(translate('IndexActionCue', 'Index'))
+        self.indexGroup.setTitle(translate("IndexActionCue", "Index"))
         self.relativeCheck.setText(
-            translate('IndexActionCue', 'Use a relative index'))
+            translate("IndexActionCue", "Use a relative index")
+        )
         self.targetIndexLabel.setText(
-            translate('IndexActionCue', 'Target index'))
-        self.actionGroup.setTitle(translate('IndexActionCue', 'Action'))
+            translate("IndexActionCue", "Target index")
+        )
+        self.actionGroup.setTitle(translate("IndexActionCue", "Action"))
 
         self.suggestionGroup.setTitle(
-            translate('IndexActionCue', 'Suggested cue name'))
+            translate("IndexActionCue", "Suggested cue name")
+        )
 
     def enableCheck(self, enabled):
         self.indexGroup.setChecked(enabled)
@@ -132,20 +143,20 @@ class IndexActionCueSettings(SettingsPage):
         checkable = self.actionGroup.isCheckable()
 
         if not (checkable and not self.indexGroup.isChecked()):
-            conf['relative'] = self.relativeCheck.isChecked()
-            conf['target_index'] = self.targetIndexSpin.value()
+            conf["relative"] = self.relativeCheck.isChecked()
+            conf["target_index"] = self.targetIndexSpin.value()
         if not (checkable and not self.actionGroup.isChecked()):
-            conf['action'] = self.actionCombo.currentData()
+            conf["action"] = self.actionCombo.currentData()
 
         return conf
 
     def loadSettings(self, settings):
-        self._cue_index = settings.get('index', -1)
+        self._cue_index = settings.get("index", -1)
 
-        self.relativeCheck.setChecked(settings.get('relative', True))
-        self.targetIndexSpin.setValue(settings.get('target_index', 0))
+        self.relativeCheck.setChecked(settings.get("relative", True))
+        self.targetIndexSpin.setValue(settings.get("target_index", 0))
         self._target_changed()  # Ensure that the correct options are displayed
-        self.actionCombo.setCurrentAction(settings.get('action', ''))
+        self.actionCombo.setCurrentItem(settings.get("action", ""))
 
     def _target_changed(self):
         target = self._current_target()
@@ -157,7 +168,7 @@ class IndexActionCueSettings(SettingsPage):
 
         if target_class is not self._target_class:
             self._target_class = target_class
-            self.actionCombo.rebuild(self._target_class.CueActions)
+            self.actionCombo.setItems(self._target_class.CueActions)
 
         self._update_suggestion()
 
@@ -166,7 +177,7 @@ class IndexActionCueSettings(SettingsPage):
 
         if target is not None:
             # This require unicode support by the used font, but hey, it's 2017
-            suggestion = self.actionCombo.currentText() + ' ➜ ' + target.name
+            suggestion = self.actionCombo.currentText() + " ➜ " + target.name
         else:
             suggestion = IndexActionCueSettings.DEFAULT_SUGGESTION
 
@@ -180,8 +191,7 @@ class IndexActionCueSettings(SettingsPage):
         else:
             if self._cue_index >= 0:
                 self.targetIndexSpin.setRange(
-                    -self._cue_index,
-                    max_index - self._cue_index
+                    -self._cue_index, max_index - self._cue_index
                 )
             else:
                 self.targetIndexSpin.setRange(-max_index, max_index)

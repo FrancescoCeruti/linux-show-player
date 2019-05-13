@@ -78,52 +78,52 @@
   <context>
     <name>ControllerOscSettings</name>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="137"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="138"/>
       <source>OSC Message</source>
       <translation>Messaggio OSC</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="188"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="189"/>
       <source>OSC</source>
       <translation>OSC</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="192"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="193"/>
       <source>Path</source>
       <translation>Percorso</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="192"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="193"/>
       <source>Types</source>
       <translation>Tipi</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="192"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="193"/>
       <source>Arguments</source>
       <translation>Argomenti</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="192"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="193"/>
       <source>Actions</source>
       <translation>Azioni</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="221"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="222"/>
       <source>OSC Capture</source>
       <translation>Acquisisci OSC</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="250"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="251"/>
       <source>Add</source>
       <translation>Aggiungi</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="251"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="252"/>
       <source>Remove</source>
       <translation>Rimuovi</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="252"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="253"/>
       <source>Capture</source>
       <translation>Acquisisci</translation>
     </message>
@@ -210,12 +210,12 @@
   <context>
     <name>OscCue</name>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="146"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="147"/>
       <source>Add</source>
       <translation>Aggiungi</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="147"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="148"/>
       <source>Remove</source>
       <translation>Rimuovi</translation>
     </message>
@@ -238,7 +238,7 @@
       <translation>Scorciatoie Tastiera</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="180"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="181"/>
       <source>OSC Controls</source>
       <translation>Controlli OSC</translation>
     </message>

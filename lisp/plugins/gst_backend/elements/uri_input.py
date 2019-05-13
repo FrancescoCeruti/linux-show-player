@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -38,27 +36,27 @@ def abs_path(path_):
 
 def uri_split(uri):
     try:
-        scheme, path = uri.split('://')
+        scheme, path = uri.split("://")
     except ValueError:
-        scheme = path = ''
+        scheme = path = ""
 
     return scheme, path
 
 
 def uri_adapter(uri):
     scheme, path = uri_split(uri)
-    return scheme + '://' + urlquote(abs_path(path))
+    return scheme + "://" + urlquote(abs_path(path))
 
 
 class UriInput(GstSrcElement):
     MediaType = MediaType.Audio
-    Name = QT_TRANSLATE_NOOP('MediaElementName', 'URI Input')
+    Name = QT_TRANSLATE_NOOP("MediaElementName", "URI Input")
 
     _mtime = Property(default=-1)
-    uri = GstProperty('decoder', 'uri', default='', adapter=uri_adapter)
-    download = GstProperty('decoder', 'download', default=False)
-    buffer_size = GstProperty('decoder', 'buffer-size', default=-1)
-    use_buffering = GstProperty('decoder', 'use-buffering', default=False)
+    uri = GstProperty("decoder", "uri", default="", adapter=uri_adapter)
+    download = GstProperty("decoder", "download", default=False)
+    buffer_size = GstProperty("decoder", "buffer-size", default=-1)
+    use_buffering = GstProperty("decoder", "use-buffering", default=False)
 
     def __init__(self, pipeline):
         super().__init__(pipeline)
@@ -70,9 +68,10 @@ class UriInput(GstSrcElement):
         self.pipeline.add(self.decoder)
         self.pipeline.add(self.audio_convert)
 
-        self.changed('uri').connect(self.__uri_changed)
-        Application().session.changed('session_file').connect(
-            self.__session_moved)
+        self.changed("uri").connect(self.__uri_changed)
+        Application().session.changed("session_file").connect(
+            self.__session_moved
+        )
 
     def input_uri(self):
         return self.uri
@@ -92,7 +91,7 @@ class UriInput(GstSrcElement):
 
         # If the uri is a file update the current mtime
         scheme, path_ = uri_split(uri)
-        if scheme == 'file':
+        if scheme == "file":
             path_ = abs_path(path_)
             if path.exists(path_):
                 self._mtime = path.getmtime(path_)
@@ -106,10 +105,10 @@ class UriInput(GstSrcElement):
     @async_in_pool(pool=ThreadPoolExecutor(1))
     def __duration(self):
         scheme, path = uri_split(self.uri)
-        self.duration = gst_uri_duration(scheme + '://' + abs_path(path))
+        self.duration = gst_uri_duration(scheme + "://" + abs_path(path))
 
     def __session_moved(self, _):
-        scheme, path_ = uri_split(self.decoder.get_property('uri'))
-        if scheme == 'file':
+        scheme, path_ = uri_split(self.decoder.get_property("uri"))
+        if scheme == "file":
             path_ = urlunquote(path_)
-            self.uri = 'file://' + Application().session.rel_path(path_)
+            self.uri = "file://" + Application().session.rel_path(path_)

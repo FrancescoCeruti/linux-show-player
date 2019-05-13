@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,7 +24,7 @@ import wave
 # Decibel value to be considered -inf
 MIN_VOLUME_DB = -144
 # Linear value of MIN_VOLUME_DB
-MIN_VOLUME = 6.30957344480193e-08
+MIN_VOLUME = 6.309_573_444_801_93e-08
 # Maximum linear value for the volume, equals to 1000%
 MAX_VOLUME = 10
 # Decibel value of MAX_VOLUME
@@ -52,7 +50,7 @@ def fader_to_slider(value):
     Note::
         If converting back to an integer scale use `round()` instead of `int()`
     """
-    return (value / 3.16227766) ** (1 / 3.7)
+    return (value / 3.162_277_66) ** (1 / 3.7)
 
 
 def slider_to_fader(value):
@@ -72,14 +70,14 @@ def slider_to_fader(value):
     elif value < 0.0:
         value = 0
 
-    return 3.16227766 * (value ** 3.7)
+    return 3.162_277_66 * (value ** 3.7)
 
 
 def python_duration(path, sound_module):
     """Returns audio-file duration using the given standard library module."""
     duration = 0
     try:
-        with sound_module.open(path, 'r') as file:
+        with sound_module.open(path, "r") as file:
             frames = file.getnframes()
             rate = file.getframerate()
             duration = int(frames / rate * 1000)
@@ -89,10 +87,10 @@ def python_duration(path, sound_module):
 
 def uri_duration(uri):
     """Return the audio-file duration, using the given uri"""
-    protocol, path = uri.split('://')
+    protocol, path = uri.split("://")
     path = urllib.parse.unquote(path)
 
-    if protocol == 'file':
+    if protocol == "file":
         for mod in [wave, aifc, sunau]:
             duration = python_duration(path, mod)
             if duration > 0:

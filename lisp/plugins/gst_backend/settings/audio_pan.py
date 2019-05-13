@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -57,8 +55,8 @@ class AudioPanSettings(SettingsPage):
         self.retransaleUi()
 
     def retransaleUi(self):
-        self.panBox.setTitle(translate('AudioPanSettings', 'Audio Pan'))
-        self.panLabel.setText(translate('AudioPanSettings', 'Center'))
+        self.panBox.setTitle(translate("AudioPanSettings", "Audio Pan"))
+        self.panLabel.setText(translate("AudioPanSettings", "Center"))
 
     def enableCheck(self, enabled):
         self.panBox.setCheckable(enabled)
@@ -66,19 +64,19 @@ class AudioPanSettings(SettingsPage):
 
     def getSettings(self):
         if not (self.panBox.isCheckable() and not self.panBox.isChecked()):
-            return {'pan': self.panSlider.value() / 10}
+            return {"pan": self.panSlider.value() / 10}
 
         return {}
 
     def loadSettings(self, settings):
-        self.panSlider.setValue(settings.get('pan', 0.5) * 10)
+        self.panSlider.setValue(settings.get("pan", 0.5) * 10)
 
     def pan_changed(self, value):
         if value < 0:
-            position = translate('AudioPanSettings', 'Left')
+            position = translate("AudioPanSettings", "Left")
         elif value > 0:
-            position = translate('AudioPanSettings', 'Right')
+            position = translate("AudioPanSettings", "Right")
         else:
-            position = translate('AudioPanSettings', 'Center')
+            position = translate("AudioPanSettings", "Center")
 
-        self.panLabel.setText('{0} - {1}'.format(value, position))
+        self.panLabel.setText("{0} - {1}".format(value, position))

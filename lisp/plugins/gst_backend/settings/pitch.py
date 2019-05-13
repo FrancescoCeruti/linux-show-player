@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -63,7 +61,7 @@ class PitchSettings(SettingsPage):
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.groupBox.setTitle(translate('PitchSettings', 'Pitch'))
+        self.groupBox.setTitle(translate("PitchSettings", "Pitch"))
         self.pitch_changed(0)
 
     def enableCheck(self, enabled):
@@ -72,14 +70,16 @@ class PitchSettings(SettingsPage):
 
     def getSettings(self):
         if not (self.groupBox.isCheckable() and not self.groupBox.isChecked()):
-            return {'pitch': math.pow(2, self.pitchSlider.value() / 12)}
+            return {"pitch": math.pow(2, self.pitchSlider.value() / 12)}
 
         return {}
 
     def loadSettings(self, settings):
         self.pitchSlider.setValue(
-            round(12 * math.log(settings.get('pitch', 1), 2)))
+            round(12 * math.log(settings.get("pitch", 1), 2))
+        )
 
     def pitch_changed(self, value):
         self.pitchLabel.setText(
-            translate('PitchSettings', '{0:+} semitones').format(value))
+            translate("PitchSettings", "{0:+} semitones").format(value)
+        )

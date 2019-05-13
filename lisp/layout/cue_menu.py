@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -28,7 +26,7 @@ from lisp.cues.cue import Cue
 MENU_PRIORITY_CUE = 0
 MENU_PRIORITY_LAYOUT = 100
 MENU_PRIORITY_PLUGIN = 1000
-MENU_PRIORITY_NONE = float('inf')
+MENU_PRIORITY_NONE = float("inf")
 
 
 class MenuAction:
@@ -54,8 +52,9 @@ class SimpleMenuAction(MenuAction):
         self._m_action = m_action
 
     def show(self, cues):
-        return not (len(cues) > 1 and (self._m_text is None or
-                                       self._m_action is None))
+        return not (
+            len(cues) > 1 and (self._m_text is None or self._m_action is None)
+        )
 
     def text(self, cues):
         if len(cues) == 1:
@@ -71,8 +70,13 @@ class SimpleMenuAction(MenuAction):
 
 
 class MenuActionsGroup:
-    def __init__(self, separators=True, submenu=False, text='',
-                 priority=MENU_PRIORITY_NONE):
+    def __init__(
+        self,
+        separators=True,
+        submenu=False,
+        text="",
+        priority=MENU_PRIORITY_NONE,
+    ):
         """
         :param separators: if True a separator is put before and after the group
         :param submenu: if True the actions are put in a submenu
@@ -101,11 +105,11 @@ def create_qmenu(actions, cues, menu):
                 menu.addSeparator()
 
             if action.submenu:
-                menu.addMenu(create_qmenu(
-                    action.actions,
-                    cues,
-                    QMenu(action.text, parent=menu)
-                ))
+                menu.addMenu(
+                    create_qmenu(
+                        action.actions, cues, QMenu(action.text, parent=menu)
+                    )
+                )
             else:
                 create_qmenu(action.actions, cues, menu)
 
@@ -121,7 +125,6 @@ def create_qmenu(actions, cues, menu):
 
 
 class CueContextMenu(ClassBasedRegistry):
-
     def add(self, item, ref_class=Cue):
         """
         :type item: typing.Union[MenuAction, MenuActionGroup]
@@ -131,8 +134,9 @@ class CueContextMenu(ClassBasedRegistry):
 
         if not issubclass(ref_class, Cue):
             raise TypeError(
-                'ref_class must be Cue or a subclass, not {0}'.format(
-                    ref_class.__name__)
+                "ref_class must be Cue or a subclass, not {0}".format(
+                    ref_class.__name__
+                )
             )
 
         super().add(item, ref_class)

@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2017 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2017 Francesco Ceruti <ceppofrancy@gmail.com>
 # Copyright 2016-2017 Thomas Achtner <info@offtools.de>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
@@ -20,20 +18,27 @@
 
 
 from PyQt5.QtCore import QT_TRANSLATE_NOOP, Qt
-from PyQt5.QtWidgets import QGridLayout, QVBoxLayout, QGroupBox, \
-    QLabel, QCheckBox, QSpinBox, QComboBox
+from PyQt5.QtWidgets import (
+    QGridLayout,
+    QVBoxLayout,
+    QGroupBox,
+    QLabel,
+    QCheckBox,
+    QSpinBox,
+    QComboBox,
+)
 
 from lisp.plugins.timecode import protocols
 from lisp.plugins.timecode.cue_tracker import TcFormat
-from lisp.ui.settings.pages import SettingsPage, CueSettingsPage, ConfigurationPage
+from lisp.ui.settings.pages import SettingsPage, CueSettingsPage
 from lisp.ui.ui_utils import translate
 
 
 class TimecodeSettings(CueSettingsPage):
-    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Timecode')
+    Name = QT_TRANSLATE_NOOP("SettingsPageName", "Timecode")
 
-    def __init__(self, cue_type, **kwargs):
-        super().__init__(cue_type, **kwargs)
+    def __init__(self, cueType, **kwargs):
+        super().__init__(cueType, **kwargs)
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
@@ -65,41 +70,45 @@ class TimecodeSettings(CueSettingsPage):
 
         self.warnLabel = QLabel(self)
         self.warnLabel.setAlignment(Qt.AlignCenter)
-        self.warnLabel.setStyleSheet('color: #FFA500; font-weight: bold')
+        self.warnLabel.setStyleSheet("color: #FFA500; font-weight: bold")
         self.layout().addWidget(self.warnLabel)
 
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.groupBox.setTitle('Timecode')
+        self.groupBox.setTitle("Timecode")
         self.useHoursCheck.setText(
-            translate('TimecodeSettings',
-                      'Replace HOURS by a static track number'))
+            translate(
+                "TimecodeSettings", "Replace HOURS by a static track number"
+            )
+        )
         self.enableTimecodeCheck.setText(
-            translate('TimecodeSettings', 'Enable Timecode'))
-        self.trackLabel.setText(
-            translate('TimecodeSettings', 'Track number'))
+            translate("TimecodeSettings", "Enable Timecode")
+        )
+        self.trackLabel.setText(translate("TimecodeSettings", "Track number"))
 
     def getSettings(self):
-        return {'timecode': {
-            'enabled': self.enableTimecodeCheck.isChecked(),
-            'replace_hours': self.useHoursCheck.isChecked(),
-            'track': self.trackSpin.value()
-        }}
+        return {
+            "timecode": {
+                "enabled": self.enableTimecodeCheck.isChecked(),
+                "replace_hours": self.useHoursCheck.isChecked(),
+                "track": self.trackSpin.value(),
+            }
+        }
 
     def loadSettings(self, settings):
-        settings = settings.get('timecode', {})
+        settings = settings.get("timecode", {})
 
-        self.enableTimecodeCheck.setChecked(settings.get('enabled', False))
-        self.useHoursCheck.setChecked(settings.get('replace_hours', False))
-        self.trackSpin.setValue(settings.get('track', 0))
+        self.enableTimecodeCheck.setChecked(settings.get("enabled", False))
+        self.useHoursCheck.setChecked(settings.get("replace_hours", False))
+        self.trackSpin.setValue(settings.get("track", 0))
 
 
-class TimecodeAppSettings(ConfigurationPage):
-    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Timecode Settings')
+class TimecodeAppSettings(SettingsPage):
+    Name = QT_TRANSLATE_NOOP("SettingsPageName", "Timecode Settings")
 
-    def __init__(self, config, **kwargs):
-        super().__init__(config, **kwargs)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
@@ -124,21 +133,24 @@ class TimecodeAppSettings(ConfigurationPage):
         self.groupBox.layout().addWidget(self.protocolCombo, 1, 1)
 
         self.retranslateUi()
-        self.loadConfiguration()
 
     def retranslateUi(self):
         self.groupBox.setTitle(
-            translate('TimecodeSettings', 'Timecode Settings'))
+            translate("TimecodeSettings", "Timecode Settings")
+        )
         self.formatLabel.setText(
-            translate('TimecodeSettings', 'Timecode Format:'))
+            translate("TimecodeSettings", "Timecode Format:")
+        )
         self.protocolLabel.setText(
-            translate('TimecodeSettings', 'Timecode Protocol:'))
+            translate("TimecodeSettings", "Timecode Protocol:")
+        )
 
-    def applySettings(self):
-        self.config['format'] = self.formatBox.currentText()
-        self.config['protocol'] = self.protocolCombo.currentText()
-        self.config.write()
+    def getSettings(self):
+        return {
+            "format": self.formatBox.currentText(),
+            "protocol": self.protocolCombo.currentText(),
+        }
 
-    def loadConfiguration(self):
-        self.formatBox.setCurrentText(self.config['format'])
-        self.protocolCombo.setCurrentText(self.config['protocol'])
+    def loadSettings(self, settings):
+        self.formatBox.setCurrentText(settings["format"])
+        self.protocolCombo.setCurrentText(settings["protocol"])

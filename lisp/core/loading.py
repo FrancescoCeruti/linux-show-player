@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,13 +16,10 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import logging
-import os.path
+import os
 import re
 
-try:
-    from os import scandir
-except ImportError:
-    from scandir import scandir
+from lisp.ui.ui_utils import translate
 
 logger = logging.getLogger(__name__)
 
@@ -45,10 +40,10 @@ class ModulesLoader:
 
     def load_modules(self):
         """Generate lists of tuples (class-name, class-object)."""
-        for entry in scandir(self.pkg_path):
+        for entry in os.scandir(self.pkg_path):
 
             # Exclude __init__, __pycache__ and likely
-            if re.match('^__.*', entry.name):
+            if re.match("^__.*", entry.name):
                 continue
 
             mod_name = entry.name
@@ -57,21 +52,26 @@ class ModulesLoader:
                 mod_name, ext = os.path.splitext(entry.name)
 
                 # Exclude all non-python files
-                if not re.match('.py[cod]?', ext):
+                if not re.match(".py[cod]?", ext):
                     continue
 
             # Exclude excluded ¯\_(°^°)_/¯
             if mod_name in self.excluded:
                 continue
 
-            mod_path = self.pkg + '.' + mod_name
+            mod_path = self.pkg + "." + mod_name
 
             try:
                 # Import module
                 yield mod_name, import_module(mod_path)
             except Exception:
                 logger.warning(
-                    'Cannot load module: {0}'.format(mod_name), exc_info=True)
+                    translate(
+                        "ModulesLoaderWarning",
+                        'Cannot load python module: "{0}"',
+                    ).format(mod_name),
+                    exc_info=True,
+                )
 
 
 class ClassLoader:
@@ -102,7 +102,7 @@ class ClassLoader:
 
     """
 
-    def __init__(self, pkg, pkg_path, pre=('',), suf=('',), exclude=()):
+    def __init__(self, pkg, pkg_path, pre=("",), suf=("",), exclude=()):
         """
         :param pkg: dotted name of the package
         :param pkg_path: path of the package to scan
@@ -125,7 +125,7 @@ class ClassLoader:
         for mod_name, module in self._mods_loader:
             # Load classes from imported module
             for prefix, suffix in zip(self.prefixes, self.suffixes):
-                cls_name = 'undefined'
+                cls_name = "undefined"
                 try:
                     cls_name = module_to_class_name(mod_name, prefix, suffix)
                     if hasattr(module, cls_name):
@@ -133,16 +133,19 @@ class ClassLoader:
                         yield cls_name, cls
                 except Exception:
                     logger.warning(
-                        'Cannot load class: {0}'.format(cls_name),
-                        exc_info=True
+                        translate(
+                            "ClassLoaderWarning",
+                            'Cannot load python class: "{0}"',
+                        ).format(cls_name),
+                        exc_info=True,
                     )
 
 
-def load_classes(pkg, pkg_path, pre=('',), suf=('',), exclude=()):
+def load_classes(pkg, pkg_path, pre=("",), suf=("",), exclude=()):
     return ClassLoader(pkg, pkg_path, pre, suf, exclude)
 
 
-def module_to_class_name(mod_name, pre='', suf=''):
+def module_to_class_name(mod_name, pre="", suf=""):
     """Return the supposed class name from loaded module.
 
     Substitutions:
@@ -155,10 +158,10 @@ def module_to_class_name(mod_name, pre='', suf=''):
     """
 
     # Capitalize the first letter of each word
-    base_name = ''.join(word.title() for word in mod_name.split('_'))
+    base_name = "".join(word.title() for word in mod_name.split("_"))
     # Add prefix and suffix to the base name
     return pre + base_name + suf
 
 
 def import_module(module_path):
-    return __import__(module_path, globals(), locals(), ['*'])
+    return __import__(module_path, globals(), locals(), ["*"])

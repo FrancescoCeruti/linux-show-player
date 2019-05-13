@@ -1,5 +1,5 @@
 {
-    "_version_": "0.6dev.12",
+    "_version_": "0.6dev.15",
     "cue": {
         "fadeAction": 3,
         "fadeActionType": "Linear",
@@ -8,10 +8,12 @@
     },
     "theme": {
         "theme": "Dark",
-        "icons": "numix"
+        "icons": "Numix"
     },
+    "locale": "",
     "session": {
-        "minSave": true
+        "minSave": true,
+        "lastPath": ""
     },
     "logging": {
         "limit": 10000,

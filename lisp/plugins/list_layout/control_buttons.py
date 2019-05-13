@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2017 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2017 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -33,37 +31,38 @@ class ShowControlButtons(QWidget):
         self.layout().setSpacing(5)
 
         # Row 0
-        self.pauseButton = self.newButton(IconTheme.get('cue-pause'))
+        self.pauseButton = self.newButton(IconTheme.get("cue-pause"))
         self.layout().addWidget(self.pauseButton, 0, 0)
 
-        self.stopButton = self.newButton(IconTheme.get('cue-stop'))
+        self.stopButton = self.newButton(IconTheme.get("cue-stop"))
         self.layout().addWidget(self.stopButton, 0, 1)
 
-        self.interruptButton = self.newButton(IconTheme.get('cue-interrupt'))
+        self.interruptButton = self.newButton(IconTheme.get("cue-interrupt"))
         self.layout().addWidget(self.interruptButton, 0, 2)
 
         # Row 1
-        self.resumeButton = self.newButton(IconTheme.get('cue-start'))
+        self.resumeButton = self.newButton(IconTheme.get("cue-start"))
         self.layout().addWidget(self.resumeButton, 1, 0)
 
-        self.fadeOutButton = self.newButton(IconTheme.get('fadeout-generic'))
+        self.fadeOutButton = self.newButton(IconTheme.get("fadeout-generic"))
         self.layout().addWidget(self.fadeOutButton, 1, 1)
 
-        self.fadeInButton = self.newButton(IconTheme.get('fadein-generic'))
+        self.fadeInButton = self.newButton(IconTheme.get("fadein-generic"))
         self.layout().addWidget(self.fadeInButton, 1, 2)
 
         self.retranslateUi()
 
     def retranslateUi(self):
         # Row 0
-        self.pauseButton.setToolTip(translate('ListLayout', 'Pause all'))
-        self.stopButton.setToolTip(translate('ListLayout', 'Stop all'))
+        self.pauseButton.setToolTip(translate("ListLayout", "Pause all"))
+        self.stopButton.setToolTip(translate("ListLayout", "Stop all"))
         self.interruptButton.setToolTip(
-            translate('ListLayout', 'Interrupt all'))
+            translate("ListLayout", "Interrupt all")
+        )
         # Row 1
-        self.resumeButton.setToolTip(translate('ListLayout', 'Resume all'))
-        self.fadeOutButton.setToolTip(translate('ListLayout', 'Fade-Out all'))
-        self.fadeInButton.setToolTip(translate('ListLayout', 'Fade-In all'))
+        self.resumeButton.setToolTip(translate("ListLayout", "Resume all"))
+        self.fadeOutButton.setToolTip(translate("ListLayout", "Fade-Out all"))
+        self.fadeInButton.setToolTip(translate("ListLayout", "Fade-In all"))
 
     def newButton(self, icon):
         button = QIconPushButton(self)
@@ -82,24 +81,24 @@ class CueControlButtons(QWidget):
         self.layout().setSpacing(2)
 
         # Start/Pause
-        self.pauseButton = self.newButton(IconTheme.get('cue-pause'))
+        self.pauseButton = self.newButton(IconTheme.get("cue-pause"))
         self.layout().addWidget(self.pauseButton, 0, 0, 2, 1)
 
-        self.startButton = self.newButton(IconTheme.get('cue-start'))
+        self.startButton = self.newButton(IconTheme.get("cue-start"))
         self.startButton.hide()
 
         # Row 0
-        self.stopButton = self.newButton(IconTheme.get('cue-stop'))
+        self.stopButton = self.newButton(IconTheme.get("cue-stop"))
         self.layout().addWidget(self.stopButton, 0, 1)
 
-        self.interruptButton = self.newButton(IconTheme.get('cue-interrupt'))
+        self.interruptButton = self.newButton(IconTheme.get("cue-interrupt"))
         self.layout().addWidget(self.interruptButton, 0, 2)
 
         # Row 1
-        self.fadeOutButton = self.newButton(IconTheme.get('fadeout-generic'))
+        self.fadeOutButton = self.newButton(IconTheme.get("fadeout-generic"))
         self.layout().addWidget(self.fadeOutButton, 1, 1)
 
-        self.fadeInButton = self.newButton(IconTheme.get('fadein-generic'))
+        self.fadeInButton = self.newButton(IconTheme.get("fadein-generic"))
         self.layout().addWidget(self.fadeInButton, 1, 2)
 
         self.layout().setColumnStretch(0, 3)

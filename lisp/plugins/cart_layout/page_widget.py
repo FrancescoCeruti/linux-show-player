@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -31,7 +29,7 @@ class CartPageWidget(QWidget):
     moveWidgetRequested = pyqtSignal(object, int, int)
     copyWidgetRequested = pyqtSignal(object, int, int)
 
-    DRAG_MAGIC = 'LiSP_Drag&Drop'
+    DRAG_MAGIC = "LiSP_Drag&Drop"
 
     def __init__(self, rows, columns, *args):
         super().__init__(*args)
@@ -64,7 +62,7 @@ class CartPageWidget(QWidget):
             self.layout().addWidget(widget, row, column)
             widget.show()
         else:
-            raise IndexError('cell {} already used'.format((row, column)))
+            raise IndexError("cell {} already used".format((row, column)))
 
     def takeWidget(self, row, column):
         self._checkIndex(row, column)
@@ -74,7 +72,7 @@ class CartPageWidget(QWidget):
             self.layout().removeWidget(widget)
             return widget
         else:
-            raise IndexError('cell {} is empty'.format((row, column)))
+            raise IndexError("cell {} is empty".format((row, column)))
 
     def moveWidget(self, o_row, o_column, n_row, n_column):
         widget = self.takeWidget(o_row, o_column)
@@ -114,15 +112,14 @@ class CartPageWidget(QWidget):
                 self.copyWidgetRequested.emit(event.source(), row, column)
 
     def indexAt(self, pos):
-        # Margins and spacings are equals
-        space = self.layout().horizontalSpacing()
+        # All four margins (left, right, top, bottom) of a cue widget are equal
         margin = self.layout().contentsMargins().right()
 
-        r_size = (self.height() + margin * 2) // self.__rows + space
-        c_size = (self.width() + margin * 2) // self.__columns + space
+        r_size = (self.height() + margin * 2) // self.__rows
+        c_size = (self.width() + margin * 2) // self.__columns
 
-        row = math.ceil(pos.y() / r_size) - 1
-        column = math.ceil(pos.x() / c_size) - 1
+        row = math.floor(pos.y() / r_size)
+        column = math.floor(pos.x() / c_size)
 
         return row, column
 
@@ -132,11 +129,14 @@ class CartPageWidget(QWidget):
     def _checkIndex(self, row, column):
         if not isinstance(row, int):
             raise TypeError(
-                'rows index must be integers, not {}'.format(typename(row)))
+                "rows index must be integers, not {}".format(typename(row))
+            )
         if not isinstance(column, int):
             raise TypeError(
-                'columns index must be integers, not {}'.format(
-                    typename(column)))
+                "columns index must be integers, not {}".format(
+                    typename(column)
+                )
+            )
 
         if not 0 <= row < self.__rows or not 0 <= column < self.__columns:
-            raise IndexError('index out of bound {}'.format((row, column)))
+            raise IndexError("index out of bound {}".format((row, column)))

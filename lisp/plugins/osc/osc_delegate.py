@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,15 +16,20 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QStyledItemDelegate, QSpinBox, QDoubleSpinBox, \
-    QCheckBox, QLineEdit
+from PyQt5.QtWidgets import (
+    QStyledItemDelegate,
+    QSpinBox,
+    QDoubleSpinBox,
+    QCheckBox,
+    QLineEdit,
+)
 
 from lisp.plugins.osc.osc_server import OscMessageType
 
 
 class OscArgumentDelegate(QStyledItemDelegate):
-    MIN = -1000000
-    MAX = 1000000
+    MIN = -1_000_000
+    MAX = 1_000_000
     DECIMALS = 4
 
     def __init__(self, tag=OscMessageType.Int, **kwargs):

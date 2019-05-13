@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,12 +25,12 @@ from lisp.plugins.gst_backend.gst_element import GstMediaElement
 class AutoSink(GstMediaElement):
     ElementType = ElementType.Output
     MediaType = MediaType.Audio
-    Name = QT_TRANSLATE_NOOP('MediaElementName', 'System Out')
+    Name = QT_TRANSLATE_NOOP("MediaElementName", "System Out")
 
     def __init__(self, pipeline):
         super().__init__(pipeline)
 
-        self.auto_sink = Gst.ElementFactory.make('autoaudiosink', 'sink')
+        self.auto_sink = Gst.ElementFactory.make("autoaudiosink", "sink")
         self.pipeline.add(self.auto_sink)
 
     def sink(self):

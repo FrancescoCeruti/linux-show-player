@@ -4,49 +4,49 @@
   <context>
     <name>ReplayGain</name>
     <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="51"/>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="52"/>
       <source>ReplayGain / Normalization</source>
-      <translation>ReplayGain / Normalisierung</translation>
+      <translation type="unfinished">ReplayGain / Normalization</translation>
     </message>
     <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="56"/>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="57"/>
       <source>Calculate</source>
-      <translation>Berechnen</translation>
+      <translation type="unfinished">Calculate</translation>
     </message>
     <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="61"/>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="62"/>
       <source>Reset all</source>
-      <translation>Alle zurücksetzen</translation>
+      <translation type="unfinished">Reset all</translation>
     </message>
     <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="66"/>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="67"/>
       <source>Reset selected</source>
-      <translation>Ausgewählte zurücksetzen</translation>
+      <translation type="unfinished">Reset selected</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/gain_ui.py" line="113"/>
       <source>Threads number</source>
-      <translation>Thread Nummer</translation>
+      <translation type="unfinished">Threads number</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/gain_ui.py" line="114"/>
       <source>Apply only to selected media</source>
-      <translation>Nur für ausgewählte Medien anwenden</translation>
+      <translation type="unfinished">Apply only to selected media</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/gain_ui.py" line="117"/>
       <source>ReplayGain to (dB SPL)</source>
-      <translation>ReplayGain auf (dB SPL)</translation>
+      <translation type="unfinished">ReplayGain to (dB SPL)</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/gain_ui.py" line="120"/>
       <source>Normalize to (dB)</source>
-      <translation>Normalisieren auf (dB)</translation>
+      <translation type="unfinished">Normalize to (dB)</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/gain_ui.py" line="145"/>
       <source>Processing files ...</source>
-      <translation>Bearbeite Dateien</translation>
+      <translation type="unfinished">Processing files ...</translation>
     </message>
   </context>
   <context>

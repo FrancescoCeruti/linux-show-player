@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -34,7 +32,7 @@ class Announcer(Thread):
     def __init__(self, ip, port, magic):
         super().__init__(daemon=True)
         self.server = socketserver.UDPServer((ip, port), AnnouncerUDPHandler)
-        self.server.bytes_magic = bytes(magic, 'utf-8')
+        self.server.bytes_magic = bytes(magic, "utf-8")
 
     def run(self):
         with self.server:
@@ -46,7 +44,6 @@ class Announcer(Thread):
 
 
 class AnnouncerUDPHandler(socketserver.BaseRequestHandler):
-
     def handle(self):
         data = self.request[0].strip()
         socket = self.request[1]
@@ -62,11 +59,13 @@ class Discoverer(Thread):
     of attempts to find active (announced) host on the network.
     """
 
-    def __init__(self, port, magic, max_attempts=3, timeout=0.5, target='<broadcast>'):
+    def __init__(
+        self, port, magic, max_attempts=3, timeout=0.5, target="<broadcast>"
+    ):
         super().__init__(daemon=True)
 
         self.address = (target, port)
-        self.bytes_magic = bytes(magic, 'utf-8')
+        self.bytes_magic = bytes(magic, "utf-8")
         self.max_attempts = max_attempts
         self.timeout = timeout
 

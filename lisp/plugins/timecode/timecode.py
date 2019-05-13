@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
 # Copyright 2016-2017 Thomas Achtner <info@offtools.de>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
@@ -20,16 +18,15 @@
 
 import logging
 
-from lisp.core.properties import Property
 from lisp.core.plugin import Plugin
+from lisp.core.properties import Property
 from lisp.core.signal import Connection
 from lisp.cues.cue import Cue
 from lisp.cues.media_cue import MediaCue
 from lisp.plugins.timecode import protocols
 from lisp.plugins.timecode.cue_tracker import TimecodeCueTracker, TcFormat
 from lisp.plugins.timecode.protocol import TimecodeProtocol
-from lisp.plugins.timecode.settings import TimecodeAppSettings, \
-    TimecodeSettings
+from lisp.plugins.timecode.settings import TimecodeAppSettings, TimecodeSettings
 from lisp.ui.settings.app_configuration import AppConfigurationDialog
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
 from lisp.ui.ui_utils import translate
@@ -38,36 +35,33 @@ logger = logging.getLogger(__name__)
 
 
 class Timecode(Plugin):
-    Name = 'Timecode'
-    Authors = ('Thomas Achtner',)
-    OptDepends = ('Midi',)
-    Description = 'Provide timecode via multiple protocols'
+    Name = "Timecode"
+    Authors = ("Thomas Achtner",)
+    OptDepends = ("Midi",)
+    Description = "Provide timecode via multiple protocols"
 
     def __init__(self, app):
         super().__init__(app)
 
         # Register a new Cue property to store settings
         Cue.timecode = Property(
-            default={
-                'enabled': False,
-                'replace_hours': False,
-                'track': 0
-            }
+            default={"enabled": False, "replace_hours": False, "track": 0}
         )
 
         # Register cue-settings-page
         CueSettingsRegistry().add(TimecodeSettings, MediaCue)
         # Register the settings widget
         AppConfigurationDialog.registerSettingsPage(
-            'plugins.timecode', TimecodeAppSettings, Timecode.Config)
+            "plugins.timecode", TimecodeAppSettings, Timecode.Config
+        )
 
         # Load available protocols
         protocols.load_protocols()
 
         # Create the cue tracker object
         self.__cue_tracker = TimecodeCueTracker(
-            self.__get_protocol(Timecode.Config['protocol']),
-            TcFormat[Timecode.Config['format']]
+            self.__get_protocol(Timecode.Config["protocol"]),
+            TcFormat[Timecode.Config["format"]],
         )
 
         # Cues with timecode-tracking enabled
@@ -87,9 +81,9 @@ class Timecode(Plugin):
         self.__cue_tracker.finalize()
 
     def __config_change(self, key, value):
-        if key == 'protocol':
+        if key == "protocol":
             self.__cue_tracker.protocol = self.__get_protocol(value)
-        elif key == 'format':
+        elif key == "format":
             self.__cue_tracker.format = value
 
     def __config_update(self, diff):
@@ -101,9 +95,10 @@ class Timecode(Plugin):
             return protocols.get_protocol(protocol_name)()
         except Exception:
             logger.error(
-                translate('Timecode', 'Cannot load timecode protocol: "{}"')
-                    .format(protocol_name),
-                exc_info=True
+                translate(
+                    "Timecode", 'Cannot load timecode protocol: "{}"'
+                ).format(protocol_name),
+                exc_info=True,
             )
             # Use a dummy protocol in case of failure
             return TimecodeProtocol()
@@ -113,17 +108,18 @@ class Timecode(Plugin):
         self.__cues.clear()
 
     def __cue_changed(self, cue, property_name, value):
-        if property_name == 'timecode':
-            if value.get('enabled', False):
+        if property_name == "timecode":
+            if value.get("enabled", False):
                 cue.started.connect(
-                    self.__cue_tracker.track, Connection.QtQueued)
+                    self.__cue_tracker.track, Connection.QtQueued
+                )
             else:
                 self.__disable_on_cue(cue)
 
     def __cue_added(self, cue):
         cue.property_changed.connect(self.__cue_changed)
         # Check for current cue settings
-        self.__cue_changed(cue, 'timecode', cue.timecode)
+        self.__cue_changed(cue, "timecode", cue.timecode)
 
     def __cue_removed(self, cue):
         cue.property_changed.disconnect(self.__cue_changed)

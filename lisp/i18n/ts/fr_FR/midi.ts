@@ -2,32 +2,16 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="fr" sourcelanguage="en">
   <context>
-    <name>CueCategory</name>
-    <message>
-      <location filename="../../../plugins/midi/midi.py" line="45"/>
-      <source>Integration cues</source>
-      <translation type="unfinished">Integration cues</translation>
-    </message>
-  </context>
-  <context>
-    <name>CueName</name>
-    <message>
-      <location filename="../../../plugins/midi/midi_cue.py" line="35"/>
-      <source>MIDI Cue</source>
-      <translation type="unfinished">MIDI Cue</translation>
-    </message>
-  </context>
-  <context>
     <name>MIDICue</name>
     <message>
       <location filename="../../../plugins/midi/widgets.py" line="88"/>
       <source>MIDI Message</source>
-      <translation>Message MIDI</translation>
+      <translation type="unfinished">MIDI Message</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/widgets.py" line="89"/>
       <source>Message type</source>
-      <translation>Type de message</translation>
+      <translation type="unfinished">Message type</translation>
     </message>
   </context>
   <context>
@@ -35,7 +19,7 @@
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="67"/>
       <source>Channel</source>
-      <translation>Canal</translation>
+      <translation type="unfinished">Channel</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="68"/>
@@ -55,17 +39,17 @@
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="71"/>
       <source>Program</source>
-      <translation>Programme</translation>
+      <translation type="unfinished">Program</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="72"/>
       <source>Value</source>
-      <translation>Valeur</translation>
+      <translation type="unfinished">Value</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="73"/>
       <source>Song</source>
-      <translation>Musique</translation>
+      <translation type="unfinished">Song</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="74"/>
@@ -75,7 +59,7 @@
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="75"/>
       <source>Position</source>
-      <translation>Position</translation>
+      <translation type="unfinished">Position</translation>
     </message>
   </context>
   <context>
@@ -118,27 +102,27 @@
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="59"/>
       <source>Song Select</source>
-      <translation>Selection de musique</translation>
+      <translation type="unfinished">Song Select</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="60"/>
       <source>Song Position</source>
-      <translation>Position de musique</translation>
+      <translation type="unfinished">Song Position</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="61"/>
       <source>Start</source>
-      <translation>Démarrer</translation>
+      <translation type="unfinished">Start</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="62"/>
       <source>Stop</source>
-      <translation>Arrêter</translation>
+      <translation type="unfinished">Stop</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="63"/>
       <source>Continue</source>
-      <translation>Continuer</translation>
+      <translation type="unfinished">Continue</translation>
     </message>
   </context>
   <context>
@@ -165,11 +149,6 @@
       <location filename="../../../plugins/midi/midi_settings.py" line="33"/>
       <source>MIDI settings</source>
       <translation>Préférences MIDI</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/midi/midi_cue.py" line="52"/>
-      <source>MIDI Settings</source>
-      <translation type="unfinished">MIDI Settings</translation>
     </message>
   </context>
 </TS>

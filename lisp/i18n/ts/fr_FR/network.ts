@@ -35,7 +35,7 @@
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="149"/>
       <source>Manage hosts</source>
-      <translation>Gérer les hôtes</translation>
+      <translation type="unfinished">Manage hosts</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="150"/>
@@ -45,27 +45,27 @@
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="153"/>
       <source>Manually add a host</source>
-      <translation>Ajouter manuellement un hôte</translation>
+      <translation type="unfinished">Manually add a host</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="156"/>
       <source>Remove selected host</source>
-      <translation>Retirer l'hôte sélectionné</translation>
+      <translation type="unfinished">Remove selected host</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="159"/>
       <source>Remove all host</source>
-      <translation>Retirer tous les hôtes</translation>
+      <translation type="unfinished">Remove all host</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="164"/>
       <source>Address</source>
-      <translation>Adresse</translation>
+      <translation type="unfinished">Address</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="164"/>
       <source>Host IP</source>
-      <translation>IP de l'hôte</translation>
+      <translation type="unfinished">Host IP</translation>
     </message>
   </context>
 </TS>

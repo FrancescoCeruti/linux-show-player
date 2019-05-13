@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,18 +25,18 @@ from lisp.plugins.gst_backend.gst_element import GstMediaElement, GstProperty
 class Equalizer10(GstMediaElement):
     ElementType = ElementType.Plugin
     MediaType = MediaType.Audio
-    Name = QT_TRANSLATE_NOOP('MediaElementName', '10 Bands Equalizer')
+    Name = QT_TRANSLATE_NOOP("MediaElementName", "10 Bands Equalizer")
 
-    band0 = GstProperty('equalizer', 'band0', default=0)
-    band1 = GstProperty('equalizer', 'band1', default=0)
-    band2 = GstProperty('equalizer', 'band2', default=0)
-    band3 = GstProperty('equalizer', 'band3', default=0)
-    band4 = GstProperty('equalizer', 'band4', default=0)
-    band5 = GstProperty('equalizer', 'band5', default=0)
-    band6 = GstProperty('equalizer', 'band6', default=0)
-    band7 = GstProperty('equalizer', 'band7', default=0)
-    band8 = GstProperty('equalizer', 'band8', default=0)
-    band9 = GstProperty('equalizer', 'band9', default=0)
+    band0 = GstProperty("equalizer", "band0", default=0)
+    band1 = GstProperty("equalizer", "band1", default=0)
+    band2 = GstProperty("equalizer", "band2", default=0)
+    band3 = GstProperty("equalizer", "band3", default=0)
+    band4 = GstProperty("equalizer", "band4", default=0)
+    band5 = GstProperty("equalizer", "band5", default=0)
+    band6 = GstProperty("equalizer", "band6", default=0)
+    band7 = GstProperty("equalizer", "band7", default=0)
+    band8 = GstProperty("equalizer", "band8", default=0)
+    band9 = GstProperty("equalizer", "band9", default=0)
 
     def __init__(self, pipeline):
         super().__init__(pipeline)

@@ -1,11 +1,9 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
 # This file contains a PyQt5 version of QProgressIndicator.cpp from
 # https://github.com/mojocorp/QProgressIndicator
 #
-# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,7 +25,6 @@ from PyQt5.QtWidgets import QWidget, QSizePolicy
 
 
 class QProgressWheel(QWidget):
-
     def __init__(self, *args):
         super().__init__(*args)
         self._angle = 0
@@ -99,7 +96,7 @@ class QProgressWheel(QWidget):
         innerRadius = (width - 1) * 0.5 * 0.38
 
         capsuleHeight = outerRadius - innerRadius
-        capsuleWidth = capsuleHeight * (.23 if width > 32 else .35)
+        capsuleWidth = capsuleHeight * (0.23 if width > 32 else 0.35)
         capsuleRadius = capsuleWidth / 2
 
         # Use the pen (text) color to draw the "capsules"
@@ -115,8 +112,11 @@ class QProgressWheel(QWidget):
 
             painter.drawRoundedRect(
                 QRectF(
-                    capsuleWidth * -0.5, (innerRadius + capsuleHeight) * -1,
-                    capsuleWidth, capsuleHeight
+                    capsuleWidth * -0.5,
+                    (innerRadius + capsuleHeight) * -1,
+                    capsuleWidth,
+                    capsuleHeight,
                 ),
-                capsuleRadius, capsuleRadius
+                capsuleRadius,
+                capsuleRadius,
             )

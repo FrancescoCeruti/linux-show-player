@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -45,26 +43,28 @@ class UserElementSettings(SettingsPage):
 
         self.warning = QLabel(self.groupBox)
         self.warning.setAlignment(QtCore.Qt.AlignCenter)
-        self.warning.setStyleSheet('color: #FF2222; font-weight: bold')
+        self.warning.setStyleSheet("color: #FF2222; font-weight: bold")
         self.groupBox.layout().addWidget(self.warning)
 
         self.retranslateUi()
 
     def retranslateUi(self):
         self.groupBox.setTitle(
-            translate('UserElementSettings', 'User defined elements'))
+            translate("UserElementSettings", "User defined elements")
+        )
         self.warning.setText(
-            translate('UserElementSettings', 'Only for advanced user!'))
+            translate("UserElementSettings", "Only for advanced user!")
+        )
 
     def enableCheck(self, enabled):
         self.groupBox.setCheckable(enabled)
         self.groupBox.setChecked(False)
 
     def loadSettings(self, settings):
-        self.textEdit.setPlainText(settings.get('bin', ''))
+        self.textEdit.setPlainText(settings.get("bin", ""))
 
     def getSettings(self):
         if not (self.groupBox.isCheckable() and not self.groupBox.isChecked()):
-            return {'bin': self.textEdit.toPlainText().strip()}
+            return {"bin": self.textEdit.toPlainText().strip()}
 
         return {}

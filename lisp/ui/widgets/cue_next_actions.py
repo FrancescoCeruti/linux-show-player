@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,13 +21,20 @@ from PyQt5.QtWidgets import QComboBox
 from lisp.cues.cue import CueNextAction
 from lisp.ui.ui_utils import translate
 
-
 CueNextActionsStrings = {
-    CueNextAction.DoNothing: QT_TRANSLATE_NOOP(
-        'CueNextAction', 'Do Nothing'),
-    CueNextAction.AutoFollow: QT_TRANSLATE_NOOP(
-        'CueNextAction', 'Auto Follow'),
-    CueNextAction.AutoNext: QT_TRANSLATE_NOOP('CueNextAction', 'Auto Next')
+    CueNextAction.DoNothing: QT_TRANSLATE_NOOP("CueNextAction", "Do Nothing"),
+    CueNextAction.TriggerAfterEnd: QT_TRANSLATE_NOOP(
+        "CueNextAction", "Trigger after the end"
+    ),
+    CueNextAction.TriggerAfterWait: QT_TRANSLATE_NOOP(
+        "CueNextAction", "Trigger after post wait"
+    ),
+    CueNextAction.SelectAfterEnd: QT_TRANSLATE_NOOP(
+        "CueNextAction", "Select after the end"
+    ),
+    CueNextAction.SelectAfterWait: QT_TRANSLATE_NOOP(
+        "CueNextAction", "Select after post wait"
+    ),
 }
 
 
@@ -42,7 +47,8 @@ def tr_next_action(action):
     :rtype: str
     """
     return translate(
-        'CueNextAction', CueNextActionsStrings.get(action, action.name))
+        "CueNextAction", CueNextActionsStrings.get(action, action.name)
+    )
 
 
 class CueNextActionComboBox(QComboBox):

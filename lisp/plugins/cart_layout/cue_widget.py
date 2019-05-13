@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,8 +17,15 @@
 
 from PyQt5.QtCore import Qt, QMimeData, pyqtSignal, QPoint
 from PyQt5.QtGui import QColor, QDrag
-from PyQt5.QtWidgets import QProgressBar, QLCDNumber, QLabel, QHBoxLayout, \
-    QWidget, QSizePolicy, QVBoxLayout
+from PyQt5.QtWidgets import (
+    QProgressBar,
+    QLCDNumber,
+    QLabel,
+    QHBoxLayout,
+    QWidget,
+    QSizePolicy,
+    QVBoxLayout,
+)
 
 from lisp.backend.audio_utils import slider_to_fader, fader_to_slider
 from lisp.core.signal import Connection
@@ -30,7 +35,7 @@ from lisp.cues.cue_time import CueTime
 from lisp.cues.media_cue import MediaCue
 from lisp.plugins.cart_layout.page_widget import CartPageWidget
 from lisp.ui.icons import IconTheme
-from lisp.ui.widgets import QClickLabel, QClickSlider, QDbMeter
+from lisp.ui.widgets import QClickLabel, QClickSlider, DBMeter
 
 
 class CueWidget(QWidget):
@@ -66,18 +71,21 @@ class CueWidget(QWidget):
         self.layout().addLayout(self.hLayout, 4)
 
         self.nameButton = QClickLabel(self)
-        self.nameButton.setObjectName('ButtonCueWidget')
+        self.nameButton.setObjectName("ButtonCueWidget")
         self.nameButton.setWordWrap(True)
         self.nameButton.setAlignment(Qt.AlignCenter)
         self.nameButton.setFocusPolicy(Qt.NoFocus)
         self.nameButton.clicked.connect(self._clicked)
-        self.nameButton.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
+        self.nameButton.setSizePolicy(
+            QSizePolicy.Ignored, QSizePolicy.Preferred
+        )
         self.hLayout.addWidget(self.nameButton, 5)
 
         self.statusIcon = QLabel(self.nameButton)
-        self.statusIcon.setStyleSheet('background-color: transparent')
+        self.statusIcon.setStyleSheet("background-color: transparent")
         self.statusIcon.setPixmap(
-            IconTheme.get('led-off').pixmap(CueWidget.ICON_SIZE))
+            IconTheme.get("led-off").pixmap(CueWidget.ICON_SIZE)
+        )
 
         self.seekSlider = QClickSlider(self.nameButton)
         self.seekSlider.setOrientation(Qt.Horizontal)
@@ -85,16 +93,17 @@ class CueWidget(QWidget):
         self.seekSlider.setVisible(False)
 
         self.volumeSlider = QClickSlider(self.nameButton)
-        self.volumeSlider.setObjectName('VolumeSlider')
+        self.volumeSlider.setObjectName("VolumeSlider")
         self.volumeSlider.setOrientation(Qt.Vertical)
         self.volumeSlider.setFocusPolicy(Qt.NoFocus)
         self.volumeSlider.setRange(0, CueWidget.SLIDER_RANGE)
         self.volumeSlider.setPageStep(10)
         self.volumeSlider.valueChanged.connect(
-            self._changeVolume, Qt.DirectConnection)
+            self._changeVolume, Qt.DirectConnection
+        )
         self.volumeSlider.setVisible(False)
 
-        self.dbMeter = QDbMeter(self)
+        self.dbMeter = DBMeter(self)
         self.dbMeter.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
         self.dbMeter.setVisible(False)
 
@@ -103,12 +112,12 @@ class CueWidget(QWidget):
         self.timeBar.setLayout(QHBoxLayout())
         self.timeBar.layout().setContentsMargins(0, 0, 0, 0)
         self.timeDisplay = QLCDNumber(self.timeBar)
-        self.timeDisplay.setStyleSheet('background-color: transparent')
+        self.timeDisplay.setStyleSheet("background-color: transparent")
         self.timeDisplay.setSegmentStyle(QLCDNumber.Flat)
         self.timeDisplay.setDigitCount(8)
-        self.timeDisplay.display('00:00:00')
+        self.timeDisplay.display("00:00:00")
         self.timeBar.layout().addWidget(self.timeDisplay)
-        self.timeBar.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
+        self.timeBar.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Fixed)
         self.timeBar.setVisible(False)
 
         self._setCue(cue)
@@ -125,7 +134,7 @@ class CueWidget(QWidget):
     def selected(self, value):
         self._selected = value
         # Show the selection via stylesheet/qproperties
-        self.nameButton.setProperty('selected', self.selected)
+        self.nameButton.setProperty("selected", self.selected)
         self.nameButton.style().unpolish(self.nameButton)
         self.nameButton.style().polish(self.nameButton)
 
@@ -133,9 +142,10 @@ class CueWidget(QWidget):
         self.contextMenuRequested.emit(event.globalPos())
 
     def mouseMoveEvent(self, event):
-        if (event.buttons() == Qt.LeftButton and
-                (event.modifiers() == Qt.ControlModifier or
-                 event.modifiers() == Qt.ShiftModifier)):
+        if event.buttons() == Qt.LeftButton and (
+            event.modifiers() == Qt.ControlModifier
+            or event.modifiers() == Qt.ShiftModifier
+        ):
             mime_data = QMimeData()
             mime_data.setText(CartPageWidget.DRAG_MAGIC)
 
@@ -173,7 +183,7 @@ class CueWidget(QWidget):
                 self._dBMeterElement = None
 
             if visible:
-                self._dBMeterElement = self._cue.media.element('DbMeter')
+                self._dBMeterElement = self._cue.media.element("DbMeter")
                 if self._dBMeterElement is not None:
                     self._dBMeterElement.level_ready.connect(self.dbMeter.plot)
 
@@ -190,18 +200,18 @@ class CueWidget(QWidget):
             self._showVolume = visible
 
             if self._volumeElement is not None:
-                self._volumeElement.changed('volume').disconnect(
-                    self.resetVolume)
+                self._volumeElement.changed("volume").disconnect(
+                    self.resetVolume
+                )
                 self._volumeElement = None
 
             if visible:
                 self.volumeSlider.setEnabled(self._cue.state & CueState.Running)
-                self._volumeElement = self._cue.media.element('Volume')
+                self._volumeElement = self._cue.media.element("Volume")
                 if self._volumeElement is not None:
                     self.resetVolume()
-                    self._volumeElement.changed('volume').connect(
-                        self.resetVolume,
-                        Connection.QtQueued
+                    self._volumeElement.changed("volume").connect(
+                        self.resetVolume, Connection.QtQueued
                     )
 
                 self.hLayout.insertWidget(1, self.volumeSlider, 1)
@@ -214,21 +224,27 @@ class CueWidget(QWidget):
 
     def resetVolume(self):
         if self._volumeElement is not None:
-            self.volumeSlider.setValue(round(fader_to_slider(
-                self._volumeElement.volume) * CueWidget.SLIDER_RANGE))
+            self.volumeSlider.setValue(
+                round(
+                    fader_to_slider(self._volumeElement.volume)
+                    * CueWidget.SLIDER_RANGE
+                )
+            )
 
     def _setCue(self, cue):
         self._cue = cue
 
         # Cue properties changes
-        self._cue.changed('name').connect(
-            self._updateName, Connection.QtQueued)
-        self._cue.changed('stylesheet').connect(
-            self._updateStyle, Connection.QtQueued)
-        self._cue.changed('duration').connect(
-            self._updateDuration, Connection.QtQueued)
-        self._cue.changed('description').connect(
-            self._updateDescription, Connection.QtQueued)
+        self._cue.changed("name").connect(self._updateName, Connection.QtQueued)
+        self._cue.changed("stylesheet").connect(
+            self._updateStyle, Connection.QtQueued
+        )
+        self._cue.changed("duration").connect(
+            self._updateDuration, Connection.QtQueued
+        )
+        self._cue.changed("description").connect(
+            self._updateDescription, Connection.QtQueued
+        )
 
         # FadeOut start/end
         self._cue.fadein_start.connect(self._enterFadein, Connection.QtQueued)
@@ -249,7 +265,8 @@ class CueWidget(QWidget):
         # Media cues features dBMeter and seekSlider
         if isinstance(cue, MediaCue):
             self._cue.media.elements_changed.connect(
-                self._mediaUpdated, Connection.QtQueued)
+                self._mediaUpdated, Connection.QtQueued
+            )
 
             self._cue.paused.connect(self.dbMeter.reset, Connection.QtQueued)
             self._cue.stopped.connect(self.dbMeter.reset, Connection.QtQueued)
@@ -278,11 +295,14 @@ class CueWidget(QWidget):
 
     def _changeVolume(self, new_volume):
         self._volumeElement.live_volume = slider_to_fader(
-            new_volume / CueWidget.SLIDER_RANGE)
+            new_volume / CueWidget.SLIDER_RANGE
+        )
 
     def _clicked(self, event):
-        if not (self.seekSlider.geometry().contains(event.pos()) and
-                self.seekSlider.isVisible()):
+        if not (
+            self.seekSlider.geometry().contains(event.pos())
+            and self.seekSlider.isVisible()
+        ):
             if event.button() != Qt.RightButton:
                 if event.modifiers() == Qt.ShiftModifier:
                     self.editRequested.emit(self._cue)
@@ -310,24 +330,28 @@ class CueWidget(QWidget):
 
     def _statusStopped(self):
         self.statusIcon.setPixmap(
-            IconTheme.get('led-off').pixmap(CueWidget.ICON_SIZE))
+            IconTheme.get("led-off").pixmap(CueWidget.ICON_SIZE)
+        )
         self.volumeSlider.setEnabled(False)
         self._updateTime(0, True)
         self.resetVolume()
 
     def _statusPlaying(self):
         self.statusIcon.setPixmap(
-            IconTheme.get('led-running').pixmap(CueWidget.ICON_SIZE))
+            IconTheme.get("led-running").pixmap(CueWidget.ICON_SIZE)
+        )
         self.volumeSlider.setEnabled(True)
 
     def _statusPaused(self):
         self.statusIcon.setPixmap(
-            IconTheme.get('led-pause').pixmap(CueWidget.ICON_SIZE))
+            IconTheme.get("led-pause").pixmap(CueWidget.ICON_SIZE)
+        )
         self.volumeSlider.setEnabled(False)
 
     def _statusError(self):
         self.statusIcon.setPixmap(
-            IconTheme.get('led-error').pixmap(CueWidget.ICON_SIZE))
+            IconTheme.get("led-error").pixmap(CueWidget.ICON_SIZE)
+        )
         self.volumeSlider.setEnabled(False)
         self.resetVolume()
 
@@ -365,7 +389,8 @@ class CueWidget(QWidget):
 
             # Show the time in the widget
             self.timeDisplay.display(
-                strtime(time, accurate=self._accurateTiming))
+                strtime(time, accurate=self._accurateTiming)
+            )
 
     def resizeEvent(self, event):
         self.update()
@@ -381,4 +406,5 @@ class CueWidget(QWidget):
 
         self.seekSlider.setGeometry(4, s_ypos, s_width, s_height)
         self.statusIcon.setGeometry(
-            4, 4, CueWidget.ICON_SIZE, CueWidget.ICON_SIZE)
+            4, 4, CueWidget.ICON_SIZE, CueWidget.ICON_SIZE
+        )

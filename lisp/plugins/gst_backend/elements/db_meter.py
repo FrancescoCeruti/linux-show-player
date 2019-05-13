@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -28,23 +26,23 @@ from lisp.plugins.gst_backend.gst_element import GstMediaElement, GstProperty
 class DbMeter(GstMediaElement):
     ElementType = ElementType.Plugin
     MediaType = MediaType.Audio
-    Name = QT_TRANSLATE_NOOP('MediaElementName', 'dB Meter')
+    Name = QT_TRANSLATE_NOOP("MediaElementName", "dB Meter")
 
-    interval = GstProperty('level', 'interval', default=50 * Gst.MSECOND)
-    peak_ttl = GstProperty('level', 'peak-ttl', default=Gst.SECOND)
-    peak_falloff = GstProperty('level', 'peak-falloff', default=20)
+    interval = GstProperty("level", "interval", default=50 * Gst.MSECOND)
+    peak_ttl = GstProperty("level", "peak-ttl", default=Gst.SECOND)
+    peak_falloff = GstProperty("level", "peak-falloff", default=20)
 
     def __init__(self, pipeline):
         super().__init__(pipeline)
         self.level_ready = Signal()
 
         self.pipeline = pipeline
-        self.level = Gst.ElementFactory.make('level', None)
-        self.level.set_property('post-messages', True)
-        self.level.set_property('interval', 50 * Gst.MSECOND)
-        self.level.set_property('peak-ttl', Gst.SECOND)
-        self.level.set_property('peak-falloff', 20)
-        self.audio_convert = Gst.ElementFactory.make('audioconvert', None)
+        self.level = Gst.ElementFactory.make("level", None)
+        self.level.set_property("post-messages", True)
+        self.level.set_property("interval", 50 * Gst.MSECOND)
+        self.level.set_property("peak-ttl", Gst.SECOND)
+        self.level.set_property("peak-falloff", 20)
+        self.audio_convert = Gst.ElementFactory.make("audioconvert", None)
 
         self.pipeline.add(self.level)
         self.pipeline.add(self.audio_convert)
@@ -53,7 +51,7 @@ class DbMeter(GstMediaElement):
 
         bus = self.pipeline.get_bus()
         bus.add_signal_watch()
-        self._handler = bus.connect('message::element', self.__on_message)
+        self._handler = bus.connect("message::element", self.__on_message)
 
     def dispose(self):
         bus = self.pipeline.get_bus()
@@ -69,9 +67,9 @@ class DbMeter(GstMediaElement):
     def __on_message(self, bus, message):
         if message.src == self.level:
             structure = message.get_structure()
-            if structure is not None and structure.has_name('level'):
+            if structure is not None and structure.has_name("level"):
                 self.level_ready.emit(
-                    structure.get_value('peak'),
-                    structure.get_value('rms'),
-                    structure.get_value('decay')
+                    structure.get_value("peak"),
+                    structure.get_value("rms"),
+                    structure.get_value("decay"),
                 )

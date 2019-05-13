@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,13 +16,24 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QDialog, QTreeWidget, QHeaderView, QVBoxLayout, \
-    QDialogButtonBox, QTreeWidgetItem
+from PyQt5.QtWidgets import (
+    QDialog,
+    QTreeWidget,
+    QHeaderView,
+    QVBoxLayout,
+    QDialogButtonBox,
+    QTreeWidgetItem,
+)
 
 
 class CueSelectDialog(QDialog):
-    def __init__(self, cues=None, properties=('index', 'name'),
-                 selection_mode=QTreeWidget.SingleSelection, **kwargs):
+    def __init__(
+        self,
+        cues=None,
+        properties=("index", "name"),
+        selection_mode=QTreeWidget.SingleSelection,
+        **kwargs,
+    ):
         super().__init__(**kwargs)
 
         self.setMinimumSize(600, 400)
@@ -63,7 +72,7 @@ class CueSelectDialog(QDialog):
         item.setTextAlignment(0, Qt.AlignCenter)
 
         for n, prop in enumerate(self._properties):
-            item.setData(n, Qt.DisplayRole, getattr(cue, prop, 'Undefined'))
+            item.setData(n, Qt.DisplayRole, getattr(cue, prop, "Undefined"))
 
         self._cues[cue] = item
         item.setData(0, Qt.UserRole, cue)

@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2017 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2017 Francesco Ceruti <ceppofrancy@gmail.com>
 # Copyright 2016-2017 Thomas Achtner <info@offtools.de>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
@@ -25,6 +23,7 @@ from threading import Lock
 from lisp.core.clock import Clock
 from lisp.core.signal import Connection
 from lisp.cues.cue_time import CueTime
+from lisp.ui.ui_utils import translate
 
 logger = logging.getLogger(__name__)
 
@@ -94,8 +93,8 @@ class TimecodeCueTracker:
         # Setup new cue and options
         self.__cue = cue
         self.__cue_time = HRCueTime(cue)
-        self.__replace_hours = cue.timecode['replace_hours']
-        self.__track = cue.timecode['track'] if self.__replace_hours else -1
+        self.__replace_hours = cue.timecode["replace_hours"]
+        self.__track = cue.timecode["track"] if self.__replace_hours else -1
 
         # Send a "starting" time
         self.send(self.__cue.current_time())
@@ -116,7 +115,12 @@ class TimecodeCueTracker:
         if self.__lock.acquire(blocking=False):
             try:
                 if not self.__protocol.send(self.format, time, self.__track):
-                    logger.warning('Cannot send timecode, untracking cue')
+                    logger.warning(
+                        translate(
+                            "TimecodeWarning",
+                            "Cannot send timecode, untracking cue",
+                        )
+                    )
                     self.untrack()
             except Exception:
                 self.__lock.release()

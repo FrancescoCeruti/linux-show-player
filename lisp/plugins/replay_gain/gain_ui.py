@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,8 +18,18 @@
 from os import cpu_count
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QDialog, QDialogButtonBox, QRadioButton, QSpinBox, \
-    QCheckBox, QFrame, QLabel, QGridLayout, QButtonGroup, QProgressDialog
+from PyQt5.QtWidgets import (
+    QDialog,
+    QDialogButtonBox,
+    QRadioButton,
+    QSpinBox,
+    QCheckBox,
+    QFrame,
+    QLabel,
+    QGridLayout,
+    QButtonGroup,
+    QProgressDialog,
+)
 
 from lisp.ui.ui_utils import translate
 
@@ -81,8 +89,9 @@ class GainUi(QDialog):
         self.layout().addWidget(self.cpuSpinBox, 4, 1)
 
         self.dialogButtons = QDialogButtonBox(self)
-        self.dialogButtons.setStandardButtons(QDialogButtonBox.Ok |
-                                              QDialogButtonBox.Cancel)
+        self.dialogButtons.setStandardButtons(
+            QDialogButtonBox.Ok | QDialogButtonBox.Cancel
+        )
         self.layout().addWidget(self.dialogButtons, 5, 0, 1, 2)
 
         self.normalizeRadio.toggled.connect(self.normalizeSpinBox.setEnabled)
@@ -99,14 +108,18 @@ class GainUi(QDialog):
 
     def retranslateUi(self):
         self.setWindowTitle(
-            translate('ReplayGain', 'ReplayGain / Normalization'))
-        self.cpuLabel.setText(translate('ReplayGain', 'Threads number'))
+            translate("ReplayGain", "ReplayGain / Normalization")
+        )
+        self.cpuLabel.setText(translate("ReplayGain", "Threads number"))
         self.selectionMode.setText(
-            translate('ReplayGain', 'Apply only to selected media'))
+            translate("ReplayGain", "Apply only to selected media")
+        )
         self.gainRadio.setText(
-            translate('ReplayGain', 'ReplayGain to (dB SPL)'))
+            translate("ReplayGain", "ReplayGain to (dB SPL)")
+        )
         self.normalizeRadio.setText(
-            translate('ReplayGain', 'Normalize to (dB)'))
+            translate("ReplayGain", "Normalize to (dB)")
+        )
 
     def mode(self):
         return 0 if self.gainRadio.isChecked() else 1
@@ -129,13 +142,13 @@ class GainProgressDialog(QProgressDialog):
         super().__init__(parent)
 
         self.setWindowModality(Qt.ApplicationModal)
-        self.setWindowTitle(translate('ReplayGain', 'Processing files ...'))
+        self.setWindowTitle(translate("ReplayGain", "Processing files ..."))
         self.setMaximumSize(320, 110)
         self.setMinimumSize(320, 110)
         self.resize(320, 110)
 
         self.setMaximum(maximum)
-        self.setLabelText('0 / {0}'.format(maximum))
+        self.setLabelText("0 / {0}".format(maximum))
 
     def on_progress(self, value):
         if value == -1:
@@ -144,4 +157,4 @@ class GainProgressDialog(QProgressDialog):
             self.deleteLater()
         else:
             self.setValue(self.value() + value)
-            self.setLabelText('{0} / {1}'.format(self.value(), self.maximum()))
+            self.setLabelText("{0} / {1}".format(self.value(), self.maximum()))

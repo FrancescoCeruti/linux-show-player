@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,8 +22,12 @@ from lisp.core.model_adapter import ModelAdapter
 
 
 class CueCartModel(ModelAdapter):
-    def __init__(self, model, rows, columns):
+    def __init__(self, model, rows, columns, current_page=0):
         super().__init__(model)
+
+        # Used in first empty, so we can insert cues in the page the user
+        # is visible while adding the cue
+        self.current_page = current_page
 
         self.__cues = SortedDict()
         self.__rows = rows
@@ -45,20 +47,27 @@ class CueCartModel(ModelAdapter):
             return index
 
     def first_empty(self):
-        """Return the first empty index."""
-        n = -1
-        for n, index in enumerate(self.__cues.keys()):
-            if n != index:
-                return n
+        """Return the first empty index, starting from the current page."""
+        offset = (self.__rows * self.__columns) * self.current_page
+        last_index = self.__cues.peekitem(-1)[0] if self.__cues else -1
 
-        return n + 1
+        if last_index > offset:
+            for n in range(offset, last_index):
+                if n not in self.__cues:  # O(1)
+                    return n
+
+            return last_index + 1
+        if last_index < offset:
+            return offset
+        else:
+            return offset + 1
 
     def item(self, index):
         index = self.flat(index)
         try:
             return self.__cues[index]
         except KeyError:
-            raise IndexError('index out of range')
+            raise IndexError("index out of range")
 
     def insert(self, item, index):
         index = self.flat(index)
@@ -73,7 +82,7 @@ class CueCartModel(ModelAdapter):
         try:
             cue = self.__cues[index]
         except KeyError:
-            raise IndexError('index out of range')
+            raise IndexError("index out of range")
 
         self.model.remove(cue)
         return cue
@@ -87,23 +96,21 @@ class CueCartModel(ModelAdapter):
             self.__cues[new_index].index = new_index
             self.item_moved.emit(old_index, new_index)
         else:
-            raise ModelException('index already used {}'.format(new_index))
+            raise ModelException("index already used {}".format(new_index))
 
     def page_edges(self, page):
         start = self.flat((page, 0, 0))
-        end = self.flat((page, self.__rows, self.__columns))
+        end = self.flat((page, self.__rows - 1, self.__columns - 1))
         return start, end
 
     def remove_page(self, page, lshift=True):
         start, end = self.page_edges(page)
-        for index in range(start, end + 1):
-            cue = self.__cues.get(index)
-            if cue is not None:
-                self.remove(cue)
+        for index in self.__cues.irange(start, end):
+            self.remove(self.__cues[index])
 
         if lshift:
             page_size = self.__rows * self.__columns
-            for index in self.__cues.irange(minimum=end + 1):
+            for index in self.__cues.irange(end + 1):
                 new_index = index - page_size
                 self.__cues[new_index] = self.__cues.pop(index)
                 self.__cues[new_index].index = new_index

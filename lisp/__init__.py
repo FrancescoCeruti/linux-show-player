@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2017 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2017 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,23 +17,26 @@
 
 from os import path
 
-__author__ = 'Francesco Ceruti'
-__email__ = 'ceppofrancy@gmail.com'
-__url__ = 'https://github.com/FrancescoCeruti/linux-show-player'
-__license__ = 'GPLv3'
-__version__ = '0.6dev'
+from appdirs import AppDirs
+
+__author__ = "Francesco Ceruti"
+__email__ = "ceppofrancy@gmail.com"
+__url__ = "https://github.com/FrancescoCeruti/linux-show-player"
+__license__ = "GPLv3"
+__version_info__ = (0, 6, 0, "dev0")
+__version__ = ".".join(map(str, __version_info__))
+
+# The version passed follows <major>.<minor>
+app_dirs = AppDirs(
+    "LinuxShowPlayer", version="{}.{}".format(*__version_info__[0:2])
+)
 
 # Application wide "constants"
 APP_DIR = path.dirname(__file__)
+I18N_DIR = path.join(APP_DIR, "i18n", "qm")
 
-USER_DIR = path.join(path.expanduser("~"), '.linux_show_player')
+DEFAULT_APP_CONFIG = path.join(APP_DIR, "default.json")
+USER_APP_CONFIG = path.join(app_dirs.user_config_dir, "lisp.json")
 
-LOGS_DIR = path.join(USER_DIR, 'logs')
-
-DEFAULT_APP_CONFIG = path.join(APP_DIR, 'default.json')
-USER_APP_CONFIG = path.join(USER_DIR, 'lisp.json')
-
-I18N_PATH = path.join(APP_DIR, 'i18n', 'qm')
-
-ICON_THEMES_DIR = path.join(APP_DIR, 'ui', 'icons')
-ICON_THEME_COMMON = 'lisp'
+ICON_THEMES_DIR = path.join(APP_DIR, "ui", "icons")
+ICON_THEME_COMMON = "lisp"

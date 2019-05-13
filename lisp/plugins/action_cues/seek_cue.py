@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,8 +17,14 @@
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import QTime, QT_TRANSLATE_NOOP
-from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QPushButton, QLabel, \
-    QHBoxLayout, QTimeEdit
+from PyQt5.QtWidgets import (
+    QVBoxLayout,
+    QGroupBox,
+    QPushButton,
+    QLabel,
+    QHBoxLayout,
+    QTimeEdit,
+)
 
 from lisp.application import Application
 from lisp.core.properties import Property
@@ -33,14 +37,15 @@ from lisp.ui.ui_utils import translate
 
 
 class SeekCue(Cue):
-    Name = QT_TRANSLATE_NOOP('CueName', 'Seek Cue')
+    Name = QT_TRANSLATE_NOOP("CueName", "Seek Cue")
+    Category = QT_TRANSLATE_NOOP("CueCategory", "Action cues")
 
     target_id = Property()
     time = Property(default=-1)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.name = translate('CueName', self.Name)
+        self.name = translate("CueName", self.Name)
 
     def __start__(self, fade=False):
         cue = Application().cue_model.get(self.target_id)
@@ -51,7 +56,7 @@ class SeekCue(Cue):
 
 
 class SeekCueSettings(SettingsPage):
-    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Seek Settings')
+    Name = QT_TRANSLATE_NOOP("SettingsPageName", "Seek Settings")
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -61,7 +66,8 @@ class SeekCueSettings(SettingsPage):
         self.cue_id = -1
 
         self.cueDialog = CueSelectDialog(
-            cues=Application().cue_model.filter(MediaCue), parent=self)
+            cues=Application().cue_model.filter(MediaCue), parent=self
+        )
 
         self.cueGroup = QGroupBox(self)
         self.cueGroup.setLayout(QVBoxLayout())
@@ -80,7 +86,7 @@ class SeekCueSettings(SettingsPage):
         self.layout().addWidget(self.seekGroup)
 
         self.seekEdit = QTimeEdit(self.seekGroup)
-        self.seekEdit.setDisplayFormat('HH.mm.ss.zzz')
+        self.seekEdit.setDisplayFormat("HH.mm.ss.zzz")
         self.seekGroup.layout().addWidget(self.seekEdit)
 
         self.seekLabel = QLabel(self.seekGroup)
@@ -90,20 +96,21 @@ class SeekCueSettings(SettingsPage):
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.cueGroup.setTitle(translate('SeekCue', 'Cue'))
-        self.cueButton.setText(translate('SeekCue', 'Click to select'))
-        self.cueLabel.setText(translate('SeekCue', 'Not selected'))
-        self.seekGroup.setTitle(translate('SeekCue', 'Seek'))
-        self.seekLabel.setText(translate('SeekCue', 'Time to reach'))
+        self.cueGroup.setTitle(translate("SeekCue", "Cue"))
+        self.cueButton.setText(translate("SeekCue", "Click to select"))
+        self.cueLabel.setText(translate("SeekCue", "Not selected"))
+        self.seekGroup.setTitle(translate("SeekCue", "Seek"))
+        self.seekLabel.setText(translate("SeekCue", "Time to reach"))
 
     def select_cue(self):
-        if self.cueDialog.exec_() == self.cueDialog.Accepted:
+        if self.cueDialog.exec() == self.cueDialog.Accepted:
             cue = self.cueDialog.selected_cue()
 
             if cue is not None:
                 self.cue_id = cue.id
                 self.seekEdit.setMaximumTime(
-                    QTime.fromMSecsSinceStartOfDay(cue.media.duration))
+                    QTime.fromMSecsSinceStartOfDay(cue.media.duration)
+                )
                 self.cueLabel.setText(cue.name)
 
     def enableCheck(self, enabled):
@@ -114,20 +121,24 @@ class SeekCueSettings(SettingsPage):
         self.seekGroup.setChecked(False)
 
     def getSettings(self):
-        return {'target_id': self.cue_id,
-                'time': self.seekEdit.time().msecsSinceStartOfDay()}
+        return {
+            "target_id": self.cue_id,
+            "time": self.seekEdit.time().msecsSinceStartOfDay(),
+        }
 
     def loadSettings(self, settings):
         if settings is not None:
-            cue = Application().cue_model.get(settings.get('target_id'))
+            cue = Application().cue_model.get(settings.get("target_id"))
             if cue is not None:
-                self.cue_id = settings['target_id']
+                self.cue_id = settings["target_id"]
                 self.seekEdit.setMaximumTime(
-                    QTime.fromMSecsSinceStartOfDay(cue.media.duration))
+                    QTime.fromMSecsSinceStartOfDay(cue.media.duration)
+                )
                 self.cueLabel.setText(cue.name)
 
             self.seekEdit.setTime(
-                QTime.fromMSecsSinceStartOfDay(settings.get('time', 0)))
+                QTime.fromMSecsSinceStartOfDay(settings.get("time", 0))
+            )
 
 
 CueSettingsRegistry().add(SeekCueSettings, SeekCue)

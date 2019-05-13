@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,8 +16,15 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
-from PyQt5.QtWidgets import QVBoxLayout, QSizePolicy, QDialogButtonBox, \
-    QDialog, QAbstractItemView, QHeaderView, QTableView
+from PyQt5.QtWidgets import (
+    QVBoxLayout,
+    QSizePolicy,
+    QDialogButtonBox,
+    QDialog,
+    QAbstractItemView,
+    QHeaderView,
+    QTableView,
+)
 
 from lisp.application import Application
 from lisp.core.properties import Property
@@ -33,13 +38,14 @@ from lisp.ui.ui_utils import translate
 
 
 class CollectionCue(Cue):
-    Name = QT_TRANSLATE_NOOP('CueName', 'Collection Cue')
+    Name = QT_TRANSLATE_NOOP("CueName", "Collection Cue")
+    Category = QT_TRANSLATE_NOOP("CueCategory", "Action cues")
 
     targets = Property(default=[])
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.name = translate('CueName', self.Name)
+        self.name = translate("CueName", self.Name)
 
     def __start__(self, fade=False):
         for target_id, action in self.targets:
@@ -51,7 +57,7 @@ class CollectionCue(Cue):
 
 
 class CollectionCueSettings(SettingsPage):
-    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Edit Collection')
+    Name = QT_TRANSLATE_NOOP("SettingsPageName", "Edit Collection")
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -59,30 +65,36 @@ class CollectionCueSettings(SettingsPage):
 
         self.cue_dialog = CueSelectDialog(
             cues=Application().cue_model,
-            selection_mode=QAbstractItemView.ExtendedSelection)
+            selection_mode=QAbstractItemView.ExtendedSelection,
+        )
 
         self.collectionModel = CollectionModel()
-        self.collectionView = CollectionView(self.cue_dialog, parent=self)
+        self.collectionView = CollectionView(
+            Application().cue_model, self.cue_dialog, parent=self
+        )
         self.collectionView.setModel(self.collectionModel)
         self.collectionView.setAlternatingRowColors(True)
         self.layout().addWidget(self.collectionView)
 
         # Buttons
         self.dialogButtons = QDialogButtonBox(self)
-        self.dialogButtons.setSizePolicy(QSizePolicy.Minimum,
-                                         QSizePolicy.Minimum)
+        self.dialogButtons.setSizePolicy(
+            QSizePolicy.Minimum, QSizePolicy.Minimum
+        )
         self.layout().addWidget(self.dialogButtons)
 
         self.addButton = self.dialogButtons.addButton(
-            translate('CollectionCue', 'Add'), QDialogButtonBox.ActionRole)
+            translate("CollectionCue", "Add"), QDialogButtonBox.ActionRole
+        )
         self.addButton.clicked.connect(self._add_dialog)
 
         self.delButton = self.dialogButtons.addButton(
-            translate('CollectionCue', 'Remove'), QDialogButtonBox.ActionRole)
+            translate("CollectionCue", "Remove"), QDialogButtonBox.ActionRole
+        )
         self.delButton.clicked.connect(self._remove_selected)
 
     def loadSettings(self, settings):
-        for target_id, action in settings.get('targets', []):
+        for target_id, action in settings.get("targets", []):
             target = Application().cue_model.get(target_id)
             if target is not None:
                 self._add_cue(target, CueAction(action))
@@ -92,14 +104,14 @@ class CollectionCueSettings(SettingsPage):
         for target_id, action in self.collectionModel.rows:
             targets.append((target_id, action.value))
 
-        return {'targets': targets}
+        return {"targets": targets}
 
     def _add_cue(self, cue, action):
         self.collectionModel.appendRow(cue.__class__, cue.id, action)
         self.cue_dialog.remove_cue(cue)
 
     def _add_dialog(self):
-        if self.cue_dialog.exec_() == QDialog.Accepted:
+        if self.cue_dialog.exec() == QDialog.Accepted:
             for target in self.cue_dialog.selected_cues():
                 self._add_cue(target, target.CueActions[0])
 
@@ -112,7 +124,7 @@ class CollectionCueSettings(SettingsPage):
 
 
 class CollectionView(QTableView):
-    def __init__(self, cue_select, **kwargs):
+    def __init__(self, cue_model, cue_select, **kwargs):
         super().__init__(**kwargs)
 
         self.setSelectionBehavior(QTableView.SelectRows)
@@ -129,8 +141,8 @@ class CollectionView(QTableView):
         self.verticalHeader().setHighlightSections(False)
 
         self.delegates = [
-            CueSelectionDelegate(cue_select),
-            CueActionDelegate()
+            CueSelectionDelegate(cue_model, cue_select),
+            CueActionDelegate(),
         ]
 
         for column, delegate in enumerate(self.delegates):
@@ -140,8 +152,12 @@ class CollectionView(QTableView):
 class CollectionModel(SimpleCueListModel):
     def __init__(self):
         # NOTE: The model does fixed-indices operations based on this list
-        super().__init__([translate('CollectionCue', 'Cue'),
-                          translate('CollectionCue', 'Action')])
+        super().__init__(
+            [
+                translate("CollectionCue", "Cue"),
+                translate("CollectionCue", "Action"),
+            ]
+        )
 
     def setData(self, index, value, role=Qt.DisplayRole):
         result = super().setData(index, value, role)
@@ -149,9 +165,11 @@ class CollectionModel(SimpleCueListModel):
         if result and role == CueClassRole:
             if self.rows[index.row()][1] not in value.CueActions:
                 self.rows[index.row()][1] = value.CueActions[0]
-                self.dataChanged.emit(self.index(index.row(), 1),
-                                      self.index(index.row(), 1),
-                                      [Qt.DisplayRole, Qt.EditRole])
+                self.dataChanged.emit(
+                    self.index(index.row(), 1),
+                    self.index(index.row(), 1),
+                    [Qt.DisplayRole, Qt.EditRole],
+                )
 
         return result
 

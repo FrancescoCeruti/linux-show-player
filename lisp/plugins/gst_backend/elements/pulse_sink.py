@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,13 +25,13 @@ from lisp.plugins.gst_backend.gst_element import GstMediaElement
 class PulseSink(GstMediaElement):
     ElementType = ElementType.Output
     MediaType = MediaType.Audio
-    Name = QT_TRANSLATE_NOOP('MediaElementName', 'PulseAudio Out')
+    Name = QT_TRANSLATE_NOOP("MediaElementName", "PulseAudio Out")
 
     def __init__(self, pipeline):
         super().__init__(pipeline)
 
-        self.pulse_sink = Gst.ElementFactory.make('pulsesink', 'sink')
-        self.pulse_sink.set_property('client-name', 'Linux Show Player')
+        self.pulse_sink = Gst.ElementFactory.make("pulsesink", "sink")
+        self.pulse_sink.set_property("client-name", "Linux Show Player")
 
         self.pipeline.add(self.pulse_sink)
 

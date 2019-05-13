@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,7 +19,6 @@ from PyQt5.QtWidgets import QTimeEdit
 
 
 class QStepTimeEdit(QTimeEdit):
-
     def __init__(self, parent=None, **kwargs):
         super().__init__(parent, **kwargs)
 
@@ -29,9 +26,9 @@ class QStepTimeEdit(QTimeEdit):
 
     def setSectionStep(self, section, step):
         if not isinstance(section, QTimeEdit.Section):
-            raise AttributeError('Not a QTimeEdit.Section')
+            raise AttributeError("Not a QTimeEdit.Section")
         if step <= 0:
-            raise AttributeError('Step value must be >= 0')
+            raise AttributeError("Step value must be >= 0")
 
         self._sections_steps[section] = step
 

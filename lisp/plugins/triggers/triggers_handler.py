@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,10 +24,10 @@ from lisp.cues.cue import CueAction
 
 
 class CueTriggers(Enum):
-    Started = QT_TRANSLATE_NOOP('CueTriggers', 'Started')
-    Paused = QT_TRANSLATE_NOOP('CueTriggers', 'Paused')
-    Stopped = QT_TRANSLATE_NOOP('CueTriggers', 'Stopped')
-    Ended = QT_TRANSLATE_NOOP('CueTriggers', 'Ended')
+    Started = QT_TRANSLATE_NOOP("CueTriggers", "Started")
+    Paused = QT_TRANSLATE_NOOP("CueTriggers", "Paused")
+    Stopped = QT_TRANSLATE_NOOP("CueTriggers", "Stopped")
+    Ended = QT_TRANSLATE_NOOP("CueTriggers", "Ended")
 
 
 class CueHandler:

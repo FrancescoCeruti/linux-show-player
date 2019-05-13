@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
+ * Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
  *
  * This file is part of LiSP (Linux Show Player).
  *
@@ -54,7 +54,7 @@ QProgressBar {
 
 QProgressBar:horizontal {
     text-align: center;
-    border: 1px solid #3A3A3A;
+    border: 1px solid #3C3C3C;
     background: #202020;
 }
 
@@ -85,7 +85,7 @@ QMenuBar:item:selected {
 }
 
 QMenuBar:item:pressed {
-    border: 1px solid #3A3A3A;
+    border: 1px solid #3C3C3C;
     background-color: #419BE6;
     color: black;
     margin-bottom:-1px;
@@ -93,7 +93,7 @@ QMenuBar:item:pressed {
 }
 
 QMenu {
-    border: 1px solid #3A3A3A;
+    border: 1px solid #3C3C3C;
     color: white;
 }
 
@@ -124,13 +124,13 @@ QTabWidget:focus, QCheckBox:focus, QRadioButton:focus {
 QLineEdit {
     background-color: #202020;
     padding: 2px;
-    border: 1px solid #3A3A3A;
+    border: 1px solid #3C3C3C;
     border-radius: 3px;
     color: white;
 }
 
 QGroupBox {
-    border: 1px solid #363636;
+    border: 1px solid #414141;
     border-radius: 2px;
     margin-top: 2ex; /* NOT px */
 }
@@ -145,7 +145,7 @@ QGroupBox:title {
 QAbstractScrollArea {
     color: white;
     background-color: #202020;
-    border: 1px solid #3A3A3A;
+    border: 1px solid #3C3C3C;
     border-radius: 3px;
 }
 
@@ -164,7 +164,7 @@ QScrollBar:add-page, QScrollBar:sub-page {
 QScrollBar:horizontal {
     height: 12px;
     margin: 0px;
-    border: 1px solid #3A3A3A;
+    border: 1px solid #3C3C3C;
     border-radius: 6px;
     background-color: QLinearGradient( x1: 0, y1: 1, x2: 0, y2: 0, stop: 0 #333, stop: 1 #484846);
 }
@@ -179,7 +179,7 @@ QScrollBar:vertical {
     background-color: QLinearGradient( x1: 1, y1: 0, x2: 0, y2: 0, stop: 0 #333, stop: 1 #484846);
     width: 12px;
     margin: 0px;
-    border: 1px solid #3A3A3A;
+    border: 1px solid #3C3C3C;
     border-radius: 6px;
 }
 
@@ -191,6 +191,9 @@ QScrollBar:handle:vertical {
 
 QTextEdit[readOnly="true"] {
     background-color: #333;
+}
+
+QTextBrowser[readOnly="true"] {
     border: none;
 }
 
@@ -246,7 +249,7 @@ QMainWindow:separator:hover {
     background-color: QLinearGradient(x1:0, y1:0, x2:0, y2:1, stop:0 #58677b, stop:0.5 #419BE6 stop:1 #58677b);
     color: white;
     padding-left: 4px;
-    border: 1px solid #3A3A3A;
+    border: 1px solid #3C3C3C;
     spacing: 2px;
 }
 
@@ -282,12 +285,16 @@ QToolBar:separator:vertical {
     image: url(:/assets/Vsepartoolbars.png);
 }
 
+QToolButton {
+    padding: 1px;
+}
+
 QPushButton {
     color: white;
     background-color: QLinearGradient( x1: 0, y1: 1, x2: 0, y2: 0, stop: 0 #333, stop: 1 #444);
-    border: 1px solid #262626;
+    border: 1px solid #202020;
     border-radius: 4px;
-    padding: 3px;
+    padding: 4px;
     padding-left: 5px;
     padding-right: 5px;
 }
@@ -300,15 +307,18 @@ QPushButton:pressed {
     background: #35393d;
 }
 
+
+QLineEdit:focus,
 QComboBox:focus,
-QPushButton:focus {
+QPushButton:focus
+QAbstractSpinBox:focus {
     border: 1px solid #419BE6;
 }
 
 QComboBox {
     background-color: #202020;
     border-style: solid;
-    border: 1px solid #3A3A3A;
+    border: 1px solid #3C3C3C;
     border-radius: 3px;
     padding: 2px;
 }
@@ -340,7 +350,7 @@ QAbstractSpinBox {
     padding-top: 2px;
     padding-bottom: 2px;
     padding-right: 25px;
-    border: 1px solid #3A3A3A;
+    border: 1px solid #3C3C3C;
     background-color: #202020;
     border-radius: 3px;
     color: white;
@@ -437,6 +447,10 @@ QTabBar::tab:selected:focus {
     border-top-color: #419BE6;
 }
 
+QTabBar QToolButton {
+    border: 1px solid #3C3C3C;
+}
+
 QDockWidget {
     color: white;
     titlebar-close-icon: url(:/assets/close.png);
@@ -444,7 +458,7 @@ QDockWidget {
 }
 
 QDockWidget:title {
-    border: 1px solid #3A3A3A;
+    border: 1px solid #3C3C3C;
     border-bottom: #333;
     text-align: left;
     spacing: 2px;
@@ -475,7 +489,7 @@ QDockWidget:close-button:pressed, QDockWidget:float-button:pressed {
 }
 
 QTreeView, QListView, QTableView {
-    border: 1px solid #3A3A3A;
+    border: 1px solid #3C3C3C;
     background-color: #202020;
 }
 
@@ -505,9 +519,8 @@ QSlider:disabled {
     background: none;
 }
 
-
 QSlider:groove {
-    border: 1px solid #3A3A3A;
+    border: 1px solid #3C3C3C;
     border-radius: 1px;
     background: #202020;
 }
@@ -636,7 +649,7 @@ QRadioButton:indicator:checked:disabled {
 
 #CartTabBar::tab {
     height: 35px;
-    width: 100px;
+    min-width: 100px;
     font-size: 13pt;
     font-weight: bold;
     color: white;
@@ -665,7 +678,7 @@ CueListView {
 }
 
 CueListView:focus {
-    border: 1px solid #3A3A3A;
+    border: 1px solid #3C3C3C;
 }
 
 #ListTimeWidget {
@@ -719,7 +732,7 @@ CueListView:focus {
 }
 
 #InfoPanelDescription[readOnly="true"] {
-    border: 1px solid #3A3A3A;
+    border: 1px solid #3C3C3C;
 }
 
 #VolumeSlider:sub-page:horizontal {

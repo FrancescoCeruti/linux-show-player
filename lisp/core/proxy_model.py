@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,6 +18,7 @@
 from abc import abstractmethod
 
 from lisp.core.model import Model, ModelException
+from lisp.core.util import typename
 
 
 class ABCProxyModel(Model):
@@ -28,8 +27,9 @@ class ABCProxyModel(Model):
 
         if not isinstance(model, Model):
             raise TypeError(
-                'ProxyModel model must be a Model object, not {0}'.format(
-                    typename(model))
+                "ProxyModel model must be a Model object, not {0}".format(
+                    typename(model)
+                )
             )
 
         self._model = model
@@ -55,13 +55,13 @@ class ABCProxyModel(Model):
 
 
 class ProxyModel(ABCProxyModel):
-    """Proxy that wrap a more generic model to extend its functionality.
+    """Proxy that wrap another model to extend its functionality.
 
-    The add, remove, __iter__, __len__ and __contains__ default implementations
-    use the the model ones.
+    The default implementations of `add`, `remove`, `__iter__`, `__len__` and
+    `__contains__` fallback on the wrapped model.
 
     .. note:
-        The base model cannot be changed.
+        The wrapped model should not be changed.
         Any ProxyModel could provide it's own methods/signals.
     """
 
@@ -86,10 +86,10 @@ class ProxyModel(ABCProxyModel):
 
 class ReadOnlyProxyModel(ProxyModel):
     def add(self, item):
-        raise ModelException('cannot add items into a read-only model')
+        raise ModelException("cannot add items into a read-only model")
 
     def remove(self, item):
-        raise ModelException('cannot remove items from a read-only model')
+        raise ModelException("cannot remove items from a read-only model")
 
     def reset(self):
-        raise ModelException('cannot reset read-only model')
+        raise ModelException("cannot reset read-only model")

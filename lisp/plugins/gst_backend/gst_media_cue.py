@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -33,10 +31,9 @@ class GstMediaCue(MediaCue):
 
 
 class GstCueFactory:
-
     def __init__(self, base_pipeline):
         self.base_pipeline = base_pipeline
-        self.input = ''
+        self.input = ""
 
     def __call__(self, id=None):
         return GstMediaCue(GstMedia(), id=id, pipeline=self.pipeline())
@@ -47,10 +44,9 @@ class GstCueFactory:
 
 
 class UriAudioCueFactory(GstCueFactory):
-
     def __init__(self, base_pipeline):
         super().__init__(base_pipeline)
-        self.input = 'UriInput'
+        self.input = "UriInput"
 
     def __call__(self, id=None, uri=None):
         cue = super().__call__(id=id)
@@ -67,4 +63,4 @@ class UriAudioCueFactory(GstCueFactory):
 class CaptureAudioCueFactory(GstCueFactory):
     def __init__(self, base_pipeline):
         super().__init__(base_pipeline)
-        self.input = 'AutoSrc'
+        self.input = "AutoSrc"

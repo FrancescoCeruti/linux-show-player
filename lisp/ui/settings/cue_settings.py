@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,17 +22,12 @@ from lisp.core.class_based_registry import ClassBasedRegistry
 from lisp.core.singleton import Singleton
 from lisp.core.util import typename
 from lisp.cues.cue import Cue
-from lisp.ui.settings.pages import SettingsPage, CuePageMixin, \
-    TabsMultiSettingsPage
+from lisp.ui.settings.pages import CuePageMixin, SettingsPagesTabWidget
 from lisp.ui.ui_utils import translate
 
 
 class CueSettingsRegistry(ClassBasedRegistry, metaclass=Singleton):
     def add(self, item, ref_class=Cue):
-        if not issubclass(item, SettingsPage):
-            raise TypeError(
-                'item must be a SettingPage, not {}'.format(item.__name__))
-
         return super().add(item, ref_class)
 
     def filter(self, ref_class=Cue):
@@ -58,6 +51,7 @@ class CueSettingsDialog(QDialog):
         self.setMinimumSize(640, 510)
         self.resize(640, 510)
         self.setLayout(QVBoxLayout())
+        # self.layout().setContentsMargins(5, 5, 5, 10)
 
         if isinstance(cue, type):
             if issubclass(cue, Cue):
@@ -65,8 +59,8 @@ class CueSettingsDialog(QDialog):
                 cue_class = cue
             else:
                 raise TypeError(
-                    'invalid cue type, must be a Cue subclass or a Cue object, '
-                    'not {}'.format(cue.__name__)
+                    "invalid cue type, must be a Cue subclass or a Cue object, "
+                    "not {}".format(cue.__name__)
                 )
         elif isinstance(cue, Cue):
             self.setWindowTitle(cue.name)
@@ -74,16 +68,17 @@ class CueSettingsDialog(QDialog):
             cue_class = cue.__class__
         else:
             raise TypeError(
-                'invalid cue type, must be a Cue subclass or a Cue object, '
-                'not {}'.format(typename(cue))
+                "invalid cue type, must be a Cue subclass or a Cue object, "
+                "not {}".format(typename(cue))
             )
 
-        self.mainPage = TabsMultiSettingsPage(parent=self)
+        self.mainPage = SettingsPagesTabWidget(parent=self)
+        self.mainPage.layout().setContentsMargins(0, 0, 0, 0)
         self.layout().addWidget(self.mainPage)
 
         def sk(widget):
             # Sort-Key function
-            return translate('SettingsPageName', widget.Name)
+            return translate("SettingsPageName", widget.Name)
 
         for page in sorted(CueSettingsRegistry().filter(cue_class), key=sk):
             if issubclass(page, CuePageMixin):
@@ -97,18 +92,21 @@ class CueSettingsDialog(QDialog):
 
         self.dialogButtons = QDialogButtonBox(self)
         self.dialogButtons.setStandardButtons(
-            QDialogButtonBox.Cancel |
-            QDialogButtonBox.Apply |
-            QDialogButtonBox.Ok
+            QDialogButtonBox.Cancel
+            | QDialogButtonBox.Apply
+            | QDialogButtonBox.Ok
         )
         self.layout().addWidget(self.dialogButtons)
 
         self.dialogButtons.button(QDialogButtonBox.Cancel).clicked.connect(
-            self.reject)
+            self.reject
+        )
         self.dialogButtons.button(QDialogButtonBox.Apply).clicked.connect(
-            self.__onApply)
+            self.__onApply
+        )
         self.dialogButtons.button(QDialogButtonBox.Ok).clicked.connect(
-            self.__onOk)
+            self.__onOk
+        )
 
     def loadSettings(self, settings):
         self.mainPage.loadSettings(settings)

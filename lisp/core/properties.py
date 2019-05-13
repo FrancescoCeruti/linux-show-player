@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -106,7 +104,8 @@ class InstanceProperty:
     To be used an InstanceProperty should be used in combination of an
     HasInstanceProperties object.
     """
-    __slots__ = ('value', 'default')
+
+    __slots__ = ("value", "default")
 
     def __init__(self, default=None):
         self.value = default

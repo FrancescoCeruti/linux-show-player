@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,8 +20,7 @@ from functools import wraps, partial
 from threading import Thread, Lock, RLock
 
 
-# TODO: rename to ensure compatibility with Python 3.7
-def async(target):
+def async_function(target):
     """Decorator. Make a function asynchronous.
 
     The decorated function is executed in a differed thread.
@@ -75,8 +72,9 @@ def locked_function(target=None, *, lock=None, blocking=True, timeout=-1):
 
     # If called with (keywords) arguments
     if target is None:
-        return partial(locked_function, lock=lock, blocking=blocking,
-                       timeout=timeout)
+        return partial(
+            locked_function, lock=lock, blocking=blocking, timeout=timeout
+        )
 
     if lock is None:
         target.__lock__ = RLock()
@@ -100,7 +98,7 @@ def locked_function(target=None, *, lock=None, blocking=True, timeout=-1):
 
 
 def locked_method(target=None, *, blocking=True, timeout=-1):
-    """Decorator. Make a *method* synchronized.
+    """Decorator. Make a *method* "synchronized".
 
     Only one thread at time can access the decorated method.
 
@@ -114,7 +112,7 @@ def locked_method(target=None, *, blocking=True, timeout=-1):
         return partial(locked_method, blocking=blocking, timeout=timeout)
 
     # generate a lock_name like "__method_name_lock__"
-    lock_name = '__' + target.__name__ + '_lock__'
+    lock_name = "__" + target.__name__ + "_lock__"
     target.__meta_lock__ = Lock()
 
     @wraps(target)
@@ -155,7 +153,7 @@ def suppress_exceptions(target=None, *, log=True):
         try:
             return target(*args, **kwargs)
         except Exception:
-            logging.warning('Exception suppressed.', exc_info=True)
+            logging.warning("Exception suppressed.", exc_info=True)
 
     return wrapped
 

@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -61,8 +59,8 @@ class SpeedSettings(SettingsPage):
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.groupBox.setTitle(translate('SpeedSettings', 'Speed'))
-        self.speedLabel.setText('1.0')
+        self.groupBox.setTitle(translate("SpeedSettings", "Speed"))
+        self.speedLabel.setText("1.0")
 
     def enableCheck(self, enabled):
         self.groupBox.setCheckable(enabled)
@@ -70,12 +68,12 @@ class SpeedSettings(SettingsPage):
 
     def getSettings(self):
         if not (self.groupBox.isCheckable() and not self.groupBox.isChecked()):
-            return {'speed': self.speedSlider.value() / 100}
+            return {"speed": self.speedSlider.value() / 100}
 
         return {}
 
     def loadSettings(self, settings):
-        self.speedSlider.setValue(settings.get('speed', 1) * 100)
+        self.speedSlider.setValue(settings.get("speed", 1) * 100)
 
     def speedChanged(self, value):
         self.speedLabel.setText(str(value / 100.0))

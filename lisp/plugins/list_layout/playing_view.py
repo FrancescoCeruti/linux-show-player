@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,21 +23,25 @@ from lisp.plugins.list_layout.playing_widgets import get_running_widget
 
 
 class RunningCuesListWidget(QListWidget):
-
-    def __init__(self, running_model, **kwargs):
+    def __init__(self, running_model, config, **kwargs):
         super().__init__(**kwargs)
         self.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.setFocusPolicy(Qt.NoFocus)
         self.setSelectionMode(self.NoSelection)
 
+        self._config = config
+
         self._running_cues = {}
         self._running_model = running_model
         self._running_model.item_added.connect(
-            self._item_added, Connection.QtQueued)
+            self._item_added, Connection.QtQueued
+        )
         self._running_model.item_removed.connect(
-            self._item_removed, Connection.QtQueued)
+            self._item_removed, Connection.QtQueued
+        )
         self._running_model.model_reset.connect(
-            self._model_reset, Connection.QtQueued)
+            self._model_reset, Connection.QtQueued
+        )
 
         self.__dbmeter_visible = False
         self.__seek_visible = False
@@ -82,7 +84,7 @@ class RunningCuesListWidget(QListWidget):
             self.itemWidget(item).set_accurate_time(accurate)
 
     def _item_added(self, cue):
-        widget = get_running_widget(cue, parent=self)
+        widget = get_running_widget(cue, self._config, parent=self)
         widget.set_accurate_time(self.__accurate_time)
         try:
             widget.set_dbmeter_visible(self.__dbmeter_visible)

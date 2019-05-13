@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -28,9 +26,9 @@ from lisp.plugins.gst_backend.gst_element import GstMediaElement
 class UserElement(GstMediaElement):
     ElementType = ElementType.Plugin
     MediaType = MediaType.Audio
-    Name = QT_TRANSLATE_NOOP('MediaElementName', 'Custom Element')
+    Name = QT_TRANSLATE_NOOP("MediaElementName", "Custom Element")
 
-    bin = Property(default='')
+    bin = Property(default="")
 
     def __init__(self, pipeline):
         super().__init__(pipeline)
@@ -50,7 +48,7 @@ class UserElement(GstMediaElement):
         self.gst_bin.link(self.audio_convert_src)
 
         self._old_bin = self.gst_bin
-        self.changed('bin').connect(self.__prepare_bin)
+        self.changed("bin").connect(self.__prepare_bin)
 
     def sink(self):
         return self.audio_convert_sink
@@ -59,7 +57,7 @@ class UserElement(GstMediaElement):
         return self.audio_convert_src
 
     def __prepare_bin(self, value):
-        if value != '' and value != self._old_bin:
+        if value != "" and value != self._old_bin:
             self._old_bin = value
 
             # If in playing we need to restart the pipeline after unblocking

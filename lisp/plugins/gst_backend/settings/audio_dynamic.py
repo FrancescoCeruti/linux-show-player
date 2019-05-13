@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,14 +19,20 @@ import math
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QGroupBox, QGridLayout, QComboBox, QDoubleSpinBox, \
-    QLabel, QVBoxLayout
+from PyQt5.QtWidgets import (
+    QGroupBox,
+    QGridLayout,
+    QComboBox,
+    QDoubleSpinBox,
+    QLabel,
+    QVBoxLayout,
+)
 
 from lisp.plugins.gst_backend.elements.audio_dynamic import AudioDynamic
 from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.ui_utils import translate
 
-MIN_dB = 0.000000312  # -100dB
+MIN_dB = 0.000_000_312  # -100dB
 
 
 class AudioDynamicSettings(SettingsPage):
@@ -48,9 +52,11 @@ class AudioDynamicSettings(SettingsPage):
         # AudioDynamic mode
         self.modeComboBox = QComboBox(self.groupBox)
         self.modeComboBox.addItem(
-            translate('AudioDynamicSettings', 'Compressor'), 'compressor')
+            translate("AudioDynamicSettings", "Compressor"), "compressor"
+        )
         self.modeComboBox.addItem(
-            translate('AudioDynamicSettings', 'Expander'), 'expander')
+            translate("AudioDynamicSettings", "Expander"), "expander"
+        )
         self.groupBox.layout().addWidget(self.modeComboBox, 0, 0, 1, 1)
 
         self.modeLabel = QLabel(self.groupBox)
@@ -60,9 +66,11 @@ class AudioDynamicSettings(SettingsPage):
         # AudioDynamic characteristic
         self.chComboBox = QComboBox(self.groupBox)
         self.chComboBox.addItem(
-            translate('AudioDynamicSettings', 'Soft Knee'), 'soft-knee')
+            translate("AudioDynamicSettings", "Soft Knee"), "soft-knee"
+        )
         self.chComboBox.addItem(
-            translate('AudioDynamicSettings', 'Hard Knee'), 'hard-knee')
+            translate("AudioDynamicSettings", "Hard Knee"), "hard-knee"
+        )
         self.groupBox.layout().addWidget(self.chComboBox, 1, 0, 1, 1)
 
         self.chLabel = QLabel(self.groupBox)
@@ -92,12 +100,14 @@ class AudioDynamicSettings(SettingsPage):
 
     def retranslateUi(self):
         self.groupBox.setTitle(
-            translate('AudioDynamicSettings', 'Compressor/Expander'))
-        self.modeLabel.setText(translate('AudioDynamicSettings', 'Type'))
-        self.chLabel.setText(translate('AudioDynamicSettings', 'Curve Shape'))
-        self.ratioLabel.setText(translate('AudioDynamicSettings', 'Ratio'))
+            translate("AudioDynamicSettings", "Compressor/Expander")
+        )
+        self.modeLabel.setText(translate("AudioDynamicSettings", "Type"))
+        self.chLabel.setText(translate("AudioDynamicSettings", "Curve Shape"))
+        self.ratioLabel.setText(translate("AudioDynamicSettings", "Ratio"))
         self.thresholdLabel.setText(
-            translate('AudioDynamicSettings', 'Threshold (dB)'))
+            translate("AudioDynamicSettings", "Threshold (dB)")
+        )
 
     def enableCheck(self, enabled):
         self.groupBox.setCheckable(enabled)
@@ -107,25 +117,31 @@ class AudioDynamicSettings(SettingsPage):
         settings = {}
 
         if not (self.groupBox.isCheckable() and not self.groupBox.isChecked()):
-            settings['ratio'] = self.ratioSpin.value()
-            settings['threshold'] = math.pow(10,
-                                             self.thresholdSpin.value() / 20)
+            settings["ratio"] = self.ratioSpin.value()
+            settings["threshold"] = math.pow(
+                10, self.thresholdSpin.value() / 20
+            )
 
-            settings['mode'] = self.modeComboBox.currentData()
-            settings['characteristics'] = self.chComboBox.currentData()
+            settings["mode"] = self.modeComboBox.currentData()
+            settings["characteristics"] = self.chComboBox.currentData()
 
         return settings
 
     def loadSettings(self, settings):
         self.modeComboBox.setCurrentText(
-            translate('AudioDynamicSettings',
-                      settings.get('mode', 'compressor')))
+            translate(
+                "AudioDynamicSettings", settings.get("mode", "compressor")
+            )
+        )
         self.chComboBox.setCurrentText(
-            translate('AudioDynamicSettings',
-                      settings.get('characteristics', 'soft-knee')))
+            translate(
+                "AudioDynamicSettings",
+                settings.get("characteristics", "soft-knee"),
+            )
+        )
 
-        if settings.get('threshold', 0) == 0:
-            settings['threshold'] = MIN_dB
+        if settings.get("threshold", 0) == 0:
+            settings["threshold"] = MIN_dB
 
-        self.thresholdSpin.setValue(20 * math.log10(settings['threshold']))
-        self.ratioSpin.setValue(settings.get('ratio', 1))
+        self.thresholdSpin.setValue(20 * math.log10(settings["threshold"]))
+        self.ratioSpin.setValue(settings.get("ratio", 1))
