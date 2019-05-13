@@ -17,14 +17,19 @@
       <translation>مفتاح</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/keyboard.py" line="53"/>
+      <location filename="../../../plugins/controller/protocols/keyboard.py" line="55"/>
       <source>Action</source>
       <translation>الإجراءات</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/keyboard.py" line="76"/>
+      <location filename="../../../plugins/controller/protocols/keyboard.py" line="78"/>
       <source>Shortcuts</source>
       <translation>الاختصارات</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/controller/protocols/keyboard.py" line="55"/>
+      <source>Shortcut</source>
+      <translation type="unfinished">Shortcut</translation>
     </message>
   </context>
   <context>
@@ -78,52 +83,52 @@
   <context>
     <name>ControllerOscSettings</name>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="137"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="138"/>
       <source>OSC Message</source>
       <translation type="unfinished">OSC Message</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="188"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="189"/>
       <source>OSC</source>
       <translation>OSC</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="192"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="193"/>
       <source>Path</source>
       <translation>المسار</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="192"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="193"/>
       <source>Types</source>
       <translation>الأنواع</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="192"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="193"/>
       <source>Arguments</source>
       <translation>الحجج</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="192"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="193"/>
       <source>Actions</source>
       <translation>الاجراءت</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="221"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="222"/>
       <source>OSC Capture</source>
       <translation>التقاط OSC</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="250"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="251"/>
       <source>Add</source>
       <translation>أضف</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="251"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="252"/>
       <source>Remove</source>
       <translation>احذف</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="252"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="253"/>
       <source>Capture</source>
       <translation type="unfinished">Capture</translation>
     </message>
@@ -131,12 +136,12 @@
   <context>
     <name>ControllerSettings</name>
     <message>
-      <location filename="../../../plugins/controller/protocols/keyboard.py" line="77"/>
+      <location filename="../../../plugins/controller/protocols/keyboard.py" line="79"/>
       <source>Add</source>
       <translation>أضف</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/keyboard.py" line="78"/>
+      <location filename="../../../plugins/controller/protocols/keyboard.py" line="80"/>
       <source>Remove</source>
       <translation>احذف</translation>
     </message>
@@ -144,52 +149,52 @@
   <context>
     <name>GlobalAction</name>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="40"/>
+      <location filename="../../../plugins/controller/common.py" line="41"/>
       <source>Go</source>
       <translation>إبدأ</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="41"/>
+      <location filename="../../../plugins/controller/common.py" line="42"/>
       <source>Reset</source>
       <translation>إعادة ضبط</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="42"/>
+      <location filename="../../../plugins/controller/common.py" line="43"/>
       <source>Stop all cues</source>
       <translation>إيقاف كل الأغاني</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="43"/>
+      <location filename="../../../plugins/controller/common.py" line="44"/>
       <source>Pause all cues</source>
       <translation type="unfinished">Pause all cues</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="44"/>
+      <location filename="../../../plugins/controller/common.py" line="45"/>
       <source>Resume all cues</source>
       <translation type="unfinished">Resume all cues</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="47"/>
+      <location filename="../../../plugins/controller/common.py" line="48"/>
       <source>Interrupt all cues</source>
       <translation>قطع كل الأغاني</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="50"/>
+      <location filename="../../../plugins/controller/common.py" line="51"/>
       <source>Fade-out all cues</source>
       <translation type="unfinished">Fade-out all cues</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="53"/>
+      <location filename="../../../plugins/controller/common.py" line="54"/>
       <source>Fade-in all cues</source>
       <translation type="unfinished">Fade-in all cues</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="56"/>
+      <location filename="../../../plugins/controller/common.py" line="57"/>
       <source>Move standby forward</source>
       <translation type="unfinished">Move standby forward</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="59"/>
+      <location filename="../../../plugins/controller/common.py" line="60"/>
       <source>Move standby back</source>
       <translation type="unfinished">Move standby back</translation>
     </message>
@@ -197,12 +202,12 @@
   <context>
     <name>Osc Cue</name>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="73"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="74"/>
       <source>Type</source>
       <translation>النوع</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="73"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="74"/>
       <source>Argument</source>
       <translation>الحجج</translation>
     </message>
@@ -210,12 +215,12 @@
   <context>
     <name>OscCue</name>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="146"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="147"/>
       <source>Add</source>
       <translation>أضف</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="147"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="148"/>
       <source>Remove</source>
       <translation>احذف</translation>
     </message>
@@ -233,12 +238,12 @@
       <translation type="unfinished">MIDI Controls</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/keyboard.py" line="42"/>
+      <location filename="../../../plugins/controller/protocols/keyboard.py" line="44"/>
       <source>Keyboard Shortcuts</source>
       <translation>اختصارات لوحة المفاتيح</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="180"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="181"/>
       <source>OSC Controls</source>
       <translation>ضوابط OSC</translation>
     </message>
