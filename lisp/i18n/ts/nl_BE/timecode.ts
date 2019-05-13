@@ -6,12 +6,12 @@
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="108"/>
       <source>Timecode Settings</source>
-      <translation type="unfinished">Timecode Settings</translation>
+      <translation>tijdscode Instellingen</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="38"/>
       <source>Timecode</source>
-      <translation type="unfinished">Timecode</translation>
+      <translation>tijdscode</translation>
     </message>
   </context>
   <context>
@@ -35,17 +35,17 @@
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="141"/>
       <source>Timecode Format:</source>
-      <translation type="unfinished">Timecode Format:</translation>
+      <translation>tijdscode Formaat</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="80"/>
       <source>Replace HOURS by a static track number</source>
-      <translation type="unfinished">Replace HOURS by a static track number</translation>
+      <translation>Vervang UREN door een statisch tracknummer</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="88"/>
       <source>Track number</source>
-      <translation type="unfinished">Track number</translation>
+      <translation>Tracknummer</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="85"/>
