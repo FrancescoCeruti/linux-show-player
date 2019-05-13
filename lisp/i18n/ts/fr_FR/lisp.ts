@@ -124,7 +124,7 @@
     <message>
       <location filename="../../../ui/settings/app_pages/general.py" line="112"/>
       <source>Language:</source>
-      <translation type="unfinished">Language:</translation>
+      <translation>Langue:</translation>
     </message>
   </context>
   <context>
@@ -165,7 +165,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_dynamic.py" line="105"/>
       <source>Type</source>
-      <translation type="unfinished">Type</translation>
+      <translation>Type</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_dynamic.py" line="106"/>
@@ -180,7 +180,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_dynamic.py" line="108"/>
       <source>Threshold (dB)</source>
-      <translation type="unfinished">Threshold (dB)</translation>
+      <translation>Seuil (dB)</translation>
     </message>
   </context>
   <context>
@@ -198,12 +198,12 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_pan.py" line="76"/>
       <source>Left</source>
-      <translation type="unfinished">Left</translation>
+      <translation>Gauche</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_pan.py" line="78"/>
       <source>Right</source>
-      <translation type="unfinished">Right</translation>
+      <translation>Droite</translation>
     </message>
   </context>
   <context>
@@ -211,7 +211,7 @@
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="81"/>
       <source>Default behaviors</source>
-      <translation type="unfinished">Default behaviors</translation>
+      <translation>Comportements par défaut</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="190"/>
@@ -231,12 +231,12 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="198"/>
       <source>Show accurate time</source>
-      <translation type="unfinished">Show accurate time</translation>
+      <translation>Afficher le temps exact</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="197"/>
       <source>Show volume</source>
-      <translation type="unfinished">Show volume</translation>
+      <translation>Afficher volume</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="89"/>
@@ -261,7 +261,7 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="161"/>
       <source>Pause</source>
-      <translation type="unfinished">Pause</translation>
+      <translation>Pause</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="161"/>
@@ -271,22 +271,22 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="174"/>
       <source>Reset volume</source>
-      <translation type="unfinished">Reset volume</translation>
+      <translation>Réinitialiser le volume</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="185"/>
       <source>Add page</source>
-      <translation type="unfinished">Add page</translation>
+      <translation>Ajouter une page</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="238"/>
       <source>Add pages</source>
-      <translation type="unfinished">Add pages</translation>
+      <translation>Ajouter des pages</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="187"/>
       <source>Remove current page</source>
-      <translation type="unfinished">Remove current page</translation>
+      <translation>Retirer la page actuelle</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="238"/>
@@ -296,7 +296,7 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="280"/>
       <source>Page {number}</source>
-      <translation type="unfinished">Page {number}</translation>
+      <translation>Page {number}</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="482"/>
@@ -311,7 +311,7 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="486"/>
       <source>Are you sure to continue?</source>
-      <translation type="unfinished">Are you sure to continue?</translation>
+      <translation>Voulez-vous vraiment continuer ?</translation>
     </message>
   </context>
   <context>
@@ -319,22 +319,22 @@
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="86"/>
       <source>Add</source>
-      <translation type="unfinished">Add</translation>
+      <translation>Ajouter</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="91"/>
       <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
+      <translation>Retirer</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="155"/>
       <source>Cue</source>
-      <translation type="unfinished">Cue</translation>
+      <translation>Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="155"/>
       <source>Action</source>
-      <translation type="unfinished">Action</translation>
+      <translation>Action</translation>
     </message>
   </context>
   <context>
@@ -342,7 +342,7 @@
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="130"/>
       <source>Command</source>
-      <translation type="unfinished">Command</translation>
+      <translation>Commande</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="131"/>
@@ -370,12 +370,12 @@
     <message>
       <location filename="../../../command/stack.py" line="32"/>
       <source>Undo: {}</source>
-      <translation type="unfinished">Undo: {}</translation>
+      <translation>Annuler: {}</translation>
     </message>
     <message>
       <location filename="../../../command/stack.py" line="33"/>
       <source>Redo: {}</source>
-      <translation type="unfinished">Redo: {}</translation>
+      <translation>Refaire: {}</translation>
     </message>
   </context>
   <context>
