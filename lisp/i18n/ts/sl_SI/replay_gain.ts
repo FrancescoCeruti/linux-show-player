@@ -4,22 +4,22 @@
   <context>
     <name>ReplayGain</name>
     <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="52"/>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="51"/>
       <source>ReplayGain / Normalization</source>
       <translation>Ojačanje predvajanja / Normalizacija</translation>
     </message>
     <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="57"/>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="56"/>
       <source>Calculate</source>
       <translation>Izračunaj</translation>
     </message>
     <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="62"/>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="61"/>
       <source>Reset all</source>
       <translation>Ponastavi vse</translation>
     </message>
     <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="67"/>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="66"/>
       <source>Reset selected</source>
       <translation>Ponastavi izbrano</translation>
     </message>
