@@ -73,27 +73,27 @@
       <translation>Habilitar modo de selección</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="123"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="125"/>
       <source>Use fade (buttons)</source>
       <translation>Usar fundido (botones)</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="126"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="128"/>
       <source>Stop Cue</source>
       <translation>Detener Cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="127"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="129"/>
       <source>Pause Cue</source>
       <translation>Pausar Cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="128"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="130"/>
       <source>Resume Cue</source>
       <translation>Reanudar Cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="129"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="131"/>
       <source>Interrupt Cue</source>
       <translation>Interrumpir Cue</translation>
     </message>
@@ -143,21 +143,6 @@
       <translation>Fundido de Entrada para Todo</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="119"/>
-      <source>GO key:</source>
-      <translation type="unfinished">GO key:</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="120"/>
-      <source>GO action:</source>
-      <translation type="unfinished">GO action:</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="121"/>
-      <source>GO delay (ms):</source>
-      <translation type="unfinished">GO delay (ms):</translation>
-    </message>
-    <message>
       <location filename="../../../plugins/list_layout/layout.py" line="139"/>
       <source>Edit selected</source>
       <translation type="unfinished">Edit selected</translation>
@@ -177,26 +162,46 @@
       <source>Remove selected</source>
       <translation type="unfinished">Remove selected</translation>
     </message>
+    <message>
+      <location filename="../../../plugins/list_layout/settings.py" line="119"/>
+      <source>GO Key:</source>
+      <translation type="unfinished">GO Key:</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/settings.py" line="120"/>
+      <source>GO Action:</source>
+      <translation type="unfinished">GO Action:</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/settings.py" line="121"/>
+      <source>GO minimum interval (ms):</source>
+      <translation type="unfinished">GO minimum interval (ms):</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/layout.py" line="363"/>
+      <source>Copy of {}</source>
+      <translation type="unfinished">Copy of {}</translation>
+    </message>
   </context>
   <context>
     <name>ListLayoutHeader</name>
     <message>
-      <location filename="../../../plugins/list_layout/list_view.py" line="73"/>
+      <location filename="../../../plugins/list_layout/list_view.py" line="74"/>
       <source>Cue</source>
       <translation>Cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/list_view.py" line="78"/>
+      <location filename="../../../plugins/list_layout/list_view.py" line="79"/>
       <source>Pre wait</source>
       <translation>Pre Espera</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/list_view.py" line="81"/>
+      <location filename="../../../plugins/list_layout/list_view.py" line="82"/>
       <source>Action</source>
       <translation>Acción</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/list_view.py" line="84"/>
+      <location filename="../../../plugins/list_layout/list_view.py" line="85"/>
       <source>Post wait</source>
       <translation>Post Espera</translation>
     </message>
