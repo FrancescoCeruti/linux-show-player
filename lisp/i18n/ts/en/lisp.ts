@@ -600,19 +600,6 @@
     </message>
 </context>
 <context>
-    <name>CueActionLog</name>
-    <message>
-        <location filename="../../../cues/cue_actions.py" line="46"/>
-        <source>Cue settings changed: &quot;{}&quot;</source>
-        <translation type="obsolete">Cue settings changed: &quot;{}&quot;</translation>
-    </message>
-    <message>
-        <location filename="../../../cues/cue_actions.py" line="75"/>
-        <source>Cues settings changed.</source>
-        <translation type="obsolete">Cues settings changed.</translation>
-    </message>
-</context>
-<context>
     <name>CueAppearanceSettings</name>
     <message>
         <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="79"/>
@@ -1101,7 +1088,7 @@
 <context>
     <name>LayoutDescription</name>
     <message>
-        <location filename="../../../plugins/list_layout/layout.py" line="42"/>
+        <location filename="../../../plugins/list_layout/layout.py" line="43"/>
         <source>Organize the cues in a list</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1114,7 +1101,7 @@
 <context>
     <name>LayoutDetails</name>
     <message>
-        <location filename="../../../plugins/list_layout/layout.py" line="46"/>
+        <location filename="../../../plugins/list_layout/layout.py" line="47"/>
         <source>SHIFT + Space or Double-Click to edit a cue</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1124,7 +1111,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/list_layout/layout.py" line="52"/>
+        <location filename="../../../plugins/list_layout/layout.py" line="53"/>
         <source>To move cues drag them</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1152,7 +1139,7 @@
 <context>
     <name>LayoutName</name>
     <message>
-        <location filename="../../../plugins/list_layout/layout.py" line="41"/>
+        <location filename="../../../plugins/list_layout/layout.py" line="42"/>
         <source>List Layout</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1183,47 +1170,32 @@
 <context>
     <name>ListLayout</name>
     <message>
-        <location filename="../../../ui/settings/app_pages/layouts.py" line="55"/>
-        <source>Stop All</source>
-        <translation type="obsolete">Stop All</translation>
-    </message>
-    <message>
-        <location filename="../../../ui/settings/app_pages/layouts.py" line="56"/>
-        <source>Pause All</source>
-        <translation type="obsolete">Pause All</translation>
-    </message>
-    <message>
-        <location filename="../../../ui/settings/app_pages/layouts.py" line="58"/>
-        <source>Interrupt All</source>
-        <translation type="obsolete">Interrupt All</translation>
-    </message>
-    <message>
         <location filename="../../../plugins/list_layout/settings.py" line="107"/>
         <source>Default behaviors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/list_layout/layout.py" line="165"/>
+        <location filename="../../../plugins/list_layout/layout.py" line="166"/>
         <source>Show playing cues</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/list_layout/layout.py" line="168"/>
+        <location filename="../../../plugins/list_layout/layout.py" line="169"/>
         <source>Show dB-meters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/list_layout/layout.py" line="172"/>
+        <location filename="../../../plugins/list_layout/layout.py" line="173"/>
         <source>Show accurate time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/list_layout/layout.py" line="171"/>
+        <location filename="../../../plugins/list_layout/layout.py" line="172"/>
         <source>Show seek-bars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/list_layout/layout.py" line="175"/>
+        <location filename="../../../plugins/list_layout/layout.py" line="176"/>
         <source>Auto-select next cue</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1278,17 +1250,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/list_layout/layout.py" line="139"/>
+        <location filename="../../../plugins/list_layout/layout.py" line="140"/>
         <source>Edit selected</source>
         <translation type="unfinished">Edit selected</translation>
     </message>
     <message>
-        <location filename="../../../plugins/list_layout/layout.py" line="139"/>
+        <location filename="../../../plugins/list_layout/layout.py" line="140"/>
         <source>Clone cue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/list_layout/layout.py" line="139"/>
+        <location filename="../../../plugins/list_layout/layout.py" line="140"/>
         <source>Clone selected</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1298,12 +1270,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/list_layout/layout.py" line="139"/>
+        <location filename="../../../plugins/list_layout/layout.py" line="140"/>
         <source>Remove selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/list_layout/layout.py" line="178"/>
+        <location filename="../../../plugins/list_layout/layout.py" line="179"/>
         <source>Selection mode</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1353,7 +1325,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/list_layout/layout.py" line="363"/>
+        <location filename="../../../plugins/list_layout/layout.py" line="352"/>
         <source>Copy of {}</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1361,22 +1333,22 @@
 <context>
     <name>ListLayoutHeader</name>
     <message>
-        <location filename="../../../plugins/list_layout/list_view.py" line="74"/>
+        <location filename="../../../plugins/list_layout/list_view.py" line="75"/>
         <source>Cue</source>
         <translation type="unfinished">Cue</translation>
     </message>
     <message>
-        <location filename="../../../plugins/list_layout/list_view.py" line="79"/>
+        <location filename="../../../plugins/list_layout/list_view.py" line="80"/>
         <source>Pre wait</source>
         <translation type="unfinished">Pre wait</translation>
     </message>
     <message>
-        <location filename="../../../plugins/list_layout/list_view.py" line="82"/>
+        <location filename="../../../plugins/list_layout/list_view.py" line="83"/>
         <source>Action</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/list_layout/list_view.py" line="85"/>
+        <location filename="../../../plugins/list_layout/list_view.py" line="86"/>
         <source>Post wait</source>
         <translation type="unfinished">Post wait</translation>
     </message>
@@ -1793,16 +1765,6 @@
         <location filename="../../../ui/mainwindow.py" line="398"/>
         <source>Close session</source>
         <translation>Close session</translation>
-    </message>
-    <message>
-        <location filename="../../../ui/mainwindow.py" line="330"/>
-        <source>The current session is not saved.</source>
-        <translation type="obsolete">The current session is not saved.</translation>
-    </message>
-    <message>
-        <location filename="../../../ui/mainwindow.py" line="333"/>
-        <source>Discard the changes?</source>
-        <translation type="obsolete">Discard the changes?</translation>
     </message>
     <message>
         <location filename="../../../ui/mainwindow.py" line="408"/>

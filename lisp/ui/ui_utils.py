@@ -53,6 +53,28 @@ def adjust_position(rect):
     return rect
 
 
+def css_to_dict(css):
+    dict = {}
+    css = css.strip()
+
+    for attribute in css.split(";"):
+        try:
+            name, value = attribute.split(":")
+            dict[name.strip()] = value.strip()
+        except Exception:
+            pass
+
+    return dict
+
+
+def dict_to_css(css_dict):
+    css = ""
+    for name in css_dict:
+        css += name + ":" + str(css_dict[name]) + ";"
+
+    return css
+
+
 def qfile_filters(extensions, allexts=True, anyfile=True):
     """Create a filter-string for a FileChooser.
 
