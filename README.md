@@ -15,7 +15,7 @@
 
 Linux Show Player, LiSP for short, is a free cue player, mainly intended for sound-playback in stage productions, the goal is to provide a complete playback software for musical plays, theater shows and similar.
 
-For bugs/requests you can open an issue on the GitHub issues tracker, for support, discussions, an anything else you should use the [gitter](https://gitter.im/linux-show-player/linux-show-player) chat.
+For bugs/requests you can open an issue on the GitHub issues tracker, for support, discussions, and anything else you should use the [gitter](https://gitter.im/linux-show-player/linux-show-player) chat.
 
 ---
 
@@ -53,9 +53,9 @@ _Following instruction are valid for the version of the software this README fil
 ### 📖 Usage
 
 User manual can be [viewed online](http://linux-show-player-users.readthedocs.io/en/latest/index.html)
-or downloaded in the GitHub release page, for a specific version.
+or downloaded from the GitHub release page, for a specific version.
 
-##### ⌨️ Command line:
+#### ⌨️ Command line:
 
 ```
 usage: linux-show-player [-h] [-f [FILE]] [-l {debug,info,warning}]
