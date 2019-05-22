@@ -17,7 +17,7 @@
 
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP, QTimer
 from PyQt5.QtGui import QKeySequence
-from PyQt5.QtWidgets import QAction, QTreeWidget
+from PyQt5.QtWidgets import QAction
 
 from lisp.command.model import ModelInsertItemsCommand
 from lisp.core.configuration import DummyConfiguration

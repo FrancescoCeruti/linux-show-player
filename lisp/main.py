@@ -36,23 +36,27 @@ from lisp.ui.ui_utils import install_translation, PyQtUnixSignalHandler
 
 def main():
     # Parse the command-line arguments
-    parser = argparse.ArgumentParser(description="Linux Show Player")
+    parser = argparse.ArgumentParser(
+        description="Cue player for stage productions."
+    )
     parser.add_argument(
         "-f",
         "--file",
         default="",
         nargs="?",
         const="",
-        help="Session file path",
+        help="Session file to open",
     )
     parser.add_argument(
         "-l",
         "--log",
         choices=["debug", "info", "warning"],
         default="warning",
-        help="Log level",
+        help="Change output verbosity. default: warning",
     )
-    parser.add_argument("--locale", default="", help="Force specified locale")
+    parser.add_argument(
+        "--locale", default="", help="Force specified locale/language"
+    )
 
     args = parser.parse_args()
 

@@ -54,23 +54,22 @@ def adjust_position(rect):
 
 
 def css_to_dict(css):
-    dict = {}
-    css = css.strip()
+    css_dict = {}
 
-    for attribute in css.split(";"):
+    for attribute in css.strip().split(";"):
         try:
             name, value = attribute.split(":")
-            dict[name.strip()] = value.strip()
-        except Exception:
+            css_dict[name.strip()] = value.strip()
+        except ValueError:
             pass
 
-    return dict
+    return css_dict
 
 
 def dict_to_css(css_dict):
     css = ""
-    for name in css_dict:
-        css += name + ":" + str(css_dict[name]) + ";"
+    for name, value in css_dict.items():
+        css += name + ":" + str(value) + ";"
 
     return css
 
