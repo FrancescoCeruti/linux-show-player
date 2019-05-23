@@ -254,6 +254,9 @@ class CueListView(QTreeWidget):
         cue.property_changed.disconnect(self.__cuePropChanged)
         self.takeTopLevelItem(cue.index)
 
+    def enabled_item(self, index, enable):
+        self.topLevelItem(index).setDisabled(enable)
+
     def __modelReset(self):
         self.reset()
         self.clear()
