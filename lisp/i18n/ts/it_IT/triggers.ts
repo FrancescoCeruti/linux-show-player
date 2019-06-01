@@ -35,27 +35,27 @@
   <context>
     <name>TriggersSettings</name>
     <message>
-      <location filename="../../../plugins/triggers/triggers_settings.py" line="63"/>
+      <location filename="../../../plugins/triggers/triggers_settings.py" line="65"/>
       <source>Add</source>
       <translation>Aggiungi</translation>
     </message>
     <message>
-      <location filename="../../../plugins/triggers/triggers_settings.py" line="68"/>
+      <location filename="../../../plugins/triggers/triggers_settings.py" line="70"/>
       <source>Remove</source>
       <translation>Rimuovi</translation>
     </message>
     <message>
-      <location filename="../../../plugins/triggers/triggers_settings.py" line="148"/>
+      <location filename="../../../plugins/triggers/triggers_settings.py" line="150"/>
       <source>Trigger</source>
       <translation>Evento</translation>
     </message>
     <message>
-      <location filename="../../../plugins/triggers/triggers_settings.py" line="148"/>
+      <location filename="../../../plugins/triggers/triggers_settings.py" line="150"/>
       <source>Cue</source>
       <translation type="unfinished">Cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/triggers/triggers_settings.py" line="148"/>
+      <location filename="../../../plugins/triggers/triggers_settings.py" line="150"/>
       <source>Action</source>
       <translation>Azione</translation>
     </message>

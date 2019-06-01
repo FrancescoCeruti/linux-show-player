@@ -6,149 +6,149 @@
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="81"/>
       <source>Default behaviors</source>
-      <translation type="unfinished">Default behaviors</translation>
+      <translation>Comportements par défaut</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="196"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="190"/>
       <source>Countdown mode</source>
-      <translation type="unfinished">Countdown mode</translation>
+      <translation>Compte à rebours</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="199"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="193"/>
       <source>Show seek-bars</source>
-      <translation type="unfinished">Show seek-bars</translation>
+      <translation>Afficher barre de progression</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="200"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="194"/>
       <source>Show dB-meters</source>
-      <translation type="unfinished">Show dB-meters</translation>
+      <translation>Afficher dB mètres</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="204"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="198"/>
       <source>Show accurate time</source>
-      <translation type="unfinished">Show accurate time</translation>
+      <translation>Afficher temps exact</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="203"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="197"/>
       <source>Show volume</source>
-      <translation type="unfinished">Show volume</translation>
+      <translation>Afficher volume</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="89"/>
       <source>Grid size</source>
-      <translation type="unfinished">Grid size</translation>
+      <translation>Taille de la grille</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="167"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="161"/>
       <source>Play</source>
-      <translation type="unfinished">Play</translation>
+      <translation>Lecture</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="167"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="161"/>
       <source>Pause</source>
-      <translation type="unfinished">Pause</translation>
+      <translation>Pause</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="167"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="161"/>
       <source>Stop</source>
-      <translation type="unfinished">Stop</translation>
+      <translation>Stop</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="180"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="174"/>
       <source>Reset volume</source>
-      <translation type="unfinished">Reset volume</translation>
+      <translation>Réinitialisation du volume</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="191"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="185"/>
       <source>Add page</source>
-      <translation type="unfinished">Add page</translation>
+      <translation>Ajouter une page</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="239"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="238"/>
       <source>Add pages</source>
-      <translation type="unfinished">Add pages</translation>
+      <translation>Ajouter des pages</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="193"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="187"/>
       <source>Remove current page</source>
-      <translation type="unfinished">Remove current page</translation>
+      <translation>Retirer la page actuelle</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="239"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="238"/>
       <source>Number of Pages:</source>
-      <translation type="unfinished">Number of Pages:</translation>
+      <translation>Nombre de pages:</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="281"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="280"/>
       <source>Page {number}</source>
-      <translation type="unfinished">Page {number}</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="478"/>
-      <source>Warning</source>
-      <translation type="unfinished">Warning</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="479"/>
-      <source>Every cue in the page will be lost.</source>
-      <translation type="unfinished">Every cue in the page will be lost.</translation>
+      <translation>Page {number}</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="482"/>
+      <source>Warning</source>
+      <translation>Attention</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/layout.py" line="483"/>
+      <source>Every cue in the page will be lost.</source>
+      <translation>Toutes les cues dans la page seront perdues.</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/layout.py" line="486"/>
       <source>Are you sure to continue?</source>
-      <translation type="unfinished">Are you sure to continue?</translation>
+      <translation>Êtes-vous sûr de vouloir continuer?</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="90"/>
       <source>Number of columns:</source>
-      <translation type="unfinished">Number of columns:</translation>
+      <translation>Nombre de colonnes:</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="91"/>
       <source>Number of rows:</source>
-      <translation type="unfinished">Number of rows:</translation>
+      <translation>Nombre de lignes:</translation>
     </message>
   </context>
   <context>
     <name>LayoutDescription</name>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="44"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="45"/>
       <source>Organize cues in grid like pages</source>
-      <translation type="unfinished">Organize cues in grid like pages</translation>
+      <translation>Organiser les cues en grille comme les pages</translation>
     </message>
   </context>
   <context>
     <name>LayoutDetails</name>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="48"/>
-      <source>Click a cue to run it</source>
-      <translation type="unfinished">Click a cue to run it</translation>
-    </message>
-    <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="49"/>
-      <source>SHIFT + Click to edit a cue</source>
-      <translation type="unfinished">SHIFT + Click to edit a cue</translation>
+      <source>Click a cue to run it</source>
+      <translation>Cliquer sur une cue pour l'exécuter</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="50"/>
-      <source>CTRL + Click to select a cue</source>
-      <translation type="unfinished">CTRL + Click to select a cue</translation>
+      <source>SHIFT + Click to edit a cue</source>
+      <translation>SHIFT + Clic pour éditer une cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="51"/>
-      <source>To copy cues drag them while pressing CTRL</source>
-      <translation type="unfinished">To copy cues drag them while pressing CTRL</translation>
+      <source>CTRL + Click to select a cue</source>
+      <translation>CTRL + Clic pour sélectionner une cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="54"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="52"/>
+      <source>To copy cues drag them while pressing CTRL</source>
+      <translation>Pour copier les cues, glissez-les en pressant CTLR</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/layout.py" line="55"/>
       <source>To move cues drag them while pressing SHIFT</source>
-      <translation type="unfinished">To move cues drag them while pressing SHIFT</translation>
+      <translation>Pour déplacer les cues, glissez-les en pressant SHIFT</translation>
     </message>
   </context>
   <context>
     <name>LayoutName</name>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="43"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="44"/>
       <source>Cart Layout</source>
       <translation type="unfinished">Cart Layout</translation>
     </message>
@@ -156,24 +156,24 @@
   <context>
     <name>ListLayout</name>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="148"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="142"/>
       <source>Edit cue</source>
-      <translation type="unfinished">Edit cue</translation>
+      <translation>Éditer la cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="148"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="142"/>
       <source>Edit selected cues</source>
-      <translation type="unfinished">Edit selected cues</translation>
+      <translation>Éditer les cues sélectionnées</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="148"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="142"/>
       <source>Remove cue</source>
-      <translation type="unfinished">Remove cue</translation>
+      <translation>Retirer la cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="148"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="142"/>
       <source>Remove selected cues</source>
-      <translation type="unfinished">Remove selected cues</translation>
+      <translation>Retirer les cues sélectionnées</translation>
     </message>
   </context>
   <context>

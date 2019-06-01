@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="108"/>
       <source>Timecode Settings</source>
-      <translation type="unfinished">Timecode Settings</translation>
+      <translation>Timecode Einstellungen</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="38"/>
@@ -40,12 +40,12 @@
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="80"/>
       <source>Replace HOURS by a static track number</source>
-      <translation type="unfinished">Replace HOURS by a static track number</translation>
+      <translation>Ersetze HOURS mit statischer Tracknummer</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="88"/>
       <source>Track number</source>
-      <translation type="unfinished">Track number</translation>
+      <translation>Track Nummer</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="85"/>

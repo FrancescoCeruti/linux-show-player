@@ -114,12 +114,12 @@
   <context>
     <name>GstBackend</name>
     <message>
-      <location filename="../../../plugins/gst_backend/gst_backend.py" line="73"/>
+      <location filename="../../../plugins/gst_backend/gst_backend.py" line="74"/>
       <source>Audio cue (from file)</source>
       <translation type="unfinished">Audio cue (from file)</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/gst_backend.py" line="113"/>
+      <location filename="../../../plugins/gst_backend/gst_backend.py" line="114"/>
       <source>Select media files</source>
       <translation type="unfinished">Select media files</translation>
     </message>
@@ -127,7 +127,7 @@
   <context>
     <name>GstMediaError</name>
     <message>
-      <location filename="../../../plugins/gst_backend/gst_media.py" line="239"/>
+      <location filename="../../../plugins/gst_backend/gst_media.py" line="238"/>
       <source>Cannot create pipeline element: &quot;{}&quot;</source>
       <translation type="unfinished">Cannot create pipeline element: &quot;{}&quot;</translation>
     </message>
@@ -143,7 +143,7 @@
   <context>
     <name>GstMediaWarning</name>
     <message>
-      <location filename="../../../plugins/gst_backend/gst_media.py" line="233"/>
+      <location filename="../../../plugins/gst_backend/gst_media.py" line="232"/>
       <source>Invalid pipeline element: &quot;{}&quot;</source>
       <translation type="unfinished">Invalid pipeline element: &quot;{}&quot;</translation>
     </message>
@@ -255,7 +255,7 @@
       <translation>Hauteur de note</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/elements/uri_input.py" line="54"/>
+      <location filename="../../../plugins/gst_backend/elements/uri_input.py" line="53"/>
       <source>URI Input</source>
       <translation>Entrée URI</translation>
     </message>
@@ -320,42 +320,42 @@
   <context>
     <name>UriInputSettings</name>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="80"/>
+      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="83"/>
       <source>Source</source>
       <translation type="unfinished">Source</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="81"/>
+      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="84"/>
       <source>Find File</source>
       <translation>Trouver le fichier</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="82"/>
+      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="85"/>
       <source>Buffering</source>
       <translation>Tampon</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="83"/>
+      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="86"/>
       <source>Use Buffering</source>
       <translation>Utiliser le tampon</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="86"/>
+      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="89"/>
       <source>Attempt download on network streams</source>
       <translation>Essayer de télécharger en flux de réseau</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="89"/>
+      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="92"/>
       <source>Buffer size (-1 default value)</source>
       <translation>Taille du tampon (valeur par défaut -1)</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="119"/>
+      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="131"/>
       <source>Choose file</source>
       <translation>Choisir un fichier</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="119"/>
+      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="131"/>
       <source>All files</source>
       <translation>Tous les fichiers</translation>
     </message>

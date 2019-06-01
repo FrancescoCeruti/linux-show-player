@@ -12,19 +12,19 @@
   <context>
     <name>ControllerKeySettings</name>
     <message>
-      <location filename="../../../plugins/controller/protocols/keyboard.py" line="53"/>
-      <source>Key</source>
-      <translation type="unfinished">Key</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/controller/protocols/keyboard.py" line="53"/>
+      <location filename="../../../plugins/controller/protocols/keyboard.py" line="55"/>
       <source>Action</source>
-      <translation type="unfinished">Action</translation>
+      <translation>Aktion</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/keyboard.py" line="76"/>
+      <location filename="../../../plugins/controller/protocols/keyboard.py" line="78"/>
       <source>Shortcuts</source>
       <translation type="unfinished">Shortcuts</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/controller/protocols/keyboard.py" line="55"/>
+      <source>Shortcut</source>
+      <translation type="unfinished">Shortcut</translation>
     </message>
   </context>
   <context>
@@ -37,12 +37,12 @@
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="59"/>
       <source>Type</source>
-      <translation type="unfinished">Type</translation>
+      <translation>Typ</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="59"/>
       <source>Channel</source>
-      <translation type="unfinished">Channel</translation>
+      <translation>Kanal</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="59"/>
@@ -52,17 +52,17 @@
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="59"/>
       <source>Action</source>
-      <translation type="unfinished">Action</translation>
+      <translation>Aktion</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="85"/>
       <source>Filter &quot;note on&quot;</source>
-      <translation type="unfinished">Filter &quot;note on&quot;</translation>
+      <translation>Filter &quot;Note an&quot;</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="89"/>
       <source>Filter &quot;note off&quot;</source>
-      <translation type="unfinished">Filter &quot;note off&quot;</translation>
+      <translation>Filter &quot;Note aus&quot;</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="106"/>
@@ -72,7 +72,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="131"/>
       <source>Listening MIDI messages ...</source>
-      <translation type="unfinished">Listening MIDI messages ...</translation>
+      <translation>Höre MIDI Nachrichten</translation>
     </message>
   </context>
   <context>
@@ -131,65 +131,65 @@
   <context>
     <name>ControllerSettings</name>
     <message>
-      <location filename="../../../plugins/controller/protocols/keyboard.py" line="77"/>
+      <location filename="../../../plugins/controller/protocols/keyboard.py" line="79"/>
       <source>Add</source>
-      <translation type="unfinished">Add</translation>
+      <translation>Hinzufügen</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/keyboard.py" line="78"/>
+      <location filename="../../../plugins/controller/protocols/keyboard.py" line="80"/>
       <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
+      <translation>Entfernen</translation>
     </message>
   </context>
   <context>
     <name>GlobalAction</name>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="40"/>
+      <location filename="../../../plugins/controller/common.py" line="41"/>
       <source>Go</source>
       <translation type="unfinished">Go</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="41"/>
+      <location filename="../../../plugins/controller/common.py" line="42"/>
       <source>Reset</source>
       <translation type="unfinished">Reset</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="42"/>
+      <location filename="../../../plugins/controller/common.py" line="43"/>
       <source>Stop all cues</source>
       <translation type="unfinished">Stop all cues</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="43"/>
+      <location filename="../../../plugins/controller/common.py" line="44"/>
       <source>Pause all cues</source>
       <translation type="unfinished">Pause all cues</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="44"/>
+      <location filename="../../../plugins/controller/common.py" line="45"/>
       <source>Resume all cues</source>
       <translation type="unfinished">Resume all cues</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="47"/>
+      <location filename="../../../plugins/controller/common.py" line="48"/>
       <source>Interrupt all cues</source>
       <translation type="unfinished">Interrupt all cues</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="50"/>
+      <location filename="../../../plugins/controller/common.py" line="51"/>
       <source>Fade-out all cues</source>
       <translation type="unfinished">Fade-out all cues</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="53"/>
+      <location filename="../../../plugins/controller/common.py" line="54"/>
       <source>Fade-in all cues</source>
       <translation type="unfinished">Fade-in all cues</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="56"/>
+      <location filename="../../../plugins/controller/common.py" line="57"/>
       <source>Move standby forward</source>
       <translation type="unfinished">Move standby forward</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="59"/>
+      <location filename="../../../plugins/controller/common.py" line="60"/>
       <source>Move standby back</source>
       <translation type="unfinished">Move standby back</translation>
     </message>
@@ -197,12 +197,12 @@
   <context>
     <name>Osc Cue</name>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="73"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="74"/>
       <source>Type</source>
       <translation type="unfinished">Type</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="73"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="74"/>
       <source>Argument</source>
       <translation type="unfinished">Argument</translation>
     </message>
@@ -233,9 +233,9 @@
       <translation type="unfinished">MIDI Controls</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/keyboard.py" line="42"/>
+      <location filename="../../../plugins/controller/protocols/keyboard.py" line="44"/>
       <source>Keyboard Shortcuts</source>
-      <translation type="unfinished">Keyboard Shortcuts</translation>
+      <translation>Tastatur Shortcuts</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="181"/>
