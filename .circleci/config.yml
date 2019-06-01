@@ -109,7 +109,7 @@ jobs:
               --publish \
               --override \
               out/linux-show-payer.flatpak \
-              francescoceruti/LinuxShowPlayer/ci/$PKG_VERSION \
+              francescoceruti/LinuxShowPlayer/$CIRCLE_BRANCH/$PKG_VERSION \
               linux-show-player_$PKG_VERSION.flatpak
 
       - store_artifacts:
@@ -129,4 +129,3 @@ workflows:
               only:
                 - master
                 - develop
-                - building

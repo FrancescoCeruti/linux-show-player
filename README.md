@@ -32,7 +32,9 @@ For version _0.5_ you can download an [AppImage](http://appimage.org/) bundle of
 
 From version _0.6_ it will be possible to install a [Flatpak](https://flatpak.org/) package, follow the _simple_ instructions on their website to get everything ready. 
 
-You can get the latest **development** version [here](https://bintray.com/francescoceruti/LinuxShowPlayer/ci/_latestVersion) - might be unstable (crash, breaking changes, etc...)
+You can get the latest **development** builds here:
+ * [Master](https://bintray.com/francescoceruti/LinuxShowPlayer/master/_latestVersion)
+ * [Development](https://bintray.com/francescoceruti/LinuxShowPlayer/develop/_latestVersion) - might be unstable (crash, breaking changes, etc...)
 
 #### 🐧 From yours distribution repository
 
@@ -40,13 +42,6 @@ For some GNU/Linux distribution you can install a native package.<br>
 Keep in mind that it might not be the latest version, here a list: 
 
 [![Packaging status](https://repology.org/badge/vertical-allrepos/linux-show-player.svg)](https://repology.org/metapackage/linux-show-player)
-
-
-#### 🔧 Manual installation
-
-_Following instruction are valid for the version of the software this README file is included with._
-
-**TODO** 
 
 ---
 
