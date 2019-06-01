@@ -13,35 +13,61 @@
 
 ---
 
-Every component on which LiSP relies (python3, GStreamer and Qt5) is multi-platform, but the program is currently tested and developed only for **GNU/Linux**.
+Linux Show Player, LiSP for short, is a free cue player, mainly intended for sound-playback in stage productions, the goal is to provide a complete playback software for musical plays, theater shows and similar.
 
-No special hardware is required to run LiSP, but some processing operations would surely take benefit from a recent CPU.
-
-For bugs/requests an issue can be open on the GitHub issues-tracker, for everything else [gitter](https://gitter.im/linux-show-player/linux-show-player) can be used.
+For bugs/requests you can open an issue on the GitHub issues tracker, for support, discussions, and anything else you should use the [gitter](https://gitter.im/linux-show-player/linux-show-player) chat.
 
 ---
 
 ### Installation
 
-You can download an [AppImage](http://appimage.org/) bundle of LiSP from the release page, once downloaded make the file executable.
-Now you should be able to run LiSP by double-clicking the file.
+Linux Show Player is currently developed/test only on **GNU/Linux**.<br>
+_The core components (Python3, GStreamer and Qt5) are multi-platform, in future, despite the name, LiSP might get ported on others platforms_
 
-Tested on the following systems *(it should work on newer versions)*:
- * Debian 8
- * Ubuntu 16.04
- * Fedora 24
+#### ⚙️ AppImage
 
-<br />Otherwise follow the instructions on the [wiki](https://github.com/FrancescoCeruti/linux-show-player/wiki/Install) 
+For version _0.5_ you can download an [AppImage](http://appimage.org/) bundle of LiSP from the release page, once downloaded make the file executable.
+
+#### 📦 Flatpak
+
+From version _0.6_ it will be possible to install a [Flatpak](https://flatpak.org/) package, follow the _simple_ instructions on their website to get everything ready. 
+
+You can get the latest **development** version [here](https://bintray.com/francescoceruti/LinuxShowPlayer/ci/_latestVersion) - might be unstable (crash, breaking changes, etc...)
+
+#### 🐧 From yours distribution repository
+
+For some GNU/Linux distribution you can install a native package.<br>
+Keep in mind that it might not be the latest version, here a list: 
+
+[![Packaging status](https://repology.org/badge/vertical-allrepos/linux-show-player.svg)](https://repology.org/metapackage/linux-show-player)
+
+
+#### 🔧 Manual installation
+
+_Following instruction are valid for the version of the software this README file is included with._
+
+**TODO** 
 
 ---
 
-### Usage
+### 📖 Usage
 
-Use the installed launcher from the menu, or:
+User manual can be [viewed online](http://linux-show-player-users.readthedocs.io/en/latest/index.html)
+or downloaded from the GitHub release page, for a specific version.
 
-    $ linux-show-player                                  # Launch the program
-    $ linux-show-player -l [debug/warning/info]          # Launch with different log options
-    $ linux-show-player -f <file/path>                   # Open a saved session
-    $ linux-show-player --locale <locale>                # Launch using the given locale
+#### ⌨️ Command line:
 
-User documentation can be downloaded under the GitHub release page or [viewed online](http://linux-show-player-users.readthedocs.io/en/latest/index.html)
+```
+usage: linux-show-player [-h] [-f [FILE]] [-l {debug,info,warning}]
+                         [--locale LOCALE]
+
+Cue player for stage productions.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -f [FILE], --file [FILE]
+                        Session file to open
+  -l {debug,info,warning}, --log {debug,info,warning}
+                        Change output verbosity. default: warning
+  --locale LOCALE       Force specified locale/language
+```

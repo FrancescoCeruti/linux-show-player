@@ -64,6 +64,8 @@ class CueStatusIcons(QWidget):
 
     def __init__(self, item, *args):
         super().__init__(*args)
+        self.setAttribute(Qt.WA_TranslucentBackground)
+
         self._icon = None
         self._item = item
 
@@ -132,12 +134,11 @@ class CueStatusIcons(QWidget):
 
 
 class NextActionIcon(QLabel):
-    STYLESHEET = "background: transparent;"
     SIZE = 16
 
     def __init__(self, item, *args):
         super().__init__(*args)
-        self.setStyleSheet(self.STYLESHEET)
+        self.setAttribute(Qt.WA_TranslucentBackground)
         self.setAlignment(Qt.AlignCenter)
 
         item.cue.changed("next_action").connect(

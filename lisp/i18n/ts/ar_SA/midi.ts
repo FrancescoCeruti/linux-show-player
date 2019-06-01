@@ -12,7 +12,7 @@
   <context>
     <name>CueName</name>
     <message>
-      <location filename="../../../plugins/midi/midi_cue.py" line="36"/>
+      <location filename="../../../plugins/midi/midi_cue.py" line="35"/>
       <source>MIDI Cue</source>
       <translation type="unfinished">MIDI Cue</translation>
     </message>
@@ -167,7 +167,7 @@
       <translation type="unfinished">MIDI settings</translation>
     </message>
     <message>
-      <location filename="../../../plugins/midi/midi_cue.py" line="53"/>
+      <location filename="../../../plugins/midi/midi_cue.py" line="52"/>
       <source>MIDI Settings</source>
       <translation type="unfinished">MIDI Settings</translation>
     </message>

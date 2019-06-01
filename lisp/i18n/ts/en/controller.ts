@@ -11,11 +11,6 @@
 <context>
     <name>ControllerKeySettings</name>
     <message>
-        <location filename="../../../plugins/controller/protocols/keyboard.py" line="53"/>
-        <source>Key</source>
-        <translation type="obsolete">Key</translation>
-    </message>
-    <message>
         <location filename="../../../plugins/controller/protocols/keyboard.py" line="55"/>
         <source>Action</source>
         <translation>Action</translation>

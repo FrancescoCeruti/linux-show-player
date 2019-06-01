@@ -27,7 +27,7 @@ from PyQt5.QtWidgets import (
 )
 
 from lisp.ui.settings.pages import SettingsPage
-from lisp.ui.ui_utils import translate
+from lisp.ui.ui_utils import translate, css_to_dict, dict_to_css
 from lisp.ui.widgets import ColorButton
 
 
@@ -155,25 +155,3 @@ class Appearance(SettingsPage):
             if "font-size" in settings:
                 # [:-2] for removing "pt"
                 self.fontSizeSpin.setValue(int(settings["font-size"][:-2]))
-
-
-def css_to_dict(css):
-    dict = {}
-    css = css.strip()
-
-    for attribute in css.split(";"):
-        try:
-            name, value = attribute.split(":")
-            dict[name.strip()] = value.strip()
-        except Exception:
-            pass
-
-    return dict
-
-
-def dict_to_css(css_dict):
-    css = ""
-    for name in css_dict:
-        css += name + ":" + str(css_dict[name]) + ";"
-
-    return css

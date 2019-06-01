@@ -68,6 +68,17 @@ def dict_merge_diff(dct, cmp_dct):
     return diff
 
 
+def subdict(d, keys):
+    return dict(isubdict(d, keys))
+
+
+def isubdict(d, keys):
+    for k in keys:
+        v = d.get(k)
+        if v is not None:
+            yield k, v
+
+
 def find_packages(path="."):
     """List the python packages in the given directory."""
 

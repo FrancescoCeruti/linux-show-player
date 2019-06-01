@@ -35,6 +35,7 @@ from lisp.plugins.list_layout.list_view import CueListView
 from lisp.plugins.list_layout.models import CueListModel, RunningCueModel
 from lisp.plugins.list_layout.view import ListLayoutView
 from lisp.ui.ui_utils import translate
+from lisp.ui.widgets.hotkeyedit import keyEventKeySequence
 
 
 class ListLayout(CueLayout):
@@ -241,36 +242,24 @@ class ListLayout(CueLayout):
 
     def _key_pressed(self, event):
         event.ignore()
-
         if not event.isAutoRepeat():
-            keys = event.key()
-            modifiers = event.modifiers()
-
-            if modifiers & Qt.ShiftModifier:
-                keys += Qt.SHIFT
-            if modifiers & Qt.ControlModifier:
-                keys += Qt.CTRL
-            if modifiers & Qt.AltModifier:
-                keys += Qt.ALT
-            if modifiers & Qt.MetaModifier:
-                keys += Qt.META
-
-            sequence = QKeySequence(keys)
+            sequence = keyEventKeySequence(event)
             if sequence in self._go_key_sequence:
                 event.accept()
                 self.__go_slot()
             elif sequence == QKeySequence.Delete:
+                event.accept()
                 self._remove_cues(self.selected_cues())
-            elif event.key() == Qt.Key_Space:
-                if event.modifiers() == Qt.ShiftModifier:
-                    event.accept()
-
-                    cue = self.standby_cue()
-                    if cue is not None:
-                        self.edit_cue(cue)
+            elif (
+                event.key() == Qt.Key_Space
+                and event.modifiers() == Qt.ShiftModifier
+            ):
+                event.accept()
+                cue = self.standby_cue()
+                if cue is not None:
+                    self.edit_cue(cue)
             else:
                 self.key_pressed.emit(event)
-                event.ignore()
 
     @accurate_time.set
     def _set_accurate_time(self, accurate):
