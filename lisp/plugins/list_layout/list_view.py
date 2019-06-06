@@ -195,7 +195,8 @@ class CueListView(QTreeWidget):
     def __currentItemChanged(self, current, previous):
         if previous is not None:
             previous.current = False
-            self.__updateItemStyle(previous)
+            if self.itemWidget(previous, 0):
+                self.__updateItemStyle(previous)
 
         if current is not None:
             current.current = True
@@ -249,6 +250,7 @@ class CueListView(QTreeWidget):
         item = self.takeTopLevelItem(before)
         self.insertTopLevelItem(after, item)
         self.__setupItemWidgets(item)
+        self.__updateItemStyle(item)
 
     def __cueRemoved(self, cue):
         cue.property_changed.disconnect(self.__cuePropChanged)
