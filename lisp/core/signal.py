@@ -77,8 +77,9 @@ class Slot:
     def is_alive(self):
         return self._reference() is not None
 
-    def _expired(self, reference):
-        self._callback(self._slot_id)
+    def _expired(self, _):
+        if self._callback is not None:
+            self._callback(self._slot_id)
 
 
 class AsyncSlot(Slot):

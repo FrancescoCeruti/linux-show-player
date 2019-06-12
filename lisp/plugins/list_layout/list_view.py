@@ -128,7 +128,9 @@ class CueListView(QTreeWidget):
 
         # This allow to have some spared space at the end of the scroll-area
         self.verticalScrollBar().rangeChanged.connect(self.__updateScrollRange)
-        self.currentItemChanged.connect(self.__currentItemChanged)
+        self.currentItemChanged.connect(
+            self.__currentItemChanged, Qt.QueuedConnection
+        )
 
     def dropEvent(self, event):
         # Decode mimedata information about the drag&drop event, since only
@@ -195,34 +197,41 @@ class CueListView(QTreeWidget):
     def __currentItemChanged(self, current, previous):
         if previous is not None:
             previous.current = False
-            if self.itemWidget(previous, 0):
-                self.__updateItemStyle(previous)
+            self.__updateItemStyle(previous)
 
         if current is not None:
             current.current = True
             self.__updateItemStyle(current)
-            if self.selectionMode() == QTreeWidget.NoSelection:
-                # ensure the current item is in the middle
-                self.scrollToItem(current, QTreeWidget.PositionAtCenter)
+            # Ensure the current item is in the middle
+            self.scrollToItem(current, QTreeWidget.PositionAtCenter)
+
+            if (
+                self.selectionMode() != QTreeWidget.NoSelection
+                and not self.selectedIndexes()
+            ):
+                current.setSelected(True)
 
     def __updateItemStyle(self, item):
-        css = css_to_dict(item.cue.stylesheet)
-        brush = QBrush()
+        if item.treeWidget() is not None:
+            css = css_to_dict(item.cue.stylesheet)
+            brush = QBrush()
 
-        if item.current:
-            widget_css = subdict(css, ("font-size",))
-            brush = CueListView.ITEM_CURRENT_BG
-        else:
-            widget_css = subdict(css, ("color", "font-size"))
-            css_bg = css.get("background")
-            if css_bg is not None:
-                color = QColor(css_bg)
-                color.setAlpha(150)
-                brush = QBrush(color)
+            if item.current:
+                widget_css = subdict(css, ("font-size",))
+                brush = CueListView.ITEM_CURRENT_BG
+            else:
+                widget_css = subdict(css, ("color", "font-size"))
+                css_bg = css.get("background")
+                if css_bg is not None:
+                    color = QColor(css_bg)
+                    color.setAlpha(150)
+                    brush = QBrush(color)
 
-        for column in range(self.columnCount()):
-            self.itemWidget(item, column).setStyleSheet(dict_to_css(widget_css))
-            item.setBackground(column, brush)
+            for column in range(self.columnCount()):
+                self.itemWidget(item, column).setStyleSheet(
+                    dict_to_css(widget_css)
+                )
+                item.setBackground(column, brush)
 
     def __cuePropChanged(self, cue, property_name, _):
         if property_name == "stylesheet":
@@ -250,7 +259,6 @@ class CueListView(QTreeWidget):
         item = self.takeTopLevelItem(before)
         self.insertTopLevelItem(after, item)
         self.__setupItemWidgets(item)
-        self.__updateItemStyle(item)
 
     def __cueRemoved(self, cue):
         cue.property_changed.disconnect(self.__cuePropChanged)

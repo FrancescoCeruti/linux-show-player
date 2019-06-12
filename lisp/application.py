@@ -164,9 +164,8 @@ class Application(metaclass=Singleton):
         if self.__session is not None:
             self.session_before_finalize.emit(self.session)
 
-            self.__commands_stack.clear()
             self.__session.finalize()
-            self.__session = None
+            self.__commands_stack.clear()
 
     def __save_to_file(self, session_file):
         """Save the current session into a file."""

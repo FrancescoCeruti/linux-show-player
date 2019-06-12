@@ -24,7 +24,7 @@ jobs:
 
       - restore_cache:
           name: PYENV ⟹ Restore cache
-          key: pyenv-python-3.6.8
+          key: pyenv-python-3.6.8b
 
       - run:
           name: PYENV ⟹ Install python 3.6.8
@@ -34,9 +34,9 @@ jobs:
 
       - save_cache:
           name: PYENV ⟹ Save cache
-          key: pyenv-python-3.6.8
+          key: pyenv-python-3.6.8b
           paths:
-            - ~/.pyenv/versions/3.6.8
+            - /opt/circleci/.pyenv/versions/3.6.8
 
       - run:
           name: FLATPAK ⟹ Install flathub Runtime & SDK

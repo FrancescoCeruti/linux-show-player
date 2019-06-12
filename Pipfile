@@ -6,7 +6,7 @@ name = "pypi"
 [packages]
 appdirs = ">=1.4.1"
 Cython = "~=0.29"
-falcon = "~=1.4"
+falcon = "~=2.0"
 JACK-Client = "~=0.4"
 mido = "~=1.2"
 PyGObject = "~=3.30"
