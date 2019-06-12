@@ -61,6 +61,3 @@ class Volume(GstMediaElement):
 
     def stop(self):
         self.live_volume = self.volume
-
-    def interrupt(self):
-        self.stop()

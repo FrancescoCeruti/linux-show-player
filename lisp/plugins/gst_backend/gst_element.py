@@ -70,17 +70,22 @@ class GstMediaElement(MediaElement):
         super().__init__()
         self.pipeline = pipeline
 
-    def interrupt(self):
-        """Called before Media interrupt"""
-
-    def stop(self):
-        """Called before Media stop"""
+    def play(self):
+        """Called before Media play"""
 
     def pause(self):
         """Called before Media pause"""
 
-    def play(self):
-        """Called before Media play"""
+    def stop(self):
+        """Called before Media stop"""
+
+    def eos(self):
+        """Called after Media ends. Defaults to `stop()`"""
+        self.stop()
+
+    def interrupt(self):
+        """Called before Media interrupt. Defaults to `stop()`"""
+        self.stop()
 
     def dispose(self):
         """Clean up the element"""

@@ -273,6 +273,10 @@ class GstMedia(Media):
                     # Otherwise go in READY state
                     self.__pipeline.set_state(Gst.State.READY)
                     self.__pipeline.get_state(Gst.SECOND)
+
+                    for element in self.elements:
+                        element.eos()
+
                     self.__reset_media()
                     self.eos.emit(self)
             elif message.type == Gst.MessageType.CLOCK_LOST:
