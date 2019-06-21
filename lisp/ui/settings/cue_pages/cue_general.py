@@ -296,9 +296,9 @@ class CueFadePage(CueSettingsPage):
         if not checkable or self.fadeInGroup.isChecked():
             settings["fadein_type"] = self.fadeInEdit.fadeType()
             settings["fadein_duration"] = self.fadeInEdit.duration()
-            
-        checkable = self.fadeOutGroup.isCheckable()    
-            
+
+        checkable = self.fadeOutGroup.isCheckable()
+
         if not checkable or self.fadeOutGroup.isChecked():
             settings["fadeout_type"] = self.fadeOutEdit.fadeType()
             settings["fadeout_duration"] = self.fadeOutEdit.duration()
