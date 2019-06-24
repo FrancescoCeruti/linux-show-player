@@ -2587,52 +2587,52 @@
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="46"/>
       <source>MIDI Controls</source>
-      <translation type="unfinished">MIDI Controls</translation>
+      <translation>Contrôles MIDI</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/keyboard.py" line="44"/>
       <source>Keyboard Shortcuts</source>
-      <translation type="unfinished">Keyboard Shortcuts</translation>
+      <translation>Raccourcis-clavier</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="181"/>
       <source>OSC Controls</source>
-      <translation type="unfinished">OSC Controls</translation>
+      <translation>Contrôles OSC</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_cue.py" line="53"/>
       <source>MIDI Settings</source>
-      <translation type="unfinished">MIDI Settings</translation>
+      <translation>Préférences MIDI</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_settings.py" line="33"/>
       <source>MIDI settings</source>
-      <translation type="unfinished">MIDI settings</translation>
+      <translation>Préférences MIDI</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/gst_settings.py" line="27"/>
       <source>GStreamer</source>
-      <translation type="unfinished">GStreamer</translation>
+      <translation>GStreamer</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/gst_media_settings.py" line="36"/>
       <source>Media Settings</source>
-      <translation type="unfinished">Media Settings</translation>
+      <translation>Préférences des médias</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="42"/>
       <source>Triggers</source>
-      <translation type="unfinished">Triggers</translation>
+      <translation>Déclencheurs</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_settings.py" line="34"/>
       <source>OSC settings</source>
-      <translation type="unfinished">OSC settings</translation>
+      <translation>Paramètres OSC</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="33"/>
       <source>Cart Layout</source>
-      <translation type="unfinished">Cart Layout</translation>
+      <translation>Disposition en carte</translation>
     </message>
   </context>
   <context>
@@ -2640,7 +2640,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/speed.py" line="62"/>
       <source>Speed</source>
-      <translation type="unfinished">Speed</translation>
+      <translation>Vitesse</translation>
     </message>
   </context>
   <context>
@@ -2648,7 +2648,7 @@
     <message>
       <location filename="../../../plugins/action_cues/stop_all.py" line="76"/>
       <source>Stop Action</source>
-      <translation type="unfinished">Stop Action</translation>
+      <translation>Arrêter l'action</translation>
     </message>
   </context>
   <context>
@@ -2656,22 +2656,22 @@
     <message>
       <location filename="../../../plugins/synchronizer/synchronizer.py" line="44"/>
       <source>Synchronization</source>
-      <translation type="unfinished">Synchronization</translation>
+      <translation>Synchronisation</translation>
     </message>
     <message>
       <location filename="../../../plugins/synchronizer/synchronizer.py" line="47"/>
       <source>Manage connected peers</source>
-      <translation type="unfinished">Manage connected peers</translation>
+      <translation>Gestion des pairs connectés</translation>
     </message>
     <message>
       <location filename="../../../plugins/synchronizer/synchronizer.py" line="53"/>
       <source>Show your IP</source>
-      <translation type="unfinished">Show your IP</translation>
+      <translation>Afficher votre IP</translation>
     </message>
     <message>
       <location filename="../../../plugins/synchronizer/synchronizer.py" line="79"/>
       <source>Your IP is:</source>
-      <translation type="unfinished">Your IP is:</translation>
+      <translation>Votre IP est : </translation>
     </message>
   </context>
   <context>
@@ -2679,7 +2679,7 @@
     <message>
       <location filename="../../../plugins/timecode/timecode.py" line="97"/>
       <source>Cannot load timecode protocol: &quot;{}&quot;</source>
-      <translation type="unfinished">Cannot load timecode protocol: &quot;{}&quot;</translation>
+      <translation>Impossible de charger le protocole de code temporel : &quot;{}&quot;</translation>
     </message>
   </context>
   <context>
@@ -2687,7 +2687,7 @@
     <message>
       <location filename="../../../plugins/timecode/protocols/artnet.py" line="72"/>
       <source>Cannot send timecode.</source>
-      <translation type="unfinished">Cannot send timecode.</translation>
+      <translation>Impossible d'envoyer le code temporel.</translation>
     </message>
   </context>
   <context>
@@ -2695,32 +2695,32 @@
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="80"/>
       <source>Replace HOURS by a static track number</source>
-      <translation type="unfinished">Replace HOURS by a static track number</translation>
+      <translation>Remplacer HOURS par un numéro de piste statique</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="85"/>
       <source>Enable Timecode</source>
-      <translation type="unfinished">Enable Timecode</translation>
+      <translation>Activer le code temporel</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="88"/>
       <source>Track number</source>
-      <translation type="unfinished">Track number</translation>
+      <translation>Numéro de piste</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="138"/>
       <source>Timecode Settings</source>
-      <translation type="unfinished">Timecode Settings</translation>
+      <translation>Paramètres de code temporel</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="141"/>
       <source>Timecode Format:</source>
-      <translation type="unfinished">Timecode Format:</translation>
+      <translation>Format de code temporel :</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="144"/>
       <source>Timecode Protocol:</source>
-      <translation type="unfinished">Timecode Protocol:</translation>
+      <translation>Protocole de code temporel :</translation>
     </message>
   </context>
   <context>
@@ -2728,7 +2728,7 @@
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="65"/>
       <source>Add</source>
-      <translation type="unfinished">Add</translation>
+      <translation>Ajouter</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="70"/>
