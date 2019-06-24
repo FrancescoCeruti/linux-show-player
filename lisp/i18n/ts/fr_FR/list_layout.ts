@@ -32,7 +32,7 @@
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="42"/>
       <source>List Layout</source>
-      <translation type="unfinished">List Layout</translation>
+      <translation>Disposition en liste</translation>
     </message>
   </context>
   <context>
@@ -50,7 +50,7 @@
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="169"/>
       <source>Show dB-meters</source>
-      <translation type="unfinished">Show dB-meters</translation>
+      <translation>Afficher le niveau de décibels</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="173"/>
