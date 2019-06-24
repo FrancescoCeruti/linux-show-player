@@ -2190,102 +2190,102 @@
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="84"/>
       <source>Cannot save preset &quot;{}&quot;</source>
-      <translation type="unfinished">Cannot save preset &quot;{}&quot;</translation>
+      <translation>Impossible de sauvegarder le pré-réglage &quot;{}&quot;</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="90"/>
       <source>Cannot rename preset &quot;{}&quot;</source>
-      <translation type="unfinished">Cannot rename preset &quot;{}&quot;</translation>
+      <translation>Impossible de renommer le pré-réglage &quot;{}&quot;</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="101"/>
       <source>Select Preset</source>
-      <translation type="unfinished">Select Preset</translation>
+      <translation>Sélectionner le pré-réglage</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets.py" line="67"/>
       <source>Presets</source>
-      <translation type="unfinished">Presets</translation>
+      <translation>Pré-réglages</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="423"/>
       <source>Preset name</source>
-      <translation type="unfinished">Preset name</translation>
+      <translation>Nom du pré-réglage</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="219"/>
       <source>Add</source>
-      <translation type="unfinished">Add</translation>
+      <translation>Ajouter</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="220"/>
       <source>Rename</source>
-      <translation type="unfinished">Rename</translation>
+      <translation>Renommer</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="221"/>
       <source>Edit</source>
-      <translation type="unfinished">Edit</translation>
+      <translation>Éditer</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="222"/>
       <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
+      <translation>Supprimer</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="227"/>
       <source>Export selected</source>
-      <translation type="unfinished">Export selected</translation>
+      <translation>Exporter la sélection</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="230"/>
       <source>Import</source>
-      <translation type="unfinished">Import</translation>
+      <translation>Importer</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="309"/>
       <source>Warning</source>
-      <translation type="unfinished">Warning</translation>
+      <translation>Avertissement</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="268"/>
       <source>The same name is already used!</source>
-      <translation type="unfinished">The same name is already used!</translation>
+      <translation>Ce nom est déjà utilisé !</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="344"/>
       <source>Cannot export correctly.</source>
-      <translation type="unfinished">Cannot export correctly.</translation>
+      <translation>Impossible d'exporter correctement.</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="369"/>
       <source>Cannot import correctly.</source>
-      <translation type="unfinished">Cannot import correctly.</translation>
+      <translation>Impossible d'importer correctement.</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="424"/>
       <source>Cue type</source>
-      <translation type="unfinished">Cue type</translation>
+      <translation>Type de go</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets.py" line="72"/>
       <source>Load on cue</source>
-      <translation type="unfinished">Load on cue</translation>
+      <translation>Charger au go</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets.py" line="72"/>
       <source>Load on selected cues</source>
-      <translation type="unfinished">Load on selected cues</translation>
+      <translation>Charger les go sélectionnés</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets.py" line="72"/>
       <source>Save as preset</source>
-      <translation type="unfinished">Save as preset</translation>
+      <translation>Sauvegarder comme pré-réglage</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="309"/>
       <source>Cannot create a cue from this preset: {}</source>
-      <translation type="unfinished">Cannot create a cue from this preset: {}</translation>
+      <translation>Impossible de créer un go depuis ce pré-réglage : {}</translation>
     </message>
   </context>
   <context>
@@ -2301,57 +2301,57 @@
     <message>
       <location filename="../../../plugins/rename_cues/rename_cues.py" line="36"/>
       <source>Rename Cues</source>
-      <translation type="unfinished">Rename Cues</translation>
+      <translation>Renommer les go</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="46"/>
       <source>Rename cues</source>
-      <translation type="unfinished">Rename cues</translation>
+      <translation>Renommer les Go</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="55"/>
       <source>Current</source>
-      <translation type="unfinished">Current</translation>
+      <translation>Actuel</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="55"/>
       <source>Preview</source>
-      <translation type="unfinished">Preview</translation>
+      <translation>Aperçu</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="72"/>
       <source>Capitalize</source>
-      <translation type="unfinished">Capitalize</translation>
+      <translation>Convertir en majuscules</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="77"/>
       <source>Lowercase</source>
-      <translation type="unfinished">Lowercase</translation>
+      <translation>Minuscule</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="82"/>
       <source>Uppercase</source>
-      <translation type="unfinished">Uppercase</translation>
+      <translation>Majuscule</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="87"/>
       <source>Remove Numbers</source>
-      <translation type="unfinished">Remove Numbers</translation>
+      <translation>Retirer les numéros</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="92"/>
       <source>Add numbering</source>
-      <translation type="unfinished">Add numbering</translation>
+      <translation>Ajouter numérotation</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="101"/>
       <source>Reset</source>
-      <translation type="unfinished">Reset</translation>
+      <translation>Réinitialiser</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="120"/>
       <source>Type your regex here: </source>
-      <translation type="unfinished">Type your regex here: </translation>
+      <translation>Tapez votre régénération ici : </translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="232"/>
