@@ -2356,7 +2356,7 @@
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="232"/>
       <source>Regex help</source>
-      <translation type="unfinished">Regex help</translation>
+      <translation>Aide à la régénération</translation>
     </message>
   </context>
   <context>
@@ -2364,7 +2364,7 @@
     <message>
       <location filename="../../../plugins/rename_cues/command.py" line="44"/>
       <source>Renamed {number} cues</source>
-      <translation type="unfinished">Renamed {number} cues</translation>
+      <translation>Renommer {number} go</translation>
     </message>
   </context>
   <context>
@@ -2372,7 +2372,7 @@
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="258"/>
       <source>Regex error: Invalid pattern</source>
-      <translation type="unfinished">Regex error: Invalid pattern</translation>
+      <translation>Erreur de régénération : modèle invalide</translation>
     </message>
   </context>
   <context>
@@ -2380,47 +2380,47 @@
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="51"/>
       <source>ReplayGain / Normalization</source>
-      <translation type="unfinished">ReplayGain / Normalization</translation>
+      <translation>Gain de lecture / normalisation</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/gain_ui.py" line="113"/>
       <source>Threads number</source>
-      <translation type="unfinished">Threads number</translation>
+      <translation>Nombre de fils</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/gain_ui.py" line="114"/>
       <source>Apply only to selected media</source>
-      <translation type="unfinished">Apply only to selected media</translation>
+      <translation>Appliquer uniquement aux médias sélectionnés</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/gain_ui.py" line="117"/>
       <source>ReplayGain to (dB SPL)</source>
-      <translation type="unfinished">ReplayGain to (dB SPL)</translation>
+      <translation>Gain de lecture à (en dB SPL)</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/gain_ui.py" line="120"/>
       <source>Normalize to (dB)</source>
-      <translation type="unfinished">Normalize to (dB)</translation>
+      <translation>Normaliser à (dB)</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/gain_ui.py" line="145"/>
       <source>Processing files ...</source>
-      <translation type="unfinished">Processing files ...</translation>
+      <translation>Fichier en cours de traitement...</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="56"/>
       <source>Calculate</source>
-      <translation type="unfinished">Calculate</translation>
+      <translation>Calculer</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="61"/>
       <source>Reset all</source>
-      <translation type="unfinished">Reset all</translation>
+      <translation>Tout réinitialiser</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="66"/>
       <source>Reset selected</source>
-      <translation type="unfinished">Reset selected</translation>
+      <translation>Réinitialiser la séléction</translation>
     </message>
   </context>
   <context>
@@ -2428,12 +2428,12 @@
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="243"/>
       <source>Applied gain for: {}</source>
-      <translation type="unfinished">Applied gain for: {}</translation>
+      <translation>Gain appliqué pour : {}</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="249"/>
       <source>Discarded gain for: {}</source>
-      <translation type="unfinished">Discarded gain for: {}</translation>
+      <translation>Gain annulé pour : {}</translation>
     </message>
   </context>
   <context>
@@ -2441,17 +2441,17 @@
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="223"/>
       <source>Gain processing stopped by user.</source>
-      <translation type="unfinished">Gain processing stopped by user.</translation>
+      <translation>Traitement des gains arrêté par l'utilisateur.</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="288"/>
       <source>Started gain calculation for: {}</source>
-      <translation type="unfinished">Started gain calculation for: {}</translation>
+      <translation>Calcul de gain commencé pour : {}</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="323"/>
       <source>Gain calculated for: {}</source>
-      <translation type="unfinished">Gain calculated for: {}</translation>
+      <translation>Gain calculé pour : {}</translation>
     </message>
   </context>
   <context>
@@ -2459,12 +2459,12 @@
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="99"/>
       <source>Cue</source>
-      <translation type="unfinished">Cue</translation>
+      <translation>Go</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="100"/>
       <source>Click to select</source>
-      <translation type="unfinished">Click to select</translation>
+      <translation>Cliquer pour sélectionner</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="101"/>
