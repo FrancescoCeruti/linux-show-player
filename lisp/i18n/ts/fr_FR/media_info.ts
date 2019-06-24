@@ -16,7 +16,7 @@
     <message>
       <location filename="../../../plugins/media_info/media_info.py" line="140"/>
       <source>Info</source>
-      <translation type="unfinished">Info</translation>
+      <translation>Information</translation>
     </message>
     <message>
       <location filename="../../../plugins/media_info/media_info.py" line="140"/>
@@ -26,7 +26,7 @@
     <message>
       <location filename="../../../plugins/media_info/media_info.py" line="70"/>
       <source>Warning</source>
-      <translation type="unfinished">Warning</translation>
+      <translation>Avertissement</translation>
     </message>
   </context>
 </TS>
