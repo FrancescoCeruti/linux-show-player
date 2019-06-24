@@ -60,7 +60,7 @@
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="172"/>
       <source>Show seek-bars</source>
-      <translation type="unfinished">Show seek-bars</translation>
+      <translation>Montrer la barre de recherche</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="176"/>
@@ -70,12 +70,12 @@
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="115"/>
       <source>Enable selection mode</source>
-      <translation type="unfinished">Enable selection mode</translation>
+      <translation>Activer le mode de sélection</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="125"/>
       <source>Use fade (buttons)</source>
-      <translation type="unfinished">Use fade (buttons)</translation>
+      <translation>Utiliser le fondu (boutons)</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="128"/>
@@ -110,7 +110,7 @@
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="179"/>
       <source>Selection mode</source>
-      <translation type="unfinished">Selection mode</translation>
+      <translation>Mode de sélection</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/control_buttons.py" line="57"/>
@@ -135,12 +135,12 @@
     <message>
       <location filename="../../../plugins/list_layout/control_buttons.py" line="64"/>
       <source>Fade-Out all</source>
-      <translation type="unfinished">Fade-Out all</translation>
+      <translation>Tout arrêter en fondu</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/control_buttons.py" line="65"/>
       <source>Fade-In all</source>
-      <translation type="unfinished">Fade-In all</translation>
+      <translation>Tout démarrer en fondu</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="140"/>
@@ -165,22 +165,22 @@
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="119"/>
       <source>GO Key:</source>
-      <translation type="unfinished">GO Key:</translation>
+      <translation>Touche GO:</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="120"/>
       <source>GO Action:</source>
-      <translation type="unfinished">GO Action:</translation>
+      <translation>Action de GO:</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="121"/>
       <source>GO minimum interval (ms):</source>
-      <translation type="unfinished">GO minimum interval (ms):</translation>
+      <translation>Intervalle minimum de GO (ms):</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="352"/>
       <source>Copy of {}</source>
-      <translation type="unfinished">Copy of {}</translation>
+      <translation>Copie de {}</translation>
     </message>
   </context>
   <context>
@@ -193,7 +193,7 @@
     <message>
       <location filename="../../../plugins/list_layout/list_view.py" line="80"/>
       <source>Pre wait</source>
-      <translation type="unfinished">Pre wait</translation>
+      <translation>Attente avant</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/list_view.py" line="83"/>
@@ -203,7 +203,7 @@
     <message>
       <location filename="../../../plugins/list_layout/list_view.py" line="86"/>
       <source>Post wait</source>
-      <translation type="unfinished">Post wait</translation>
+      <translation>Attente après</translation>
     </message>
   </context>
   <context>
@@ -224,7 +224,7 @@
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="37"/>
       <source>List Layout</source>
-      <translation type="unfinished">List Layout</translation>
+      <translation>Disposition en liste</translation>
     </message>
   </context>
 </TS>
