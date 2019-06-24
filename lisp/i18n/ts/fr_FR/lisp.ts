@@ -2733,22 +2733,22 @@
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="70"/>
       <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
+      <translation>Supprimer</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="150"/>
       <source>Trigger</source>
-      <translation type="unfinished">Trigger</translation>
+      <translation>Déclencheur</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="150"/>
       <source>Cue</source>
-      <translation type="unfinished">Cue</translation>
+      <translation>Go</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="150"/>
       <source>Action</source>
-      <translation type="unfinished">Action</translation>
+      <translation>Action</translation>
     </message>
   </context>
   <context>
@@ -2756,7 +2756,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="83"/>
       <source>Source</source>
-      <translation type="unfinished">Source</translation>
+      <translation>Source</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="84"/>
