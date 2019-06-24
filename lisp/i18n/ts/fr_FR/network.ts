@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/network/server.py" line="48"/>
       <source>Stop serving network API</source>
-      <translation type="unfinished">Stop serving network API</translation>
+      <translation>Arrêter l'API de service réseau</translation>
     </message>
   </context>
   <context>
@@ -14,7 +14,7 @@
     <message>
       <location filename="../../../plugins/network/server.py" line="50"/>
       <source>Network API server stopped working.</source>
-      <translation type="unfinished">Network API server stopped working.</translation>
+      <translation>Le serveur d'API réseau a cessé de fonctionner.</translation>
     </message>
   </context>
   <context>
@@ -22,7 +22,7 @@
     <message>
       <location filename="../../../plugins/network/api/__init__.py" line="14"/>
       <source>New end-point: {}</source>
-      <translation type="unfinished">New end-point: {}</translation>
+      <translation>Nouveau point d'arrêt : {}</translation>
     </message>
   </context>
   <context>
@@ -30,7 +30,7 @@
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="72"/>
       <source>Host discovery</source>
-      <translation type="unfinished">Host discovery</translation>
+      <translation>Découverte d'hôte</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="149"/>
@@ -40,7 +40,7 @@
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="150"/>
       <source>Discover hosts</source>
-      <translation type="unfinished">Discover hosts</translation>
+      <translation>Découvrir les hôtes</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="153"/>
