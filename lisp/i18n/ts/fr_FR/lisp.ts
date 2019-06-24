@@ -1589,27 +1589,27 @@
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="58"/>
       <source>Pitch Bend Change</source>
-      <translation type="unfinished">Pitch Bend Change</translation>
+      <translation>Changement de courbe du pitch</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="59"/>
       <source>Song Select</source>
-      <translation type="unfinished">Song Select</translation>
+      <translation>Sélection de musique</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="60"/>
       <source>Song Position</source>
-      <translation type="unfinished">Song Position</translation>
+      <translation>Position de musique</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="61"/>
       <source>Start</source>
-      <translation type="unfinished">Start</translation>
+      <translation>Démarrer</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="62"/>
       <source>Stop</source>
-      <translation type="unfinished">Stop</translation>
+      <translation>Stop</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="63"/>
@@ -2050,7 +2050,7 @@
     <message>
       <location filename="../../../plugins/osc/osc_server.py" line="119"/>
       <source>Message from {} -&gt; path: &quot;{}&quot; args: {}</source>
-      <translation type="unfinished">Message from {} -&gt; path: &quot;{}&quot; args: {}</translation>
+      <translation>Message de {} -&gt; chemin : &quot;{}&quot; paramètres: {}</translation>
     </message>
   </context>
   <context>
@@ -2058,7 +2058,7 @@
     <message>
       <location filename="../../../plugins/osc/osc_server.py" line="99"/>
       <source>Cannot start OSC sever</source>
-      <translation type="unfinished">Cannot start OSC sever</translation>
+      <translation>Impossible de démarrer le serveur OSC</translation>
     </message>
   </context>
   <context>
@@ -2066,12 +2066,12 @@
     <message>
       <location filename="../../../plugins/osc/osc_server.py" line="93"/>
       <source>OSC server started at {}</source>
-      <translation type="unfinished">OSC server started at {}</translation>
+      <translation>Serveur OSC démarré à {}</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_server.py" line="111"/>
       <source>OSC server stopped</source>
-      <translation type="unfinished">OSC server stopped</translation>
+      <translation>Serveur OSC arrêté</translation>
     </message>
   </context>
   <context>
@@ -2079,22 +2079,22 @@
     <message>
       <location filename="../../../plugins/osc/osc_settings.py" line="43"/>
       <source>OSC Settings</source>
-      <translation type="unfinished">OSC Settings</translation>
+      <translation>Paramètres OSC</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_settings.py" line="50"/>
       <source>Input Port:</source>
-      <translation type="unfinished">Input Port:</translation>
+      <translation>Port d'entrée :</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_settings.py" line="59"/>
       <source>Output Port:</source>
-      <translation type="unfinished">Output Port:</translation>
+      <translation>Port de sortie :</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_settings.py" line="68"/>
       <source>Hostname:</source>
-      <translation type="unfinished">Hostname:</translation>
+      <translation>Nom d'hôte :</translation>
     </message>
   </context>
   <context>
@@ -2102,12 +2102,12 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/pitch.py" line="64"/>
       <source>Pitch</source>
-      <translation type="unfinished">Pitch</translation>
+      <translation>Hauteur de note</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/pitch.py" line="83"/>
       <source>{0:+} semitones</source>
-      <translation type="unfinished">{0:+} semitones</translation>
+      <translation>{0:+} demi-tons</translation>
     </message>
   </context>
   <context>
@@ -2115,17 +2115,17 @@
     <message>
       <location filename="../../../plugins/__init__.py" line="63"/>
       <source>Failed to load &quot;{}&quot;</source>
-      <translation type="unfinished">Failed to load &quot;{}&quot;</translation>
+      <translation>Échec du chargement de &quot;{}&quot;</translation>
     </message>
     <message>
       <location filename="../../../plugins/__init__.py" line="160"/>
       <source>Failed to terminate plugin: &quot;{}&quot;</source>
-      <translation type="unfinished">Failed to terminate plugin: &quot;{}&quot;</translation>
+      <translation>Impossible de mettre fin au plugin : &quot;{}&quot;</translation>
     </message>
     <message>
       <location filename="../../../plugins/__init__.py" line="175"/>
       <source>the requested plugin is not loaded: {}</source>
-      <translation type="unfinished">the requested plugin is not loaded: {}</translation>
+      <translation>le greffon demandé n'est pas chargé : {}</translation>
     </message>
   </context>
   <context>
@@ -2133,12 +2133,12 @@
     <message>
       <location filename="../../../plugins/__init__.py" line="126"/>
       <source>Plugin loaded: &quot;{}&quot;</source>
-      <translation type="unfinished">Plugin loaded: &quot;{}&quot;</translation>
+      <translation>Greffon chargé : &quot;{}&quot;</translation>
     </message>
     <message>
       <location filename="../../../plugins/__init__.py" line="154"/>
       <source>Plugin terminated: &quot;{}&quot;</source>
-      <translation type="unfinished">Plugin terminated: &quot;{}&quot;</translation>
+      <translation>Le greffon est arrêté : &quot;{}&quot;</translation>
     </message>
   </context>
   <context>
@@ -2146,7 +2146,7 @@
     <message>
       <location filename="../../../plugins/__init__.py" line="87"/>
       <source>Cannot satisfy dependencies for: {}</source>
-      <translation type="unfinished">Cannot satisfy dependencies for: {}</translation>
+      <translation>Impossible de satisfaire les dépendances pour : {}</translation>
     </message>
   </context>
   <context>
@@ -2154,12 +2154,12 @@
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="223"/>
       <source>Create Cue</source>
-      <translation type="unfinished">Create Cue</translation>
+      <translation>Créer un go</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="224"/>
       <source>Load on selected Cues</source>
-      <translation type="unfinished">Load on selected Cues</translation>
+      <translation>Charger les go sélectionnés</translation>
     </message>
   </context>
   <context>
@@ -2167,7 +2167,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/preset_src.py" line="36"/>
       <source>Presets</source>
-      <translation type="unfinished">Presets</translation>
+      <translation>Pré-réglages</translation>
     </message>
   </context>
   <context>
@@ -2175,17 +2175,17 @@
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="67"/>
       <source>Cannot scan presets</source>
-      <translation type="unfinished">Cannot scan presets</translation>
+      <translation>Impossible de charger les prés-réglages</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="71"/>
       <source>Error while deleting preset &quot;{}&quot;</source>
-      <translation type="unfinished">Error while deleting preset &quot;{}&quot;</translation>
+      <translation>Erreur lors de la suppression du pré-réglage &quot;{}&quot;</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="78"/>
       <source>Cannot load preset &quot;{}&quot;</source>
-      <translation type="unfinished">Cannot load preset &quot;{}&quot;</translation>
+      <translation>Impossible de charger le pré-réglage &quot;{}&quot;</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="84"/>
