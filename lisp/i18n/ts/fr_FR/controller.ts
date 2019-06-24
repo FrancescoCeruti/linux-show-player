@@ -67,7 +67,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="106"/>
       <source>Capture</source>
-      <translation type="unfinished">Capture</translation>
+      <translation>Capture</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="131"/>
@@ -90,7 +90,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="193"/>
       <source>Path</source>
-      <translation type="unfinished">Path</translation>
+      <translation>Chemin d'accès</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="193"/>
@@ -110,7 +110,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="222"/>
       <source>OSC Capture</source>
-      <translation type="unfinished">OSC Capture</translation>
+      <translation>Capture OSC</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="251"/>
@@ -125,7 +125,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="253"/>
       <source>Capture</source>
-      <translation type="unfinished">Capture</translation>
+      <translation>Capture</translation>
     </message>
   </context>
   <context>
@@ -156,7 +156,7 @@
     <message>
       <location filename="../../../plugins/controller/common.py" line="43"/>
       <source>Stop all cues</source>
-      <translation>Arrêter toutes les cues</translation>
+      <translation>Arrêter toutes les go</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="44"/>
@@ -176,22 +176,22 @@
     <message>
       <location filename="../../../plugins/controller/common.py" line="51"/>
       <source>Fade-out all cues</source>
-      <translation type="unfinished">Fade-out all cues</translation>
+      <translation>Arrêter en fondu tous les go</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="54"/>
       <source>Fade-in all cues</source>
-      <translation type="unfinished">Fade-in all cues</translation>
+      <translation>Démarrer en fondu tous les go</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="57"/>
       <source>Move standby forward</source>
-      <translation type="unfinished">Move standby forward</translation>
+      <translation>Avancer en mode veille</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="60"/>
       <source>Move standby back</source>
-      <translation type="unfinished">Move standby back</translation>
+      <translation>Reculer en mode veille</translation>
     </message>
   </context>
   <context>
@@ -225,7 +225,7 @@
     <message>
       <location filename="../../../plugins/controller/controller_settings.py" line="25"/>
       <source>Cue Control</source>
-      <translation>Contrôle de la cue</translation>
+      <translation>Contrôle du go</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="46"/>
@@ -240,12 +240,12 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="181"/>
       <source>OSC Controls</source>
-      <translation type="unfinished">OSC Controls</translation>
+      <translation>Contrôles OSC</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/controller_settings.py" line="41"/>
       <source>Layout Controls</source>
-      <translation type="unfinished">Layout Controls</translation>
+      <translation>Contrôles d'agencement</translation>
     </message>
   </context>
 </TS>
