@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="223"/>
       <source>Create Cue</source>
-      <translation>Créer un cue</translation>
+      <translation>Créer un go</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="224"/>
@@ -119,17 +119,17 @@
     <message>
       <location filename="../../../plugins/presets/presets.py" line="72"/>
       <source>Load on cue</source>
-      <translation type="unfinished">Load on cue</translation>
+      <translation>Charger au go</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets.py" line="72"/>
       <source>Load on selected cues</source>
-      <translation type="unfinished">Load on selected cues</translation>
+      <translation>Charger les go sélectionnés</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="309"/>
       <source>Cannot create a cue from this preset: {}</source>
-      <translation type="unfinished">Cannot create a cue from this preset: {}</translation>
+      <translation>Impossible de créer un go depuis ce pré-réglage : {}</translation>
     </message>
   </context>
 </TS>
