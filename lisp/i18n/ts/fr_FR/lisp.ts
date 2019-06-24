@@ -2761,37 +2761,37 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="84"/>
       <source>Find File</source>
-      <translation type="unfinished">Find File</translation>
+      <translation>Trouver le fichier</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="85"/>
       <source>Buffering</source>
-      <translation type="unfinished">Buffering</translation>
+      <translation>Mémoire tampon</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="86"/>
       <source>Use Buffering</source>
-      <translation type="unfinished">Use Buffering</translation>
+      <translation>Utiliser la mémoire tampon</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="89"/>
       <source>Attempt download on network streams</source>
-      <translation type="unfinished">Attempt download on network streams</translation>
+      <translation>Essai de téléchargement via le réseau</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="92"/>
       <source>Buffer size (-1 default value)</source>
-      <translation type="unfinished">Buffer size (-1 default value)</translation>
+      <translation>Taille du tampon (valeur par défaut -1)</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="131"/>
       <source>Choose file</source>
-      <translation type="unfinished">Choose file</translation>
+      <translation>Choisir un fichier</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="131"/>
       <source>All files</source>
-      <translation type="unfinished">All files</translation>
+      <translation>Tous les fichiers</translation>
     </message>
   </context>
   <context>
@@ -2799,12 +2799,12 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/user_element.py" line="52"/>
       <source>User defined elements</source>
-      <translation type="unfinished">User defined elements</translation>
+      <translation>Éléments définis par l'utilisateur</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/user_element.py" line="55"/>
       <source>Only for advanced user!</source>
-      <translation type="unfinished">Only for advanced user!</translation>
+      <translation>Seulement pour utilisateurs avancés !</translation>
     </message>
   </context>
   <context>
@@ -2812,27 +2812,27 @@
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="199"/>
       <source>Cue</source>
-      <translation type="unfinished">Cue</translation>
+      <translation>Go</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="200"/>
       <source>Click to select</source>
-      <translation type="unfinished">Click to select</translation>
+      <translation>Cliquer pour sélectionner</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="201"/>
       <source>Not selected</source>
-      <translation type="unfinished">Not selected</translation>
+      <translation>Non sélectionné</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="202"/>
       <source>Volume to reach</source>
-      <translation type="unfinished">Volume to reach</translation>
+      <translation>Volume à atteindre</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="203"/>
       <source>Fade</source>
-      <translation type="unfinished">Fade</translation>
+      <translation>Fondu</translation>
     </message>
   </context>
   <context>
@@ -2840,7 +2840,7 @@
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="129"/>
       <source>Error during cue execution.</source>
-      <translation type="unfinished">Error during cue execution.</translation>
+      <translation>Erreur lors de l'exécution de la cue.</translation>
     </message>
   </context>
   <context>
@@ -2848,17 +2848,17 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/volume.py" line="83"/>
       <source>Volume</source>
-      <translation type="unfinished">Volume</translation>
+      <translation>Volume</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/volume.py" line="85"/>
       <source>Normalized volume</source>
-      <translation type="unfinished">Normalized volume</translation>
+      <translation>Volume normalisé</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/volume.py" line="89"/>
       <source>Reset</source>
-      <translation type="unfinished">Reset</translation>
+      <translation>Réinitialiser</translation>
     </message>
   </context>
 </TS>
