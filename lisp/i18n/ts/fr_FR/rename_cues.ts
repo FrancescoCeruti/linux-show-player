@@ -16,7 +16,7 @@
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="55"/>
       <source>Current</source>
-      <translation>Courant</translation>
+      <translation>Actuel</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="55"/>
@@ -26,7 +26,7 @@
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="72"/>
       <source>Capitalize</source>
-      <translation type="unfinished">Capitalize</translation>
+      <translation>Convertir en majuscules</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="77"/>
@@ -46,7 +46,7 @@
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="92"/>
       <source>Add numbering</source>
-      <translation type="unfinished">Add numbering</translation>
+      <translation>Ajouter un numéro</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="101"/>
@@ -69,7 +69,7 @@
     <message>
       <location filename="../../../plugins/rename_cues/command.py" line="44"/>
       <source>Renamed {number} cues</source>
-      <translation type="unfinished">Renamed {number} cues</translation>
+      <translation>Renommer {number} go</translation>
     </message>
   </context>
   <context>
