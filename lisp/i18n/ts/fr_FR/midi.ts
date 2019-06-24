@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/midi/midi.py" line="45"/>
       <source>Integration cues</source>
-      <translation type="unfinished">Integration cues</translation>
+      <translation>Go d'intégration</translation>
     </message>
   </context>
   <context>
@@ -14,7 +14,7 @@
     <message>
       <location filename="../../../plugins/midi/midi_cue.py" line="36"/>
       <source>MIDI Cue</source>
-      <translation type="unfinished">MIDI Cue</translation>
+      <translation>Go MIDI</translation>
     </message>
   </context>
   <context>
@@ -40,17 +40,17 @@
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="68"/>
       <source>Note</source>
-      <translation type="unfinished">Note</translation>
+      <translation>Commentaire</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="69"/>
       <source>Velocity</source>
-      <translation type="unfinished">Velocity</translation>
+      <translation>Vitesse</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="70"/>
       <source>Control</source>
-      <translation type="unfinished">Control</translation>
+      <translation>Commandes</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="71"/>
@@ -70,7 +70,7 @@
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="74"/>
       <source>Pitch</source>
-      <translation type="unfinished">Pitch</translation>
+      <translation>Hauteur de note</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="75"/>
@@ -83,37 +83,37 @@
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="50"/>
       <source>Note ON</source>
-      <translation type="unfinished">Note ON</translation>
+      <translation>Note ON</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="51"/>
       <source>Note OFF</source>
-      <translation type="unfinished">Note OFF</translation>
+      <translation>Note OFF</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="52"/>
       <source>Polyphonic After-touch</source>
-      <translation type="unfinished">Polyphonic After-touch</translation>
+      <translation>Post-traitement polyphonique</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="53"/>
       <source>Control/Mode Change</source>
-      <translation type="unfinished">Control/Mode Change</translation>
+      <translation>Contrôle/Mode de changement</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="56"/>
       <source>Program Change</source>
-      <translation type="unfinished">Program Change</translation>
+      <translation>Programme de changement</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="57"/>
       <source>Channel After-touch</source>
-      <translation type="unfinished">Channel After-touch</translation>
+      <translation>Canal d'après-toucher</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="58"/>
       <source>Pitch Bend Change</source>
-      <translation type="unfinished">Pitch Bend Change</translation>
+      <translation>Changement de courbe du pitch</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="59"/>
@@ -169,7 +169,7 @@
     <message>
       <location filename="../../../plugins/midi/midi_cue.py" line="53"/>
       <source>MIDI Settings</source>
-      <translation type="unfinished">MIDI Settings</translation>
+      <translation>Préférences MIDI</translation>
     </message>
   </context>
 </TS>
