@@ -150,7 +150,7 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="44"/>
       <source>Cart Layout</source>
-      <translation type="unfinished">Cart Layout</translation>
+      <translation>Disposition en carte</translation>
     </message>
   </context>
   <context>
@@ -181,7 +181,7 @@
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="33"/>
       <source>Cart Layout</source>
-      <translation type="unfinished">Cart Layout</translation>
+      <translation>Disposition en carte</translation>
     </message>
   </context>
 </TS>
