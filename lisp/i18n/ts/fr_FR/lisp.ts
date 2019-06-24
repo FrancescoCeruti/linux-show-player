@@ -1498,12 +1498,12 @@
     <message>
       <location filename="../../../plugins/midi/widgets.py" line="88"/>
       <source>MIDI Message</source>
-      <translation type="unfinished">MIDI Message</translation>
+      <translation>Message MIDI</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/widgets.py" line="89"/>
       <source>Message type</source>
-      <translation type="unfinished">Message type</translation>
+      <translation>Type de message</translation>
     </message>
   </context>
   <context>
@@ -1511,47 +1511,47 @@
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="67"/>
       <source>Channel</source>
-      <translation type="unfinished">Channel</translation>
+      <translation>Canal</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="68"/>
       <source>Note</source>
-      <translation type="unfinished">Note</translation>
+      <translation>Commentaire</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="69"/>
       <source>Velocity</source>
-      <translation type="unfinished">Velocity</translation>
+      <translation>Vitesse</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="70"/>
       <source>Control</source>
-      <translation type="unfinished">Control</translation>
+      <translation>Contrôle</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="71"/>
       <source>Program</source>
-      <translation type="unfinished">Program</translation>
+      <translation>Programme</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="72"/>
       <source>Value</source>
-      <translation type="unfinished">Value</translation>
+      <translation>Valeur</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="73"/>
       <source>Song</source>
-      <translation type="unfinished">Song</translation>
+      <translation>Musique</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="74"/>
       <source>Pitch</source>
-      <translation type="unfinished">Pitch</translation>
+      <translation>Hauteur de note</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="75"/>
       <source>Position</source>
-      <translation type="unfinished">Position</translation>
+      <translation>Position</translation>
     </message>
   </context>
   <context>
@@ -1559,32 +1559,32 @@
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="50"/>
       <source>Note ON</source>
-      <translation type="unfinished">Note ON</translation>
+      <translation>Note ON</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="51"/>
       <source>Note OFF</source>
-      <translation type="unfinished">Note OFF</translation>
+      <translation>Note OFF</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="52"/>
       <source>Polyphonic After-touch</source>
-      <translation type="unfinished">Polyphonic After-touch</translation>
+      <translation>Post-traitement polyphonique</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="53"/>
       <source>Control/Mode Change</source>
-      <translation type="unfinished">Control/Mode Change</translation>
+      <translation>Changement de contrôle/mode</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="56"/>
       <source>Program Change</source>
-      <translation type="unfinished">Program Change</translation>
+      <translation>Programme de changement</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="57"/>
       <source>Channel After-touch</source>
-      <translation type="unfinished">Channel After-touch</translation>
+      <translation>Canal après-toucher</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="58"/>
