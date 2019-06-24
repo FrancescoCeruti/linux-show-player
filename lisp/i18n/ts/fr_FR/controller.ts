@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/controller/controller.py" line="165"/>
       <source>Cannot load controller protocol: &quot;{}&quot;</source>
-      <translation type="unfinished">Cannot load controller protocol: &quot;{}&quot;</translation>
+      <translation>Impossible de charger le protocole du contrôleur : &quot;{}&quot;</translation>
     </message>
   </context>
   <context>
@@ -24,7 +24,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/keyboard.py" line="55"/>
       <source>Shortcut</source>
-      <translation type="unfinished">Shortcut</translation>
+      <translation>Raccourci</translation>
     </message>
   </context>
   <context>
@@ -47,7 +47,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="59"/>
       <source>Note</source>
-      <translation type="unfinished">Note</translation>
+      <translation>Commentaire</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="59"/>
