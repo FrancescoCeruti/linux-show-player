@@ -54,12 +54,12 @@
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="243"/>
       <source>Applied gain for: {}</source>
-      <translation type="unfinished">Applied gain for: {}</translation>
+      <translation>Gain appliqué pour : {}</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="249"/>
       <source>Discarded gain for: {}</source>
-      <translation type="unfinished">Discarded gain for: {}</translation>
+      <translation>Gain annulé pour : {}</translation>
     </message>
   </context>
   <context>
@@ -67,17 +67,17 @@
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="223"/>
       <source>Gain processing stopped by user.</source>
-      <translation type="unfinished">Gain processing stopped by user.</translation>
+      <translation>Traitement des gains arrêté par l'utilisateur.</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="288"/>
       <source>Started gain calculation for: {}</source>
-      <translation type="unfinished">Started gain calculation for: {}</translation>
+      <translation>Calcul de gain commencé pour : {}</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="323"/>
       <source>Gain calculated for: {}</source>
-      <translation type="unfinished">Gain calculated for: {}</translation>
+      <translation>Gain calculé pour : {}</translation>
     </message>
   </context>
 </TS>
