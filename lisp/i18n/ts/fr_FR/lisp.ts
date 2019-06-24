@@ -498,7 +498,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="193"/>
       <source>Actions</source>
-      <translation type="unfinished">Actions</translation>
+      <translation>Actions</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="222"/>
@@ -518,7 +518,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="253"/>
       <source>Capture</source>
-      <translation type="unfinished">Capture</translation>
+      <translation>Capture</translation>
     </message>
   </context>
   <context>
@@ -567,32 +567,32 @@
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="26"/>
       <source>Faded Start</source>
-      <translation type="unfinished">Faded Start</translation>
+      <translation>Fondu de début</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="27"/>
       <source>Faded Resume</source>
-      <translation type="unfinished">Faded Resume</translation>
+      <translation>Reprise en fondu</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="28"/>
       <source>Faded Pause</source>
-      <translation type="unfinished">Faded Pause</translation>
+      <translation>Pause en fondu</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="29"/>
       <source>Faded Stop</source>
-      <translation type="unfinished">Faded Stop</translation>
+      <translation>Stoppé en fondu</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="30"/>
       <source>Faded Interrupt</source>
-      <translation type="unfinished">Faded Interrupt</translation>
+      <translation>Interruption du fondu</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="34"/>
       <source>Resume</source>
-      <translation type="unfinished">Resume</translation>
+      <translation>Reprendre</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="37"/>
@@ -648,17 +648,17 @@
     <message>
       <location filename="../../../plugins/action_cues/stop_all.py" line="31"/>
       <source>Action cues</source>
-      <translation type="unfinished">Action cues</translation>
+      <translation>Go d'action</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc.py" line="44"/>
       <source>Integration cues</source>
-      <translation type="unfinished">Integration cues</translation>
+      <translation>Go d'intégration</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="266"/>
       <source>Misc cues</source>
-      <translation type="unfinished">Misc cues</translation>
+      <translation>Go divers</translation>
     </message>
   </context>
   <context>
@@ -666,12 +666,12 @@
     <message>
       <location filename="../../../command/cue.py" line="46"/>
       <source>Cue settings changed: &quot;{}&quot;</source>
-      <translation type="unfinished">Cue settings changed: &quot;{}&quot;</translation>
+      <translation>Paramètres du go modifiés : &quot;{}&quot;</translation>
     </message>
     <message>
       <location filename="../../../command/cue.py" line="75"/>
       <source>Cues settings changed.</source>
-      <translation type="unfinished">Cues settings changed.</translation>
+      <translation>Paramètres de go modifiés.</translation>
     </message>
   </context>
   <context>
@@ -684,42 +684,42 @@
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="39"/>
       <source>Index Action</source>
-      <translation type="unfinished">Index Action</translation>
+      <translation>Action d'index</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="40"/>
       <source>Seek Cue</source>
-      <translation type="unfinished">Seek Cue</translation>
+      <translation>Recherche de Go</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="54"/>
       <source>Volume Control</source>
-      <translation type="unfinished">Volume Control</translation>
+      <translation>Contrôle du Volume</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="40"/>
       <source>Command Cue</source>
-      <translation type="unfinished">Command Cue</translation>
+      <translation>Go de commande</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="41"/>
       <source>Collection Cue</source>
-      <translation type="unfinished">Collection Cue</translation>
+      <translation>Liste de Go</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/stop_all.py" line="30"/>
       <source>Stop-All</source>
-      <translation type="unfinished">Stop-All</translation>
+      <translation>Tout arrêter</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_cue.py" line="36"/>
       <source>MIDI Cue</source>
-      <translation type="unfinished">MIDI Cue</translation>
+      <translation>Go MIDI</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="64"/>
       <source>OSC Cue</source>
-      <translation type="unfinished">OSC Cue</translation>
+      <translation>Go OSC</translation>
     </message>
   </context>
   <context>
@@ -732,22 +732,22 @@
     <message>
       <location filename="../../../ui/widgets/cue_next_actions.py" line="26"/>
       <source>Trigger after the end</source>
-      <translation type="unfinished">Trigger after the end</translation>
+      <translation>Déclencher après la fin</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_next_actions.py" line="29"/>
       <source>Trigger after post wait</source>
-      <translation type="unfinished">Trigger after post wait</translation>
+      <translation>Déclencher après l'attente</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_next_actions.py" line="32"/>
       <source>Select after the end</source>
-      <translation type="unfinished">Select after the end</translation>
+      <translation>Sélectionner après la fin</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_next_actions.py" line="35"/>
       <source>Select after post wait</source>
-      <translation type="unfinished">Select after post wait</translation>
+      <translation>Sélectionner après l'attente</translation>
     </message>
   </context>
   <context>
@@ -800,12 +800,12 @@
     <message>
       <location filename="../../../ui/settings/app_pages/cue.py" line="53"/>
       <source>Interrupt fade</source>
-      <translation type="unfinished">Interrupt fade</translation>
+      <translation>Interrompre le fondu</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/cue.py" line="54"/>
       <source>Fade actions</source>
-      <translation type="unfinished">Fade actions</translation>
+      <translation>Action de fondu</translation>
     </message>
   </context>
   <context>
@@ -836,22 +836,22 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/db_meter.py" line="84"/>
       <source>DbMeter settings</source>
-      <translation type="unfinished">DbMeter settings</translation>
+      <translation>Préférences du mesureur de dB</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/db_meter.py" line="85"/>
       <source>Time between levels (ms)</source>
-      <translation type="unfinished">Time between levels (ms)</translation>
+      <translation>Temps entre les niveaux (en ms)</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/db_meter.py" line="88"/>
       <source>Peak ttl (ms)</source>
-      <translation type="unfinished">Peak ttl (ms)</translation>
+      <translation>Crête TTL (en ms)</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/db_meter.py" line="89"/>
       <source>Peak falloff (dB/sec)</source>
-      <translation type="unfinished">Peak falloff (dB/sec)</translation>
+      <translation>Pointe maximale (en dB/sec)</translation>
     </message>
   </context>
   <context>
@@ -859,7 +859,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/equalizer10.py" line="52"/>
       <source>10 Bands Equalizer (IIR)</source>
-      <translation type="unfinished">10 Bands Equalizer (IIR)</translation>
+      <translation>Égaliseur 10 bandes (IIR)</translation>
     </message>
   </context>
   <context>
@@ -890,7 +890,7 @@
     <message>
       <location filename="../../../ui/widgets/fades.py" line="97"/>
       <source>Curve:</source>
-      <translation type="unfinished">Curve:</translation>
+      <translation>Courbe :</translation>
     </message>
   </context>
   <context>
@@ -941,22 +941,22 @@
     <message>
       <location filename="../../../plugins/controller/common.py" line="51"/>
       <source>Fade-out all cues</source>
-      <translation type="unfinished">Fade-out all cues</translation>
+      <translation>Arrêter en fondu tous les go</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="54"/>
       <source>Fade-in all cues</source>
-      <translation type="unfinished">Fade-in all cues</translation>
+      <translation>Démarrer en fondu tous les go</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="57"/>
       <source>Move standby forward</source>
-      <translation type="unfinished">Move standby forward</translation>
+      <translation>Avancer en mode veille</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="60"/>
       <source>Move standby back</source>
-      <translation type="unfinished">Move standby back</translation>
+      <translation>Reculer en mode veille</translation>
     </message>
   </context>
   <context>
@@ -964,12 +964,12 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_backend.py" line="74"/>
       <source>Audio cue (from file)</source>
-      <translation type="unfinished">Audio cue (from file)</translation>
+      <translation>Go audio (depuis un fichier)</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/gst_backend.py" line="114"/>
       <source>Select media files</source>
-      <translation type="unfinished">Select media files</translation>
+      <translation>Sélectionner des fichiers médias</translation>
     </message>
   </context>
   <context>
@@ -977,7 +977,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_media.py" line="238"/>
       <source>Cannot create pipeline element: &quot;{}&quot;</source>
-      <translation type="unfinished">Cannot create pipeline element: &quot;{}&quot;</translation>
+      <translation>Impossible de créer l'élément tunnel : &quot;{}&quot;</translation>
     </message>
   </context>
   <context>
@@ -985,7 +985,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_media_settings.py" line="50"/>
       <source>Change Pipeline</source>
-      <translation type="unfinished">Change Pipeline</translation>
+      <translation>Changer le tunnel</translation>
     </message>
   </context>
   <context>
@@ -993,7 +993,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_media.py" line="232"/>
       <source>Invalid pipeline element: &quot;{}&quot;</source>
-      <translation type="unfinished">Invalid pipeline element: &quot;{}&quot;</translation>
+      <translation>Élément tunnel incorrect : &quot;{}&quot;</translation>
     </message>
   </context>
   <context>
@@ -1001,7 +1001,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_pipe_edit.py" line="166"/>
       <source>Edit Pipeline</source>
-      <translation type="unfinished">Edit Pipeline</translation>
+      <translation>Modifier le tunnel</translation>
     </message>
   </context>
   <context>
@@ -1009,7 +1009,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_settings.py" line="44"/>
       <source>Pipeline</source>
-      <translation type="unfinished">Pipeline</translation>
+      <translation>Tunnel</translation>
     </message>
   </context>
   <context>
@@ -1017,7 +1017,7 @@
     <message>
       <location filename="../../../ui/widgets/hotkeyedit.py" line="124"/>
       <source>Press shortcut</source>
-      <translation type="unfinished">Press shortcut</translation>
+      <translation>Appuyez sur le raccourci</translation>
     </message>
   </context>
   <context>
@@ -1025,27 +1025,27 @@
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="67"/>
       <source>No suggestion</source>
-      <translation type="unfinished">No suggestion</translation>
+      <translation>Aucune suggestion</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="121"/>
       <source>Index</source>
-      <translation type="unfinished">Index</translation>
+      <translation>Index</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="122"/>
       <source>Use a relative index</source>
-      <translation type="unfinished">Use a relative index</translation>
+      <translation>Utiliser un index relatif</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="125"/>
       <source>Target index</source>
-      <translation type="unfinished">Target index</translation>
+      <translation>Index cible</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="128"/>
       <source>Action</source>
-      <translation type="unfinished">Action</translation>
+      <translation>Action</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="130"/>
