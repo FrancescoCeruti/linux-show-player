@@ -16,7 +16,7 @@
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="155"/>
       <source>Cue</source>
-      <translation type="unfinished">Cue</translation>
+      <translation>Stichwort</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="155"/>
@@ -98,7 +98,7 @@
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="121"/>
       <source>Index</source>
-      <translation type="unfinished">Index</translation>
+      <translation>Index</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="122"/>
