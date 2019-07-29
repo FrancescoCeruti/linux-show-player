@@ -41,52 +41,52 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="161"/>
       <source>Play</source>
-      <translation type="unfinished">Play</translation>
+      <translation>Start</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="161"/>
       <source>Pause</source>
-      <translation type="unfinished">Pause</translation>
+      <translation>Pause</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="161"/>
       <source>Stop</source>
-      <translation type="unfinished">Stop</translation>
+      <translation>Stop</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="174"/>
       <source>Reset volume</source>
-      <translation type="unfinished">Reset volume</translation>
+      <translation>Lautstärke zurücksetzen</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="185"/>
       <source>Add page</source>
-      <translation type="unfinished">Add page</translation>
+      <translation>Seite hinzufügen</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="238"/>
       <source>Add pages</source>
-      <translation type="unfinished">Add pages</translation>
+      <translation>Seiten hinzufügen</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="187"/>
       <source>Remove current page</source>
-      <translation type="unfinished">Remove current page</translation>
+      <translation>Aktuelle Seite entfernen</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="238"/>
       <source>Number of Pages:</source>
-      <translation type="unfinished">Number of Pages:</translation>
+      <translation>Anzahl der Seiten:</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="280"/>
       <source>Page {number}</source>
-      <translation type="unfinished">Page {number}</translation>
+      <translation>Seitenzahl {number}</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="482"/>
       <source>Warning</source>
-      <translation type="unfinished">Warning</translation>
+      <translation>Warnung</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="483"/>
