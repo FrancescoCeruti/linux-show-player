@@ -30,12 +30,12 @@
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="198"/>
       <source>Type</source>
-      <translation type="unfinished">Type</translation>
+      <translation>Typ</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="198"/>
       <source>Value</source>
-      <translation type="unfinished">Value</translation>
+      <translation>Wert</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="198"/>
@@ -55,12 +55,12 @@
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="254"/>
       <source>Add</source>
-      <translation type="unfinished">Add</translation>
+      <translation>Hinzufügen</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="255"/>
       <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
+      <translation>Entfernen</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="256"/>
@@ -132,7 +132,7 @@
     <message>
       <location filename="../../../plugins/osc/osc_settings.py" line="68"/>
       <source>Hostname:</source>
-      <translation type="unfinished">Hostname:</translation>
+      <translation>Hostname:</translation>
     </message>
   </context>
   <context>
