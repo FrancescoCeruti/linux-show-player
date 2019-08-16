@@ -34,9 +34,6 @@ class ListLayoutView(QWidget):
         self.listModel = listModel
 
         self.mainSplitter = QSplitter(Qt.Vertical, self)
-        self.mainSplitter.splitterMoved.connect(
-            lambda pos, index: print(pos, index)
-        )
         self.layout().addWidget(self.mainSplitter)
 
         self.topSplitter = QSplitter(self.mainSplitter)

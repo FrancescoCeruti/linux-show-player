@@ -121,5 +121,3 @@ class RunningCuesListWidget(QListWidget):
         width = self.viewport().width()
         for n in range(self.count()):
             self.itemWidget(self.item(n)).updateSize(width)
-
-        self.scroll
