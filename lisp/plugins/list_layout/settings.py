@@ -45,9 +45,6 @@ class ListLayoutSettings(SettingsPage):
         self.behaviorsGroup.setLayout(QVBoxLayout())
         self.layout().addWidget(self.behaviorsGroup)
 
-        self.showPlaying = QCheckBox(self.behaviorsGroup)
-        self.behaviorsGroup.layout().addWidget(self.showPlaying)
-
         self.showDbMeters = QCheckBox(self.behaviorsGroup)
         self.behaviorsGroup.layout().addWidget(self.showDbMeters)
 
@@ -107,7 +104,6 @@ class ListLayoutSettings(SettingsPage):
         self.behaviorsGroup.setTitle(
             translate("ListLayout", "Default behaviors")
         )
-        self.showPlaying.setText(translate("ListLayout", "Show playing cues"))
         self.showDbMeters.setText(translate("ListLayout", "Show dB-meters"))
         self.showAccurate.setText(translate("ListLayout", "Show accurate time"))
         self.showSeek.setText(translate("ListLayout", "Show seek-bars"))
@@ -131,7 +127,6 @@ class ListLayoutSettings(SettingsPage):
         self.interruptCueFade.setText(translate("ListLayout", "Interrupt Cue"))
 
     def loadSettings(self, settings):
-        self.showPlaying.setChecked(settings["show"]["playingCues"])
         self.showDbMeters.setChecked(settings["show"]["dBMeters"])
         self.showAccurate.setChecked(settings["show"]["accurateTime"])
         self.showSeek.setChecked(settings["show"]["seekSliders"])
@@ -153,7 +148,6 @@ class ListLayoutSettings(SettingsPage):
         return {
             "show": {
                 "accurateTime": self.showAccurate.isChecked(),
-                "playingCues": self.showPlaying.isChecked(),
                 "dBMeters": self.showDbMeters.isChecked(),
                 "seekBars": self.showSeek.isChecked(),
             },

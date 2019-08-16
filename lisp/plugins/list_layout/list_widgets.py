@@ -52,11 +52,15 @@ class NameWidget(QLabel):
         super().__init__(*args, **kwargs)
         self.setAttribute(Qt.WA_TranslucentBackground)
 
-        item.cue.changed("name").connect(self.__update, Connection.QtQueued)
-        self.__update(item.cue.name)
+        self._item = item
+        self._item.cue.changed("name").connect(
+            self.__update, Connection.QtQueued
+        )
 
-    def __update(self, newName):
-        self.setText(newName)
+        self.setText(self._item.cue.name)
+
+    def __update(self, text):
+        super().setText(text)
 
 
 class CueStatusIcons(QWidget):

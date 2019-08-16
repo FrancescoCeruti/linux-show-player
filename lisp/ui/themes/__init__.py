@@ -1,7 +1,6 @@
 from os import path
 
 from lisp.core.loading import load_classes
-from lisp.ui.themes.dark.dark import Dark
 
 _THEMES = {}
 

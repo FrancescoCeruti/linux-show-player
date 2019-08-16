@@ -26,6 +26,7 @@ class RunningCuesListWidget(QListWidget):
     def __init__(self, running_model, config, **kwargs):
         super().__init__(**kwargs)
         self.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.setFocusPolicy(Qt.NoFocus)
         self.setSelectionMode(self.NoSelection)
 
@@ -85,6 +86,7 @@ class RunningCuesListWidget(QListWidget):
 
     def _item_added(self, cue):
         widget = get_running_widget(cue, self._config, parent=self)
+        widget.updateSize(self.viewport().width())
         widget.set_accurate_time(self.__accurate_time)
         try:
             widget.set_dbmeter_visible(self.__dbmeter_visible)
@@ -112,3 +114,12 @@ class RunningCuesListWidget(QListWidget):
     def _model_reset(self):
         for cue in list(self._running_cues.keys()):
             self._item_removed(cue)
+
+    def resizeEvent(self, event):
+        super().resizeEvent(event)
+
+        width = self.viewport().width()
+        for n in range(self.count()):
+            self.itemWidget(self.item(n)).updateSize(width)
+
+        self.scroll

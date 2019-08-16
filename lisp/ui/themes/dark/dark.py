@@ -21,7 +21,7 @@ from PyQt5.QtGui import QColor, QPalette
 
 # Import resources
 # noinspection PyUnresolvedReferences
-from . import assetes
+from . import assets
 
 
 class Dark:

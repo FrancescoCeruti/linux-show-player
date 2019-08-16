@@ -21,6 +21,7 @@ from PyQt5.QtCore import (
     QDataStream,
     QIODevice,
     QT_TRANSLATE_NOOP,
+    QTimer,
 )
 from PyQt5.QtGui import QKeyEvent, QContextMenuEvent, QBrush, QColor
 from PyQt5.QtWidgets import QTreeWidget, QHeaderView, QTreeWidgetItem
@@ -62,7 +63,7 @@ class CueTreeWidgetItem(QTreeWidgetItem):
         self.current = False
 
 
-# TODO: consider using a custom Model/View
+# TODO: use a custom Model/View
 class CueListView(QTreeWidget):
     keyPressed = pyqtSignal(QKeyEvent)
     contextMenuInvoked = pyqtSignal(QContextMenuEvent)
@@ -97,7 +98,6 @@ class CueListView(QTreeWidget):
         :type listModel: lisp.plugins.list_layout.models.CueListModel
         """
         super().__init__(parent)
-
         self.__itemMoving = False
         self.__scrollRangeGuard = False
 
@@ -187,12 +187,36 @@ class CueListView(QTreeWidget):
         ):
             super().mousePressEvent(event)
 
+    def resizeEvent(self, event):
+        super().resizeEvent(event)
+        self.__resizeHeaders()
+
     def standbyIndex(self):
         return self.indexOfTopLevelItem(self.currentItem())
 
     def setStandbyIndex(self, newIndex):
         if 0 <= newIndex < self.topLevelItemCount():
             self.setCurrentItem(self.topLevelItem(newIndex))
+
+    def __resizeHeaders(self):
+        """Some hack to have "stretchable" columns with a minimum size
+
+        NOTE: this currently works properly with only one "stretchable" column
+        """
+        header = self.header()
+        for i, column in enumerate(CueListView.COLUMNS):
+            if column.resize == QHeaderView.Stretch:
+                # Make the header calculate the content size
+                header.setSectionResizeMode(i, QHeaderView.ResizeToContents)
+                contentWidth = header.sectionSize(i)
+
+                # Make the header calculate the stretched size
+                header.setSectionResizeMode(i, QHeaderView.Stretch)
+                stretchWidth = header.sectionSize(i)
+
+                # Set the maximum size as fixed size for the section
+                header.setSectionResizeMode(i, QHeaderView.Fixed)
+                header.resizeSection(i, max(contentWidth, stretchWidth))
 
     def __currentItemChanged(self, current, previous):
         if previous is not None:
@@ -236,6 +260,8 @@ class CueListView(QTreeWidget):
     def __cuePropChanged(self, cue, property_name, _):
         if property_name == "stylesheet":
             self.__updateItemStyle(self.topLevelItem(cue.index))
+        if property_name == "name":
+            QTimer.singleShot(1, self.__resizeHeaders)
 
     def __cueAdded(self, cue):
         item = CueTreeWidgetItem(cue)

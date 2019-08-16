@@ -43,8 +43,11 @@ class LocaleComboBox(QComboBox):
     def _localeUiText(locale):
         if locale:
             ql = QLocale(locale)
-            return "{} ({})".format(
-                ql.languageToString(ql.language()), ql.nativeLanguageName()
+            return "{} - {} ({} - {})".format(
+                ql.languageToString(ql.language()),
+                ql.countryToString(ql.country()),
+                ql.nativeLanguageName(),
+                ql.nativeCountryName(),
             )
         else:
             return "System ({})".format(QLocale().system().nativeLanguageName())
