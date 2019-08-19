@@ -15,9 +15,11 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+from typing import Iterable
+
 import mido
 from PyQt5.QtCore import QT_TRANSLATE_NOOP
-
+from mido import Message
 
 MIDI_MSGS_SPEC = {
     "note_on": ["channel", "note", "velocity"],
@@ -76,13 +78,46 @@ MIDI_ATTRS_NAME = {
 }
 
 
-def str_msg_to_dict(str_message):
-    return mido.parse_string(str_message).dict()
+def midi_str_to_dict(midi_str: str) -> dict:
+    return mido.parse_string(midi_str).dict()
 
 
-def dict_msg_to_str(dict_message):
-    message = mido.Message.from_dict(dict_message)
+def midi_dict_to_str(midi_dict: dict) -> str:
+    message = mido.Message.from_dict(midi_dict)
     return mido.format_as_string(message, include_time=False)
+
+
+def midi_data_from_msg(message) -> list:
+    data = []
+
+    for attr in MIDI_MSGS_SPEC.get(message.type, ()):
+        if attr is not None:
+            data.append(getattr(message, attr, None))
+
+    return data
+
+
+def midi_data_from_dict(midi_dict: dict) -> list:
+    return midi_data_from_msg(midi_from_dict(midi_dict))
+
+
+def midi_msg_from_data(message_type: str, data: Iterable):
+    message_spec = MIDI_MSGS_SPEC.get(message_type, ())
+    message = Message(message_type)
+
+    for attr, value in zip(message_spec, data):
+        if attr is not None:
+            setattr(message, attr, value)
+
+    return message
+
+
+def midi_from_dict(midi_dict: dict):
+    return mido.Message.from_dict(midi_dict)
+
+
+def midi_from_str(midi_str: str):
+    return mido.Message.from_str(midi_str)
 
 
 def mido_backend():

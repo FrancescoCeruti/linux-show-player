@@ -23,7 +23,7 @@ from PyQt5.QtWidgets import QVBoxLayout
 from lisp.core.properties import Property
 from lisp.cues.cue import Cue
 from lisp.plugins import get_plugin
-from lisp.plugins.midi.midi_utils import str_msg_to_dict, dict_msg_to_str
+from lisp.plugins.midi.midi_utils import midi_str_to_dict, midi_dict_to_str
 from lisp.plugins.midi.widgets import MIDIMessageEdit
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
 from lisp.ui.settings.pages import SettingsPage
@@ -61,12 +61,12 @@ class MidiCueSettings(SettingsPage):
         self.layout().addWidget(self.midiEdit)
 
     def getSettings(self):
-        return {"message": dict_msg_to_str(self.midiEdit.getMessageDict())}
+        return {"message": midi_dict_to_str(self.midiEdit.getMessageDict())}
 
     def loadSettings(self, settings):
         message = settings.get("message", "")
         if message:
-            self.midiEdit.setMessageDict(str_msg_to_dict(message))
+            self.midiEdit.setMessageDict(midi_str_to_dict(message))
 
 
 CueSettingsRegistry().add(MidiCueSettings, MidiCue)
