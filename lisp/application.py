@@ -23,6 +23,7 @@ from PyQt5.QtWidgets import QDialog, qApp
 
 from lisp import layout
 from lisp.command.stack import CommandsStack
+from lisp.core.configuration import DummyConfiguration
 from lisp.core.signal import Signal
 from lisp.core.singleton import Singleton
 from lisp.core.util import filter_live_properties
@@ -48,7 +49,7 @@ logger = logging.getLogger(__name__)
 
 
 class Application(metaclass=Singleton):
-    def __init__(self, app_conf):
+    def __init__(self, app_conf=DummyConfiguration()):
         self.session_created = Signal()
         self.session_before_finalize = Signal()
 

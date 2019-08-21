@@ -27,7 +27,6 @@ from PyQt5.QtWidgets import (
     QHeaderView,
     QGridLayout,
     QLabel,
-    QStyledItemDelegate,
     QHBoxLayout,
 )
 
@@ -40,7 +39,7 @@ from lisp.plugins.midi.midi_utils import (
     midi_msg_from_data,
     midi_from_dict,
     midi_from_str,
-)
+    MIDI_MSGS_SPEC, MIDI_ATTRS_SPEC)
 from lisp.plugins.midi.widgets import MIDIMessageEditDialog
 from lisp.ui.qdelegates import (
     CueActionDelegate,
@@ -64,7 +63,6 @@ class MidiSettings(SettingsPage):
 
         self.midiGroup = QGroupBox(self)
         self.midiGroup.setTitle(translate("ControllerMidiSettings", "MIDI"))
-        # self.midiGroup.setEnabled(check_module('midi'))
         self.midiGroup.setLayout(QGridLayout())
         self.layout().addWidget(self.midiGroup)
 
@@ -207,6 +205,26 @@ class MidiMessageTypeDelegate(LabelDelegate):
         )
 
 
+class MidiValueDelegate(LabelDelegate):
+    def _text(self, option, index):
+        option.displayAlignment = Qt.AlignCenter
+
+        value = index.data()
+        if value is not None:
+            model = index.model()
+            message_type = model.data(model.index(index.row(), 0))
+            message_spec = MIDI_MSGS_SPEC.get(message_type, ())
+
+            if len(message_spec) >= index.column():
+                attr = message_spec[index.column() - 1]
+                attr_spec = MIDI_ATTRS_SPEC.get(attr)
+
+                if MIDI_MSGS_SPEC is not None:
+                    return str(value - attr_spec[-1])
+
+        return ""
+
+
 class MidiModel(SimpleTableModel):
     def __init__(self):
         super().__init__(
@@ -227,7 +245,6 @@ class MidiModel(SimpleTableModel):
     def updateMessage(self, row, message, action):
         data = midi_data_from_msg(message)
         data.extend((None,) * (3 - len(data)))
-
         self.updateRow(row, message.type, *data, action)
 
     def getMessage(self, row):
@@ -250,9 +267,9 @@ class MidiView(QTableView):
 
         self.delegates = [
             MidiMessageTypeDelegate(),
-            QStyledItemDelegate(),
-            QStyledItemDelegate(),
-            QStyledItemDelegate(),
+            MidiValueDelegate(),
+            MidiValueDelegate(),
+            MidiValueDelegate(),
             actionDelegate,
         ]
 

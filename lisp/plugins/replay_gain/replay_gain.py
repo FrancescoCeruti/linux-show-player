@@ -17,7 +17,6 @@
 
 import logging
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from math import pow
 from threading import Thread, Lock
 
 import gi

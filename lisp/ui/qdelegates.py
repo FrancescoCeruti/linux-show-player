@@ -17,7 +17,7 @@
 
 from enum import Enum
 
-from PyQt5.QtCore import Qt, QEvent, QSize, QRect
+from PyQt5.QtCore import Qt, QEvent, QSize
 from PyQt5.QtGui import QKeySequence, QFontMetrics
 from PyQt5.QtWidgets import (
     QStyledItemDelegate,
