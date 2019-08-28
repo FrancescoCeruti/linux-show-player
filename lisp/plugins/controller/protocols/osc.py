@@ -18,6 +18,7 @@
 
 
 import ast
+import logging
 
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import (
@@ -49,6 +50,8 @@ from lisp.ui.qdelegates import (
 from lisp.ui.qmodels import SimpleTableModel
 from lisp.ui.settings.pages import SettingsPage, CuePageMixin
 from lisp.ui.ui_utils import translate
+
+logger = logging.getLogger(__name__)
 
 
 class OscMessageDialog(QDialog):
@@ -265,11 +268,19 @@ class OscSettings(SettingsPage):
         return {"osc": entries}
 
     def loadSettings(self, settings):
-        if "osc" in settings:
-            for options in settings["osc"]:
+        for options in settings.get("osc", ()):
+            try:
                 key = Osc.message_from_key(options[0])
                 self.oscModel.appendRow(
                     key[0], key[1], "{}".format(key[2:])[1:-1], options[1]
+                )
+            except Exception:
+                logger.warning(
+                    translate(
+                        "ControllerOscSettingsWarning"
+                        "Error while importing configuration entry, skipped."
+                    ),
+                    exc_info=True,
                 )
 
     def capture_message(self):

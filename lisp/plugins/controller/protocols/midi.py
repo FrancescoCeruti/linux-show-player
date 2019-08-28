@@ -14,6 +14,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
+import logging
 
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import (
@@ -39,7 +40,9 @@ from lisp.plugins.midi.midi_utils import (
     midi_msg_from_data,
     midi_from_dict,
     midi_from_str,
-    MIDI_MSGS_SPEC, MIDI_ATTRS_SPEC)
+    MIDI_MSGS_SPEC,
+    MIDI_ATTRS_SPEC,
+)
 from lisp.plugins.midi.widgets import MIDIMessageEditDialog
 from lisp.ui.qdelegates import (
     CueActionDelegate,
@@ -49,6 +52,9 @@ from lisp.ui.qdelegates import (
 from lisp.ui.qmodels import SimpleTableModel
 from lisp.ui.settings.pages import CuePageMixin, SettingsPage
 from lisp.ui.ui_utils import translate
+
+
+logger = logging.getLogger(__name__)
 
 
 class MidiSettings(SettingsPage):
@@ -133,9 +139,17 @@ class MidiSettings(SettingsPage):
         return {"midi": entries}
 
     def loadSettings(self, settings):
-        if "midi" in settings:
-            for entry in settings["midi"]:
+        for entry in settings.get("midi", ()):
+            try:
                 self.midiModel.appendMessage(midi_from_str(entry[0]), entry[1])
+            except Exception:
+                logger.warning(
+                    translate(
+                        "ControllerMidiSettingsWarning"
+                        "Error while importing configuration entry, skipped."
+                    ),
+                    exc_info=True,
+                )
 
     def capture_message(self):
         handler = self.__midi.input
