@@ -277,7 +277,7 @@ class OscSettings(SettingsPage):
             except Exception:
                 logger.warning(
                     translate(
-                        "ControllerOscSettingsWarning"
+                        "ControllerOscSettingsWarning",
                         "Error while importing configuration entry, skipped."
                     ),
                     exc_info=True,

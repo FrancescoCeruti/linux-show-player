@@ -145,7 +145,7 @@ class MidiSettings(SettingsPage):
             except Exception:
                 logger.warning(
                     translate(
-                        "ControllerMidiSettingsWarning"
+                        "ControllerMidiSettingsWarning",
                         "Error while importing configuration entry, skipped."
                     ),
                     exc_info=True,
