@@ -146,7 +146,7 @@ class MidiSettings(SettingsPage):
                 logger.warning(
                     translate(
                         "ControllerMidiSettingsWarning",
-                        "Error while importing configuration entry, skipped."
+                        "Error while importing configuration entry, skipped.",
                     ),
                     exc_info=True,
                 )
@@ -169,7 +169,7 @@ class MidiSettings(SettingsPage):
         mgs_filter = self.filterTypeCombo.currentData(Qt.UserRole)
         if mgs_filter == self.FILTER_ALL or message.type == mgs_filter:
             if hasattr(message, "velocity"):
-                message.velocity = 0
+                message = message.copy(velocity=0)
 
             self.midiModel.appendMessage(message, self._defaultAction)
 
@@ -333,6 +333,6 @@ class Midi(Protocol):
 
     def __new_message(self, message):
         if hasattr(message, "velocity"):
-            message.velocity = 0
+            message = message.copy(velocity=0)
 
         self.protocol_event.emit(str(message))
