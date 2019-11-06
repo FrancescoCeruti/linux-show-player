@@ -1,7 +1,8 @@
 {
-  "_version_": "2",
+  "_version_": "2.1",
   "_enabled_": true,
   "backend": "mido.backends.rtmidi",
   "inputDevice": "",
-  "outputDevice": ""
+  "outputDevice": "",
+  "connectByNameMatch": true
 }

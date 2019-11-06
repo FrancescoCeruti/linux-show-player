@@ -22,9 +22,11 @@ from PyQt5.QtWidgets import (
     QComboBox,
     QGridLayout,
     QLabel,
+    QCheckBox,
 )
 
-from lisp.plugins.midi.midi_utils import mido_backend
+from lisp.plugins.midi.midi_utils import midi_input_names, midi_output_names
+from lisp.ui.icons import IconTheme
 from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.ui_utils import translate
 
@@ -37,41 +39,73 @@ class MIDISettings(SettingsPage):
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
-        self.midiGroup = QGroupBox(self)
-        self.midiGroup.setTitle(
-            translate("MIDISettings", "MIDI default devices")
-        )
-        self.midiGroup.setLayout(QGridLayout())
-        self.layout().addWidget(self.midiGroup)
+        self.portsGroup = QGroupBox(self)
+        self.portsGroup.setLayout(QGridLayout())
+        self.layout().addWidget(self.portsGroup)
 
-        self.inputLabel = QLabel(
-            translate("MIDISettings", "Input"), self.midiGroup
-        )
-        self.midiGroup.layout().addWidget(self.inputLabel, 0, 0)
-        self.inputCombo = QComboBox(self.midiGroup)
-        self.midiGroup.layout().addWidget(self.inputCombo, 0, 1)
+        # Input port
+        self.inputLabel = QLabel(self.portsGroup)
+        self.portsGroup.layout().addWidget(self.inputLabel, 0, 0)
+        self.inputCombo = QComboBox(self.portsGroup)
+        self.portsGroup.layout().addWidget(self.inputCombo, 0, 1)
 
-        self.outputLabel = QLabel(
-            translate("MIDISettings", "Output"), self.midiGroup
-        )
-        self.midiGroup.layout().addWidget(self.outputLabel, 1, 0)
-        self.outputCombo = QComboBox(self.midiGroup)
-        self.midiGroup.layout().addWidget(self.outputCombo, 1, 1)
+        # Output port
+        self.outputLabel = QLabel(self.portsGroup)
+        self.portsGroup.layout().addWidget(self.outputLabel, 1, 0)
+        self.outputCombo = QComboBox(self.portsGroup)
+        self.portsGroup.layout().addWidget(self.outputCombo, 1, 1)
 
-        self.midiGroup.layout().setColumnStretch(0, 2)
-        self.midiGroup.layout().setColumnStretch(1, 3)
+        self.portsGroup.layout().setColumnStretch(0, 2)
+        self.portsGroup.layout().setColumnStretch(1, 3)
+
+        self.miscGroup = QGroupBox(self)
+        self.miscGroup.setLayout(QVBoxLayout())
+        self.layout().addWidget(self.miscGroup)
+
+        self.nameMatchCheckBox = QCheckBox(self.miscGroup)
+        self.miscGroup.layout().addWidget(self.nameMatchCheckBox)
+
+        self.retranslateUi()
 
         try:
             self._loadDevices()
         except Exception:
             self.setEnabled(False)
 
+    def retranslateUi(self):
+        self.portsGroup.setTitle(
+            translate("MIDISettings", "MIDI default devices")
+        )
+        self.inputLabel.setText(translate("MIDISettings", "Input"))
+        self.outputLabel.setText(translate("MIDISettings", "Output"))
+
+        self.miscGroup.setTitle(translate("MIDISettings", "Misc options"))
+        self.nameMatchCheckBox.setText(
+            translate(
+                "MIDISettings", "Try to connect ignoring the device/port id"
+            )
+        )
+
     def loadSettings(self, settings):
-        # TODO: instead of forcing 'Default' add a warning label and keep the invalid device as an option
-        self.inputCombo.setCurrentText("Default")
-        self.inputCombo.setCurrentText(settings["inputDevice"])
-        self.outputCombo.setCurrentText("Default")
-        self.outputCombo.setCurrentText(settings["outputDevice"])
+        if settings["inputDevice"]:
+            self.inputCombo.setCurrentText(settings["inputDevice"])
+            if self.inputCombo.currentText() != settings["inputDevice"]:
+                self.inputCombo.insertItem(
+                    1, IconTheme.get("dialog-warning"), settings["inputDevice"]
+                )
+                self.inputCombo.setCurrentIndex(1)
+
+        if settings["outputDevice"]:
+            self.outputCombo.setCurrentText(settings["outputDevice"])
+            if self.outputCombo.currentText() != settings["outputDevice"]:
+                self.outputCombo.insertItem(
+                    1, IconTheme.get("dialog-warning"), settings["outputDevice"]
+                )
+                self.outputCombo.setCurrentIndex(1)
+
+        self.nameMatchCheckBox.setChecked(
+            settings.get("connectByNameMatch", False)
+        )
 
     def getSettings(self):
         if self.isEnabled():
@@ -81,17 +115,16 @@ class MIDISettings(SettingsPage):
             return {
                 "inputDevice": "" if input == "Default" else input,
                 "outputDevice": "" if output == "Default" else output,
+                "connectByNameMatch": self.nameMatchCheckBox.isChecked(),
             }
 
         return {}
 
     def _loadDevices(self):
-        backend = mido_backend()
-
         self.inputCombo.clear()
         self.inputCombo.addItems(["Default"])
-        self.inputCombo.addItems(backend.get_input_names())
+        self.inputCombo.addItems(midi_input_names())
 
         self.outputCombo.clear()
         self.outputCombo.addItems(["Default"])
-        self.outputCombo.addItems(backend.get_output_names())
+        self.outputCombo.addItems(midi_output_names())

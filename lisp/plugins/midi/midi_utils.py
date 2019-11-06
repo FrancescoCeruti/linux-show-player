@@ -19,7 +19,6 @@ from typing import Iterable
 
 import mido
 from PyQt5.QtCore import QT_TRANSLATE_NOOP
-from mido import Message
 
 MIDI_MSGS_SPEC = {
     "note_on": ["channel", "note", "velocity"],
@@ -78,6 +77,19 @@ MIDI_ATTRS_NAME = {
 }
 
 
+def midi_backend() -> mido.Backend:
+    """Return the current backend object."""
+    backend = None
+
+    if hasattr(mido, "backend"):
+        backend = mido.backend
+
+    if backend is None:
+        raise RuntimeError("MIDI backend not loaded")
+
+    return backend
+
+
 def midi_str_to_dict(midi_str: str) -> dict:
     return mido.parse_string(midi_str).dict()
 
@@ -87,7 +99,7 @@ def midi_dict_to_str(midi_dict: dict) -> str:
     return mido.format_as_string(message, include_time=False)
 
 
-def midi_data_from_msg(message) -> list:
+def midi_data_from_msg(message: mido.Message) -> list:
     data = []
 
     for attr in MIDI_MSGS_SPEC.get(message.type, ()):
@@ -101,9 +113,9 @@ def midi_data_from_dict(midi_dict: dict) -> list:
     return midi_data_from_msg(midi_from_dict(midi_dict))
 
 
-def midi_msg_from_data(message_type: str, data: Iterable):
+def midi_msg_from_data(message_type: str, data: Iterable) -> mido.Message:
     message_spec = MIDI_MSGS_SPEC.get(message_type, ())
-    message = Message(message_type)
+    message = mido.Message(message_type)
 
     for attr, value in zip(message_spec, data):
         if attr is not None:
@@ -112,22 +124,23 @@ def midi_msg_from_data(message_type: str, data: Iterable):
     return message
 
 
-def midi_from_dict(midi_dict: dict):
+def midi_from_dict(midi_dict: dict) -> mido.Message:
     return mido.Message.from_dict(midi_dict)
 
 
-def midi_from_str(midi_str: str):
+def midi_from_str(midi_str: str) -> mido.Message:
     return mido.Message.from_str(midi_str)
 
 
-def mido_backend():
-    """Return the current backend object, or None"""
-    backend = None
-
-    if hasattr(mido, "backend"):
-        backend = mido.backend
-
+def midi_input_names(backend: mido.Backend = None):
     if backend is None:
-        raise RuntimeError("MIDI backend not loaded")
+        backend = midi_backend()
 
-    return backend
+    return backend.get_input_names()
+
+
+def midi_output_names(backend: mido.Backend = None):
+    if backend is None:
+        backend = midi_backend()
+
+    return backend.get_output_names()
