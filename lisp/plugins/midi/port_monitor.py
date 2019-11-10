@@ -17,6 +17,7 @@
 
 import logging
 from threading import Thread
+from time import sleep
 
 try:
     from pyalsa import alsaseq
@@ -94,11 +95,17 @@ class _ALSAPortMonitor(PortMonitor):
     def __loop(self):
         while True:
             for event in self.__seq.receive_events(timeout=-1, maxevents=1):
-                if event.type == alsaseq.SEQ_EVENT_PORT_UNSUBSCRIBED:
-                    logger.debug("ALSA MIDI port unsubscribed.")
+                if event.type == alsaseq.SEQ_EVENT_PORT_EXIT:
+                    logger.debug("ALSA MIDI port deleted from system.")
                     self.port_removed.emit()
-                elif event.type == alsaseq.SEQ_EVENT_PORT_SUBSCRIBED:
-                    logger.debug("ALSA MIDI port subscribed.")
+                elif event.type == alsaseq.SEQ_EVENT_PORT_START:
+                    """
+                    Some client may set it's name after the port creation.
+                    Adding a small wait should ensure that the name are set when
+                    we emit the signal.
+                    """
+                    sleep(0.05)
+                    logger.debug("ALSA MIDI new port created.")
                     self.port_added.emit()
 
 
