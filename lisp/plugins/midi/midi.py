@@ -75,12 +75,9 @@ class Midi(Plugin):
         self.__output = MIDIOutput(self.backend, current_output)
         self._reconnect(self.__output, current_output, avail_outputs)
 
-        """
-        Monitor ports, for auto-reconnection.
-
-        Since current midi backends are not reliable on connection/disconnection
-        detection we need to use the native APIs.
-        """
+        # Monitor ports, for auto-reconnection.
+        # Since current midi backends are not reliable on
+        # connection/disconnection detection, we need to use the native APIs.
         self.port_monitor = ALSAPortMonitor()
         self.port_monitor.port_removed.connect(
             self._on_port_removed, Connection.QtQueued
