@@ -101,4 +101,4 @@ def tr_sorted(context, iterable, key=None, reverse=False):
         def tr_key(item):
             translate(context, item)
 
-    return sorted(iterable, key=tr_key, reverse=reverse)\
+    return sorted(iterable, key=tr_key, reverse=reverse)
