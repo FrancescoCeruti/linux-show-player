@@ -111,10 +111,15 @@ _TRANSLATORS = []
 
 
 def search_translations(prefix="base", tr_path=I18N_DIR):
-    for entry in os.scandir(tr_path):
-        name = entry.name
-        if entry.is_file() and name.endswith(".qm") and name.startswith(prefix):
-            yield os.path.splitext(name)[0][len(prefix) + 1 :]
+    if os.path.exists(tr_path):
+        for entry in os.scandir(tr_path):
+            name = entry.name
+            if (
+                entry.is_file()
+                and name.endswith(".qm")
+                and name.startswith(prefix)
+            ):
+                yield os.path.splitext(name)[0][len(prefix) + 1 :]
 
 
 def install_translation(name, tr_path=I18N_DIR):

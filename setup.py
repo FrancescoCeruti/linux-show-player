@@ -43,6 +43,7 @@ setup(
     packages=find_packages(),
     package_data={
         "": ["*.qm", "*.qss", "*.json"],
+        "lisp": ["i18n/qm/*.qm"],
         "lisp.ui.icons": package_data_dirs("lisp/ui/icons"),
     },
     entry_points={"console_scripts": ["linux-show-player=lisp.main:main"]},

@@ -194,7 +194,7 @@
 			"name": "python-six",
 			"buildsystem": "simple",
 			"build-commands": [
-				"pip3 install --no-index --no-deps --prefix=${FLATPAK_DEST} six-1.11.0-py2.py3-none-any.whl"
+				"pip3 install --verbose --no-index --no-deps --prefix=${FLATPAK_DEST} six-1.11.0-py2.py3-none-any.whl"
 			],
 			"sources": [
 				{
@@ -208,7 +208,7 @@
 			"name": "python-google-protobuf",
 			"buildsystem": "simple",
 			"build-commands": [
-				"pip3 install --no-index --no-deps --prefix=${FLATPAK_DEST} protobuf-3.1.0.post1-py2.py3-none-any.whl"
+				"pip3 install --verbose --no-index --no-deps --prefix=${FLATPAK_DEST} protobuf-3.1.0.post1-py2.py3-none-any.whl"
 			],
 			"sources": [
 				{
@@ -251,7 +251,7 @@
 			"name": "python-alsa",
 			"buildsystem": "simple",
 			"build-commands": [
-				"pip3 install --no-index --no-deps --prefix=${FLATPAK_DEST} ."
+				"pip3 install --verbose --no-index --no-deps --prefix=${FLATPAK_DEST} ."
 			],
 			"sources": [
 				{
@@ -265,7 +265,7 @@
 			"name": "python-wheel",
 			"buildsystem": "simple",
 			"build-commands": [
-				"pip3 install --no-index --no-deps --prefix=${FLATPAK_DEST} wheel-0.33.1-py2.py3-none-any.whl"
+				"pip3 install --verbose --no-index --no-deps --prefix=${FLATPAK_DEST} wheel-0.33.1-py2.py3-none-any.whl"
 			],
 			"sources": [
 				{
@@ -279,7 +279,7 @@
 			"name": "linux-show-player",
 			"buildsystem": "simple",
 			"build-commands": [
-				"pip3 install --no-index --no-deps --no-build-isolation --prefix=${FLATPAK_DEST} .",
+				"pip3 install --verbose --no-index --no-deps --no-build-isolation --prefix=${FLATPAK_DEST} .",
 				"mkdir -p /app/share/applications/",
 				"cp dist/linuxshowplayer.desktop /app/share/applications/",
 				"mkdir -p /app/share/mime/packages/",
