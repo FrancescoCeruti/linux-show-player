@@ -17,7 +17,7 @@
 
 from os import path
 
-#from appdirs import AppDirs
+from appdirs import AppDirs
 
 __author__ = "Francesco Ceruti"
 __email__ = "ceppofrancy@gmail.com"
@@ -27,16 +27,16 @@ __version_info__ = (0, 6, 0, "dev0")
 __version__ = ".".join(map(str, __version_info__))
 
 # The version passed follows <major>.<minor>
-#app_dirs = AppDirs(
-#    "LinuxShowPlayer", version="{}.{}".format(*__version_info__[0:2])
-#)
+app_dirs = AppDirs(
+    "LinuxShowPlayer", version="{}.{}".format(*__version_info__[0:2])
+)
 
 # Application wide "constants"
 APP_DIR = path.dirname(__file__)
 I18N_DIR = path.join(APP_DIR, "i18n", "qm")
 
 DEFAULT_APP_CONFIG = path.join(APP_DIR, "default.json")
-USER_APP_CONFIG = ""#path.join(app_dirs.user_config_dir, "lisp.json")
+USER_APP_CONFIG = path.join(app_dirs.user_config_dir, "lisp.json")
 
 ICON_THEMES_DIR = path.join(APP_DIR, "ui", "icons")
 ICON_THEME_COMMON = "lisp"
