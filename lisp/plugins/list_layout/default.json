@@ -9,6 +9,7 @@
     "selectionMode": false,
     "autoContinue": true,
     "goKey": "Space",
+    "goKeyDisabledWhilePlaying": false,
     "goAction": "Default",
     "goDelay": 100,
     "stopCueFade": true,

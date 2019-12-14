@@ -37,7 +37,6 @@ from lisp.plugins.list_layout.view import ListLayoutView
 from lisp.ui.ui_utils import translate
 from lisp.ui.widgets.hotkeyedit import keyEventKeySequence
 
-
 class ListLayout(CueLayout):
     NAME = QT_TRANSLATE_NOOP("LayoutName", "List Layout")
     DESCRIPTION = QT_TRANSLATE_NOOP(
@@ -54,6 +53,7 @@ class ListLayout(CueLayout):
     ]
     Config = DummyConfiguration()
 
+    go_key_disabled_while_playing = ProxyProperty()
     auto_continue = ProxyProperty()
     dbmeters_visible = ProxyProperty()
     seek_sliders_visible = ProxyProperty()
@@ -120,6 +120,11 @@ class ListLayout(CueLayout):
         self.selection_mode_action.setShortcut(QKeySequence("Ctrl+Alt+S"))
         layout_menu.addAction(self.selection_mode_action)
 
+        self.go_key_disabled_while_playing_action = QAction(layout_menu)
+        self.go_key_disabled_while_playing_action.setCheckable(True)
+        self.go_key_disabled_while_playing_action.triggered.connect(self._set_go_key_disabled_while_playing)
+        layout_menu.addAction(self.go_key_disabled_while_playing_action)
+
         layout_menu.addSeparator()
 
         self.enable_view_resize_action = QAction(layout_menu)
@@ -142,6 +147,7 @@ class ListLayout(CueLayout):
         self._set_dbmeters_visible(ListLayout.Config["show.dBMeters"])
         self._set_selection_mode(ListLayout.Config["selectionMode"])
         self._set_auto_continue(ListLayout.Config["autoContinue"])
+        self._set_go_key_disabled_while_playing(ListLayout.Config["goKeyDisabledWhilePlaying"])
 
         # Context menu actions
         self._edit_actions_group = MenuActionsGroup(priority=MENU_PRIORITY_CUE)
@@ -189,6 +195,9 @@ class ListLayout(CueLayout):
         )
         self.reset_size_action.setText(
             translate("ListLayout", "Restore default size")
+        )
+        self.go_key_disabled_while_playing_action.setText(
+            translate("ListLayout", "Disable GO Key While Playing")
         )
 
     @property
@@ -257,7 +266,10 @@ class ListLayout(CueLayout):
             sequence = keyEventKeySequence(event)
             if sequence in self._go_key_sequence:
                 event.accept()
-                self.__go_slot()
+                if self._running_model.is_playing() is not True:
+                    self.__go_slot()
+                if self._get_go_key_disabled_while_playing() is not True:
+                    self.__go_slot()
             elif sequence == QKeySequence.Delete:
                 event.accept()
                 self._remove_cues(self.selected_cues())
@@ -271,6 +283,14 @@ class ListLayout(CueLayout):
                     self.edit_cue(cue)
             else:
                 self.key_pressed.emit(event)
+
+    @go_key_disabled_while_playing.set
+    def _set_go_key_disabled_while_playing(self, enable):
+        self.go_key_disabled_while_playing_action.setChecked(enable)
+
+    @go_key_disabled_while_playing.get
+    def _get_go_key_disabled_while_playing(self):
+        return self.go_key_disabled_while_playing_action.isChecked()
 
     @accurate_time.set
     def _set_accurate_time(self, accurate):

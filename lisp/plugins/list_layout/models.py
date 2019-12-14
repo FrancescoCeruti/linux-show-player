@@ -93,6 +93,9 @@ class RunningCueModel(ReadOnlyProxyModel):
         super().__init__(model)
         self.__playing = []
 
+    def is_playing(self):
+        return len(self.__playing) > 0
+
     def _item_added(self, item):
         item.end.connect(self._remove)
         item.started.connect(self._add)

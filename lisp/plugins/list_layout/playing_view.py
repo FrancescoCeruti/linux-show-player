@@ -84,6 +84,9 @@ class RunningCuesListWidget(QListWidget):
         for item in self._running_cues.values():
             self.itemWidget(item).set_accurate_time(accurate)
 
+    def has_running_cues(self):
+        return len(self._running_cues) > 0
+
     def _item_added(self, cue):
         widget = get_running_widget(cue, self._config, parent=self)
         widget.updateSize(self.viewport().width())

@@ -84,6 +84,9 @@ class ListLayoutSettings(SettingsPage):
         self.goDelaySpin.setMaximum(10000)
         self.goLayout.addWidget(self.goDelaySpin, 2, 1)
 
+        self.goKeyDisabledWhilePlaying = QCheckBox(self.behaviorsGroup)
+        self.goLayout.addWidget(self.goKeyDisabledWhilePlaying)
+
         self.useFadeGroup = QGroupBox(self)
         self.useFadeGroup.setLayout(QGridLayout())
         self.layout().addWidget(self.useFadeGroup)
@@ -117,6 +120,7 @@ class ListLayoutSettings(SettingsPage):
         self.goDelayLabel.setText(
             translate("ListLayout", "GO minimum interval (ms):")
         )
+        self.goKeyDisabledWhilePlaying.setText(translate("ListLayout", "GO Key Disabled While Playing"))
 
         self.useFadeGroup.setTitle(
             translate("ListLayout", "Use fade (buttons)")
@@ -138,6 +142,7 @@ class ListLayoutSettings(SettingsPage):
         )
         self.goActionCombo.setCurrentItem(settings["goAction"])
         self.goDelaySpin.setValue(settings["goDelay"])
+        self.goKeyDisabledWhilePlaying.setChecked(settings["goKeyDisabledWhilePlaying"])
 
         self.stopCueFade.setChecked(settings["stopCueFade"])
         self.pauseCueFade.setChecked(settings["pauseCueFade"])
@@ -158,6 +163,7 @@ class ListLayoutSettings(SettingsPage):
             ),
             "goAction": self.goActionCombo.currentItem(),
             "goDelay": self.goDelaySpin.value(),
+            "goKeyDisabledWhilePlaying": self.goKeyDisabledWhilePlaying.isChecked(),
             "stopCueFade": self.stopCueFade.isChecked(),
             "pauseCueFade": self.pauseCueFade.isChecked(),
             "resumeCueFade": self.resumeCueFade.isChecked(),
