@@ -76,6 +76,9 @@ class ListLayoutSettings(SettingsPage):
         self.goKeyLayout.setStretch(0, 2)
         self.goKeyLayout.setStretch(1, 5)
 
+        self.disableGoKeyWhilePlaying = QCheckBox(self.behaviorsGroup)
+        self.behaviorsGroup.layout().addWidget(self.disableGoKeyWhilePlaying)
+        
         self.useFadeGroup = QGroupBox(self)
         self.useFadeGroup.setLayout(QGridLayout())
         self.layout().addWidget(self.useFadeGroup)
@@ -112,6 +115,7 @@ class ListLayoutSettings(SettingsPage):
         self.autoNext.setText(translate('ListLayout', 'Auto-select next cue'))
         self.endListLabel.setText(translate('ListLayout', 'At list end:'))
         self.goKeyLabel.setText(translate('ListLayout', 'Go key:'))
+        self.disableGoKeyWhilePlaying.setText(translate('ListLayout', 'Disable Go key while cues are playing (the button can still be clicked)'))
 
         self.useFadeGroup.setTitle(translate('ListLayout', 'Use fade'))
         self.stopCueFade.setText(translate('ListLayout', 'Stop Cue'))
@@ -133,6 +137,7 @@ class ListLayoutSettings(SettingsPage):
             'endlist': str(self.endListBehavior.currentData()),
             'gokey': self.goKeyEdit.keySequence().toString(
                 QKeySequence.NativeText),
+            'disablegokeywhileplaying': str(self.disableGoKeyWhilePlaying.isChecked()),
             'stopcuefade': str(self.stopCueFade.isChecked()),
             'pausecuefade': str(self.pauseCueFade.isChecked()),
             'resumecuefade': str(self.resumeCueFade.isChecked()),
@@ -158,6 +163,7 @@ class ListLayoutSettings(SettingsPage):
         self.goKeyEdit.setKeySequence(
             QKeySequence(settings.get('gokey', 'Space'),
                          QKeySequence.NativeText))
+        self.disableGoKeyWhilePlaying.setChecked(settings.get('disablegokeywhileplaying') == 'True')
 
         self.stopCueFade.setChecked(settings.get('stopcuefade') == 'True')
         self.pauseCueFade.setChecked(settings.get('pausecuefade') == 'True')

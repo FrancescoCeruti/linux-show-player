@@ -87,6 +87,7 @@ class ListLayout(QWidget, CueLayout):
         self._go_key = config['ListLayout']['GoKey']
         self._go_key_sequence = QKeySequence(self._go_key,
                                              QKeySequence.NativeText)
+        self._disable_go_while_playing = config['ListLayout'].getboolean('DisableGoKeyWhilePlaying')
 
         try:
             self._end_list = EndListBehavior(config['ListLayout']['EndList'])
@@ -275,7 +276,10 @@ class ListLayout(QWidget, CueLayout):
                 keys += Qt.META
 
             if QKeySequence(keys) in self._go_key_sequence:
-                self.go()
+                if self.playView.has_running_cues() is not True:
+                    self.go()
+                elif (self._disable_go_while_playing is not True):
+                    self.go()
             elif e.key() == Qt.Key_Space:
                 if qApp.keyboardModifiers() == Qt.ShiftModifier:
                     cue = self.current_cue()
