@@ -197,6 +197,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
             self.deselectAll.triggered.disconnect()
             self.invertSelection.triggered.disconnect()
 
+        self.filename = ""
         self.layout = layout
         self.centralWidget().layout().addWidget(self.layout)
         self.layout.show()
