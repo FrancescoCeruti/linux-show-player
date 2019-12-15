@@ -202,6 +202,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         self.fullScreenAction.setText(translate("MainWindow", "Full Screen"))
         self.fullScreenAction.setShortcut(QKeySequence.FullScreen)
         self.exitAction.setText(translate("MainWindow", "Exit"))
+        self.exitAction.setShortcut(QKeySequence.Quit)
         # menuEdit
         self.menuEdit.setTitle(translate("MainWindow", "&Edit"))
         self.actionUndo.setText(translate("MainWindow", "Undo"))
