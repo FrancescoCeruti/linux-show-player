@@ -120,7 +120,21 @@ class GstBackend(Plugin, BaseBackend):
         if files:
             GstBackend.Config["mediaLookupDir"] = os.path.dirname(files[0])
             GstBackend.Config.write()
+        self.add_cue_from_files(files)
 
+    def add_cue_from_urls(self, urls):
+        extensions = self.supported_extensions()
+        files = []
+        for url in urls:
+            filename = url.path()
+            ext = os.path.splitext(url.fileName())[-1]
+            if ext.strip('.') not in extensions['audio'] + extensions['video']:
+                # Skip unsupported media types
+                continue
+            files.append(filename)
+        self.add_cue_from_files(files)
+
+    def add_cue_from_files(self, files):
         QApplication.setOverrideCursor(QCursor(Qt.WaitCursor))
 
         # Create media cues, and add them to the Application cue_model

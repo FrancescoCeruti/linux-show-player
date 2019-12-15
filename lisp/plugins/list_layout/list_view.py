@@ -27,6 +27,7 @@ from PyQt5.QtGui import QKeyEvent, QContextMenuEvent, QBrush, QColor
 from PyQt5.QtWidgets import QTreeWidget, QHeaderView, QTreeWidgetItem
 
 from lisp.application import Application
+from lisp.backend import get_backend
 from lisp.command.model import ModelMoveItemsCommand, ModelInsertItemsCommand
 from lisp.core.util import subdict
 from lisp.cues.cue_factory import CueFactory
@@ -132,43 +133,58 @@ class CueListView(QTreeWidget):
             self.__currentItemChanged, Qt.QueuedConnection
         )
 
+    def dragEnterEvent(self, event):
+        if event.mimeData().hasUrls():
+            if all([x.isLocalFile() for x in event.mimeData().urls()]):
+                event.accept()
+            else:
+                event.ignore()
+        else:
+            return super(CueListView, self).dragEnterEvent(event)
+
     def dropEvent(self, event):
-        # Decode mimedata information about the drag&drop event, since only
-        # internal movement are allowed we assume the data format is correct
-        data = event.mimeData().data("application/x-qabstractitemmodeldatalist")
-        stream = QDataStream(data, QIODevice.ReadOnly)
+        if event.mimeData().hasUrls():
+            # If files are being dropped, add them as cues
+            get_backend().add_cue_from_urls(event.mimeData().urls())
+        else:
+            # Otherwise copy/move existing cue.
 
-        # Get the starting-item row
-        to_index = self.indexAt(event.pos()).row()
-        if not 0 <= to_index <= len(self._model):
-            to_index = len(self._model)
+            # Decode mimedata information about the drag&drop event, since only
+            # internal movement are allowed we assume the data format is correct
+            data = event.mimeData().data("application/x-qabstractitemmodeldatalist")
+            stream = QDataStream(data, QIODevice.ReadOnly)
 
-        rows = []
-        while not stream.atEnd():
-            row = stream.readInt()
-            # Skip column and data
-            stream.readInt()
-            for _ in range(stream.readInt()):
+            # Get the starting-item row
+            to_index = self.indexAt(event.pos()).row()
+            if not 0 <= to_index <= len(self._model):
+                to_index = len(self._model)
+
+            rows = []
+            while not stream.atEnd():
+                row = stream.readInt()
+                # Skip column and data
                 stream.readInt()
-                stream.readQVariant()
+                for _ in range(stream.readInt()):
+                    stream.readInt()
+                    stream.readQVariant()
 
-            if rows and row == rows[-1]:
-                continue
+                if rows and row == rows[-1]:
+                    continue
 
-            rows.append(row)
+                rows.append(row)
 
-        if event.proposedAction() == Qt.MoveAction:
-            Application().commands_stack.do(
-                ModelMoveItemsCommand(self._model, rows, to_index)
-            )
-        elif event.proposedAction() == Qt.CopyAction:
-            new_cues = []
-            for row in sorted(rows):
-                new_cues.append(CueFactory.clone_cue(self._model.item(row)))
+            if event.proposedAction() == Qt.MoveAction:
+                Application().commands_stack.do(
+                    ModelMoveItemsCommand(self._model, rows, to_index)
+                )
+            elif event.proposedAction() == Qt.CopyAction:
+                new_cues = []
+                for row in sorted(rows):
+                    new_cues.append(CueFactory.clone_cue(self._model.item(row)))
 
-            Application().commands_stack.do(
-                ModelInsertItemsCommand(self._model, to_index, *new_cues)
-            )
+                Application().commands_stack.do(
+                    ModelInsertItemsCommand(self._model, to_index, *new_cues)
+                )
 
     def contextMenuEvent(self, event):
         self.contextMenuInvoked.emit(event)
