@@ -21,6 +21,7 @@ from PyQt5.QtCore import pyqtSignal, Qt, QPoint
 from PyQt5.QtWidgets import QWidget, QGridLayout, QSizePolicy
 from sortedcontainers import SortedDict
 
+from lisp.backend import get_backend
 from lisp.core.util import typename
 
 
@@ -99,17 +100,26 @@ class CartPageWidget(QWidget):
         self.contextMenuRequested.emit(event.globalPos())
 
     def dragEnterEvent(self, event):
-        if event.mimeData().text() == CartPageWidget.DRAG_MAGIC:
+        if event.mimeData().hasUrls() and all([x.isLocalFile() for x in event.mimeData().urls()]):
             event.accept()
+        elif event.mimeData().hasText() and event.mimeData().text() == CartPageWidget.DRAG_MAGIC:
+            event.accept()
+        else:
+            event.ignore()
 
     def dropEvent(self, event):
-        row, column = self.indexAt(event.pos())
+        if event.mimeData().hasUrls():
+            # If files are being dropped, add them as cues
+            get_backend().add_cue_from_urls(event.mimeData().urls())
+        else:
+            # Otherwise copy/move existing cue.
+            row, column = self.indexAt(event.pos())
 
-        if self.layout().itemAtPosition(row, column) is None:
-            if event.proposedAction() == Qt.MoveAction:
-                self.moveWidgetRequested.emit(event.source(), row, column)
-            elif event.proposedAction() == Qt.CopyAction:
-                self.copyWidgetRequested.emit(event.source(), row, column)
+            if self.layout().itemAtPosition(row, column) is None:
+                if event.proposedAction() == Qt.MoveAction:
+                    self.moveWidgetRequested.emit(event.source(), row, column)
+                elif event.proposedAction() == Qt.CopyAction:
+                    self.copyWidgetRequested.emit(event.source(), row, column)
 
     def indexAt(self, pos):
         # All four margins (left, right, top, bottom) of a cue widget are equal
