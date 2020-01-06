@@ -17,6 +17,7 @@
 
 from lisp.core.configuration import DummyConfiguration
 from lisp.plugins import PluginState
+from lisp.ui.ui_utils import translate
 
 
 # TODO: add possible additional metadata (Icon, Version, ...)
@@ -55,10 +56,28 @@ class Plugin:
 
     @classmethod
     def status_icon(cls):
-        if cls.is_disabled():
-            return 'led-off'
         if cls.State & PluginState.InError:
             return 'led-error'
+
         if cls.State & PluginState.InWarning:
+            if cls.is_disabled():
+                return 'led-pause-outline'
             return 'led-pause'
+
+        if cls.is_disabled():
+            return 'led-off'
         return 'led-running'
+
+    @classmethod
+    def status_tooltip(cls):
+        if cls.State & PluginState.InError:
+            return translate('PluginsTooltip', 'An error has occurred with this plugin. Please see logs for further information.')
+
+        if cls.State & PluginState.InWarning:
+            if cls.is_disabled():
+                return translate('PluginsTooltip', 'There is a non-critical issue with this disabled plugin. Please see logs for further information.')
+            return translate('PluginsTooltip', 'A non-critical issue is affecting this plugin. Please see logs for further information.')
+
+        if cls.is_disabled():
+            return translate('PluginsTooltip', 'Plugin disabled. Enable to use.')
+        return translate('PluginsTooltip', 'Plugin loaded and ready for use.')

@@ -48,6 +48,7 @@ class PluginsSettings(SettingsPage):
         for name, plugin in plugins.PLUGINS.items():
             item = QListWidgetItem(plugin.Name)
             item.setIcon(IconTheme.get(plugin.status_icon()))
+            item.setToolTip(plugin.status_tooltip())
 
             item.setData(Qt.UserRole, plugin)
 
