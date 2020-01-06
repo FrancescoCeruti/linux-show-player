@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2020 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,10 +16,10 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from lisp.core.configuration import DummyConfiguration
+from lisp.plugins import PluginState
 
 
 # TODO: add possible additional metadata (Icon, Version, ...)
-# TODO: implement some kind of plugin status
 class Plugin:
     """Base class for plugins."""
 
@@ -29,10 +29,12 @@ class Plugin:
     Authors = ("None",)
     Description = "No Description"
     Config = DummyConfiguration()
+    State = PluginState.Listed
 
     def __init__(self, app):
         """:type app: lisp.application.Application"""
         self.__app = app
+        self.__class__.State |= PluginState.Loaded
 
     @property
     def app(self):
@@ -41,7 +43,22 @@ class Plugin:
 
     def finalize(self):
         """Called when the application is getting closed."""
+        self.__class__.State &= ~PluginState.Loaded
 
     @classmethod
     def is_disabled(cls):
         return not cls.Config.get("_enabled_", False)
+
+    @classmethod
+    def is_loaded(cls):
+        return cls.State & PluginState.Loaded
+
+    @classmethod
+    def status_icon(cls):
+        if cls.is_disabled():
+            return 'led-off'
+        if cls.State & PluginState.InError:
+            return 'led-error'
+        if cls.State & PluginState.InWarning:
+            return 'led-pause'
+        return 'led-running'

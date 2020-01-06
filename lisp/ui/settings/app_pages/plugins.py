@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2017 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2020 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -47,12 +47,7 @@ class PluginsSettings(SettingsPage):
 
         for name, plugin in plugins.PLUGINS.items():
             item = QListWidgetItem(plugin.Name)
-            if plugins.is_loaded(name):
-                item.setIcon(IconTheme.get("led-running"))
-            elif not plugin.Config["_enabled_"]:
-                item.setIcon(IconTheme.get("led-pause"))
-            else:
-                item.setIcon(IconTheme.get("led-error"))
+            item.setIcon(IconTheme.get(plugin.status_icon()))
 
             item.setData(Qt.UserRole, plugin)
 
