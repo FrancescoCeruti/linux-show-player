@@ -120,7 +120,7 @@ def __load_plugins(plugins, application, optionals=True):
 
             # Try to load the plugin, if enabled
             try:
-                if plugin.Config.get("_enabled_", False):
+                if not plugin.is_disabled():
                     # Create an instance of the plugin and save it
                     LOADED[name] = plugin(application)
                     logger.info(

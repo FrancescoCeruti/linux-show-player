@@ -41,3 +41,7 @@ class Plugin:
 
     def finalize(self):
         """Called when the application is getting closed."""
+
+    @classmethod
+    def is_disabled(cls):
+        return not cls.Config.get("_enabled_", False)
