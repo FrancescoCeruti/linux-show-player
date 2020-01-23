@@ -131,7 +131,12 @@ def __load_plugins(plugins, application, optionals=True):
         else:
             plugins.pop(name)
             resolved = True
-            plugin.State &= ~PluginState.DependenciesNotSatisfied
+            plugin.State &= ~(PluginState.DependenciesNotSatisfied | PluginState.OptionalDependenciesNotSatisfied)
+
+            for dep in plugin.OptDepends:
+                if dep not in PLUGINS or not PLUGINS[dep].is_loaded():
+                    plugin.State |= PluginState.OptionalDependenciesNotSatisfied
+                    break
 
             # Try to load the plugin, if enabled
             try:
