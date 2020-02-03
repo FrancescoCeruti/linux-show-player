@@ -47,8 +47,8 @@ class Plugin:
         self.__class__.State &= ~PluginState.Loaded
 
     @classmethod
-    def is_disabled(cls):
-        return not cls.Config.get("_enabled_", False)
+    def is_enabled(cls):
+        return cls.Config.get("_enabled_", False)
 
     @classmethod
     def is_loaded(cls):
@@ -60,13 +60,13 @@ class Plugin:
             return 'led-error'
 
         if cls.State & PluginState.InWarning:
-            if cls.is_disabled():
-                return 'led-pause-outline'
-            return 'led-pause'
+            if cls.is_enabled():
+                return 'led-pause'
+            return 'led-pause-outline'
 
-        if cls.is_disabled():
-            return 'led-off'
-        return 'led-running'
+        if cls.is_enabled():
+            return 'led-running'
+        return 'led-off'
 
     @classmethod
     def status_tooltip(cls):
@@ -74,10 +74,10 @@ class Plugin:
             return translate('PluginsTooltip', 'An error has occurred with this plugin. Please see logs for further information.')
 
         if cls.State & PluginState.InWarning:
-            if cls.is_disabled():
-                return translate('PluginsTooltip', 'There is a non-critical issue with this disabled plugin. Please see logs for further information.')
-            return translate('PluginsTooltip', 'A non-critical issue is affecting this plugin. Please see logs for further information.')
+            if cls.is_enabled():
+                return translate('PluginsTooltip', 'A non-critical issue is affecting this plugin. Please see logs for further information.')
+            return translate('PluginsTooltip', 'There is a non-critical issue with this disabled plugin. Please see logs for further information.')
 
-        if cls.is_disabled():
-            return translate('PluginsTooltip', 'Plugin disabled. Enable to use.')
-        return translate('PluginsTooltip', 'Plugin loaded and ready for use.')
+        if cls.is_enabled():
+            return translate('PluginsTooltip', 'Plugin loaded and ready for use.')
+        return translate('PluginsTooltip', 'Plugin disabled. Enable to use.')
