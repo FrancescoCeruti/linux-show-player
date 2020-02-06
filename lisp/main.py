@@ -23,7 +23,7 @@ import sys
 from itertools import chain
 from os import path
 
-from PyQt5.QtCore import QTranslator, QLocale, QLibraryInfo
+from PyQt5.QtCore import QTranslator, QLocale, QLibraryInfo, QProcessEnvironment
 from PyQt5.QtGui import QFont, QIcon
 from PyQt5.QtWidgets import QApplication
 
@@ -62,6 +62,12 @@ def main():
         datefmt='%H:%M:%S',
         level=log
     )
+
+    # Detect qt5ct (icons do not appear when qt5ct is installed)
+    env = QProcessEnvironment.systemEnvironment()
+    if env.contains('QT_QPA_PLATFORMTHEME') and env.value('QT_QPA_PLATFORMTHEME') == 'qt5ct':
+        logging.warning('qt5ct detected. Linux Show Player and qt5ct are not compatible. Overriding.')
+        sys.argv += ['-platformtheme', '']
 
     # Create the QApplication
     qt_app = QApplication(sys.argv)
