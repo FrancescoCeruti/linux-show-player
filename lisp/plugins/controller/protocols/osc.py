@@ -316,7 +316,7 @@ class OscSettings(SettingsPage):
         dialog = OscMessageDialog(parent=self)
         if dialog.exec() == dialog.Accepted:
             path = dialog.pathEdit.text()
-            if len(path) < 2 or path[0] is not "/":
+            if len(path) < 2 or path[0] != "/":
                 QMessageBox.warning(
                     self,
                     "Warning",

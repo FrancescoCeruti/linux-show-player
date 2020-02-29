@@ -47,13 +47,9 @@ class CartPageWidget(QWidget):
     def initLayout(self):
         for row in range(0, self.__rows):
             self.layout().setRowStretch(row, 1)
-            # item = QSpacerItem(0, 0, QSizePolicy.Minimum, QSizePolicy.Expanding)
-            # self.layout().addItem(item, row, 0)
 
         for column in range(0, self.__columns):
             self.layout().setColumnStretch(column, 1)
-            # item = QSpacerItem(0, 0, QSizePolicy.Expanding, QSizePolicy.Minimum)
-            # self.layout().addItem(item, 0, column)
 
     def addWidget(self, widget, row, column):
         self._checkIndex(row, column)
@@ -100,9 +96,11 @@ class CartPageWidget(QWidget):
         self.contextMenuRequested.emit(event.globalPos())
 
     def dragEnterEvent(self, event):
-        if event.mimeData().hasUrls() and all([x.isLocalFile() for x in event.mimeData().urls()]):
+        if event.mimeData().hasUrls() and all(
+            [x.isLocalFile() for x in event.mimeData().urls()]
+        ):
             event.accept()
-        elif event.mimeData().hasText() and event.mimeData().text() == CartPageWidget.DRAG_MAGIC:
+        elif event.mimeData().text() == CartPageWidget.DRAG_MAGIC:
             event.accept()
         else:
             event.ignore()

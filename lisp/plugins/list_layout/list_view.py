@@ -140,7 +140,7 @@ class CueListView(QTreeWidget):
             else:
                 event.ignore()
         else:
-            return super(CueListView, self).dragEnterEvent(event)
+            return super().dragEnterEvent(event)
 
     def dropEvent(self, event):
         if event.mimeData().hasUrls():
@@ -151,7 +151,9 @@ class CueListView(QTreeWidget):
 
             # Decode mimedata information about the drag&drop event, since only
             # internal movement are allowed we assume the data format is correct
-            data = event.mimeData().data("application/x-qabstractitemmodeldatalist")
+            data = event.mimeData().data(
+                "application/x-qabstractitemmodeldatalist"
+            )
             stream = QDataStream(data, QIODevice.ReadOnly)
 
             # Get the starting-item row
@@ -242,13 +244,13 @@ class CueListView(QTreeWidget):
         if current is not None:
             current.current = True
             self.__updateItemStyle(current)
-            # Ensure the current item is in the middle
-            self.scrollToItem(current, QTreeWidget.PositionAtCenter)
 
-            if (
-                self.selectionMode() != QTreeWidget.NoSelection
-                and not self.selectedIndexes()
-            ):
+            if self.selectionMode() == QTreeWidget.NoSelection:
+                # Ensure the current item is in the middle of the viewport.
+                # This is skipped in "selection-mode" otherwise it creates
+                # confusion during drang&drop operations
+                self.scrollToItem(current, QTreeWidget.PositionAtCenter)
+            elif not self.selectedIndexes():
                 current.setSelected(True)
 
     def __updateItemStyle(self, item):
