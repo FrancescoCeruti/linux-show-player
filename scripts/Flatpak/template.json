@@ -192,20 +192,6 @@
 			]
 		},
 		{
-			"name": "python-six",
-			"buildsystem": "simple",
-			"build-commands": [
-				"pip3 install --verbose --no-index --no-deps --prefix=${FLATPAK_DEST} six-1.14.0-py2.py3-none-any.whl"
-			],
-			"sources": [
-				{
-					"type": "file",
-					"url": "https://files.pythonhosted.org/packages/65/eb/1f97cb97bfc2390a276969c6fae16075da282f5058082d4cb10c6c5c1dba/six-1.14.0-py2.py3-none-any.whl",
-					"sha256": "8f3cd2e254d8f793e7f3d6d9df77b92252b52637291d0f0da013c76ea2724b6c"
-				}
-			]
-		},
-		{
 			"name": "python-google-protobuf",
 			"buildsystem": "simple",
 			"build-commands": [
