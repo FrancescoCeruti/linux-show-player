@@ -38,7 +38,6 @@ class AppConfigurationDialog(QDialog):
         super().__init__(**kwargs)
         self.setWindowTitle(translate("AppConfiguration", "LiSP preferences"))
         self.setWindowModality(QtCore.Qt.WindowModal)
-        self.setMaximumSize(800, 510)
         self.setMinimumSize(800, 510)
         self.resize(800, 510)
         self.setLayout(QVBoxLayout())

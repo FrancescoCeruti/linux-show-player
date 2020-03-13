@@ -50,7 +50,6 @@ class CueLayout(HasProperties):
         self.cue_executed = Signal()  # After a cue is executed
         self.all_executed = Signal()  # After execute_all is called
 
-        # TODO: self.standby_changed = Signal()
         self.key_pressed = Signal()  # After a key is pressed
 
     @property

@@ -42,16 +42,13 @@ class CueSettingsDialog(QDialog):
 
     def __init__(self, cue, **kwargs):
         """
-
         :param cue: Target cue, or a cue-type for multi-editing
         """
         super().__init__(**kwargs)
         self.setWindowModality(QtCore.Qt.ApplicationModal)
-        self.setMaximumSize(640, 510)
-        self.setMinimumSize(640, 510)
-        self.resize(640, 510)
+        self.setMinimumSize(800, 510)
+        self.resize(800, 510)
         self.setLayout(QVBoxLayout())
-        # self.layout().setContentsMargins(5, 5, 5, 10)
 
         if isinstance(cue, type):
             if issubclass(cue, Cue):

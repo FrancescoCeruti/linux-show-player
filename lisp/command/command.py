@@ -21,10 +21,10 @@ from abc import ABC, abstractmethod
 class Command(ABC):
     """Base class for commands.
 
-    Commands provides the ability to revert the changes done in the "do" method,
+    A Command gives the ability to revert the changes done in the "do" method,
     via the "undo" method, and redo them via the "redo" method.
 
-    A command could provide, via the "log" function, a simple log message.
+    A simple log message can be provided, via the "log" function.
 
     .. warning::
         Commands may keep reference to external objects.
@@ -51,7 +51,7 @@ class Command(ABC):
         """Return a short message to describe what the command does.
 
         The method should return a message generic for do/undo/redo,
-        an handler will care about adding context to the message.
+        a handler will care about adding context to the message.
 
         The log message should be user-friendly and localized.
         """

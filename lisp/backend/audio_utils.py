@@ -17,7 +17,6 @@
 
 import aifc
 import math
-import sunau
 import urllib.parse
 import wave
 
@@ -87,11 +86,11 @@ def python_duration(path, sound_module):
 
 def uri_duration(uri):
     """Return the audio-file duration, using the given uri"""
-    protocol, path = uri.split("://")
+    scheme, path = uri.split("://")
     path = urllib.parse.unquote(path)
 
-    if protocol == "file":
-        for mod in [wave, aifc, sunau]:
+    if scheme == "file":
+        for mod in [wave, aifc]:
             duration = python_duration(path, mod)
             if duration > 0:
                 return duration

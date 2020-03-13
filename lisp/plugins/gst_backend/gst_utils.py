@@ -44,16 +44,19 @@ def gst_mime_types():
 
 def gst_uri_metadata(uri):
     """Discover media-file metadata using GStreamer."""
-    discoverer = GstPbutils.Discoverer()
-    uri = uri.split("://")
-    info = discoverer.discover_uri(uri[0] + "://" + quote(unquote(uri[1])))
+    try:
+        discoverer = GstPbutils.Discoverer()
+        scheme, _, path = uri.partition("://")
+        return discoverer.discover_uri(scheme + "://" + quote(unquote(path)))
+    except Exception:
+        pass
 
-    return info
 
-
-# Adaption of the code found in https://github.com/ch3pjw/pyam
 def gst_parse_tags_list(gst_tag_list):
-    """Takes a GstTagList object and returns a dict."""
+    """Takes a GstTagList object and returns a dict.
+
+    Adapted from https://github.com/ch3pjw/pyamp
+    """
     parsed_tags = {}
 
     def parse_tag(gst_tag_list, tag_name, parsed_tags):
