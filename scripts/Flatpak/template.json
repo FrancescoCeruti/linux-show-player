@@ -138,9 +138,10 @@
 			],
 			"sources": [
 				{
-					"type": "archive",
-					"url": "https://github.com/jackaudio/jack2/releases/download/v1.9.12/jack2-1.9.12.tar.gz",
-					"sha1": "8ab6329c6a107cdf370c40afac154370b406437d"
+					"type": "git",
+					"url": "https://github.com/jackaudio/jack2.git",
+					"tag": "v1.9.14",
+					"commit": "b54a09bf7ef760d81fdb8544ad10e45575394624"
 				}
 			],
 			"cleanup": [
@@ -157,8 +158,8 @@
 				{
 					"type": "git",
 					"url": "https://github.com/thestk/rtmidi.git",
-					"tag": "v3.0.0",
-					"commit": "88e53b9cfe60719c9ade800795313f3c6026c48c"
+					"tag": "v4.0.0",
+					"commit": "cc887191c3b4cb6697aeba5536d9f4eb423090aa"
 				}
 			]
 		},
@@ -172,8 +173,8 @@
 				{
 					"type": "git",
 					"url": "https://github.com/radarsat1/liblo.git",
-					"tag": "0.29",
-					"commit": "901c6ff1ab269d964e256936a609779f86047ebd"
+					"tag": "0.31",
+					"commit": "840ed69b1d669a1ce587eb592746e3dff6985d76"
 				}
 			]
 		},
@@ -194,13 +195,13 @@
 			"name": "python-six",
 			"buildsystem": "simple",
 			"build-commands": [
-				"pip3 install --verbose --no-index --no-deps --prefix=${FLATPAK_DEST} six-1.11.0-py2.py3-none-any.whl"
+				"pip3 install --verbose --no-index --no-deps --prefix=${FLATPAK_DEST} six-1.14.0-py2.py3-none-any.whl"
 			],
 			"sources": [
 				{
 					"type": "file",
-					"url": "https://files.pythonhosted.org/packages/67/4b/141a581104b1f6397bfa78ac9d43d8ad29a7ca43ea90a2d863fe3056e86a/six-1.11.0-py2.py3-none-any.whl",
-					"sha256": "832dc0e10feb1aa2c68dcc57dbb658f1c7e65b9b61af69048abc87a2db00a0eb"
+					"url": "https://files.pythonhosted.org/packages/65/eb/1f97cb97bfc2390a276969c6fae16075da282f5058082d4cb10c6c5c1dba/six-1.14.0-py2.py3-none-any.whl",
+					"sha256": "8f3cd2e254d8f793e7f3d6d9df77b92252b52637291d0f0da013c76ea2724b6c"
 				}
 			]
 		},
@@ -265,13 +266,13 @@
 			"name": "python-wheel",
 			"buildsystem": "simple",
 			"build-commands": [
-				"pip3 install --verbose --no-index --no-deps --prefix=${FLATPAK_DEST} wheel-0.33.1-py2.py3-none-any.whl"
+				"pip3 install --verbose --no-index --no-deps --prefix=${FLATPAK_DEST} wheel-0.34.2-py2.py3-none-any.whl"
 			],
 			"sources": [
 				{
 					"type": "file",
-					"url": "https://files.pythonhosted.org/packages/96/ba/a4702cbb6a3a485239fbe9525443446203f00771af9ac000fa3ef2788201/wheel-0.33.1-py2.py3-none-any.whl",
-					"sha256": "8eb4a788b3aec8abf5ff68d4165441bc57420c9f64ca5f471f58c3969fe08668"
+					"url": "https://files.pythonhosted.org/packages/8c/23/848298cccf8e40f5bbb59009b32848a4c38f4e7f3364297ab3c3e2e2cd14/wheel-0.34.2-py2.py3-none-any.whl",
+					"sha256": "df277cb51e61359aba502208d680f90c0493adec6f0e848af94948778aed386e"
 				}
 			]
 		},
