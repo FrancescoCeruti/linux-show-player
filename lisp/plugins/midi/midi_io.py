@@ -38,15 +38,14 @@ class MIDIBase(ABC):
         return self._backend
 
     @property
+    def port(self):
+        return self._port
+
     def port_name(self, real=True):
         if real and self._port is not None:
             return self._port.name
         else:
             return self._port_name
-
-    @property
-    def port(self):
-        return self._port
 
     def change_port(self, port_name):
         self._port_name = port_name

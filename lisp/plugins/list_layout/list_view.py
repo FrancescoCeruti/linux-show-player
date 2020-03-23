@@ -207,7 +207,7 @@ class CueListView(QTreeWidget):
 
     def resizeEvent(self, event):
         super().resizeEvent(event)
-        self.__resizeHeaders()
+        self.updateHeadersSizes()
 
     def standbyIndex(self):
         return self.indexOfTopLevelItem(self.currentItem())
@@ -216,7 +216,7 @@ class CueListView(QTreeWidget):
         if 0 <= newIndex < self.topLevelItemCount():
             self.setCurrentItem(self.topLevelItem(newIndex))
 
-    def __resizeHeaders(self):
+    def updateHeadersSizes(self):
         """Some hack to have "stretchable" columns with a minimum size
 
         NOTE: this currently works properly with only one "stretchable" column
@@ -279,7 +279,7 @@ class CueListView(QTreeWidget):
         if property_name == "stylesheet":
             self.__updateItemStyle(self.topLevelItem(cue.index))
         if property_name == "name":
-            QTimer.singleShot(1, self.__resizeHeaders)
+            QTimer.singleShot(1, self.updateHeadersSizes)
 
     def __cueAdded(self, cue):
         item = CueTreeWidgetItem(cue)

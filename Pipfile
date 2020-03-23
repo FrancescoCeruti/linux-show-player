@@ -15,8 +15,7 @@ PyQt5 = "~=5.6"
 python-rtmidi = "~=1.1"
 requests = "~=2.20"
 sortedcontainers = "~=2.0"
-pyudev = "~=0.21"
+pyalsa = {editable = true, git = "https://github.com/alsa-project/alsa-python.git", ref = "v1.1.6"}
 
 [dev-packages]
-pysnooper = "*"
 html5lib = "*"

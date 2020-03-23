@@ -75,6 +75,7 @@ class FadeEdit(QWidget):
     def __init__(self, *args, mode=FadeComboBox.Mode.FadeOut, **kwargs):
         super().__init__(*args, **kwargs)
         self.setLayout(QGridLayout())
+        self.layout().setContentsMargins(0, 0, 0, 0)
 
         self.fadeDurationLabel = QLabel(self)
         self.layout().addWidget(self.fadeDurationLabel, 0, 0)

@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "10ea83f3292f6fc7b6370a438e3c32738b187e1280feb34136152369ceaf1a9f"
+            "sha256": "b76c9327c4b71f648a8d88df6b06b02d5dc3f68aa7ea55857728d05356e5218f"
         },
         "pipfile-spec": 6,
         "requires": {},
@@ -150,6 +150,11 @@
             "index": "pypi",
             "version": "==1.2.9"
         },
+        "pyalsa": {
+            "editable": true,
+            "git": "https://github.com/alsa-project/alsa-python.git",
+            "ref": "e1bc1c27b6286dcf2d6bf4955650cf5729cf9b7a"
+        },
         "pycairo": {
             "hashes": [
                 "sha256:2c143183280feb67f5beb4e543fd49990c28e7df427301ede04fc550d3562e84"
@@ -158,16 +163,17 @@
         },
         "pycparser": {
             "hashes": [
-                "sha256:a988718abfad80b6b157acce7bf130a30876d27603738ac39f140993246b25b3"
+                "sha256:2d475327684562c3a96cc71adf7dc8c4f0565175cf86b6d7a404ff4c771f15f0",
+                "sha256:7582ad22678f0fcd81102833f60ef8d0e57288b6b5fb00323d101be910e35705"
             ],
-            "version": "==2.19"
+            "version": "==2.20"
         },
         "pygobject": {
             "hashes": [
-                "sha256:2acb0daf2b3a23a90f52066cc23d1053339fee2f5f7f4275f8baa3704ae0c543"
+                "sha256:b97f570e55017fcd3732164811f24ecf63983a4834f61b55b0aaf64ecefac856"
             ],
             "index": "pypi",
-            "version": "==3.34.0"
+            "version": "==3.36.0"
         },
         "pyliblo": {
             "hashes": [
@@ -227,13 +233,6 @@
             "index": "pypi",
             "version": "==1.4.0"
         },
-        "pyudev": {
-            "hashes": [
-                "sha256:69bb1beb7ac52855b6d1b9fe909eefb0017f38d917cba9939602c6880035b276"
-            ],
-            "index": "pypi",
-            "version": "==0.22.0"
-        },
         "requests": {
             "hashes": [
                 "sha256:43999036bfa82904b6af1d99e4882b560e5e2c68e5c4b0aa03b655f3d7d73fee",
@@ -241,13 +240,6 @@
             ],
             "index": "pypi",
             "version": "==2.23.0"
-        },
-        "six": {
-            "hashes": [
-                "sha256:236bdbdce46e6e6a3d61a337c0f8b763ca1e8717c03b369e87a7ec7ce1319c0a",
-                "sha256:8f3cd2e254d8f793e7f3d6d9df77b92252b52637291d0f0da013c76ea2724b6c"
-            ],
-            "version": "==1.14.0"
         },
         "sortedcontainers": {
             "hashes": [
@@ -273,14 +265,6 @@
             ],
             "index": "pypi",
             "version": "==1.0.1"
-        },
-        "pysnooper": {
-            "hashes": [
-                "sha256:7d7684d9d5cf1d026bba6a52e87009eab9458d3265b13059ab1abaea7eee6c93",
-                "sha256:85892ef6f4009af7d729e73c7b9e4071a16d5063b1ac9340741c5f192501441b"
-            ],
-            "index": "pypi",
-            "version": "==0.3.0"
         },
         "six": {
             "hashes": [

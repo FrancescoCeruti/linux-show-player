@@ -57,6 +57,7 @@ class ListLayout(CueLayout):
     auto_continue = ProxyProperty()
     dbmeters_visible = ProxyProperty()
     seek_sliders_visible = ProxyProperty()
+    index_column_visible = ProxyProperty()
     accurate_time = ProxyProperty()
     selection_mode = ProxyProperty()
     view_sizes = ProxyProperty()
@@ -109,6 +110,11 @@ class ListLayout(CueLayout):
         self.show_accurate_action.triggered.connect(self._set_accurate_time)
         layout_menu.addAction(self.show_accurate_action)
 
+        self.show_index_action = QAction(layout_menu)
+        self.show_index_action.setCheckable(True)
+        self.show_index_action.triggered.connect(self._set_index_visible)
+        layout_menu.addAction(self.show_index_action)
+
         self.auto_continue_action = QAction(layout_menu)
         self.auto_continue_action.setCheckable(True)
         self.auto_continue_action.triggered.connect(self._set_auto_continue)
@@ -140,6 +146,7 @@ class ListLayout(CueLayout):
         self._set_seeksliders_visible(ListLayout.Config["show.seekSliders"])
         self._set_accurate_time(ListLayout.Config["show.accurateTime"])
         self._set_dbmeters_visible(ListLayout.Config["show.dBMeters"])
+        self._set_index_visible(ListLayout.Config["show.indexColumn"])
         self._set_selection_mode(ListLayout.Config["selectionMode"])
         self._set_auto_continue(ListLayout.Config["autoContinue"])
 
@@ -178,6 +185,7 @@ class ListLayout(CueLayout):
         self.show_accurate_action.setText(
             translate("ListLayout", "Show accurate time")
         )
+        self.show_index_action.setText(translate("ListLayout", "Show index column"))
         self.auto_continue_action.setText(
             translate("ListLayout", "Auto-select next cue")
         )
@@ -306,6 +314,16 @@ class ListLayout(CueLayout):
     @dbmeters_visible.get
     def _get_dbmeters_visible(self):
         return self.show_dbmeter_action.isChecked()
+
+    @index_column_visible.get
+    def _get_index_column_visible(self):
+        return not self.show_index_action.isChecked()
+
+    @index_column_visible.set
+    def _set_index_visible(self, visible):
+        self.show_index_action.setChecked(visible)
+        self._view.listView.setColumnHidden(1, not visible)
+        self._view.listView.updateHeadersSizes()
 
     @selection_mode.set
     def _set_selection_mode(self, enable):

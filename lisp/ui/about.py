@@ -86,9 +86,9 @@ class About(QDialog):
 
         self.setWindowModality(QtCore.Qt.ApplicationModal)
         self.setWindowTitle(translate("About", "About Linux Show Player"))
-        self.setMaximumSize(500, 420)
-        self.setMinimumSize(500, 420)
-        self.resize(500, 420)
+        self.setMaximumSize(550, 420)
+        self.setMinimumSize(550, 420)
+        self.resize(550, 420)
 
         self.setLayout(QGridLayout())
 

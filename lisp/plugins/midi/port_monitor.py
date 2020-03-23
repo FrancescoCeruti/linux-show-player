@@ -93,6 +93,7 @@ class _ALSAPortMonitor(PortMonitor):
             )
 
     def __loop(self):
+        logger.debug("Started monitoring ALSA MIDI ports")
         while True:
             for event in self.__seq.receive_events(timeout=-1, maxevents=1):
                 if event.type == alsaseq.SEQ_EVENT_PORT_EXIT:

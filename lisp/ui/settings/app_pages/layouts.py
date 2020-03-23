@@ -49,11 +49,19 @@ class LayoutsSettings(SettingsPage):
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.useFadeGroup.setTitle(translate("ListLayout", "Use fade"))
-        self.stopAllFade.setText(translate("ListLayout", "Stop all"))
-        self.pauseAllFade.setText(translate("ListLayout", "Pause all"))
-        self.resumeAllFade.setText(translate("ListLayout", "Resume all"))
-        self.interruptAllFade.setText(translate("ListLayout", "Interrupt all"))
+        self.useFadeGroup.setTitle(translate("ListLayout", "Layout actions"))
+        self.stopAllFade.setText(
+            translate("ListLayout", "Fade out when stopping all cues")
+        )
+        self.interruptAllFade.setText(
+            translate("ListLayout", "Fade out when interrupting all cues")
+        )
+        self.pauseAllFade.setText(
+            translate("ListLayout", "Fade out when pausing all cues")
+        )
+        self.resumeAllFade.setText(
+            translate("ListLayout", "Fade in when resuming all cues")
+        )
 
     def loadSettings(self, settings):
         self.stopAllFade.setChecked(settings["layout"]["stopAllFade"])

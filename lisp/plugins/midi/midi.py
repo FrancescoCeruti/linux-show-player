@@ -110,7 +110,7 @@ class Midi(Plugin):
                 logger.info(
                     translate(
                         "MIDIInfo", "MIDI port disconnected: '{}'"
-                    ).format(self.__input.port_name)
+                    ).format(self.__input.port_name())
                 )
                 self.__input.close()
 
@@ -119,7 +119,7 @@ class Midi(Plugin):
                 logger.info(
                     translate(
                         "MIDIInfo", "MIDI port disconnected: '{}'"
-                    ).format(self.__output.port_name)
+                    ).format(self.__output.port_name())
                 )
                 self.__input.close()
 

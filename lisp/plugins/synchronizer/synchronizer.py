@@ -34,7 +34,7 @@ class Synchronizer(Plugin):
     Name = "Synchronizer"
     Authors = ("Francesco Ceruti",)
     OptDepends = ("Network",)
-    Description = "Keep multiple sessions, on a network, synchronized"
+    Description = "Keep multiple sessions, in a network, synchronized"
 
     def __init__(self, app):
         super().__init__(app)
@@ -76,7 +76,7 @@ class Synchronizer(Plugin):
         self.peers = manager.hosts()
 
     def show_ip(self):
-        ip = translate("Synchronizer", "Your IP is:") + " " + str(get_lan_ip())
+        ip = translate("Synchronizer", "Your IP is: {}".format(get_lan_ip()))
         QMessageBox.information(self.app.window, " ", ip)
 
     def _url(self, host, path):
@@ -88,14 +88,14 @@ class Synchronizer(Plugin):
         )
 
     def _cue_executes(self, cue):
-        for peer in self.peers:
+        for peer, _ in self.peers:
             requests.post(
                 self._url(peer, "/cues/{}/action".format(cue.id)),
                 json={"action": CueAction.Default.value},
             )
 
     def _all_executed(self, action):
-        for peer in self.peers:
+        for peer, _ in self.peers:
             requests.post(
                 self._url(peer, "/layout/action"), json={"action": action.value}
             )

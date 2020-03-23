@@ -23,8 +23,10 @@ from PyQt5.QtWidgets import (
     QGridLayout,
     QLabel,
     QCheckBox,
+    QSpacerItem,
 )
 
+from lisp.plugins import get_plugin
 from lisp.plugins.midi.midi_utils import midi_input_names, midi_output_names
 from lisp.ui.icons import IconTheme
 from lisp.ui.settings.pages import SettingsPage
@@ -33,6 +35,7 @@ from lisp.ui.ui_utils import translate
 
 class MIDISettings(SettingsPage):
     Name = QT_TRANSLATE_NOOP("SettingsPageName", "MIDI settings")
+    STATUS_SYMBOLS = {True: "✓", False: "×"}  # U+2713, U+00D7
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -45,15 +48,28 @@ class MIDISettings(SettingsPage):
 
         # Input port
         self.inputLabel = QLabel(self.portsGroup)
-        self.portsGroup.layout().addWidget(self.inputLabel, 0, 0)
+        self.portsGroup.layout().addWidget(self.inputLabel, 0, 0, 2, 1)
+
         self.inputCombo = QComboBox(self.portsGroup)
         self.portsGroup.layout().addWidget(self.inputCombo, 0, 1)
 
+        self.inputStatus = QLabel(self.portsGroup)
+        self.inputStatus.setDisabled(True)
+        self.portsGroup.layout().addWidget(self.inputStatus, 1, 1)
+
+        # Spacer
+        self.portsGroup.layout().addItem(QSpacerItem(0, 30), 2, 0, 2, 1)
+
         # Output port
         self.outputLabel = QLabel(self.portsGroup)
-        self.portsGroup.layout().addWidget(self.outputLabel, 1, 0)
+        self.portsGroup.layout().addWidget(self.outputLabel, 3, 0, 2, 1)
+
         self.outputCombo = QComboBox(self.portsGroup)
-        self.portsGroup.layout().addWidget(self.outputCombo, 1, 1)
+        self.portsGroup.layout().addWidget(self.outputCombo, 3, 1)
+
+        self.outputStatus = QLabel(self.portsGroup)
+        self.outputStatus.setDisabled(True)
+        self.portsGroup.layout().addWidget(self.outputStatus, 4, 1)
 
         self.portsGroup.layout().setColumnStretch(0, 2)
         self.portsGroup.layout().setColumnStretch(1, 3)
@@ -68,21 +84,34 @@ class MIDISettings(SettingsPage):
         self.retranslateUi()
 
         try:
+            plugin = get_plugin("Midi")
             self._loadDevices()
+
+            inputStatus = MIDISettings.STATUS_SYMBOLS.get(
+                plugin.input.is_open(), ""
+            )
+            self.inputStatus.setText(
+                "[{}] {}".format(inputStatus, plugin.input.port_name())
+            )
+
+            outputStatus = MIDISettings.STATUS_SYMBOLS.get(
+                plugin.output.is_open(), ""
+            )
+            self.outputStatus.setText(
+                "[{}] {}".format(outputStatus, plugin.output.port_name())
+            )
         except Exception:
             self.setEnabled(False)
 
     def retranslateUi(self):
-        self.portsGroup.setTitle(
-            translate("MIDISettings", "MIDI default devices")
-        )
+        self.portsGroup.setTitle(translate("MIDISettings", "MIDI devices"))
         self.inputLabel.setText(translate("MIDISettings", "Input"))
         self.outputLabel.setText(translate("MIDISettings", "Output"))
 
         self.miscGroup.setTitle(translate("MIDISettings", "Misc options"))
         self.nameMatchCheckBox.setText(
             translate(
-                "MIDISettings", "Try to connect ignoring the device/port id"
+                "MIDISettings", "Try to connect using only device/port name"
             )
         )
 

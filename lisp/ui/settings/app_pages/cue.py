@@ -16,7 +16,7 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import QT_TRANSLATE_NOOP, Qt
-from PyQt5.QtWidgets import QVBoxLayout, QGroupBox
+from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QLabel
 
 from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.ui_utils import translate
@@ -31,27 +31,51 @@ class CueAppSettings(SettingsPage):
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
-        # Interrupt
+        # Interrupt fade settings
         self.interruptGroup = QGroupBox(self)
         self.interruptGroup.setLayout(QVBoxLayout())
         self.layout().addWidget(self.interruptGroup)
 
+        self.interruptHelpText = QLabel(self.interruptGroup)
+        self.interruptHelpText.setWordWrap(True)
+        self.interruptGroup.layout().addWidget(self.interruptHelpText)
+
         self.interruptFadeEdit = FadeEdit(self.interruptGroup)
         self.interruptGroup.layout().addWidget(self.interruptFadeEdit)
 
-        # Action
-        self.actionGroup = QGroupBox(self)
-        self.actionGroup.setLayout(QVBoxLayout())
-        self.layout().addWidget(self.actionGroup)
+        # Fade action defaults
+        self.fadeActionsDefaultsGroup = QGroupBox(self)
+        self.fadeActionsDefaultsGroup.setLayout(QVBoxLayout())
+        self.layout().addWidget(self.fadeActionsDefaultsGroup)
 
-        self.fadeActionEdit = FadeEdit(self.actionGroup)
-        self.actionGroup.layout().addWidget(self.fadeActionEdit)
+        self.fadeActionDefaultsHelpText = QLabel(self.fadeActionsDefaultsGroup)
+        self.fadeActionDefaultsHelpText.setWordWrap(True)
+        self.fadeActionsDefaultsGroup.layout().addWidget(
+            self.fadeActionDefaultsHelpText
+        )
+
+        self.fadeActionEdit = FadeEdit(self.fadeActionsDefaultsGroup)
+        self.fadeActionsDefaultsGroup.layout().addWidget(self.fadeActionEdit)
 
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.interruptGroup.setTitle(translate("CueSettings", "Interrupt fade"))
-        self.actionGroup.setTitle(translate("CueSettings", "Fade actions"))
+        self.interruptGroup.setTitle(
+            translate("CueSettings", "Interrupt action fade")
+        )
+        self.interruptHelpText.setText(
+            translate("CueSettings", "Used globally when interrupting cues",)
+        )
+        self.fadeActionsDefaultsGroup.setTitle(
+            translate("CueSettings", "Fade actions default value")
+        )
+        self.fadeActionDefaultsHelpText.setText(
+            translate(
+                "CueSettings",
+                "Used for fade-in and fade-out actions, by cues where fade "
+                "duration is 0.",
+            )
+        )
 
     def getSettings(self):
         return {

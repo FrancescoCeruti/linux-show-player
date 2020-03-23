@@ -39,6 +39,7 @@ class GstPipeEdit(QWidget):
         super().__init__(**kwargs)
         self.setLayout(QGridLayout())
         self.layout().setAlignment(Qt.AlignTop)
+        self.layout().setContentsMargins(0, 0, 0, 0)
 
         self._app_mode = app_mode
 

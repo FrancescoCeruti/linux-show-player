@@ -23,7 +23,8 @@ from PyQt5.QtWidgets import QVBoxLayout
 from lisp.core.properties import Property
 from lisp.cues.cue import Cue
 from lisp.plugins import get_plugin
-from lisp.plugins.midi.midi_utils import midi_str_to_dict, midi_dict_to_str
+from lisp.plugins.midi.midi_utils import midi_str_to_dict, midi_dict_to_str, \
+    midi_from_str
 from lisp.plugins.midi.widgets import MIDIMessageEdit
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
 from lisp.ui.settings.pages import SettingsPage
@@ -44,7 +45,7 @@ class MidiCue(Cue):
 
     def __start__(self, fade=False):
         if self.message:
-            self.__midi.output.send_from_str(self.message)
+            self.__midi.output.send(midi_from_str(self.message))
 
         return False
 

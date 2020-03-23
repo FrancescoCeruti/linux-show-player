@@ -14,8 +14,9 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
+import time
 
-from PyQt5.QtCore import QRect, Qt
+from PyQt5.QtCore import QRect, Qt, QSize
 from PyQt5.QtGui import (
     QPainter,
     QBrush,
@@ -40,8 +41,17 @@ class IndexWidget(QLabel):
         self.setAttribute(Qt.WA_TranslucentBackground)
         self.setAlignment(Qt.AlignCenter)
 
+        # This value will be used to provide some spacing for the widget
+        # the value depends on the current font.
+        self.sizeIncrement = QSize(
+            self.fontMetrics().size(Qt.TextSingleLine, "00").width(), 0
+        )
+
         item.cue.changed("index").connect(self.__update, Connection.QtQueued)
         self.__update(item.cue.index)
+
+    def sizeHint(self):
+        return super().sizeHint() + self.sizeIncrement
 
     def __update(self, newIndex):
         self.setText(str(newIndex + 1))
