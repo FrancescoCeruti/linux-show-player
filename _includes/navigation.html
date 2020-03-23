@@ -1,0 +1,25 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="navbar-brand font-weight-bold">Linux Show Player</div>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbar">
+        <ul class="navbar-nav mr-auto">
+            {% for item in site.data.navigation %}
+            <li class="nav-item {% if page.url == item.link %} active {% endif %}">
+                <a class="nav-link" href="{{ item.link }}">
+                    {{ item.name }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+        <div class="button-group">
+            <a class="btn btn-md rounded btn-light" href="https://github.com/FrancescoCeruti/linux-show-player" target="_blank">
+                <i class="fab fa-github mr-2"></i>GitHub
+            </a>
+        </div>
+    </div>
+</nav>

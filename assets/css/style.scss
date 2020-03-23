@@ -1,0 +1,28 @@
+---
+---
+
+$enable-responsive-font-sizes: true;
+
+@import 'variables';
+@import 'bootstrap/bootstrap';
+@import 'bootswatch';
+
+
+.home-backdrop::before {
+    content: " ";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 0;
+    background-image: url('/assets/images/mixer.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+    opacity: 0.3; 
+}
+
+.home-backdrop .container {
+    position: relative;
+    z-index: 1;
+}

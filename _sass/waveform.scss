@@ -1,0 +1,61 @@
+$span-height:               20px;
+$span-height-increase:      10;
+$border-radius:             2px;
+$animation-time:            1.8s;
+$animation-mul:             0.95, 0.80, 1.10, 0.68, 0.60, 0.75, 1.00, 0.50, 0.90, 0.73;
+
+.waveform-backdrop {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding-left: inherit;
+    padding-right: inherit;
+    opacity: 0.2;
+}
+
+.waveform {
+    display: flex;
+    width: 100%;
+    align-items: baseline;
+
+    span {
+        display: inline-block;
+        width: 10%;
+        max-width: 40px;
+        margin: 0 2px;
+        border-radius: $border-radius $border-radius 0 0; 
+        background-color: $primary;
+    }
+
+    @for $i from 1 through 5 {
+        span:nth-child(#{$i}) {
+            height: ($i * $span-height-increase) + $span-height;
+            animation: pulse (nth($animation-mul, $i) * $animation-time) infinite;
+        }
+    }
+    
+    @for $i from 6 through 10 {
+        span:nth-child(#{$i}) {
+            height: ((10 - $i) * $span-height-increase) + $span-height;
+            animation: pulse (nth($animation-mul, $i) * $animation-time) infinite;
+        }
+    }
+
+    @keyframes pulse {
+        0% {
+            transform: scaleY(1);
+            transform-origin: bottom left;
+        }
+        
+        50% {
+            transform: scaleY(0.2);
+            transform-origin: bottom left;
+        }
+        
+        100% {
+            transform: scaleY(1);
+            transform-origin: bottom left;
+        }
+    }
+}
