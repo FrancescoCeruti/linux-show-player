@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
+from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP, QTimer
 from PyQt5.QtWidgets import (
     QGroupBox,
     QVBoxLayout,
@@ -84,24 +84,15 @@ class MIDISettings(SettingsPage):
         self.retranslateUi()
 
         try:
-            plugin = get_plugin("Midi")
+            self._updatePortsStatus()
             self._loadDevices()
-
-            inputStatus = MIDISettings.STATUS_SYMBOLS.get(
-                plugin.input.is_open(), ""
-            )
-            self.inputStatus.setText(
-                "[{}] {}".format(inputStatus, plugin.input.port_name())
-            )
-
-            outputStatus = MIDISettings.STATUS_SYMBOLS.get(
-                plugin.output.is_open(), ""
-            )
-            self.outputStatus.setText(
-                "[{}] {}".format(outputStatus, plugin.output.port_name())
-            )
         except Exception:
             self.setEnabled(False)
+        else:
+            # Update status every 2 seconds
+            self.updateTimer = QTimer(self)
+            self.updateTimer.timeout.connect(self._update)
+            self.updateTimer.start(2000)
 
     def retranslateUi(self):
         self.portsGroup.setTitle(translate("MIDISettings", "MIDI devices"))
@@ -149,6 +140,23 @@ class MIDISettings(SettingsPage):
 
         return {}
 
+    def _portStatusSymbol(self, port):
+        return MIDISettings.STATUS_SYMBOLS.get(port.is_open(), "")
+
+    def _updatePortsStatus(self):
+        plugin = get_plugin("Midi")
+
+        self.inputStatus.setText(
+            "[{}] {}".format(
+                self._portStatusSymbol(plugin.input), plugin.input.port_name()
+            )
+        )
+        self.outputStatus.setText(
+            "[{}] {}".format(
+                self._portStatusSymbol(plugin.output), plugin.output.port_name()
+            )
+        )
+
     def _loadDevices(self):
         self.inputCombo.clear()
         self.inputCombo.addItems(["Default"])
@@ -157,3 +165,10 @@ class MIDISettings(SettingsPage):
         self.outputCombo.clear()
         self.outputCombo.addItems(["Default"])
         self.outputCombo.addItems(midi_output_names())
+
+    def _update(self):
+        if self.isVisible():
+            try:
+                self._updatePortsStatus()
+            except Exception:
+                pass

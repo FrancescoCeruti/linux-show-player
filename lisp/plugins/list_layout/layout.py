@@ -185,7 +185,9 @@ class ListLayout(CueLayout):
         self.show_accurate_action.setText(
             translate("ListLayout", "Show accurate time")
         )
-        self.show_index_action.setText(translate("ListLayout", "Show index column"))
+        self.show_index_action.setText(
+            translate("ListLayout", "Show index column")
+        )
         self.auto_continue_action.setText(
             translate("ListLayout", "Auto-select next cue")
         )
