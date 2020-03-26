@@ -1,8 +1,9 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="navbar-brand font-weight-bold">Linux Show Player</div>
+    <div class="navbar-brand font-weight-bold py-0">
+        <img src="assets/images/logo_128.png" height="42" width="42">
+    </div>
 
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar"
-        aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -10,16 +11,43 @@
         <ul class="navbar-nav mr-auto">
             {% for item in site.data.navigation %}
             <li class="nav-item {% if page.url == item.link %} active {% endif %}">
-                <a class="nav-link" href="{{ item.link }}">
+                <a class="nav-link" href="{{ item.link }}" {% if item.target %} target="{{ item.target }}" {% endif %}>
                     {{ item.name }}
+                    {% if item.target == "_blank" %}
+                    <sup><i class="fas fa-external-link-alt small"></i></sup>
+                    {% endif %}
                 </a>
             </li>
             {% endfor %}
         </ul>
         <div class="button-group">
-            <a class="btn btn-md rounded btn-light" href="https://github.com/FrancescoCeruti/linux-show-player" target="_blank">
+            <a class="btn btn-md btn-warning" data-toggle="modal" data-target="#beerModal"><i class="fas fa-beer beer"></i></a>
+            <a class="btn btn-md btn-light" href="https://github.com/FrancescoCeruti/linux-show-player" target="_blank">
                 <i class="fab fa-github mr-2"></i>GitHub
             </a>
+        </div>
+    </div>
+
+    <div class="modal fade" id="beerModal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header p-2">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <h4 class="mb-4">
+                        Do you want to offer me a beer?<br>
+                        You've come to the right place <small>😜</small>
+                    </h4>
+                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+                        <input type="hidden" name="cmd" value="_s-xclick">
+                        <input type="hidden" name="hosted_button_id" value="ZFF3ARFGL3JRJ">
+                        <button type="submit" class="btn btn-warning"><i class="fab fa-paypal mr-2"></i> Donate</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </nav>

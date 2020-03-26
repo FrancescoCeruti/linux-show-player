@@ -2,5 +2,6 @@
   link: /
 - name: Download
   link: /download.html
-- name: About
-  link: /about.html
+- name: Documentation
+  link: https://linux-show-player-users.readthedocs.io/en/latest/index.html
+  target: _blank

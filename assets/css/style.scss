@@ -7,6 +7,15 @@ $enable-responsive-font-sizes: true;
 @import 'bootstrap/bootstrap';
 @import 'bootswatch';
 
+body {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+footer {
+    margin-top: auto;
+}
 
 .home-backdrop::before {
     content: " ";
@@ -16,13 +25,25 @@ $enable-responsive-font-sizes: true;
     bottom: 0;
     right: 0;
     z-index: 0;
-    background-image: url('/assets/images/mixer.jpg');
-    background-attachment: fixed;
+    background-image: url('/assets/images/home-splash.jpg');
+    background-repeat: no-repeat;
     background-size: cover;
-    opacity: 0.3; 
+    background-position: bottom;
+    opacity: 0.2;
 }
 
 .home-backdrop .container {
     position: relative;
     z-index: 1;
+}
+
+.home-backdrop .attribution {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.beer  {
+    color: #ffe600;
+    text-shadow: 1px 1px 2px black;
 }
