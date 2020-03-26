@@ -146,6 +146,9 @@ def main():
         logging.info('Using "{}" icon theme'.format(icon_theme))
     except Exception:
         logging.exception("Unable to load icon theme.")
+    else:
+        # Set application icon (from the theme)
+        qt_app.setWindowIcon(IconTheme.get('linux-show-player'))
 
     # Initialize the application
     lisp_app = Application(app_conf)

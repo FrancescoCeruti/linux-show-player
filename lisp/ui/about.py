@@ -51,9 +51,9 @@ class About(QDialog):
 
     DESCRIPTION = QT_TRANSLATE_NOOP(
         "AboutDialog",
-        "Linux Show Player is a cue-player designed for stage productions.",
+        "Linux Show Player is a cue player designed for stage productions.",
     )
-    WEB_SITE = "http://linux-show-player.sourceforge.net"
+    WEB_SITE = "https://linux-show-player.org"
     DISCUSSION = "https://gitter.im/linux-show-player/linux-show-player"
     SOURCE_CODE = "https://github.com/FrancescoCeruti/linux-show-player"
 
