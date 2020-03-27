@@ -272,7 +272,7 @@ class OscSettings(SettingsPage):
             try:
                 key = Osc.message_from_key(options[0])
                 self.oscModel.appendRow(
-                    key[0], key[1], "{}".format(key[2:])[1:-1], options[1]
+                    key[0], key[1], str(key[2:])[1:-1], options[1]
                 )
             except Exception:
                 logger.warning(
@@ -288,7 +288,7 @@ class OscSettings(SettingsPage):
 
         result = self.captureDialog.exec()
         if result == QDialog.Accepted and self.capturedMessage["path"]:
-            args = "{}".format(self.capturedMessage["args"])[1:-1]
+            args = str(self.capturedMessage["args"])[1:-1]
             self.oscModel.appendRow(
                 self.capturedMessage["path"],
                 self.capturedMessage["types"],
@@ -298,19 +298,13 @@ class OscSettings(SettingsPage):
 
         self.__osc.server.new_message.disconnect(self.__show_message)
 
-        self.captureLabel.setText("Waiting for message:")
+        self.captureLabel.setText("Waiting for messages:")
 
     def __show_message(self, path, args, types):
         self.capturedMessage["path"] = path
         self.capturedMessage["types"] = types
         self.capturedMessage["args"] = args
-        self.captureLabel.setText(
-            'OSC: "{0}" "{1}" {2}'.format(
-                self.capturedMessage["path"],
-                self.capturedMessage["types"],
-                self.capturedMessage["args"],
-            )
-        )
+        self.captureLabel.setText(f'OSC: "{path}" "{types}" {args}')
 
     def __new_message(self):
         dialog = OscMessageDialog(parent=self)
@@ -320,8 +314,8 @@ class OscSettings(SettingsPage):
                 QMessageBox.warning(
                     self,
                     "Warning",
-                    "Osc path seems not valid, \ndo not forget to edit the "
-                    "path later.",
+                    "Osc path seems not valid,\n"
+                    "do not forget to edit the path later.",
                 )
 
             types = ""
@@ -344,7 +338,7 @@ class OscSettings(SettingsPage):
                     arguments.append(row[1])
 
             self.oscModel.appendRow(
-                path, types, "{}".format(arguments)[1:-1], self._defaultAction
+                path, types, str([0, 1])[1:-1], self._defaultAction
             )
 
     def __remove_message(self):
@@ -422,14 +416,14 @@ class Osc(Protocol):
     @staticmethod
     def key_from_message(path, types, args):
         key = [path, types, *args]
-        return "OSC{}".format(key)
+        return f"OSC{key}"
 
     @staticmethod
     def key_from_values(path, types, args):
         if not types:
-            return "OSC['{0}', '{1}']".format(path, types)
+            return f"OSC['{path}', '{types}']"
         else:
-            return "OSC['{0}', '{1}', {2}]".format(path, types, args)
+            return f"OSC['{path}', '{types}', {args}]"
 
     @staticmethod
     def message_from_key(key):

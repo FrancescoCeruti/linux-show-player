@@ -55,6 +55,7 @@ class MIDISettings(SettingsPage):
 
         self.inputStatus = QLabel(self.portsGroup)
         self.inputStatus.setDisabled(True)
+        self.inputStatus.setText(f"[{MIDISettings.STATUS_SYMBOLS[False]}]")
         self.portsGroup.layout().addWidget(self.inputStatus, 1, 1)
 
         # Spacer
@@ -69,6 +70,7 @@ class MIDISettings(SettingsPage):
 
         self.outputStatus = QLabel(self.portsGroup)
         self.outputStatus.setDisabled(True)
+        self.outputStatus.setText(f"[{MIDISettings.STATUS_SYMBOLS[False]}]")
         self.portsGroup.layout().addWidget(self.outputStatus, 4, 1)
 
         self.portsGroup.layout().setColumnStretch(0, 2)
@@ -140,21 +142,18 @@ class MIDISettings(SettingsPage):
 
         return {}
 
-    def _portStatusSymbol(self, port):
+    @staticmethod
+    def portStatusSymbol(port):
         return MIDISettings.STATUS_SYMBOLS.get(port.is_open(), "")
 
     def _updatePortsStatus(self):
-        plugin = get_plugin("Midi")
+        midi = get_plugin("Midi")
 
         self.inputStatus.setText(
-            "[{}] {}".format(
-                self._portStatusSymbol(plugin.input), plugin.input.port_name()
-            )
+            f"[{self.portStatusSymbol(midi.input)}] {midi.input.port_name()}"
         )
         self.outputStatus.setText(
-            "[{}] {}".format(
-                self._portStatusSymbol(plugin.output), plugin.output.port_name()
-            )
+            f"[{self.portStatusSymbol(midi.output)}] {midi.output.port_name()}"
         )
 
     def _loadDevices(self):

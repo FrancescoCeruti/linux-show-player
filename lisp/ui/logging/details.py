@@ -37,7 +37,7 @@ class LogDetails(QTextEdit):
         self._record = record
         text = ""
         for attr, attr_text in LOG_ATTRIBUTES.items():
-            text += "⇨{}:\n    {}".format(attr_text, self.formatAttribute(attr))
+            text += f"⇨{attr_text}:\n    {self.formatAttribute(attr)}"
 
         self.setText(text)
 

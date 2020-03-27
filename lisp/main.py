@@ -24,6 +24,7 @@ from functools import partial
 from logging.handlers import RotatingFileHandler
 
 from PyQt5.QtCore import QLocale, QLibraryInfo, QTimer
+from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QApplication
 
 from lisp import app_dirs, DEFAULT_APP_CONFIG, USER_APP_CONFIG, plugins
@@ -110,18 +111,10 @@ def main():
     qt_app.setQuitOnLastWindowClosed(True)
 
     # Get/Set the locale
-    locale = args.locale
-    if locale:
-        QLocale().setDefault(QLocale(locale))
-    else:
-        locale = app_conf["locale"]
-        if locale != "":
-            QLocale().setDefault(QLocale(locale))
-
+    locale_name = args.locale if args.locale else app_conf["locale"]
+    QLocale().setDefault(QLocale(locale_name))
     logging.info(
-        'Using "{}" locale -> {}'.format(
-            QLocale().name(), QLocale().uiLanguages()
-        )
+        f'Using "{QLocale().name()}" locale -> {QLocale().uiLanguages()}'
     )
 
     # Qt platform translation
@@ -135,7 +128,7 @@ def main():
     try:
         theme_name = app_conf["theme.theme"]
         themes.get_theme(theme_name).apply(qt_app)
-        logging.info('Using "{}" theme'.format(theme_name))
+        logging.info(f'Using "{theme_name}" theme')
     except Exception:
         logging.exception("Unable to load theme.")
 
@@ -143,12 +136,14 @@ def main():
     try:
         icon_theme = app_conf["theme.icons"]
         IconTheme.set_theme_name(icon_theme)
-        logging.info('Using "{}" icon theme'.format(icon_theme))
+        logging.info(f'Using "{icon_theme}" icon theme')
     except Exception:
         logging.exception("Unable to load icon theme.")
     else:
-        # Set application icon (from the theme)
-        qt_app.setWindowIcon(IconTheme.get('linux-show-player'))
+        # Set application icon
+        qt_app.setWindowIcon(
+            QIcon(IconTheme.get("linux-show-player").pixmap(128, 128))
+        )
 
     # Initialize the application
     lisp_app = Application(app_conf)

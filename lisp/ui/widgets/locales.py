@@ -50,4 +50,4 @@ class LocaleComboBox(QComboBox):
                 ql.nativeCountryName(),
             )
         else:
-            return "System ({})".format(QLocale().system().nativeLanguageName())
+            return f"System ({QLocale().system().nativeLanguageName()})"

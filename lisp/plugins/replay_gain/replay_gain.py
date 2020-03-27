@@ -330,9 +330,7 @@ class GstGain:
                 error, _ = message.parse_error()
                 self.gain_pipe.set_state(Gst.State.NULL)
 
-                logger.error(
-                    "GStreamer: {}".format(error.message), exc_info=error
-                )
+                logger.error(f"GStreamer: {error.message}", exc_info=error)
                 self.__release()
         except Exception:
             logger.exception(

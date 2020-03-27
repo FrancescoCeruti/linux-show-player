@@ -101,9 +101,8 @@ class About(QDialog):
         self.shortInfo = QLabel(self)
         self.shortInfo.setAlignment(Qt.AlignCenter)
         self.shortInfo.setText(
-            "<h2>Linux Show Player   {0}</h2>Copyright © Francesco Ceruti".format(
-                str(lisp.__version__)
-            )
+            f"<h2>Linux Show Player   {lisp.__version__}</h2>"
+            "Copyright © Francesco Ceruti"
         )
         self.layout().addWidget(self.shortInfo, 0, 1)
 
@@ -177,7 +176,7 @@ class About(QDialog):
                     text += ' - <a href="mailto:{0}">{0}</a>'.format(person[1])
 
                 if len(person) >= 3:
-                    text += " ({})".format(person[2])
+                    text += f" ({person[2]})"
 
                 text += "<br />"
 

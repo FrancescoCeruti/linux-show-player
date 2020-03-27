@@ -79,4 +79,4 @@ class AudioPanSettings(SettingsPage):
         else:
             position = translate("AudioPanSettings", "Center")
 
-        self.panLabel.setText("{0} - {1}".format(value, position))
+        self.panLabel.setText(f"{value} - {position}")

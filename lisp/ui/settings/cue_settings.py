@@ -57,7 +57,7 @@ class CueSettingsDialog(QDialog):
             else:
                 raise TypeError(
                     "invalid cue type, must be a Cue subclass or a Cue object, "
-                    "not {}".format(cue.__name__)
+                    f"not {cue.__name__}"
                 )
         elif isinstance(cue, Cue):
             self.setWindowTitle(cue.name)
@@ -66,7 +66,7 @@ class CueSettingsDialog(QDialog):
         else:
             raise TypeError(
                 "invalid cue type, must be a Cue subclass or a Cue object, "
-                "not {}".format(typename(cue))
+                f"not {typename(cue)}"
             )
 
         self.mainPage = SettingsPagesTabWidget(parent=self)

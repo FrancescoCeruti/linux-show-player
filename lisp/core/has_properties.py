@@ -212,7 +212,7 @@ class HasProperties(metaclass=HasPropertiesMeta):
         The signals returned by this method are created lazily and cached.
         """
         if name not in self.properties_names():
-            raise ValueError('no property "{}" found'.format(name))
+            raise ValueError(f'no property "{name}" found')
 
         signal = self.__changed_signals.get(name)
         if signal is None:
@@ -239,7 +239,7 @@ class HasProperties(metaclass=HasPropertiesMeta):
 
         # TODO: PropertyError ??
         raise AttributeError(
-            "'{}' object has no property '{}'".format(typename(self), name)
+            f"'{typename(self)}' object has no property '{name}'"
         )
 
 

@@ -75,7 +75,7 @@ class CueFactory:
 
         if not callable(factory):
             raise Exception(
-                "Cue not available or badly registered: {}".format(cue_type)
+                f"Cue not available or badly registered: {cue_type}"
             )
 
         return factory(id=cue_id, **kwargs)

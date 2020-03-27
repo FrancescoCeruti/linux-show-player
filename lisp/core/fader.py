@@ -98,7 +98,7 @@ class Fader:
         if not isinstance(fade_type, (FadeInType, FadeOutType)):
             raise AttributeError(
                 "fade_type must be one of FadeInType or FadeOutType members,"
-                "not {}".format(typename(fade_type))
+                f"not {typename(fade_type)}"
             )
 
         try:

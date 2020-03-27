@@ -179,7 +179,7 @@ class Signal:
         :raise ValueError: if mode not in Connection enum
         """
         if mode not in Connection:
-            raise ValueError("invalid mode value: {0}".format(mode))
+            raise ValueError(f"invalid mode value: {mode}")
 
         with self.__lock:
             sid = slot_id(slot_callable)

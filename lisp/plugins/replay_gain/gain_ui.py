@@ -148,7 +148,7 @@ class GainProgressDialog(QProgressDialog):
         self.resize(320, 110)
 
         self.setMaximum(maximum)
-        self.setLabelText("0 / {0}".format(maximum))
+        self.setLabelText(f"0 / {maximum}")
 
     def on_progress(self, value):
         if value == -1:
@@ -157,4 +157,4 @@ class GainProgressDialog(QProgressDialog):
             self.deleteLater()
         else:
             self.setValue(self.value() + value)
-            self.setLabelText("{0} / {1}".format(self.value(), self.maximum()))
+            self.setLabelText(f"{self.value()} / {self.maximum()}")

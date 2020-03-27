@@ -80,11 +80,8 @@ class MIDIOutput(MIDIBase):
         except OSError:
             logger.exception(
                 translate(
-                    "MIDIError",
-                    "Cannot connect to MIDI output port '{}'.".format(
-                        self._port_name
-                    ),
-                )
+                    "MIDIError", "Cannot connect to MIDI output port '{}'."
+                ).format(self._port_name)
             )
 
 
@@ -104,11 +101,8 @@ class MIDIInput(MIDIBase):
         except OSError:
             logger.exception(
                 translate(
-                    "MIDIError",
-                    "Cannot connect to MIDI input port '{}'.".format(
-                        self._port_name
-                    ),
-                )
+                    "MIDIError", "Cannot connect to MIDI input port '{}'."
+                ).format(self._port_name)
             )
 
     def __new_message(self, message):

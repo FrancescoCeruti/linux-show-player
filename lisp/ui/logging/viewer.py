@@ -123,7 +123,7 @@ class LogViewer(QMainWindow):
 
     def _rowsChanged(self):
         self.statusLabel.setText(
-            "Showing {} of {} records".format(
+            translate("Logging", "Showing {} of {} records").format(
                 self.filterModel.rowCount(),
                 self.filterModel.sourceModel().rowCount(),
             )

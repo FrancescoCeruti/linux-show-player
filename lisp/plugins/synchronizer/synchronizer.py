@@ -76,7 +76,7 @@ class Synchronizer(Plugin):
         self.peers = manager.hosts()
 
     def show_ip(self):
-        ip = translate("Synchronizer", "Your IP is: {}".format(get_lan_ip()))
+        ip = translate("Synchronizer", "Your IP is: {}").format(get_lan_ip())
         QMessageBox.information(self.app.window, " ", ip)
 
     def _url(self, host, path):
@@ -90,7 +90,7 @@ class Synchronizer(Plugin):
     def _cue_executes(self, cue):
         for peer, _ in self.peers:
             requests.post(
-                self._url(peer, "/cues/{}/action".format(cue.id)),
+                self._url(peer, f"/cues/{cue.id}/action"),
                 json={"action": CueAction.Default.value},
             )
 

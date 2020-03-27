@@ -286,7 +286,7 @@ class GstMedia(Media):
         if message.type == Gst.MessageType.ERROR:
             error, debug = message.parse_error()
             logger.error(
-                "GStreamer: {}".format(error.message), exc_info=GstError(debug)
+                f"GStreamer: {error.message}", exc_info=GstError(debug)
             )
 
             # Set the pipeline to NULL

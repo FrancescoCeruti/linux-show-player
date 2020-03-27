@@ -129,11 +129,9 @@ def install_translation(name, tr_path=I18N_DIR):
     if QApplication.installTranslator(translator):
         # Keep a reference, QApplication does not
         _TRANSLATORS.append(translator)
-        logger.debug(
-            'Installed translation for "{}" from {}'.format(name, tr_path)
-        )
+        logger.debug(f'Installed translation for "{name}" from {tr_path}')
     else:
-        logger.debug('No translation for "{}" in {}'.format(name, tr_path))
+        logger.debug(f'No translation for "{name}" in {tr_path}')
 
 
 def translate(context, text, disambiguation=None, n=-1):

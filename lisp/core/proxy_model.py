@@ -27,9 +27,7 @@ class ABCProxyModel(Model):
 
         if not isinstance(model, Model):
             raise TypeError(
-                "ProxyModel model must be a Model object, not {0}".format(
-                    typename(model)
-                )
+                f"ProxyModel model must be a Model object, not {typename(model)}"
             )
 
         self._model = model

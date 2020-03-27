@@ -59,7 +59,7 @@ class CartPageWidget(QWidget):
             self.layout().addWidget(widget, row, column)
             widget.show()
         else:
-            raise IndexError("cell {} already used".format((row, column)))
+            raise IndexError(f"cell {row, column} already used")
 
     def takeWidget(self, row, column):
         self._checkIndex(row, column)
@@ -69,7 +69,7 @@ class CartPageWidget(QWidget):
             self.layout().removeWidget(widget)
             return widget
         else:
-            raise IndexError("cell {} is empty".format((row, column)))
+            raise IndexError(f"cell {row, column} is empty")
 
     def moveWidget(self, o_row, o_column, n_row, n_column):
         widget = self.takeWidget(o_row, o_column)
@@ -136,15 +136,11 @@ class CartPageWidget(QWidget):
 
     def _checkIndex(self, row, column):
         if not isinstance(row, int):
-            raise TypeError(
-                "rows index must be integers, not {}".format(typename(row))
-            )
+            raise TypeError(f"rows index must be integers, not {typename(row)}")
         if not isinstance(column, int):
             raise TypeError(
-                "columns index must be integers, not {}".format(
-                    typename(column)
-                )
+                f"columns index must be integers, not {typename(column)}"
             )
 
         if not 0 <= row < self.__rows or not 0 <= column < self.__columns:
-            raise IndexError("index out of bound {}".format((row, column)))
+            raise IndexError(f"index out of bound {row, column}")

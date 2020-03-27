@@ -225,9 +225,8 @@ class Application(metaclass=Singleton):
                     name = cues_dict.get("name", "No name")
                     logger.exception(
                         translate(
-                            "ApplicationError",
-                            'Unable to create the cue "{}"'.format(name),
-                        )
+                            "ApplicationError", 'Unable to create the cue "{}"',
+                        ).format(name)
                     )
 
             self.commands_stack.set_saved()

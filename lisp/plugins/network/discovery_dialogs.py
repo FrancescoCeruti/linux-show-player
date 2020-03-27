@@ -100,7 +100,7 @@ class HostDiscoveryDialog(QDialog):
 
     def _host_discovered(self, host, fqdn):
         if fqdn != host:
-            item_text = "{} - {}".format(fqdn, host)
+            item_text = f"{fqdn} - {host}"
         else:
             item_text = host
 
