@@ -64,7 +64,7 @@ jobs:
       - restore_cache:
           name: FLATPAK BUILD ⟹ Restore cache
           keys:
-            - v2-flatpak-{{ checksum "scripts/Flatpak/com.github.FrancescoCeruti.LinuxShowPlayer.json" }}
+            - v2-flatpak-{{ checksum "scripts/Flatpak/org.linux_show_player.LinuxShowPlayer.json" }}
             - v2-flatpak-
 
       - run:
@@ -74,7 +74,7 @@ jobs:
 
       - save_cache:
           name: FLATPAK BUILD ⟹ Save cache
-          key: v2-flatpak-{{ checksum "scripts/Flatpak/com.github.FrancescoCeruti.LinuxShowPlayer.json" }}
+          key: v2-flatpak-{{ checksum "scripts/Flatpak/org.linux_show_player.LinuxShowPlayer.json" }}
           paths:
             - ~/repo/scripts/Flatpak/.flatpak-builder
 

@@ -1,5 +1,5 @@
 {
-	"app-id": "com.github.FrancescoCeruti.LinuxShowPlayer",
+	"app-id": "org.linux_show_player.LinuxShowPlayer",
 	"runtime": "org.gnome.Platform",
 	"runtime-version": "3.34",
 	"sdk": "org.gnome.Sdk",
@@ -270,7 +270,7 @@
 				"mkdir -p /app/share/applications/",
 				"cp dist/linuxshowplayer.desktop /app/share/applications/",
 				"mkdir -p /app/share/mime/packages/",
-				"cp dist/linuxshowplayer.xml /app/share/mime/packages/com.github.FrancescoCeruti.LinuxShowPlayer.xml",
+				"cp dist/linuxshowplayer.xml /app/share/mime/packages/org.linux_show_player.LinuxShowPlayer.xml",
 				"mkdir -p /app/share/metainfo/",
 				"cp dist/linuxshowplayer.appdata.xml /app/share/metainfo/",
 				"mkdir -p /app/share/icons/hicolor/512x512/apps/",
