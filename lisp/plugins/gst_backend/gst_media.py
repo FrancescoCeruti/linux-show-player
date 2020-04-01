@@ -24,6 +24,7 @@ from lisp.core.util import weak_call_proxy
 from lisp.plugins.gst_backend import elements as gst_elements
 from lisp.plugins.gst_backend.gi_repository import Gst
 from lisp.plugins.gst_backend.gst_element import GstMediaElements
+from lisp.plugins.gst_backend.gst_utils import GstError
 from lisp.ui.ui_utils import translate
 
 logger = logging.getLogger(__name__)
@@ -48,12 +49,6 @@ def media_finalizer(pipeline, message_handler, media_elements):
 
     # Dispose all the elements
     media_elements.clear()
-
-
-class GstError(Exception):
-    """Used to wrap GStreamer debug messages for the logging system."""
-
-    pass
 
 
 class GstMedia(Media):

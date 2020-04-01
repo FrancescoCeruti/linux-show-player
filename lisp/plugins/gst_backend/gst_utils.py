@@ -64,3 +64,7 @@ def gst_parse_tags_list(gst_tag_list):
 
     gst_tag_list.foreach(parse_tag, parsed_tags)
     return parsed_tags
+
+
+class GstError(Exception):
+    """Used to wrap GStreamer debug messages for the logging system."""

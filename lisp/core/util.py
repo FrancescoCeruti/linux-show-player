@@ -16,6 +16,7 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import functools
+import hashlib
 import re
 import socket
 from collections.abc import Mapping, MutableMapping
@@ -121,12 +122,12 @@ def strtime(time, accurate=False):
         return f"{minutes:02}:{seconds:02}.00"
 
 
-def compose_url(schema, host, port, path="/"):
+def compose_url(scheme, host, port, path="/"):
     """Compose a URL."""
     if not path.startswith("/"):
         path = "/" + path
 
-    return f"{schema}://{host}:{port}{path}"
+    return f"{scheme}://{host}:{port}{path}"
 
 
 def greatest_common_superclass(instances):
@@ -254,6 +255,23 @@ def filter_live_properties(properties):
     :return:
     """
     return set(p for p in properties if not p.startswith("live_"))
+
+
+def file_hash(path, block_size=65536, **hasher_kwargs):
+    """Hash a file using `hashlib.blake2b`, the file is read in chunks.
+
+    :param path: the path of the file to hash
+    :param block_size: the size in bytes of the chunk to read
+    :param **hasher_kwargs: will be passed to the hash function
+    """
+    h = hashlib.blake2b(**hasher_kwargs)
+    with open(path, "rb") as file_to_hash:
+        buffer = file_to_hash.read(block_size)
+        while buffer:
+            h.update(buffer)
+            buffer = file_to_hash.read(block_size)
+
+    return h.hexdigest()
 
 
 class EqEnum(Enum):

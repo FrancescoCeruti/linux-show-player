@@ -17,6 +17,9 @@
 
 from abc import abstractmethod, ABCMeta
 
+from lisp.backend.media import Media
+from lisp.backend.waveform import Waveform
+
 
 class Backend(metaclass=ABCMeta):
     """Common interface that any backend must provide.
@@ -25,32 +28,28 @@ class Backend(metaclass=ABCMeta):
     """
 
     @abstractmethod
-    def uri_duration(self, uri):
+    def uri_duration(self, uri: str) -> int:
         """Return the file duration in milliseconds.
 
         :param uri: The URI of the file
-        :type uri: str
-
-        :rtype: int
         """
 
     @abstractmethod
-    def uri_tags(self, uri):
+    def uri_tags(self, uri: str) -> dict:
         """Return a dictionary containing the file metadata/tags.
 
         :param uri: The URI of the file
-        :type uri: str
-
-        :rtype: dict
         """
 
     @abstractmethod
-    def supported_extensions(self):
+    def supported_extensions(self) -> dict:
         """Return file extensions supported by the backend.
 
         Extensions will be categorized in 'audio' and 'video', optionally the
         backend can create others categories.
         e.g. {'audio': ['wav', 'mp3', ...], 'video': ['mp4', 'mov', ...]}
-
-        :rtype: dict
         """
+
+    @abstractmethod
+    def media_waveform(self, media: Media) -> Waveform:
+        """Return a Waveform object capable of loading the waveform of the given media."""

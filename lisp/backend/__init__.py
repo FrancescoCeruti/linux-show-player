@@ -27,6 +27,6 @@ def set_backend(backend):
 
 def get_backend():
     """
-    :rtype: lisp.backends.base.backend.Backend
+    :rtype: lisp.backend.backend.Backend
     """
     return __backend

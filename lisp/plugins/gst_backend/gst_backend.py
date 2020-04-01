@@ -42,6 +42,7 @@ from lisp.plugins.gst_backend.gst_utils import (
     gst_mime_types,
     gst_uri_duration,
 )
+from lisp.plugins.gst_backend.gst_waveform import GstWaveform
 from lisp.ui.settings.app_configuration import AppConfigurationDialog
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
 from lisp.ui.ui_utils import translate, qfile_filters
@@ -103,6 +104,14 @@ class GstBackend(Plugin, BaseBackend):
                     extensions[mime].extend(gst_extensions)
 
         return extensions
+
+    def media_waveform(self, media):
+        uri = media.input_uri()
+        scheme, _, path = uri.partition("://")
+        if scheme == "file":
+            uri = scheme + "://" + self.app.session.abs_path(path)
+
+        return GstWaveform(uri, media.duration)
 
     def _add_uri_audio_cue(self):
         """Add audio MediaCue(s) form user-selected files"""

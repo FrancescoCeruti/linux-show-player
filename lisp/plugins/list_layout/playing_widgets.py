@@ -25,6 +25,7 @@ from PyQt5.QtWidgets import (
     QHBoxLayout,
 )
 
+from lisp.backend import get_backend
 from lisp.core.signal import Connection
 from lisp.core.util import strtime
 from lisp.cues.cue import CueAction
@@ -33,6 +34,7 @@ from lisp.cues.media_cue import MediaCue
 from lisp.plugins.list_layout.control_buttons import CueControlButtons
 from lisp.ui.widgets import QClickSlider, DBMeter
 from lisp.ui.widgets.elidedlabel import ElidedLabel
+from lisp.ui.widgets.waveform import WaveformSlider
 
 
 def get_running_widget(cue, config, **kwargs):
@@ -177,9 +179,16 @@ class RunningMediaCueWidget(RunningCueWidget):
         super().__init__(cue, config, **kwargs)
         self._dbmeter_element = None
 
-        self.seekSlider = QClickSlider(self.gridLayoutWidget)
-        self.seekSlider.setOrientation(Qt.Horizontal)
-        self.seekSlider.setRange(0, cue.duration)
+        if config.get("show.waveformSlider", False):
+            self.waveform = get_backend().media_waveform(cue.media)
+            self.seekSlider = WaveformSlider(
+                self.waveform, parent=self.gridLayoutWidget
+            )
+        else:
+            self.seekSlider = QClickSlider(self.gridLayoutWidget)
+            self.seekSlider.setOrientation(Qt.Horizontal)
+            self.seekSlider.setRange(0, cue.duration)
+
         self.seekSlider.setFocusPolicy(Qt.NoFocus)
         self.seekSlider.sliderMoved.connect(self._seek)
         self.seekSlider.sliderJumped.connect(self._seek)

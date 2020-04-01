@@ -45,7 +45,10 @@ def uri_split(uri):
 
 def uri_adapter(uri):
     scheme, path = uri_split(uri)
-    return scheme + "://" + urlquote(abs_path(path))
+    if scheme == "file":
+        path = abs_path(path)
+
+    return scheme + "://" + urlquote(path)
 
 
 class UriInput(GstSrcElement):
@@ -104,8 +107,7 @@ class UriInput(GstSrcElement):
 
     @async_in_pool(pool=ThreadPoolExecutor(1))
     def __duration(self):
-        scheme, path = uri_split(self.uri)
-        self.duration = gst_uri_duration(scheme + "://" + abs_path(path))
+        self.duration = gst_uri_duration(uri_adapter(self.uri))
 
     def __session_moved(self, _):
         scheme, path_ = uri_split(self.decoder.get_property("uri"))
