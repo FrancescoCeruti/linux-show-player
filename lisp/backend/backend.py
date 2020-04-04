@@ -17,8 +17,8 @@
 
 from abc import abstractmethod, ABCMeta
 
-from lisp.backend.media import Media
-from lisp.backend.waveform import Waveform
+from .media import Media
+from .waveform import Waveform
 
 
 class Backend(metaclass=ABCMeta):

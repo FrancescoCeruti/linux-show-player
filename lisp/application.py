@@ -24,6 +24,7 @@ from PyQt5.QtWidgets import QDialog, qApp
 from lisp import layout
 from lisp.command.stack import CommandsStack
 from lisp.core.configuration import DummyConfiguration
+from lisp.core.session import Session
 from lisp.core.signal import Signal
 from lisp.core.singleton import Singleton
 from lisp.core.util import filter_live_properties
@@ -31,7 +32,6 @@ from lisp.cues.cue import Cue
 from lisp.cues.cue_factory import CueFactory
 from lisp.cues.cue_model import CueModel
 from lisp.cues.media_cue import MediaCue
-from lisp.session import Session
 from lisp.ui.layoutselect import LayoutSelect
 from lisp.ui.mainwindow import MainWindow
 from lisp.ui.settings.app_configuration import AppConfigurationDialog
@@ -188,9 +188,11 @@ class Application(metaclass=Singleton):
         # Write to a file the json-encoded session
         with open(session_file, mode="w", encoding="utf-8") as file:
             if self.conf.get("session.minSave", False):
-                file.write(json.dumps(session_dict, separators=(",", ":")))
+                dump_options = {"separators": (",", ":")}
             else:
-                file.write(json.dumps(session_dict, sort_keys=True, indent=4))
+                dump_options = {"sort_keys": True, "indent": 4}
+
+            file.write(json.dumps(session_dict, **dump_options))
 
         # Save last session path
         self.conf.set("session.lastPath", dirname(session_file))

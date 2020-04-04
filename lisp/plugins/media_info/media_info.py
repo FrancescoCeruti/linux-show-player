@@ -63,15 +63,8 @@ class MediaInfo(Plugin):
 
         CueLayout.CuesMenu.add(self.cue_action_group, MediaCue)
 
-    def _gst_uri_metadata(self, uri):
-        if uri is not None:
-            if uri.startswith("file://"):
-                uri = "file://" + self.app.session.abs_path(uri[7:])
-
-            return gst_uri_metadata(uri)
-
     def _show_info(self, cue):
-        gst_meta = self._gst_uri_metadata(cue.media.input_uri())
+        gst_meta = gst_uri_metadata(cue.media.input_uri())
 
         if gst_meta is None:
             return QMessageBox.warning(

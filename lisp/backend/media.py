@@ -17,9 +17,12 @@
 
 from abc import abstractmethod
 from enum import Enum
+from typing import Union
 
+from lisp.backend.media_element import MediaElement
 from lisp.core.has_properties import HasProperties
 from lisp.core.properties import Property
+from lisp.core.session_uri import SessionURI
 from lisp.core.signal import Signal
 
 
@@ -36,10 +39,10 @@ class Media(HasProperties):
     """Interface for Media objects.
 
     Media(s) provides control over multimedia contents.
-    To control various parameter of the media, MediaElement(s) should be used.
+    MediaElement(s) should be used to control the media parameter.
 
-    .. note::
-        The play/stop/pause functions must be non-blocking functions.
+    functions such as play/stop/pause must be non-blocking, communications
+    should be done via signals.
     """
 
     loop = Property(default=0)
@@ -77,35 +80,23 @@ class Media(HasProperties):
 
     @property
     @abstractmethod
-    def state(self):
-        """
-        :return: the media current state
-        :rtype: MediaState
-        """
+    def state(self) -> MediaState:
+        """Return the media current state."""
 
     @abstractmethod
-    def current_time(self):
-        """
-        :return: the current playback time in milliseconds or 0
-        :rtype: int
-        """
+    def current_time(self) -> int:
+        """Return he current playback time in milliseconds or 0."""
 
     @abstractmethod
-    def element(self, class_name):
-        """
+    def element(self, class_name: str) -> Union[MediaElement, type(None)]:
+        """Return the element with the specified class-name or None
+
         :param class_name: The element class-name
-        :type class_name: str
-
-        :return: The element with the specified class-name or None
-        :rtype: lisp.core.base.media_element.MediaElement
         """
 
     @abstractmethod
-    def input_uri(self):
-        """
-        :return: The media input uri (e.g. "file:///home/..."), or None
-        :rtype: str
-        """
+    def input_uri(self) -> Union[SessionURI, type(None)]:
+        """Return the media SessionURI, or None."""
 
     @abstractmethod
     def pause(self):
@@ -116,11 +107,10 @@ class Media(HasProperties):
         """The media go in PLAYING state (starts the playback)."""
 
     @abstractmethod
-    def seek(self, position):
+    def seek(self, position: int):
         """Seek to the specified point.
 
         :param position: The position to be reached in milliseconds
-        :type position: int
         """
 
     @abstractmethod

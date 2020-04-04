@@ -16,17 +16,13 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 
-# In the current state set/get_backend are quite useless
-__backend = None
+from .backend import Backend
 
 
-def set_backend(backend):
-    global __backend
-    __backend = backend
+def set_backend(backend: Backend):
+    global CurrentBackend
+    CurrentBackend = backend
 
 
-def get_backend():
-    """
-    :rtype: lisp.backend.backend.Backend
-    """
-    return __backend
+def get_backend() -> Backend:
+    return CurrentBackend

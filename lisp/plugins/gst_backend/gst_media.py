@@ -145,7 +145,7 @@ class GstMedia(Media):
     def input_uri(self):
         try:
             return self.elements[0].input_uri()
-        except Exception:
+        except (IndexError, AttributeError):
             pass
 
     def update_properties(self, properties):

@@ -17,10 +17,10 @@
 
 import aifc
 import math
-import urllib.parse
 import wave
 
 # Decibel value to be considered -inf
+
 MIN_VOLUME_DB = -144
 # Linear value of MIN_VOLUME_DB
 MIN_VOLUME = 6.309_573_444_801_93e-08
@@ -84,15 +84,11 @@ def python_duration(path, sound_module):
         return duration
 
 
-def uri_duration(uri):
-    """Return the audio-file duration, using the given uri"""
-    scheme, path = uri.split("://")
-    path = urllib.parse.unquote(path)
-
-    if scheme == "file":
-        for mod in [wave, aifc]:
-            duration = python_duration(path, mod)
-            if duration > 0:
-                return duration
+def audio_file_duration(path: str):
+    """Return the audio-file duration, using the given file path"""
+    for mod in [wave, aifc]:
+        duration = python_duration(path, mod)
+        if duration > 0:
+            return duration
 
     return 0

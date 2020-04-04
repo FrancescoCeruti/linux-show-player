@@ -14,13 +14,14 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
+
 import logging
 import pickle
 from abc import ABCMeta, abstractmethod
 from os import path, makedirs
 
 from lisp import DEFAULT_CACHE_DIR
-from lisp.application import Application
+from lisp.core.session_uri import SessionURI
 from lisp.core.signal import Signal
 from lisp.core.util import file_hash
 
@@ -32,23 +33,30 @@ class Waveform(metaclass=ABCMeta):
     CACHE_DIR_NAME = "waveforms"
     MAX_DECIMALS = 5
 
-    def __init__(self, uri, duration, max_samples=1280, cache=True):
-        self.ready = Signal()
-        self.rms_samples = []
-        self.peak_samples = []
-        self.max_samples = max_samples
-        self.duration = duration
-        self.uri = uri
-        self.failed = Signal()
-        self._hash = None
-        self.cache = cache
-
-    def cache_dir(self):
-        cache_dir = Application().conf.get("cache.position", "")
+    def __init__(
+        self,
+        uri: SessionURI,
+        duration,
+        max_samples=2560,
+        enable_cache=True,
+        cache_dir=None,
+    ):
         if not cache_dir:
             cache_dir = DEFAULT_CACHE_DIR
 
-        return path.join(cache_dir, self.CACHE_DIR_NAME)
+        self.max_samples = max_samples
+        self.duration = duration
+
+        self._uri = uri
+        self._hash = None
+        self._cache_dir = path.join(cache_dir, self.CACHE_DIR_NAME)
+        self._enable_cache = enable_cache
+
+        self.rms_samples = []
+        self.peak_samples = []
+
+        self.ready = Signal()
+        self.failed = Signal()
 
     def cache_path(self, refresh=True):
         """Return the path of the file used to cache the waveform.
@@ -56,17 +64,17 @@ class Waveform(metaclass=ABCMeta):
         The path name is based on the hash of the source file, which will be
         calculated and saved the first time.
         """
-        scheme, _, file_path = self.uri.partition("://")
-        if scheme != "file":
+        if not self._uri.is_local:
             return ""
 
+        file_path = self._uri.absolute_path
         if not self._hash or refresh:
             self._hash = file_hash(
                 file_path, digest_size=16, person=self.CACHE_VERSION.encode(),
             )
 
         return path.join(
-            path.dirname(file_path), self.cache_dir(), self._hash + ".waveform",
+            path.dirname(file_path), self._cache_dir, self._hash + ".waveform",
         )
 
     def load_waveform(self):
@@ -102,7 +110,7 @@ class Waveform(metaclass=ABCMeta):
         """ Retrieve data from a cache file, if caching is enabled. """
         try:
             cache_path = self.cache_path()
-            if self.cache and path.exists(cache_path):
+            if self._enable_cache and path.exists(cache_path):
                 with open(cache_path, "rb") as cache_file:
                     cache_data = pickle.load(cache_file)
                     if len(cache_data) >= 2:
@@ -119,11 +127,11 @@ class Waveform(metaclass=ABCMeta):
         return False
 
     def _to_cache(self):
-        """ Dump the waveform data to a file, if caching is enabled. """
-        if self.cache:
+        """Dump the waveform data to a file, if caching is enabled."""
+        if self._enable_cache:
             cache_path = self.cache_path()
-            cache_dir = path.dirname(cache_path)
-            if cache_dir:
+            if cache_path:
+                cache_dir = path.dirname(cache_path)
                 if not path.exists(cache_dir):
                     makedirs(cache_dir, exist_ok=True)
 

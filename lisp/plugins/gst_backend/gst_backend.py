@@ -106,12 +106,11 @@ class GstBackend(Plugin, BaseBackend):
         return extensions
 
     def media_waveform(self, media):
-        uri = media.input_uri()
-        scheme, _, path = uri.partition("://")
-        if scheme == "file":
-            uri = scheme + "://" + self.app.session.abs_path(path)
-
-        return GstWaveform(uri, media.duration)
+        return GstWaveform(
+            media.input_uri(),
+            media.duration,
+            cache_dir=self.app.conf.get("cache.position", ""),
+        )
 
     def _add_uri_audio_cue(self):
         """Add audio MediaCue(s) form user-selected files"""
@@ -163,8 +162,7 @@ class GstBackend(Plugin, BaseBackend):
 
         cues = []
         for index, file in enumerate(files, start_index):
-            file = self.app.session.rel_path(file)
-            cue = factory(uri="file://" + file)
+            cue = factory(uri=file)
             # Use the filename without extension as cue name
             cue.name = os.path.splitext(os.path.basename(file))[0]
             # Set the index (if something is selected)

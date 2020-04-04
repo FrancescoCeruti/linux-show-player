@@ -77,21 +77,15 @@ class ReplayGain(Plugin):
             else:
                 cues = self.app.cue_model.filter(MediaCue)
 
-            # Extract single uri(s), this way if a uri is used in more than
-            # one place, the gain is only calculated once.
+            # Extract single uri(s), this way if one uri is used in more than
+            # one place, the gain will be calculated only once.
             files = {}
             for cue in cues:
                 media = cue.media
                 uri = media.input_uri()
 
                 if uri is not None:
-                    if uri[:7] == "file://":
-                        uri = "file://" + self.app.session.abs_path(uri[7:])
-
-                    if uri not in files:
-                        files[uri] = [media]
-                    else:
-                        files[uri].append(media)
+                    files.setdefault(uri.uri, []).append(media)
 
             # Gain (main) thread
             self._gain_thread = GainMainThread(

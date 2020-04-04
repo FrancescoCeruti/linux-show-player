@@ -1,5 +1,5 @@
 {
-    "_version_": "0.6dev.16",
+    "_version_": "0.6dev.17",
     "cue": {
         "fadeAction": 3,
         "fadeActionType": "Linear",
@@ -15,7 +15,7 @@
     },
     "locale": "",
     "session": {
-        "minSave": true,
+        "minSave": false,
         "lastPath": ""
     },
     "logging": {

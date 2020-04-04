@@ -37,8 +37,8 @@ class GstWaveform(Waveform):
     )
     MAX_PCM_VALUE = 32768
 
-    def __init__(self, uri, duration, max_samples=1280, cache=True):
-        super().__init__(uri, duration, max_samples=max_samples, cache=cache)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self._pipeline = None
         self._bus_id = None
 
@@ -52,8 +52,8 @@ class GstWaveform(Waveform):
         # Create the pipeline with an appropriate buffer-size to control
         # how many seconds of data we receive at each 'new-sample' event.
         self._pipeline = Gst.parse_launch(
-            GstWaveform.PIPELINE_TEMPLATE.format(
-                uri=self.uri,
+            self.PIPELINE_TEMPLATE.format(
+                uri=self._uri.uri,
                 sample_length=f"{self.duration // 1000}/{self.max_samples}",
             )
         )
@@ -115,7 +115,7 @@ class GstWaveform(Waveform):
 
             error, debug = message.parse_error()
             logger.warning(
-                f'Cannot generate waveform for "{self.uri}": {error.message}',
+                f'Cannot generate waveform for "{self._uri.unquoted_uri}": {error.message}',
                 exc_info=GstError(debug),
             )
 
@@ -127,12 +127,10 @@ class GstWaveform(Waveform):
         # Normalize data
         for peak, rms in zip(self._temp_peak, self._temp_rms):
             self.peak_samples.append(
-                round(
-                    peak / GstWaveform.MAX_PCM_VALUE, GstWaveform.MAX_DECIMALS
-                )
+                round(peak / self.MAX_PCM_VALUE, self.MAX_DECIMALS)
             )
             self.rms_samples.append(
-                round(rms / GstWaveform.MAX_PCM_VALUE, GstWaveform.MAX_DECIMALS)
+                round(rms / self.MAX_PCM_VALUE, self.MAX_DECIMALS)
             )
 
         # Dump the data into a file (does nothing if caching is disabled)

@@ -81,6 +81,11 @@ class Slot:
         if self._callback is not None:
             self._callback(self._slot_id)
 
+    def __str__(self):
+        return (
+            f"{self.__class__.__qualname__}: {self._reference().__qualname__}"
+        )
+
 
 class AsyncSlot(Slot):
     """Asynchronous slot, NOT queued, any call is performed in a new thread."""
