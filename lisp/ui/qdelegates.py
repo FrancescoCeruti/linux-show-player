@@ -54,7 +54,9 @@ class LabelDelegate(QStyledItemDelegate):
         return index.data()
 
     def paint(self, painter, option, index):
-        # Add 4px of left an right padding
+        self.initStyleOption(option, index)
+
+        # Add 4px of left and right padding
         option.rect.adjust(4, 0, -4, 0)
 
         text = self._text(option, index)

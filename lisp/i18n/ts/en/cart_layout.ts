@@ -8,27 +8,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/cart_layout/layout.py" line="190"/>
+        <location filename="../../../plugins/cart_layout/settings.py" line="84"/>
         <source>Countdown mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/cart_layout/layout.py" line="193"/>
+        <location filename="../../../plugins/cart_layout/settings.py" line="85"/>
         <source>Show seek-bars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/cart_layout/layout.py" line="194"/>
+        <location filename="../../../plugins/cart_layout/settings.py" line="86"/>
         <source>Show dB-meters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/cart_layout/layout.py" line="198"/>
+        <location filename="../../../plugins/cart_layout/settings.py" line="87"/>
         <source>Show accurate time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/cart_layout/layout.py" line="197"/>
+        <location filename="../../../plugins/cart_layout/settings.py" line="88"/>
         <source>Show volume</source>
         <translation type="unfinished"></translation>
     </message>
@@ -78,22 +78,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/cart_layout/layout.py" line="280"/>
+        <location filename="../../../plugins/cart_layout/layout.py" line="283"/>
         <source>Page {number}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/cart_layout/layout.py" line="482"/>
+        <location filename="../../../plugins/cart_layout/layout.py" line="485"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/cart_layout/layout.py" line="483"/>
+        <location filename="../../../plugins/cart_layout/layout.py" line="486"/>
         <source>Every cue in the page will be lost.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/cart_layout/layout.py" line="486"/>
+        <location filename="../../../plugins/cart_layout/layout.py" line="489"/>
         <source>Are you sure to continue?</source>
         <translation type="unfinished"></translation>
     </message>

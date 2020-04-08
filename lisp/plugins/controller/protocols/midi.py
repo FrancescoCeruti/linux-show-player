@@ -233,7 +233,7 @@ class MidiValueDelegate(LabelDelegate):
                 attr = message_spec[index.column() - 1]
                 attr_spec = MIDI_ATTRS_SPEC.get(attr)
 
-                if MIDI_MSGS_SPEC is not None:
+                if attr_spec is not None:
                     return str(value - attr_spec[-1])
 
         return ""
