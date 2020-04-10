@@ -20,8 +20,8 @@
     </message>
     <message>
       <location filename="../../../plugins/synchronizer/synchronizer.py" line="79"/>
-      <source>Your IP is:</source>
-      <translation>Tvoj IP je:</translation>
+      <source>Your IP is: {}</source>
+      <translation type="unfinished">Your IP is: {}</translation>
     </message>
   </context>
 </TS>
