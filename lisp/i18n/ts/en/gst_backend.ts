@@ -158,9 +158,14 @@
 <context>
     <name>GstSettings</name>
     <message>
-        <location filename="../../../plugins/gst_backend/gst_settings.py" line="44"/>
-        <source>Pipeline</source>
-        <translation>Pipeline</translation>
+        <location filename="../../../plugins/gst_backend/gst_settings.py" line="54"/>
+        <source>Default pipeline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../plugins/gst_backend/gst_settings.py" line="55"/>
+        <source>Applied only to new cues.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

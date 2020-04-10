@@ -3,37 +3,32 @@
 <context>
     <name>CartLayout</name>
     <message>
-        <location filename="../../../plugins/cart_layout/settings.py" line="81"/>
-        <source>Default behaviors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../plugins/cart_layout/settings.py" line="84"/>
+        <location filename="../../../plugins/cart_layout/settings.py" line="86"/>
         <source>Countdown mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/cart_layout/settings.py" line="85"/>
+        <location filename="../../../plugins/cart_layout/settings.py" line="87"/>
         <source>Show seek-bars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/cart_layout/settings.py" line="86"/>
+        <location filename="../../../plugins/cart_layout/settings.py" line="88"/>
         <source>Show dB-meters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/cart_layout/settings.py" line="87"/>
+        <location filename="../../../plugins/cart_layout/settings.py" line="89"/>
         <source>Show accurate time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/cart_layout/settings.py" line="88"/>
+        <location filename="../../../plugins/cart_layout/settings.py" line="90"/>
         <source>Show volume</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/cart_layout/settings.py" line="89"/>
+        <location filename="../../../plugins/cart_layout/settings.py" line="91"/>
         <source>Grid size</source>
         <translation type="unfinished"></translation>
     </message>
@@ -98,13 +93,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/cart_layout/settings.py" line="90"/>
+        <location filename="../../../plugins/cart_layout/settings.py" line="92"/>
         <source>Number of columns:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/cart_layout/settings.py" line="91"/>
+        <location filename="../../../plugins/cart_layout/settings.py" line="93"/>
         <source>Number of rows:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../plugins/cart_layout/settings.py" line="81"/>
+        <source>Default behaviors (applied to new sessions)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

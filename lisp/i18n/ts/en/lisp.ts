@@ -236,47 +236,42 @@
 <context>
     <name>CartLayout</name>
     <message>
-        <location filename="../../../plugins/cart_layout/settings.py" line="81"/>
-        <source>Default behaviors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../plugins/cart_layout/settings.py" line="84"/>
+        <location filename="../../../plugins/cart_layout/settings.py" line="86"/>
         <source>Countdown mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/cart_layout/settings.py" line="85"/>
+        <location filename="../../../plugins/cart_layout/settings.py" line="87"/>
         <source>Show seek-bars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/cart_layout/settings.py" line="86"/>
+        <location filename="../../../plugins/cart_layout/settings.py" line="88"/>
         <source>Show dB-meters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/cart_layout/settings.py" line="87"/>
+        <location filename="../../../plugins/cart_layout/settings.py" line="89"/>
         <source>Show accurate time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/cart_layout/settings.py" line="88"/>
+        <location filename="../../../plugins/cart_layout/settings.py" line="90"/>
         <source>Show volume</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/cart_layout/settings.py" line="89"/>
+        <location filename="../../../plugins/cart_layout/settings.py" line="91"/>
         <source>Grid size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/cart_layout/settings.py" line="90"/>
+        <location filename="../../../plugins/cart_layout/settings.py" line="92"/>
         <source>Number of columns:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/cart_layout/settings.py" line="91"/>
+        <location filename="../../../plugins/cart_layout/settings.py" line="93"/>
         <source>Number of rows:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -338,6 +333,11 @@
     <message>
         <location filename="../../../plugins/cart_layout/layout.py" line="489"/>
         <source>Are you sure to continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../plugins/cart_layout/settings.py" line="81"/>
+        <source>Default behaviors (applied to new sessions)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -848,12 +848,12 @@
         <translation>Default action to stop the cue</translation>
     </message>
     <message>
-        <location filename="../../../ui/settings/app_pages/cue.py" line="63"/>
+        <location filename="../../../ui/settings/app_pages/cue.py" line="69"/>
         <source>Interrupt action fade</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../ui/settings/app_pages/cue.py" line="69"/>
+        <location filename="../../../ui/settings/app_pages/cue.py" line="75"/>
         <source>Fade actions default value</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1057,8 +1057,13 @@
 <context>
     <name>GstSettings</name>
     <message>
-        <location filename="../../../plugins/gst_backend/gst_settings.py" line="44"/>
-        <source>Pipeline</source>
+        <location filename="../../../plugins/gst_backend/gst_settings.py" line="54"/>
+        <source>Default pipeline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../plugins/gst_backend/gst_settings.py" line="55"/>
+        <source>Applied only to new cues.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1221,107 +1226,102 @@
 <context>
     <name>ListLayout</name>
     <message>
-        <location filename="../../../plugins/list_layout/settings.py" line="104"/>
-        <source>Default behaviors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../plugins/list_layout/settings.py" line="107"/>
+        <location filename="../../../plugins/list_layout/settings.py" line="118"/>
         <source>Show dB-meters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/list_layout/settings.py" line="108"/>
+        <location filename="../../../plugins/list_layout/settings.py" line="119"/>
         <source>Show accurate time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/list_layout/settings.py" line="109"/>
+        <location filename="../../../plugins/list_layout/settings.py" line="120"/>
         <source>Show seek-bars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/list_layout/settings.py" line="110"/>
+        <location filename="../../../plugins/list_layout/settings.py" line="121"/>
         <source>Auto-select next cue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/list_layout/settings.py" line="111"/>
+        <location filename="../../../plugins/list_layout/settings.py" line="122"/>
         <source>Enable selection mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/list_layout/settings.py" line="115"/>
+        <location filename="../../../plugins/list_layout/settings.py" line="130"/>
         <source>GO Key:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/list_layout/settings.py" line="116"/>
+        <location filename="../../../plugins/list_layout/settings.py" line="131"/>
         <source>GO Action:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/list_layout/settings.py" line="117"/>
+        <location filename="../../../plugins/list_layout/settings.py" line="132"/>
         <source>GO minimum interval (ms):</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/list_layout/settings.py" line="121"/>
+        <location filename="../../../plugins/list_layout/settings.py" line="136"/>
         <source>Use fade (buttons)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/list_layout/settings.py" line="124"/>
+        <location filename="../../../plugins/list_layout/settings.py" line="139"/>
         <source>Stop Cue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/list_layout/settings.py" line="125"/>
+        <location filename="../../../plugins/list_layout/settings.py" line="140"/>
         <source>Pause Cue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/list_layout/settings.py" line="126"/>
+        <location filename="../../../plugins/list_layout/settings.py" line="141"/>
         <source>Resume Cue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/list_layout/settings.py" line="127"/>
+        <location filename="../../../plugins/list_layout/settings.py" line="142"/>
         <source>Interrupt Cue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/list_layout/layout.py" line="155"/>
+        <location filename="../../../plugins/list_layout/layout.py" line="152"/>
         <source>Edit cue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/list_layout/layout.py" line="155"/>
+        <location filename="../../../plugins/list_layout/layout.py" line="152"/>
         <source>Edit selected</source>
         <translation type="unfinished">Edit selected</translation>
     </message>
     <message>
-        <location filename="../../../plugins/list_layout/layout.py" line="155"/>
+        <location filename="../../../plugins/list_layout/layout.py" line="152"/>
         <source>Clone cue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/list_layout/layout.py" line="155"/>
+        <location filename="../../../plugins/list_layout/layout.py" line="152"/>
         <source>Clone selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/list_layout/layout.py" line="155"/>
+        <location filename="../../../plugins/list_layout/layout.py" line="152"/>
         <source>Remove cue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/list_layout/layout.py" line="155"/>
+        <location filename="../../../plugins/list_layout/layout.py" line="152"/>
         <source>Remove selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/list_layout/layout.py" line="194"/>
+        <location filename="../../../plugins/list_layout/layout.py" line="191"/>
         <source>Selection mode</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1396,18 +1396,33 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/list_layout/layout.py" line="188"/>
+        <location filename="../../../plugins/list_layout/layout.py" line="185"/>
         <source>Show index column</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/list_layout/layout.py" line="197"/>
+        <location filename="../../../plugins/list_layout/layout.py" line="194"/>
         <source>Show resize handles</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/list_layout/layout.py" line="200"/>
+        <location filename="../../../plugins/list_layout/layout.py" line="197"/>
         <source>Restore default size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../plugins/list_layout/settings.py" line="113"/>
+        <source>Default behaviors (applied to new sessions)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../plugins/list_layout/settings.py" line="126"/>
+        <source>Behaviors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../plugins/list_layout/settings.py" line="127"/>
+        <source>Use waveform seek-bar</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2691,7 +2706,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../plugins/list_layout/settings.py" line="37"/>
+        <location filename="../../../plugins/list_layout/settings.py" line="39"/>
         <source>List Layout</source>
         <translation type="unfinished"></translation>
     </message>
