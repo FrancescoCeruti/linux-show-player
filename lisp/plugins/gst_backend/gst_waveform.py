@@ -35,7 +35,7 @@ class GstWaveform(Waveform):
         "! audiobuffersplit output-buffer-duration={sample_length} "
         "! appsink name=app_sink emit-signals=true sync=false"
     )
-    MAX_PCM_VALUE = 32768
+    MAX_S16_PCM_VALUE = 32768
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -100,8 +100,8 @@ class GstWaveform(Waveform):
             # Get the all data from the buffer, as bytes
             # We expect each audio sample to be 16bits signed integer
             data_bytes = buffer.extract_dup(0, buffer.get_size())
-            # Get max (peak-to-peak) of the samples
-            self._temp_peak.append(audioop.maxpp(data_bytes, 2))
+            # Get the max of the absolute values in the samples
+            self._temp_peak.append(audioop.max(data_bytes, 2))
             # Get rms of the samples
             self._temp_rms.append(audioop.rms(data_bytes, 2))
 
@@ -111,13 +111,14 @@ class GstWaveform(Waveform):
         if message.type == Gst.MessageType.EOS:
             self._eos()
         elif message.type == Gst.MessageType.ERROR:
-            self._clear()
-
             error, debug = message.parse_error()
             logger.warning(
                 f'Cannot generate waveform for "{self._uri.unquoted_uri}": {error.message}',
                 exc_info=GstError(debug),
             )
+
+            self._clear()
+            self.failed.emit()
 
     def _eos(self):
         """Called when the file has been processed."""
@@ -127,10 +128,10 @@ class GstWaveform(Waveform):
         # Normalize data
         for peak, rms in zip(self._temp_peak, self._temp_rms):
             self.peak_samples.append(
-                round(peak / self.MAX_PCM_VALUE, self.MAX_DECIMALS)
+                round(peak / self.MAX_S16_PCM_VALUE, self.MAX_DECIMALS)
             )
             self.rms_samples.append(
-                round(rms / self.MAX_PCM_VALUE, self.MAX_DECIMALS)
+                round(rms / self.MAX_S16_PCM_VALUE, self.MAX_DECIMALS)
             )
 
         # Dump the data into a file (does nothing if caching is disabled)

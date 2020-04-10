@@ -24,7 +24,7 @@ from PyQt5.QtWidgets import QLabel, QPushButton
 
 class DynamicFontSizeMixin:
     FONT_PRECISION = 0.5
-    PADDING = 8
+    FONT_PADDING = 8
 
     def getWidgetMaximumFontSize(self, text: str):
         font = self.font()
@@ -34,8 +34,8 @@ class DynamicFontSizeMixin:
             return currentSize
 
         widgetRect = QRectF(self.contentsRect())
-        widgetWidth = widgetRect.width() - self.PADDING
-        widgetHeight = widgetRect.height() - self.PADDING
+        widgetWidth = widgetRect.width() - self.FONT_PADDING
+        widgetHeight = widgetRect.height() - self.FONT_PADDING
 
         step = currentSize / 2.0
         # If too small, increase step

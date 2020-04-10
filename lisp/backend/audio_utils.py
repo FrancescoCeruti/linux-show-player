@@ -92,3 +92,28 @@ def audio_file_duration(path: str):
             return duration
 
     return 0
+
+
+def iec_scale(dB):
+    """IEC 268-18:1995 standard dB scaling.
+
+    adapted from: http://plugin.org.uk/meterbridge/
+    """
+    scale = 100
+
+    if dB < -70.0:
+        scale = 0.0
+    elif dB < -60.0:
+        scale = (dB + 70.0) * 0.25
+    elif dB < -50.0:
+        scale = (dB + 60.0) * 0.50 + 5
+    elif dB < -40.0:
+        scale = (dB + 50.0) * 0.75 + 7.5
+    elif dB < -30.0:
+        scale = (dB + 40.0) * 1.5 + 15
+    elif dB < -20.0:
+        scale = (dB + 30.0) * 2.0 + 30
+    elif dB < 0:
+        scale = (dB + 20.0) * 2.5 + 50
+
+    return scale / 100

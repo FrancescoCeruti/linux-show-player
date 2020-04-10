@@ -1,14 +1,17 @@
 from math import floor, ceil
 
-from PyQt5.QtCore import QLineF, pyqtSignal
+from PyQt5.QtCore import QLineF, pyqtSignal, Qt, QRectF
 from PyQt5.QtGui import QPainter, QPen, QColor, QBrush
 from PyQt5.QtWidgets import QWidget
 
+from lisp.backend.waveform import Waveform
 from lisp.core.signal import Connection
+from lisp.core.util import strtime
+from lisp.ui.widgets.dynamicfontsize import DynamicFontSizeMixin
 
 
 class WaveformWidget(QWidget):
-    def __init__(self, waveform, **kwargs):
+    def __init__(self, waveform: Waveform, **kwargs):
         super().__init__(**kwargs)
         self._waveform = waveform
         self._maximum = self._waveform.duration
@@ -16,6 +19,8 @@ class WaveformWidget(QWidget):
         self._value = 0
         self._lastDrawnValue = 0
 
+        self.backgroundColor = QColor(32, 32, 32)
+        self.backgroundRadius = 6
         self.elapsedPeakColor = QColor(75, 154, 250)
         self.elapsedRmsColor = QColor(153, 199, 255)
         self.remainsPeakColor = QColor(90, 90, 90)
@@ -44,28 +49,28 @@ class WaveformWidget(QWidget):
     def setValue(self, value):
         self._value = min(value, self._maximum)
 
-        if self.isVisible():
+        # if we are not visible we can skip this
+        if not self.visibleRegion().isEmpty():
             # Repaint only if we have new pixels to draw
             if self._value >= floor(self._lastDrawnValue + self._valueToPx):
-                x = self._lastDrawnValue / self._valueToPx
-                width = (self._value - self._lastDrawnValue) / self._valueToPx
+                x = self._lastDrawnValue // self._valueToPx
+                width = (self._value - self._lastDrawnValue) // self._valueToPx
                 # Repaint only the changed area
-                self.update(floor(x), 0, ceil(width), self.height())
+                self.update(x - 1, 0, width + 1, self.height())
             elif self._value <= ceil(self._lastDrawnValue - self._valueToPx):
-                x = self._value / self._valueToPx
-                width = (self._lastDrawnValue - self._value) / self._valueToPx
+                x = self._value // self._valueToPx
+                width = (self._lastDrawnValue - self._value) // self._valueToPx
                 # Repaint only the changed area
-                self.update(floor(x), 0, ceil(width) + 1, self.height())
+                self.update(x - 1, 0, width + 1, self.height())
 
     def resizeEvent(self, event):
         self._valueToPx = self._maximum / self.width()
 
     def paintEvent(self, event):
         halfHeight = self.height() / 2
-
         painter = QPainter()
-        painter.begin(self)
 
+        painter.begin(self)
         pen = QPen()
         pen.setWidth(1)
         painter.setPen(pen)
@@ -80,7 +85,7 @@ class WaveformWidget(QWidget):
             peakRemainsLines = []
             rmsElapsedLines = []
             rmsRemainsLines = []
-            for x in range(event.rect().x(), self.rect().right()):
+            for x in range(event.rect().x(), event.rect().right() + 1):
                 # Calculate re-sample interval
                 s0 = floor(x * samplesToPx)
                 s1 = ceil(x * samplesToPx + samplesToPx)
@@ -135,8 +140,10 @@ class WaveformWidget(QWidget):
         painter.end()
 
 
-class WaveformSlider(WaveformWidget):
-    """ Implement an API similar to a QAbstractSlider. """
+class WaveformSlider(DynamicFontSizeMixin, WaveformWidget):
+    """Implement an API similar to a QAbstractSlider."""
+
+    FONT_PADDING = 1
 
     sliderMoved = pyqtSignal(int)
     sliderJumped = pyqtSignal(int)
@@ -145,13 +152,20 @@ class WaveformSlider(WaveformWidget):
         super().__init__(waveform, **kwargs)
         self.setMouseTracking(True)
 
-        self._mouseDown = False
         self._lastPosition = -1
+        self._mouseDown = False
+        self._labelRight = True
+        self._maxFontSize = self.font().pointSizeF()
 
-        self.backgroundColor = QColor(32, 32, 32)
-        self.seekIndicatorColor = QColor(255, 0, 0)
+        self.seekIndicatorColor = QColor(Qt.red)
+        self.seekTimestampBG = QColor(32, 32, 32)
+        self.seekTimestampFG = QColor(Qt.white)
+
+    def _xToValue(self, x):
+        return round(x * self._valueToPx)
 
     def leaveEvent(self, event):
+        self._labelRight = True
         self._lastPosition = -1
 
     def mouseMoveEvent(self, event):
@@ -159,24 +173,36 @@ class WaveformSlider(WaveformWidget):
         self.update()
 
         if self._mouseDown:
-            self.sliderMoved.emit(round(self._lastPosition * self._valueToPx))
+            self.sliderMoved.emit(self._xToValue(self._lastPosition))
 
     def mousePressEvent(self, event):
         self._mouseDown = True
 
     def mouseReleaseEvent(self, event):
         self._mouseDown = False
-        self.sliderJumped.emit(round(event.x() * self._valueToPx))
+        self.sliderJumped.emit(self._xToValue(event.x()))
+
+    def resizeEvent(self, event):
+        fontSize = self.getWidgetMaximumFontSize("0123456789")
+        if fontSize > self._maxFontSize:
+            fontSize = self._maxFontSize
+
+        font = self.font()
+        font.setPointSizeF(fontSize)
+        self.setFont(font)
+
+        super().resizeEvent(event)
 
     def paintEvent(self, event):
-        # Draw background
         painter = QPainter()
-        painter.begin(self)
-        painter.setRenderHint(QPainter.Antialiasing)
-
         pen = QPen(QColor(0, 0, 0, 0))
+
+        # Draw the background (it will be clipped to event.rect())
+        painter.begin(self)
+
         painter.setPen(pen)
         painter.setBrush(QBrush(self.backgroundColor))
+        painter.setRenderHint(QPainter.Antialiasing)
         painter.drawRoundedRect(self.rect(), 6, 6)
 
         painter.end()
@@ -184,16 +210,48 @@ class WaveformSlider(WaveformWidget):
         # Draw the waveform
         super().paintEvent(event)
 
-        # If necessary (mouse-over) draw the seek indicator
+        # If needed (mouse-over) draw the seek indicator, and it's timestamp
         if self._lastPosition >= 0:
             painter.begin(self)
 
+            # Draw the indicator as a 1px vertical line
             pen.setWidth(1)
             pen.setColor(self.seekIndicatorColor)
             painter.setPen(pen)
-
             painter.drawLine(
                 self._lastPosition, 0, self._lastPosition, self.height()
             )
+
+            # Get the timestamp of the indicator position
+            text = strtime(self._xToValue(self._lastPosition))[:-3]
+            textSize = self.fontMetrics().size(Qt.TextSingleLine, text)
+            # Vertical offset to center the label
+            vOffset = (self.height() - textSize.height()) / 2
+
+            # Decide on which side of the indicator the label should be drawn
+            left = self._lastPosition - textSize.width() - 14
+            right = self._lastPosition + textSize.width() + 14
+            if (self._labelRight and right < self.width()) or left < 0:
+                xOffset = self._lastPosition + 6
+                self._labelRight = True
+            else:
+                xOffset = self._lastPosition - textSize.width() - 14
+                self._labelRight = False
+
+            # Define the label rect, add 8px of width for left/right padding
+            rect = QRectF(
+                xOffset, vOffset, textSize.width() + 8, textSize.height()
+            )
+
+            # Draw the label rect
+            pen.setColor(self.seekIndicatorColor.darker(150))
+            painter.setPen(pen)
+            painter.setBrush(QBrush(self.seekTimestampBG))
+            painter.drawRoundedRect(rect, 2, 2)
+
+            # Draw the timestamp
+            pen.setColor(self.seekTimestampFG)
+            painter.setPen(pen)
+            painter.drawText(rect, Qt.AlignCenter, text)
 
             painter.end()

@@ -15,123 +15,135 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5 import QtCore
-from PyQt5.QtGui import QLinearGradient, QColor, QPainter
+from typing import Callable
+
+from PyQt5.QtCore import QRect, QRectF
+from PyQt5.QtGui import QLinearGradient, QColor, QPainter, QPixmap
 from PyQt5.QtWidgets import QWidget
+
+from lisp.backend.audio_utils import iec_scale
 
 
 class DBMeter(QWidget):
-    def __init__(self, parent, min=-60, max=0, clip=0):
-        super().__init__(parent)
-        self.db_min = min
-        self.db_max = max
-        self.db_clip = clip
+    """DPM - Digital Peak Meter widget"""
 
-        db_range = abs(self.db_min - self.db_max)
-        yellow = abs(self.db_min + 20) / db_range  # -20 db
-        red = abs(self.db_min) / db_range  # 0 db
+    def __init__(
+        self,
+        parent=None,
+        dBMin: int = -70,
+        dBMax: int = 0,
+        clipping: int = 0,
+        smoothing: float = 0.66,
+        scale: Callable = iec_scale,
+        **kwargs,
+    ):
+        super().__init__(parent, **kwargs)
+        self.dBMin = dBMin
+        self.dBMax = dBMax
+        self.dbClipping = clipping
+        self.valueSmoothing = smoothing
+        self.scale = scale
 
-        self.grad = QLinearGradient()
-        self.grad.setColorAt(0, QColor(0, 255, 0))  # Green
-        self.grad.setColorAt(yellow, QColor(255, 255, 0))  # Yellow
-        self.grad.setColorAt(red, QColor(255, 0, 0))  # Red
+        self.backgroundColor = QColor(32, 32, 32)
+        self.borderColor = QColor(80, 80, 80)
+        self.clippingColor = QColor(220, 50, 50)
+
+        self._currentSmoothing = self.valueSmoothing
+        self._pixmap = QPixmap()
 
         self.reset()
 
     def reset(self):
-        self.peaks = [self.db_min, self.db_min]
-        self.rmss = [self.db_min, self.db_min]
-        self.decPeak = [self.db_min, self.db_min]
+        self.peaks = [self.dBMin, self.dBMin]
+        self.decayPeaks = [self.dBMin, self.dBMin]
         self.clipping = {}
-        self.repaint()
 
-    def plot(self, peaks, rms, decPeak):
+        self.update()
+
+    def plot(self, peaks, _, decayPeak):
+        for n in range(min(len(peaks), len(self.peaks))):
+            if peaks[n] > self.dbClipping:
+                self.clipping[n] = True
+
+            if self.valueSmoothing:
+                if peaks[n] < self.peaks[n]:
+                    peaks[n] = self.peaks[n] - self._currentSmoothing
+                    self._currentSmoothing *= 1.1
+                else:
+                    self._currentSmoothing = self.valueSmoothing
+
         self.peaks = peaks
-        self.rmss = rms
-        self.decPeak = decPeak
+        self.decayPeaks = decayPeak
 
-        self.repaint()
+        self.update()
+
+    def updatePixmap(self):
+        """Prepare the colored rect to be used during paintEvent(s)"""
+        w = self.width()
+        h = self.height()
+
+        dbRange = abs(self.dBMin - self.dBMax)
+
+        gradient = QLinearGradient(0, 0, 0, h)
+        gradient.setColorAt(0, QColor(230, 0, 0))
+        gradient.setColorAt(10 / dbRange, QColor(255, 220, 0))
+        gradient.setColorAt(30 / dbRange, QColor(0, 220, 0))
+        gradient.setColorAt(1, QColor(0, 160, 0))
+
+        self._pixmap = QPixmap(w, h)
+        QPainter(self._pixmap).fillRect(0, 0, w, h, gradient)
+
+    def resizeEvent(self, event):
+        self.updatePixmap()
 
     def paintEvent(self, e):
-        if not self.visibleRegion().isEmpty():
-            # Stretch factor
-            mul = self.height() - 4
-            mul /= self.db_max - self.db_min
+        height = self.height()
+        width = self.width()
 
-            peaks = []
-            for n, peak in enumerate(self.peaks):
-                if peak > self.db_clip:
-                    self.clipping[n] = True
+        painter = QPainter()
+        painter.begin(self)
+        painter.setBrush(self.backgroundColor)
 
-                # Checks also for NaN values
-                if peak < self.db_min or peak != peak:
-                    peak = self.db_min
-                elif peak > self.db_max:
-                    peak = self.db_max
+        # Calculate the meter size (per single channel)
+        meterWidth = width / len(self.peaks)
+        meterRect = QRect(0, 0, meterWidth - 2, height - 1)
 
-                peaks.append(round((peak - self.db_min) * mul))
+        # Draw each channel
+        for n, values in enumerate(zip(self.peaks, self.decayPeaks)):
+            # Draw Background
+            if self.clipping.get(n, False):
+                painter.setPen(self.clippingColor)
+            else:
+                painter.setPen(self.borderColor)
 
-            rmss = []
-            for rms in self.rmss:
-                # Checks also for NaN values
-                if rms < self.db_min or rms != rms:
-                    rms = self.db_min
-                elif rms > self.db_max:
-                    rms = self.db_max
+            painter.drawRect(meterRect)
 
-                rmss.append(round((rms - self.db_min) * mul))
+            # Limit the values between dbMin and dbMax
+            peak = max(self.dBMin, min(self.dBMax, values[0]))
+            decayPeak = max(self.dBMin, min(self.dBMax, values[1]))
+            # Scale the values to the widget height
+            peak = self.scale(peak) * (height - 2)
+            decayPeak = self.scale(decayPeak) * (height - 2)
 
-            dPeaks = []
-            for dPeak in self.decPeak:
-                # Checks also for NaN values
-                if dPeak < self.db_min or dPeak != dPeak:
-                    dPeak = self.db_min
-                elif dPeak > self.db_max:
-                    dPeak = self.db_max
+            # Draw peak (audio peak in dB)
+            peakRect = QRectF(
+                meterRect.x() + 1,
+                height - peak - 1,
+                meterRect.width() - 1,
+                peak,
+            )
+            painter.drawPixmap(peakRect, self._pixmap, peakRect)
 
-                dPeaks.append(round((dPeak - self.db_min) * mul))
+            # Draw decay indicator
+            decayRect = QRectF(
+                meterRect.x() + 1,
+                height - decayPeak - 1,
+                meterRect.width() - 1,
+                1,
+            )
+            painter.drawPixmap(decayRect, self._pixmap, decayRect)
 
-            qp = QPainter()
-            qp.begin(self)
-            qp.setBrush(QColor(0, 0, 0, 0))
+            # Move to the next meter
+            meterRect.translate(meterWidth, 0)
 
-            xpos = 0
-            xdim = self.width() / len(peaks)
-
-            for n, (peak, rms, dPeak) in enumerate(zip(peaks, rmss, dPeaks)):
-                # Maximum 'peak-rect' size
-                maxRect = QtCore.QRect(
-                    xpos, self.height() - 2, xdim - 2, 2 - self.height()
-                )
-
-                # Set QLinearGradient start and final-stop position
-                self.grad.setStart(maxRect.topLeft())
-                self.grad.setFinalStop(maxRect.bottomRight())
-
-                # Draw peak (audio peak in dB)
-                rect = QtCore.QRect(xpos, self.height() - 2, xdim - 2, -peak)
-                qp.setOpacity(0.6)
-                qp.fillRect(rect, self.grad)
-                qp.setOpacity(1.0)
-
-                # Draw rms (in db)
-                rect = QtCore.QRect(xpos, self.height() - 2, xdim - 2, -rms)
-                qp.fillRect(rect, self.grad)
-
-                # Draw decay peak
-                decRect = QtCore.QRect(
-                    xpos, (self.height() - 3) - dPeak, xdim - 2, 2
-                )
-                qp.fillRect(decRect, self.grad)
-
-                # Draw Borders
-                if self.clipping.get(n, False):
-                    qp.setPen(QColor(200, 0, 0))
-                else:
-                    qp.setPen(QColor(100, 100, 100))
-
-                qp.drawRect(maxRect)
-
-                xpos += xdim
-
-            qp.end()
+        painter.end()
