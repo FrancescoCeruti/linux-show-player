@@ -55,7 +55,7 @@
   <context>
     <name>CueCategory</name>
     <message>
-      <location filename="../../../plugins/action_cues/stop_all.py" line="31"/>
+      <location filename="../../../plugins/action_cues/index_action_cue.py" line="40"/>
       <source>Action cues</source>
       <translation type="unfinished">Action cues</translation>
     </message>
@@ -66,11 +66,6 @@
       <location filename="../../../plugins/action_cues/command_cue.py" line="40"/>
       <source>Command Cue</source>
       <translation>أمر الأغنية</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/action_cues/midi_cue.py" line="35"/>
-      <source>MIDI Cue</source>
-      <translation type="unfinished">MIDI Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="54"/>
@@ -132,32 +127,6 @@
     </message>
   </context>
   <context>
-    <name>Osc Cue</name>
-    <message>
-      <location filename="../../../plugins/action_cues/osc_cue.py" line="247"/>
-      <source>Fade</source>
-      <translation>التلاشي</translation>
-    </message>
-  </context>
-  <context>
-    <name>OscCue</name>
-    <message>
-      <location filename="../../../plugins/action_cues/osc_cue.py" line="298"/>
-      <source>Add</source>
-      <translation>أضف</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/action_cues/osc_cue.py" line="299"/>
-      <source>Remove</source>
-      <translation>احذف</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/action_cues/osc_cue.py" line="304"/>
-      <source>Fade</source>
-      <translation>تلاشي</translation>
-    </message>
-  </context>
-  <context>
     <name>SeekCue</name>
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="99"/>
@@ -191,11 +160,6 @@
       <location filename="../../../plugins/action_cues/command_cue.py" line="104"/>
       <source>Command</source>
       <translation>الأوامر</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/action_cues/midi_cue.py" line="52"/>
-      <source>MIDI Settings</source>
-      <translation type="unfinished">MIDI Settings</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="139"/>
