@@ -35,32 +35,32 @@
   <context>
     <name>AboutDialog</name>
     <message>
-      <location filename="../../../ui/about.py" line="118"/>
+      <location filename="../../../ui/about.py" line="117"/>
       <source>Web site</source>
       <translation>موقع ويب</translation>
     </message>
     <message>
-      <location filename="../../../ui/about.py" line="118"/>
+      <location filename="../../../ui/about.py" line="117"/>
       <source>Source code</source>
       <translation type="unfinished">Source code</translation>
     </message>
     <message>
-      <location filename="../../../ui/about.py" line="133"/>
+      <location filename="../../../ui/about.py" line="132"/>
       <source>Info</source>
       <translation type="unfinished">Info</translation>
     </message>
     <message>
-      <location filename="../../../ui/about.py" line="138"/>
+      <location filename="../../../ui/about.py" line="137"/>
       <source>License</source>
       <translation type="unfinished">License</translation>
     </message>
     <message>
-      <location filename="../../../ui/about.py" line="144"/>
+      <location filename="../../../ui/about.py" line="143"/>
       <source>Contributors</source>
       <translation type="unfinished">Contributors</translation>
     </message>
     <message>
-      <location filename="../../../ui/about.py" line="118"/>
+      <location filename="../../../ui/about.py" line="117"/>
       <source>Discussion</source>
       <translation type="unfinished">Discussion</translation>
     </message>
@@ -92,45 +92,50 @@
   <context>
     <name>AppGeneralSettings</name>
     <message>
-      <location filename="../../../ui/settings/app_pages/general.py" line="95"/>
+      <location filename="../../../ui/settings/app_pages/general.py" line="103"/>
       <source>Default layout</source>
       <translation type="unfinished">Default layout</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/app_pages/general.py" line="98"/>
-      <source>Enable startup layout selector</source>
-      <translation type="unfinished">Enable startup layout selector</translation>
-    </message>
-    <message>
-      <location filename="../../../ui/settings/app_pages/general.py" line="101"/>
+      <location filename="../../../ui/settings/app_pages/general.py" line="112"/>
       <source>Application themes</source>
       <translation type="unfinished">Application themes</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/app_pages/general.py" line="104"/>
+      <location filename="../../../ui/settings/app_pages/general.py" line="115"/>
       <source>UI theme:</source>
       <translation type="unfinished">UI theme:</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/app_pages/general.py" line="105"/>
+      <location filename="../../../ui/settings/app_pages/general.py" line="116"/>
       <source>Icons theme:</source>
       <translation type="unfinished">Icons theme:</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/app_pages/general.py" line="107"/>
-      <source>Application language (require restart)</source>
-      <translation type="unfinished">Application language (require restart)</translation>
-    </message>
-    <message>
-      <location filename="../../../ui/settings/app_pages/general.py" line="112"/>
+      <location filename="../../../ui/settings/app_pages/general.py" line="123"/>
       <source>Language:</source>
       <translation type="unfinished">Language:</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/settings/app_pages/general.py" line="106"/>
+      <source>Show layout selection at startup</source>
+      <translation type="unfinished">Show layout selection at startup</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/settings/app_pages/general.py" line="109"/>
+      <source>Use layout at startup:</source>
+      <translation type="unfinished">Use layout at startup:</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/settings/app_pages/general.py" line="118"/>
+      <source>Application language (require a restart)</source>
+      <translation type="unfinished">Application language (require a restart)</translation>
     </message>
   </context>
   <context>
     <name>ApplicationError</name>
     <message>
-      <location filename="../../../application.py" line="151"/>
+      <location filename="../../../application.py" line="153"/>
       <source>Startup error</source>
       <translation type="unfinished">Startup error</translation>
     </message>
@@ -207,49 +212,67 @@
     </message>
   </context>
   <context>
-    <name>CartLayout</name>
+    <name>CacheManager</name>
     <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="81"/>
-      <source>Default behaviors</source>
-      <translation type="unfinished">Default behaviors</translation>
+      <location filename="../../../plugins/cache_manager/cache_manager.py" line="135"/>
+      <source>Cache size warning</source>
+      <translation type="unfinished">Cache size warning</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="190"/>
+      <location filename="../../../plugins/cache_manager/cache_manager.py" line="138"/>
+      <source>Warning threshold in MB (0 = disabled)</source>
+      <translation type="unfinished">Warning threshold in MB (0 = disabled)</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cache_manager/cache_manager.py" line="142"/>
+      <source>Cache cleanup</source>
+      <translation type="unfinished">Cache cleanup</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cache_manager/cache_manager.py" line="143"/>
+      <source>Delete the cache content</source>
+      <translation type="unfinished">Delete the cache content</translation>
+    </message>
+  </context>
+  <context>
+    <name>CartLayout</name>
+    <message>
+      <location filename="../../../plugins/cart_layout/settings.py" line="86"/>
       <source>Countdown mode</source>
       <translation type="unfinished">Countdown mode</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="193"/>
+      <location filename="../../../plugins/cart_layout/settings.py" line="87"/>
       <source>Show seek-bars</source>
       <translation type="unfinished">Show seek-bars</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="194"/>
+      <location filename="../../../plugins/cart_layout/settings.py" line="88"/>
       <source>Show dB-meters</source>
       <translation type="unfinished">Show dB-meters</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="198"/>
+      <location filename="../../../plugins/cart_layout/settings.py" line="89"/>
       <source>Show accurate time</source>
       <translation type="unfinished">Show accurate time</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="197"/>
+      <location filename="../../../plugins/cart_layout/settings.py" line="90"/>
       <source>Show volume</source>
       <translation type="unfinished">Show volume</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="89"/>
+      <location filename="../../../plugins/cart_layout/settings.py" line="91"/>
       <source>Grid size</source>
       <translation type="unfinished">Grid size</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="90"/>
+      <location filename="../../../plugins/cart_layout/settings.py" line="92"/>
       <source>Number of columns:</source>
       <translation type="unfinished">Number of columns:</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="91"/>
+      <location filename="../../../plugins/cart_layout/settings.py" line="93"/>
       <source>Number of rows:</source>
       <translation type="unfinished">Number of rows:</translation>
     </message>
@@ -294,24 +317,29 @@
       <translation type="unfinished">Number of Pages:</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="280"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="283"/>
       <source>Page {number}</source>
       <translation type="unfinished">Page {number}</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="482"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="485"/>
       <source>Warning</source>
       <translation type="unfinished">Warning</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="483"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="486"/>
       <source>Every cue in the page will be lost.</source>
       <translation type="unfinished">Every cue in the page will be lost.</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="486"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="489"/>
       <source>Are you sure to continue?</source>
       <translation type="unfinished">Are you sure to continue?</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/settings.py" line="81"/>
+      <source>Default behaviors (applied to new sessions)</source>
+      <translation type="unfinished">Default behaviors (applied to new sessions)</translation>
     </message>
   </context>
   <context>
@@ -405,131 +433,154 @@
   <context>
     <name>ControllerKeySettings</name>
     <message>
-      <location filename="../../../plugins/controller/protocols/keyboard.py" line="53"/>
-      <source>Key</source>
-      <translation type="unfinished">Key</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/controller/protocols/keyboard.py" line="53"/>
+      <location filename="../../../plugins/controller/protocols/keyboard.py" line="55"/>
       <source>Action</source>
       <translation type="unfinished">Action</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/keyboard.py" line="76"/>
+      <location filename="../../../plugins/controller/protocols/keyboard.py" line="78"/>
       <source>Shortcuts</source>
       <translation type="unfinished">Shortcuts</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/controller/protocols/keyboard.py" line="55"/>
+      <source>Shortcut</source>
+      <translation type="unfinished">Shortcut</translation>
     </message>
   </context>
   <context>
     <name>ControllerMidiSettings</name>
     <message>
-      <location filename="../../../plugins/controller/protocols/midi.py" line="54"/>
+      <location filename="../../../plugins/controller/protocols/midi.py" line="71"/>
       <source>MIDI</source>
       <translation type="unfinished">MIDI</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/midi.py" line="59"/>
+      <location filename="../../../plugins/controller/protocols/midi.py" line="244"/>
       <source>Type</source>
       <translation type="unfinished">Type</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/midi.py" line="59"/>
-      <source>Channel</source>
-      <translation type="unfinished">Channel</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/controller/protocols/midi.py" line="59"/>
-      <source>Note</source>
-      <translation type="unfinished">Note</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/controller/protocols/midi.py" line="59"/>
+      <location filename="../../../plugins/controller/protocols/midi.py" line="244"/>
       <source>Action</source>
       <translation type="unfinished">Action</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/midi.py" line="85"/>
-      <source>Filter &quot;note on&quot;</source>
-      <translation type="unfinished">Filter &quot;note on&quot;</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/controller/protocols/midi.py" line="89"/>
-      <source>Filter &quot;note off&quot;</source>
-      <translation type="unfinished">Filter &quot;note off&quot;</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/controller/protocols/midi.py" line="106"/>
+      <location filename="../../../plugins/controller/protocols/midi.py" line="124"/>
       <source>Capture</source>
       <translation type="unfinished">Capture</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/midi.py" line="131"/>
+      <location filename="../../../plugins/controller/protocols/midi.py" line="159"/>
       <source>Listening MIDI messages ...</source>
       <translation type="unfinished">Listening MIDI messages ...</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/controller/protocols/midi.py" line="103"/>
+      <source>-- All Messages --</source>
+      <translation type="unfinished">-- All Messages --</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/controller/protocols/midi.py" line="125"/>
+      <source>Capture filter</source>
+      <translation type="unfinished">Capture filter</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/controller/protocols/midi.py" line="244"/>
+      <source>Data 1</source>
+      <translation type="unfinished">Data 1</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/controller/protocols/midi.py" line="244"/>
+      <source>Data 2</source>
+      <translation type="unfinished">Data 2</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/controller/protocols/midi.py" line="244"/>
+      <source>Data 3</source>
+      <translation type="unfinished">Data 3</translation>
     </message>
   </context>
   <context>
     <name>ControllerOscSettings</name>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="137"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="101"/>
       <source>OSC Message</source>
       <translation type="unfinished">OSC Message</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="188"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="232"/>
       <source>OSC</source>
       <translation type="unfinished">OSC</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="192"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="436"/>
       <source>Path</source>
       <translation type="unfinished">Path</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="192"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="436"/>
       <source>Types</source>
       <translation type="unfinished">Types</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="192"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="436"/>
       <source>Arguments</source>
       <translation type="unfinished">Arguments</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="192"/>
-      <source>Actions</source>
-      <translation type="unfinished">Actions</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="221"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="258"/>
       <source>OSC Capture</source>
       <translation type="unfinished">OSC Capture</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="250"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="287"/>
       <source>Add</source>
       <translation type="unfinished">Add</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="251"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="288"/>
       <source>Remove</source>
       <translation type="unfinished">Remove</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="252"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="289"/>
       <source>Capture</source>
       <translation type="unfinished">Capture</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="334"/>
+      <source>Waiting for messages:</source>
+      <translation type="unfinished">Waiting for messages:</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="103"/>
+      <source>/path/to/method</source>
+      <translation type="unfinished">/path/to/method</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="436"/>
+      <source>Action</source>
+      <translation type="unfinished">Action</translation>
+    </message>
+  </context>
+  <context>
+    <name>ControllerOscSettingsWarning</name>
+    <message>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="350"/>
+      <source>Warning</source>
+      <translation type="unfinished">Warning</translation>
     </message>
   </context>
   <context>
     <name>ControllerSettings</name>
     <message>
-      <location filename="../../../plugins/controller/protocols/keyboard.py" line="77"/>
+      <location filename="../../../plugins/controller/protocols/midi.py" line="121"/>
       <source>Add</source>
       <translation type="unfinished">Add</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/keyboard.py" line="78"/>
+      <location filename="../../../plugins/controller/protocols/midi.py" line="122"/>
       <source>Remove</source>
       <translation type="unfinished">Remove</translation>
     </message>
@@ -537,7 +588,7 @@
   <context>
     <name>Cue Name</name>
     <message>
-      <location filename="../../../plugins/osc/osc_cue.py" line="180"/>
+      <location filename="../../../plugins/osc/osc_cue.py" line="181"/>
       <source>OSC Settings</source>
       <translation type="unfinished">OSC Settings</translation>
     </message>
@@ -601,19 +652,6 @@
     </message>
   </context>
   <context>
-    <name>CueActionLog</name>
-    <message>
-      <location filename="../../../cues/cue_actions.py" line="46"/>
-      <source>Cue settings changed: &quot;{}&quot;</source>
-      <translation type="unfinished">Cue settings changed: &quot;{}&quot;</translation>
-    </message>
-    <message>
-      <location filename="../../../cues/cue_actions.py" line="75"/>
-      <source>Cues settings changed.</source>
-      <translation type="unfinished">Cues settings changed.</translation>
-    </message>
-  </context>
-  <context>
     <name>CueAppearanceSettings</name>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="79"/>
@@ -659,17 +697,17 @@
   <context>
     <name>CueCategory</name>
     <message>
-      <location filename="../../../plugins/action_cues/stop_all.py" line="31"/>
+      <location filename="../../../plugins/action_cues/index_action_cue.py" line="40"/>
       <source>Action cues</source>
       <translation type="unfinished">Action cues</translation>
     </message>
     <message>
-      <location filename="../../../plugins/osc/osc.py" line="44"/>
+      <location filename="../../../plugins/osc/osc.py" line="45"/>
       <source>Integration cues</source>
       <translation type="unfinished">Integration cues</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="262"/>
+      <location filename="../../../ui/mainwindow.py" line="267"/>
       <source>Misc cues</source>
       <translation type="unfinished">Misc cues</translation>
     </message>
@@ -690,7 +728,7 @@
   <context>
     <name>CueName</name>
     <message>
-      <location filename="../../../cues/media_cue.py" line="32"/>
+      <location filename="../../../cues/media_cue.py" line="31"/>
       <source>Media Cue</source>
       <translation type="unfinished">Media Cue</translation>
     </message>
@@ -725,12 +763,12 @@
       <translation type="unfinished">Stop-All</translation>
     </message>
     <message>
-      <location filename="../../../plugins/midi/midi_cue.py" line="35"/>
+      <location filename="../../../plugins/midi/midi_cue.py" line="40"/>
       <source>MIDI Cue</source>
       <translation type="unfinished">MIDI Cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/osc/osc_cue.py" line="63"/>
+      <location filename="../../../plugins/osc/osc_cue.py" line="64"/>
       <source>OSC Cue</source>
       <translation type="unfinished">OSC Cue</translation>
     </message>
@@ -738,27 +776,27 @@
   <context>
     <name>CueNextAction</name>
     <message>
-      <location filename="../../../ui/widgets/cue_next_actions.py" line="26"/>
+      <location filename="../../../ui/widgets/cue_next_actions.py" line="25"/>
       <source>Do Nothing</source>
       <translation>لا تفعل شيئا</translation>
     </message>
     <message>
-      <location filename="../../../ui/widgets/cue_next_actions.py" line="27"/>
+      <location filename="../../../ui/widgets/cue_next_actions.py" line="26"/>
       <source>Trigger after the end</source>
       <translation type="unfinished">Trigger after the end</translation>
     </message>
     <message>
-      <location filename="../../../ui/widgets/cue_next_actions.py" line="30"/>
+      <location filename="../../../ui/widgets/cue_next_actions.py" line="29"/>
       <source>Trigger after post wait</source>
       <translation type="unfinished">Trigger after post wait</translation>
     </message>
     <message>
-      <location filename="../../../ui/widgets/cue_next_actions.py" line="33"/>
+      <location filename="../../../ui/widgets/cue_next_actions.py" line="32"/>
       <source>Select after the end</source>
       <translation type="unfinished">Select after the end</translation>
     </message>
     <message>
-      <location filename="../../../ui/widgets/cue_next_actions.py" line="36"/>
+      <location filename="../../../ui/widgets/cue_next_actions.py" line="35"/>
       <source>Select after post wait</source>
       <translation type="unfinished">Select after post wait</translation>
     </message>
@@ -811,14 +849,14 @@
       <translation type="unfinished">Default action to stop the cue</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/app_pages/cue.py" line="53"/>
-      <source>Interrupt fade</source>
-      <translation type="unfinished">Interrupt fade</translation>
+      <location filename="../../../ui/settings/app_pages/cue.py" line="69"/>
+      <source>Interrupt action fade</source>
+      <translation type="unfinished">Interrupt action fade</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/app_pages/cue.py" line="54"/>
-      <source>Fade actions</source>
-      <translation type="unfinished">Fade actions</translation>
+      <location filename="../../../ui/settings/app_pages/cue.py" line="75"/>
+      <source>Fade actions default value</source>
+      <translation type="unfinished">Fade actions default value</translation>
     </message>
   </context>
   <context>
@@ -896,12 +934,12 @@
   <context>
     <name>FadeEdit</name>
     <message>
-      <location filename="../../../ui/widgets/fades.py" line="96"/>
+      <location filename="../../../ui/widgets/fades.py" line="97"/>
       <source>Duration (sec):</source>
       <translation type="unfinished">Duration (sec):</translation>
     </message>
     <message>
-      <location filename="../../../ui/widgets/fades.py" line="97"/>
+      <location filename="../../../ui/widgets/fades.py" line="98"/>
       <source>Curve:</source>
       <translation>منحنى:</translation>
     </message>
@@ -922,52 +960,52 @@
   <context>
     <name>GlobalAction</name>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="40"/>
+      <location filename="../../../plugins/controller/common.py" line="41"/>
       <source>Go</source>
       <translation type="unfinished">Go</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="41"/>
+      <location filename="../../../plugins/controller/common.py" line="42"/>
       <source>Reset</source>
       <translation type="unfinished">Reset</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="42"/>
+      <location filename="../../../plugins/controller/common.py" line="43"/>
       <source>Stop all cues</source>
       <translation type="unfinished">Stop all cues</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="43"/>
+      <location filename="../../../plugins/controller/common.py" line="44"/>
       <source>Pause all cues</source>
       <translation type="unfinished">Pause all cues</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="44"/>
+      <location filename="../../../plugins/controller/common.py" line="45"/>
       <source>Resume all cues</source>
       <translation type="unfinished">Resume all cues</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="47"/>
+      <location filename="../../../plugins/controller/common.py" line="48"/>
       <source>Interrupt all cues</source>
       <translation type="unfinished">Interrupt all cues</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="50"/>
+      <location filename="../../../plugins/controller/common.py" line="51"/>
       <source>Fade-out all cues</source>
       <translation type="unfinished">Fade-out all cues</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="53"/>
+      <location filename="../../../plugins/controller/common.py" line="54"/>
       <source>Fade-in all cues</source>
       <translation type="unfinished">Fade-in all cues</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="56"/>
+      <location filename="../../../plugins/controller/common.py" line="57"/>
       <source>Move standby forward</source>
       <translation type="unfinished">Move standby forward</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="59"/>
+      <location filename="../../../plugins/controller/common.py" line="60"/>
       <source>Move standby back</source>
       <translation type="unfinished">Move standby back</translation>
     </message>
@@ -975,12 +1013,12 @@
   <context>
     <name>GstBackend</name>
     <message>
-      <location filename="../../../plugins/gst_backend/gst_backend.py" line="73"/>
+      <location filename="../../../plugins/gst_backend/gst_backend.py" line="74"/>
       <source>Audio cue (from file)</source>
       <translation type="unfinished">Audio cue (from file)</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/gst_backend.py" line="113"/>
+      <location filename="../../../plugins/gst_backend/gst_backend.py" line="123"/>
       <source>Select media files</source>
       <translation type="unfinished">Select media files</translation>
     </message>
@@ -988,7 +1026,7 @@
   <context>
     <name>GstMediaError</name>
     <message>
-      <location filename="../../../plugins/gst_backend/gst_media.py" line="239"/>
+      <location filename="../../../plugins/gst_backend/gst_media.py" line="233"/>
       <source>Cannot create pipeline element: &quot;{}&quot;</source>
       <translation type="unfinished">Cannot create pipeline element: &quot;{}&quot;</translation>
     </message>
@@ -1004,7 +1042,7 @@
   <context>
     <name>GstMediaWarning</name>
     <message>
-      <location filename="../../../plugins/gst_backend/gst_media.py" line="233"/>
+      <location filename="../../../plugins/gst_backend/gst_media.py" line="227"/>
       <source>Invalid pipeline element: &quot;{}&quot;</source>
       <translation type="unfinished">Invalid pipeline element: &quot;{}&quot;</translation>
     </message>
@@ -1012,7 +1050,7 @@
   <context>
     <name>GstPipelineEdit</name>
     <message>
-      <location filename="../../../plugins/gst_backend/gst_pipe_edit.py" line="166"/>
+      <location filename="../../../plugins/gst_backend/gst_pipe_edit.py" line="167"/>
       <source>Edit Pipeline</source>
       <translation type="unfinished">Edit Pipeline</translation>
     </message>
@@ -1020,9 +1058,22 @@
   <context>
     <name>GstSettings</name>
     <message>
-      <location filename="../../../plugins/gst_backend/gst_settings.py" line="44"/>
-      <source>Pipeline</source>
-      <translation type="unfinished">Pipeline</translation>
+      <location filename="../../../plugins/gst_backend/gst_settings.py" line="54"/>
+      <source>Default pipeline</source>
+      <translation type="unfinished">Default pipeline</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/gst_backend/gst_settings.py" line="55"/>
+      <source>Applied only to new cues.</source>
+      <translation type="unfinished">Applied only to new cues.</translation>
+    </message>
+  </context>
+  <context>
+    <name>HotKeyEdit</name>
+    <message>
+      <location filename="../../../ui/widgets/hotkeyedit.py" line="124"/>
+      <source>Press shortcut</source>
+      <translation type="unfinished">Press shortcut</translation>
     </message>
   </context>
   <context>
@@ -1094,7 +1145,7 @@
   <context>
     <name>LayoutDescription</name>
     <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="42"/>
+      <location filename="../../../plugins/list_layout/layout.py" line="43"/>
       <source>Organize the cues in a list</source>
       <translation type="unfinished">Organize the cues in a list</translation>
     </message>
@@ -1107,17 +1158,17 @@
   <context>
     <name>LayoutDetails</name>
     <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="46"/>
+      <location filename="../../../plugins/list_layout/layout.py" line="47"/>
       <source>SHIFT + Space or Double-Click to edit a cue</source>
       <translation type="unfinished">SHIFT + Space or Double-Click to edit a cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="52"/>
+      <location filename="../../../plugins/list_layout/layout.py" line="50"/>
       <source>To copy cues drag them while pressing CTRL</source>
       <translation type="unfinished">To copy cues drag them while pressing CTRL</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="52"/>
+      <location filename="../../../plugins/list_layout/layout.py" line="53"/>
       <source>To move cues drag them</source>
       <translation type="unfinished">To move cues drag them</translation>
     </message>
@@ -1145,7 +1196,7 @@
   <context>
     <name>LayoutName</name>
     <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="41"/>
+      <location filename="../../../plugins/list_layout/layout.py" line="42"/>
       <source>List Layout</source>
       <translation type="unfinished">List Layout</translation>
     </message>
@@ -1158,17 +1209,17 @@
   <context>
     <name>LayoutSelect</name>
     <message>
-      <location filename="../../../ui/layoutselect.py" line="38"/>
+      <location filename="../../../ui/layoutselect.py" line="37"/>
       <source>Layout selection</source>
       <translation type="unfinished">Layout selection</translation>
     </message>
     <message>
-      <location filename="../../../ui/layoutselect.py" line="51"/>
+      <location filename="../../../ui/layoutselect.py" line="50"/>
       <source>Select layout</source>
       <translation type="unfinished">Select layout</translation>
     </message>
     <message>
-      <location filename="../../../ui/layoutselect.py" line="55"/>
+      <location filename="../../../ui/layoutselect.py" line="54"/>
       <source>Open file</source>
       <translation>فتح الملف</translation>
     </message>
@@ -1176,147 +1227,122 @@
   <context>
     <name>ListLayout</name>
     <message>
-      <location filename="../../../ui/settings/app_pages/layouts.py" line="55"/>
-      <source>Stop All</source>
-      <translation>إيقاف الكل</translation>
-    </message>
-    <message>
-      <location filename="../../../ui/settings/app_pages/layouts.py" line="56"/>
-      <source>Pause All</source>
-      <translation>إيقاف مؤقت للكل</translation>
-    </message>
-    <message>
-      <location filename="../../../ui/settings/app_pages/layouts.py" line="58"/>
-      <source>Interrupt All</source>
-      <translation>قطع كل</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="107"/>
-      <source>Default behaviors</source>
-      <translation type="unfinished">Default behaviors</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="165"/>
-      <source>Show playing cues</source>
-      <translation type="unfinished">Show playing cues</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="168"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="118"/>
       <source>Show dB-meters</source>
       <translation type="unfinished">Show dB-meters</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="172"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="119"/>
       <source>Show accurate time</source>
       <translation type="unfinished">Show accurate time</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="171"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="120"/>
       <source>Show seek-bars</source>
       <translation type="unfinished">Show seek-bars</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="175"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="121"/>
       <source>Auto-select next cue</source>
       <translation type="unfinished">Auto-select next cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="115"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="122"/>
       <source>Enable selection mode</source>
       <translation type="unfinished">Enable selection mode</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="119"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="130"/>
       <source>GO Key:</source>
       <translation type="unfinished">GO Key:</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="120"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="131"/>
       <source>GO Action:</source>
       <translation type="unfinished">GO Action:</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="121"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="132"/>
       <source>GO minimum interval (ms):</source>
       <translation type="unfinished">GO minimum interval (ms):</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="125"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="136"/>
       <source>Use fade (buttons)</source>
       <translation type="unfinished">Use fade (buttons)</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="128"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="139"/>
       <source>Stop Cue</source>
       <translation type="unfinished">Stop Cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="129"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="140"/>
       <source>Pause Cue</source>
       <translation type="unfinished">Pause Cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="130"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="141"/>
       <source>Resume Cue</source>
       <translation type="unfinished">Resume Cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="131"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="142"/>
       <source>Interrupt Cue</source>
       <translation type="unfinished">Interrupt Cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="142"/>
+      <location filename="../../../plugins/list_layout/layout.py" line="152"/>
       <source>Edit cue</source>
       <translation type="unfinished">Edit cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="139"/>
+      <location filename="../../../plugins/list_layout/layout.py" line="152"/>
       <source>Edit selected</source>
       <translation type="unfinished">Edit selected</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="139"/>
+      <location filename="../../../plugins/list_layout/layout.py" line="152"/>
       <source>Clone cue</source>
       <translation type="unfinished">Clone cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="139"/>
+      <location filename="../../../plugins/list_layout/layout.py" line="152"/>
       <source>Clone selected</source>
       <translation type="unfinished">Clone selected</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="142"/>
+      <location filename="../../../plugins/list_layout/layout.py" line="152"/>
       <source>Remove cue</source>
       <translation type="unfinished">Remove cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="139"/>
+      <location filename="../../../plugins/list_layout/layout.py" line="152"/>
       <source>Remove selected</source>
       <translation type="unfinished">Remove selected</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="178"/>
+      <location filename="../../../plugins/list_layout/layout.py" line="191"/>
       <source>Selection mode</source>
       <translation type="unfinished">Selection mode</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/app_pages/layouts.py" line="54"/>
+      <location filename="../../../plugins/list_layout/control_buttons.py" line="57"/>
       <source>Pause all</source>
       <translation type="unfinished">Pause all</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/app_pages/layouts.py" line="53"/>
+      <location filename="../../../plugins/list_layout/control_buttons.py" line="58"/>
       <source>Stop all</source>
       <translation type="unfinished">Stop all</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/app_pages/layouts.py" line="56"/>
+      <location filename="../../../plugins/list_layout/control_buttons.py" line="59"/>
       <source>Interrupt all</source>
       <translation type="unfinished">Interrupt all</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/app_pages/layouts.py" line="55"/>
+      <location filename="../../../plugins/list_layout/control_buttons.py" line="63"/>
       <source>Resume all</source>
       <translation type="unfinished">Resume all</translation>
     </message>
@@ -1341,35 +1367,85 @@
       <translation type="unfinished">Remove selected cues</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/app_pages/layouts.py" line="52"/>
-      <source>Use fade</source>
-      <translation type="unfinished">Use fade</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="363"/>
+      <location filename="../../../plugins/list_layout/layout.py" line="385"/>
       <source>Copy of {}</source>
       <translation type="unfinished">Copy of {}</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/settings/app_pages/layouts.py" line="52"/>
+      <source>Layout actions</source>
+      <translation type="unfinished">Layout actions</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/settings/app_pages/layouts.py" line="53"/>
+      <source>Fade out when stopping all cues</source>
+      <translation type="unfinished">Fade out when stopping all cues</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/settings/app_pages/layouts.py" line="56"/>
+      <source>Fade out when interrupting all cues</source>
+      <translation type="unfinished">Fade out when interrupting all cues</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/settings/app_pages/layouts.py" line="59"/>
+      <source>Fade out when pausing all cues</source>
+      <translation type="unfinished">Fade out when pausing all cues</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/settings/app_pages/layouts.py" line="62"/>
+      <source>Fade in when resuming all cues</source>
+      <translation type="unfinished">Fade in when resuming all cues</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/layout.py" line="185"/>
+      <source>Show index column</source>
+      <translation type="unfinished">Show index column</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/layout.py" line="194"/>
+      <source>Show resize handles</source>
+      <translation type="unfinished">Show resize handles</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/layout.py" line="197"/>
+      <source>Restore default size</source>
+      <translation type="unfinished">Restore default size</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/settings.py" line="113"/>
+      <source>Default behaviors (applied to new sessions)</source>
+      <translation type="unfinished">Default behaviors (applied to new sessions)</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/settings.py" line="126"/>
+      <source>Behaviors</source>
+      <translation type="unfinished">Behaviors</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/settings.py" line="127"/>
+      <source>Use waveform seek-bar</source>
+      <translation type="unfinished">Use waveform seek-bar</translation>
     </message>
   </context>
   <context>
     <name>ListLayoutHeader</name>
     <message>
-      <location filename="../../../plugins/list_layout/list_view.py" line="74"/>
+      <location filename="../../../plugins/list_layout/list_view.py" line="77"/>
       <source>Cue</source>
       <translation type="unfinished">Cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/list_view.py" line="79"/>
+      <location filename="../../../plugins/list_layout/list_view.py" line="82"/>
       <source>Pre wait</source>
       <translation type="unfinished">Pre wait</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/list_view.py" line="82"/>
+      <location filename="../../../plugins/list_layout/list_view.py" line="85"/>
       <source>Action</source>
       <translation type="unfinished">Action</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/list_view.py" line="85"/>
+      <location filename="../../../plugins/list_layout/list_view.py" line="88"/>
       <source>Post wait</source>
       <translation type="unfinished">Post wait</translation>
     </message>
@@ -1423,7 +1499,7 @@
       <translation>إظهار التفاصيل</translation>
     </message>
     <message>
-      <location filename="../../../ui/logging/viewer.py" line="55"/>
+      <location filename="../../../ui/logging/viewer.py" line="53"/>
       <source>Linux Show Player - Log Viewer</source>
       <translation>Linux Show Player--عارض السجل</translation>
     </message>
@@ -1512,6 +1588,11 @@
       <source>Exception info</source>
       <translation>معلومات الاستثناء</translation>
     </message>
+    <message>
+      <location filename="../../../ui/logging/viewer.py" line="125"/>
+      <source>Showing {} of {} records</source>
+      <translation type="unfinished">Showing {} of {} records</translation>
+    </message>
   </context>
   <context>
     <name>MIDICue</name>
@@ -1527,49 +1608,80 @@
     </message>
   </context>
   <context>
+    <name>MIDIError</name>
+    <message>
+      <location filename="../../../plugins/midi/midi_io.py" line="81"/>
+      <source>Cannot connect to MIDI output port &apos;{}&apos;.</source>
+      <translation type="unfinished">Cannot connect to MIDI output port &apos;{}&apos;.</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/midi/midi_io.py" line="102"/>
+      <source>Cannot connect to MIDI input port &apos;{}&apos;.</source>
+      <translation type="unfinished">Cannot connect to MIDI input port &apos;{}&apos;.</translation>
+    </message>
+  </context>
+  <context>
+    <name>MIDIInfo</name>
+    <message>
+      <location filename="../../../plugins/midi/midi.py" line="119"/>
+      <source>MIDI port disconnected: &apos;{}&apos;</source>
+      <translation type="unfinished">MIDI port disconnected: &apos;{}&apos;</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/midi/midi.py" line="137"/>
+      <source>Connecting to MIDI port: &apos;{}&apos;</source>
+      <translation type="unfinished">Connecting to MIDI port: &apos;{}&apos;</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/midi/midi.py" line="146"/>
+      <source>Connecting to matching MIDI port: &apos;{}&apos;</source>
+      <translation type="unfinished">Connecting to matching MIDI port: &apos;{}&apos;</translation>
+    </message>
+  </context>
+  <context>
     <name>MIDIMessageAttr</name>
     <message>
-      <location filename="../../../plugins/midi/midi_utils.py" line="67"/>
+      <location filename="../../../plugins/midi/midi_utils.py" line="68"/>
       <source>Channel</source>
       <translation type="unfinished">Channel</translation>
     </message>
     <message>
-      <location filename="../../../plugins/midi/midi_utils.py" line="68"/>
+      <location filename="../../../plugins/midi/midi_utils.py" line="69"/>
       <source>Note</source>
       <translation type="unfinished">Note</translation>
     </message>
     <message>
-      <location filename="../../../plugins/midi/midi_utils.py" line="69"/>
+      <location filename="../../../plugins/midi/midi_utils.py" line="70"/>
       <source>Velocity</source>
       <translation type="unfinished">Velocity</translation>
     </message>
     <message>
-      <location filename="../../../plugins/midi/midi_utils.py" line="70"/>
+      <location filename="../../../plugins/midi/midi_utils.py" line="71"/>
       <source>Control</source>
       <translation type="unfinished">Control</translation>
     </message>
     <message>
-      <location filename="../../../plugins/midi/midi_utils.py" line="71"/>
+      <location filename="../../../plugins/midi/midi_utils.py" line="72"/>
       <source>Program</source>
       <translation type="unfinished">Program</translation>
     </message>
     <message>
-      <location filename="../../../plugins/midi/midi_utils.py" line="72"/>
+      <location filename="../../../plugins/midi/midi_utils.py" line="73"/>
       <source>Value</source>
       <translation type="unfinished">Value</translation>
     </message>
     <message>
-      <location filename="../../../plugins/midi/midi_utils.py" line="73"/>
+      <location filename="../../../plugins/midi/midi_utils.py" line="74"/>
       <source>Song</source>
       <translation type="unfinished">Song</translation>
     </message>
     <message>
-      <location filename="../../../plugins/midi/midi_utils.py" line="74"/>
+      <location filename="../../../plugins/midi/midi_utils.py" line="75"/>
       <source>Pitch</source>
       <translation type="unfinished">Pitch</translation>
     </message>
     <message>
-      <location filename="../../../plugins/midi/midi_utils.py" line="75"/>
+      <location filename="../../../plugins/midi/midi_utils.py" line="76"/>
       <source>Position</source>
       <translation type="unfinished">Position</translation>
     </message>
@@ -1577,62 +1689,62 @@
   <context>
     <name>MIDIMessageType</name>
     <message>
-      <location filename="../../../plugins/midi/midi_utils.py" line="50"/>
+      <location filename="../../../plugins/midi/midi_utils.py" line="51"/>
       <source>Note ON</source>
       <translation type="unfinished">Note ON</translation>
     </message>
     <message>
-      <location filename="../../../plugins/midi/midi_utils.py" line="51"/>
+      <location filename="../../../plugins/midi/midi_utils.py" line="52"/>
       <source>Note OFF</source>
       <translation type="unfinished">Note OFF</translation>
     </message>
     <message>
-      <location filename="../../../plugins/midi/midi_utils.py" line="52"/>
+      <location filename="../../../plugins/midi/midi_utils.py" line="53"/>
       <source>Polyphonic After-touch</source>
       <translation type="unfinished">Polyphonic After-touch</translation>
     </message>
     <message>
-      <location filename="../../../plugins/midi/midi_utils.py" line="53"/>
+      <location filename="../../../plugins/midi/midi_utils.py" line="54"/>
       <source>Control/Mode Change</source>
       <translation type="unfinished">Control/Mode Change</translation>
     </message>
     <message>
-      <location filename="../../../plugins/midi/midi_utils.py" line="56"/>
+      <location filename="../../../plugins/midi/midi_utils.py" line="57"/>
       <source>Program Change</source>
       <translation type="unfinished">Program Change</translation>
     </message>
     <message>
-      <location filename="../../../plugins/midi/midi_utils.py" line="57"/>
+      <location filename="../../../plugins/midi/midi_utils.py" line="58"/>
       <source>Channel After-touch</source>
       <translation type="unfinished">Channel After-touch</translation>
     </message>
     <message>
-      <location filename="../../../plugins/midi/midi_utils.py" line="58"/>
+      <location filename="../../../plugins/midi/midi_utils.py" line="59"/>
       <source>Pitch Bend Change</source>
       <translation type="unfinished">Pitch Bend Change</translation>
     </message>
     <message>
-      <location filename="../../../plugins/midi/midi_utils.py" line="59"/>
+      <location filename="../../../plugins/midi/midi_utils.py" line="60"/>
       <source>Song Select</source>
       <translation type="unfinished">Song Select</translation>
     </message>
     <message>
-      <location filename="../../../plugins/midi/midi_utils.py" line="60"/>
+      <location filename="../../../plugins/midi/midi_utils.py" line="61"/>
       <source>Song Position</source>
       <translation type="unfinished">Song Position</translation>
     </message>
     <message>
-      <location filename="../../../plugins/midi/midi_utils.py" line="61"/>
+      <location filename="../../../plugins/midi/midi_utils.py" line="62"/>
       <source>Start</source>
       <translation type="unfinished">Start</translation>
     </message>
     <message>
-      <location filename="../../../plugins/midi/midi_utils.py" line="62"/>
+      <location filename="../../../plugins/midi/midi_utils.py" line="63"/>
       <source>Stop</source>
       <translation type="unfinished">Stop</translation>
     </message>
     <message>
-      <location filename="../../../plugins/midi/midi_utils.py" line="63"/>
+      <location filename="../../../plugins/midi/midi_utils.py" line="64"/>
       <source>Continue</source>
       <translation type="unfinished">Continue</translation>
     </message>
@@ -1640,165 +1752,165 @@
   <context>
     <name>MIDISettings</name>
     <message>
-      <location filename="../../../plugins/midi/midi_settings.py" line="41"/>
-      <source>MIDI default devices</source>
-      <translation type="unfinished">MIDI default devices</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/midi/midi_settings.py" line="47"/>
+      <location filename="../../../plugins/midi/midi_settings.py" line="101"/>
       <source>Input</source>
       <translation type="unfinished">Input</translation>
     </message>
     <message>
-      <location filename="../../../plugins/midi/midi_settings.py" line="54"/>
+      <location filename="../../../plugins/midi/midi_settings.py" line="102"/>
       <source>Output</source>
       <translation type="unfinished">Output</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/midi/midi_settings.py" line="100"/>
+      <source>MIDI devices</source>
+      <translation type="unfinished">MIDI devices</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/midi/midi_settings.py" line="104"/>
+      <source>Misc options</source>
+      <translation type="unfinished">Misc options</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/midi/midi_settings.py" line="105"/>
+      <source>Try to connect using only device/port name</source>
+      <translation type="unfinished">Try to connect using only device/port name</translation>
     </message>
   </context>
   <context>
     <name>MainWindow</name>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="187"/>
+      <location filename="../../../ui/mainwindow.py" line="191"/>
       <source>&amp;File</source>
       <translation>&amp;ملف</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="188"/>
+      <location filename="../../../ui/mainwindow.py" line="192"/>
       <source>New session</source>
       <translation>دورة جديدة</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="190"/>
+      <location filename="../../../ui/mainwindow.py" line="194"/>
       <source>Open</source>
       <translation>افتح</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="192"/>
+      <location filename="../../../ui/mainwindow.py" line="196"/>
       <source>Save session</source>
       <translation>حفظ الدورة</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="194"/>
+      <location filename="../../../ui/mainwindow.py" line="198"/>
       <source>Preferences</source>
       <translation type="unfinished">Preferences</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="196"/>
+      <location filename="../../../ui/mainwindow.py" line="200"/>
       <source>Save as</source>
       <translation>حفظ كـ</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="198"/>
+      <location filename="../../../ui/mainwindow.py" line="202"/>
       <source>Full Screen</source>
       <translation>كامل الشاشة</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="200"/>
+      <location filename="../../../ui/mainwindow.py" line="204"/>
       <source>Exit</source>
       <translation>الخروج</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="202"/>
+      <location filename="../../../ui/mainwindow.py" line="207"/>
       <source>&amp;Edit</source>
       <translation>&amp;تعديل</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="203"/>
+      <location filename="../../../ui/mainwindow.py" line="208"/>
       <source>Undo</source>
       <translation>التراجع</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="205"/>
+      <location filename="../../../ui/mainwindow.py" line="210"/>
       <source>Redo</source>
       <translation>الإعادة</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="207"/>
+      <location filename="../../../ui/mainwindow.py" line="212"/>
       <source>Select all</source>
       <translation>اختيار الكل</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="208"/>
+      <location filename="../../../ui/mainwindow.py" line="213"/>
       <source>Select all media cues</source>
       <translation type="unfinished">Select all media cues</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="212"/>
+      <location filename="../../../ui/mainwindow.py" line="217"/>
       <source>Deselect all</source>
       <translation>إلغاء تحديد الكل</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="213"/>
+      <location filename="../../../ui/mainwindow.py" line="218"/>
       <source>CTRL+SHIFT+A</source>
       <translation>CTRL + SHIFT + A</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="214"/>
+      <location filename="../../../ui/mainwindow.py" line="219"/>
       <source>Invert selection</source>
       <translation type="unfinished">Invert selection</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="217"/>
+      <location filename="../../../ui/mainwindow.py" line="222"/>
       <source>CTRL+I</source>
       <translation>CTRL + I</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="218"/>
+      <location filename="../../../ui/mainwindow.py" line="223"/>
       <source>Edit selected</source>
       <translation>تعديل المحددة</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="219"/>
+      <location filename="../../../ui/mainwindow.py" line="224"/>
       <source>CTRL+SHIFT+E</source>
       <translation>CTRL + SHIFT + E</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="221"/>
+      <location filename="../../../ui/mainwindow.py" line="226"/>
       <source>&amp;Layout</source>
       <translation type="unfinished">&amp;Layout</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="223"/>
+      <location filename="../../../ui/mainwindow.py" line="228"/>
       <source>&amp;Tools</source>
       <translation>&amp;أدوات</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="224"/>
+      <location filename="../../../ui/mainwindow.py" line="229"/>
       <source>Edit selection</source>
       <translation>تعديل المجموعة</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="226"/>
+      <location filename="../../../ui/mainwindow.py" line="231"/>
       <source>&amp;About</source>
       <translation>&amp;حول</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="227"/>
+      <location filename="../../../ui/mainwindow.py" line="232"/>
       <source>About</source>
       <translation>حول</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="228"/>
+      <location filename="../../../ui/mainwindow.py" line="233"/>
       <source>About Qt</source>
       <translation>حول Qt</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="394"/>
+      <location filename="../../../ui/mainwindow.py" line="399"/>
       <source>Close session</source>
       <translation type="unfinished">Close session</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="330"/>
-      <source>The current session is not saved.</source>
-      <translation>لم يتم حفظ في الدورة الحالية.</translation>
-    </message>
-    <message>
-      <location filename="../../../ui/mainwindow.py" line="333"/>
-      <source>Discard the changes?</source>
-      <translation type="unfinished">Discard the changes?</translation>
-    </message>
-    <message>
-      <location filename="../../../ui/mainwindow.py" line="404"/>
+      <location filename="../../../ui/mainwindow.py" line="409"/>
       <source>Do you want to save them now?</source>
       <translation type="unfinished">Do you want to save them now?</translation>
     </message>
@@ -1806,7 +1918,7 @@
   <context>
     <name>MainWindowDebug</name>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="255"/>
+      <location filename="../../../ui/mainwindow.py" line="260"/>
       <source>Registered cue menu: &quot;{}&quot;</source>
       <translation type="unfinished">Registered cue menu: &quot;{}&quot;</translation>
     </message>
@@ -1814,7 +1926,7 @@
   <context>
     <name>MainWindowError</name>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="339"/>
+      <location filename="../../../ui/mainwindow.py" line="344"/>
       <source>Cannot create cue {}</source>
       <translation type="unfinished">Cannot create cue {}</translation>
     </message>
@@ -1875,7 +1987,7 @@
       <translation type="unfinished">JACK Out</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/elements/uri_input.py" line="53"/>
+      <location filename="../../../plugins/gst_backend/elements/uri_input.py" line="38"/>
       <source>URI Input</source>
       <translation type="unfinished">URI Input</translation>
     </message>
@@ -1928,7 +2040,7 @@
   <context>
     <name>MediaInfo</name>
     <message>
-      <location filename="../../../plugins/media_info/media_info.py" line="130"/>
+      <location filename="../../../plugins/media_info/media_info.py" line="125"/>
       <source>Media Info</source>
       <translation type="unfinished">Media Info</translation>
     </message>
@@ -1938,19 +2050,19 @@
       <translation type="unfinished">Warning</translation>
     </message>
     <message>
-      <location filename="../../../plugins/media_info/media_info.py" line="70"/>
-      <source>No info to display</source>
-      <translation type="unfinished">No info to display</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/media_info/media_info.py" line="140"/>
+      <location filename="../../../plugins/media_info/media_info.py" line="135"/>
       <source>Info</source>
       <translation type="unfinished">Info</translation>
     </message>
     <message>
-      <location filename="../../../plugins/media_info/media_info.py" line="140"/>
+      <location filename="../../../plugins/media_info/media_info.py" line="135"/>
       <source>Value</source>
       <translation type="unfinished">Value</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/media_info/media_info.py" line="70"/>
+      <source>Cannot get any information.</source>
+      <translation type="unfinished">Cannot get any information.</translation>
     </message>
   </context>
   <context>
@@ -1964,55 +2076,60 @@
   <context>
     <name>NetworkDiscovery</name>
     <message>
-      <location filename="../../../plugins/network/discovery_dialogs.py" line="72"/>
+      <location filename="../../../plugins/network/discovery_dialogs.py" line="79"/>
       <source>Host discovery</source>
       <translation type="unfinished">Host discovery</translation>
     </message>
     <message>
-      <location filename="../../../plugins/network/discovery_dialogs.py" line="149"/>
+      <location filename="../../../plugins/network/discovery_dialogs.py" line="164"/>
       <source>Manage hosts</source>
       <translation type="unfinished">Manage hosts</translation>
     </message>
     <message>
-      <location filename="../../../plugins/network/discovery_dialogs.py" line="150"/>
+      <location filename="../../../plugins/network/discovery_dialogs.py" line="165"/>
       <source>Discover hosts</source>
       <translation type="unfinished">Discover hosts</translation>
     </message>
     <message>
-      <location filename="../../../plugins/network/discovery_dialogs.py" line="153"/>
+      <location filename="../../../plugins/network/discovery_dialogs.py" line="168"/>
       <source>Manually add a host</source>
       <translation type="unfinished">Manually add a host</translation>
     </message>
     <message>
-      <location filename="../../../plugins/network/discovery_dialogs.py" line="156"/>
+      <location filename="../../../plugins/network/discovery_dialogs.py" line="171"/>
       <source>Remove selected host</source>
       <translation type="unfinished">Remove selected host</translation>
     </message>
     <message>
-      <location filename="../../../plugins/network/discovery_dialogs.py" line="159"/>
+      <location filename="../../../plugins/network/discovery_dialogs.py" line="174"/>
       <source>Remove all host</source>
       <translation type="unfinished">Remove all host</translation>
     </message>
     <message>
-      <location filename="../../../plugins/network/discovery_dialogs.py" line="164"/>
+      <location filename="../../../plugins/network/discovery_dialogs.py" line="179"/>
       <source>Address</source>
       <translation type="unfinished">Address</translation>
     </message>
     <message>
-      <location filename="../../../plugins/network/discovery_dialogs.py" line="164"/>
+      <location filename="../../../plugins/network/discovery_dialogs.py" line="179"/>
       <source>Host IP</source>
       <translation type="unfinished">Host IP</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/network/discovery_dialogs.py" line="76"/>
+      <source>Select the hosts you want to add</source>
+      <translation type="unfinished">Select the hosts you want to add</translation>
     </message>
   </context>
   <context>
     <name>Osc Cue</name>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="73"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="71"/>
       <source>Type</source>
       <translation type="unfinished">Type</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="73"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="71"/>
       <source>Argument</source>
       <translation type="unfinished">Argument</translation>
     </message>
@@ -2020,57 +2137,57 @@
   <context>
     <name>OscCue</name>
     <message>
-      <location filename="../../../plugins/osc/osc_cue.py" line="253"/>
+      <location filename="../../../plugins/osc/osc_cue.py" line="254"/>
       <source>Add</source>
       <translation type="unfinished">Add</translation>
     </message>
     <message>
-      <location filename="../../../plugins/osc/osc_cue.py" line="254"/>
+      <location filename="../../../plugins/osc/osc_cue.py" line="255"/>
       <source>Remove</source>
       <translation type="unfinished">Remove</translation>
     </message>
     <message>
-      <location filename="../../../plugins/osc/osc_cue.py" line="197"/>
+      <location filename="../../../plugins/osc/osc_cue.py" line="198"/>
       <source>Type</source>
       <translation type="unfinished">Type</translation>
     </message>
     <message>
-      <location filename="../../../plugins/osc/osc_cue.py" line="197"/>
+      <location filename="../../../plugins/osc/osc_cue.py" line="198"/>
       <source>Value</source>
       <translation type="unfinished">Value</translation>
     </message>
     <message>
-      <location filename="../../../plugins/osc/osc_cue.py" line="197"/>
+      <location filename="../../../plugins/osc/osc_cue.py" line="198"/>
       <source>FadeTo</source>
       <translation type="unfinished">FadeTo</translation>
     </message>
     <message>
-      <location filename="../../../plugins/osc/osc_cue.py" line="259"/>
+      <location filename="../../../plugins/osc/osc_cue.py" line="260"/>
       <source>Fade</source>
       <translation type="unfinished">Fade</translation>
     </message>
     <message>
-      <location filename="../../../plugins/osc/osc_cue.py" line="252"/>
+      <location filename="../../../plugins/osc/osc_cue.py" line="253"/>
       <source>OSC Message</source>
       <translation type="unfinished">OSC Message</translation>
     </message>
     <message>
-      <location filename="../../../plugins/osc/osc_cue.py" line="255"/>
+      <location filename="../../../plugins/osc/osc_cue.py" line="256"/>
       <source>OSC Path:</source>
       <translation type="unfinished">OSC Path:</translation>
     </message>
     <message>
-      <location filename="../../../plugins/osc/osc_cue.py" line="256"/>
+      <location filename="../../../plugins/osc/osc_cue.py" line="257"/>
       <source>/path/to/something</source>
       <translation type="unfinished">/path/to/something</translation>
     </message>
     <message>
-      <location filename="../../../plugins/osc/osc_cue.py" line="260"/>
+      <location filename="../../../plugins/osc/osc_cue.py" line="261"/>
       <source>Time (sec)</source>
       <translation type="unfinished">Time (sec)</translation>
     </message>
     <message>
-      <location filename="../../../plugins/osc/osc_cue.py" line="261"/>
+      <location filename="../../../plugins/osc/osc_cue.py" line="262"/>
       <source>Curve</source>
       <translation type="unfinished">Curve</translation>
     </message>
@@ -2148,12 +2265,12 @@
       <translation type="unfinished">Failed to load &quot;{}&quot;</translation>
     </message>
     <message>
-      <location filename="../../../plugins/__init__.py" line="160"/>
+      <location filename="../../../plugins/__init__.py" line="159"/>
       <source>Failed to terminate plugin: &quot;{}&quot;</source>
       <translation type="unfinished">Failed to terminate plugin: &quot;{}&quot;</translation>
     </message>
     <message>
-      <location filename="../../../plugins/__init__.py" line="175"/>
+      <location filename="../../../plugins/__init__.py" line="174"/>
       <source>the requested plugin is not loaded: {}</source>
       <translation type="unfinished">the requested plugin is not loaded: {}</translation>
     </message>
@@ -2166,7 +2283,7 @@
       <translation type="unfinished">Plugin loaded: &quot;{}&quot;</translation>
     </message>
     <message>
-      <location filename="../../../plugins/__init__.py" line="154"/>
+      <location filename="../../../plugins/__init__.py" line="153"/>
       <source>Plugin terminated: &quot;{}&quot;</source>
       <translation type="unfinished">Plugin terminated: &quot;{}&quot;</translation>
     </message>
@@ -2182,12 +2299,12 @@
   <context>
     <name>Preset</name>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="223"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="222"/>
       <source>Create Cue</source>
       <translation type="unfinished">Create Cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="224"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="223"/>
       <source>Load on selected Cues</source>
       <translation type="unfinished">Load on selected Cues</translation>
     </message>
@@ -2238,62 +2355,62 @@
       <translation type="unfinished">Presets</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="423"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="422"/>
       <source>Preset name</source>
       <translation type="unfinished">Preset name</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="219"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="218"/>
       <source>Add</source>
       <translation type="unfinished">Add</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="220"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="219"/>
       <source>Rename</source>
       <translation type="unfinished">Rename</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="221"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="220"/>
       <source>Edit</source>
       <translation type="unfinished">Edit</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="222"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="221"/>
       <source>Remove</source>
       <translation type="unfinished">Remove</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="227"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="226"/>
       <source>Export selected</source>
       <translation type="unfinished">Export selected</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="230"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="229"/>
       <source>Import</source>
       <translation type="unfinished">Import</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="309"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="308"/>
       <source>Warning</source>
       <translation type="unfinished">Warning</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="268"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="267"/>
       <source>The same name is already used!</source>
       <translation type="unfinished">The same name is already used!</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="344"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="343"/>
       <source>Cannot export correctly.</source>
       <translation type="unfinished">Cannot export correctly.</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="369"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="368"/>
       <source>Cannot import correctly.</source>
       <translation type="unfinished">Cannot import correctly.</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="424"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="423"/>
       <source>Cue type</source>
       <translation type="unfinished">Cue type</translation>
     </message>
@@ -2313,7 +2430,7 @@
       <translation type="unfinished">Save as preset</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="309"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="308"/>
       <source>Cannot create a cue from this preset: {}</source>
       <translation type="unfinished">Cannot create a cue from this preset: {}</translation>
     </message>
@@ -2321,7 +2438,7 @@
   <context>
     <name>QColorButton</name>
     <message>
-      <location filename="../../../ui/widgets/qcolorbutton.py" line="38"/>
+      <location filename="../../../ui/widgets/colorbutton.py" line="38"/>
       <source>Right click to reset</source>
       <translation type="unfinished">Right click to reset</translation>
     </message>
@@ -2408,7 +2525,7 @@
   <context>
     <name>ReplayGain</name>
     <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="51"/>
+      <location filename="../../../plugins/replay_gain/gain_ui.py" line="110"/>
       <source>ReplayGain / Normalization</source>
       <translation type="unfinished">ReplayGain / Normalization</translation>
     </message>
@@ -2438,17 +2555,17 @@
       <translation type="unfinished">Processing files ...</translation>
     </message>
     <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="56"/>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="55"/>
       <source>Calculate</source>
       <translation type="unfinished">Calculate</translation>
     </message>
     <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="61"/>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="60"/>
       <source>Reset all</source>
       <translation type="unfinished">Reset all</translation>
     </message>
     <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="66"/>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="65"/>
       <source>Reset selected</source>
       <translation type="unfinished">Reset selected</translation>
     </message>
@@ -2456,12 +2573,12 @@
   <context>
     <name>ReplayGainDebug</name>
     <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="243"/>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="236"/>
       <source>Applied gain for: {}</source>
       <translation type="unfinished">Applied gain for: {}</translation>
     </message>
     <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="249"/>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="242"/>
       <source>Discarded gain for: {}</source>
       <translation type="unfinished">Discarded gain for: {}</translation>
     </message>
@@ -2469,17 +2586,17 @@
   <context>
     <name>ReplayGainInfo</name>
     <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="223"/>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="216"/>
       <source>Gain processing stopped by user.</source>
       <translation type="unfinished">Gain processing stopped by user.</translation>
     </message>
     <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="288"/>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="281"/>
       <source>Started gain calculation for: {}</source>
       <translation type="unfinished">Started gain calculation for: {}</translation>
     </message>
     <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="323"/>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="316"/>
       <source>Gain calculated for: {}</source>
       <translation type="unfinished">Gain calculated for: {}</translation>
     </message>
@@ -2590,7 +2707,7 @@
       <translation type="unfinished">Stop Settings</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="37"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="39"/>
       <source>List Layout</source>
       <translation type="unfinished">List Layout</translation>
     </message>
@@ -2615,27 +2732,27 @@
       <translation type="unfinished">Layout Controls</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/midi.py" line="46"/>
+      <location filename="../../../plugins/controller/protocols/midi.py" line="63"/>
       <source>MIDI Controls</source>
       <translation type="unfinished">MIDI Controls</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/keyboard.py" line="42"/>
+      <location filename="../../../plugins/controller/protocols/keyboard.py" line="44"/>
       <source>Keyboard Shortcuts</source>
       <translation type="unfinished">Keyboard Shortcuts</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="180"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="224"/>
       <source>OSC Controls</source>
       <translation type="unfinished">OSC Controls</translation>
     </message>
     <message>
-      <location filename="../../../plugins/midi/midi_cue.py" line="52"/>
+      <location filename="../../../plugins/midi/midi_cue.py" line="57"/>
       <source>MIDI Settings</source>
       <translation type="unfinished">MIDI Settings</translation>
     </message>
     <message>
-      <location filename="../../../plugins/midi/midi_settings.py" line="33"/>
+      <location filename="../../../plugins/midi/midi_settings.py" line="37"/>
       <source>MIDI settings</source>
       <translation type="unfinished">MIDI settings</translation>
     </message>
@@ -2664,6 +2781,11 @@
       <source>Cart Layout</source>
       <translation type="unfinished">Cart Layout</translation>
     </message>
+    <message>
+      <location filename="../../../plugins/cache_manager/cache_manager.py" line="96"/>
+      <source>Cache Manager</source>
+      <translation type="unfinished">Cache Manager</translation>
+    </message>
   </context>
   <context>
     <name>SpeedSettings</name>
@@ -2684,24 +2806,24 @@
   <context>
     <name>Synchronizer</name>
     <message>
-      <location filename="../../../plugins/synchronizer/synchronizer.py" line="43"/>
+      <location filename="../../../plugins/synchronizer/synchronizer.py" line="44"/>
       <source>Synchronization</source>
       <translation type="unfinished">Synchronization</translation>
     </message>
     <message>
-      <location filename="../../../plugins/synchronizer/synchronizer.py" line="46"/>
+      <location filename="../../../plugins/synchronizer/synchronizer.py" line="47"/>
       <source>Manage connected peers</source>
       <translation type="unfinished">Manage connected peers</translation>
     </message>
     <message>
-      <location filename="../../../plugins/synchronizer/synchronizer.py" line="52"/>
+      <location filename="../../../plugins/synchronizer/synchronizer.py" line="53"/>
       <source>Show your IP</source>
       <translation type="unfinished">Show your IP</translation>
     </message>
     <message>
-      <location filename="../../../plugins/synchronizer/synchronizer.py" line="78"/>
-      <source>Your IP is:</source>
-      <translation type="unfinished">Your IP is:</translation>
+      <location filename="../../../plugins/synchronizer/synchronizer.py" line="79"/>
+      <source>Your IP is: {}</source>
+      <translation type="unfinished">Your IP is: {}</translation>
     </message>
   </context>
   <context>
