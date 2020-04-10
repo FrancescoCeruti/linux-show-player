@@ -12,7 +12,7 @@
   <context>
     <name>CueCategory</name>
     <message>
-      <location filename="../../../plugins/osc/osc.py" line="44"/>
+      <location filename="../../../plugins/osc/osc.py" line="45"/>
       <source>Integration cues</source>
       <translation>Go d'intégration</translation>
     </message>
