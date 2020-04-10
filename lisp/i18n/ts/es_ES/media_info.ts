@@ -4,22 +4,17 @@
   <context>
     <name>MediaInfo</name>
     <message>
-      <location filename="../../../plugins/media_info/media_info.py" line="130"/>
+      <location filename="../../../plugins/media_info/media_info.py" line="125"/>
       <source>Media Info</source>
       <translation>Información del Media</translation>
     </message>
     <message>
-      <location filename="../../../plugins/media_info/media_info.py" line="70"/>
-      <source>No info to display</source>
-      <translation>Ninguna información para mostrar</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/media_info/media_info.py" line="140"/>
+      <location filename="../../../plugins/media_info/media_info.py" line="135"/>
       <source>Info</source>
       <translation>Información</translation>
     </message>
     <message>
-      <location filename="../../../plugins/media_info/media_info.py" line="140"/>
+      <location filename="../../../plugins/media_info/media_info.py" line="135"/>
       <source>Value</source>
       <translation>Valor</translation>
     </message>
@@ -27,6 +22,11 @@
       <location filename="../../../plugins/media_info/media_info.py" line="70"/>
       <source>Warning</source>
       <translation>Advertencia</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/media_info/media_info.py" line="70"/>
+      <source>Cannot get any information.</source>
+      <translation type="unfinished">Cannot get any information.</translation>
     </message>
   </context>
 </TS>
