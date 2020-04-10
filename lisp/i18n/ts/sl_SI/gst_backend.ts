@@ -119,7 +119,7 @@
       <translation type="unfinished">Audio cue (from file)</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/gst_backend.py" line="114"/>
+      <location filename="../../../plugins/gst_backend/gst_backend.py" line="123"/>
       <source>Select media files</source>
       <translation type="unfinished">Select media files</translation>
     </message>
@@ -127,7 +127,7 @@
   <context>
     <name>GstMediaError</name>
     <message>
-      <location filename="../../../plugins/gst_backend/gst_media.py" line="238"/>
+      <location filename="../../../plugins/gst_backend/gst_media.py" line="233"/>
       <source>Cannot create pipeline element: &quot;{}&quot;</source>
       <translation type="unfinished">Cannot create pipeline element: &quot;{}&quot;</translation>
     </message>
@@ -143,7 +143,7 @@
   <context>
     <name>GstMediaWarning</name>
     <message>
-      <location filename="../../../plugins/gst_backend/gst_media.py" line="232"/>
+      <location filename="../../../plugins/gst_backend/gst_media.py" line="227"/>
       <source>Invalid pipeline element: &quot;{}&quot;</source>
       <translation type="unfinished">Invalid pipeline element: &quot;{}&quot;</translation>
     </message>
@@ -151,7 +151,7 @@
   <context>
     <name>GstPipelineEdit</name>
     <message>
-      <location filename="../../../plugins/gst_backend/gst_pipe_edit.py" line="166"/>
+      <location filename="../../../plugins/gst_backend/gst_pipe_edit.py" line="167"/>
       <source>Edit Pipeline</source>
       <translation>Uredi cevovod</translation>
     </message>
@@ -159,9 +159,14 @@
   <context>
     <name>GstSettings</name>
     <message>
-      <location filename="../../../plugins/gst_backend/gst_settings.py" line="44"/>
-      <source>Pipeline</source>
-      <translation>Cevovod</translation>
+      <location filename="../../../plugins/gst_backend/gst_settings.py" line="54"/>
+      <source>Default pipeline</source>
+      <translation type="unfinished">Default pipeline</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/gst_backend/gst_settings.py" line="55"/>
+      <source>Applied only to new cues.</source>
+      <translation type="unfinished">Applied only to new cues.</translation>
     </message>
   </context>
   <context>
@@ -255,7 +260,7 @@
       <translation>Višina</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/elements/uri_input.py" line="53"/>
+      <location filename="../../../plugins/gst_backend/elements/uri_input.py" line="38"/>
       <source>URI Input</source>
       <translation>URI vhod</translation>
     </message>
