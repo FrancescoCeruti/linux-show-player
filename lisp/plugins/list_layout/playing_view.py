@@ -120,4 +120,8 @@ class RunningCuesListWidget(QListWidget):
 
         width = self.viewport().width()
         for n in range(self.count()):
-            self.itemWidget(self.item(n)).updateSize(width)
+            item = self.item(n)
+            widget = self.itemWidget(item)
+
+            widget.updateSize(width)
+            item.setSizeHint(widget.size())

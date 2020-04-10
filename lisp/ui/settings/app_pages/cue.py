@@ -46,10 +46,16 @@ class CueAppSettings(SettingsPage):
         # Fade action defaults
         self.fadeActionsDefaultsGroup = QGroupBox(self)
         self.fadeActionsDefaultsGroup.setLayout(QVBoxLayout())
+        self.fadeActionsDefaultsGroup.layout().setSpacing(
+            self.fadeActionsDefaultsGroup.layout().contentsMargins().top()
+        )
         self.layout().addWidget(self.fadeActionsDefaultsGroup)
 
         self.fadeActionDefaultsHelpText = QLabel(self.fadeActionsDefaultsGroup)
-        self.fadeActionDefaultsHelpText.setWordWrap(True)
+        self.fadeActionDefaultsHelpText.setAlignment(Qt.AlignCenter)
+        font = self.fadeActionDefaultsHelpText.font()
+        font.setPointSizeF(font.pointSizeF() * 0.9)
+        self.fadeActionDefaultsHelpText.setFont(font)
         self.fadeActionsDefaultsGroup.layout().addWidget(
             self.fadeActionDefaultsHelpText
         )

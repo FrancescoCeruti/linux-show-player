@@ -78,7 +78,7 @@ class Waveform(metaclass=ABCMeta):
         )
 
     def load_waveform(self):
-        """ Load the waveform.
+        """Load the waveform.
 
         If the waveform is ready returns True, False otherwise, in that case
         the "ready" signal will be emitted when the processing is complete.
@@ -99,7 +99,7 @@ class Waveform(metaclass=ABCMeta):
 
     @abstractmethod
     def _load_waveform(self):
-        """ Implemented by subclasses. Load the waveform from the file.
+        """Implemented by subclasses. Load the waveform from the file.
 
         Should return True if the waveform is already available, False
         if otherwise.
@@ -107,7 +107,7 @@ class Waveform(metaclass=ABCMeta):
         """
 
     def _from_cache(self):
-        """ Retrieve data from a cache file, if caching is enabled. """
+        """Retrieve data from a cache file, if caching is enabled."""
         try:
             cache_path = self.cache_path()
             if self._enable_cache and path.exists(cache_path):

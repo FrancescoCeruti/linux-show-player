@@ -140,9 +140,6 @@ class ListLayout(CueLayout):
         layout_menu.addAction(self.reset_size_action)
 
         # Load settings
-        self._go_key_sequence = QKeySequence(
-            ListLayout.Config["goKey"], QKeySequence.NativeText
-        )
         self._set_seeksliders_visible(ListLayout.Config["show.seekSliders"])
         self._set_accurate_time(ListLayout.Config["show.accurateTime"])
         self._set_dbmeters_visible(ListLayout.Config["show.dBMeters"])
@@ -265,7 +262,10 @@ class ListLayout(CueLayout):
         event.ignore()
         if not event.isAutoRepeat():
             sequence = keyEventKeySequence(event)
-            if sequence in self._go_key_sequence:
+            goSequence = QKeySequence(
+                ListLayout.Config["goKey"], QKeySequence.NativeText
+            )
+            if sequence in goSequence:
                 event.accept()
                 self.__go_slot()
             elif sequence == QKeySequence.Delete:
