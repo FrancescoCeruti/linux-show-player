@@ -73,24 +73,27 @@ class ListLayoutSettings(QScrollArea, SettingsPage):
         self.useWaveformSeek = QCheckBox(self.behaviorsGroup)
         self.behaviorsGroup.layout().addWidget(self.useWaveformSeek, 0, 0, 1, 2)
 
+        self.goKeyDisabledWhilePlaying = QCheckBox(self.behaviorsGroup)
+        self.behaviorsGroup.layout().addWidget(self.goKeyDisabledWhilePlaying, 1, 0, 1, 2)
+
         self.goKeyLabel = QLabel(self.behaviorsGroup)
-        self.behaviorsGroup.layout().addWidget(self.goKeyLabel, 1, 0)
+        self.behaviorsGroup.layout().addWidget(self.goKeyLabel, 2, 0)
         self.goKeyEdit = QKeySequenceEdit(self.behaviorsGroup)
-        self.behaviorsGroup.layout().addWidget(self.goKeyEdit, 1, 1)
+        self.behaviorsGroup.layout().addWidget(self.goKeyEdit, 2, 1)
 
         self.goActionLabel = QLabel(self.behaviorsGroup)
-        self.behaviorsGroup.layout().addWidget(self.goActionLabel, 2, 0)
+        self.behaviorsGroup.layout().addWidget(self.goActionLabel, 3, 0)
         self.goActionCombo = CueActionComboBox(
             actions=(CueAction.Default, CueAction.Start, CueAction.FadeInStart),
             mode=CueActionComboBox.Mode.Value,
         )
-        self.behaviorsGroup.layout().addWidget(self.goActionCombo, 2, 1)
+        self.behaviorsGroup.layout().addWidget(self.goActionCombo, 3, 1)
 
         self.goDelayLabel = QLabel(self.behaviorsGroup)
-        self.behaviorsGroup.layout().addWidget(self.goDelayLabel, 3, 0)
+        self.behaviorsGroup.layout().addWidget(self.goDelayLabel, 4, 0)
         self.goDelaySpin = QSpinBox(self.behaviorsGroup)
         self.goDelaySpin.setMaximum(10000)
-        self.behaviorsGroup.layout().addWidget(self.goDelaySpin, 3, 1)
+        self.behaviorsGroup.layout().addWidget(self.goDelaySpin, 4, 1)
 
         self.useFadeGroup = QGroupBox(self.contentWidget)
         self.useFadeGroup.setLayout(QGridLayout())
@@ -125,7 +128,10 @@ class ListLayoutSettings(QScrollArea, SettingsPage):
 
         self.behaviorsGroup.setTitle(translate("ListLayout", "Behaviors"))
         self.useWaveformSeek.setText(
-            translate("ListLayout", "Use waveform seek-bar")
+            translate("ListLayout", "Use waveform seek-bars")
+        )
+        self.goKeyDisabledWhilePlaying.setText(
+            translate("ListLayout", "GO Key Disabled While Playing")
         )
         self.goKeyLabel.setText(translate("ListLayout", "GO Key:"))
         self.goActionLabel.setText(translate("ListLayout", "GO Action:"))
@@ -149,6 +155,9 @@ class ListLayoutSettings(QScrollArea, SettingsPage):
         self.autoNext.setChecked(settings["autoContinue"])
         self.selectionMode.setChecked(settings["selectionMode"])
 
+        self.goKeyDisabledWhilePlaying.setChecked(
+            settings["goKeyDisabledWhilePlaying"]
+        )
         self.goKeyEdit.setKeySequence(
             QKeySequence(settings["goKey"], QKeySequence.NativeText)
         )
@@ -175,6 +184,7 @@ class ListLayoutSettings(QScrollArea, SettingsPage):
             ),
             "goAction": self.goActionCombo.currentItem(),
             "goDelay": self.goDelaySpin.value(),
+            "goKeyDisabledWhilePlaying": self.goKeyDisabledWhilePlaying.isChecked(),
             "stopCueFade": self.stopCueFade.isChecked(),
             "pauseCueFade": self.pauseCueFade.isChecked(),
             "resumeCueFade": self.resumeCueFade.isChecked(),
