@@ -44,7 +44,7 @@ class SessionURI:
         return self.path_to_relative(path)
 
     @property
-    @lru_cache
+    @lru_cache(maxsize=256)
     def absolute_path(self):
         """Unquoted "path" component of the URI."""
         # We can cache this, the absolute path doesn't change
