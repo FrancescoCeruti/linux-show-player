@@ -17,8 +17,8 @@
 
 from typing import Callable
 
-from PyQt5.QtCore import QRect, QRectF
-from PyQt5.QtGui import QLinearGradient, QColor, QPainter, QPixmap
+from PyQt5.QtCore import QPointF, QRect, QRectF, Qt
+from PyQt5.QtGui import QLinearGradient, QColor, QPainter, QPixmap, QFontMetrics
 from PyQt5.QtWidgets import QWidget
 
 from lisp.backend.audio_utils import iec_scale
@@ -35,6 +35,7 @@ class DBMeter(QWidget):
         clipping: int = 0,
         smoothing: float = 0.66,
         scale: Callable = iec_scale,
+        unit: str = 'dBFS',
         **kwargs,
     ):
         super().__init__(parent, **kwargs)
@@ -43,13 +44,22 @@ class DBMeter(QWidget):
         self.dbClipping = clipping
         self.valueSmoothing = smoothing
         self.scale = scale
+        self.unit = unit
 
         self.backgroundColor = QColor(32, 32, 32)
         self.borderColor = QColor(80, 80, 80)
         self.clippingColor = QColor(220, 50, 50)
 
         self._currentSmoothing = self.valueSmoothing
+        self._markings = []
         self._pixmap = QPixmap()
+
+        font = self.font()
+        font.setPointSize(font.pointSize() - 2)
+        self.setFont(font)
+        font.setPointSize(font.pointSize() - 2)
+        self.unit_font = font
+        self.scale_width = 0
 
         self.reset()
 
@@ -77,6 +87,35 @@ class DBMeter(QWidget):
 
         self.update()
 
+    def updateMarkings(self):
+        self._markings = []
+
+        height = self.height()
+        font_height = QFontMetrics(self.font()).height()
+        steps = [1, 5, 10, 25, 50, 100, 250]
+        curr_level = self.dBMax
+        curr_y = 0
+
+        while curr_y < height - font_height:
+            prev_level = curr_level
+            prev_y = curr_y + font_height
+
+            for step in steps:
+                curr_level = prev_level - step
+                curr_y = height - self.scale(curr_level) * (height - 2)
+                if curr_y > prev_y:
+                    break
+
+            self._markings.append([curr_y, curr_level])
+
+        self._markings.pop()
+
+        self.scale_width = max(
+            QFontMetrics(self.font()).boundingRect(str(-abs(self.dBMax - self.dBMin))).width(),
+            QFontMetrics(self.unit_font).boundingRect(self.unit).width()
+        )
+
+
     def updatePixmap(self):
         """Prepare the colored rect to be used during paintEvent(s)"""
         w = self.width()
@@ -95,6 +134,7 @@ class DBMeter(QWidget):
 
     def resizeEvent(self, event):
         self.updatePixmap()
+        self.updateMarkings()
 
     def paintEvent(self, e):
         height = self.height()
@@ -105,7 +145,7 @@ class DBMeter(QWidget):
         painter.setBrush(self.backgroundColor)
 
         # Calculate the meter size (per single channel)
-        meterWidth = width / len(self.peaks)
+        meterWidth = (width - self.scale_width) / len(self.peaks)
         meterRect = QRect(0, 0, meterWidth - 2, height - 1)
 
         # Draw each channel
@@ -143,7 +183,26 @@ class DBMeter(QWidget):
             )
             painter.drawPixmap(decayRect, self._pixmap, decayRect)
 
+            # Draw markings
+            x_start = meterRect.x() + meterRect.width() / 2
+            x_end = meterRect.x() + meterRect.width()
+            for mark in self._markings:
+                painter.drawLine(QPointF(x_start, mark[0]), QPointF(x_end, mark[0]))
+
             # Move to the next meter
             meterRect.translate(meterWidth, 0)
+
+        # Write the scale marking text
+        text_height = QFontMetrics(self.font()).height()
+        text_offset = text_height / 2
+        painter.setPen(self.palette().windowText().color())
+        painter.drawText(0, 0, width, text_height, Qt.AlignRight, str(self.dBMax))
+        for mark in self._markings:
+            painter.drawText(0, mark[0] - text_offset, width, width, Qt.AlignRight, str(mark[1]))
+
+        # And the units that the scale uses
+        text_height = QFontMetrics(self.unit_font).height()
+        painter.setFont(self.unit_font)
+        painter.drawText(0, height - text_height, width, text_height, Qt.AlignRight, self.unit)
 
         painter.end()
