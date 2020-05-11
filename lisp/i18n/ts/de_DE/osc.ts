@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="181"/>
       <source>OSC Settings</source>
-      <translation type="unfinished">OSC Settings</translation>
+      <translation>OSC-Einstellungen</translation>
     </message>
   </context>
   <context>
@@ -14,7 +14,7 @@
     <message>
       <location filename="../../../plugins/osc/osc.py" line="45"/>
       <source>Integration cues</source>
-      <translation type="unfinished">Integration cues</translation>
+      <translation>Integrations-Cues</translation>
     </message>
   </context>
   <context>
@@ -22,7 +22,7 @@
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="64"/>
       <source>OSC Cue</source>
-      <translation type="unfinished">OSC Cue</translation>
+      <translation>OSC Cue</translation>
     </message>
   </context>
   <context>
@@ -40,17 +40,17 @@
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="198"/>
       <source>FadeTo</source>
-      <translation type="unfinished">FadeTo</translation>
+      <translation>ÜberblendenZu</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="260"/>
       <source>Fade</source>
-      <translation type="unfinished">Fade</translation>
+      <translation>Überblenden</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="253"/>
       <source>OSC Message</source>
-      <translation type="unfinished">OSC Message</translation>
+      <translation>OSC-Nachricht</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="254"/>
@@ -65,22 +65,22 @@
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="256"/>
       <source>OSC Path:</source>
-      <translation type="unfinished">OSC Path:</translation>
+      <translation>OSC-Pfad:</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="257"/>
       <source>/path/to/something</source>
-      <translation type="unfinished">/path/to/something</translation>
+      <translation>/pfad/zu/etwas</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="261"/>
       <source>Time (sec)</source>
-      <translation type="unfinished">Time (sec)</translation>
+      <translation>Zeit (Sek)</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="262"/>
       <source>Curve</source>
-      <translation type="unfinished">Curve</translation>
+      <translation>Kurve</translation>
     </message>
   </context>
   <context>
@@ -88,7 +88,7 @@
     <message>
       <location filename="../../../plugins/osc/osc_server.py" line="119"/>
       <source>Message from {} -&gt; path: &quot;{}&quot; args: {}</source>
-      <translation type="unfinished">Message from {} -&gt; path: &quot;{}&quot; args: {}</translation>
+      <translation>Nachricht von {} -&gt; Pfad: &quot;{}&quot; Args: {}</translation>
     </message>
   </context>
   <context>
@@ -96,7 +96,7 @@
     <message>
       <location filename="../../../plugins/osc/osc_server.py" line="99"/>
       <source>Cannot start OSC sever</source>
-      <translation type="unfinished">Cannot start OSC sever</translation>
+      <translation>OSC-Sever kann nicht gestartet werden</translation>
     </message>
   </context>
   <context>
@@ -104,12 +104,12 @@
     <message>
       <location filename="../../../plugins/osc/osc_server.py" line="93"/>
       <source>OSC server started at {}</source>
-      <translation type="unfinished">OSC server started at {}</translation>
+      <translation>OSC-Server gestartet bei {}</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_server.py" line="111"/>
       <source>OSC server stopped</source>
-      <translation type="unfinished">OSC server stopped</translation>
+      <translation>OSC-Server gestoppt</translation>
     </message>
   </context>
   <context>
@@ -117,17 +117,17 @@
     <message>
       <location filename="../../../plugins/osc/osc_settings.py" line="43"/>
       <source>OSC Settings</source>
-      <translation type="unfinished">OSC Settings</translation>
+      <translation>OSC-Einstellungen</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_settings.py" line="50"/>
       <source>Input Port:</source>
-      <translation type="unfinished">Input Port:</translation>
+      <translation>Eingangs-Port:</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_settings.py" line="59"/>
       <source>Output Port:</source>
-      <translation type="unfinished">Output Port:</translation>
+      <translation>Ausgangsports:</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_settings.py" line="68"/>
@@ -140,7 +140,7 @@
     <message>
       <location filename="../../../plugins/osc/osc_settings.py" line="34"/>
       <source>OSC settings</source>
-      <translation type="unfinished">OSC settings</translation>
+      <translation>OSC-Einstellungen</translation>
     </message>
   </context>
 </TS>
