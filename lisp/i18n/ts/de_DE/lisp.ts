@@ -618,12 +618,12 @@
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="26"/>
       <source>Faded Start</source>
-      <translation type="unfinished">Faded Start</translation>
+      <translation>Eingeblendeter Start</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="27"/>
       <source>Faded Resume</source>
-      <translation type="unfinished">Faded Resume</translation>
+      <translation>Eingeblendetes Fortsetzen</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="28"/>
@@ -1007,7 +1007,7 @@
     <message>
       <location filename="../../../plugins/controller/common.py" line="60"/>
       <source>Move standby back</source>
-      <translation type="unfinished">Move standby back</translation>
+      <translation>Standby zurück bewegen</translation>
     </message>
   </context>
   <context>
@@ -1015,12 +1015,12 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_backend.py" line="74"/>
       <source>Audio cue (from file)</source>
-      <translation type="unfinished">Audio cue (from file)</translation>
+      <translation>Audio-Cue (von Datei)</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/gst_backend.py" line="123"/>
       <source>Select media files</source>
-      <translation type="unfinished">Select media files</translation>
+      <translation>Mediendateien auswählen</translation>
     </message>
   </context>
   <context>
@@ -1028,7 +1028,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_media.py" line="233"/>
       <source>Cannot create pipeline element: &quot;{}&quot;</source>
-      <translation type="unfinished">Cannot create pipeline element: &quot;{}&quot;</translation>
+      <translation>Pipeline-Element kann nicht erstellt werden: &quot;{}&quot;</translation>
     </message>
   </context>
   <context>
@@ -1036,7 +1036,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_media_settings.py" line="50"/>
       <source>Change Pipeline</source>
-      <translation type="unfinished">Change Pipeline</translation>
+      <translation>Pipeline verändern</translation>
     </message>
   </context>
   <context>
@@ -1044,7 +1044,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_media.py" line="227"/>
       <source>Invalid pipeline element: &quot;{}&quot;</source>
-      <translation type="unfinished">Invalid pipeline element: &quot;{}&quot;</translation>
+      <translation>Ungültiges Pipeline-Element: &quot;{}&quot;</translation>
     </message>
   </context>
   <context>
