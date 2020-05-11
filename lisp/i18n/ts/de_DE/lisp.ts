@@ -334,12 +334,12 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="489"/>
       <source>Are you sure to continue?</source>
-      <translation type="unfinished">Are you sure to continue?</translation>
+      <translation>Möchten Sie wirklich fortsetzen?</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="81"/>
       <source>Default behaviors (applied to new sessions)</source>
-      <translation type="unfinished">Default behaviors (applied to new sessions)</translation>
+      <translation>Standardverhalten (auf neue Sitzungen angewendet)</translation>
     </message>
   </context>
   <context>
@@ -347,22 +347,22 @@
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="86"/>
       <source>Add</source>
-      <translation type="unfinished">Add</translation>
+      <translation>Hinzufügen</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="91"/>
       <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
+      <translation>Entfernen</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="155"/>
       <source>Cue</source>
-      <translation type="unfinished">Cue</translation>
+      <translation>Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="155"/>
       <source>Action</source>
-      <translation type="unfinished">Action</translation>
+      <translation>Aktion</translation>
     </message>
   </context>
   <context>
@@ -370,27 +370,27 @@
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="130"/>
       <source>Command</source>
-      <translation type="unfinished">Command</translation>
+      <translation>Befehl</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="131"/>
       <source>Command to execute, as in a shell</source>
-      <translation type="unfinished">Command to execute, as in a shell</translation>
+      <translation>Befehl zum Ausführen, wie in einer Shell</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="134"/>
       <source>Discard command output</source>
-      <translation type="unfinished">Discard command output</translation>
+      <translation>Befehlsausgabe verwerfen</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="137"/>
       <source>Ignore command errors</source>
-      <translation type="unfinished">Ignore command errors</translation>
+      <translation>Befehlsfehler ignorieren</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="140"/>
       <source>Kill instead of terminate</source>
-      <translation type="unfinished">Kill instead of terminate</translation>
+      <translation>Töten statt beenden</translation>
     </message>
   </context>
   <context>
@@ -398,12 +398,12 @@
     <message>
       <location filename="../../../command/stack.py" line="32"/>
       <source>Undo: {}</source>
-      <translation type="unfinished">Undo: {}</translation>
+      <translation>Rückgängig: {}</translation>
     </message>
     <message>
       <location filename="../../../command/stack.py" line="33"/>
       <source>Redo: {}</source>
-      <translation type="unfinished">Redo: {}</translation>
+      <translation>Wiederherstellen: {}</translation>
     </message>
   </context>
   <context>
@@ -411,7 +411,7 @@
     <message>
       <location filename="../../../core/configuration.py" line="220"/>
       <source>Configuration written at {}</source>
-      <translation type="unfinished">Configuration written at {}</translation>
+      <translation>Konfiguration geschrieben unter {}</translation>
     </message>
   </context>
   <context>
@@ -419,7 +419,7 @@
     <message>
       <location filename="../../../core/configuration.py" line="243"/>
       <source>New configuration installed at {}</source>
-      <translation type="unfinished">New configuration installed at {}</translation>
+      <translation>Neue Konfiguration installiert unter {}</translation>
     </message>
   </context>
   <context>
@@ -427,7 +427,7 @@
     <message>
       <location filename="../../../plugins/controller/controller.py" line="165"/>
       <source>Cannot load controller protocol: &quot;{}&quot;</source>
-      <translation type="unfinished">Cannot load controller protocol: &quot;{}&quot;</translation>
+      <translation>Kann das Controller-Protokoll nicht laden: &quot;{}&quot;</translation>
     </message>
   </context>
   <context>
@@ -435,17 +435,17 @@
     <message>
       <location filename="../../../plugins/controller/protocols/keyboard.py" line="55"/>
       <source>Action</source>
-      <translation type="unfinished">Action</translation>
+      <translation>Aktion</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/keyboard.py" line="78"/>
       <source>Shortcuts</source>
-      <translation type="unfinished">Shortcuts</translation>
+      <translation>Tastenkürzel</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/keyboard.py" line="55"/>
       <source>Shortcut</source>
-      <translation type="unfinished">Shortcut</translation>
+      <translation>Tastenkürzel</translation>
     </message>
   </context>
   <context>
@@ -453,52 +453,52 @@
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="71"/>
       <source>MIDI</source>
-      <translation type="unfinished">MIDI</translation>
+      <translation>MIDI</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="244"/>
       <source>Type</source>
-      <translation type="unfinished">Type</translation>
+      <translation>Typ</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="244"/>
       <source>Action</source>
-      <translation type="unfinished">Action</translation>
+      <translation>Aktion</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="124"/>
       <source>Capture</source>
-      <translation type="unfinished">Capture</translation>
+      <translation>Aufnehmen</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="159"/>
       <source>Listening MIDI messages ...</source>
-      <translation type="unfinished">Listening MIDI messages ...</translation>
+      <translation>Warte auf MIDI Nachrichten...</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="103"/>
       <source>-- All Messages --</source>
-      <translation type="unfinished">-- All Messages --</translation>
+      <translation>-- Alle Nachrichten --</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="125"/>
       <source>Capture filter</source>
-      <translation type="unfinished">Capture filter</translation>
+      <translation>Aufnahmefilter</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="244"/>
       <source>Data 1</source>
-      <translation type="unfinished">Data 1</translation>
+      <translation>Daten 1</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="244"/>
       <source>Data 2</source>
-      <translation type="unfinished">Data 2</translation>
+      <translation>Daten 2</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="244"/>
       <source>Data 3</source>
-      <translation type="unfinished">Data 3</translation>
+      <translation>Daten 3</translation>
     </message>
   </context>
   <context>
@@ -506,62 +506,62 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="101"/>
       <source>OSC Message</source>
-      <translation type="unfinished">OSC Message</translation>
+      <translation>OSC-Nachricht</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="232"/>
       <source>OSC</source>
-      <translation type="unfinished">OSC</translation>
+      <translation>OSC</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="436"/>
       <source>Path</source>
-      <translation type="unfinished">Path</translation>
+      <translation>Pfad</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="436"/>
       <source>Types</source>
-      <translation type="unfinished">Types</translation>
+      <translation>Typen</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="436"/>
       <source>Arguments</source>
-      <translation type="unfinished">Arguments</translation>
+      <translation>Argumente</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="258"/>
       <source>OSC Capture</source>
-      <translation type="unfinished">OSC Capture</translation>
+      <translation>OSC-Aufnahme</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="287"/>
       <source>Add</source>
-      <translation type="unfinished">Add</translation>
+      <translation>Hinzufügen</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="288"/>
       <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
+      <translation>Entfernen</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="289"/>
       <source>Capture</source>
-      <translation type="unfinished">Capture</translation>
+      <translation>Aufnehmen</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="334"/>
       <source>Waiting for messages:</source>
-      <translation type="unfinished">Waiting for messages:</translation>
+      <translation>Warte auf Nachrichten:</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="103"/>
       <source>/path/to/method</source>
-      <translation type="unfinished">/path/to/method</translation>
+      <translation>/pfad/zu/methode</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="436"/>
       <source>Action</source>
-      <translation type="unfinished">Action</translation>
+      <translation>Aktion</translation>
     </message>
   </context>
   <context>
@@ -569,7 +569,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="350"/>
       <source>Warning</source>
-      <translation type="unfinished">Warning</translation>
+      <translation>Warnung</translation>
     </message>
   </context>
   <context>
@@ -577,12 +577,12 @@
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="121"/>
       <source>Add</source>
-      <translation type="unfinished">Add</translation>
+      <translation>Hinzufügen</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="122"/>
       <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
+      <translation>Entfernen</translation>
     </message>
   </context>
   <context>
@@ -590,7 +590,7 @@
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="181"/>
       <source>OSC Settings</source>
-      <translation type="unfinished">OSC Settings</translation>
+      <translation>OSC-Einstellungen</translation>
     </message>
   </context>
   <context>
@@ -603,17 +603,17 @@
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="35"/>
       <source>Pause</source>
-      <translation type="unfinished">Pause</translation>
+      <translation>Pause</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="33"/>
       <source>Start</source>
-      <translation type="unfinished">Start</translation>
+      <translation>Start</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="36"/>
       <source>Stop</source>
-      <translation type="unfinished">Stop</translation>
+      <translation>Stopp</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="26"/>
@@ -2078,47 +2078,47 @@
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="79"/>
       <source>Host discovery</source>
-      <translation type="unfinished">Host discovery</translation>
+      <translation>Host-Entdeckung</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="164"/>
       <source>Manage hosts</source>
-      <translation type="unfinished">Manage hosts</translation>
+      <translation>Hosts verwalten</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="165"/>
       <source>Discover hosts</source>
-      <translation type="unfinished">Discover hosts</translation>
+      <translation>Hosts entdecken</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="168"/>
       <source>Manually add a host</source>
-      <translation type="unfinished">Manually add a host</translation>
+      <translation>Einen Host manuell hinzufügen</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="171"/>
       <source>Remove selected host</source>
-      <translation type="unfinished">Remove selected host</translation>
+      <translation>Ausgewählten Host entfernen</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="174"/>
       <source>Remove all host</source>
-      <translation type="unfinished">Remove all host</translation>
+      <translation>Alle Hosts entfernen</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="179"/>
       <source>Address</source>
-      <translation type="unfinished">Address</translation>
+      <translation>Adresse</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="179"/>
       <source>Host IP</source>
-      <translation type="unfinished">Host IP</translation>
+      <translation>Host-IP</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="76"/>
       <source>Select the hosts you want to add</source>
-      <translation type="unfinished">Select the hosts you want to add</translation>
+      <translation>Wählen Sie die Hosts aus, die Sie hinzufügen möchten</translation>
     </message>
   </context>
   <context>
@@ -2126,12 +2126,12 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="71"/>
       <source>Type</source>
-      <translation type="unfinished">Type</translation>
+      <translation>Typ</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="71"/>
       <source>Argument</source>
-      <translation type="unfinished">Argument</translation>
+      <translation>Argument</translation>
     </message>
   </context>
   <context>
@@ -2139,57 +2139,57 @@
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="254"/>
       <source>Add</source>
-      <translation type="unfinished">Add</translation>
+      <translation>Hinzufügen</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="255"/>
       <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
+      <translation>Entfernen</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="198"/>
       <source>Type</source>
-      <translation type="unfinished">Type</translation>
+      <translation>Typ</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="198"/>
       <source>Value</source>
-      <translation type="unfinished">Value</translation>
+      <translation>Wert</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="198"/>
       <source>FadeTo</source>
-      <translation type="unfinished">FadeTo</translation>
+      <translation>ÜberblendenZu</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="260"/>
       <source>Fade</source>
-      <translation type="unfinished">Fade</translation>
+      <translation>Überblenden</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="253"/>
       <source>OSC Message</source>
-      <translation type="unfinished">OSC Message</translation>
+      <translation>OSC-Nachricht</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="256"/>
       <source>OSC Path:</source>
-      <translation type="unfinished">OSC Path:</translation>
+      <translation>OSC-Pfad:</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="257"/>
       <source>/path/to/something</source>
-      <translation type="unfinished">/path/to/something</translation>
+      <translation>/pfad/zu/etwas</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="261"/>
       <source>Time (sec)</source>
-      <translation type="unfinished">Time (sec)</translation>
+      <translation>Zeit (Sek)</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="262"/>
       <source>Curve</source>
-      <translation type="unfinished">Curve</translation>
+      <translation>Kurve</translation>
     </message>
   </context>
   <context>
@@ -2197,7 +2197,7 @@
     <message>
       <location filename="../../../plugins/osc/osc_server.py" line="119"/>
       <source>Message from {} -&gt; path: &quot;{}&quot; args: {}</source>
-      <translation type="unfinished">Message from {} -&gt; path: &quot;{}&quot; args: {}</translation>
+      <translation>Nachricht von {} -&gt; Pfad: &quot;{}&quot; Args: {}</translation>
     </message>
   </context>
   <context>
@@ -2205,7 +2205,7 @@
     <message>
       <location filename="../../../plugins/osc/osc_server.py" line="99"/>
       <source>Cannot start OSC sever</source>
-      <translation type="unfinished">Cannot start OSC sever</translation>
+      <translation>OSC-Sever kann nicht gestartet werden</translation>
     </message>
   </context>
   <context>
@@ -2213,12 +2213,12 @@
     <message>
       <location filename="../../../plugins/osc/osc_server.py" line="93"/>
       <source>OSC server started at {}</source>
-      <translation type="unfinished">OSC server started at {}</translation>
+      <translation>OSC-Server gestartet bei {}</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_server.py" line="111"/>
       <source>OSC server stopped</source>
-      <translation type="unfinished">OSC server stopped</translation>
+      <translation>OSC-Server gestoppt</translation>
     </message>
   </context>
   <context>
@@ -2226,22 +2226,22 @@
     <message>
       <location filename="../../../plugins/osc/osc_settings.py" line="43"/>
       <source>OSC Settings</source>
-      <translation type="unfinished">OSC Settings</translation>
+      <translation>OSC-Einstellungen</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_settings.py" line="50"/>
       <source>Input Port:</source>
-      <translation type="unfinished">Input Port:</translation>
+      <translation>Eingangs-Port:</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_settings.py" line="59"/>
       <source>Output Port:</source>
-      <translation type="unfinished">Output Port:</translation>
+      <translation>Ausgabe-Port:</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_settings.py" line="68"/>
       <source>Hostname:</source>
-      <translation type="unfinished">Hostname:</translation>
+      <translation>Hostname:</translation>
     </message>
   </context>
   <context>
@@ -2249,12 +2249,12 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/pitch.py" line="64"/>
       <source>Pitch</source>
-      <translation type="unfinished">Pitch</translation>
+      <translation>Tonhöhe</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/pitch.py" line="83"/>
       <source>{0:+} semitones</source>
-      <translation type="unfinished">{0:+} semitones</translation>
+      <translation>{0:+} Halbtöne</translation>
     </message>
   </context>
   <context>
@@ -2262,17 +2262,17 @@
     <message>
       <location filename="../../../plugins/__init__.py" line="63"/>
       <source>Failed to load &quot;{}&quot;</source>
-      <translation type="unfinished">Failed to load &quot;{}&quot;</translation>
+      <translation>Fehler beim Laden von &quot;{}&quot;</translation>
     </message>
     <message>
       <location filename="../../../plugins/__init__.py" line="159"/>
       <source>Failed to terminate plugin: &quot;{}&quot;</source>
-      <translation type="unfinished">Failed to terminate plugin: &quot;{}&quot;</translation>
+      <translation>Plugin konnte nicht beendet werden: &quot;{}&quot;</translation>
     </message>
     <message>
       <location filename="../../../plugins/__init__.py" line="174"/>
       <source>the requested plugin is not loaded: {}</source>
-      <translation type="unfinished">the requested plugin is not loaded: {}</translation>
+      <translation>das angeforderte Plugin ist nicht geladen: {}</translation>
     </message>
   </context>
   <context>
@@ -2280,12 +2280,12 @@
     <message>
       <location filename="../../../plugins/__init__.py" line="126"/>
       <source>Plugin loaded: &quot;{}&quot;</source>
-      <translation type="unfinished">Plugin loaded: &quot;{}&quot;</translation>
+      <translation>Plugin geladen: &quot;{}&quot;</translation>
     </message>
     <message>
       <location filename="../../../plugins/__init__.py" line="153"/>
       <source>Plugin terminated: &quot;{}&quot;</source>
-      <translation type="unfinished">Plugin terminated: &quot;{}&quot;</translation>
+      <translation>Plugin beendet: &quot;{}&quot;</translation>
     </message>
   </context>
   <context>
