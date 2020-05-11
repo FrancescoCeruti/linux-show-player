@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/network/server.py" line="48"/>
       <source>Stop serving network API</source>
-      <translation type="unfinished">Stop serving network API</translation>
+      <translation>Netzwerk-API nicht mehr bereitstellen</translation>
     </message>
   </context>
   <context>
@@ -62,7 +62,7 @@
     <message>
       <location filename="../../../ui/about.py" line="117"/>
       <source>Discussion</source>
-      <translation type="unfinished">Discussion</translation>
+      <translation>Diskussion</translation>
     </message>
   </context>
   <context>
@@ -70,7 +70,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/alsa_sink.py" line="62"/>
       <source>ALSA device</source>
-      <translation type="unfinished">ALSA device</translation>
+      <translation>ALSA Gerät</translation>
     </message>
   </context>
   <context>
@@ -78,7 +78,7 @@
     <message>
       <location filename="../../../plugins/network/server.py" line="50"/>
       <source>Network API server stopped working.</source>
-      <translation type="unfinished">Network API server stopped working.</translation>
+      <translation>Netzwerk-API-Server funktionierte nicht.</translation>
     </message>
   </context>
   <context>
@@ -86,7 +86,7 @@
     <message>
       <location filename="../../../ui/settings/app_configuration.py" line="39"/>
       <source>LiSP preferences</source>
-      <translation type="unfinished">LiSP preferences</translation>
+      <translation>LiSP Einstellungen</translation>
     </message>
   </context>
   <context>
@@ -94,12 +94,12 @@
     <message>
       <location filename="../../../ui/settings/app_pages/general.py" line="103"/>
       <source>Default layout</source>
-      <translation type="unfinished">Default layout</translation>
+      <translation>Standard Layout</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/general.py" line="112"/>
       <source>Application themes</source>
-      <translation type="unfinished">Application themes</translation>
+      <translation>App-Thema</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/general.py" line="115"/>
