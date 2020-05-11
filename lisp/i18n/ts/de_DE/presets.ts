@@ -19,7 +19,7 @@
     <message>
       <location filename="../../../plugins/presets/presets.py" line="67"/>
       <source>Presets</source>
-      <translation type="unfinished">Presets</translation>
+      <translation>Presets</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets.py" line="72"/>
@@ -119,17 +119,17 @@
     <message>
       <location filename="../../../plugins/presets/presets.py" line="72"/>
       <source>Load on cue</source>
-      <translation type="unfinished">Load on cue</translation>
+      <translation>Auf Cue laden</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets.py" line="72"/>
       <source>Load on selected cues</source>
-      <translation type="unfinished">Load on selected cues</translation>
+      <translation>Auf ausgewählte Cues laden</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="308"/>
       <source>Cannot create a cue from this preset: {}</source>
-      <translation type="unfinished">Cannot create a cue from this preset: {}</translation>
+      <translation>Kann keinen Cue aus diesem Preset erstellen: {}</translation>
     </message>
   </context>
 </TS>
