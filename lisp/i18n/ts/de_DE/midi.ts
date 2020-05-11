@@ -192,12 +192,12 @@
     <message>
       <location filename="../../../plugins/midi/midi_settings.py" line="104"/>
       <source>Misc options</source>
-      <translation type="unfinished">Misc options</translation>
+      <translation>Sonstige Optionen</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_settings.py" line="105"/>
       <source>Try to connect using only device/port name</source>
-      <translation type="unfinished">Try to connect using only device/port name</translation>
+      <translation>Versuche nur per Geräte-/Portname zu verbinden</translation>
     </message>
   </context>
   <context>
@@ -210,7 +210,7 @@
     <message>
       <location filename="../../../plugins/midi/midi_cue.py" line="57"/>
       <source>MIDI Settings</source>
-      <translation type="unfinished">MIDI Settings</translation>
+      <translation>MIDI Einstellungen</translation>
     </message>
   </context>
 </TS>
