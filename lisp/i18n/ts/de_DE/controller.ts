@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/controller/controller.py" line="165"/>
       <source>Cannot load controller protocol: &quot;{}&quot;</source>
-      <translation type="unfinished">Cannot load controller protocol: &quot;{}&quot;</translation>
+      <translation>Kann das Controller-Protokoll nicht laden: &quot;{}&quot;</translation>
     </message>
   </context>
   <context>
@@ -19,12 +19,12 @@
     <message>
       <location filename="../../../plugins/controller/protocols/keyboard.py" line="78"/>
       <source>Shortcuts</source>
-      <translation type="unfinished">Shortcuts</translation>
+      <translation>Tastenkürzel</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/keyboard.py" line="55"/>
       <source>Shortcut</source>
-      <translation type="unfinished">Shortcut</translation>
+      <translation>Tastenkürzel</translation>
     </message>
   </context>
   <context>
@@ -32,7 +32,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="71"/>
       <source>MIDI</source>
-      <translation type="unfinished">MIDI</translation>
+      <translation>MIDI</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="244"/>
@@ -47,7 +47,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="124"/>
       <source>Capture</source>
-      <translation type="unfinished">Capture</translation>
+      <translation>Aufnehmen</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="159"/>
@@ -57,27 +57,27 @@
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="103"/>
       <source>-- All Messages --</source>
-      <translation type="unfinished">-- All Messages --</translation>
+      <translation>-- Alle Nachrichten --</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="125"/>
       <source>Capture filter</source>
-      <translation type="unfinished">Capture filter</translation>
+      <translation>Aufnahmefilter</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="244"/>
       <source>Data 1</source>
-      <translation type="unfinished">Data 1</translation>
+      <translation>Daten 1</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="244"/>
       <source>Data 2</source>
-      <translation type="unfinished">Data 2</translation>
+      <translation>Daten 2</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="244"/>
       <source>Data 3</source>
-      <translation type="unfinished">Data 3</translation>
+      <translation>Daten 3</translation>
     </message>
   </context>
   <context>
@@ -85,62 +85,62 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="101"/>
       <source>OSC Message</source>
-      <translation type="unfinished">OSC Message</translation>
+      <translation>OSC-Nachricht</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="232"/>
       <source>OSC</source>
-      <translation type="unfinished">OSC</translation>
+      <translation>OSC</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="436"/>
       <source>Path</source>
-      <translation type="unfinished">Path</translation>
+      <translation>Pfad</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="436"/>
       <source>Types</source>
-      <translation type="unfinished">Types</translation>
+      <translation>Typen</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="436"/>
       <source>Arguments</source>
-      <translation type="unfinished">Arguments</translation>
+      <translation>Argumente</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="258"/>
       <source>OSC Capture</source>
-      <translation type="unfinished">OSC Capture</translation>
+      <translation>OSC-Aufnahme</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="287"/>
       <source>Add</source>
-      <translation type="unfinished">Add</translation>
+      <translation>Hinzufügen</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="288"/>
       <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
+      <translation>Entfernen</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="289"/>
       <source>Capture</source>
-      <translation type="unfinished">Capture</translation>
+      <translation>Aufnehmen</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="334"/>
       <source>Waiting for messages:</source>
-      <translation type="unfinished">Waiting for messages:</translation>
+      <translation>Warte auf Nachrichten:</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="103"/>
       <source>/path/to/method</source>
-      <translation type="unfinished">/path/to/method</translation>
+      <translation>/pfad/zu/methode</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="436"/>
       <source>Action</source>
-      <translation type="unfinished">Action</translation>
+      <translation>Aktion</translation>
     </message>
   </context>
   <context>
@@ -148,7 +148,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="350"/>
       <source>Warning</source>
-      <translation type="unfinished">Warning</translation>
+      <translation>Warnung</translation>
     </message>
   </context>
   <context>
@@ -169,52 +169,52 @@
     <message>
       <location filename="../../../plugins/controller/common.py" line="41"/>
       <source>Go</source>
-      <translation type="unfinished">Go</translation>
+      <translation>Go</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="42"/>
       <source>Reset</source>
-      <translation type="unfinished">Reset</translation>
+      <translation>Zurücksetzen</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="43"/>
       <source>Stop all cues</source>
-      <translation type="unfinished">Stop all cues</translation>
+      <translation>Alle Cues stoppen</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="44"/>
       <source>Pause all cues</source>
-      <translation type="unfinished">Pause all cues</translation>
+      <translation>Alle Cues pausieren</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="45"/>
       <source>Resume all cues</source>
-      <translation type="unfinished">Resume all cues</translation>
+      <translation>Alle Cues fortsetzen</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="48"/>
       <source>Interrupt all cues</source>
-      <translation type="unfinished">Interrupt all cues</translation>
+      <translation>Alle Cues unterbrechen</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="51"/>
       <source>Fade-out all cues</source>
-      <translation type="unfinished">Fade-out all cues</translation>
+      <translation>Alle Cues ausblenden</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="54"/>
       <source>Fade-in all cues</source>
-      <translation type="unfinished">Fade-in all cues</translation>
+      <translation>Alle Cues einblenden</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="57"/>
       <source>Move standby forward</source>
-      <translation type="unfinished">Move standby forward</translation>
+      <translation>Standby vorwärts bewegen</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="60"/>
       <source>Move standby back</source>
-      <translation type="unfinished">Move standby back</translation>
+      <translation>Standby zurück bewegen</translation>
     </message>
   </context>
   <context>
@@ -222,12 +222,12 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="71"/>
       <source>Type</source>
-      <translation type="unfinished">Type</translation>
+      <translation>Typ</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="71"/>
       <source>Argument</source>
-      <translation type="unfinished">Argument</translation>
+      <translation>Argument</translation>
     </message>
   </context>
   <context>
@@ -235,12 +235,12 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="106"/>
       <source>Add</source>
-      <translation type="unfinished">Add</translation>
+      <translation>Hinzufügen</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="107"/>
       <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
+      <translation>Entfernen</translation>
     </message>
   </context>
   <context>
@@ -248,12 +248,12 @@
     <message>
       <location filename="../../../plugins/controller/controller_settings.py" line="25"/>
       <source>Cue Control</source>
-      <translation type="unfinished">Cue Control</translation>
+      <translation>Cue Steuerung</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="63"/>
       <source>MIDI Controls</source>
-      <translation type="unfinished">MIDI Controls</translation>
+      <translation>MIDI-Kontrollelemente</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/keyboard.py" line="44"/>
@@ -263,12 +263,12 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="224"/>
       <source>OSC Controls</source>
-      <translation type="unfinished">OSC Controls</translation>
+      <translation>OSC-Kontrollelemente</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/controller_settings.py" line="41"/>
       <source>Layout Controls</source>
-      <translation type="unfinished">Layout Controls</translation>
+      <translation>Layout-Kontrollelemente</translation>
     </message>
   </context>
 </TS>
