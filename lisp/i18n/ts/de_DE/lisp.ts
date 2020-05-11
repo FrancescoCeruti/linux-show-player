@@ -2684,107 +2684,107 @@
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="59"/>
       <source>Seek Settings</source>
-      <translation type="unfinished">Seek Settings</translation>
+      <translation>Seek Einstellungen</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="139"/>
       <source>Volume Settings</source>
-      <translation type="unfinished">Volume Settings</translation>
+      <translation>Lautstärke Einstellungen</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="104"/>
       <source>Command</source>
-      <translation type="unfinished">Command</translation>
+      <translation>Befehl</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="60"/>
       <source>Edit Collection</source>
-      <translation type="unfinished">Edit Collection</translation>
+      <translation>Sammlung bearbeiten</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/stop_all.py" line="46"/>
       <source>Stop Settings</source>
-      <translation type="unfinished">Stop Settings</translation>
+      <translation>Stopp Einstellungen</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="39"/>
       <source>List Layout</source>
-      <translation type="unfinished">List Layout</translation>
+      <translation>Listen-Layout</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="38"/>
       <source>Timecode</source>
-      <translation type="unfinished">Timecode</translation>
+      <translation>Timecode</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="108"/>
       <source>Timecode Settings</source>
-      <translation type="unfinished">Timecode Settings</translation>
+      <translation>Timecode Einstellungen</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/controller_settings.py" line="25"/>
       <source>Cue Control</source>
-      <translation type="unfinished">Cue Control</translation>
+      <translation>Cue Steuerung</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/controller_settings.py" line="41"/>
       <source>Layout Controls</source>
-      <translation type="unfinished">Layout Controls</translation>
+      <translation>Layout-Kontrollelemente</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="63"/>
       <source>MIDI Controls</source>
-      <translation type="unfinished">MIDI Controls</translation>
+      <translation>MIDI-Kontrollelemente</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/keyboard.py" line="44"/>
       <source>Keyboard Shortcuts</source>
-      <translation type="unfinished">Keyboard Shortcuts</translation>
+      <translation>Tastaturkürzel</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="224"/>
       <source>OSC Controls</source>
-      <translation type="unfinished">OSC Controls</translation>
+      <translation>OSC-Kontrollelemente</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_cue.py" line="57"/>
       <source>MIDI Settings</source>
-      <translation type="unfinished">MIDI Settings</translation>
+      <translation>MIDI Einstellungen</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_settings.py" line="37"/>
       <source>MIDI settings</source>
-      <translation type="unfinished">MIDI settings</translation>
+      <translation>MIDI Einstellungen</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/gst_settings.py" line="27"/>
       <source>GStreamer</source>
-      <translation type="unfinished">GStreamer</translation>
+      <translation>GStreamer</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/gst_media_settings.py" line="36"/>
       <source>Media Settings</source>
-      <translation type="unfinished">Media Settings</translation>
+      <translation>Medien Einstellungen</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="42"/>
       <source>Triggers</source>
-      <translation type="unfinished">Triggers</translation>
+      <translation>Auslöser</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_settings.py" line="34"/>
       <source>OSC settings</source>
-      <translation type="unfinished">OSC settings</translation>
+      <translation>OSC-Einstellungen</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="33"/>
       <source>Cart Layout</source>
-      <translation type="unfinished">Cart Layout</translation>
+      <translation>Warenkorb Layout</translation>
     </message>
     <message>
       <location filename="../../../plugins/cache_manager/cache_manager.py" line="96"/>
       <source>Cache Manager</source>
-      <translation type="unfinished">Cache Manager</translation>
+      <translation>Cache-Verwaltung</translation>
     </message>
   </context>
   <context>
@@ -2792,7 +2792,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/speed.py" line="62"/>
       <source>Speed</source>
-      <translation type="unfinished">Speed</translation>
+      <translation>Geschwindigkeit</translation>
     </message>
   </context>
   <context>
@@ -2800,7 +2800,7 @@
     <message>
       <location filename="../../../plugins/action_cues/stop_all.py" line="76"/>
       <source>Stop Action</source>
-      <translation type="unfinished">Stop Action</translation>
+      <translation>Stopp-Aktion</translation>
     </message>
   </context>
   <context>
@@ -2808,22 +2808,22 @@
     <message>
       <location filename="../../../plugins/synchronizer/synchronizer.py" line="44"/>
       <source>Synchronization</source>
-      <translation type="unfinished">Synchronization</translation>
+      <translation>Synchronisation</translation>
     </message>
     <message>
       <location filename="../../../plugins/synchronizer/synchronizer.py" line="47"/>
       <source>Manage connected peers</source>
-      <translation type="unfinished">Manage connected peers</translation>
+      <translation>Bearbeite verbundene Peers</translation>
     </message>
     <message>
       <location filename="../../../plugins/synchronizer/synchronizer.py" line="53"/>
       <source>Show your IP</source>
-      <translation type="unfinished">Show your IP</translation>
+      <translation>Ihre IP anzeigen</translation>
     </message>
     <message>
       <location filename="../../../plugins/synchronizer/synchronizer.py" line="79"/>
       <source>Your IP is: {}</source>
-      <translation type="unfinished">Your IP is: {}</translation>
+      <translation>Ihre IP ist: {}</translation>
     </message>
   </context>
   <context>
@@ -2831,7 +2831,7 @@
     <message>
       <location filename="../../../plugins/timecode/timecode.py" line="97"/>
       <source>Cannot load timecode protocol: &quot;{}&quot;</source>
-      <translation type="unfinished">Cannot load timecode protocol: &quot;{}&quot;</translation>
+      <translation>Timecode Protokoll kann nicht geladen werden: &quot;{}&quot;</translation>
     </message>
   </context>
   <context>
@@ -2839,7 +2839,7 @@
     <message>
       <location filename="../../../plugins/timecode/protocols/artnet.py" line="72"/>
       <source>Cannot send timecode.</source>
-      <translation type="unfinished">Cannot send timecode.</translation>
+      <translation>Zeitcode kann nicht gesendet werden.</translation>
     </message>
   </context>
   <context>
@@ -2847,32 +2847,32 @@
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="80"/>
       <source>Replace HOURS by a static track number</source>
-      <translation type="unfinished">Replace HOURS by a static track number</translation>
+      <translation>Ersetze HOURS mit statischer Tracknummer</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="85"/>
       <source>Enable Timecode</source>
-      <translation type="unfinished">Enable Timecode</translation>
+      <translation>Timecode aktivieren</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="88"/>
       <source>Track number</source>
-      <translation type="unfinished">Track number</translation>
+      <translation>Track Nummer</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="138"/>
       <source>Timecode Settings</source>
-      <translation type="unfinished">Timecode Settings</translation>
+      <translation>Timecode Einstellungen</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="141"/>
       <source>Timecode Format:</source>
-      <translation type="unfinished">Timecode Format:</translation>
+      <translation>Timecode-Format:</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="144"/>
       <source>Timecode Protocol:</source>
-      <translation type="unfinished">Timecode Protocol:</translation>
+      <translation>Timecode-Protokoll:</translation>
     </message>
   </context>
   <context>
@@ -2880,22 +2880,22 @@
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="65"/>
       <source>Add</source>
-      <translation type="unfinished">Add</translation>
+      <translation>Hinzufügen</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="70"/>
       <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
+      <translation>Entfernen</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="150"/>
       <source>Trigger</source>
-      <translation type="unfinished">Trigger</translation>
+      <translation>Auslöser</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="150"/>
       <source>Cue</source>
-      <translation type="unfinished">Cue</translation>
+      <translation>Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="150"/>
