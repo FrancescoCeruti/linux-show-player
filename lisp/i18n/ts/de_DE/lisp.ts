@@ -1052,7 +1052,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_pipe_edit.py" line="167"/>
       <source>Edit Pipeline</source>
-      <translation type="unfinished">Edit Pipeline</translation>
+      <translation>Pipeline bearbeiten</translation>
     </message>
   </context>
   <context>
@@ -1060,12 +1060,12 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_settings.py" line="54"/>
       <source>Default pipeline</source>
-      <translation type="unfinished">Default pipeline</translation>
+      <translation>Standard-Pipeline</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/gst_settings.py" line="55"/>
       <source>Applied only to new cues.</source>
-      <translation type="unfinished">Applied only to new cues.</translation>
+      <translation>Wird nur auf neue Cues angewendet.</translation>
     </message>
   </context>
   <context>
@@ -1073,7 +1073,7 @@
     <message>
       <location filename="../../../ui/widgets/hotkeyedit.py" line="124"/>
       <source>Press shortcut</source>
-      <translation type="unfinished">Press shortcut</translation>
+      <translation>Drücken Sie die Tastenkombination</translation>
     </message>
   </context>
   <context>
@@ -1081,32 +1081,32 @@
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="67"/>
       <source>No suggestion</source>
-      <translation type="unfinished">No suggestion</translation>
+      <translation>Kein Vorschlag</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="121"/>
       <source>Index</source>
-      <translation type="unfinished">Index</translation>
+      <translation>Index</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="122"/>
       <source>Use a relative index</source>
-      <translation type="unfinished">Use a relative index</translation>
+      <translation>Einen relativen Index verwenden</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="125"/>
       <source>Target index</source>
-      <translation type="unfinished">Target index</translation>
+      <translation>Ziel Index</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="128"/>
       <source>Action</source>
-      <translation type="unfinished">Action</translation>
+      <translation>Aktion</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="130"/>
       <source>Suggested cue name</source>
-      <translation type="unfinished">Suggested cue name</translation>
+      <translation>Vorgeschlagener Cue-Name</translation>
     </message>
   </context>
   <context>
@@ -1114,32 +1114,32 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/jack_sink.py" line="78"/>
       <source>Connections</source>
-      <translation type="unfinished">Connections</translation>
+      <translation>Verbindungen</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/jack_sink.py" line="79"/>
       <source>Edit connections</source>
-      <translation type="unfinished">Edit connections</translation>
+      <translation>Verbindungen bearbeiten</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/jack_sink.py" line="275"/>
       <source>Output ports</source>
-      <translation type="unfinished">Output ports</translation>
+      <translation>Ausgangsports</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/jack_sink.py" line="278"/>
       <source>Input ports</source>
-      <translation type="unfinished">Input ports</translation>
+      <translation>Eingangsports</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/jack_sink.py" line="337"/>
       <source>Connect</source>
-      <translation type="unfinished">Connect</translation>
+      <translation>Verbinden</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/jack_sink.py" line="332"/>
       <source>Disconnect</source>
-      <translation type="unfinished">Disconnect</translation>
+      <translation>Trennen</translation>
     </message>
   </context>
   <context>
@@ -1147,12 +1147,12 @@
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="43"/>
       <source>Organize the cues in a list</source>
-      <translation type="unfinished">Organize the cues in a list</translation>
+      <translation>Organisieren Sie die Cues in einer Liste</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="45"/>
       <source>Organize cues in grid like pages</source>
-      <translation type="unfinished">Organize cues in grid like pages</translation>
+      <translation>Cues in rasterartigen Seiten organisieren</translation>
     </message>
   </context>
   <context>
@@ -1160,37 +1160,37 @@
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="47"/>
       <source>SHIFT + Space or Double-Click to edit a cue</source>
-      <translation type="unfinished">SHIFT + Space or Double-Click to edit a cue</translation>
+      <translation>SHIFT + Leerzeichen oder Doppelklick, um einen Cue zu bearbeiten</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="50"/>
       <source>To copy cues drag them while pressing CTRL</source>
-      <translation type="unfinished">To copy cues drag them while pressing CTRL</translation>
+      <translation>Um Cues zu kopieren, ziehen Sie sie, während Sie STRG drücken</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="53"/>
       <source>To move cues drag them</source>
-      <translation type="unfinished">To move cues drag them</translation>
+      <translation>Um Cues zu verschieben, ziehen Sie sie</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="49"/>
       <source>Click a cue to run it</source>
-      <translation type="unfinished">Click a cue to run it</translation>
+      <translation>Klicken Sie auf einen Cue, um ihn auszuführen</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="50"/>
       <source>SHIFT + Click to edit a cue</source>
-      <translation type="unfinished">SHIFT + Click to edit a cue</translation>
+      <translation>SHIFT + Klicken, um einen Cue zu bearbeiten</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="51"/>
       <source>CTRL + Click to select a cue</source>
-      <translation type="unfinished">CTRL + Click to select a cue</translation>
+      <translation>STRG + Klicken, um einen Cue auszuwählen</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="55"/>
       <source>To move cues drag them while pressing SHIFT</source>
-      <translation type="unfinished">To move cues drag them while pressing SHIFT</translation>
+      <translation>Um Cues zu verschieben, ziehen Sie sie, während Sie SHIFT drücken</translation>
     </message>
   </context>
   <context>
@@ -1198,12 +1198,12 @@
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="42"/>
       <source>List Layout</source>
-      <translation type="unfinished">List Layout</translation>
+      <translation>Listen-Layout</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="44"/>
       <source>Cart Layout</source>
-      <translation type="unfinished">Cart Layout</translation>
+      <translation>Warenkorb Layout</translation>
     </message>
   </context>
   <context>
@@ -1229,87 +1229,87 @@
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="118"/>
       <source>Show dB-meters</source>
-      <translation type="unfinished">Show dB-meters</translation>
+      <translation>dB-Meter anzeigen</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="119"/>
       <source>Show accurate time</source>
-      <translation type="unfinished">Show accurate time</translation>
+      <translation>Genaue Zeit anzeigen</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="120"/>
       <source>Show seek-bars</source>
-      <translation type="unfinished">Show seek-bars</translation>
+      <translation>Suchleisten anzeigen</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="121"/>
       <source>Auto-select next cue</source>
-      <translation type="unfinished">Auto-select next cue</translation>
+      <translation>Nächsten Cue automatisch auswählen</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="122"/>
       <source>Enable selection mode</source>
-      <translation type="unfinished">Enable selection mode</translation>
+      <translation>Selektionsmodus aktivieren</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="130"/>
       <source>GO Key:</source>
-      <translation type="unfinished">GO Key:</translation>
+      <translation>GO Taste:</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="131"/>
       <source>GO Action:</source>
-      <translation type="unfinished">GO Action:</translation>
+      <translation>GO-Aktion:</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="132"/>
       <source>GO minimum interval (ms):</source>
-      <translation type="unfinished">GO minimum interval (ms):</translation>
+      <translation>GO minimales Intervall (ms):</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="136"/>
       <source>Use fade (buttons)</source>
-      <translation type="unfinished">Use fade (buttons)</translation>
+      <translation>Fade verwenden (Buttons)</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="139"/>
       <source>Stop Cue</source>
-      <translation type="unfinished">Stop Cue</translation>
+      <translation>Cue stoppen</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="140"/>
       <source>Pause Cue</source>
-      <translation type="unfinished">Pause Cue</translation>
+      <translation>Cue pausieren</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="141"/>
       <source>Resume Cue</source>
-      <translation type="unfinished">Resume Cue</translation>
+      <translation>Cue fortsetzen</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="142"/>
       <source>Interrupt Cue</source>
-      <translation type="unfinished">Interrupt Cue</translation>
+      <translation>Cue unterbrechen</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="152"/>
       <source>Edit cue</source>
-      <translation type="unfinished">Edit cue</translation>
+      <translation>Cue bearbeiten</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="152"/>
       <source>Edit selected</source>
-      <translation type="unfinished">Edit selected</translation>
+      <translation>Ausgewählte bearbeiten</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="152"/>
       <source>Clone cue</source>
-      <translation type="unfinished">Clone cue</translation>
+      <translation>Cue klonen</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="152"/>
       <source>Clone selected</source>
-      <translation type="unfinished">Clone selected</translation>
+      <translation>Ausgewählte klonen</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="152"/>
@@ -1586,12 +1586,12 @@
     <message>
       <location filename="../../../ui/logging/common.py" line="51"/>
       <source>Exception info</source>
-      <translation type="unfinished">Exception info</translation>
+      <translation>Ausnahme-Info</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/viewer.py" line="125"/>
       <source>Showing {} of {} records</source>
-      <translation type="unfinished">Showing {} of {} records</translation>
+      <translation>Zeige {} von {} Datensätzen</translation>
     </message>
   </context>
   <context>
@@ -1599,12 +1599,12 @@
     <message>
       <location filename="../../../plugins/midi/widgets.py" line="88"/>
       <source>MIDI Message</source>
-      <translation type="unfinished">MIDI Message</translation>
+      <translation>MIDI-Nachricht</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/widgets.py" line="89"/>
       <source>Message type</source>
-      <translation type="unfinished">Message type</translation>
+      <translation>Nachrichtentyp</translation>
     </message>
   </context>
   <context>
@@ -1612,12 +1612,12 @@
     <message>
       <location filename="../../../plugins/midi/midi_io.py" line="81"/>
       <source>Cannot connect to MIDI output port &apos;{}&apos;.</source>
-      <translation type="unfinished">Cannot connect to MIDI output port &apos;{}&apos;.</translation>
+      <translation>Verbindung zum MIDI-Ausgangsport &apos;{}&apos; nicht möglich.</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_io.py" line="102"/>
       <source>Cannot connect to MIDI input port &apos;{}&apos;.</source>
-      <translation type="unfinished">Cannot connect to MIDI input port &apos;{}&apos;.</translation>
+      <translation>Verbindung zum MIDI-Eingangsport &apos;{}&apos; nicht möglich.</translation>
     </message>
   </context>
   <context>
@@ -2332,72 +2332,72 @@
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="78"/>
       <source>Cannot load preset &quot;{}&quot;</source>
-      <translation type="unfinished">Cannot load preset &quot;{}&quot;</translation>
+      <translation>Kann Preset &quot;{}&quot; nicht laden</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="84"/>
       <source>Cannot save preset &quot;{}&quot;</source>
-      <translation type="unfinished">Cannot save preset &quot;{}&quot;</translation>
+      <translation>Kann Preset &quot;{}&quot; nicht speichern</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="90"/>
       <source>Cannot rename preset &quot;{}&quot;</source>
-      <translation type="unfinished">Cannot rename preset &quot;{}&quot;</translation>
+      <translation>Kann Preset &quot;{}&quot; nicht umbenennen</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="101"/>
       <source>Select Preset</source>
-      <translation type="unfinished">Select Preset</translation>
+      <translation>Preset auswählen</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets.py" line="67"/>
       <source>Presets</source>
-      <translation type="unfinished">Presets</translation>
+      <translation>Presets</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="422"/>
       <source>Preset name</source>
-      <translation type="unfinished">Preset name</translation>
+      <translation>Preset Name</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="218"/>
       <source>Add</source>
-      <translation type="unfinished">Add</translation>
+      <translation>Hinzufügen</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="219"/>
       <source>Rename</source>
-      <translation type="unfinished">Rename</translation>
+      <translation>Umbenennen</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="220"/>
       <source>Edit</source>
-      <translation type="unfinished">Edit</translation>
+      <translation>Bearbeiten</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="221"/>
       <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
+      <translation>Entfernen</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="226"/>
       <source>Export selected</source>
-      <translation type="unfinished">Export selected</translation>
+      <translation>Ausgewählte exportieren</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="229"/>
       <source>Import</source>
-      <translation type="unfinished">Import</translation>
+      <translation>Importieren</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="308"/>
       <source>Warning</source>
-      <translation type="unfinished">Warning</translation>
+      <translation>Warnung</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="267"/>
       <source>The same name is already used!</source>
-      <translation type="unfinished">The same name is already used!</translation>
+      <translation>Der gleiche Name wird bereits verwendet!</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="343"/>
