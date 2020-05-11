@@ -57,7 +57,7 @@
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="40"/>
       <source>Action cues</source>
-      <translation type="unfinished">Action cues</translation>
+      <translation>Aktions-Cues</translation>
     </message>
   </context>
   <context>
@@ -75,12 +75,12 @@
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="40"/>
       <source>Seek Cue</source>
-      <translation type="unfinished">Seek Cue</translation>
+      <translation>Positions-Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="41"/>
       <source>Collection Cue</source>
-      <translation type="unfinished">Collection Cue</translation>
+      <translation>Sammlungs-Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/stop_all.py" line="30"/>
@@ -118,12 +118,12 @@
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="67"/>
       <source>No suggestion</source>
-      <translation type="unfinished">No suggestion</translation>
+      <translation>Kein Vorschlag</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="130"/>
       <source>Suggested cue name</source>
-      <translation type="unfinished">Suggested cue name</translation>
+      <translation>Vorgeschlagener Cue-Name</translation>
     </message>
   </context>
   <context>
@@ -131,7 +131,7 @@
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="99"/>
       <source>Cue</source>
-      <translation type="unfinished">Cue</translation>
+      <translation>Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="100"/>
@@ -146,7 +146,7 @@
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="102"/>
       <source>Seek</source>
-      <translation type="unfinished">Seek</translation>
+      <translation>Suchen</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="103"/>
@@ -200,7 +200,7 @@
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="199"/>
       <source>Cue</source>
-      <translation type="unfinished">Cue</translation>
+      <translation>Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="200"/>
@@ -220,7 +220,7 @@
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="203"/>
       <source>Fade</source>
-      <translation type="unfinished">Fade</translation>
+      <translation>Überblenden</translation>
     </message>
   </context>
   <context>
@@ -228,7 +228,7 @@
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="129"/>
       <source>Error during cue execution.</source>
-      <translation type="unfinished">Error during cue execution.</translation>
+      <translation>Fehler bei der Cue-Ausführung.</translation>
     </message>
   </context>
 </TS>
