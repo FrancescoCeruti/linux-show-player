@@ -6,22 +6,22 @@
     <message>
       <location filename="../../../plugins/cache_manager/cache_manager.py" line="135"/>
       <source>Cache size warning</source>
-      <translation type="unfinished">Cache size warning</translation>
+      <translation>Cache-Größenwarnung</translation>
     </message>
     <message>
       <location filename="../../../plugins/cache_manager/cache_manager.py" line="138"/>
       <source>Warning threshold in MB (0 = disabled)</source>
-      <translation type="unfinished">Warning threshold in MB (0 = disabled)</translation>
+      <translation>Warnschwelle in MB (0 = deaktiviert)</translation>
     </message>
     <message>
       <location filename="../../../plugins/cache_manager/cache_manager.py" line="142"/>
       <source>Cache cleanup</source>
-      <translation type="unfinished">Cache cleanup</translation>
+      <translation>Cache-Bereinigung</translation>
     </message>
     <message>
       <location filename="../../../plugins/cache_manager/cache_manager.py" line="143"/>
       <source>Delete the cache content</source>
-      <translation type="unfinished">Delete the cache content</translation>
+      <translation>Cache-Inhalt löschen</translation>
     </message>
   </context>
   <context>
@@ -29,7 +29,7 @@
     <message>
       <location filename="../../../plugins/cache_manager/cache_manager.py" line="96"/>
       <source>Cache Manager</source>
-      <translation type="unfinished">Cache Manager</translation>
+      <translation>Cache Verwaltung</translation>
     </message>
   </context>
 </TS>
