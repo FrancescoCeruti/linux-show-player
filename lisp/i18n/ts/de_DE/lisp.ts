@@ -2231,12 +2231,12 @@
     <message>
       <location filename="../../../plugins/osc/osc_settings.py" line="50"/>
       <source>Input Port:</source>
-      <translation>Eingangs-Port:</translation>
+      <translation>Eingangsport:</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_settings.py" line="59"/>
       <source>Output Port:</source>
-      <translation>Ausgabe-Port:</translation>
+      <translation>Ausgangsport:</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_settings.py" line="68"/>
@@ -2473,12 +2473,12 @@
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="77"/>
       <source>Lowercase</source>
-      <translation>Kleinbuchstaben</translation>
+      <translation>Kleinschreibung</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="82"/>
       <source>Uppercase</source>
-      <translation>Großbuchstaben</translation>
+      <translation>Großschreibung</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="87"/>
