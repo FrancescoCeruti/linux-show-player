@@ -122,12 +122,12 @@
     <message>
       <location filename="../../../plugins/osc/osc_settings.py" line="50"/>
       <source>Input Port:</source>
-      <translation>Eingangs-Port:</translation>
+      <translation>Eingangsport:</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_settings.py" line="59"/>
       <source>Output Port:</source>
-      <translation>Ausgangsports:</translation>
+      <translation>Ausgangsport:</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_settings.py" line="68"/>
