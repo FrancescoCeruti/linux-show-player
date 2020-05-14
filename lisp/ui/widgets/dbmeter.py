@@ -15,10 +15,11 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+from math import ceil
 from typing import Callable
 
 from PyQt5.QtCore import QPointF, QRect, QRectF, Qt
-from PyQt5.QtGui import QLinearGradient, QColor, QPainter, QPixmap, QFontMetrics
+from PyQt5.QtGui import QLinearGradient, QColor, QPainter, QPixmap, QFontDatabase, QFontMetrics
 from PyQt5.QtWidgets import QWidget
 
 from lisp.backend.audio_utils import iec_scale
@@ -26,6 +27,8 @@ from lisp.backend.audio_utils import iec_scale
 
 class DBMeter(QWidget):
     """DPM - Digital Peak Meter widget"""
+
+    scale_steps = [1, 5, 10, 20, 50]
 
     def __init__(
         self,
@@ -54,10 +57,10 @@ class DBMeter(QWidget):
         self._markings = []
         self._pixmap = QPixmap()
 
-        font = self.font()
-        font.setPointSize(font.pointSize() - 2)
+        font = QFontDatabase.systemFont(QFontDatabase.FixedFont)
+        font.setPointSize(font.pointSize() - 3)
         self.setFont(font)
-        font.setPointSize(font.pointSize() - 2)
+        font.setPointSize(font.pointSize() - 1)
         self.unit_font = font
         self.scale_width = 0
 
@@ -91,16 +94,16 @@ class DBMeter(QWidget):
         self._markings = []
 
         height = self.height()
-        font_height = QFontMetrics(self.font()).height()
-        steps = [1, 5, 10, 25, 50, 100, 250]
+        # We assume that we're using numerals that lack descenders
+        font_height = QFontMetrics(self.font()).ascent()
         curr_level = self.dBMax
-        curr_y = 0
+        curr_y = ceil(font_height / 2)
 
         while curr_y < height - font_height:
             prev_level = curr_level
             prev_y = curr_y + font_height
 
-            for step in steps:
+            for step in self.scale_steps:
                 curr_level = prev_level - step
                 curr_y = height - self.scale(curr_level) * (height - 2)
                 if curr_y > prev_y:
@@ -114,7 +117,6 @@ class DBMeter(QWidget):
             QFontMetrics(self.font()).boundingRect(str(-abs(self.dBMax - self.dBMin))).width(),
             QFontMetrics(self.unit_font).boundingRect(self.unit).width()
         )
-
 
     def updatePixmap(self):
         """Prepare the colored rect to be used during paintEvent(s)"""
