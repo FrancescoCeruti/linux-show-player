@@ -63,6 +63,7 @@ class DBMeter(QWidget):
         font.setPointSize(font.pointSize() - 1)
         self.unit_font = font
         self.scale_width = 0
+        self.paint_scale_text = True
 
         self.reset()
 
@@ -118,6 +119,8 @@ class DBMeter(QWidget):
             QFontMetrics(self.unit_font).boundingRect(self.unit).width()
         )
 
+        self.paint_scale_text = self.width() > self.scale_width * 2
+
     def updatePixmap(self):
         """Prepare the colored rect to be used during paintEvent(s)"""
         w = self.width()
@@ -147,7 +150,11 @@ class DBMeter(QWidget):
         painter.setBrush(self.backgroundColor)
 
         # Calculate the meter size (per single channel)
-        meterWidth = (width - self.scale_width) / len(self.peaks)
+        if self.paint_scale_text:
+            usableWidth = (width - self.scale_width)
+        else:
+            usableWidth = width
+        meterWidth = usableWidth / len(self.peaks)
         meterRect = QRect(0, 0, meterWidth - 2, height - 1)
 
         # Draw each channel
@@ -193,6 +200,10 @@ class DBMeter(QWidget):
 
             # Move to the next meter
             meterRect.translate(meterWidth, 0)
+
+        if not self.paint_scale_text:
+            painter.end()
+            return
 
         # Write the scale marking text
         text_height = QFontMetrics(self.font()).height()
