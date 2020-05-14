@@ -84,7 +84,7 @@
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="226"/>
       <source>Export selected</source>
-      <translation>Ausgewähltes exportieren</translation>
+      <translation>Ausgewählte exportieren</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="229"/>
@@ -119,17 +119,17 @@
     <message>
       <location filename="../../../plugins/presets/presets.py" line="72"/>
       <source>Load on cue</source>
-      <translation>Auf Cue laden</translation>
+      <translation>Cue überladen</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets.py" line="72"/>
       <source>Load on selected cues</source>
-      <translation>Auf ausgewählte Cues laden</translation>
+      <translation>Ausgewählte Cues überladen</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="308"/>
       <source>Cannot create a cue from this preset: {}</source>
-      <translation>Kann keinen Cue aus diesem Preset erstellen: {}</translation>
+      <translation>Kann aus diesem Preset keinen Cue erstellen: {}</translation>
     </message>
   </context>
 </TS>
