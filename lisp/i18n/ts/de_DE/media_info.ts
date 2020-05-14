@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/media_info/media_info.py" line="125"/>
       <source>Media Info</source>
-      <translation>Medien Information</translation>
+      <translation>Medien-Information</translation>
     </message>
     <message>
       <location filename="../../../plugins/media_info/media_info.py" line="135"/>
