@@ -134,7 +134,7 @@
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="57"/>
       <source>Program Change</source>
-      <translation>Programmänderung</translation>
+      <translation>Programmwechsel</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="58"/>
@@ -205,12 +205,12 @@
     <message>
       <location filename="../../../plugins/midi/midi_settings.py" line="37"/>
       <source>MIDI settings</source>
-      <translation>MIDI Einstellungen</translation>
+      <translation>MIDI-Einstellungen</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_cue.py" line="57"/>
       <source>MIDI Settings</source>
-      <translation>MIDI Einstellungen</translation>
+      <translation>MIDI-Einstellungen</translation>
     </message>
   </context>
 </TS>
