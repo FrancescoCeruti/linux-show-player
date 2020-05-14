@@ -52,7 +52,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="159"/>
       <source>Listening MIDI messages ...</source>
-      <translation>Höre MIDI Nachrichten</translation>
+      <translation>Warte auf MIDI Nachrichten...</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="103"/>
