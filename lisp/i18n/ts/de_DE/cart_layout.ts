@@ -137,12 +137,12 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="52"/>
       <source>To copy cues drag them while pressing CTRL</source>
-      <translation>Um Cues zu kopieren, ziehen Sie sie, während Sie STRG drücken</translation>
+      <translation>STRG und Ziehen, um Cues zu kopieren</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="55"/>
       <source>To move cues drag them while pressing SHIFT</source>
-      <translation>Um Cues zu verschieben, ziehen Sie sie, während Sie SHIFT drücken</translation>
+      <translation>SHIFT und Ziehen, um Cues zu verschieben</translation>
     </message>
   </context>
   <context>
