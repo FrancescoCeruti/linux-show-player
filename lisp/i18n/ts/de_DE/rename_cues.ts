@@ -26,7 +26,7 @@
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="72"/>
       <source>Capitalize</source>
-      <translation>Großschreiben</translation>
+      <translation>Wortanfänge großschreiben</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="77"/>
@@ -41,7 +41,7 @@
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="87"/>
       <source>Remove Numbers</source>
-      <translation>Nummern löschen</translation>
+      <translation>Nummern entfernen</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="92"/>
