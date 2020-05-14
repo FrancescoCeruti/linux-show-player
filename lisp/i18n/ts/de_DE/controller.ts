@@ -248,7 +248,7 @@
     <message>
       <location filename="../../../plugins/controller/controller_settings.py" line="25"/>
       <source>Cue Control</source>
-      <translation>Cue Steuerung</translation>
+      <translation>Cue-Steuerung</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="63"/>
@@ -258,7 +258,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/keyboard.py" line="44"/>
       <source>Keyboard Shortcuts</source>
-      <translation>Tastatur Shortcuts</translation>
+      <translation>Tastaturkürzel</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="224"/>
