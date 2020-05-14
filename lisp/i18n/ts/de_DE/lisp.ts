@@ -2779,7 +2779,7 @@
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="33"/>
       <source>Cart Layout</source>
-      <translation>Warenkorb Layout</translation>
+      <translation>Warenkorb-Layout</translation>
     </message>
     <message>
       <location filename="../../../plugins/cache_manager/cache_manager.py" line="96"/>
@@ -2933,7 +2933,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="92"/>
       <source>Buffer size (-1 default value)</source>
-      <translation>Buffer Größe(-1 Standard Wert)</translation>
+      <translation>Puffergröße (-1 Standardwert)</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="131"/>
