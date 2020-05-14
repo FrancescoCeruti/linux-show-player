@@ -44,12 +44,12 @@
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="137"/>
       <source>Ignore command errors</source>
-      <translation>Befehl Fehler ignorieren</translation>
+      <translation>Befehls-Fehler ignorieren</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="140"/>
       <source>Kill instead of terminate</source>
-      <translation>Kill statt Terminate</translation>
+      <translation>Töten statt Beenden</translation>
     </message>
   </context>
   <context>
@@ -90,7 +90,7 @@
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="39"/>
       <source>Index Action</source>
-      <translation>Index Aktion</translation>
+      <translation>Index-Aktion</translation>
     </message>
   </context>
   <context>
@@ -108,7 +108,7 @@
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="125"/>
       <source>Target index</source>
-      <translation>Ziel Index</translation>
+      <translation>Ziel-Index</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="128"/>
@@ -146,7 +146,7 @@
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="102"/>
       <source>Seek</source>
-      <translation>Suchen</translation>
+      <translation>Aufsuchen</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="103"/>
@@ -169,12 +169,12 @@
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="59"/>
       <source>Seek Settings</source>
-      <translation>Seek Einstellungen</translation>
+      <translation>Sucheinstellungen</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="60"/>
       <source>Edit Collection</source>
-      <translation>Collection bearbeiten</translation>
+      <translation>Sammlung bearbeiten</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="65"/>
@@ -184,7 +184,7 @@
     <message>
       <location filename="../../../plugins/action_cues/stop_all.py" line="46"/>
       <source>Stop Settings</source>
-      <translation>Stop Einstellungen</translation>
+      <translation>Stoppeinstellungen</translation>
     </message>
   </context>
   <context>
@@ -192,7 +192,7 @@
     <message>
       <location filename="../../../plugins/action_cues/stop_all.py" line="76"/>
       <source>Stop Action</source>
-      <translation>Stop Aktion</translation>
+      <translation>Stopp-Aktion</translation>
     </message>
   </context>
   <context>
