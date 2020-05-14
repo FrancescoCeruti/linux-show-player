@@ -45,7 +45,7 @@
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="88"/>
       <source>Track number</source>
-      <translation>Track Nummer</translation>
+      <translation>Spurnummer</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="85"/>
@@ -55,7 +55,7 @@
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="138"/>
       <source>Timecode Settings</source>
-      <translation>Timecode Einstellungen</translation>
+      <translation>Timecode-Einstellungen</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="144"/>
