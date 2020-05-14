@@ -1842,7 +1842,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="213"/>
       <source>Select all media cues</source>
-      <translation>Alle Media Cues auswählen</translation>
+      <translation>Alle Media-Cues auswählen</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="217"/>
@@ -1852,7 +1852,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="218"/>
       <source>CTRL+SHIFT+A</source>
-      <translation>CTRL+Shift+A</translation>
+      <translation>CTRL+SHIFT+A</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="219"/>
@@ -1862,7 +1862,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="222"/>
       <source>CTRL+I</source>
-      <translation>STRG + I</translation>
+      <translation>STRG+I</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="223"/>
@@ -1872,7 +1872,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="224"/>
       <source>CTRL+SHIFT+E</source>
-      <translation>CTRL + Shift + E</translation>
+      <translation>CTRL+SHIFT+E</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="226"/>
@@ -1936,7 +1936,7 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/media_cue.py" line="81"/>
       <source>Start time</source>
-      <translation>Start Zeit</translation>
+      <translation>Start-Zeit</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/media_cue.py" line="82"/>
@@ -1946,12 +1946,12 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/media_cue.py" line="85"/>
       <source>Stop time</source>
-      <translation>Stop Zeit</translation>
+      <translation>Stopp-Zeit</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/media_cue.py" line="86"/>
       <source>Start position of the media</source>
-      <translation>Start Position der Datei</translation>
+      <translation>Startposition der Datei</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/media_cue.py" line="89"/>
@@ -2042,7 +2042,7 @@
     <message>
       <location filename="../../../plugins/media_info/media_info.py" line="125"/>
       <source>Media Info</source>
-      <translation>Medien-Info</translation>
+      <translation>Medien-Informationen</translation>
     </message>
     <message>
       <location filename="../../../plugins/media_info/media_info.py" line="70"/>
@@ -2052,7 +2052,7 @@
     <message>
       <location filename="../../../plugins/media_info/media_info.py" line="135"/>
       <source>Info</source>
-      <translation>Info</translation>
+      <translation>Informationen</translation>
     </message>
     <message>
       <location filename="../../../plugins/media_info/media_info.py" line="135"/>
