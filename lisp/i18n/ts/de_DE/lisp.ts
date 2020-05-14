@@ -836,7 +836,7 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="113"/>
       <source>Default action to start the cue</source>
-      <translation>Standard Aktion zum Starten der Cue</translation>
+      <translation>Standard Aktion zum Starten des Cues</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="118"/>
@@ -846,7 +846,7 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="119"/>
       <source>Default action to stop the cue</source>
-      <translation>Standard Aktion zum Beenden der Cue</translation>
+      <translation>Standard Aktion zum Beenden des Cues</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/cue.py" line="69"/>
