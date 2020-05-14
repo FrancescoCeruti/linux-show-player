@@ -49,7 +49,7 @@
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="140"/>
       <source>Kill instead of terminate</source>
-      <translation>Töten statt Beenden</translation>
+      <translation>Kill statt Terminate</translation>
     </message>
   </context>
   <context>
