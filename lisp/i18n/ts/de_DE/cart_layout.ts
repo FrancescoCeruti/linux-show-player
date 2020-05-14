@@ -11,7 +11,7 @@
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="87"/>
       <source>Show seek-bars</source>
-      <translation>Suchleiste anzeigen</translation>
+      <translation>Suchleisten anzeigen</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="88"/>
@@ -36,7 +36,7 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="161"/>
       <source>Play</source>
-      <translation>Start</translation>
+      <translation>Wiedergabe</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="161"/>
@@ -46,7 +46,7 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="161"/>
       <source>Stop</source>
-      <translation>Stop</translation>
+      <translation>Stopp</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="174"/>
@@ -71,12 +71,12 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="238"/>
       <source>Number of Pages:</source>
-      <translation>Anzahl der Seiten:</translation>
+      <translation>Seitenanzahl:</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="283"/>
       <source>Page {number}</source>
-      <translation>Seitenzahl {number}</translation>
+      <translation>Seite {number}</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="485"/>
@@ -101,7 +101,7 @@
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="93"/>
       <source>Number of rows:</source>
-      <translation>Anzahl Zeilen:</translation>
+      <translation>Zeilen-Anzahl:</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="81"/>
@@ -122,17 +122,17 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="49"/>
       <source>Click a cue to run it</source>
-      <translation>Klicke auf eine Cue, um ihn auszuführen</translation>
+      <translation>Klicke auf einen Cue, um ihn auszuführen</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="50"/>
       <source>SHIFT + Click to edit a cue</source>
-      <translation>SHIFT + Klicken, um eine Cue zu bearbeiten</translation>
+      <translation>SHIFT + Klicken, um einen Cue zu bearbeiten</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="51"/>
       <source>CTRL + Click to select a cue</source>
-      <translation>STRG + Klicken, um eine Cue auszuwählen</translation>
+      <translation>STRG + Klicken, um einen Cue auszuwählen</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="52"/>
