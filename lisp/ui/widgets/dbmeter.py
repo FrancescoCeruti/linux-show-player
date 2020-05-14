@@ -18,7 +18,7 @@
 from math import ceil
 from typing import Callable
 
-from PyQt5.QtCore import QPointF, QRect, QRectF, Qt
+from PyQt5.QtCore import QPoint, QPointF, QRect, QRectF, Qt
 from PyQt5.QtGui import QLinearGradient, QColor, QPainter, QPixmap, QFontDatabase, QFontMetrics
 from PyQt5.QtWidgets import QWidget
 
@@ -89,7 +89,10 @@ class DBMeter(QWidget):
         self.peaks = peaks
         self.decayPeaks = decayPeak
 
-        self.update()
+        if self.paint_scale_text:
+            self.repaint(0, 0, self.width() - self.scale_width, self.height())
+        else:
+            self.repaint(0, 0, self.width(), self.height())
 
     def updateMarkings(self):
         self._markings = []
@@ -201,7 +204,7 @@ class DBMeter(QWidget):
             # Move to the next meter
             meterRect.translate(meterWidth, 0)
 
-        if not self.paint_scale_text:
+        if not self.paint_scale_text or not e.region().contains(QPoint(usableWidth, 0)):
             painter.end()
             return
 
