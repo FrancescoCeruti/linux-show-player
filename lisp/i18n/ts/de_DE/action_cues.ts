@@ -16,7 +16,7 @@
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="155"/>
       <source>Cue</source>
-      <translation>Stichwort</translation>
+      <translation>Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="155"/>
@@ -34,12 +34,12 @@
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="131"/>
       <source>Command to execute, as in a shell</source>
-      <translation>Befehl zum Ausführen, wie in einer Shell</translation>
+      <translation>Auszuführender Befehl, wie in einer Shell</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="134"/>
       <source>Discard command output</source>
-      <translation>Befehl Output verwerfen</translation>
+      <translation>Befehls-Output verwerfen</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="137"/>
@@ -65,7 +65,7 @@
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="40"/>
       <source>Command Cue</source>
-      <translation>Befehl Cue</translation>
+      <translation>Befehls-Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="54"/>
@@ -164,7 +164,7 @@
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="139"/>
       <source>Volume Settings</source>
-      <translation>Lautstärke Einstellungen</translation>
+      <translation>Lautstärkeeinstellungen</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="59"/>
@@ -215,7 +215,7 @@
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="202"/>
       <source>Volume to reach</source>
-      <translation>Lautstärke zu erreichen</translation>
+      <translation>Zu erreichende Lautstärke</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="203"/>
