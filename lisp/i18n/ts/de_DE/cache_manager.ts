@@ -29,7 +29,7 @@
     <message>
       <location filename="../../../plugins/cache_manager/cache_manager.py" line="96"/>
       <source>Cache Manager</source>
-      <translation>Cache Verwaltung</translation>
+      <translation>Cache-Verwaltung</translation>
     </message>
   </context>
 </TS>
