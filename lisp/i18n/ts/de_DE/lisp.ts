@@ -129,7 +129,7 @@
     <message>
       <location filename="../../../ui/settings/app_pages/general.py" line="118"/>
       <source>Application language (require a restart)</source>
-      <translation>Sprache der Anwendung (Neustart erforderlich)</translation>
+      <translation>Anwendungssprache (Neustart erforderlich)</translation>
     </message>
   </context>
   <context>
@@ -269,12 +269,12 @@
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="92"/>
       <source>Number of columns:</source>
-      <translation>Spalten-Anzahl:</translation>
+      <translation>Spaltenanzahl:</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="93"/>
       <source>Number of rows:</source>
-      <translation>Anzahl Zeilen:</translation>
+      <translation>Zeilenanzahl:</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="161"/>
@@ -390,7 +390,7 @@
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="140"/>
       <source>Kill instead of terminate</source>
-      <translation>Töten statt beenden</translation>
+      <translation>Kill statt Terminate</translation>
     </message>
   </context>
   <context>
