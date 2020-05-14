@@ -2639,7 +2639,7 @@
     <message>
       <location filename="../../../ui/settings/app_pages/general.py" line="38"/>
       <source>General</source>
-      <translation>Generell</translation>
+      <translation>Allgemein</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="43"/>
@@ -2684,12 +2684,12 @@
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="59"/>
       <source>Seek Settings</source>
-      <translation>Seek Einstellungen</translation>
+      <translation>Sucheinstellungen</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="139"/>
       <source>Volume Settings</source>
-      <translation>Lautstärke Einstellungen</translation>
+      <translation>Lautstärkeeinstellungen</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="104"/>
@@ -2704,7 +2704,7 @@
     <message>
       <location filename="../../../plugins/action_cues/stop_all.py" line="46"/>
       <source>Stop Settings</source>
-      <translation>Stopp Einstellungen</translation>
+      <translation>Stopp-Einstellungen</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="39"/>
@@ -2724,7 +2724,7 @@
     <message>
       <location filename="../../../plugins/controller/controller_settings.py" line="25"/>
       <source>Cue Control</source>
-      <translation>Cue Steuerung</translation>
+      <translation>Cue-Steuerung</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/controller_settings.py" line="41"/>
@@ -2739,7 +2739,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/keyboard.py" line="44"/>
       <source>Keyboard Shortcuts</source>
-      <translation>Tastaturkürzel</translation>
+      <translation>Tastenkürzel</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="224"/>
@@ -2764,7 +2764,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_media_settings.py" line="36"/>
       <source>Media Settings</source>
-      <translation>Medien Einstellungen</translation>
+      <translation>Medien-Einstellungen</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="42"/>
