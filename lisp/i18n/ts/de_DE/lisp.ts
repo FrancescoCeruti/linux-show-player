@@ -661,12 +661,12 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="91"/>
       <source>Cue name</source>
-      <translation>Cue Name</translation>
+      <translation>Cue-Name</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="94"/>
       <source>NoName</source>
-      <translation>Kein Name</translation>
+      <translation>KeinName</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="95"/>
@@ -676,7 +676,7 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="98"/>
       <source>Set Font Size</source>
-      <translation>Font Größe einstellen</translation>
+      <translation>Schriftgröße einstellen</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="101"/>
@@ -691,7 +691,7 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="105"/>
       <source>Select font color</source>
-      <translation>Font-Farbe auswählen</translation>
+      <translation>Schriftfarbe auswählen</translation>
     </message>
   </context>
   <context>
@@ -735,7 +735,7 @@
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="39"/>
       <source>Index Action</source>
-      <translation>Indexaktion</translation>
+      <translation>Index-Aktion</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="40"/>
@@ -821,7 +821,7 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="208"/>
       <source>Wait after cue execution</source>
-      <translation>Nach Cue Ausführung warten</translation>
+      <translation>Nach Cue-Ausführung warten</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="212"/>
@@ -841,7 +841,7 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="118"/>
       <source>Stop action</source>
-      <translation>Stop Aktion</translation>
+      <translation>Stopp-Aktion</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="119"/>
@@ -928,7 +928,7 @@
     <message>
       <location filename="../../../ui/widgets/fades.py" line="35"/>
       <source>Quadratic2</source>
-      <translation>Logistisch</translation>
+      <translation>Quadratisch2</translation>
     </message>
   </context>
   <context>
@@ -1073,7 +1073,7 @@
     <message>
       <location filename="../../../ui/widgets/hotkeyedit.py" line="124"/>
       <source>Press shortcut</source>
-      <translation>Drücken Sie die Tastenkombination</translation>
+      <translation>Tastenkürzel drücken</translation>
     </message>
   </context>
   <context>
@@ -1165,12 +1165,12 @@
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="50"/>
       <source>To copy cues drag them while pressing CTRL</source>
-      <translation>Um Cues zu kopieren, ziehen Sie sie, während Sie STRG drücken</translation>
+      <translation>STRG und Ziehen, um Cues zu kopieren</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="53"/>
       <source>To move cues drag them</source>
-      <translation>Um Cues zu verschieben, ziehen Sie sie</translation>
+      <translation>Ziehen, um Cues zu verschieben</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="49"/>
@@ -1203,7 +1203,7 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="44"/>
       <source>Cart Layout</source>
-      <translation>Warenkorb Layout</translation>
+      <translation>Warenkorb-Layout</translation>
     </message>
   </context>
   <context>
@@ -1211,7 +1211,7 @@
     <message>
       <location filename="../../../ui/layoutselect.py" line="37"/>
       <source>Layout selection</source>
-      <translation>Layout Auswahl</translation>
+      <translation>Layout-Auswahl</translation>
     </message>
     <message>
       <location filename="../../../ui/layoutselect.py" line="50"/>
@@ -1711,7 +1711,7 @@
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="57"/>
       <source>Program Change</source>
-      <translation>Programmänderung</translation>
+      <translation>Programmwechsel</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="58"/>
@@ -1764,7 +1764,7 @@
     <message>
       <location filename="../../../plugins/midi/midi_settings.py" line="100"/>
       <source>MIDI devices</source>
-      <translation>MIDI Geräte</translation>
+      <translation>MIDI-Geräte</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_settings.py" line="104"/>
