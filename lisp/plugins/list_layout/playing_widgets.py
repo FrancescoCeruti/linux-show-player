@@ -227,7 +227,7 @@ class RunningMediaCueWidget(RunningCueWidget):
         # Add/Remove the QDbMeter in the layout
         if visible and not self.dbmeter.isVisible():
             self.gridLayout.addWidget(self.dbmeter, 0, 2, 3, 1)
-            self.gridLayout.setColumnStretch(2, 1)
+            self.gridLayout.setColumnStretch(2, 2)
         elif not visible and self.dbmeter.isVisible():
             self.gridLayout.removeWidget(self.dbmeter)
             self.gridLayout.setColumnStretch(2, 0)
