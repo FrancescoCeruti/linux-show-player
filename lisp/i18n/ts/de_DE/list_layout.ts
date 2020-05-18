@@ -38,67 +38,67 @@
   <context>
     <name>ListLayout</name>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="118"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="123"/>
       <source>Show dB-meters</source>
       <translation>dB-Meter anzeigen</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="119"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="124"/>
       <source>Show accurate time</source>
       <translation>Genaue Zeit anzeigen</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="120"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="125"/>
       <source>Show seek-bars</source>
       <translation>Suchleiste anzeigen</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="121"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="126"/>
       <source>Auto-select next cue</source>
       <translation>Nächsten Cue automatisch auswählen</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="122"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="127"/>
       <source>Enable selection mode</source>
       <translation>Selektionsmodus aktivieren</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="136"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="144"/>
       <source>Use fade (buttons)</source>
       <translation>Fade verwenden (Buttons)</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="139"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="147"/>
       <source>Stop Cue</source>
       <translation>Cue stoppen</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="140"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="148"/>
       <source>Pause Cue</source>
       <translation>Cue pausieren</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="141"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="149"/>
       <source>Resume Cue</source>
       <translation>Cue fortsetzen</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="142"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="150"/>
       <source>Interrupt Cue</source>
       <translation>Cue unterbrechen</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="152"/>
+      <location filename="../../../plugins/list_layout/layout.py" line="163"/>
       <source>Edit cue</source>
       <translation>Cue bearbeiten</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="152"/>
+      <location filename="../../../plugins/list_layout/layout.py" line="163"/>
       <source>Remove cue</source>
       <translation>Cue entfernen</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="191"/>
+      <location filename="../../../plugins/list_layout/layout.py" line="202"/>
       <source>Selection mode</source>
       <translation>Auswahlmodus</translation>
     </message>
@@ -133,74 +133,84 @@
       <translation>Alle einblenden</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="152"/>
+      <location filename="../../../plugins/list_layout/layout.py" line="163"/>
       <source>Edit selected</source>
       <translation>Ausgewählte bearbeiten</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="152"/>
+      <location filename="../../../plugins/list_layout/layout.py" line="163"/>
       <source>Clone cue</source>
       <translation>Cue klonen</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="152"/>
+      <location filename="../../../plugins/list_layout/layout.py" line="163"/>
       <source>Clone selected</source>
       <translation>Ausgewählte klonen</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="152"/>
+      <location filename="../../../plugins/list_layout/layout.py" line="163"/>
       <source>Remove selected</source>
       <translation>Ausgewählte entfernen</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="130"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="138"/>
       <source>GO Key:</source>
       <translation>GO Taste:</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="131"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="139"/>
       <source>GO Action:</source>
       <translation>GO-Aktion:</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="132"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="140"/>
       <source>GO minimum interval (ms):</source>
       <translation>GO minimales Intervall (ms):</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="385"/>
+      <location filename="../../../plugins/list_layout/layout.py" line="411"/>
       <source>Copy of {}</source>
       <translation>Kopie von {}</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="185"/>
+      <location filename="../../../plugins/list_layout/layout.py" line="196"/>
       <source>Show index column</source>
       <translation>Indexspalte anzeigen</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="194"/>
+      <location filename="../../../plugins/list_layout/layout.py" line="205"/>
       <source>Show resize handles</source>
       <translation>Größen-Griffe anzeigen</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="197"/>
+      <location filename="../../../plugins/list_layout/layout.py" line="208"/>
       <source>Restore default size</source>
       <translation>Standard-Größe wiederherstellen</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="113"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="118"/>
       <source>Default behaviors (applied to new sessions)</source>
       <translation>Standardverhalten (auf neue Sitzungen angewendet)</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="126"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="131"/>
       <source>Behaviors</source>
       <translation>Verhalten</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="127"/>
-      <source>Use waveform seek-bar</source>
-      <translation>Wellenform Suchleiste verwenden</translation>
+      <location filename="../../../plugins/list_layout/layout.py" line="211"/>
+      <source>Disable GO Key While Playing</source>
+      <translation type="unfinished">Disable GO Key While Playing</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/settings.py" line="132"/>
+      <source>Use waveform seek-bars</source>
+      <translation type="unfinished">Use waveform seek-bars</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/settings.py" line="135"/>
+      <source>GO Key Disabled While Playing</source>
+      <translation type="unfinished">GO Key Disabled While Playing</translation>
     </message>
   </context>
   <context>
