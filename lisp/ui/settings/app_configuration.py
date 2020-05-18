@@ -42,10 +42,11 @@ class AppConfigurationDialog(QDialog):
         self.resize(800, 510)
         self.setLayout(QVBoxLayout())
 
-        self._confsMap = {}
-        self.model = PagesTreeModel()
-        for r_node in AppConfigurationDialog.PagesRegistry.children:
-            self._populateModel(QModelIndex(), r_node)
+        self.configurations = {}
+
+        self.model = PagesTreeModel(tr_context="SettingsPageName")
+        for page_node in AppConfigurationDialog.PagesRegistry.children:
+            self._populateModel(QModelIndex(), page_node)
 
         self.mainPage = PagesTreeWidget(self.model)
         self.mainPage.selectFirst()
@@ -70,16 +71,16 @@ class AppConfigurationDialog(QDialog):
         )
 
     def applySettings(self):
-        for conf, pages in self._confsMap.items():
+        for conf, pages in self.configurations.items():
             for page in pages:
                 conf.update(page.getSettings())
 
             conf.write()
 
-    def _populateModel(self, m_parent, r_parent):
-        if r_parent.value is not None:
-            page_class = r_parent.value.page
-            config = r_parent.value.config
+    def _populateModel(self, model_parent, page_parent):
+        if page_parent.value is not None:
+            page_class = page_parent.value.page
+            config = page_parent.value.config
         else:
             page_class = None
             config = None
@@ -88,14 +89,16 @@ class AppConfigurationDialog(QDialog):
             if page_class is None:
                 # The current node have no page, use the parent model-index
                 # as parent for it's children
-                mod_index = m_parent
+                model_index = model_parent
             else:
                 page_instance = page_class()
                 page_instance.loadSettings(config)
-                mod_index = self.model.addPage(page_instance, parent=m_parent)
+                model_index = self.model.addPage(
+                    page_instance, parent=model_parent
+                )
 
                 # Keep track of configurations and corresponding pages
-                self._confsMap.setdefault(config, []).append(page_instance)
+                self.configurations.setdefault(config, []).append(page_instance)
         except Exception:
             if not isinstance(page_class, type):
                 page_name = "InvalidPage"
@@ -106,12 +109,12 @@ class AppConfigurationDialog(QDialog):
                 translate(
                     "AppConfigurationWarning",
                     'Cannot load configuration page: "{}" ({})',
-                ).format(page_name, r_parent.path()),
+                ).format(page_name, page_parent.path()),
                 exc_info=True,
             )
         else:
-            for r_node in r_parent.children:
-                self._populateModel(mod_index, r_node)
+            for page_node in page_parent.children:
+                self._populateModel(model_index, page_node)
 
     def __onOk(self):
         self.applySettings()

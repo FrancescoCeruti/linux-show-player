@@ -66,10 +66,12 @@ class DbMeter(GstMediaElement):
 
     def __on_message(self, bus, message):
         if message.src == self.level:
-            structure = message.get_structure()
-            if structure is not None and structure.has_name("level"):
-                self.level_ready.emit(
-                    structure.get_value("peak"),
-                    structure.get_value("rms"),
-                    structure.get_value("decay"),
-                )
+            state = self.level.get_state(Gst.MSECOND)[1]
+            if state == Gst.State.PLAYING or state == Gst.State.PAUSED:
+                structure = message.get_structure()
+                if structure is not None and structure.has_name("level"):
+                    self.level_ready.emit(
+                        structure.get_value("peak"),
+                        structure.get_value("rms"),
+                        structure.get_value("decay"),
+                    )

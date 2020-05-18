@@ -67,7 +67,9 @@ class LayoutSelect(QDialog):
         self.layout().addWidget(self.description, 2, 0, 1, 3)
 
         for layoutClass in layout.get_layouts():
-            self.layoutCombo.addItem(layoutClass.NAME, layoutClass)
+            self.layoutCombo.addItem(
+                translate("LayoutName", layoutClass.NAME), layoutClass
+            )
 
         if self.layoutCombo.count() == 0:
             raise Exception("No layout installed!")
@@ -88,7 +90,7 @@ class LayoutSelect(QDialog):
 
         self.description.setHtml(
             "<center><h2>{}</h2><i><h4>{}</h4></i></center>{}".format(
-                layoutClass.NAME,
+                translate("LayoutName", layoutClass.NAME),
                 translate("LayoutDescription", layoutClass.DESCRIPTION),
                 details,
             )

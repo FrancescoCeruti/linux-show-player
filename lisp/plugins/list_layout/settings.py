@@ -74,7 +74,9 @@ class ListLayoutSettings(QScrollArea, SettingsPage):
         self.behaviorsGroup.layout().addWidget(self.useWaveformSeek, 0, 0, 1, 2)
 
         self.goKeyDisabledWhilePlaying = QCheckBox(self.behaviorsGroup)
-        self.behaviorsGroup.layout().addWidget(self.goKeyDisabledWhilePlaying, 1, 0, 1, 2)
+        self.behaviorsGroup.layout().addWidget(
+            self.goKeyDisabledWhilePlaying, 1, 0, 1, 2
+        )
 
         self.goKeyLabel = QLabel(self.behaviorsGroup)
         self.behaviorsGroup.layout().addWidget(self.goKeyLabel, 2, 0)

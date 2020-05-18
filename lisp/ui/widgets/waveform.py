@@ -61,7 +61,7 @@ class WaveformWidget(QWidget):
                 x = self._value // self._valueToPx
                 width = (self._lastDrawnValue - self._value) // self._valueToPx
                 # Repaint only the changed area
-                self.update(x - 1, 0, width + 1, self.height())
+                self.update(x - 1, 0, width + 2, self.height())
 
     def resizeEvent(self, event):
         self._valueToPx = self._maximum / self.width()
