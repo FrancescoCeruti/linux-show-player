@@ -6,62 +6,62 @@
     <message>
       <location filename="../../../plugins/rename_cues/rename_cues.py" line="36"/>
       <source>Rename Cues</source>
-      <translation type="unfinished">Rename Cues</translation>
+      <translation>重新命名cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="46"/>
       <source>Rename cues</source>
-      <translation type="unfinished">Rename cues</translation>
+      <translation>重新命名cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="55"/>
       <source>Current</source>
-      <translation type="unfinished">Current</translation>
+      <translation>当前名称</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="55"/>
       <source>Preview</source>
-      <translation type="unfinished">Preview</translation>
+      <translation>预览</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="72"/>
       <source>Capitalize</source>
-      <translation type="unfinished">Capitalize</translation>
+      <translation>首字母大写</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="77"/>
       <source>Lowercase</source>
-      <translation type="unfinished">Lowercase</translation>
+      <translation>小写</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="82"/>
       <source>Uppercase</source>
-      <translation type="unfinished">Uppercase</translation>
+      <translation>大写</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="87"/>
       <source>Remove Numbers</source>
-      <translation type="unfinished">Remove Numbers</translation>
+      <translation>移除号码</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="92"/>
       <source>Add numbering</source>
-      <translation type="unfinished">Add numbering</translation>
+      <translation>添加号码</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="101"/>
       <source>Reset</source>
-      <translation type="unfinished">Reset</translation>
+      <translation>重设</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="120"/>
       <source>Type your regex here: </source>
-      <translation type="unfinished">Type your regex here: </translation>
+      <translation>在此输入regex: </translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="232"/>
       <source>Regex help</source>
-      <translation type="unfinished">Regex help</translation>
+      <translation>Regex帮助</translation>
     </message>
   </context>
   <context>
@@ -69,7 +69,7 @@
     <message>
       <location filename="../../../plugins/rename_cues/command.py" line="44"/>
       <source>Renamed {number} cues</source>
-      <translation type="unfinished">Renamed {number} cues</translation>
+      <translation>已重新命名 {number} 個cue</translation>
     </message>
   </context>
   <context>
@@ -77,7 +77,7 @@
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="258"/>
       <source>Regex error: Invalid pattern</source>
-      <translation type="unfinished">Regex error: Invalid pattern</translation>
+      <translation>Regex错误：Invalid pattern</translation>
     </message>
   </context>
 </TS>
