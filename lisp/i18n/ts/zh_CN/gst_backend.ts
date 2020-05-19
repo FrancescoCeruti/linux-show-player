@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/alsa_sink.py" line="62"/>
       <source>ALSA device</source>
-      <translation type="unfinished">ALSA device</translation>
+      <translation>ALSA装置</translation>
     </message>
   </context>
   <context>
@@ -14,47 +14,47 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_dynamic.py" line="54"/>
       <source>Compressor</source>
-      <translation type="unfinished">Compressor</translation>
+      <translation>压缩器</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_dynamic.py" line="57"/>
       <source>Expander</source>
-      <translation type="unfinished">Expander</translation>
+      <translation>扩展器</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_dynamic.py" line="68"/>
       <source>Soft Knee</source>
-      <translation type="unfinished">Soft Knee</translation>
+      <translation>高拐点柔软度</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_dynamic.py" line="71"/>
       <source>Hard Knee</source>
-      <translation type="unfinished">Hard Knee</translation>
+      <translation>低拐点柔软度</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_dynamic.py" line="102"/>
       <source>Compressor/Expander</source>
-      <translation type="unfinished">Compressor/Expander</translation>
+      <translation>压缩器/扩展器</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_dynamic.py" line="105"/>
       <source>Type</source>
-      <translation type="unfinished">Type</translation>
+      <translation>类型</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_dynamic.py" line="106"/>
       <source>Curve Shape</source>
-      <translation type="unfinished">Curve Shape</translation>
+      <translation>曲线形状</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_dynamic.py" line="107"/>
       <source>Ratio</source>
-      <translation type="unfinished">Ratio</translation>
+      <translation>比例</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_dynamic.py" line="108"/>
       <source>Threshold (dB)</source>
-      <translation type="unfinished">Threshold (dB)</translation>
+      <translation>阈值 (dB)</translation>
     </message>
   </context>
   <context>
