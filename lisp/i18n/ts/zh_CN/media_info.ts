@@ -26,7 +26,7 @@
     <message>
       <location filename="../../../plugins/media_info/media_info.py" line="70"/>
       <source>Cannot get any information.</source>
-      <translation>无法获取任何信息</translation>
+      <translation>无法获取任何资料</translation>
     </message>
   </context>
 </TS>
