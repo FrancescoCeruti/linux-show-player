@@ -114,7 +114,7 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="45"/>
       <source>Organize cues in grid like pages</source>
-      <translation>在网格页面排列cues</translation>
+      <translation>把cue排列在网格页面</translation>
     </message>
   </context>
   <context>
