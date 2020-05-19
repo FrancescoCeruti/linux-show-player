@@ -209,12 +209,12 @@
     <message>
       <location filename="../../../plugins/controller/common.py" line="57"/>
       <source>Move standby forward</source>
-      <translation type="unfinished">Move standby forward</translation>
+      <translation>移前待命</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="60"/>
       <source>Move standby back</source>
-      <translation type="unfinished">Move standby back</translation>
+      <translation>移后待命</translation>
     </message>
   </context>
   <context>
@@ -222,12 +222,12 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="71"/>
       <source>Type</source>
-      <translation type="unfinished">Type</translation>
+      <translation>类型</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="71"/>
       <source>Argument</source>
-      <translation type="unfinished">Argument</translation>
+      <translation>参数</translation>
     </message>
   </context>
   <context>
@@ -235,12 +235,12 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="106"/>
       <source>Add</source>
-      <translation type="unfinished">Add</translation>
+      <translation>添加</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="107"/>
       <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
+      <translation>移除</translation>
     </message>
   </context>
   <context>
@@ -248,22 +248,22 @@
     <message>
       <location filename="../../../plugins/controller/controller_settings.py" line="25"/>
       <source>Cue Control</source>
-      <translation type="unfinished">Cue Control</translation>
+      <translation>Cue控制</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="63"/>
       <source>MIDI Controls</source>
-      <translation type="unfinished">MIDI Controls</translation>
+      <translation>MIDI控制</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/keyboard.py" line="44"/>
       <source>Keyboard Shortcuts</source>
-      <translation type="unfinished">Keyboard Shortcuts</translation>
+      <translation>键盘快捷键</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="224"/>
       <source>OSC Controls</source>
-      <translation type="unfinished">OSC Controls</translation>
+      <translation>OSC控制</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/controller_settings.py" line="41"/>
