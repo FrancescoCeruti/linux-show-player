@@ -210,17 +210,17 @@
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="201"/>
       <source>Not selected</source>
-      <translation type="unfinished">Not selected</translation>
+      <translation>未选择</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="202"/>
       <source>Volume to reach</source>
-      <translation type="unfinished">Volume to reach</translation>
+      <translation>目标音量</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="203"/>
       <source>Fade</source>
-      <translation type="unfinished">Fade</translation>
+      <translation>淡入淡出</translation>
     </message>
   </context>
   <context>
@@ -228,7 +228,7 @@
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="129"/>
       <source>Error during cue execution.</source>
-      <translation type="unfinished">Error during cue execution.</translation>
+      <translation>执行cue期间发生错误</translation>
     </message>
   </context>
 </TS>
