@@ -353,12 +353,12 @@
     <message>
       <location filename="../../../ui/settings/app_pages/cue.py" line="69"/>
       <source>Interrupt action fade</source>
-      <translation type="unfinished">Interrupt action fade</translation>
+      <translation>中断动作淡出</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/cue.py" line="75"/>
       <source>Fade actions default value</source>
-      <translation type="unfinished">Fade actions default value</translation>
+      <translation>淡入/淡出预设值</translation>
     </message>
   </context>
   <context>
@@ -371,12 +371,12 @@
     <message>
       <location filename="../../../ui/widgets/fades.py" line="34"/>
       <source>Quadratic</source>
-      <translation type="unfinished">Quadratic</translation>
+      <translation>二次曲线</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/fades.py" line="35"/>
       <source>Quadratic2</source>
-      <translation type="unfinished">Quadratic2</translation>
+      <translation>S形曲線</translation>
     </message>
   </context>
   <context>
@@ -600,7 +600,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="192"/>
       <source>New session</source>
-      <translation type="unfinished">New session</translation>
+      <translation>开新档案</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="194"/>
@@ -610,7 +610,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="196"/>
       <source>Save session</source>
-      <translation type="unfinished">Save session</translation>
+      <translation>储存档案</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="198"/>
@@ -720,7 +720,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="399"/>
       <source>Close session</source>
-      <translation type="unfinished">Close session</translation>
+      <translation>关闭档案</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="409"/>
@@ -733,7 +733,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="260"/>
       <source>Registered cue menu: &quot;{}&quot;</source>
-      <translation type="unfinished">Registered cue menu: &quot;{}&quot;</translation>
+      <translation>已注册cue菜单： &quot;{}&quot;</translation>
     </message>
   </context>
   <context>
