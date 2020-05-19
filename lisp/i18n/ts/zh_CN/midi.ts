@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/midi/midi.py" line="54"/>
       <source>Integration cues</source>
-      <translation type="unfinished">Integration cues</translation>
+      <translation>互联cue</translation>
     </message>
   </context>
   <context>
@@ -14,7 +14,7 @@
     <message>
       <location filename="../../../plugins/midi/midi_cue.py" line="40"/>
       <source>MIDI Cue</source>
-      <translation type="unfinished">MIDI Cue</translation>
+      <translation>MIDI Cue</translation>
     </message>
   </context>
   <context>
@@ -22,12 +22,12 @@
     <message>
       <location filename="../../../plugins/midi/widgets.py" line="88"/>
       <source>MIDI Message</source>
-      <translation type="unfinished">MIDI Message</translation>
+      <translation>MIDI讯息</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/widgets.py" line="89"/>
       <source>Message type</source>
-      <translation type="unfinished">Message type</translation>
+      <translation>讯息类型</translation>
     </message>
   </context>
   <context>
@@ -35,12 +35,12 @@
     <message>
       <location filename="../../../plugins/midi/midi_io.py" line="81"/>
       <source>Cannot connect to MIDI output port &apos;{}&apos;.</source>
-      <translation type="unfinished">Cannot connect to MIDI output port &apos;{}&apos;.</translation>
+      <translation>无法连接到MIDI输出端口 &apos;{}&apos;</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_io.py" line="102"/>
       <source>Cannot connect to MIDI input port &apos;{}&apos;.</source>
-      <translation type="unfinished">Cannot connect to MIDI input port &apos;{}&apos;.</translation>
+      <translation>无法连接到MIDI输入端口 &apos;{}&apos;</translation>
     </message>
   </context>
   <context>
@@ -48,17 +48,17 @@
     <message>
       <location filename="../../../plugins/midi/midi.py" line="119"/>
       <source>MIDI port disconnected: &apos;{}&apos;</source>
-      <translation type="unfinished">MIDI port disconnected: &apos;{}&apos;</translation>
+      <translation>MIDI端口已断线：&apos;{}&apos;</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi.py" line="137"/>
       <source>Connecting to MIDI port: &apos;{}&apos;</source>
-      <translation type="unfinished">Connecting to MIDI port: &apos;{}&apos;</translation>
+      <translation>正在连接到MIDI端口：&apos;{}&apos;</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi.py" line="146"/>
       <source>Connecting to matching MIDI port: &apos;{}&apos;</source>
-      <translation type="unfinished">Connecting to matching MIDI port: &apos;{}&apos;</translation>
+      <translation>正在连接到匹配的MIDI端口：&apos;{}&apos;</translation>
     </message>
   </context>
   <context>
@@ -66,47 +66,47 @@
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="68"/>
       <source>Channel</source>
-      <translation type="unfinished">Channel</translation>
+      <translation>频道</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="69"/>
       <source>Note</source>
-      <translation type="unfinished">Note</translation>
+      <translation>音</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="70"/>
       <source>Velocity</source>
-      <translation type="unfinished">Velocity</translation>
+      <translation>速度</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="71"/>
       <source>Control</source>
-      <translation type="unfinished">Control</translation>
+      <translation>控制</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="72"/>
       <source>Program</source>
-      <translation type="unfinished">Program</translation>
+      <translation>程式</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="73"/>
       <source>Value</source>
-      <translation type="unfinished">Value</translation>
+      <translation>值</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="74"/>
       <source>Song</source>
-      <translation type="unfinished">Song</translation>
+      <translation>歌曲</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="75"/>
       <source>Pitch</source>
-      <translation type="unfinished">Pitch</translation>
+      <translation>音调</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="76"/>
       <source>Position</source>
-      <translation type="unfinished">Position</translation>
+      <translation>位置</translation>
     </message>
   </context>
   <context>
@@ -114,22 +114,22 @@
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="51"/>
       <source>Note ON</source>
-      <translation type="unfinished">Note ON</translation>
+      <translation>音「开」</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="52"/>
       <source>Note OFF</source>
-      <translation type="unfinished">Note OFF</translation>
+      <translation>音「关」</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="53"/>
       <source>Polyphonic After-touch</source>
-      <translation type="unfinished">Polyphonic After-touch</translation>
+      <translation>多音的后压</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="54"/>
       <source>Control/Mode Change</source>
-      <translation type="unfinished">Control/Mode Change</translation>
+      <translation>控制/模式转换</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="57"/>
