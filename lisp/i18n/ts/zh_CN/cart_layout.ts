@@ -16,7 +16,7 @@
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="88"/>
       <source>Show dB-meters</source>
-      <translation>显示dB计</translation>
+      <translation>显示分貝计</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="89"/>
