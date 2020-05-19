@@ -690,7 +690,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="226"/>
       <source>&amp;Layout</source>
-      <translation type="unfinished">&amp;Layout</translation>
+      <translation>&amp;布局</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="228"/>
