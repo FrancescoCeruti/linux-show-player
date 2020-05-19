@@ -52,12 +52,12 @@
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="159"/>
       <source>Listening MIDI messages ...</source>
-      <translation>正在监听MIDI信息...</translation>
+      <translation>正在监听MIDI讯息...</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="103"/>
       <source>-- All Messages --</source>
-      <translation>-- 所有信息 --</translation>
+      <translation>-- 所有讯息 --</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="125"/>
@@ -85,7 +85,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="101"/>
       <source>OSC Message</source>
-      <translation>OSC 信息</translation>
+      <translation>OSC 讯息</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="232"/>
@@ -130,7 +130,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="334"/>
       <source>Waiting for messages:</source>
-      <translation>正在等待信息：</translation>
+      <translation>正在等待讯息：</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="103"/>
