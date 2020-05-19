@@ -6,22 +6,22 @@
     <message>
       <location filename="../../../plugins/synchronizer/synchronizer.py" line="44"/>
       <source>Synchronization</source>
-      <translation type="unfinished">Synchronization</translation>
+      <translation>同步</translation>
     </message>
     <message>
       <location filename="../../../plugins/synchronizer/synchronizer.py" line="47"/>
       <source>Manage connected peers</source>
-      <translation type="unfinished">Manage connected peers</translation>
+      <translation>管理已连接的用户</translation>
     </message>
     <message>
       <location filename="../../../plugins/synchronizer/synchronizer.py" line="53"/>
       <source>Show your IP</source>
-      <translation type="unfinished">Show your IP</translation>
+      <translation>显示你的IP</translation>
     </message>
     <message>
       <location filename="../../../plugins/synchronizer/synchronizer.py" line="79"/>
       <source>Your IP is: {}</source>
-      <translation type="unfinished">Your IP is: {}</translation>
+      <translation>你的IP：{}</translation>
     </message>
   </context>
 </TS>
