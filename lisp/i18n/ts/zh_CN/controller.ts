@@ -135,12 +135,12 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="103"/>
       <source>/path/to/method</source>
-      <translation type="unfinished">/path/to/method</translation>
+      <translation>方法路径</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="436"/>
       <source>Action</source>
-      <translation type="unfinished">Action</translation>
+      <translation>动作</translation>
     </message>
   </context>
   <context>
@@ -148,7 +148,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="350"/>
       <source>Warning</source>
-      <translation type="unfinished">Warning</translation>
+      <translation>警告</translation>
     </message>
   </context>
   <context>
@@ -156,12 +156,12 @@
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="121"/>
       <source>Add</source>
-      <translation type="unfinished">Add</translation>
+      <translation>添加</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="122"/>
       <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
+      <translation>移除</translation>
     </message>
   </context>
   <context>
@@ -169,42 +169,42 @@
     <message>
       <location filename="../../../plugins/controller/common.py" line="41"/>
       <source>Go</source>
-      <translation type="unfinished">Go</translation>
+      <translation>开始</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="42"/>
       <source>Reset</source>
-      <translation type="unfinished">Reset</translation>
+      <translation>重设</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="43"/>
       <source>Stop all cues</source>
-      <translation type="unfinished">Stop all cues</translation>
+      <translation>停止所有cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="44"/>
       <source>Pause all cues</source>
-      <translation type="unfinished">Pause all cues</translation>
+      <translation>暂停所有cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="45"/>
       <source>Resume all cues</source>
-      <translation type="unfinished">Resume all cues</translation>
+      <translation>恢复所有cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="48"/>
       <source>Interrupt all cues</source>
-      <translation type="unfinished">Interrupt all cues</translation>
+      <translation>中断所有cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="51"/>
       <source>Fade-out all cues</source>
-      <translation type="unfinished">Fade-out all cues</translation>
+      <translation>淡出所有cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="54"/>
       <source>Fade-in all cues</source>
-      <translation type="unfinished">Fade-in all cues</translation>
+      <translation>淡入所有cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="57"/>
