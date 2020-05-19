@@ -32,7 +32,7 @@
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="42"/>
       <source>List Layout</source>
-      <translation type="unfinished">List Layout</translation>
+      <translation>列表布局</translation>
     </message>
   </context>
   <context>
@@ -45,167 +45,167 @@
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="124"/>
       <source>Show accurate time</source>
-      <translation type="unfinished">Show accurate time</translation>
+      <translation>显示准确时间</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="125"/>
       <source>Show seek-bars</source>
-      <translation type="unfinished">Show seek-bars</translation>
+      <translation>显示进度条</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="126"/>
       <source>Auto-select next cue</source>
-      <translation type="unfinished">Auto-select next cue</translation>
+      <translation>自動選擇下一個cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="127"/>
       <source>Enable selection mode</source>
-      <translation type="unfinished">Enable selection mode</translation>
+      <translation>启用选取cue模式</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="144"/>
       <source>Use fade (buttons)</source>
-      <translation type="unfinished">Use fade (buttons)</translation>
+      <translation>使用淡入淡出(按钮)</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="147"/>
       <source>Stop Cue</source>
-      <translation type="unfinished">Stop Cue</translation>
+      <translation>停止cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="148"/>
       <source>Pause Cue</source>
-      <translation type="unfinished">Pause Cue</translation>
+      <translation>暂停cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="149"/>
       <source>Resume Cue</source>
-      <translation type="unfinished">Resume Cue</translation>
+      <translation>继续cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="150"/>
       <source>Interrupt Cue</source>
-      <translation type="unfinished">Interrupt Cue</translation>
+      <translation>中断cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="163"/>
       <source>Edit cue</source>
-      <translation type="unfinished">Edit cue</translation>
+      <translation>编辑cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="163"/>
       <source>Remove cue</source>
-      <translation type="unfinished">Remove cue</translation>
+      <translation>移除cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="202"/>
       <source>Selection mode</source>
-      <translation type="unfinished">Selection mode</translation>
+      <translation>选取cue模式</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/control_buttons.py" line="57"/>
       <source>Pause all</source>
-      <translation type="unfinished">Pause all</translation>
+      <translation>全部暂停</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/control_buttons.py" line="58"/>
       <source>Stop all</source>
-      <translation type="unfinished">Stop all</translation>
+      <translation>全部停止</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/control_buttons.py" line="59"/>
       <source>Interrupt all</source>
-      <translation type="unfinished">Interrupt all</translation>
+      <translation>全部中断</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/control_buttons.py" line="63"/>
       <source>Resume all</source>
-      <translation type="unfinished">Resume all</translation>
+      <translation>全部恢复</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/control_buttons.py" line="64"/>
       <source>Fade-Out all</source>
-      <translation type="unfinished">Fade-Out all</translation>
+      <translation>全部淡出</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/control_buttons.py" line="65"/>
       <source>Fade-In all</source>
-      <translation type="unfinished">Fade-In all</translation>
+      <translation>全部淡入</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="163"/>
       <source>Edit selected</source>
-      <translation type="unfinished">Edit selected</translation>
+      <translation>编辑选择项</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="163"/>
       <source>Clone cue</source>
-      <translation type="unfinished">Clone cue</translation>
+      <translation>复制cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="163"/>
       <source>Clone selected</source>
-      <translation type="unfinished">Clone selected</translation>
+      <translation>复制选择项</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="163"/>
       <source>Remove selected</source>
-      <translation type="unfinished">Remove selected</translation>
+      <translation>删除所选</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="138"/>
       <source>GO Key:</source>
-      <translation type="unfinished">GO Key:</translation>
+      <translation>GO键：</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="139"/>
       <source>GO Action:</source>
-      <translation type="unfinished">GO Action:</translation>
+      <translation>GO动作：</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="140"/>
       <source>GO minimum interval (ms):</source>
-      <translation type="unfinished">GO minimum interval (ms):</translation>
+      <translation>GO最小间隔(ms)：</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="411"/>
       <source>Copy of {}</source>
-      <translation type="unfinished">Copy of {}</translation>
+      <translation>{} 的副本</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="196"/>
       <source>Show index column</source>
-      <translation type="unfinished">Show index column</translation>
+      <translation>显示索引列</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="205"/>
       <source>Show resize handles</source>
-      <translation type="unfinished">Show resize handles</translation>
+      <translation>显示调整大小手柄</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="208"/>
       <source>Restore default size</source>
-      <translation type="unfinished">Restore default size</translation>
+      <translation>回复默认大小</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="118"/>
       <source>Default behaviors (applied to new sessions)</source>
-      <translation type="unfinished">Default behaviors (applied to new sessions)</translation>
+      <translation>默认行为(套用于新工作阶段)</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="131"/>
       <source>Behaviors</source>
-      <translation type="unfinished">Behaviors</translation>
+      <translation>行为</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="211"/>
       <source>Disable GO Key While Playing</source>
-      <translation type="unfinished">Disable GO Key While Playing</translation>
+      <translation>在播放时禁用GO键</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="132"/>
       <source>Use waveform seek-bars</source>
-      <translation type="unfinished">Use waveform seek-bars</translation>
+      <translation>使用波形图拖动条</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="135"/>
