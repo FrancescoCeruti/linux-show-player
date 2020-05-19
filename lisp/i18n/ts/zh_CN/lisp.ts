@@ -313,7 +313,7 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="203"/>
       <source>Wait before cue execution</source>
-      <translation type="unfinished">Wait before cue execution</translation>
+      <translation>执行cue前等待</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="207"/>
@@ -323,32 +323,32 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="208"/>
       <source>Wait after cue execution</source>
-      <translation type="unfinished">Wait after cue execution</translation>
+      <translation>执行cue后等待</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="212"/>
       <source>Next action</source>
-      <translation type="unfinished">Next action</translation>
+      <translation>下一个动作</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="112"/>
       <source>Start action</source>
-      <translation type="unfinished">Start action</translation>
+      <translation>开始方式</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="113"/>
       <source>Default action to start the cue</source>
-      <translation type="unfinished">Default action to start the cue</translation>
+      <translation>预设cue开始方式</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="118"/>
       <source>Stop action</source>
-      <translation type="unfinished">Stop action</translation>
+      <translation>停止方式</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="119"/>
       <source>Default action to stop the cue</source>
-      <translation type="unfinished">Default action to stop the cue</translation>
+      <translation>预设cue停止方式</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/cue.py" line="69"/>
@@ -366,7 +366,7 @@
     <message>
       <location filename="../../../ui/widgets/fades.py" line="33"/>
       <source>Linear</source>
-      <translation type="unfinished">Linear</translation>
+      <translation>线性</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/fades.py" line="34"/>
@@ -389,7 +389,7 @@
     <message>
       <location filename="../../../ui/widgets/fades.py" line="98"/>
       <source>Curve:</source>
-      <translation type="unfinished">Curve:</translation>
+      <translation>曲线：</translation>
     </message>
   </context>
   <context>
@@ -397,12 +397,12 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="277"/>
       <source>Fade In</source>
-      <translation type="unfinished">Fade In</translation>
+      <translation>淡入</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="278"/>
       <source>Fade Out</source>
-      <translation type="unfinished">Fade Out</translation>
+      <translation>淡出</translation>
     </message>
   </context>
   <context>
@@ -410,7 +410,7 @@
     <message>
       <location filename="../../../ui/widgets/hotkeyedit.py" line="124"/>
       <source>Press shortcut</source>
-      <translation type="unfinished">Press shortcut</translation>
+      <translation>按下快捷键</translation>
     </message>
   </context>
   <context>
@@ -620,12 +620,12 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="200"/>
       <source>Save as</source>
-      <translation type="unfinished">Save as</translation>
+      <translation>另存为</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="202"/>
       <source>Full Screen</source>
-      <translation type="unfinished">Full Screen</translation>
+      <translation>全屏显示</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="204"/>
