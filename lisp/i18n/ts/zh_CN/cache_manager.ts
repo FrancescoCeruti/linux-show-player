@@ -11,17 +11,17 @@
     <message>
       <location filename="../../../plugins/cache_manager/cache_manager.py" line="138"/>
       <source>Warning threshold in MB (0 = disabled)</source>
-      <translation type="unfinished">Warning threshold in MB (0 = disabled)</translation>
+      <translation>警告阀值 (MB为单位) (0 = 停用)</translation>
     </message>
     <message>
       <location filename="../../../plugins/cache_manager/cache_manager.py" line="142"/>
       <source>Cache cleanup</source>
-      <translation type="unfinished">Cache cleanup</translation>
+      <translation>清除缓存</translation>
     </message>
     <message>
       <location filename="../../../plugins/cache_manager/cache_manager.py" line="143"/>
       <source>Delete the cache content</source>
-      <translation type="unfinished">Delete the cache content</translation>
+      <translation>清除缓存</translation>
     </message>
   </context>
   <context>
@@ -29,7 +29,7 @@
     <message>
       <location filename="../../../plugins/cache_manager/cache_manager.py" line="96"/>
       <source>Cache Manager</source>
-      <translation type="unfinished">Cache Manager</translation>
+      <translation>缓存管理</translation>
     </message>
   </context>
 </TS>
