@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/controller/controller.py" line="165"/>
       <source>Cannot load controller protocol: &quot;{}&quot;</source>
-      <translation type="unfinished">Cannot load controller protocol: &quot;{}&quot;</translation>
+      <translation>无法加载控制器协议： &quot;{}&quot;</translation>
     </message>
   </context>
   <context>
@@ -14,17 +14,17 @@
     <message>
       <location filename="../../../plugins/controller/protocols/keyboard.py" line="55"/>
       <source>Action</source>
-      <translation type="unfinished">Action</translation>
+      <translation>动作</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/keyboard.py" line="78"/>
       <source>Shortcuts</source>
-      <translation type="unfinished">Shortcuts</translation>
+      <translation>快捷键</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/keyboard.py" line="55"/>
       <source>Shortcut</source>
-      <translation type="unfinished">Shortcut</translation>
+      <translation>快捷键</translation>
     </message>
   </context>
   <context>
@@ -32,52 +32,52 @@
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="71"/>
       <source>MIDI</source>
-      <translation type="unfinished">MIDI</translation>
+      <translation>MIDI</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="244"/>
       <source>Type</source>
-      <translation type="unfinished">Type</translation>
+      <translation>类型</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="244"/>
       <source>Action</source>
-      <translation type="unfinished">Action</translation>
+      <translation>动作</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="124"/>
       <source>Capture</source>
-      <translation type="unfinished">Capture</translation>
+      <translation>捕捉输入</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="159"/>
       <source>Listening MIDI messages ...</source>
-      <translation type="unfinished">Listening MIDI messages ...</translation>
+      <translation>正在监听MIDI信息...</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="103"/>
       <source>-- All Messages --</source>
-      <translation type="unfinished">-- All Messages --</translation>
+      <translation>-- 所有信息 --</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="125"/>
       <source>Capture filter</source>
-      <translation type="unfinished">Capture filter</translation>
+      <translation>捕捉过滤</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="244"/>
       <source>Data 1</source>
-      <translation type="unfinished">Data 1</translation>
+      <translation>数据 1</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="244"/>
       <source>Data 2</source>
-      <translation type="unfinished">Data 2</translation>
+      <translation>数据 2</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="244"/>
       <source>Data 3</source>
-      <translation type="unfinished">Data 3</translation>
+      <translation>数据 3</translation>
     </message>
   </context>
   <context>
@@ -85,52 +85,52 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="101"/>
       <source>OSC Message</source>
-      <translation type="unfinished">OSC Message</translation>
+      <translation>OSC 信息</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="232"/>
       <source>OSC</source>
-      <translation type="unfinished">OSC</translation>
+      <translation>OSC</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="436"/>
       <source>Path</source>
-      <translation type="unfinished">Path</translation>
+      <translation>路径</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="436"/>
       <source>Types</source>
-      <translation type="unfinished">Types</translation>
+      <translation>类型</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="436"/>
       <source>Arguments</source>
-      <translation type="unfinished">Arguments</translation>
+      <translation>参数</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="258"/>
       <source>OSC Capture</source>
-      <translation type="unfinished">OSC Capture</translation>
+      <translation>捕捉 OSC</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="287"/>
       <source>Add</source>
-      <translation type="unfinished">Add</translation>
+      <translation>添加</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="288"/>
       <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
+      <translation>移除</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="289"/>
       <source>Capture</source>
-      <translation type="unfinished">Capture</translation>
+      <translation>捕捉输入</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="334"/>
       <source>Waiting for messages:</source>
-      <translation type="unfinished">Waiting for messages:</translation>
+      <translation>正在等待信息：</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="103"/>
