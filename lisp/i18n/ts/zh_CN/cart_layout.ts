@@ -6,107 +6,107 @@
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="86"/>
       <source>Countdown mode</source>
-      <translation type="unfinished">Countdown mode</translation>
+      <translation>倒计时模式</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="87"/>
       <source>Show seek-bars</source>
-      <translation type="unfinished">Show seek-bars</translation>
+      <translation>显示进度条</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="88"/>
       <source>Show dB-meters</source>
-      <translation type="unfinished">Show dB-meters</translation>
+      <translation>显示dB计</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="89"/>
       <source>Show accurate time</source>
-      <translation type="unfinished">Show accurate time</translation>
+      <translation>显示准确时间</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="90"/>
       <source>Show volume</source>
-      <translation type="unfinished">Show volume</translation>
+      <translation>显示音量</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="91"/>
       <source>Grid size</source>
-      <translation type="unfinished">Grid size</translation>
+      <translation>网格大小</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="161"/>
       <source>Play</source>
-      <translation type="unfinished">Play</translation>
+      <translation>播放</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="161"/>
       <source>Pause</source>
-      <translation type="unfinished">Pause</translation>
+      <translation>暂停</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="161"/>
       <source>Stop</source>
-      <translation type="unfinished">Stop</translation>
+      <translation>停止</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="174"/>
       <source>Reset volume</source>
-      <translation type="unfinished">Reset volume</translation>
+      <translation>重置音量</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="185"/>
       <source>Add page</source>
-      <translation type="unfinished">Add page</translation>
+      <translation>添加页面</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="238"/>
       <source>Add pages</source>
-      <translation type="unfinished">Add pages</translation>
+      <translation>添加页面</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="187"/>
       <source>Remove current page</source>
-      <translation type="unfinished">Remove current page</translation>
+      <translation>移除当前页面</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="238"/>
       <source>Number of Pages:</source>
-      <translation type="unfinished">Number of Pages:</translation>
+      <translation>页数:</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="283"/>
       <source>Page {number}</source>
-      <translation type="unfinished">Page {number}</translation>
+      <translation>第 {number} 页</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="485"/>
       <source>Warning</source>
-      <translation type="unfinished">Warning</translation>
+      <translation>警告</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="486"/>
       <source>Every cue in the page will be lost.</source>
-      <translation type="unfinished">Every cue in the page will be lost.</translation>
+      <translation>页面中的每个cue都会被删除。</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="489"/>
       <source>Are you sure to continue?</source>
-      <translation type="unfinished">Are you sure to continue?</translation>
+      <translation>是否确认继续？</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="92"/>
       <source>Number of columns:</source>
-      <translation type="unfinished">Number of columns:</translation>
+      <translation>列数：</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="93"/>
       <source>Number of rows:</source>
-      <translation type="unfinished">Number of rows:</translation>
+      <translation>行数：</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="81"/>
       <source>Default behaviors (applied to new sessions)</source>
-      <translation type="unfinished">Default behaviors (applied to new sessions)</translation>
+      <translation>默认行为(套用于新工作阶段)</translation>
     </message>
   </context>
   <context>
