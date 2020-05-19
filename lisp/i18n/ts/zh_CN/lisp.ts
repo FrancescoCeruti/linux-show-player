@@ -680,7 +680,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="223"/>
       <source>Edit selected</source>
-      <translation>编辑选择项</translation>
+      <translation>编辑所選</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="224"/>
@@ -700,7 +700,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="229"/>
       <source>Edit selection</source>
-      <translation>编辑选择项</translation>
+      <translation>编辑所選</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="231"/>
