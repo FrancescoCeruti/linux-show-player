@@ -6,12 +6,12 @@
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="222"/>
       <source>Create Cue</source>
-      <translation type="unfinished">Create Cue</translation>
+      <translation>创建cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="223"/>
       <source>Load on selected Cues</source>
-      <translation type="unfinished">Load on selected Cues</translation>
+      <translation>加载所选的cue</translation>
     </message>
   </context>
   <context>
@@ -19,32 +19,32 @@
     <message>
       <location filename="../../../plugins/presets/presets.py" line="67"/>
       <source>Presets</source>
-      <translation type="unfinished">Presets</translation>
+      <translation>预设</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets.py" line="72"/>
       <source>Save as preset</source>
-      <translation type="unfinished">Save as preset</translation>
+      <translation>保存预设​​​​​​​</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="67"/>
       <source>Cannot scan presets</source>
-      <translation type="unfinished">Cannot scan presets</translation>
+      <translation>无法寻找预设</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="71"/>
       <source>Error while deleting preset &quot;{}&quot;</source>
-      <translation type="unfinished">Error while deleting preset &quot;{}&quot;</translation>
+      <translation>删除预设 &quot;{}&quot; 时发生错误</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="78"/>
       <source>Cannot load preset &quot;{}&quot;</source>
-      <translation type="unfinished">Cannot load preset &quot;{}&quot;</translation>
+      <translation>无法加载预设 &quot;{}&quot;</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="84"/>
       <source>Cannot save preset &quot;{}&quot;</source>
-      <translation type="unfinished">Cannot save preset &quot;{}&quot;</translation>
+      <translation>无法保存预设 &quot;{}&quot;</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="90"/>
