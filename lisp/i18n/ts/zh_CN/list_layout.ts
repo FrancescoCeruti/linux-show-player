@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="43"/>
       <source>Organize the cues in a list</source>
-      <translation type="unfinished">Organize the cues in a list</translation>
+      <translation>把cue排列在列表</translation>
     </message>
   </context>
   <context>
@@ -14,17 +14,17 @@
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="47"/>
       <source>SHIFT + Space or Double-Click to edit a cue</source>
-      <translation type="unfinished">SHIFT + Space or Double-Click to edit a cue</translation>
+      <translation>SHIFT + 空白键或按两下以编辑cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="50"/>
       <source>To copy cues drag them while pressing CTRL</source>
-      <translation type="unfinished">To copy cues drag them while pressing CTRL</translation>
+      <translation>按着CTRL然后拖拉cue以复制cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="53"/>
       <source>To move cues drag them</source>
-      <translation type="unfinished">To move cues drag them</translation>
+      <translation>拖拉cue以移动cue</translation>
     </message>
   </context>
   <context>
@@ -135,7 +135,7 @@
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="163"/>
       <source>Edit selected</source>
-      <translation>编辑选择项</translation>
+      <translation>编辑所选</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="163"/>
@@ -145,7 +145,7 @@
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="163"/>
       <source>Clone selected</source>
-      <translation>复制选择项</translation>
+      <translation>复制所选</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="163"/>
