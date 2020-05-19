@@ -40,7 +40,7 @@
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="123"/>
       <source>Show dB-meters</source>
-      <translation type="unfinished">Show dB-meters</translation>
+      <translation>显示分貝计</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="124"/>
