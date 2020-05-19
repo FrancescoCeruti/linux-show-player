@@ -347,7 +347,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="89"/>
       <source>Attempt download on network streams</source>
-      <translation>尝试从网上下载</translation>
+      <translation>尝试从互联网下载</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="92"/>
