@@ -210,7 +210,7 @@
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="135"/>
       <source>GO Key Disabled While Playing</source>
-      <translation type="unfinished">GO Key Disabled While Playing</translation>
+      <translation>播放时禁用GO键</translation>
     </message>
   </context>
   <context>
@@ -218,22 +218,22 @@
     <message>
       <location filename="../../../plugins/list_layout/list_view.py" line="77"/>
       <source>Cue</source>
-      <translation type="unfinished">Cue</translation>
+      <translation>Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/list_view.py" line="82"/>
       <source>Pre wait</source>
-      <translation type="unfinished">Pre wait</translation>
+      <translation>开始前等候</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/list_view.py" line="85"/>
       <source>Action</source>
-      <translation type="unfinished">Action</translation>
+      <translation>动作</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/list_view.py" line="88"/>
       <source>Post wait</source>
-      <translation type="unfinished">Post wait</translation>
+      <translation>结束后等候</translation>
     </message>
   </context>
   <context>
@@ -241,12 +241,12 @@
     <message>
       <location filename="../../../plugins/list_layout/info_panel.py" line="48"/>
       <source>Cue name</source>
-      <translation type="unfinished">Cue name</translation>
+      <translation>Cue名称</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/info_panel.py" line="51"/>
       <source>Cue description</source>
-      <translation type="unfinished">Cue description</translation>
+      <translation>Cue描述</translation>
     </message>
   </context>
   <context>
@@ -254,7 +254,7 @@
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="39"/>
       <source>List Layout</source>
-      <translation type="unfinished">List Layout</translation>
+      <translation>列表布局</translation>
     </message>
   </context>
 </TS>
