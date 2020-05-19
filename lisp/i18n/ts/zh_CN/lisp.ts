@@ -384,7 +384,7 @@
     <message>
       <location filename="../../../ui/widgets/fades.py" line="97"/>
       <source>Duration (sec):</source>
-      <translation type="unfinished">Duration (sec):</translation>
+      <translation>长度 (秒)：</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/fades.py" line="98"/>
@@ -418,17 +418,17 @@
     <message>
       <location filename="../../../ui/layoutselect.py" line="37"/>
       <source>Layout selection</source>
-      <translation type="unfinished">Layout selection</translation>
+      <translation>布局选择</translation>
     </message>
     <message>
       <location filename="../../../ui/layoutselect.py" line="50"/>
       <source>Select layout</source>
-      <translation type="unfinished">Select layout</translation>
+      <translation>选择布局</translation>
     </message>
     <message>
       <location filename="../../../ui/layoutselect.py" line="54"/>
       <source>Open file</source>
-      <translation type="unfinished">Open file</translation>
+      <translation>打开档案</translation>
     </message>
   </context>
   <context>
@@ -436,27 +436,27 @@
     <message>
       <location filename="../../../ui/settings/app_pages/layouts.py" line="52"/>
       <source>Layout actions</source>
-      <translation type="unfinished">Layout actions</translation>
+      <translation>布局操作</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/layouts.py" line="53"/>
       <source>Fade out when stopping all cues</source>
-      <translation type="unfinished">Fade out when stopping all cues</translation>
+      <translation>以淡出方式停止所有cue</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/layouts.py" line="56"/>
       <source>Fade out when interrupting all cues</source>
-      <translation type="unfinished">Fade out when interrupting all cues</translation>
+      <translation>以淡出方式中断所有cue</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/layouts.py" line="59"/>
       <source>Fade out when pausing all cues</source>
-      <translation type="unfinished">Fade out when pausing all cues</translation>
+      <translation>以淡出方式暂停所有cue</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/layouts.py" line="62"/>
       <source>Fade in when resuming all cues</source>
-      <translation type="unfinished">Fade in when resuming all cues</translation>
+      <translation>以淡入方式繼續所有cue</translation>
     </message>
   </context>
   <context>
@@ -464,7 +464,7 @@
     <message>
       <location filename="../../../ui/logging/status.py" line="36"/>
       <source>Errors/Warnings</source>
-      <translation type="unfinished">Errors/Warnings</translation>
+      <translation>错误/警告</translation>
     </message>
   </context>
   <context>
@@ -472,102 +472,102 @@
     <message>
       <location filename="../../../ui/logging/common.py" line="21"/>
       <source>Debug</source>
-      <translation type="unfinished">Debug</translation>
+      <translation>除错</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="23"/>
       <source>Warning</source>
-      <translation type="unfinished">Warning</translation>
+      <translation>警告</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="24"/>
       <source>Error</source>
-      <translation type="unfinished">Error</translation>
+      <translation>錯誤</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/dialog.py" line="79"/>
       <source>Dismiss all</source>
-      <translation type="unfinished">Dismiss all</translation>
+      <translation>全部忽略</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/dialog.py" line="86"/>
       <source>Show details</source>
-      <translation type="unfinished">Show details</translation>
+      <translation>显示详情</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/viewer.py" line="53"/>
       <source>Linux Show Player - Log Viewer</source>
-      <translation type="unfinished">Linux Show Player - Log Viewer</translation>
+      <translation>Linux Show Player - 查看日志</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="22"/>
       <source>Info</source>
-      <translation type="unfinished">Info</translation>
+      <translation>关于</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="25"/>
       <source>Critical</source>
-      <translation type="unfinished">Critical</translation>
+      <translation>严重</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="37"/>
       <source>Time</source>
-      <translation type="unfinished">Time</translation>
+      <translation>时间</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="38"/>
       <source>Milliseconds</source>
-      <translation type="unfinished">Milliseconds</translation>
+      <translation>毫秒</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="39"/>
       <source>Logger name</source>
-      <translation type="unfinished">Logger name</translation>
+      <translation>记录者名称</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="40"/>
       <source>Level</source>
-      <translation type="unfinished">Level</translation>
+      <translation>级别</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="41"/>
       <source>Message</source>
-      <translation type="unfinished">Message</translation>
+      <translation>信息</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="42"/>
       <source>Function</source>
-      <translation type="unfinished">Function</translation>
+      <translation>函数</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="43"/>
       <source>Path name</source>
-      <translation type="unfinished">Path name</translation>
+      <translation>路径</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="44"/>
       <source>File name</source>
-      <translation type="unfinished">File name</translation>
+      <translation>档案名称</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="45"/>
       <source>Line no.</source>
-      <translation type="unfinished">Line no.</translation>
+      <translation>行号</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="46"/>
       <source>Module</source>
-      <translation type="unfinished">Module</translation>
+      <translation>模块</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="47"/>
       <source>Process ID</source>
-      <translation type="unfinished">Process ID</translation>
+      <translation>进程号码</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="48"/>
       <source>Process name</source>
-      <translation type="unfinished">Process name</translation>
+      <translation>进程名称</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="49"/>
@@ -605,7 +605,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="194"/>
       <source>Open</source>
-      <translation type="unfinished">Open</translation>
+      <translation>开启</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="196"/>
@@ -615,7 +615,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="198"/>
       <source>Preferences</source>
-      <translation type="unfinished">Preferences</translation>
+      <translation>设定</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="200"/>
@@ -680,7 +680,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="223"/>
       <source>Edit selected</source>
-      <translation type="unfinished">Edit selected</translation>
+      <translation>编辑选择项</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="224"/>
@@ -741,7 +741,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="344"/>
       <source>Cannot create cue {}</source>
-      <translation type="unfinished">Cannot create cue {}</translation>
+      <translation>无法创建cue {}</translation>
     </message>
   </context>
   <context>
