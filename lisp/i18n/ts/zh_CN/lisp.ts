@@ -600,7 +600,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="192"/>
       <source>New session</source>
-      <translation>开新档案</translation>
+      <translation>新工作阶段</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="194"/>
@@ -610,7 +610,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="196"/>
       <source>Save session</source>
-      <translation>储存档案</translation>
+      <translation>储存工作阶段</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="198"/>
@@ -720,7 +720,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="399"/>
       <source>Close session</source>
-      <translation>关闭档案</translation>
+      <translation>关闭工作阶段</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="409"/>
