@@ -6,12 +6,12 @@
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="86"/>
       <source>Add</source>
-      <translation type="unfinished">Add</translation>
+      <translation>添加</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="91"/>
       <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
+      <translation>移除</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="155"/>
