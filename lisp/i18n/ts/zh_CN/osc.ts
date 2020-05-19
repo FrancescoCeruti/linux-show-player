@@ -104,12 +104,12 @@
     <message>
       <location filename="../../../plugins/osc/osc_server.py" line="93"/>
       <source>OSC server started at {}</source>
-      <translation type="unfinished">OSC server started at {}</translation>
+      <translation>OSC伺服器已于 {} 启动</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_server.py" line="111"/>
       <source>OSC server stopped</source>
-      <translation type="unfinished">OSC server stopped</translation>
+      <translation>OSC伺服器已停止</translation>
     </message>
   </context>
   <context>
@@ -117,22 +117,22 @@
     <message>
       <location filename="../../../plugins/osc/osc_settings.py" line="43"/>
       <source>OSC Settings</source>
-      <translation type="unfinished">OSC Settings</translation>
+      <translation>OSC设定</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_settings.py" line="50"/>
       <source>Input Port:</source>
-      <translation type="unfinished">Input Port:</translation>
+      <translation>输入端口：</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_settings.py" line="59"/>
       <source>Output Port:</source>
-      <translation type="unfinished">Output Port:</translation>
+      <translation>输出端口：</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_settings.py" line="68"/>
       <source>Hostname:</source>
-      <translation type="unfinished">Hostname:</translation>
+      <translation>主机名：</translation>
     </message>
   </context>
   <context>
@@ -140,7 +140,7 @@
     <message>
       <location filename="../../../plugins/osc/osc_settings.py" line="34"/>
       <source>OSC settings</source>
-      <translation type="unfinished">OSC settings</translation>
+      <translation>OSC设定</translation>
     </message>
   </context>
 </TS>
