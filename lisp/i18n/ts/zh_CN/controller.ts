@@ -268,7 +268,7 @@
     <message>
       <location filename="../../../plugins/controller/controller_settings.py" line="41"/>
       <source>Layout Controls</source>
-      <translation type="unfinished">Layout Controls</translation>
+      <translation>布局控制</translation>
     </message>
   </context>
 </TS>
