@@ -532,7 +532,7 @@
     <message>
       <location filename="../../../ui/logging/common.py" line="41"/>
       <source>Message</source>
-      <translation>信息</translation>
+      <translation>讯息</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="42"/>
@@ -582,7 +582,7 @@
     <message>
       <location filename="../../../ui/logging/common.py" line="51"/>
       <source>Exception info</source>
-      <translation>异常信息</translation>
+      <translation>异常讯息</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/viewer.py" line="125"/>
