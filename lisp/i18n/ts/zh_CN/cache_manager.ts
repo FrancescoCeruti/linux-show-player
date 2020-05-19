@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/cache_manager/cache_manager.py" line="135"/>
       <source>Cache size warning</source>
-      <translation type="unfinished">Cache size warning</translation>
+      <translation>缓存大小警告</translation>
     </message>
     <message>
       <location filename="../../../plugins/cache_manager/cache_manager.py" line="138"/>
