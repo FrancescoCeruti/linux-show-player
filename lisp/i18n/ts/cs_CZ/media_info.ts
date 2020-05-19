@@ -21,12 +21,12 @@
     <message>
       <location filename="../../../plugins/media_info/media_info.py" line="70"/>
       <source>Warning</source>
-      <translation type="unfinished">Warning</translation>
+      <translation>Varování</translation>
     </message>
     <message>
       <location filename="../../../plugins/media_info/media_info.py" line="70"/>
       <source>Cannot get any information.</source>
-      <translation type="unfinished">Cannot get any information.</translation>
+      <translation>Nelze získat žádné informace.</translation>
     </message>
   </context>
 </TS>
