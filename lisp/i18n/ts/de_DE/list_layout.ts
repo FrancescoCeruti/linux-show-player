@@ -200,17 +200,17 @@
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="211"/>
       <source>Disable GO Key While Playing</source>
-      <translation type="unfinished">Disable GO Key While Playing</translation>
+      <translation>GO-Taste während der Wiedergabe deaktivieren</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="132"/>
       <source>Use waveform seek-bars</source>
-      <translation type="unfinished">Use waveform seek-bars</translation>
+      <translation>Wellenform Suchleisten verwenden</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="135"/>
       <source>GO Key Disabled While Playing</source>
-      <translation type="unfinished">GO Key Disabled While Playing</translation>
+      <translation>GO-Taste während der Wiedergabe deaktiviert</translation>
     </message>
   </context>
   <context>
