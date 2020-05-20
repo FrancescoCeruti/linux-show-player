@@ -132,7 +132,7 @@
     <message>
       <location filename="../../../plugins/osc/osc_settings.py" line="68"/>
       <source>Hostname:</source>
-      <translation>主机名：</translation>
+      <translation>主机名称：</translation>
     </message>
   </context>
   <context>
