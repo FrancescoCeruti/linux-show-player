@@ -137,12 +137,12 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="52"/>
       <source>To copy cues drag them while pressing CTRL</source>
-      <translation>按着 CTRL 然后拖拉cue以复制 Cue</translation>
+      <translation>按着 CTRL 然后拖拉 Cue 以复制 Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="55"/>
       <source>To move cues drag them while pressing SHIFT</source>
-      <translation>按着 SHIFT 然后拖拉cue以移动 Cue</translation>
+      <translation>按着 SHIFT 然后拖拉 Cue 以移动 Cue</translation>
     </message>
   </context>
   <context>
