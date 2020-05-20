@@ -22,7 +22,7 @@
     <message>
       <location filename="../../../plugins/midi/widgets.py" line="88"/>
       <source>MIDI Message</source>
-      <translation>MIDI讯息</translation>
+      <translation>MIDI 讯息</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/widgets.py" line="89"/>
@@ -35,12 +35,12 @@
     <message>
       <location filename="../../../plugins/midi/midi_io.py" line="81"/>
       <source>Cannot connect to MIDI output port &apos;{}&apos;.</source>
-      <translation>无法连接到MIDI输出端口 &apos;{}&apos;</translation>
+      <translation>无法连接到 MIDI 输出端口 &apos;{}&apos;</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_io.py" line="102"/>
       <source>Cannot connect to MIDI input port &apos;{}&apos;.</source>
-      <translation>无法连接到MIDI输入端口 &apos;{}&apos;</translation>
+      <translation>无法连接到 MIDI 输入端口 &apos;{}&apos;</translation>
     </message>
   </context>
   <context>
@@ -48,17 +48,17 @@
     <message>
       <location filename="../../../plugins/midi/midi.py" line="119"/>
       <source>MIDI port disconnected: &apos;{}&apos;</source>
-      <translation>MIDI端口已断线：&apos;{}&apos;</translation>
+      <translation>MIDI 端口已断线：&apos;{}&apos;</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi.py" line="137"/>
       <source>Connecting to MIDI port: &apos;{}&apos;</source>
-      <translation>正在连接到MIDI端口：&apos;{}&apos;</translation>
+      <translation>正在连接到 MIDI 端口：&apos;{}&apos;</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi.py" line="146"/>
       <source>Connecting to matching MIDI port: &apos;{}&apos;</source>
-      <translation>正在连接到匹配的MIDI端口：&apos;{}&apos;</translation>
+      <translation>正在连接到匹配的 MIDI 端口：&apos;{}&apos;</translation>
     </message>
   </context>
   <context>
@@ -129,12 +129,12 @@
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="54"/>
       <source>Control/Mode Change</source>
-      <translation>Control/Mode改变</translation>
+      <translation>Control/Mode 改变</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="57"/>
       <source>Program Change</source>
-      <translation>Program改变</translation>
+      <translation>Program 改变</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="58"/>
@@ -144,7 +144,7 @@
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="59"/>
       <source>Pitch Bend Change</source>
-      <translation>Pitch Bend改变</translation>
+      <translation>Pitch Bend 改变</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="60"/>
@@ -187,7 +187,7 @@
     <message>
       <location filename="../../../plugins/midi/midi_settings.py" line="100"/>
       <source>MIDI devices</source>
-      <translation>MIDI装置</translation>
+      <translation>MIDI 装置</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_settings.py" line="104"/>
@@ -205,12 +205,12 @@
     <message>
       <location filename="../../../plugins/midi/midi_settings.py" line="37"/>
       <source>MIDI settings</source>
-      <translation>MIDI设置</translation>
+      <translation>MIDI 设置</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_cue.py" line="57"/>
       <source>MIDI Settings</source>
-      <translation>MIDI设置</translation>
+      <translation>MIDI 设置</translation>
     </message>
   </context>
 </TS>
