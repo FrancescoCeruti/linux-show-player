@@ -88,7 +88,7 @@
     <message>
       <location filename="../../../plugins/osc/osc_server.py" line="119"/>
       <source>Message from {} -&gt; path: &quot;{}&quot; args: {}</source>
-      <translation>来自 {} 的消息 -&gt; 路径: &quot;{}&quot; args: {}</translation>
+      <translation>来自 {} 的讯息 -&gt; 路径: &quot;{}&quot; args: {}</translation>
     </message>
   </context>
   <context>
