@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/midi/midi.py" line="54"/>
       <source>Integration cues</source>
-      <translation>互联 Cue</translation>
+      <translation>互联 Cues</translation>
     </message>
   </context>
   <context>
