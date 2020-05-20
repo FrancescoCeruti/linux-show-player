@@ -251,7 +251,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="267"/>
       <source>Misc cues</source>
-      <translation>杂项cues</translation>
+      <translation>杂项 Cue</translation>
     </message>
   </context>
   <context>
@@ -259,12 +259,12 @@
     <message>
       <location filename="../../../command/cue.py" line="46"/>
       <source>Cue settings changed: &quot;{}&quot;</source>
-      <translation>Cue设置已更改： &quot;{}&quot;</translation>
+      <translation>Cue 设置已更改： &quot;{}&quot;</translation>
     </message>
     <message>
       <location filename="../../../command/cue.py" line="75"/>
       <source>Cues settings changed.</source>
-      <translation>Cues 设置已更改</translation>
+      <translation>Cue 设置已更改</translation>
     </message>
   </context>
   <context>
@@ -272,7 +272,7 @@
     <message>
       <location filename="../../../cues/media_cue.py" line="31"/>
       <source>Media Cue</source>
-      <translation>媒体cue</translation>
+      <translation>媒体 Cue</translation>
     </message>
   </context>
   <context>
@@ -313,7 +313,7 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="203"/>
       <source>Wait before cue execution</source>
-      <translation>执行cue前等待</translation>
+      <translation>执行 Cue 前等待</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="207"/>
@@ -323,7 +323,7 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="208"/>
       <source>Wait after cue execution</source>
-      <translation>执行cue后等待</translation>
+      <translation>执行 Cue 后等待</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="212"/>
@@ -338,7 +338,7 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="113"/>
       <source>Default action to start the cue</source>
-      <translation>预设cue开始方式</translation>
+      <translation>预设 Cue 开始方式</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="118"/>
@@ -348,7 +348,7 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="119"/>
       <source>Default action to stop the cue</source>
-      <translation>预设cue停止方式</translation>
+      <translation>预设 Cue 停止方式</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/cue.py" line="69"/>
@@ -441,12 +441,12 @@
     <message>
       <location filename="../../../ui/settings/app_pages/layouts.py" line="53"/>
       <source>Fade out when stopping all cues</source>
-      <translation>以淡出方式停止所有cue</translation>
+      <translation>以淡出方式停止所有 Cue</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/layouts.py" line="56"/>
       <source>Fade out when interrupting all cues</source>
-      <translation>以淡出方式中断所有cue</translation>
+      <translation>以淡出方式中断所有 Cue</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/layouts.py" line="59"/>
