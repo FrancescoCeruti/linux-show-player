@@ -6,12 +6,12 @@
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="108"/>
       <source>Timecode Settings</source>
-      <translation type="unfinished">Timecode Settings</translation>
+      <translation>时间码设定</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="38"/>
       <source>Timecode</source>
-      <translation type="unfinished">Timecode</translation>
+      <translation>时间码</translation>
     </message>
   </context>
   <context>
@@ -19,7 +19,7 @@
     <message>
       <location filename="../../../plugins/timecode/timecode.py" line="97"/>
       <source>Cannot load timecode protocol: &quot;{}&quot;</source>
-      <translation type="unfinished">Cannot load timecode protocol: &quot;{}&quot;</translation>
+      <translation>无法加载时间码协议： &quot;{}&quot;</translation>
     </message>
   </context>
   <context>
@@ -27,7 +27,7 @@
     <message>
       <location filename="../../../plugins/timecode/protocols/artnet.py" line="72"/>
       <source>Cannot send timecode.</source>
-      <translation type="unfinished">Cannot send timecode.</translation>
+      <translation>无法发送时间码</translation>
     </message>
   </context>
   <context>
@@ -35,32 +35,32 @@
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="141"/>
       <source>Timecode Format:</source>
-      <translation type="unfinished">Timecode Format:</translation>
+      <translation>时间码格式：</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="80"/>
       <source>Replace HOURS by a static track number</source>
-      <translation type="unfinished">Replace HOURS by a static track number</translation>
+      <translation>以静态曲目编号代替小时</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="88"/>
       <source>Track number</source>
-      <translation type="unfinished">Track number</translation>
+      <translation>曲目编号</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="85"/>
       <source>Enable Timecode</source>
-      <translation type="unfinished">Enable Timecode</translation>
+      <translation>启用时间码</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="138"/>
       <source>Timecode Settings</source>
-      <translation type="unfinished">Timecode Settings</translation>
+      <translation>时间码设定</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="144"/>
       <source>Timecode Protocol:</source>
-      <translation type="unfinished">Timecode Protocol:</translation>
+      <translation>时间码协议：</translation>
     </message>
   </context>
 </TS>
