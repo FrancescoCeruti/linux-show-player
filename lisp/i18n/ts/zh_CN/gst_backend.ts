@@ -116,7 +116,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_backend.py" line="74"/>
       <source>Audio cue (from file)</source>
-      <translation>声音cue (从档案汇入)</translation>
+      <translation>媒体cue (从档案汇入)</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/gst_backend.py" line="123"/>
