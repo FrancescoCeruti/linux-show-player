@@ -16,12 +16,12 @@
     <message>
       <location filename="../../../plugins/synchronizer/synchronizer.py" line="53"/>
       <source>Show your IP</source>
-      <translation>显示你的IP</translation>
+      <translation>显示你的 IP</translation>
     </message>
     <message>
       <location filename="../../../plugins/synchronizer/synchronizer.py" line="79"/>
       <source>Your IP is: {}</source>
-      <translation>你的IP：{}</translation>
+      <translation>你的 IP：{}</translation>
     </message>
   </context>
 </TS>
