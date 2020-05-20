@@ -26,17 +26,17 @@
     <message>
       <location filename="../../../plugins/replay_gain/gain_ui.py" line="113"/>
       <source>Threads number</source>
-      <translation type="unfinished">Threads number</translation>
+      <translation>线程数量</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/gain_ui.py" line="114"/>
       <source>Apply only to selected media</source>
-      <translation type="unfinished">Apply only to selected media</translation>
+      <translation>仅应用于所选媒体</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/gain_ui.py" line="117"/>
       <source>ReplayGain to (dB SPL)</source>
-      <translation type="unfinished">ReplayGain to (dB SPL)</translation>
+      <translation>回放增益至 (分贝 声压级)</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/gain_ui.py" line="120"/>
@@ -46,7 +46,7 @@
     <message>
       <location filename="../../../plugins/replay_gain/gain_ui.py" line="145"/>
       <source>Processing files ...</source>
-      <translation type="unfinished">Processing files ...</translation>
+      <translation>正在处理档案...</translation>
     </message>
   </context>
   <context>
@@ -54,12 +54,12 @@
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="236"/>
       <source>Applied gain for: {}</source>
-      <translation type="unfinished">Applied gain for: {}</translation>
+      <translation>已套用為 {} 作增益</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="242"/>
       <source>Discarded gain for: {}</source>
-      <translation type="unfinished">Discarded gain for: {}</translation>
+      <translation>已舍弃為 {} 作增益</translation>
     </message>
   </context>
   <context>
@@ -67,17 +67,17 @@
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="216"/>
       <source>Gain processing stopped by user.</source>
-      <translation type="unfinished">Gain processing stopped by user.</translation>
+      <translation>用户已停止增益处理</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="281"/>
       <source>Started gain calculation for: {}</source>
-      <translation type="unfinished">Started gain calculation for: {}</translation>
+      <translation>已开始为 {} 作增益计算</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="316"/>
       <source>Gain calculated for: {}</source>
-      <translation type="unfinished">Gain calculated for: {}</translation>
+      <translation>已为 {} 作增益计算</translation>
     </message>
   </context>
 </TS>
