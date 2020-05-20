@@ -34,7 +34,7 @@
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="131"/>
       <source>Command to execute, as in a shell</source>
-      <translation>要执行的shell指令</translation>
+      <translation>要执行的 Shell 指令</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="134"/>
@@ -49,7 +49,7 @@
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="140"/>
       <source>Kill instead of terminate</source>
-      <translation>传送kill讯号而非terminate讯号</translation>
+      <translation>传送 kil l讯号而非 terminate 讯号</translation>
     </message>
   </context>
   <context>
