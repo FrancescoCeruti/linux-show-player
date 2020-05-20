@@ -19,42 +19,42 @@
     <message>
       <location filename="../../../plugins/presets/presets.py" line="67"/>
       <source>Presets</source>
-      <translation>预设</translation>
+      <translation>範本</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets.py" line="72"/>
       <source>Save as preset</source>
-      <translation>保存预设​​​​​​​</translation>
+      <translation>保存为範本</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="67"/>
       <source>Cannot scan presets</source>
-      <translation>无法寻找预设</translation>
+      <translation>无法寻找範本</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="71"/>
       <source>Error while deleting preset &quot;{}&quot;</source>
-      <translation>删除预设 &quot;{}&quot; 时发生错误</translation>
+      <translation>删除範本 &quot;{}&quot; 时发生错误</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="78"/>
       <source>Cannot load preset &quot;{}&quot;</source>
-      <translation>无法加载预设 &quot;{}&quot;</translation>
+      <translation>无法加载範本 &quot;{}&quot;</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="84"/>
       <source>Cannot save preset &quot;{}&quot;</source>
-      <translation>无法保存预设 &quot;{}&quot;</translation>
+      <translation>无法保存範本 &quot;{}&quot;</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="90"/>
       <source>Cannot rename preset &quot;{}&quot;</source>
-      <translation>无法重新命名预设 &quot;{}&quot;</translation>
+      <translation>无法重新命名範本 &quot;{}&quot;</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="101"/>
       <source>Select Preset</source>
-      <translation>选择预设</translation>
+      <translation>选择範本</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="422"/>
