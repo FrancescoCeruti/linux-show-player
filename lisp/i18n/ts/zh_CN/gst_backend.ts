@@ -54,7 +54,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_dynamic.py" line="108"/>
       <source>Threshold (dB)</source>
-      <translation>阈值 (分貝)</translation>
+      <translation>阀值 (分貝)</translation>
     </message>
   </context>
   <context>
@@ -166,7 +166,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_settings.py" line="55"/>
       <source>Applied only to new cues.</source>
-      <translation>只仅应用于新cue</translation>
+      <translation>只套用于新cue</translation>
     </message>
   </context>
   <context>
