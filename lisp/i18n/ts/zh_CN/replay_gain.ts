@@ -6,22 +6,22 @@
     <message>
       <location filename="../../../plugins/replay_gain/gain_ui.py" line="110"/>
       <source>ReplayGain / Normalization</source>
-      <translation type="unfinished">ReplayGain / Normalization</translation>
+      <translation>回放增益/标准化</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="55"/>
       <source>Calculate</source>
-      <translation type="unfinished">Calculate</translation>
+      <translation>计算</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="60"/>
       <source>Reset all</source>
-      <translation type="unfinished">Reset all</translation>
+      <translation>全部重设</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="65"/>
       <source>Reset selected</source>
-      <translation type="unfinished">Reset selected</translation>
+      <translation>重设所选</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/gain_ui.py" line="113"/>
@@ -41,7 +41,7 @@
     <message>
       <location filename="../../../plugins/replay_gain/gain_ui.py" line="120"/>
       <source>Normalize to (dB)</source>
-      <translation type="unfinished">Normalize to (dB)</translation>
+      <translation>标准化至 (分贝)</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/gain_ui.py" line="145"/>
