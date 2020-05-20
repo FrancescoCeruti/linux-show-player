@@ -502,7 +502,7 @@
     <message>
       <location filename="../../../ui/logging/common.py" line="22"/>
       <source>Info</source>
-      <translation>关于</translation>
+      <translation>资讯</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="25"/>
@@ -733,7 +733,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="260"/>
       <source>Registered cue menu: &quot;{}&quot;</source>
-      <translation>Registered cue menu: &quot;{}&quot;</translation>
+      <translation>已记录 Cue 选单： &quot;{}&quot;</translation>
     </message>
   </context>
   <context>
