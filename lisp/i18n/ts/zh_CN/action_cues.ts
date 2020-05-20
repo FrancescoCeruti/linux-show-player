@@ -57,7 +57,7 @@
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="40"/>
       <source>Action cues</source>
-      <translation>动作cues</translation>
+      <translation>动作 Cue</translation>
     </message>
   </context>
   <context>
@@ -65,7 +65,7 @@
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="40"/>
       <source>Command Cue</source>
-      <translation>指令cue</translation>
+      <translation>指令 Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="54"/>
@@ -75,12 +75,12 @@
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="40"/>
       <source>Seek Cue</source>
-      <translation>跳转cue</translation>
+      <translation>跳转 Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="41"/>
       <source>Collection Cue</source>
-      <translation>多动作cue</translation>
+      <translation>多动作 Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/stop_all.py" line="30"/>
@@ -123,7 +123,7 @@
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="130"/>
       <source>Suggested cue name</source>
-      <translation>建议的cue名称</translation>
+      <translation>建议的 Cue 名称</translation>
     </message>
   </context>
   <context>
@@ -228,7 +228,7 @@
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="129"/>
       <source>Error during cue execution.</source>
-      <translation>执行cue期间发生错误</translation>
+      <translation>执行 Cue 期间发生错误</translation>
     </message>
   </context>
 </TS>
