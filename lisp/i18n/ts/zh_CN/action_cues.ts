@@ -80,7 +80,7 @@
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="41"/>
       <source>Collection Cue</source>
-      <translation>多动作 Cue</translation>
+      <translation>动作集合 Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/stop_all.py" line="30"/>
