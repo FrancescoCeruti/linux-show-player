@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="181"/>
       <source>OSC Settings</source>
-      <translation>OSC设定</translation>
+      <translation>OSC 设定</translation>
     </message>
   </context>
   <context>
@@ -14,7 +14,7 @@
     <message>
       <location filename="../../../plugins/osc/osc.py" line="45"/>
       <source>Integration cues</source>
-      <translation>互联cues</translation>
+      <translation>互联 Cue</translation>
     </message>
   </context>
   <context>
@@ -96,7 +96,7 @@
     <message>
       <location filename="../../../plugins/osc/osc_server.py" line="99"/>
       <source>Cannot start OSC sever</source>
-      <translation>无法启动OSC伺服器</translation>
+      <translation>无法启动 OSC 伺服器</translation>
     </message>
   </context>
   <context>
@@ -104,12 +104,12 @@
     <message>
       <location filename="../../../plugins/osc/osc_server.py" line="93"/>
       <source>OSC server started at {}</source>
-      <translation>OSC伺服器已于 {} 启动</translation>
+      <translation>OSC 伺服器已于 {} 启动</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_server.py" line="111"/>
       <source>OSC server stopped</source>
-      <translation>OSC伺服器已停止</translation>
+      <translation>OSC 伺服器已停止</translation>
     </message>
   </context>
   <context>
@@ -117,7 +117,7 @@
     <message>
       <location filename="../../../plugins/osc/osc_settings.py" line="43"/>
       <source>OSC Settings</source>
-      <translation>OSC设定</translation>
+      <translation>OSC 设定</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_settings.py" line="50"/>
@@ -140,7 +140,7 @@
     <message>
       <location filename="../../../plugins/osc/osc_settings.py" line="34"/>
       <source>OSC settings</source>
-      <translation>OSC设定</translation>
+      <translation>OSC 设定</translation>
     </message>
   </context>
 </TS>
