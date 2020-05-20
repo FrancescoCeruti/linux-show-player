@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/network/server.py" line="48"/>
       <source>Stop serving network API</source>
-      <translation>停止服务网络API</translation>
+      <translation>停止服务网络 API</translation>
     </message>
   </context>
   <context>
@@ -14,7 +14,7 @@
     <message>
       <location filename="../../../plugins/network/server.py" line="50"/>
       <source>Network API server stopped working.</source>
-      <translation>网络API伺服器停止运作</translation>
+      <translation>网络 API 伺服器停止运作</translation>
     </message>
   </context>
   <context>
@@ -65,7 +65,7 @@
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="179"/>
       <source>Host IP</source>
-      <translation>主机IP</translation>
+      <translation>主机 IP</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="76"/>
