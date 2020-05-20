@@ -55,52 +55,52 @@
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="126"/>
       <source>Auto-select next cue</source>
-      <translation>自動選擇下一個cue</translation>
+      <translation>自動選擇下一個 Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="127"/>
       <source>Enable selection mode</source>
-      <translation>启用选取cue模式</translation>
+      <translation>启用选取 Cue 模式</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="144"/>
       <source>Use fade (buttons)</source>
-      <translation>使用淡入淡出(按钮)</translation>
+      <translation>使用淡入淡出 (按钮)</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="147"/>
       <source>Stop Cue</source>
-      <translation>停止cue</translation>
+      <translation>停止 Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="148"/>
       <source>Pause Cue</source>
-      <translation>暂停cue</translation>
+      <translation>暂停 Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="149"/>
       <source>Resume Cue</source>
-      <translation>继续cue</translation>
+      <translation>继续 Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="150"/>
       <source>Interrupt Cue</source>
-      <translation>中断cue</translation>
+      <translation>中断 Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="163"/>
       <source>Edit cue</source>
-      <translation>编辑cue</translation>
+      <translation>编辑 Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="163"/>
       <source>Remove cue</source>
-      <translation>移除cue</translation>
+      <translation>移除 Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="202"/>
       <source>Selection mode</source>
-      <translation>选取cue模式</translation>
+      <translation>选取 Cue 模式</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/control_buttons.py" line="57"/>
@@ -140,7 +140,7 @@
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="163"/>
       <source>Clone cue</source>
-      <translation>复制cue</translation>
+      <translation>复制 Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="163"/>
@@ -155,17 +155,17 @@
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="138"/>
       <source>GO Key:</source>
-      <translation>GO键：</translation>
+      <translation>GO 键：</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="139"/>
       <source>GO Action:</source>
-      <translation>GO动作：</translation>
+      <translation>GO 动作：</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="140"/>
       <source>GO minimum interval (ms):</source>
-      <translation>GO最小间隔(ms)：</translation>
+      <translation>GO最小间隔 (毫秒)：</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="411"/>
@@ -190,7 +190,7 @@
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="118"/>
       <source>Default behaviors (applied to new sessions)</source>
-      <translation>默认行为(套用于新工作阶段)</translation>
+      <translation>默认行为 (套用于新工作阶段)</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="131"/>
@@ -200,7 +200,7 @@
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="211"/>
       <source>Disable GO Key While Playing</source>
-      <translation>在播放时禁用GO键</translation>
+      <translation>在播放时禁用 GO 键</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="132"/>
@@ -241,12 +241,12 @@
     <message>
       <location filename="../../../plugins/list_layout/info_panel.py" line="48"/>
       <source>Cue name</source>
-      <translation>Cue名称</translation>
+      <translation>Cue 名称</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/info_panel.py" line="51"/>
       <source>Cue description</source>
-      <translation>Cue描述</translation>
+      <translation>Cue 描述</translation>
     </message>
   </context>
   <context>
