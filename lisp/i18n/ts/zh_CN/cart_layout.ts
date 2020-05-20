@@ -106,7 +106,7 @@
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="81"/>
       <source>Default behaviors (applied to new sessions)</source>
-      <translation>默认行为(套用于新工作阶段)</translation>
+      <translation>默认行为 (套用于新工作阶段)</translation>
     </message>
   </context>
   <context>
@@ -137,12 +137,12 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="52"/>
       <source>To copy cues drag them while pressing CTRL</source>
-      <translation>按着CTRL然后拖拉cue以复制cue</translation>
+      <translation>按着 CTRL 然后拖拉cue以复制 Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="55"/>
       <source>To move cues drag them while pressing SHIFT</source>
-      <translation>按着SHIFT然后拖拉cue以移动cue</translation>
+      <translation>按着 SHIFT 然后拖拉cue以移动 Cue</translation>
     </message>
   </context>
   <context>
@@ -158,22 +158,22 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="142"/>
       <source>Edit cue</source>
-      <translation>编辑cue</translation>
+      <translation>编辑 Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="142"/>
       <source>Edit selected cues</source>
-      <translation>编辑所选的cue</translation>
+      <translation>编辑所选的 Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="142"/>
       <source>Remove cue</source>
-      <translation>移除cue</translation>
+      <translation>移除 Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="142"/>
       <source>Remove selected cues</source>
-      <translation>移除所选的cue</translation>
+      <translation>移除所选的 Cue</translation>
     </message>
   </context>
   <context>
