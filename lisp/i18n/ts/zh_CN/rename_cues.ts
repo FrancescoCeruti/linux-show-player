@@ -56,12 +56,12 @@
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="120"/>
       <source>Type your regex here: </source>
-      <translation>在此输入regex: </translation>
+      <translation>在此输入正规表达式: </translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="232"/>
       <source>Regex help</source>
-      <translation>Regex帮助</translation>
+      <translation>正规表达式帮助</translation>
     </message>
   </context>
   <context>
@@ -77,7 +77,7 @@
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="258"/>
       <source>Regex error: Invalid pattern</source>
-      <translation>Regex错误：Invalid pattern</translation>
+      <translation>正规表达式错误：无效表达式</translation>
     </message>
   </context>
 </TS>
