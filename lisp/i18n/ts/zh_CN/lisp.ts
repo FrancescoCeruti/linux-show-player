@@ -595,7 +595,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="191"/>
       <source>&amp;File</source>
-      <translation>&amp;档案</translation>
+      <translation>档案 (&amp;F)</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="192"/>
@@ -635,7 +635,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="207"/>
       <source>&amp;Edit</source>
-      <translation>&amp;编辑</translation>
+      <translation>编辑 (&amp;E)</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="208"/>
@@ -690,12 +690,12 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="226"/>
       <source>&amp;Layout</source>
-      <translation>&amp;布局</translation>
+      <translation>布局 (&amp;L)</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="228"/>
       <source>&amp;Tools</source>
-      <translation>&amp;工具</translation>
+      <translation>工具 (&amp;T)</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="229"/>
@@ -705,7 +705,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="231"/>
       <source>&amp;About</source>
-      <translation>&amp;关于</translation>
+      <translation>关于 (&amp;A)</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="232"/>
