@@ -11,7 +11,7 @@
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="223"/>
       <source>Load on selected Cues</source>
-      <translation>加载所选的 Cue</translation>
+      <translation>在所选的 Cue 上加载范本</translation>
     </message>
   </context>
   <context>
@@ -119,17 +119,17 @@
     <message>
       <location filename="../../../plugins/presets/presets.py" line="72"/>
       <source>Load on cue</source>
-      <translation>在 Cue 上加载</translation>
+      <translation>在 Cue 上加载范本</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets.py" line="72"/>
       <source>Load on selected cues</source>
-      <translation>在所选的 Cue 上加载</translation>
+      <translation>在所选的 Cue 上加载范本</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="308"/>
       <source>Cannot create a cue from this preset: {}</source>
-      <translation>无法从此预设创建 Cue：{}</translation>
+      <translation>无法从此范本创建 Cue：{}</translation>
     </message>
   </context>
 </TS>
