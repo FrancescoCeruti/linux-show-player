@@ -251,7 +251,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="267"/>
       <source>Misc cues</source>
-      <translation>杂项cue</translation>
+      <translation>杂项cues</translation>
     </message>
   </context>
   <context>
