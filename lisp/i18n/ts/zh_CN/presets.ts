@@ -59,7 +59,7 @@
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="422"/>
       <source>Preset name</source>
-      <translation>预设名称</translation>
+      <translation>範本名称</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="218"/>
@@ -89,7 +89,7 @@
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="229"/>
       <source>Import</source>
-      <translation>匯入</translation>
+      <translation>汇入</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="308"/>
@@ -104,12 +104,12 @@
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="343"/>
       <source>Cannot export correctly.</source>
-      <translation>无法正确汇出</translation>
+      <translation>无法汇出</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="368"/>
       <source>Cannot import correctly.</source>
-      <translation>无法正确汇入</translation>
+      <translation>无法汇入</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="423"/>
