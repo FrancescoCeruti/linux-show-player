@@ -251,7 +251,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="267"/>
       <source>Misc cues</source>
-      <translation>杂项 Cue</translation>
+      <translation>杂项 Cues</translation>
     </message>
   </context>
   <context>
@@ -376,7 +376,7 @@
     <message>
       <location filename="../../../ui/widgets/fades.py" line="35"/>
       <source>Quadratic2</source>
-      <translation>S形曲線</translation>
+      <translation>S形曲线</translation>
     </message>
   </context>
   <context>
@@ -715,7 +715,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="233"/>
       <source>About Qt</source>
-      <translation>关于Qt</translation>
+      <translation>关于 Qt</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="399"/>
