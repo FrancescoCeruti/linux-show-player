@@ -21,7 +21,7 @@
     <message>
       <location filename="../../../ui/about.py" line="88"/>
       <source>About Linux Show Player</source>
-      <translation>关于Linux Show Player</translation>
+      <translation>关于 Linux Show Player</translation>
     </message>
   </context>
   <context>
