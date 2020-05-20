@@ -298,7 +298,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/preset_src.py" line="36"/>
       <source>Presets</source>
-      <translation>预设</translation>
+      <translation>範本</translation>
     </message>
   </context>
   <context>
