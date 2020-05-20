@@ -6,12 +6,12 @@
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="222"/>
       <source>Create Cue</source>
-      <translation>创建cue</translation>
+      <translation>创建 Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="223"/>
       <source>Load on selected Cues</source>
-      <translation>加载所选的cue</translation>
+      <translation>加载所选的 Cue</translation>
     </message>
   </context>
   <context>
@@ -114,22 +114,22 @@
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="423"/>
       <source>Cue type</source>
-      <translation>Cue类型</translation>
+      <translation>Cue 类型</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets.py" line="72"/>
       <source>Load on cue</source>
-      <translation>在cue上加载</translation>
+      <translation>在 Cue 上加载</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets.py" line="72"/>
       <source>Load on selected cues</source>
-      <translation>在所选的cue上加载</translation>
+      <translation>在所选的 Cue 上加载</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="308"/>
       <source>Cannot create a cue from this preset: {}</source>
-      <translation>无法从此预设创建cue：{}</translation>
+      <translation>无法从此预设创建 Cue：{}</translation>
     </message>
   </context>
 </TS>
