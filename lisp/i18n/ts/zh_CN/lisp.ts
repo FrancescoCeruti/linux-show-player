@@ -264,7 +264,7 @@
     <message>
       <location filename="../../../command/cue.py" line="75"/>
       <source>Cues settings changed.</source>
-      <translation>Cue 设置已更改</translation>
+      <translation>多个 Cue 设置已更改</translation>
     </message>
   </context>
   <context>
@@ -338,7 +338,7 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="113"/>
       <source>Default action to start the cue</source>
-      <translation>预设 Cue 开始方式</translation>
+      <translation>预设开始 Cue 的方式</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="118"/>
@@ -451,12 +451,12 @@
     <message>
       <location filename="../../../ui/settings/app_pages/layouts.py" line="59"/>
       <source>Fade out when pausing all cues</source>
-      <translation>以淡出方式暂停所有cue</translation>
+      <translation>以淡出方式暂停所有 Cue</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/layouts.py" line="62"/>
       <source>Fade in when resuming all cues</source>
-      <translation>以淡入方式繼續所有cue</translation>
+      <translation>以淡入方式繼續所有 Cue</translation>
     </message>
   </context>
   <context>
@@ -655,7 +655,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="213"/>
       <source>Select all media cues</source>
-      <translation>选择所有媒体cue</translation>
+      <translation>选择所有媒体 Cue</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="217"/>
@@ -733,7 +733,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="260"/>
       <source>Registered cue menu: &quot;{}&quot;</source>
-      <translation>已注册cue菜单： &quot;{}&quot;</translation>
+      <translation>已注册 Cue 菜单： &quot;{}&quot;</translation>
     </message>
   </context>
   <context>
@@ -741,7 +741,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="344"/>
       <source>Cannot create cue {}</source>
-      <translation>无法创建cue {}</translation>
+      <translation>无法创建 Cue {}</translation>
     </message>
   </context>
   <context>
@@ -800,7 +800,7 @@
     <message>
       <location filename="../../../ui/settings/app_pages/cue.py" line="27"/>
       <source>Cue Settings</source>
-      <translation>Cue设定</translation>
+      <translation>Cue 设定</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/plugins.py" line="33"/>
