@@ -86,7 +86,7 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="486"/>
       <source>Every cue in the page will be lost.</source>
-      <translation>分页中的所有 Cue 都会被删除。</translation>
+      <translation>分页中的所有 Cue 都会被删除</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="489"/>
