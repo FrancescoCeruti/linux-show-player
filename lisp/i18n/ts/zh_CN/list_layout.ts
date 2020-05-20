@@ -185,7 +185,7 @@
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="208"/>
       <source>Restore default size</source>
-      <translation>回复默认大小</translation>
+      <translation>重设至默认大小</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="118"/>
