@@ -11,7 +11,7 @@
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="46"/>
       <source>Rename cues</source>
-      <translation>重新命名cue</translation>
+      <translation>重新命名多个 Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="55"/>
@@ -69,7 +69,7 @@
     <message>
       <location filename="../../../plugins/rename_cues/command.py" line="44"/>
       <source>Renamed {number} cues</source>
-      <translation>已重新命名 {number} 個cue</translation>
+      <translation>已重新命名 {number} 個 Cue</translation>
     </message>
   </context>
   <context>
