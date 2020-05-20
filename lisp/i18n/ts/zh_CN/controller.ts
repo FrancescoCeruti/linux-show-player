@@ -52,7 +52,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="159"/>
       <source>Listening MIDI messages ...</source>
-      <translation>正在监听MIDI讯息...</translation>
+      <translation>正在监听 MIDI 讯息...</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="103"/>
@@ -253,7 +253,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="63"/>
       <source>MIDI Controls</source>
-      <translation>MIDI控制</translation>
+      <translation>MIDI 控制</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/keyboard.py" line="44"/>
@@ -263,7 +263,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="224"/>
       <source>OSC Controls</source>
-      <translation>OSC控制</translation>
+      <translation>OSC 控制</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/controller_settings.py" line="41"/>
