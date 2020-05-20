@@ -22,7 +22,7 @@
     <message>
       <location filename="../../../plugins/network/api/__init__.py" line="14"/>
       <source>New end-point: {}</source>
-      <translation>New end-point: {}</translation>
+      <translation>新终端：{}</translation>
     </message>
   </context>
   <context>
