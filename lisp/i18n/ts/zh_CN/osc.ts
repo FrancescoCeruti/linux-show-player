@@ -14,7 +14,7 @@
     <message>
       <location filename="../../../plugins/osc/osc.py" line="45"/>
       <source>Integration cues</source>
-      <translation>互联 Cue</translation>
+      <translation>互联 Cues</translation>
     </message>
   </context>
   <context>
