@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/network/server.py" line="48"/>
       <source>Stop serving network API</source>
-      <translation type="unfinished">Stop serving network API</translation>
+      <translation>停止服务网络API</translation>
     </message>
   </context>
   <context>
@@ -14,7 +14,7 @@
     <message>
       <location filename="../../../plugins/network/server.py" line="50"/>
       <source>Network API server stopped working.</source>
-      <translation type="unfinished">Network API server stopped working.</translation>
+      <translation>网络API伺服器停止运作</translation>
     </message>
   </context>
   <context>
@@ -22,7 +22,7 @@
     <message>
       <location filename="../../../plugins/network/api/__init__.py" line="14"/>
       <source>New end-point: {}</source>
-      <translation type="unfinished">New end-point: {}</translation>
+      <translation>新终端：{}</translation>
     </message>
   </context>
   <context>
@@ -30,47 +30,47 @@
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="79"/>
       <source>Host discovery</source>
-      <translation type="unfinished">Host discovery</translation>
+      <translation>搜索主机</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="164"/>
       <source>Manage hosts</source>
-      <translation type="unfinished">Manage hosts</translation>
+      <translation>管理主机</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="165"/>
       <source>Discover hosts</source>
-      <translation type="unfinished">Discover hosts</translation>
+      <translation>寻找主机</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="168"/>
       <source>Manually add a host</source>
-      <translation type="unfinished">Manually add a host</translation>
+      <translation>手动添加主机</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="171"/>
       <source>Remove selected host</source>
-      <translation type="unfinished">Remove selected host</translation>
+      <translation>移除所选主机</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="174"/>
       <source>Remove all host</source>
-      <translation type="unfinished">Remove all host</translation>
+      <translation>移除所有主机</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="179"/>
       <source>Address</source>
-      <translation type="unfinished">Address</translation>
+      <translation>地址</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="179"/>
       <source>Host IP</source>
-      <translation type="unfinished">Host IP</translation>
+      <translation>主机IP</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="76"/>
       <source>Select the hosts you want to add</source>
-      <translation type="unfinished">Select the hosts you want to add</translation>
+      <translation>选择你想增加的主机</translation>
     </message>
   </context>
 </TS>
