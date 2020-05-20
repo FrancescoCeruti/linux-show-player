@@ -179,32 +179,32 @@
     <message>
       <location filename="../../../plugins/controller/common.py" line="43"/>
       <source>Stop all cues</source>
-      <translation>停止所有cue</translation>
+      <translation>停止所有 Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="44"/>
       <source>Pause all cues</source>
-      <translation>暂停所有cue</translation>
+      <translation>暂停所有 Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="45"/>
       <source>Resume all cues</source>
-      <translation>恢复所有cue</translation>
+      <translation>恢复所有 Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="48"/>
       <source>Interrupt all cues</source>
-      <translation>中断所有cue</translation>
+      <translation>中断所有 Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="51"/>
       <source>Fade-out all cues</source>
-      <translation>淡出所有cue</translation>
+      <translation>淡出所有 Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="54"/>
       <source>Fade-in all cues</source>
-      <translation>淡入所有cue</translation>
+      <translation>淡入所有 Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="57"/>
@@ -248,7 +248,7 @@
     <message>
       <location filename="../../../plugins/controller/controller_settings.py" line="25"/>
       <source>Cue Control</source>
-      <translation>Cue控制</translation>
+      <translation>Cue 控制</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="63"/>
