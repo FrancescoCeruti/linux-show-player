@@ -19,7 +19,7 @@
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="50"/>
       <source>To copy cues drag them while pressing CTRL</source>
-      <translation>按着 CTRL 然后拖拉cue以复制 Cue</translation>
+      <translation>按着 CTRL 然后拖拉 Cue 以复制 Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="53"/>
