@@ -57,7 +57,7 @@
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="40"/>
       <source>Action cues</source>
-      <translation>动作 Cue</translation>
+      <translation>动作 Cues</translation>
     </message>
   </context>
   <context>
