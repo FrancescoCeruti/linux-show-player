@@ -348,7 +348,7 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="119"/>
       <source>Default action to stop the cue</source>
-      <translation>预设 Cue 停止方式</translation>
+      <translation>预设停止 Cue 的方式</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/cue.py" line="69"/>
@@ -733,7 +733,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="260"/>
       <source>Registered cue menu: &quot;{}&quot;</source>
-      <translation>已注册 Cue 菜单： &quot;{}&quot;</translation>
+      <translation>已注册 Cue 选单： &quot;{}&quot;</translation>
     </message>
   </context>
   <context>
