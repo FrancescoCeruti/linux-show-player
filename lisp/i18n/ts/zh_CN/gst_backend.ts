@@ -116,7 +116,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_backend.py" line="74"/>
       <source>Audio cue (from file)</source>
-      <translation>媒体cue (从档案汇入)</translation>
+      <translation>媒体 Cue (从档案汇入)</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/gst_backend.py" line="123"/>
@@ -166,7 +166,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_settings.py" line="55"/>
       <source>Applied only to new cues.</source>
-      <translation>只套用于新cue</translation>
+      <translation>只套用于新 Cue</translation>
     </message>
   </context>
   <context>
