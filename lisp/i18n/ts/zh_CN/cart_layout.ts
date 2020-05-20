@@ -56,17 +56,17 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="185"/>
       <source>Add page</source>
-      <translation>添加页面</translation>
+      <translation>添加分页</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="238"/>
       <source>Add pages</source>
-      <translation>添加多个页面</translation>
+      <translation>添加多个分页</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="187"/>
       <source>Remove current page</source>
-      <translation>移除当前页面</translation>
+      <translation>移除当前分页</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="238"/>
@@ -86,7 +86,7 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="486"/>
       <source>Every cue in the page will be lost.</source>
-      <translation>页面中的每个cue都会被删除。</translation>
+      <translation>分页中的所有 Cue 都会被删除。</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="489"/>
@@ -114,7 +114,7 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="45"/>
       <source>Organize cues in grid like pages</source>
-      <translation>把cue排列在网格页面</translation>
+      <translation>把 Cue 排列在网格分页</translation>
     </message>
   </context>
   <context>
@@ -122,17 +122,17 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="49"/>
       <source>Click a cue to run it</source>
-      <translation>滑鼠左按以执行cue</translation>
+      <translation>滑鼠左按以执行 Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="50"/>
       <source>SHIFT + Click to edit a cue</source>
-      <translation>SHIFT + 滑鼠左按以编辑cue</translation>
+      <translation>SHIFT + 滑鼠左按以编辑 Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="51"/>
       <source>CTRL + Click to select a cue</source>
-      <translation>CTRL + 滑鼠左按以选择cue</translation>
+      <translation>CTRL + 滑鼠左按以选择 Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="52"/>
