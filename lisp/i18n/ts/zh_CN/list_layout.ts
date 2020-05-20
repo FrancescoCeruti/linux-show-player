@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="43"/>
       <source>Organize the cues in a list</source>
-      <translation>把cue排列在列表</translation>
+      <translation>把 Cue 排列在列表</translation>
     </message>
   </context>
   <context>
@@ -14,17 +14,17 @@
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="47"/>
       <source>SHIFT + Space or Double-Click to edit a cue</source>
-      <translation>SHIFT + 空白键或按两下以编辑cue</translation>
+      <translation>SHIFT + 空白键或按两下以编辑 Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="50"/>
       <source>To copy cues drag them while pressing CTRL</source>
-      <translation>按着CTRL然后拖拉cue以复制cue</translation>
+      <translation>按着 CTRL 然后拖拉cue以复制 Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="53"/>
       <source>To move cues drag them</source>
-      <translation>拖拉cue以移动cue</translation>
+      <translation>拖拉 Cue 以移动 Cue</translation>
     </message>
   </context>
   <context>
