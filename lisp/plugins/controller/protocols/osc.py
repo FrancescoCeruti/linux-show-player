@@ -335,7 +335,7 @@ class OscSettings(SettingsPage):
             translate("ControllerOscSettings", "Waiting for messages:")
         )
 
-    def __show_message(self, path, args, types):
+    def __show_message(self, path, args, types, *_, **__):
         self.capturedMessage["path"] = path
         self.capturedMessage["types"] = types
         self.capturedMessage["args"] = args
