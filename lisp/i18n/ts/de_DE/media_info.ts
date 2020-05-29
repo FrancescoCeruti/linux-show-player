@@ -4,29 +4,29 @@
   <context>
     <name>MediaInfo</name>
     <message>
-      <location filename="../../../plugins/media_info/media_info.py" line="130"/>
+      <location filename="../../../plugins/media_info/media_info.py" line="125"/>
       <source>Media Info</source>
-      <translation>Medien Information</translation>
+      <translation>Medien-Information</translation>
     </message>
     <message>
-      <location filename="../../../plugins/media_info/media_info.py" line="70"/>
-      <source>No info to display</source>
-      <translation>Keine Informationen zum darstellen</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/media_info/media_info.py" line="140"/>
+      <location filename="../../../plugins/media_info/media_info.py" line="135"/>
       <source>Info</source>
       <translation>Informationen</translation>
     </message>
     <message>
-      <location filename="../../../plugins/media_info/media_info.py" line="140"/>
+      <location filename="../../../plugins/media_info/media_info.py" line="135"/>
       <source>Value</source>
       <translation>Wert</translation>
     </message>
     <message>
       <location filename="../../../plugins/media_info/media_info.py" line="70"/>
       <source>Warning</source>
-      <translation type="unfinished">Warning</translation>
+      <translation>Warnung</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/media_info/media_info.py" line="70"/>
+      <source>Cannot get any information.</source>
+      <translation>Kann keine Informationen erhalten.</translation>
     </message>
   </context>
 </TS>

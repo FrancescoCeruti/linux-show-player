@@ -19,7 +19,7 @@
     <message>
       <location filename="../../../plugins/timecode/timecode.py" line="97"/>
       <source>Cannot load timecode protocol: &quot;{}&quot;</source>
-      <translation type="unfinished">Cannot load timecode protocol: &quot;{}&quot;</translation>
+      <translation>Impossible de charger le protocole de code temporel : &quot;{}&quot;</translation>
     </message>
   </context>
   <context>
@@ -55,12 +55,12 @@
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="138"/>
       <source>Timecode Settings</source>
-      <translation type="unfinished">Timecode Settings</translation>
+      <translation>Paramètres de code temporel</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="144"/>
       <source>Timecode Protocol:</source>
-      <translation type="unfinished">Timecode Protocol:</translation>
+      <translation>Protocole de code temporel :</translation>
     </message>
   </context>
 </TS>

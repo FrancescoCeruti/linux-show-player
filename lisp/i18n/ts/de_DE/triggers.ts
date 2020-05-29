@@ -29,7 +29,7 @@
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="42"/>
       <source>Triggers</source>
-      <translation>Trigger</translation>
+      <translation>Auslöser</translation>
     </message>
   </context>
   <context>
@@ -47,12 +47,12 @@
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="150"/>
       <source>Trigger</source>
-      <translation type="unfinished">Trigger</translation>
+      <translation>Auslöser</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="150"/>
       <source>Cue</source>
-      <translation type="unfinished">Cue</translation>
+      <translation>Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="150"/>

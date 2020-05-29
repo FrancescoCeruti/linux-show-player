@@ -32,85 +32,75 @@
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="42"/>
       <source>List Layout</source>
-      <translation type="unfinished">List Layout</translation>
+      <translation>Disposition en liste</translation>
     </message>
   </context>
   <context>
     <name>ListLayout</name>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="107"/>
-      <source>Default behaviors</source>
-      <translation>Comportements par défaut</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="166"/>
-      <source>Show playing cues</source>
-      <translation>Afficher les cues en cours</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="169"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="123"/>
       <source>Show dB-meters</source>
-      <translation type="unfinished">Show dB-meters</translation>
+      <translation>Afficher le niveau de décibels</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="173"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="124"/>
       <source>Show accurate time</source>
       <translation>Afficher le temps exact</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="172"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="125"/>
       <source>Show seek-bars</source>
-      <translation type="unfinished">Show seek-bars</translation>
+      <translation>Montrer la barre de recherche</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="176"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="126"/>
       <source>Auto-select next cue</source>
       <translation>Auto-sélectionner la prochaine cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="115"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="127"/>
       <source>Enable selection mode</source>
-      <translation type="unfinished">Enable selection mode</translation>
+      <translation>Activer le mode de sélection</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="125"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="144"/>
       <source>Use fade (buttons)</source>
-      <translation type="unfinished">Use fade (buttons)</translation>
+      <translation>Utiliser le fondu (boutons)</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="128"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="147"/>
       <source>Stop Cue</source>
       <translation>Arrêter la cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="129"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="148"/>
       <source>Pause Cue</source>
       <translation>Mettre la cue en pause</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="130"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="149"/>
       <source>Resume Cue</source>
       <translation>Reprendre la cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="131"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="150"/>
       <source>Interrupt Cue</source>
       <translation>Interrompre la cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="140"/>
+      <location filename="../../../plugins/list_layout/layout.py" line="163"/>
       <source>Edit cue</source>
       <translation>Éditer la cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="140"/>
+      <location filename="../../../plugins/list_layout/layout.py" line="163"/>
       <source>Remove cue</source>
       <translation>Retirer la cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="179"/>
+      <location filename="../../../plugins/list_layout/layout.py" line="202"/>
       <source>Selection mode</source>
-      <translation type="unfinished">Selection mode</translation>
+      <translation>Mode de sélection</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/control_buttons.py" line="57"/>
@@ -135,75 +125,115 @@
     <message>
       <location filename="../../../plugins/list_layout/control_buttons.py" line="64"/>
       <source>Fade-Out all</source>
-      <translation type="unfinished">Fade-Out all</translation>
+      <translation>Tout arrêter en fondu</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/control_buttons.py" line="65"/>
       <source>Fade-In all</source>
-      <translation type="unfinished">Fade-In all</translation>
+      <translation>Tout démarrer en fondu</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="140"/>
+      <location filename="../../../plugins/list_layout/layout.py" line="163"/>
       <source>Edit selected</source>
       <translation>Éditer la sélection</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="140"/>
+      <location filename="../../../plugins/list_layout/layout.py" line="163"/>
       <source>Clone cue</source>
       <translation>Cloner la cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="140"/>
+      <location filename="../../../plugins/list_layout/layout.py" line="163"/>
       <source>Clone selected</source>
       <translation>Cloner la selection</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="140"/>
+      <location filename="../../../plugins/list_layout/layout.py" line="163"/>
       <source>Remove selected</source>
       <translation>Retirer la selection</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="119"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="138"/>
       <source>GO Key:</source>
-      <translation type="unfinished">GO Key:</translation>
+      <translation>Touche GO:</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="120"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="139"/>
       <source>GO Action:</source>
-      <translation type="unfinished">GO Action:</translation>
+      <translation>Action de GO:</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="121"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="140"/>
       <source>GO minimum interval (ms):</source>
-      <translation type="unfinished">GO minimum interval (ms):</translation>
+      <translation>Intervalle minimum de GO (ms):</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="352"/>
+      <location filename="../../../plugins/list_layout/layout.py" line="411"/>
       <source>Copy of {}</source>
-      <translation type="unfinished">Copy of {}</translation>
+      <translation>Copie de {}</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/layout.py" line="196"/>
+      <source>Show index column</source>
+      <translation type="unfinished">Show index column</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/layout.py" line="205"/>
+      <source>Show resize handles</source>
+      <translation type="unfinished">Show resize handles</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/layout.py" line="208"/>
+      <source>Restore default size</source>
+      <translation type="unfinished">Restore default size</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/settings.py" line="118"/>
+      <source>Default behaviors (applied to new sessions)</source>
+      <translation type="unfinished">Default behaviors (applied to new sessions)</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/settings.py" line="131"/>
+      <source>Behaviors</source>
+      <translation type="unfinished">Behaviors</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/layout.py" line="211"/>
+      <source>Disable GO Key While Playing</source>
+      <translation type="unfinished">Disable GO Key While Playing</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/settings.py" line="132"/>
+      <source>Use waveform seek-bars</source>
+      <translation type="unfinished">Use waveform seek-bars</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/settings.py" line="135"/>
+      <source>GO Key Disabled While Playing</source>
+      <translation type="unfinished">GO Key Disabled While Playing</translation>
     </message>
   </context>
   <context>
     <name>ListLayoutHeader</name>
     <message>
-      <location filename="../../../plugins/list_layout/list_view.py" line="75"/>
+      <location filename="../../../plugins/list_layout/list_view.py" line="77"/>
       <source>Cue</source>
       <translation>Cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/list_view.py" line="80"/>
+      <location filename="../../../plugins/list_layout/list_view.py" line="82"/>
       <source>Pre wait</source>
-      <translation type="unfinished">Pre wait</translation>
+      <translation>Attente avant</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/list_view.py" line="83"/>
+      <location filename="../../../plugins/list_layout/list_view.py" line="85"/>
       <source>Action</source>
       <translation>Action</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/list_view.py" line="86"/>
+      <location filename="../../../plugins/list_layout/list_view.py" line="88"/>
       <source>Post wait</source>
-      <translation type="unfinished">Post wait</translation>
+      <translation>Attente après</translation>
     </message>
   </context>
   <context>
@@ -222,9 +252,9 @@
   <context>
     <name>SettingsPageName</name>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="37"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="39"/>
       <source>List Layout</source>
-      <translation type="unfinished">List Layout</translation>
+      <translation>Disposition en liste</translation>
     </message>
   </context>
 </TS>

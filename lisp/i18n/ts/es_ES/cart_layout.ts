@@ -4,37 +4,32 @@
   <context>
     <name>CartLayout</name>
     <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="81"/>
-      <source>Default behaviors</source>
-      <translation>Comportamiento por defecto</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="190"/>
+      <location filename="../../../plugins/cart_layout/settings.py" line="86"/>
       <source>Countdown mode</source>
       <translation>Modo de cuenta regresiva</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="193"/>
+      <location filename="../../../plugins/cart_layout/settings.py" line="87"/>
       <source>Show seek-bars</source>
       <translation>Mostrar barra de búsqueda</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="194"/>
+      <location filename="../../../plugins/cart_layout/settings.py" line="88"/>
       <source>Show dB-meters</source>
       <translation>Mostrar medidores de dB</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="198"/>
+      <location filename="../../../plugins/cart_layout/settings.py" line="89"/>
       <source>Show accurate time</source>
       <translation>Mostrar tiempo preciso</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="197"/>
+      <location filename="../../../plugins/cart_layout/settings.py" line="90"/>
       <source>Show volume</source>
       <translation>Mostrar volumen</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="89"/>
+      <location filename="../../../plugins/cart_layout/settings.py" line="91"/>
       <source>Grid size</source>
       <translation>Tamaño de cuadrícula</translation>
     </message>
@@ -79,34 +74,39 @@
       <translation>Número de páginas:</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="280"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="283"/>
       <source>Page {number}</source>
       <translation>Página {number}</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="482"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="485"/>
       <source>Warning</source>
       <translation>Advertencia</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="483"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="486"/>
       <source>Every cue in the page will be lost.</source>
       <translation>Todos los cues en la página se perderán.</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="486"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="489"/>
       <source>Are you sure to continue?</source>
       <translation>¿Está seguro de continuar?</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="90"/>
+      <location filename="../../../plugins/cart_layout/settings.py" line="92"/>
       <source>Number of columns:</source>
       <translation type="unfinished">Number of columns:</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="91"/>
+      <location filename="../../../plugins/cart_layout/settings.py" line="93"/>
       <source>Number of rows:</source>
       <translation type="unfinished">Number of rows:</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/settings.py" line="81"/>
+      <source>Default behaviors (applied to new sessions)</source>
+      <translation type="unfinished">Default behaviors (applied to new sessions)</translation>
     </message>
   </context>
   <context>

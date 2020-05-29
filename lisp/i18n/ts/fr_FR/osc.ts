@@ -6,15 +6,15 @@
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="181"/>
       <source>OSC Settings</source>
-      <translation type="unfinished">OSC Settings</translation>
+      <translation>Paramètres OSC</translation>
     </message>
   </context>
   <context>
     <name>CueCategory</name>
     <message>
-      <location filename="../../../plugins/osc/osc.py" line="44"/>
+      <location filename="../../../plugins/osc/osc.py" line="45"/>
       <source>Integration cues</source>
-      <translation type="unfinished">Integration cues</translation>
+      <translation>Go d'intégration</translation>
     </message>
   </context>
   <context>
@@ -22,7 +22,7 @@
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="64"/>
       <source>OSC Cue</source>
-      <translation type="unfinished">OSC Cue</translation>
+      <translation>Go OSC</translation>
     </message>
   </context>
   <context>
@@ -30,57 +30,57 @@
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="198"/>
       <source>Type</source>
-      <translation type="unfinished">Type</translation>
+      <translation>Type</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="198"/>
       <source>Value</source>
-      <translation type="unfinished">Value</translation>
+      <translation>Valeur</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="198"/>
       <source>FadeTo</source>
-      <translation type="unfinished">FadeTo</translation>
+      <translation>Fondu vers</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="260"/>
       <source>Fade</source>
-      <translation type="unfinished">Fade</translation>
+      <translation>Fondu</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="253"/>
       <source>OSC Message</source>
-      <translation type="unfinished">OSC Message</translation>
+      <translation>Message OSC</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="254"/>
       <source>Add</source>
-      <translation type="unfinished">Add</translation>
+      <translation>Ajouter</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="255"/>
       <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
+      <translation>Supprimer</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="256"/>
       <source>OSC Path:</source>
-      <translation type="unfinished">OSC Path:</translation>
+      <translation>Chemin OSC :</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="257"/>
       <source>/path/to/something</source>
-      <translation type="unfinished">/path/to/something</translation>
+      <translation>/chemin/vers/quelque chose</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="261"/>
       <source>Time (sec)</source>
-      <translation type="unfinished">Time (sec)</translation>
+      <translation>Durée (en sec)</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="262"/>
       <source>Curve</source>
-      <translation type="unfinished">Curve</translation>
+      <translation>Courbe</translation>
     </message>
   </context>
   <context>

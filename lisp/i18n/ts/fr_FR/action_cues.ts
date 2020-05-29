@@ -16,7 +16,7 @@
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="155"/>
       <source>Cue</source>
-      <translation>Cue</translation>
+      <translation>Go</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="155"/>
@@ -55,9 +55,9 @@
   <context>
     <name>CueCategory</name>
     <message>
-      <location filename="../../../plugins/action_cues/stop_all.py" line="31"/>
+      <location filename="../../../plugins/action_cues/index_action_cue.py" line="40"/>
       <source>Action cues</source>
-      <translation type="unfinished">Action cues</translation>
+      <translation>Go d'action</translation>
     </message>
   </context>
   <context>

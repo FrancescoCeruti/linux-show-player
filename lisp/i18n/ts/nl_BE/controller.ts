@@ -30,113 +30,136 @@
   <context>
     <name>ControllerMidiSettings</name>
     <message>
-      <location filename="../../../plugins/controller/protocols/midi.py" line="54"/>
+      <location filename="../../../plugins/controller/protocols/midi.py" line="71"/>
       <source>MIDI</source>
       <translation type="unfinished">MIDI</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/midi.py" line="59"/>
+      <location filename="../../../plugins/controller/protocols/midi.py" line="244"/>
       <source>Type</source>
       <translation type="unfinished">Type</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/midi.py" line="59"/>
-      <source>Channel</source>
-      <translation>Kanaal</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/controller/protocols/midi.py" line="59"/>
-      <source>Note</source>
-      <translation>Notitie</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/controller/protocols/midi.py" line="59"/>
+      <location filename="../../../plugins/controller/protocols/midi.py" line="244"/>
       <source>Action</source>
       <translation>Actie</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/midi.py" line="85"/>
-      <source>Filter &quot;note on&quot;</source>
-      <translation type="unfinished">Filter &quot;note on&quot;</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/controller/protocols/midi.py" line="89"/>
-      <source>Filter &quot;note off&quot;</source>
-      <translation type="unfinished">Filter &quot;note off&quot;</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/controller/protocols/midi.py" line="106"/>
+      <location filename="../../../plugins/controller/protocols/midi.py" line="124"/>
       <source>Capture</source>
       <translation>Neem over</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/midi.py" line="131"/>
+      <location filename="../../../plugins/controller/protocols/midi.py" line="159"/>
       <source>Listening MIDI messages ...</source>
       <translation>Wacht op MIDI boodschap ...</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/controller/protocols/midi.py" line="103"/>
+      <source>-- All Messages --</source>
+      <translation type="unfinished">-- All Messages --</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/controller/protocols/midi.py" line="125"/>
+      <source>Capture filter</source>
+      <translation type="unfinished">Capture filter</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/controller/protocols/midi.py" line="244"/>
+      <source>Data 1</source>
+      <translation type="unfinished">Data 1</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/controller/protocols/midi.py" line="244"/>
+      <source>Data 2</source>
+      <translation type="unfinished">Data 2</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/controller/protocols/midi.py" line="244"/>
+      <source>Data 3</source>
+      <translation type="unfinished">Data 3</translation>
     </message>
   </context>
   <context>
     <name>ControllerOscSettings</name>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="138"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="101"/>
       <source>OSC Message</source>
       <translation type="unfinished">OSC Message</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="189"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="232"/>
       <source>OSC</source>
       <translation type="unfinished">OSC</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="193"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="436"/>
       <source>Path</source>
       <translation type="unfinished">Path</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="193"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="436"/>
       <source>Types</source>
       <translation type="unfinished">Types</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="193"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="436"/>
       <source>Arguments</source>
       <translation type="unfinished">Arguments</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="193"/>
-      <source>Actions</source>
-      <translation type="unfinished">Actions</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="222"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="258"/>
       <source>OSC Capture</source>
       <translation type="unfinished">OSC Capture</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="251"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="287"/>
       <source>Add</source>
       <translation type="unfinished">Add</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="252"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="288"/>
       <source>Remove</source>
       <translation type="unfinished">Remove</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="253"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="289"/>
       <source>Capture</source>
       <translation type="unfinished">Capture</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="334"/>
+      <source>Waiting for messages:</source>
+      <translation type="unfinished">Waiting for messages:</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="103"/>
+      <source>/path/to/method</source>
+      <translation type="unfinished">/path/to/method</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="436"/>
+      <source>Action</source>
+      <translation type="unfinished">Action</translation>
+    </message>
+  </context>
+  <context>
+    <name>ControllerOscSettingsWarning</name>
+    <message>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="350"/>
+      <source>Warning</source>
+      <translation type="unfinished">Warning</translation>
     </message>
   </context>
   <context>
     <name>ControllerSettings</name>
     <message>
-      <location filename="../../../plugins/controller/protocols/keyboard.py" line="79"/>
+      <location filename="../../../plugins/controller/protocols/midi.py" line="121"/>
       <source>Add</source>
       <translation>Toevoegen</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/keyboard.py" line="80"/>
+      <location filename="../../../plugins/controller/protocols/midi.py" line="122"/>
       <source>Remove</source>
       <translation>Verwijder</translation>
     </message>
@@ -197,12 +220,12 @@
   <context>
     <name>Osc Cue</name>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="74"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="71"/>
       <source>Type</source>
       <translation type="unfinished">Type</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="74"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="71"/>
       <source>Argument</source>
       <translation type="unfinished">Argument</translation>
     </message>
@@ -210,12 +233,12 @@
   <context>
     <name>OscCue</name>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="147"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="106"/>
       <source>Add</source>
       <translation type="unfinished">Add</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="148"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="107"/>
       <source>Remove</source>
       <translation type="unfinished">Remove</translation>
     </message>
@@ -228,7 +251,7 @@
       <translation>Cue bediening</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/midi.py" line="46"/>
+      <location filename="../../../plugins/controller/protocols/midi.py" line="63"/>
       <source>MIDI Controls</source>
       <translation>MIDI bediening</translation>
     </message>
@@ -238,7 +261,7 @@
       <translation>Toetsenbord snelkoppeling</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="181"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="224"/>
       <source>OSC Controls</source>
       <translation type="unfinished">OSC Controls</translation>
     </message>

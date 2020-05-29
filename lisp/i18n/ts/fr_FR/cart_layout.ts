@@ -4,37 +4,32 @@
   <context>
     <name>CartLayout</name>
     <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="81"/>
-      <source>Default behaviors</source>
-      <translation>Comportements par défaut</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="190"/>
+      <location filename="../../../plugins/cart_layout/settings.py" line="86"/>
       <source>Countdown mode</source>
       <translation>Compte à rebours</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="193"/>
+      <location filename="../../../plugins/cart_layout/settings.py" line="87"/>
       <source>Show seek-bars</source>
       <translation>Afficher barre de progression</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="194"/>
+      <location filename="../../../plugins/cart_layout/settings.py" line="88"/>
       <source>Show dB-meters</source>
       <translation>Afficher dB mètres</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="198"/>
+      <location filename="../../../plugins/cart_layout/settings.py" line="89"/>
       <source>Show accurate time</source>
       <translation>Afficher temps exact</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="197"/>
+      <location filename="../../../plugins/cart_layout/settings.py" line="90"/>
       <source>Show volume</source>
       <translation>Afficher volume</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="89"/>
+      <location filename="../../../plugins/cart_layout/settings.py" line="91"/>
       <source>Grid size</source>
       <translation>Taille de la grille</translation>
     </message>
@@ -79,34 +74,39 @@
       <translation>Nombre de pages:</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="280"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="283"/>
       <source>Page {number}</source>
       <translation>Page {number}</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="482"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="485"/>
       <source>Warning</source>
       <translation>Attention</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="483"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="486"/>
       <source>Every cue in the page will be lost.</source>
       <translation>Toutes les cues dans la page seront perdues.</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="486"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="489"/>
       <source>Are you sure to continue?</source>
       <translation>Êtes-vous sûr de vouloir continuer?</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="90"/>
+      <location filename="../../../plugins/cart_layout/settings.py" line="92"/>
       <source>Number of columns:</source>
       <translation>Nombre de colonnes:</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="91"/>
+      <location filename="../../../plugins/cart_layout/settings.py" line="93"/>
       <source>Number of rows:</source>
       <translation>Nombre de lignes:</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/settings.py" line="81"/>
+      <source>Default behaviors (applied to new sessions)</source>
+      <translation type="unfinished">Default behaviors (applied to new sessions)</translation>
     </message>
   </context>
   <context>
@@ -150,7 +150,7 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="44"/>
       <source>Cart Layout</source>
-      <translation type="unfinished">Cart Layout</translation>
+      <translation>Disposition en carte</translation>
     </message>
   </context>
   <context>
@@ -181,7 +181,7 @@
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="33"/>
       <source>Cart Layout</source>
-      <translation type="unfinished">Cart Layout</translation>
+      <translation>Disposition en carte</translation>
     </message>
   </context>
 </TS>

@@ -55,7 +55,7 @@
   <context>
     <name>CueCategory</name>
     <message>
-      <location filename="../../../plugins/action_cues/stop_all.py" line="31"/>
+      <location filename="../../../plugins/action_cues/index_action_cue.py" line="40"/>
       <source>Action cues</source>
       <translation type="unfinished">Action cues</translation>
     </message>

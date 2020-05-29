@@ -55,7 +55,7 @@
   <context>
     <name>CueCategory</name>
     <message>
-      <location filename="../../../plugins/action_cues/stop_all.py" line="31"/>
+      <location filename="../../../plugins/action_cues/index_action_cue.py" line="40"/>
       <source>Action cues</source>
       <translation type="unfinished">Action cues</translation>
     </message>
@@ -98,7 +98,7 @@
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="121"/>
       <source>Index</source>
-      <translation type="unfinished">Index</translation>
+      <translation>Index</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="122"/>
@@ -228,7 +228,7 @@
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="129"/>
       <source>Error during cue execution.</source>
-      <translation type="unfinished">Error during cue execution.</translation>
+      <translation>Chyba! Při spuštění narážky došlo k chybě.</translation>
     </message>
   </context>
 </TS>

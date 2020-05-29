@@ -4,22 +4,22 @@
   <context>
     <name>ReplayGain</name>
     <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="51"/>
+      <location filename="../../../plugins/replay_gain/gain_ui.py" line="110"/>
       <source>ReplayGain / Normalization</source>
       <translation>ReplayGain / Normalisierung</translation>
     </message>
     <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="56"/>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="55"/>
       <source>Calculate</source>
       <translation>Berechnen</translation>
     </message>
     <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="61"/>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="60"/>
       <source>Reset all</source>
       <translation>Alle zurücksetzen</translation>
     </message>
     <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="66"/>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="65"/>
       <source>Reset selected</source>
       <translation>Ausgewählte zurücksetzen</translation>
     </message>
@@ -52,32 +52,32 @@
   <context>
     <name>ReplayGainDebug</name>
     <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="243"/>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="236"/>
       <source>Applied gain for: {}</source>
-      <translation type="unfinished">Applied gain for: {}</translation>
+      <translation>Angewendetes Gain für: {}</translation>
     </message>
     <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="249"/>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="242"/>
       <source>Discarded gain for: {}</source>
-      <translation type="unfinished">Discarded gain for: {}</translation>
+      <translation>Verworfenes Gain für: {}</translation>
     </message>
   </context>
   <context>
     <name>ReplayGainInfo</name>
     <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="223"/>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="216"/>
       <source>Gain processing stopped by user.</source>
-      <translation type="unfinished">Gain processing stopped by user.</translation>
+      <translation>Gain-Bearbeitung durch Benutzer gestoppt.</translation>
     </message>
     <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="288"/>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="281"/>
       <source>Started gain calculation for: {}</source>
-      <translation type="unfinished">Started gain calculation for: {}</translation>
+      <translation>Gain-Berechnung gestartet für: {}</translation>
     </message>
     <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="323"/>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="316"/>
       <source>Gain calculated for: {}</source>
-      <translation type="unfinished">Gain calculated for: {}</translation>
+      <translation>Gain berechnet für: {}</translation>
     </message>
   </context>
 </TS>

@@ -11,7 +11,7 @@
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="38"/>
       <source>Timecode</source>
-      <translation type="unfinished">Timecode</translation>
+      <translation>Timecode</translation>
     </message>
   </context>
   <context>
@@ -19,7 +19,7 @@
     <message>
       <location filename="../../../plugins/timecode/timecode.py" line="97"/>
       <source>Cannot load timecode protocol: &quot;{}&quot;</source>
-      <translation type="unfinished">Cannot load timecode protocol: &quot;{}&quot;</translation>
+      <translation>Timecode Protokoll kann nicht geladen werden: &quot;{}&quot;</translation>
     </message>
   </context>
   <context>
@@ -27,7 +27,7 @@
     <message>
       <location filename="../../../plugins/timecode/protocols/artnet.py" line="72"/>
       <source>Cannot send timecode.</source>
-      <translation type="unfinished">Cannot send timecode.</translation>
+      <translation>Zeitcode kann nicht gesendet werden.</translation>
     </message>
   </context>
   <context>
@@ -35,7 +35,7 @@
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="141"/>
       <source>Timecode Format:</source>
-      <translation type="unfinished">Timecode Format:</translation>
+      <translation>Timecode-Format:</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="80"/>
@@ -45,22 +45,22 @@
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="88"/>
       <source>Track number</source>
-      <translation>Track Nummer</translation>
+      <translation>Spurnummer</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="85"/>
       <source>Enable Timecode</source>
-      <translation type="unfinished">Enable Timecode</translation>
+      <translation>Timecode aktivieren</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="138"/>
       <source>Timecode Settings</source>
-      <translation type="unfinished">Timecode Settings</translation>
+      <translation>Timecode-Einstellungen</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="144"/>
       <source>Timecode Protocol:</source>
-      <translation type="unfinished">Timecode Protocol:</translation>
+      <translation>Timecode Protokoll:</translation>
     </message>
   </context>
 </TS>

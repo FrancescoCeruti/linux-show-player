@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/network/server.py" line="48"/>
       <source>Stop serving network API</source>
-      <translation type="unfinished">Stop serving network API</translation>
+      <translation>Netzwerk-API nicht mehr bereitstellen</translation>
     </message>
   </context>
   <context>
@@ -14,7 +14,7 @@
     <message>
       <location filename="../../../plugins/network/server.py" line="50"/>
       <source>Network API server stopped working.</source>
-      <translation type="unfinished">Network API server stopped working.</translation>
+      <translation>Netzwerk-API-Server funktionierte nicht.</translation>
     </message>
   </context>
   <context>
@@ -22,50 +22,55 @@
     <message>
       <location filename="../../../plugins/network/api/__init__.py" line="14"/>
       <source>New end-point: {}</source>
-      <translation type="unfinished">New end-point: {}</translation>
+      <translation>Neuer Endpunkt: {}</translation>
     </message>
   </context>
   <context>
     <name>NetworkDiscovery</name>
     <message>
-      <location filename="../../../plugins/network/discovery_dialogs.py" line="72"/>
+      <location filename="../../../plugins/network/discovery_dialogs.py" line="79"/>
       <source>Host discovery</source>
-      <translation type="unfinished">Host discovery</translation>
+      <translation>Host-Entdeckung</translation>
     </message>
     <message>
-      <location filename="../../../plugins/network/discovery_dialogs.py" line="149"/>
+      <location filename="../../../plugins/network/discovery_dialogs.py" line="164"/>
       <source>Manage hosts</source>
-      <translation type="unfinished">Manage hosts</translation>
+      <translation>Hosts verwalten</translation>
     </message>
     <message>
-      <location filename="../../../plugins/network/discovery_dialogs.py" line="150"/>
+      <location filename="../../../plugins/network/discovery_dialogs.py" line="165"/>
       <source>Discover hosts</source>
-      <translation type="unfinished">Discover hosts</translation>
+      <translation>Hosts entdecken</translation>
     </message>
     <message>
-      <location filename="../../../plugins/network/discovery_dialogs.py" line="153"/>
+      <location filename="../../../plugins/network/discovery_dialogs.py" line="168"/>
       <source>Manually add a host</source>
-      <translation type="unfinished">Manually add a host</translation>
+      <translation>Einen Host manuell hinzufügen</translation>
     </message>
     <message>
-      <location filename="../../../plugins/network/discovery_dialogs.py" line="156"/>
+      <location filename="../../../plugins/network/discovery_dialogs.py" line="171"/>
       <source>Remove selected host</source>
-      <translation type="unfinished">Remove selected host</translation>
+      <translation>Ausgewählten Host entfernen</translation>
     </message>
     <message>
-      <location filename="../../../plugins/network/discovery_dialogs.py" line="159"/>
+      <location filename="../../../plugins/network/discovery_dialogs.py" line="174"/>
       <source>Remove all host</source>
-      <translation type="unfinished">Remove all host</translation>
+      <translation>Alle Hosts entfernen</translation>
     </message>
     <message>
-      <location filename="../../../plugins/network/discovery_dialogs.py" line="164"/>
+      <location filename="../../../plugins/network/discovery_dialogs.py" line="179"/>
       <source>Address</source>
-      <translation type="unfinished">Address</translation>
+      <translation>Adresse</translation>
     </message>
     <message>
-      <location filename="../../../plugins/network/discovery_dialogs.py" line="164"/>
+      <location filename="../../../plugins/network/discovery_dialogs.py" line="179"/>
       <source>Host IP</source>
-      <translation type="unfinished">Host IP</translation>
+      <translation>Host-IP</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/network/discovery_dialogs.py" line="76"/>
+      <source>Select the hosts you want to add</source>
+      <translation>Wählen Sie die Hosts aus, die Sie hinzufügen möchten</translation>
     </message>
   </context>
 </TS>
