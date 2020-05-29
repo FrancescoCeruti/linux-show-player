@@ -2,14 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="it" sourcelanguage="en">
   <context>
-    <name>APIServerInfo</name>
-    <message>
-      <location filename="../../../plugins/network/server.py" line="48"/>
-      <source>Stop serving network API</source>
-      <translation type="unfinished">Stop serving network API</translation>
-    </message>
-  </context>
-  <context>
     <name>About</name>
     <message>
       <location filename="../../../ui/about.py" line="60"/>
@@ -154,154 +146,6 @@
     </message>
   </context>
   <context>
-    <name>Controller</name>
-    <message>
-      <location filename="../../../plugins/controller/controller.py" line="165"/>
-      <source>Cannot load controller protocol: &quot;{}&quot;</source>
-      <translation type="unfinished">Cannot load controller protocol: &quot;{}&quot;</translation>
-    </message>
-  </context>
-  <context>
-    <name>ControllerKeySettings</name>
-    <message>
-      <location filename="../../../plugins/controller/protocols/keyboard.py" line="55"/>
-      <source>Action</source>
-      <translation type="unfinished">Action</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/controller/protocols/keyboard.py" line="78"/>
-      <source>Shortcuts</source>
-      <translation type="unfinished">Shortcuts</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/controller/protocols/keyboard.py" line="55"/>
-      <source>Shortcut</source>
-      <translation type="unfinished">Shortcut</translation>
-    </message>
-  </context>
-  <context>
-    <name>ControllerMidiSettings</name>
-    <message>
-      <location filename="../../../plugins/controller/protocols/midi.py" line="54"/>
-      <source>MIDI</source>
-      <translation type="unfinished">MIDI</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/controller/protocols/midi.py" line="59"/>
-      <source>Type</source>
-      <translation type="unfinished">Type</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/controller/protocols/midi.py" line="59"/>
-      <source>Channel</source>
-      <translation type="unfinished">Channel</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/controller/protocols/midi.py" line="59"/>
-      <source>Note</source>
-      <translation type="unfinished">Note</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/controller/protocols/midi.py" line="59"/>
-      <source>Action</source>
-      <translation type="unfinished">Action</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/controller/protocols/midi.py" line="85"/>
-      <source>Filter &quot;note on&quot;</source>
-      <translation type="unfinished">Filter &quot;note on&quot;</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/controller/protocols/midi.py" line="89"/>
-      <source>Filter &quot;note off&quot;</source>
-      <translation type="unfinished">Filter &quot;note off&quot;</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/controller/protocols/midi.py" line="106"/>
-      <source>Capture</source>
-      <translation type="unfinished">Capture</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/controller/protocols/midi.py" line="131"/>
-      <source>Listening MIDI messages ...</source>
-      <translation type="unfinished">Listening MIDI messages ...</translation>
-    </message>
-  </context>
-  <context>
-    <name>ControllerOscSettings</name>
-    <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="138"/>
-      <source>OSC Message</source>
-      <translation type="unfinished">OSC Message</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="189"/>
-      <source>OSC</source>
-      <translation type="unfinished">OSC</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="193"/>
-      <source>Path</source>
-      <translation type="unfinished">Path</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="193"/>
-      <source>Types</source>
-      <translation type="unfinished">Types</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="193"/>
-      <source>Arguments</source>
-      <translation type="unfinished">Arguments</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="193"/>
-      <source>Actions</source>
-      <translation type="unfinished">Actions</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="222"/>
-      <source>OSC Capture</source>
-      <translation type="unfinished">OSC Capture</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="251"/>
-      <source>Add</source>
-      <translation type="unfinished">Add</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="252"/>
-      <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="253"/>
-      <source>Capture</source>
-      <translation type="unfinished">Capture</translation>
-    </message>
-  </context>
-  <context>
-    <name>ControllerSettings</name>
-    <message>
-      <location filename="../../../plugins/controller/protocols/keyboard.py" line="79"/>
-      <source>Add</source>
-      <translation type="unfinished">Add</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/controller/protocols/keyboard.py" line="80"/>
-      <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
-    </message>
-  </context>
-  <context>
-    <name>Cue Name</name>
-    <message>
-      <location filename="../../../plugins/osc/osc_cue.py" line="181"/>
-      <source>OSC Settings</source>
-      <translation type="unfinished">OSC Settings</translation>
-    </message>
-  </context>
-  <context>
     <name>CueAction</name>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="25"/>
@@ -430,46 +274,6 @@
       <source>Media Cue</source>
       <translation>Cue Multimediale</translation>
     </message>
-    <message>
-      <location filename="../../../plugins/action_cues/index_action_cue.py" line="39"/>
-      <source>Index Action</source>
-      <translation type="unfinished">Index Action</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/action_cues/seek_cue.py" line="40"/>
-      <source>Seek Cue</source>
-      <translation type="unfinished">Seek Cue</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/action_cues/volume_control.py" line="54"/>
-      <source>Volume Control</source>
-      <translation type="unfinished">Volume Control</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="40"/>
-      <source>Command Cue</source>
-      <translation type="unfinished">Command Cue</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="41"/>
-      <source>Collection Cue</source>
-      <translation type="unfinished">Collection Cue</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/action_cues/stop_all.py" line="30"/>
-      <source>Stop-All</source>
-      <translation type="unfinished">Stop-All</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/midi/midi_cue.py" line="36"/>
-      <source>MIDI Cue</source>
-      <translation type="unfinished">MIDI Cue</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/osc/osc_cue.py" line="64"/>
-      <source>OSC Cue</source>
-      <translation type="unfinished">OSC Cue</translation>
-    </message>
   </context>
   <context>
     <name>CueNextAction</name>
@@ -555,60 +359,6 @@
       <location filename="../../../ui/settings/app_pages/cue.py" line="75"/>
       <source>Fade actions default value</source>
       <translation type="unfinished">Fade actions default value</translation>
-    </message>
-  </context>
-  <context>
-    <name>CueTriggers</name>
-    <message>
-      <location filename="../../../plugins/triggers/triggers_handler.py" line="27"/>
-      <source>Started</source>
-      <translation type="unfinished">Started</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/triggers/triggers_handler.py" line="28"/>
-      <source>Paused</source>
-      <translation type="unfinished">Paused</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/triggers/triggers_handler.py" line="29"/>
-      <source>Stopped</source>
-      <translation type="unfinished">Stopped</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/triggers/triggers_handler.py" line="30"/>
-      <source>Ended</source>
-      <translation type="unfinished">Ended</translation>
-    </message>
-  </context>
-  <context>
-    <name>DbMeterSettings</name>
-    <message>
-      <location filename="../../../plugins/gst_backend/settings/db_meter.py" line="84"/>
-      <source>DbMeter settings</source>
-      <translation type="unfinished">DbMeter settings</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/gst_backend/settings/db_meter.py" line="85"/>
-      <source>Time between levels (ms)</source>
-      <translation type="unfinished">Time between levels (ms)</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/gst_backend/settings/db_meter.py" line="88"/>
-      <source>Peak ttl (ms)</source>
-      <translation type="unfinished">Peak ttl (ms)</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/gst_backend/settings/db_meter.py" line="89"/>
-      <source>Peak falloff (dB/sec)</source>
-      <translation type="unfinished">Peak falloff (dB/sec)</translation>
-    </message>
-  </context>
-  <context>
-    <name>Equalizer10Settings</name>
-    <message>
-      <location filename="../../../plugins/gst_backend/settings/equalizer10.py" line="52"/>
-      <source>10 Bands Equalizer (IIR)</source>
-      <translation type="unfinished">10 Bands Equalizer (IIR)</translation>
     </message>
   </context>
   <context>
@@ -841,7 +591,7 @@
     </message>
   </context>
   <context>
-    <name>MIDICue</name>
+    <name>MainWindow</name>
     <message>
       <location filename="../../../ui/mainwindow.py" line="191"/>
       <source>&amp;File</source>
@@ -852,9 +602,6 @@
       <source>New session</source>
       <translation>Nuova sessione</translation>
     </message>
-  </context>
-  <context>
-    <name>MIDIMessageAttr</name>
     <message>
       <location filename="../../../ui/mainwindow.py" line="194"/>
       <source>Open</source>
@@ -900,9 +647,6 @@
       <source>Redo</source>
       <translation>Ripeti</translation>
     </message>
-  </context>
-  <context>
-    <name>MIDIMessageType</name>
     <message>
       <location filename="../../../ui/mainwindow.py" line="212"/>
       <source>Select all</source>
@@ -1037,11 +781,11 @@
     </message>
   </context>
   <context>
-    <name>PresetSrcSettings</name>
+    <name>SettingsPageName</name>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/preset_src.py" line="36"/>
-      <source>Presets</source>
-      <translation type="unfinished">Presets</translation>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="35"/>
+      <source>Appearance</source>
+      <translation>Aspetto</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/general.py" line="38"/>
@@ -1082,337 +826,6 @@
       <location filename="../../../ui/settings/app_pages/layouts.py" line="26"/>
       <source>Layouts</source>
       <translation type="unfinished">Layouts</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/action_cues/index_action_cue.py" line="65"/>
-      <source>Action Settings</source>
-      <translation type="unfinished">Action Settings</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/action_cues/seek_cue.py" line="59"/>
-      <source>Seek Settings</source>
-      <translation type="unfinished">Seek Settings</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/action_cues/volume_control.py" line="139"/>
-      <source>Volume Settings</source>
-      <translation type="unfinished">Volume Settings</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="104"/>
-      <source>Command</source>
-      <translation type="unfinished">Command</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="60"/>
-      <source>Edit Collection</source>
-      <translation type="unfinished">Edit Collection</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/action_cues/stop_all.py" line="46"/>
-      <source>Stop Settings</source>
-      <translation type="unfinished">Stop Settings</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="37"/>
-      <source>List Layout</source>
-      <translation type="unfinished">List Layout</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/timecode/settings.py" line="38"/>
-      <source>Timecode</source>
-      <translation type="unfinished">Timecode</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/timecode/settings.py" line="108"/>
-      <source>Timecode Settings</source>
-      <translation type="unfinished">Timecode Settings</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/controller/controller_settings.py" line="25"/>
-      <source>Cue Control</source>
-      <translation type="unfinished">Cue Control</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/controller/controller_settings.py" line="41"/>
-      <source>Layout Controls</source>
-      <translation type="unfinished">Layout Controls</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/controller/protocols/midi.py" line="46"/>
-      <source>MIDI Controls</source>
-      <translation type="unfinished">MIDI Controls</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/controller/protocols/keyboard.py" line="44"/>
-      <source>Keyboard Shortcuts</source>
-      <translation type="unfinished">Keyboard Shortcuts</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="181"/>
-      <source>OSC Controls</source>
-      <translation type="unfinished">OSC Controls</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/midi/midi_cue.py" line="53"/>
-      <source>MIDI Settings</source>
-      <translation type="unfinished">MIDI Settings</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/midi/midi_settings.py" line="33"/>
-      <source>MIDI settings</source>
-      <translation type="unfinished">MIDI settings</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/gst_backend/gst_settings.py" line="27"/>
-      <source>GStreamer</source>
-      <translation type="unfinished">GStreamer</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/gst_backend/gst_media_settings.py" line="36"/>
-      <source>Media Settings</source>
-      <translation type="unfinished">Media Settings</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/triggers/triggers_settings.py" line="42"/>
-      <source>Triggers</source>
-      <translation type="unfinished">Triggers</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/osc/osc_settings.py" line="34"/>
-      <source>OSC settings</source>
-      <translation type="unfinished">OSC settings</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="33"/>
-      <source>Cart Layout</source>
-      <translation type="unfinished">Cart Layout</translation>
-    </message>
-  </context>
-  <context>
-    <name>SpeedSettings</name>
-    <message>
-      <location filename="../../../plugins/gst_backend/settings/speed.py" line="62"/>
-      <source>Speed</source>
-      <translation type="unfinished">Speed</translation>
-    </message>
-  </context>
-  <context>
-    <name>StopAll</name>
-    <message>
-      <location filename="../../../plugins/action_cues/stop_all.py" line="76"/>
-      <source>Stop Action</source>
-      <translation type="unfinished">Stop Action</translation>
-    </message>
-  </context>
-  <context>
-    <name>Synchronizer</name>
-    <message>
-      <location filename="../../../plugins/synchronizer/synchronizer.py" line="44"/>
-      <source>Synchronization</source>
-      <translation type="unfinished">Synchronization</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/synchronizer/synchronizer.py" line="47"/>
-      <source>Manage connected peers</source>
-      <translation type="unfinished">Manage connected peers</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/synchronizer/synchronizer.py" line="53"/>
-      <source>Show your IP</source>
-      <translation type="unfinished">Show your IP</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/synchronizer/synchronizer.py" line="79"/>
-      <source>Your IP is:</source>
-      <translation type="unfinished">Your IP is:</translation>
-    </message>
-  </context>
-  <context>
-    <name>Timecode</name>
-    <message>
-      <location filename="../../../plugins/timecode/timecode.py" line="97"/>
-      <source>Cannot load timecode protocol: &quot;{}&quot;</source>
-      <translation type="unfinished">Cannot load timecode protocol: &quot;{}&quot;</translation>
-    </message>
-  </context>
-  <context>
-    <name>TimecodeError</name>
-    <message>
-      <location filename="../../../plugins/timecode/protocols/artnet.py" line="72"/>
-      <source>Cannot send timecode.</source>
-      <translation type="unfinished">Cannot send timecode.</translation>
-    </message>
-  </context>
-  <context>
-    <name>TimecodeSettings</name>
-    <message>
-      <location filename="../../../plugins/timecode/settings.py" line="80"/>
-      <source>Replace HOURS by a static track number</source>
-      <translation type="unfinished">Replace HOURS by a static track number</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/timecode/settings.py" line="85"/>
-      <source>Enable Timecode</source>
-      <translation type="unfinished">Enable Timecode</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/timecode/settings.py" line="88"/>
-      <source>Track number</source>
-      <translation type="unfinished">Track number</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/timecode/settings.py" line="138"/>
-      <source>Timecode Settings</source>
-      <translation type="unfinished">Timecode Settings</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/timecode/settings.py" line="141"/>
-      <source>Timecode Format:</source>
-      <translation type="unfinished">Timecode Format:</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/timecode/settings.py" line="144"/>
-      <source>Timecode Protocol:</source>
-      <translation type="unfinished">Timecode Protocol:</translation>
-    </message>
-  </context>
-  <context>
-    <name>TriggersSettings</name>
-    <message>
-      <location filename="../../../plugins/triggers/triggers_settings.py" line="65"/>
-      <source>Add</source>
-      <translation type="unfinished">Add</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/triggers/triggers_settings.py" line="70"/>
-      <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/triggers/triggers_settings.py" line="150"/>
-      <source>Trigger</source>
-      <translation type="unfinished">Trigger</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/triggers/triggers_settings.py" line="150"/>
-      <source>Cue</source>
-      <translation type="unfinished">Cue</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/triggers/triggers_settings.py" line="150"/>
-      <source>Action</source>
-      <translation type="unfinished">Action</translation>
-    </message>
-  </context>
-  <context>
-    <name>UriInputSettings</name>
-    <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="83"/>
-      <source>Source</source>
-      <translation type="unfinished">Source</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="84"/>
-      <source>Find File</source>
-      <translation type="unfinished">Find File</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="85"/>
-      <source>Buffering</source>
-      <translation type="unfinished">Buffering</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="86"/>
-      <source>Use Buffering</source>
-      <translation type="unfinished">Use Buffering</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="89"/>
-      <source>Attempt download on network streams</source>
-      <translation type="unfinished">Attempt download on network streams</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="92"/>
-      <source>Buffer size (-1 default value)</source>
-      <translation type="unfinished">Buffer size (-1 default value)</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="131"/>
-      <source>Choose file</source>
-      <translation type="unfinished">Choose file</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="131"/>
-      <source>All files</source>
-      <translation type="unfinished">All files</translation>
-    </message>
-  </context>
-  <context>
-    <name>UserElementSettings</name>
-    <message>
-      <location filename="../../../plugins/gst_backend/settings/user_element.py" line="52"/>
-      <source>User defined elements</source>
-      <translation type="unfinished">User defined elements</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/gst_backend/settings/user_element.py" line="55"/>
-      <source>Only for advanced user!</source>
-      <translation type="unfinished">Only for advanced user!</translation>
-    </message>
-  </context>
-  <context>
-    <name>VolumeControl</name>
-    <message>
-      <location filename="../../../plugins/action_cues/volume_control.py" line="199"/>
-      <source>Cue</source>
-      <translation type="unfinished">Cue</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/action_cues/volume_control.py" line="200"/>
-      <source>Click to select</source>
-      <translation type="unfinished">Click to select</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/action_cues/volume_control.py" line="201"/>
-      <source>Not selected</source>
-      <translation type="unfinished">Not selected</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/action_cues/volume_control.py" line="202"/>
-      <source>Volume to reach</source>
-      <translation type="unfinished">Volume to reach</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/action_cues/volume_control.py" line="203"/>
-      <source>Fade</source>
-      <translation type="unfinished">Fade</translation>
-    </message>
-  </context>
-  <context>
-    <name>VolumeControlError</name>
-    <message>
-      <location filename="../../../plugins/action_cues/volume_control.py" line="129"/>
-      <source>Error during cue execution.</source>
-      <translation type="unfinished">Error during cue execution.</translation>
-    </message>
-  </context>
-  <context>
-    <name>VolumeSettings</name>
-    <message>
-      <location filename="../../../plugins/gst_backend/settings/volume.py" line="83"/>
-      <source>Volume</source>
-      <translation type="unfinished">Volume</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/gst_backend/settings/volume.py" line="85"/>
-      <source>Normalized volume</source>
-      <translation type="unfinished">Normalized volume</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/gst_backend/settings/volume.py" line="89"/>
-      <source>Reset</source>
-      <translation type="unfinished">Reset</translation>
     </message>
   </context>
 </TS>

@@ -131,10 +131,5 @@
       <source>Cannot create a cue from this preset: {}</source>
       <translation>Kann aus diesem Preset keinen Cue erstellen: {}</translation>
     </message>
-    <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="309"/>
-      <source>Cannot create a cue from this preset: {}</source>
-      <translation type="unfinished">Cannot create a cue from this preset: {}</translation>
-    </message>
   </context>
 </TS>
