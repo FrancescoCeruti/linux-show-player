@@ -17,6 +17,7 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
+import re
 import subprocess
 import sys
 from argparse import ArgumentParser
@@ -36,39 +37,39 @@ def dirs_path(path: str):
 
 
 def existing_locales():
-    for entry in os.scandir(TS_DIR):
-        if entry.is_dir():
-            yield entry.name
+    for language_dir in dirs_path(TS_DIR):
+        yield language_dir.name
 
 
-def source_files(root: Path, extensions: Iterable[str] = ("py",)):
-    for ext in extensions:
-        yield from root.glob("**/*.{}".format(ext))
-
-
-def module_sources(module_path: Path, extensions: Iterable[str] = ("py",)):
-    return module_path.stem, tuple(source_files(module_path, extensions))
+def source_files(root: Path, extensions: Iterable[str], exclude: str = ""):
+    for entry in root.glob("**/*"):
+        if (
+            entry.is_file()
+            and entry.suffix in extensions
+            and (not exclude or re.search(exclude, str(entry)) is None)
+        ):
+            yield entry
 
 
 def modules_sources(
-    modules_path: Iterable[Path], extensions: Iterable[str] = ("py",)
+    modules_path: Iterable[Path], extensions: Iterable[str], exclude: str = "",
 ):
     for module_path in modules_path:
-        if not module_path.match("__*__"):
-            yield module_sources(module_path, extensions)
+        yield module_path.stem, source_files(module_path, extensions, exclude),
 
 
 def lupdate(
     modules_path: Iterable[Path],
     locales: Iterable[str],
     options: Iterable[str] = (),
-    extensions: Iterable[str] = ("py",),
+    extensions: Iterable[str] = (".py",),
+    exclude: str = "",
 ):
-    ts_files = dict(modules_sources(modules_path, extensions))
+    ts_files = modules_sources(modules_path, extensions, exclude)
     for locale in locales:
         locale_path = TS_DIR.joinpath(locale)
         locale_path.mkdir(exist_ok=True)
-        for module_name, sources in ts_files.items():
+        for module_name, sources in ts_files:
             subprocess.run(
                 (
                     PYLUPDATE,
@@ -86,7 +87,7 @@ def lrelease(locales: Iterable[str], options: Iterable[str] = ()):
     for locale in locales:
         qm_file = QM_DIR.joinpath("base_{}.qm".format(locale))
         locale_path = TS_DIR.joinpath(locale)
-        ts_files = source_files(locale_path, extensions=("ts",))
+        ts_files = source_files(locale_path, extensions=(".ts",))
 
         subprocess.run(
             (LRELEASE, *options, *ts_files, "-qm", qm_file),
@@ -108,7 +109,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "-n",
         "--noobsolete",
-        help="If --qm, discard obsolete strings",
+        help="If updating (--ts), discard obsolete strings",
         action="store_true",
     )
     parser.add_argument(
@@ -138,9 +139,12 @@ if __name__ == "__main__":
             options.append("-noobsolete")
 
         lupdate(
-            list(dirs_path("lisp/plugins")) + [Path("lisp")], locales, options
+            [Path("lisp")], locales, options=options, exclude="^lisp/plugins/"
         )
+        lupdate(dirs_path("lisp/plugins"), locales, options=options)
 
     if do_release:
         print(">>> RELEASING ...")
         lrelease(locales)
+
+    print(">>> DONE!")

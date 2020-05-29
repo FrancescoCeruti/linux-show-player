@@ -48,7 +48,7 @@ class ConfDict:
             raise ValueError("ConfDict separator cannot be empty")
         if not isinstance(sep, str):
             raise TypeError(
-                "ConfDict separator must be a str, not {}".format(typename(sep))
+                f"ConfDict separator must be a str, not {typename(sep)}"
             )
 
         self._sep = sep
@@ -59,7 +59,7 @@ class ConfDict:
             self._root = root
         else:
             raise TypeError(
-                "ConfDict root must be a dict, not {}".format(typename(root))
+                f"ConfDict root must be a dict, not {typename(root)}"
             )
 
     def get(self, path, default=_UNSET):

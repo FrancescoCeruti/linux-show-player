@@ -20,7 +20,6 @@ from threading import Lock
 from PyQt5.QtCore import QT_TRANSLATE_NOOP
 
 from lisp.backend.audio_utils import MIN_VOLUME
-from lisp.core.configuration import AppConfig
 from lisp.core.decorators import async_function
 from lisp.core.fade_functions import FadeInType, FadeOutType
 from lisp.core.fader import Fader
@@ -89,7 +88,11 @@ class MediaCue(Cue):
 
             if self._state & CueState.Running and fade:
                 self._st_lock.release()
-                ended = self._on_stop_fade()
+                ended = self.__fadeout(
+                    self.fadeout_duration,
+                    MIN_VOLUME,
+                    FadeOutType[self.fadeout_type],
+                )
                 self._st_lock.acquire()
                 if not ended:
                     return False
@@ -106,7 +109,11 @@ class MediaCue(Cue):
 
             if fade:
                 self._st_lock.release()
-                ended = self._on_stop_fade()
+                ended = self.__fadeout(
+                    self.fadeout_duration,
+                    MIN_VOLUME,
+                    FadeOutType[self.fadeout_type],
+                )
                 self._st_lock.acquire()
                 if not ended:
                     return False
@@ -118,7 +125,11 @@ class MediaCue(Cue):
         self.__fader.stop()
 
         if self._state & CueState.Running and fade:
-            self._on_stop_fade(interrupt=True)
+            self.__fadeout(
+                self._default_fade_duration(),
+                MIN_VOLUME,
+                self._default_fade_type(FadeOutType, FadeOutType.Linear),
+            )
 
         self.media.stop()
 
@@ -215,15 +226,3 @@ class MediaCue(Cue):
                 self.__volume.volume,
                 FadeInType[self.fadein_type],
             )
-
-    def _on_stop_fade(self, interrupt=False):
-        if interrupt:
-            duration = AppConfig().get("cue.interruptFade", 0)
-            fade_type = AppConfig().get(
-                "cue.interruptFadeType", FadeOutType.Linear.name
-            )
-        else:
-            duration = self.fadeout_duration
-            fade_type = self.fadeout_type
-
-        return self.__fadeout(duration, 0, FadeOutType[fade_type])

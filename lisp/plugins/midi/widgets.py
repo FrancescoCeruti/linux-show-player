@@ -135,7 +135,6 @@ class MIDIMessageEditDialog(QDialog):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
-        self.layout().setContentsMargins(0, 0, 0, 0)
 
         self.editor = MIDIMessageEdit()
         self.layout().addWidget(self.editor)
@@ -145,7 +144,7 @@ class MIDIMessageEditDialog(QDialog):
         )
         self.buttons.accepted.connect(self.accept)
         self.buttons.rejected.connect(self.reject)
-        self.layout().addWidget(self.editor)
+        self.layout().addWidget(self.buttons)
 
     def getMessageDict(self):
         return self.editor.getMessageDict()

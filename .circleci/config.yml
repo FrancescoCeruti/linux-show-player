@@ -24,7 +24,7 @@ jobs:
 
       - restore_cache:
           name: PYENV ⟹ Restore cache
-          key: pyenv-python-3.6.8
+          key: pyenv-python-3.6.8b
 
       - run:
           name: PYENV ⟹ Install python 3.6.8
@@ -34,9 +34,9 @@ jobs:
 
       - save_cache:
           name: PYENV ⟹ Save cache
-          key: pyenv-python-3.6.8
+          key: pyenv-python-3.6.8b
           paths:
-            - ~/.pyenv/versions/3.6.8
+            - /opt/circleci/.pyenv/versions/3.6.8
 
       - run:
           name: FLATPAK ⟹ Install flathub Runtime & SDK
@@ -64,7 +64,7 @@ jobs:
       - restore_cache:
           name: FLATPAK BUILD ⟹ Restore cache
           keys:
-            - v2-flatpak-{{ checksum "scripts/Flatpak/com.github.FrancescoCeruti.LinuxShowPlayer.json" }}
+            - v2-flatpak-{{ checksum "scripts/Flatpak/org.linux_show_player.LinuxShowPlayer.json" }}
             - v2-flatpak-
 
       - run:
@@ -74,7 +74,7 @@ jobs:
 
       - save_cache:
           name: FLATPAK BUILD ⟹ Save cache
-          key: v2-flatpak-{{ checksum "scripts/Flatpak/com.github.FrancescoCeruti.LinuxShowPlayer.json" }}
+          key: v2-flatpak-{{ checksum "scripts/Flatpak/org.linux_show_player.LinuxShowPlayer.json" }}
           paths:
             - ~/repo/scripts/Flatpak/.flatpak-builder
 
@@ -109,7 +109,7 @@ jobs:
               --publish \
               --override \
               out/linux-show-payer.flatpak \
-              francescoceruti/LinuxShowPlayer/ci/$PKG_VERSION \
+              francescoceruti/LinuxShowPlayer/$CIRCLE_BRANCH/$PKG_VERSION \
               linux-show-player_$PKG_VERSION.flatpak
 
       - store_artifacts:
@@ -129,4 +129,3 @@ workflows:
               only:
                 - master
                 - develop
-                - building

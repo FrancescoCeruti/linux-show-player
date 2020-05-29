@@ -112,6 +112,10 @@ def get_locked_packages(lock_file):
     # Get the required packages
     packages = []
     for name, info in lock_content.get("default", {}).items():
+        if info.get("editable", False):
+            # Skip packages with an editable path (usually git)
+            continue
+
         packages.append(
             {
                 "name": name,

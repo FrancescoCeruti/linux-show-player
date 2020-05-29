@@ -41,7 +41,7 @@ class HasPropertiesMeta(ABCMeta):
         cls = super().__new__(mcls, name, bases, namespace, **kwargs)
 
         # Compute the set of property names
-        cls.__pro__ = {
+        cls._properties_ = {
             name
             for name, value in namespace.items()
             if isinstance(value, Property)
@@ -50,7 +50,7 @@ class HasPropertiesMeta(ABCMeta):
         # Update the set from "proper" base classes
         for base in bases:
             if isinstance(base, HasPropertiesMeta):
-                cls.__pro__.update(base.__pro__)
+                cls._properties_.update(base._properties_)
 
         return cls
 
@@ -63,16 +63,16 @@ class HasPropertiesMeta(ABCMeta):
     def __delattr__(cls, name):
         super().__delattr__(name)
 
-        if name in cls.__pro__:
+        if name in cls._properties_:
             cls._del_property(name)
 
     def _add_property(cls, name):
-        cls.__pro__.add(name)
+        cls._properties_.add(name)
         for subclass in cls.__subclasses__():
             subclass._add_property(name)
 
     def _del_property(cls, name):
-        cls.__pro__.discard(name)
+        cls._properties_.discard(name)
         for subclass in cls.__subclasses__():
             subclass._del_property(name)
 
@@ -95,7 +95,7 @@ class HasProperties(metaclass=HasPropertiesMeta):
 
     def __init__(self):
         self.__changed_signals = {}
-        # Contains signals that are emitted after the associated property is
+        # Contain signals that are emitted after the associated property is
         # changed, the signal are create only when requested the first time.
 
         self.property_changed = Signal()
@@ -124,7 +124,7 @@ class HasProperties(metaclass=HasPropertiesMeta):
 
         :rtype: set
         """
-        return self.__class__.__pro__.copy()
+        return self.__class__._properties_.copy()
 
     def properties_defaults(self, filter=None):
         """Instance properties defaults.
@@ -139,7 +139,7 @@ class HasProperties(metaclass=HasPropertiesMeta):
         defaults = {}
 
         for name in self.properties_names(filter=filter):
-            value = self._pro(name).default
+            value = self._property(name).default
             if isinstance(value, HasProperties):
                 value = value.properties_defaults()
 
@@ -161,10 +161,12 @@ class HasProperties(metaclass=HasPropertiesMeta):
         if callable(filter):
             return {
                 name: getattr(cls, name).default
-                for name in filter(cls.__pro__.copy())
+                for name in filter(cls._properties_.copy())
             }
         else:
-            return {name: getattr(cls, name).default for name in cls.__pro__}
+            return {
+                name: getattr(cls, name).default for name in cls._properties_
+            }
 
     def properties(self, defaults=True, filter=None):
         """
@@ -184,7 +186,7 @@ class HasProperties(metaclass=HasPropertiesMeta):
                 value = value.properties(defaults=defaults, filter=filter)
                 if defaults or value:
                     properties[name] = value
-            elif defaults or value != self._pro(name).default:
+            elif defaults or value != self._property(name).default:
                 properties[name] = value
 
         return properties
@@ -212,7 +214,7 @@ class HasProperties(metaclass=HasPropertiesMeta):
         The signals returned by this method are created lazily and cached.
         """
         if name not in self.properties_names():
-            raise ValueError('no property "{}" found'.format(name))
+            raise ValueError(f'no property "{name}" found')
 
         signal = self.__changed_signals.get(name)
         if signal is None:
@@ -233,27 +235,27 @@ class HasProperties(metaclass=HasPropertiesMeta):
         except KeyError:
             pass
 
-    def _pro(self, name):
-        if name in self.__class__.__pro__:
+    def _property(self, name):
+        if name in self.__class__._properties_:
             return getattr(self.__class__, name)
 
         # TODO: PropertyError ??
         raise AttributeError(
-            "'{}' object has no property '{}'".format(typename(self), name)
+            f"'{typename(self)}' object has no property '{name}'"
         )
 
 
 class HasInstanceProperties(HasProperties):
     # Fallback __init__
-    __ipro__ = set()
+    _i_properties_ = set()
 
     def __init__(self):
         super().__init__()
-        self.__ipro__ = set()
+        self._i_properties_ = set()
         # Registry to keep track of instance-properties
 
     def _properties_names(self):
-        return super()._properties_names().union(self.__ipro__)
+        return super()._properties_names().union(self._i_properties_)
 
     def __getattribute__(self, name):
         attribute = super().__getattribute__(name)
@@ -265,8 +267,8 @@ class HasInstanceProperties(HasProperties):
     def __setattr__(self, name, value):
         if isinstance(value, InstanceProperty):
             super().__setattr__(name, value)
-            self.__ipro__.add(name)
-        elif name in self.__ipro__:
+            self._i_properties_.add(name)
+        elif name in self._i_properties_:
             property = super().__getattribute__(name)
             property.__pset__(value)
             self._emit_changed(name, value)
@@ -275,10 +277,10 @@ class HasInstanceProperties(HasProperties):
 
     def __delattr__(self, name):
         super().__delattr__(name)
-        self.__ipro__.discard(name)
+        self._i_properties_.discard(name)
 
-    def _pro(self, name):
-        if name in self.__ipro__:
+    def _property(self, name):
+        if name in self._i_properties_:
             return self._getattribute(name)
 
-        return super()._pro(name)
+        return super()._property(name)

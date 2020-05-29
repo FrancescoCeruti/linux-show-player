@@ -28,7 +28,7 @@ class DbMeter(GstMediaElement):
     MediaType = MediaType.Audio
     Name = QT_TRANSLATE_NOOP("MediaElementName", "dB Meter")
 
-    interval = GstProperty("level", "interval", default=50 * Gst.MSECOND)
+    interval = GstProperty("level", "interval", default=33 * Gst.MSECOND)
     peak_ttl = GstProperty("level", "peak-ttl", default=Gst.SECOND)
     peak_falloff = GstProperty("level", "peak-falloff", default=20)
 
@@ -39,9 +39,9 @@ class DbMeter(GstMediaElement):
         self.pipeline = pipeline
         self.level = Gst.ElementFactory.make("level", None)
         self.level.set_property("post-messages", True)
-        self.level.set_property("interval", 50 * Gst.MSECOND)
-        self.level.set_property("peak-ttl", Gst.SECOND)
-        self.level.set_property("peak-falloff", 20)
+        self.level.set_property("interval", self.interval)
+        self.level.set_property("peak-ttl", self.peak_ttl)
+        self.level.set_property("peak-falloff", self.peak_falloff)
         self.audio_convert = Gst.ElementFactory.make("audioconvert", None)
 
         self.pipeline.add(self.level)
@@ -66,10 +66,12 @@ class DbMeter(GstMediaElement):
 
     def __on_message(self, bus, message):
         if message.src == self.level:
-            structure = message.get_structure()
-            if structure is not None and structure.has_name("level"):
-                self.level_ready.emit(
-                    structure.get_value("peak"),
-                    structure.get_value("rms"),
-                    structure.get_value("decay"),
-                )
+            state = self.level.get_state(Gst.MSECOND)[1]
+            if state == Gst.State.PLAYING or state == Gst.State.PAUSED:
+                structure = message.get_structure()
+                if structure is not None and structure.has_name("level"):
+                    self.level_ready.emit(
+                        structure.get_value("peak"),
+                        structure.get_value("rms"),
+                        structure.get_value("decay"),
+                    )

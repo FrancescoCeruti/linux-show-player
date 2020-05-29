@@ -15,16 +15,20 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>
 
-from urllib.parse import unquote, quote
-
-from lisp.backend.audio_utils import uri_duration
+from lisp.backend.audio_utils import audio_file_duration
+from lisp.core.session_uri import SessionURI
 from lisp.plugins.gst_backend.gi_repository import Gst, GstPbutils
 
 
-def gst_uri_duration(uri):
+def gst_uri_duration(uri: SessionURI):
     # First try to use the base implementation, because it's faster
-    duration = uri_duration(uri)
+    duration = 0
+    if uri.is_local:
+        duration = audio_file_duration(uri.absolute_path)
+
     try:
+        # Fallback to GStreamer discoverer
+        # TODO: we can probabbly make this faster see https://github.com/mopidy/mopidy/blob/develop/mopidy/audio/scan.py
         if duration <= 0:
             duration = gst_uri_metadata(uri).get_duration() // Gst.MSECOND
     finally:
@@ -42,18 +46,20 @@ def gst_mime_types():
                 yield mime, extensions
 
 
-def gst_uri_metadata(uri):
+def gst_uri_metadata(uri: SessionURI):
     """Discover media-file metadata using GStreamer."""
-    discoverer = GstPbutils.Discoverer()
-    uri = uri.split("://")
-    info = discoverer.discover_uri(uri[0] + "://" + quote(unquote(uri[1])))
+    try:
+        discoverer = GstPbutils.Discoverer()
+        return discoverer.discover_uri(uri.uri)
+    except Exception:
+        pass
 
-    return info
 
-
-# Adaption of the code found in https://github.com/ch3pjw/pyam
 def gst_parse_tags_list(gst_tag_list):
-    """Takes a GstTagList object and returns a dict."""
+    """Takes a GstTagList object and returns a dict.
+
+    Adapted from https://github.com/ch3pjw/pyamp
+    """
     parsed_tags = {}
 
     def parse_tag(gst_tag_list, tag_name, parsed_tags):
@@ -61,3 +67,7 @@ def gst_parse_tags_list(gst_tag_list):
 
     gst_tag_list.foreach(parse_tag, parsed_tags)
     return parsed_tags
+
+
+class GstError(Exception):
+    """Used to wrap GStreamer debug messages for the logging system."""

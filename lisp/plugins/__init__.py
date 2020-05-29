@@ -17,7 +17,8 @@
 
 import inspect
 import logging
-from os import path
+from os import makedirs, path
+import sys
 
 from lisp import app_dirs
 from lisp.core.configuration import JSONFileConfiguration
@@ -28,6 +29,11 @@ PLUGINS = {}
 LOADED = {}
 
 FALLBACK_CONFIG_PATH = path.join(path.dirname(__file__), "default.json")
+USER_PLUGIN_PATH = path.join(app_dirs.user_data_dir, "plugins")
+
+# Make sure the path exists, and insert it into the list of paths python uses to find modules
+makedirs(USER_PLUGIN_PATH, exist_ok=True)
+sys.path.insert(1, USER_PLUGIN_PATH)
 
 logger = logging.getLogger(__name__)
 
@@ -38,7 +44,17 @@ class PluginNotLoadedError(Exception):
 
 def load_plugins(application):
     """Load and instantiate available plugins."""
-    for name, plugin in load_classes(__package__, path.dirname(__file__)):
+
+    def callback(name, plugin):
+
+        if name in PLUGINS:
+            # We don't want users to be able to override plugins that are provided with lisp
+            logger.error(
+                translate("PluginsError",
+                          'A plugin by the name of "{}" already exists.').format(name)
+            )
+            return
+
         try:
             PLUGINS[name] = plugin
 
@@ -63,6 +79,14 @@ def load_plugins(application):
             logger.exception(
                 translate("PluginsError", 'Failed to load "{}"').format(name)
             )
+
+    # Load plugins that install with lisp
+    for name, plugin in load_classes(__package__, path.dirname(__file__)):
+        callback(name, plugin)
+
+    # Load plugins that a user has installed to their profile
+    for name, plugin in load_classes("", USER_PLUGIN_PATH):
+        callback(name, plugin)
 
     __init_plugins(application)
 
@@ -138,9 +162,8 @@ def __load_plugins(plugins, application, optionals=True):
             except Exception:
                 logger.exception(
                     translate(
-                        "PluginsError",
-                        'Failed to load plugin: "{}"'.format(name),
-                    )
+                        "PluginsError", 'Failed to load plugin: "{}"',
+                    ).format(name)
                 )
 
     return resolved

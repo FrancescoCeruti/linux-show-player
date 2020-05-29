@@ -111,10 +111,15 @@ _TRANSLATORS = []
 
 
 def search_translations(prefix="base", tr_path=I18N_DIR):
-    for entry in os.scandir(tr_path):
-        name = entry.name
-        if entry.is_file() and name.endswith(".qm") and name.startswith(prefix):
-            yield os.path.splitext(name)[0][len(prefix) + 1 :]
+    if os.path.exists(tr_path):
+        for entry in os.scandir(tr_path):
+            name = entry.name
+            if (
+                entry.is_file()
+                and name.endswith(".qm")
+                and name.startswith(prefix)
+            ):
+                yield os.path.splitext(name)[0][len(prefix) + 1 :]
 
 
 def install_translation(name, tr_path=I18N_DIR):
@@ -124,11 +129,9 @@ def install_translation(name, tr_path=I18N_DIR):
     if QApplication.installTranslator(translator):
         # Keep a reference, QApplication does not
         _TRANSLATORS.append(translator)
-        logger.debug(
-            'Installed translation for "{}" from {}'.format(name, tr_path)
-        )
+        logger.debug(f'Installed translation for "{name}" from {tr_path}')
     else:
-        logger.debug('No translation for "{}" in {}'.format(name, tr_path))
+        logger.debug(f'No translation for "{name}" in {tr_path}')
 
 
 def translate(context, text, disambiguation=None, n=-1):

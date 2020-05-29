@@ -17,11 +17,10 @@
 
 import aifc
 import math
-import sunau
-import urllib.parse
 import wave
 
 # Decibel value to be considered -inf
+
 MIN_VOLUME_DB = -144
 # Linear value of MIN_VOLUME_DB
 MIN_VOLUME = 6.309_573_444_801_93e-08
@@ -85,15 +84,36 @@ def python_duration(path, sound_module):
         return duration
 
 
-def uri_duration(uri):
-    """Return the audio-file duration, using the given uri"""
-    protocol, path = uri.split("://")
-    path = urllib.parse.unquote(path)
-
-    if protocol == "file":
-        for mod in [wave, aifc, sunau]:
-            duration = python_duration(path, mod)
-            if duration > 0:
-                return duration
+def audio_file_duration(path: str):
+    """Return the audio-file duration, using the given file path"""
+    for mod in [wave, aifc]:
+        duration = python_duration(path, mod)
+        if duration > 0:
+            return duration
 
     return 0
+
+
+def iec_scale(dB):
+    """IEC 268-18:1995 standard dB scaling.
+
+    adapted from: http://plugin.org.uk/meterbridge/
+    """
+    scale = 100
+
+    if dB < -70.0:
+        scale = 0.0
+    elif dB < -60.0:
+        scale = (dB + 70.0) * 0.25
+    elif dB < -50.0:
+        scale = (dB + 60.0) * 0.50 + 5
+    elif dB < -40.0:
+        scale = (dB + 50.0) * 0.75 + 7.5
+    elif dB < -30.0:
+        scale = (dB + 40.0) * 1.5 + 15
+    elif dB < -20.0:
+        scale = (dB + 30.0) * 2.0 + 30
+    elif dB < 0:
+        scale = (dB + 20.0) * 2.5 + 50
+
+    return scale / 100

@@ -25,7 +25,7 @@ from lisp.core.signal import Signal
 class Announcer(Thread):
     """Allow other hosts on a network to discover a specific "service" via UPD.
 
-    While this class is called "Announcer" it act passively, only responding
+    While this class is called "Announcer" it acts passively, only responding
     to requests, it does not advertise itself on the network.
     """
 
@@ -39,8 +39,9 @@ class Announcer(Thread):
             self.server.serve_forever()
 
     def stop(self):
-        self.server.shutdown()
-        self.join()
+        if self.is_alive():
+            self.server.shutdown()
+            self.join()
 
 
 class AnnouncerUDPHandler(socketserver.BaseRequestHandler):
@@ -55,8 +56,8 @@ class AnnouncerUDPHandler(socketserver.BaseRequestHandler):
 class Discoverer(Thread):
     """Actively search for an announced "service" on a network.
 
-    While it can run a continue scan, by default it only does a small number
-    of attempts to find active (announced) host on the network.
+    By default, does only a few attempts to find active (announced)
+    host on the network.
     """
 
     def __init__(
@@ -69,9 +70,9 @@ class Discoverer(Thread):
         self.max_attempts = max_attempts
         self.timeout = timeout
 
-        # Emitted when every time a new host is discovered
+        # Emitted when a new host has been discovered (ip, fully-qualified-name)
         self.discovered = Signal()
-        # Emitted when the discovery is ended
+        # Emitted on discovery ended
         self.ended = Signal()
 
         self._stop_flag = False
@@ -91,25 +92,26 @@ class Discoverer(Thread):
     def run(self):
         self._stop_flag = False
 
-        with self._new_socket() as socket:
-            self._send_beacon(socket)
+        with self._new_socket() as sock:
+            self._send_beacon(sock)
             attempts = 1
 
             while not self._stop_flag:
                 try:
-                    data, address = socket.recvfrom(1024)
+                    data, address = sock.recvfrom(1024)
                     host = address[0]
                     # Check if the response is valid and if the host
                     # has already replied
                     if data == self.bytes_magic and host not in self._cache:
+                        fqdn = socket.getfqdn(host)
                         self._cache.add(host)
-                        self.discovered.emit(host)
+                        self.discovered.emit(host, fqdn)
                 except OSError:
                     if attempts >= self.max_attempts:
                         break
 
                     attempts += 1
-                    self._send_beacon(socket)
+                    self._send_beacon(sock)
 
         self.ended.emit()
 

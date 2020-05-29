@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from urllib.request import unquote
+from urllib.parse import unquote
 
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import (
@@ -64,23 +64,18 @@ class MediaInfo(Plugin):
         CueLayout.CuesMenu.add(self.cue_action_group, MediaCue)
 
     def _show_info(self, cue):
-        media_uri = cue.media.input_uri()
+        gst_meta = gst_uri_metadata(cue.media.input_uri())
 
-        if media_uri is None:
-            QMessageBox.warning(
+        if gst_meta is None:
+            return QMessageBox.warning(
                 self.app.window,
                 translate("MediaInfo", "Warning"),
-                translate("MediaInfo", "No info to display"),
+                translate("MediaInfo", "Cannot get any information."),
             )
         else:
-            if media_uri.startswith("file://"):
-                media_uri = "file://" + self.app.session.abs_path(media_uri[7:])
-
-            gst_info = gst_uri_metadata(media_uri)
-            info = {"URI": unquote(gst_info.get_uri())}
-
+            info = {"URI": unquote(gst_meta.get_uri())}
             # Audio streams info
-            for stream in gst_info.get_audio_streams():
+            for stream in gst_meta.get_audio_streams():
                 name = stream.get_stream_type_nick().capitalize()
                 info[name] = {
                     "Bitrate": str(stream.get_bitrate() // 1000) + " Kb/s",
@@ -90,7 +85,7 @@ class MediaInfo(Plugin):
                 }
 
             # Video streams info
-            for stream in gst_info.get_video_streams():
+            for stream in gst_meta.get_video_streams():
                 name = stream.get_stream_type_nick().capitalize()
                 info[name] = {
                     "Height": str(stream.get_height()) + " px",
@@ -104,7 +99,7 @@ class MediaInfo(Plugin):
                 }
 
             # Tags
-            gst_tags = gst_info.get_tags()
+            gst_tags = gst_meta.get_tags()
             tags = {}
 
             if gst_tags is not None:

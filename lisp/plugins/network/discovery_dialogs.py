@@ -25,40 +25,44 @@ from PyQt5.QtWidgets import (
     QPushButton,
     QInputDialog,
     QListWidgetItem,
+    QGridLayout,
+    QLabel,
 )
 
 from lisp.core.signal import Connection
 from lisp.plugins.network.discovery import Discoverer
 from lisp.ui.ui_utils import translate
-from lisp.ui.widgets.qprogresswheel import QProgressWheel
+from lisp.ui.widgets.qwaitingspinner import QWaitingSpinner
 
 
 class HostDiscoveryDialog(QDialog):
     def __init__(self, port, magic, **kwargs):
         super().__init__(**kwargs)
         self.setWindowModality(Qt.WindowModal)
-        self.setLayout(QVBoxLayout())
-        self.setMaximumSize(300, 200)
+        self.setLayout(QGridLayout())
         self.setMinimumSize(300, 200)
-        self.resize(300, 200)
+        self.resize(500, 200)
+
+        self.hintLabel = QLabel(self)
+        self.layout().addWidget(self.hintLabel, 0, 0, 1, 2)
 
         self.listWidget = QListWidget(self)
         self.listWidget.setAlternatingRowColors(True)
         self.listWidget.setSelectionMode(self.listWidget.MultiSelection)
-        self.layout().addWidget(self.listWidget)
+        self.layout().addWidget(self.listWidget, 1, 0, 1, 2)
 
-        self.progressWheel = QProgressWheel()
-
-        self.progressItem = QListWidgetItem()
-        self.progressItem.setFlags(Qt.NoItemFlags)
-        self.progressItem.setSizeHint(QSize(30, 30))
-        self.listWidget.addItem(self.progressItem)
-        self.listWidget.setItemWidget(self.progressItem, self.progressWheel)
+        self.progressSpinner = QWaitingSpinner(
+            parent=self, centerOnParent=False
+        )
+        self.progressSpinner.setInnerRadius(8)
+        self.progressSpinner.setLineWidth(4)
+        self.progressSpinner.setLineLength(4)
+        self.layout().addWidget(self.progressSpinner, 2, 0)
 
         self.dialogButton = QDialogButtonBox(self)
         self.dialogButton.setStandardButtons(self.dialogButton.Ok)
         self.dialogButton.accepted.connect(self.accept)
-        self.layout().addWidget(self.dialogButton)
+        self.layout().addWidget(self.dialogButton, 2, 1)
 
         self.retranslateUi()
 
@@ -69,6 +73,9 @@ class HostDiscoveryDialog(QDialog):
         self._discoverer.ended.connect(self._search_ended, Connection.QtQueued)
 
     def retranslateUi(self):
+        self.hintLabel.setText(
+            translate("NetworkDiscovery", "Select the hosts you want to add")
+        )
         self.setWindowTitle(translate("NetworkDiscovery", "Host discovery"))
 
     def accept(self):
@@ -79,22 +86,31 @@ class HostDiscoveryDialog(QDialog):
         self._discoverer.stop()
         return super().reject()
 
-    def exec_(self):
-        self.layout().activate()
-        self.progressWheel.startAnimation()
-
+    def exec(self):
+        self.progressSpinner.start()
         self._discoverer.start()
+
         return super().exec()
 
     def hosts(self):
-        return [item.text() for item in self.listWidget.selectedItems()]
+        return [
+            (item.data(Qt.UserRole), item.text())
+            for item in self.listWidget.selectedItems()
+        ]
 
-    def _host_discovered(self, host):
-        self.listWidget.insertItem(self.listWidget.count() - 1, host)
+    def _host_discovered(self, host, fqdn):
+        if fqdn != host:
+            item_text = f"{fqdn} - {host}"
+        else:
+            item_text = host
+
+        item = QListWidgetItem(item_text)
+        item.setData(Qt.UserRole, host)
+        item.setSizeHint(QSize(100, 30))
+        self.listWidget.addItem(item)
 
     def _search_ended(self):
-        self.listWidget.takeItem(self.listWidget.count() - 1)
-        self.progressWheel.stopAnimation()
+        self.progressSpinner.stop()
 
 
 class HostManagementDialog(QDialog):
@@ -105,13 +121,11 @@ class HostManagementDialog(QDialog):
 
         self.setWindowModality(Qt.WindowModal)
         self.setLayout(QHBoxLayout())
-        self.setMaximumSize(500, 200)
         self.setMinimumSize(500, 200)
         self.resize(500, 200)
 
         self.listWidget = QListWidget(self)
         self.listWidget.setAlternatingRowColors(True)
-        self.listWidget.addItems(hosts)
         self.layout().addWidget(self.listWidget)
 
         self.buttonsLayout = QVBoxLayout()
@@ -144,6 +158,7 @@ class HostManagementDialog(QDialog):
         self.layout().setStretch(1, 1)
 
         self.retranslateUi()
+        self.addHosts(hosts)
 
     def retranslateUi(self):
         self.setWindowTitle(translate("NetworkDiscovery", "Manage hosts"))
@@ -167,12 +182,22 @@ class HostManagementDialog(QDialog):
             translate("NetworkDiscovery", "Host IP"),
         )
 
-        if ok:
-            self.addHost(host)
+        if host and ok:
+            self.addHost(host, host)
 
-    def addHost(self, host):
-        if not self.listWidget.findItems(host, Qt.MatchExactly):
-            self.listWidget.addItem(host)
+    def addHosts(self, hosts):
+        for host in hosts:
+            if isinstance(host, str):
+                self.addHost(host, host)
+            else:
+                self.addHost(*host)
+
+    def addHost(self, hostname, display_name):
+        if not self.listWidget.findItems(hostname, Qt.MatchEndsWith):
+            item = QListWidgetItem(display_name)
+            item.setData(Qt.UserRole, hostname)
+            item.setSizeHint(QSize(100, 30))
+            self.listWidget.addItem(item)
 
     def discoverHosts(self):
         dialog = HostDiscoveryDialog(
@@ -180,8 +205,8 @@ class HostManagementDialog(QDialog):
         )
 
         if dialog.exec() == dialog.Accepted:
-            for host in dialog.hosts():
-                self.addHost(host)
+            for hostname, display_name in dialog.hosts():
+                self.addHost(hostname, display_name)
 
     def removeSelectedHosts(self):
         for index in self.listWidget.selectedIndexes():
@@ -193,6 +218,7 @@ class HostManagementDialog(QDialog):
     def hosts(self):
         hosts = []
         for index in range(self.listWidget.count()):
-            hosts.append(self.listWidget.item(index).text())
+            item = self.listWidget.item(index)
+            hosts.append((item.data(Qt.UserRole), item.text()))
 
         return hosts

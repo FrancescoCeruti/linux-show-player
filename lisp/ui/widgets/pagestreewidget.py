@@ -19,6 +19,7 @@ from PyQt5.QtCore import QModelIndex, QAbstractItemModel, Qt
 from PyQt5.QtWidgets import QWidget, QGridLayout, QTreeView, QSizePolicy
 
 from lisp.ui.qdelegates import PaddedDelegate
+from lisp.ui.ui_utils import translate
 
 
 class PagesTreeWidget(QWidget):
@@ -120,8 +121,9 @@ class PageNode:
 class PagesTreeModel(QAbstractItemModel):
     PageRole = Qt.UserRole + 1
 
-    def __init__(self, **kwargs):
+    def __init__(self, tr_context="", **kwargs):
         super().__init__(**kwargs)
+        self._tr_context = tr_context
         self._root = PageNode(None)
 
     def rowCount(self, parent=QModelIndex()):
@@ -137,6 +139,9 @@ class PagesTreeModel(QAbstractItemModel):
         if index.isValid():
             node = index.internalPointer()
             if role == Qt.DisplayRole:
+                if self._tr_context:
+                    return translate(self._tr_context, node.page.Name)
+
                 return node.page.Name
             elif role == PagesTreeModel.PageRole:
                 return node.page

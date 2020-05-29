@@ -255,7 +255,10 @@ class CartLayout(CueLayout):
         page.copyWidgetRequested.connect(self._copy_widget)
 
         self._cart_view.addTab(
-            page, "Page {}".format(self._cart_view.count() + 1)
+            page,
+            translate("CartLayout", "Page {number}").format(
+                number=self._cart_view.count() + 1
+            ),
         )
 
     def remove_current_page(self):

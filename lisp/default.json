@@ -1,10 +1,13 @@
 {
-    "_version_": "0.6dev.15",
+    "_version_": "0.6dev.17",
     "cue": {
         "fadeAction": 3,
         "fadeActionType": "Linear",
         "interruptFade": 3,
         "interruptFadeType": "Linear"
+    },
+    "cache": {
+        "position": ""
     },
     "theme": {
         "theme": "Dark",
@@ -12,7 +15,7 @@
     },
     "locale": "",
     "session": {
-        "minSave": true,
+        "minSave": false,
         "lastPath": ""
     },
     "logging": {

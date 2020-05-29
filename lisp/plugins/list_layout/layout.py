@@ -55,11 +55,13 @@ class ListLayout(CueLayout):
     Config = DummyConfiguration()
 
     auto_continue = ProxyProperty()
-    running_visible = ProxyProperty()
     dbmeters_visible = ProxyProperty()
     seek_sliders_visible = ProxyProperty()
+    index_column_visible = ProxyProperty()
     accurate_time = ProxyProperty()
     selection_mode = ProxyProperty()
+    view_sizes = ProxyProperty()
+    go_key_disabled_while_playing = ProxyProperty()
 
     def __init__(self, application):
         super().__init__(application)
@@ -72,6 +74,7 @@ class ListLayout(CueLayout):
         self._view = ListLayoutView(
             self._list_model, self._running_model, self.Config
         )
+        self._view.setResizeHandlesEnabled(False)
         # GO button
         self._view.goButton.clicked.connect(self.__go_slot)
         # Global actions
@@ -93,47 +96,67 @@ class ListLayout(CueLayout):
         # Layout menu
         layout_menu = self.app.window.menuLayout
 
-        self.show_running_action = QAction(parent=layout_menu)
-        self.show_running_action.setCheckable(True)
-        self.show_running_action.triggered.connect(self._set_running_visible)
-        layout_menu.addAction(self.show_running_action)
-
-        self.show_dbmeter_action = QAction(parent=layout_menu)
+        self.show_dbmeter_action = QAction(layout_menu)
         self.show_dbmeter_action.setCheckable(True)
         self.show_dbmeter_action.triggered.connect(self._set_dbmeters_visible)
         layout_menu.addAction(self.show_dbmeter_action)
 
-        self.show_seek_action = QAction(parent=layout_menu)
+        self.show_seek_action = QAction(layout_menu)
         self.show_seek_action.setCheckable(True)
         self.show_seek_action.triggered.connect(self._set_seeksliders_visible)
         layout_menu.addAction(self.show_seek_action)
 
-        self.show_accurate_action = QAction(parent=layout_menu)
+        self.show_accurate_action = QAction(layout_menu)
         self.show_accurate_action.setCheckable(True)
         self.show_accurate_action.triggered.connect(self._set_accurate_time)
         layout_menu.addAction(self.show_accurate_action)
 
-        self.auto_continue_action = QAction(parent=layout_menu)
+        self.show_index_action = QAction(layout_menu)
+        self.show_index_action.setCheckable(True)
+        self.show_index_action.triggered.connect(self._set_index_visible)
+        layout_menu.addAction(self.show_index_action)
+
+        self.auto_continue_action = QAction(layout_menu)
         self.auto_continue_action.setCheckable(True)
         self.auto_continue_action.triggered.connect(self._set_auto_continue)
         layout_menu.addAction(self.auto_continue_action)
 
-        self.selection_mode_action = QAction(parent=layout_menu)
+        self.selection_mode_action = QAction(layout_menu)
         self.selection_mode_action.setCheckable(True)
         self.selection_mode_action.triggered.connect(self._set_selection_mode)
         self.selection_mode_action.setShortcut(QKeySequence("Ctrl+Alt+S"))
         layout_menu.addAction(self.selection_mode_action)
 
-        # Load settings
-        self._go_key_sequence = QKeySequence(
-            ListLayout.Config["goKey"], QKeySequence.NativeText
+        self.go_key_disabled_while_playing_action = QAction(layout_menu)
+        self.go_key_disabled_while_playing_action.setCheckable(True)
+        self.go_key_disabled_while_playing_action.triggered.connect(
+            self._set_go_key_disabled_while_playing
         )
+        layout_menu.addAction(self.go_key_disabled_while_playing_action)
+
+        layout_menu.addSeparator()
+
+        self.enable_view_resize_action = QAction(layout_menu)
+        self.enable_view_resize_action.setCheckable(True)
+        self.enable_view_resize_action.triggered.connect(
+            self._set_view_resize_enabled
+        )
+        layout_menu.addAction(self.enable_view_resize_action)
+
+        self.reset_size_action = QAction(layout_menu)
+        self.reset_size_action.triggered.connect(self._view.resetSize)
+        layout_menu.addAction(self.reset_size_action)
+
+        # Load settings
         self._set_seeksliders_visible(ListLayout.Config["show.seekSliders"])
-        self._set_running_visible(ListLayout.Config["show.playingCues"])
         self._set_accurate_time(ListLayout.Config["show.accurateTime"])
         self._set_dbmeters_visible(ListLayout.Config["show.dBMeters"])
+        self._set_index_visible(ListLayout.Config["show.indexColumn"])
         self._set_selection_mode(ListLayout.Config["selectionMode"])
         self._set_auto_continue(ListLayout.Config["autoContinue"])
+        self._set_go_key_disabled_while_playing(
+            ListLayout.Config["goKeyDisabledWhilePlaying"]
+        )
 
         # Context menu actions
         self._edit_actions_group = MenuActionsGroup(priority=MENU_PRIORITY_CUE)
@@ -163,9 +186,6 @@ class ListLayout(CueLayout):
         self.retranslate()
 
     def retranslate(self):
-        self.show_running_action.setText(
-            translate("ListLayout", "Show playing cues")
-        )
         self.show_dbmeter_action.setText(
             translate("ListLayout", "Show dB-meters")
         )
@@ -173,11 +193,23 @@ class ListLayout(CueLayout):
         self.show_accurate_action.setText(
             translate("ListLayout", "Show accurate time")
         )
+        self.show_index_action.setText(
+            translate("ListLayout", "Show index column")
+        )
         self.auto_continue_action.setText(
             translate("ListLayout", "Auto-select next cue")
         )
         self.selection_mode_action.setText(
             translate("ListLayout", "Selection mode")
+        )
+        self.enable_view_resize_action.setText(
+            translate("ListLayout", "Show resize handles")
+        )
+        self.reset_size_action.setText(
+            translate("ListLayout", "Restore default size")
+        )
+        self.go_key_disabled_while_playing_action.setText(
+            translate("ListLayout", "Disable GO Key While Playing")
         )
 
     @property
@@ -244,9 +276,16 @@ class ListLayout(CueLayout):
         event.ignore()
         if not event.isAutoRepeat():
             sequence = keyEventKeySequence(event)
-            if sequence in self._go_key_sequence:
+            goSequence = QKeySequence(
+                ListLayout.Config["goKey"], QKeySequence.NativeText
+            )
+            if sequence in goSequence:
                 event.accept()
-                self.__go_slot()
+                if not (
+                    self.go_key_disabled_while_playing
+                    and len(self._running_model)
+                ):
+                    self.__go_slot()
             elif sequence == QKeySequence.Delete:
                 event.accept()
                 self._remove_cues(self.selected_cues())
@@ -260,6 +299,14 @@ class ListLayout(CueLayout):
                     self.edit_cue(cue)
             else:
                 self.key_pressed.emit(event)
+
+    @go_key_disabled_while_playing.set
+    def _set_go_key_disabled_while_playing(self, enable):
+        self.go_key_disabled_while_playing_action.setChecked(enable)
+
+    @go_key_disabled_while_playing.get
+    def _get_go_key_disabled_while_playing(self):
+        return self.go_key_disabled_while_playing_action.isChecked()
 
     @accurate_time.set
     def _set_accurate_time(self, accurate):
@@ -296,15 +343,15 @@ class ListLayout(CueLayout):
     def _get_dbmeters_visible(self):
         return self.show_dbmeter_action.isChecked()
 
-    @running_visible.set
-    def _set_running_visible(self, visible):
-        self.show_running_action.setChecked(visible)
-        self._view.runView.setVisible(visible)
-        self._view.controlButtons.setVisible(visible)
+    @index_column_visible.get
+    def _get_index_column_visible(self):
+        return not self.show_index_action.isChecked()
 
-    @running_visible.get
-    def _get_running_visible(self):
-        return self.show_running_action.isChecked()
+    @index_column_visible.set
+    def _set_index_visible(self, visible):
+        self.show_index_action.setChecked(visible)
+        self._view.listView.setColumnHidden(1, not visible)
+        self._view.listView.updateHeadersSizes()
 
     @selection_mode.set
     def _set_selection_mode(self, enable):
@@ -322,6 +369,18 @@ class ListLayout(CueLayout):
     @selection_mode.get
     def _get_selection_mode(self):
         return self.selection_mode_action.isChecked()
+
+    @view_sizes.get
+    def _get_view_sizes(self):
+        return self._view.getSplitterSizes()
+
+    @view_sizes.set
+    def _set_view_sizes(self, sizes):
+        self._view.setSplitterSize(sizes)
+
+    def _set_view_resize_enabled(self, enabled):
+        self.enable_view_resize_action.setChecked(enabled)
+        self._view.setResizeHandlesEnabled(enabled)
 
     def _double_clicked(self):
         cue = self.standby_cue()

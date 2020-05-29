@@ -79,7 +79,9 @@ class CartLayoutSettings(SettingsPage):
 
     def retranslateUi(self):
         self.behaviorsGroup.setTitle(
-            translate("CartLayout", "Default behaviors")
+            translate(
+                "CartLayout", "Default behaviors (applied to new sessions)"
+            )
         )
         self.countdownMode.setText(translate("CartLayout", "Countdown mode"))
         self.showSeek.setText(translate("CartLayout", "Show seek-bars"))

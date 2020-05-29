@@ -62,7 +62,7 @@ class WriteOnceProperty(Property):
     """Property that can be modified only once.
 
     Obviously this is not really "write-once", but when used as normal attribute
-    will ignore any change when the stored value is different than the default.
+    will ignore any change when the stored value is different from the default.
     """
 
     def __set__(self, instance, value):

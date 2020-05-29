@@ -46,6 +46,7 @@ class OscServer:
         self.__lock = Lock()
 
         self.new_message = Signal()
+        self.new_message.connect(self.__log_message)
 
     @property
     def out_port(self):
@@ -84,7 +85,6 @@ class OscServer:
 
         try:
             self.__srv = ServerThread(self.__in_port)
-            self.__srv.add_method(None, None, self.__log_message)
             self.__srv.add_method(None, None, self.new_message.emit)
             self.__srv.start()
 

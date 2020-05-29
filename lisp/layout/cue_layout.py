@@ -17,6 +17,8 @@
 
 from abc import abstractmethod
 
+from PyQt5.QtCore import Qt
+
 from lisp.command.cue import UpdateCueCommand, UpdateCuesCommand
 from lisp.command.model import ModelRemoveItemsCommand
 from lisp.core.has_properties import HasProperties
@@ -48,7 +50,6 @@ class CueLayout(HasProperties):
         self.cue_executed = Signal()  # After a cue is executed
         self.all_executed = Signal()  # After execute_all is called
 
-        # TODO: self.standby_changed = Signal()
         self.key_pressed = Signal()  # After a key is pressed
 
     @property
@@ -215,6 +216,8 @@ class CueLayout(HasProperties):
     def show_cue_context_menu(self, cues, position):
         if cues:
             menu = self.CuesMenu.create_qmenu(cues, self.view)
+            # Avoid "leaking" references kept in the menu
+            menu.setAttribute(Qt.WA_DeleteOnClose)
             menu.move(position)
             menu.show()
 

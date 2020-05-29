@@ -134,9 +134,7 @@ class CueContextMenu(ClassBasedRegistry):
 
         if not issubclass(ref_class, Cue):
             raise TypeError(
-                "ref_class must be Cue or a subclass, not {0}".format(
-                    ref_class.__name__
-                )
+                f"ref_class must be Cue or a subclass, not {ref_class.__name__}"
             )
 
         super().add(item, ref_class)

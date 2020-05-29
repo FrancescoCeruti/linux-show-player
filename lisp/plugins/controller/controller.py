@@ -106,7 +106,7 @@ class Controller(Plugin):
 
     def delete_from_cue_map(self, cue):
         for actions_map in self.__cue_map.values():
-            actions_map.pop(cue)
+            actions_map.pop(cue, None)
 
     def perform_cue_action(self, key):
         for cue, actions in self.__cue_map.get(key, {}).items():

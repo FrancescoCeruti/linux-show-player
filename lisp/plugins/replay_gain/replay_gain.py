@@ -17,7 +17,6 @@
 
 import logging
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from math import pow
 from threading import Thread, Lock
 
 import gi
@@ -78,21 +77,15 @@ class ReplayGain(Plugin):
             else:
                 cues = self.app.cue_model.filter(MediaCue)
 
-            # Extract single uri(s), this way if a uri is used in more than
-            # one place, the gain is only calculated once.
+            # Extract single uri(s), this way if one uri is used in more than
+            # one place, the gain will be calculated only once.
             files = {}
             for cue in cues:
                 media = cue.media
                 uri = media.input_uri()
 
                 if uri is not None:
-                    if uri[:7] == "file://":
-                        uri = "file://" + self.app.session.abs_path(uri[7:])
-
-                    if uri not in files:
-                        files[uri] = [media]
-                    else:
-                        files[uri].append(media)
+                    files.setdefault(uri.uri, []).append(media)
 
             # Gain (main) thread
             self._gain_thread = GainMainThread(
@@ -331,9 +324,7 @@ class GstGain:
                 error, _ = message.parse_error()
                 self.gain_pipe.set_state(Gst.State.NULL)
 
-                logger.error(
-                    "GStreamer: {}".format(error.message), exc_info=error
-                )
+                logger.error(f"GStreamer: {error.message}", exc_info=error)
                 self.__release()
         except Exception:
             logger.exception(

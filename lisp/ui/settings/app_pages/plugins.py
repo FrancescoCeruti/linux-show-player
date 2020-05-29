@@ -73,9 +73,9 @@ class PluginsSettings(SettingsPage):
 
         if item is not None:
             plugin = item.data(Qt.UserRole)
-            html = "<b>Description: </b>{}".format(plugin.Description)
+            html = f"<b>Description: </b>{plugin.Description}"
             html += "<br /><br />"
-            html += "<b>Authors: </b>{}".format(", ".join(plugin.Authors))
+            html += f"<b>Authors: </b>{', '.join(plugin.Authors)}"
 
             self.pluginDescription.setHtml(html)
         else:

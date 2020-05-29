@@ -45,7 +45,7 @@ class ColorButton(QPushButton):
 
         if self._color is not None:
             self.setStyleSheet(
-                "QColorButton {{ background-color: {0}; }}".format(self._color)
+                f"ColorButton {{ background-color: {self._color}; }}"
             )
         else:
             self.setStyleSheet("")

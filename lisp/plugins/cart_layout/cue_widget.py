@@ -185,7 +185,9 @@ class CueWidget(QWidget):
             if visible:
                 self._dBMeterElement = self._cue.media.element("DbMeter")
                 if self._dBMeterElement is not None:
-                    self._dBMeterElement.level_ready.connect(self.dbMeter.plot)
+                    self._dBMeterElement.level_ready.connect(
+                        self.dbMeter.plot, Connection.QtQueued
+                    )
 
                 self.hLayout.insertWidget(2, self.dbMeter, 1)
                 self.dbMeter.show()

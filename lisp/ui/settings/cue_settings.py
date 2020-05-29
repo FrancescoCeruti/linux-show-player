@@ -42,16 +42,13 @@ class CueSettingsDialog(QDialog):
 
     def __init__(self, cue, **kwargs):
         """
-
         :param cue: Target cue, or a cue-type for multi-editing
         """
         super().__init__(**kwargs)
         self.setWindowModality(QtCore.Qt.ApplicationModal)
-        self.setMaximumSize(640, 510)
-        self.setMinimumSize(640, 510)
-        self.resize(640, 510)
+        self.setMinimumSize(800, 510)
+        self.resize(800, 510)
         self.setLayout(QVBoxLayout())
-        # self.layout().setContentsMargins(5, 5, 5, 10)
 
         if isinstance(cue, type):
             if issubclass(cue, Cue):
@@ -60,7 +57,7 @@ class CueSettingsDialog(QDialog):
             else:
                 raise TypeError(
                     "invalid cue type, must be a Cue subclass or a Cue object, "
-                    "not {}".format(cue.__name__)
+                    f"not {cue.__name__}"
                 )
         elif isinstance(cue, Cue):
             self.setWindowTitle(cue.name)
@@ -69,7 +66,7 @@ class CueSettingsDialog(QDialog):
         else:
             raise TypeError(
                 "invalid cue type, must be a Cue subclass or a Cue object, "
-                "not {}".format(typename(cue))
+                f"not {typename(cue)}"
             )
 
         self.mainPage = SettingsPagesTabWidget(parent=self)

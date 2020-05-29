@@ -24,6 +24,7 @@ from lisp.core.util import weak_call_proxy
 from lisp.plugins.gst_backend import elements as gst_elements
 from lisp.plugins.gst_backend.gi_repository import Gst
 from lisp.plugins.gst_backend.gst_element import GstMediaElements
+from lisp.plugins.gst_backend.gst_utils import GstError
 from lisp.ui.ui_utils import translate
 
 logger = logging.getLogger(__name__)
@@ -48,12 +49,6 @@ def media_finalizer(pipeline, message_handler, media_elements):
 
     # Dispose all the elements
     media_elements.clear()
-
-
-class GstError(Exception):
-    """Used to wrap GStreamer debug messages for the logging system."""
-
-    pass
 
 
 class GstMedia(Media):
@@ -150,7 +145,7 @@ class GstMedia(Media):
     def input_uri(self):
         try:
             return self.elements[0].input_uri()
-        except Exception:
+        except (IndexError, AttributeError):
             pass
 
     def update_properties(self, properties):
@@ -273,6 +268,10 @@ class GstMedia(Media):
                     # Otherwise go in READY state
                     self.__pipeline.set_state(Gst.State.READY)
                     self.__pipeline.get_state(Gst.SECOND)
+
+                    for element in self.elements:
+                        element.eos()
+
                     self.__reset_media()
                     self.eos.emit(self)
             elif message.type == Gst.MessageType.CLOCK_LOST:
@@ -282,7 +281,7 @@ class GstMedia(Media):
         if message.type == Gst.MessageType.ERROR:
             error, debug = message.parse_error()
             logger.error(
-                "GStreamer: {}".format(error.message), exc_info=GstError(debug)
+                f"GStreamer: {error.message}", exc_info=GstError(debug)
             )
 
             # Set the pipeline to NULL

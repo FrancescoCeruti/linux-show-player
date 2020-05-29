@@ -77,8 +77,14 @@ class Slot:
     def is_alive(self):
         return self._reference() is not None
 
-    def _expired(self, reference):
-        self._callback(self._slot_id)
+    def _expired(self, _):
+        if self._callback is not None:
+            self._callback(self._slot_id)
+
+    def __str__(self):
+        return (
+            f"{self.__class__.__qualname__}: {self._reference().__qualname__}"
+        )
 
 
 class AsyncSlot(Slot):
@@ -178,7 +184,7 @@ class Signal:
         :raise ValueError: if mode not in Connection enum
         """
         if mode not in Connection:
-            raise ValueError("invalid mode value: {0}".format(mode))
+            raise ValueError(f"invalid mode value: {mode}")
 
         with self.__lock:
             sid = slot_id(slot_callable)

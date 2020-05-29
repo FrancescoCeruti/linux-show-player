@@ -23,6 +23,8 @@ from PyQt5.QtWidgets import QDialog, qApp
 
 from lisp import layout
 from lisp.command.stack import CommandsStack
+from lisp.core.configuration import DummyConfiguration
+from lisp.core.session import Session
 from lisp.core.signal import Signal
 from lisp.core.singleton import Singleton
 from lisp.core.util import filter_live_properties
@@ -30,7 +32,6 @@ from lisp.cues.cue import Cue
 from lisp.cues.cue_factory import CueFactory
 from lisp.cues.cue_model import CueModel
 from lisp.cues.media_cue import MediaCue
-from lisp.session import Session
 from lisp.ui.layoutselect import LayoutSelect
 from lisp.ui.mainwindow import MainWindow
 from lisp.ui.settings.app_configuration import AppConfigurationDialog
@@ -48,7 +49,7 @@ logger = logging.getLogger(__name__)
 
 
 class Application(metaclass=Singleton):
-    def __init__(self, app_conf):
+    def __init__(self, app_conf=DummyConfiguration()):
         self.session_created = Signal()
         self.session_before_finalize = Signal()
 
@@ -164,9 +165,8 @@ class Application(metaclass=Singleton):
         if self.__session is not None:
             self.session_before_finalize.emit(self.session)
 
-            self.__commands_stack.clear()
             self.__session.finalize()
-            self.__session = None
+            self.__commands_stack.clear()
 
     def __save_to_file(self, session_file):
         """Save the current session into a file."""
@@ -188,9 +188,11 @@ class Application(metaclass=Singleton):
         # Write to a file the json-encoded session
         with open(session_file, mode="w", encoding="utf-8") as file:
             if self.conf.get("session.minSave", False):
-                file.write(json.dumps(session_dict, separators=(",", ":")))
+                dump_options = {"separators": (",", ":")}
             else:
-                file.write(json.dumps(session_dict, sort_keys=True, indent=4))
+                dump_options = {"sort_keys": True, "indent": 4}
+
+            file.write(json.dumps(session_dict, **dump_options))
 
         # Save last session path
         self.conf.set("session.lastPath", dirname(session_file))
@@ -225,9 +227,8 @@ class Application(metaclass=Singleton):
                     name = cues_dict.get("name", "No name")
                     logger.exception(
                         translate(
-                            "ApplicationError",
-                            'Unable to create the cue "{}"'.format(name),
-                        )
+                            "ApplicationError", 'Unable to create the cue "{}"',
+                        ).format(name)
                     )
 
             self.commands_stack.set_saved()

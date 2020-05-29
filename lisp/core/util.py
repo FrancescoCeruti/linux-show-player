@@ -16,6 +16,7 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import functools
+import hashlib
 import re
 import socket
 from collections.abc import Mapping, MutableMapping
@@ -89,45 +90,44 @@ def find_packages(path="."):
     ]
 
 
-def time_tuple(millis):
+def time_tuple(milliseconds):
     """Split the given time in a tuple.
 
-    :param millis: Number of milliseconds
-    :type millis: int
+    :param milliseconds: Number of milliseconds
+    :type milliseconds: int
 
-    :return (hours, minutes, seconds, milliseconds)
+    :returns: (hours, minutes, seconds, milliseconds)
     """
-    seconds, millis = divmod(millis, 1000)
+    seconds, milliseconds = divmod(milliseconds, 1000)
     minutes, seconds = divmod(seconds, 60)
     hours, minutes = divmod(minutes, 60)
 
-    return hours, minutes, seconds, millis
+    return hours, minutes, seconds, milliseconds
 
 
 def strtime(time, accurate=False):
     """Return a string from the given milliseconds time.
 
-    :returns:
-        hh:mm:ss when > 59min
-        mm:ss:00 when < 1h and accurate=False
-        mm:ss:z0 when < 1h and accurate=True
+     - when > 59min               -> hh:mm:ss
+     - when < 1h and accurate     -> mm:ss:00
+     - when < 1h and not accurate -> mm:ss:z0
     """
-    # Cast time to int to avoid formatting problems
-    time = time_tuple(int(time))
-    if time[0] > 0:
-        return "{:02}:{:02}:{:02}".format(*time[:-1])
+
+    hours, minutes, seconds, milliseconds = time_tuple(int(time))
+    if hours > 0:
+        return f"{hours:02}:{minutes:02}:{seconds:02}"
     elif accurate:
-        return "{:02}:{:02}.{}0".format(time[1], time[2], time[3] // 100)
+        return f"{minutes:02}:{seconds:02}.{milliseconds // 100}0"
     else:
-        return "{:02}:{:02}.00".format(*time[1:3])
+        return f"{minutes:02}:{seconds:02}.00"
 
 
-def compose_url(protocol, host, port, path="/"):
+def compose_url(scheme, host, port, path="/"):
     """Compose a URL."""
     if not path.startswith("/"):
         path = "/" + path
 
-    return "{}://{}:{}{}".format(protocol, host, port, path)
+    return f"{scheme}://{host}:{port}{path}"
 
 
 def greatest_common_superclass(instances):
@@ -255,6 +255,23 @@ def filter_live_properties(properties):
     :return:
     """
     return set(p for p in properties if not p.startswith("live_"))
+
+
+def file_hash(path, block_size=65536, **hasher_kwargs):
+    """Hash a file using `hashlib.blake2b`, the file is read in chunks.
+
+    :param path: the path of the file to hash
+    :param block_size: the size in bytes of the chunk to read
+    :param **hasher_kwargs: will be passed to the hash function
+    """
+    h = hashlib.blake2b(**hasher_kwargs)
+    with open(path, "rb") as file_to_hash:
+        buffer = file_to_hash.read(block_size)
+        while buffer:
+            h.update(buffer)
+            buffer = file_to_hash.read(block_size)
+
+    return h.hexdigest()
 
 
 class EqEnum(Enum):

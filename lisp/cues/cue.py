@@ -72,7 +72,7 @@ class CueNextAction(EqEnum):
 
 
 class Cue(HasProperties):
-    """Cue(s) are the base component for implement any kind of live-controllable
+    """Cue(s) are the base component to implement any kind of live-controllable
     element (live = during a show).
 
     A cue implement his behavior(s) reimplementing __start__, __stop__,
@@ -160,13 +160,13 @@ class Cue(HasProperties):
         self.fadeout_end = Signal()
 
         # Status signals
-        self.interrupted = Signal()  # self
-        self.started = Signal()  # self
-        self.stopped = Signal()  # self
-        self.paused = Signal()  # self
-        self.error = Signal()  # self
-        self.next = Signal()  # self
-        self.end = Signal()  # self
+        self.interrupted = Signal()
+        self.started = Signal()
+        self.stopped = Signal()
+        self.paused = Signal()
+        self.error = Signal()
+        self.next = Signal()
+        self.end = Signal()
 
         self.changed("next_action").connect(self.__next_action_changed)
 
@@ -176,7 +176,7 @@ class Cue(HasProperties):
         .. Note::
             Even if not specified in Cue.CueActions, when CueAction.Default
             is given, a "default" action is selected depending on the current
-            cue state, if this action is not supported nothing will be done.
+            cue state, if this action is not supported, nothing will be done.
 
         :param action: the action to be performed
         :type action: CueAction
@@ -212,19 +212,35 @@ class Cue(HasProperties):
             elif action == CueAction.FadeInResume:
                 self.resume(fade=self.fadein_duration > 0)
             elif action == CueAction.FadeOut:
-                duration = AppConfig().get("cue.fadeAction", 0)
-                fade = AppConfig().get(
-                    "cue.fadeActionType", FadeOutType.Linear.name
-                )
-
-                self.fadeout(duration, FadeOutType[fade])
+                if self.fadeout_duration > 0:
+                    self.fadeout(
+                        self.fadeout_duration, FadeOutType[self.fadeout_type]
+                    )
+                else:
+                    self.fadeout(
+                        self._default_fade_duration(),
+                        self._default_fade_type(
+                            FadeOutType, FadeOutType.Linear
+                        ),
+                    )
             elif action == CueAction.FadeIn:
-                duration = AppConfig().get("cue.fadeAction", 0)
-                fade = AppConfig().get(
-                    "cue.fadeActionType", FadeInType.Linear.name
-                )
+                if self.fadein_duration > 0:
+                    self.fadein(
+                        self.fadein_duration, FadeInType[self.fadein_type]
+                    )
+                else:
+                    self.fadein(
+                        self._default_fade_duration(),
+                        self._default_fade_type(FadeInType, FadeInType.Linear),
+                    )
 
-                self.fadein(duration, FadeInType[fade])
+    def _default_fade_duration(self):
+        return AppConfig().get("cue.fadeAction", 0)
+
+    def _default_fade_type(self, type_class, default=None):
+        return getattr(
+            type_class, AppConfig().get("cue.fadeActionType"), default
+        )
 
     @async_function
     def start(self, fade=False):
@@ -301,7 +317,7 @@ class Cue(HasProperties):
     def __start__(self, fade=False):
         """Implement the cue `start` behavior.
 
-        Long running task should not block this function (i.e. the fade should
+        Long running tasks should not block this function (i.e. the fade should
         be performed in another thread).
 
         When called from `Cue.start()`, `_st_lock` is acquired.
@@ -359,9 +375,9 @@ class Cue(HasProperties):
     def __stop__(self, fade=False):
         """Implement the cue `stop` behavior.
 
-        Long running task should block this function (i.e. the fade should
-        "block" this function), when this happen `_st_lock` must be released and
-        then re-acquired.
+        Long running tasks should block this function (i.e. the fade should
+        "block" this function), when this happens `_st_lock` must be released
+        and then re-acquired.
 
         If called during a `fadeout` operation this should be interrupted,
         the cue stopped and return `True`.
@@ -410,8 +426,8 @@ class Cue(HasProperties):
     def __pause__(self, fade=False):
         """Implement the cue `pause` behavior.
 
-        Long running task should block this function (i.e. the fade should
-        "block" this function), when this happen `_st_lock` must be released and
+        Long running tasks should block this function (i.e. the fade should
+        "block" this function), when this happens `_st_lock` must be released and
         then re-acquired.
 
         If called during a `fadeout` operation this should be interrupted,
@@ -462,7 +478,7 @@ class Cue(HasProperties):
     def __interrupt__(self, fade=False):
         """Implement the cue `interrupt` behavior.
 
-        Long running task should block this function without releasing
+        Long running tasks should block this function without releasing
         `_st_lock`.
 
         :param fade: True if a fade should be performed (when supported)

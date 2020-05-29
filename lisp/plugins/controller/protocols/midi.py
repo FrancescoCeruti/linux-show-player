@@ -14,6 +14,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
+import logging
 
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import (
@@ -26,23 +27,39 @@ from PyQt5.QtWidgets import (
     QTableWidget,
     QHeaderView,
     QGridLayout,
+    QLabel,
+    QHBoxLayout,
 )
 
 from lisp.plugins import get_plugin, PluginNotLoadedError
 from lisp.plugins.controller.common import LayoutAction, tr_layout_action
 from lisp.plugins.controller.protocol import Protocol
+from lisp.plugins.midi.midi_utils import (
+    MIDI_MSGS_NAME,
+    midi_data_from_msg,
+    midi_msg_from_data,
+    midi_from_dict,
+    midi_from_str,
+    MIDI_MSGS_SPEC,
+    MIDI_ATTRS_SPEC,
+)
+from lisp.plugins.midi.widgets import MIDIMessageEditDialog
 from lisp.ui.qdelegates import (
-    ComboBoxDelegate,
-    SpinBoxDelegate,
     CueActionDelegate,
     EnumComboBoxDelegate,
+    LabelDelegate,
 )
 from lisp.ui.qmodels import SimpleTableModel
 from lisp.ui.settings.pages import CuePageMixin, SettingsPage
 from lisp.ui.ui_utils import translate
 
 
+logger = logging.getLogger(__name__)
+
+
 class MidiSettings(SettingsPage):
+    FILTER_ALL = "__all__"
+
     Name = QT_TRANSLATE_NOOP("SettingsPageName", "MIDI Controls")
 
     def __init__(self, actionDelegate, **kwargs):
@@ -52,18 +69,10 @@ class MidiSettings(SettingsPage):
 
         self.midiGroup = QGroupBox(self)
         self.midiGroup.setTitle(translate("ControllerMidiSettings", "MIDI"))
-        # self.midiGroup.setEnabled(check_module('midi'))
         self.midiGroup.setLayout(QGridLayout())
         self.layout().addWidget(self.midiGroup)
 
-        self.midiModel = SimpleTableModel(
-            [
-                translate("ControllerMidiSettings", "Type"),
-                translate("ControllerMidiSettings", "Channel"),
-                translate("ControllerMidiSettings", "Note"),
-                translate("ControllerMidiSettings", "Action"),
-            ]
-        )
+        self.midiModel = MidiModel()
 
         self.midiView = MidiView(actionDelegate, parent=self.midiGroup)
         self.midiView.setModel(self.midiModel)
@@ -81,16 +90,24 @@ class MidiSettings(SettingsPage):
         self.midiCapture.clicked.connect(self.capture_message)
         self.midiGroup.layout().addWidget(self.midiCapture, 2, 0)
 
-        self.msgTypeCombo = QComboBox(self.midiGroup)
-        self.msgTypeCombo.addItem(
-            translate("ControllerMidiSettings", 'Filter "note on"')
+        self.filterLayout = QHBoxLayout()
+        self.midiGroup.layout().addLayout(self.filterLayout, 2, 1)
+
+        self.filterLabel = QLabel(self.midiGroup)
+        self.filterLabel.setAlignment(Qt.AlignCenter)
+        self.filterLayout.addWidget(self.filterLabel)
+
+        self.filterTypeCombo = QComboBox(self.midiGroup)
+        self.filterLayout.addWidget(self.filterTypeCombo)
+
+        self.filterTypeCombo.addItem(
+            translate("ControllerMidiSettings", "-- All Messages --"),
+            self.FILTER_ALL,
         )
-        self.msgTypeCombo.setItemData(0, "note_on", Qt.UserRole)
-        self.msgTypeCombo.addItem(
-            translate("ControllerMidiSettings", 'Filter "note off"')
-        )
-        self.msgTypeCombo.setItemData(1, "note_off", Qt.UserRole)
-        self.midiGroup.layout().addWidget(self.msgTypeCombo, 2, 1)
+        for msg_type, msg_name in MIDI_MSGS_NAME.items():
+            self.filterTypeCombo.addItem(
+                translate("MIDIMessageType", msg_name), msg_type
+            )
 
         self.retranslateUi()
 
@@ -103,7 +120,11 @@ class MidiSettings(SettingsPage):
     def retranslateUi(self):
         self.addButton.setText(translate("ControllerSettings", "Add"))
         self.removeButton.setText(translate("ControllerSettings", "Remove"))
+
         self.midiCapture.setText(translate("ControllerMidiSettings", "Capture"))
+        self.filterLabel.setText(
+            translate("ControllerMidiSettings", "Capture filter")
+        )
 
     def enableCheck(self, enabled):
         self.midiGroup.setCheckable(enabled)
@@ -111,17 +132,24 @@ class MidiSettings(SettingsPage):
 
     def getSettings(self):
         entries = []
-        for row in self.midiModel.rows:
-            message = Midi.str_from_values(row[0], row[1] - 1, row[2])
-            entries.append((message, row[-1]))
+        for row in range(self.midiModel.rowCount()):
+            message, action = self.midiModel.getMessage(row)
+            entries.append((str(message), action))
 
         return {"midi": entries}
 
     def loadSettings(self, settings):
-        if "midi" in settings:
-            for entries in settings["midi"]:
-                m_type, channel, note = Midi.from_string(entries[0])
-                self.midiModel.appendRow(m_type, channel + 1, note, entries[1])
+        for entry in settings.get("midi", ()):
+            try:
+                self.midiModel.appendMessage(midi_from_str(entry[0]), entry[1])
+            except Exception:
+                logger.warning(
+                    translate(
+                        "ControllerMidiSettingsWarning",
+                        "Error while importing configuration entry, skipped.",
+                    ),
+                    exc_info=True,
+                )
 
     def capture_message(self):
         handler = self.__midi.input
@@ -137,15 +165,22 @@ class MidiSettings(SettingsPage):
         handler.new_message_alt.disconnect(self.__add_message)
         handler.alternate_mode = False
 
-    def __add_message(self, msg):
-        if self.msgTypeCombo.currentData(Qt.UserRole) == msg.type:
-            self.midiModel.appendRow(
-                msg.type, msg.channel + 1, msg.note, self._defaultAction
-            )
+    def __add_message(self, message):
+        mgs_filter = self.filterTypeCombo.currentData(Qt.UserRole)
+        if mgs_filter == self.FILTER_ALL or message.type == mgs_filter:
+            if hasattr(message, "velocity"):
+                message = message.copy(velocity=0)
+
+            self.midiModel.appendMessage(message, self._defaultAction)
 
     def __new_message(self):
-        message_type = self.msgTypeCombo.currentData(Qt.UserRole)
-        self.midiModel.appendRow(message_type, 1, 0, self._defaultAction)
+        dialog = MIDIMessageEditDialog()
+        if dialog.exec() == MIDIMessageEditDialog.Accepted:
+            message = midi_from_dict(dialog.getMessageDict())
+            if hasattr(message, "velocity"):
+                message.velocity = 0
+
+            self.midiModel.appendMessage(message, self._defaultAction)
 
     def __remove_message(self):
         self.midiModel.removeRow(self.midiView.currentIndex().row())
@@ -176,14 +211,79 @@ class MidiLayoutSettings(MidiSettings):
         self._defaultAction = LayoutAction.Go.name
 
 
+class MidiMessageTypeDelegate(LabelDelegate):
+    def _text(self, option, index):
+        message_type = index.data()
+        return translate(
+            "MIDIMessageType", MIDI_MSGS_NAME.get(message_type, "undefined")
+        )
+
+
+class MidiValueDelegate(LabelDelegate):
+    def _text(self, option, index):
+        option.displayAlignment = Qt.AlignCenter
+
+        value = index.data()
+        if value is not None:
+            model = index.model()
+            message_type = model.data(model.index(index.row(), 0))
+            message_spec = MIDI_MSGS_SPEC.get(message_type, ())
+
+            if len(message_spec) >= index.column():
+                attr = message_spec[index.column() - 1]
+                attr_spec = MIDI_ATTRS_SPEC.get(attr)
+
+                if attr_spec is not None:
+                    return str(value - attr_spec[-1])
+
+        return ""
+
+
+class MidiModel(SimpleTableModel):
+    def __init__(self):
+        super().__init__(
+            [
+                translate("ControllerMidiSettings", "Type"),
+                translate("ControllerMidiSettings", "Data 1"),
+                translate("ControllerMidiSettings", "Data 2"),
+                translate("ControllerMidiSettings", "Data 3"),
+                translate("ControllerMidiSettings", "Action"),
+            ]
+        )
+
+    def appendMessage(self, message, action):
+        data = midi_data_from_msg(message)
+        data.extend((None,) * (3 - len(data)))
+        self.appendRow(message.type, *data, action)
+
+    def updateMessage(self, row, message, action):
+        data = midi_data_from_msg(message)
+        data.extend((None,) * (3 - len(data)))
+        self.updateRow(row, message.type, *data, action)
+
+    def getMessage(self, row):
+        if row < len(self.rows):
+            return (
+                midi_msg_from_data(self.rows[row][0], self.rows[row][1:4]),
+                self.rows[row][4],
+            )
+
+    def flags(self, index):
+        if index.column() <= 3:
+            return Qt.ItemIsEnabled | Qt.ItemIsSelectable
+        else:
+            return super().flags(index)
+
+
 class MidiView(QTableView):
     def __init__(self, actionDelegate, **kwargs):
         super().__init__(**kwargs)
 
         self.delegates = [
-            ComboBoxDelegate(options=["note_on", "note_off"]),
-            SpinBoxDelegate(minimum=1, maximum=16),
-            SpinBoxDelegate(minimum=0, maximum=127),
+            MidiMessageTypeDelegate(),
+            MidiValueDelegate(),
+            MidiValueDelegate(),
+            MidiValueDelegate(),
             actionDelegate,
         ]
 
@@ -193,7 +293,11 @@ class MidiView(QTableView):
         self.setShowGrid(False)
         self.setAlternatingRowColors(True)
 
-        self.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.horizontalHeader().setSectionResizeMode(
+            QHeaderView.ResizeToContents
+        )
+        self.horizontalHeader().setMinimumSectionSize(80)
+        self.horizontalHeader().setStretchLastSection(True)
         self.horizontalHeader().setHighlightSections(False)
 
         self.verticalHeader().sectionResizeMode(QHeaderView.Fixed)
@@ -202,6 +306,20 @@ class MidiView(QTableView):
 
         for column, delegate in enumerate(self.delegates):
             self.setItemDelegateForColumn(column, delegate)
+
+        self.doubleClicked.connect(self.__doubleClicked)
+
+    def __doubleClicked(self, index):
+        if index.column() <= 3:
+            message, action = self.model().getMessage(index.row())
+
+            dialog = MIDIMessageEditDialog()
+            dialog.setMessageDict(message.dict())
+
+            if dialog.exec() == MIDIMessageEditDialog.Accepted:
+                self.model().updateMessage(
+                    index.row(), midi_from_dict(dialog.getMessageDict()), action
+                )
 
 
 class Midi(Protocol):
@@ -214,18 +332,7 @@ class Midi(Protocol):
         get_plugin("Midi").input.new_message.connect(self.__new_message)
 
     def __new_message(self, message):
-        if message.type == "note_on" or message.type == "note_off":
-            self.protocol_event.emit(Midi.str_from_message(message))
+        if hasattr(message, "velocity"):
+            message = message.copy(velocity=0)
 
-    @staticmethod
-    def str_from_message(message):
-        return Midi.str_from_values(message.type, message.channel, message.note)
-
-    @staticmethod
-    def str_from_values(m_type, channel, note):
-        return "{} {} {}".format(m_type, channel, note)
-
-    @staticmethod
-    def from_string(message_str):
-        m_type, channel, note = message_str.split()
-        return m_type, int(channel), int(note)
+        self.protocol_event.emit(str(message))

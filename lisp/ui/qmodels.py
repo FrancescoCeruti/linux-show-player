@@ -45,6 +45,16 @@ class SimpleTableModel(QAbstractTableModel):
         self.rows.append(list(values))
         self.endInsertRows()
 
+    def updateRow(self, row, *values):
+        if -1 < row < len(self.rows):
+            self.rows[row] = list(values)
+
+        self.dataChanged.emit(
+            self.index(row, 0),
+            self.index(row, len(self.columns)),
+            [Qt.DisplayRole, Qt.EditRole],
+        )
+
     def removeRow(self, row, parent=QModelIndex()):
         if -1 < row < len(self.rows):
             self.beginRemoveRows(parent, row, row)

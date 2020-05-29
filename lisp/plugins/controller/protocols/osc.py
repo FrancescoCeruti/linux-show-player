@@ -18,6 +18,7 @@
 
 
 import ast
+import logging
 
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import (
@@ -33,6 +34,7 @@ from PyQt5.QtWidgets import (
     QDialogButtonBox,
     QLineEdit,
     QMessageBox,
+    QSpacerItem,
 )
 
 from lisp.plugins import get_plugin, PluginNotLoadedError
@@ -42,110 +44,151 @@ from lisp.plugins.osc.osc_delegate import OscArgumentDelegate
 from lisp.plugins.osc.osc_server import OscMessageType
 from lisp.ui.qdelegates import (
     ComboBoxDelegate,
-    LineEditDelegate,
     CueActionDelegate,
     EnumComboBoxDelegate,
+    LabelDelegate,
 )
 from lisp.ui.qmodels import SimpleTableModel
 from lisp.ui.settings.pages import SettingsPage, CuePageMixin
 from lisp.ui.ui_utils import translate
 
+logger = logging.getLogger(__name__)
+
 
 class OscMessageDialog(QDialog):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.setMaximumSize(500, 300)
+        self.setLayout(QGridLayout())
         self.setMinimumSize(500, 300)
-        self.resize(500, 300)
+        self.resize(500, 350)
 
-        self.setLayout(QVBoxLayout())
-        self.layout().setAlignment(Qt.AlignTop)
+        self.pathLabel = QLabel(self)
+        self.layout().addWidget(self.pathLabel, 0, 0, 1, 2)
 
-        self.groupBox = QGroupBox(self)
-        self.groupBox.setLayout(QGridLayout())
-        self.layout().addWidget(self.groupBox)
-
-        self.pathLabel = QLabel()
-        self.groupBox.layout().addWidget(self.pathLabel, 0, 0, 1, 2)
-
-        self.pathEdit = QLineEdit()
-        self.groupBox.layout().addWidget(self.pathEdit, 1, 0, 1, 2)
+        self.pathEdit = QLineEdit(self)
+        self.layout().addWidget(self.pathEdit, 1, 0, 1, 2)
 
         self.model = SimpleTableModel(
             [translate("Osc Cue", "Type"), translate("Osc Cue", "Argument")]
         )
+        self.model.dataChanged.connect(self.__argumentChanged)
 
-        self.model.dataChanged.connect(self.__argument_changed)
-
-        self.view = OscArgumentView(parent=self.groupBox)
-        self.view.doubleClicked.connect(self.__update_editor)
+        self.view = OscArgumentView(parent=self)
         self.view.setModel(self.model)
-        self.groupBox.layout().addWidget(self.view, 2, 0, 1, 2)
+        self.layout().addWidget(self.view, 2, 0, 1, 2)
+
+        self.addButton = QPushButton(self)
+        self.addButton.clicked.connect(self.__addArgument)
+        self.layout().addWidget(self.addButton, 3, 0)
+
+        self.removeButton = QPushButton(self)
+        self.removeButton.clicked.connect(self.__removeArgument)
+        self.layout().addWidget(self.removeButton, 3, 1)
+
+        self.layout().addItem(QSpacerItem(0, 20), 4, 0, 1, 2)
 
         self.buttons = QDialogButtonBox(self)
         self.buttons.addButton(QDialogButtonBox.Cancel)
         self.buttons.addButton(QDialogButtonBox.Ok)
-        self.layout().addWidget(self.buttons)
-
-        self.addButton = QPushButton(self.groupBox)
-        self.addButton.clicked.connect(self.__add_argument)
-        self.groupBox.layout().addWidget(self.addButton, 3, 0)
-
-        self.removeButton = QPushButton(self.groupBox)
-        self.removeButton.clicked.connect(self.__remove_argument)
-        self.groupBox.layout().addWidget(self.removeButton, 3, 1)
+        self.layout().addWidget(self.buttons, 5, 0, 1, 2)
 
         self.buttons.accepted.connect(self.accept)
         self.buttons.rejected.connect(self.reject)
 
         self.retranslateUi()
 
-    def __add_argument(self):
-        self.model.appendRow(OscMessageType.Int.value, 0)
-
-    def __remove_argument(self):
-        if self.model.rowCount() and self.view.currentIndex().row() > -1:
-            self.model.removeRow(self.view.currentIndex().row())
-
-    def __update_editor(self, model_index):
-        column = model_index.column()
-        row = model_index.row()
-        if column == 1:
-            model = model_index.model()
-            osc_type = model.rows[row][0]
-            delegate = self.view.itemDelegate(model_index)
-            delegate.updateEditor(OscMessageType(osc_type))
-
-    def __argument_changed(self, index_topleft, index_bottomright, roles):
-        if not (Qt.EditRole in roles):
-            return
-
-        model = self.model
-        curr_row = index_topleft.row()
-        model_row = model.rows[curr_row]
-        curr_col = index_bottomright.column()
-        osc_type = model_row[0]
-
-        if curr_col == 0:
-            if osc_type == "Integer" or osc_type == "Float":
-                model_row[1] = 0
-            elif osc_type == "Bool":
-                model_row[1] = True
-            else:
-                model_row[1] = ""
-
     def retranslateUi(self):
-        self.groupBox.setTitle(
-            translate("ControllerOscSettings", "OSC Message")
-        )
-        self.pathLabel.setText(
-            translate(
-                "ControllerOscSettings",
-                'OSC Path: (example: "/path/to/something")',
-            )
+        self.setWindowTitle(translate("ControllerOscSettings", "OSC Message"))
+        self.pathLabel.setText(translate("ControllerOscSettings", "OSC Path:",))
+        self.pathEdit.setPlaceholderText(
+            translate("ControllerOscSettings", "/path/to/method")
         )
         self.addButton.setText(translate("OscCue", "Add"))
         self.removeButton.setText(translate("OscCue", "Remove"))
+
+    def getMessage(self):
+        path = self.pathEdit.text()
+        types = ""
+        arguments = []
+
+        for rowType, rowValue in self.model.rows:
+            if rowType == OscMessageType.Bool:
+                types += "T" if rowValue else "F"
+            else:
+                if rowType == OscMessageType.Int:
+                    types += "i"
+                elif rowType == OscMessageType.Float:
+                    types += "f"
+                elif rowType == OscMessageType.String:
+                    types += "s"
+                else:
+                    raise TypeError("Unsupported Osc Type")
+
+                arguments.append(rowValue)
+
+        return path, types, str(arguments)[1:-1]
+
+    def setMessage(self, path, types, arguments):
+        self.pathEdit.setText(path)
+        # Split strings
+        types = tuple(types)
+        arguments = ast.literal_eval(f"[{arguments}]")
+
+        # We keep a separate index, because booleans don't have a value
+        valIndex = 0
+        for t in types:
+            if t == "T" or t == "F":
+                rowType = OscMessageType.Bool.value
+                rowValue = t == "T"
+            elif valIndex < len(arguments):
+                if t == "i":
+                    rowType = OscMessageType.Int.value
+                    rowValue = self.__castValue(arguments[valIndex], int, 0)
+                elif t == "f":
+                    rowType = OscMessageType.Float.value
+                    rowValue = self.__castValue(arguments[valIndex], float, 0.0)
+                elif t == "s":
+                    rowType = OscMessageType.String.value
+                    rowValue = arguments[valIndex]
+                else:
+                    valIndex += 1
+                    continue
+
+                valIndex += 1
+            else:
+                continue
+
+            self.model.appendRow(rowType, rowValue)
+
+    def __addArgument(self):
+        self.model.appendRow(OscMessageType.Int.value, 0)
+
+    def __removeArgument(self):
+        if self.model.rowCount() and self.view.currentIndex().row() > -1:
+            self.model.removeRow(self.view.currentIndex().row())
+
+    def __argumentChanged(self, topLeft, bottomRight, roles):
+        # If the "Type" column has changed
+        if Qt.EditRole in roles and bottomRight.column() == 0:
+            # Get the edited row
+            row = self.model.rows[topLeft.row()]
+            oscType = row[0]
+
+            # Update the value column with a proper type
+            if oscType == OscMessageType.Int:
+                row[1] = self.__castValue(row[1], int, 0)
+            elif oscType == OscMessageType.Float:
+                row[1] = self.__castValue(row[1], float, 0.0)
+            elif oscType == OscMessageType.Bool:
+                row[1] = True
+            else:
+                row[1] = ""
+
+    def __castValue(self, value, toType, default):
+        try:
+            return toType(value)
+        except (TypeError, ValueError):
+            return default
 
 
 class OscArgumentView(QTableView):
@@ -190,14 +233,7 @@ class OscSettings(SettingsPage):
         self.oscGroup.setLayout(QGridLayout())
         self.layout().addWidget(self.oscGroup)
 
-        self.oscModel = SimpleTableModel(
-            [
-                translate("ControllerOscSettings", "Path"),
-                translate("ControllerOscSettings", "Types"),
-                translate("ControllerOscSettings", "Arguments"),
-                translate("ControllerOscSettings", "Actions"),
-            ]
-        )
+        self.oscModel = OscModel()
 
         self.OscView = OscView(actionDelegate, parent=self.oscGroup)
         self.OscView.setModel(self.oscModel)
@@ -260,16 +296,24 @@ class OscSettings(SettingsPage):
         entries = []
         for row in self.oscModel.rows:
             message = Osc.key_from_values(row[0], row[1], row[2])
-            entries.append((message, row[-1]))
+            entries.append((message, row[3]))
 
         return {"osc": entries}
 
     def loadSettings(self, settings):
-        if "osc" in settings:
-            for options in settings["osc"]:
-                key = Osc.message_from_key(options[0])
+        for entry in settings.get("osc", ()):
+            try:
+                message = Osc.message_from_key(entry[0])
                 self.oscModel.appendRow(
-                    key[0], key[1], "{}".format(key[2:])[1:-1], options[1]
+                    message[0], message[1], str(message[2:])[1:-1], entry[1]
+                )
+            except Exception:
+                logger.warning(
+                    translate(
+                        "ControllerOscSettingsWarning",
+                        "Error while importing configuration entry, skipped.",
+                    ),
+                    exc_info=True,
                 )
 
     def capture_message(self):
@@ -277,7 +321,7 @@ class OscSettings(SettingsPage):
 
         result = self.captureDialog.exec()
         if result == QDialog.Accepted and self.capturedMessage["path"]:
-            args = "{}".format(self.capturedMessage["args"])[1:-1]
+            args = str(self.capturedMessage["args"])[1:-1]
             self.oscModel.appendRow(
                 self.capturedMessage["path"],
                 self.capturedMessage["types"],
@@ -287,54 +331,33 @@ class OscSettings(SettingsPage):
 
         self.__osc.server.new_message.disconnect(self.__show_message)
 
-        self.captureLabel.setText("Waiting for message:")
+        self.captureLabel.setText(
+            translate("ControllerOscSettings", "Waiting for messages:")
+        )
 
-    def __show_message(self, path, args, types):
+    def __show_message(self, path, args, types, *_, **__):
         self.capturedMessage["path"] = path
         self.capturedMessage["types"] = types
         self.capturedMessage["args"] = args
-        self.captureLabel.setText(
-            'OSC: "{0}" "{1}" {2}'.format(
-                self.capturedMessage["path"],
-                self.capturedMessage["types"],
-                self.capturedMessage["args"],
-            )
-        )
+        self.captureLabel.setText(f'OSC: "{path}" "{types}" {args}')
 
     def __new_message(self):
         dialog = OscMessageDialog(parent=self)
         if dialog.exec() == dialog.Accepted:
-            path = dialog.pathEdit.text()
-            if len(path) < 2 or path[0] is not "/":
+            path, types, arguments = dialog.getMessage()
+
+            if len(path) < 2 or path[0] != "/":
                 QMessageBox.warning(
                     self,
-                    "Warning",
-                    "Osc path seems not valid, \ndo not forget to edit the "
-                    "path later.",
+                    translate("ControllerOscSettingsWarning", "Warning"),
+                    translate(
+                        "ControllerOscSettingsWarning",
+                        "Osc path seems invalid,\n"
+                        "do not forget to edit the path later.",
+                    ),
                 )
 
-            types = ""
-            arguments = []
-            for row in dialog.model.rows:
-                if row[0] == "Bool":
-                    if row[1] is True:
-                        types += "T"
-                    else:
-                        types += "F"
-                else:
-                    if row[0] == "Integer":
-                        types += "i"
-                    elif row[0] == "Float":
-                        types += "f"
-                    elif row[0] == "String":
-                        types += "s"
-                    else:
-                        raise TypeError("Unsupported Osc Type")
-                    arguments.append(row[1])
-
-            self.oscModel.appendRow(
-                path, types, "{}".format(arguments)[1:-1], self._defaultAction
-            )
+            self.oscModel.appendRow(path, types, arguments, self._defaultAction)
 
     def __remove_message(self):
         if self.oscModel.rowCount() and self.OscView.currentIndex().row() > -1:
@@ -371,9 +394,9 @@ class OscView(QTableView):
         super().__init__(**kwargs)
 
         self.delegates = [
-            LineEditDelegate(),
-            LineEditDelegate(),
-            LineEditDelegate(),
+            LabelDelegate(),
+            LabelDelegate(),
+            LabelDelegate(),
             actionDelegate,
         ]
 
@@ -393,6 +416,38 @@ class OscView(QTableView):
         for column, delegate in enumerate(self.delegates):
             self.setItemDelegateForColumn(column, delegate)
 
+        self.doubleClicked.connect(self.__doubleClicked)
+
+    def __doubleClicked(self, index):
+        if index.column() <= 2:
+            row = self.model().rows[index.row()]
+            dialog = OscMessageDialog()
+            dialog.setMessage(row[0], row[1], row[2])
+
+            if dialog.exec() == dialog.Accepted:
+                path, types, arguments = dialog.getMessage()
+                self.model().updateRow(
+                    index.row(), path, types, arguments, row[3]
+                )
+
+
+class OscModel(SimpleTableModel):
+    def __init__(self):
+        super().__init__(
+            [
+                translate("ControllerOscSettings", "Path"),
+                translate("ControllerOscSettings", "Types"),
+                translate("ControllerOscSettings", "Arguments"),
+                translate("ControllerOscSettings", "Action"),
+            ]
+        )
+
+    def flags(self, index):
+        if index.column() <= 2:
+            return Qt.ItemIsEnabled | Qt.ItemIsSelectable
+
+        return super().flags(index)
+
 
 class Osc(Protocol):
     CueSettings = OscCueSettings
@@ -410,17 +465,15 @@ class Osc(Protocol):
 
     @staticmethod
     def key_from_message(path, types, args):
-        key = [path, types, *args]
-        return "OSC{}".format(key)
+        return f"OSC{[path, types, *args]}"
 
     @staticmethod
     def key_from_values(path, types, args):
         if not types:
-            return "OSC['{0}', '{1}']".format(path, types)
+            return f"OSC['{path}', '{types}']"
         else:
-            return "OSC['{0}', '{1}', {2}]".format(path, types, args)
+            return f"OSC['{path}', '{types}', {args}]"
 
     @staticmethod
     def message_from_key(key):
-        key = ast.literal_eval(key[3:])
-        return key
+        return ast.literal_eval(key[3:])

@@ -15,9 +15,12 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+from typing import Union
+
 from lisp.backend.media_element import MediaElement, ElementType
 from lisp.core.has_properties import HasInstanceProperties
 from lisp.core.properties import Property, InstanceProperty
+from lisp.core.session_uri import SessionURI
 from lisp.core.util import typename
 
 
@@ -39,6 +42,33 @@ class GstProperty(Property):
 
             element = getattr(instance, self.element_name)
             element.set_property(self.property_name, value)
+
+
+class GstURIProperty(GstProperty):
+    def __init__(self, element_name, property_name, **meta):
+        super().__init__(
+            element_name,
+            property_name,
+            default="",
+            adapter=self._adepter,
+            **meta,
+        )
+
+    def __set__(self, instance, value):
+        super().__set__(instance, SessionURI(value))
+
+    def __get__(self, instance, owner=None):
+        value = super().__get__(instance, owner)
+        if isinstance(value, SessionURI):
+            if value.is_local:
+                return value.relative_path
+            else:
+                return value.uri
+
+        return value
+
+    def _adepter(self, value: SessionURI):
+        return value.uri
 
 
 class GstLiveProperty(Property):
@@ -70,17 +100,22 @@ class GstMediaElement(MediaElement):
         super().__init__()
         self.pipeline = pipeline
 
-    def interrupt(self):
-        """Called before Media interrupt"""
-
-    def stop(self):
-        """Called before Media stop"""
+    def play(self):
+        """Called before Media play"""
 
     def pause(self):
         """Called before Media pause"""
 
-    def play(self):
-        """Called before Media play"""
+    def stop(self):
+        """Called before Media stop"""
+
+    def eos(self):
+        """Called after Media ends. Defaults to `stop()`"""
+        self.stop()
+
+    def interrupt(self):
+        """Called before Media interrupt. Defaults to `stop()`"""
+        self.stop()
 
     def dispose(self):
         """Clean up the element"""
@@ -113,7 +148,7 @@ class GstSrcElement(GstMediaElement):
 
     duration = Property(default=0)
 
-    def input_uri(self):
+    def input_uri(self) -> Union[SessionURI, type(None)]:
         """Return the input uri or None"""
         return None
 

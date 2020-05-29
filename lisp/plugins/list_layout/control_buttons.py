@@ -67,7 +67,7 @@ class ShowControlButtons(QWidget):
     def newButton(self, icon):
         button = QIconPushButton(self)
         button.setFocusPolicy(Qt.NoFocus)
-        button.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Expanding)
+        button.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
         button.setIcon(icon)
         button.setIconSize(QSize(32, 32))
         return button

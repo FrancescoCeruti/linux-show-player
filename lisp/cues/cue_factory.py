@@ -36,7 +36,7 @@ class CueFactory:
 
         :param cue_type: The cue class name
         :type cue_type: str
-        :param factory: The cue class or a factory function
+        :param factory: The cue class, or a factory function
         """
         cls.__REGISTRY[cue_type] = factory
 
@@ -75,7 +75,7 @@ class CueFactory:
 
         if not callable(factory):
             raise Exception(
-                "Cue not available or badly registered: {}".format(cue_type)
+                f"Cue not available or badly registered: {cue_type}"
             )
 
         return factory(id=cue_id, **kwargs)

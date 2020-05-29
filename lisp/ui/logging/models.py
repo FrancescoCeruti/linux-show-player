@@ -135,9 +135,8 @@ class LogRecordFilterModel(QSortFilterProxyModel):
             super().setSourceModel(source_model)
         else:
             raise TypeError(
-                "LogRecordFilterModel source must be LogRecordModel, not {}".format(
-                    typename(source_model)
-                )
+                "LogRecordFilterModel source must be LogRecordModel, "
+                f"not {typename(source_model)}"
             )
 
     def filterAcceptsRow(self, source_row, source_parent):

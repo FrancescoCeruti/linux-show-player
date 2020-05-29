@@ -16,7 +16,7 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
-from PyQt5.QtWidgets import QVBoxLayout, QGroupBox
+from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QLabel
 
 from lisp.plugins.gst_backend.gst_pipe_edit import GstPipeEdit
 from lisp.ui.settings.pages import SettingsPage
@@ -33,7 +33,17 @@ class GstSettings(SettingsPage):
 
         self.pipeGroup = QGroupBox(self)
         self.pipeGroup.setLayout(QVBoxLayout())
+        self.pipeGroup.layout().setSpacing(
+            self.pipeGroup.layout().contentsMargins().top()
+        )
         self.layout().addWidget(self.pipeGroup)
+
+        self.noticeLabel = QLabel(self.pipeGroup)
+        self.noticeLabel.setAlignment(Qt.AlignCenter)
+        font = self.noticeLabel.font()
+        font.setPointSizeF(font.pointSizeF() * 0.9)
+        self.noticeLabel.setFont(font)
+        self.pipeGroup.layout().addWidget(self.noticeLabel)
 
         self.pipeEdit = GstPipeEdit("", app_mode=True)
         self.pipeGroup.layout().addWidget(self.pipeEdit)
@@ -41,7 +51,10 @@ class GstSettings(SettingsPage):
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.pipeGroup.setTitle(translate("GstSettings", "Pipeline"))
+        self.pipeGroup.setTitle(translate("GstSettings", "Default pipeline"))
+        self.noticeLabel.setText(
+            translate("GstSettings", "Applied only to new cues.")
+        )
 
     def loadSettings(self, settings):
         self.pipeEdit.set_pipe(settings["pipeline"])

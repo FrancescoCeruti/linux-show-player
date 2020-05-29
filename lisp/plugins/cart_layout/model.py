@@ -96,7 +96,7 @@ class CueCartModel(ModelAdapter):
             self.__cues[new_index].index = new_index
             self.item_moved.emit(old_index, new_index)
         else:
-            raise ModelException("index already used {}".format(new_index))
+            raise ModelException(f"index already used {new_index}")
 
     def page_edges(self, page):
         start = self.flat((page, 0, 0))

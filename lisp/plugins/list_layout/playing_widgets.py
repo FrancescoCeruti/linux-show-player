@@ -20,12 +20,12 @@ from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import (
     QWidget,
     QGridLayout,
-    QLabel,
     QSizePolicy,
     QLCDNumber,
     QHBoxLayout,
 )
 
+from lisp.backend import get_backend
 from lisp.core.signal import Connection
 from lisp.core.util import strtime
 from lisp.cues.cue import CueAction
@@ -33,6 +33,8 @@ from lisp.cues.cue_time import CueTime
 from lisp.cues.media_cue import MediaCue
 from lisp.plugins.list_layout.control_buttons import CueControlButtons
 from lisp.ui.widgets import QClickSlider, DBMeter
+from lisp.ui.widgets.elidedlabel import ElidedLabel
+from lisp.ui.widgets.waveform import WaveformSlider
 
 
 def get_running_widget(cue, config, **kwargs):
@@ -45,7 +47,6 @@ def get_running_widget(cue, config, **kwargs):
 class RunningCueWidget(QWidget):
     def __init__(self, cue, config, **kwargs):
         super().__init__(**kwargs)
-        self.setGeometry(0, 0, self.parent().viewport().width(), 80)
         self.setFocusPolicy(Qt.NoFocus)
         self.setLayout(QHBoxLayout(self))
         self.layout().setContentsMargins(0, 0, 0, 1)
@@ -64,7 +65,7 @@ class RunningCueWidget(QWidget):
         self.gridLayout.setSpacing(2)
         self.layout().addWidget(self.gridLayoutWidget)
 
-        self.nameLabel = QLabel(self.gridLayoutWidget)
+        self.nameLabel = ElidedLabel(self.gridLayoutWidget)
         self.nameLabel.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
         self.nameLabel.setText(cue.name)
         self.nameLabel.setToolTip(cue.name)
@@ -117,6 +118,9 @@ class RunningCueWidget(QWidget):
         cue.fadein_end.connect(self.exit_fade, Connection.QtQueued)
         cue.fadeout_start.connect(self.enter_fadeout, Connection.QtQueued)
         cue.fadeout_end.connect(self.exit_fade, Connection.QtQueued)
+
+    def updateSize(self, width):
+        self.resize(width, width // 3.75)
 
     def enter_fadein(self):
         p = self.timeDisplay.palette()
@@ -173,13 +177,18 @@ class RunningCueWidget(QWidget):
 class RunningMediaCueWidget(RunningCueWidget):
     def __init__(self, cue, config, **kwargs):
         super().__init__(cue, config, **kwargs)
-        self.setGeometry(0, 0, self.width(), 110)
-
         self._dbmeter_element = None
 
-        self.seekSlider = QClickSlider(self.gridLayoutWidget)
-        self.seekSlider.setOrientation(Qt.Horizontal)
-        self.seekSlider.setRange(0, cue.duration)
+        if config.get("show.waveformSlider", False):
+            self.waveform = get_backend().media_waveform(cue.media)
+            self.seekSlider = WaveformSlider(
+                self.waveform, parent=self.gridLayoutWidget
+            )
+        else:
+            self.seekSlider = QClickSlider(self.gridLayoutWidget)
+            self.seekSlider.setOrientation(Qt.Horizontal)
+            self.seekSlider.setRange(0, cue.duration)
+
         self.seekSlider.setFocusPolicy(Qt.NoFocus)
         self.seekSlider.sliderMoved.connect(self._seek)
         self.seekSlider.sliderJumped.connect(self._seek)
@@ -191,6 +200,9 @@ class RunningMediaCueWidget(RunningCueWidget):
         cue.changed("duration").connect(
             self._update_duration, Connection.QtQueued
         )
+
+    def updateSize(self, width):
+        self.resize(width, width // 2.75)
 
     def set_seek_visible(self, visible):
         if visible and not self.seekSlider.isVisible():
@@ -215,7 +227,7 @@ class RunningMediaCueWidget(RunningCueWidget):
         # Add/Remove the QDbMeter in the layout
         if visible and not self.dbmeter.isVisible():
             self.gridLayout.addWidget(self.dbmeter, 0, 2, 3, 1)
-            self.gridLayout.setColumnStretch(2, 1)
+            self.gridLayout.setColumnStretch(2, 2)
         elif not visible and self.dbmeter.isVisible():
             self.gridLayout.removeWidget(self.dbmeter)
             self.gridLayout.setColumnStretch(2, 0)

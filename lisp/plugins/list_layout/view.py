@@ -16,10 +16,11 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QWidget, QGridLayout, QPushButton, QSizePolicy
+from PyQt5.QtWidgets import QWidget, QSizePolicy, QSplitter, QVBoxLayout
 
 from lisp.plugins.list_layout.list_view import CueListView
 from lisp.plugins.list_layout.playing_view import RunningCuesListWidget
+from lisp.ui.widgets.dynamicfontsize import DynamicFontSizePushButton
 from .control_buttons import ShowControlButtons
 from .info_panel import InfoPanel
 
@@ -27,40 +28,100 @@ from .info_panel import InfoPanel
 class ListLayoutView(QWidget):
     def __init__(self, listModel, runModel, config, *args):
         super().__init__(*args)
-        self.setLayout(QGridLayout())
+        self.setLayout(QVBoxLayout())
         self.layout().setContentsMargins(0, 0, 0, 0)
 
         self.listModel = listModel
 
+        self.mainSplitter = QSplitter(Qt.Vertical, self)
+        self.layout().addWidget(self.mainSplitter)
+
+        self.topSplitter = QSplitter(self.mainSplitter)
+        self.mainSplitter.addWidget(self.topSplitter)
+
+        self.centralSplitter = QSplitter(self.topSplitter)
+        self.mainSplitter.addWidget(self.centralSplitter)
+
         # GO-BUTTON (top-left)
-        self.goButton = QPushButton("GO", self)
+        self.goButton = DynamicFontSizePushButton(parent=self)
+        self.goButton.setText("GO")
+        self.goButton.setMinimumWidth(60)
+        self.goButton.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
         self.goButton.setFocusPolicy(Qt.NoFocus)
-        self.goButton.setFixedWidth(120)
-        self.goButton.setFixedHeight(100)
-        self.goButton.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
-        self.goButton.setStyleSheet("font-size: 48pt;")
-        self.layout().addWidget(self.goButton, 0, 0)
+        self.topSplitter.addWidget(self.goButton)
 
         # INFO PANEL (top-center)
         self.infoPanel = InfoPanel(self)
-        self.infoPanel.setFixedHeight(120)
-        self.layout().addWidget(self.infoPanel, 0, 1)
+        self.infoPanel.setMinimumWidth(300)
+        self.infoPanel.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Ignored)
+        self.infoPanel.cueDescription.setFontPointSize(
+            config.get(
+                "infoPanelFontSize",
+                self.infoPanel.cueDescription.fontPointSize(),
+            )
+        )
+        self.topSplitter.addWidget(self.infoPanel)
 
         # CONTROL-BUTTONS (top-right)
         self.controlButtons = ShowControlButtons(self)
-        self.controlButtons.setFixedHeight(120)
-        self.layout().addWidget(self.controlButtons, 0, 2)
+        self.controlButtons.setMinimumWidth(100)
+        self.controlButtons.setSizePolicy(
+            QSizePolicy.Minimum, QSizePolicy.Minimum
+        )
+        self.topSplitter.addWidget(self.controlButtons)
 
         # CUE VIEW (center-left)
         self.listView = CueListView(listModel, self)
+        self.listView.setMinimumWidth(200)
         self.listView.currentItemChanged.connect(self.__listViewCurrentChanged)
-        self.layout().addWidget(self.listView, 1, 0, 1, 2)
+        self.centralSplitter.addWidget(self.listView)
+        self.centralSplitter.setCollapsible(0, False)
 
         # PLAYING VIEW (center-right)
         self.runView = RunningCuesListWidget(runModel, config, parent=self)
-        self.runView.setMinimumWidth(300)
-        self.runView.setMaximumWidth(300)
-        self.layout().addWidget(self.runView, 1, 2)
+        self.runView.setMinimumWidth(200)
+        self.runView.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
+        self.centralSplitter.addWidget(self.runView)
+
+        self.__userResized = False
+
+    def showEvent(self, event):
+        super().showEvent(event)
+        if not self.__userResized:
+            self.resetSize()
+
+    def resetSize(self):
+        self.mainSplitter.setSizes((0.22 * self.width(), 0.78 * self.width()))
+        self.centralSplitter.setSizes(
+            (0.78 * self.width(), 0.22 * self.width())
+        )
+        self.topSplitter.setSizes(
+            (0.11 * self.width(), 0.67 * self.width(), 0.22 * self.width())
+        )
+
+    def getSplitterSizes(self):
+        return [
+            self.mainSplitter.sizes(),
+            self.topSplitter.sizes(),
+            self.centralSplitter.sizes(),
+        ]
+
+    def setSplitterSize(self, sizes):
+        if len(sizes) >= 3:
+            self.mainSplitter.setSizes(sizes[0])
+            self.topSplitter.setSizes(sizes[1])
+            self.centralSplitter.setSizes(sizes[2])
+
+            self.__userResized = True
+
+    def setResizeHandlesEnabled(self, enabled):
+        self.__setSplitterHandlesEnabled(self.mainSplitter, enabled)
+        self.__setSplitterHandlesEnabled(self.topSplitter, enabled)
+        self.__setSplitterHandlesEnabled(self.centralSplitter, enabled)
+
+    def __setSplitterHandlesEnabled(self, splitter: QSplitter, enabled):
+        for n in range(splitter.count()):
+            splitter.handle(n).setEnabled(enabled)
 
     def __listViewCurrentChanged(self, current, _):
         cue = None

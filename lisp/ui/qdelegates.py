@@ -18,7 +18,7 @@
 from enum import Enum
 
 from PyQt5.QtCore import Qt, QEvent, QSize
-from PyQt5.QtGui import QKeySequence
+from PyQt5.QtGui import QKeySequence, QFontMetrics
 from PyQt5.QtWidgets import (
     QStyledItemDelegate,
     QComboBox,
@@ -50,14 +50,16 @@ class PaddedDelegate(QStyledItemDelegate):
 
 
 class LabelDelegate(QStyledItemDelegate):
-    def _text(self, painter, option, index):
+    def _text(self, option, index):
         return index.data()
 
     def paint(self, painter, option, index):
-        # Add 4px of left an right padding
-        option.rect.adjust(4, 0, 4, 0)
+        self.initStyleOption(option, index)
 
-        text = self._text(painter, option, index)
+        # Add 4px of left and right padding
+        option.rect.adjust(4, 0, -4, 0)
+
+        text = self._text(option, index)
         text = option.fontMetrics.elidedText(
             text, Qt.ElideRight, option.rect.width()
         )
@@ -75,6 +77,11 @@ class LabelDelegate(QStyledItemDelegate):
 
         painter.restore()
 
+    def sizeHint(self, option, index):
+        return QFontMetrics(option.font).size(
+            Qt.TextSingleLine, self._text(option, index)
+        ) + QSize(8, 0)
+
 
 class ComboBoxDelegate(LabelDelegate):
     def __init__(self, options=(), tr_context=None, **kwargs):
@@ -82,11 +89,11 @@ class ComboBoxDelegate(LabelDelegate):
         self.options = options
         self.tr_context = tr_context
 
-    def _text(self, painter, option, index):
+    def _text(self, option, index):
         return translate(self.tr_context, index.data())
 
     def paint(self, painter, option, index):
-        option.displayAlignment = Qt.AlignHCenter | Qt.AlignVCenter
+        option.displayAlignment = Qt.AlignCenter
         super().paint(painter, option, index)
 
     def createEditor(self, parent, option, index):
@@ -242,7 +249,7 @@ class HotKeyEditDelegate(LabelDelegate):
     def updateEditorGeometry(self, editor, option, index):
         editor.setGeometry(option.rect)
 
-    def _text(self, painter, option, index):
+    def _text(self, option, index):
         return self._sequence(index).toString(QKeySequence.NativeText)
 
     def _sequence(self, index):
@@ -264,7 +271,7 @@ class EnumComboBoxDelegate(LabelDelegate):
         self.mode = mode
         self.trItem = trItem
 
-    def _text(self, painter, option, index):
+    def _text(self, option, index):
         return self.trItem(self.itemFromData(index.data(Qt.EditRole)))
 
     def paint(self, painter, option, index):
@@ -322,10 +329,10 @@ class CueSelectionDelegate(LabelDelegate):
         self.cue_model = cue_model
         self.cue_select = cue_select_dialog
 
-    def _text(self, painter, option, index):
+    def _text(self, option, index):
         cue = self.cue_model.get(index.data())
         if cue is not None:
-            return "{} | {}".format(cue.index, cue.name)
+            return f"{cue.index} | {cue.name}"
 
         return "UNDEF"
 

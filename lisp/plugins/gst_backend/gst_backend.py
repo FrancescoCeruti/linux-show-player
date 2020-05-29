@@ -42,6 +42,7 @@ from lisp.plugins.gst_backend.gst_utils import (
     gst_mime_types,
     gst_uri_duration,
 )
+from lisp.plugins.gst_backend.gst_waveform import GstWaveform
 from lisp.ui.settings.app_configuration import AppConfigurationDialog
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
 from lisp.ui.ui_utils import translate, qfile_filters
@@ -60,7 +61,6 @@ class GstBackend(Plugin, BaseBackend):
 
         # Initialize GStreamer
         Gst.init(None)
-
         # Register GStreamer settings widgets
         AppConfigurationDialog.registerSettingsPage(
             "plugins.gst", GstSettings, GstBackend.Config
@@ -105,22 +105,50 @@ class GstBackend(Plugin, BaseBackend):
 
         return extensions
 
+    def media_waveform(self, media):
+        return GstWaveform(
+            media.input_uri(),
+            media.duration,
+            cache_dir=self.app.conf.get("cache.position", ""),
+        )
+
     def _add_uri_audio_cue(self):
         """Add audio MediaCue(s) form user-selected files"""
+        # Get the last visited directory, or use the session-file location
         directory = GstBackend.Config.get("mediaLookupDir", "")
         if not os.path.exists(directory):
             directory = self.app.session.dir()
 
+        # Open a filechooser, at the last visited directory
         files, _ = QFileDialog.getOpenFileNames(
             self.app.window,
             translate("GstBackend", "Select media files"),
             directory,
             qfile_filters(self.supported_extensions(), anyfile=True),
         )
+
         if files:
+            # Updated the last visited directory
             GstBackend.Config["mediaLookupDir"] = os.path.dirname(files[0])
             GstBackend.Config.write()
 
+            self.add_cue_from_files(files)
+
+    def add_cue_from_urls(self, urls):
+        extensions = self.supported_extensions()
+        extensions = extensions["audio"] + extensions["video"]
+        files = []
+
+        for url in urls:
+            # Get the file extension without the leading dot
+            extension = os.path.splitext(url.fileName())[-1][1:]
+            # If is a supported audio/video file keep it
+            if extension in extensions:
+                files.append(url.path())
+
+        self.add_cue_from_files(files)
+
+    def add_cue_from_files(self, files):
         QApplication.setOverrideCursor(QCursor(Qt.WaitCursor))
 
         # Create media cues, and add them to the Application cue_model
@@ -134,8 +162,7 @@ class GstBackend(Plugin, BaseBackend):
 
         cues = []
         for index, file in enumerate(files, start_index):
-            file = self.app.session.rel_path(file)
-            cue = factory(uri="file://" + file)
+            cue = factory(uri=file)
             # Use the filename without extension as cue name
             cue.name = os.path.splitext(os.path.basename(file))[0]
             # Set the index (if something is selected)
@@ -144,6 +171,7 @@ class GstBackend(Plugin, BaseBackend):
 
             cues.append(cue)
 
+        # Insert the cue into the layout
         self.app.commands_stack.do(
             LayoutAutoInsertCuesCommand(self.app.session.layout, *cues)
         )

@@ -6,7 +6,7 @@ name = "pypi"
 [packages]
 appdirs = ">=1.4.1"
 Cython = "~=0.29"
-falcon = "~=1.4"
+falcon = "~=2.0"
 JACK-Client = "~=0.4"
 mido = "~=1.2"
 PyGObject = "~=3.30"
@@ -15,7 +15,8 @@ PyQt5 = "~=5.6"
 python-rtmidi = "~=1.1"
 requests = "~=2.20"
 sortedcontainers = "~=2.0"
+pyalsa = {editable = true,git = "https://github.com/alsa-project/alsa-python.git",ref = "v1.1.6"}
+humanize = "~=2.2"
 
 [dev-packages]
-pysnooper = "*"
 html5lib = "*"

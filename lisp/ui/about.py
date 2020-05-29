@@ -51,9 +51,9 @@ class About(QDialog):
 
     DESCRIPTION = QT_TRANSLATE_NOOP(
         "AboutDialog",
-        "Linux Show Player is a cue-player designed for stage productions.",
+        "Linux Show Player is a cue player designed for stage productions.",
     )
-    WEB_SITE = "http://linux-show-player.sourceforge.net"
+    WEB_SITE = "https://linux-show-player.org"
     DISCUSSION = "https://gitter.im/linux-show-player/linux-show-player"
     SOURCE_CODE = "https://github.com/FrancescoCeruti/linux-show-player"
 
@@ -86,9 +86,9 @@ class About(QDialog):
 
         self.setWindowModality(QtCore.Qt.ApplicationModal)
         self.setWindowTitle(translate("About", "About Linux Show Player"))
-        self.setMaximumSize(500, 420)
-        self.setMinimumSize(500, 420)
-        self.resize(500, 420)
+        self.setMaximumSize(550, 420)
+        self.setMinimumSize(550, 420)
+        self.resize(550, 420)
 
         self.setLayout(QGridLayout())
 
@@ -101,9 +101,8 @@ class About(QDialog):
         self.shortInfo = QLabel(self)
         self.shortInfo.setAlignment(Qt.AlignCenter)
         self.shortInfo.setText(
-            "<h2>Linux Show Player   {0}</h2>Copyright © Francesco Ceruti".format(
-                str(lisp.__version__)
-            )
+            f"<h2>Linux Show Player   {lisp.__version__}</h2>"
+            "Copyright © Francesco Ceruti"
         )
         self.layout().addWidget(self.shortInfo, 0, 1)
 
@@ -177,7 +176,7 @@ class About(QDialog):
                     text += ' - <a href="mailto:{0}">{0}</a>'.format(person[1])
 
                 if len(person) >= 3:
-                    text += " ({})".format(person[2])
+                    text += f" ({person[2]})"
 
                 text += "<br />"
 

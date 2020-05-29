@@ -20,7 +20,7 @@ import os
 from functools import partial
 
 from PyQt5 import QtCore
-from PyQt5.QtCore import pyqtSignal
+from PyQt5.QtCore import pyqtSignal, QT_TRANSLATE_NOOP
 from PyQt5.QtGui import QKeySequence
 from PyQt5.QtWidgets import (
     QMainWindow,
@@ -202,6 +202,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         self.fullScreenAction.setText(translate("MainWindow", "Full Screen"))
         self.fullScreenAction.setShortcut(QKeySequence.FullScreen)
         self.exitAction.setText(translate("MainWindow", "Exit"))
+        self.exitAction.setShortcut(QKeySequence.Quit)
         # menuEdit
         self.menuEdit.setTitle(translate("MainWindow", "&Edit"))
         self.actionUndo.setText(translate("MainWindow", "Undo"))
@@ -248,7 +249,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
 
         if category:
             if category not in self._cueSubMenus:
-                subMenu = QMenu(category, self)
+                subMenu = QMenu(translate("CueCategory", category), self)
                 self._cueSubMenus[category] = subMenu
                 self.menuEdit.insertMenu(self.cueSeparator, subMenu)
 
@@ -264,9 +265,9 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
 
     def registerSimpleCueMenu(self, cueClass, category=""):
         self.registerCueMenu(
-            translate("CueName", cueClass.Name),
+            cueClass.Name,
             partial(self.__simpleCueInsert, cueClass),
-            category or translate("CueCategory", "Misc cues"),
+            category or QT_TRANSLATE_NOOP("CueCategory", "Misc cues"),
         )
 
     def updateWindowTitle(self):

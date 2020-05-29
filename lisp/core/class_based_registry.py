@@ -17,10 +17,10 @@
 
 
 class ClassBasedRegistry:
-    """Allow to register/un-register and filter items using a reference class.
+    """Register and filter items using a reference class.
 
     The filter "check" whenever the filter-class is a subclass of
-    the one used to register the item or exactly the the same.
+    the one used to register the item or exactly the same.
 
     .. highlight::
 
@@ -36,7 +36,7 @@ class ClassBasedRegistry:
         self._registry = {}
 
     def add(self, item, ref_class=object):
-        """Register a item for ref_class."""
+        """Register an item for ref_class."""
         if ref_class not in self._registry:
             self._registry[ref_class] = [item]
         elif item not in self._registry[ref_class]:

@@ -26,7 +26,7 @@ from PyQt5.QtWidgets import (
     QHBoxLayout,
 )
 
-from lisp import layout
+from lisp.layout import get_layouts
 from lisp.ui.icons import icon_themes_names
 from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.themes import themes_names
@@ -44,19 +44,27 @@ class AppGeneral(SettingsPage):
 
         # Startup "layout"
         self.layoutGroup = QGroupBox(self)
-        self.layoutGroup.setLayout(QVBoxLayout())
+        self.layoutGroup.setLayout(QGridLayout())
         self.layout().addWidget(self.layoutGroup)
 
         self.startupDialogCheck = QCheckBox(self.layoutGroup)
-        self.layoutGroup.layout().addWidget(self.startupDialogCheck)
+        self.layoutGroup.layout().addWidget(self.startupDialogCheck, 0, 0, 1, 2)
+
+        self.layoutLabel = QLabel(self.layoutGroup)
+        self.layoutGroup.layout().addWidget(self.layoutLabel, 1, 0)
 
         self.layoutCombo = QComboBox(self.layoutGroup)
-        for lay in layout.get_layouts():
-            self.layoutCombo.addItem(lay.NAME, lay.__name__)
-        self.layoutGroup.layout().addWidget(self.layoutCombo)
+        self.layoutGroup.layout().addWidget(self.layoutCombo, 1, 1)
+        # Get available layouts
+        for layout in get_layouts():
+            self.layoutCombo.addItem(layout.NAME, layout.__name__)
 
+        # Enable/Disable layout selection
         self.startupDialogCheck.stateChanged.connect(
             self.layoutCombo.setDisabled
+        )
+        self.startupDialogCheck.stateChanged.connect(
+            self.layoutLabel.setDisabled
         )
 
         # Application theme
@@ -96,7 +104,10 @@ class AppGeneral(SettingsPage):
             translate("AppGeneralSettings", "Default layout")
         )
         self.startupDialogCheck.setText(
-            translate("AppGeneralSettings", "Enable startup layout selector")
+            translate("AppGeneralSettings", "Show layout selection at startup")
+        )
+        self.layoutLabel.setText(
+            translate("AppGeneralSettings", "Use layout at startup:")
         )
         self.themeGroup.setTitle(
             translate("AppGeneralSettings", "Application themes")
@@ -106,7 +117,7 @@ class AppGeneral(SettingsPage):
 
         self.localeGroup.setTitle(
             translate(
-                "AppGeneralSettings", "Application language (require restart)"
+                "AppGeneralSettings", "Application language (require a restart)"
             )
         )
         self.localeLabel.setText(translate("AppGeneralSettings", "Language:"))

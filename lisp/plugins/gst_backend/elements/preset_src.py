@@ -90,9 +90,6 @@ class PresetSrc(GstSrcElement):
     def stop(self):
         self.n_sample = 0
 
-    def interrupt(self):
-        self.stop()
-
     def generate_samples(self, src, need_bytes):
         remaining = int(self.duration / 1000 * PresetSrc.FREQ - self.n_sample)
         if remaining <= 0:

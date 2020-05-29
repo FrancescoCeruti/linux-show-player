@@ -17,6 +17,7 @@
 
 # Used to indicate the default behaviour when a specific option is not found to
 # raise an exception. Created to enable `None` as a valid fallback value.
+
 from lisp.core.util import typename
 
 _UNSET = object()
@@ -43,17 +44,15 @@ class DictNode:
     def add_child(self, node, name):
         if not isinstance(node, DictNode):
             raise TypeError(
-                "DictNode children must be a DictNode, not {}".format(
-                    typename(node)
-                )
+                f"DictNode children must be a DictNode, not {typename(node)}"
             )
         if not isinstance(name, str):
             raise TypeError(
-                "DictNode name must be a str, not {}".format(typename(node))
+                f"DictNode name must be a str, not {typename(node)}"
             )
         if self.Sep in name:
             raise DictTreeError(
-                "DictNode name cannot contains the path separator"
+                "DictNode name cannot contain the path separator"
             )
 
         # Set node name and parent

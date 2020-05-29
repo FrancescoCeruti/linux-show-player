@@ -50,7 +50,7 @@ class DbMeterSettings(SettingsPage):
         self.intervalSpin = QSpinBox(self.groupBox)
         self.intervalSpin.setRange(1, 1000)
         self.intervalSpin.setMaximum(1000)
-        self.intervalSpin.setValue(50)
+        self.intervalSpin.setValue(33)
         self.groupBox.layout().addWidget(self.intervalSpin, 0, 0)
 
         self.intervalLabel = QLabel(self.groupBox)
@@ -61,7 +61,7 @@ class DbMeterSettings(SettingsPage):
         self.ttlSpin = QSpinBox(self.groupBox)
         self.ttlSpin.setSingleStep(10)
         self.ttlSpin.setRange(10, 10000)
-        self.ttlSpin.setValue(500)
+        self.ttlSpin.setValue(1000)
         self.groupBox.layout().addWidget(self.ttlSpin, 1, 0)
 
         self.ttlLabel = QLabel(self.groupBox)
@@ -91,8 +91,8 @@ class DbMeterSettings(SettingsPage):
         )
 
     def loadSettings(self, settings):
-        self.intervalSpin.setValue(settings.get("interval", 50) / Gst.MSECOND)
-        self.ttlSpin.setValue(settings.get("peak_ttl", 500) / Gst.MSECOND)
+        self.intervalSpin.setValue(settings.get("interval", 33) / Gst.MSECOND)
+        self.ttlSpin.setValue(settings.get("peak_ttl", 1000) / Gst.MSECOND)
         self.falloffSpin.setValue(settings.get("peak_falloff", 20))
 
     def getSettings(self):
