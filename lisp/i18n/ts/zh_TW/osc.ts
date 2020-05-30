@@ -22,7 +22,7 @@
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="64"/>
       <source>OSC Cue</source>
-      <translation type="unfinished">OSC Cue</translation>
+      <translation>OSC Cue</translation>
     </message>
   </context>
   <context>
