@@ -6,22 +6,22 @@
     <message>
       <location filename="../../../plugins/triggers/triggers_handler.py" line="27"/>
       <source>Started</source>
-      <translation type="unfinished">Started</translation>
+      <translation>已開始</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_handler.py" line="28"/>
       <source>Paused</source>
-      <translation type="unfinished">Paused</translation>
+      <translation>已暫停</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_handler.py" line="29"/>
       <source>Stopped</source>
-      <translation type="unfinished">Stopped</translation>
+      <translation>已停止</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_handler.py" line="30"/>
       <source>Ended</source>
-      <translation type="unfinished">Ended</translation>
+      <translation>已結束</translation>
     </message>
   </context>
   <context>
@@ -29,7 +29,7 @@
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="42"/>
       <source>Triggers</source>
-      <translation type="unfinished">Triggers</translation>
+      <translation>觸發</translation>
     </message>
   </context>
   <context>
@@ -37,27 +37,27 @@
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="65"/>
       <source>Add</source>
-      <translation type="unfinished">Add</translation>
+      <translation>添加</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="70"/>
       <source>Remove</source>
-      <translation type="unfinished">Remove</translation>
+      <translation>移除</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="150"/>
       <source>Trigger</source>
-      <translation type="unfinished">Trigger</translation>
+      <translation>觸發條件</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="150"/>
       <source>Cue</source>
-      <translation type="unfinished">Cue</translation>
+      <translation>Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="150"/>
       <source>Action</source>
-      <translation type="unfinished">Action</translation>
+      <translation>動作</translation>
     </message>
   </context>
 </TS>

@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/alsa_sink.py" line="62"/>
       <source>ALSA device</source>
-      <translation type="unfinished">ALSA device</translation>
+      <translation>ALSA 装置</translation>
     </message>
   </context>
   <context>
@@ -14,47 +14,47 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_dynamic.py" line="54"/>
       <source>Compressor</source>
-      <translation type="unfinished">Compressor</translation>
+      <translation>壓縮器</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_dynamic.py" line="57"/>
       <source>Expander</source>
-      <translation type="unfinished">Expander</translation>
+      <translation>擴展器</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_dynamic.py" line="68"/>
       <source>Soft Knee</source>
-      <translation type="unfinished">Soft Knee</translation>
+      <translation>高拐點柔软度</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_dynamic.py" line="71"/>
       <source>Hard Knee</source>
-      <translation type="unfinished">Hard Knee</translation>
+      <translation>低拐點柔软度</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_dynamic.py" line="102"/>
       <source>Compressor/Expander</source>
-      <translation type="unfinished">Compressor/Expander</translation>
+      <translation>壓縮器/擴展器</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_dynamic.py" line="105"/>
       <source>Type</source>
-      <translation type="unfinished">Type</translation>
+      <translation>類型</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_dynamic.py" line="106"/>
       <source>Curve Shape</source>
-      <translation type="unfinished">Curve Shape</translation>
+      <translation>曲線形狀</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_dynamic.py" line="107"/>
       <source>Ratio</source>
-      <translation type="unfinished">Ratio</translation>
+      <translation>比例</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_dynamic.py" line="108"/>
       <source>Threshold (dB)</source>
-      <translation type="unfinished">Threshold (dB)</translation>
+      <translation>閥值 (分貝)</translation>
     </message>
   </context>
   <context>
@@ -62,22 +62,22 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_pan.py" line="58"/>
       <source>Audio Pan</source>
-      <translation type="unfinished">Audio Pan</translation>
+      <translation>音頻平移</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_pan.py" line="80"/>
       <source>Center</source>
-      <translation type="unfinished">Center</translation>
+      <translation>中</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_pan.py" line="76"/>
       <source>Left</source>
-      <translation type="unfinished">Left</translation>
+      <translation>左</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_pan.py" line="78"/>
       <source>Right</source>
-      <translation type="unfinished">Right</translation>
+      <translation>右</translation>
     </message>
   </context>
   <context>
@@ -85,22 +85,22 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/db_meter.py" line="84"/>
       <source>DbMeter settings</source>
-      <translation type="unfinished">DbMeter settings</translation>
+      <translation>分貝計設定</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/db_meter.py" line="85"/>
       <source>Time between levels (ms)</source>
-      <translation type="unfinished">Time between levels (ms)</translation>
+      <translation>階級之間的時間 (毫秒)</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/db_meter.py" line="88"/>
       <source>Peak ttl (ms)</source>
-      <translation type="unfinished">Peak ttl (ms)</translation>
+      <translation>峰值存活時間 (毫秒)</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/db_meter.py" line="89"/>
       <source>Peak falloff (dB/sec)</source>
-      <translation type="unfinished">Peak falloff (dB/sec)</translation>
+      <translation>峰值下跌率 (分貝/秒)</translation>
     </message>
   </context>
   <context>
@@ -108,7 +108,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/equalizer10.py" line="52"/>
       <source>10 Bands Equalizer (IIR)</source>
-      <translation type="unfinished">10 Bands Equalizer (IIR)</translation>
+      <translation>10頻段均衡器 (無限衝擊響應濾波器)</translation>
     </message>
   </context>
   <context>
@@ -116,12 +116,12 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_backend.py" line="74"/>
       <source>Audio cue (from file)</source>
-      <translation type="unfinished">Audio cue (from file)</translation>
+      <translation>媒體 Cue (從檔案匯入)</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/gst_backend.py" line="123"/>
       <source>Select media files</source>
-      <translation type="unfinished">Select media files</translation>
+      <translation>選擇媒體檔案</translation>
     </message>
   </context>
   <context>
@@ -129,7 +129,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_media.py" line="233"/>
       <source>Cannot create pipeline element: &quot;{}&quot;</source>
-      <translation type="unfinished">Cannot create pipeline element: &quot;{}&quot;</translation>
+      <translation>無法創建管道元素： &quot;{}&quot;</translation>
     </message>
   </context>
   <context>
@@ -137,7 +137,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_media_settings.py" line="50"/>
       <source>Change Pipeline</source>
-      <translation type="unfinished">Change Pipeline</translation>
+      <translation>更改管道</translation>
     </message>
   </context>
   <context>
@@ -145,7 +145,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_media.py" line="227"/>
       <source>Invalid pipeline element: &quot;{}&quot;</source>
-      <translation type="unfinished">Invalid pipeline element: &quot;{}&quot;</translation>
+      <translation>管道元素無效： &quot;{}&quot;</translation>
     </message>
   </context>
   <context>
@@ -153,7 +153,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_pipe_edit.py" line="167"/>
       <source>Edit Pipeline</source>
-      <translation type="unfinished">Edit Pipeline</translation>
+      <translation>編輯管道</translation>
     </message>
   </context>
   <context>
@@ -161,12 +161,12 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_settings.py" line="54"/>
       <source>Default pipeline</source>
-      <translation type="unfinished">Default pipeline</translation>
+      <translation>默認管道</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/gst_settings.py" line="55"/>
       <source>Applied only to new cues.</source>
-      <translation type="unfinished">Applied only to new cues.</translation>
+      <translation>只套用於新 Cue</translation>
     </message>
   </context>
   <context>
@@ -174,32 +174,32 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/jack_sink.py" line="78"/>
       <source>Connections</source>
-      <translation type="unfinished">Connections</translation>
+      <translation>聯繫</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/jack_sink.py" line="79"/>
       <source>Edit connections</source>
-      <translation type="unfinished">Edit connections</translation>
+      <translation>編輯聯繫</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/jack_sink.py" line="275"/>
       <source>Output ports</source>
-      <translation type="unfinished">Output ports</translation>
+      <translation>輸出端口</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/jack_sink.py" line="278"/>
       <source>Input ports</source>
-      <translation type="unfinished">Input ports</translation>
+      <translation>輸入端口</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/jack_sink.py" line="337"/>
       <source>Connect</source>
-      <translation type="unfinished">Connect</translation>
+      <translation>連接</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/jack_sink.py" line="332"/>
       <source>Disconnect</source>
-      <translation type="unfinished">Disconnect</translation>
+      <translation>斷開連接</translation>
     </message>
   </context>
   <context>
@@ -207,77 +207,77 @@
     <message>
       <location filename="../../../plugins/gst_backend/elements/audio_dynamic.py" line="30"/>
       <source>Compressor/Expander</source>
-      <translation type="unfinished">Compressor/Expander</translation>
+      <translation>壓縮器/擴展器</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/elements/audio_pan.py" line="28"/>
       <source>Audio Pan</source>
-      <translation type="unfinished">Audio Pan</translation>
+      <translation>音頻平移</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/elements/pulse_sink.py" line="28"/>
       <source>PulseAudio Out</source>
-      <translation type="unfinished">PulseAudio Out</translation>
+      <translation>PulseAudio 輸出</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/elements/volume.py" line="32"/>
       <source>Volume</source>
-      <translation type="unfinished">Volume</translation>
+      <translation>音量</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/elements/db_meter.py" line="29"/>
       <source>dB Meter</source>
-      <translation type="unfinished">dB Meter</translation>
+      <translation>分貝計</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/elements/auto_src.py" line="27"/>
       <source>System Input</source>
-      <translation type="unfinished">System Input</translation>
+      <translation>系统輸入</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/elements/alsa_sink.py" line="28"/>
       <source>ALSA Out</source>
-      <translation type="unfinished">ALSA Out</translation>
+      <translation>ALSA 輸出</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/elements/jack_sink.py" line="35"/>
       <source>JACK Out</source>
-      <translation type="unfinished">JACK Out</translation>
+      <translation>JACK 輸出</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/elements/user_element.py" line="29"/>
       <source>Custom Element</source>
-      <translation type="unfinished">Custom Element</translation>
+      <translation>自定義元素</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/elements/auto_sink.py" line="28"/>
       <source>System Out</source>
-      <translation type="unfinished">System Out</translation>
+      <translation>系统輸出</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/elements/pitch.py" line="28"/>
       <source>Pitch</source>
-      <translation type="unfinished">Pitch</translation>
+      <translation>音調</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/elements/uri_input.py" line="38"/>
       <source>URI Input</source>
-      <translation type="unfinished">URI Input</translation>
+      <translation>URI 輸入</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/elements/equalizer10.py" line="28"/>
       <source>10 Bands Equalizer</source>
-      <translation type="unfinished">10 Bands Equalizer</translation>
+      <translation>10頻段均衡器</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/elements/speed.py" line="29"/>
       <source>Speed</source>
-      <translation type="unfinished">Speed</translation>
+      <translation>速度</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/elements/preset_src.py" line="30"/>
       <source>Preset Input</source>
-      <translation type="unfinished">Preset Input</translation>
+      <translation>預設輸入</translation>
     </message>
   </context>
   <context>
@@ -285,12 +285,12 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/pitch.py" line="64"/>
       <source>Pitch</source>
-      <translation type="unfinished">Pitch</translation>
+      <translation>音調</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/pitch.py" line="83"/>
       <source>{0:+} semitones</source>
-      <translation type="unfinished">{0:+} semitones</translation>
+      <translation>{0:+} 半音</translation>
     </message>
   </context>
   <context>
@@ -298,7 +298,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/preset_src.py" line="36"/>
       <source>Presets</source>
-      <translation type="unfinished">Presets</translation>
+      <translation>預設</translation>
     </message>
   </context>
   <context>
@@ -306,12 +306,12 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_media_settings.py" line="36"/>
       <source>Media Settings</source>
-      <translation type="unfinished">Media Settings</translation>
+      <translation>媒體設定</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/gst_settings.py" line="27"/>
       <source>GStreamer</source>
-      <translation type="unfinished">GStreamer</translation>
+      <translation>GStreamer</translation>
     </message>
   </context>
   <context>
@@ -319,7 +319,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/speed.py" line="62"/>
       <source>Speed</source>
-      <translation type="unfinished">Speed</translation>
+      <translation>速度</translation>
     </message>
   </context>
   <context>
@@ -327,42 +327,42 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="83"/>
       <source>Source</source>
-      <translation type="unfinished">Source</translation>
+      <translation>來源</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="84"/>
       <source>Find File</source>
-      <translation type="unfinished">Find File</translation>
+      <translation>查找檔案</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="85"/>
       <source>Buffering</source>
-      <translation type="unfinished">Buffering</translation>
+      <translation>緩衝</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="86"/>
       <source>Use Buffering</source>
-      <translation type="unfinished">Use Buffering</translation>
+      <translation>使用緩衝</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="89"/>
       <source>Attempt download on network streams</source>
-      <translation type="unfinished">Attempt download on network streams</translation>
+      <translation>嘗試從互聯網下載</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="92"/>
       <source>Buffer size (-1 default value)</source>
-      <translation type="unfinished">Buffer size (-1 default value)</translation>
+      <translation>緩衝大小 (-1 為默認值)</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="131"/>
       <source>Choose file</source>
-      <translation type="unfinished">Choose file</translation>
+      <translation>選擇檔案</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="131"/>
       <source>All files</source>
-      <translation type="unfinished">All files</translation>
+      <translation>所有檔案</translation>
     </message>
   </context>
   <context>
@@ -370,12 +370,12 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/user_element.py" line="52"/>
       <source>User defined elements</source>
-      <translation type="unfinished">User defined elements</translation>
+      <translation>用戶定義的元素</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/user_element.py" line="55"/>
       <source>Only for advanced user!</source>
-      <translation type="unfinished">Only for advanced user!</translation>
+      <translation>只供進階用戶使用！</translation>
     </message>
   </context>
   <context>
@@ -383,17 +383,17 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/volume.py" line="83"/>
       <source>Volume</source>
-      <translation type="unfinished">Volume</translation>
+      <translation>音量</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/volume.py" line="85"/>
       <source>Normalized volume</source>
-      <translation type="unfinished">Normalized volume</translation>
+      <translation>標準化音量</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/volume.py" line="89"/>
       <source>Reset</source>
-      <translation type="unfinished">Reset</translation>
+      <translation>重設</translation>
     </message>
   </context>
 </TS>
