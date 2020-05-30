@@ -6,27 +6,27 @@
     <message>
       <location filename="../../../plugins/media_info/media_info.py" line="125"/>
       <source>Media Info</source>
-      <translation type="unfinished">Media Info</translation>
+      <translation>媒體資料</translation>
     </message>
     <message>
       <location filename="../../../plugins/media_info/media_info.py" line="135"/>
       <source>Info</source>
-      <translation type="unfinished">Info</translation>
+      <translation>資料</translation>
     </message>
     <message>
       <location filename="../../../plugins/media_info/media_info.py" line="135"/>
       <source>Value</source>
-      <translation type="unfinished">Value</translation>
+      <translation>值</translation>
     </message>
     <message>
       <location filename="../../../plugins/media_info/media_info.py" line="70"/>
       <source>Warning</source>
-      <translation type="unfinished">Warning</translation>
+      <translation>警告</translation>
     </message>
     <message>
       <location filename="../../../plugins/media_info/media_info.py" line="70"/>
       <source>Cannot get any information.</source>
-      <translation type="unfinished">Cannot get any information.</translation>
+      <translation>無法獲取任何資料</translation>
     </message>
   </context>
 </TS>
