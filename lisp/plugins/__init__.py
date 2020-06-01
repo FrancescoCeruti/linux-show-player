@@ -50,8 +50,10 @@ def load_plugins(application):
         if name in PLUGINS:
             # We don't want users to be able to override plugins that are provided with lisp
             logger.error(
-                translate("PluginsError",
-                          'A plugin by the name of "{}" already exists.').format(name)
+                translate(
+                    "PluginsError",
+                    'A plugin by the name of "{}" already exists.',
+                ).format(name)
             )
             return
 

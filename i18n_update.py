@@ -55,7 +55,10 @@ def modules_sources(
     modules_path: Iterable[Path], extensions: Iterable[str], exclude: str = "",
 ):
     for module_path in modules_path:
-        yield module_path.stem, source_files(module_path, extensions, exclude),
+        if module_path.stem != "__pycache__":
+            yield module_path.stem, source_files(
+                module_path, extensions, exclude
+            ),
 
 
 def lupdate(
@@ -139,9 +142,17 @@ if __name__ == "__main__":
             options.append("-noobsolete")
 
         lupdate(
-            [Path("lisp")], locales, options=options, exclude="^lisp/plugins/"
+            [Path("lisp")],
+            locales,
+            options=options,
+            exclude="^lisp/plugins/|__pycache__",
         )
-        lupdate(dirs_path("lisp/plugins"), locales, options=options)
+        lupdate(
+            dirs_path("lisp/plugins"),
+            locales,
+            options=options,
+            exclude="__pycache__",
+        )
 
     if do_release:
         print(">>> RELEASING ...")
