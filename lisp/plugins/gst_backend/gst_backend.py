@@ -17,7 +17,7 @@
 
 import os.path
 
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtGui import QCursor
 from PyQt5.QtWidgets import QFileDialog, QApplication
 
@@ -74,7 +74,7 @@ class GstBackend(Plugin, BaseBackend):
         self.app.window.registerCueMenu(
             translate("GstBackend", "Audio cue (from file)"),
             self._add_uri_audio_cue,
-            category="Media cues",
+            category=QT_TRANSLATE_NOOP("CueCategory", "Media cues"),
             shortcut="CTRL+M",
         )
 
