@@ -81,6 +81,14 @@
     </message>
   </context>
   <context>
+    <name>CueCategory</name>
+    <message>
+      <location filename="../../../plugins/gst_backend/gst_backend.py" line="74"/>
+      <source>Media cues</source>
+      <translation type="unfinished">Media cues</translation>
+    </message>
+  </context>
+  <context>
     <name>DbMeterSettings</name>
     <message>
       <location filename="../../../plugins/gst_backend/settings/db_meter.py" line="84"/>
