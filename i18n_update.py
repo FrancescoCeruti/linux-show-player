@@ -20,6 +20,7 @@ import os
 import re
 import subprocess
 import sys
+import shutil
 from argparse import ArgumentParser
 from pathlib import Path
 from typing import Iterable
@@ -27,7 +28,7 @@ from typing import Iterable
 TS_DIR = Path("lisp/i18n/ts")
 QM_DIR = Path("lisp/i18n/qm")
 PYLUPDATE = "pylupdate5"
-LRELEASE = "lrelease"
+LRELEASE = "lrelease" if shutil.which("lrelease") else "lrelease-qt5"
 
 
 def dirs_path(path: str):
