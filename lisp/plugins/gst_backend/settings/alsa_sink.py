@@ -15,11 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5 import QtCore
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (
     QGroupBox,
-    QHBoxLayout,
     QComboBox,
     QLabel,
     QVBoxLayout,
@@ -45,7 +43,7 @@ class AlsaSinkSettings(SettingsPage):
 
         self.deviceGroup = QGroupBox(self)
         self.deviceGroup.setGeometry(0, 0, self.width(), 100)
-        self.deviceGroup.setLayout(QHBoxLayout())
+        self.deviceGroup.setLayout(QVBoxLayout())
         self.layout().addWidget(self.deviceGroup)
 
         self.deviceComboBox = QComboBox(self.deviceGroup)
@@ -59,11 +57,10 @@ class AlsaSinkSettings(SettingsPage):
         self.deviceGroup.layout().addWidget(self.deviceComboBox)
 
         self.helpLabel = QLabel(self.deviceGroup)
-        font = self.noticeLabel.font()
-        font.setPointSizeF(font.pointSizeF() * 0.9)
-        self.noticeLabel.setFont(font)
-        self.helpLabel.setAlignment(QtCore.Qt.AlignCenter)
-        self.layout().addWidget(self.helpLabel)
+        self.helpLabel.setWordWrap(True)
+        self.deviceGroup.layout().addWidget(self.helpLabel)
+
+        self.retranslateUi()
 
     def retranslateUi(self):
         self.deviceGroup.setTitle(translate("AlsaSinkSettings", "ALSA device"))
@@ -71,7 +68,7 @@ class AlsaSinkSettings(SettingsPage):
             translate(
                 "AlsaSinkSettings",
                 "To make your custom PCM objects appear correctly in this list "
-                "requires adding a 'hint.description' line to them",
+                "requires adding a 'hint.description' line to them.",
             )
         )
 
