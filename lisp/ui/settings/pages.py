@@ -54,7 +54,13 @@ class SettingsPage(QWidget):
         :type enabled: bool
         """
 
-    def isGroupEnabled(self, group: QGroupBox):
+    @staticmethod
+    def setGroupEnabled(group: QGroupBox, enabled: bool):
+        group.setCheckable(enabled)
+        group.setChecked(False)
+
+    @staticmethod
+    def isGroupEnabled(group: QGroupBox):
         return not (group.isCheckable() and not group.isChecked())
 
 

@@ -89,18 +89,16 @@ class VolumeSettings(SettingsPage):
         self.normalReset.setText(translate("VolumeSettings", "Reset"))
 
     def enableCheck(self, enabled):
-        for box in [self.normalBox, self.volumeBox]:
-            box.setCheckable(enabled)
-            box.setChecked(False)
+        self.setGroupEnabled(self.normalBox, enabled)
+        self.setGroupEnabled(self.volumeBox, enabled)
 
     def getSettings(self):
         settings = {}
-        checkable = self.volumeBox.isCheckable()
 
-        if not (checkable and not self.volumeBox.isChecked()):
+        if self.isGroupEnabled(self.volumeBox):
             settings["volume"] = db_to_linear(self.volume.value() / 10)
             settings["mute"] = self.muteButton.isMute()
-        if not (checkable and not self.normalBox.isChecked()):
+        if self.isGroupEnabled(self.normalBox):
             if self.normalReset.isChecked():
                 settings["normal_volume"] = 1
                 # If the apply button is pressed, show the correct value

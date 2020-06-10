@@ -142,8 +142,7 @@ class CommandCueSettings(SettingsPage):
         )
 
     def enableCheck(self, enabled):
-        self.group.setCheckable(enabled)
-        self.group.setChecked(False)
+        self.setGroupEnabled(self.group, enabled)
 
         self.noOutputCheckBox.setTristate(enabled)
         if enabled:
@@ -166,9 +165,11 @@ class CommandCueSettings(SettingsPage):
     def getSettings(self):
         settings = {}
 
-        if not (self.group.isCheckable() and not self.group.isChecked()):
-            if self.commandLineEdit.text().strip():
-                settings["command"] = self.commandLineEdit.text()
+        if (
+            self.isGroupEnabled(self.group)
+            and self.commandLineEdit.text().strip()
+        ):
+            settings["command"] = self.commandLineEdit.text()
         if self.noOutputCheckBox.checkState() != Qt.PartiallyChecked:
             settings["no_output"] = self.noOutputCheckBox.isChecked()
         if self.noErrorCheckBox.checkState() != Qt.PartiallyChecked:

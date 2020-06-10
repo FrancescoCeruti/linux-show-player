@@ -289,8 +289,7 @@ class OscSettings(SettingsPage):
         self.oscCapture.setText(translate("ControllerOscSettings", "Capture"))
 
     def enableCheck(self, enabled):
-        self.oscGroup.setCheckable(enabled)
-        self.oscGroup.setChecked(False)
+        self.setGroupEnabled(self.oscGroup, enabled)
 
     def getSettings(self):
         entries = []

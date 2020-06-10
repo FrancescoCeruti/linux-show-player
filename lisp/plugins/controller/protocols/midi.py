@@ -127,8 +127,7 @@ class MidiSettings(SettingsPage):
         )
 
     def enableCheck(self, enabled):
-        self.midiGroup.setCheckable(enabled)
-        self.midiGroup.setChecked(False)
+        self.setGroupEnabled(self.midiGroup, enabled)
 
     def getSettings(self):
         entries = []

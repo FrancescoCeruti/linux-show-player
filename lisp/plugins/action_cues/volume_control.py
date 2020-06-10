@@ -211,28 +211,22 @@ class VolumeSettings(SettingsPage):
                 self.cueLabel.setText(cue.name)
 
     def enableCheck(self, enabled):
-        self.cueGroup.setCheckable(enabled)
-        self.cueGroup.setChecked(False)
-
-        self.volumeGroup.setCheckable(enabled)
-        self.volumeGroup.setChecked(False)
-
-        self.fadeGroup.setCheckable(enabled)
-        self.volumeGroup.setChecked(False)
+        self.setGroupEnabled(self.cueGroup, enabled)
+        self.setGroupEnabled(self.volumeGroup, enabled)
+        self.setGroupEnabled(self.fadeGroup, enabled)
 
     def getSettings(self):
-        conf = {}
-        checkable = self.cueGroup.isCheckable()
+        settings = {}
 
-        if not (checkable and not self.cueGroup.isChecked()):
-            conf["target_id"] = self.cue_id
-        if not (checkable and not self.volumeGroup.isCheckable()):
-            conf["volume"] = self.volumeEdit.value() / 100
-        if not (checkable and not self.fadeGroup.isCheckable()):
-            conf["duration"] = self.fadeEdit.duration() * 1000
-            conf["fade_type"] = self.fadeEdit.fadeType()
+        if self.isGroupEnabled(self.cueGroup):
+            settings["target_id"] = self.cue_id
+        if self.isGroupEnabled(self.volumeGroup):
+            settings["volume"] = self.volumeEdit.value() / 100
+        if self.isGroupEnabled(self.fadeGroup):
+            settings["duration"] = self.fadeEdit.duration() * 1000
+            settings["fade_type"] = self.fadeEdit.fadeType()
 
-        return conf
+        return settings
 
     def loadSettings(self, settings):
         cue = Application().cue_model.get(settings.get("target_id", ""))

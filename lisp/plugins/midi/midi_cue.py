@@ -64,8 +64,14 @@ class MidiCueSettings(SettingsPage):
         self.midiEdit = MIDIMessageEdit(parent=self)
         self.layout().addWidget(self.midiEdit)
 
+    def enableCheck(self, enabled):
+        self.setGroupEnabled(self.midiEdit.msgGroup, enabled)
+
     def getSettings(self):
-        return {"message": midi_dict_to_str(self.midiEdit.getMessageDict())}
+        if self.isGroupEnabled(self.midiEdit.msgGroup):
+            return {"message": midi_dict_to_str(self.midiEdit.getMessageDict())}
+
+        return {}
 
     def loadSettings(self, settings):
         message = settings.get("message", "")

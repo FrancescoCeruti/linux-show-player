@@ -76,8 +76,7 @@ class AlsaSinkSettings(SettingsPage):
         )
 
     def enableCheck(self, enabled):
-        self.deviceGroup.setCheckable(enabled)
-        self.deviceGroup.setChecked(False)
+        self.setGroupEnabled(self.deviceGroup, enabled)
 
     def loadSettings(self, settings):
         device = settings.get("device", "default")

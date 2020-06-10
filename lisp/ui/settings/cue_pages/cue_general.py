@@ -121,24 +121,23 @@ class CueBehavioursPage(CueSettingsPage):
         )
 
     def enableCheck(self, enabled):
-        self.startActionGroup.setCheckable(enabled)
-        self.startActionGroup.setChecked(False)
-        self.stopActionGroup.setCheckable(enabled)
-        self.stopActionGroup.setChecked(False)
+        self.setGroupEnabled(self.startActionGroup, enabled)
+        self.setGroupEnabled(self.stopActionGroup, enabled)
 
     def getSettings(self):
         settings = {}
-        checkable = self.startActionGroup.isCheckable()
 
         if (
-            not checkable or self.startActionGroup.isChecked()
-        ) and self.startActionCombo.isEnabled():
+            self.isGroupEnabled(self.startActionGroup)
+            and self.startActionCombo.isEnabled()
+        ):
             settings[
                 "default_start_action"
             ] = self.startActionCombo.currentItem()
         if (
-            not checkable or self.stopActionGroup.isChecked()
-        ) and self.stopActionCombo.isEnabled():
+            self.isGroupEnabled(self.stopActionGroup)
+            and self.stopActionCombo.isEnabled()
+        ):
             settings["default_stop_action"] = self.stopActionCombo.currentItem()
 
         return settings
@@ -212,12 +211,9 @@ class CueWaitsPage(CueSettingsPage):
         self.nextActionGroup.setTitle(translate("CueSettings", "Next action"))
 
     def enableCheck(self, enabled):
-        self.preWaitGroup.setCheckable(enabled)
-        self.preWaitGroup.setChecked(False)
-        self.postWaitGroup.setCheckable(enabled)
-        self.postWaitGroup.setChecked(False)
-        self.nextActionGroup.setCheckable(enabled)
-        self.nextActionGroup.setChecked(False)
+        self.setGroupEnabled(self.preWaitGroup, enabled)
+        self.setGroupEnabled(self.postWaitGroup, enabled)
+        self.setGroupEnabled(self.nextActionGroup, enabled)
 
     def loadSettings(self, settings):
         self.preWaitSpin.setValue(settings.get("pre_wait", 0))
@@ -226,13 +222,12 @@ class CueWaitsPage(CueSettingsPage):
 
     def getSettings(self):
         settings = {}
-        checkable = self.preWaitGroup.isCheckable()
 
-        if not checkable or self.preWaitGroup.isChecked():
+        if self.isGroupEnabled(self.preWaitGroup):
             settings["pre_wait"] = self.preWaitSpin.value()
-        if not checkable or self.postWaitGroup.isChecked():
+        if self.isGroupEnabled(self.postWaitGroup):
             settings["post_wait"] = self.postWaitSpin.value()
-        if not checkable or self.nextActionGroup.isChecked():
+        if self.isGroupEnabled(self.nextActionGroup):
             settings["next_action"] = self.nextActionCombo.currentData()
 
         return settings
@@ -284,20 +279,17 @@ class CueFadePage(CueSettingsPage):
         self.fadeOutEdit.setDuration(settings.get("fadeout_duration", 0))
 
     def enableCheck(self, enabled):
-        self.fadeInGroup.setCheckable(enabled)
-        self.fadeInGroup.setChecked(False)
-        self.fadeOutGroup.setCheckable(enabled)
-        self.fadeOutGroup.setChecked(False)
+        self.setGroupEnabled(self.fadeInGroup, enabled)
+        self.setGroupEnabled(self.fadeOutGroup, enabled)
 
     def getSettings(self):
         settings = {}
-        checkable = self.fadeInGroup.isCheckable()
 
-        if not checkable or self.fadeInGroup.isChecked():
+        if self.isGroupEnabled(self.fadeInGroup):
             settings["fadein_type"] = self.fadeInEdit.fadeType()
             settings["fadein_duration"] = self.fadeInEdit.duration()
 
-        if not checkable or self.fadeOutGroup.isChecked():
+        if self.isGroupEnabled(self.fadeOutGroup):
             settings["fadeout_type"] = self.fadeOutEdit.fadeType()
             settings["fadeout_duration"] = self.fadeOutEdit.duration()
 

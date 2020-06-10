@@ -63,11 +63,10 @@ class SpeedSettings(SettingsPage):
         self.speedLabel.setText("1.0")
 
     def enableCheck(self, enabled):
-        self.groupBox.setCheckable(enabled)
-        self.groupBox.setChecked(False)
+        self.setGroupEnabled(self.groupBox, enabled)
 
     def getSettings(self):
-        if not (self.groupBox.isCheckable() and not self.groupBox.isChecked()):
+        if self.isGroupEnabled(self.groupBox):
             return {"speed": self.speedSlider.value() / 100}
 
         return {}

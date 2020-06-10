@@ -63,7 +63,7 @@ class SeekCueSettings(SettingsPage):
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(QtCore.Qt.AlignTop)
 
-        self.cue_id = -1
+        self.targetCueId = -1
 
         self.cueDialog = CueSelectDialog(
             cues=Application().cue_model.filter(MediaCue), parent=self
@@ -107,30 +107,31 @@ class SeekCueSettings(SettingsPage):
             cue = self.cueDialog.selected_cue()
 
             if cue is not None:
-                self.cue_id = cue.id
+                self.targetCueId = cue.id
                 self.seekEdit.setMaximumTime(
                     QTime.fromMSecsSinceStartOfDay(cue.media.duration)
                 )
                 self.cueLabel.setText(cue.name)
 
     def enableCheck(self, enabled):
-        self.cueGroup.setCheckable(enabled)
-        self.cueGroup.setChecked(False)
-
-        self.seekGroup.setCheckable(enabled)
-        self.seekGroup.setChecked(False)
+        self.setGroupEnabled(self.cueGroup, enabled)
+        self.setGroupEnabled(self.seekGroup, enabled)
 
     def getSettings(self):
-        return {
-            "target_id": self.cue_id,
-            "time": self.seekEdit.time().msecsSinceStartOfDay(),
-        }
+        settings = {}
+
+        if self.isGroupEnabled(self.cueGroup):
+            settings["target_id"] = self.targetCueId
+        if self.isGroupEnabled(self.seekGroup):
+            settings["time"] = self.seekEdit.time().msecsSinceStartOfDay()
+
+        return settings
 
     def loadSettings(self, settings):
         if settings is not None:
             cue = Application().cue_model.get(settings.get("target_id"))
             if cue is not None:
-                self.cue_id = settings["target_id"]
+                self.targetCueId = settings["target_id"]
                 self.seekEdit.setMaximumTime(
                     QTime.fromMSecsSinceStartOfDay(cue.media.duration)
                 )

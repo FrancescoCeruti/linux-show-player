@@ -51,7 +51,7 @@ class Appearance(SettingsPage):
         self.cueDescriptionGroup.setLayout(QHBoxLayout())
         self.layout().addWidget(self.cueDescriptionGroup)
 
-        self.cueDescriptionEdit = QTextEdit(self.cueNameGroup)
+        self.cueDescriptionEdit = QTextEdit(self.cueDescriptionGroup)
         self.cueDescriptionGroup.layout().addWidget(self.cueDescriptionEdit)
 
         # Font
@@ -107,33 +107,25 @@ class Appearance(SettingsPage):
         )
 
     def enableCheck(self, enabled):
-        self.cueNameGroup.setCheckable(enabled)
-        self.cueNameGroup.setChecked(False)
-
-        self.cueDescriptionGroup.setChecked(enabled)
-        self.cueDescriptionGroup.setChecked(False)
-
-        self.fontSizeGroup.setCheckable(enabled)
-        self.fontSizeGroup.setChecked(False)
-
-        self.colorGroup.setCheckable(enabled)
-        self.colorGroup.setChecked(False)
+        self.setGroupEnabled(self.cueNameGroup, enabled)
+        self.setGroupEnabled(self.cueDescriptionGroup, enabled)
+        self.setGroupEnabled(self.fontSizeGroup, enabled)
+        self.setGroupEnabled(self.colorGroup, enabled)
 
     def getSettings(self):
         settings = {}
         style = {}
-        checkable = self.cueNameGroup.isCheckable()
 
-        if not (checkable and not self.cueNameGroup.isChecked()):
+        if self.isGroupEnabled(self.cueNameGroup):
             settings["name"] = self.cueNameEdit.text()
-        if not (checkable and not self.cueDescriptionGroup.isChecked()):
+        if self.isGroupEnabled(self.cueDescriptionGroup):
             settings["description"] = self.cueDescriptionEdit.toPlainText()
-        if not (checkable and not self.colorGroup.isChecked()):
+        if self.isGroupEnabled(self.colorGroup):
             if self.colorBButton.color() is not None:
                 style["background"] = self.colorBButton.color()
             if self.colorFButton.color() is not None:
                 style["color"] = self.colorFButton.color()
-        if not (checkable and not self.fontSizeGroup.isChecked()):
+        if self.isGroupEnabled(self.fontSizeGroup):
             style["font-size"] = str(self.fontSizeSpin.value()) + "pt"
 
         if style:

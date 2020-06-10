@@ -82,17 +82,13 @@ class Equalizer10Settings(SettingsPage):
             self.groupBox.layout().addWidget(fLabel, 2, n)
 
     def enableCheck(self, enabled):
-        self.groupBox.setCheckable(enabled)
-        self.groupBox.setChecked(False)
+        self.setGroupEnabled(self.groupBox, enabled)
 
     def getSettings(self):
-        settings = {}
+        if self.isGroupEnabled(self.groupBox):
+            return {band: self.sliders[band].value() for band in self.sliders}
 
-        if not (self.groupBox.isCheckable() and not self.groupBox.isChecked()):
-            for band in self.sliders:
-                settings[band] = self.sliders[band].value()
-
-        return settings
+        return {}
 
     def loadSettings(self, settings):
         for band in self.sliders:

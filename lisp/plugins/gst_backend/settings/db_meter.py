@@ -96,11 +96,11 @@ class DbMeterSettings(SettingsPage):
         self.falloffSpin.setValue(settings.get("peak_falloff", 20))
 
     def getSettings(self):
-        settings = {}
+        if self.isGroupEnabled(self.groupBox):
+            return {
+                "interval": self.intervalSpin.value() * Gst.MSECOND,
+                "peak_ttl": self.ttlSpin.value() * Gst.MSECOND,
+                "peak_falloff": self.falloffSpin.value(),
+            }
 
-        if not (self.groupBox.isCheckable() and not self.groupBox.isChecked()):
-            settings["interval"] = self.intervalSpin.value() * Gst.MSECOND
-            settings["peak_ttl"] = self.ttlSpin.value() * Gst.MSECOND
-            settings["peak_falloff"] = self.falloffSpin.value()
-
-        return settings
+        return {}

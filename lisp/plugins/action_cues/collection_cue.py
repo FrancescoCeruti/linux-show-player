@@ -24,6 +24,8 @@ from PyQt5.QtWidgets import (
     QAbstractItemView,
     QHeaderView,
     QTableView,
+    QGroupBox,
+    QPushButton,
 )
 
 from lisp.application import Application
@@ -63,68 +65,89 @@ class CollectionCueSettings(SettingsPage):
         super().__init__(**kwargs)
         self.setLayout(QVBoxLayout(self))
 
-        self.cue_dialog = CueSelectDialog(
+        self.cueDialog = CueSelectDialog(
             cues=Application().cue_model,
             selection_mode=QAbstractItemView.ExtendedSelection,
         )
-
         self.collectionModel = CollectionModel()
+
+        self.collectionGroup = QGroupBox(self)
+        self.collectionGroup.setLayout(QVBoxLayout())
+        self.layout().addWidget(self.collectionGroup)
+
         self.collectionView = CollectionView(
-            Application().cue_model, self.cue_dialog, parent=self
+            Application().cue_model, self.cueDialog, parent=self.collectionGroup
         )
         self.collectionView.setModel(self.collectionModel)
         self.collectionView.setAlternatingRowColors(True)
-        self.layout().addWidget(self.collectionView)
+        self.collectionGroup.layout().addWidget(self.collectionView)
 
         # Buttons
-        self.dialogButtons = QDialogButtonBox(self)
+        self.dialogButtons = QDialogButtonBox(self.collectionGroup)
         self.dialogButtons.setSizePolicy(
             QSizePolicy.Minimum, QSizePolicy.Minimum
         )
-        self.layout().addWidget(self.dialogButtons)
+        self.collectionGroup.layout().addWidget(self.dialogButtons)
 
-        self.addButton = self.dialogButtons.addButton(
-            translate("CollectionCue", "Add"), QDialogButtonBox.ActionRole
+        self.addButton = QPushButton(self.dialogButtons)
+        self.dialogButtons.addButton(
+            self.addButton, QDialogButtonBox.ActionRole
         )
-        self.addButton.clicked.connect(self._add_dialog)
+        self.addButton.clicked.connect(self._showAddCueDialog)
 
-        self.delButton = self.dialogButtons.addButton(
-            translate("CollectionCue", "Remove"), QDialogButtonBox.ActionRole
+        self.delButton = QPushButton(self.dialogButtons)
+        self.dialogButtons.addButton(
+            self.delButton, QDialogButtonBox.ActionRole
         )
-        self.delButton.clicked.connect(self._remove_selected)
+        self.delButton.clicked.connect(self._removeCurrentCue)
+
+        self.retranslateUi()
+
+    def retranslateUi(self):
+        self.collectionGroup.setTitle(
+            translate("SettingsPageName", "Edit Collection")
+        )
+        self.addButton.setText(translate("CollectionCue", "Add"))
+        self.delButton.setText(translate("CollectionCue", "Remove"))
+
+    def enableCheck(self, enabled):
+        self.setGroupEnabled(self.collectionGroup, enabled)
 
     def loadSettings(self, settings):
         for target_id, action in settings.get("targets", []):
             target = Application().cue_model.get(target_id)
             if target is not None:
-                self._add_cue(target, CueAction(action))
+                self._addCue(target, CueAction(action))
 
     def getSettings(self):
-        targets = []
-        for target_id, action in self.collectionModel.rows:
-            targets.append((target_id, action.value))
+        if self.isGroupEnabled(self.collectionGroup):
+            targets = []
+            for target_id, action in self.collectionModel.rows:
+                targets.append((target_id, action.value))
 
-        return {"targets": targets}
+            return {"targets": targets}
 
-    def _add_cue(self, cue, action):
+        return {}
+
+    def _addCue(self, cue, action):
         self.collectionModel.appendRow(cue.__class__, cue.id, action)
-        self.cue_dialog.remove_cue(cue)
+        self.cueDialog.remove_cue(cue)
 
-    def _add_dialog(self):
-        if self.cue_dialog.exec() == QDialog.Accepted:
-            for target in self.cue_dialog.selected_cues():
-                self._add_cue(target, target.CueActions[0])
+    def _showAddCueDialog(self):
+        if self.cueDialog.exec() == QDialog.Accepted:
+            for target in self.cueDialog.selected_cues():
+                self._addCue(target, target.CueActions[0])
 
-    def _remove_selected(self):
+    def _removeCurrentCue(self):
         row = self.collectionView.currentIndex().row()
-        cue_id = self.collectionModel.rows[row][0]
+        cueId = self.collectionModel.rows[row][0]
 
         self.collectionModel.removeRow(row)
-        self.cue_dialog.add_cue(Application().cue_model.get(cue_id))
+        self.cueDialog.add_cue(Application().cue_model.get(cueId))
 
 
 class CollectionView(QTableView):
-    def __init__(self, cue_model, cue_select, **kwargs):
+    def __init__(self, cueModel, cueSelect, **kwargs):
         super().__init__(**kwargs)
 
         self.setSelectionBehavior(QTableView.SelectRows)
@@ -141,7 +164,7 @@ class CollectionView(QTableView):
         self.verticalHeader().setHighlightSections(False)
 
         self.delegates = [
-            CueSelectionDelegate(cue_model, cue_select),
+            CueSelectionDelegate(cueModel, cueSelect),
             CueActionDelegate(),
         ]
 

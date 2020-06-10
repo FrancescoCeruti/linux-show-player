@@ -87,14 +87,20 @@ class TimecodeSettings(CueSettingsPage):
         )
         self.trackLabel.setText(translate("TimecodeSettings", "Track number"))
 
+    def enableCheck(self, enabled):
+        self.setGroupEnabled(self.groupBox, enabled)
+
     def getSettings(self):
-        return {
-            "timecode": {
-                "enabled": self.enableTimecodeCheck.isChecked(),
-                "replace_hours": self.useHoursCheck.isChecked(),
-                "track": self.trackSpin.value(),
+        if self.isGroupEnabled(self.groupBox):
+            return {
+                "timecode": {
+                    "enabled": self.enableTimecodeCheck.isChecked(),
+                    "replace_hours": self.useHoursCheck.isChecked(),
+                    "track": self.trackSpin.value(),
+                }
             }
-        }
+
+        return {}
 
     def loadSettings(self, settings):
         settings = settings.get("timecode", {})

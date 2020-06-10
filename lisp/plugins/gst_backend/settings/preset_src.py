@@ -48,14 +48,10 @@ class PresetSrcSettings(SettingsPage):
         self.functionGroup.layout().addWidget(self.functionDuration)
 
     def enableCheck(self, enabled):
-        self.functionGroup.setCheckable(enabled)
-        self.functionGroup.setChecked(False)
+        self.setGroupEnabled(self.functionGroup, enabled)
 
     def getSettings(self):
-        if not (
-            self.functionGroup.isCheckable()
-            and not self.functionGroup.isChecked()
-        ):
+        if self.isGroupEnabled(self.functionGroup):
             return {
                 "preset": self.functionCombo.currentText(),
                 "duration": self.functionDuration.time().msecsSinceStartOfDay(),

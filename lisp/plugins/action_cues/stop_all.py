@@ -76,16 +76,13 @@ class StopAllSettings(SettingsPage):
         self.group.setTitle(translate("StopAll", "Stop Action"))
 
     def enableCheck(self, enabled):
-        self.group.setCheckable(enabled)
-        self.group.setChecked(False)
+        self.setGroupEnabled(self.group, enabled)
 
     def getSettings(self):
-        conf = {}
+        if self.isGroupEnabled(self.group):
+            return {"action": self.actionCombo.currentData()}
 
-        if not (self.group.isCheckable() and not self.group.isChecked()):
-            conf["action"] = self.actionCombo.currentData()
-
-        return conf
+        return {}
 
     def loadSettings(self, settings):
         self.actionCombo.setCurrentText(

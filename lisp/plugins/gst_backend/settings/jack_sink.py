@@ -86,14 +86,10 @@ class JackSinkSettings(SettingsPage):
         super().closeEvent(event)
 
     def getSettings(self):
-        settings = {}
+        if self.isGroupEnabled(self.jackGroup):
+            return {"connections": self.connections}
 
-        if not (
-            self.jackGroup.isCheckable() and not self.jackGroup.isChecked()
-        ):
-            settings["connections"] = self.connections
-
-        return settings
+        return {}
 
     def loadSettings(self, settings):
         connections = settings.get("connections", [])
@@ -101,8 +97,7 @@ class JackSinkSettings(SettingsPage):
             self.connections = connections.copy()
 
     def enableCheck(self, enabled):
-        self.jackGroup.setCheckable(enabled)
-        self.jackGroup.setChecked(False)
+        self.setGroupEnabled(self.jackGroup, enabled)
 
     def __edit_connections(self):
         dialog = JackConnectionsDialog(self.__jack_client, parent=self)
