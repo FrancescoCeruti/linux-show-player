@@ -24,6 +24,7 @@ from PyQt5.QtWidgets import (
     QLabel,
     QVBoxLayout,
 )
+from pyalsa import alsacard
 
 from lisp.plugins.gst_backend.elements.alsa_sink import AlsaSink
 from lisp.ui.settings.pages import SettingsPage
@@ -39,31 +40,40 @@ class AlsaSinkSettings(SettingsPage):
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
-        self.devices = self._discover_pcm_devices()
-        self.devices["default"] = "default"
+        self.devices = {}
+        self.discover_output_pcm_devices()
 
         self.deviceGroup = QGroupBox(self)
-        self.deviceGroup.setTitle(translate("AlsaSinkSettings", "ALSA device"))
         self.deviceGroup.setGeometry(0, 0, self.width(), 100)
         self.deviceGroup.setLayout(QHBoxLayout())
         self.layout().addWidget(self.deviceGroup)
 
-        self.device = QComboBox(self.deviceGroup)
-        self.device.addItems(self.devices.keys())
-        self.device.setCurrentText("default")
-        self.device.setToolTip(
+        self.deviceComboBox = QComboBox(self.deviceGroup)
+        for name, description in self.devices.items():
+            self.deviceComboBox.addItem(description, name)
+            if name == "default":
+                self.deviceComboBox.setCurrentIndex(
+                    self.deviceComboBox.count() - 1
+                )
+
+        self.deviceGroup.layout().addWidget(self.deviceComboBox)
+
+        self.helpLabel = QLabel(self.deviceGroup)
+        font = self.noticeLabel.font()
+        font.setPointSizeF(font.pointSizeF() * 0.9)
+        self.noticeLabel.setFont(font)
+        self.helpLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.layout().addWidget(self.helpLabel)
+
+    def retranslateUi(self):
+        self.deviceGroup.setTitle(translate("AlsaSinkSettings", "ALSA device"))
+        self.helpLabel.setText(
             translate(
                 "AlsaSinkSettings",
-                "ALSA devices, as defined in an " "asound configuration file",
+                "To make your custom PCM objects appear correctly in this list "
+                "requires adding a 'hint.description' line to them",
             )
         )
-        self.deviceGroup.layout().addWidget(self.device)
-
-        self.label = QLabel(
-            translate("AlsaSinkSettings", "ALSA device"), self.deviceGroup
-        )
-        self.label.setAlignment(QtCore.Qt.AlignCenter)
-        self.deviceGroup.layout().addWidget(self.label)
 
     def enableCheck(self, enabled):
         self.deviceGroup.setCheckable(enabled)
@@ -72,26 +82,23 @@ class AlsaSinkSettings(SettingsPage):
     def loadSettings(self, settings):
         device = settings.get("device", "default")
 
-        for name, dev_name in self.devices.items():
-            if device == dev_name:
-                self.device.setCurrentText(name)
-                break
+        self.deviceComboBox.setCurrentText(
+            self.devices.get(device, self.devices.get("default", ""))
+        )
 
     def getSettings(self):
-        if not (
-            self.deviceGroup.isCheckable() and not self.deviceGroup.isChecked()
-        ):
-            return {"device": self.devices[self.device.currentText()]}
+        if self.isGroupEnabled(self.deviceGroup):
+            return {"device": self.deviceComboBox.currentData()}
 
         return {}
 
-    def _discover_pcm_devices(self):
-        devices = {}
+    def discover_output_pcm_devices(self):
+        self.devices = {}
 
-        with open("/proc/asound/pcm", mode="r") as f:
-            for dev in f.readlines():
-                dev_name = dev[7 : dev.find(":", 7)].strip()
-                dev_code = "hw:" + dev[:5].replace("-", ",")
-                devices[dev_name] = dev_code
-
-        return devices
+        # Get a list of the pcm devices "hints", the result is a combination of
+        # "snd_device_name_hint()" and "snd_device_name_get_hint()"
+        for pcm in alsacard.device_name_hint(-1, "pcm"):
+            ioid = pcm.get("IOID")
+            # Keep only bi-directional and output devices
+            if ioid is None or ioid == "Output":
+                self.devices[pcm["NAME"]] = pcm.get("DESC", pcm["NAME"])
