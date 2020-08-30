@@ -11,17 +11,17 @@
     <message>
       <location filename="../../../plugins/synchronizer/synchronizer.py" line="47"/>
       <source>Manage connected peers</source>
-      <translation>Verbonden peers beheren</translation>
+      <translation>Beheer verbonden peers</translation>
     </message>
     <message>
       <location filename="../../../plugins/synchronizer/synchronizer.py" line="53"/>
       <source>Show your IP</source>
-      <translation>Uw IP weergeven</translation>
+      <translation>Toon je IP</translation>
     </message>
     <message>
       <location filename="../../../plugins/synchronizer/synchronizer.py" line="79"/>
       <source>Your IP is: {}</source>
-      <translation type="unfinished">Your IP is: {}</translation>
+      <translation>Jouw IP is: {}</translation>
     </message>
   </context>
 </TS>
