@@ -16,12 +16,12 @@
     <message>
       <location filename="../../../plugins/cache_manager/cache_manager.py" line="142"/>
       <source>Cache cleanup</source>
-      <translation type="unfinished">Cache cleanup</translation>
+      <translation>Cache opschonen</translation>
     </message>
     <message>
       <location filename="../../../plugins/cache_manager/cache_manager.py" line="143"/>
       <source>Delete the cache content</source>
-      <translation type="unfinished">Delete the cache content</translation>
+      <translation>Verwijder de cache-inhoud</translation>
     </message>
   </context>
   <context>
@@ -29,7 +29,7 @@
     <message>
       <location filename="../../../plugins/cache_manager/cache_manager.py" line="96"/>
       <source>Cache Manager</source>
-      <translation type="unfinished">Cache Manager</translation>
+      <translation>Cachemanager</translation>
     </message>
   </context>
 </TS>
