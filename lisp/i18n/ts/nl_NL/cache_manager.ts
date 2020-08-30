@@ -6,12 +6,12 @@
     <message>
       <location filename="../../../plugins/cache_manager/cache_manager.py" line="135"/>
       <source>Cache size warning</source>
-      <translation type="unfinished">Cache size warning</translation>
+      <translation>Waarschuwing cachegrootte</translation>
     </message>
     <message>
       <location filename="../../../plugins/cache_manager/cache_manager.py" line="138"/>
       <source>Warning threshold in MB (0 = disabled)</source>
-      <translation type="unfinished">Warning threshold in MB (0 = disabled)</translation>
+      <translation>Waarschuwingsdrempel in MB (0 = uitgeschakeld)</translation>
     </message>
     <message>
       <location filename="../../../plugins/cache_manager/cache_manager.py" line="142"/>
