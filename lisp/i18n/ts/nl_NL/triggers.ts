@@ -29,7 +29,7 @@
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="42"/>
       <source>Triggers</source>
-      <translation type="unfinished">Triggers</translation>
+      <translation>Triggers</translation>
     </message>
   </context>
   <context>
@@ -37,22 +37,22 @@
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="65"/>
       <source>Add</source>
-      <translation>Toevoegen</translation>
+      <translation>Voeg toe</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="70"/>
       <source>Remove</source>
-      <translation>Verwijderen</translation>
+      <translation>Verwijder</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="150"/>
       <source>Trigger</source>
-      <translation type="unfinished">Trigger</translation>
+      <translation>Trigger</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="150"/>
       <source>Cue</source>
-      <translation type="unfinished">Cue</translation>
+      <translation>Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="150"/>
