@@ -85,7 +85,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_backend.py" line="74"/>
       <source>Media cues</source>
-      <translation type="unfinished">Media cues</translation>
+      <translation>媒体 cues</translation>
     </message>
   </context>
   <context>
