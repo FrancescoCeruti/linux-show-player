@@ -70,8 +70,8 @@ class PagesTreeWidget(QWidget):
             self._currentWidget.setSizePolicy(
                 QSizePolicy.Ignored, QSizePolicy.Ignored
             )
-            self._currentWidget.show()
             self.layout().addWidget(self._currentWidget, 0, 1)
+            self._currentWidget.show()
             self._resetStretch()
 
 
