@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2020 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ from lisp.core.decorators import memoize
 from lisp.core.plugin import Plugin
 from lisp.cues.cue_factory import CueFactory
 from lisp.cues.media_cue import MediaCue
-from lisp.plugins.gst_backend import elements, settings
+from lisp.plugins.gst_backend import config, elements, settings
 from lisp.plugins.gst_backend.gi_repository import Gst
 from lisp.plugins.gst_backend.gst_media_cue import (
     GstCueFactory,
@@ -65,6 +65,11 @@ class GstBackend(Plugin, BaseBackend):
         AppConfigurationDialog.registerSettingsPage(
             "plugins.gst", GstSettings, GstBackend.Config
         )
+        # Register elements' application-level config
+        for name, page in config.load():
+            AppConfigurationDialog.registerSettingsPage(
+                f"plugins.gst.{name}", page, GstBackend.Config
+            )
         # Add MediaCue settings widget to the CueLayout
         CueSettingsRegistry().add(GstMediaSettings, MediaCue)
 
