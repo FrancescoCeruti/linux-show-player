@@ -105,10 +105,13 @@ class GstBackend(Plugin, BaseBackend):
 
         return extensions
 
-    def media_waveform(self, media):
+    def uri_waveform(self, uri, duration=None):
+        if duration is None or duration <= 0:
+            duration = self.uri_duration(uri)
+
         return GstWaveform(
-            media.input_uri(),
-            media.duration,
+            uri,
+            duration,
             cache_dir=self.app.conf.get("cache.position", ""),
         )
 

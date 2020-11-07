@@ -17,6 +17,7 @@
 
 from abc import abstractmethod, ABCMeta
 
+from lisp.core.session_uri import SessionURI
 from .media import Media
 from .waveform import Waveform
 
@@ -28,14 +29,14 @@ class Backend(metaclass=ABCMeta):
     """
 
     @abstractmethod
-    def uri_duration(self, uri: str) -> int:
+    def uri_duration(self, uri: SessionURI) -> int:
         """Return the file duration in milliseconds.
 
         :param uri: The URI of the file
         """
 
     @abstractmethod
-    def uri_tags(self, uri: str) -> dict:
+    def uri_tags(self, uri: SessionURI) -> dict:
         """Return a dictionary containing the file metadata/tags.
 
         :param uri: The URI of the file
@@ -50,6 +51,10 @@ class Backend(metaclass=ABCMeta):
         e.g. {'audio': ['wav', 'mp3', ...], 'video': ['mp4', 'mov', ...]}
         """
 
-    @abstractmethod
     def media_waveform(self, media: Media) -> Waveform:
         """Return a Waveform object capable of loading the waveform of the given media."""
+        return self.uri_waveform(media.input_uri(), media.duration)
+
+    @abstractmethod
+    def uri_waveform(self, uri: SessionURI, duration=None) -> Waveform:
+        """Return a Waveform object capable of loading the waveform of the given uri."""

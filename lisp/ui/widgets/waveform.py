@@ -69,9 +69,17 @@ class WaveformWidget(QWidget):
     def paintEvent(self, event):
         halfHeight = self.height() / 2
         painter = QPainter()
-
         painter.begin(self)
-        pen = QPen()
+
+        # Draw the background (it will be clipped to event.rect())
+        pen = QPen(QColor(0, 0, 0, 0))
+        painter.setPen(pen)
+        painter.setBrush(QBrush(self.backgroundColor))
+        painter.setRenderHint(QPainter.Antialiasing)
+        painter.drawRoundedRect(self.rect(), 6, 6)
+        painter.setRenderHint(QPainter.Antialiasing, False)
+
+        # Draw the weveform
         pen.setWidth(1)
         painter.setPen(pen)
 
@@ -98,7 +106,7 @@ class WaveformWidget(QWidget):
                 rmsLine = QLineF(x, halfHeight + rms, x, halfHeight - rms)
 
                 # Decide if elapsed or remaining
-                if x <= elapsedWidth:
+                if x < elapsedWidth:
                     peakElapsedLines.append(peakLine)
                     rmsElapsedLines.append(rmsLine)
                 else:
@@ -194,27 +202,16 @@ class WaveformSlider(DynamicFontSizeMixin, WaveformWidget):
         super().resizeEvent(event)
 
     def paintEvent(self, event):
-        painter = QPainter()
-        pen = QPen(QColor(0, 0, 0, 0))
-
-        # Draw the background (it will be clipped to event.rect())
-        painter.begin(self)
-
-        painter.setPen(pen)
-        painter.setBrush(QBrush(self.backgroundColor))
-        painter.setRenderHint(QPainter.Antialiasing)
-        painter.drawRoundedRect(self.rect(), 6, 6)
-
-        painter.end()
-
         # Draw the waveform
         super().paintEvent(event)
 
         # If needed (mouse-over) draw the seek indicator, and it's timestamp
         if self._lastPosition >= 0:
+            painter = QPainter()
             painter.begin(self)
 
             # Draw the indicator as a 1px vertical line
+            pen = QPen()
             pen.setWidth(1)
             pen.setColor(self.seekIndicatorColor)
             painter.setPen(pen)

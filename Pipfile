@@ -16,7 +16,7 @@ python-rtmidi = "~=1.1"
 requests = "~=2.20"
 sortedcontainers = "~=2.0"
 pyalsa = {editable = true,git = "https://github.com/alsa-project/alsa-python.git",ref = "v1.1.6"}
-humanize = "~=2.2"
+humanize = "~=3.1.0"
 
 [dev-packages]
 html5lib = "*"
