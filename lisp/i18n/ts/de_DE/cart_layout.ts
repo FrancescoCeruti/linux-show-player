@@ -4,6 +4,26 @@
   <context>
     <name>CartLayout</name>
     <message>
+      <location filename="../../../plugins/cart_layout/layout.py" line="175"/>
+      <source>Reset volume</source>
+      <translation>Lautstärke zurücksetzen</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/layout.py" line="185"/>
+      <source>Add page</source>
+      <translation>Seite hinzufügen</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/layout.py" line="240"/>
+      <source>Add pages</source>
+      <translation>Seiten hinzufügen</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/layout.py" line="188"/>
+      <source>Remove current page</source>
+      <translation>Aktuelle Seite entfernen</translation>
+    </message>
+    <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="86"/>
       <source>Countdown mode</source>
       <translation>Countdown-Modus</translation>
@@ -19,62 +39,22 @@
       <translation>dB-Meter anzeigen</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="89"/>
-      <source>Show accurate time</source>
-      <translation>Genaue Zeit anzeigen</translation>
-    </message>
-    <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="90"/>
       <source>Show volume</source>
       <translation>Lautstärke anzeigen</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="91"/>
-      <source>Grid size</source>
-      <translation>Rastergröße</translation>
+      <location filename="../../../plugins/cart_layout/settings.py" line="89"/>
+      <source>Show accurate time</source>
+      <translation>Genaue Zeit anzeigen</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="161"/>
-      <source>Play</source>
-      <translation>Wiedergabe</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="161"/>
-      <source>Pause</source>
-      <translation>Pause</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="161"/>
-      <source>Stop</source>
-      <translation>Stopp</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="174"/>
-      <source>Reset volume</source>
-      <translation>Lautstärke zurücksetzen</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="185"/>
-      <source>Add page</source>
-      <translation>Seite hinzufügen</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="238"/>
-      <source>Add pages</source>
-      <translation>Seiten hinzufügen</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="187"/>
-      <source>Remove current page</source>
-      <translation>Aktuelle Seite entfernen</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="238"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="241"/>
       <source>Number of Pages:</source>
       <translation>Seitenanzahl:</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="283"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="259"/>
       <source>Page {number}</source>
       <translation>Seite {number}</translation>
     </message>
@@ -84,14 +64,39 @@
       <translation>Warnung</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="486"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="487"/>
       <source>Every cue in the page will be lost.</source>
       <translation>Alle Cues auf der Seite gehen verloren.</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="489"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="490"/>
       <source>Are you sure to continue?</source>
       <translation>Möchten Sie wirklich fortsetzen?</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/layout.py" line="163"/>
+      <source>Play</source>
+      <translation>Wiedergabe</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/layout.py" line="166"/>
+      <source>Pause</source>
+      <translation>Pause</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/layout.py" line="169"/>
+      <source>Stop</source>
+      <translation>Stopp</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/settings.py" line="82"/>
+      <source>Default behaviors (applied to new sessions)</source>
+      <translation>Standardverhalten (auf neue Sitzungen angewendet)</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/settings.py" line="91"/>
+      <source>Grid size</source>
+      <translation>Rastergröße</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="92"/>
@@ -102,11 +107,6 @@
       <location filename="../../../plugins/cart_layout/settings.py" line="93"/>
       <source>Number of rows:</source>
       <translation>Zeilen-Anzahl:</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="81"/>
-      <source>Default behaviors (applied to new sessions)</source>
-      <translation>Standardverhalten (auf neue Sitzungen angewendet)</translation>
     </message>
   </context>
   <context>
@@ -156,22 +156,22 @@
   <context>
     <name>ListLayout</name>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="142"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="144"/>
       <source>Edit cue</source>
       <translation>Cue bearbeiten</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="142"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="146"/>
       <source>Edit selected cues</source>
       <translation>Ausgewählte Cues bearbeiten</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="142"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="150"/>
       <source>Remove cue</source>
       <translation>Cue entfernen</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="142"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="152"/>
       <source>Remove selected cues</source>
       <translation>Ausgewählte Cues entfernen</translation>
     </message>
