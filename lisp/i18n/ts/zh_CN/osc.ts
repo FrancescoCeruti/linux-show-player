@@ -12,7 +12,7 @@
   <context>
     <name>CueCategory</name>
     <message>
-      <location filename="../../../plugins/osc/osc.py" line="45"/>
+      <location filename="../../../plugins/osc/osc.py" line="46"/>
       <source>Integration cues</source>
       <translation>互联 Cues</translation>
     </message>
@@ -27,26 +27,6 @@
   </context>
   <context>
     <name>OscCue</name>
-    <message>
-      <location filename="../../../plugins/osc/osc_cue.py" line="198"/>
-      <source>Type</source>
-      <translation>类型</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/osc/osc_cue.py" line="198"/>
-      <source>Value</source>
-      <translation>值</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/osc/osc_cue.py" line="198"/>
-      <source>FadeTo</source>
-      <translation>淡入/淡出至</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/osc/osc_cue.py" line="260"/>
-      <source>Fade</source>
-      <translation>淡入淡出</translation>
-    </message>
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="253"/>
       <source>OSC Message</source>
@@ -68,9 +48,14 @@
       <translation>OSC 路径：</translation>
     </message>
     <message>
-      <location filename="../../../plugins/osc/osc_cue.py" line="257"/>
+      <location filename="../../../plugins/osc/osc_cue.py" line="258"/>
       <source>/path/to/something</source>
       <translation>路径</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/osc/osc_cue.py" line="203"/>
+      <source>Fade</source>
+      <translation>淡入淡出</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="261"/>
@@ -82,19 +67,42 @@
       <source>Curve</source>
       <translation>曲线</translation>
     </message>
+    <message>
+      <location filename="../../../plugins/osc/osc_cue.py" line="200"/>
+      <source>Type</source>
+      <translation>类型</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/osc/osc_cue.py" line="201"/>
+      <source>Value</source>
+      <translation>值</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/osc/osc_cue.py" line="202"/>
+      <source>FadeTo</source>
+      <translation>淡入/淡出至</translation>
+    </message>
+  </context>
+  <context>
+    <name>OscCueError</name>
+    <message>
+      <location filename="../../../plugins/osc/osc_cue.py" line="113"/>
+      <source>Cannot send OSC message, see error for details</source>
+      <translation type="unfinished">Cannot send OSC message, see error for details</translation>
+    </message>
   </context>
   <context>
     <name>OscServerDebug</name>
     <message>
-      <location filename="../../../plugins/osc/osc_server.py" line="119"/>
-      <source>Message from {} -&gt; path: &quot;{}&quot; args: {}</source>
-      <translation>来自 {} 的讯息 -&gt; 路径: &quot;{}&quot; args: {}</translation>
+      <location filename="../../../plugins/osc/osc_server.py" line="120"/>
+      <source>Message from {} -&gt; path: "{}" args: {}</source>
+      <translation type="unfinished">Message from {} -&gt; path: "{}" args: {}</translation>
     </message>
   </context>
   <context>
     <name>OscServerError</name>
     <message>
-      <location filename="../../../plugins/osc/osc_server.py" line="99"/>
+      <location filename="../../../plugins/osc/osc_server.py" line="100"/>
       <source>Cannot start OSC sever</source>
       <translation>无法启动 OSC 伺服器</translation>
     </message>
@@ -102,14 +110,14 @@
   <context>
     <name>OscServerInfo</name>
     <message>
-      <location filename="../../../plugins/osc/osc_server.py" line="93"/>
-      <source>OSC server started at {}</source>
-      <translation>OSC 伺服器已于 {} 启动</translation>
-    </message>
-    <message>
       <location filename="../../../plugins/osc/osc_server.py" line="111"/>
       <source>OSC server stopped</source>
       <translation>OSC 伺服器已停止</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/osc/osc_server.py" line="94"/>
+      <source>OSC server started at {}</source>
+      <translation>OSC 伺服器已于 {} 启动</translation>
     </message>
   </context>
   <context>
