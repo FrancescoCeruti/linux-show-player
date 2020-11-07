@@ -4,12 +4,17 @@
   <context>
     <name>CacheManager</name>
     <message>
-      <location filename="../../../plugins/cache_manager/cache_manager.py" line="135"/>
+      <location filename="../../../plugins/cache_manager/cache_manager.py" line="54"/>
+      <source>Cache size</source>
+      <translation type="unfinished">Cache size</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cache_manager/cache_manager.py" line="136"/>
       <source>Cache size warning</source>
       <translation>Waarschuwing cachegrootte</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cache_manager/cache_manager.py" line="138"/>
+      <location filename="../../../plugins/cache_manager/cache_manager.py" line="139"/>
       <source>Warning threshold in MB (0 = disabled)</source>
       <translation>Waarschuwingsdrempel in MB (0 = uitgeschakeld)</translation>
     </message>
@@ -19,9 +24,16 @@
       <translation>Cache opschonen</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cache_manager/cache_manager.py" line="143"/>
+      <location filename="../../../plugins/cache_manager/cache_manager.py" line="144"/>
       <source>Delete the cache content</source>
       <translation>Verwijder de cache-inhoud</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cache_manager/cache_manager.py" line="55"/>
+      <source>The cache has exceeded {}. Consider clean it.
+You can do it in the application settings.</source>
+      <translation type="unfinished">The cache has exceeded {}. Consider clean it.
+You can do it in the application settings.</translation>
     </message>
   </context>
   <context>
