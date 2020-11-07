@@ -91,7 +91,7 @@ class HasProperties(metaclass=HasPropertiesMeta):
         class DeepThought(HasProperties):
             the_answer = Property(default=42)
             nested = Property(default=AnotherThought.class_defaults())
-   """
+    """
 
     def __init__(self):
         self.__changed_signals = {}

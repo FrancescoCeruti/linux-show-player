@@ -49,7 +49,7 @@ class Midi(TimecodeProtocol):
 
     def __send_full(self, fmt, hours, minutes, seconds, frame):
         """Sends fullframe timecode message.
-        
+
         Used in case timecode is non continuous (repositioning, rewind).
         """
         message = Message(

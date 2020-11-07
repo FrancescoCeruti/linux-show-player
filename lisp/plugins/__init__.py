@@ -164,7 +164,8 @@ def __load_plugins(plugins, application, optionals=True):
             except Exception:
                 logger.exception(
                     translate(
-                        "PluginsError", 'Failed to load plugin: "{}"',
+                        "PluginsError",
+                        'Failed to load plugin: "{}"',
                     ).format(name)
                 )
 

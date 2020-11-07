@@ -99,7 +99,10 @@ class QWaitingSpinner(QWidget):
             painter.translate(self._innerRadius, 0)
             painter.setBrush(color)
             painter.drawRoundedRect(
-                linesRect, self._roundness, self._roundness, Qt.RelativeSize,
+                linesRect,
+                self._roundness,
+                self._roundness,
+                Qt.RelativeSize,
             )
             painter.restore()
 

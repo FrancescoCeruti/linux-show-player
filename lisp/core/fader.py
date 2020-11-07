@@ -25,16 +25,16 @@ from lisp.core.util import rsetattr, rgetattr, typename
 class Fader:
     """Allow to perform fades on "generic" objects attributes.
 
-     * Fades have a resolution of `1-hundredth-of-second`
-     * To be able to fade correctly the attribute must be numeric, if not, the
-       `fade` function will fail
-     * When fading, the `fade` function cannot be entered by other threads,
-       if this happens the function will simply return immediately
-     * To execute a fader, the `prepare` function must be called first,
-       this will also stop the fader
-     * After calling `prepare` the fader is considered as running
-     * The `stop` function wait until all "pending" target changes are applied
-     * Changing the target will also stop the fader
+    * Fades have a resolution of `1-hundredth-of-second`
+    * To be able to fade correctly the attribute must be numeric, if not, the
+      `fade` function will fail
+    * When fading, the `fade` function cannot be entered by other threads,
+      if this happens the function will simply return immediately
+    * To execute a fader, the `prepare` function must be called first,
+      this will also stop the fader
+    * After calling `prepare` the fader is considered as running
+    * The `stop` function wait until all "pending" target changes are applied
+    * Changing the target will also stop the fader
     """
 
     def __init__(self, target, attribute):

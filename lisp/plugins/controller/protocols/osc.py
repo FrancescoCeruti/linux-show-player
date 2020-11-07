@@ -99,7 +99,12 @@ class OscMessageDialog(QDialog):
 
     def retranslateUi(self):
         self.setWindowTitle(translate("ControllerOscSettings", "OSC Message"))
-        self.pathLabel.setText(translate("ControllerOscSettings", "OSC Path:",))
+        self.pathLabel.setText(
+            translate(
+                "ControllerOscSettings",
+                "OSC Path:",
+            )
+        )
         self.pathEdit.setPlaceholderText(
             translate("ControllerOscSettings", "/path/to/method")
         )

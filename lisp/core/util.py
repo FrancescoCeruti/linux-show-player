@@ -108,9 +108,9 @@ def time_tuple(milliseconds):
 def strtime(time, accurate=False):
     """Return a string from the given milliseconds time.
 
-     - when > 59min               -> hh:mm:ss
-     - when < 1h and accurate     -> mm:ss:00
-     - when < 1h and not accurate -> mm:ss:z0
+    - when > 59min               -> hh:mm:ss
+    - when < 1h and accurate     -> mm:ss:00
+    - when < 1h and not accurate -> mm:ss:z0
     """
 
     hours, minutes, seconds, milliseconds = time_tuple(int(time))

@@ -70,7 +70,10 @@ class CueAppSettings(SettingsPage):
             translate("CueSettings", "Interrupt action fade")
         )
         self.interruptHelpText.setText(
-            translate("CueSettings", "Used globally when interrupting cues",)
+            translate(
+                "CueSettings",
+                "Used globally when interrupting cues",
+            )
         )
         self.fadeActionsDefaultsGroup.setTitle(
             translate("CueSettings", "Fade actions default value")
