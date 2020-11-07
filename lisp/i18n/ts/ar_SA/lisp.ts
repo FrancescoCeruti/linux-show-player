@@ -4,17 +4,17 @@
   <context>
     <name>About</name>
     <message>
-      <location filename="../../../ui/about.py" line="60"/>
+      <location filename="../../../ui/about.py" line="62"/>
       <source>Authors</source>
       <translation>المؤلفون</translation>
     </message>
     <message>
-      <location filename="../../../ui/about.py" line="60"/>
+      <location filename="../../../ui/about.py" line="65"/>
       <source>Contributors</source>
       <translation type="unfinished">Contributors</translation>
     </message>
     <message>
-      <location filename="../../../ui/about.py" line="60"/>
+      <location filename="../../../ui/about.py" line="70"/>
       <source>Translators</source>
       <translation>المترجمون</translation>
     </message>
@@ -27,14 +27,9 @@
   <context>
     <name>AboutDialog</name>
     <message>
-      <location filename="../../../ui/about.py" line="117"/>
-      <source>Web site</source>
-      <translation>موقع ويب</translation>
-    </message>
-    <message>
-      <location filename="../../../ui/about.py" line="117"/>
-      <source>Source code</source>
-      <translation type="unfinished">Source code</translation>
+      <location filename="../../../ui/about.py" line="52"/>
+      <source>Linux Show Player is a cue player designed for stage productions.</source>
+      <translation type="unfinished">Linux Show Player is a cue player designed for stage productions.</translation>
     </message>
     <message>
       <location filename="../../../ui/about.py" line="132"/>
@@ -47,14 +42,24 @@
       <translation type="unfinished">License</translation>
     </message>
     <message>
-      <location filename="../../../ui/about.py" line="143"/>
+      <location filename="../../../ui/about.py" line="144"/>
       <source>Contributors</source>
       <translation type="unfinished">Contributors</translation>
     </message>
     <message>
-      <location filename="../../../ui/about.py" line="117"/>
+      <location filename="../../../ui/about.py" line="125"/>
+      <source>Web site</source>
+      <translation>موقع ويب</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/about.py" line="127"/>
       <source>Discussion</source>
       <translation type="unfinished">Discussion</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/about.py" line="129"/>
+      <source>Source code</source>
+      <translation type="unfinished">Source code</translation>
     </message>
   </context>
   <context>
@@ -66,14 +71,32 @@
     </message>
   </context>
   <context>
+    <name>AppConfigurationWarning</name>
+    <message>
+      <location filename="../../../ui/settings/app_configuration.py" line="109"/>
+      <source>Cannot load configuration page: "{}" ({})</source>
+      <translation type="unfinished">Cannot load configuration page: "{}" ({})</translation>
+    </message>
+  </context>
+  <context>
     <name>AppGeneralSettings</name>
     <message>
-      <location filename="../../../ui/settings/app_pages/general.py" line="103"/>
+      <location filename="../../../ui/settings/app_pages/general.py" line="104"/>
       <source>Default layout</source>
       <translation type="unfinished">Default layout</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/app_pages/general.py" line="112"/>
+      <location filename="../../../ui/settings/app_pages/general.py" line="107"/>
+      <source>Show layout selection at startup</source>
+      <translation type="unfinished">Show layout selection at startup</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/settings/app_pages/general.py" line="110"/>
+      <source>Use layout at startup:</source>
+      <translation type="unfinished">Use layout at startup:</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/settings/app_pages/general.py" line="113"/>
       <source>Application themes</source>
       <translation type="unfinished">Application themes</translation>
     </message>
@@ -88,32 +111,40 @@
       <translation type="unfinished">Icons theme:</translation>
     </message>
     <message>
+      <location filename="../../../ui/settings/app_pages/general.py" line="119"/>
+      <source>Application language (require a restart)</source>
+      <translation type="unfinished">Application language (require a restart)</translation>
+    </message>
+    <message>
       <location filename="../../../ui/settings/app_pages/general.py" line="123"/>
       <source>Language:</source>
       <translation type="unfinished">Language:</translation>
-    </message>
-    <message>
-      <location filename="../../../ui/settings/app_pages/general.py" line="106"/>
-      <source>Show layout selection at startup</source>
-      <translation type="unfinished">Show layout selection at startup</translation>
-    </message>
-    <message>
-      <location filename="../../../ui/settings/app_pages/general.py" line="109"/>
-      <source>Use layout at startup:</source>
-      <translation type="unfinished">Use layout at startup:</translation>
-    </message>
-    <message>
-      <location filename="../../../ui/settings/app_pages/general.py" line="118"/>
-      <source>Application language (require a restart)</source>
-      <translation type="unfinished">Application language (require a restart)</translation>
     </message>
   </context>
   <context>
     <name>ApplicationError</name>
     <message>
-      <location filename="../../../application.py" line="153"/>
+      <location filename="../../../application.py" line="154"/>
       <source>Startup error</source>
       <translation type="unfinished">Startup error</translation>
+    </message>
+    <message>
+      <location filename="../../../application.py" line="237"/>
+      <source>Error while reading the session file "{}"</source>
+      <translation type="unfinished">Error while reading the session file "{}"</translation>
+    </message>
+    <message>
+      <location filename="../../../application.py" line="229"/>
+      <source>Unable to create the cue "{}"</source>
+      <translation type="unfinished">Unable to create the cue "{}"</translation>
+    </message>
+  </context>
+  <context>
+    <name>ClassLoaderWarning</name>
+    <message>
+      <location filename="../../../core/loading.py" line="136"/>
+      <source>Cannot load python class: "{0}"</source>
+      <translation type="unfinished">Cannot load python class: "{0}"</translation>
     </message>
   </context>
   <context>
@@ -132,7 +163,7 @@
   <context>
     <name>ConfigurationDebug</name>
     <message>
-      <location filename="../../../core/configuration.py" line="220"/>
+      <location filename="../../../core/configuration.py" line="221"/>
       <source>Configuration written at {}</source>
       <translation type="unfinished">Configuration written at {}</translation>
     </message>
@@ -140,9 +171,14 @@
   <context>
     <name>ConfigurationInfo</name>
     <message>
-      <location filename="../../../core/configuration.py" line="243"/>
+      <location filename="../../../core/configuration.py" line="244"/>
       <source>New configuration installed at {}</source>
       <translation type="unfinished">New configuration installed at {}</translation>
+    </message>
+    <message>
+      <location filename="../../../core/configuration.py" line="72"/>
+      <source>Invalid path "{}", return default.</source>
+      <translation type="unfinished">Invalid path "{}", return default.</translation>
     </message>
   </context>
   <context>
@@ -151,21 +187,6 @@
       <location filename="../../../ui/widgets/cue_actions.py" line="25"/>
       <source>Default</source>
       <translation>الطبيعي</translation>
-    </message>
-    <message>
-      <location filename="../../../ui/widgets/cue_actions.py" line="35"/>
-      <source>Pause</source>
-      <translation>إيقاف مؤقت</translation>
-    </message>
-    <message>
-      <location filename="../../../ui/widgets/cue_actions.py" line="33"/>
-      <source>Start</source>
-      <translation>بدء</translation>
-    </message>
-    <message>
-      <location filename="../../../ui/widgets/cue_actions.py" line="36"/>
-      <source>Stop</source>
-      <translation>إيقاف</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="26"/>
@@ -193,9 +214,24 @@
       <translation type="unfinished">Faded Interrupt</translation>
     </message>
     <message>
+      <location filename="../../../ui/widgets/cue_actions.py" line="33"/>
+      <source>Start</source>
+      <translation>بدء</translation>
+    </message>
+    <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="34"/>
       <source>Resume</source>
       <translation>إستكمال</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/widgets/cue_actions.py" line="35"/>
+      <source>Pause</source>
+      <translation>إيقاف مؤقت</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/widgets/cue_actions.py" line="36"/>
+      <source>Stop</source>
+      <translation>إيقاف</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="37"/>
@@ -206,12 +242,12 @@
   <context>
     <name>CueAppearanceSettings</name>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="79"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="80"/>
       <source>The appearance depends on the layout</source>
       <translation type="unfinished">The appearance depends on the layout</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="91"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="92"/>
       <source>Cue name</source>
       <translation type="unfinished">Cue name</translation>
     </message>
@@ -221,12 +257,12 @@
       <translation type="unfinished">NoName</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="95"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="96"/>
       <source>Description/Note</source>
       <translation>وصف/ملاحظة</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="98"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="99"/>
       <source>Set Font Size</source>
       <translation type="unfinished">Set Font Size</translation>
     </message>
@@ -236,12 +272,12 @@
       <translation>اللون</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="102"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="103"/>
       <source>Select background color</source>
       <translation>اختر لون الخلفية</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="105"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="106"/>
       <source>Select font color</source>
       <translation type="unfinished">Select font color</translation>
     </message>
@@ -249,7 +285,7 @@
   <context>
     <name>CueCategory</name>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="267"/>
+      <location filename="../../../ui/mainwindow.py" line="270"/>
       <source>Misc cues</source>
       <translation type="unfinished">Misc cues</translation>
     </message>
@@ -257,14 +293,14 @@
   <context>
     <name>CueCommandLog</name>
     <message>
-      <location filename="../../../command/cue.py" line="46"/>
-      <source>Cue settings changed: &quot;{}&quot;</source>
-      <translation type="unfinished">Cue settings changed: &quot;{}&quot;</translation>
-    </message>
-    <message>
       <location filename="../../../command/cue.py" line="75"/>
       <source>Cues settings changed.</source>
       <translation type="unfinished">Cues settings changed.</translation>
+    </message>
+    <message>
+      <location filename="../../../command/cue.py" line="46"/>
+      <source>Cue settings changed: "{}"</source>
+      <translation type="unfinished">Cue settings changed: "{}"</translation>
     </message>
   </context>
   <context>
@@ -306,29 +342,24 @@
   <context>
     <name>CueSettings</name>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="202"/>
-      <source>Pre wait</source>
-      <translation>قبل الانتظار</translation>
+      <location filename="../../../ui/settings/app_pages/cue.py" line="70"/>
+      <source>Interrupt action fade</source>
+      <translation type="unfinished">Interrupt action fade</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="203"/>
-      <source>Wait before cue execution</source>
-      <translation type="unfinished">Wait before cue execution</translation>
+      <location filename="../../../ui/settings/app_pages/cue.py" line="73"/>
+      <source>Used globally when interrupting cues</source>
+      <translation type="unfinished">Used globally when interrupting cues</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="207"/>
-      <source>Post wait</source>
-      <translation>بعد الانتظار</translation>
+      <location filename="../../../ui/settings/app_pages/cue.py" line="76"/>
+      <source>Fade actions default value</source>
+      <translation type="unfinished">Fade actions default value</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="208"/>
-      <source>Wait after cue execution</source>
-      <translation type="unfinished">Wait after cue execution</translation>
-    </message>
-    <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="212"/>
-      <source>Next action</source>
-      <translation>الإجراءت التالية</translation>
+      <location filename="../../../ui/settings/app_pages/cue.py" line="79"/>
+      <source>Used for fade-in and fade-out actions, by cues where fade duration is 0.</source>
+      <translation type="unfinished">Used for fade-in and fade-out actions, by cues where fade duration is 0.</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="112"/>
@@ -336,7 +367,7 @@
       <translation>بدء الإجراء</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="113"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="114"/>
       <source>Default action to start the cue</source>
       <translation type="unfinished">Default action to start the cue</translation>
     </message>
@@ -346,19 +377,34 @@
       <translation>توقف الإجراءت</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="119"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="120"/>
       <source>Default action to stop the cue</source>
       <translation type="unfinished">Default action to stop the cue</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/app_pages/cue.py" line="69"/>
-      <source>Interrupt action fade</source>
-      <translation type="unfinished">Interrupt action fade</translation>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="201"/>
+      <source>Pre wait</source>
+      <translation>قبل الانتظار</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/app_pages/cue.py" line="75"/>
-      <source>Fade actions default value</source>
-      <translation type="unfinished">Fade actions default value</translation>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="203"/>
+      <source>Wait before cue execution</source>
+      <translation type="unfinished">Wait before cue execution</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="206"/>
+      <source>Post wait</source>
+      <translation>بعد الانتظار</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="208"/>
+      <source>Wait after cue execution</source>
+      <translation type="unfinished">Wait after cue execution</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="211"/>
+      <source>Next action</source>
+      <translation>الإجراءت التالية</translation>
     </message>
   </context>
   <context>
@@ -395,12 +441,12 @@
   <context>
     <name>FadeSettings</name>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="277"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="272"/>
       <source>Fade In</source>
       <translation>ظهور تدريجي</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="278"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="273"/>
       <source>Fade Out</source>
       <translation>تلاشي تدريجي</translation>
     </message>
@@ -408,7 +454,7 @@
   <context>
     <name>HotKeyEdit</name>
     <message>
-      <location filename="../../../ui/widgets/hotkeyedit.py" line="124"/>
+      <location filename="../../../ui/widgets/hotkeyedit.py" line="125"/>
       <source>Press shortcut</source>
       <translation type="unfinished">Press shortcut</translation>
     </message>
@@ -439,22 +485,22 @@
       <translation type="unfinished">Layout actions</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/app_pages/layouts.py" line="53"/>
+      <location filename="../../../ui/settings/app_pages/layouts.py" line="54"/>
       <source>Fade out when stopping all cues</source>
       <translation type="unfinished">Fade out when stopping all cues</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/app_pages/layouts.py" line="56"/>
+      <location filename="../../../ui/settings/app_pages/layouts.py" line="57"/>
       <source>Fade out when interrupting all cues</source>
       <translation type="unfinished">Fade out when interrupting all cues</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/app_pages/layouts.py" line="59"/>
+      <location filename="../../../ui/settings/app_pages/layouts.py" line="60"/>
       <source>Fade out when pausing all cues</source>
       <translation type="unfinished">Fade out when pausing all cues</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/app_pages/layouts.py" line="62"/>
+      <location filename="../../../ui/settings/app_pages/layouts.py" line="63"/>
       <source>Fade in when resuming all cues</source>
       <translation type="unfinished">Fade in when resuming all cues</translation>
     </message>
@@ -470,21 +516,6 @@
   <context>
     <name>Logging</name>
     <message>
-      <location filename="../../../ui/logging/common.py" line="21"/>
-      <source>Debug</source>
-      <translation>التنقيح</translation>
-    </message>
-    <message>
-      <location filename="../../../ui/logging/common.py" line="23"/>
-      <source>Warning</source>
-      <translation>تحذير</translation>
-    </message>
-    <message>
-      <location filename="../../../ui/logging/common.py" line="24"/>
-      <source>Error</source>
-      <translation>خطأ</translation>
-    </message>
-    <message>
       <location filename="../../../ui/logging/dialog.py" line="79"/>
       <source>Dismiss all</source>
       <translation>تجاهل الكل</translation>
@@ -495,14 +526,24 @@
       <translation>إظهار التفاصيل</translation>
     </message>
     <message>
-      <location filename="../../../ui/logging/viewer.py" line="53"/>
-      <source>Linux Show Player - Log Viewer</source>
-      <translation>Linux Show Player--عارض السجل</translation>
+      <location filename="../../../ui/logging/common.py" line="21"/>
+      <source>Debug</source>
+      <translation>التنقيح</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="22"/>
       <source>Info</source>
       <translation>معلومات</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/logging/common.py" line="23"/>
+      <source>Warning</source>
+      <translation>تحذير</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/logging/common.py" line="24"/>
+      <source>Error</source>
+      <translation>خطأ</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="25"/>
@@ -585,7 +626,12 @@
       <translation>معلومات الاستثناء</translation>
     </message>
     <message>
-      <location filename="../../../ui/logging/viewer.py" line="125"/>
+      <location filename="../../../ui/logging/viewer.py" line="54"/>
+      <source>Linux Show Player - Log Viewer</source>
+      <translation>Linux Show Player--عارض السجل</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/logging/viewer.py" line="126"/>
       <source>Showing {} of {} records</source>
       <translation type="unfinished">Showing {} of {} records</translation>
     </message>
@@ -653,7 +699,7 @@
       <translation>اختيار الكل</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="213"/>
+      <location filename="../../../ui/mainwindow.py" line="214"/>
       <source>Select all media cues</source>
       <translation type="unfinished">Select all media cues</translation>
     </message>
@@ -668,7 +714,7 @@
       <translation>CTRL + SHIFT + A</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="219"/>
+      <location filename="../../../ui/mainwindow.py" line="220"/>
       <source>Invert selection</source>
       <translation type="unfinished">Invert selection</translation>
     </message>
@@ -718,12 +764,17 @@
       <translation>حول Qt</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="399"/>
+      <location filename="../../../ui/mainwindow.py" line="401"/>
       <source>Close session</source>
       <translation type="unfinished">Close session</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="409"/>
+      <location filename="../../../ui/mainwindow.py" line="402"/>
+      <source>The current session contains changes that have not been saved.</source>
+      <translation type="unfinished">The current session contains changes that have not been saved.</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/mainwindow.py" line="410"/>
       <source>Do you want to save them now?</source>
       <translation type="unfinished">Do you want to save them now?</translation>
     </message>
@@ -731,15 +782,15 @@
   <context>
     <name>MainWindowDebug</name>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="260"/>
-      <source>Registered cue menu: &quot;{}&quot;</source>
-      <translation type="unfinished">Registered cue menu: &quot;{}&quot;</translation>
+      <location filename="../../../ui/mainwindow.py" line="261"/>
+      <source>Registered cue menu: "{}"</source>
+      <translation type="unfinished">Registered cue menu: "{}"</translation>
     </message>
   </context>
   <context>
     <name>MainWindowError</name>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="344"/>
+      <location filename="../../../ui/mainwindow.py" line="345"/>
       <source>Cannot create cue {}</source>
       <translation type="unfinished">Cannot create cue {}</translation>
     </message>
@@ -752,7 +803,7 @@
       <translation>وقت البدء</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="82"/>
+      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="83"/>
       <source>Stop position of the media</source>
       <translation type="unfinished">Stop position of the media</translation>
     </message>
@@ -762,7 +813,7 @@
       <translation>وقت الإيقاف</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="86"/>
+      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="87"/>
       <source>Start position of the media</source>
       <translation type="unfinished">Start position of the media</translation>
     </message>
@@ -770,6 +821,19 @@
       <location filename="../../../ui/settings/cue_pages/media_cue.py" line="89"/>
       <source>Loop</source>
       <translation type="unfinished">Loop</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="91"/>
+      <source>Repetition after first play (-1 = infinite)</source>
+      <translation type="unfinished">Repetition after first play (-1 = infinite)</translation>
+    </message>
+  </context>
+  <context>
+    <name>ModulesLoaderWarning</name>
+    <message>
+      <location filename="../../../core/loading.py" line="69"/>
+      <source>Cannot load python module: "{0}"</source>
+      <translation type="unfinished">Cannot load python module: "{0}"</translation>
     </message>
   </context>
   <context>
@@ -783,9 +847,9 @@
   <context>
     <name>SettingsPageName</name>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="35"/>
-      <source>Appearance</source>
-      <translation>المظهر</translation>
+      <location filename="../../../ui/settings/app_pages/plugins.py" line="33"/>
+      <source>Plugins</source>
+      <translation>الإضافات</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/general.py" line="38"/>
@@ -793,9 +857,9 @@
       <translation>إعدادات عامة</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="43"/>
-      <source>Cue</source>
-      <translation>الأغنية</translation>
+      <location filename="../../../ui/settings/app_pages/layouts.py" line="26"/>
+      <source>Layouts</source>
+      <translation type="unfinished">Layouts</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/cue.py" line="27"/>
@@ -803,9 +867,9 @@
       <translation>إعدادات الأغنية</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/app_pages/plugins.py" line="33"/>
-      <source>Plugins</source>
-      <translation>الإضافات</translation>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="43"/>
+      <source>Cue</source>
+      <translation>الأغنية</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="53"/>
@@ -813,19 +877,19 @@
       <translation>السلوك</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="156"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="155"/>
       <source>Pre/Post Wait</source>
       <translation type="unfinished">Pre/Post Wait</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="242"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="237"/>
       <source>Fade In/Out</source>
       <translation type="unfinished">Fade In/Out</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/app_pages/layouts.py" line="26"/>
-      <source>Layouts</source>
-      <translation type="unfinished">Layouts</translation>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="35"/>
+      <source>Appearance</source>
+      <translation>المظهر</translation>
     </message>
   </context>
 </TS>
