@@ -4,6 +4,26 @@
   <context>
     <name>CartLayout</name>
     <message>
+      <location filename="../../../plugins/cart_layout/layout.py" line="175"/>
+      <source>Reset volume</source>
+      <translation>重置音量</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/layout.py" line="185"/>
+      <source>Add page</source>
+      <translation>添加頁面</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/layout.py" line="240"/>
+      <source>Add pages</source>
+      <translation>添加多個頁面</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/layout.py" line="188"/>
+      <source>Remove current page</source>
+      <translation>移除當前頁面</translation>
+    </message>
+    <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="86"/>
       <source>Countdown mode</source>
       <translation>倒計時模式</translation>
@@ -19,62 +39,22 @@
       <translation>顯示分貝計</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="89"/>
-      <source>Show accurate time</source>
-      <translation>顯示準確時間</translation>
-    </message>
-    <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="90"/>
       <source>Show volume</source>
       <translation>顯示音量</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="91"/>
-      <source>Grid size</source>
-      <translation>網格大小</translation>
+      <location filename="../../../plugins/cart_layout/settings.py" line="89"/>
+      <source>Show accurate time</source>
+      <translation>顯示準確時間</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="161"/>
-      <source>Play</source>
-      <translation>播放</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="161"/>
-      <source>Pause</source>
-      <translation>暫停</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="161"/>
-      <source>Stop</source>
-      <translation>停止</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="174"/>
-      <source>Reset volume</source>
-      <translation>重置音量</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="185"/>
-      <source>Add page</source>
-      <translation>添加頁面</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="238"/>
-      <source>Add pages</source>
-      <translation>添加多個頁面</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="187"/>
-      <source>Remove current page</source>
-      <translation>移除當前頁面</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="238"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="241"/>
       <source>Number of Pages:</source>
       <translation>頁數：</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="283"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="259"/>
       <source>Page {number}</source>
       <translation>第 {number} 頁</translation>
     </message>
@@ -84,14 +64,39 @@
       <translation>警告</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="486"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="487"/>
       <source>Every cue in the page will be lost.</source>
       <translation>頁面中的所有 Cue 都会被刪除。</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="489"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="490"/>
       <source>Are you sure to continue?</source>
       <translation>是否確認繼續？</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/layout.py" line="163"/>
+      <source>Play</source>
+      <translation>播放</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/layout.py" line="166"/>
+      <source>Pause</source>
+      <translation>暫停</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/layout.py" line="169"/>
+      <source>Stop</source>
+      <translation>停止</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/settings.py" line="82"/>
+      <source>Default behaviors (applied to new sessions)</source>
+      <translation>默認行為 (套用於新工作階段)</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/settings.py" line="91"/>
+      <source>Grid size</source>
+      <translation>網格大小</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="92"/>
@@ -102,11 +107,6 @@
       <location filename="../../../plugins/cart_layout/settings.py" line="93"/>
       <source>Number of rows:</source>
       <translation>行數：</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="81"/>
-      <source>Default behaviors (applied to new sessions)</source>
-      <translation>默認行為 (套用於新工作階段)</translation>
     </message>
   </context>
   <context>
@@ -156,22 +156,22 @@
   <context>
     <name>ListLayout</name>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="142"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="144"/>
       <source>Edit cue</source>
       <translation>編輯 Cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="142"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="146"/>
       <source>Edit selected cues</source>
       <translation>編輯所選的 Cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="142"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="150"/>
       <source>Remove cue</source>
       <translation>移除 Cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="142"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="152"/>
       <source>Remove selected cues</source>
       <translation>移除所選的 Cue</translation>
     </message>
