@@ -27,7 +27,7 @@
   <context>
     <name>SettingsPageName</name>
     <message>
-      <location filename="../../../plugins/triggers/triggers_settings.py" line="42"/>
+      <location filename="../../../plugins/triggers/triggers_settings.py" line="86"/>
       <source>Triggers</source>
       <translation>Spouštěče</translation>
     </message>
@@ -35,27 +35,27 @@
   <context>
     <name>TriggersSettings</name>
     <message>
-      <location filename="../../../plugins/triggers/triggers_settings.py" line="65"/>
+      <location filename="../../../plugins/triggers/triggers_settings.py" line="87"/>
       <source>Add</source>
       <translation>Přidat</translation>
     </message>
     <message>
-      <location filename="../../../plugins/triggers/triggers_settings.py" line="70"/>
+      <location filename="../../../plugins/triggers/triggers_settings.py" line="88"/>
       <source>Remove</source>
       <translation>Odstranit</translation>
     </message>
     <message>
-      <location filename="../../../plugins/triggers/triggers_settings.py" line="150"/>
+      <location filename="../../../plugins/triggers/triggers_settings.py" line="173"/>
       <source>Trigger</source>
       <translation>Spouštěč</translation>
     </message>
     <message>
-      <location filename="../../../plugins/triggers/triggers_settings.py" line="150"/>
+      <location filename="../../../plugins/triggers/triggers_settings.py" line="174"/>
       <source>Cue</source>
       <translation>Narážka</translation>
     </message>
     <message>
-      <location filename="../../../plugins/triggers/triggers_settings.py" line="150"/>
+      <location filename="../../../plugins/triggers/triggers_settings.py" line="175"/>
       <source>Action</source>
       <translation>Činnost</translation>
     </message>
