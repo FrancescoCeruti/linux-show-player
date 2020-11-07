@@ -12,21 +12,34 @@
   <context>
     <name>ApiServerError</name>
     <message>
-      <location filename="../../../plugins/network/server.py" line="50"/>
+      <location filename="../../../plugins/network/server.py" line="51"/>
       <source>Network API server stopped working.</source>
       <translation>Netzwerk-API-Server funktionierte nicht.</translation>
     </message>
   </context>
   <context>
+    <name>ApiServerInfo</name>
+    <message>
+      <location filename="../../../plugins/network/server.py" line="37"/>
+      <source>Start serving network API at: http://{}:{}/</source>
+      <translation type="unfinished">Start serving network API at: http://{}:{}/</translation>
+    </message>
+  </context>
+  <context>
     <name>NetworkApiDebug</name>
     <message>
-      <location filename="../../../plugins/network/api/__init__.py" line="14"/>
+      <location filename="../../../plugins/network/api/__init__.py" line="15"/>
       <source>New end-point: {}</source>
       <translation>Neuer Endpunkt: {}</translation>
     </message>
   </context>
   <context>
     <name>NetworkDiscovery</name>
+    <message>
+      <location filename="../../../plugins/network/discovery_dialogs.py" line="77"/>
+      <source>Select the hosts you want to add</source>
+      <translation>Wählen Sie die Hosts aus, die Sie hinzufügen möchten</translation>
+    </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="79"/>
       <source>Host discovery</source>
@@ -38,39 +51,34 @@
       <translation>Hosts verwalten</translation>
     </message>
     <message>
-      <location filename="../../../plugins/network/discovery_dialogs.py" line="165"/>
+      <location filename="../../../plugins/network/discovery_dialogs.py" line="166"/>
       <source>Discover hosts</source>
       <translation>Hosts entdecken</translation>
     </message>
     <message>
-      <location filename="../../../plugins/network/discovery_dialogs.py" line="168"/>
+      <location filename="../../../plugins/network/discovery_dialogs.py" line="169"/>
       <source>Manually add a host</source>
       <translation>Einen Host manuell hinzufügen</translation>
     </message>
     <message>
-      <location filename="../../../plugins/network/discovery_dialogs.py" line="171"/>
+      <location filename="../../../plugins/network/discovery_dialogs.py" line="172"/>
       <source>Remove selected host</source>
       <translation>Ausgewählten Host entfernen</translation>
     </message>
     <message>
-      <location filename="../../../plugins/network/discovery_dialogs.py" line="174"/>
+      <location filename="../../../plugins/network/discovery_dialogs.py" line="175"/>
       <source>Remove all host</source>
       <translation>Alle Hosts entfernen</translation>
     </message>
     <message>
-      <location filename="../../../plugins/network/discovery_dialogs.py" line="179"/>
+      <location filename="../../../plugins/network/discovery_dialogs.py" line="181"/>
       <source>Address</source>
       <translation>Adresse</translation>
     </message>
     <message>
-      <location filename="../../../plugins/network/discovery_dialogs.py" line="179"/>
+      <location filename="../../../plugins/network/discovery_dialogs.py" line="182"/>
       <source>Host IP</source>
       <translation>Host-IP</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/network/discovery_dialogs.py" line="76"/>
-      <source>Select the hosts you want to add</source>
-      <translation>Wählen Sie die Hosts aus, die Sie hinzufügen möchten</translation>
     </message>
   </context>
 </TS>
