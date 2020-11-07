@@ -37,7 +37,8 @@ from PyQt5.QtWidgets import (
     QSpacerItem,
 )
 
-from lisp.plugins import get_plugin, PluginNotLoadedError
+from lisp.plugins import get_plugin
+from lisp.core.plugin import PluginNotLoadedError
 from lisp.plugins.controller.common import LayoutAction, tr_layout_action
 from lisp.plugins.controller.protocol import Protocol
 from lisp.plugins.osc.osc_delegate import OscArgumentDelegate

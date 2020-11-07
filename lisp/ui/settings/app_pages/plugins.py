@@ -45,7 +45,7 @@ class PluginsSettings(SettingsPage):
         self.pluginsList.itemSelectionChanged.connect(self.__selection_changed)
         self.layout().addWidget(self.pluginsList)
 
-        for name, plugin in plugins.PLUGINS.items():
+        for name, plugin in plugins.PluginsRegister.items():
             item = QListWidgetItem(plugin.Name)
             if plugins.is_loaded(name):
                 item.setIcon(IconTheme.get("led-running"))
