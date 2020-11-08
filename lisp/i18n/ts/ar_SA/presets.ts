@@ -4,12 +4,12 @@
   <context>
     <name>Preset</name>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="222"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="223"/>
       <source>Create Cue</source>
       <translation type="unfinished">Create Cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="224"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="225"/>
       <source>Load on selected Cues</source>
       <translation type="unfinished">Load on selected Cues</translation>
     </message>
@@ -27,42 +27,42 @@
       <translation>إعدادات مسبقة</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="422"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="423"/>
       <source>Preset name</source>
       <translation type="unfinished">Preset name</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="218"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="219"/>
       <source>Add</source>
       <translation>أضف</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="219"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="220"/>
       <source>Rename</source>
       <translation>إعادة التسمية</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="220"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="221"/>
       <source>Edit</source>
       <translation>تعديل</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="221"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="222"/>
       <source>Remove</source>
       <translation>احذف</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="227"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="228"/>
       <source>Export selected</source>
       <translation type="unfinished">Export selected</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="229"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="230"/>
       <source>Import</source>
       <translation>تحميل</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="423"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="424"/>
       <source>Cue type</source>
       <translation type="unfinished">Cue type</translation>
     </message>
@@ -97,32 +97,32 @@
       <translation type="unfinished">Preset "{}" already exists, overwrite?</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="269"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="270"/>
       <source>Warning</source>
       <translation>تحذير</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="270"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="271"/>
       <source>The same name is already used!</source>
       <translation>هذا الإسم مستعمل مسبقا!</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="344"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="345"/>
       <source>Cannot export correctly.</source>
       <translation type="unfinished">Cannot export correctly.</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="355"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="356"/>
       <source>Some presets already exists, overwrite?</source>
       <translation type="unfinished">Some presets already exists, overwrite?</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="369"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="370"/>
       <source>Cannot import correctly.</source>
       <translation type="unfinished">Cannot import correctly.</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="311"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="312"/>
       <source>Cannot create a cue from this preset: {}</source>
       <translation type="unfinished">Cannot create a cue from this preset: {}</translation>
     </message>
