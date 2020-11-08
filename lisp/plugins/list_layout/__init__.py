@@ -7,6 +7,7 @@ from lisp.ui.settings.app_configuration import AppConfigurationDialog
 
 class ListLayout(Plugin):
     Name = "List Layout"
+    CorePlugin = True
     Description = "Provide a layout that organize the cues in a list"
     Authors = ("Francesco Ceruti",)
 

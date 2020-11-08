@@ -7,6 +7,7 @@ from lisp.ui.settings.app_configuration import AppConfigurationDialog
 
 class CartLayout(Plugin):
     Name = "Cart Layout"
+    CorePlugin = True
     Description = "Provide a layout that organizes cues in grid-like pages"
     Authors = ("Francesco Ceruti",)
 

@@ -42,6 +42,13 @@ def is_loaded(plugin_name):
     )
 
 
+def get_plugins():
+    if DefaultPluginsManager is not None:
+        return DefaultPluginsManager.get_plugins()
+    else:
+        raise RuntimeError("Cannot get plugins before they have been loaded.")
+
+
 def get_plugin(plugin_name):
     if DefaultPluginsManager is not None:
         return DefaultPluginsManager.get_plugin(plugin_name)

@@ -20,12 +20,12 @@ import itertools
 import logging
 import sys
 from os import path
-from typing import Dict, Type
+from typing import Dict, Type, Union
 
 from lisp import USER_PLUGINS_PATH, app_dirs, PLUGINS_PACKAGE, PLUGINS_PATH
 from lisp.core.configuration import JSONFileConfiguration, DummyConfiguration
 from lisp.core.loading import load_classes
-from lisp.core.plugin import Plugin, PluginNotLoadedError
+from lisp.core.plugin import Plugin, PluginNotLoadedError, PluginState
 from lisp.core.plugin_loader import PluginsLoader
 from lisp.ui.ui_utils import translate, install_translation
 
@@ -34,16 +34,13 @@ logger = logging.getLogger(__name__)
 
 class PluginsManager:
     # Fallback plugin configuration
-    FALLBACK_CONFIG = {"_version_": "undefined", "_enabled_": True}
+    FALLBACK_CONFIG_PATH = path.join(PLUGINS_PATH, "default.json")
 
     def __init__(self, application, enable_user_plugins=True):
         self.application = application
-        self.enable_user_plugins = enable_user_plugins
 
-        # The discovered plugins
-        self.register: Dict[str, Type[Plugin]] = {}
-        # Loaded plugins instances
-        self.plugins: Dict[str, Plugin] = {}
+        self._enable_user_plugins = enable_user_plugins
+        self._plugins: Dict[str, Union[Plugin, Type[Plugin]]] = {}
 
     def load_plugins(self):
         """Load and instantiate available plugins."""
@@ -52,7 +49,7 @@ class PluginsManager:
         lisp_plugins = load_classes(PLUGINS_PACKAGE, PLUGINS_PATH)
 
         # Plugins installed by the user
-        if self.enable_user_plugins:
+        if self._enable_user_plugins:
             # Allow importing of python modules from the user plugins path.
             if USER_PLUGINS_PATH not in sys.path:
                 sys.path.insert(1, USER_PLUGINS_PATH)
@@ -67,14 +64,13 @@ class PluginsManager:
 
         # Load (instantiate) the plugins
         # Note that PluginsLoader.load() is a generator, it will yield
-        # each plugin when ready, so "self.plugins" will be update gradually,
-        # allowing plugins to request other plugins in theirs __init__ method.
-        self.plugins.update(
-            PluginsLoader(self.application, self.register).load()
+        # each plugin when ready, so "self.plugins" will be update gradually.
+        self._plugins.update(
+            PluginsLoader(self.application, self._plugins.copy()).load()
         )
 
     def register_plugin(self, name, plugin):
-        if name in self.register:
+        if name in self._plugins:
             # Prevent user plugins to override those provided with lisp,
             # if the latter are register before.
             # More generically, if two plugins with same name are provided,
@@ -96,20 +92,19 @@ class PluginsManager:
                 app_dirs.user_config_dir, mod_name + ".json"
             )
             default_config_path = path.join(mod_path, "default.json")
-            if path.exists(default_config_path):
+            if not path.exists(default_config_path):
                 # Configuration for file
-                plugin.Config = JSONFileConfiguration(
-                    user_config_path, default_config_path
-                )
-            else:
-                # Fallback configuration, if the plugin didn't provide one
-                plugin.Config = DummyConfiguration(self.FALLBACK_CONFIG.copy())
+                default_config_path = self.FALLBACK_CONFIG_PATH
+
+            plugin.Config = JSONFileConfiguration(
+                user_config_path, default_config_path
+            )
 
             # Load plugin translations
             install_translation(mod_name, tr_path=path.join(mod_path, "i18n"))
 
             # Register plugin
-            self.register[name] = plugin
+            self._plugins[name] = plugin
         except Exception:
             logger.exception(
                 translate(
@@ -117,22 +112,34 @@ class PluginsManager:
                 ).format(name)
             )
 
-    def is_loaded(self, plugin_name):
-        return plugin_name in self.plugins
+    def is_loaded(self, plugin_name: str) -> bool:
+        plugin = self._plugins.get(plugin_name)
 
-    def get_plugin(self, plugin_name):
+        if plugin is not None:
+            return self._plugins[plugin_name].is_loaded()
+
+        return False
+
+    def get_plugins(self):
+        for name, plugin in self._plugins.items():
+            yield name, plugin
+
+    def get_plugin(self, plugin_name: str) -> Plugin:
         if self.is_loaded(plugin_name):
-            return self.plugins[plugin_name]
+            return self._plugins[plugin_name]
         else:
             raise PluginNotLoadedError(
                 translate(
-                    "PluginsError", "The requested plugin is not loaded: {}"
+                    "PluginsError", 'The requested plugin is not loaded: "{}"'
                 ).format(plugin_name)
             )
 
     def finalize_plugins(self):
         """Finalize all the plugins."""
-        for name, plugin in self.plugins.items():
+        for name, plugin in self._plugins.items():
+            if not plugin.is_loaded():
+                continue
+
             try:
                 plugin.finalize()
                 logger.info(
@@ -147,4 +154,4 @@ class PluginsManager:
                     ).format(name)
                 )
 
-        self.plugins.clear()
+        self._plugins.clear()

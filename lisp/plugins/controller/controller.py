@@ -162,7 +162,7 @@ class Controller(Plugin):
 
                 self.__protocols[protocol_class.__name__.lower()] = protocol
             except Exception:
-                logger.exception(
+                logger.warning(
                     translate(
                         "Controller", 'Cannot load controller protocol: "{}"'
                     ).format(protocol_class.__name__)

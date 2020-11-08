@@ -79,6 +79,7 @@ class Timecode(Plugin):
 
     def finalize(self):
         self.__cue_tracker.finalize()
+        super().finalize()
 
     def __config_change(self, key, value):
         if key == "protocol":
@@ -94,7 +95,7 @@ class Timecode(Plugin):
         try:
             return protocols.get_protocol(protocol_name)()
         except Exception:
-            logger.error(
+            logger.warning(
                 translate(
                     "Timecode", 'Cannot load timecode protocol: "{}"'
                 ).format(protocol_name),

@@ -16,9 +16,9 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import logging
-from typing import Dict, Type, Iterable
+from typing import Dict, Type, Iterable, Optional
 
-from lisp.core.plugin import Plugin, logger
+from lisp.core.plugin import Plugin, logger, PluginState
 from lisp.ui.ui_utils import translate
 
 
@@ -34,80 +34,95 @@ class PluginsLoader:
     def __init__(
         self,
         application,
-        to_load: Dict[str, Type[Plugin]],
+        plugins: Dict[str, Type[Plugin]],
     ):
         self.application = application
-        self.to_load = to_load
+        self.plugins = plugins
 
         self.resolved = set()
         self.unresolved = set()
         self.failed = set()
 
     def load(self):
-        yield from self._resolve_dependencies(
-            self.to_load.keys(), optionals=True, log_level=logging.ERROR
+        yield from self._load_plugins(
+            self.to_load(), optionals=True, log_level=logging.ERROR
         )
+
+    def to_load(self):
+        for name, plugin in self.plugins.items():
+            if plugin.is_enabled():
+                yield name
 
     def _resolve_plugin_dependencies(self, plugin: Type[Plugin]):
         self.unresolved.add(plugin)
 
         try:
-            yield from self._resolve_dependencies(plugin.Depends)
-            yield from self._resolve_dependencies(
-                plugin.OptDepends, optionals=True
+            yield from self._load_plugins(plugin.Depends, required_by=plugin)
+            yield from self._load_plugins(
+                plugin.OptDepends, optionals=True, required_by=plugin
             )
 
             self.resolved.add(plugin)
         except PluginLoadException as e:
             raise PluginLoadException(
                 translate(
-                    "PluginsError", "Cannot satisfy dependencies for plugin: {}"
+                    "PluginsError",
+                    'Cannot satisfy dependencies for plugin: "{}"',
                 ).format(plugin.Name),
             ) from e
         finally:
             self.unresolved.remove(plugin)
 
-    def _resolve_dependencies(
+    def _load_plugins(
         self,
-        dependencies: Iterable[str],
+        plugins: Iterable[str],
         optionals: bool = False,
         log_level: int = logging.WARNING,
+        required_by: Optional[Type[Plugin]] = None,
     ):
-        for dependency_name in dependencies:
+        for plugin_name in plugins:
             try:
-                dependency = self._dependency_from_name(dependency_name)
-                if self._should_resolve(dependency):
-                    yield from self._resolve_plugin_dependencies(dependency)
-                    yield from self._load_plugin(dependency, dependency_name)
+                plugin = self._plugin_from_name(plugin_name)
+                if self._should_resolve(plugin):
+                    yield from self._resolve_plugin_dependencies(plugin)
+                    yield from self._load_plugin(plugin, plugin_name)
             except PluginLoadException as e:
                 logger.log(log_level, str(e), exc_info=e)
+
                 if not optionals:
+                    if required_by is not None:
+                        required_by.State |= (
+                            PluginState.DependenciesNotSatisfied
+                        )
                     raise e
+                elif required_by is not None:
+                    required_by.State |= (
+                        PluginState.OptionalDependenciesNotSatisfied
+                    )
 
     def _load_plugin(self, plugin: Type[Plugin], name: str):
-        # Try to load the plugin, if enabled
-        if plugin.Config.get("_enabled_", False):
-            try:
-                # Create an instance of the plugin and yield it
-                yield name, plugin(self.application)
-                logger.info(
-                    translate("PluginsInfo", "Plugin loaded: {}").format(
-                        plugin.Name
-                    )
+        try:
+            # Create an instance of the plugin and yield it
+            yield name, plugin(self.application)
+            logger.info(
+                translate("PluginsInfo", 'Plugin loaded: "{}"').format(
+                    plugin.Name
                 )
-            except Exception as e:
-                self.failed.add(plugin)
-                raise PluginInitFailedException(
-                    f"Failed to initialize plugin: {plugin.Name}"
-                ) from e
-        else:
-            raise PluginLoadException("Plugin disabled, not loaded.")
+            )
+        except Exception as e:
+            self.failed.add(plugin)
+            raise PluginInitFailedException(
+                f'Failed to initialize plugin: "{plugin.Name}"'
+            ) from e
 
     def _should_resolve(self, plugin: Type[Plugin]) -> bool:
         if plugin in self.failed:
             raise PluginLoadException(
-                f"Plugin is in error state: {plugin.Name}"
+                f'Plugin is in error state: "{plugin.Name}"'
             )
+
+        if not plugin.is_enabled():
+            raise PluginLoadException(f'Plugin is disabled: "{plugin.Name}"')
 
         if plugin not in self.resolved:
             if plugin in self.unresolved:
@@ -117,8 +132,8 @@ class PluginsLoader:
 
         return False
 
-    def _dependency_from_name(self, name: str) -> Type[Plugin]:
+    def _plugin_from_name(self, name: str) -> Type[Plugin]:
         try:
-            return self.to_load[name]
+            return self.plugins[name]
         except KeyError:
-            raise PluginLoadException(f"No plugin named '{name}'")
+            raise PluginLoadException(f'No plugin named "{name}"')
