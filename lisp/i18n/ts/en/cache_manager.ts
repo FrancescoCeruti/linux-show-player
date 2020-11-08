@@ -9,27 +9,27 @@
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../plugins/cache_manager/cache_manager.py" line="136" />
+      <location filename="../../../plugins/cache_manager/cache_manager.py" line="139" />
       <source>Cache size warning</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../plugins/cache_manager/cache_manager.py" line="139" />
+      <location filename="../../../plugins/cache_manager/cache_manager.py" line="142" />
       <source>Warning threshold in MB (0 = disabled)</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../plugins/cache_manager/cache_manager.py" line="142" />
+      <location filename="../../../plugins/cache_manager/cache_manager.py" line="145" />
       <source>Cache cleanup</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../plugins/cache_manager/cache_manager.py" line="144" />
+      <location filename="../../../plugins/cache_manager/cache_manager.py" line="147" />
       <source>Delete the cache content</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../plugins/cache_manager/cache_manager.py" line="55" />
+      <location filename="../../../plugins/cache_manager/cache_manager.py" line="58" />
       <source>The cache has exceeded {}. Consider clean it.
 You can do it in the application settings.</source>
       <translation type="unfinished" />
@@ -38,7 +38,7 @@ You can do it in the application settings.</source>
   <context>
     <name>SettingsPageName</name>
     <message>
-      <location filename="../../../plugins/cache_manager/cache_manager.py" line="96" />
+      <location filename="../../../plugins/cache_manager/cache_manager.py" line="99" />
       <source>Cache Manager</source>
       <translation type="unfinished" />
     </message>

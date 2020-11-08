@@ -17,7 +17,7 @@
   <context>
     <name>Timecode</name>
     <message>
-      <location filename="../../../plugins/timecode/timecode.py" line="98" />
+      <location filename="../../../plugins/timecode/timecode.py" line="99" />
       <source>Cannot load timecode protocol: "{}"</source>
       <translation type="unfinished" />
     </message>
