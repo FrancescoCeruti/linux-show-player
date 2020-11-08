@@ -4,12 +4,12 @@
   <context>
     <name>Preset</name>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="222"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="223"/>
       <source>Create Cue</source>
       <translation>Maak cue aan</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="224"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="225"/>
       <source>Load on selected Cues</source>
       <translation>Toepassen op geselecteerde cue</translation>
     </message>
@@ -27,42 +27,42 @@
       <translation type="unfinished">Presets</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="422"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="423"/>
       <source>Preset name</source>
       <translation>Preset naam</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="218"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="219"/>
       <source>Add</source>
       <translation>Toevoegen </translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="219"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="220"/>
       <source>Rename</source>
       <translation>Hernoemen</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="220"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="221"/>
       <source>Edit</source>
       <translation>Bewerken</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="221"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="222"/>
       <source>Remove</source>
       <translation>Verwijderen</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="227"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="228"/>
       <source>Export selected</source>
       <translation>Exporteer selectie</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="229"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="230"/>
       <source>Import</source>
       <translation>Importeren</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="423"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="424"/>
       <source>Cue type</source>
       <translation type="unfinished">Cue type</translation>
     </message>
@@ -97,32 +97,32 @@
       <translation type="unfinished">Preset "{}" already exists, overwrite?</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="269"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="270"/>
       <source>Warning</source>
       <translation>Waarschuwing</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="270"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="271"/>
       <source>The same name is already used!</source>
       <translation>Deze naam is alreeds in gebruik!</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="344"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="345"/>
       <source>Cannot export correctly.</source>
       <translation>Kan niet correct exporteren </translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="355"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="356"/>
       <source>Some presets already exists, overwrite?</source>
       <translation type="unfinished">Some presets already exists, overwrite?</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="369"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="370"/>
       <source>Cannot import correctly.</source>
       <translation>Kan niet correct importeren</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="311"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="312"/>
       <source>Cannot create a cue from this preset: {}</source>
       <translation type="unfinished">Cannot create a cue from this preset: {}</translation>
     </message>
