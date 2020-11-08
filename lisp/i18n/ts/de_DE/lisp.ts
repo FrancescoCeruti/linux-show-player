@@ -129,7 +129,7 @@
       <translation>Fehler beim Starten</translation>
     </message>
     <message>
-      <location filename="../../../application.py" line="237"/>
+      <location filename="../../../application.py" line="238"/>
       <source>Error while reading the session file "{}"</source>
       <translation type="unfinished">Error while reading the session file "{}"</translation>
     </message>
@@ -352,12 +352,12 @@
       <translation type="unfinished">Used globally when interrupting cues</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/app_pages/cue.py" line="76"/>
+      <location filename="../../../ui/settings/app_pages/cue.py" line="79"/>
       <source>Fade actions default value</source>
       <translation>Standardwert für Überblende-Aktionen</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/app_pages/cue.py" line="79"/>
+      <location filename="../../../ui/settings/app_pages/cue.py" line="82"/>
       <source>Used for fade-in and fade-out actions, by cues where fade duration is 0.</source>
       <translation type="unfinished">Used for fade-in and fade-out actions, by cues where fade duration is 0.</translation>
     </message>
@@ -837,6 +837,88 @@
     </message>
   </context>
   <context>
+    <name>PluginsError</name>
+    <message>
+      <location filename="../../../core/plugins_manager.py" line="79"/>
+      <source>A plugin by the name of "{}" already exists.</source>
+      <translation type="unfinished">A plugin by the name of "{}" already exists.</translation>
+    </message>
+    <message>
+      <location filename="../../../core/plugins_manager.py" line="132"/>
+      <source>The requested plugin is not loaded: "{}"</source>
+      <translation type="unfinished">The requested plugin is not loaded: "{}"</translation>
+    </message>
+    <message>
+      <location filename="../../../core/plugins_manager.py" line="110"/>
+      <source>Failed to register plugin: "{}"</source>
+      <translation type="unfinished">Failed to register plugin: "{}"</translation>
+    </message>
+    <message>
+      <location filename="../../../core/plugins_manager.py" line="152"/>
+      <source>Failed to terminate plugin: "{}"</source>
+      <translation type="unfinished">Failed to terminate plugin: "{}"</translation>
+    </message>
+    <message>
+      <location filename="../../../core/plugin_loader.py" line="68"/>
+      <source>Cannot satisfy dependencies for plugin: "{}"</source>
+      <translation type="unfinished">Cannot satisfy dependencies for plugin: "{}"</translation>
+    </message>
+  </context>
+  <context>
+    <name>PluginsInfo</name>
+    <message>
+      <location filename="../../../core/plugins_manager.py" line="146"/>
+      <source>Plugin terminated: "{}"</source>
+      <translation type="unfinished">Plugin terminated: "{}"</translation>
+    </message>
+    <message>
+      <location filename="../../../core/plugin_loader.py" line="108"/>
+      <source>Plugin loaded: "{}"</source>
+      <translation type="unfinished">Plugin loaded: "{}"</translation>
+    </message>
+  </context>
+  <context>
+    <name>PluginsSettings</name>
+    <message>
+      <location filename="../../../ui/settings/app_pages/plugins.py" line="91"/>
+      <source>Plugin</source>
+      <translation type="unfinished">Plugin</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/settings/app_pages/plugins.py" line="92"/>
+      <source>Enabled</source>
+      <translation type="unfinished">Enabled</translation>
+    </message>
+  </context>
+  <context>
+    <name>PluginsStatusText</name>
+    <message>
+      <location filename="../../../core/plugin.py" line="117"/>
+      <source>Plugin disabled. Enable to use.</source>
+      <translation type="unfinished">Plugin disabled. Enable to use.</translation>
+    </message>
+    <message>
+      <location filename="../../../core/plugin.py" line="92"/>
+      <source>An error has occurred with this plugin. Please see logs for further information.</source>
+      <translation type="unfinished">An error has occurred with this plugin. Please see logs for further information.</translation>
+    </message>
+    <message>
+      <location filename="../../../core/plugin.py" line="106"/>
+      <source>There is a non-critical issue with this disabled plugin. Please see logs for further information.</source>
+      <translation type="unfinished">There is a non-critical issue with this disabled plugin. Please see logs for further information.</translation>
+    </message>
+    <message>
+      <location filename="../../../core/plugin.py" line="113"/>
+      <source>Plugin loaded and ready for use.</source>
+      <translation type="unfinished">Plugin loaded and ready for use.</translation>
+    </message>
+    <message>
+      <location filename="../../../core/plugin.py" line="100"/>
+      <source>A non-critical issue is affecting this plugin. Please see logs for further information.</source>
+      <translation type="unfinished">A non-critical issue is affecting this plugin. Please see logs for further information.</translation>
+    </message>
+  </context>
+  <context>
     <name>QColorButton</name>
     <message>
       <location filename="../../../ui/widgets/colorbutton.py" line="38"/>
@@ -847,7 +929,7 @@
   <context>
     <name>SettingsPageName</name>
     <message>
-      <location filename="../../../ui/settings/app_pages/plugins.py" line="33"/>
+      <location filename="../../../ui/settings/app_pages/plugins.py" line="36"/>
       <source>Plugins</source>
       <translation>Plug-ins</translation>
     </message>
