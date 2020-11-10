@@ -119,7 +119,7 @@ class PluginModel(QAbstractTableModel):
 
             # Column-independent values
             if role == Qt.TextAlignmentRole:
-                return Qt.AlignLeft
+                return Qt.AlignLeft | Qt.AlignVCenter
             elif role == Qt.ToolTipRole:
                 return plugin.status_text()
             elif role == Qt.UserRole:

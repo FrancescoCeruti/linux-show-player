@@ -1,29 +1,28 @@
 {
-	"app-id": "org.linux_show_player.LinuxShowPlayer",
-	"runtime": "org.gnome.Platform",
-	"runtime-version": "3.34",
-	"sdk": "org.gnome.Sdk",
-	"command": "linux-show-player",
-	"build-options": {
-		"no-debuginfo": true
-	},
-	"finish-args": [
-		"--share=network",
-		"--socket=x11",
-		"--socket=wayland",
-		"--socket=pulseaudio",
-		"--filesystem=home",
-		"--device=all"
-	],
-	"cleanup-commands": [
-		"pip3 uninstall --yes cython || true",
-		"pip3 uninstall --yes wheel || true"
-	],
-	"rename-appdata-file": "linuxshowplayer.appdata.xml",
-	"rename-desktop-file": "linuxshowplayer.desktop",
-	"rename-icon": "linuxshowplayer",
-	"modules": [
-		{
+    "app-id": "org.linux_show_player.LinuxShowPlayer",
+    "runtime": "org.gnome.Platform",
+    "runtime-version": "3.38",
+    "sdk": "org.gnome.Sdk",
+    "command": "linux-show-player",
+    "build-options": {
+        "no-debuginfo": true
+    },
+    "finish-args": [
+        "--share=network",
+        "--socket=x11",
+        "--socket=wayland",
+        "--socket=pulseaudio",
+        "--filesystem=home",
+        "--device=all"
+    ],
+    "cleanup-commands": [
+        "pip3 uninstall --yes cython wheel packaging toml sip || true"
+    ],
+    "rename-appdata-file": "linuxshowplayer.appdata.xml",
+    "rename-desktop-file": "linuxshowplayer.desktop",
+    "rename-icon": "linuxshowplayer",
+    "modules": [
+        {
 			"name": "Qt5",
 			"config-opts": [
 				"-confirm-license", "-opensource",
@@ -48,39 +47,40 @@
 				"-skip", "qtwebglplugin",
 				"-skip", "qtwebsockets",
 				"-skip", "qtwebview",
+                "-skip", "qtwayland",
 				"-gtk"
 			],
 			"sources": [
 				{
 					"type": "archive",
-					"url": "http://master.qt.io/archive/qt/5.12/5.12.2/single/qt-everywhere-src-5.12.2.tar.xz",
-					"sha256": "59b8cb4e728450b21224dcaaa40eb25bafc5196b6988f2225c394c6b7f881ff5"
+					"url": "http://master.qt.io/archive/qt/5.15.1/5.15.1/single/qt-everywhere-src-5.15.1.tar.xz",
+					"sha256": "44da876057e21e1be42de31facd99be7d5f9f07893e1ea762359bcee0ef64ee9"
 				}
 			]
 		},
-		{
-			"name": "PyQt5",
-			"config-opts": [
-				"--assume-shared",
-				"--concatenate",
-				"--confirm-license",
-				"--no-designer-plugin",
-				"--no-dist-info",
-				"--no-docstrings",
-				"--no-qml-plugin",
-				"--no-qsci-api",
-				"--no-stubs",
-				"--no-tools",
-				"QMAKE_CFLAGS_RELEASE='-I/usr/include/python3.7m/'",
-				"QMAKE_CXXFLAGS_RELEASE='-I/usr/include/python3.7m/'"
-			],
-			"sources": [
-				{
-					"type": "archive",
-					"url": "https://www.riverbankcomputing.com/static/Downloads/PyQt5/5.12.1/PyQt5_gpl-5.12.1.tar.gz",
-					"sha256": "3718ce847d824090fd5f95ff3f13847ee75c2507368d4cbaeb48338f506e59bf"
-				},
-				{
+        {
+            "name": "PyQt5",
+            "config-opts": [
+                "--assume-shared",
+                "--concatenate",
+                "--confirm-license",
+                "--no-designer-plugin",
+                "--no-dist-info",
+                "--no-docstrings",
+                "--no-qml-plugin",
+                "--no-qsci-api",
+                "--no-stubs",
+                "--no-tools",
+                "QMAKE_CFLAGS_RELEASE='-I/usr/include/python3.8m/'",
+                "QMAKE_CXXFLAGS_RELEASE='-I/usr/include/python3.8m/'"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://www.riverbankcomputing.com/static/Downloads/PyQt5/PyQt5-5.15.2.dev2010041344.tar.gz",
+                    "sha256": "25153398487b652b4b0737e0a348dfd9a077c5865cfeb79b02470efa597cfe8e"
+                },
+                {
 					"type": "script",
 					"commands": [
 						"processed=`sed -e 's|prefix|sysroot|' <<< $@`",
@@ -88,201 +88,225 @@
 					],
 					"dest-filename": "configure"
 				}
-			],
-			"modules": [
-				{
-					"name": "SIP",
-					"config-opts": [
-						"--no-dist-info",
-						"--no-stubs",
-						"--bindir=/app/bin",
-						"--destdir=/app/lib/python3.7/site-packages",
-						"--incdir=/app/include",
-						"--pyidir=/app/lib/python3.7/site-packages",
-						"--sipdir=/app/share/sip",
-						"--sip-module PyQt5.sip"
-					],
-					"sources": [
-						{
-							"type": "archive",
-							"url": "https://www.riverbankcomputing.com/static/Downloads/sip/4.19.15/sip-4.19.15.tar.gz",
-							"sha256": "2b5c0b2c0266b467b365c21376d50dde61a3236722ab87ff1e8dacec283eb610"
-						},
-						{
-							"type": "script",
-							"commands": [
-								"processed=`sed -e 's|--prefix=/app||' <<< $@`",
-								"python3 configure.py $processed"
-							],
-							"dest-filename": "configure"
-						}
-					],
-					"cleanup": [
-						"/bin",
-						"/include"
-					]
-				}
-			],
-			"cleanup": [
-				"/bin",
-				"/include"
-			]
-		},
-		{
-			"name": "Jack",
-			"buildsystem": "simple",
-			"build-commands": [
-				"./waf configure --prefix='/app/'",
-				"./waf",
-				"./waf install"
-			],
-			"sources": [
-				{
-					"type": "git",
-					"url": "https://github.com/jackaudio/jack2.git",
-					"tag": "v1.9.14",
-					"commit": "b54a09bf7ef760d81fdb8544ad10e45575394624"
-				}
-			],
-			"cleanup": [
-				"/bin"
-			]
-		},
-		{
-			"name": "RtMidi",
-			"config-opts": [
-				"--with-jack",
-				"--with-alsa"
-			],
-			"sources": [
-				{
-					"type": "git",
-					"url": "https://github.com/thestk/rtmidi.git",
-					"tag": "4.0.0",
-					"commit": "cc887191c3b4cb6697aeba5536d9f4eb423090aa"
-				}
-			]
-		},
-		{
-			"name": "liblo",
-			"config-opts": [
-				"--disable-examples",
-				"--disable-tools"
-			],
-			"sources": [
-				{
-					"type": "git",
-					"url": "https://github.com/radarsat1/liblo.git",
-					"tag": "0.31",
-					"commit": "840ed69b1d669a1ce587eb592746e3dff6985d76"
-				}
-			]
-		},
-		{
-			"name": "cpp-google-protobuf",
-			"config-opts": [
-				"--disable-static"
-			],
-			"sources": [
-				{
-					"type": "archive",
-					"url": "https://github.com/protocolbuffers/protobuf/releases/download/v3.1.0/protobuf-cpp-3.1.0.tar.gz",
-					"sha256": "51ceea9957c875bdedeb1f64396b5b0f3864fe830eed6a2d9c066448373ea2d6"
-				}
-			]
-		},
-		{
-			"name": "python-google-protobuf",
-			"buildsystem": "simple",
-			"build-commands": [
-				"pip3 install --verbose --no-index --no-deps --prefix=${FLATPAK_DEST} protobuf-3.1.0.post1-py2.py3-none-any.whl"
-			],
-			"sources": [
-				{
-					"type": "file",
-					"url": "https://files.pythonhosted.org/packages/a5/bb/11821bdc46cb9aad8e18618715e5e93eef44abb642ed862c4b080c474183/protobuf-3.1.0.post1-py2.py3-none-any.whl",
-					"sha256": "42315e73409eaefdcc11e216695ff21f87dc483ad0595c57999baddf7f841180"
-				}
-			]
-		},
-		{
-			"name": "ola",
-			"build-options": {
-				"env": {
-					"PYTHON": "python3"
-				}
-			},
-			"config-opts": [
-				"--disable-unittests",
-				"--disable-examples",
-				"--disable-osc",
-				"--disable-http",
-				"--enable-python-libs"
-			],
-			"sources": [
-				{
-					"type": "archive",
-					"url": "https://github.com/OpenLightingProject/ola/releases/download/0.10.7/ola-0.10.7.tar.gz",
-					"sha256": "8a65242d95e0622a3553df498e0db323a13e99eeb1accc63a8a2ca8913ab31a0"
-				},
-				{
-					"type": "script",
-					"dest-filename": "autogen.sh",
-					"commands": [
-						"autoreconf -fi"
-					]
-				}
-			]
-		},
-		{
-			"name": "python-alsa",
-			"buildsystem": "simple",
-			"build-commands": [
-				"pip3 install --verbose --no-index --no-deps --prefix=${FLATPAK_DEST} ."
-			],
-			"sources": [
-				{
-					"type": "archive",
-					"url": "ftp://ftp.alsa-project.org/pub/pyalsa/pyalsa-1.1.6.tar.bz2",
-					"sha256": "2771291a5d2cf700f0abbe6629ea37468d1463a01b2330d84ef976e1e918676c"
-				}
-			]
-		},
-		{
-			"name": "python-wheel",
-			"buildsystem": "simple",
-			"build-commands": [
-				"pip3 install --verbose --no-index --no-deps --prefix=${FLATPAK_DEST} wheel-0.34.2-py2.py3-none-any.whl"
-			],
-			"sources": [
-				{
-					"type": "file",
-					"url": "https://files.pythonhosted.org/packages/8c/23/848298cccf8e40f5bbb59009b32848a4c38f4e7f3364297ab3c3e2e2cd14/wheel-0.34.2-py2.py3-none-any.whl",
-					"sha256": "df277cb51e61359aba502208d680f90c0493adec6f0e848af94948778aed386e"
-				}
-			]
-		},
-		{
-			"name": "linux-show-player",
-			"buildsystem": "simple",
-			"build-commands": [
-				"pip3 install --verbose --no-index --no-deps --no-build-isolation --prefix=${FLATPAK_DEST} .",
-				"mkdir -p /app/share/applications/",
-				"cp dist/linuxshowplayer.desktop /app/share/applications/",
-				"mkdir -p /app/share/mime/packages/",
-				"cp dist/linuxshowplayer.xml /app/share/mime/packages/org.linux_show_player.LinuxShowPlayer.xml",
-				"mkdir -p /app/share/metainfo/",
-				"cp dist/linuxshowplayer.appdata.xml /app/share/metainfo/",
-				"mkdir -p /app/share/icons/hicolor/512x512/apps/",
-				"cp dist/linuxshowplayer.png /app/share/icons/hicolor/512x512/apps/"
-			],
-			"sources": [
-				{
-					"type": "git",
-					"url": "https://github.com/FrancescoCeruti/linux-show-player.git",
-					"branch": "master"
-				}
-			]
-		}
-	]
+            ],
+            "modules": [
+                {
+                    "name": "packaging",
+                    "buildsystem": "simple",
+                    "build-commands": [
+                        "pip3 install --verbose --no-index --no-deps --prefix=${FLATPAK_DEST} packaging-20.4-py2.py3-none-any.whl"
+                    ],
+                    "sources": [
+                        {
+                            "type": "file",
+                            "url": "https://files.pythonhosted.org/packages/46/19/c5ab91b1b05cfe63cccd5cfc971db9214c6dd6ced54e33c30d5af1d2bc43/packaging-20.4-py2.py3-none-any.whl",
+                            "sha256": "998416ba6962ae7fbd6596850b80e17859a5753ba17c32284f67bfff33784181"
+                        }
+                    ]
+                },
+                {
+                    "name": "pyparsing",
+                    "buildsystem": "simple",
+                    "build-commands": [
+                        "pip3 install --verbose --no-index --no-deps --prefix=${FLATPAK_DEST} pyparsing-2.4.7-py2.py3-none-any.whl"
+                    ],
+                    "sources": [
+                        {
+                            "type": "file",
+                            "url": "https://files.pythonhosted.org/packages/8a/bb/488841f56197b13700afd5658fc279a2025a39e22449b7cf29864669b15d/pyparsing-2.4.7-py2.py3-none-any.whl",
+                            "sha256": "ef9d7589ef3c200abe66653d3f1ab1033c3c419ae9b9bdb1240a85b024efc88b"
+                        }
+                    ]
+                },
+                {
+                    "name": "toml",
+                    "buildsystem": "simple",
+                    "build-commands": [
+                        "pip3 install --verbose --no-index --no-deps --prefix=${FLATPAK_DEST} toml-0.10.2-py2.py3-none-any.whl"
+                    ],
+                    "sources": [
+                        {
+                            "type": "file",
+                            "url": "https://files.pythonhosted.org/packages/44/6f/7120676b6d73228c96e17f1f794d8ab046fc910d781c8d151120c3f1569e/toml-0.10.2-py2.py3-none-any.whl",
+                            "sha256": "806143ae5bfb6a3c6e736a764057db0e6a0e05e338b5630894a5f779cabb4f9b"
+                        }
+                    ]
+                },
+                {
+                    "name": "SIP",
+                    "buildsystem": "simple",
+                    "build-commands": [
+                        "pip3 install --verbose --no-index --no-deps --prefix=${FLATPAK_DEST} sip-5.4.0-cp38-cp38-manylinux2014_x86_64.whl"
+                    ],
+                    "sources": [
+                        {
+                            "type": "file",
+                            "url": "https://files.pythonhosted.org/packages/fb/c4/93366a89e7f7374eded03a77b3e702a0413312056b4781dc7bad014dfd5c/sip-5.4.0-cp38-cp38-manylinux2014_x86_64.whl",
+                            "sha256": "3e2c724cb03487ac7dfd372200c02199b1d023512f0185b1849cf88e367f4f69"
+                        }
+                    ]
+                }
+            ],
+            "cleanup": [
+                "/bin",
+                "/include"
+            ]
+        },
+        {
+            "name": "Jack",
+            "buildsystem": "simple",
+            "build-commands": [
+                "./waf configure --prefix='/app/'",
+                "./waf",
+                "./waf install"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/jackaudio/jack2.git",
+                    "tag": "v1.9.16",
+                    "commit": "5b78c2ef158c2d9ffe09818a7dd80209ed251c5f"
+                }
+            ],
+            "cleanup": [
+                "/bin"
+            ]
+        },
+        {
+            "name": "RtMidi",
+            "config-opts": [
+                "--with-jack",
+                "--with-alsa"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/thestk/rtmidi.git",
+                    "tag": "4.0.0",
+                    "commit": "cc887191c3b4cb6697aeba5536d9f4eb423090aa"
+                }
+            ]
+        },
+        {
+            "name": "liblo",
+            "config-opts": [
+                "--disable-examples",
+                "--disable-tools"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/radarsat1/liblo.git",
+                    "tag": "0.31",
+                    "commit": "840ed69b1d669a1ce587eb592746e3dff6985d76"
+                }
+            ]
+        },
+        {
+            "name": "cpp-google-protobuf",
+            "config-opts": [
+                "--disable-static"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/protocolbuffers/protobuf/releases/download/v3.1.0/protobuf-cpp-3.1.0.tar.gz",
+                    "sha256": "51ceea9957c875bdedeb1f64396b5b0f3864fe830eed6a2d9c066448373ea2d6"
+                }
+            ]
+        },
+        {
+            "name": "python-google-protobuf",
+            "buildsystem": "simple",
+            "build-commands": [
+                "pip3 install --verbose --no-index --no-deps --prefix=${FLATPAK_DEST} protobuf-3.1.0.post1-py2.py3-none-any.whl"
+            ],
+            "sources": [
+                {
+                    "type": "file",
+                    "url": "https://files.pythonhosted.org/packages/a5/bb/11821bdc46cb9aad8e18618715e5e93eef44abb642ed862c4b080c474183/protobuf-3.1.0.post1-py2.py3-none-any.whl",
+                    "sha256": "42315e73409eaefdcc11e216695ff21f87dc483ad0595c57999baddf7f841180"
+                }
+            ]
+        },
+        {
+            "name": "ola",
+            "build-options": {
+                "env": {
+                    "PYTHON": "python3"
+                }
+            },
+            "config-opts": [
+                "--disable-unittests",
+                "--disable-examples",
+                "--disable-osc",
+                "--disable-http",
+                "--enable-python-libs"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/OpenLightingProject/ola/releases/download/0.10.7/ola-0.10.7.tar.gz",
+                    "sha256": "8a65242d95e0622a3553df498e0db323a13e99eeb1accc63a8a2ca8913ab31a0"
+                },
+                {
+                    "type": "script",
+                    "dest-filename": "autogen.sh",
+                    "commands": [
+                        "autoreconf -fi"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "python-alsa",
+            "buildsystem": "simple",
+            "build-commands": [
+                "pip3 install --verbose --no-index --no-deps --prefix=${FLATPAK_DEST} ."
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "ftp://ftp.alsa-project.org/pub/pyalsa/pyalsa-1.1.6.tar.bz2",
+                    "sha256": "2771291a5d2cf700f0abbe6629ea37468d1463a01b2330d84ef976e1e918676c"
+                }
+            ]
+        },
+        {
+            "name": "python-wheel",
+            "buildsystem": "simple",
+            "build-commands": [
+                "pip3 install --verbose --no-index --no-deps --prefix=${FLATPAK_DEST} wheel-0.34.2-py2.py3-none-any.whl"
+            ],
+            "sources": [
+                {
+                    "type": "file",
+                    "url": "https://files.pythonhosted.org/packages/8c/23/848298cccf8e40f5bbb59009b32848a4c38f4e7f3364297ab3c3e2e2cd14/wheel-0.34.2-py2.py3-none-any.whl",
+                    "sha256": "df277cb51e61359aba502208d680f90c0493adec6f0e848af94948778aed386e"
+                }
+            ]
+        },
+        {
+            "name": "linux-show-player",
+            "buildsystem": "simple",
+            "build-commands": [
+                "pip3 install --verbose --no-index --no-deps --no-build-isolation --prefix=${FLATPAK_DEST} .",
+                "mkdir -p /app/share/applications/",
+                "cp dist/linuxshowplayer.desktop /app/share/applications/",
+                "mkdir -p /app/share/mime/packages/",
+                "cp dist/linuxshowplayer.xml /app/share/mime/packages/org.linux_show_player.LinuxShowPlayer.xml",
+                "mkdir -p /app/share/metainfo/",
+                "cp dist/linuxshowplayer.appdata.xml /app/share/metainfo/",
+                "mkdir -p /app/share/icons/hicolor/512x512/apps/",
+                "cp dist/linuxshowplayer.png /app/share/icons/hicolor/512x512/apps/"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/FrancescoCeruti/linux-show-player.git",
+                    "branch": "master"
+                }
+            ]
+        }
+    ]
 }

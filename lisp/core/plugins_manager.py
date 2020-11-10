@@ -49,7 +49,7 @@ class PluginsManager:
         lisp_plugins = load_classes(PLUGINS_PACKAGE, PLUGINS_PATH)
 
         # Plugins installed by the user
-        if self._enable_user_plugins:
+        if self._enable_user_plugins and path.exists(USER_PLUGINS_PATH):
             # Allow importing of python modules from the user plugins path.
             if USER_PLUGINS_PATH not in sys.path:
                 sys.path.insert(1, USER_PLUGINS_PATH)
