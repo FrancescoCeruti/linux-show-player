@@ -71,8 +71,8 @@
                 "--no-qsci-api",
                 "--no-stubs",
                 "--no-tools",
-                "QMAKE_CFLAGS_RELEASE='-I/usr/include/python3.8m/'",
-                "QMAKE_CXXFLAGS_RELEASE='-I/usr/include/python3.8m/'"
+                "QMAKE_CFLAGS_RELEASE='-I/usr/include/python3.8/'",
+                "QMAKE_CXXFLAGS_RELEASE='-I/usr/include/python3.8/'"
             ],
             "sources": [
                 {
