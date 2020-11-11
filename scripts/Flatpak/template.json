@@ -53,7 +53,7 @@
 			"sources": [
 				{
 					"type": "archive",
-					"url": "http://master.qt.io/archive/qt/5.15.1/5.15.1/single/qt-everywhere-src-5.15.1.tar.xz",
+					"url": "http://master.qt.io/archive/qt/5.15/5.15.1/single/qt-everywhere-src-5.15.1.tar.xz",
 					"sha256": "44da876057e21e1be42de31facd99be7d5f9f07893e1ea762359bcee0ef64ee9"
 				}
 			]
