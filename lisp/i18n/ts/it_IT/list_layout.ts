@@ -120,17 +120,17 @@
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="119"/>
       <source>Default behaviors (applied to new sessions)</source>
-      <translation type="unfinished">Default behaviors (applied to new sessions)</translation>
+      <translation>Comportamenti predefiniti (applicati alle nuove sessioni)</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="128"/>
       <source>Enable selection mode</source>
-      <translation type="unfinished">Enable selection mode</translation>
+      <translation>Abilita modalità di selezione</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="131"/>
       <source>Behaviors</source>
-      <translation type="unfinished">Behaviors</translation>
+      <translation>Comportamenti</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="133"/>
