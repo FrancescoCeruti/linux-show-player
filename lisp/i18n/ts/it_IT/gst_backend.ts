@@ -11,7 +11,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/alsa_sink.py" line="68"/>
       <source>To make your custom PCM objects appear correctly in this list requires adding a 'hint.description' line to them.</source>
-      <translation type="unfinished">To make your custom PCM objects appear correctly in this list requires adding a 'hint.description' line to them.</translation>
+      <translation>Per far sì che gli oggetti PCM personalizzati appaiano correttamente in questo elenco è necessario che definiscano una linea 'hint.description'.</translation>
     </message>
   </context>
   <context>
@@ -90,7 +90,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_backend.py" line="77"/>
       <source>Media cues</source>
-      <translation type="unfinished">Media cues</translation>
+      <translation>Cue Multimediali</translation>
     </message>
   </context>
   <context>
@@ -142,7 +142,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_media.py" line="234"/>
       <source>Cannot create pipeline element: "{}"</source>
-      <translation type="unfinished">Cannot create pipeline element: "{}"</translation>
+      <translation>Impossibile creare l'elemento della pipeline: "{}"</translation>
     </message>
   </context>
   <context>
@@ -158,7 +158,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_media.py" line="228"/>
       <source>Invalid pipeline element: "{}"</source>
-      <translation type="unfinished">Invalid pipeline element: "{}"</translation>
+      <translation>Elemento pipeline non valido: "{}"</translation>
     </message>
   </context>
   <context>
@@ -174,12 +174,12 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_settings.py" line="54"/>
       <source>Default pipeline</source>
-      <translation type="unfinished">Default pipeline</translation>
+      <translation>Pipeline predefinita</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/gst_settings.py" line="56"/>
       <source>Applied only to new cues.</source>
-      <translation type="unfinished">Applied only to new cues.</translation>
+      <translation>Applicato solo alle nuove cue.</translation>
     </message>
   </context>
   <context>
@@ -187,7 +187,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/elements/jack_sink.py" line="135"/>
       <source>An error occurred while disconnection Jack ports</source>
-      <translation type="unfinished">An error occurred while disconnection Jack ports</translation>
+      <translation>Si è verificato un errore durante la disconnessione delle porte Jack</translation>
     </message>
   </context>
   <context>
