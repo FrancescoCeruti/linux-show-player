@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/midi/midi.py" line="55"/>
       <source>Integration cues</source>
-      <translation type="unfinished">Integration cues</translation>
+      <translation>Cue di integrazione</translation>
     </message>
   </context>
   <context>
@@ -14,7 +14,7 @@
     <message>
       <location filename="../../../plugins/midi/midi_cue.py" line="40"/>
       <source>MIDI Cue</source>
-      <translation type="unfinished">MIDI Cue</translation>
+      <translation>Cue MIDI</translation>
     </message>
   </context>
   <context>
@@ -22,12 +22,12 @@
     <message>
       <location filename="../../../plugins/midi/widgets.py" line="88"/>
       <source>MIDI Message</source>
-      <translation type="unfinished">MIDI Message</translation>
+      <translation>Messaggio MIDI</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/widgets.py" line="89"/>
       <source>Message type</source>
-      <translation type="unfinished">Message type</translation>
+      <translation>Tipo di messaggio</translation>
     </message>
   </context>
   <context>
@@ -35,17 +35,17 @@
     <message>
       <location filename="../../../plugins/midi/midi_io.py" line="82"/>
       <source>Cannot connect to MIDI output port '{}'.</source>
-      <translation type="unfinished">Cannot connect to MIDI output port '{}'.</translation>
+      <translation>Impossibile connettersi alla porta MIDI in uscita '{}'.</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_io.py" line="103"/>
       <source>Cannot connect to MIDI input port '{}'.</source>
-      <translation type="unfinished">Cannot connect to MIDI input port '{}'.</translation>
+      <translation>Impossibile connettersi alla porta MIDI in ingresso '{}'.</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/port_monitor.py" line="88"/>
       <source>Cannot create ALSA-MIDI port monitor, MIDI connections/disconnections will not be detected.</source>
-      <translation type="unfinished">Cannot create ALSA-MIDI port monitor, MIDI connections/disconnections will not be detected.</translation>
+      <translation>Impossibile monitorare la porta ALSA-MIDI, le connessioni/disconnessioni MIDI non saranno rilevate.</translation>
     </message>
   </context>
   <context>
@@ -53,17 +53,17 @@
     <message>
       <location filename="../../../plugins/midi/midi.py" line="138"/>
       <source>Connecting to MIDI port: '{}'</source>
-      <translation type="unfinished">Connecting to MIDI port: '{}'</translation>
+      <translation>Connessione alla porta MIDI: '{}'</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi.py" line="120"/>
       <source>MIDI port disconnected: '{}'</source>
-      <translation type="unfinished">MIDI port disconnected: '{}'</translation>
+      <translation>Porta MIDI disconnessa: '{}'</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi.py" line="147"/>
       <source>Connecting to matching MIDI port: '{}'</source>
-      <translation type="unfinished">Connecting to matching MIDI port: '{}'</translation>
+      <translation>Connessione alla porta MIDI corrispondente: '{}'</translation>
     </message>
   </context>
   <context>
@@ -71,42 +71,42 @@
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="68"/>
       <source>Channel</source>
-      <translation type="unfinished">Channel</translation>
+      <translation>Canale</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="69"/>
       <source>Note</source>
-      <translation type="unfinished">Note</translation>
+      <translation>Nota</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="70"/>
       <source>Velocity</source>
-      <translation type="unfinished">Velocity</translation>
+      <translation>Velocità</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="71"/>
       <source>Control</source>
-      <translation type="unfinished">Control</translation>
+      <translation>Controllo</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="72"/>
       <source>Program</source>
-      <translation type="unfinished">Program</translation>
+      <translation>Programma</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="73"/>
       <source>Value</source>
-      <translation type="unfinished">Value</translation>
+      <translation>Valore</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="74"/>
       <source>Song</source>
-      <translation type="unfinished">Song</translation>
+      <translation>Brano</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="75"/>
       <source>Pitch</source>
-      <translation type="unfinished">Pitch</translation>
+      <translation>Tonalità</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="76"/>
