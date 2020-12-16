@@ -29,7 +29,7 @@
     <message>
       <location filename="../../../ui/about.py" line="52"/>
       <source>Linux Show Player is a cue player designed for stage productions.</source>
-      <translation type="unfinished">Linux Show Player is a cue player designed for stage productions.</translation>
+      <translation>Linux Show Player è un cue-player pensato per produzioni teatrali.</translation>
     </message>
     <message>
       <location filename="../../../ui/about.py" line="132"/>
@@ -75,7 +75,7 @@
     <message>
       <location filename="../../../ui/settings/app_configuration.py" line="109"/>
       <source>Cannot load configuration page: "{}" ({})</source>
-      <translation type="unfinished">Cannot load configuration page: "{}" ({})</translation>
+      <translation>Impossibile caricare la pagina di configurazione: "{}" ({})</translation>
     </message>
   </context>
   <context>
