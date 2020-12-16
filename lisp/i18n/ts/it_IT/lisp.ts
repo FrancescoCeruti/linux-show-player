@@ -88,12 +88,12 @@
     <message>
       <location filename="../../../ui/settings/app_pages/general.py" line="107"/>
       <source>Show layout selection at startup</source>
-      <translation type="unfinished">Show layout selection at startup</translation>
+      <translation>Consenti la selezione del layout all'avvio</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/general.py" line="110"/>
       <source>Use layout at startup:</source>
-      <translation type="unfinished">Use layout at startup:</translation>
+      <translation>Usa il seguente layout all'avvio:</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/general.py" line="113"/>
@@ -103,22 +103,22 @@
     <message>
       <location filename="../../../ui/settings/app_pages/general.py" line="115"/>
       <source>UI theme:</source>
-      <translation type="unfinished">UI theme:</translation>
+      <translation>Tema:</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/general.py" line="116"/>
       <source>Icons theme:</source>
-      <translation type="unfinished">Icons theme:</translation>
+      <translation>Tema icone:</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/general.py" line="119"/>
       <source>Application language (require a restart)</source>
-      <translation type="unfinished">Application language (require a restart)</translation>
+      <translation>Lingua dell'applicazione (richiede riavvio)</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/general.py" line="123"/>
       <source>Language:</source>
-      <translation type="unfinished">Language:</translation>
+      <translation>Lingua:</translation>
     </message>
   </context>
   <context>
@@ -126,17 +126,17 @@
     <message>
       <location filename="../../../application.py" line="154"/>
       <source>Startup error</source>
-      <translation type="unfinished">Startup error</translation>
+      <translation>Errore all'avvio</translation>
     </message>
     <message>
       <location filename="../../../application.py" line="238"/>
       <source>Error while reading the session file "{}"</source>
-      <translation type="unfinished">Error while reading the session file "{}"</translation>
+      <translation>Errore durante la lettura del file di sessione "{}"</translation>
     </message>
     <message>
       <location filename="../../../application.py" line="229"/>
       <source>Unable to create the cue "{}"</source>
-      <translation type="unfinished">Unable to create the cue "{}"</translation>
+      <translation>Impossibile creare la cue "{}"</translation>
     </message>
   </context>
   <context>
@@ -144,7 +144,7 @@
     <message>
       <location filename="../../../core/loading.py" line="136"/>
       <source>Cannot load python class: "{0}"</source>
-      <translation type="unfinished">Cannot load python class: "{0}"</translation>
+      <translation>Impossibile caricare la classe python: "{0}"</translation>
     </message>
   </context>
   <context>
@@ -152,12 +152,12 @@
     <message>
       <location filename="../../../command/stack.py" line="32"/>
       <source>Undo: {}</source>
-      <translation type="unfinished">Undo: {}</translation>
+      <translation>Annulla: {}</translation>
     </message>
     <message>
       <location filename="../../../command/stack.py" line="33"/>
       <source>Redo: {}</source>
-      <translation type="unfinished">Redo: {}</translation>
+      <translation>Ripeti: {}</translation>
     </message>
   </context>
   <context>
@@ -731,12 +731,12 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="224"/>
       <source>CTRL+SHIFT+E</source>
-      <translation type="unfinished">CTRL+SHIFT+E</translation>
+      <translation>CTRL+SHIFT+E</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="226"/>
       <source>&amp;Layout</source>
-      <translation type="unfinished">&amp;Layout</translation>
+      <translation>&amp;Layout</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="228"/>
@@ -751,7 +751,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="231"/>
       <source>&amp;About</source>
-      <translation type="unfinished">&amp;About</translation>
+      <translation>&amp;About</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="232"/>
@@ -771,12 +771,12 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="402"/>
       <source>The current session contains changes that have not been saved.</source>
-      <translation type="unfinished">The current session contains changes that have not been saved.</translation>
+      <translation>La sessione corrente contiene modifiche che non sono state salvate.</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="410"/>
       <source>Do you want to save them now?</source>
-      <translation type="unfinished">Do you want to save them now?</translation>
+      <translation>Vuoi salvarle adesso?</translation>
     </message>
   </context>
   <context>
@@ -784,7 +784,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="261"/>
       <source>Registered cue menu: "{}"</source>
-      <translation type="unfinished">Registered cue menu: "{}"</translation>
+      <translation>Menu cue registrato: "{}"</translation>
     </message>
   </context>
   <context>
@@ -792,7 +792,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="345"/>
       <source>Cannot create cue {}</source>
-      <translation type="unfinished">Cannot create cue {}</translation>
+      <translation>Impossibile creare la cue {}</translation>
     </message>
   </context>
   <context>
@@ -820,12 +820,12 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/media_cue.py" line="89"/>
       <source>Loop</source>
-      <translation type="unfinished">Loop</translation>
+      <translation>Loop</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/media_cue.py" line="91"/>
       <source>Repetition after first play (-1 = infinite)</source>
-      <translation type="unfinished">Repetition after first play (-1 = infinite)</translation>
+      <translation>Ripetizioni dopo la prima riproduzione (-1 = infinite)</translation>
     </message>
   </context>
   <context>
@@ -833,7 +833,7 @@
     <message>
       <location filename="../../../core/loading.py" line="69"/>
       <source>Cannot load python module: "{0}"</source>
-      <translation type="unfinished">Cannot load python module: "{0}"</translation>
+      <translation>Impossibile caricare il modulo python: "{0}"</translation>
     </message>
   </context>
   <context>
@@ -841,27 +841,27 @@
     <message>
       <location filename="../../../core/plugins_manager.py" line="79"/>
       <source>A plugin by the name of "{}" already exists.</source>
-      <translation type="unfinished">A plugin by the name of "{}" already exists.</translation>
+      <translation>Esiste già un plugin con il nome "{}".</translation>
     </message>
     <message>
       <location filename="../../../core/plugins_manager.py" line="132"/>
       <source>The requested plugin is not loaded: "{}"</source>
-      <translation type="unfinished">The requested plugin is not loaded: "{}"</translation>
+      <translation>Il plugin richiesto non è caricato: "{}"</translation>
     </message>
     <message>
       <location filename="../../../core/plugins_manager.py" line="110"/>
       <source>Failed to register plugin: "{}"</source>
-      <translation type="unfinished">Failed to register plugin: "{}"</translation>
+      <translation>Registrazione del plugin non riuscita: "{}"</translation>
     </message>
     <message>
       <location filename="../../../core/plugins_manager.py" line="152"/>
       <source>Failed to terminate plugin: "{}"</source>
-      <translation type="unfinished">Failed to terminate plugin: "{}"</translation>
+      <translation>Terminazione del plugin non riuscita: "{}"</translation>
     </message>
     <message>
       <location filename="../../../core/plugin_loader.py" line="68"/>
       <source>Cannot satisfy dependencies for plugin: "{}"</source>
-      <translation type="unfinished">Cannot satisfy dependencies for plugin: "{}"</translation>
+      <translation>Impossibile soddisfare le dipendenze per il plugin: "{}"</translation>
     </message>
   </context>
   <context>
@@ -869,12 +869,12 @@
     <message>
       <location filename="../../../core/plugins_manager.py" line="146"/>
       <source>Plugin terminated: "{}"</source>
-      <translation type="unfinished">Plugin terminated: "{}"</translation>
+      <translation>Plugin terminato: "{}"</translation>
     </message>
     <message>
       <location filename="../../../core/plugin_loader.py" line="108"/>
       <source>Plugin loaded: "{}"</source>
-      <translation type="unfinished">Plugin loaded: "{}"</translation>
+      <translation>Plugin caricato: "{}"</translation>
     </message>
   </context>
   <context>
@@ -882,12 +882,12 @@
     <message>
       <location filename="../../../ui/settings/app_pages/plugins.py" line="91"/>
       <source>Plugin</source>
-      <translation type="unfinished">Plugin</translation>
+      <translation>Plugin</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/plugins.py" line="92"/>
       <source>Enabled</source>
-      <translation type="unfinished">Enabled</translation>
+      <translation>Abilitato</translation>
     </message>
   </context>
   <context>
@@ -895,27 +895,27 @@
     <message>
       <location filename="../../../core/plugin.py" line="117"/>
       <source>Plugin disabled. Enable to use.</source>
-      <translation type="unfinished">Plugin disabled. Enable to use.</translation>
+      <translation>Plugin disabilitato. Abilitarlo per poterlo usare.</translation>
     </message>
     <message>
       <location filename="../../../core/plugin.py" line="92"/>
       <source>An error has occurred with this plugin. Please see logs for further information.</source>
-      <translation type="unfinished">An error has occurred with this plugin. Please see logs for further information.</translation>
+      <translation>Si è verificato un errore con questo plugin. Consulta i log per ulteriori informazioni.</translation>
     </message>
     <message>
       <location filename="../../../core/plugin.py" line="106"/>
       <source>There is a non-critical issue with this disabled plugin. Please see logs for further information.</source>
-      <translation type="unfinished">There is a non-critical issue with this disabled plugin. Please see logs for further information.</translation>
+      <translation>C'è un problema non critico con questo plugin disabilitato. Consulta i log per ulteriori informazioni.</translation>
     </message>
     <message>
       <location filename="../../../core/plugin.py" line="113"/>
       <source>Plugin loaded and ready for use.</source>
-      <translation type="unfinished">Plugin loaded and ready for use.</translation>
+      <translation>Plugin caricato e pronto all'uso.</translation>
     </message>
     <message>
       <location filename="../../../core/plugin.py" line="100"/>
       <source>A non-critical issue is affecting this plugin. Please see logs for further information.</source>
-      <translation type="unfinished">A non-critical issue is affecting this plugin. Please see logs for further information.</translation>
+      <translation>Un problema non critico sta interessando questo plugin. Consulta i log per ulteriori informazioni.</translation>
     </message>
   </context>
   <context>
@@ -931,7 +931,7 @@
     <message>
       <location filename="../../../ui/settings/app_pages/plugins.py" line="36"/>
       <source>Plugins</source>
-      <translation type="unfinished">Plugins</translation>
+      <translation>Plugin</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/general.py" line="38"/>
@@ -941,7 +941,7 @@
     <message>
       <location filename="../../../ui/settings/app_pages/layouts.py" line="26"/>
       <source>Layouts</source>
-      <translation type="unfinished">Layouts</translation>
+      <translation>Layout</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/cue.py" line="27"/>
@@ -951,22 +951,22 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="43"/>
       <source>Cue</source>
-      <translation type="unfinished">Cue</translation>
+      <translation>Cue</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="53"/>
       <source>Behaviours</source>
-      <translation type="unfinished">Behaviours</translation>
+      <translation>Comportamenti</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="155"/>
       <source>Pre/Post Wait</source>
-      <translation type="unfinished">Pre/Post Wait</translation>
+      <translation>Attesa Prima/Dopo</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="237"/>
       <source>Fade In/Out</source>
-      <translation type="unfinished">Fade In/Out</translation>
+      <translation>Dissolvenza Ingresso/Uscita</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="35"/>
