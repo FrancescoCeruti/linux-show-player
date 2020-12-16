@@ -54,7 +54,7 @@
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="80"/>
       <source>Command cue ended with an error status. Exit code: {}</source>
-      <translation type="unfinished">Command cue ended with an error status. Exit code: {}</translation>
+      <translation>Cue comando terminata in stato di errore. Codice di uscita: {}</translation>
     </message>
   </context>
   <context>
@@ -62,7 +62,7 @@
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="40"/>
       <source>Action cues</source>
-      <translation type="unfinished">Action cues</translation>
+      <translation>Cue azione</translation>
     </message>
   </context>
   <context>
@@ -233,7 +233,7 @@
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="130"/>
       <source>Error during cue execution.</source>
-      <translation type="unfinished">Error during cue execution.</translation>
+      <translation>Errore durante l'esecuzione della cue.</translation>
     </message>
   </context>
 </TS>
