@@ -209,37 +209,37 @@ non dimenticare di modificarlo.</translation>
     <message>
       <location filename="../../../plugins/controller/common.py" line="44"/>
       <source>Pause all cues</source>
-      <translation type="unfinished">Pause all cues</translation>
+      <translation>Pausa tutte le cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="45"/>
       <source>Resume all cues</source>
-      <translation type="unfinished">Resume all cues</translation>
+      <translation>Riprendi tutte le cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="48"/>
       <source>Interrupt all cues</source>
-      <translation type="unfinished">Interrupt all cues</translation>
+      <translation>Interrompi tutte le cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="51"/>
       <source>Fade-out all cues</source>
-      <translation type="unfinished">Fade-out all cues</translation>
+      <translation>Sfuma in uscita tutte le cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="54"/>
       <source>Fade-in all cues</source>
-      <translation type="unfinished">Fade-in all cues</translation>
+      <translation>Sfuma in entrata tutte le cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="57"/>
       <source>Move standby forward</source>
-      <translation type="unfinished">Move standby forward</translation>
+      <translation>Muovi standby in avanti</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="60"/>
       <source>Move standby back</source>
-      <translation type="unfinished">Move standby back</translation>
+      <translation>Muovi standby indietro</translation>
     </message>
   </context>
   <context>
@@ -278,7 +278,7 @@ non dimenticare di modificarlo.</translation>
     <message>
       <location filename="../../../plugins/controller/controller_settings.py" line="41"/>
       <source>Layout Controls</source>
-      <translation type="unfinished">Layout Controls</translation>
+      <translation>Controlli del layout</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/keyboard.py" line="44"/>
