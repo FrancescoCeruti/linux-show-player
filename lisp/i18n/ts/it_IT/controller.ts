@@ -85,7 +85,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="147"/>
       <source>Error while importing configuration entry, skipped.</source>
-      <translation type="unfinished">Error while importing configuration entry, skipped.</translation>
+      <translation>Impossibile importare una voce della configurazione, ignorata.</translation>
     </message>
   </context>
   <context>
@@ -98,12 +98,12 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="104"/>
       <source>OSC Path:</source>
-      <translation type="unfinished">OSC Path:</translation>
+      <translation>Percorso OSC:</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="110"/>
       <source>/path/to/method</source>
-      <translation type="unfinished">/path/to/method</translation>
+      <translation>/percorso/al/metodo</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="238"/>
@@ -133,7 +133,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="340"/>
       <source>Waiting for messages:</source>
-      <translation type="unfinished">Waiting for messages:</translation>
+      <translation>In attesa di messaggi:</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="443"/>
@@ -153,7 +153,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="446"/>
       <source>Action</source>
-      <translation type="unfinished">Action</translation>
+      <translation>Azione</translation>
     </message>
   </context>
   <context>
@@ -161,19 +161,19 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="357"/>
       <source>Warning</source>
-      <translation type="unfinished">Warning</translation>
+      <translation>Attenzione</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="358"/>
       <source>Osc path seems invalid,
 do not forget to edit the path later.</source>
-      <translation type="unfinished">Osc path seems invalid,
-do not forget to edit the path later.</translation>
+      <translation>Il percorso Osc sembra invalido,
+non dimenticare di modificarlo.</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="317"/>
       <source>Error while importing configuration entry, skipped.</source>
-      <translation type="unfinished">Error while importing configuration entry, skipped.</translation>
+      <translation>Impossibile importare una voce della configurazione, ignorata.</translation>
     </message>
   </context>
   <context>
@@ -194,17 +194,17 @@ do not forget to edit the path later.</translation>
     <message>
       <location filename="../../../plugins/controller/common.py" line="41"/>
       <source>Go</source>
-      <translation type="unfinished">Go</translation>
+      <translation>Go</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="42"/>
       <source>Reset</source>
-      <translation type="unfinished">Reset</translation>
+      <translation>Azzera</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="43"/>
       <source>Stop all cues</source>
-      <translation type="unfinished">Stop all cues</translation>
+      <translation>Ferma tutte le cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="44"/>
