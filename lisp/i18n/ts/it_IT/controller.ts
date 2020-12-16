@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/controller/controller.py" line="166"/>
       <source>Cannot load controller protocol: "{}"</source>
-      <translation type="unfinished">Cannot load controller protocol: "{}"</translation>
+      <translation>Impossibile caricare il protocollo: "{}"</translation>
     </message>
   </context>
   <context>
@@ -19,7 +19,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/keyboard.py" line="57"/>
       <source>Shortcut</source>
-      <translation type="unfinished">Shortcut</translation>
+      <translation>Scorciatoia</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/keyboard.py" line="58"/>
@@ -37,7 +37,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="105"/>
       <source>-- All Messages --</source>
-      <translation type="unfinished">-- All Messages --</translation>
+      <translation>-- Tutti I Messaggi --</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="125"/>
@@ -47,7 +47,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="127"/>
       <source>Capture filter</source>
-      <translation type="unfinished">Capture filter</translation>
+      <translation>Filtro di acquisizione</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="162"/>
@@ -62,17 +62,17 @@
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="247"/>
       <source>Data 1</source>
-      <translation type="unfinished">Data 1</translation>
+      <translation>Data 1</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="248"/>
       <source>Data 2</source>
-      <translation type="unfinished">Data 2</translation>
+      <translation>Data 2</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="249"/>
       <source>Data 3</source>
-      <translation type="unfinished">Data 3</translation>
+      <translation>Data 3</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="250"/>
