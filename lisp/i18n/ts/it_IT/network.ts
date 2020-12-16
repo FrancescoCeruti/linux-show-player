@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/network/server.py" line="48"/>
       <source>Stop serving network API</source>
-      <translation type="unfinished">Stop serving network API</translation>
+      <translation>Interrompe le API di rete</translation>
     </message>
   </context>
   <context>
