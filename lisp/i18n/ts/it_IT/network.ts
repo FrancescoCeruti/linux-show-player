@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/network/server.py" line="48"/>
       <source>Stop serving network API</source>
-      <translation>Interrompe le API di rete</translation>
+      <translation>Interrotte le API di rete</translation>
     </message>
   </context>
   <context>
@@ -14,7 +14,7 @@
     <message>
       <location filename="../../../plugins/network/server.py" line="51"/>
       <source>Network API server stopped working.</source>
-      <translation type="unfinished">Network API server stopped working.</translation>
+      <translation>Il server delle API di rete è stato interrotto.</translation>
     </message>
   </context>
   <context>
@@ -22,7 +22,7 @@
     <message>
       <location filename="../../../plugins/network/server.py" line="37"/>
       <source>Start serving network API at: http://{}:{}/</source>
-      <translation type="unfinished">Start serving network API at: http://{}:{}/</translation>
+      <translation>Inizia a servire le API di rete a: http://{}:{}/</translation>
     </message>
   </context>
   <context>
@@ -30,7 +30,7 @@
     <message>
       <location filename="../../../plugins/network/api/__init__.py" line="15"/>
       <source>New end-point: {}</source>
-      <translation type="unfinished">New end-point: {}</translation>
+      <translation>Nuovo end-point: {}</translation>
     </message>
   </context>
   <context>
