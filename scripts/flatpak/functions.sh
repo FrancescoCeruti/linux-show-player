@@ -11,27 +11,28 @@ function flatpak_build_manifest() {
     pip3 install --upgrade -r requirements.txt
 
     # Build manifest
-    python3 prepare_flatpak.py
+    python3 patch-manifest.py
+    python3 poetry-flatpak.py "$FLATPAK_PY_LOCKFILE" -e $FLATPAK_PY_IGNORE_PACKAGES
     deactivate
 }
 
 function flatpak_install_runtime() {
-    echo -e "\n"
+    echo ""
     echo "###################################################"
     echo "#    Install flatpak (flathub) runtime and sdk    #"
     echo "###################################################"
-    echo -e "\n"
+    echo ""
 
     flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
     flatpak install --user --noninteractive --assumeyes flathub $FLATPAK_INSTALL
 }
 
 function flatpak_build() {
-    echo -e "\n"
+    echo ""
     echo "###########################"
     echo "#    Build the flatpak    #"
     echo "###########################"
-    echo -e "\n"
+    echo ""
 
     # Prepare the repository
     ostree init --mode=archive-z2 --repo=repo
@@ -59,15 +60,15 @@ function flatpak_build_noexit_check() {
 }
 
 function flatpak_bundle() {
-    echo -e "\n"
+    echo ""
     echo "###############################"
     echo "#    Create flatpak bundle    #"
     echo "###############################"
-    echo -e "\n"
+    echo ""
 
     mkdir -p out
     # Create the bundle (without blocking the script)
-    flatpak build-bundle repo out/linux-show-payer.flatpak $FLATPAK_APP_ID $BUILD_BRANCH &
+    flatpak build-bundle repo out/linux-show-player.flatpak $FLATPAK_APP_ID $BUILD_BRANCH &
     # Print elapsed time
     watch_process $!
 }

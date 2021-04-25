@@ -2,7 +2,7 @@
 
 (╯°□°）╯︵ ┻━┻
 
-The scripts/files in this folder allow to build a Flatpak package of Linux Show Player.
+The scripts in this folder allow to build a Flatpak package of Linux Show Player.
 
  * build_flatpak.sh: Combine the commands from "functions.sh" to run a complete build
 
@@ -10,16 +10,9 @@ The scripts/files in this folder allow to build a Flatpak package of Linux Show 
 
  * functions.sh: A collection of commands to build the flatpak
 
- * pipenv_flatpak.py: Starting from the project Pipfile.lock generate the
-                      appropriate modules to install the python requirements
+ * patch-flatpak.py: Patch the flatpak manifest to use the current CI branch/commit
 
- * prepare_flatpak.py: Starting from "template.json" outputs the complete
-                       manifest. Uses "pipenv_flatpak.py" internally.
-
- * template.json: The base manifest file, contains all the metadata, and the
-                  non-python packages (some exception here)
-
- * requirements.txt: Python packages required for the build
+ * poetry-flatpak.py: Starting from the project poetry.lock generate the appropriate modules to install the python requirements
 
 ====== REQUIREMENTS ======
 
@@ -43,7 +36,7 @@ of a longer build time.
 Until version 0.11 we must use protobuf < 3.2, or it will not build,
 if needed we may patch it, for now it's fine.
 
-=== protobuf ===
+=== Protobuf ===
 
 It's needed to "build" the OLA python package, which, can only be build
 with all the OLA framework (--enable-python-libs)
@@ -52,8 +45,5 @@ Requires "six" and "setuptools", we install only the first, we
 consider the second already shipped with the python version
 
 ====== NOTES ======
-
-Some parts are hardcoded, because I'm lazy and this scripts are designed with
-LiSP in mind.
 
 Non-used features of the various packages should be disabled when possible.

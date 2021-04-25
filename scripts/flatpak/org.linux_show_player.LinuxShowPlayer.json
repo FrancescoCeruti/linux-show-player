@@ -16,14 +16,14 @@
         "--device=all"
     ],
     "cleanup-commands": [
-        "pip3 uninstall --yes cython wheel packaging toml sip || true"
+        "pip3 uninstall --yes packaging toml poetry-core || true"
     ],
     "rename-appdata-file": "linuxshowplayer.appdata.xml",
     "rename-desktop-file": "linuxshowplayer.desktop",
     "rename-icon": "linuxshowplayer",
     "modules": [
         {
-			"name": "Qt5",
+			"name": "qt5",
 			"config-opts": [
 				"-confirm-license", "-opensource",
 				"-shared",
@@ -59,70 +59,25 @@
 			]
 		},
         {
-            "name": "PyQt5",
-            "config-opts": [
-                "--assume-shared",
-                "--concatenate",
-                "--confirm-license",
-                "--no-designer-plugin",
-                "--no-dist-info",
-                "--no-docstrings",
-                "--no-qml-plugin",
-                "--no-qsci-api",
-                "--no-stubs",
-                "--no-tools",
-                "QMAKE_CFLAGS_RELEASE='-I/usr/include/python3.8/'",
-                "QMAKE_CXXFLAGS_RELEASE='-I/usr/include/python3.8/'"
+            "name": "python-sip",
+            "buildsystem": "simple",
+            "build-commands": [
+                "pip3 install --no-index --no-build-isolation --find-links=\"file://${PWD}\" --prefix=\"${FLATPAK_DEST}\" sip"
             ],
             "sources": [
                 {
-                    "type": "archive",
-                    "url": "https://www.riverbankcomputing.com/static/Downloads/PyQt5/PyQt5-5.15.2.dev2010041344.tar.gz",
-                    "sha256": "25153398487b652b4b0737e0a348dfd9a077c5865cfeb79b02470efa597cfe8e"
-                },
-                {
-					"type": "script",
-					"commands": [
-						"processed=`sed -e 's|prefix|sysroot|' <<< $@`",
-						"python3 configure.py $processed"
-					],
-					"dest-filename": "configure"
-				}
+                    "type": "file",
+                    "url": "https://files.pythonhosted.org/packages/33/e9/27730ac17713c0a80d81d8f3bb56213f1549d96f9dc183fd16a7eec6287c/sip-5.5.0.tar.gz",
+                    "sha256": "5d024c419b30fea8a6de8c71a560c7ab0bc3c221fbfb14d55a5b865bd58eaac5"
+                }
             ],
+            "cleanup-platform": ["*"],
             "modules": [
                 {
-                    "name": "packaging",
+                    "name": "python-toml",
                     "buildsystem": "simple",
                     "build-commands": [
-                        "pip3 install --verbose --no-index --no-deps --prefix=${FLATPAK_DEST} packaging-20.4-py2.py3-none-any.whl"
-                    ],
-                    "sources": [
-                        {
-                            "type": "file",
-                            "url": "https://files.pythonhosted.org/packages/46/19/c5ab91b1b05cfe63cccd5cfc971db9214c6dd6ced54e33c30d5af1d2bc43/packaging-20.4-py2.py3-none-any.whl",
-                            "sha256": "998416ba6962ae7fbd6596850b80e17859a5753ba17c32284f67bfff33784181"
-                        }
-                    ]
-                },
-                {
-                    "name": "pyparsing",
-                    "buildsystem": "simple",
-                    "build-commands": [
-                        "pip3 install --verbose --no-index --no-deps --prefix=${FLATPAK_DEST} pyparsing-2.4.7-py2.py3-none-any.whl"
-                    ],
-                    "sources": [
-                        {
-                            "type": "file",
-                            "url": "https://files.pythonhosted.org/packages/8a/bb/488841f56197b13700afd5658fc279a2025a39e22449b7cf29864669b15d/pyparsing-2.4.7-py2.py3-none-any.whl",
-                            "sha256": "ef9d7589ef3c200abe66653d3f1ab1033c3c419ae9b9bdb1240a85b024efc88b"
-                        }
-                    ]
-                },
-                {
-                    "name": "toml",
-                    "buildsystem": "simple",
-                    "build-commands": [
-                        "pip3 install --verbose --no-index --no-deps --prefix=${FLATPAK_DEST} toml-0.10.2-py2.py3-none-any.whl"
+                        "pip3 install --no-index --no-build-isolation --find-links=\"file://${PWD}\" --prefix=\"${FLATPAK_DEST}\" toml"
                     ],
                     "sources": [
                         {
@@ -133,23 +88,80 @@
                     ]
                 },
                 {
-                    "name": "SIP",
+                    "name": "python-pyparsing",
                     "buildsystem": "simple",
                     "build-commands": [
-                        "pip3 install --verbose --no-index --no-deps --prefix=${FLATPAK_DEST} sip-5.4.0-cp38-cp38-manylinux2014_x86_64.whl"
+                        "pip3 install --no-index --no-build-isolation --find-links=\"file://${PWD}\" --prefix=\"${FLATPAK_DEST}\" pyparsing"
                     ],
                     "sources": [
                         {
                             "type": "file",
-                            "url": "https://files.pythonhosted.org/packages/fb/c4/93366a89e7f7374eded03a77b3e702a0413312056b4781dc7bad014dfd5c/sip-5.4.0-cp38-cp38-manylinux2014_x86_64.whl",
-                            "sha256": "3e2c724cb03487ac7dfd372200c02199b1d023512f0185b1849cf88e367f4f69"
+                            "url": "https://files.pythonhosted.org/packages/8a/bb/488841f56197b13700afd5658fc279a2025a39e22449b7cf29864669b15d/pyparsing-2.4.7-py2.py3-none-any.whl",
+                            "sha256": "ef9d7589ef3c200abe66653d3f1ab1033c3c419ae9b9bdb1240a85b024efc88b"
+                        }
+                    ]
+                },
+                {
+                    "name": "python-packaging",
+                    "buildsystem": "simple",
+                    "build-commands": [
+                        "pip3 install --no-index --no-build-isolation --find-links=\"file://${PWD}\" --prefix=\"${FLATPAK_DEST}\" packaging"
+                    ],
+                    "sources": [
+                        {
+                            "type": "file",
+                            "url": "https://files.pythonhosted.org/packages/46/19/c5ab91b1b05cfe63cccd5cfc971db9214c6dd6ced54e33c30d5af1d2bc43/packaging-20.4-py2.py3-none-any.whl",
+                            "sha256": "998416ba6962ae7fbd6596850b80e17859a5753ba17c32284f67bfff33784181"
                         }
                     ]
                 }
+            ]
+        },
+        {
+            "name": "python-pyqt5",
+            "buildsystem": "simple",
+            "build-commands": [
+                "MAKEFLAGS=\"-j${FLATPAK_BUILDER_N_JOBS}\" sip-install --qt-shared --verbose --confirm-license --no-dbus-python --no-designer-plugin --no-docstrings --no-qml-plugin --no-tools --disable QtNetwork --disable QtPositioning --disable QtPrintSupport --disable QtRemoteObjects --disable QtSerialPort --disable QtSql --disable QtTest --target-dir=\"${FLATPAK_DEST}/lib/python$(python3 -c 'import sys; print(sys.version[:3])')/site-packages\""
             ],
-            "cleanup": [
-                "/bin",
-                "/include"
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://files.pythonhosted.org/packages/8e/a4/d5e4bf99dd50134c88b95e926d7b81aad2473b47fde5e3e4eac2c69a8942/PyQt5-5.15.4.tar.gz",
+                    "sha256": "2a69597e0dd11caabe75fae133feca66387819fc9bc050f547e5551bce97e5be"
+                }
+            ],
+            "cleanup-platform": [ "/lib/python*/site-packages/PyQt5/bindings" ],
+            "modules": [
+                {
+                    "name": "pyqt5-builder",
+                    "buildsystem": "simple",
+                    "build-commands": [
+                        "pip3 install --no-index --find-links=\"file://${PWD}\" --prefix=\"${FLATPAK_DEST}\" --no-build-isolation pyqt-builder"
+                    ],
+                    "sources": [
+                        {
+                            "type": "file",
+                            "url": "https://files.pythonhosted.org/packages/37/fd/5bc6351d5d279c797a1d78fec3483a6a9e4b8628073a8ed5448fbe1cf038/PyQt-builder-1.5.0.tar.gz",
+                            "sha256": "11bbe26e8e3d5ffec6d2ef2f50596b1670eb2d8b49aee0f859821922d8282841"
+                        }
+                    ],
+                    "cleanup-platform": [ "*" ],
+                    "cleanup": [ "/bin" ]
+                },
+                {
+                    "name": "pyqt5-sip",
+                    "buildsystem": "simple",
+                    "build-commands": [
+                        "pip3 install --no-index --no-build-isolation --find-links=\"file://${PWD}\" --prefix=\"${FLATPAK_DEST}\" pyqt5-sip"
+                    ],
+                    "sources": [
+                        {
+                            "type": "file",
+                            "url": "https://files.pythonhosted.org/packages/73/8c/c662b7ebc4b2407d8679da68e11c2a2eb275f5f2242a92610f6e5024c1f2/PyQt5_sip-12.8.1.tar.gz",
+                            "sha256": "30e944db9abee9cc757aea16906d4198129558533eb7fadbe48c5da2bd18e0bd"
+                        }
+                    ]
+                }
             ]
         },
         {
@@ -219,7 +231,7 @@
             "name": "python-google-protobuf",
             "buildsystem": "simple",
             "build-commands": [
-                "pip3 install --verbose --no-index --no-deps --prefix=${FLATPAK_DEST} protobuf-3.1.0.post1-py2.py3-none-any.whl"
+                "pip3 install --no-index --no-build-isolation --find-links=\"file://${PWD}\" --prefix=\"${FLATPAK_DEST}\" protobuf"
             ],
             "sources": [
                 {
@@ -262,7 +274,7 @@
             "name": "python-alsa",
             "buildsystem": "simple",
             "build-commands": [
-                "pip3 install --verbose --no-index --no-deps --prefix=${FLATPAK_DEST} ."
+                "pip3 install --no-index --no-build-isolation --prefix=\"${FLATPAK_DEST}\" ."
             ],
             "sources": [
                 {
@@ -273,24 +285,25 @@
             ]
         },
         {
-            "name": "python-wheel",
+            "name": "poetry-core",
             "buildsystem": "simple",
             "build-commands": [
-                "pip3 install --verbose --no-index --no-deps --prefix=${FLATPAK_DEST} wheel-0.34.2-py2.py3-none-any.whl"
+                "pip3 install --no-index --no-build-isolation --find-links=\"file://${PWD}\" --prefix=\"${FLATPAK_DEST}\" poetry-core"
             ],
             "sources": [
                 {
                     "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/8c/23/848298cccf8e40f5bbb59009b32848a4c38f4e7f3364297ab3c3e2e2cd14/wheel-0.34.2-py2.py3-none-any.whl",
-                    "sha256": "df277cb51e61359aba502208d680f90c0493adec6f0e848af94948778aed386e"
+                    "url": "https://files.pythonhosted.org/packages/bf/e1/08c7478df1e93dea47b06c9d9a80dbb54af7421462e1b22c280d063df807/poetry_core-1.0.3-py2.py3-none-any.whl",
+                    "sha256": "c6bde46251112de8384013e1ab8d66e7323d2c75172f80220aba2bc07e208e9a"
                 }
             ]
         },
+        "python-modules.json",
         {
             "name": "linux-show-player",
             "buildsystem": "simple",
             "build-commands": [
-                "pip3 install --verbose --no-index --no-deps --no-build-isolation --prefix=${FLATPAK_DEST} .",
+                "pip3 install --no-deps --no-build-isolation --prefix=\"${FLATPAK_DEST}\" .",
                 "mkdir -p /app/share/applications/",
                 "cp dist/linuxshowplayer.desktop /app/share/applications/",
                 "mkdir -p /app/share/mime/packages/",

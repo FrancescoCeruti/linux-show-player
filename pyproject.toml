@@ -4,9 +4,55 @@ target-version = ['py36']
 exclude = '''
 /(
     \.git
-    | \.github
-    | \.tx
     | dist
     | docs
 )/
 '''
+
+[tool.poetry]
+name = "linux-show-player"
+version = "0.6.0.dev0"
+description = "Cue player for stage productions"
+authors = ["Francesco Ceruti <ceppofrancy@gmail.com>"]
+license = "GPLv3"
+
+readme = "README.md"
+
+homepage = "https://www.linux-show-player.org/"
+repository = "https://github.com/FrancescoCeruti/linux-show-player"
+
+packages = [
+    { include = "lisp" }
+]
+
+exclude = [
+    "lisp/i18n/ts/",
+    "lisp/ui/themes/*/assets/"
+]
+
+[tool.poetry.dependencies]
+python = "^3.6"
+appdirs = "^1.4.1"
+cython = "^0.29"
+falcon = "^2.0"
+jack-client = "^0.5"
+mido = "^1.2"
+pygobject = "^3.30"
+pyliblo = "^0.10"
+pyqt5 = "^5.6"
+python-rtmidi = "^1.1"
+requests = "^2.20"
+sortedcontainers = "^2.0"
+pyalsa = {git = "https://github.com/alsa-project/alsa-python.git", tag = "v1.1.6"}
+humanize = "^3.1.0"
+
+[tool.poetry.dev-dependencies]
+toml = "*"
+packaging = "*"
+
+[tool.poetry.scripts]
+linux-show-player = "lisp.main:main"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
