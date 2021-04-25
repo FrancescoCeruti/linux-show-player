@@ -94,6 +94,7 @@ jobs:
             ghr \
               -n "Automated build ($CIRCLE_BRANCH)" \
               -b "Build number: $CIRCLE_BUILD_NUM<br>Completed at: $(date)" \
+              -c $CIRCLE_SHA1 \
               -recreate \
               -prerelease \
               $TAG "out/$ARTIFACT_NAME"

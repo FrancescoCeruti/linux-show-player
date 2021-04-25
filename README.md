@@ -26,24 +26,18 @@ For bugs/requests you can open an issue on the GitHub issues tracker, for suppor
 Linux Show Player is currently developed/test only on **GNU/Linux**.<br>
 _The core components (Python3, GStreamer and Qt5) are multi-platform, in future, despite the name, LiSP might get ported on others platforms_
 
-#### ⚙️ AppImage
-
-For version _0.5_ you can download an [AppImage](http://appimage.org/) bundle of LiSP from the release page, once downloaded make the file executable.
-
 #### 📦 Flatpak
 
 From version _0.6_ it will be possible to install a [Flatpak](https://flatpak.org/) package, follow the _simple_ instructions on their website to get everything ready. 
 
 You can get the latest **development** builds here:
- * [Master](https://bintray.com/francescoceruti/LinuxShowPlayer/master/_latestVersion)
- * [Development](https://bintray.com/francescoceruti/LinuxShowPlayer/develop/_latestVersion) - might be unstable (crash, breaking changes, etc...)
+ * [Master](https://github.com/FrancescoCeruti/linux-show-player/releases/tag/ci-master) - Generally stable
+ * [Development](https://github.com/FrancescoCeruti/linux-show-player/releases/tag/ci-develop) - Preview features, might be unstable and untested
 
 #### 🐧 From yours distribution repository
 
 For some GNU/Linux distribution you can install a native package.<br>
-Keep in mind that it might not be the latest version, here a list: 
-
-[![Packaging status](https://repology.org/badge/vertical-allrepos/linux-show-player.svg)](https://repology.org/metapackage/linux-show-player)
+Keep in mind that it might not be the latest version, you can find a list on [repology.org](https://repology.org/metapackage/linux-show-player)
 
 ---
 
