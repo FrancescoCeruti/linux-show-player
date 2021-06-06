@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2020 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2021 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -75,10 +75,10 @@ class AlsaSinkSettings(SettingsPage):
     def loadSettings(self, settings):
         device = settings.get("device", "")
         if not device:
-            device = get_plugin('GstBackend').Config.get('alsa_device', AlsaSink.FALLBACK_DEFAULT_DEVICE)
+            device = get_plugin('GstBackend').Config.get('alsa_device', AlsaSink.FALLBACK_DEVICE)
 
         self.deviceComboBox.setCurrentText(
-            self.devices.get(device, self.devices.get(AlsaSink.FALLBACK_DEFAULT_DEVICE, ""))
+            self.devices.get(device, self.devices.get(AlsaSink.FALLBACK_DEVICE, ""))
         )
 
     def getSettings(self):
