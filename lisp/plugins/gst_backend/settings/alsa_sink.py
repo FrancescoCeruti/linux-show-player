@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2021 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@ from PyQt5.QtWidgets import (
 )
 from pyalsa import alsacard
 
+from lisp.plugins.gst_backend import GstBackend
 from lisp.plugins.gst_backend.elements.alsa_sink import AlsaSink
 from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.ui_utils import translate
@@ -49,10 +50,6 @@ class AlsaSinkSettings(SettingsPage):
         self.deviceComboBox = QComboBox(self.deviceGroup)
         for name, description in self.devices.items():
             self.deviceComboBox.addItem(description, name)
-            if name == "default":
-                self.deviceComboBox.setCurrentIndex(
-                    self.deviceComboBox.count() - 1
-                )
 
         self.deviceGroup.layout().addWidget(self.deviceComboBox)
 
@@ -76,10 +73,13 @@ class AlsaSinkSettings(SettingsPage):
         self.setGroupEnabled(self.deviceGroup, enabled)
 
     def loadSettings(self, settings):
-        device = settings.get("device", "default")
+        device = settings.get(
+            "device",
+            GstBackend.Config.get("alsa_device", AlsaSink.FALLBACK_DEVICE)
+        )
 
         self.deviceComboBox.setCurrentText(
-            self.devices.get(device, self.devices.get("default", ""))
+            self.devices.get(device, self.devices.get(AlsaSink.FALLBACK_DEVICE))
         )
 
     def getSettings(self):
