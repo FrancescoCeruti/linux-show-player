@@ -24,7 +24,7 @@ from PyQt5.QtWidgets import (
 )
 from pyalsa import alsacard
 
-from lisp.plugins import get_plugin
+from lisp.plugins.gst_backend import GstBackend
 from lisp.plugins.gst_backend.elements.alsa_sink import AlsaSink
 from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.ui_utils import translate
@@ -73,12 +73,13 @@ class AlsaSinkSettings(SettingsPage):
         self.setGroupEnabled(self.deviceGroup, enabled)
 
     def loadSettings(self, settings):
-        device = settings.get("device", "")
-        if not device:
-            device = get_plugin('GstBackend').Config.get('alsa_device', AlsaSink.FALLBACK_DEVICE)
+        device = settings.get(
+            "device",
+            GstBackend.Config.get("alsa_device", AlsaSink.FALLBACK_DEVICE)
+        )
 
         self.deviceComboBox.setCurrentText(
-            self.devices.get(device, self.devices.get(AlsaSink.FALLBACK_DEVICE, ""))
+            self.devices.get(device, self.devices.get(AlsaSink.FALLBACK_DEVICE))
         )
 
     def getSettings(self):

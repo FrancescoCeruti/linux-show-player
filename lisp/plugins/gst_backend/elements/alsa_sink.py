@@ -18,7 +18,7 @@
 from PyQt5.QtCore import QT_TRANSLATE_NOOP
 
 from lisp.backend.media_element import ElementType, MediaType
-from lisp.plugins import get_plugin
+from lisp.plugins.gst_backend import GstBackend
 from lisp.plugins.gst_backend.gi_repository import Gst
 from lisp.plugins.gst_backend.gst_element import GstMediaElement, GstProperty
 
@@ -36,10 +36,7 @@ class AlsaSink(GstMediaElement):
 
         self.audio_resample = Gst.ElementFactory.make("audioresample", None)
         self.alsa_sink = Gst.ElementFactory.make("alsasink", "sink")
-        self.alsa_sink.set_property(
-            "device",
-            get_plugin('GstBackend').Config.get('alsa_device', self.FALLBACK_DEVICE)
-        )
+        self.device = GstBackend.Config.get("alsa_device", self.FALLBACK_DEVICE)
 
         self.pipeline.add(self.audio_resample)
         self.pipeline.add(self.alsa_sink)
