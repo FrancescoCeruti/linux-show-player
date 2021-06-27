@@ -24,7 +24,7 @@ from PyQt5.QtCore import (
     QTimer,
 )
 from PyQt5.QtGui import QKeyEvent, QContextMenuEvent, QBrush, QColor
-from PyQt5.QtWidgets import QTreeWidget, QHeaderView, QTreeWidgetItem
+from PyQt5.QtWidgets import QTreeWidget, QHeaderView, QTreeWidgetItem, QMenu
 
 from lisp.application import Application
 from lisp.backend import get_backend
@@ -50,6 +50,7 @@ class ListColumn:
         self.resize = resize
         self.width = width
         self.visible = visible
+        self.action = None
 
     @property
     def name(self):
@@ -109,6 +110,10 @@ class CueListView(QTreeWidget):
         self._model.item_removed.connect(self.__cueRemoved)
         self._model.model_reset.connect(self.__modelReset)
 
+        self.__columnMenu = QMenu()
+        self.__hideMenu = self.__columnMenu.addAction("Hide")
+        self.__showMenu = self.__columnMenu.addMenu("Show")
+
         # Setup the columns headers
         self.setHeaderLabels((c.name for c in CueListView.COLUMNS))
         for i, column in enumerate(CueListView.COLUMNS):
@@ -116,9 +121,20 @@ class CueListView(QTreeWidget):
                 self.header().setSectionResizeMode(i, column.resize)
             if column.width is not None:
                 self.setColumnWidth(i, column.width)
+            # Create popup menu
+            column.action = self.__showMenu.addAction(column.name)
+            column.action.triggered.connect(
+                lambda chk, item=i: self.showColumn(item))
 
-        self.header().setDragEnabled(False)
+
+        self.header().setDragEnabled(True)
         self.header().setStretchLastSection(False)
+        
+        # Connect local context menu for headers
+        self.header().setContextMenuPolicy(Qt.CustomContextMenu)
+        self.header().customContextMenuRequested.connect(self.__openHeaderMenu)
+
+
 
         self.setDragDropMode(self.InternalMove)
 
@@ -323,3 +339,17 @@ class CueListView(QTreeWidget):
             self.__scrollRangeGuard = True
             self.verticalScrollBar().setMaximum(max_ + 1)
             self.__scrollRangeGuard = False
+
+    def __openHeaderMenu(self, position):
+        index = self.indexAt(position)
+        showShowMenu = False
+        for i, column in enumerate(CueListView.COLUMNS):
+            column.action.setVisible(self.isColumnHidden(i))
+            showShowMenu |= self.isColumnHidden(i)
+        self.__showMenu.menuAction().setVisible(showShowMenu)
+        action = self.__columnMenu.exec_(self.mapToGlobal(position))
+        if action == self.__hideMenu:
+            self.hideColumn(index.column())
+
+
+            
