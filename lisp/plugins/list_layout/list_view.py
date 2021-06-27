@@ -111,8 +111,8 @@ class CueListView(QTreeWidget):
         self._model.model_reset.connect(self.__modelReset)
 
         self.__columnMenu = QMenu()
-        self.__hideMenu = self.__columnMenu.addAction("Hide")
-        self.__showMenu = self.__columnMenu.addMenu("Show")
+        self.__hideMenu = self.__columnMenu.addAction(QT_TRANSLATE_NOOP("ListLayoutHeaderMenu", "Hide"))
+        self.__showMenu = self.__columnMenu.addMenu(QT_TRANSLATE_NOOP("ListLayoutHeaderMenu","Show"))
 
         # Setup the columns headers
         self.setHeaderLabels((c.name for c in CueListView.COLUMNS))
