@@ -110,6 +110,7 @@ class CueListView(QTreeWidget):
         self._model.item_removed.connect(self.__cueRemoved)
         self._model.model_reset.connect(self.__modelReset)
 
+        # Create context menu for column headers
         self.__columnMenu = QMenu()
         self.__hideMenu = self.__columnMenu.addAction(QT_TRANSLATE_NOOP("ListLayoutHeaderMenu", "Hide"))
         self.__showMenu = self.__columnMenu.addMenu(QT_TRANSLATE_NOOP("ListLayoutHeaderMenu","Show"))
@@ -121,20 +122,18 @@ class CueListView(QTreeWidget):
                 self.header().setSectionResizeMode(i, column.resize)
             if column.width is not None:
                 self.setColumnWidth(i, column.width)
-            # Create popup menu
+            # Create context menu to show the column
             column.action = self.__showMenu.addAction(column.name)
             column.action.triggered.connect(
                 lambda chk, item=i: self.showColumn(item))
 
 
-        self.header().setDragEnabled(True)
+        self.header().setDragEnabled(True) 
         self.header().setStretchLastSection(False)
         
         # Connect local context menu for headers
         self.header().setContextMenuPolicy(Qt.CustomContextMenu)
         self.header().customContextMenuRequested.connect(self.__openHeaderMenu)
-
-
 
         self.setDragDropMode(self.InternalMove)
 
@@ -341,9 +340,11 @@ class CueListView(QTreeWidget):
             self.__scrollRangeGuard = False
 
     def __openHeaderMenu(self, position):
+        # Prepare and open context menu 
         index = self.indexAt(position)
         showShowMenu = False
         for i, column in enumerate(CueListView.COLUMNS):
+            # show column name in menu if column is hidden
             column.action.setVisible(self.isColumnHidden(i))
             showShowMenu |= self.isColumnHidden(i)
         self.__showMenu.menuAction().setVisible(showShowMenu)
