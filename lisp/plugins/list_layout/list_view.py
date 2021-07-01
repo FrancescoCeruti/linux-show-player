@@ -44,12 +44,12 @@ from lisp.ui.ui_utils import translate, css_to_dict, dict_to_css
 
 
 class ListColumn:
-    def __init__(self, name, widget, resize=None, width=None, visible=True):
+    def __init__(self, name, widget, resize=None, width=None, displayName=True):
         self.baseName = name
         self.widget = widget
         self.resize = resize
         self.width = width
-        self.visible = visible
+        self.displayName = displayName
         self.action = None
 
     @property
@@ -73,7 +73,7 @@ class CueListView(QTreeWidget):
     # TODO: add ability to show/hide
     # TODO: implement columns (cue-type / target / etc..)
     COLUMNS = [
-        ListColumn("", CueStatusIcons, QHeaderView.Fixed, width=45),
+        ListColumn(QT_TRANSLATE_NOOP("ListLayoutHeader", "Cue Status"), CueStatusIcons, QHeaderView.Fixed, width=45, displayName=False),
         ListColumn("#", IndexWidget, QHeaderView.ResizeToContents),
         ListColumn(
             QT_TRANSLATE_NOOP("ListLayoutHeader", "Cue"),
@@ -89,7 +89,7 @@ class CueListView(QTreeWidget):
         ListColumn(
             QT_TRANSLATE_NOOP("ListLayoutHeader", "Post wait"), PostWaitWidget
         ),
-        ListColumn("", NextActionIcon, QHeaderView.Fixed, width=18),
+        ListColumn(QT_TRANSLATE_NOOP("ListLayoutHeader", "Next Action"), NextActionIcon, QHeaderView.Fixed, width=18, displayName=False),
     ]
 
     ITEM_DEFAULT_BG = QBrush(Qt.transparent)
@@ -116,7 +116,7 @@ class CueListView(QTreeWidget):
         self.__showMenu = self.__columnMenu.addMenu(QT_TRANSLATE_NOOP("ListLayoutHeaderMenu","Show"))
 
         # Setup the columns headers
-        self.setHeaderLabels((c.name for c in CueListView.COLUMNS))
+        self.setHeaderLabels((c.name if c.displayName else "" for c in CueListView.COLUMNS))
         for i, column in enumerate(CueListView.COLUMNS):
             if column.resize is not None:
                 self.header().setSectionResizeMode(i, column.resize)
