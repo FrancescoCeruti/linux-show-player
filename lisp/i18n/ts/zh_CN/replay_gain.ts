@@ -67,12 +67,12 @@
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="331"/>
       <source>An error occurred during gain calculation.</source>
-      <translation type="unfinished">An error occurred during gain calculation.</translation>
+      <translation>计算回放增益时发生错误。</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="203"/>
       <source>An error occurred while processing gain results.</source>
-      <translation type="unfinished">An error occurred while processing gain results.</translation>
+      <translation>处理回放增益计算结果时发生错误。</translation>
     </message>
   </context>
   <context>
