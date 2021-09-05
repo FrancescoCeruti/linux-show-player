@@ -46,7 +46,7 @@
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="111"/>
       <source>Rename all cue. () in regex below usable with $0, $1 ...</source>
-      <translation type="unfinished">Rename all cue. () in regex below usable with $0, $1 ...</translation>
+      <translation>重新命名所有cue。() 在下列的正規表達式，可用$0, $1 ...</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="121"/>
