@@ -46,7 +46,7 @@
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="111"/>
       <source>Rename all cue. () in regex below usable with $0, $1 ...</source>
-      <translation type="unfinished">Rename all cue. () in regex below usable with $0, $1 ...</translation>
+      <translation>重新命名所有cue。 () 在下列的正规表达式，可用$0, $1 ...</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="121"/>
@@ -70,16 +70,16 @@ Exemple:
 Only the numbers are between parenthesis and will be usable with $0 in the first line.
 
 For more information about Regexes, consult python documentation at: https://docs.python.org/3/howto/regex.html#regex-howto</source>
-      <translation type="unfinished">You can use Regexes to rename your cues.
+      <translation>你可以用正规表达式（Regexes）重新命名cues。
 
-Insert expressions captured with regexes in the line below with $0 for the first parenthesis, $1 forthe second, etc...
-In the second line, you can use standard Python Regexes to match expressions in the original cues names. Use parenthesis to capture parts of the matched expression.
+在第一行输入正规表达式，$0为第一个括号，$1为第二个括号，如此类推...
+在第二行中，你可以使用标准python正规表达式以搜寻匹配的cues名称。使用括号以搜寻匹配的表达式。
 
-Exemple: 
-^[a-z]([0-9]+) will find a lower case character([a-z]), followed by one or more number.
-Only the numbers are between parenthesis and will be usable with $0 in the first line.
+例子：
+^[a-z]([0-9]+) 会寻找小写字元 ([a-z])，兼且有一个或以上的数字。
+只有数字是在括号之间而能用于第一行的$0。
 
-For more information about Regexes, consult python documentation at: https://docs.python.org/3/howto/regex.html#regex-howto</translation>
+若要获取更多正规表达式的资讯，请查阅python说明：https://docs.python.org/3/howto/regex.html#regex-howto</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="57"/>
@@ -110,7 +110,7 @@ For more information about Regexes, consult python documentation at: https://doc
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="288"/>
       <source>Regex error: catch with () before display with $n</source>
-      <translation type="unfinished">Regex error: catch with () before display with $n</translation>
+      <translation>正规表达式错误：在显示 $n 前已用 () 捕捉</translation>
     </message>
   </context>
 </TS>
