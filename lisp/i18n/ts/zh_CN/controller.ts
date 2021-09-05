@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/controller/controller.py" line="166"/>
       <source>Cannot load controller protocol: "{}"</source>
-      <translation type="unfinished">Cannot load controller protocol: "{}"</translation>
+      <translation>无法加载控制器协议： "{}"</translation>
     </message>
   </context>
   <context>
@@ -85,7 +85,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="147"/>
       <source>Error while importing configuration entry, skipped.</source>
-      <translation type="unfinished">Error while importing configuration entry, skipped.</translation>
+      <translation>汇入设定时发生错误，已跳过。</translation>
     </message>
   </context>
   <context>
@@ -98,7 +98,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="104"/>
       <source>OSC Path:</source>
-      <translation type="unfinished">OSC Path:</translation>
+      <translation>OSC路径：</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="110"/>
@@ -167,13 +167,13 @@
       <location filename="../../../plugins/controller/protocols/osc.py" line="358"/>
       <source>Osc path seems invalid,
 do not forget to edit the path later.</source>
-      <translation type="unfinished">Osc path seems invalid,
-do not forget to edit the path later.</translation>
+      <translation>Osc路经似乎不正确，
+请修改路径。</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="317"/>
       <source>Error while importing configuration entry, skipped.</source>
-      <translation type="unfinished">Error while importing configuration entry, skipped.</translation>
+      <translation>汇入设定时发生错误，已跳过。</translation>
     </message>
   </context>
   <context>
