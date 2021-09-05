@@ -187,7 +187,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/elements/jack_sink.py" line="135"/>
       <source>An error occurred while disconnection Jack ports</source>
-      <translation>解除連接Jack埠時發生錯誤</translation>
+      <translation>解除連接Jack端口時發生錯誤</translation>
     </message>
   </context>
   <context>
