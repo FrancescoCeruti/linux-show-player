@@ -96,7 +96,7 @@
     <message>
       <location filename="../../../plugins/osc/osc_server.py" line="120"/>
       <source>Message from {} -&gt; path: "{}" args: {}</source>
-      <translation type="unfinished">Message from {} -&gt; path: "{}" args: {}</translation>
+      <translation>來自 {} 的訊息 -&gt; 路徑: {} args: {}</translation>
     </message>
   </context>
   <context>
