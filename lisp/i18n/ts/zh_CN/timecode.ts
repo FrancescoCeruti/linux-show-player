@@ -19,7 +19,7 @@
     <message>
       <location filename="../../../plugins/timecode/timecode.py" line="99"/>
       <source>Cannot load timecode protocol: "{}"</source>
-      <translation type="unfinished">Cannot load timecode protocol: "{}"</translation>
+      <translation>无法加载时间码协议： "{}"</translation>
     </message>
   </context>
   <context>
@@ -28,8 +28,8 @@
       <location filename="../../../plugins/timecode/protocols/artnet.py" line="65"/>
       <source>Cannot send timecode. 
 OLA daemon has stopped.</source>
-      <translation type="unfinished">Cannot send timecode. 
-OLA daemon has stopped.</translation>
+      <translation>无法传送时间码。
+OLA 守护行程（daemon）已停止</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/protocols/artnet.py" line="73"/>
@@ -75,7 +75,7 @@ OLA daemon has stopped.</translation>
     <message>
       <location filename="../../../plugins/timecode/cue_tracker.py" line="119"/>
       <source>Cannot send timecode, untracking cue</source>
-      <translation type="unfinished">Cannot send timecode, untracking cue</translation>
+      <translation>无法传送时间码，正取消追踪cue。</translation>
     </message>
   </context>
 </TS>
