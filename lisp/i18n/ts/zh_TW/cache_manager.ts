@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/cache_manager/cache_manager.py" line="54"/>
       <source>Cache size</source>
-      <translation type="unfinished">Cache size</translation>
+      <translation>緩存大小</translation>
     </message>
     <message>
       <location filename="../../../plugins/cache_manager/cache_manager.py" line="139"/>
@@ -32,8 +32,8 @@
       <location filename="../../../plugins/cache_manager/cache_manager.py" line="58"/>
       <source>The cache has exceeded {}. Consider clean it.
 You can do it in the application settings.</source>
-      <translation type="unfinished">The cache has exceeded {}. Consider clean it.
-You can do it in the application settings.</translation>
+      <translation>緩存已超過{}。請考慮清除緩存。
+你可以在應用程式設定中清除緩存。</translation>
     </message>
   </context>
   <context>
