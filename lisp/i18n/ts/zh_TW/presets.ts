@@ -69,22 +69,22 @@
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="73"/>
       <source>Error while deleting preset "{}"</source>
-      <translation type="unfinished">Error while deleting preset "{}"</translation>
+      <translation>刪除範本 "{}" 時發生錯誤</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="79"/>
       <source>Cannot load preset "{}"</source>
-      <translation type="unfinished">Cannot load preset "{}"</translation>
+      <translation>無法加載範本 "{}"</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="85"/>
       <source>Cannot save preset "{}"</source>
-      <translation type="unfinished">Cannot save preset "{}"</translation>
+      <translation>無法保存範本 "{}"</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="92"/>
       <source>Cannot rename preset "{}"</source>
-      <translation type="unfinished">Cannot rename preset "{}"</translation>
+      <translation>無法重新命名範本 "{}"</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="102"/>
@@ -94,7 +94,7 @@
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="115"/>
       <source>Preset "{}" already exists, overwrite?</source>
-      <translation type="unfinished">Preset "{}" already exists, overwrite?</translation>
+      <translation>範本 "{}" 已存在，要覆寫嗎？</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="270"/>
@@ -114,7 +114,7 @@
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="356"/>
       <source>Some presets already exists, overwrite?</source>
-      <translation type="unfinished">Some presets already exists, overwrite?</translation>
+      <translation>一些範本已存在，要覆寫嗎？</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="370"/>
