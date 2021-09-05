@@ -349,7 +349,7 @@
     <message>
       <location filename="../../../ui/settings/app_pages/cue.py" line="73"/>
       <source>Used globally when interrupting cues</source>
-      <translation>全域地終止cues</translation>
+      <translation>在终止cues時全域地使用</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/cue.py" line="79"/>
