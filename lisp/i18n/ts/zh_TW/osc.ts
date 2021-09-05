@@ -88,7 +88,7 @@
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="113"/>
       <source>Cannot send OSC message, see error for details</source>
-      <translation type="unfinished">Cannot send OSC message, see error for details</translation>
+      <translation>無法傳送OSC信息，請閱讀錯誤記錄以獲取更多細節</translation>
     </message>
   </context>
   <context>
