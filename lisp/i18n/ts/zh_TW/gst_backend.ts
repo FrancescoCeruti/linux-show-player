@@ -11,7 +11,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/alsa_sink.py" line="68"/>
       <source>To make your custom PCM objects appear correctly in this list requires adding a 'hint.description' line to them.</source>
-      <translation type="unfinished">To make your custom PCM objects appear correctly in this list requires adding a 'hint.description' line to them.</translation>
+      <translation>若要正確顯示自訂PCM物件，需插入「hint.description」到此表。</translation>
     </message>
   </context>
   <context>
@@ -142,7 +142,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_media.py" line="234"/>
       <source>Cannot create pipeline element: "{}"</source>
-      <translation type="unfinished">Cannot create pipeline element: "{}"</translation>
+      <translation>無法創建管道元素： "{}"</translation>
     </message>
   </context>
   <context>
@@ -158,7 +158,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_media.py" line="228"/>
       <source>Invalid pipeline element: "{}"</source>
-      <translation type="unfinished">Invalid pipeline element: "{}"</translation>
+      <translation>管道元素無效： "{}"</translation>
     </message>
   </context>
   <context>
@@ -187,7 +187,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/elements/jack_sink.py" line="135"/>
       <source>An error occurred while disconnection Jack ports</source>
-      <translation type="unfinished">An error occurred while disconnection Jack ports</translation>
+      <translation>解除連接Jack埠時發生錯誤</translation>
     </message>
   </context>
   <context>
