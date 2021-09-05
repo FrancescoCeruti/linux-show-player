@@ -35,17 +35,17 @@
     <message>
       <location filename="../../../plugins/midi/midi_io.py" line="82"/>
       <source>Cannot connect to MIDI output port '{}'.</source>
-      <translation type="unfinished">Cannot connect to MIDI output port '{}'.</translation>
+      <translation>無法連接到 MIDI 輸出端口 '{}'。</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_io.py" line="103"/>
       <source>Cannot connect to MIDI input port '{}'.</source>
-      <translation type="unfinished">Cannot connect to MIDI input port '{}'.</translation>
+      <translation>無法連接到 MIDI 輸入端口 '{}'。</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/port_monitor.py" line="88"/>
       <source>Cannot create ALSA-MIDI port monitor, MIDI connections/disconnections will not be detected.</source>
-      <translation type="unfinished">Cannot create ALSA-MIDI port monitor, MIDI connections/disconnections will not be detected.</translation>
+      <translation>無法創建ALSA-MIDI端口監察器，MIDI連接／斷接將不會受到偵測。</translation>
     </message>
   </context>
   <context>
@@ -53,17 +53,17 @@
     <message>
       <location filename="../../../plugins/midi/midi.py" line="138"/>
       <source>Connecting to MIDI port: '{}'</source>
-      <translation type="unfinished">Connecting to MIDI port: '{}'</translation>
+      <translation>正在連接到 MIDI 端口：'{}'</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi.py" line="120"/>
       <source>MIDI port disconnected: '{}'</source>
-      <translation type="unfinished">MIDI port disconnected: '{}'</translation>
+      <translation>MIDI 端口已斷線：'{}'</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi.py" line="147"/>
       <source>Connecting to matching MIDI port: '{}'</source>
-      <translation type="unfinished">Connecting to matching MIDI port: '{}'</translation>
+      <translation>正在連接到匹配的 MIDI 端口：'{}'</translation>
     </message>
   </context>
   <context>
