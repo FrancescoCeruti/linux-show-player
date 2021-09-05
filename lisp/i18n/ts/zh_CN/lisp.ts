@@ -29,7 +29,7 @@
     <message>
       <location filename="../../../ui/about.py" line="52"/>
       <source>Linux Show Player is a cue player designed for stage productions.</source>
-      <translation type="unfinished">Linux Show Player is a cue player designed for stage productions.</translation>
+      <translation>Linux Show Player是个为舞台表演而设的cue播放器。</translation>
     </message>
     <message>
       <location filename="../../../ui/about.py" line="132"/>
@@ -75,7 +75,7 @@
     <message>
       <location filename="../../../ui/settings/app_configuration.py" line="109"/>
       <source>Cannot load configuration page: "{}" ({})</source>
-      <translation type="unfinished">Cannot load configuration page: "{}" ({})</translation>
+      <translation>无法加载设定页："{}" ({})</translation>
     </message>
   </context>
   <context>
@@ -131,12 +131,12 @@
     <message>
       <location filename="../../../application.py" line="238"/>
       <source>Error while reading the session file "{}"</source>
-      <translation type="unfinished">Error while reading the session file "{}"</translation>
+      <translation>载入工作阶段档案时发生错误 "{}"</translation>
     </message>
     <message>
       <location filename="../../../application.py" line="229"/>
       <source>Unable to create the cue "{}"</source>
-      <translation type="unfinished">Unable to create the cue "{}"</translation>
+      <translation>无法创建cue "{}"</translation>
     </message>
   </context>
   <context>
@@ -144,7 +144,7 @@
     <message>
       <location filename="../../../core/loading.py" line="136"/>
       <source>Cannot load python class: "{0}"</source>
-      <translation type="unfinished">Cannot load python class: "{0}"</translation>
+      <translation>无法加载python class: "{0}"</translation>
     </message>
   </context>
   <context>
@@ -178,7 +178,7 @@
     <message>
       <location filename="../../../core/configuration.py" line="72"/>
       <source>Invalid path "{}", return default.</source>
-      <translation type="unfinished">Invalid path "{}", return default.</translation>
+      <translation>路径不正确 "{}"，使用预设值。</translation>
     </message>
   </context>
   <context>
@@ -300,7 +300,7 @@
     <message>
       <location filename="../../../command/cue.py" line="46"/>
       <source>Cue settings changed: "{}"</source>
-      <translation type="unfinished">Cue settings changed: "{}"</translation>
+      <translation>Cue 设置已更改： "{}"</translation>
     </message>
   </context>
   <context>
@@ -349,7 +349,7 @@
     <message>
       <location filename="../../../ui/settings/app_pages/cue.py" line="73"/>
       <source>Used globally when interrupting cues</source>
-      <translation type="unfinished">Used globally when interrupting cues</translation>
+      <translation>在终止cues时全域地使用</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/cue.py" line="79"/>
@@ -359,7 +359,7 @@
     <message>
       <location filename="../../../ui/settings/app_pages/cue.py" line="82"/>
       <source>Used for fade-in and fade-out actions, by cues where fade duration is 0.</source>
-      <translation type="unfinished">Used for fade-in and fade-out actions, by cues where fade duration is 0.</translation>
+      <translation>用于淡入及淡出，若cues的渐变长度是0。</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="112"/>
@@ -771,7 +771,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="402"/>
       <source>The current session contains changes that have not been saved.</source>
-      <translation type="unfinished">The current session contains changes that have not been saved.</translation>
+      <translation>这个工作阶段尚有未储存的更变。</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="410"/>
@@ -784,7 +784,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="261"/>
       <source>Registered cue menu: "{}"</source>
-      <translation type="unfinished">Registered cue menu: "{}"</translation>
+      <translation>已登陆cue菜单："{}"</translation>
     </message>
   </context>
   <context>
@@ -825,7 +825,7 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/media_cue.py" line="91"/>
       <source>Repetition after first play (-1 = infinite)</source>
-      <translation type="unfinished">Repetition after first play (-1 = infinite)</translation>
+      <translation>第一次播放后重复 (-1 = 无限)</translation>
     </message>
   </context>
   <context>
@@ -833,7 +833,7 @@
     <message>
       <location filename="../../../core/loading.py" line="69"/>
       <source>Cannot load python module: "{0}"</source>
-      <translation type="unfinished">Cannot load python module: "{0}"</translation>
+      <translation>无法加载python module: "{0}"</translation>
     </message>
   </context>
   <context>
@@ -841,27 +841,27 @@
     <message>
       <location filename="../../../core/plugins_manager.py" line="79"/>
       <source>A plugin by the name of "{}" already exists.</source>
-      <translation type="unfinished">A plugin by the name of "{}" already exists.</translation>
+      <translation>已有同名为"{}"的插件。</translation>
     </message>
     <message>
       <location filename="../../../core/plugins_manager.py" line="132"/>
       <source>The requested plugin is not loaded: "{}"</source>
-      <translation type="unfinished">The requested plugin is not loaded: "{}"</translation>
+      <translation>请求的插件没有被加载："{}"</translation>
     </message>
     <message>
       <location filename="../../../core/plugins_manager.py" line="110"/>
       <source>Failed to register plugin: "{}"</source>
-      <translation type="unfinished">Failed to register plugin: "{}"</translation>
+      <translation>注册插件失败："{}"</translation>
     </message>
     <message>
       <location filename="../../../core/plugins_manager.py" line="152"/>
       <source>Failed to terminate plugin: "{}"</source>
-      <translation type="unfinished">Failed to terminate plugin: "{}"</translation>
+      <translation>停止插件失败："{}"</translation>
     </message>
     <message>
       <location filename="../../../core/plugin_loader.py" line="68"/>
       <source>Cannot satisfy dependencies for plugin: "{}"</source>
-      <translation type="unfinished">Cannot satisfy dependencies for plugin: "{}"</translation>
+      <translation>无法满足插件需求："{}"</translation>
     </message>
   </context>
   <context>
@@ -869,12 +869,12 @@
     <message>
       <location filename="../../../core/plugins_manager.py" line="146"/>
       <source>Plugin terminated: "{}"</source>
-      <translation type="unfinished">Plugin terminated: "{}"</translation>
+      <translation>插件已终止："{}"</translation>
     </message>
     <message>
       <location filename="../../../core/plugin_loader.py" line="108"/>
       <source>Plugin loaded: "{}"</source>
-      <translation type="unfinished">Plugin loaded: "{}"</translation>
+      <translation>插件已加载："{}"</translation>
     </message>
   </context>
   <context>
@@ -882,12 +882,12 @@
     <message>
       <location filename="../../../ui/settings/app_pages/plugins.py" line="91"/>
       <source>Plugin</source>
-      <translation type="unfinished">Plugin</translation>
+      <translation>插件</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/plugins.py" line="92"/>
       <source>Enabled</source>
-      <translation type="unfinished">Enabled</translation>
+      <translation>已启用</translation>
     </message>
   </context>
   <context>
@@ -895,27 +895,27 @@
     <message>
       <location filename="../../../core/plugin.py" line="117"/>
       <source>Plugin disabled. Enable to use.</source>
-      <translation type="unfinished">Plugin disabled. Enable to use.</translation>
+      <translation>插件已禁用。启用以使用插件。</translation>
     </message>
     <message>
       <location filename="../../../core/plugin.py" line="92"/>
       <source>An error has occurred with this plugin. Please see logs for further information.</source>
-      <translation type="unfinished">An error has occurred with this plugin. Please see logs for further information.</translation>
+      <translation>插件发生错误。请阅读记录以获取更多资讯。</translation>
     </message>
     <message>
       <location filename="../../../core/plugin.py" line="106"/>
       <source>There is a non-critical issue with this disabled plugin. Please see logs for further information.</source>
-      <translation type="unfinished">There is a non-critical issue with this disabled plugin. Please see logs for further information.</translation>
+      <translation>已禁用插件发生非危急错误。请阅读记录以获取更多资讯。</translation>
     </message>
     <message>
       <location filename="../../../core/plugin.py" line="113"/>
       <source>Plugin loaded and ready for use.</source>
-      <translation type="unfinished">Plugin loaded and ready for use.</translation>
+      <translation>插件已加载并可使用。</translation>
     </message>
     <message>
       <location filename="../../../core/plugin.py" line="100"/>
       <source>A non-critical issue is affecting this plugin. Please see logs for further information.</source>
-      <translation type="unfinished">A non-critical issue is affecting this plugin. Please see logs for further information.</translation>
+      <translation>此插件受非危急错误影响。请阅读记录以获取更多资讯。</translation>
     </message>
   </context>
   <context>
