@@ -825,7 +825,7 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/media_cue.py" line="91"/>
       <source>Repetition after first play (-1 = infinite)</source>
-      <translation type="unfinished">Repetition after first play (-1 = infinite)</translation>
+      <translation>第一次播放後重複 (-1 = 無限)</translation>
     </message>
   </context>
   <context>
@@ -833,7 +833,7 @@
     <message>
       <location filename="../../../core/loading.py" line="69"/>
       <source>Cannot load python module: "{0}"</source>
-      <translation type="unfinished">Cannot load python module: "{0}"</translation>
+      <translation>無法加載python module: "{0}"</translation>
     </message>
   </context>
   <context>
@@ -841,27 +841,27 @@
     <message>
       <location filename="../../../core/plugins_manager.py" line="79"/>
       <source>A plugin by the name of "{}" already exists.</source>
-      <translation type="unfinished">A plugin by the name of "{}" already exists.</translation>
+      <translation>已有同名為"{}"的插件。</translation>
     </message>
     <message>
       <location filename="../../../core/plugins_manager.py" line="132"/>
       <source>The requested plugin is not loaded: "{}"</source>
-      <translation type="unfinished">The requested plugin is not loaded: "{}"</translation>
+      <translation>請求的插件沒有被加載："{}"</translation>
     </message>
     <message>
       <location filename="../../../core/plugins_manager.py" line="110"/>
       <source>Failed to register plugin: "{}"</source>
-      <translation type="unfinished">Failed to register plugin: "{}"</translation>
+      <translation>註冊插件失敗："{}"</translation>
     </message>
     <message>
       <location filename="../../../core/plugins_manager.py" line="152"/>
       <source>Failed to terminate plugin: "{}"</source>
-      <translation type="unfinished">Failed to terminate plugin: "{}"</translation>
+      <translation>停止插件失敗："{}"</translation>
     </message>
     <message>
       <location filename="../../../core/plugin_loader.py" line="68"/>
       <source>Cannot satisfy dependencies for plugin: "{}"</source>
-      <translation type="unfinished">Cannot satisfy dependencies for plugin: "{}"</translation>
+      <translation>無法滿足插件需求："{}"</translation>
     </message>
   </context>
   <context>
@@ -869,12 +869,12 @@
     <message>
       <location filename="../../../core/plugins_manager.py" line="146"/>
       <source>Plugin terminated: "{}"</source>
-      <translation type="unfinished">Plugin terminated: "{}"</translation>
+      <translation>插件已終止："{}"</translation>
     </message>
     <message>
       <location filename="../../../core/plugin_loader.py" line="108"/>
       <source>Plugin loaded: "{}"</source>
-      <translation type="unfinished">Plugin loaded: "{}"</translation>
+      <translation>插件已加載："{}"</translation>
     </message>
   </context>
   <context>
@@ -882,12 +882,12 @@
     <message>
       <location filename="../../../ui/settings/app_pages/plugins.py" line="91"/>
       <source>Plugin</source>
-      <translation type="unfinished">Plugin</translation>
+      <translation>插件</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/plugins.py" line="92"/>
       <source>Enabled</source>
-      <translation type="unfinished">Enabled</translation>
+      <translation>已啓用</translation>
     </message>
   </context>
   <context>
@@ -895,27 +895,27 @@
     <message>
       <location filename="../../../core/plugin.py" line="117"/>
       <source>Plugin disabled. Enable to use.</source>
-      <translation type="unfinished">Plugin disabled. Enable to use.</translation>
+      <translation>插件已禁用。啟用以使用插件。</translation>
     </message>
     <message>
       <location filename="../../../core/plugin.py" line="92"/>
       <source>An error has occurred with this plugin. Please see logs for further information.</source>
-      <translation type="unfinished">An error has occurred with this plugin. Please see logs for further information.</translation>
+      <translation>插件發生錯誤。請閱讀記錄以獲取更多資訊。</translation>
     </message>
     <message>
       <location filename="../../../core/plugin.py" line="106"/>
       <source>There is a non-critical issue with this disabled plugin. Please see logs for further information.</source>
-      <translation type="unfinished">There is a non-critical issue with this disabled plugin. Please see logs for further information.</translation>
+      <translation>已禁用插件發生非危急錯誤。請閱讀記錄以獲取更多資訊。</translation>
     </message>
     <message>
       <location filename="../../../core/plugin.py" line="113"/>
       <source>Plugin loaded and ready for use.</source>
-      <translation type="unfinished">Plugin loaded and ready for use.</translation>
+      <translation>插件已加載並可使用。</translation>
     </message>
     <message>
       <location filename="../../../core/plugin.py" line="100"/>
       <source>A non-critical issue is affecting this plugin. Please see logs for further information.</source>
-      <translation type="unfinished">A non-critical issue is affecting this plugin. Please see logs for further information.</translation>
+      <translation>此插件受非危急錯誤影響。請閱讀記錄以獲取更多資訊。</translation>
     </message>
   </context>
   <context>
