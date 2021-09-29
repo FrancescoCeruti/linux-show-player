@@ -106,7 +106,7 @@
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="93"/>
       <source>Number of rows:</source>
-      <translation type="unfinished">Number of rows:</translation>
+      <translation>Numero di righe:</translation>
     </message>
   </context>
   <context>
@@ -150,7 +150,7 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="44"/>
       <source>Cart Layout</source>
-      <translation type="unfinished">Cart Layout</translation>
+      <translation>Layout a carte</translation>
     </message>
   </context>
   <context>
@@ -181,7 +181,7 @@
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="33"/>
       <source>Cart Layout</source>
-      <translation type="unfinished">Cart Layout</translation>
+      <translation>Layout a carte</translation>
     </message>
   </context>
 </TS>
