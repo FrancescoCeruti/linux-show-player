@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="43"/>
       <source>Organize the cues in a list</source>
-      <translation type="unfinished">Organize the cues in a list</translation>
+      <translation>Organizza le cue in una lista</translation>
     </message>
   </context>
   <context>
