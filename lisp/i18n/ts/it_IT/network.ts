@@ -38,47 +38,47 @@
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="77"/>
       <source>Select the hosts you want to add</source>
-      <translation type="unfinished">Select the hosts you want to add</translation>
+      <translation>Seleziona gli host che vuoi aggiungere</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="79"/>
       <source>Host discovery</source>
-      <translation type="unfinished">Host discovery</translation>
+      <translation>Scoperta degli host</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="164"/>
       <source>Manage hosts</source>
-      <translation type="unfinished">Manage hosts</translation>
+      <translation>Gestisci host</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="166"/>
       <source>Discover hosts</source>
-      <translation type="unfinished">Discover hosts</translation>
+      <translation>Scopri host</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="169"/>
       <source>Manually add a host</source>
-      <translation type="unfinished">Manually add a host</translation>
+      <translation>Aggiungi manualmente un host</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="172"/>
       <source>Remove selected host</source>
-      <translation type="unfinished">Remove selected host</translation>
+      <translation>Rimuovi host selezionato</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="175"/>
       <source>Remove all host</source>
-      <translation type="unfinished">Remove all host</translation>
+      <translation>Rimuovi tutti gli host</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="181"/>
       <source>Address</source>
-      <translation type="unfinished">Address</translation>
+      <translation>Indirizzo</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="182"/>
       <source>Host IP</source>
-      <translation type="unfinished">Host IP</translation>
+      <translation>IP dell'host</translation>
     </message>
   </context>
 </TS>
