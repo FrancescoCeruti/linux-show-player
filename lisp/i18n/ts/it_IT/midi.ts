@@ -144,37 +144,37 @@
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="58"/>
       <source>Channel After-touch</source>
-      <translation type="unfinished">Channel After-touch</translation>
+      <translation>Channel After-touch</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="59"/>
       <source>Pitch Bend Change</source>
-      <translation type="unfinished">Pitch Bend Change</translation>
+      <translation>Cambio Pitch Bend</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="60"/>
       <source>Song Select</source>
-      <translation type="unfinished">Song Select</translation>
+      <translation>Selezione Brano</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="61"/>
       <source>Song Position</source>
-      <translation type="unfinished">Song Position</translation>
+      <translation>Posizione Brano</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="62"/>
       <source>Start</source>
-      <translation type="unfinished">Start</translation>
+      <translation>Avvia</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="63"/>
       <source>Stop</source>
-      <translation type="unfinished">Stop</translation>
+      <translation>Ferma</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="64"/>
       <source>Continue</source>
-      <translation type="unfinished">Continue</translation>
+      <translation>Continua</translation>
     </message>
   </context>
   <context>
@@ -182,7 +182,7 @@
     <message>
       <location filename="../../../plugins/midi/midi_settings.py" line="100"/>
       <source>MIDI devices</source>
-      <translation type="unfinished">MIDI devices</translation>
+      <translation>Dispositivi MIDI</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_settings.py" line="101"/>
@@ -197,12 +197,12 @@
     <message>
       <location filename="../../../plugins/midi/midi_settings.py" line="104"/>
       <source>Misc options</source>
-      <translation type="unfinished">Misc options</translation>
+      <translation>Opzioni varie</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_settings.py" line="106"/>
       <source>Try to connect using only device/port name</source>
-      <translation type="unfinished">Try to connect using only device/port name</translation>
+      <translation>Prova a connetterti usando solo il nome del dispositivo/porta</translation>
     </message>
   </context>
   <context>
@@ -215,7 +215,7 @@
     <message>
       <location filename="../../../plugins/midi/midi_cue.py" line="57"/>
       <source>MIDI Settings</source>
-      <translation type="unfinished">MIDI Settings</translation>
+      <translation>Impostazioni MIDI</translation>
     </message>
   </context>
 </TS>
