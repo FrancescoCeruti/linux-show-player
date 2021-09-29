@@ -721,7 +721,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="222"/>
       <source>CTRL+I</source>
-      <translation type="unfinished">CTRL+I</translation>
+      <translation>CTRL+I</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="223"/>
