@@ -326,7 +326,7 @@
     <message>
       <location filename="../../../ui/widgets/cue_next_actions.py" line="29"/>
       <source>Trigger after post wait</source>
-      <translation>Attiva dopo il post-wait</translation>
+      <translation>Attiva dopo il post wait</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_next_actions.py" line="32"/>
@@ -336,7 +336,7 @@
     <message>
       <location filename="../../../ui/widgets/cue_next_actions.py" line="35"/>
       <source>Select after post wait</source>
-      <translation>Seleziona dopo il post-wait</translation>
+      <translation>Seleziona dopo il post wait</translation>
     </message>
   </context>
   <context>
@@ -384,7 +384,7 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="201"/>
       <source>Pre wait</source>
-      <translation type="unfinished">Pre wait</translation>
+      <translation>Pre wait</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="203"/>
@@ -394,7 +394,7 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="206"/>
       <source>Post wait</source>
-      <translation type="unfinished">Post wait</translation>
+      <translation>Post wait</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="208"/>
@@ -430,12 +430,12 @@
     <message>
       <location filename="../../../ui/widgets/fades.py" line="97"/>
       <source>Duration (sec):</source>
-      <translation type="unfinished">Duration (sec):</translation>
+      <translation>Durata (sec):</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/fades.py" line="98"/>
       <source>Curve:</source>
-      <translation type="unfinished">Curve:</translation>
+      <translation>Curva:</translation>
     </message>
   </context>
   <context>
@@ -456,7 +456,7 @@
     <message>
       <location filename="../../../ui/widgets/hotkeyedit.py" line="125"/>
       <source>Press shortcut</source>
-      <translation type="unfinished">Press shortcut</translation>
+      <translation>Premi scorciatoia</translation>
     </message>
   </context>
   <context>
@@ -482,7 +482,7 @@
     <message>
       <location filename="../../../ui/settings/app_pages/layouts.py" line="52"/>
       <source>Layout actions</source>
-      <translation type="unfinished">Layout actions</translation>
+      <translation>Azioni del layout</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/layouts.py" line="54"/>
