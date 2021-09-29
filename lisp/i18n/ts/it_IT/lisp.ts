@@ -487,22 +487,22 @@
     <message>
       <location filename="../../../ui/settings/app_pages/layouts.py" line="54"/>
       <source>Fade out when stopping all cues</source>
-      <translation type="unfinished">Fade out when stopping all cues</translation>
+      <translation>Dissolvenza in uscita quando vengono fermate tutte le cue</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/layouts.py" line="57"/>
       <source>Fade out when interrupting all cues</source>
-      <translation type="unfinished">Fade out when interrupting all cues</translation>
+      <translation>Dissolvenza in uscita quando vengono interrotte tutte le cue</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/layouts.py" line="60"/>
       <source>Fade out when pausing all cues</source>
-      <translation type="unfinished">Fade out when pausing all cues</translation>
+      <translation>Dissolvenza in uscita quando vengono messe in pause tutte le cue</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/layouts.py" line="63"/>
       <source>Fade in when resuming all cues</source>
-      <translation type="unfinished">Fade in when resuming all cues</translation>
+      <translation>Dissolvenza in ingresso quando vengono riprese tutte le cue</translation>
     </message>
   </context>
   <context>
@@ -510,7 +510,7 @@
     <message>
       <location filename="../../../ui/logging/status.py" line="36"/>
       <source>Errors/Warnings</source>
-      <translation type="unfinished">Errors/Warnings</translation>
+      <translation>Errori/Avvisi</translation>
     </message>
   </context>
   <context>
@@ -518,22 +518,22 @@
     <message>
       <location filename="../../../ui/logging/dialog.py" line="79"/>
       <source>Dismiss all</source>
-      <translation type="unfinished">Dismiss all</translation>
+      <translation>Ignora tutto</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/dialog.py" line="86"/>
       <source>Show details</source>
-      <translation type="unfinished">Show details</translation>
+      <translation>Mostra dettagli</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="21"/>
       <source>Debug</source>
-      <translation type="unfinished">Debug</translation>
+      <translation>Debug</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="22"/>
       <source>Info</source>
-      <translation type="unfinished">Info</translation>
+      <translation>Informazioni</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="23"/>
@@ -548,92 +548,92 @@
     <message>
       <location filename="../../../ui/logging/common.py" line="25"/>
       <source>Critical</source>
-      <translation type="unfinished">Critical</translation>
+      <translation>Critico</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="37"/>
       <source>Time</source>
-      <translation type="unfinished">Time</translation>
+      <translation>Orario</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="38"/>
       <source>Milliseconds</source>
-      <translation type="unfinished">Milliseconds</translation>
+      <translation>Millisecondi</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="39"/>
       <source>Logger name</source>
-      <translation type="unfinished">Logger name</translation>
+      <translation>Nome del logger</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="40"/>
       <source>Level</source>
-      <translation type="unfinished">Level</translation>
+      <translation>Livello</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="41"/>
       <source>Message</source>
-      <translation type="unfinished">Message</translation>
+      <translation>Messaggio</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="42"/>
       <source>Function</source>
-      <translation type="unfinished">Function</translation>
+      <translation>Funzione</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="43"/>
       <source>Path name</source>
-      <translation type="unfinished">Path name</translation>
+      <translation>Nome del percorso</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="44"/>
       <source>File name</source>
-      <translation type="unfinished">File name</translation>
+      <translation>Nome del file</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="45"/>
       <source>Line no.</source>
-      <translation type="unfinished">Line no.</translation>
+      <translation>N. riga</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="46"/>
       <source>Module</source>
-      <translation type="unfinished">Module</translation>
+      <translation>Modulo</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="47"/>
       <source>Process ID</source>
-      <translation type="unfinished">Process ID</translation>
+      <translation>ID Processo</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="48"/>
       <source>Process name</source>
-      <translation type="unfinished">Process name</translation>
+      <translation>Nome del processo</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="49"/>
       <source>Thread ID</source>
-      <translation type="unfinished">Thread ID</translation>
+      <translation>ID del thread</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="50"/>
       <source>Thread name</source>
-      <translation type="unfinished">Thread name</translation>
+      <translation>Nome del thread</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="51"/>
       <source>Exception info</source>
-      <translation type="unfinished">Exception info</translation>
+      <translation>Informazioni sull'eccezione</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/viewer.py" line="54"/>
       <source>Linux Show Player - Log Viewer</source>
-      <translation type="unfinished">Linux Show Player - Log Viewer</translation>
+      <translation>Linux Show Player - Visualizzatore dei log</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/viewer.py" line="126"/>
       <source>Showing {} of {} records</source>
-      <translation type="unfinished">Showing {} of {} records</translation>
+      <translation>Mostrando {} di {} record</translation>
     </message>
   </context>
   <context>
@@ -641,7 +641,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="191"/>
       <source>&amp;File</source>
-      <translation type="unfinished">&amp;File</translation>
+      <translation>&amp;File</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="192"/>
@@ -711,7 +711,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="218"/>
       <source>CTRL+SHIFT+A</source>
-      <translation type="unfinished">CTRL+SHIFT+A</translation>
+      <translation>CTRL+SHIFT+A</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="220"/>
