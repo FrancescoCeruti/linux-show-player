@@ -287,7 +287,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="270"/>
       <source>Misc cues</source>
-      <translation type="unfinished">Misc cues</translation>
+      <translation>Cue varie</translation>
     </message>
   </context>
   <context>
@@ -295,12 +295,12 @@
     <message>
       <location filename="../../../command/cue.py" line="75"/>
       <source>Cues settings changed.</source>
-      <translation type="unfinished">Cues settings changed.</translation>
+      <translation>Impostazioni di più cue modificate.</translation>
     </message>
     <message>
       <location filename="../../../command/cue.py" line="46"/>
       <source>Cue settings changed: "{}"</source>
-      <translation type="unfinished">Cue settings changed: "{}"</translation>
+      <translation>Impostazioni cue modificate: "{}"</translation>
     </message>
   </context>
   <context>
