@@ -111,7 +111,7 @@
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="76"/>
       <source>Position</source>
-      <translation type="unfinished">Position</translation>
+      <translation>Posizione</translation>
     </message>
   </context>
   <context>
@@ -119,27 +119,27 @@
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="51"/>
       <source>Note ON</source>
-      <translation type="unfinished">Note ON</translation>
+      <translation>Nota OFF</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="52"/>
       <source>Note OFF</source>
-      <translation type="unfinished">Note OFF</translation>
+      <translation>Nota OFF</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="53"/>
       <source>Polyphonic After-touch</source>
-      <translation type="unfinished">Polyphonic After-touch</translation>
+      <translation>After-touch polifonico</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="54"/>
       <source>Control/Mode Change</source>
-      <translation type="unfinished">Control/Mode Change</translation>
+      <translation>Controllo/Cambio Modalità</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="57"/>
       <source>Program Change</source>
-      <translation type="unfinished">Program Change</translation>
+      <translation>Cambio Programma</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="58"/>
