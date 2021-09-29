@@ -165,7 +165,7 @@
     <message>
       <location filename="../../../core/configuration.py" line="221"/>
       <source>Configuration written at {}</source>
-      <translation type="unfinished">Configuration written at {}</translation>
+      <translation>Configurazione scritta in {}</translation>
     </message>
   </context>
   <context>
@@ -173,12 +173,12 @@
     <message>
       <location filename="../../../core/configuration.py" line="244"/>
       <source>New configuration installed at {}</source>
-      <translation type="unfinished">New configuration installed at {}</translation>
+      <translation>Nuova configurazione installata in {}</translation>
     </message>
     <message>
       <location filename="../../../core/configuration.py" line="72"/>
       <source>Invalid path "{}", return default.</source>
-      <translation type="unfinished">Invalid path "{}", return default.</translation>
+      <translation>Percorso non valido "{}", restituito valore predefinito.</translation>
     </message>
   </context>
   <context>
