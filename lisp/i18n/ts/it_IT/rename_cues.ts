@@ -6,52 +6,52 @@
     <message>
       <location filename="../../../plugins/rename_cues/rename_cues.py" line="37"/>
       <source>Rename Cues</source>
-      <translation type="unfinished">Rename Cues</translation>
+      <translation>Rinomina cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="46"/>
       <source>Rename cues</source>
-      <translation type="unfinished">Rename cues</translation>
+      <translation>Rinomina cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="72"/>
       <source>Capitalize</source>
-      <translation type="unfinished">Capitalize</translation>
+      <translation>Iniziali in maiuscolo</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="77"/>
       <source>Lowercase</source>
-      <translation type="unfinished">Lowercase</translation>
+      <translation>Minuscolo</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="82"/>
       <source>Uppercase</source>
-      <translation type="unfinished">Uppercase</translation>
+      <translation>Maiuscolo</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="87"/>
       <source>Remove Numbers</source>
-      <translation type="unfinished">Remove Numbers</translation>
+      <translation>Rimuovi Numeri</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="93"/>
       <source>Add numbering</source>
-      <translation type="unfinished">Add numbering</translation>
+      <translation>Aggiungi numerazione</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="101"/>
       <source>Reset</source>
-      <translation type="unfinished">Reset</translation>
+      <translation>Azzera</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="111"/>
       <source>Rename all cue. () in regex below usable with $0, $1 ...</source>
-      <translation type="unfinished">Rename all cue. () in regex below usable with $0, $1 ...</translation>
+      <translation>Rinomina tutte le cue. () nell'espressione regolare utilizzabili con $0, $1 ...</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="121"/>
       <source>Type your regex here: </source>
-      <translation type="unfinished">Type your regex here: </translation>
+      <translation>Scrivi qui la tue espressione regolare: </translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="232"/>
