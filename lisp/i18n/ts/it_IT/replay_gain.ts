@@ -54,12 +54,12 @@
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="237"/>
       <source>Applied gain for: {}</source>
-      <translation type="unfinished">Applied gain for: {}</translation>
+      <translation>Guadagno applicato per: {}</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="243"/>
       <source>Discarded gain for: {}</source>
-      <translation type="unfinished">Discarded gain for: {}</translation>
+      <translation>Guadagno scartato per: {}</translation>
     </message>
   </context>
   <context>
@@ -67,7 +67,7 @@
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="331"/>
       <source>An error occurred during gain calculation.</source>
-      <translation type="unfinished">An error occurred during gain calculation.</translation>
+      <translation>Si è verificato un errore durante il calcolo del guadagno.</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="203"/>
