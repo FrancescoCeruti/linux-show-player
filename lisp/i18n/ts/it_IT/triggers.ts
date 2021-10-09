@@ -29,7 +29,7 @@
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="86"/>
       <source>Triggers</source>
-      <translation type="unfinished">Triggers</translation>
+      <translation>Eventi</translation>
     </message>
   </context>
   <context>
@@ -52,7 +52,7 @@
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="174"/>
       <source>Cue</source>
-      <translation type="unfinished">Cue</translation>
+      <translation>Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="175"/>
