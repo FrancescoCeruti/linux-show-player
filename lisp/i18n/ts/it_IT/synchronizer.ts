@@ -21,7 +21,7 @@
     <message>
       <location filename="../../../plugins/synchronizer/synchronizer.py" line="79"/>
       <source>Your IP is: {}</source>
-      <translation type="unfinished">Your IP is: {}</translation>
+      <translation>Il tuo IP è: {}</translation>
     </message>
   </context>
 </TS>
