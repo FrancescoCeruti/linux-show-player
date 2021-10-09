@@ -72,7 +72,7 @@
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="203"/>
       <source>An error occurred while processing gain results.</source>
-      <translation type="unfinished">An error occurred while processing gain results.</translation>
+      <translation>Si è verificato un errore durante il calcolo del guadagno.</translation>
     </message>
   </context>
   <context>
@@ -80,17 +80,17 @@
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="217"/>
       <source>Gain processing stopped by user.</source>
-      <translation type="unfinished">Gain processing stopped by user.</translation>
+      <translation>Calcolo del guadagno fermato dall'utente.</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="282"/>
       <source>Started gain calculation for: {}</source>
-      <translation type="unfinished">Started gain calculation for: {}</translation>
+      <translation>Avviato calcolo del guadagno per: {}</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="317"/>
       <source>Gain calculated for: {}</source>
-      <translation type="unfinished">Gain calculated for: {}</translation>
+      <translation>Guadagno calcolato per: {}</translation>
     </message>
   </context>
 </TS>
