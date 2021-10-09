@@ -134,7 +134,7 @@ class JackSink(GstMediaElement):
                     logger.exception(
                         translate(
                             "JackSinkError",
-                            "An error occurred while disconnection Jack ports",
+                            "An error occurred while disconnecting Jack ports",
                         )
                     )
 

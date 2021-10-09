@@ -67,7 +67,7 @@ class CueAppSettings(SettingsPage):
 
     def retranslateUi(self):
         self.interruptGroup.setTitle(
-            translate("CueSettings", "Interrupt action fade")
+            translate("CueSettings", "Interrupt fade")
         )
         self.interruptHelpText.setText(
             translate(
@@ -76,13 +76,13 @@ class CueAppSettings(SettingsPage):
             )
         )
         self.fadeActionsDefaultsGroup.setTitle(
-            translate("CueSettings", "Fade actions default value")
+            translate("CueSettings", "Fallback fade settings")
         )
         self.fadeActionDefaultsHelpText.setText(
             translate(
                 "CueSettings",
-                "Used for fade-in and fade-out actions, by cues where fade "
-                "duration is 0.",
+                "Used for fade-in and fade-out actions, for cues where fade "
+                "duration is set to 0.",
             )
         )
 
