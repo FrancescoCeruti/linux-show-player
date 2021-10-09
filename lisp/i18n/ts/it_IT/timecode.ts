@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="38"/>
       <source>Timecode</source>
-      <translation type="unfinished">Timecode</translation>
+      <translation>Timecode</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="114"/>
@@ -19,7 +19,7 @@
     <message>
       <location filename="../../../plugins/timecode/timecode.py" line="99"/>
       <source>Cannot load timecode protocol: "{}"</source>
-      <translation type="unfinished">Cannot load timecode protocol: "{}"</translation>
+      <translation>Impossibile caricare il protocollo timecode: "{}"</translation>
     </message>
   </context>
   <context>
@@ -28,13 +28,13 @@
       <location filename="../../../plugins/timecode/protocols/artnet.py" line="65"/>
       <source>Cannot send timecode. 
 OLA daemon has stopped.</source>
-      <translation type="unfinished">Cannot send timecode. 
-OLA daemon has stopped.</translation>
+      <translation>Impossibile inviare il timecode. 
+Il demone OLA si è fermato.</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/protocols/artnet.py" line="73"/>
       <source>Cannot send timecode.</source>
-      <translation type="unfinished">Cannot send timecode.</translation>
+      <translation>Impossibile inviare il timecode.</translation>
     </message>
   </context>
   <context>
@@ -47,7 +47,7 @@ OLA daemon has stopped.</translation>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="86"/>
       <source>Enable Timecode</source>
-      <translation type="unfinished">Enable Timecode</translation>
+      <translation>Abilita Timecode</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="88"/>
@@ -57,7 +57,7 @@ OLA daemon has stopped.</translation>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="145"/>
       <source>Timecode Settings</source>
-      <translation type="unfinished">Timecode Settings</translation>
+      <translation>Impostazioni Timecode</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="148"/>
@@ -67,7 +67,7 @@ OLA daemon has stopped.</translation>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="151"/>
       <source>Timecode Protocol:</source>
-      <translation type="unfinished">Timecode Protocol:</translation>
+      <translation>Protocollo Timecode:</translation>
     </message>
   </context>
   <context>
@@ -75,7 +75,7 @@ OLA daemon has stopped.</translation>
     <message>
       <location filename="../../../plugins/timecode/cue_tracker.py" line="119"/>
       <source>Cannot send timecode, untracking cue</source>
-      <translation type="unfinished">Cannot send timecode, untracking cue</translation>
+      <translation>Impossibile inviare il timecode, cue ignorata</translation>
     </message>
   </context>
 </TS>
