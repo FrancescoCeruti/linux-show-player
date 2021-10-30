@@ -37,7 +37,6 @@ class CueAppSettings(SettingsPage):
         self.layout().addWidget(self.interruptGroup)
 
         self.interruptHelpText = QLabel(self.interruptGroup)
-        self.interruptHelpText.setWordWrap(True)
         self.interruptGroup.layout().addWidget(self.interruptHelpText)
 
         self.interruptFadeEdit = FadeEdit(self.interruptGroup)
@@ -52,10 +51,6 @@ class CueAppSettings(SettingsPage):
         self.layout().addWidget(self.fadeActionsDefaultsGroup)
 
         self.fadeActionDefaultsHelpText = QLabel(self.fadeActionsDefaultsGroup)
-        self.fadeActionDefaultsHelpText.setAlignment(Qt.AlignCenter)
-        font = self.fadeActionDefaultsHelpText.font()
-        font.setPointSizeF(font.pointSizeF() * 0.9)
-        self.fadeActionDefaultsHelpText.setFont(font)
         self.fadeActionsDefaultsGroup.layout().addWidget(
             self.fadeActionDefaultsHelpText
         )
