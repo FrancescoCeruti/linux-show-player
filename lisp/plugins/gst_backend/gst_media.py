@@ -159,7 +159,7 @@ class GstMedia(Media):
     def __reset_media(self):
         self.__loop = self.loop
 
-    def __seek(self, position):
+    def __seek(self, position, flush=True):
         if self.state == MediaState.Playing or self.state == MediaState.Paused:
             max_position = self.duration
             if 0 < self.stop_time < self.duration:
@@ -177,10 +177,14 @@ class GstMedia(Media):
                     stop_type = Gst.SeekType.SET
 
                 # Seek the pipeline
+                flags = Gst.SeekFlags.SEGMENT | Gst.SeekFlags.TRICKMODE
+                if flush:
+                    flags |= Gst.SeekFlags.FLUSH
+
                 result = self.__pipeline.seek(
                     rate if rate > 0 else 1,
                     Gst.Format.TIME,
-                    Gst.SeekFlags.FLUSH | Gst.SeekFlags.SKIP,
+                    flags,
                     Gst.SeekType.SET,
                     position * Gst.MSECOND,
                     stop_type,
@@ -258,12 +262,11 @@ class GstMedia(Media):
 
     def __on_message(self, bus, message):
         if message.src == self.__pipeline:
-            if message.type == Gst.MessageType.EOS:
+            if message.type in (Gst.MessageType.SEGMENT_DONE, Gst.MessageType.EOS):
                 if self.__loop != 0:
                     # If we still have loops to do then seek to start
-                    # FIXME: this is not 100% seamless
                     self.__loop -= 1
-                    self.seek(self.start_time)
+                    self.__seek(self.start_time, flush=False)
                 else:
                     # Otherwise go in READY state
                     self.__pipeline.set_state(Gst.State.READY)
