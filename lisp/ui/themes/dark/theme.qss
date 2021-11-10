@@ -717,6 +717,10 @@ CueListView:focus {
     border: 1px solid palette(light);
 }
 
+RunningCueWidget>QWidget {
+    background-color: palette(mid);
+}
+
 #ListTimeWidget {
     height: 25px;
     border-radius: 0px;
