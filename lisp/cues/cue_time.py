@@ -18,7 +18,7 @@
 from enum import IntEnum
 from weakref import WeakValueDictionary
 
-from lisp.core.clock import Clock_100
+from lisp.core.clock import Clock_33
 from lisp.core.decorators import locked_method
 from lisp.core.signal import Connection, Signal
 from lisp.cues.cue import CueState
@@ -49,7 +49,7 @@ class CueTime(metaclass=MetaCueTime):
         The notify signal is emitted only when the cue is running.
     """
 
-    _Clock = Clock_100
+    _Clock = Clock_33
 
     def __init__(self, cue):
         self.notify = Signal()
@@ -115,7 +115,7 @@ class CueWaitTime:
     def __init__(self, cue, mode=Mode.Pre):
         self.notify = Signal()
 
-        self._clock = Clock_100
+        self._clock = Clock_33
         self._start_time = 0
         self._last = 0
         self._cue = cue
