@@ -2,23 +2,28 @@
     "name": "python-modules",
     "buildsystem": "simple",
     "build-commands": [
-        "pip3 install --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} appdirs certifi cffi chardet falcon humanize idna jack-client mido pycparser pyliblo python-rtmidi requests sortedcontainers urllib3"
+        "pip3 install --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} appdirs certifi cffi charset-normalizer falcon humanize idna importlib-metadata jack-client mido pycparser pyliblo python-rtmidi requests sortedcontainers typing-extensions urllib3 zipp"
     ],
     "sources": [
         {
             "type": "file",
-            "url": "https://files.pythonhosted.org/packages/19/c7/fa589626997dd07bd87d9269342ccb74b1720384a4d739a1872bd84fbe68/chardet-4.0.0-py2.py3-none-any.whl",
-            "sha256": "f864054d66fd9118f2e67044ac8981a54775ec5b67aed0441892edb553d21da5"
+            "url": "https://files.pythonhosted.org/packages/04/a2/d918dcd22354d8958fe113e1a3630137e0fc8b44859ade3063982eacd2a4/idna-3.3-py3-none-any.whl",
+            "sha256": "84d9dd047ffa80596e0f246e2eab0b391788b0503584e8945f2368256d2735ff"
         },
         {
             "type": "file",
-            "url": "https://files.pythonhosted.org/packages/49/ac/7673fc4c19f0ecd258c3a9636d63cb77003c2c6afc46943d3db752b35758/humanize-3.2.0-py3-none-any.whl",
-            "sha256": "d47d80cd47c1511ed3e49ca5f10c82ed940ea020b45b49ab106ed77fa8bb9d22"
+            "url": "https://files.pythonhosted.org/packages/b5/6d/e18a5b59ff086e1cd61d7fbf943d86c5f593a4e68bfc60215ab74210b22b/mido-1.2.10-py2.py3-none-any.whl",
+            "sha256": "0e618232063e0a220249da4961563c7636fea00096cfb3e2b87a4231f0ac1a9e"
         },
         {
             "type": "file",
-            "url": "https://files.pythonhosted.org/packages/20/0a/81beb587b1ae832ea6a1901dc7c6faa380e8dd154e0a862f0a9f3d2afab9/mido-1.2.9-py2.py3-none-any.whl",
-            "sha256": "fc6364efa028c8405166f63e6a83cbc6c17aaeac2c28680abe64ae48703a89dd"
+            "url": "https://files.pythonhosted.org/packages/fd/5e/9840102591431f86c2e99c5a8e4f18bb399f9f2e982b0dbba87c98ae800f/humanize-3.12.0-py3-none-any.whl",
+            "sha256": "4c71c4381f0209715cd993058e717c1b74d58ae2f8c6da7bdb59ab66473b9ab0"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/de/c8/820b1546c68efcbbe3c1b10dd925fbd84a0dda7438bc18db0ef1fa567733/charset_normalizer-2.0.7-py3-none-any.whl",
+            "sha256": "f7af805c321bfa1ce6714c51f254e0d5bb5e5834039bc17db7ebe3a4cec9492b"
         },
         {
             "type": "file",
@@ -27,8 +32,28 @@
         },
         {
             "type": "file",
+            "url": "https://files.pythonhosted.org/packages/c0/da/4b8052ab5aa07952d7fe7b068d737a042e76373573eadd340f7550eddea9/pyliblo-0.10.0.tar.gz",
+            "sha256": "fc67f1950b827272b00f9f0dc4ed7113c0ccef0c1c09e9976dead40ebbf1798f"
+        },
+        {
+            "type": "file",
             "url": "https://files.pythonhosted.org/packages/3b/00/2344469e2084fb287c2e0b57b72910309874c3245463acd6cf5e3db69324/appdirs-1.4.4-py2.py3-none-any.whl",
             "sha256": "a841dacd6b99318a741b166adb07e19ee71a274450e68237b4650ca1055ab128"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/37/45/946c02767aabb873146011e665728b680884cd8fe70dde973c640e45b775/certifi-2021.10.8-py2.py3-none-any.whl",
+            "sha256": "d62a0163eb4c2344ac042ab2bdf75399a71a2d8c7d47eac2e2ee91b9d6339569"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/92/bf/749468bc43f85ec77f37154327360ba82e7d0ae622341eab44a6d75751c3/python-rtmidi-1.4.9.tar.gz",
+            "sha256": "bfeb4ed99d0cccf6fa2837566907652ded7adc1c03b69f2160c9de4082301302"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/71/c2/cb1855f0b2a0ae9ccc9b69f150a7aebd4a8d815bd951e74621c4154c52a8/importlib_metadata-4.8.1-py3-none-any.whl",
+            "sha256": "b618b6d2d5ffa2f16add5697cf57a46c76a56229b0ed1c438322e4e95645bd15"
         },
         {
             "type": "file",
@@ -37,48 +62,38 @@
         },
         {
             "type": "file",
-            "url": "https://files.pythonhosted.org/packages/c0/da/4b8052ab5aa07952d7fe7b068d737a042e76373573eadd340f7550eddea9/pyliblo-0.10.0.tar.gz",
-            "sha256": "fc67f1950b827272b00f9f0dc4ed7113c0ccef0c1c09e9976dead40ebbf1798f"
+            "url": "https://files.pythonhosted.org/packages/32/46/9cb0e58b2deb7f82b84065f37f3bffeb12413f947f9388e4cac22c4621ce/sortedcontainers-2.4.0-py2.py3-none-any.whl",
+            "sha256": "a163dcaede0f1c021485e957a39245190e74249897e2ae4b2aa38595db237ee0"
         },
         {
             "type": "file",
-            "url": "https://files.pythonhosted.org/packages/a2/38/928ddce2273eaa564f6f50de919327bf3a00f091b5baba8dfa9460f3a8a8/idna-2.10-py2.py3-none-any.whl",
-            "sha256": "b97d804b1e9b523befed77c48dacec60e6dcb0b5391d57af6a65a312a90648c0"
+            "url": "https://files.pythonhosted.org/packages/74/60/18783336cc7fcdd95dae91d73477830aa53f5d3181ae4fe20491d7fc3199/typing_extensions-3.10.0.2-py3-none-any.whl",
+            "sha256": "f1d25edafde516b146ecd0613dabcc61409817af4766fbbcfb8d1ad4ec441a34"
         },
         {
             "type": "file",
-            "url": "https://files.pythonhosted.org/packages/5e/a0/5f06e1e1d463903cf0c0eebeb751791119ed7a4b3737fdc9a77f1cdfb51f/certifi-2020.12.5-py2.py3-none-any.whl",
-            "sha256": "719a74fb9e33b9bd44cc7f3a8d94bc35e4049deebe19ba7d8e108280cfd59830"
+            "url": "https://files.pythonhosted.org/packages/92/96/144f70b972a9c0eabbd4391ef93ccd49d0f2747f4f6a2a2738e99e5adc65/requests-2.26.0-py2.py3-none-any.whl",
+            "sha256": "6c1246513ecd5ecd4528a0906f910e8f0f9c6b8ec72030dc9fd154dc1a6efd24"
         },
         {
             "type": "file",
-            "url": "https://files.pythonhosted.org/packages/4b/89/37b132c6ae7f85c60a1549f9e46109eec40cf0c31f0305faecb7f7bcfceb/falcon-2.0.0-py2.py3-none-any.whl",
-            "sha256": "54f2cb4b687035b2a03206dbfc538055cc48b59a953187b0458aa1b574d47b53"
+            "url": "https://files.pythonhosted.org/packages/63/22/6a9009c53ad78e65d88a44db8eccc7f39c6f54fc05fb43b1e9cbbc481d06/falcon-3.0.1.tar.gz",
+            "sha256": "c41d84db325881a870e8b7129d5ecfd972fa4323cf77b7119a1d2a21966ee681"
         },
         {
             "type": "file",
-            "url": "https://files.pythonhosted.org/packages/32/48/86ce3b159fb97372bc929e77d540191e5d4682eb4d83d5dae4e09f0d5309/python-rtmidi-1.4.7.tar.gz",
-            "sha256": "d7dbc2b174b09015dfbee449a672a072aa72b367be40b13e04ee35a2e2e399e3"
+            "url": "https://files.pythonhosted.org/packages/bd/df/d4a4974a3e3957fd1c1fa3082366d7fff6e428ddb55f074bf64876f8e8ad/zipp-3.6.0-py3-none-any.whl",
+            "sha256": "9fe5ea21568a0a70e50f273397638d39b03353731e6cbbb3fd8502a33fec40bc"
         },
         {
             "type": "file",
-            "url": "https://files.pythonhosted.org/packages/20/4d/a7046ae1a1a4cc4e9bbed194c387086f06b25038be596543d026946330c9/sortedcontainers-2.3.0-py2.py3-none-any.whl",
-            "sha256": "37257a32add0a3ee490bb170b599e93095eed89a55da91fa9f48753ea12fd73f"
+            "url": "https://files.pythonhosted.org/packages/af/f4/524415c0744552cce7d8bf3669af78e8a069514405ea4fcbd0cc44733744/urllib3-1.26.7-py2.py3-none-any.whl",
+            "sha256": "c4fdf4019605b6e5423637e01bc9fe4daef873709a7973e195ceba0a62bbc844"
         },
         {
             "type": "file",
-            "url": "https://files.pythonhosted.org/packages/a8/20/025f59f929bbcaa579704f443a438135918484fffaacfaddba776b374563/cffi-1.14.5.tar.gz",
-            "sha256": "fd78e5fee591709f32ef6edb9a015b4aa1a5022598e36227500c8f4e02328d9c"
-        },
-        {
-            "type": "file",
-            "url": "https://files.pythonhosted.org/packages/29/c1/24814557f1d22c56d50280771a17307e6bf87b70727d975fd6b2ce6b014a/requests-2.25.1-py2.py3-none-any.whl",
-            "sha256": "c210084e36a42ae6b9219e00e48287def368a26d03a048ddad7bfee44f75871e"
-        },
-        {
-            "type": "file",
-            "url": "https://files.pythonhosted.org/packages/23/fc/8a49991f7905261f9ca9df5aa9b58363c3c821ce3e7f671895442b7100f2/urllib3-1.26.3-py2.py3-none-any.whl",
-            "sha256": "1b465e494e3e0d8939b50680403e3aedaa2bc434b7d5af64dfd3c958d7f5ae80"
+            "url": "https://files.pythonhosted.org/packages/00/9e/92de7e1217ccc3d5f352ba21e52398372525765b2e0c4530e6eb2ba9282a/cffi-1.15.0.tar.gz",
+            "sha256": "920f0d66a896c2d99f0adbb391f990a84091179542c205fa53ce5787aff87954"
         }
     ]
 }
