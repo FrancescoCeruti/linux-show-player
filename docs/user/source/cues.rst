@@ -12,7 +12,7 @@ subdivided in two main categories:
 A cue can perform different *actions* depending on its current *state*
 
 **Actions:**
-    * ``start:`` Perform the cue task
+    * ``start:`` Perform the cue task, or stop it if the cue is already running
     * ``stop:`` Stop the running cue
     * ``pause:`` Pause the running cue if possible
     * ``interrupt:`` Stop the running cue, other cues/functions will ignore this event
