@@ -213,7 +213,7 @@ class VolumeSettings(SettingsPage):
         if not (checkable and not self.volumeGroup.isCheckable()):
             conf['volume'] = self.volumeEdit.value() / 100
         if not (checkable and not self.fadeGroup.isCheckable()):
-            conf['duration'] = self.fadeEdit.duration() * 1000
+            conf['duration'] = int(self.fadeEdit.duration() * 1000)
             conf['fade_type'] = self.fadeEdit.fadeType()
 
         return conf

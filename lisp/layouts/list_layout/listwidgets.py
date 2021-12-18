@@ -115,7 +115,7 @@ class TimeWidget(QProgressBar):
             self.setTextVisible(True)
             self.setFormat(strtime(duration, accurate=self.accurate_time))
             # Avoid settings min and max to 0, or the the bar go in busy state
-            self.setRange(0 if duration > 0 else -1, duration)
+            self.setRange(0 if duration > 0 else -1, int(duration))
         else:
             self.setTextVisible(False)
 

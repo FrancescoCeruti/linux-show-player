@@ -104,7 +104,7 @@ class QDbMeter(QWidget):
 
             for n, (peak, rms, dPeak) in enumerate(zip(peaks, rmss, dPeaks)):
                 # Maximum "peak-rect" size
-                maxRect = QtCore.QRect(xpos, self.height() - 2, xdim - 2,
+                maxRect = QtCore.QRectF(xpos, self.height() - 2, xdim - 2,
                                        2 - self.height())
 
                 # Set QLinearGradient start and final-stop position
@@ -112,17 +112,17 @@ class QDbMeter(QWidget):
                 self.grad.setFinalStop(maxRect.bottomRight())
 
                 # Draw peak (audio peak in dB)
-                rect = QtCore.QRect(xpos, self.height() - 2, xdim - 2, -peak)
+                rect = QtCore.QRectF(xpos, self.height() - 2, xdim - 2, -peak)
                 qp.setOpacity(0.6)
                 qp.fillRect(rect, self.grad)
                 qp.setOpacity(1.0)
 
                 # Draw rms (in db)
-                rect = QtCore.QRect(xpos, self.height() - 2, xdim - 2, -rms)
+                rect = QtCore.QRectF(xpos, self.height() - 2, xdim - 2, -rms)
                 qp.fillRect(rect, self.grad)
 
                 # Draw decay peak
-                decRect = QtCore.QRect(xpos, (self.height() - 3) - dPeak,
+                decRect = QtCore.QRectF(xpos, (self.height() - 3) - dPeak,
                                        xdim - 2, 2)
                 qp.fillRect(decRect, self.grad)
 

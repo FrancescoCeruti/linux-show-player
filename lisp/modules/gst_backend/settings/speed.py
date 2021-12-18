@@ -75,7 +75,7 @@ class SpeedSettings(SettingsPage):
         return {}
 
     def load_settings(self, settings):
-        self.speedSlider.setValue(settings.get('speed', 1) * 100)
+        self.speedSlider.setValue(int(settings.get('speed', 1) * 100))
 
     def speedChanged(self, value):
         self.speedLabel.setText(str(value / 100.0))

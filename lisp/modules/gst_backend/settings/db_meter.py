@@ -86,8 +86,8 @@ class DbMeterSettings(SettingsPage):
             translate('DbMeterSettings', 'Peak falloff (dB/sec)'))
 
     def load_settings(self, settings):
-        self.intervalSpin.setValue(settings.get('interval', 50) / Gst.MSECOND)
-        self.ttlSpin.setValue(settings.get('peak_ttl', 500) / Gst.MSECOND)
+        self.intervalSpin.setValue(settings.get('interval', 50) // Gst.MSECOND)
+        self.ttlSpin.setValue(settings.get('peak_ttl', 500) // Gst.MSECOND)
         self.falloffSpin.setValue(settings.get('peak_falloff', 20))
 
     def get_settings(self):

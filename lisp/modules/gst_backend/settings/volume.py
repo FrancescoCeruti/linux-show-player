@@ -106,7 +106,7 @@ class VolumeSettings(SettingsPage):
         return settings
 
     def load_settings(self, settings):
-        self.volume.setValue(linear_to_db(settings.get('volume', 1)) * 10)
+        self.volume.setValue(int(linear_to_db(settings.get('volume', 1)) * 10))
         self.muteButton.setMute(settings.get('mute', False))
         self.normal = settings.get('normal_volume', 1)
         self.normalLabel.setText(

@@ -19,7 +19,7 @@
 
 import re
 import socket
-from collections import Mapping
+from collections.abc import Mapping
 from enum import Enum
 from os import listdir
 from os.path import isdir, exists, join

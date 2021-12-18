@@ -18,7 +18,7 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from abc import abstractmethod
-from collections import Sized, Iterable, Container
+from collections.abc import Sized, Iterable, Container
 
 from lisp.core.signal import Signal
 

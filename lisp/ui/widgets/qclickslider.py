@@ -41,7 +41,7 @@ class QClickSlider(QSlider):
                 value += e.x() * (zmax / self.width())
 
             if self.value() != value:
-                self.setValue(value)
+                self.setValue(round(value))
                 self.sliderJumped.emit(self.value())
                 e.accept()
             else:
