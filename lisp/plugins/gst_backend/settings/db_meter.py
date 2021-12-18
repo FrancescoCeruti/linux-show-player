@@ -91,8 +91,8 @@ class DbMeterSettings(SettingsPage):
         )
 
     def loadSettings(self, settings):
-        self.intervalSpin.setValue(settings.get("interval", 33) / Gst.MSECOND)
-        self.ttlSpin.setValue(settings.get("peak_ttl", 1000) / Gst.MSECOND)
+        self.intervalSpin.setValue(settings.get("interval", 33) // Gst.MSECOND)
+        self.ttlSpin.setValue(settings.get("peak_ttl", 1000) // Gst.MSECOND)
         self.falloffSpin.setValue(settings.get("peak_falloff", 20))
 
     def getSettings(self):

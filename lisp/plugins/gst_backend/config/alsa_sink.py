@@ -31,7 +31,9 @@ class AlsaSinkConfig(AlsaSinkSettings):
         device = settings.get("alsa_device", AlsaSink.FALLBACK_DEVICE)
 
         self.deviceComboBox.setCurrentText(
-            self.devices.get(device, self.devices.get(AlsaSink.FALLBACK_DEVICE, ""))
+            self.devices.get(
+                device, self.devices.get(AlsaSink.FALLBACK_DEVICE, "")
+            )
         )
 
     def getSettings(self):

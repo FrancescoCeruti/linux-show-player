@@ -75,7 +75,7 @@ class AlsaSinkSettings(SettingsPage):
     def loadSettings(self, settings):
         device = settings.get(
             "device",
-            GstBackend.Config.get("alsa_device", AlsaSink.FALLBACK_DEVICE)
+            GstBackend.Config.get("alsa_device", AlsaSink.FALLBACK_DEVICE),
         )
 
         self.deviceComboBox.setCurrentText(

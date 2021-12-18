@@ -17,7 +17,6 @@
 
 import logging
 
-from PyQt5 import QtCore
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import (
     QVBoxLayout,
@@ -30,6 +29,7 @@ from PyQt5.QtWidgets import (
 
 from lisp.application import Application
 from lisp.backend.audio_utils import (
+    MAX_VOLUME,
     MIN_VOLUME_DB,
     MAX_VOLUME_DB,
     linear_to_db,
@@ -154,7 +154,7 @@ class VolumeSettings(SettingsPage):
         self.layout().addWidget(self.cueGroup)
 
         self.cueLabel = QLabel(self.cueGroup)
-        self.cueLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.cueLabel.setAlignment(Qt.AlignCenter)
         self.cueLabel.setStyleSheet("font-weight: bold;")
         self.cueGroup.layout().addWidget(self.cueLabel)
 
@@ -166,23 +166,21 @@ class VolumeSettings(SettingsPage):
         self.volumeGroup.setLayout(QHBoxLayout())
         self.layout().addWidget(self.volumeGroup)
 
-        self.volumeEdit = QDoubleSpinBox(self.volumeGroup)
-        self.volumeEdit.setDecimals(6)
-        self.volumeEdit.setMaximum(100)
-        self.volumeGroup.layout().addWidget(self.volumeEdit)
+        self.volumePercentEdit = QDoubleSpinBox(self.volumeGroup)
+        self.volumePercentEdit.setSuffix(" %")
+        self.volumePercentEdit.setDecimals(6)
+        self.volumePercentEdit.setMaximum(MAX_VOLUME * 100)
+        self.volumeGroup.layout().addWidget(self.volumePercentEdit)
 
-        self.percentLabel = QLabel("%", self.volumeGroup)
-        self.volumeGroup.layout().addWidget(self.percentLabel)
+        self.volumeGroup.layout().setSpacing(100)
 
         self.volumeDbEdit = QDoubleSpinBox(self.volumeGroup)
+        self.volumeDbEdit.setSuffix(" dB")
         self.volumeDbEdit.setRange(MIN_VOLUME_DB, MAX_VOLUME_DB)
         self.volumeDbEdit.setValue(MIN_VOLUME_DB)
         self.volumeGroup.layout().addWidget(self.volumeDbEdit)
 
-        self.dbLabel = QLabel("dB", self.volumeGroup)
-        self.volumeGroup.layout().addWidget(self.dbLabel)
-
-        self.volumeEdit.valueChanged.connect(self.__volume_change)
+        self.volumePercentEdit.valueChanged.connect(self.__volume_change)
         self.volumeDbEdit.valueChanged.connect(self.__db_volume_change)
 
         # Fade
@@ -221,9 +219,9 @@ class VolumeSettings(SettingsPage):
         if self.isGroupEnabled(self.cueGroup):
             settings["target_id"] = self.cue_id
         if self.isGroupEnabled(self.volumeGroup):
-            settings["volume"] = self.volumeEdit.value() / 100
+            settings["volume"] = self.volumePercentEdit.value() / 100
         if self.isGroupEnabled(self.fadeGroup):
-            settings["duration"] = self.fadeEdit.duration() * 1000
+            settings["duration"] = int(self.fadeEdit.duration() * 1000)
             settings["fade_type"] = self.fadeEdit.fadeType()
 
         return settings
@@ -234,7 +232,7 @@ class VolumeSettings(SettingsPage):
             self.cue_id = settings["target_id"]
             self.cueLabel.setText(cue.name)
 
-        self.volumeEdit.setValue(settings.get("volume", 0) * 100)
+        self.volumePercentEdit.setValue(settings.get("volume", 0) * 100)
         self.fadeEdit.setDuration(settings.get("duration", 0) / 1000)
         self.fadeEdit.setFadeType(settings.get("fade_type", ""))
 
@@ -250,7 +248,7 @@ class VolumeSettings(SettingsPage):
         if not self.__v_edit_flag:
             try:
                 self.__v_edit_flag = True
-                self.volumeEdit.setValue(db_to_linear(value) * 100)
+                self.volumePercentEdit.setValue(db_to_linear(value) * 100)
             finally:
                 self.__v_edit_flag = False
 

@@ -94,7 +94,7 @@ class GstWaveform(Waveform):
         self._temp_rms = array("i")
 
     def _on_new_sample(self, sink, _):
-        """ Called by GStreamer every time we have a new sample ready. """
+        """Called by GStreamer every time we have a new sample ready."""
         buffer = sink.emit("pull-sample").get_buffer()
         if buffer is not None:
             # Get the all data from the buffer, as bytes

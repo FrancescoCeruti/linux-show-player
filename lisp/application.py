@@ -110,7 +110,7 @@ class Application(metaclass=Singleton):
 
     @property
     def commands_stack(self):
-        """:rtype: lisp.command.stack.CommandsStack """
+        """:rtype: lisp.command.stack.CommandsStack"""
         return self.__commands_stack
 
     def start(self, session_file=""):
@@ -203,7 +203,7 @@ class Application(metaclass=Singleton):
         self.window.updateWindowTitle()
 
     def __load_from_file(self, session_file):
-        """ Load a saved session from file """
+        """Load a saved session from file"""
         try:
             with open(session_file, mode="r", encoding="utf-8") as file:
                 session_dict = json.load(file)

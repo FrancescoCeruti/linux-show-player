@@ -28,7 +28,7 @@ SOFTWARE.
 
 import math
 
-from PyQt5.QtCore import Qt, QTimer, QRect
+from PyQt5.QtCore import Qt, QTimer, QRectF
 from PyQt5.QtGui import QPainter, QColor
 from PyQt5.QtWidgets import QWidget
 
@@ -68,7 +68,7 @@ class QWaitingSpinner(QWidget):
 
     def paintEvent(self, QPaintEvent):
         self.updatePosition()
-        linesRect = QRect(
+        linesRect = QRectF(
             0, -self._lineWidth / 2, self._lineLength, self._lineWidth
         )
 
@@ -203,7 +203,7 @@ class QWaitingSpinner(QWidget):
 
     def updateTimer(self):
         self._timer.setInterval(
-            1000 / (self._numberOfLines * self._revolutionsPerSecond)
+            int(1000 / (self._numberOfLines * self._revolutionsPerSecond))
         )
 
     def updatePosition(self):
@@ -212,9 +212,9 @@ class QWaitingSpinner(QWidget):
             y = self.y()
 
             if self._centerOnParent & Qt.AlignHCenter:
-                x = self.parentWidget().width() / 2 - self.width() / 2
+                x = int(self.parentWidget().width() / 2 - self.width() / 2)
             if self._centerOnParent & Qt.AlignVCenter:
-                y = self.parentWidget().height() / 2 - self.height() / 2
+                y = int(self.parentWidget().height() / 2 - self.height() / 2)
 
             self.move(x, y)
 

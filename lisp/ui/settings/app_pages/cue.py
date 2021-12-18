@@ -61,9 +61,7 @@ class CueAppSettings(SettingsPage):
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.interruptGroup.setTitle(
-            translate("CueSettings", "Interrupt fade")
-        )
+        self.interruptGroup.setTitle(translate("CueSettings", "Interrupt fade"))
         self.interruptHelpText.setText(
             translate(
                 "CueSettings",

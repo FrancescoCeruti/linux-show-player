@@ -120,7 +120,7 @@ class RunningCueWidget(QWidget):
         cue.fadeout_end.connect(self.exit_fade, Connection.QtQueued)
 
     def updateSize(self, width):
-        self.resize(width, width // 3.75)
+        self.resize(width, int(width / 3.75))
 
     def enter_fadein(self):
         p = self.timeDisplay.palette()
@@ -179,7 +179,10 @@ class RunningMediaCueWidget(RunningCueWidget):
         super().__init__(cue, config, **kwargs)
         self._dbmeter_element = None
 
-        if config.get("show.waveformSlider", False) and cue.media.input_uri() is not None:
+        if (
+            config.get("show.waveformSlider", False)
+            and cue.media.input_uri() is not None
+        ):
             self.waveform = get_backend().media_waveform(cue.media)
             self.seekSlider = WaveformSlider(
                 self.waveform, parent=self.gridLayoutWidget
@@ -202,7 +205,7 @@ class RunningMediaCueWidget(RunningCueWidget):
         )
 
     def updateSize(self, width):
-        self.resize(width, width // 2.75)
+        self.resize(width, int(width / 2.75))
 
     def set_seek_visible(self, visible):
         if visible and not self.seekSlider.isVisible():

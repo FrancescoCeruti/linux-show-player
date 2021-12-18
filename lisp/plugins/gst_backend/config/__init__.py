@@ -19,6 +19,7 @@ from os.path import dirname
 
 from lisp.core.loading import load_classes
 
+
 def load():
     for name, page in load_classes(
         __package__, dirname(__file__), suf=("Config",)

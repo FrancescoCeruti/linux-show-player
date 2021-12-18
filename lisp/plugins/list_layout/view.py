@@ -91,12 +91,18 @@ class ListLayoutView(QWidget):
             self.resetSize()
 
     def resetSize(self):
-        self.mainSplitter.setSizes((0.22 * self.width(), 0.78 * self.width()))
+        self.mainSplitter.setSizes(
+            (int(0.22 * self.width()), int(0.78 * self.width()))
+        )
         self.centralSplitter.setSizes(
-            (0.78 * self.width(), 0.22 * self.width())
+            (int(0.78 * self.width()), int(0.22 * self.width()))
         )
         self.topSplitter.setSizes(
-            (0.11 * self.width(), 0.67 * self.width(), 0.22 * self.width())
+            (
+                int(0.11 * self.width()),
+                int(0.67 * self.width()),
+                int(0.22 * self.width()),
+            )
         )
 
     def getSplitterSizes(self):

@@ -167,7 +167,7 @@ class DBMeter(QWidget):
         # Calculate the meter size (per single channel)
         usableWidth = width - self._scale_width
         meterWidth = usableWidth / len(self.peaks)
-        meterRect = QRect(0, 0, meterWidth - 2, height - 1)
+        meterRect = QRectF(0, 0, meterWidth - 2, height - 1)
 
         # Draw each channel
         for n, values in enumerate(zip(self.peaks, self.decayPeaks)):
@@ -223,14 +223,11 @@ class DBMeter(QWidget):
             text_offset = text_height / 2
             painter.setPen(self.palette().windowText().color())
             painter.drawText(
-                0, 0, width, text_height, Qt.AlignRight, str(self.dBMax)
+                QRectF(0, 0, width, text_height), Qt.AlignRight, str(self.dBMax)
             )
             for mark in self._markings:
                 painter.drawText(
-                    0,
-                    mark[0] - text_offset,
-                    width,
-                    width,
+                    QRectF(0, mark[0] - text_offset, width, width),
                     Qt.AlignRight,
                     str(mark[1]),
                 )
@@ -239,10 +236,7 @@ class DBMeter(QWidget):
             text_height = QFontMetrics(self.unit_font).height()
             painter.setFont(self.unit_font)
             painter.drawText(
-                0,
-                height - text_height,
-                width,
-                text_height,
+                QRectF(0, height - text_height, width, text_height),
                 Qt.AlignRight,
                 self.unit,
             )

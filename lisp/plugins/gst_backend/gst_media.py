@@ -262,7 +262,10 @@ class GstMedia(Media):
 
     def __on_message(self, bus, message):
         if message.src == self.__pipeline:
-            if message.type in (Gst.MessageType.SEGMENT_DONE, Gst.MessageType.EOS):
+            if message.type in (
+                Gst.MessageType.SEGMENT_DONE,
+                Gst.MessageType.EOS,
+            ):
                 if self.__loop != 0:
                     # If we still have loops to do then seek to start
                     self.__loop -= 1

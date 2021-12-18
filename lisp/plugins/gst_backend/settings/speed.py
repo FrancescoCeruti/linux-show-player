@@ -17,7 +17,13 @@
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QSlider, QLabel, QVBoxLayout
+from PyQt5.QtWidgets import (
+    QGroupBox,
+    QHBoxLayout,
+    QDoubleSpinBox,
+    QLabel,
+    QVBoxLayout,
+)
 
 from lisp.plugins.gst_backend.elements.speed import Speed
 from lisp.ui.settings.pages import SettingsPage
@@ -37,42 +43,31 @@ class SpeedSettings(SettingsPage):
         self.groupBox.setLayout(QHBoxLayout())
         self.layout().addWidget(self.groupBox)
 
-        self.speedSlider = QSlider(self.groupBox)
-        self.speedSlider.setMinimum(1)
-        self.speedSlider.setMaximum(1000)
-        self.speedSlider.setPageStep(1)
-        self.speedSlider.setValue(100)
-        self.speedSlider.setOrientation(QtCore.Qt.Horizontal)
-        self.speedSlider.setTickPosition(QSlider.TicksAbove)
-        self.speedSlider.setTickInterval(10)
-        self.groupBox.layout().addWidget(self.speedSlider)
+        self.speedSpinBox = QDoubleSpinBox(self.groupBox)
+        self.speedSpinBox.setMinimum(0.1)
+        self.speedSpinBox.setSingleStep(0.1)
+        self.speedSpinBox.setMaximum(10)
+        self.speedSpinBox.setValue(1)
+        self.groupBox.layout().addWidget(self.speedSpinBox)
 
         self.speedLabel = QLabel(self.groupBox)
         self.speedLabel.setAlignment(QtCore.Qt.AlignCenter)
         self.groupBox.layout().addWidget(self.speedLabel)
 
-        self.groupBox.layout().setStretch(0, 3)
-        self.groupBox.layout().setStretch(1, 1)
-
-        self.speedSlider.valueChanged.connect(self.speedChanged)
-
         self.retranslateUi()
 
     def retranslateUi(self):
         self.groupBox.setTitle(translate("SpeedSettings", "Speed"))
-        self.speedLabel.setText("1.0")
+        self.speedLabel.setText(translate("SpeedSettings", "Speed"))
 
     def enableCheck(self, enabled):
         self.setGroupEnabled(self.groupBox, enabled)
 
     def getSettings(self):
         if self.isGroupEnabled(self.groupBox):
-            return {"speed": self.speedSlider.value() / 100}
+            return {"speed": self.speedSpinBox.value()}
 
         return {}
 
     def loadSettings(self, settings):
-        self.speedSlider.setValue(settings.get("speed", 1) * 100)
-
-    def speedChanged(self, value):
-        self.speedLabel.setText(str(value / 100.0))
+        self.speedSpinBox.setValue(settings.get("speed", 1))

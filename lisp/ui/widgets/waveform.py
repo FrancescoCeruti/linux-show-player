@@ -53,13 +53,17 @@ class WaveformWidget(QWidget):
         if not self.visibleRegion().isEmpty():
             # Repaint only if we have new pixels to draw
             if self._value >= floor(self._lastDrawnValue + self._valueToPx):
-                x = self._lastDrawnValue // self._valueToPx
-                width = (self._value - self._lastDrawnValue) // self._valueToPx
+                x = int(self._lastDrawnValue / self._valueToPx)
+                width = int(
+                    (self._value - self._lastDrawnValue) / self._valueToPx
+                )
                 # Repaint only the changed area
                 self.update(x - 1, 0, width + 1, self.height())
             elif self._value <= ceil(self._lastDrawnValue - self._valueToPx):
-                x = self._value // self._valueToPx
-                width = (self._lastDrawnValue - self._value) // self._valueToPx
+                x = int(self._value / self._valueToPx)
+                width = int(
+                    (self._lastDrawnValue - self._value) / self._valueToPx
+                )
                 # Repaint only the changed area
                 self.update(x - 1, 0, width + 2, self.height())
 
