@@ -63,7 +63,7 @@ class AudioPanSettings(SettingsPage):
 
     def getSettings(self):
         if self.isGroupEnabled(self.panBox):
-            return {"pan": self.panSlider.value() // 10}
+            return {"pan": self.panSlider.value() / 10}
 
         return {}
 
