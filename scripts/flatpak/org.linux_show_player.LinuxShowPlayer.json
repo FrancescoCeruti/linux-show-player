@@ -1,12 +1,10 @@
 {
     "app-id": "org.linux_show_player.LinuxShowPlayer",
-    "runtime": "org.gnome.Platform",
-    "runtime-version": "3.38",
-    "sdk": "org.gnome.Sdk",
+    "runtime": "org.kde.Platform",
+    "runtime-version": "5.15-21.08",
+    "sdk": "org.kde.Sdk",
     "command": "linux-show-player",
-    "build-options": {
-        "no-debuginfo": true
-    },
+    "rename-icon": "linuxshowplayer",
     "finish-args": [
         "--share=network",
         "--socket=x11",
@@ -15,155 +13,13 @@
         "--filesystem=home",
         "--device=all"
     ],
-    "cleanup-commands": [
-        "pip3 uninstall --yes packaging toml poetry-core || true"
+    "cleanup": [
+        "*.la",
+        "*.a",
+        "/include",
+        "/lib/pkgconfig"
     ],
-    "rename-appdata-file": "linuxshowplayer.appdata.xml",
-    "rename-desktop-file": "linuxshowplayer.desktop",
-    "rename-icon": "linuxshowplayer",
     "modules": [
-        {
-			"name": "qt5",
-			"config-opts": [
-				"-confirm-license", "-opensource",
-				"-shared",
-				"-nomake", "examples",
-				"-nomake", "tests",
-				"-skip", "qt3d",
-				"-skip", "qtconnectivity",
-				"-skip", "qtcharts",
-				"-skip", "qtdatavis3d",
-				"-skip", "qtdeclarative",
-				"-skip", "qtmultimedia",
-				"-skip", "qtquickcontrols",
-				"-skip", "qtquickcontrols2",
-				"-skip", "qtsensors",
-				"-skip", "qtscript",
-				"-skip", "qtserialbus",
-				"-skip", "qtspeech",
-				"-skip", "qttools",
-				"-skip", "qtwebchannel",
-				"-skip", "qtwebengine",
-				"-skip", "qtwebglplugin",
-				"-skip", "qtwebsockets",
-				"-skip", "qtwebview",
-                "-skip", "qtwayland",
-				"-gtk"
-			],
-			"sources": [
-				{
-					"type": "archive",
-					"url": "http://master.qt.io/archive/qt/5.15/5.15.1/single/qt-everywhere-src-5.15.1.tar.xz",
-					"sha256": "44da876057e21e1be42de31facd99be7d5f9f07893e1ea762359bcee0ef64ee9"
-				}
-			]
-		},
-        {
-            "name": "python-sip",
-            "buildsystem": "simple",
-            "build-commands": [
-                "pip3 install --no-index --no-build-isolation --find-links=\"file://${PWD}\" --prefix=\"${FLATPAK_DEST}\" sip"
-            ],
-            "sources": [
-                {
-                    "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/33/e9/27730ac17713c0a80d81d8f3bb56213f1549d96f9dc183fd16a7eec6287c/sip-5.5.0.tar.gz",
-                    "sha256": "5d024c419b30fea8a6de8c71a560c7ab0bc3c221fbfb14d55a5b865bd58eaac5"
-                }
-            ],
-            "cleanup-platform": ["*"],
-            "modules": [
-                {
-                    "name": "python-toml",
-                    "buildsystem": "simple",
-                    "build-commands": [
-                        "pip3 install --no-index --no-build-isolation --find-links=\"file://${PWD}\" --prefix=\"${FLATPAK_DEST}\" toml"
-                    ],
-                    "sources": [
-                        {
-                            "type": "file",
-                            "url": "https://files.pythonhosted.org/packages/44/6f/7120676b6d73228c96e17f1f794d8ab046fc910d781c8d151120c3f1569e/toml-0.10.2-py2.py3-none-any.whl",
-                            "sha256": "806143ae5bfb6a3c6e736a764057db0e6a0e05e338b5630894a5f779cabb4f9b"
-                        }
-                    ]
-                },
-                {
-                    "name": "python-pyparsing",
-                    "buildsystem": "simple",
-                    "build-commands": [
-                        "pip3 install --no-index --no-build-isolation --find-links=\"file://${PWD}\" --prefix=\"${FLATPAK_DEST}\" pyparsing"
-                    ],
-                    "sources": [
-                        {
-                            "type": "file",
-                            "url": "https://files.pythonhosted.org/packages/8a/bb/488841f56197b13700afd5658fc279a2025a39e22449b7cf29864669b15d/pyparsing-2.4.7-py2.py3-none-any.whl",
-                            "sha256": "ef9d7589ef3c200abe66653d3f1ab1033c3c419ae9b9bdb1240a85b024efc88b"
-                        }
-                    ]
-                },
-                {
-                    "name": "python-packaging",
-                    "buildsystem": "simple",
-                    "build-commands": [
-                        "pip3 install --no-index --no-build-isolation --find-links=\"file://${PWD}\" --prefix=\"${FLATPAK_DEST}\" packaging"
-                    ],
-                    "sources": [
-                        {
-                            "type": "file",
-                            "url": "https://files.pythonhosted.org/packages/46/19/c5ab91b1b05cfe63cccd5cfc971db9214c6dd6ced54e33c30d5af1d2bc43/packaging-20.4-py2.py3-none-any.whl",
-                            "sha256": "998416ba6962ae7fbd6596850b80e17859a5753ba17c32284f67bfff33784181"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "python-pyqt5",
-            "buildsystem": "simple",
-            "build-commands": [
-                "MAKEFLAGS=\"-j${FLATPAK_BUILDER_N_JOBS}\" sip-install --qt-shared --verbose --confirm-license --no-dbus-python --no-designer-plugin --no-docstrings --no-qml-plugin --no-tools --disable QtNetwork --disable QtPositioning --disable QtPrintSupport --disable QtRemoteObjects --disable QtSerialPort --disable QtSql --disable QtTest --target-dir=\"${FLATPAK_DEST}/lib/python$(python3 -c 'import sys; print(sys.version[:3])')/site-packages\""
-            ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://files.pythonhosted.org/packages/8e/a4/d5e4bf99dd50134c88b95e926d7b81aad2473b47fde5e3e4eac2c69a8942/PyQt5-5.15.4.tar.gz",
-                    "sha256": "2a69597e0dd11caabe75fae133feca66387819fc9bc050f547e5551bce97e5be"
-                }
-            ],
-            "cleanup-platform": [ "/lib/python*/site-packages/PyQt5/bindings" ],
-            "modules": [
-                {
-                    "name": "pyqt5-builder",
-                    "buildsystem": "simple",
-                    "build-commands": [
-                        "pip3 install --no-index --find-links=\"file://${PWD}\" --prefix=\"${FLATPAK_DEST}\" --no-build-isolation pyqt-builder"
-                    ],
-                    "sources": [
-                        {
-                            "type": "file",
-                            "url": "https://files.pythonhosted.org/packages/37/fd/5bc6351d5d279c797a1d78fec3483a6a9e4b8628073a8ed5448fbe1cf038/PyQt-builder-1.5.0.tar.gz",
-                            "sha256": "11bbe26e8e3d5ffec6d2ef2f50596b1670eb2d8b49aee0f859821922d8282841"
-                        }
-                    ],
-                    "cleanup-platform": [ "*" ],
-                    "cleanup": [ "/bin" ]
-                },
-                {
-                    "name": "pyqt5-sip",
-                    "buildsystem": "simple",
-                    "build-commands": [
-                        "pip3 install --no-index --no-build-isolation --find-links=\"file://${PWD}\" --prefix=\"${FLATPAK_DEST}\" pyqt5-sip"
-                    ],
-                    "sources": [
-                        {
-                            "type": "file",
-                            "url": "https://files.pythonhosted.org/packages/73/8c/c662b7ebc4b2407d8679da68e11c2a2eb275f5f2242a92610f6e5024c1f2/PyQt5_sip-12.8.1.tar.gz",
-                            "sha256": "30e944db9abee9cc757aea16906d4198129558533eb7fadbe48c5da2bd18e0bd"
-                        }
-                    ]
-                }
-            ]
-        },
         {
             "name": "Jack",
             "buildsystem": "simple",
@@ -215,15 +71,16 @@
             ]
         },
         {
-            "name": "cpp-google-protobuf",
+            "name": "protobuf",
             "config-opts": [
                 "--disable-static"
             ],
             "sources": [
                 {
-                    "type": "archive",
-                    "url": "https://github.com/protocolbuffers/protobuf/releases/download/v3.1.0/protobuf-cpp-3.1.0.tar.gz",
-                    "sha256": "51ceea9957c875bdedeb1f64396b5b0f3864fe830eed6a2d9c066448373ea2d6"
+                    "type": "git",
+                    "url": "https://github.com/google/protobuf",
+                    "tag": "v3.19.1",
+                    "commit": "7c40b2df1fdf6f414c1c18c789715a9c948a0725"
                 }
             ]
         },
@@ -236,8 +93,8 @@
             "sources": [
                 {
                     "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/a5/bb/11821bdc46cb9aad8e18618715e5e93eef44abb642ed862c4b080c474183/protobuf-3.1.0.post1-py2.py3-none-any.whl",
-                    "sha256": "42315e73409eaefdcc11e216695ff21f87dc483ad0595c57999baddf7f841180"
+                    "url": "https://files.pythonhosted.org/packages/c1/12/7479ece04931984162698bfaa05cbb2fc23d7f6ee1ab5146cfc6ade56a31/protobuf-3.19.1-py2.py3-none-any.whl",
+                    "sha256": "e813b1c9006b6399308e917ac5d298f345d95bb31f46f02b60cd92970a9afa17"
                 }
             ]
         },
@@ -258,8 +115,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/OpenLightingProject/ola/releases/download/0.10.7/ola-0.10.7.tar.gz",
-                    "sha256": "8a65242d95e0622a3553df498e0db323a13e99eeb1accc63a8a2ca8913ab31a0"
+                    "url": "https://github.com/OpenLightingProject/ola/releases/download/0.10.8/ola-0.10.8.tar.gz",
+                    "sha256": "102aa3114562a2a71dbf7f77d2a0fb9fc47acc35d6248a70b6e831365ca71b13"
                 },
                 {
                     "type": "script",
@@ -290,6 +147,9 @@
             "build-commands": [
                 "pip3 install --no-index --no-build-isolation --find-links=\"file://${PWD}\" --prefix=\"${FLATPAK_DEST}\" poetry-core"
             ],
+            "cleanup": [
+                "*"
+            ],
             "sources": [
                 {
                     "type": "file",
@@ -298,6 +158,8 @@
                 }
             ]
         },
+        "pyqt-modules.json",
+        "pygobject-modules.json",
         "python-modules.json",
         {
             "name": "linux-show-player",
@@ -305,21 +167,23 @@
             "build-commands": [
                 "pip3 install --no-deps --no-build-isolation --prefix=\"${FLATPAK_DEST}\" .",
                 "mkdir -p /app/share/applications/",
-                "cp dist/linuxshowplayer.desktop /app/share/applications/",
                 "mkdir -p /app/share/mime/packages/",
-                "cp dist/linuxshowplayer.xml /app/share/mime/packages/org.linux_show_player.LinuxShowPlayer.xml",
                 "mkdir -p /app/share/metainfo/",
-                "cp dist/linuxshowplayer.appdata.xml /app/share/metainfo/",
                 "mkdir -p /app/share/icons/hicolor/512x512/apps/",
-                "cp dist/linuxshowplayer.png /app/share/icons/hicolor/512x512/apps/"
+                "cp dist/linuxshowplayer.desktop /app/share/applications/org.linux_show_player.LinuxShowPlayer.desktop",
+                "cp dist/linuxshowplayer.xml /app/share/mime/packages/org.linux_show_player.LinuxShowPlayer.xml",
+                "cp dist/linuxshowplayer.appdata.xml /app/share/metainfo/org.linux_show_player.LinuxShowPlayer.appdata.xml",
+                "cp dist/linuxshowplayer.png /app/share/icons/hicolor/512x512/apps/linuxshowplayer.png"
             ],
             "sources": [
                 {
                     "type": "git",
                     "url": "https://github.com/FrancescoCeruti/linux-show-player.git",
-                    "branch": "master"
+                    "branch": "develop"
                 }
             ]
         }
-    ]
+    ],
+    "branch": "develop",
+    "desktop-file-name-suffix": " (develop)"
 }

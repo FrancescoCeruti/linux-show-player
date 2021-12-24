@@ -7,27 +7,15 @@ import urllib.parse
 import urllib.request
 from collections import OrderedDict
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from typing import Mapping
 
 import toml
 from packaging.utils import parse_wheel_filename
 from packaging.tags import Tag
 
-# Python3 packages that come as part of org.freedesktop.Sdk.
-SYS_PACKAGES = [
-    "cython",
-    "mako",
-    "markdown",
-    "meson",
-    "pip",
-    "pygments",
-    "setuptools",
-    "six",
-    "wheel",
-]
 
-
-def get_best_source(sources, hashes):
-    # Look for a wheel package first
+def get_best_source(name: str, sources: list, hashes: list):
+    # Search for a platform-independent wheel distribution
     for source in sources:
         if (
             source["packagetype"] == "bdist_wheel"
@@ -37,7 +25,7 @@ def get_best_source(sources, hashes):
             if Tag("py3", "none", "any") in wheel_tags:
                 return source["url"], source["digests"]["sha256"]
 
-    # If no compatible wheel is found get the source
+    # Search for a source distribution
     for source in sources:
         if (
             source["packagetype"] == "sdist"
@@ -46,7 +34,7 @@ def get_best_source(sources, hashes):
         ):
             return source["url"], source["digests"]["sha256"]
 
-    raise Exception(f"Cannot find a viable distribution for the package.")
+    raise Exception(f"Cannot find a viable distribution for '{name}'.")
 
 
 def get_pypi_source(name: str, version: str, hashes: list) -> tuple:
@@ -57,7 +45,7 @@ def get_pypi_source(name: str, version: str, hashes: list) -> tuple:
     with urllib.request.urlopen(url) as response:
         body = json.loads(response.read())
         try:
-            return get_best_source(body["releases"][version], hashes)
+            return get_best_source(name, body["releases"][version], hashes)
         except KeyError:
             raise Exception(f"Failed to extract url and hash from {url}")
 
@@ -74,7 +62,7 @@ def get_package_hashes(package_files: list) -> list:
     return hashes
 
 
-def get_packages_sources(packages: list, parsed_lockfile: dict) -> list:
+def get_packages_sources(packages: list, parsed_lockfile: Mapping) -> list:
     """Gets the list of sources from a toml parsed lockfile."""
     sources = []
     parsed_files = parsed_lockfile["metadata"]["files"]
@@ -100,7 +88,7 @@ def get_packages_sources(packages: list, parsed_lockfile: dict) -> list:
     return sources
 
 
-def get_locked_packages(parsed_lockfile: dict, exclude=tuple()) -> list:
+def get_locked_packages(parsed_lockfile: Mapping, exclude=tuple()) -> list:
     """Gets the list of dependency names."""
     dependencies = []
     packages = parsed_lockfile.get("package", [])
@@ -123,14 +111,9 @@ def main():
     parser.add_argument("-o", dest="outfile", default="python-modules.json")
     args = parser.parse_args()
 
-    lockfile = args.lockfile
-    exclude = SYS_PACKAGES + args.exclude
-    outfile = args.outfile
-
-    print(f'Scanning "{lockfile}"')
-    parsed_lockfile = toml.load(lockfile)
-    dependencies = get_locked_packages(parsed_lockfile, exclude=exclude)
-    print(f"Found {len(dependencies)} required packages")
+    parsed_lockfile = toml.load(args.lockfile)
+    dependencies = get_locked_packages(parsed_lockfile, exclude=args.exclude)
+    print(f"Found {len(dependencies)} required packages in {args.lockfile}")
 
     pip_command = [
         "pip3",
@@ -152,9 +135,10 @@ def main():
     sources = get_packages_sources(dependencies, parsed_lockfile)
     main_module["sources"] = sources
 
-    print(f'Writing modules to "{outfile}"')
-    with open(outfile, "w") as f:
+    print(f'Writing modules to "{args.outfile}"')
+    with open(args.outfile, "w") as f:
         f.write(json.dumps(main_module, indent=4))
+
     print("Done!")
 
 

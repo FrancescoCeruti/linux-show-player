@@ -12,7 +12,7 @@ function flatpak_build_manifest() {
 
     # Build manifest
     python3 patch-manifest.py
-    python3 poetry-flatpak.py "$FLATPAK_PY_LOCKFILE" -e $FLATPAK_PY_IGNORE_PACKAGES
+    python3 poetry-flatpak.py "$FLATPAK_PY_LOCKFILE" -e $FLATPAK_PY_IGNORE
     deactivate
 }
 
