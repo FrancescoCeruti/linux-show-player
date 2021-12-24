@@ -46,8 +46,8 @@ class About(QDialog):
 
     DESCRIPTION = QT_TRANSLATE_NOOP('AboutDialog',
         'Linux Show Player is a cue-player designed for stage productions.')
-    WEB_SITE = 'http://linux-show-player.sourceforge.net'
-    USER_GROUP = 'http://groups.google.com/group/linux-show-player---users'
+    WEB_SITE = 'https://www.linux-show-player.org/'
+    USER_GROUP = 'https://gitter.im/linux-show-player/linux-show-player'
     SOURCE_CODE = 'https://github.com/FrancescoCeruti/linux-show-player'
 
     CONTRIBUTORS = OrderedDict({
@@ -64,7 +64,8 @@ class About(QDialog):
             ('fri', 'https://www.transifex.com/user/profile/fri'),
             ('Luis García-Tornel', 'tornel@gmail.com'),
             ('miharix', 'https://github.com/miharix'),
-            ('Olivier Humbert - français', 'trebmuh@tuxfamily.org')
+            ('Olivier Humbert - français', 'trebmuh@tuxfamily.org'),
+            ('Santiago Benejam Torres', 'sbenejam@gmail.com')
         ],
     })
 
