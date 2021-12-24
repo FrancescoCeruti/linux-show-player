@@ -22,7 +22,7 @@ from PyQt5.QtWidgets import (
     QLabel,
     QCheckBox,
     QVBoxLayout,
-    QDoubleSpinBox
+    QDoubleSpinBox,
 )
 
 from lisp.backend.audio_utils import db_to_linear, linear_to_db
