@@ -147,7 +147,7 @@ class WaveformWidget(QWidget):
             # Draw a single line in the middle
             pen.setColor(self.remainsRmsColor)
             painter.setPen(pen)
-            painter.drawLine(0, halfHeight, self.width(), halfHeight)
+            painter.drawLine(QLineF(0, halfHeight, self.width(), halfHeight))
 
         painter.end()
 
