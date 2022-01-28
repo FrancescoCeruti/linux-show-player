@@ -37,7 +37,7 @@ from lisp.backend.audio_utils import (
 )
 from lisp.core.decorators import async_function
 from lisp.core.fade_functions import FadeInType, FadeOutType
-from lisp.core.fader import Fader
+from lisp.core.fader import Fader, DummyFader
 from lisp.core.properties import Property
 from lisp.cues.cue import Cue, CueAction
 from lisp.cues.media_cue import MediaCue
@@ -62,7 +62,6 @@ class VolumeControl(Cue):
         CueAction.Default,
         CueAction.Start,
         CueAction.Stop,
-        CueAction.Pause,
         CueAction.Interrupt,
     )
 
@@ -70,7 +69,7 @@ class VolumeControl(Cue):
         super().__init__(**kwargs)
         self.name = translate("CueName", self.Name)
 
-        self.__fader = Fader(None, "live_volume")
+        self.__fader = None
         self.__init_fader()
 
     def __init_fader(self):
@@ -79,18 +78,15 @@ class VolumeControl(Cue):
         if isinstance(cue, MediaCue):
             volume = cue.media.element("Volume")
             if volume is not None:
-                if volume is not self.__fader.target:
-                    self.__fader.target = volume
+                self.__fader = volume.get_fader("live_volume")
                 return True
+
+        self.__fader = DummyFader()
 
         return False
 
     def __start__(self, fade=False):
         if self.__init_fader():
-            if self.__fader.is_paused():
-                self.__fader.resume()
-                return True
-
             if self.duration > 0:
                 if self.__fader.target.live_volume > self.volume:
                     self.__fade(FadeOutType[self.fade_type])
@@ -107,10 +103,6 @@ class VolumeControl(Cue):
         self.__fader.stop()
         return True
 
-    def __pause__(self, fade=False):
-        self.__fader.pause()
-        return True
-
     __interrupt__ = __stop__
 
     @async_function
@@ -122,8 +114,6 @@ class VolumeControl(Cue):
             )
 
             if ended:
-                # to avoid approximation problems
-                self.__fader.target.live_volume = self.volume
                 self._ended()
         except Exception:
             logger.exception(

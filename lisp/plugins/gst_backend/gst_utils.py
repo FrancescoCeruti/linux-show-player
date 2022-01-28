@@ -17,7 +17,7 @@
 
 from lisp.backend.audio_utils import audio_file_duration
 from lisp.core.session_uri import SessionURI
-from lisp.plugins.gst_backend.gi_repository import Gst, GstPbutils
+from lisp.plugins.gst_backend.gi_repository import GObject, Gst, GstPbutils
 
 
 def gst_uri_duration(uri: SessionURI):
@@ -67,6 +67,11 @@ def gst_parse_tags_list(gst_tag_list):
 
     gst_tag_list.foreach(parse_tag, parsed_tags)
     return parsed_tags
+
+
+def gtype(g_object: GObject.GObject) -> GObject.GType:
+    """Get the GType of GObject objects"""
+    return g_object.__gtype__
 
 
 class GstError(Exception):

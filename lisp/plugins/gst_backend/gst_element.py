@@ -15,82 +15,16 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Union
+from collections.abc import Collection
+from typing import Union, Optional
 
 from lisp.backend.media_element import MediaElement, ElementType
 from lisp.core.has_properties import HasInstanceProperties
 from lisp.core.properties import Property, InstanceProperty
 from lisp.core.session_uri import SessionURI
 from lisp.core.util import typename
-
-
-class GstProperty(Property):
-    def __init__(
-        self, element_name, property_name, default=None, adapter=None, **meta
-    ):
-        super().__init__(default=default, **meta)
-        self.element_name = element_name
-        self.property_name = property_name
-        self.adapter = adapter
-
-    def __set__(self, instance, value):
-        super().__set__(instance, value)
-
-        if instance is not None:
-            if self.adapter is not None:
-                value = self.adapter(value)
-
-            element = getattr(instance, self.element_name)
-            element.set_property(self.property_name, value)
-
-
-class GstURIProperty(GstProperty):
-    def __init__(self, element_name, property_name, **meta):
-        super().__init__(
-            element_name,
-            property_name,
-            default="",
-            adapter=self._adepter,
-            **meta,
-        )
-
-    def __set__(self, instance, value):
-        super().__set__(instance, SessionURI(value))
-
-    def __get__(self, instance, owner=None):
-        value = super().__get__(instance, owner)
-        if isinstance(value, SessionURI):
-            if value.is_local:
-                return value.relative_path
-            else:
-                return value.uri
-
-        return value
-
-    def _adepter(self, value: SessionURI):
-        return value.uri
-
-
-class GstLiveProperty(Property):
-    def __init__(self, element_name, property_name, adapter=None, **meta):
-        super().__init__(**meta)
-        self.element_name = element_name
-        self.property_name = property_name
-        self.adapter = adapter
-
-    def __get__(self, instance, owner=None):
-        if instance is None:
-            return self
-        else:
-            element = getattr(instance, self.element_name)
-            return element.get_property(self.property_name)
-
-    def __set__(self, instance, value):
-        if self.adapter is not None:
-            value = self.adapter(value)
-
-        element = getattr(instance, self.element_name)
-        element.set_property(self.property_name, value)
+from lisp.plugins.gst_backend.gst_fader import GstFader
+from lisp.plugins.gst_backend.gst_properties import GstPropertyController
 
 
 class GstMediaElement(MediaElement):
@@ -128,6 +62,19 @@ class GstMediaElement(MediaElement):
         """Return the GstElement used as src"""
         return None
 
+    def get_controller(
+        self, property_name: str
+    ) -> Optional[GstPropertyController]:
+        """Return the appropriate element controller for the given property"""
+        return None
+
+    def get_fader(self, property_name: str):
+        controller = self.get_controller(property_name)
+        if controller is not None:
+            return GstFader(self, property_name)
+
+        return super().get_fader(property_name)
+
     def link(self, element):
         if self.src() is not None:
             sink = element.sink()
@@ -153,7 +100,7 @@ class GstSrcElement(GstMediaElement):
         return None
 
 
-class GstMediaElements(HasInstanceProperties):
+class GstMediaElements(Collection, HasInstanceProperties):
     def __init__(self):
         super().__init__()
         self.elements = []
