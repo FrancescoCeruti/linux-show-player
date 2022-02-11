@@ -9,4 +9,4 @@ gi.require_version("GstApp", "1.0")
 
 # noinspection PyUnresolvedReferences
 # pylint: disable=unused-import
-from gi.repository import GObject, Gst, GstController, GstPbutils, GstApp
+from gi.repository import GObject, GLib, Gst, GstController, GstPbutils, GstApp
