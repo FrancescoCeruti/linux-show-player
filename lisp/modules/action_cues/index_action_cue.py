@@ -124,6 +124,7 @@ class IndexActionCueSettings(SettingsPage):
 
         self.relativeCheck.setChecked(settings.get('relative', True))
         self.targetIndexSpin.setValue(settings.get('target_index', 0))
+        self._update_action_combo()
         self.actionCombo.setCurrentText(
             translate('CueAction', settings.get('action', '')))
 
@@ -142,8 +143,8 @@ class IndexActionCueSettings(SettingsPage):
         if target_class is not self._target_class:
             self._target_class = target_class
 
-            self.actionGroup.layout().removeWidget(self.actionCombo)
             self.actionCombo.deleteLater()
+            self.actionGroup.layout().removeWidget(self.actionCombo)
 
             self.actionCombo = CueActionComboBox(
                 self._target_class,
@@ -162,6 +163,7 @@ class IndexActionCueSettings(SettingsPage):
                                               max_index - self._cue_index)
             else:
                 self.targetIndexSpin.setRange(-max_index, max_index)
+        self._update_action_combo()
 
 
 CueSettingsRegistry().add_item(IndexActionCueSettings, IndexActionCue)
