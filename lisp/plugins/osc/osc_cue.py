@@ -67,7 +67,6 @@ class OscCue(Cue):
         CueAction.Default,
         CueAction.Start,
         CueAction.Stop,
-        CueAction.Pause,
     )
 
     path = Property(default="")
@@ -129,10 +128,6 @@ class OscCue(Cue):
         return self.__has_fade and self.duration > 0
 
     def __start__(self, fade=False):
-        if self.__fader.is_paused():
-            self.__fader.resume()
-            return True
-
         if self.has_fade():
             if not self.__fadein:
                 self.__fade(FadeOutType[self.fade_type])
@@ -147,10 +142,6 @@ class OscCue(Cue):
 
     def __stop__(self, fade=False):
         self.__fader.stop()
-        return True
-
-    def __pause__(self, fade=False):
-        self.__fader.pause()
         return True
 
     __interrupt__ = __stop__
