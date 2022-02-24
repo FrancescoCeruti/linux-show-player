@@ -111,6 +111,10 @@ class CueListView(QTreeWidget):
         else:
             super().contextMenuEvent(event)
 
+    def keyboardSearch(self, search):
+        # disable scroll to letter match
+        pass
+
     def keyPressEvent(self, event):
         self.key_event.emit(event)
 
