@@ -115,18 +115,16 @@ class ClientItem(QTreeWidgetItem):
         self.name = client_name
         self.ports = {}
 
-    def add_port(self, port_name):
-        port = PortItem(port_name)
-
-        self.addChild(port)
-        self.ports[port_name] = port
+    def add_port(self, full_name, display_name):
+        self.ports[full_name] = PortItem(full_name, display_name)
+        self.addChild(self.ports[full_name])
 
 
 class PortItem(QTreeWidgetItem):
-    def __init__(self, port_name):
-        super().__init__([port_name[: port_name.index(":")]])
+    def __init__(self, full_name, display_name):
+        super().__init__([display_name])
 
-        self.name = port_name
+        self.name = full_name
 
 
 class ConnectionsWidget(QWidget):
@@ -292,13 +290,18 @@ class JackConnectionsDialog(QDialog):
         self.input_widget.clear()
         clients = {}
         for port in input_ports:
-            client_name = port.name[: port.name.index(":")]
+            try:
+                colon_index = port.name.index(":")
+                client_name = port.name[:colon_index]
+                port_display_name = port.name[colon_index+1:]
 
-            if client_name not in clients:
-                clients[client_name] = ClientItem(client_name)
-                self.input_widget.addTopLevelItem(clients[client_name])
+                if client_name not in clients:
+                    clients[client_name] = ClientItem(client_name)
+                    self.input_widget.addTopLevelItem(clients[client_name])
 
-            clients[client_name].add_port(port.name)
+                clients[client_name].add_port(port.name, port_display_name)
+            except ValueError:
+                pass
 
     def __input_selection_changed(self):
         if self.input_widget.selectedItems():
