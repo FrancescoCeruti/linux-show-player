@@ -26,7 +26,6 @@ from lisp.backend.backend import Backend as BaseBackend
 from lisp.command.layout import LayoutAutoInsertCuesCommand
 from lisp.core.decorators import memoize
 from lisp.core.plugin import Plugin
-from lisp.cues.cue_factory import CueFactory
 from lisp.cues.media_cue import MediaCue
 from lisp.plugins.gst_backend import config, elements, settings
 from lisp.plugins.gst_backend.gi_repository import Gst
@@ -74,7 +73,7 @@ class GstBackend(Plugin, BaseBackend):
         CueSettingsRegistry().add(GstMediaSettings, MediaCue)
 
         # Register GstMediaCue factory
-        CueFactory.register_factory("GstMediaCue", GstCueFactory(tuple()))
+        app.cue_factory.register_factory("GstMediaCue", GstCueFactory(tuple()))
         # Add Menu entry
         self.app.window.registerCueMenu(
             translate("GstBackend", "Audio cue (from file)"),
@@ -170,7 +169,7 @@ class GstBackend(Plugin, BaseBackend):
 
         cues = []
         for index, file in enumerate(files, start_index):
-            cue = factory(uri=file)
+            cue = factory(self.app, uri=file)
             # Use the filename without extension as cue name
             cue.name = os.path.splitext(os.path.basename(file))[0]
             # Set the index (if something is selected)

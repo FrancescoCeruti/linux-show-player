@@ -19,7 +19,6 @@
 from PyQt5.QtCore import QT_TRANSLATE_NOOP
 
 from lisp.core.plugin import Plugin
-from lisp.cues.cue_factory import CueFactory
 from lisp.plugins.osc.osc_cue import OscCue
 from lisp.plugins.osc.osc_server import OscServer
 from lisp.plugins.osc.osc_settings import OscSettings
@@ -41,7 +40,7 @@ class Osc(Plugin):
             "plugins.osc", OscSettings, Osc.Config
         )
         # Register the cue
-        CueFactory.register_factory(OscCue.__name__, OscCue)
+        app.cue_factory.register_factory(OscCue.__name__, OscCue)
         app.window.registerSimpleCueMenu(
             OscCue, QT_TRANSLATE_NOOP("CueCategory", "Integration cues")
         )

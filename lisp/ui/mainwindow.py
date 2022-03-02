@@ -40,7 +40,6 @@ from PyQt5.QtWidgets import (
 
 from lisp.command.layout import LayoutAutoInsertCuesCommand
 from lisp.core.singleton import QSingleton
-from lisp.cues.cue_factory import CueFactory
 from lisp.cues.media_cue import MediaCue
 from lisp.ui.about import About
 from lisp.ui.logging.dialog import LogDialogs
@@ -337,7 +336,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
             self._app.commands_stack.do(
                 LayoutAutoInsertCuesCommand(
                     self._app.session.layout,
-                    CueFactory.create_cue(cueClass.__name__),
+                    self._app.cue_factory.create_cue(cueClass.__name__),
                 )
             )
         except Exception:

@@ -24,7 +24,6 @@ from lisp.command.model import ModelInsertItemsCommand, ModelMoveItemCommand
 from lisp.core.configuration import DummyConfiguration
 from lisp.core.properties import ProxyProperty
 from lisp.cues.cue import Cue
-from lisp.cues.cue_factory import CueFactory
 from lisp.cues.media_cue import MediaCue
 from lisp.layout.cue_layout import CueLayout
 from lisp.layout.cue_menu import (
@@ -405,7 +404,7 @@ class CartLayout(CueLayout):
         new_index = self.to_1d_index(
             (self._cart_view.currentIndex(), to_row, to_column)
         )
-        new_cue = CueFactory.clone_cue(widget.cue)
+        new_cue = self.app.cue_factory.clone_cue(widget.cue)
 
         self.app.commands_stack.do(
             ModelInsertItemsCommand(self._cart_model, new_index, new_cue)

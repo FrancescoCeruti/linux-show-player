@@ -38,7 +38,6 @@ from PyQt5.QtWidgets import (
 
 from lisp.core.util import natural_keys
 from lisp.cues.cue import Cue
-from lisp.cues.cue_factory import CueFactory
 from lisp.plugins.presets.lib import (
     preset_exists,
     export_presets,
@@ -284,8 +283,9 @@ class PresetsDialog(QDialog):
                 preset = load_preset(item.text())
                 if preset is not None:
                     try:
-                        cue_class = CueFactory.create_cue(preset.get("_type_"))
-                        cue_class = cue_class.__class__
+                        cue_class = self.app.cue_factory.create_cue(
+                            preset.get("_type_")
+                        ).__class__
                     except Exception:
                         cue_class = Cue
 

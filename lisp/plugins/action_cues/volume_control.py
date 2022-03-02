@@ -65,15 +65,15 @@ class VolumeControl(Cue):
         CueAction.Interrupt,
     )
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.name = translate("CueName", self.Name)
 
         self.__fader = None
         self.__init_fader()
 
     def __init_fader(self):
-        cue = Application().cue_model.get(self.target_id)
+        cue = self.app.cue_model.get(self.target_id)
 
         if isinstance(cue, MediaCue):
             volume = cue.media.element("Volume")

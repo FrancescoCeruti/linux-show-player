@@ -23,7 +23,7 @@ from PyQt5.QtWidgets import QDialog, qApp
 
 from lisp import layout
 from lisp.command.stack import CommandsStack
-from lisp.core.configuration import DummyConfiguration
+from lisp.core.configuration import Configuration, DummyConfiguration
 from lisp.core.session import Session
 from lisp.core.signal import Signal
 from lisp.core.singleton import Singleton
@@ -32,6 +32,7 @@ from lisp.cues.cue import Cue
 from lisp.cues.cue_factory import CueFactory
 from lisp.cues.cue_model import CueModel
 from lisp.cues.media_cue import MediaCue
+from lisp.layout.cue_layout import CueLayout
 from lisp.ui.layoutselect import LayoutSelect
 from lisp.ui.mainwindow import MainWindow
 from lisp.ui.settings.app_configuration import AppConfigurationDialog
@@ -54,6 +55,7 @@ class Application(metaclass=Singleton):
         self.session_before_finalize = Signal()
 
         self.__conf = app_conf
+        self.__cue_factory = CueFactory(self)
         self.__cue_model = CueModel()
         self.__session = None
         self.__commands_stack = CommandsStack()
@@ -84,33 +86,31 @@ class Application(metaclass=Singleton):
         self.__main_window.open_session.connect(self.__load_from_file)
 
     @property
-    def conf(self):
-        """:rtype: lisp.core.configuration.Configuration"""
+    def conf(self) -> Configuration:
         return self.__conf
 
     @property
-    def session(self):
-        """:rtype: lisp.core.session.Session"""
+    def session(self) -> Session:
         return self.__session
 
     @property
-    def window(self):
-        """:rtype: lisp.ui.mainwindow.MainWindow"""
+    def window(self) -> MainWindow:
         return self.__main_window
 
     @property
-    def layout(self):
-        """:rtype: lisp.layout.cue_layout.CueLayout"""
+    def layout(self) -> CueLayout:
         return self.__session.layout
 
     @property
-    def cue_model(self):
-        """:rtype: lisp.cues.cue_model.CueModel"""
+    def cue_model(self) -> CueModel:
         return self.__cue_model
 
     @property
-    def commands_stack(self):
-        """:rtype: lisp.command.stack.CommandsStack"""
+    def cue_factory(self) -> CueFactory:
+        return self.__cue_factory
+
+    @property
+    def commands_stack(self) -> CommandsStack:
         return self.__commands_stack
 
     def start(self, session_file=""):
@@ -220,7 +220,7 @@ class Application(metaclass=Singleton):
                 cue_type = cues_dict.pop("_type_", "Undefined")
                 cue_id = cues_dict.pop("id")
                 try:
-                    cue = CueFactory.create_cue(cue_type, cue_id=cue_id)
+                    cue = self.cue_factory.create_cue(cue_type, cue_id=cue_id)
                     cue.update_properties(cues_dict)
                     self.cue_model.add(cue)
                 except Exception:

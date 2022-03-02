@@ -22,7 +22,6 @@ from zipfile import ZipFile
 from lisp import app_dirs
 from lisp.command.cue import UpdateCueCommand, UpdateCuesCommand
 from lisp.command.layout import LayoutAutoInsertCuesCommand
-from lisp.cues.cue_factory import CueFactory
 
 PRESETS_DIR = os.path.join(app_dirs.user_data_dir, "presets")
 
@@ -64,7 +63,7 @@ def insert_cue_from_preset(app, preset_name):
     :type preset_name: str
     """
     preset = load_preset(preset_name)
-    cue = CueFactory.create_cue(preset["_type_"])
+    cue = app.cue_factory.create_cue(preset["_type_"])
     cue.update_properties(preset)
 
     app.commands_stack.do(LayoutAutoInsertCuesCommand(app.layout, cue))

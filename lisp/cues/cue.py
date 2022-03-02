@@ -18,7 +18,6 @@
 from threading import Lock
 from uuid import uuid4
 
-from lisp.core.configuration import AppConfig
 from lisp.core.decorators import async_function
 from lisp.core.fade_functions import FadeInType, FadeOutType
 from lisp.core.has_properties import HasProperties
@@ -82,6 +81,7 @@ class Cue(HasProperties):
     HasProperties/Property specifications.
 
     :ivar _type_: Cue type (class name). Should NEVER change after init.
+    :ivar app: The application instance.
     :ivar id: Identify the cue uniquely. Should NEVER change after init.
     :ivar index: Cue position in the view.
     :ivar name: Cue visualized name.
@@ -131,9 +131,14 @@ class Cue(HasProperties):
 
     CueActions = (CueAction.Start,)
 
-    def __init__(self, id=None):
+    def __init__(self, app, id=None):
+        """
+        :type app: lisp.application.Application
+        """
         super().__init__()
+
         self.id = str(uuid4()) if id is None else id
+        self.app = app
         self._type_ = typename(self)
 
         self._st_lock = Lock()
@@ -234,12 +239,22 @@ class Cue(HasProperties):
                         self._default_fade_type(FadeInType, FadeInType.Linear),
                     )
 
+    def _interrupt_fade_duration(self):
+        return self.app.conf.get("cue.interruptFade", 0)
+
+    def _interrupt_fade_type(self):
+        return getattr(
+            FadeOutType,
+            self.app.conf.get("cue.interruptFadeType"),
+            FadeOutType.Linear,
+        )
+
     def _default_fade_duration(self):
-        return AppConfig().get("cue.fadeAction", 0)
+        return self.app.conf.get("cue.fadeAction", 0)
 
     def _default_fade_type(self, type_class, default=None):
         return getattr(
-            type_class, AppConfig().get("cue.fadeActionType"), default
+            type_class, self.app.conf.get("cue.fadeActionType"), default
         )
 
     @async_function
@@ -317,7 +332,7 @@ class Cue(HasProperties):
     def __start__(self, fade=False):
         """Implement the cue `start` behavior.
 
-        Long running tasks should not block this function (i.e. the fade should
+        Long-running tasks should not block this function (i.e. the fade should
         be performed in another thread).
 
         When called from `Cue.start()`, `_st_lock` is acquired.
@@ -375,7 +390,7 @@ class Cue(HasProperties):
     def __stop__(self, fade=False):
         """Implement the cue `stop` behavior.
 
-        Long running tasks should block this function (i.e. the fade should
+        Long-running tasks should block this function (i.e. the fade should
         "block" this function), when this happens `_st_lock` must be released
         and then re-acquired.
 
@@ -426,7 +441,7 @@ class Cue(HasProperties):
     def __pause__(self, fade=False):
         """Implement the cue `pause` behavior.
 
-        Long running tasks should block this function (i.e. the fade should
+        Long-running tasks should block this function (i.e. the fade should
         "block" this function), when this happens `_st_lock` must be released and
         then re-acquired.
 
@@ -478,7 +493,7 @@ class Cue(HasProperties):
     def __interrupt__(self, fade=False):
         """Implement the cue `interrupt` behavior.
 
-        Long running tasks should block this function without releasing
+        Long-running tasks should block this function without releasing
         `_st_lock`.
 
         :param fade: True if a fade should be performed (when supported)

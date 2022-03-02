@@ -18,7 +18,6 @@
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import QComboBox, QVBoxLayout, QGroupBox
 
-from lisp.application import Application
 from lisp.core.properties import Property
 from lisp.cues.cue import Cue, CueAction
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
@@ -32,14 +31,12 @@ class StopAll(Cue):
 
     action = Property(default=CueAction.Stop.value)
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.name = translate("CueName", self.Name)
 
     def __start__(self, fade=False):
-        Application().layout.execute_all(
-            action=CueAction(self.action), quiet=True
-        )
+        self.app.layout.execute_all(action=CueAction(self.action), quiet=True)
 
 
 class StopAllSettings(SettingsPage):

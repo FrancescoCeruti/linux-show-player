@@ -45,13 +45,13 @@ class CollectionCue(Cue):
 
     targets = Property(default=[])
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.name = translate("CueName", self.Name)
 
     def __start__(self, fade=False):
         for target_id, action in self.targets:
-            cue = Application().cue_model.get(target_id)
+            cue = self.app.cue_model.get(target_id)
             if cue is not self:
                 cue.execute(action=CueAction[action])
 

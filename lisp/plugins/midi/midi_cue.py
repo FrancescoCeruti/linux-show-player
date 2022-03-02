@@ -41,8 +41,8 @@ class MidiCue(Cue):
 
     message = Property(default="")
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.name = translate("CueName", self.Name)
         self.__midi = get_plugin("Midi")
 

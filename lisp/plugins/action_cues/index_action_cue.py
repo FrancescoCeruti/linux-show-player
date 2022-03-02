@@ -43,8 +43,8 @@ class IndexActionCue(Cue):
     relative = Property(default=True)
     action = Property(default=CueAction.Stop.value)
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.name = translate("CueName", self.Name)
 
     def __start__(self, fade=False):
@@ -54,7 +54,7 @@ class IndexActionCue(Cue):
             index = self.target_index
 
         try:
-            cue = Application().layout.cue_at(index)
+            cue = self.app.layout.cue_at(index)
             if cue is not self:
                 cue.execute(CueAction(self.action))
         except IndexError:

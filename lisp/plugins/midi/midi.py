@@ -22,7 +22,6 @@ from PyQt5.QtCore import QT_TRANSLATE_NOOP
 
 from lisp.core.plugin import Plugin
 from lisp.core.signal import Connection
-from lisp.cues.cue_factory import CueFactory
 from lisp.plugins.midi.midi_cue import MidiCue
 from lisp.plugins.midi.midi_io import MIDIOutput, MIDIInput, MIDIBase
 from lisp.plugins.midi.midi_settings import MIDISettings
@@ -50,7 +49,7 @@ class Midi(Plugin):
         )
 
         # Register cue
-        CueFactory.register_factory(MidiCue.__name__, MidiCue)
+        app.cue_factory.register_factory(MidiCue.__name__, MidiCue)
         app.window.registerSimpleCueMenu(
             MidiCue, QT_TRANSLATE_NOOP("CueCategory", "Integration cues")
         )

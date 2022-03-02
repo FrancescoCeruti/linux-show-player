@@ -30,7 +30,6 @@ from lisp.application import Application
 from lisp.backend import get_backend
 from lisp.command.model import ModelMoveItemsCommand, ModelInsertItemsCommand
 from lisp.core.util import subdict
-from lisp.cues.cue_factory import CueFactory
 from lisp.plugins.list_layout.list_widgets import (
     CueStatusIcons,
     NameWidget,
@@ -182,7 +181,11 @@ class CueListView(QTreeWidget):
             elif event.proposedAction() == Qt.CopyAction:
                 new_cues = []
                 for row in sorted(rows):
-                    new_cues.append(CueFactory.clone_cue(self._model.item(row)))
+                    new_cues.append(
+                        Application().cue_factory.clone_cue(
+                            self._model.item(row)
+                        )
+                    )
 
                 Application().commands_stack.do(
                     ModelInsertItemsCommand(self._model, to_index, *new_cues)

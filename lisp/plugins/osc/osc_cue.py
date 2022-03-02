@@ -73,8 +73,8 @@ class OscCue(Cue):
     args = Property(default=[])
     fade_type = Property(default=FadeInType.Linear.name)
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.name = translate("CueName", self.Name)
 
         self.__osc = get_plugin("Osc")

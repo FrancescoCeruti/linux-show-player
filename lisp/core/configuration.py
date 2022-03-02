@@ -25,9 +25,7 @@ from copy import deepcopy
 from os import path
 from shutil import copyfile
 
-from lisp import DEFAULT_APP_CONFIG, USER_APP_CONFIG
 from lisp.core.signal import Signal
-from lisp.core.singleton import ABCSingleton
 from lisp.core.util import dict_merge, dict_merge_diff, typename
 from lisp.ui.ui_utils import translate
 
@@ -250,10 +248,3 @@ class JSONFileConfiguration(Configuration):
     def _read_json(path):
         with open(path, "r") as f:
             return json.load(f)
-
-
-class AppConfig(JSONFileConfiguration, metaclass=ABCSingleton):
-    """Provide access to the application configuration (singleton)"""
-
-    def __init__(self):
-        super().__init__(USER_APP_CONFIG, DEFAULT_APP_CONFIG)

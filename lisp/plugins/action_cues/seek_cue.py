@@ -43,12 +43,12 @@ class SeekCue(Cue):
     target_id = Property()
     time = Property(default=-1)
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.name = translate("CueName", self.Name)
 
     def __start__(self, fade=False):
-        cue = Application().cue_model.get(self.target_id)
+        cue = self.app.cue_model.get(self.target_id)
         if isinstance(cue, MediaCue) and self.time >= 0:
             cue.media.seek(self.time)
 
