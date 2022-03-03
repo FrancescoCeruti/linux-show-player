@@ -96,7 +96,7 @@ def main():
     # Create the file handler
     file_handler = RotatingFileHandler(
         os.path.join(app_dirs.user_log_dir, "lisp.log"),
-        maxBytes=10 * (2 ** 20),
+        maxBytes=10 * (2**20),
         backupCount=5,
     )
     file_handler.setFormatter(default_formatter)

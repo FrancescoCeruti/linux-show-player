@@ -293,7 +293,7 @@ class JackConnectionsDialog(QDialog):
             try:
                 colon_index = port.name.index(":")
                 client_name = port.name[:colon_index]
-                port_display_name = port.name[colon_index+1:]
+                port_display_name = port.name[colon_index + 1 :]
 
                 if client_name not in clients:
                     clients[client_name] = ClientItem(client_name)

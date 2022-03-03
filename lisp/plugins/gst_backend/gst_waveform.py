@@ -61,7 +61,7 @@ class GstWaveform(Waveform):
         except GLib.GError:
             logger.warning(
                 f'Cannot generate waveform for "{self._uri.unquoted_uri}"',
-                exc_info=True
+                exc_info=True,
             )
             return True
 
