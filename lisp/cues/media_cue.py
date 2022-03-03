@@ -210,8 +210,11 @@ class MediaCue(Cue):
     def current_time(self):
         return self.media.current_time()
 
-    def is_fading(self):
-        return self.__in_fadein or self.__in_fadeout
+    def is_fading_in(self):
+        return self.__in_fadein
+
+    def is_fading_out(self):
+        return self.__in_fadeout
 
     def _duration_change(self, value):
         self.duration = value

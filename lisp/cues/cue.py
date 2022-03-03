@@ -568,6 +568,15 @@ class Cue(HasProperties):
         """
         return self._state
 
+    def is_fading(self):
+        return self.is_fading_in() or self.is_fading_out()
+
+    def is_fading_in(self):
+        return False
+
+    def is_fading_out(self):
+        return False
+
     def __next_action_changed(self, next_action):
         self.end.disconnect(self.next.emit)
         if (
