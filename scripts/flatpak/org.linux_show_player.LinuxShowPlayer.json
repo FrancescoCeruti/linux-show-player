@@ -24,8 +24,8 @@
             "name": "Jack",
             "buildsystem": "simple",
             "build-commands": [
-                "./waf configure --prefix='/app/'",
-                "./waf",
+                "./waf configure --prefix=$FLATPAK_DEST",
+                "./waf build -j $FLATPAK_BUILDER_N_JOBS",
                 "./waf install"
             ],
             "sources": [
@@ -37,7 +37,7 @@
                 }
             ],
             "cleanup": [
-                "/bin"
+                "*"
             ]
         },
         {
