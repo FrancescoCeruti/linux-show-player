@@ -10,6 +10,8 @@
         "--socket=x11",
         "--socket=wayland",
         "--socket=pulseaudio",
+        "--system-talk-name=org.freedesktop.RealtimeKit1",
+        "--filesystem=xdg-run/pipewire-0",
         "--filesystem=home",
         "--device=all"
     ],
