@@ -330,6 +330,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
     def __sessionCreated(self):
         self._app.session.layout.view.show()
         self.centralWidget().layout().addWidget(self._app.session.layout.view)
+        self.updateWindowTitle()
 
     def __simpleCueInsert(self, cueClass):
         try:
@@ -388,6 +389,8 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
 
         if path is not None:
             self.open_session.emit(path)
+
+        self.updateWindowTitle()
 
     def __newSession(self):
         if self.__checkSessionSaved():
