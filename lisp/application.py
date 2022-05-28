@@ -52,6 +52,7 @@ logger = logging.getLogger(__name__)
 class Application(metaclass=Singleton):
     def __init__(self, app_conf=DummyConfiguration()):
         self.session_created = Signal()
+        self.session_loaded = Signal()
         self.session_before_finalize = Signal()
 
         self.__conf = app_conf
@@ -159,7 +160,7 @@ class Application(metaclass=Singleton):
         self.__delete_session()
         self.__session = Session(layout(application=self))
 
-        self.session_created.emit(self.__session)
+        self.session_created.emit(self.session)
 
     def __delete_session(self):
         if self.__session is not None:
@@ -233,6 +234,8 @@ class Application(metaclass=Singleton):
                     )
 
             self.commands_stack.set_saved()
+
+            self.session_loaded.emit(self.session)
         except Exception:
             logger.exception(
                 translate(

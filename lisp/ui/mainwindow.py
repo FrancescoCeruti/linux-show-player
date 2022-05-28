@@ -76,6 +76,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         # Session change
         self._app.session_created.connect(self.__sessionCreated)
         self._app.session_before_finalize.connect(self.__beforeSessionFinalize)
+        self._app.session_loaded.connect(self.updateWindowTitle)
 
         # Changes
         self._app.commands_stack.done.connect(self.updateWindowTitle)
@@ -389,8 +390,6 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
 
         if path is not None:
             self.open_session.emit(path)
-
-        self.updateWindowTitle()
 
     def __newSession(self):
         if self.__checkSessionSaved():
