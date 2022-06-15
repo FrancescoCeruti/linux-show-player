@@ -14,7 +14,6 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
-import time
 
 from PyQt5.QtCore import QRect, Qt, QSize
 from PyQt5.QtGui import (
