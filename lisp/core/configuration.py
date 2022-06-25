@@ -211,6 +211,12 @@ class JSONFileConfiguration(Configuration):
         self._check_file()
         self._root = self._read_json(self.user_path)
 
+        logger.debug(
+            translate(
+                "ConfigurationDebug", "Configuration read from {}"
+            ).format(self.user_path)
+        )
+
     def write(self):
         with open(self.user_path, "w") as f:
             json.dump(self._root, f, indent=True)

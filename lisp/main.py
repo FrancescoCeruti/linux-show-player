@@ -111,10 +111,16 @@ def main():
     qt_app.setQuitOnLastWindowClosed(True)
 
     # Get/Set the locale
-    locale_name = args.locale if args.locale else app_conf["locale"]
-    QLocale().setDefault(QLocale(locale_name))
+    if args.locale:
+        qt_locale = QLocale(args.locale)
+    elif app_conf["locale"]:
+        qt_locale = QLocale(app_conf["locale"])
+    else:
+        qt_locale = QLocale()
+
+    QLocale.setDefault(qt_locale)
     logging.info(
-        f'Using "{QLocale().name()}" locale -> {QLocale().uiLanguages()}'
+        f'Using "{qt_locale.name()}" locale -> {qt_locale.uiLanguages()}'
     )
 
     # Qt platform translation
