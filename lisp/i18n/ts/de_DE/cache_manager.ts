@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/cache_manager/cache_manager.py" line="54"/>
       <source>Cache size</source>
-      <translation type="unfinished">Cache size</translation>
+      <translation>Cache-Größe</translation>
     </message>
     <message>
       <location filename="../../../plugins/cache_manager/cache_manager.py" line="139"/>
