@@ -32,8 +32,8 @@
       <location filename="../../../plugins/cache_manager/cache_manager.py" line="58"/>
       <source>The cache has exceeded {}. Consider clean it.
 You can do it in the application settings.</source>
-      <translation type="unfinished">The cache has exceeded {}. Consider clean it.
-You can do it in the application settings.</translation>
+      <translation>Der Cache hat {} überschritten und sollte gelöscht werden.
+Das kann in den App-Einstellungen getan werden.</translation>
     </message>
   </context>
   <context>
