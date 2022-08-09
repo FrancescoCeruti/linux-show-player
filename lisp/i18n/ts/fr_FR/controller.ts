@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/controller/controller.py" line="166"/>
       <source>Cannot load controller protocol: "{}"</source>
-      <translation type="unfinished">Cannot load controller protocol: "{}"</translation>
+      <translation>Impossible de charger le protocole du contrôleur : "{}"</translation>
     </message>
   </context>
   <context>
@@ -37,7 +37,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="105"/>
       <source>-- All Messages --</source>
-      <translation type="unfinished">-- All Messages --</translation>
+      <translation>-- Tous les messages --</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="125"/>
@@ -47,7 +47,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="127"/>
       <source>Capture filter</source>
-      <translation type="unfinished">Capture filter</translation>
+      <translation>Filtre de capture</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="162"/>
@@ -62,17 +62,17 @@
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="247"/>
       <source>Data 1</source>
-      <translation type="unfinished">Data 1</translation>
+      <translation>Donnée 1</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="248"/>
       <source>Data 2</source>
-      <translation type="unfinished">Data 2</translation>
+      <translation>Donnée 2</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="249"/>
       <source>Data 3</source>
-      <translation type="unfinished">Data 3</translation>
+      <translation>Donnée 3</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="250"/>
@@ -85,7 +85,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="147"/>
       <source>Error while importing configuration entry, skipped.</source>
-      <translation type="unfinished">Error while importing configuration entry, skipped.</translation>
+      <translation>Erreur lors de l'importation de l'entrée de configuration, ignorée.</translation>
     </message>
   </context>
   <context>
@@ -98,12 +98,12 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="104"/>
       <source>OSC Path:</source>
-      <translation type="unfinished">OSC Path:</translation>
+      <translation>Chemin OSC :</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="110"/>
       <source>/path/to/method</source>
-      <translation type="unfinished">/path/to/method</translation>
+      <translation>/chemin/vers/méthode</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="238"/>
@@ -133,7 +133,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="340"/>
       <source>Waiting for messages:</source>
-      <translation type="unfinished">Waiting for messages:</translation>
+      <translation>En attente de messages :</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="443"/>
@@ -153,7 +153,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="446"/>
       <source>Action</source>
-      <translation type="unfinished">Action</translation>
+      <translation>Action</translation>
     </message>
   </context>
   <context>
@@ -161,19 +161,19 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="357"/>
       <source>Warning</source>
-      <translation type="unfinished">Warning</translation>
+      <translation>Avertissement</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="358"/>
       <source>Osc path seems invalid,
 do not forget to edit the path later.</source>
-      <translation type="unfinished">Osc path seems invalid,
-do not forget to edit the path later.</translation>
+      <translation>Le chemin Osc semble invalide,
+n'oubliez pas d'éditer le chemin plus tard.</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="317"/>
       <source>Error while importing configuration entry, skipped.</source>
-      <translation type="unfinished">Error while importing configuration entry, skipped.</translation>
+      <translation>Erreur lors de l'importation de l'entrée de configuration, ignorée.</translation>
     </message>
   </context>
   <context>
