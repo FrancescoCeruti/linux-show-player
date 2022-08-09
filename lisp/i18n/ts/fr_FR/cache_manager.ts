@@ -6,34 +6,34 @@
     <message>
       <location filename="../../../plugins/cache_manager/cache_manager.py" line="54"/>
       <source>Cache size</source>
-      <translation type="unfinished">Cache size</translation>
+      <translation>Taille du cache</translation>
     </message>
     <message>
       <location filename="../../../plugins/cache_manager/cache_manager.py" line="139"/>
       <source>Cache size warning</source>
-      <translation type="unfinished">Cache size warning</translation>
+      <translation>Taille du cache : avertissement</translation>
     </message>
     <message>
       <location filename="../../../plugins/cache_manager/cache_manager.py" line="142"/>
       <source>Warning threshold in MB (0 = disabled)</source>
-      <translation type="unfinished">Warning threshold in MB (0 = disabled)</translation>
+      <translation>Seuil d'avertissement en Mo (0 = désactivé)</translation>
     </message>
     <message>
       <location filename="../../../plugins/cache_manager/cache_manager.py" line="145"/>
       <source>Cache cleanup</source>
-      <translation type="unfinished">Cache cleanup</translation>
+      <translation>Nettoyage du cache</translation>
     </message>
     <message>
       <location filename="../../../plugins/cache_manager/cache_manager.py" line="147"/>
       <source>Delete the cache content</source>
-      <translation type="unfinished">Delete the cache content</translation>
+      <translation>Supprimer le contenu du cache</translation>
     </message>
     <message>
       <location filename="../../../plugins/cache_manager/cache_manager.py" line="58"/>
       <source>The cache has exceeded {}. Consider clean it.
 You can do it in the application settings.</source>
-      <translation type="unfinished">The cache has exceeded {}. Consider clean it.
-You can do it in the application settings.</translation>
+      <translation>Le cache a dépassé {}. Pensez à le nettoyer.
+Vous pouvez le faire dans les paramètres de l'application.</translation>
     </message>
   </context>
   <context>
@@ -41,7 +41,7 @@ You can do it in the application settings.</translation>
     <message>
       <location filename="../../../plugins/cache_manager/cache_manager.py" line="99"/>
       <source>Cache Manager</source>
-      <translation type="unfinished">Cache Manager</translation>
+      <translation>Gestion du cache</translation>
     </message>
   </context>
 </TS>
