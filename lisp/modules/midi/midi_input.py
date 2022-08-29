@@ -20,6 +20,8 @@
 from lisp.core.signal import Signal
 from lisp.modules.midi.midi_common import MIDICommon
 from lisp.modules.midi.midi_utils import mido_backend, mido_port_name
+import logging
+from mido.messages import Message
 
 
 class MIDIInput(MIDICommon):
@@ -35,7 +37,20 @@ class MIDIInput(MIDICommon):
         self._port = mido_backend().open_input(name=port_name,
                                                callback=self.__new_message)
 
-    def __new_message(self, message):
+    # Translate "Note On" with Velocity=0 to "Note Off"
+    # See https://github.com/mido/mido/issues/130
+    def _translateNoteOnWithZeroVelocity(self, message: Message):
+        if message.type == 'note_on' and message.velocity == 0:
+            message = Message('note_off',
+                                   channel=message.channel,
+                                   note=message.note,
+                                   velocity=message.velocity,
+                                   time=message.time)
+
+    def __new_message(self, message: Message):
+        self._translateNoteOnWithZeroVelocity(message)
+        if message.type != 'clock':
+            logging.debug(message)
         if self.alternate_mode:
             self.new_message_alt.emit(message)
         else:
