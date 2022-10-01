@@ -78,7 +78,7 @@
       <translation>Collectie-cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/stop_all.py" line="30"/>
+      <location filename="../../../plugins/action_cues/stop_all.py" line="29"/>
       <source>Stop-All</source>
       <translation>Alles stoppen</translation>
     </message>
@@ -172,7 +172,7 @@
       <translation>Collectie bewerken</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/stop_all.py" line="46"/>
+      <location filename="../../../plugins/action_cues/stop_all.py" line="43"/>
       <source>Stop Settings</source>
       <translation>Stop-instellingen</translation>
     </message>
@@ -182,7 +182,7 @@
       <translation>Opdracht</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/volume_control.py" line="139"/>
+      <location filename="../../../plugins/action_cues/volume_control.py" line="129"/>
       <source>Volume Settings</source>
       <translation>Volume-instellingen</translation>
     </message>
@@ -195,7 +195,7 @@
   <context>
     <name>StopAll</name>
     <message>
-      <location filename="../../../plugins/action_cues/stop_all.py" line="76"/>
+      <location filename="../../../plugins/action_cues/stop_all.py" line="73"/>
       <source>Stop Action</source>
       <translation>Stopactie</translation>
     </message>
@@ -203,27 +203,27 @@
   <context>
     <name>VolumeControl</name>
     <message>
-      <location filename="../../../plugins/action_cues/volume_control.py" line="199"/>
+      <location filename="../../../plugins/action_cues/volume_control.py" line="187"/>
       <source>Cue</source>
       <translation type="unfinished">Cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/volume_control.py" line="200"/>
+      <location filename="../../../plugins/action_cues/volume_control.py" line="188"/>
       <source>Click to select</source>
       <translation>Klik om te selecteren</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/volume_control.py" line="201"/>
+      <location filename="../../../plugins/action_cues/volume_control.py" line="189"/>
       <source>Not selected</source>
       <translation>Niet geselecteerd</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/volume_control.py" line="202"/>
+      <location filename="../../../plugins/action_cues/volume_control.py" line="190"/>
       <source>Volume to reach</source>
       <translation>Volumebereik</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/volume_control.py" line="203"/>
+      <location filename="../../../plugins/action_cues/volume_control.py" line="191"/>
       <source>Fade</source>
       <translation>Regelen</translation>
     </message>
@@ -231,7 +231,7 @@
   <context>
     <name>VolumeControlError</name>
     <message>
-      <location filename="../../../plugins/action_cues/volume_control.py" line="130"/>
+      <location filename="../../../plugins/action_cues/volume_control.py" line="120"/>
       <source>Error during cue execution.</source>
       <translation type="unfinished">Error during cue execution.</translation>
     </message>
