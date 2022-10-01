@@ -4,12 +4,12 @@
   <context>
     <name>AlsaSinkSettings</name>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/alsa_sink.py" line="66"/>
+      <location filename="../../../plugins/gst_backend/settings/alsa_sink.py" line="63"/>
       <source>ALSA device</source>
       <translation>ALSA 装置</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/alsa_sink.py" line="68"/>
+      <location filename="../../../plugins/gst_backend/settings/alsa_sink.py" line="65"/>
       <source>To make your custom PCM objects appear correctly in this list requires adding a 'hint.description' line to them.</source>
       <translation>若要正確顯示自訂PCM物件，需插入「hint.description」到此表。</translation>
     </message>
@@ -88,7 +88,7 @@
   <context>
     <name>CueCategory</name>
     <message>
-      <location filename="../../../plugins/gst_backend/gst_backend.py" line="77"/>
+      <location filename="../../../plugins/gst_backend/gst_backend.py" line="81"/>
       <source>Media cues</source>
       <translation>媒體 cues</translation>
     </message>
@@ -127,12 +127,12 @@
   <context>
     <name>GstBackend</name>
     <message>
-      <location filename="../../../plugins/gst_backend/gst_backend.py" line="75"/>
+      <location filename="../../../plugins/gst_backend/gst_backend.py" line="79"/>
       <source>Audio cue (from file)</source>
       <translation>媒體 Cue (從檔案匯入)</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/gst_backend.py" line="128"/>
+      <location filename="../../../plugins/gst_backend/gst_backend.py" line="132"/>
       <source>Select media files</source>
       <translation>選擇媒體檔案</translation>
     </message>
@@ -140,7 +140,7 @@
   <context>
     <name>GstMediaError</name>
     <message>
-      <location filename="../../../plugins/gst_backend/gst_media.py" line="234"/>
+      <location filename="../../../plugins/gst_backend/gst_media.py" line="238"/>
       <source>Cannot create pipeline element: "{}"</source>
       <translation>無法創建管道元素： "{}"</translation>
     </message>
@@ -156,7 +156,7 @@
   <context>
     <name>GstMediaWarning</name>
     <message>
-      <location filename="../../../plugins/gst_backend/gst_media.py" line="228"/>
+      <location filename="../../../plugins/gst_backend/gst_media.py" line="232"/>
       <source>Invalid pipeline element: "{}"</source>
       <translation>管道元素無效： "{}"</translation>
     </message>
@@ -186,8 +186,8 @@
     <name>JackSinkError</name>
     <message>
       <location filename="../../../plugins/gst_backend/elements/jack_sink.py" line="135"/>
-      <source>An error occurred while disconnection Jack ports</source>
-      <translation>解除連接Jack端口時發生錯誤</translation>
+      <source>An error occurred while disconnecting Jack ports</source>
+      <translation type="unfinished">An error occurred while disconnecting Jack ports</translation>
     </message>
   </context>
   <context>
@@ -203,22 +203,22 @@
       <translation>編輯聯繫</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/jack_sink.py" line="333"/>
+      <location filename="../../../plugins/gst_backend/settings/jack_sink.py" line="336"/>
       <source>Connect</source>
       <translation>連接</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/jack_sink.py" line="271"/>
+      <location filename="../../../plugins/gst_backend/settings/jack_sink.py" line="269"/>
       <source>Output ports</source>
       <translation>輸出端口</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/jack_sink.py" line="274"/>
+      <location filename="../../../plugins/gst_backend/settings/jack_sink.py" line="272"/>
       <source>Input ports</source>
       <translation>輸入端口</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/jack_sink.py" line="328"/>
+      <location filename="../../../plugins/gst_backend/settings/jack_sink.py" line="331"/>
       <source>Disconnect</source>
       <translation>斷開連接</translation>
     </message>
@@ -231,22 +231,22 @@
       <translation>速度</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/elements/db_meter.py" line="29"/>
+      <location filename="../../../plugins/gst_backend/elements/db_meter.py" line="30"/>
       <source>dB Meter</source>
       <translation>分貝計</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/elements/audio_pan.py" line="28"/>
+      <location filename="../../../plugins/gst_backend/elements/audio_pan.py" line="29"/>
       <source>Audio Pan</source>
       <translation>音頻平移</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/elements/volume.py" line="32"/>
+      <location filename="../../../plugins/gst_backend/elements/volume.py" line="35"/>
       <source>Volume</source>
       <translation>音量</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/elements/uri_input.py" line="38"/>
+      <location filename="../../../plugins/gst_backend/elements/uri_input.py" line="35"/>
       <source>URI Input</source>
       <translation>URI 輸入</translation>
     </message>
@@ -266,7 +266,7 @@
       <translation>系统輸出</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/elements/audio_dynamic.py" line="30"/>
+      <location filename="../../../plugins/gst_backend/elements/audio_dynamic.py" line="31"/>
       <source>Compressor/Expander</source>
       <translation>壓縮器/擴展器</translation>
     </message>
@@ -281,12 +281,12 @@
       <translation>預設輸入</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/elements/pitch.py" line="28"/>
+      <location filename="../../../plugins/gst_backend/elements/pitch.py" line="29"/>
       <source>Pitch</source>
       <translation>音調</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/elements/equalizer10.py" line="28"/>
+      <location filename="../../../plugins/gst_backend/elements/equalizer10.py" line="29"/>
       <source>10 Bands Equalizer</source>
       <translation>10頻段均衡器</translation>
     </message>
@@ -296,7 +296,7 @@
       <translation>系统輸入</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/elements/alsa_sink.py" line="28"/>
+      <location filename="../../../plugins/gst_backend/elements/alsa_sink.py" line="30"/>
       <source>ALSA Out</source>
       <translation>ALSA 輸出</translation>
     </message>
@@ -334,11 +334,16 @@
       <source>GStreamer</source>
       <translation>GStreamer</translation>
     </message>
+    <message>
+      <location filename="../../../plugins/gst_backend/config/alsa_sink.py" line="25"/>
+      <source>ALSA Default Device</source>
+      <translation type="unfinished">ALSA Default Device</translation>
+    </message>
   </context>
   <context>
     <name>SpeedSettings</name>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/speed.py" line="62"/>
+      <location filename="../../../plugins/gst_backend/settings/speed.py" line="61"/>
       <source>Speed</source>
       <translation>速度</translation>
     </message>
@@ -402,17 +407,17 @@
   <context>
     <name>VolumeSettings</name>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/volume.py" line="83"/>
+      <location filename="../../../plugins/gst_backend/settings/volume.py" line="87"/>
       <source>Volume</source>
       <translation>音量</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/volume.py" line="86"/>
+      <location filename="../../../plugins/gst_backend/settings/volume.py" line="89"/>
       <source>Normalized volume</source>
       <translation>標準化音量</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/volume.py" line="89"/>
+      <location filename="../../../plugins/gst_backend/settings/volume.py" line="92"/>
       <source>Reset</source>
       <translation>重設</translation>
     </message>
