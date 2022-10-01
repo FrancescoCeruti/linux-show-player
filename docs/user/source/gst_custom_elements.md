@@ -1,4 +1,4 @@
-GStreamer Backend - Custom Elements
+Media - Custom Elements
 ===================================
 
 One of the most used functionality of GStreamer is the ability to create pipelines

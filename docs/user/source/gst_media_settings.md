@@ -1,7 +1,7 @@
 .. toctree::
     :hidden:
 
-GStreamer Backend - Media Settings
+Media Settings
 ==================================
 
 Media Cues relay on a backend to provide playback capabilities. LiSP currently

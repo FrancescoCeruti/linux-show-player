@@ -50,6 +50,11 @@ pyliblo = {git = "https://github.com/s0600204/pyliblo.git", branch = "pip"}
 [tool.poetry.dev-dependencies]
 toml = "*"
 packaging = "*"
+Sphinx = "^5.1.1"
+furo = "^2022.6.21"
+sphinx-autobuild = "^2021.3.14"
+sphinx-inline-tabs = { version = "^2022.1.2-beta.11", python = "^3.8" }
+myst-parser = "^0.18.0"
 
 [tool.poetry.scripts]
 linux-show-player = "lisp.main:main"
