@@ -4,7 +4,7 @@
   <context>
     <name>CueCategory</name>
     <message>
-      <location filename="../../../plugins/midi/midi.py" line="55"/>
+      <location filename="../../../plugins/midi/midi.py" line="54"/>
       <source>Integration cues</source>
       <translation>互聯 Cues</translation>
     </message>
@@ -51,17 +51,17 @@
   <context>
     <name>MIDIInfo</name>
     <message>
-      <location filename="../../../plugins/midi/midi.py" line="138"/>
+      <location filename="../../../plugins/midi/midi.py" line="137"/>
       <source>Connecting to MIDI port: '{}'</source>
       <translation>正在連接到 MIDI 端口：'{}'</translation>
     </message>
     <message>
-      <location filename="../../../plugins/midi/midi.py" line="120"/>
+      <location filename="../../../plugins/midi/midi.py" line="119"/>
       <source>MIDI port disconnected: '{}'</source>
       <translation>MIDI 端口已斷線：'{}'</translation>
     </message>
     <message>
-      <location filename="../../../plugins/midi/midi.py" line="147"/>
+      <location filename="../../../plugins/midi/midi.py" line="146"/>
       <source>Connecting to matching MIDI port: '{}'</source>
       <translation>正在連接到匹配的 MIDI 端口：'{}'</translation>
     </message>
