@@ -78,7 +78,7 @@
       <translation>動作集合 Cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/stop_all.py" line="30"/>
+      <location filename="../../../plugins/action_cues/stop_all.py" line="29"/>
       <source>Stop-All</source>
       <translation>全部停止</translation>
     </message>
@@ -172,7 +172,7 @@
       <translation>編輯動作集合</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/stop_all.py" line="46"/>
+      <location filename="../../../plugins/action_cues/stop_all.py" line="43"/>
       <source>Stop Settings</source>
       <translation>停止設定</translation>
     </message>
@@ -182,7 +182,7 @@
       <translation>指令</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/volume_control.py" line="139"/>
+      <location filename="../../../plugins/action_cues/volume_control.py" line="129"/>
       <source>Volume Settings</source>
       <translation>音量設定</translation>
     </message>
@@ -195,7 +195,7 @@
   <context>
     <name>StopAll</name>
     <message>
-      <location filename="../../../plugins/action_cues/stop_all.py" line="76"/>
+      <location filename="../../../plugins/action_cues/stop_all.py" line="73"/>
       <source>Stop Action</source>
       <translation>停止方式</translation>
     </message>
@@ -203,27 +203,27 @@
   <context>
     <name>VolumeControl</name>
     <message>
-      <location filename="../../../plugins/action_cues/volume_control.py" line="199"/>
+      <location filename="../../../plugins/action_cues/volume_control.py" line="187"/>
       <source>Cue</source>
       <translation>Cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/volume_control.py" line="200"/>
+      <location filename="../../../plugins/action_cues/volume_control.py" line="188"/>
       <source>Click to select</source>
       <translation>點擊以選擇</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/volume_control.py" line="201"/>
+      <location filename="../../../plugins/action_cues/volume_control.py" line="189"/>
       <source>Not selected</source>
       <translation>未選擇</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/volume_control.py" line="202"/>
+      <location filename="../../../plugins/action_cues/volume_control.py" line="190"/>
       <source>Volume to reach</source>
       <translation>目標音量</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/volume_control.py" line="203"/>
+      <location filename="../../../plugins/action_cues/volume_control.py" line="191"/>
       <source>Fade</source>
       <translation>淡入淡出</translation>
     </message>
@@ -231,7 +231,7 @@
   <context>
     <name>VolumeControlError</name>
     <message>
-      <location filename="../../../plugins/action_cues/volume_control.py" line="130"/>
+      <location filename="../../../plugins/action_cues/volume_control.py" line="120"/>
       <source>Error during cue execution.</source>
       <translation>執行 Cue 期間發生錯誤</translation>
     </message>
