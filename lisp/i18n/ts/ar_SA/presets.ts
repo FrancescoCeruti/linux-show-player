@@ -4,12 +4,12 @@
   <context>
     <name>Preset</name>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="223"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="222"/>
       <source>Create Cue</source>
       <translation type="unfinished">Create Cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="225"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="224"/>
       <source>Load on selected Cues</source>
       <translation type="unfinished">Load on selected Cues</translation>
     </message>
@@ -17,7 +17,7 @@
   <context>
     <name>Presets</name>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="67"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="66"/>
       <source>Cannot scan presets</source>
       <translation>لا يمكن تفحص إعدادات مسبقة</translation>
     </message>
@@ -32,32 +32,32 @@
       <translation type="unfinished">Preset name</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="219"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="218"/>
       <source>Add</source>
       <translation>أضف</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="220"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="219"/>
       <source>Rename</source>
       <translation>إعادة التسمية</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="221"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="220"/>
       <source>Edit</source>
       <translation>تعديل</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="222"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="221"/>
       <source>Remove</source>
       <translation>احذف</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="228"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="227"/>
       <source>Export selected</source>
       <translation type="unfinished">Export selected</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="230"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="229"/>
       <source>Import</source>
       <translation>تحميل</translation>
     </message>
@@ -67,42 +67,42 @@
       <translation type="unfinished">Cue type</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="73"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="72"/>
       <source>Error while deleting preset "{}"</source>
       <translation type="unfinished">Error while deleting preset "{}"</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="79"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="78"/>
       <source>Cannot load preset "{}"</source>
       <translation type="unfinished">Cannot load preset "{}"</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="85"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="84"/>
       <source>Cannot save preset "{}"</source>
       <translation type="unfinished">Cannot save preset "{}"</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="92"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="91"/>
       <source>Cannot rename preset "{}"</source>
       <translation type="unfinished">Cannot rename preset "{}"</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="102"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="101"/>
       <source>Select Preset</source>
       <translation>حدّد ضبط مُسبق</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="115"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="114"/>
       <source>Preset "{}" already exists, overwrite?</source>
       <translation type="unfinished">Preset "{}" already exists, overwrite?</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="270"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="269"/>
       <source>Warning</source>
       <translation>تحذير</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="271"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="270"/>
       <source>The same name is already used!</source>
       <translation>هذا الإسم مستعمل مسبقا!</translation>
     </message>
@@ -128,13 +128,13 @@
     </message>
     <message>
       <location filename="../../../plugins/presets/presets.py" line="74"/>
-      <source>Load on cue</source>
-      <translation type="unfinished">Load on cue</translation>
+      <source>Apply to cue</source>
+      <translation type="unfinished">Apply to cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets.py" line="76"/>
-      <source>Load on selected cues</source>
-      <translation type="unfinished">Load on selected cues</translation>
+      <source>Apply to selected cues</source>
+      <translation type="unfinished">Apply to selected cues</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets.py" line="80"/>
