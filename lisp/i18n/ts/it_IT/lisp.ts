@@ -124,17 +124,17 @@
   <context>
     <name>ApplicationError</name>
     <message>
-      <location filename="../../../application.py" line="154"/>
+      <location filename="../../../application.py" line="155"/>
       <source>Startup error</source>
       <translation>Errore all'avvio</translation>
     </message>
     <message>
-      <location filename="../../../application.py" line="238"/>
+      <location filename="../../../application.py" line="241"/>
       <source>Error while reading the session file "{}"</source>
       <translation>Errore durante la lettura del file di sessione "{}"</translation>
     </message>
     <message>
-      <location filename="../../../application.py" line="229"/>
+      <location filename="../../../application.py" line="230"/>
       <source>Unable to create the cue "{}"</source>
       <translation>Impossibile creare la cue "{}"</translation>
     </message>
@@ -163,7 +163,12 @@
   <context>
     <name>ConfigurationDebug</name>
     <message>
-      <location filename="../../../core/configuration.py" line="221"/>
+      <location filename="../../../core/configuration.py" line="215"/>
+      <source>Configuration read from {}</source>
+      <translation type="unfinished">Configuration read from {}</translation>
+    </message>
+    <message>
+      <location filename="../../../core/configuration.py" line="225"/>
       <source>Configuration written at {}</source>
       <translation>Configurazione scritta in {}</translation>
     </message>
@@ -171,12 +176,12 @@
   <context>
     <name>ConfigurationInfo</name>
     <message>
-      <location filename="../../../core/configuration.py" line="244"/>
+      <location filename="../../../core/configuration.py" line="248"/>
       <source>New configuration installed at {}</source>
       <translation>Nuova configurazione installata in {}</translation>
     </message>
     <message>
-      <location filename="../../../core/configuration.py" line="72"/>
+      <location filename="../../../core/configuration.py" line="70"/>
       <source>Invalid path "{}", return default.</source>
       <translation>Percorso non valido "{}", restituito valore predefinito.</translation>
     </message>
@@ -306,7 +311,7 @@
   <context>
     <name>CueName</name>
     <message>
-      <location filename="../../../cues/media_cue.py" line="31"/>
+      <location filename="../../../cues/media_cue.py" line="29"/>
       <source>Media Cue</source>
       <translation>Cue Multimediale</translation>
     </message>
@@ -342,24 +347,24 @@
   <context>
     <name>CueSettings</name>
     <message>
-      <location filename="../../../ui/settings/app_pages/cue.py" line="70"/>
-      <source>Interrupt action fade</source>
-      <translation type="unfinished">Interrupt action fade</translation>
+      <location filename="../../../ui/settings/app_pages/cue.py" line="64"/>
+      <source>Interrupt fade</source>
+      <translation type="unfinished">Interrupt fade</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/app_pages/cue.py" line="73"/>
+      <location filename="../../../ui/settings/app_pages/cue.py" line="66"/>
       <source>Used globally when interrupting cues</source>
       <translation type="unfinished">Used globally when interrupting cues</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/app_pages/cue.py" line="79"/>
-      <source>Fade actions default value</source>
-      <translation type="unfinished">Fade actions default value</translation>
+      <location filename="../../../ui/settings/app_pages/cue.py" line="72"/>
+      <source>Fallback fade settings</source>
+      <translation type="unfinished">Fallback fade settings</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/app_pages/cue.py" line="82"/>
-      <source>Used for fade-in and fade-out actions, by cues where fade duration is 0.</source>
-      <translation type="unfinished">Used for fade-in and fade-out actions, by cues where fade duration is 0.</translation>
+      <location filename="../../../ui/settings/app_pages/cue.py" line="75"/>
+      <source>Used for fade-in and fade-out actions, for cues where fade duration is set to 0.</source>
+      <translation type="unfinished">Used for fade-in and fade-out actions, for cues where fade duration is set to 0.</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="112"/>
@@ -764,17 +769,17 @@
       <translation>Informazioni su Qt</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="401"/>
+      <location filename="../../../ui/mainwindow.py" line="402"/>
       <source>Close session</source>
       <translation>Chiudi sessione</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="402"/>
+      <location filename="../../../ui/mainwindow.py" line="403"/>
       <source>The current session contains changes that have not been saved.</source>
       <translation>La sessione corrente contiene modifiche che non sono state salvate.</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="410"/>
+      <location filename="../../../ui/mainwindow.py" line="411"/>
       <source>Do you want to save them now?</source>
       <translation>Vuoi salvarle adesso?</translation>
     </message>
@@ -790,7 +795,7 @@
   <context>
     <name>MainWindowError</name>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="345"/>
+      <location filename="../../../ui/mainwindow.py" line="346"/>
       <source>Cannot create cue {}</source>
       <translation>Impossibile creare la cue {}</translation>
     </message>
