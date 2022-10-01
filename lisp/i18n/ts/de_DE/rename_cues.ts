@@ -65,7 +65,7 @@
 Insert expressions captured with regexes in the line below with $0 for the first parenthesis, $1 forthe second, etc...
 In the second line, you can use standard Python Regexes to match expressions in the original cues names. Use parenthesis to capture parts of the matched expression.
 
-Exemple: 
+Example: 
 ^[a-z]([0-9]+) will find a lower case character([a-z]), followed by one or more number.
 Only the numbers are between parenthesis and will be usable with $0 in the first line.
 
@@ -75,7 +75,7 @@ For more information about Regexes, consult python documentation at: https://doc
 Insert expressions captured with regexes in the line below with $0 for the first parenthesis, $1 forthe second, etc...
 In the second line, you can use standard Python Regexes to match expressions in the original cues names. Use parenthesis to capture parts of the matched expression.
 
-Exemple: 
+Example: 
 ^[a-z]([0-9]+) will find a lower case character([a-z]), followed by one or more number.
 Only the numbers are between parenthesis and will be usable with $0 in the first line.
 
