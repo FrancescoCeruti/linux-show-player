@@ -38,13 +38,14 @@ falcon = "^3.0"
 jack-client = "^0.5"
 mido = "^1.2"
 pygobject = "^3.30"
-pyliblo = "^0.10"
 pyqt5 = "^5.6"
 python-rtmidi = "^1.1"
 requests = "^2.20"
 sortedcontainers = "^2.0"
-pyalsa = {git = "https://github.com/alsa-project/alsa-python.git", tag = "v1.2.6"}
 humanize = "^3.1.0"
+pyalsa = {git = "https://github.com/alsa-project/alsa-python.git", tag = "v1.2.6"}
+# Use a pyliblo fork that define dependecies correctly
+pyliblo = {git = "https://github.com/s0600204/pyliblo.git", branch = "pip"}
 
 [tool.poetry.dev-dependencies]
 toml = "*"
