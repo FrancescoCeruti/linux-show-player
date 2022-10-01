@@ -114,11 +114,13 @@ class GstMedia(Media):
             for element in self._elements:
                 element.play()
 
+            is_paused = self.state == MediaState.Paused
+
             self._state = MediaState.Playing
             self._gst_pipe.set_state(Gst.State.PLAYING)
             self._gst_pipe.get_state(Gst.SECOND)
 
-            if self.start_time > 0 or self.stop_time > 0:
+            if (not is_paused) and (self.start_time > 0 or self.stop_time > 0):
                 self.seek(self.start_time)
 
             self.played.emit(self)
