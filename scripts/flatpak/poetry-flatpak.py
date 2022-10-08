@@ -97,7 +97,7 @@ def get_locked_packages(parsed_lockfile: Mapping, exclude=tuple()) -> list:
         if (
             package.get("category") == "main"
             and package.get("source") is None
-            and package.get("name") not in exclude
+            and package.get("name").lower() not in exclude
         ):
             dependencies.append(package)
 
