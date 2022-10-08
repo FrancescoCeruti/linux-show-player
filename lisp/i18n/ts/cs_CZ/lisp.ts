@@ -247,42 +247,42 @@
   <context>
     <name>CueAppearanceSettings</name>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="80"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="83"/>
       <source>The appearance depends on the layout</source>
       <translation>Vzhled závisí na rozvržení</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="92"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="95"/>
       <source>Cue name</source>
       <translation>Název narážky</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="94"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="97"/>
       <source>NoName</source>
       <translation>Bez názvu</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="96"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="99"/>
       <source>Description/Note</source>
       <translation>Popis/Poznámka</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="99"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="102"/>
       <source>Set Font Size</source>
       <translation>Nastavit velikost písma</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="101"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="104"/>
       <source>Color</source>
       <translation>Barva</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="103"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="106"/>
       <source>Select background color</source>
       <translation>Vybrat barvu pozadí</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="106"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="109"/>
       <source>Select font color</source>
       <translation>Vybrat barvu písma</translation>
     </message>
@@ -974,7 +974,7 @@
       <translation type="unfinished">Fade In/Out</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="35"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="36"/>
       <source>Appearance</source>
       <translation>Vzhled</translation>
     </message>
