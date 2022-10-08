@@ -16,6 +16,7 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
+from PyQt5.QtGui import QFontDatabase
 from PyQt5.QtWidgets import (
     QVBoxLayout,
     QGroupBox,
@@ -52,6 +53,8 @@ class Appearance(SettingsPage):
         self.layout().addWidget(self.cueDescriptionGroup)
 
         self.cueDescriptionEdit = QTextEdit(self.cueDescriptionGroup)
+        self.cueDescriptionEdit.setAcceptRichText(False)
+        self.cueDescriptionEdit.setFont(QFontDatabase.systemFont(QFontDatabase.FixedFont))
         self.cueDescriptionGroup.layout().addWidget(self.cueDescriptionEdit)
 
         # Font
@@ -137,7 +140,7 @@ class Appearance(SettingsPage):
         if "name" in settings:
             self.cueNameEdit.setText(settings["name"])
         if "description" in settings:
-            self.cueDescriptionEdit.setText(settings["description"])
+            self.cueDescriptionEdit.setPlainText(settings["description"])
         if "stylesheet" in settings:
             settings = css_to_dict(settings["stylesheet"])
             if "background" in settings:

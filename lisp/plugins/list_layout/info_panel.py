@@ -16,6 +16,7 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QTextDocument
 from PyQt5.QtWidgets import QWidget, QTextEdit, QLineEdit, QVBoxLayout
 
 from lisp.ui.ui_utils import translate
@@ -48,9 +49,6 @@ class InfoPanel(QWidget):
         self.cueName.setPlaceholderText(
             translate("ListLayoutInfoPanel", "Cue name")
         )
-        self.cueDescription.setPlaceholderText(
-            translate("ListLayoutInfoPanel", "Cue description")
-        )
 
     @property
     def cue(self):
@@ -78,4 +76,10 @@ class InfoPanel(QWidget):
         self.cueName.setText(str(self.cue.index + 1) + " → " + name)
 
     def _desc_changed(self, description):
-        self.cueDescription.setText(description)
+        if hasattr(QTextDocument, 'setMarkdown'):
+            self.cueDescription.document().setMarkdown(description)
+        else:
+            self.cueDescription.setText(description)
+
+        self.cueDescription.setProperty('empty', len(description) == 0)
+        self.cueDescription.style().polish(self.cueDescription)

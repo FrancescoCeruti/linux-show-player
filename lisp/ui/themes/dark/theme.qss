@@ -771,7 +771,11 @@ RunningCueWidget>QWidget {
     background-color: #CC0000;
 }
 
-#InfoPanelDescription[readOnly="true"] {
+#InfoPanelDescription[empty="false"] {
+    background: palette(mid);
+}
+
+#InfoPanelDescription {
     border: 1px solid palette(light);
 }
 
