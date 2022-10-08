@@ -239,14 +239,9 @@
   <context>
     <name>ListLayoutInfoPanel</name>
     <message>
-      <location filename="../../../plugins/list_layout/info_panel.py" line="49"/>
+      <location filename="../../../plugins/list_layout/info_panel.py" line="50"/>
       <source>Cue name</source>
       <translation type="unfinished">Cue name</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/list_layout/info_panel.py" line="52"/>
-      <source>Cue description</source>
-      <translation type="unfinished">Cue description</translation>
     </message>
   </context>
   <context>
