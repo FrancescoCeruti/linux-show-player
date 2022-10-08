@@ -247,42 +247,42 @@
   <context>
     <name>CueAppearanceSettings</name>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="80"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="83"/>
       <source>The appearance depends on the layout</source>
       <translation>外觀取决於佈局</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="92"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="95"/>
       <source>Cue name</source>
       <translation>Cue 名稱</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="94"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="97"/>
       <source>NoName</source>
       <translation>没有名稱</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="96"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="99"/>
       <source>Description/Note</source>
       <translation>描述/注釋</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="99"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="102"/>
       <source>Set Font Size</source>
       <translation>設置字體大小</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="101"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="104"/>
       <source>Color</source>
       <translation>顏色</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="103"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="106"/>
       <source>Select background color</source>
       <translation>選擇背景顏色</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="106"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="109"/>
       <source>Select font color</source>
       <translation>選擇字體顏色</translation>
     </message>
@@ -974,7 +974,7 @@
       <translation>淡入/淡出</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="35"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="36"/>
       <source>Appearance</source>
       <translation>外觀</translation>
     </message>
