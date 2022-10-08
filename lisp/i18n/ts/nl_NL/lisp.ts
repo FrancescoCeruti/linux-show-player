@@ -247,42 +247,42 @@
   <context>
     <name>CueAppearanceSettings</name>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="80"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="83"/>
       <source>The appearance depends on the layout</source>
       <translation>Het uiterlijk hangt af van de indeling</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="92"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="95"/>
       <source>Cue name</source>
       <translation>Cuenaam</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="94"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="97"/>
       <source>NoName</source>
       <translation>Geen naam</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="96"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="99"/>
       <source>Description/Note</source>
       <translation>Omschrijving/Aantekening</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="99"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="102"/>
       <source>Set Font Size</source>
       <translation>Lettertypegrootte instellen</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="101"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="104"/>
       <source>Color</source>
       <translation>Kleur</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="103"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="106"/>
       <source>Select background color</source>
       <translation>Achtergrondkleur instellen</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="106"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="109"/>
       <source>Select font color</source>
       <translation>Lettertypekleur instellen</translation>
     </message>
@@ -974,7 +974,7 @@
       <translation type="unfinished">Fade In/Out</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="35"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="36"/>
       <source>Appearance</source>
       <translation>Uiterlijk</translation>
     </message>
