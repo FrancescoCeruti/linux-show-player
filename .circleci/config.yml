@@ -17,13 +17,10 @@ jobs:
           name: SYSTEM ⟹ Install required packages
           command: |
             sudo apt-get -qq update
-            sudo apt-get install -y \
-              software-properties-common \
-              python3-software-properties \
-              golang \
-              ostree \
-              flatpak \
-              flatpak-builder
+            sudo apt-get install -y software-properties-common python3-software-properties
+            sudo add-apt-repository -y ppa:flatpak/stable
+            sudo apt-get -qq update
+            sudo apt-get install -y golang ostree flatpak flatpak-builder
 
       - run:
           name: FLATPAK ⟹ Install flathub Runtime & SDK
