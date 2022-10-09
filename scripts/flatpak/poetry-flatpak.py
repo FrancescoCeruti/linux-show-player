@@ -119,6 +119,7 @@ def main():
         "pip3",
         "install",
         "--no-index",
+        "--no-build-isolation",
         '--find-links="file://${PWD}"',
         "--prefix=${FLATPAK_DEST}",
         " ".join([d["name"] for d in dependencies]),
