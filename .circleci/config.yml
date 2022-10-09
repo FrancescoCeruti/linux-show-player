@@ -85,7 +85,7 @@ jobs:
             mv out/linux-show-player.flatpak "out/$ARTIFACT_NAME"
 
             # Download helper for github releases
-            go get github.com/tcnksm/ghr
+            go get github.com/tcnksm/ghr@v0.15.0
 
             # Upload the artifacts
             ghr \
