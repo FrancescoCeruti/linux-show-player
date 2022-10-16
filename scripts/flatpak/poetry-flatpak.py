@@ -96,6 +96,7 @@ def get_locked_packages(parsed_lockfile: Mapping, exclude=tuple()) -> list:
     for package in packages:
         if (
             package.get("category") == "main"
+            and not package.get("optional")
             and package.get("source") is None
             and package.get("name").lower() not in exclude
         ):
