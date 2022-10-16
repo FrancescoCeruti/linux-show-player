@@ -39,7 +39,7 @@ Add/Edit cues (accessible right-clicking on empty areas of the layout)
 
 This menu give access to layout functionality and display options for the current view.
 
-```{tab} Cart Layout
+#### Cart Layout
 
 * **Add page/Add pages:** Allows to add one or multiple pages on the current layout. Pages can be switched using the tab bar on top of the layout or directional keys.
 * **Remove current page:** Remove the current page and all its cues
@@ -49,9 +49,7 @@ This menu give access to layout functionality and display options for the curren
 * **Show volume:** Media cues will display a volume control on their right side. Setting the volume to the middle point (50%) of the slider sets the volume to +0dB.
 * **Show accurate time:** When checked, cues will display play time with a precision of 0.1s. When unchecked the time is only precise down to 1s.
 
-```
-
-```{tab} List Layout
+#### List Layout
 
 * **Show dB-meters:** Show / hide the db-meters for running media-cues;
 * **Show seek-bars:** Show / hide seek bars for running media-cues;
@@ -61,9 +59,7 @@ This menu give access to layout functionality and display options for the curren
 * **Selection mode:** ``[CTRL+SHIFT+E]`` Enable multi-selection (for editing);
 * **Disable GO Key while playing:** Disable the "GO" keyboard shortcut while there are playing cues;
 * **Show resize handles:** Enable handles that allow to customize the size of various panels;
-* **Restore default size:** Reset the size of panels to their defaults. 
-
-```
+* **Restore default size:** Reset the size of panels to their defaults.
 
 ## Tools
 

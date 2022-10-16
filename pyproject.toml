@@ -1,13 +1,6 @@
-[tool.black]
-line-length = 80
-target-version = ['py37']
-exclude = '''
-/(
-    \.git
-    | dist
-    | docs
-)/
-'''
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "linux-show-player"
@@ -15,7 +8,6 @@ version = "0.6.0.dev0"
 description = "Cue player for stage productions"
 authors = ["Francesco Ceruti <ceppofrancy@gmail.com>"]
 license = "GPLv3"
-
 readme = "README.md"
 
 homepage = "https://www.linux-show-player.org/"
@@ -24,7 +16,6 @@ repository = "https://github.com/FrancescoCeruti/linux-show-player"
 packages = [
     { include = "lisp" }
 ]
-
 exclude = [
     "lisp/i18n/ts/",
     "lisp/ui/themes/*/assets/"
@@ -42,23 +33,34 @@ pyqt5 = "^5.6"
 python-rtmidi = "^1.1"
 requests = "^2.20"
 sortedcontainers = "^2.0"
-humanize = "^3.1.0"
-pyalsa = {git = "https://github.com/alsa-project/alsa-python.git", tag = "v1.2.6"}
+humanize = "^4.4.0"
+pyalsa = { git = "https://github.com/alsa-project/alsa-python.git", tag = "v1.2.7" }
 # Use a pyliblo fork that define dependecies correctly
-pyliblo = {git = "https://github.com/s0600204/pyliblo.git", branch = "pip"}
+pyliblo = { git = "https://github.com/s0600204/pyliblo.git", branch = "pip" }
 
-[tool.poetry.dev-dependencies]
+# Optional dependencies (to build documentation)
+Sphinx = { version = "^5.1.1", optional = true }
+furo = { version = "^2022.6.21", optional = true }
+sphinx-autobuild = { version = "^2021.3.14", optional = true }
+myst-parser = { version = "^0.18.0", optional = true }
+
+[tool.poetry.group.dev.dependencies]
 toml = "*"
 packaging = "*"
-Sphinx = "^5.1.1"
-furo = "^2022.6.21"
-sphinx-autobuild = "^2021.3.14"
-sphinx-inline-tabs = { version = "^2022.1.2-beta.11", python = "^3.8" }
-myst-parser = "^0.18.0"
+
+[tool.poetry.extras]
+docs = ["Sphinx", "furo", "myst-parser"]
 
 [tool.poetry.scripts]
 linux-show-player = "lisp.main:main"
 
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+[tool.black]
+line-length = 80
+target-version = ['py37']
+exclude = '''
+/(
+    \.git
+    | dist
+    | docs
+)/
+'''
