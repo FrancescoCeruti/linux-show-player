@@ -8,7 +8,7 @@ How to use
 
 The main interface is accessible via ``Tools > Presets``
 
-.. image:: ../media/presets.png
+.. image:: ../_static/presets.png
     :alt: Linux Show Player - Presets
     :align: center
 

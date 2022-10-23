@@ -42,10 +42,10 @@ pyliblo = { git = "https://github.com/s0600204/pyliblo.git", branch = "pip" }
 optional = true
 
 [tool.poetry.group.docs.dependencies]
-Sphinx = { version = "^5.1.1" }
-furo = { version = "^2022.6.21" }
-sphinx-autobuild = { version = "^2021.3.14" }
-myst-parser = { version = "^0.18.0" }
+Sphinx = "^5.1.1"
+furo = "^2022.6.21"
+myst-parser = "^0.18.0"
+sphinx-autobuild = "^2021.3.14"
 
 [tool.poetry.group.dev.dependencies]
 toml = "*"

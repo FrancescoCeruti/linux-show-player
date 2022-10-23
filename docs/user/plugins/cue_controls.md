@@ -12,7 +12,7 @@ settings window:
 Keyboard
 --------
 
-.. image:: ../media/controller_settings_keyboard.png
+.. image:: ../_static/controller_settings_keyboard.png
     :alt: Linux Show Player - Controller settings - Keyboard
     :align: center
 
@@ -29,7 +29,7 @@ In general, what is taken in account, it's not the pressed key, but the typed ch
 MIDI
 ----
 
-.. image:: ../media/controller_settings_midi.png
+.. image:: ../_static/controller_settings_midi.png
     :alt: Linux Show Player - Controller settings - MIDI
     :align: center
 

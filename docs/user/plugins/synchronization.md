@@ -13,7 +13,7 @@ The plugin usage is quite simple, the only thing to do, is to add the remote ses
 you want to "control" to the peer-list, this can be done via
 ``Tools > Synchronization > Mange connected peers``
 
-.. image:: ../media/synchronization_peers.png
+.. image:: ../_static/synchronization_peers.png
     :alt: Linux Show Player - Manage synchronization peers
     :align: center
 

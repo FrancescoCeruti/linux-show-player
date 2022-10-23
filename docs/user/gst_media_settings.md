@@ -16,7 +16,7 @@ The elements and their settings can be changed in a specific tab in the cue sett
 
 |
 
-.. image:: media/gst_media_settings.png
+.. image:: _static/gst_media_settings.png
     :alt: Linux Show Player - GStreamer Backed settings
     :align: center
 
@@ -24,7 +24,7 @@ The elements and their settings can be changed in a specific tab in the cue sett
 
 The active elements can be changed using the *Change Pipeline* button
 
-.. image:: media/gst_edit_pipeline.png
+.. image:: _static/gst_edit_pipeline.png
     :alt: Linux Show Player - GStreamer Backed edit pipeline
     :align: center
 

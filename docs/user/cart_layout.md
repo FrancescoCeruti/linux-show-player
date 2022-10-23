@@ -7,7 +7,7 @@ Cart Layout
 The Cart Layout organize all the cues in grid-like tabs, cues are shown as
 buttons, as in the following image:
 
-.. image:: media/cart_layout_main_view.png
+.. image:: _static/cart_layout_main_view.png
     :alt: Linux Show Player - Cart Layout
     :align: center
 
@@ -67,7 +67,7 @@ In the application settings (``File > Preferences``) various options are provide
     When the grid size is changed, cues will be visually shifted to keep their
     logical positioning.
 
-.. image:: media/cart_layout_settings.png
+.. image:: _static/cart_layout_settings.png
     :alt: Linux Show Player - Cart Layout settings
     :align: center
 

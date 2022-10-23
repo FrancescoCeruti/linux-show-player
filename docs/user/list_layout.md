@@ -7,7 +7,7 @@ List Layout
 The List Layout, as the name suggest, organize the cues in a (single) list,
 a sidebar to monitor and interact with the running cues is also provided.
 
-.. image:: media/list_layout_main_view.png
+.. image:: _static/list_layout_main_view.png
     :alt: Linux Show Player - List Layout
     :align: center
 
@@ -86,6 +86,6 @@ In the application settings (``File > Preferences``) various options are provide
 
 |
 
-.. image:: media/list_layout_settings.png
+.. image:: _static/list_layout_settings.png
     :alt: Linux Show Player - List Layout settings
     :align: center

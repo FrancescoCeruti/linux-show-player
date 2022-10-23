@@ -18,7 +18,7 @@ Via ``Tools > ReplayGain / Normalization`` menu the following options are provid
 * **Reset all**: Reset to 0dB the normalized volumes of all cues
 * **Reset selected**: Reset to 0dB the normalized volumes, only for the selected cues
 
-.. image:: ../media/replaygain_dialog.png
+.. image:: ../_static/replaygain_dialog.png
     :alt: Linux Show Player - ReplayGain dialog
     :align: center
 

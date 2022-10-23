@@ -19,7 +19,7 @@ the OLA interface.
 Timecode Preferences
 --------------------
 
-.. image:: ../media/timecode_settings.png
+.. image:: ../_static/timecode_settings.png
     :alt: Timecode - Preferences
     :align: center
 
@@ -35,7 +35,7 @@ To enable and setup the plugin go to ``File > Preferences > Timecode Settings``.
 Timecode Cue Settings
 ---------------------
 
-.. image:: ../media/timecode_cue_settings.png
+.. image:: ../_static/timecode_cue_settings.png
     :alt: Timecode - Cue Settings
     :align: center
 

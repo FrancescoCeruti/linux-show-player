@@ -10,7 +10,7 @@ How to use
 Triggers can be added/removed and modified from the cue-settings dialog of the
 cue from which the event is generated (source):
 
-.. image:: ../media/triggers_cue_settings.png
+.. image:: ../_static/triggers_cue_settings.png
     :alt: Linux Show Player - Triggers cue settings
     :align: center
 
