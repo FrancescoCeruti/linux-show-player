@@ -1,25 +1,18 @@
-Command Cues Examples
-=====================
+# Command Cues Examples
 
-Examples of ``Command cues`` to control other programs using LiSP:
+Examples of `Command cues` to control other programs using LiSP:
 
 
-LibreOffice
------------
+## LibreOffice Impress
 
-Impress
-^^^^^^^
+* **Start slideshow:** `xdotool key --window "$(xdotool search --class Libreoffice | head -n1)" F5` (requires xdotool)
+* **Next slide:** `xdotool key --window "$(xdotool search --class Libreoffice | head -n1)" Right` (requires xdotool)
 
-* **Start slideshow:** ``xdotool key --window "$(xdotool search --class Libreoffice | head -n1)" F5`` (requires xdotool)
-* **Next slide:** ``xdotool key --window "$(xdotool search --class Libreoffice | head -n1)" Right`` (requires xdotool)
+## VLC
 
-VLC
----
+* **Playback a file (full-screen):** `vlc -f <file/path>`
 
-* **Playback a file (full-screen):** ``vlc -f <file/path>``
-
-MPV PLAYER
-----------
+## MPV PLAYER
 
 Allows to use a single mpv player instance, which is controlled through their json IPC interface.
 Use "Start Player" to init the player, you have to edit --geometry according
@@ -28,6 +21,6 @@ $MEDIA variable at the beginning of this command). The videos are played and
 stays open until next file is started. Images work too, so it is possible add add
 black images between the videos if needed.
 
-* **Start Player:** ``mpv --input-ipc-server=/tmp/mpvsocket --idle --keep-open=always --osc=no --fullscreen --geometry=1920:0``
-* **Load File:** ``MEDIA="<file/path>"; printf '{ "command": ["loadfile", "%s"] }\n' $MEDIA|socat - /tmp/mpvsocket``
-* *A complete set of commands can be downloaded and imported as preset in the GitHub releases page.*
+* **Start Player:** `mpv --input-ipc-server=/tmp/mpvsocket --idle --keep-open=always --osc=no --fullscreen --geometry=1920:0`
+* **Load File:** `MEDIA="<file/path>"; printf '{ "command": ["loadfile", "%s"] }\n' $MEDIA|socat - /tmp/mpvsocket`
+* *A complete set of commands can be downloaded and imported as preset [here](https://www.dropbox.com/sh/dnkqk84u16f67gi/AAC55CbOsG-m9Z2-uckskQDHa?dl=0).*

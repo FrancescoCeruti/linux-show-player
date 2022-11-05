@@ -4,7 +4,7 @@ Here you can find a comprehensive list of the standard main menu entries.\
 Keyboard shortcut are indicated as ``[key-combination]``.
 
 ```{note}
-   Some of the shortcuts may be different, depending on the used language and desktop environment
+Some of the shortcuts may be different, depending on the used language and desktop environment.
 ```
 
 ## File menu
@@ -39,7 +39,7 @@ Add/Edit cues (accessible right-clicking on empty areas of the layout)
 
 This menu give access to layout functionality and display options for the current view.
 
-#### Cart Layout
+### Cart Layout
 
 * **Add page/Add pages:** Allows to add one or multiple pages on the current layout. Pages can be switched using the tab bar on top of the layout or directional keys.
 * **Remove current page:** Remove the current page and all its cues
@@ -49,7 +49,7 @@ This menu give access to layout functionality and display options for the curren
 * **Show volume:** Media cues will display a volume control on their right side. Setting the volume to the middle point (50%) of the slider sets the volume to +0dB.
 * **Show accurate time:** When checked, cues will display play time with a precision of 0.1s. When unchecked the time is only precise down to 1s.
 
-#### List Layout
+### List Layout
 
 * **Show dB-meters:** Show / hide the db-meters for running media-cues;
 * **Show seek-bars:** Show / hide seek bars for running media-cues;

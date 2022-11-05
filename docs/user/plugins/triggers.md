@@ -1,23 +1,19 @@
-Triggers
-========
+# Triggers
 
 This plugin allow to create triggers based on cues events, and to assign them a
 specific action on another cue.
 
-How to use
-----------
+## How to use
 
 Triggers can be added/removed and modified from the cue-settings dialog of the
 cue from which the event is generated (source):
 
-.. image:: ../_static/triggers_cue_settings.png
-    :alt: Linux Show Player - Triggers cue settings
-    :align: center
+```{image} ../_static/triggers_cue_settings.png
+:alt: Linux Show Player - Triggers cue settings
+:align: center
+```
 
-|
-
-Events
-------
+## Events
 
 The following events are available:
 

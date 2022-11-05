@@ -15,7 +15,7 @@ cues
 gst_media_settings
 gst_custom_elements
 command_cue_examples
-plugins/*
+plugins/index
 ```
 
 
