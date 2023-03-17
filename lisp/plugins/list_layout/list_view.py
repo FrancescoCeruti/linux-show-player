@@ -291,6 +291,7 @@ class CueListView(QTreeWidget):
 
         self.insertTopLevelItem(cue.index, item)
         self.__setupItemWidgets(item)
+        self.__updateItemStyle(item)
 
         if self.topLevelItemCount() == 1:
             # If it's the only item in the view, set it as current
