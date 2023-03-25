@@ -42,7 +42,7 @@ This menu give access to layout functionality and display options for the curren
 ### Cart Layout
 
 * **Add page/Add pages:** Allows to add one or multiple pages on the current layout. Pages can be switched using the tab bar on top of the layout or directional keys.
-* **Remove current page:** Remove the current page and all its cues
+* **Remove current page:** Remove the current page and all its cues.
 * **Countdown mode:** Cues will display the remaining time instead of the elapsed time.
 * **Show seek-bars:** Media cues will display a seek bar, allowing to directly seek to a specific time of the cue.
 * **Show dB-meters:** Media cues will display a dB meter on their right side.
@@ -51,21 +51,21 @@ This menu give access to layout functionality and display options for the curren
 
 ### List Layout
 
-* **Show dB-meters:** Show / hide the db-meters for running media-cues;
-* **Show seek-bars:** Show / hide seek bars for running media-cues;
-* **Show accurate time:** Show / hide tens of seconds for running media-cues;
-* **Show index column:** Show / hide the cue numbers;
-* **Auto-select next cue:** If enabled the next cue is selected automatically;
-* **Selection mode:** ``[CTRL+SHIFT+E]`` Enable multi-selection (for editing);
-* **Disable GO Key while playing:** Disable the "GO" keyboard shortcut while there are playing cues;
-* **Show resize handles:** Enable handles that allow to customize the size of various panels;
+* **Show dB-meters:** Show / hide the db-meters for running media-cues.
+* **Show seek-bars:** Show / hide seek bars for running media-cues.
+* **Show accurate time:** Show / hide tens of seconds for running media-cues.
+* **Show index column:** Show / hide the cue numbers.
+* **Auto-select next cue:** If enabled the next cue is selected automatically.
+* **Selection mode:** ``[CTRL+SHIFT+E]`` Enable multi-selection (for editing).
+* **Disable GO Key while playing:** Disable the "GO" keyboard shortcut while there are playing cues.
+* **Show resize handles:** Enable handles that allow to customize the size of various panels.
 * **Restore default size:** Reset the size of panels to their defaults.
 
 ## Tools
 
-* **ReplayGain/Normalization:** Volume normalization [[see more]](plugins/replaygain.md);
-* **Synchronization:** Keep multiple "live" sessions in sync [[see more]](plugins/synchronization.md);
-* **Rename Cues:** Rename multiple cues at once [[see more]](plugins/cue_rename.md);
+* **ReplayGain/Normalization:** Volume normalization [[see more]](plugins/replaygain.md).
+* **Synchronization:** Keep multiple "live" sessions in sync [[see more]](plugins/synchronization.md).
+* **Rename Cues:** Rename multiple cues at once [[see more]](plugins/cue_rename.md).
 * **Presets:** Manage cues presets [[see more]](plugins/presets.md).
 
 ## About
