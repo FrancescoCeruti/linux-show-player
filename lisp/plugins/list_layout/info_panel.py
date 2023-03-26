@@ -76,10 +76,10 @@ class InfoPanel(QWidget):
         self.cueName.setText(str(self.cue.index + 1) + " → " + name)
 
     def _desc_changed(self, description):
-        if hasattr(QTextDocument, 'setMarkdown'):
+        if hasattr(QTextDocument, "setMarkdown"):
             self.cueDescription.document().setMarkdown(description)
         else:
             self.cueDescription.setText(description)
 
-        self.cueDescription.setProperty('empty', len(description) == 0)
+        self.cueDescription.setProperty("empty", len(description) == 0)
         self.cueDescription.style().polish(self.cueDescription)

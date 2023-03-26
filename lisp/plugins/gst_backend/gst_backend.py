@@ -48,7 +48,6 @@ from lisp.ui.ui_utils import translate, qfile_filters
 
 
 class GstBackend(Plugin, BaseBackend):
-
     Name = "GStreamer Backend"
     Authors = ("Francesco Ceruti",)
     Description = (

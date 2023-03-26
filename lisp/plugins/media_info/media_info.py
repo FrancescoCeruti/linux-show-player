@@ -45,7 +45,6 @@ from lisp.ui.ui_utils import translate
 
 
 class MediaInfo(Plugin):
-
     Name = "Media-Cue information dialog"
     Authors = ("Francesco Ceruti",)
     Description = "Provide a function to show information on media-cues source"

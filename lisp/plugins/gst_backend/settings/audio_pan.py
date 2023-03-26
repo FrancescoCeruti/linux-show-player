@@ -24,7 +24,6 @@ from lisp.ui.ui_utils import translate
 
 
 class AudioPanSettings(SettingsPage):
-
     ELEMENT = AudioPan
     Name = ELEMENT.Name
 

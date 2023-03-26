@@ -32,7 +32,6 @@ from lisp.ui.ui_utils import translate
 
 
 class DbMeterSettings(SettingsPage):
-
     ELEMENT = DbMeter
     Name = ELEMENT.Name
 

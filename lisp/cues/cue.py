@@ -289,7 +289,6 @@ class Cue(HasProperties):
             if state & (
                 CueState.IsStopped | CueState.Pause | CueState.PreWait_Pause
             ):
-
                 running = self.__start__(fade)
                 self._state = CueState.Running
                 self.started.emit(self)

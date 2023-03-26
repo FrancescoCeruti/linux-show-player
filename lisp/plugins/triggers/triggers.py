@@ -24,7 +24,6 @@ from lisp.ui.settings.cue_settings import CueSettingsRegistry
 
 
 class Triggers(Plugin):
-
     Name = "Triggers"
     Authors = ("Francesco Ceruti",)
     Description = "Allow cues to react to other-cues state changes"

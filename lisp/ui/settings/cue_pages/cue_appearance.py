@@ -54,7 +54,9 @@ class Appearance(SettingsPage):
 
         self.cueDescriptionEdit = QTextEdit(self.cueDescriptionGroup)
         self.cueDescriptionEdit.setAcceptRichText(False)
-        self.cueDescriptionEdit.setFont(QFontDatabase.systemFont(QFontDatabase.FixedFont))
+        self.cueDescriptionEdit.setFont(
+            QFontDatabase.systemFont(QFontDatabase.FixedFont)
+        )
         self.cueDescriptionGroup.layout().addWidget(self.cueDescriptionEdit)
 
         # Font

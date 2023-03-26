@@ -41,7 +41,6 @@ class ModulesLoader:
     def load_modules(self):
         """Generate lists of tuples (class-name, class-object)."""
         for entry in os.scandir(self.pkg_path):
-
             # Exclude __init__, __pycache__ and likely
             if re.match("^__.*", entry.name):
                 continue

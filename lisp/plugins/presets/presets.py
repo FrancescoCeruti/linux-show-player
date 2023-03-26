@@ -45,7 +45,6 @@ from lisp.ui.ui_utils import translate
 
 
 class Presets(Plugin):
-
     Name = "Preset"
     Authors = ("Francesco Ceruti",)
     Description = "Allow to save, edit, import and export cue presets"

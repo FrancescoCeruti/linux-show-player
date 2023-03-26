@@ -110,11 +110,13 @@ class MIDIInput(MIDIBase):
     def __new_message(self, message):
         # Translate "Note On" with Velocity=0 to "Note Off"
         # See https://github.com/mido/mido/issues/130
-        if message.type == 'note_on' and message.velocity == 0:
-            return Message.from_dict({
-                **message.dict(),
-                'type': 'note_off',
-            })
+        if message.type == "note_on" and message.velocity == 0:
+            return Message.from_dict(
+                {
+                    **message.dict(),
+                    "type": "note_off",
+                }
+            )
 
         if self.alternate_mode:
             self.new_message_alt.emit(message)
