@@ -32,6 +32,6 @@ class LayoutAutoInsertCuesCommand(ModelInsertItemsCommand):
         selection = tuple(layout.selected_cues())
         super().__init__(
             layout.model,
-            selection[-1].index + 1 if selection else len(layout.model),
+            selection[-1].index + 1 if selection else -1,
             *cues,
         )
