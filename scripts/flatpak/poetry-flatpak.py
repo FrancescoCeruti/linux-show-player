@@ -3,6 +3,7 @@
 import argparse
 import json
 import re
+import sys
 import urllib.parse
 import urllib.request
 from collections import OrderedDict
@@ -16,6 +17,7 @@ from packaging.tags import Tag
 
 def get_best_source(name: str, sources: list, hashes: list):
     # Search for a platform-independent wheel distribution
+
     for source in sources:
         if (
             source["packagetype"] == "bdist_wheel"
@@ -65,13 +67,17 @@ def get_package_hashes(package_files: list) -> list:
 def get_packages_sources(packages: list, parsed_lockfile: Mapping) -> list:
     """Gets the list of sources from a toml parsed lockfile."""
     sources = []
-    parsed_files = parsed_lockfile["metadata"]["files"]
+    metadata_files = parsed_lockfile["metadata"].get("files", {})
 
     executor = ThreadPoolExecutor(max_workers=10)
     futures = []
 
     for package in packages:
-        package_files = parsed_files.get(package["name"], [])
+        # Older poetry.lock format contains files in [metadata].
+        # New version 2.0 contains files in [[package]] section.
+        package_files = metadata_files.get(package["name"], [])
+        package_files += package.get("files", [])
+
         futures.append(
             executor.submit(
                 get_pypi_source,
