@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2022 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -74,7 +74,7 @@ class Cue(HasProperties):
     """Cue(s) are the base component to implement any kind of live-controllable
     element (live = during a show).
 
-    A cue implement his behavior(s) reimplementing __start__, __stop__,
+    A cue should support this behavior by reimplementing __start__, __stop__,
     __pause__ and __interrupt__ methods.
 
     Cue provide **(and any subclass should do the same)** properties via

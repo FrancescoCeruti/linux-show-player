@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2017 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2022 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -126,7 +126,7 @@ class CueStatusIcons(QWidget):
             path.lineTo(0, indicator_height - 1)
             path.lineTo(indicator_width // 3, indicator_height - 1)
             path.lineTo(indicator_width, indicator_width)
-            path.lineTo(indicator_width // 3, 0)
+            path.lineTo(indicator_width // 3, 1)
             path.lineTo(0, 1)
 
             qp.setPen(QPen(QBrush(QColor(0, 0, 0)), 2))

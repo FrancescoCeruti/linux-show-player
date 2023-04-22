@@ -63,7 +63,7 @@ In the application settings (`File > Preferences`) various options are provided:
 * **Countdown mode:** when enabled the current cue time is displayed as a countdown
 * **Show seek-bars:** when enabled a slider able to change the current playing position
   of media cues (for media cues)
-* **Show bB-meters:** when enabled, a db level indicator is shown (for supported cues)
+* **Show dB-meters:** when enabled, a dB level indicator is shown (for supported cues)
 * **Show accurate time:** when enabled the cue time is displayed including tens of seconds
 * **Show volume:** when enabled a volume slider is shown (for supported cues)
 * **Grid size:** define the number of rows & columns per page. (require to reload

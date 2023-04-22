@@ -123,7 +123,7 @@ class UriInputSettings(SettingsPage):
         if not os.path.exists(directory):
             directory = GstBackend.Config.get("mediaLookupDir", "")
         if not os.path.exists(directory):
-            directory = self.app.session.dir()
+            directory = Application().session.dir()
 
         path, _ = QFileDialog.getOpenFileName(
             self,

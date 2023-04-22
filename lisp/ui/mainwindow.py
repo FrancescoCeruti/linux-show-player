@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2019 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2022 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -329,8 +329,8 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         self._app.session.layout.view.setParent(None)
 
     def __sessionCreated(self):
-        self._app.session.layout.view.show()
         self.centralWidget().layout().addWidget(self._app.session.layout.view)
+        self._app.session.layout.view.show()
         self.updateWindowTitle()
 
     def __simpleCueInsert(self, cueClass):

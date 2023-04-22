@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2022 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -83,8 +83,8 @@ class HasProperties(metaclass=HasPropertiesMeta):
     Using the Property descriptor subclasses can specify a set of properties
     that can be easily retrieved and updated via a series of provided functions.
 
-    HasProperties objects can be nested, using a property that keep an
-    HasProperties object as value.
+    HasProperties objects can be nested, using a property that keeps an
+    HasProperties object as a value.
 
     Usage:
 
@@ -95,17 +95,17 @@ class HasProperties(metaclass=HasPropertiesMeta):
 
     def __init__(self):
         self.__changed_signals = {}
-        # Contain signals that are emitted after the associated property is
-        # changed, the signal are create only when requested the first time.
+        # Contains signals that are emitted after the associated property is
+        # changed, the signals are created only when requested the first time.
 
         self.property_changed = Signal()
         # Emitted after property change (self, name, value)
 
     def properties_names(self, filter=None):
         """
-        To work as intended `filter` must be a function that take a set as
-        parameter and return a set with the properties names filtered by
-        some custom rule, the given set can be modified in-place.
+        To work as intended `filter` must be a function that takes a set as a
+        parameter and return a set with the property names filtered by
+        some custom rule. The given set can be modified in-place.
 
         :param filter: a function to filter the returned properties, or None
         :rtype: set
@@ -129,8 +129,8 @@ class HasProperties(metaclass=HasPropertiesMeta):
     def properties_defaults(self, filter=None):
         """Instance properties defaults.
 
-        Differently from `class_defaults` this works on instances, and it might
-        give different results with some subclass.
+        Different from `class_defaults` this works on instances, and it might
+        give different results with some subclasses.
 
         :param filter: filter the properties, see `properties_names`
         :return: The default properties as a dictionary {name: default_value}
@@ -208,7 +208,7 @@ class HasProperties(metaclass=HasPropertiesMeta):
     def changed(self, name):
         """
         :param name: The property name
-        :return: A signal that notify the given property changes
+        :return: A signal that notifies that the given property has changed
         :rtype: Signal
 
         The signals returned by this method are created lazily and cached.

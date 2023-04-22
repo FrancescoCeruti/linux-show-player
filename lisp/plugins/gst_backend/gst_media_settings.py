@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2022 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -113,8 +113,8 @@ class GstMediaSettings(SettingsPage):
             self._current_page.hide()
 
         self._current_page = self._pages[self.listWidget.row(current)]
-        self._current_page.show()
         self.layout().addWidget(self._current_page, 0, 1, 2, 1)
+        self._current_page.show()
 
     def __edit_pipe(self):
         # Backup the settings

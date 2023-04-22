@@ -15,16 +15,16 @@
 
 ---
 
-Linux Show Player, LiSP for short, is a free cue player, mainly intended for sound-playback in stage productions, the goal is to provide a complete playback software for musical plays, theater shows and similar.
+Linux Show Player, LiSP for short, is a free cue player, primarily intended for sound-playback during stage productions. The ultimate goal is to provide a complete playback software for musical plays, theatre shows, and similar.
 
-For bugs/requests you can open an issue on the GitHub issues tracker, for support, discussions, and anything else you should use the [gitter](https://gitter.im/linux-show-player/linux-show-player) chat.
+For bugs and requests you can open an issue on the GitHub issues tracker; for support, discussions, and anything else you should use the [gitter](https://gitter.im/linux-show-player/linux-show-player) chat.
 
 ---
 
 ### Installation
 
-Linux Show Player is currently developed/test only on **GNU/Linux**.<br>
-_The core components (Python3, GStreamer and Qt5) are multi-platform, in future, despite the name, LiSP might get ported on others platforms_
+Linux Show Player is currently developed on and tested for **GNU/Linux** only.<br>
+_The core components (Python3, GStreamer and Qt5) are multi-platform, thus in future - despite the name - LiSP might get ported to other platforms._
 
 #### 📦 Flatpak
 
@@ -34,17 +34,16 @@ You can get the latest **development** builds here:
  * [Master](https://github.com/FrancescoCeruti/linux-show-player/releases/tag/ci-master) - Generally stable
  * [Development](https://github.com/FrancescoCeruti/linux-show-player/releases/tag/ci-develop) - Preview features, might be unstable and untested
 
-#### 🐧 From yours distribution repository
+#### 🐧 From your distribution repository
 
-For some GNU/Linux distribution you can install a native package.<br>
-Keep in mind that it might not be the latest version, you can find a list on [repology.org](https://repology.org/metapackage/linux-show-player)
+For some GNU/Linux distributions you can install a native package.<br>
+Keeping in mind that it might not be the latest version, you can find a list on [repology.org](https://repology.org/metapackage/linux-show-player).
 
 ---
 
 ### 📖 Usage
 
-User manual can be [viewed online](http://linux-show-player-users.readthedocs.io/en/latest/index.html)
-or downloaded from the GitHub release page, for a specific version.
+A user manual can be [viewed online](http://linux-show-player-users.readthedocs.io/en/latest/index.html) or downloaded from the [releases page](https://github.com/FrancescoCeruti/linux-show-player/releases) on GitHub.
 
 #### ⌨️ Command line:
 

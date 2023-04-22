@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2022 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -72,9 +72,9 @@ class JackSinkSettings(SettingsPage):
         # if __jack_client is None this will return a default value
         self.connections = JackSink.default_connections(self.__jack_client)
 
-        self.retranlsateUi()
+        self.retranslateUi()
 
-    def retranlsateUi(self):
+    def retranslateUi(self):
         self.jackGroup.setTitle(translate("JackSinkSettings", "Connections"))
         self.connectionsEdit.setText(
             translate("JackSinkSettings", "Edit connections")

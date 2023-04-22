@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2022 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ from threading import Thread, Lock, RLock
 def async_function(target):
     """Decorator. Make a function asynchronous.
 
-    The decorated function is executed in a differed thread.
+    The decorated function is executed in a different thread.
     """
 
     @wraps(target)
