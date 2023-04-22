@@ -332,7 +332,7 @@ class CueSelectionDelegate(LabelDelegate):
     def _text(self, option, index):
         cue = self.cue_model.get(index.data())
         if cue is not None:
-            return f"{cue.index} | {cue.name}"
+            return f"{cue.index+1} | {cue.name}"
 
         return "UNDEF"
 
