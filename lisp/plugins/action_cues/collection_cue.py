@@ -42,21 +42,36 @@ from lisp.ui.ui_utils import translate
 class CollectionCue(Cue):
     Name = QT_TRANSLATE_NOOP("CueName", "Collection Cue")
     Category = QT_TRANSLATE_NOOP("CueCategory", "Action cues")
+    CueActions = (CueAction.Default, CueAction.Start, CueAction.Stop)
 
     targets = Property(default=[])
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.name = translate("CueName", self.Name)
+        self.ended_cues_count = 0
 
     def __start__(self, fade=False):
         for target_id, action in self.targets:
             cue = self.app.cue_model.get(target_id)
             if cue is not self:
+                cue.end.connect(self.mark_as_done)
                 cue.execute(action=CueAction[action])
 
-        return False
+        return True
 
+    def __stop__(self, fade=False):
+        for target_id, action in self.targets:
+            self.app.cue_model.get(target_id).end.disconnect(self.mark_as_done)
+        self.ended_cues_count = 0
+
+        return True
+
+    def mark_as_done(self, cue):
+        self.ended_cues_count += 1
+        if self.ended_cues_count == len(self.targets):
+            self.ended_cues_count = 0
+            self._ended()
 
 class CollectionCueSettings(SettingsPage):
     Name = QT_TRANSLATE_NOOP("SettingsPageName", "Edit Collection")
