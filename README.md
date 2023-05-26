@@ -7,7 +7,7 @@ Every component on which LiSP relies (python3, GStreamer and Qt5) is multi-platf
 
 No special hardware is required to run LiSP, but some processing operations would surely take benefit from a recent CPU.
 
-For bugs/requests an issue can be open on the GitHub issues-tracker, for everything else [gitter](https://gitter.im/linux-show-player/linux-show-player) can be used.
+For bugs/requests an issue can be open on the GitHub issues-tracker, for everything else use the [discussions section](https://github.com/FrancescoCeruti/linux-show-player/discussions) or chat on [gitter](https://gitter.im/linux-show-player/linux-show-player).
 
 ---
 
