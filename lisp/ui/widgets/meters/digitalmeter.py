@@ -67,11 +67,11 @@ class DigitalMeter(QWidget):
         self.clipping = {}
 
         self._currentSmoothing = self.valueSmoothing
-        self._markings = []
         self._meterPixmap = QPixmap()
-        self._markingsPixmap = QPixmap()
-        self._scaleWidth = self.scaleWidth()
-        self._canDisplayScale = True
+        self._outerScale = []
+        self._outerScaleWidth = self.outerScaleWidth()
+        self._canDisplayOuterScale = True
+        self._innerScalePixmap = QPixmap()
 
     def reset(self):
         self.peaks = [self.scale.min] * len(self.peaks)
@@ -89,11 +89,11 @@ class DigitalMeter(QWidget):
     def metersWidth(self, forceScale: bool = False):
         metersCount = self.metersCount()
         totalSpacing = self.metersSpacing * (metersCount - 1)
-        scaleWidth = self._scaleWidth * int(self._canDisplayScale or forceScale)
+        outerScaleWidth = self._outerScaleWidth * int(self._canDisplayOuterScale or forceScale)
 
-        return int((self.width() - totalSpacing - scaleWidth) / metersCount)
+        return int((self.width() - totalSpacing - outerScaleWidth) / metersCount)
 
-    def scaleWidth(self):
+    def outerScaleWidth(self):
         return (
             max(
                 QFontMetrics(self.font()).width(str(self.scale.min)),
@@ -122,14 +122,14 @@ class DigitalMeter(QWidget):
         self.decayPeaks = decayPeak
 
         if updatePixmaps:
-            self.updateMarkings()
+            self.updateOuterScale()
+            self.updateInnerScalePixmap()
             self.updateMeterPixmap()
-            self.updateMarkingsPixmap()
 
         self.update(
             0,
             0,
-            self.width() - (self._scaleWidth if self._canDisplayScale else 0),
+            self.width() - (self._outerScaleWidth if self._canDisplayOuterScale else 0),
             self.height()
         )
 
@@ -150,8 +150,8 @@ class DigitalMeter(QWidget):
             0, 0, meterWidth, meterHeight, gradient
         )
 
-    def updateMarkings(self):
-        self._markings = []
+    def updateOuterScale(self):
+        self._outerScale = []
 
         fm = QFontMetrics(self.font())
         height = self.metersHeight() - 1
@@ -171,27 +171,27 @@ class DigitalMeter(QWidget):
                     break
 
             if currY < height - stepMixHeight:
-                self._markings.append([ceil(currY), currLevel])
+                self._outerScale.append([ceil(currY), currLevel])
 
-    def updateMarkingsPixmap(self):
+    def updateInnerScalePixmap(self):
         meterWidth = self.metersWidth()
 
-        self._markingsPixmap = QPixmap(meterWidth, self.height())
-        self._markingsPixmap.fill(Qt.GlobalColor.transparent)
+        self._innerScalePixmap = QPixmap(meterWidth, self.height())
+        self._innerScalePixmap.fill(Qt.GlobalColor.transparent)
 
-        with QPainter(self._markingsPixmap) as painter:
+        with QPainter(self._innerScalePixmap) as painter:
             painter.setPen(self.scaleColor)
             painter.setFont(self.font())
 
-            for i, mark in enumerate(self._markings):
+            for i, mark in enumerate(self._outerScale):
                 painter.drawLine(meterWidth - 10, mark[0], meterWidth, mark[0])
 
     def resizeEvent(self, event):
-        self._canDisplayScale = self.metersWidth(True) >= 10
+        self._canDisplayOuterScale = self.metersWidth(True) >= 10
 
-        self.updateMarkings()
+        self.updateOuterScale()
+        self.updateInnerScalePixmap()
         self.updateMeterPixmap()
-        self.updateMarkingsPixmap()
 
     def paintEvent(self, event):
         painter = QPainter()
@@ -242,15 +242,15 @@ class DigitalMeter(QWidget):
             )
 
             # Draw inner markings
-            painter.drawPixmap(peakAreaRect.topLeft(), self._markingsPixmap)
+            painter.drawPixmap(peakAreaRect.topLeft(), self._innerScalePixmap)
 
             # Move to the next meter
             meterRect.translate(meterRect.width() + self.metersSpacing, 0)
             peakAreaRect.translate(meterRect.width() + self.metersSpacing, 0)
 
         # Draw the meter scale, when needed
-        if self._canDisplayScale and event.region().contains(
-            QPoint(self.width() - self._scaleWidth, 0)
+        if self._canDisplayOuterScale and event.region().contains(
+            QPoint(self.width() - self._outerScaleWidth, 0)
         ):
             self.drawScale(painter)
 
@@ -258,16 +258,16 @@ class DigitalMeter(QWidget):
 
     def drawScale(self, painter: QPainter):
         # Draw the scale marking text
-        x = self.width() - self._scaleWidth
+        x = self.width() - self._outerScaleWidth
         textHeight = QFontMetrics(self.font()).height()
         textOffset = textHeight / 2
 
         painter.setPen(self.palette().windowText().color())
 
         painter.drawText(QPointF(x, 0), str(self.scale.max))
-        for mark in self._markings:
+        for mark in self._outerScale:
             painter.drawText(
-                QRectF(x, mark[0] - textOffset, self._scaleWidth, textHeight),
+                QRectF(x, mark[0] - textOffset, self._outerScaleWidth, textHeight),
                 Qt.AlignVCenter | Qt.AlignRight,
                 str(mark[1]),
             )
