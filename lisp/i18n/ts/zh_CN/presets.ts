@@ -129,12 +129,12 @@
     <message>
       <location filename="../../../plugins/presets/presets.py" line="74"/>
       <source>Apply to cue</source>
-      <translation type="unfinished">Apply to cue</translation>
+      <translation>应用到提示</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets.py" line="76"/>
       <source>Apply to selected cues</source>
-      <translation type="unfinished">Apply to selected cues</translation>
+      <translation>应用于选定的提示</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets.py" line="80"/>
