@@ -21,18 +21,17 @@ from lisp.plugins.gst_backend.gi_repository import GObject, Gst, GstPbutils
 
 
 def gst_uri_duration(uri: SessionURI):
-    # First try to use the base implementation, because it's faster
     duration = 0
+
+    # First we try to use the base implementation, because it's faster
     if uri.is_local:
         duration = audio_file_duration(uri.absolute_path)
 
-    try:
-        # Fallback to GStreamer discoverer
-        # TODO: we can probabbly make this faster see https://github.com/mopidy/mopidy/blob/develop/mopidy/audio/scan.py
-        if duration <= 0:
-            duration = gst_uri_metadata(uri).get_duration() // Gst.MSECOND
-    finally:
-        return duration if duration >= 0 else 0
+    # Fallback to GStreamer discoverer
+    if duration <= 0:
+        duration = gst_uri_metadata(uri).get_duration() // Gst.MSECOND
+
+    return duration if duration >= 0 else 0
 
 
 def gst_mime_types():
