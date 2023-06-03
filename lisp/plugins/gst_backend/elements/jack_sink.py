@@ -80,6 +80,7 @@ class JackSink(GstMediaElement):
             JackSink._clients.remove(self._client_id)
         finally:
             if not JackSink._clients:
+                JackSink._ControlClient.deactivate()
                 JackSink._ControlClient.close()
                 JackSink._ControlClient = None
 
