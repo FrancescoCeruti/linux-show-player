@@ -37,17 +37,17 @@
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="105"/>
       <source>-- All Messages --</source>
-      <translation>-- 所有讯息 --</translation>
+      <translation>-- 所有消息 --</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="125"/>
       <source>Capture</source>
-      <translation>捕捉输入</translation>
+      <translation>捕获</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="127"/>
       <source>Capture filter</source>
-      <translation>捕捉过滤</translation>
+      <translation>捕获过滤器</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="162"/>
@@ -103,7 +103,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="110"/>
       <source>/path/to/method</source>
-      <translation>方法路径</translation>
+      <translation>路径/到/方法</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="238"/>
@@ -128,7 +128,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="295"/>
       <source>Capture</source>
-      <translation>捕捉输入</translation>
+      <translation>捕获</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="340"/>
@@ -199,37 +199,37 @@ do not forget to edit the path later.</source>
     <message>
       <location filename="../../../plugins/controller/common.py" line="42"/>
       <source>Reset</source>
-      <translation>重设</translation>
+      <translation>重置</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="43"/>
       <source>Stop all cues</source>
-      <translation>停止所有 Cue</translation>
+      <translation>停止所有提示</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="44"/>
       <source>Pause all cues</source>
-      <translation>暂停所有 Cue</translation>
+      <translation>暂停所有提示</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="45"/>
       <source>Resume all cues</source>
-      <translation>恢复所有 Cue</translation>
+      <translation>恢复所有提示</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="48"/>
       <source>Interrupt all cues</source>
-      <translation>中断所有 Cue</translation>
+      <translation>中断所有提示</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="51"/>
       <source>Fade-out all cues</source>
-      <translation>淡出所有 Cue</translation>
+      <translation>淡出所有提示</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="54"/>
       <source>Fade-in all cues</source>
-      <translation>淡入所有 Cue</translation>
+      <translation>淡入所有提示</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="57"/>
@@ -273,7 +273,7 @@ do not forget to edit the path later.</source>
     <message>
       <location filename="../../../plugins/controller/controller_settings.py" line="25"/>
       <source>Cue Control</source>
-      <translation>Cue 控制</translation>
+      <translation>提示控制</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/controller_settings.py" line="41"/>
