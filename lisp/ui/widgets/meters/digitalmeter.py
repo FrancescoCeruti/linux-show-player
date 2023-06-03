@@ -55,6 +55,7 @@ class DigitalMeter(QWidget):
         self.scaleColor = QColor(90, 90, 90)
         self.clippingColor = QColor(220, 50, 50)
         self.metersSpacing = 3
+        self.minMeterWith = 10
 
         font = QFontDatabase.systemFont(QFontDatabase.FixedFont)
         font.setPointSize(font.pointSize() - 3)
@@ -175,6 +176,7 @@ class DigitalMeter(QWidget):
 
     def updateInnerScalePixmap(self):
         meterWidth = self.metersWidth()
+        innerScaleX = meterWidth - max(meterWidth - meterWidth // 2, self.minMeterWith)
 
         self._innerScalePixmap = QPixmap(meterWidth, self.height())
         self._innerScalePixmap.fill(Qt.GlobalColor.transparent)
@@ -184,10 +186,10 @@ class DigitalMeter(QWidget):
             painter.setFont(self.font())
 
             for i, mark in enumerate(self._outerScale):
-                painter.drawLine(meterWidth - 10, mark[0], meterWidth, mark[0])
+                painter.drawLine(innerScaleX, mark[0], meterWidth, mark[0])
 
     def resizeEvent(self, event):
-        self._canDisplayOuterScale = self.metersWidth(True) >= 10
+        self._canDisplayOuterScale = self.metersWidth(True) >= self.minMeterWith
 
         self.updateOuterScale()
         self.updateInnerScalePixmap()
