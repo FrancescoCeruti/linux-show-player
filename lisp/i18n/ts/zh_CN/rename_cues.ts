@@ -70,16 +70,16 @@ Example:
 Only the numbers are between parenthesis and will be usable with $0 in the first line.
 
 For more information about Regexes, consult python documentation at: https://docs.python.org/3/howto/regex.html#regex-howto</source>
-      <translation type="unfinished">You can use Regexes to rename your cues.
+      <translation>您可以使用正则表达式来重命名您的提示。
 
-Insert expressions captured with regexes in the line below with $0 for the first parenthesis, $1 forthe second, etc...
-In the second line, you can use standard Python Regexes to match expressions in the original cues names. Use parenthesis to capture parts of the matched expression.
+在下面的行中插入用正则表达式捕获的表达式，第一个括号为 $0，第二个括号为 $1，等等...
+在第二行中，您可以使用标准 Python 正则表达式来匹配原始提示名称中的表达式。 使用括号来捕获匹配表达式的部分内容。
 
-Example: 
-^[a-z]([0-9]+) will find a lower case character([a-z]), followed by one or more number.
-Only the numbers are between parenthesis and will be usable with $0 in the first line.
+例：
+^[a-z]([0-9]+) 将找到一个小写字符 ([a-z])，后跟一个或多个数字。
+只有数字在括号之间并且可以在第一行中使用 $0。
 
-For more information about Regexes, consult python documentation at: https://docs.python.org/3/howto/regex.html#regex-howto</translation>
+有关正则表达式的更多信息，请参阅 Python 文档：https://docs.python.org/3/howto/regex.html#regex-howto</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="57"/>
