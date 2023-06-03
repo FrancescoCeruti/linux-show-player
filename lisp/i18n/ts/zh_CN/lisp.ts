@@ -165,7 +165,7 @@
     <message>
       <location filename="../../../core/configuration.py" line="215"/>
       <source>Configuration read from {}</source>
-      <translation type="unfinished">Configuration read from {}</translation>
+      <translation>从 {} 读取的配置</translation>
     </message>
     <message>
       <location filename="../../../core/configuration.py" line="225"/>
@@ -349,7 +349,7 @@
     <message>
       <location filename="../../../ui/settings/app_pages/cue.py" line="64"/>
       <source>Interrupt fade</source>
-      <translation type="unfinished">Interrupt fade</translation>
+      <translation>中断淡入淡出</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/cue.py" line="66"/>
@@ -359,12 +359,12 @@
     <message>
       <location filename="../../../ui/settings/app_pages/cue.py" line="72"/>
       <source>Fallback fade settings</source>
-      <translation type="unfinished">Fallback fade settings</translation>
+      <translation>回退淡入淡出设置</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/cue.py" line="75"/>
       <source>Used for fade-in and fade-out actions, for cues where fade duration is set to 0.</source>
-      <translation type="unfinished">Used for fade-in and fade-out actions, for cues where fade duration is set to 0.</translation>
+      <translation>用于淡入淡出动作，用于淡入淡出持续时间设置为 0 的提示。</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="112"/>
