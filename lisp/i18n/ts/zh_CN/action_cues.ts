@@ -16,7 +16,7 @@
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="180"/>
       <source>Cue</source>
-      <translation>Cue</translation>
+      <translation>提示</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="181"/>
@@ -29,32 +29,32 @@
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="130"/>
       <source>Command</source>
-      <translation>指令</translation>
+      <translation>命令</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="132"/>
       <source>Command to execute, as in a shell</source>
-      <translation>要执行的 Shell 指令</translation>
+      <translation>要执行的 Shell 命令</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="135"/>
       <source>Discard command output</source>
-      <translation>舍弃指令输出</translation>
+      <translation>舍弃命令输出</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="138"/>
       <source>Ignore command errors</source>
-      <translation>忽略指令错误</translation>
+      <translation>忽略命令错误</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="141"/>
       <source>Kill instead of terminate</source>
-      <translation>传送 kil l讯号而非 terminate 讯号</translation>
+      <translation>杀死而不是终止</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="80"/>
       <source>Command cue ended with an error status. Exit code: {}</source>
-      <translation>指令 Cue 发生错误。退出代码：{}</translation>
+      <translation>命令提示以错误状态结束。 退出代码：{}</translation>
     </message>
   </context>
   <context>
@@ -62,7 +62,7 @@
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="40"/>
       <source>Action cues</source>
-      <translation>动作 Cues</translation>
+      <translation>动作提示</translation>
     </message>
   </context>
   <context>
@@ -70,12 +70,12 @@
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="40"/>
       <source>Seek Cue</source>
-      <translation>跳转 Cue</translation>
+      <translation>查询提示</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="43"/>
       <source>Collection Cue</source>
-      <translation>动作集合 Cue</translation>
+      <translation>动作集合提示</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/stop_all.py" line="29"/>
@@ -85,7 +85,7 @@
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="40"/>
       <source>Command Cue</source>
-      <translation>指令 Cue</translation>
+      <translation>命令提示</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="54"/>
@@ -128,7 +128,7 @@
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="131"/>
       <source>Suggested cue name</source>
-      <translation>建议的 Cue 名称</translation>
+      <translation>建议的提示名称</translation>
     </message>
   </context>
   <context>
@@ -136,7 +136,7 @@
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="99"/>
       <source>Cue</source>
-      <translation>Cue</translation>
+      <translation>提示</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="100"/>
@@ -151,12 +151,12 @@
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="102"/>
       <source>Seek</source>
-      <translation>跳转</translation>
+      <translation>查询</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="103"/>
       <source>Time to reach</source>
-      <translation>跳到时间</translation>
+      <translation>到达时间</translation>
     </message>
   </context>
   <context>
@@ -164,7 +164,7 @@
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="59"/>
       <source>Seek Settings</source>
-      <translation>跳转设定</translation>
+      <translation>查询设置</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="108"/>
@@ -179,7 +179,7 @@
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="104"/>
       <source>Command</source>
-      <translation>指令</translation>
+      <translation>命令</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="129"/>
@@ -197,7 +197,7 @@
     <message>
       <location filename="../../../plugins/action_cues/stop_all.py" line="73"/>
       <source>Stop Action</source>
-      <translation>停止方式</translation>
+      <translation>停止动作</translation>
     </message>
   </context>
   <context>
@@ -205,7 +205,7 @@
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="187"/>
       <source>Cue</source>
-      <translation>Cue</translation>
+      <translation>提示</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="188"/>
@@ -233,7 +233,7 @@
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="120"/>
       <source>Error during cue execution.</source>
-      <translation>执行 Cue 期间发生错误</translation>
+      <translation>提示执行期间出错。</translation>
     </message>
   </context>
 </TS>
