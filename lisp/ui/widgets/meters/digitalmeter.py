@@ -126,7 +126,12 @@ class DigitalMeter(QWidget):
             self.updateMeterPixmap()
             self.updateMarkingsPixmap()
 
-        self.update(0, 0, self.width() - self._scaleWidth, self.height())
+        self.update(
+            0,
+            0,
+            self.width() - (self._scaleWidth if self._canDisplayScale else 0),
+            self.height()
+        )
 
     def updateMeterPixmap(self):
         """Prepare the colored rect to be used during paintEvent(s)"""
