@@ -11,7 +11,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/alsa_sink.py" line="65"/>
       <source>To make your custom PCM objects appear correctly in this list requires adding a 'hint.description' line to them.</source>
-      <translation>若要正确显示自订PCM物件，需插入「hint.description」到此表。</translation>
+      <translation>要使您的自定义 PCM 对象正确显示在此列表中，需要向它们添加“hint.description”行。</translation>
     </message>
   </context>
   <context>
@@ -59,7 +59,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_dynamic.py" line="109"/>
       <source>Threshold (dB)</source>
-      <translation>阀值 (分貝)</translation>
+      <translation>阈值（分贝）</translation>
     </message>
   </context>
   <context>
@@ -72,7 +72,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_pan.py" line="79"/>
       <source>Center</source>
-      <translation>中</translation>
+      <translation>中央</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_pan.py" line="75"/>
@@ -90,7 +90,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_backend.py" line="81"/>
       <source>Media cues</source>
-      <translation>媒体 cues</translation>
+      <translation>媒体提示</translation>
     </message>
   </context>
   <context>
@@ -98,12 +98,12 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/db_meter.py" line="84"/>
       <source>DbMeter settings</source>
-      <translation>分貝计设定</translation>
+      <translation>分贝计设置</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/db_meter.py" line="86"/>
       <source>Time between levels (ms)</source>
-      <translation>阶级之间的时间 (毫秒)</translation>
+      <translation>级别之间的时间（毫秒）</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/db_meter.py" line="88"/>
@@ -113,7 +113,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/db_meter.py" line="90"/>
       <source>Peak falloff (dB/sec)</source>
-      <translation>峰值下跌率 (分貝/秒)</translation>
+      <translation>峰值衰减（分贝/秒）</translation>
     </message>
   </context>
   <context>
@@ -121,7 +121,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/equalizer10.py" line="53"/>
       <source>10 Bands Equalizer (IIR)</source>
-      <translation>10频段均衡器 (无限冲击响应滤波器)</translation>
+      <translation>10 波段均衡器 (IIR)</translation>
     </message>
   </context>
   <context>
@@ -129,12 +129,12 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_backend.py" line="79"/>
       <source>Audio cue (from file)</source>
-      <translation>媒体 Cue (从档案汇入)</translation>
+      <translation>音频提示（来自文件）</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/gst_backend.py" line="132"/>
       <source>Select media files</source>
-      <translation>选择媒体档案</translation>
+      <translation>选择媒体文件</translation>
     </message>
   </context>
   <context>
@@ -179,7 +179,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_settings.py" line="56"/>
       <source>Applied only to new cues.</source>
-      <translation>只套用于新 Cue</translation>
+      <translation>只应用于新提示</translation>
     </message>
   </context>
   <context>
@@ -187,7 +187,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/elements/jack_sink.py" line="135"/>
       <source>An error occurred while disconnecting Jack ports</source>
-      <translation type="unfinished">An error occurred while disconnecting Jack ports</translation>
+      <translation>断开 Jack 端口时出错</translation>
     </message>
   </context>
   <context>
@@ -195,12 +195,12 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/jack_sink.py" line="78"/>
       <source>Connections</source>
-      <translation>联系</translation>
+      <translation>连接</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/jack_sink.py" line="80"/>
       <source>Edit connections</source>
-      <translation>编辑联系</translation>
+      <translation>编辑连接</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/jack_sink.py" line="336"/>
@@ -337,7 +337,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/config/alsa_sink.py" line="25"/>
       <source>ALSA Default Device</source>
-      <translation type="unfinished">ALSA Default Device</translation>
+      <translation>ALSA 默认设备</translation>
     </message>
   </context>
   <context>
