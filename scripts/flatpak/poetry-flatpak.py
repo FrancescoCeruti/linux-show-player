@@ -3,11 +3,11 @@
 import argparse
 import json
 import re
-import sys
 import urllib.parse
 import urllib.request
 from collections import OrderedDict
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from pathlib import Path
 from typing import Mapping
 
 import toml
@@ -101,12 +101,25 @@ def get_locked_packages(parsed_lockfile: Mapping, exclude=tuple()) -> list:
 
     for package in packages:
         if (
-            package.get("category") == "main"
-            and not package.get("optional")
+            not package.get("optional")
             and package.get("source") is None
             and package.get("name").lower() not in exclude
         ):
             dependencies.append(package)
+
+    return dependencies
+
+
+def get_dependencies(parsed_pyproject: Mapping, exclude=tuple()) -> list[str]:
+    try:
+        parsed_dependencies = parsed_pyproject["tool"]["poetry"]["dependencies"]
+    except (KeyError, TypeError):
+        return []
+
+    dependencies = []
+    for dependency in parsed_dependencies:
+        if dependency.lower() not in exclude and dependency.lower() != "python":
+            dependencies.append(dependency)
 
     return dependencies
 
@@ -118,10 +131,18 @@ def main():
     parser.add_argument("-o", dest="outfile", default="python-modules.json")
     args = parser.parse_args()
 
-    parsed_lockfile = toml.load(args.lockfile)
-    dependencies = get_locked_packages(parsed_lockfile, exclude=args.exclude)
-    print(f"Found {len(dependencies)} required packages in {args.lockfile}")
+    # Get the required packages from the pyproject file
+    pyproject = Path(args.lockfile).parent.joinpath("pyproject.toml")
+    parsed_pyproject = toml.load(pyproject)
+    dependencies = get_dependencies(parsed_pyproject, exclude=args.exclude)
+    print(f"Found {len(dependencies)} dependencies in {pyproject}")
 
+    # Get packages sources from the poetry.lock file
+    parsed_lockfile = toml.load(args.lockfile)
+    locked_packages = get_locked_packages(parsed_lockfile, exclude=args.exclude)
+    print(f"Found {len(locked_packages)} packages in {args.lockfile}")
+
+    # Compose the "pip install" command
     pip_command = [
         "pip3",
         "install",
@@ -129,7 +150,7 @@ def main():
         "--no-build-isolation",
         '--find-links="file://${PWD}"',
         "--prefix=${FLATPAK_DEST}",
-        " ".join([d["name"] for d in dependencies]),
+        " ".join(dependencies),
     ]
     main_module = OrderedDict(
         [
@@ -140,7 +161,7 @@ def main():
     )
 
     print("Fetching metadata from pypi")
-    sources = get_packages_sources(dependencies, parsed_lockfile)
+    sources = get_packages_sources(locked_packages, parsed_lockfile)
     main_module["sources"] = sources
 
     print(f'Writing modules to "{args.outfile}"')
