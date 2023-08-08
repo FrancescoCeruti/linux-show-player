@@ -45,6 +45,6 @@ class LinearScale(Scale):
         if value < self.min:
             return 0
         elif value < self.max:
-            return 1 + (value / (abs(self.min) + abs(self.max)))
+            return (value - self.min) / (self.max - self.min)
 
         return 1

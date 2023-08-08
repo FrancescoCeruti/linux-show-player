@@ -55,7 +55,7 @@ class DigitalMeter(QWidget):
         self.scaleColor = QColor(90, 90, 90)
         self.clippingColor = QColor(220, 50, 50)
         self.metersSpacing = 3
-        self.minMeterWith = 10
+        self.minMeterWidth = 10
 
         font = QFontDatabase.systemFont(QFontDatabase.FixedFont)
         font.setPointSize(font.pointSize() - 3)
@@ -82,7 +82,8 @@ class DigitalMeter(QWidget):
         self.update()
 
     def metersHeight(self):
-        return self.height()
+        # Subtract 1 to address border width
+        return self.height() - 1
 
     def metersCount(self):
         return len(self.peaks)
@@ -90,9 +91,15 @@ class DigitalMeter(QWidget):
     def metersWidth(self, forceScale: bool = False):
         metersCount = self.metersCount()
         totalSpacing = self.metersSpacing * (metersCount - 1)
-        outerScaleWidth = self._outerScaleWidth * int(self._canDisplayOuterScale or forceScale)
+        bordersOverflow = self.metersCount()
+        outerScaleWidth = self._outerScaleWidth * int(
+            self._canDisplayOuterScale or forceScale
+        )
 
-        return int((self.width() - totalSpacing - outerScaleWidth) / metersCount)
+        return int(
+            (self.width() - totalSpacing - bordersOverflow - outerScaleWidth)
+            / metersCount
+        )
 
     def outerScaleWidth(self):
         return (
@@ -130,8 +137,9 @@ class DigitalMeter(QWidget):
         self.update(
             0,
             0,
-            self.width() - (self._outerScaleWidth if self._canDisplayOuterScale else 0),
-            self.height()
+            self.width()
+            - (self._outerScaleWidth if self._canDisplayOuterScale else 0),
+            self.height(),
         )
 
     def updateMeterPixmap(self):
@@ -155,7 +163,7 @@ class DigitalMeter(QWidget):
         self._outerScale = []
 
         fm = QFontMetrics(self.font())
-        height = self.metersHeight() - 1
+        height = self.metersHeight()
         # We assume that we're using numerals that lack descenders
         stepMixHeight = fm.ascent() * 1.25
         currLevel = self.scale.max
@@ -176,7 +184,9 @@ class DigitalMeter(QWidget):
 
     def updateInnerScalePixmap(self):
         meterWidth = self.metersWidth()
-        innerScaleX = meterWidth - max(meterWidth - meterWidth // 2, self.minMeterWith)
+        innerScaleX = meterWidth - max(
+            meterWidth - meterWidth // 2, self.minMeterWidth
+        )
 
         self._innerScalePixmap = QPixmap(meterWidth, self.height())
         self._innerScalePixmap.fill(Qt.GlobalColor.transparent)
@@ -189,7 +199,9 @@ class DigitalMeter(QWidget):
                 painter.drawLine(innerScaleX, mark[0], meterWidth, mark[0])
 
     def resizeEvent(self, event):
-        self._canDisplayOuterScale = self.metersWidth(True) >= self.minMeterWith
+        self._canDisplayOuterScale = (
+            self.metersWidth(True) >= self.minMeterWidth
+        )
 
         self.updateOuterScale()
         self.updateInnerScalePixmap()
@@ -269,7 +281,9 @@ class DigitalMeter(QWidget):
         painter.drawText(QPointF(x, 0), str(self.scale.max))
         for mark in self._outerScale:
             painter.drawText(
-                QRectF(x, mark[0] - textOffset, self._outerScaleWidth, textHeight),
+                QRectF(
+                    x, mark[0] - textOffset, self._outerScaleWidth, textHeight
+                ),
                 Qt.AlignVCenter | Qt.AlignRight,
                 str(mark[1]),
             )
