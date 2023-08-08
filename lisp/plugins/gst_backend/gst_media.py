@@ -139,6 +139,10 @@ class GstMedia(Media):
         if self.__seek(position):
             self.sought.emit(self, position)
 
+    def loop_release(self):
+        # if self.state == MediaState.Playing or self.state == MediaState.Paused:
+        self.__loop = 0
+
     def element(self, class_name):
         return getattr(self.elements, class_name, None)
 
@@ -299,6 +303,3 @@ class GstMedia(Media):
 
     def __duration_changed(self, duration):
         self.duration = duration
-
-    def loop_release(self):
-        self.__loop = 0

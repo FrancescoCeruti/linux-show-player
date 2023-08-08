@@ -502,6 +502,10 @@ class Cue(HasProperties):
         :type fade: bool
         """
 
+    def loop_release(self):
+        """Release any remaining cue loops."""
+        pass
+
     def fadein(self, duration, fade_type):
         """Fade-in the cue.
 

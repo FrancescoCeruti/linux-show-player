@@ -161,6 +161,9 @@ class MediaCue(Cue):
 
         self._st_lock.release()
 
+    def loop_release(self):
+        self.media.loop_release()
+
     @async_function
     def fadeout(self, duration, fade_type):
         if not self._st_lock.acquire(timeout=0.1):
@@ -241,6 +244,3 @@ class MediaCue(Cue):
                 self.__volume.volume,
                 FadeInType[self.fadein_type],
             )
-
-    def loop_release(self):
-        self.media.loop_release()
