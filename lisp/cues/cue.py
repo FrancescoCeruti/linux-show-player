@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2022 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2023 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -60,6 +60,7 @@ class CueAction(EqEnum):
     Pause = "Pause"
     Stop = "Stop"
     DoNothing = "DoNothing"
+    LoopRelease = "LoopRelease"
 
 
 class CueNextAction(EqEnum):
@@ -238,6 +239,8 @@ class Cue(HasProperties):
                         self._default_fade_duration(),
                         self._default_fade_type(FadeInType, FadeInType.Linear),
                     )
+            elif action == CueAction.LoopRelease:
+                self.loop_release()
 
     def _interrupt_fade_duration(self):
         return self.app.conf.get("cue.interruptFade", 0)
@@ -498,6 +501,10 @@ class Cue(HasProperties):
         :param fade: True if a fade should be performed (when supported)
         :type fade: bool
         """
+
+    def loop_release(self):
+        """Release any remaining cue loops."""
+        pass
 
     def fadein(self, duration, fade_type):
         """Fade-in the cue.

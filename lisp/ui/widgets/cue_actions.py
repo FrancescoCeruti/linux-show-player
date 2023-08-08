@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2023 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -35,6 +35,7 @@ CueActionsStrings = {
     CueAction.Pause: QT_TRANSLATE_NOOP("CueAction", "Pause"),
     CueAction.Stop: QT_TRANSLATE_NOOP("CueAction", "Stop"),
     CueAction.DoNothing: QT_TRANSLATE_NOOP("CueAction", "Do Nothing"),
+    CueAction.LoopRelease: QT_TRANSLATE_NOOP("CueAction", "Release from Loop"),
 }
 
 

@@ -86,6 +86,7 @@ class CueBehavioursPage(CueSettingsPage):
                 CueAction.Pause,
                 CueAction.FadeOutStop,
                 CueAction.FadeOutPause,
+                CueAction.LoopRelease,
             }
             .intersection(self.cueType.CueActions)
             .union({CueAction.DoNothing}),

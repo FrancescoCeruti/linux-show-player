@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2023 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -138,6 +138,10 @@ class GstMedia(Media):
     def seek(self, position):
         if self.__seek(position):
             self.sought.emit(self, position)
+
+    def loop_release(self):
+        # if self.state == MediaState.Playing or self.state == MediaState.Paused:
+        self.__loop = 0
 
     def element(self, class_name):
         return getattr(self.elements, class_name, None)
