@@ -28,6 +28,8 @@ from lisp.ui.ui_utils import translate
 class MediaCueSettings(SettingsPage):
     Name = 'Media-Cue'
 
+    MinWidth = 420
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.setLayout(QVBoxLayout(self))

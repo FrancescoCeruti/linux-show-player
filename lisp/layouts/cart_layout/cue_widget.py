@@ -41,6 +41,7 @@ class CueWidget(QWidget):
     context_menu_request = pyqtSignal(object, QPoint)
     edit_request = pyqtSignal(object)
     cue_executed = pyqtSignal(object)
+    cue_selected = pyqtSignal()
 
     def __init__(self, cue, **kwargs):
         super().__init__(**kwargs)
@@ -285,6 +286,7 @@ class CueWidget(QWidget):
                     self.edit_request.emit(self.cue)
                 elif event.modifiers() == Qt.ControlModifier:
                     self.selected = not self.selected
+                    self.cue_selected.emit()
                 else:
                     self.cue_executed.emit(self.cue)
                     self.cue.execute()

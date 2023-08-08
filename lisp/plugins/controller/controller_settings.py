@@ -28,6 +28,8 @@ from lisp.ui.ui_utils import translate
 class ControllerSettings(CueSettingsPage):
     Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Cue Control')
 
+    MinHeight = 260
+
     def __init__(self, cue_class, **kwargs):
         super().__init__(cue_class, **kwargs)
         self.setLayout(QHBoxLayout())

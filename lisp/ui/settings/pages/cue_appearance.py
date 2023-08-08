@@ -29,6 +29,8 @@ from lisp.ui.ui_utils import translate
 class Appearance(SettingsPage):
     Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Appearance')
 
+    MinHeight = 350
+
     def __init__(self, **kwargs):
         super().__init__()
         self.setLayout(QVBoxLayout())
@@ -60,7 +62,7 @@ class Appearance(SettingsPage):
 
         # Color
         self.colorGroup = QGroupBox(self)
-        self.colorGroup.setLayout(QHBoxLayout())
+        self.colorGroup.setLayout(QVBoxLayout())
         self.layout().addWidget(self.colorGroup)
 
         self.colorBButton = QColorButton(self.colorGroup)

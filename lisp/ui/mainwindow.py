@@ -42,9 +42,10 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
     def __init__(self):
         super().__init__()
         self.setMinimumSize(500, 400)
+
         self.setCentralWidget(QWidget())
         self.centralWidget().setLayout(QVBoxLayout())
-        self.centralWidget().layout().setContentsMargins(5, 5, 5, 5)
+        self.centralWidget().layout().setContentsMargins(5, 5, 5, 0)
 
         self._cue_add_menu = {}
         self.layout = None

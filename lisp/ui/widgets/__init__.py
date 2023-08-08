@@ -4,6 +4,7 @@ from .qclicklabel import QClickLabel
 from .qclickslider import QClickSlider
 from .qcolorbutton import QColorButton
 from .qdbmeter import QDbMeter
+from .qfoldabletab import QFoldableTab
 from .qmessagebox import QDetailedMessageBox
 from .qmutebutton import QMuteButton
 from .qsteptimeedit import QStepTimeEdit

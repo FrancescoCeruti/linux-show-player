@@ -31,6 +31,9 @@ from lisp.ui.widgets.fade_edit import FadeEdit
 class CueGeneralSettings(CueSettingsPage):
     Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Cue')
 
+    MinHeight = 260
+    MinWidth = 430
+
     def __init__(self, cue_class, **kwargs):
         super().__init__(cue_class, **kwargs)
         self.setLayout(QVBoxLayout())

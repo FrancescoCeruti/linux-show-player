@@ -163,6 +163,8 @@ class Cue(HasProperties):
 
         self.changed('next_action').connect(self.__next_action_changed)
 
+        self.property_updated = Signal()
+
     def execute(self, action=CueAction.Default):
         """Execute the specified action, if supported.
 
@@ -520,3 +522,7 @@ class Cue(HasProperties):
         self.end.disconnect(self.next.emit)
         if next_action == CueNextAction.AutoFollow:
             self.end.connect(self.next.emit)
+
+    def update_properties(self, properties):
+        super().update_properties(properties)
+        self.property_updated.emit()

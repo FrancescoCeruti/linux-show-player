@@ -35,6 +35,8 @@ from lisp.ui.ui_utils import translate
 class TriggersSettings(SettingsPage):
     Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Triggers')
 
+    MinWidth = 380
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.setLayout(QVBoxLayout(self))

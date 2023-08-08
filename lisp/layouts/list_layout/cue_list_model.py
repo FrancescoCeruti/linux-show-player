@@ -29,7 +29,8 @@ class CueListModel(ModelAdapter):
         self.__cues = []
 
     def item(self, index):
-        return self.__cues[index]
+        if index != -1:
+            return self.__cues[index]
 
     def insert(self, item, index):
         item.index = index
