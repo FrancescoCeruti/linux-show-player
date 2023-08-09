@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-PYTHON_VERSION=$(python3 -c 'import sys; print(sys.version[:3])')
+PYTHON_VERSION=$(python3 -c 'import sys; print("{}.{}".format(*sys.version_info))')
 
 sip-install \
     --qt-shared \

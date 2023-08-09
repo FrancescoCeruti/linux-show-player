@@ -16,7 +16,7 @@ The scripts in this folder allow to build a Flatpak package of Linux Show Player
  * ostree
  * flatpak >= 1.0
  * flatpak-builder
- * python >= 3.6
+ * python >= 3.9
    * packaging
    * toml
  * the BUILD_BRANCH variable to be set.
