@@ -9,8 +9,8 @@ hide-toc: true
 
 getting_started
 menus
-cart_layout
 list_layout
+cart_layout
 cues
 gst_media_settings
 gst_custom_elements

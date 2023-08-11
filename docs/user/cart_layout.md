@@ -60,14 +60,20 @@ to move/copy between pages, while dragging the cue, over the destination page.
 
 In the application settings (`File > Preferences`) various options are provided:
 
+### Default behaviours
+
+This can be changed per-show via the `Layout` menu.
+
 * **Countdown mode:** when enabled the current cue time is displayed as a countdown
 * **Show seek-bars:** when enabled a slider able to change the current playing position
   of media cues (for media cues)
 * **Show dB-meters:** when enabled, a dB level indicator is shown (for supported cues)
 * **Show accurate time:** when enabled the cue time is displayed including tens of seconds
 * **Show volume:** when enabled a volume slider is shown (for supported cues)
-* **Grid size:** define the number of rows & columns per page. (require to reload
-  the session)
+
+### Grid size
+
+Define the number of rows & columns per page (reload the session to apply).
 
 ```{warning}
 When the grid size is changed, cues will be visually shifted to keep their
