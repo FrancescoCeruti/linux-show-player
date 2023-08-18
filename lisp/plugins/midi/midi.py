@@ -25,7 +25,7 @@ from lisp.core.signal import Connection
 from lisp.plugins.midi.midi_cue import MidiCue
 from lisp.plugins.midi.midi_io import MIDIOutput, MIDIInput, MIDIBase
 from lisp.plugins.midi.midi_settings import MIDISettings
-from lisp.plugins.midi.midi_utils import midi_output_names, midi_input_names
+from lisp.plugins.midi.midi_utils import midi_output_names, midi_input_names, PortStatus
 from lisp.plugins.midi.port_monitor import ALSAPortMonitor
 from lisp.ui.settings.app_configuration import AppConfigurationDialog
 from lisp.ui.ui_utils import translate
@@ -106,12 +106,22 @@ class Midi(Plugin):
         patches = Midi.Config.get("inputDevices", None)
         return patches if patches else { "in#1": Midi.Config.get("inputDevice", self.__default_input) }
 
+    def input_status(self, patch_id):
+        if patch_id not in self.__inputs:
+            return PortStatus.DoesNotExist
+        return PortStatus.Open if self.__inputs[patch_id].is_open() else PortStatus.Closed
+
     def output_name(self, patch_id="out#1"):
         return self.__outputs[patch_id].port_name()
 
     def output_patches(self):
         patches = Midi.Config.get("outputDevices", None)
         return patches if patches else { "out#1": Midi.Config.get("outputDevice", self.__default_output) }
+
+    def output_status(self, patch_id):
+        if patch_id not in self.__outputs:
+            return PortStatus.DoesNotExist
+        return PortStatus.Open if self.__outputs[patch_id].is_open() else PortStatus.Closed
 
     def _on_port_removed(self):
         avail_names = self.backend.get_input_names()

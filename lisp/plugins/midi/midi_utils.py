@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2019 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2023 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+from enum import Enum
 from typing import Iterable
 
 import mido
@@ -75,6 +76,16 @@ MIDI_ATTRS_NAME = {
     "pitch": QT_TRANSLATE_NOOP("MIDIMessageAttr", "Pitch"),
     "pos": QT_TRANSLATE_NOOP("MIDIMessageAttr", "Position"),
 }
+
+
+DEFAULT_DEVICE_NAME = "Default"
+MAX_MIDI_DEVICES = 16 # 16 ins, 16 outs.
+
+
+class PortStatus(Enum):
+    Open = "✓" # U+2713
+    Closed = "×" # U+00D7
+    DoesNotExist = "~"
 
 
 def midi_backend() -> mido.Backend:

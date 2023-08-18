@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2023 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,11 +23,14 @@ from PyQt5.QtWidgets import (
     QGridLayout,
     QLabel,
     QCheckBox,
+    QPushButton,
     QSpacerItem,
 )
 
 from lisp.plugins import get_plugin
 from lisp.plugins.midi.midi_utils import midi_input_names, midi_output_names
+from lisp.plugins.midi.midi_io_device_model import MidiInputDeviceModel, MidiOutputDeviceModel
+from lisp.plugins.midi.midi_io_device_view import MidiIODeviceView
 from lisp.ui.icons import IconTheme
 from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.ui_utils import translate
@@ -76,6 +79,41 @@ class MIDISettings(SettingsPage):
         self.portsGroup.layout().setColumnStretch(0, 2)
         self.portsGroup.layout().setColumnStretch(1, 3)
 
+        # Input patches
+        self.inputGroup = QGroupBox(self)
+        self.inputGroup.setLayout(QGridLayout())
+        self.layout().addWidget(self.inputGroup)
+
+        self.inputModel = MidiInputDeviceModel()
+        self.inputView = MidiIODeviceView(self.inputModel, parent=self.inputGroup)
+        self.inputGroup.layout().addWidget(self.inputView, 0, 0, 1, 2)
+
+        self.inputAddButton = QPushButton(parent=self.inputGroup)
+        self.inputAddButton.pressed.connect(self.inputModel.appendPatch)
+        self.inputGroup.layout().addWidget(self.inputAddButton, 1, 0)
+
+        self.inputRemButton = QPushButton(parent=self.inputGroup)
+        self.inputRemButton.setEnabled(False)
+        self.inputGroup.layout().addWidget(self.inputRemButton, 1, 1)
+
+        # Output patches
+        self.outputGroup = QGroupBox(self)
+        self.outputGroup.setLayout(QGridLayout())
+        self.layout().addWidget(self.outputGroup)
+
+        self.outputModel = MidiOutputDeviceModel()
+        self.outputView = MidiIODeviceView(self.outputModel, parent=self.outputGroup)
+        self.outputGroup.layout().addWidget(self.outputView, 0, 0, 1, 2)
+
+        self.outputAddButton = QPushButton(parent=self.outputGroup)
+        self.outputAddButton.pressed.connect(self.outputModel.appendPatch)
+        self.outputGroup.layout().addWidget(self.outputAddButton, 1, 0)
+
+        self.outputRemButton = QPushButton(parent=self.outputGroup)
+        self.outputRemButton.setEnabled(False)
+        self.outputGroup.layout().addWidget(self.outputRemButton, 1, 1)
+
+        # Match by name
         self.miscGroup = QGroupBox(self)
         self.miscGroup.setLayout(QVBoxLayout())
         self.layout().addWidget(self.miscGroup)
@@ -108,6 +146,14 @@ class MIDISettings(SettingsPage):
             )
         )
 
+        self.inputGroup.setTitle(translate("MIDISettings", "MIDI Inputs"))
+        self.inputAddButton.setText(translate("MIDISettings", "Add"))
+        self.inputRemButton.setText(translate("MIDISettings", "Remove"))
+
+        self.outputGroup.setTitle(translate("MIDISettings", "MIDI Outputs"))
+        self.outputAddButton.setText(translate("MIDISettings", "Add"))
+        self.outputRemButton.setText(translate("MIDISettings", "Remove"))
+
     def loadSettings(self, settings):
         if settings["inputDevice"]:
             self.inputCombo.setCurrentText(settings["inputDevice"])
@@ -117,6 +163,8 @@ class MIDISettings(SettingsPage):
                 )
                 self.inputCombo.setCurrentIndex(1)
 
+            self.inputModel.deserialise(settings["inputDevice"])
+
         if settings["outputDevice"]:
             self.outputCombo.setCurrentText(settings["outputDevice"])
             if self.outputCombo.currentText() != settings["outputDevice"]:
@@ -124,6 +172,8 @@ class MIDISettings(SettingsPage):
                     1, IconTheme.get("dialog-warning"), settings["outputDevice"]
                 )
                 self.outputCombo.setCurrentIndex(1)
+
+            self.outputModel.deserialise(settings["outputDevice"])
 
         self.nameMatchCheckBox.setChecked(
             settings.get("connectByNameMatch", False)
@@ -156,6 +206,9 @@ class MIDISettings(SettingsPage):
             f"[{self.portStatusSymbol(midi.output)}] {midi.output.port_name()}"
         )
 
+        self.inputModel.updateStatuses()
+        self.outputModel.updateStatuses()
+
     def _loadDevices(self):
         self.inputCombo.clear()
         self.inputCombo.addItems(["Default"])
@@ -164,6 +217,9 @@ class MIDISettings(SettingsPage):
         self.outputCombo.clear()
         self.outputCombo.addItems(["Default"])
         self.outputCombo.addItems(midi_output_names())
+
+        self.inputView.setOptions(midi_input_names())
+        self.outputView.setOptions(midi_output_names())
 
     def _update(self):
         if self.isVisible():
