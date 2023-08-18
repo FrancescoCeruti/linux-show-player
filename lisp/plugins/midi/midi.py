@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2021 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2023 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -64,15 +64,17 @@ class Midi(Plugin):
         self.__default_input = avail_inputs[0] if avail_inputs else ""
         self.__default_output = avail_outputs[0] if avail_outputs else ""
 
-        # Create input handler and connect
-        current_input = self.input_name()
-        self.__input = MIDIInput(self.backend, current_input)
-        self._reconnect(self.__input, current_input, avail_inputs)
+        # Create input handlers and connect
+        self.__inputs = []
+        for name in self.input_names():
+            self.__inputs.append(MIDIInput(self.backend, name))
+            self._reconnect(self.__inputs[-1], name, avail_inputs)
 
-        # Create output handler and connect
-        current_output = self.output_name()
-        self.__output = MIDIOutput(self.backend, current_output)
-        self._reconnect(self.__output, current_output, avail_outputs)
+        # Create output handlers and connect
+        self.__outputs = []
+        for name in self.output_names():
+            self.__outputs.append(MIDIOutput(self.backend, name))
+            self._reconnect(self.__outputs[-1], name, avail_outputs)
 
         # Monitor ports, for auto-reconnection.
         # Since current midi backends are not reliable on
@@ -91,45 +93,57 @@ class Midi(Plugin):
 
     @property
     def input(self):
-        return self.__input
+        return self.__inputs[0]
 
     @property
     def output(self):
-        return self.__output
+        return self.__outputs[0]
 
     def input_name(self):
-        return Midi.Config["inputDevice"] or self.__default_input
+        return self.input_names()[0]
+
+    def input_names(self):
+        names = Midi.Config.get("inputDevices", None)
+        return names if names else [Midi.Config["inputDevice"] or self.__default_input]
 
     def output_name(self):
-        return Midi.Config["outputDevice"] or self.__default_output
+        return self.output_names()[0]
+
+    def output_names(self):
+        names = Midi.Config.get("outputDevices", None)
+        return names if names else [Midi.Config["outputDevice"] or self.__default_output]
 
     def _on_port_removed(self):
-        if self.__input.is_open():
-            if self.input_name() not in midi_input_names():
+        avail_names = self.backend.get_input_names()
+        for port in self.__inputs:
+            if port.is_open() and port.port_name() not in avail_names:
                 logger.info(
                     translate(
                         "MIDIInfo", "MIDI port disconnected: '{}'"
-                    ).format(self.__input.port_name())
+                    ).format(port.port_name())
                 )
-                self.__input.close()
+                port.close()
 
-        if self.__output.is_open():
-            if self.output_name() not in midi_output_names():
+        avail_names = self.backend.get_output_names()
+        for port in self.__outputs:
+            if port.is_open() and port.port_name() not in avail_names:
                 logger.info(
                     translate(
                         "MIDIInfo", "MIDI port disconnected: '{}'"
-                    ).format(self.__output.port_name())
+                    ).format(port.port_name())
                 )
-                self.__input.close()
+                port.close()
 
     def _on_port_added(self):
-        if not self.__input.is_open():
-            self._reconnect(self.__input, self.input_name(), midi_input_names())
+        avail_names = self.backend.get_input_names()
+        for port in self.__inputs:
+            if not port.is_open() and port.port_name() in avail_names:
+                self._reconnect(port, port.port_name(), avail_names)
 
-        if not self.__output.is_open():
-            self._reconnect(
-                self.__output, self.output_name(), midi_output_names()
-            )
+        avail_names = self.backend.get_output_names()
+        for port in self.__outputs:
+            if not port.is_open() and port.port_name() in avail_names:
+                self._reconnect(port, port.port_name(), avail_names)
 
     def _reconnect(self, midi: MIDIBase, current: str, available: list):
         if current in available:
@@ -159,9 +173,9 @@ class Midi(Plugin):
 
     def __config_change(self, key, _):
         if key == "inputDevice":
-            self.__input.change_port(self.input_name())
+            self.__inputs[0].change_port(self.input_name())
         elif key == "outputDevice":
-            self.__output.change_port(self.output_name())
+            self.__outputs[0].change_port(self.output_name())
 
     def __config_update(self, diff):
         if "inputDevice" in diff:
