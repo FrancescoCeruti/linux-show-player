@@ -123,6 +123,12 @@ class Midi(Plugin):
             return PortStatus.DoesNotExist
         return PortStatus.Open if self.__outputs[patch_id].is_open() else PortStatus.Closed
 
+    def output_patch_exists(self, patch_id):
+        return patch_id in self.__outputs
+
+    def send(self, patch_id, message):
+        self.__outputs[patch_id].send(message)
+
     def _on_port_removed(self):
         avail_names = self.backend.get_input_names()
         for port in self.__inputs.values():

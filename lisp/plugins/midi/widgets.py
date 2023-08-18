@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2019 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2023 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -29,6 +29,7 @@ from PyQt5.QtWidgets import (
     QDialogButtonBox,
 )
 
+from lisp.plugins import get_plugin
 from lisp.plugins.midi.midi_utils import (
     MIDI_MSGS_SPEC,
     MIDI_ATTRS_SPEC,
@@ -54,25 +55,33 @@ class MIDIMessageEdit(QWidget):
         self.msgGroup.setLayout(QGridLayout())
         self.layout().addWidget(self.msgGroup)
 
+        # Device patch
+        self.msgPatchLabel = QLabel(self.msgGroup)
+        self.msgGroup.layout().addWidget(self.msgPatchLabel, 0, 0)
+        self.msgPatchCombo = QComboBox(self.msgGroup)
+        for patch_id, device_name in get_plugin("Midi").output_patches().items():
+            self.msgPatchCombo.addItem("", patch_id)
+        self.msgGroup.layout().addWidget(self.msgPatchCombo, 0, 1)
+
         # Message type
         self.msgTypeLabel = QLabel(self.msgGroup)
-        self.msgGroup.layout().addWidget(self.msgTypeLabel, 0, 0)
+        self.msgGroup.layout().addWidget(self.msgTypeLabel, 1, 0)
         self.msgTypeCombo = QComboBox(self.msgGroup)
         for msgType in MIDI_MSGS_SPEC.keys():
             self.msgTypeCombo.addItem(
                 translate("MIDIMessageType", MIDI_MSGS_NAME[msgType]), msgType
             )
         self.msgTypeCombo.currentIndexChanged.connect(self._typeChanged)
-        self.msgGroup.layout().addWidget(self.msgTypeCombo, 0, 1)
+        self.msgGroup.layout().addWidget(self.msgTypeCombo, 1, 1)
 
         line = QFrame(self.msgGroup)
         line.setFrameShape(QFrame.HLine)
         line.setFrameShadow(QFrame.Sunken)
-        self.msgGroup.layout().addWidget(line, 1, 0, 1, 2)
+        self.msgGroup.layout().addWidget(line, 2, 0, 1, 2)
 
         # Data widgets
         self._dataWidgets = []
-        for n in range(2, 5):
+        for n in range(3, 6):
             dataLabel = QLabel(self.msgGroup)
             dataSpin = QSpinBox(self.msgGroup)
 
@@ -86,7 +95,25 @@ class MIDIMessageEdit(QWidget):
 
     def retranslateUi(self):
         self.msgGroup.setTitle(translate("MIDICue", "MIDI Message"))
+        self.msgPatchLabel.setText(translate("MIDICue", "MIDI Output"))
+        for patch_id, device_name in get_plugin("Midi").output_patches().items():
+            self.msgPatchCombo.setItemText(
+                self.msgPatchCombo.findData(patch_id),
+                translate(
+                    "MIDICue", "#{} :: {}"
+                ).format(
+                    patch_id.split('#')[1], device_name
+                )
+            )
         self.msgTypeLabel.setText(translate("MIDICue", "Message type"))
+
+    def getPatchId(self):
+        return self.msgPatchCombo.currentData()
+
+    def setPatchId(self, patch_id):
+        self.msgPatchCombo.setCurrentIndex(
+            self.msgPatchCombo.findData(patch_id)
+        )
 
     def getMessageDict(self):
         msgType = self.msgTypeCombo.currentData()
@@ -151,3 +178,9 @@ class MIDIMessageEditDialog(QDialog):
 
     def setMessageDict(self, dictMsg):
         self.editor.setMessageDict(dictMsg)
+
+    def getPatchId(self):
+        return self.editor.getPatchId()
+
+    def setPatchId(self, patch_id):
+        return self.editor.setPatchId(patch_id)
