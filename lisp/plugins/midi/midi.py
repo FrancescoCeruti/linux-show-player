@@ -65,16 +65,16 @@ class Midi(Plugin):
         self.__default_output = avail_outputs[0] if avail_outputs else ""
 
         # Create input handlers and connect
-        self.__inputs = []
-        for name in self.input_names():
-            self.__inputs.append(MIDIInput(self.backend, name))
-            self._reconnect(self.__inputs[-1], name, avail_inputs)
+        self.__inputs = {}
+        for patchId, deviceName in self.input_patches().items():
+            self.__inputs[patchId] = MIDIInput(self.backend, deviceName)
+            self._reconnect(self.__inputs[patchId], deviceName, avail_inputs)
 
         # Create output handlers and connect
-        self.__outputs = []
-        for name in self.output_names():
-            self.__outputs.append(MIDIOutput(self.backend, name))
-            self._reconnect(self.__outputs[-1], name, avail_outputs)
+        self.__outputs = {}
+        for patchId, deviceName in self.output_patches().items():
+            self.__outputs[patchId] = MIDIOutput(self.backend, deviceName)
+            self._reconnect(self.__outputs[patchId], deviceName, avail_outputs)
 
         # Monitor ports, for auto-reconnection.
         # Since current midi backends are not reliable on
@@ -93,29 +93,29 @@ class Midi(Plugin):
 
     @property
     def input(self):
-        return self.__inputs[0]
+        return self.__inputs["in#1"]
 
     @property
     def output(self):
-        return self.__outputs[0]
+        return self.__outputs["out#1"]
 
-    def input_name(self):
-        return self.input_names()[0]
+    def input_name(self, patch_id="in#1"):
+        return self.__inputs[patch_id].port_name()
 
-    def input_names(self):
-        names = Midi.Config.get("inputDevices", None)
-        return names if names else [Midi.Config["inputDevice"] or self.__default_input]
+    def input_patches(self):
+        patches = Midi.Config.get("inputDevices", None)
+        return patches if patches else { "in#1": Midi.Config.get("inputDevice", self.__default_input) }
 
-    def output_name(self):
-        return self.output_names()[0]
+    def output_name(self, patch_id="out#1"):
+        return self.__outputs[patch_id].port_name()
 
-    def output_names(self):
-        names = Midi.Config.get("outputDevices", None)
-        return names if names else [Midi.Config["outputDevice"] or self.__default_output]
+    def output_patches(self):
+        patches = Midi.Config.get("outputDevices", None)
+        return patches if patches else { "out#1": Midi.Config.get("outputDevice", self.__default_output) }
 
     def _on_port_removed(self):
         avail_names = self.backend.get_input_names()
-        for port in self.__inputs:
+        for port in self.__inputs.values():
             if port.is_open() and port.port_name() not in avail_names:
                 logger.info(
                     translate(
@@ -125,7 +125,7 @@ class Midi(Plugin):
                 port.close()
 
         avail_names = self.backend.get_output_names()
-        for port in self.__outputs:
+        for port in self.__outputs.values():
             if port.is_open() and port.port_name() not in avail_names:
                 logger.info(
                     translate(
@@ -136,12 +136,12 @@ class Midi(Plugin):
 
     def _on_port_added(self):
         avail_names = self.backend.get_input_names()
-        for port in self.__inputs:
+        for port in self.__inputs.values():
             if not port.is_open() and port.port_name() in avail_names:
                 self._reconnect(port, port.port_name(), avail_names)
 
         avail_names = self.backend.get_output_names()
-        for port in self.__outputs:
+        for port in self.__outputs.values():
             if not port.is_open() and port.port_name() in avail_names:
                 self._reconnect(port, port.port_name(), avail_names)
 
@@ -173,9 +173,9 @@ class Midi(Plugin):
 
     def __config_change(self, key, _):
         if key == "inputDevice":
-            self.__inputs[0].change_port(self.input_name())
+            self.__inputs["in#1"].change_port(self.input_name())
         elif key == "outputDevice":
-            self.__outputs[0].change_port(self.output_name())
+            self.__outputs["out#1"].change_port(self.output_name())
 
     def __config_update(self, diff):
         if "inputDevice" in diff:
