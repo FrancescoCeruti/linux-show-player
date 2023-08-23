@@ -54,4 +54,4 @@ in front of the element to make things work.
 
 ---
 
-Extracted from the [GStreamer SDK docs](https://gstreamer.freedesktop.org/documentation/tools/gst-launch.html)
+Extracted from the <a href="https://gstreamer.freedesktop.org/documentation/tools/gst-launch.html" target="_blank">GStreamer SDK docs</a>
