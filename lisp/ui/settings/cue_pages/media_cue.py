@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import QTime, Qt
+from PyQt5.QtCore import QTime, Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import (
     QGroupBox,
     QHBoxLayout,
@@ -30,7 +30,7 @@ from lisp.ui.ui_utils import translate
 
 
 class MediaCueSettings(SettingsPage):
-    Name = "Media-Cue"
+    Name = QT_TRANSLATE_NOOP("SettingsPageName", "Media Cue")
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
