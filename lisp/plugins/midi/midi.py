@@ -21,7 +21,7 @@ import mido
 from PyQt5.QtCore import QT_TRANSLATE_NOOP
 
 from lisp.core.plugin import Plugin
-from lisp.core.signal import Connection
+from lisp.core.signal import Connection, Signal
 from lisp.plugins.midi.midi_cue import MidiCue
 from lisp.plugins.midi.midi_io import MIDIOutput, MIDIInput, MIDIBase
 from lisp.plugins.midi.midi_settings import MIDISettings
@@ -65,15 +65,17 @@ class Midi(Plugin):
         self.__default_output = avail_outputs[0] if avail_outputs else ""
 
         # Create input handlers and connect
+        self.received = Signal()
         self.__inputs = {}
         for patchId, deviceName in self.input_patches().items():
-            self.__inputs[patchId] = MIDIInput(self.backend, deviceName)
+            self.__inputs[patchId] = MIDIInput(self.backend, patchId, deviceName)
+            self.__inputs[patchId].received.connect(self._dispatch_message)
             self._reconnect(self.__inputs[patchId], deviceName, avail_inputs)
 
         # Create output handlers and connect
         self.__outputs = {}
         for patchId, deviceName in self.output_patches().items():
-            self.__outputs[patchId] = MIDIOutput(self.backend, deviceName)
+            self.__outputs[patchId] = MIDIOutput(self.backend, patchId, deviceName)
             self._reconnect(self.__outputs[patchId], deviceName, avail_outputs)
 
         # Monitor ports, for auto-reconnection.
@@ -160,6 +162,9 @@ class Midi(Plugin):
         for port in self.__outputs.values():
             if not port.is_open() and port.port_name() in avail_names:
                 self._reconnect(port, port.port_name(), avail_names)
+
+    def _dispatch_message(self, patch_id, message):
+        self.received.emit(patch_id, message)
 
     def _reconnect(self, midi: MIDIBase, current: str, available: list):
         if current in available:
