@@ -27,6 +27,7 @@ from lisp.plugins.midi.midi_utils import (
     midi_dict_to_str,
     midi_from_str,
     midi_str_to_dict,
+    PortDirection,
 )
 from lisp.plugins.midi.widgets import MIDIMessageEdit
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
@@ -76,7 +77,7 @@ class MidiCueSettings(SettingsPage):
         self.setLayout(QVBoxLayout())
         self.layout().setContentsMargins(0, 0, 0, 0)
 
-        self.midiEdit = MIDIMessageEdit(parent=self)
+        self.midiEdit = MIDIMessageEdit(PortDirection.Output, parent=self)
         self.layout().addWidget(self.midiEdit)
 
     def enableCheck(self, enabled):
