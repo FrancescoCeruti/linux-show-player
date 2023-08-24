@@ -15,6 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+from abc import abstractmethod
+
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (
     QGroupBox,
@@ -35,8 +37,34 @@ from lisp.plugins.midi.midi_utils import (
     MIDI_ATTRS_SPEC,
     MIDI_MSGS_NAME,
     MIDI_ATTRS_NAME,
+    PortDirection,
 )
 from lisp.ui.ui_utils import translate
+
+
+class MIDIPatchCombo(QComboBox):
+    def __init__(self, direction: PortDirection, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.__direction = direction
+        self.__midi = get_plugin("Midi")
+        for patch_id, device_name in self._patches().items():
+            self.addItem("", patch_id)
+
+    def _patches(self):
+        if self.__direction is PortDirection.Input:
+            return self.__midi.input_patches()
+        return self.__midi.output_patches()
+
+    def retranslateUi(self):
+        for patch_id, device_name in self._patches().items():
+            self.setItemText(
+                self.findData(patch_id),
+                translate(
+                    "MIDICue", "#{} :: {}"
+                ).format(
+                    patch_id.split('#')[1], device_name
+                )
+            )
 
 
 class MIDIMessageEdit(QWidget):
@@ -46,7 +74,7 @@ class MIDIMessageEdit(QWidget):
         https://www.midi.org/specifications-old/item/table-1-summary-of-midi-message
     """
 
-    def __init__(self, **kwargs):
+    def __init__(self, direction: PortDirection, **kwargs):
         super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
@@ -58,9 +86,7 @@ class MIDIMessageEdit(QWidget):
         # Device patch
         self.msgPatchLabel = QLabel(self.msgGroup)
         self.msgGroup.layout().addWidget(self.msgPatchLabel, 0, 0)
-        self.msgPatchCombo = QComboBox(self.msgGroup)
-        for patch_id, device_name in get_plugin("Midi").output_patches().items():
-            self.msgPatchCombo.addItem("", patch_id)
+        self.msgPatchCombo = MIDIPatchCombo(direction, self.msgGroup)
         self.msgGroup.layout().addWidget(self.msgPatchCombo, 0, 1)
 
         # Message type
@@ -95,16 +121,8 @@ class MIDIMessageEdit(QWidget):
 
     def retranslateUi(self):
         self.msgGroup.setTitle(translate("MIDICue", "MIDI Message"))
-        self.msgPatchLabel.setText(translate("MIDICue", "MIDI Output"))
-        for patch_id, device_name in get_plugin("Midi").output_patches().items():
-            self.msgPatchCombo.setItemText(
-                self.msgPatchCombo.findData(patch_id),
-                translate(
-                    "MIDICue", "#{} :: {}"
-                ).format(
-                    patch_id.split('#')[1], device_name
-                )
-            )
+        self.msgPatchLabel.setText(translate("MIDICue", "MIDI Patch"))
+        self.msgPatchCombo.retranslateUi()
         self.msgTypeLabel.setText(translate("MIDICue", "Message type"))
 
     def getPatchId(self):
@@ -159,11 +177,11 @@ class MIDIMessageEdit(QWidget):
 
 
 class MIDIMessageEditDialog(QDialog):
-    def __init__(self, **kwargs):
+    def __init__(self, direction: PortDirection, **kwargs):
         super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
 
-        self.editor = MIDIMessageEdit()
+        self.editor = MIDIMessageEdit(direction)
         self.layout().addWidget(self.editor)
 
         self.buttons = QDialogButtonBox(
