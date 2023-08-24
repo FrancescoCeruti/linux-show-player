@@ -1,45 +1,51 @@
-Presets
-=======
+# Presets
 
-Allow to create, edit, import and export presets for cues.
+This plugin allows to create, edit, import and export presets for cues.
 
-How to use
-----------
+Presets have multiple purposes:
+  * Easy replicate cues
+  * Apply certain settings to one or multiple cues
+  * Exchange cue configurations between users 
 
-The main interface is accessible via `Tools > Presets`
+**Presets are global.** All shows/sessions in the same user account have access to same presets.
 
-```{image} ../_static/presets.png
-:alt: Linux Show Player - Presets
+## How to use
+
+The interface, where you can manage your presets, is accessible via `Tools > Presets`
+
+```{image} ../_static/presets_main_dialog.png
+:alt: Presets
 :align: center
 ```
 
-On the left the list of the available presets (sorted by name), double-click to
-edit a preset. Multiple preset can be selected using the `CTRL` and `SHIFT`.
+On the left, the list of the available presets (sorted by name), you can `Double-Click` to
+edit a preset, you can select multiple entries by using the stander `CTRL` and `SHIFT` modifiers.
 
 On the right a series of buttons gives access to the following:
 
-* **Add:** allow to manually create a preset
+* **Add:** create a new preset
 * **Rename:** rename the selected preset
 * **Edit:** edit the selected preset
 * **Remove:** remove the selected preset
-* **Create Cue:** create a cue from the selected presets
+* **Create Cue:** create a new cue from the selected presets
 * **Load on selected Cues:** load a preset on selected cues
 
 On the bottom:
 
-* **Export selected:** export the selected presets to a custom archive
-* **Import:** import from an exported preset
+* **Export selected:** export the selected presets
+* **Import:** import presets form an existing export
 
 ```{note}
-The archive use a custom extension to easily filer others files, but it's a
-standard zip file.
+The exported file use the `.presets` extension to easily filter others files, but it's a standard zip file.
 ```
 
-The following options are provided in the cue context menu (right-click):
+### Contex menu
+
+The following options are provided in each cue context menu (right-click):
 
 * **Load preset:** load a preset on the cue
 * **Save as preset:** save the cue settings as a preset
 
-```{note}
-Preset are saved under `$HOME/.linux-show-player/presets/`
+```{warning}
+While it's possible to undo/redo actions on cues, like loading a preset on a cue, changes to the presets are not undoable. 
 ```

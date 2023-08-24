@@ -23,7 +23,7 @@ Settings and operations related to the current session
 
 Add/Edit cues (accessible right-clicking on empty areas of the layout)
 
-* **Integration cues:** Add cus that comunicate with different protocols (MIDI, OSC).
+* **Integration cues:** Add cus that communicate with different protocols (MIDI, OSC).
 * **Media cues:** Add media-cues.
 * **Action cues:** Add different types of action-cues.
 * **Misc cues:** Add misc cues.

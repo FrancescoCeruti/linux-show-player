@@ -5,10 +5,12 @@ hide-toc: true
 # Tools
 
 ```{toctree}
-artnet_timecode
 cue_controls
+layout_controls
+triggers
 presets
 replaygain
+cue_rename
+timecode
 synchronization
-triggers
 ```

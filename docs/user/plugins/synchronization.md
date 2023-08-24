@@ -1,36 +1,26 @@
 # Synchronization
 
-The goal of this plugin is to allow two or more LiSP sessions running on different
-PCs to be synchronized during a performance (no edit synchronization).
-The two session are supposed to be identical, so, only user interaction with the
-cues are replicated on other sessions.
+The goal of this plugin is to allow multiple LiSP sessions, running on different
+computers, to be synchronized during a show (no edit synchronization). The sessions must be identical.
 
 ## How to use
 
-The plugin usage is quite simple, the only thing to do, is to add the remote session
-you want to "control" to the peer-list, this can be done via
-`Tools > Synchronization > Mange connected peers`
+The plugin usage is simple, you only need to add the remote sessions you want to "control" as a host,
+this can be done via `Tools > Synchronization > Mange connected peers`
 
-```{image} ../_static/synchronization_peers.png
-:alt: Linux Show Player - Manage synchronization peers
-:align: center
+```{image} ../_static/synchronization_hosts.png
+:alt: Manage synchronization hosts
 ```
 
-On the left you can find the peers list, on the right the following buttons:
+On the left you can find the connected hosts, on the right the following buttons:
 
-* **Discover peers:** Allow to search for other sessions in the network;
-* **Manually add peer:** Allow to manually add a peer, using it's IP address;
-* **Remove selected peer:** Remove the selected peer;
-* **Remove all peers:** Remove all the peers.
+* **Discover hosts:** search for other active LiSP sessions in the network
+* **Manually add host:** manually add a host, using its IP address
+* **Remove selected host:** remove the selected host
+* **Remove all hosts:** remove all the hosts
 
 To easily retrieve the (local) IP address `Tools > Synchronization > Show your IP`
-will display the current IP address of the PC.
+will display the current IP address of your computer.
 
-## How it works
-
-Once a session is connected, user actions are replicated on the connected one.
-This is achieved by sending some info over the network, by default the `8070`
-and `50000` (for the discovery) ports are used, those values can be changed
-in the configuration file `$HOME/.linux-show-player/config.cfg`.
-
-Two or more sessions can be mutually connected, this way all the sessions share the same "state".
+Once a session is connected, direct actions on cues will be replicated onto it.<br>
+Two or more sessions can be mutually connected.

@@ -1,42 +1,58 @@
 # Cue Controls
 
-Provide control over cues using keyboard and MIDI.
-
-## How to use
-
-Settings are provided per cue, and are accessible through a specific tab in the cue
-settings window:
+Provide control over cues using keyboard, MIDI or OSC.
 
 ## Keyboard
 
-```{image} ../_static/controller_settings_keyboard.png
-:alt: Linux Show Player - Controller settings - Keyboard
+Trigger the cue with a custom key
+
+```{image} ../_static/cue_control_options_keyboard.png
+:alt: Cue Control - Keyboard
 :align: center
 ```
 
-* **Key:** the key (character) that trigger the cue
-* **Action:** the action to be executed when the key is pressed (Start/Stop/...)
+* **Shortcut:** the shortcut that trigger the cue
+* **Action:** the action to execute (Default/Start/Stop/...)
 
-New keys can be added/removed using the buttons at the table bottom. A key can
-be any single character that the keyboard is able to insert, so special keys are
-excluded, Upper/lower cases are considered, so "A" is not the same of "a".
-In general, what is taken in account, it's not the pressed key, but the typed character.
+New keys can be added and removed using the buttons at the bottom of the list.
 
 ## MIDI
 
-```{image} ../_static/controller_settings_midi.png
-:alt: Linux Show Player - Controller settings - MIDI
+Trigger the cue when a MIDI message is received
+
+```{image} ../_static/cue_control_options_midi.png
+:alt: Cue Control - MIDI
 :align: center
 ```
 
-* **Type:** The message type (only *note_on/off*)
-* **Channel:** MIDI message "channel"
-* **Note:** MIDI message "note"
-* **Action:** Action to execute when a matching message is received
-* *The MIDI Note "velocity" is ignored*
+* **Type:** The message type
+* **Data 1/2/3:** MIDI message data
+* **Action:** the action to execute (Default/Start/Stop/...)
 
-New MIDI messages can be added/removed manually using the provided buttons,
-or can be captured directly from the device, when doing so, a filter is provided
-to select the type of messages to be captured.
+New messages can be added and removed using the provided buttons,
+to edit `Duble-Click` on the value you want to change.
 
-The used MIDI device can be changed in the application settings `File > Preferences > MIDI Settings`
+Messages can be captured directly from the device using the **Capture** button,
+a filter is provided to select the type of messages to be captured.
+
+```{note}
+The used MIDI device can be changed in the application settings `File > Preferences > Plugins > MIDI settings`
+```
+
+## OSC
+
+Trigger the cue when an OSC message is received
+
+```{image} ../_static/cue_control_options_osc.png
+:alt: Cue Control - OSC
+:align: center
+```
+
+* **Path:** OSC path
+* **Types/Attributes:** The message expected attributes types, and values
+* **Action:** the action to execute (Default/Start/Stop/...)
+
+New messages can be added and removed using the provided buttons,
+to edit `Duble-Click` on the value you want to change.
+
+Messages can be captured directly using the **Capture** button.

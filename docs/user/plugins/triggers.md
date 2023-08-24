@@ -1,23 +1,25 @@
 # Triggers
 
-This plugin allow to create triggers based on cues events, and to assign them a
-specific action on another cue.
+Triggers allows to "trigger" actions on _target_ cues when the state of a _source_ cue changes.
 
-## How to use
+For example, when a certain cue ends, you can automatically start another.
 
-Triggers can be added/removed and modified from the cue-settings dialog of the
-cue from which the event is generated (source):
+## Cue options (Triggers)
 
-```{image} ../_static/triggers_cue_settings.png
-:alt: Linux Show Player - Triggers cue settings
+Triggers can be managed from the cue of which the state change will trigger an action (source):
+
+```{image} ../_static/triggers_cue_options.png
+:alt: Triggers cue options
 :align: center
 ```
 
-## Events
+* **Trigger:** the state change of the _source_ cue that will trigger the action
+  * **Started:** The cue is started (after pre-wait)
+  * **Stopped:** The cue is stopped
+  * **Paused:** The cue is paused
+  * **Ended:** The cue is ended
+* **Cue:** the _target_ cue
+* **Action:** the action to execute on the _target_ cue
 
-The following events are available:
-
-* **Started:** The cue is started (after pre-wait)
-* **Stopped:** The cue is stopped
-* **Paused:** The cue is paused
-* **Ended:** The cue is ended
+Triggers can be added and removed with the bottom right buttons,
+and edited by `Duble-Click` on the value you want to change.

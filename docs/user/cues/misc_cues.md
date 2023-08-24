@@ -57,4 +57,4 @@ Images work too, so it is possible add black images between the videos if needed
 
 * **Start Player:** `mpv --input-ipc-server=/tmp/mpvsocket --idle --keep-open=always --osc=no --fullscreen --geometry=1920:0`
 * **Load File:** `MEDIA="<file/path>"; printf '{ "command": ["loadfile", "%s"] }\n' $MEDIA|socat - /tmp/mpvsocket`
-* A complete set of commands can be downloaded <a href="https://www.dropbox.com/sh/dnkqk84u16f67gi/AAC55CbOsG-m9Z2-uckskQDHa?dl=0">here</a> and imported as preset
+* A complete set of commands can be downloaded <a href="https://www.dropbox.com/sh/dnkqk84u16f67gi/AAC55CbOsG-m9Z2-uckskQDHa?dl=0" target="_blank">here</a> and imported as preset
