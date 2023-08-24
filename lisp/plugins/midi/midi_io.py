@@ -92,10 +92,10 @@ class MIDIInput(MIDIBase):
     def __init__(self, *args):
         super().__init__(*args)
 
-        self.alternate_mode = False
+        self.exclusive_mode = False
         self.received = Signal()
         self.new_message = Signal()
-        self.new_message_alt = Signal()
+        self.received_exclusive = Signal()
 
     def open(self):
         try:
@@ -120,8 +120,8 @@ class MIDIInput(MIDIBase):
                 }
             )
 
-        if self.alternate_mode:
-            self.new_message_alt.emit(message)
+        if self.exclusive_mode:
+            self.received_exclusive.emit(self._patch_id, message)
         else:
             self.received.emit(self._patch_id, message)
             self.new_message.emit(message)
