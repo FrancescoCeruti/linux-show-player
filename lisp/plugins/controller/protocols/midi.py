@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2023 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -43,8 +43,9 @@ from lisp.plugins.midi.midi_utils import (
     midi_from_str,
     MIDI_MSGS_SPEC,
     MIDI_ATTRS_SPEC,
+    PortDirection,
 )
-from lisp.plugins.midi.widgets import MIDIMessageEditDialog
+from lisp.plugins.midi.widgets import MIDIPatchCombo, MIDIMessageEditDialog
 from lisp.ui.qdelegates import (
     CueActionDelegate,
     EnumComboBoxDelegate,
@@ -98,6 +99,9 @@ class MidiSettings(SettingsPage):
         self.filterLabel.setAlignment(Qt.AlignCenter)
         self.filterLayout.addWidget(self.filterLabel)
 
+        self.filterPatchCombo = MIDIPatchCombo(PortDirection.Input, self.midiGroup)
+        self.filterLayout.addWidget(self.filterPatchCombo)
+
         self.filterTypeCombo = QComboBox(self.midiGroup)
         self.filterLayout.addWidget(self.filterTypeCombo)
 
@@ -126,6 +130,7 @@ class MidiSettings(SettingsPage):
         self.filterLabel.setText(
             translate("ControllerMidiSettings", "Capture filter")
         )
+        self.filterPatchCombo.retranslateUi()
 
     def enableCheck(self, enabled):
         self.setGroupEnabled(self.midiGroup, enabled)
@@ -152,20 +157,19 @@ class MidiSettings(SettingsPage):
                 )
 
     def capture_message(self):
-        handler = self.__midi.input
-        handler.alternate_mode = True
-        handler.new_message_alt.connect(self.__add_message)
+        settings = [
+            self.filterPatchCombo.currentData(),
+            self.__add_message
+        ]
+        if self.__midi.add_exclusive_callback(*settings):
+            QMessageBox.information(
+                self,
+                "",
+                translate("ControllerMidiSettings", "Listening MIDI messages ..."),
+            )
+            self.__midi.remove_exclusive_callback(*settings)
 
-        QMessageBox.information(
-            self,
-            "",
-            translate("ControllerMidiSettings", "Listening MIDI messages ..."),
-        )
-
-        handler.new_message_alt.disconnect(self.__add_message)
-        handler.alternate_mode = False
-
-    def __add_message(self, message):
+    def __add_message(self, patch_id, message):
         mgs_filter = self.filterTypeCombo.currentData(Qt.UserRole)
         if mgs_filter == self.FILTER_ALL or message.type == mgs_filter:
             if hasattr(message, "velocity"):
@@ -174,7 +178,7 @@ class MidiSettings(SettingsPage):
             self.midiModel.appendMessage(message, self._defaultAction)
 
     def __new_message(self):
-        dialog = MIDIMessageEditDialog()
+        dialog = MIDIMessageEditDialog(PortDirection.Input)
         if dialog.exec() == MIDIMessageEditDialog.Accepted:
             message = midi_from_dict(dialog.getMessageDict())
             if hasattr(message, "velocity"):
@@ -313,7 +317,7 @@ class MidiView(QTableView):
         if index.column() <= 3:
             message, action = self.model().getMessage(index.row())
 
-            dialog = MIDIMessageEditDialog()
+            dialog = MIDIMessageEditDialog(PortDirection.Input)
             dialog.setMessageDict(message.dict())
 
             if dialog.exec() == MIDIMessageEditDialog.Accepted:

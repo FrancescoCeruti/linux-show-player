@@ -101,6 +101,24 @@ class Midi(Plugin):
     def output(self):
         return self.__outputs["out#1"]
 
+    def add_exclusive_callback(self, patch_id, callback):
+        if patch_id not in self.__inputs:
+            return False
+        handler = self.__inputs[patch_id]
+        if handler.exclusive_mode:
+            return False
+        handler.exclusive_mode = True
+        handler.received_exclusive.connect(callback)
+        return True
+
+    def remove_exclusive_callback(self, patch_id, callback):
+        if patch_id not in self.__inputs:
+            return
+        handler = self.__inputs[patch_id]
+        if handler.received_exclusive.is_connected_to(callback):
+            handler.exclusive_mode = False
+            handler.received_exclusive.disconnect(callback)
+
     def input_name(self, patch_id="in#1"):
         return self.__inputs[patch_id].port_name()
 
