@@ -210,7 +210,7 @@ class HostManagementDialog(QDialog):
 
     def removeSelectedHosts(self):
         for index in self.listWidget.selectedIndexes():
-            self.listWidget.takeItem(index)
+            self.listWidget.takeItem(index.row())
 
     def removeAllHosts(self):
         self.listWidget.clear()
