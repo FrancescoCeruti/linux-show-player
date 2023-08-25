@@ -33,12 +33,12 @@
   <context>
     <name>MIDIError</name>
     <message>
-      <location filename="../../../plugins/midi/midi_io.py" line="82"/>
+      <location filename="../../../plugins/midi/midi_io.py" line="84"/>
       <source>Cannot connect to MIDI output port '{}'.</source>
       <translation>无法连接到 MIDI 输出端口 '{}'。</translation>
     </message>
     <message>
-      <location filename="../../../plugins/midi/midi_io.py" line="103"/>
+      <location filename="../../../plugins/midi/midi_io.py" line="105"/>
       <source>Cannot connect to MIDI input port '{}'.</source>
       <translation>无法连接到 MIDI 输入端口 '{}'。</translation>
     </message>
