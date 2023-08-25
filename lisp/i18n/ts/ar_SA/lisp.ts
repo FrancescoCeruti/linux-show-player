@@ -142,7 +142,7 @@
   <context>
     <name>ClassLoaderWarning</name>
     <message>
-      <location filename="../../../core/loading.py" line="136"/>
+      <location filename="../../../core/loading.py" line="135"/>
       <source>Cannot load python class: "{0}"</source>
       <translation type="unfinished">Cannot load python class: "{0}"</translation>
     </message>
@@ -243,46 +243,51 @@
       <source>Do Nothing</source>
       <translation>لا تفعل شيئا</translation>
     </message>
+    <message>
+      <location filename="../../../ui/widgets/cue_actions.py" line="38"/>
+      <source>Release from Loop</source>
+      <translation type="unfinished">Release from Loop</translation>
+    </message>
   </context>
   <context>
     <name>CueAppearanceSettings</name>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="83"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="85"/>
       <source>The appearance depends on the layout</source>
       <translation type="unfinished">The appearance depends on the layout</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="95"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="97"/>
       <source>Cue name</source>
       <translation type="unfinished">Cue name</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="97"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="99"/>
       <source>NoName</source>
       <translation type="unfinished">NoName</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="99"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="101"/>
       <source>Description/Note</source>
       <translation>وصف/ملاحظة</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="102"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="104"/>
       <source>Set Font Size</source>
       <translation type="unfinished">Set Font Size</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="104"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="106"/>
       <source>Color</source>
       <translation>اللون</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="106"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="108"/>
       <source>Select background color</source>
       <translation>اختر لون الخلفية</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="109"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="111"/>
       <source>Select font color</source>
       <translation type="unfinished">Select font color</translation>
     </message>
@@ -298,12 +303,12 @@
   <context>
     <name>CueCommandLog</name>
     <message>
-      <location filename="../../../command/cue.py" line="75"/>
+      <location filename="../../../command/cue.py" line="73"/>
       <source>Cues settings changed.</source>
       <translation type="unfinished">Cues settings changed.</translation>
     </message>
     <message>
-      <location filename="../../../command/cue.py" line="46"/>
+      <location filename="../../../command/cue.py" line="45"/>
       <source>Cue settings changed: "{}"</source>
       <translation type="unfinished">Cue settings changed: "{}"</translation>
     </message>
@@ -367,47 +372,47 @@
       <translation type="unfinished">Used for fade-in and fade-out actions, for cues where fade duration is set to 0.</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="112"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="113"/>
       <source>Start action</source>
       <translation>بدء الإجراء</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="114"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="115"/>
       <source>Default action to start the cue</source>
       <translation type="unfinished">Default action to start the cue</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="118"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="119"/>
       <source>Stop action</source>
       <translation>توقف الإجراءت</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="120"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="121"/>
       <source>Default action to stop the cue</source>
       <translation type="unfinished">Default action to stop the cue</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="201"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="202"/>
       <source>Pre wait</source>
       <translation>قبل الانتظار</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="203"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="204"/>
       <source>Wait before cue execution</source>
       <translation type="unfinished">Wait before cue execution</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="206"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="207"/>
       <source>Post wait</source>
       <translation>بعد الانتظار</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="208"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="209"/>
       <source>Wait after cue execution</source>
       <translation type="unfinished">Wait after cue execution</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="211"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="212"/>
       <source>Next action</source>
       <translation>الإجراءت التالية</translation>
     </message>
@@ -446,12 +451,12 @@
   <context>
     <name>FadeSettings</name>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="272"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="273"/>
       <source>Fade In</source>
       <translation>ظهور تدريجي</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="273"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="274"/>
       <source>Fade Out</source>
       <translation>تلاشي تدريجي</translation>
     </message>
@@ -836,7 +841,7 @@
   <context>
     <name>ModulesLoaderWarning</name>
     <message>
-      <location filename="../../../core/loading.py" line="69"/>
+      <location filename="../../../core/loading.py" line="68"/>
       <source>Cannot load python module: "{0}"</source>
       <translation type="unfinished">Cannot load python module: "{0}"</translation>
     </message>
@@ -844,22 +849,22 @@
   <context>
     <name>PluginsError</name>
     <message>
-      <location filename="../../../core/plugins_manager.py" line="79"/>
+      <location filename="../../../core/plugins_manager.py" line="78"/>
       <source>A plugin by the name of "{}" already exists.</source>
       <translation type="unfinished">A plugin by the name of "{}" already exists.</translation>
     </message>
     <message>
-      <location filename="../../../core/plugins_manager.py" line="132"/>
+      <location filename="../../../core/plugins_manager.py" line="131"/>
       <source>The requested plugin is not loaded: "{}"</source>
       <translation type="unfinished">The requested plugin is not loaded: "{}"</translation>
     </message>
     <message>
-      <location filename="../../../core/plugins_manager.py" line="110"/>
+      <location filename="../../../core/plugins_manager.py" line="109"/>
       <source>Failed to register plugin: "{}"</source>
       <translation type="unfinished">Failed to register plugin: "{}"</translation>
     </message>
     <message>
-      <location filename="../../../core/plugins_manager.py" line="152"/>
+      <location filename="../../../core/plugins_manager.py" line="151"/>
       <source>Failed to terminate plugin: "{}"</source>
       <translation type="unfinished">Failed to terminate plugin: "{}"</translation>
     </message>
@@ -872,7 +877,7 @@
   <context>
     <name>PluginsInfo</name>
     <message>
-      <location filename="../../../core/plugins_manager.py" line="146"/>
+      <location filename="../../../core/plugins_manager.py" line="145"/>
       <source>Plugin terminated: "{}"</source>
       <translation type="unfinished">Plugin terminated: "{}"</translation>
     </message>
@@ -954,6 +959,11 @@
       <translation>إعدادات الأغنية</translation>
     </message>
     <message>
+      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="33"/>
+      <source>Media Cue</source>
+      <translation type="unfinished">Media Cue</translation>
+    </message>
+    <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="43"/>
       <source>Cue</source>
       <translation>الأغنية</translation>
@@ -964,12 +974,12 @@
       <translation>السلوك</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="155"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="156"/>
       <source>Pre/Post Wait</source>
       <translation type="unfinished">Pre/Post Wait</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="237"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="238"/>
       <source>Fade In/Out</source>
       <translation type="unfinished">Fade In/Out</translation>
     </message>
