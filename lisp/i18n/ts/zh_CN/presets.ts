@@ -22,7 +22,7 @@
       <translation>无法寻找範本</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets.py" line="69"/>
+      <location filename="../../../plugins/presets/presets.py" line="68"/>
       <source>Presets</source>
       <translation>範本</translation>
     </message>
@@ -127,17 +127,17 @@
       <translation>无法从此范本创建 Cue：{}</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets.py" line="74"/>
+      <location filename="../../../plugins/presets/presets.py" line="73"/>
       <source>Apply to cue</source>
       <translation>应用到提示</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets.py" line="76"/>
+      <location filename="../../../plugins/presets/presets.py" line="75"/>
       <source>Apply to selected cues</source>
       <translation>应用于选定的提示</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets.py" line="80"/>
+      <location filename="../../../plugins/presets/presets.py" line="79"/>
       <source>Save as preset</source>
       <translation>保存为範本</translation>
     </message>
