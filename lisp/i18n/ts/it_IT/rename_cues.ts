@@ -89,7 +89,7 @@ For more information about Regexes, consult python documentation at: https://doc
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="58"/>
       <source>Preview</source>
-      <translation type="unfinished">Preview</translation>
+      <translation>Anteprima</translation>
     </message>
   </context>
   <context>
@@ -97,7 +97,7 @@ For more information about Regexes, consult python documentation at: https://doc
     <message>
       <location filename="../../../plugins/rename_cues/command.py" line="44"/>
       <source>Renamed {number} cues</source>
-      <translation type="unfinished">Renamed {number} cues</translation>
+      <translation>Rinominate {number} cue</translation>
     </message>
   </context>
   <context>
@@ -105,12 +105,12 @@ For more information about Regexes, consult python documentation at: https://doc
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="259"/>
       <source>Regex error: Invalid pattern</source>
-      <translation type="unfinished">Regex error: Invalid pattern</translation>
+      <translation>Errore Regex: Pattern invalido</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="288"/>
       <source>Regex error: catch with () before display with $n</source>
-      <translation type="unfinished">Regex error: catch with () before display with $n</translation>
+      <translation>Errore Regex: cattura con () prima di visualizzare con $n</translation>
     </message>
   </context>
 </TS>
