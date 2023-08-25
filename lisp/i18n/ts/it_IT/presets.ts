@@ -22,7 +22,7 @@
       <translation>Impossibile cercare i preset</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets.py" line="69"/>
+      <location filename="../../../plugins/presets/presets.py" line="68"/>
       <source>Presets</source>
       <translation>Preset</translation>
     </message>
@@ -127,17 +127,17 @@
       <translation>Impossibile creare cue da questo preset: {}</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets.py" line="74"/>
+      <location filename="../../../plugins/presets/presets.py" line="73"/>
       <source>Apply to cue</source>
-      <translation type="unfinished">Apply to cue</translation>
+      <translation>Applica alla cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets.py" line="76"/>
+      <location filename="../../../plugins/presets/presets.py" line="75"/>
       <source>Apply to selected cues</source>
-      <translation type="unfinished">Apply to selected cues</translation>
+      <translation>Applica alle cue selezionate</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets.py" line="80"/>
+      <location filename="../../../plugins/presets/presets.py" line="79"/>
       <source>Save as preset</source>
       <translation>Salva come preset</translation>
     </message>
