@@ -65,22 +65,22 @@
   <context>
     <name>AudioPanSettings</name>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/audio_pan.py" line="58"/>
+      <location filename="../../../plugins/gst_backend/settings/audio_pan.py" line="57"/>
       <source>Audio Pan</source>
       <translation>Bilanciamento</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/audio_pan.py" line="79"/>
+      <location filename="../../../plugins/gst_backend/settings/audio_pan.py" line="78"/>
       <source>Center</source>
       <translation>Centro</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/audio_pan.py" line="75"/>
+      <location filename="../../../plugins/gst_backend/settings/audio_pan.py" line="74"/>
       <source>Left</source>
       <translation>Sinistra</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/audio_pan.py" line="77"/>
+      <location filename="../../../plugins/gst_backend/settings/audio_pan.py" line="76"/>
       <source>Right</source>
       <translation>Destra</translation>
     </message>
@@ -88,7 +88,7 @@
   <context>
     <name>CueCategory</name>
     <message>
-      <location filename="../../../plugins/gst_backend/gst_backend.py" line="81"/>
+      <location filename="../../../plugins/gst_backend/gst_backend.py" line="80"/>
       <source>Media cues</source>
       <translation>Cue Multimediali</translation>
     </message>
@@ -96,22 +96,22 @@
   <context>
     <name>DbMeterSettings</name>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/db_meter.py" line="84"/>
+      <location filename="../../../plugins/gst_backend/settings/db_meter.py" line="83"/>
       <source>DbMeter settings</source>
       <translation>Impostazioni indicatore dB</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/db_meter.py" line="86"/>
+      <location filename="../../../plugins/gst_backend/settings/db_meter.py" line="85"/>
       <source>Time between levels (ms)</source>
       <translation>Intervallo tra due livelli (ms)</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/db_meter.py" line="88"/>
+      <location filename="../../../plugins/gst_backend/settings/db_meter.py" line="87"/>
       <source>Peak ttl (ms)</source>
       <translation>Durata picchi (ms)</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/db_meter.py" line="90"/>
+      <location filename="../../../plugins/gst_backend/settings/db_meter.py" line="89"/>
       <source>Peak falloff (dB/sec)</source>
       <translation>Decadimento picchi (dB/sec)</translation>
     </message>
@@ -127,12 +127,12 @@
   <context>
     <name>GstBackend</name>
     <message>
-      <location filename="../../../plugins/gst_backend/gst_backend.py" line="79"/>
+      <location filename="../../../plugins/gst_backend/gst_backend.py" line="78"/>
       <source>Audio cue (from file)</source>
       <translation>Cue audio (da file)</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/gst_backend.py" line="132"/>
+      <location filename="../../../plugins/gst_backend/gst_backend.py" line="131"/>
       <source>Select media files</source>
       <translation>Seleziona file multimediali</translation>
     </message>
@@ -140,7 +140,7 @@
   <context>
     <name>GstMediaError</name>
     <message>
-      <location filename="../../../plugins/gst_backend/gst_media.py" line="238"/>
+      <location filename="../../../plugins/gst_backend/gst_media.py" line="242"/>
       <source>Cannot create pipeline element: "{}"</source>
       <translation>Impossibile creare l'elemento della pipeline: "{}"</translation>
     </message>
@@ -156,7 +156,7 @@
   <context>
     <name>GstMediaWarning</name>
     <message>
-      <location filename="../../../plugins/gst_backend/gst_media.py" line="232"/>
+      <location filename="../../../plugins/gst_backend/gst_media.py" line="236"/>
       <source>Invalid pipeline element: "{}"</source>
       <translation>Elemento pipeline non valido: "{}"</translation>
     </message>
@@ -185,9 +185,9 @@
   <context>
     <name>JackSinkError</name>
     <message>
-      <location filename="../../../plugins/gst_backend/elements/jack_sink.py" line="135"/>
+      <location filename="../../../plugins/gst_backend/elements/jack_sink.py" line="136"/>
       <source>An error occurred while disconnecting Jack ports</source>
-      <translation type="unfinished">An error occurred while disconnecting Jack ports</translation>
+      <translation>Si è verificato un errore durante la disconnessione delle porte Jack</translation>
     </message>
   </context>
   <context>
@@ -337,7 +337,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/config/alsa_sink.py" line="25"/>
       <source>ALSA Default Device</source>
-      <translation type="unfinished">ALSA Default Device</translation>
+      <translation>Dispositivo Predefinito ALSA</translation>
     </message>
   </context>
   <context>
