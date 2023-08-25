@@ -103,7 +103,7 @@
     <name>OscServerError</name>
     <message>
       <location filename="../../../plugins/osc/osc_server.py" line="100" />
-      <source>Cannot start OSC sever</source>
+      <source>Cannot start OSC server</source>
       <translation type="unfinished" />
     </message>
   </context>

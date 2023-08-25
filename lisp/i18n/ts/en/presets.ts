@@ -22,7 +22,7 @@
       <translation>Cannot scan presets</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets.py" line="69" />
+      <location filename="../../../plugins/presets/presets.py" line="68" />
       <source>Presets</source>
       <translation>Presets</translation>
     </message>
@@ -127,17 +127,17 @@
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets.py" line="74" />
+      <location filename="../../../plugins/presets/presets.py" line="73" />
       <source>Apply to cue</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets.py" line="76" />
+      <location filename="../../../plugins/presets/presets.py" line="75" />
       <source>Apply to selected cues</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets.py" line="80" />
+      <location filename="../../../plugins/presets/presets.py" line="79" />
       <source>Save as preset</source>
       <translation>Save as preset</translation>
     </message>
