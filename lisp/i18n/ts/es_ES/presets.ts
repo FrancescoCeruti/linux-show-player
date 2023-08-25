@@ -22,7 +22,7 @@
       <translation>No se pueden escanear Presets</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets.py" line="69"/>
+      <location filename="../../../plugins/presets/presets.py" line="68"/>
       <source>Presets</source>
       <translation>Preajustes</translation>
     </message>
@@ -127,17 +127,17 @@
       <translation type="unfinished">Cannot create a cue from this preset: {}</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets.py" line="74"/>
+      <location filename="../../../plugins/presets/presets.py" line="73"/>
       <source>Apply to cue</source>
       <translation type="unfinished">Apply to cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets.py" line="76"/>
+      <location filename="../../../plugins/presets/presets.py" line="75"/>
       <source>Apply to selected cues</source>
       <translation type="unfinished">Apply to selected cues</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets.py" line="80"/>
+      <location filename="../../../plugins/presets/presets.py" line="79"/>
       <source>Save as preset</source>
       <translation>Guardar como Preset</translation>
     </message>
