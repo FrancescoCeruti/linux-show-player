@@ -163,8 +163,13 @@ class MIDISettings(SettingsPage):
                 )
                 self.inputCombo.setCurrentIndex(1)
 
-            self.inputModel.deserialise(settings["inputDevice"])
-            self.inputView.ensureOptionExists(settings["inputDevice"])
+            if "inputDevices" not in settings:
+                self.inputModel.deserialise(settings["inputDevice"])
+                self.inputView.ensureOptionExists(settings["inputDevice"])
+
+        if "inputDevices" in settings:
+            self.inputModel.deserialise(settings["inputDevices"])
+            self.inputView.ensureOptionsExist(settings["inputDevices"])
 
         if settings["outputDevice"]:
             self.outputCombo.setCurrentText(settings["outputDevice"])
@@ -174,8 +179,13 @@ class MIDISettings(SettingsPage):
                 )
                 self.outputCombo.setCurrentIndex(1)
 
-            self.outputModel.deserialise(settings["outputDevice"])
-            self.outputView.ensureOptionExists(settings["outputDevice"])
+            if "outputDevices" not in settings:
+                self.outputModel.deserialise(settings["outputDevice"])
+                self.outputView.ensureOptionExists(settings["outputDevice"])
+
+        if "outputDevices" in settings:
+            self.outputModel.deserialise(settings["outputDevices"])
+            self.outputView.ensureOptionsExist(settings["outputDevices"])
 
         self.nameMatchCheckBox.setChecked(
             settings.get("connectByNameMatch", False)
@@ -189,6 +199,8 @@ class MIDISettings(SettingsPage):
             return {
                 "inputDevice": "" if input == "Default" else input,
                 "outputDevice": "" if output == "Default" else output,
+                "inputDevices": self.inputModel.serialise(),
+                "outputDevices": self.outputModel.serialise(),
                 "connectByNameMatch": self.nameMatchCheckBox.isChecked(),
             }
 
