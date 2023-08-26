@@ -164,6 +164,7 @@ class MIDISettings(SettingsPage):
                 self.inputCombo.setCurrentIndex(1)
 
             self.inputModel.deserialise(settings["inputDevice"])
+            self.inputView.ensureOptionExists(settings["inputDevice"])
 
         if settings["outputDevice"]:
             self.outputCombo.setCurrentText(settings["outputDevice"])
@@ -174,6 +175,7 @@ class MIDISettings(SettingsPage):
                 self.outputCombo.setCurrentIndex(1)
 
             self.outputModel.deserialise(settings["outputDevice"])
+            self.outputView.ensureOptionExists(settings["outputDevice"])
 
         self.nameMatchCheckBox.setChecked(
             settings.get("connectByNameMatch", False)

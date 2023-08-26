@@ -20,6 +20,7 @@ from PyQt5.QtWidgets import QHeaderView, QTableView
 from lisp.plugins.midi.midi_utils import (
         DEFAULT_DEVICE_NAME,
         MAX_MIDI_DEVICES,
+        PortNameMatch,
 )
 from lisp.ui.qdelegates import (
         ComboBoxDelegate,
@@ -63,3 +64,7 @@ class MidiIODeviceView(QTableView):
 
     def setOptions(self, midi_devices):
         self.delegates[1].options = [DEFAULT_DEVICE_NAME] + midi_devices
+
+    def ensureOptionExists(self, entry):
+        if self.model().patches[0]["name_match"] is not PortNameMatch.ExactMatch:
+            self.delegates[1].options.insert(1, entry)
