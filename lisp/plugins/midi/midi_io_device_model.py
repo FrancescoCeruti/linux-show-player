@@ -115,6 +115,9 @@ class MidiIODeviceModel(QAbstractTableModel):
     def deserialise(self, settings):
         if isinstance(settings, str):
             self.appendPatch(settings)
+        else:
+            for patch_id, device in settings.items():
+                self.appendPatch(device, int(patch_id.split('#')[1]))
 
     def flags(self, index):
         column = index.column()
@@ -137,6 +140,10 @@ class MidiIODeviceModel(QAbstractTableModel):
 
     def rowCount(self, parent=QModelIndex()):
         return len(self.patches)
+
+    @abstractmethod
+    def serialise(self):
+        pass
 
     def setData(self, index, value, role=Qt.EditRole):
         if not index.isValid() or role != Qt.EditRole:
@@ -203,6 +210,12 @@ class MidiInputDeviceModel(MidiIODeviceModel):
         status = plugin.input_name_match(patch_id, port_name)
         return status
 
+    def serialise(self):
+        patches = {}
+        for row in self.patches:
+            patches[f'in#{row["id"]}'] = row["device"]
+        return patches
+
 class MidiOutputDeviceModel(MidiIODeviceModel):
 
     def portStatus(self, numid, port_name):
@@ -216,3 +229,9 @@ class MidiOutputDeviceModel(MidiIODeviceModel):
         plugin = get_plugin("Midi")
         status = plugin.output_name_match(patch_id, port_name)
         return status
+
+    def serialise(self):
+        patches = {}
+        for row in self.patches:
+            patches[f'out#{row["id"]}'] = row["device"]
+        return patches

@@ -25,7 +25,7 @@ from lisp.core.signal import Connection, Signal
 from lisp.plugins.midi.midi_cue import MidiCue
 from lisp.plugins.midi.midi_io import MIDIOutput, MIDIInput, MIDIBase
 from lisp.plugins.midi.midi_settings import MIDISettings
-from lisp.plugins.midi.midi_utils import midi_output_names, midi_input_names, PortNameMatch, PortStatus
+from lisp.plugins.midi.midi_utils import midi_output_names, midi_input_names, PortDirection, PortNameMatch, PortStatus
 from lisp.plugins.midi.port_monitor import ALSAPortMonitor
 from lisp.ui.settings.app_configuration import AppConfigurationDialog
 from lisp.ui.ui_utils import translate
@@ -67,16 +67,13 @@ class Midi(Plugin):
         # Create input handlers and connect
         self.received = Signal()
         self.__inputs = {}
-        for patchId, deviceName in self.input_patches().items():
-            self.__inputs[patchId] = MIDIInput(self.backend, patchId, deviceName)
-            self.__inputs[patchId].received.connect(self._dispatch_message)
-            self._reconnect(self.__inputs[patchId], deviceName, avail_inputs)
+        for patch_id, device_name in self.input_patches().items():
+            self._connect(patch_id, device_name, PortDirection.Input)
 
         # Create output handlers and connect
         self.__outputs = {}
-        for patchId, deviceName in self.output_patches().items():
-            self.__outputs[patchId] = MIDIOutput(self.backend, patchId, deviceName)
-            self._reconnect(self.__outputs[patchId], deviceName, avail_outputs)
+        for patch_id, device_name in self.output_patches().items():
+            self._connect(patch_id, device_name, PortDirection.Output)
 
         # Monitor ports, for auto-reconnection.
         # Since current midi backends are not reliable on
@@ -204,6 +201,17 @@ class Midi(Plugin):
     def _dispatch_message(self, patch_id, message):
         self.received.emit(patch_id, message)
 
+    def _connect(self, patch_id, device_name, direction: PortDirection):
+        if direction is PortDirection.Input:
+            available = self.backend.get_input_names()
+            self.__inputs[patch_id] = MIDIInput(self.backend, patch_id, device_name)
+            self.__inputs[patch_id].received.connect(self._dispatch_message)
+            self._reconnect(self.__inputs[patch_id], device_name, available)
+        elif direction is PortDirection.Output:
+            available = self.backend.get_output_names()
+            self.__outputs[patch_id] = MIDIOutput(self.backend, patch_id, device_name)
+            self._reconnect(self.__outputs[patch_id], device_name, available)
+
     def _reconnect(self, midi: MIDIBase, current: str, available: list):
         if current in available:
             logger.info(
@@ -230,14 +238,22 @@ class Midi(Plugin):
             if possible_match.startswith(simple_name):
                 return possible_match
 
-    def __config_change(self, key, _):
-        if key == "inputDevice":
-            self.__inputs["in#1"].change_port(self.input_name())
-        elif key == "outputDevice":
-            self.__outputs["out#1"].change_port(self.output_name())
+    def __config_change(self, key, changeset):
+        if key == "inputDevices":
+            for patch_id, device_name in changeset.items():
+                if patch_id not in self.__inputs:
+                    self._connect(patch_id, device_name, PortDirection.Input)
+                else:
+                    self.__inputs[patch_id].change_port(device_name)
+        elif key == "outputDevices":
+            for patch_id, device_name in changeset.items():
+                if patch_id not in self.__outputs:
+                    self._connect(patch_id, device_name, PortDirection.Output)
+                else:
+                    self.__outputs[patch_id].change_port(device_name)
 
     def __config_update(self, diff):
-        if "inputDevice" in diff:
-            self.__config_change("inputDevice", diff["inputDevice"])
-        if "outputDevice" in diff:
-            self.__config_change("outputDevice", diff["outputDevice"])
+        if "inputDevices" in diff:
+            self.__config_change("inputDevices", diff["inputDevices"])
+        if "outputDevices" in diff:
+            self.__config_change("outputDevices", diff["outputDevices"])
