@@ -63,6 +63,8 @@ class MidiIODeviceView(QTableView):
         self.horizontalHeader().resizeSection(2, 64)
 
     def setOptions(self, midi_devices):
+        midi_devices = list(set(midi_devices)) # Remove duplicates
+        midi_devices.sort()
         self.delegates[1].options = [DEFAULT_DEVICE_NAME] + midi_devices
 
     def ensureOptionExists(self, entry):
