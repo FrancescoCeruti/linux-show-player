@@ -83,8 +83,8 @@ MAX_MIDI_DEVICES = 16 # 16 ins, 16 outs.
 
 
 class PortDirection(Enum):
-    Input = 0
-    Output = 1
+    Input = "in"
+    Output = "out"
 
 
 class PortNameMatch(Enum):

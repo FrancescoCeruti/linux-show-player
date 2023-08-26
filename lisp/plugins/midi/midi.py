@@ -92,11 +92,11 @@ class Midi(Plugin):
 
     @property
     def input(self):
-        return self.__inputs["in#1"]
+        return self.__inputs[f"{PortDirection.Input.value}#1"]
 
     @property
     def output(self):
-        return self.__outputs["out#1"]
+        return self.__outputs[f"{PortDirection.Output.value}#1"]
 
     def add_exclusive_callback(self, patch_id, callback):
         if patch_id not in self.__inputs:
@@ -116,7 +116,7 @@ class Midi(Plugin):
             handler.exclusive_mode = False
             handler.received_exclusive.disconnect(callback)
 
-    def input_name(self, patch_id="in#1"):
+    def input_name(self, patch_id=f"{PortDirection.Input.value}#1"):
         return self.__inputs[patch_id].port_name()
 
     def input_name_match(self, patch_id, candidate_name):
@@ -131,14 +131,14 @@ class Midi(Plugin):
 
     def input_patches(self):
         patches = Midi.Config.get("inputDevices", None)
-        return patches if patches else { "in#1": Midi.Config.get("inputDevice", self.__default_input) }
+        return patches if patches else { f"{PortDirection.Input.value}#1": Midi.Config.get("inputDevice", self.__default_input) }
 
     def input_status(self, patch_id):
         if patch_id not in self.__inputs:
             return PortStatus.DoesNotExist
         return PortStatus.Open if self.__inputs[patch_id].is_open() else PortStatus.Closed
 
-    def output_name(self, patch_id="out#1"):
+    def output_name(self, patch_id=f"{PortDirection.Output.value}#1"):
         return self.__outputs[patch_id].port_name()
 
     def output_name_match(self, patch_id, candidate_name):
@@ -153,7 +153,7 @@ class Midi(Plugin):
 
     def output_patches(self):
         patches = Midi.Config.get("outputDevices", None)
-        return patches if patches else { "out#1": Midi.Config.get("outputDevice", self.__default_output) }
+        return patches if patches else { f"{PortDirection.Output.value}#1": Midi.Config.get("outputDevice", self.__default_output) }
 
     def output_status(self, patch_id):
         if patch_id not in self.__outputs:
