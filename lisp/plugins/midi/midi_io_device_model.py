@@ -32,6 +32,7 @@ from lisp.plugins.midi.midi_utils import (
     MAX_MIDI_DEVICES,
     midi_input_names,
     midi_output_names,
+    PortNameMatch,
     PortStatus,
 )
 from lisp.ui.ui_utils import translate
@@ -76,6 +77,7 @@ class MidiIODeviceModel(QAbstractTableModel):
             "id": numid,
             "device": port_name,
             "status": self.portStatus(numid, port_name),
+            "name_match": self.portNameMatch(numid, port_name),
         }
         self.patches.insert(row, patch)
         self.endInsertRows()
@@ -98,7 +100,12 @@ class MidiIODeviceModel(QAbstractTableModel):
                 if column == 0:
                     return patch["id"]
                 elif column == 1:
-                    return patch["device"]
+                    prefix = ""
+                    if patch["name_match"] is PortNameMatch.FuzzyMatch:
+                        prefix = "~ "
+                    elif patch["name_match"] is PortNameMatch.NoMatch:
+                        prefix = "* "
+                    return f'{prefix} {patch["device"]}'
                 elif column == 2:
                     return patch["status"].value
 
@@ -142,6 +149,7 @@ class MidiIODeviceModel(QAbstractTableModel):
         row = index.row()
         patch = self.patches[row]
         patch["device"] = value
+        patch["name_match"] = self.portNameMatch(patch["id"], value)
 
         status_updated = self._updateStatus(row)
         self.dataChanged.emit(
@@ -150,6 +158,14 @@ class MidiIODeviceModel(QAbstractTableModel):
             [Qt.DisplayRole, Qt.EditRole],
         )
         return True
+
+    def _updateNameMatch(self, row):
+        patch = self.patches[row]
+        match = self.portNameMatch(patch["id"], patch["device"])
+        if match != patch["name_match"]:
+            patch["name_match"] = match
+            return True
+        return False
 
     def _updateStatus(self, row):
         patch = self.patches[row]
@@ -161,10 +177,15 @@ class MidiIODeviceModel(QAbstractTableModel):
 
     def updateStatuses(self):
         for row in range(len(self.patches)):
+            col = False
+            if self._updateNameMatch(row):
+                col = [1, 1]
             if self._updateStatus(row):
+                col = [col[0] if col else 2, 2]
+            if col:
                 self.dataChanged.emit(
-                    self.index(row, 2), # from top-left
-                    self.index(row, 2), # to bottom-right
+                    self.index(row, col[0]), # from top-left
+                    self.index(row, col[1]), # to bottom-right
                     [Qt.DisplayRole],
                 )
 
@@ -174,8 +195,12 @@ class MidiInputDeviceModel(MidiIODeviceModel):
         patch_id = f"in#{numid}"
         plugin = get_plugin("Midi")
         status = plugin.input_status(patch_id)
-        if status is PortStatus.DoesNotExist or plugin.input_name(patch_id) != port_name:
-            return PortStatus.DoesNotExist
+        return status
+
+    def portNameMatch(self, numid, port_name):
+        patch_id = f"in#{numid}"
+        plugin = get_plugin("Midi")
+        status = plugin.input_name_match(patch_id, port_name)
         return status
 
 class MidiOutputDeviceModel(MidiIODeviceModel):
@@ -184,7 +209,10 @@ class MidiOutputDeviceModel(MidiIODeviceModel):
         patch_id = f"out#{numid}"
         plugin = get_plugin("Midi")
         status = plugin.output_status(patch_id)
-        print(status)
-        if status is PortStatus.DoesNotExist or plugin.output_name(patch_id) != port_name:
-            return PortStatus.DoesNotExist
+        return status
+
+    def portNameMatch(self, numid, port_name):
+        patch_id = f"out#{numid}"
+        plugin = get_plugin("Midi")
+        status = plugin.output_name_match(patch_id, port_name)
         return status

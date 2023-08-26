@@ -87,6 +87,12 @@ class PortDirection(Enum):
     Output = 1
 
 
+class PortNameMatch(Enum):
+    NoMatch = 0
+    ExactMatch = 1
+    FuzzyMatch = -1
+
+
 class PortStatus(Enum):
     Open = "✓" # U+2713
     Closed = "×" # U+00D7

@@ -25,7 +25,7 @@ from lisp.core.signal import Connection, Signal
 from lisp.plugins.midi.midi_cue import MidiCue
 from lisp.plugins.midi.midi_io import MIDIOutput, MIDIInput, MIDIBase
 from lisp.plugins.midi.midi_settings import MIDISettings
-from lisp.plugins.midi.midi_utils import midi_output_names, midi_input_names, PortStatus
+from lisp.plugins.midi.midi_utils import midi_output_names, midi_input_names, PortNameMatch, PortStatus
 from lisp.plugins.midi.port_monitor import ALSAPortMonitor
 from lisp.ui.settings.app_configuration import AppConfigurationDialog
 from lisp.ui.ui_utils import translate
@@ -122,6 +122,16 @@ class Midi(Plugin):
     def input_name(self, patch_id="in#1"):
         return self.__inputs[patch_id].port_name()
 
+    def input_name_match(self, patch_id, candidate_name):
+        if patch_id not in self.__inputs:
+            return PortNameMatch.NoMatch
+        port_name = self.__inputs[patch_id].port_name()
+        if candidate_name == port_name:
+            return PortNameMatch.ExactMatch
+        if self.Config['connectByNameMatch'] and self._port_search_match(candidate_name, [port_name]):
+            return PortNameMatch.FuzzyMatch
+        return PortNameMatch.NoMatch
+
     def input_patches(self):
         patches = Midi.Config.get("inputDevices", None)
         return patches if patches else { "in#1": Midi.Config.get("inputDevice", self.__default_input) }
@@ -133,6 +143,16 @@ class Midi(Plugin):
 
     def output_name(self, patch_id="out#1"):
         return self.__outputs[patch_id].port_name()
+
+    def output_name_match(self, patch_id, candidate_name):
+        if patch_id not in self.__outputs:
+            return PortNameMatch.NoMatch
+        port_name = self.__outputs[patch_id].port_name()
+        if candidate_name == port_name:
+            return PortNameMatch.ExactMatch
+        if self.Config['connectByNameMatch'] and self._port_search_match(candidate_name, [port_name]):
+            return PortNameMatch.FuzzyMatch
+        return PortNameMatch.NoMatch
 
     def output_patches(self):
         patches = Midi.Config.get("outputDevices", None)
