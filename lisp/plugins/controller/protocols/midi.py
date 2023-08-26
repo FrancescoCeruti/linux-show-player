@@ -138,15 +138,21 @@ class MidiSettings(SettingsPage):
     def getSettings(self):
         entries = []
         for row in range(self.midiModel.rowCount()):
+            patch_id = self.midiModel.getPatchId(row)
             message, action = self.midiModel.getMessage(row)
-            entries.append((str(message), action))
+            entries.append((f"{patch_id} {str(message)}", action))
 
         return {"midi": entries}
 
     def loadSettings(self, settings):
         for entry in settings.get("midi", ()):
             try:
-                self.midiModel.appendMessage(midi_from_str(entry[0]), entry[1])
+                entry_split = entry[0].split(" ", 1)
+                if '#' not in entry_split[0]:
+                    # Backwards compatibility for config without patches
+                    self.midiModel.appendMessage("in#1", midi_from_str(entry[0]), entry[1])
+                else:
+                    self.midiModel.appendMessage(entry_split[0], midi_from_str(entry_split[1]), entry[1])
             except Exception:
                 logger.warning(
                     translate(
@@ -175,16 +181,17 @@ class MidiSettings(SettingsPage):
             if hasattr(message, "velocity"):
                 message = message.copy(velocity=0)
 
-            self.midiModel.appendMessage(message, self._defaultAction)
+            self.midiModel.appendMessage(patch_id, message, self._defaultAction)
 
     def __new_message(self):
         dialog = MIDIMessageEditDialog(PortDirection.Input)
         if dialog.exec() == MIDIMessageEditDialog.Accepted:
             message = midi_from_dict(dialog.getMessageDict())
+            patch_id = dialog.getPatchId()
             if hasattr(message, "velocity"):
                 message.velocity = 0
 
-            self.midiModel.appendMessage(message, self._defaultAction)
+            self.midiModel.appendMessage(patch_id, message, self._defaultAction)
 
     def __remove_message(self):
         self.midiModel.removeRow(self.midiView.currentIndex().row())
@@ -230,11 +237,11 @@ class MidiValueDelegate(LabelDelegate):
         value = index.data()
         if value is not None:
             model = index.model()
-            message_type = model.data(model.index(index.row(), 0))
+            message_type = model.data(model.index(index.row(), 1))
             message_spec = MIDI_MSGS_SPEC.get(message_type, ())
 
-            if len(message_spec) >= index.column():
-                attr = message_spec[index.column() - 1]
+            if len(message_spec) >= index.column() - 1:
+                attr = message_spec[index.column() - 2]
                 attr_spec = MIDI_ATTRS_SPEC.get(attr)
 
                 if attr_spec is not None:
@@ -247,6 +254,7 @@ class MidiModel(SimpleTableModel):
     def __init__(self):
         super().__init__(
             [
+                translate("ControllerMidiSettings", "MIDI Patch"),
                 translate("ControllerMidiSettings", "Type"),
                 translate("ControllerMidiSettings", "Data 1"),
                 translate("ControllerMidiSettings", "Data 2"),
@@ -255,25 +263,29 @@ class MidiModel(SimpleTableModel):
             ]
         )
 
-    def appendMessage(self, message, action):
+    def appendMessage(self, patch_id, message, action):
         data = midi_data_from_msg(message)
         data.extend((None,) * (3 - len(data)))
-        self.appendRow(message.type, *data, action)
+        self.appendRow(patch_id, message.type, *data, action)
 
-    def updateMessage(self, row, message, action):
+    def updateMessage(self, row, patch_id, message, action):
         data = midi_data_from_msg(message)
         data.extend((None,) * (3 - len(data)))
-        self.updateRow(row, message.type, *data, action)
+        self.updateRow(row, patch_id, message.type, *data, action)
 
     def getMessage(self, row):
         if row < len(self.rows):
             return (
-                midi_msg_from_data(self.rows[row][0], self.rows[row][1:4]),
-                self.rows[row][4],
+                midi_msg_from_data(self.rows[row][1], self.rows[row][2:5]),
+                self.rows[row][5],
             )
 
+    def getPatchId(self, row):
+        if row < len(self.rows):
+            return self.rows[row][0]
+
     def flags(self, index):
-        if index.column() <= 3:
+        if index.column() <= 4:
             return Qt.ItemIsEnabled | Qt.ItemIsSelectable
         else:
             return super().flags(index)
@@ -284,6 +296,7 @@ class MidiView(QTableView):
         super().__init__(**kwargs)
 
         self.delegates = [
+            LabelDelegate(),
             MidiMessageTypeDelegate(),
             MidiValueDelegate(),
             MidiValueDelegate(),
@@ -314,15 +327,17 @@ class MidiView(QTableView):
         self.doubleClicked.connect(self.__doubleClicked)
 
     def __doubleClicked(self, index):
-        if index.column() <= 3:
+        if index.column() <= 4:
+            patch_id = self.model().getPatchId(index.row())
             message, action = self.model().getMessage(index.row())
 
             dialog = MIDIMessageEditDialog(PortDirection.Input)
+            dialog.setPatchId(patch_id)
             dialog.setMessageDict(message.dict())
 
             if dialog.exec() == MIDIMessageEditDialog.Accepted:
                 self.model().updateMessage(
-                    index.row(), midi_from_dict(dialog.getMessageDict()), action
+                    index.row(), dialog.getPatchId(), midi_from_dict(dialog.getMessageDict()), action
                 )
 
 
@@ -333,10 +348,10 @@ class Midi(Protocol):
     def __init__(self):
         super().__init__()
         # Install callback for new MIDI messages
-        get_plugin("Midi").input.new_message.connect(self.__new_message)
+        get_plugin("Midi").received.connect(self.__new_message)
 
-    def __new_message(self, message):
+    def __new_message(self, patch_id, message):
         if hasattr(message, "velocity"):
             message = message.copy(velocity=0)
 
-        self.protocol_event.emit(str(message))
+        self.protocol_event.emit(f"{patch_id} {str(message)}")
