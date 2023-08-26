@@ -38,46 +38,11 @@ from lisp.ui.ui_utils import translate
 
 class MIDISettings(SettingsPage):
     Name = QT_TRANSLATE_NOOP("SettingsPageName", "MIDI settings")
-    STATUS_SYMBOLS = {True: "✓", False: "×"}  # U+2713, U+00D7
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
-
-        self.portsGroup = QGroupBox(self)
-        self.portsGroup.setLayout(QGridLayout())
-        self.layout().addWidget(self.portsGroup)
-
-        # Input port
-        self.inputLabel = QLabel(self.portsGroup)
-        self.portsGroup.layout().addWidget(self.inputLabel, 0, 0, 2, 1)
-
-        self.inputCombo = QComboBox(self.portsGroup)
-        self.portsGroup.layout().addWidget(self.inputCombo, 0, 1)
-
-        self.inputStatus = QLabel(self.portsGroup)
-        self.inputStatus.setDisabled(True)
-        self.inputStatus.setText(f"[{MIDISettings.STATUS_SYMBOLS[False]}]")
-        self.portsGroup.layout().addWidget(self.inputStatus, 1, 1)
-
-        # Spacer
-        self.portsGroup.layout().addItem(QSpacerItem(0, 30), 2, 0, 2, 1)
-
-        # Output port
-        self.outputLabel = QLabel(self.portsGroup)
-        self.portsGroup.layout().addWidget(self.outputLabel, 3, 0, 2, 1)
-
-        self.outputCombo = QComboBox(self.portsGroup)
-        self.portsGroup.layout().addWidget(self.outputCombo, 3, 1)
-
-        self.outputStatus = QLabel(self.portsGroup)
-        self.outputStatus.setDisabled(True)
-        self.outputStatus.setText(f"[{MIDISettings.STATUS_SYMBOLS[False]}]")
-        self.portsGroup.layout().addWidget(self.outputStatus, 4, 1)
-
-        self.portsGroup.layout().setColumnStretch(0, 2)
-        self.portsGroup.layout().setColumnStretch(1, 3)
 
         # Input patches
         self.inputGroup = QGroupBox(self)
@@ -135,17 +100,6 @@ class MIDISettings(SettingsPage):
             self.updateTimer.start(2000)
 
     def retranslateUi(self):
-        self.portsGroup.setTitle(translate("MIDISettings", "MIDI devices"))
-        self.inputLabel.setText(translate("MIDISettings", "Input"))
-        self.outputLabel.setText(translate("MIDISettings", "Output"))
-
-        self.miscGroup.setTitle(translate("MIDISettings", "Misc options"))
-        self.nameMatchCheckBox.setText(
-            translate(
-                "MIDISettings", "Try to connect using only device/port name"
-            )
-        )
-
         self.inputGroup.setTitle(translate("MIDISettings", "MIDI Inputs"))
         self.inputAddButton.setText(translate("MIDISettings", "Add"))
         self.inputRemButton.setText(translate("MIDISettings", "Remove"))
@@ -154,38 +108,27 @@ class MIDISettings(SettingsPage):
         self.outputAddButton.setText(translate("MIDISettings", "Add"))
         self.outputRemButton.setText(translate("MIDISettings", "Remove"))
 
+        self.miscGroup.setTitle(translate("MIDISettings", "Misc options"))
+        self.nameMatchCheckBox.setText(
+            translate(
+                "MIDISettings", "Try to connect using only device/port name"
+            )
+        )
+
     def loadSettings(self, settings):
-        if settings["inputDevice"]:
-            self.inputCombo.setCurrentText(settings["inputDevice"])
-            if self.inputCombo.currentText() != settings["inputDevice"]:
-                self.inputCombo.insertItem(
-                    1, IconTheme.get("dialog-warning"), settings["inputDevice"]
-                )
-                self.inputCombo.setCurrentIndex(1)
-
-            if "inputDevices" not in settings:
-                self.inputModel.deserialise(settings["inputDevice"])
-                self.inputView.ensureOptionExists(settings["inputDevice"])
-
         if "inputDevices" in settings:
             self.inputModel.deserialise(settings["inputDevices"])
             self.inputView.ensureOptionsExist(settings["inputDevices"])
-
-        if settings["outputDevice"]:
-            self.outputCombo.setCurrentText(settings["outputDevice"])
-            if self.outputCombo.currentText() != settings["outputDevice"]:
-                self.outputCombo.insertItem(
-                    1, IconTheme.get("dialog-warning"), settings["outputDevice"]
-                )
-                self.outputCombo.setCurrentIndex(1)
-
-            if "outputDevices" not in settings:
-                self.outputModel.deserialise(settings["outputDevice"])
-                self.outputView.ensureOptionExists(settings["outputDevice"])
+        elif "inputDevice" in settings:
+            self.inputModel.deserialise(settings["inputDevice"])
+            self.inputView.ensureOptionExists(settings["inputDevice"])
 
         if "outputDevices" in settings:
             self.outputModel.deserialise(settings["outputDevices"])
             self.outputView.ensureOptionsExist(settings["outputDevices"])
+        elif "outputDevice" in settings:
+            self.outputModel.deserialise(settings["outputDevice"])
+            self.outputView.ensureOptionExists(settings["outputDevice"])
 
         self.nameMatchCheckBox.setChecked(
             settings.get("connectByNameMatch", False)
@@ -193,45 +136,18 @@ class MIDISettings(SettingsPage):
 
     def getSettings(self):
         if self.isEnabled():
-            input = self.inputCombo.currentText()
-            output = self.outputCombo.currentText()
-
             return {
-                "inputDevice": "" if input == "Default" else input,
-                "outputDevice": "" if output == "Default" else output,
                 "inputDevices": self.inputModel.serialise(),
                 "outputDevices": self.outputModel.serialise(),
                 "connectByNameMatch": self.nameMatchCheckBox.isChecked(),
             }
-
         return {}
 
-    @staticmethod
-    def portStatusSymbol(port):
-        return MIDISettings.STATUS_SYMBOLS.get(port.is_open(), "")
-
     def _updatePortsStatus(self):
-        midi = get_plugin("Midi")
-
-        self.inputStatus.setText(
-            f"[{self.portStatusSymbol(midi.input)}] {midi.input.port_name()}"
-        )
-        self.outputStatus.setText(
-            f"[{self.portStatusSymbol(midi.output)}] {midi.output.port_name()}"
-        )
-
         self.inputModel.updateStatuses()
         self.outputModel.updateStatuses()
 
     def _loadDevices(self):
-        self.inputCombo.clear()
-        self.inputCombo.addItems(["Default"])
-        self.inputCombo.addItems(midi_input_names())
-
-        self.outputCombo.clear()
-        self.outputCombo.addItems(["Default"])
-        self.outputCombo.addItems(midi_output_names())
-
         self.inputView.setOptions(midi_input_names())
         self.outputView.setOptions(midi_output_names())
 
