@@ -32,6 +32,7 @@ from lisp.plugins.midi.midi_utils import (
     MAX_MIDI_DEVICES,
     midi_input_names,
     midi_output_names,
+    PortDirection,
     PortNameMatch,
     PortStatus,
 )
@@ -46,6 +47,7 @@ class MidiIODeviceModel(QAbstractTableModel):
     def __init__(self):
         super().__init__()
 
+        self._direction = PortDirection.Input
         self.patches = []
         self.columns = [
             translate("MIDISettings", "#"),
@@ -141,9 +143,11 @@ class MidiIODeviceModel(QAbstractTableModel):
     def rowCount(self, parent=QModelIndex()):
         return len(self.patches)
 
-    @abstractmethod
     def serialise(self):
-        pass
+        patches = {}
+        for row in self.patches:
+            patches[f'{self._direction.value}#{row["id"]}'] = row["device"]
+        return patches
 
     def setData(self, index, value, role=Qt.EditRole):
         if not index.isValid() or role != Qt.EditRole:
@@ -199,39 +203,31 @@ class MidiIODeviceModel(QAbstractTableModel):
 class MidiInputDeviceModel(MidiIODeviceModel):
 
     def portStatus(self, numid, port_name):
-        patch_id = f"in#{numid}"
+        patch_id = f"{self._direction.value}#{numid}"
         plugin = get_plugin("Midi")
         status = plugin.input_status(patch_id)
         return status
 
     def portNameMatch(self, numid, port_name):
-        patch_id = f"in#{numid}"
+        patch_id = f"{self._direction.value}#{numid}"
         plugin = get_plugin("Midi")
         status = plugin.input_name_match(patch_id, port_name)
         return status
 
-    def serialise(self):
-        patches = {}
-        for row in self.patches:
-            patches[f'in#{row["id"]}'] = row["device"]
-        return patches
-
 class MidiOutputDeviceModel(MidiIODeviceModel):
 
+    def __init__(self):
+        super().__init__()
+        self._direction = PortDirection.Output
+
     def portStatus(self, numid, port_name):
-        patch_id = f"out#{numid}"
+        patch_id = f"{self._direction.value}#{numid}"
         plugin = get_plugin("Midi")
         status = plugin.output_status(patch_id)
         return status
 
     def portNameMatch(self, numid, port_name):
-        patch_id = f"out#{numid}"
+        patch_id = f"{self._direction.value}#{numid}"
         plugin = get_plugin("Midi")
         status = plugin.output_name_match(patch_id, port_name)
         return status
-
-    def serialise(self):
-        patches = {}
-        for row in self.patches:
-            patches[f'out#{row["id"]}'] = row["device"]
-        return patches
