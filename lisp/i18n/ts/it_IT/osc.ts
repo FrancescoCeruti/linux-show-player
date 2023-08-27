@@ -104,7 +104,7 @@
     <message>
       <location filename="../../../plugins/osc/osc_server.py" line="100"/>
       <source>Cannot start OSC server</source>
-      <translation type="unfinished">Cannot start OSC server</translation>
+      <translation>Impossibile avviare il server OSC</translation>
     </message>
   </context>
   <context>
