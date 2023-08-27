@@ -4,63 +4,78 @@
   <context>
     <name>SettingsPageName</name>
     <message>
-      <location filename="../../../plugins/timecode/settings.py" line="108"/>
-      <source>Timecode Settings</source>
-      <translation type="unfinished">Timecode Settings</translation>
-    </message>
-    <message>
       <location filename="../../../plugins/timecode/settings.py" line="38"/>
       <source>Timecode</source>
-      <translation type="unfinished">Timecode</translation>
+      <translation>Tijdcode</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/timecode/settings.py" line="114"/>
+      <source>Timecode Settings</source>
+      <translation>Instellingen tijdcode</translation>
     </message>
   </context>
   <context>
     <name>Timecode</name>
     <message>
-      <location filename="../../../plugins/timecode/timecode.py" line="97"/>
-      <source>Cannot load timecode protocol: &quot;{}&quot;</source>
-      <translation type="unfinished">Cannot load timecode protocol: &quot;{}&quot;</translation>
+      <location filename="../../../plugins/timecode/timecode.py" line="99"/>
+      <source>Cannot load timecode protocol: "{}"</source>
+      <translation type="unfinished">Cannot load timecode protocol: "{}"</translation>
     </message>
   </context>
   <context>
     <name>TimecodeError</name>
     <message>
-      <location filename="../../../plugins/timecode/protocols/artnet.py" line="72"/>
+      <location filename="../../../plugins/timecode/protocols/artnet.py" line="65"/>
+      <source>Cannot send timecode. 
+OLA daemon has stopped.</source>
+      <translation type="unfinished">Cannot send timecode. 
+OLA daemon has stopped.</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/timecode/protocols/artnet.py" line="73"/>
       <source>Cannot send timecode.</source>
-      <translation type="unfinished">Cannot send timecode.</translation>
+      <translation>Kan tijdcode niet versturen.</translation>
     </message>
   </context>
   <context>
     <name>TimecodeSettings</name>
     <message>
-      <location filename="../../../plugins/timecode/settings.py" line="141"/>
-      <source>Timecode Format:</source>
-      <translation type="unfinished">Timecode Format:</translation>
+      <location filename="../../../plugins/timecode/settings.py" line="81"/>
+      <source>Replace HOURS by a static track number</source>
+      <translation>Vervang UREN door een statisch tracknummer</translation>
     </message>
     <message>
-      <location filename="../../../plugins/timecode/settings.py" line="80"/>
-      <source>Replace HOURS by a static track number</source>
-      <translation type="unfinished">Replace HOURS by a static track number</translation>
+      <location filename="../../../plugins/timecode/settings.py" line="86"/>
+      <source>Enable Timecode</source>
+      <translation>Schakel tijdcode in</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="88"/>
       <source>Track number</source>
-      <translation type="unfinished">Track number</translation>
+      <translation>Tracknummer</translation>
     </message>
     <message>
-      <location filename="../../../plugins/timecode/settings.py" line="85"/>
-      <source>Enable Timecode</source>
-      <translation type="unfinished">Enable Timecode</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/timecode/settings.py" line="138"/>
+      <location filename="../../../plugins/timecode/settings.py" line="145"/>
       <source>Timecode Settings</source>
-      <translation type="unfinished">Timecode Settings</translation>
+      <translation>Instellingen tijdcode</translation>
     </message>
     <message>
-      <location filename="../../../plugins/timecode/settings.py" line="144"/>
+      <location filename="../../../plugins/timecode/settings.py" line="148"/>
+      <source>Timecode Format:</source>
+      <translation>Formaat tijdcode:</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/timecode/settings.py" line="151"/>
       <source>Timecode Protocol:</source>
-      <translation type="unfinished">Timecode Protocol:</translation>
+      <translation>Protocol tijdcode:</translation>
+    </message>
+  </context>
+  <context>
+    <name>TimecodeWarning</name>
+    <message>
+      <location filename="../../../plugins/timecode/cue_tracker.py" line="119"/>
+      <source>Cannot send timecode, untracking cue</source>
+      <translation type="unfinished">Cannot send timecode, untracking cue</translation>
     </message>
   </context>
 </TS>

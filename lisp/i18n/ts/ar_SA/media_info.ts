@@ -9,6 +9,16 @@
       <translation type="unfinished">Media Info</translation>
     </message>
     <message>
+      <location filename="../../../plugins/media_info/media_info.py" line="71"/>
+      <source>Warning</source>
+      <translation>تحذير</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/media_info/media_info.py" line="72"/>
+      <source>Cannot get any information.</source>
+      <translation type="unfinished">Cannot get any information.</translation>
+    </message>
+    <message>
       <location filename="../../../plugins/media_info/media_info.py" line="135"/>
       <source>Info</source>
       <translation>معلومات</translation>
@@ -17,16 +27,6 @@
       <location filename="../../../plugins/media_info/media_info.py" line="135"/>
       <source>Value</source>
       <translation>القيمة</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/media_info/media_info.py" line="70"/>
-      <source>Warning</source>
-      <translation>تحذير</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/media_info/media_info.py" line="70"/>
-      <source>Cannot get any information.</source>
-      <translation type="unfinished">Cannot get any information.</translation>
     </message>
   </context>
 </TS>

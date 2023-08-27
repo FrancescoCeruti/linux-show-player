@@ -12,21 +12,34 @@
   <context>
     <name>ApiServerError</name>
     <message>
-      <location filename="../../../plugins/network/server.py" line="50"/>
+      <location filename="../../../plugins/network/server.py" line="51"/>
       <source>Network API server stopped working.</source>
       <translation>網络 API 伺服器停止運作</translation>
     </message>
   </context>
   <context>
+    <name>ApiServerInfo</name>
+    <message>
+      <location filename="../../../plugins/network/server.py" line="37"/>
+      <source>Start serving network API at: http://{}:{}/</source>
+      <translation>啟動網络 API 於：http://{}:{}/</translation>
+    </message>
+  </context>
+  <context>
     <name>NetworkApiDebug</name>
     <message>
-      <location filename="../../../plugins/network/api/__init__.py" line="14"/>
+      <location filename="../../../plugins/network/api/__init__.py" line="15"/>
       <source>New end-point: {}</source>
       <translation>新終端：{}</translation>
     </message>
   </context>
   <context>
     <name>NetworkDiscovery</name>
+    <message>
+      <location filename="../../../plugins/network/discovery_dialogs.py" line="77"/>
+      <source>Select the hosts you want to add</source>
+      <translation>選擇你想增加的主機</translation>
+    </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="79"/>
       <source>Host discovery</source>
@@ -38,39 +51,34 @@
       <translation>管理主機</translation>
     </message>
     <message>
-      <location filename="../../../plugins/network/discovery_dialogs.py" line="165"/>
+      <location filename="../../../plugins/network/discovery_dialogs.py" line="166"/>
       <source>Discover hosts</source>
       <translation>尋找主機</translation>
     </message>
     <message>
-      <location filename="../../../plugins/network/discovery_dialogs.py" line="168"/>
+      <location filename="../../../plugins/network/discovery_dialogs.py" line="169"/>
       <source>Manually add a host</source>
       <translation>手動添加主機</translation>
     </message>
     <message>
-      <location filename="../../../plugins/network/discovery_dialogs.py" line="171"/>
+      <location filename="../../../plugins/network/discovery_dialogs.py" line="172"/>
       <source>Remove selected host</source>
       <translation>移除所選主機</translation>
     </message>
     <message>
-      <location filename="../../../plugins/network/discovery_dialogs.py" line="174"/>
+      <location filename="../../../plugins/network/discovery_dialogs.py" line="175"/>
       <source>Remove all host</source>
       <translation>移除所有主機</translation>
     </message>
     <message>
-      <location filename="../../../plugins/network/discovery_dialogs.py" line="179"/>
+      <location filename="../../../plugins/network/discovery_dialogs.py" line="181"/>
       <source>Address</source>
       <translation>地址</translation>
     </message>
     <message>
-      <location filename="../../../plugins/network/discovery_dialogs.py" line="179"/>
+      <location filename="../../../plugins/network/discovery_dialogs.py" line="182"/>
       <source>Host IP</source>
       <translation>主機 IP</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/network/discovery_dialogs.py" line="76"/>
-      <source>Select the hosts you want to add</source>
-      <translation>選擇你想增加的主機</translation>
     </message>
   </context>
 </TS>

@@ -9,6 +9,16 @@
       <translation>媒体资料</translation>
     </message>
     <message>
+      <location filename="../../../plugins/media_info/media_info.py" line="71"/>
+      <source>Warning</source>
+      <translation>警告</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/media_info/media_info.py" line="72"/>
+      <source>Cannot get any information.</source>
+      <translation>无法获取任何资料</translation>
+    </message>
+    <message>
       <location filename="../../../plugins/media_info/media_info.py" line="135"/>
       <source>Info</source>
       <translation>资料</translation>
@@ -17,16 +27,6 @@
       <location filename="../../../plugins/media_info/media_info.py" line="135"/>
       <source>Value</source>
       <translation>值</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/media_info/media_info.py" line="70"/>
-      <source>Warning</source>
-      <translation>警告</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/media_info/media_info.py" line="70"/>
-      <source>Cannot get any information.</source>
-      <translation>无法获取任何资料</translation>
     </message>
   </context>
 </TS>

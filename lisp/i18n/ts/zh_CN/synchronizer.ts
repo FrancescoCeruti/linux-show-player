@@ -9,12 +9,12 @@
       <translation>同步</translation>
     </message>
     <message>
-      <location filename="../../../plugins/synchronizer/synchronizer.py" line="47"/>
+      <location filename="../../../plugins/synchronizer/synchronizer.py" line="48"/>
       <source>Manage connected peers</source>
       <translation>管理已连接的用户</translation>
     </message>
     <message>
-      <location filename="../../../plugins/synchronizer/synchronizer.py" line="53"/>
+      <location filename="../../../plugins/synchronizer/synchronizer.py" line="54"/>
       <source>Show your IP</source>
       <translation>显示你的 IP</translation>
     </message>

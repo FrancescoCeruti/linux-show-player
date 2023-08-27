@@ -9,7 +9,7 @@
       <translation>Créer un go</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="223"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="224"/>
       <source>Load on selected Cues</source>
       <translation>Charger les cues sélectionnés</translation>
     </message>
@@ -17,47 +17,17 @@
   <context>
     <name>Presets</name>
     <message>
-      <location filename="../../../plugins/presets/presets.py" line="67"/>
-      <source>Presets</source>
-      <translation>Pré-réglages</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/presets/presets.py" line="72"/>
-      <source>Save as preset</source>
-      <translation>Sauvegarder un pré-réglage sous</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="67"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="66"/>
       <source>Cannot scan presets</source>
       <translation>Impossible d&apos;examiner les pré-réglages</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="71"/>
-      <source>Error while deleting preset &quot;{}&quot;</source>
-      <translation>Erreur lors de la suppression du pré-réglage &quot;{}&quot;</translation>
+      <location filename="../../../plugins/presets/presets.py" line="68"/>
+      <source>Presets</source>
+      <translation>Pré-réglages</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="78"/>
-      <source>Cannot load preset &quot;{}&quot;</source>
-      <translation>Impossible de charger le pré-réglage &quot;{}&quot;</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="84"/>
-      <source>Cannot save preset &quot;{}&quot;</source>
-      <translation>Impossible de sauvegarder le pré-réglage &quot;{}&quot;</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="90"/>
-      <source>Cannot rename preset &quot;{}&quot;</source>
-      <translation>Impossible de renommer le pré-réglage &quot;{}&quot;</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="101"/>
-      <source>Select Preset</source>
-      <translation>Sélectionner le pré-réglage</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="422"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="423"/>
       <source>Preset name</source>
       <translation>Nom du pré-réglage</translation>
     </message>
@@ -82,7 +52,7 @@
       <translation>Supprimer</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="226"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="227"/>
       <source>Export selected</source>
       <translation>Exporter le sélectionné</translation>
     </message>
@@ -92,44 +62,84 @@
       <translation>Importer</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="308"/>
-      <source>Warning</source>
-      <translation>Attention</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="267"/>
-      <source>The same name is already used!</source>
-      <translation>Le même nom est déjà utilisé !</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="343"/>
-      <source>Cannot export correctly.</source>
-      <translation>Impossible d&apos;exporter correctement</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="368"/>
-      <source>Cannot import correctly.</source>
-      <translation>Impossible d&apos;importer correctement.</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="423"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="424"/>
       <source>Cue type</source>
       <translation>Type de cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets.py" line="72"/>
-      <source>Load on cue</source>
-      <translation>Charger au go</translation>
+      <location filename="../../../plugins/presets/presets_ui.py" line="72"/>
+      <source>Error while deleting preset "{}"</source>
+      <translation type="unfinished">Error while deleting preset "{}"</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets.py" line="72"/>
-      <source>Load on selected cues</source>
-      <translation>Charger les go sélectionnés</translation>
+      <location filename="../../../plugins/presets/presets_ui.py" line="78"/>
+      <source>Cannot load preset "{}"</source>
+      <translation type="unfinished">Cannot load preset "{}"</translation>
     </message>
     <message>
-      <location filename="../../../plugins/presets/presets_ui.py" line="308"/>
+      <location filename="../../../plugins/presets/presets_ui.py" line="84"/>
+      <source>Cannot save preset "{}"</source>
+      <translation type="unfinished">Cannot save preset "{}"</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/presets/presets_ui.py" line="91"/>
+      <source>Cannot rename preset "{}"</source>
+      <translation type="unfinished">Cannot rename preset "{}"</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/presets/presets_ui.py" line="101"/>
+      <source>Select Preset</source>
+      <translation>Sélectionner le pré-réglage</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/presets/presets_ui.py" line="114"/>
+      <source>Preset "{}" already exists, overwrite?</source>
+      <translation type="unfinished">Preset "{}" already exists, overwrite?</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/presets/presets_ui.py" line="269"/>
+      <source>Warning</source>
+      <translation>Attention</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/presets/presets_ui.py" line="270"/>
+      <source>The same name is already used!</source>
+      <translation>Le même nom est déjà utilisé !</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/presets/presets_ui.py" line="345"/>
+      <source>Cannot export correctly.</source>
+      <translation>Impossible d&apos;exporter correctement</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/presets/presets_ui.py" line="356"/>
+      <source>Some presets already exists, overwrite?</source>
+      <translation type="unfinished">Some presets already exists, overwrite?</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/presets/presets_ui.py" line="370"/>
+      <source>Cannot import correctly.</source>
+      <translation>Impossible d&apos;importer correctement.</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/presets/presets_ui.py" line="312"/>
       <source>Cannot create a cue from this preset: {}</source>
       <translation>Impossible de créer un go depuis ce pré-réglage : {}</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/presets/presets.py" line="73"/>
+      <source>Apply to cue</source>
+      <translation type="unfinished">Apply to cue</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/presets/presets.py" line="75"/>
+      <source>Apply to selected cues</source>
+      <translation type="unfinished">Apply to selected cues</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/presets/presets.py" line="79"/>
+      <source>Save as preset</source>
+      <translation>Sauvegarder un pré-réglage sous</translation>
     </message>
   </context>
 </TS>

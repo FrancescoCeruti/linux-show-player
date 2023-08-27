@@ -33,32 +33,37 @@
   <context>
     <name>MIDIError</name>
     <message>
-      <location filename="../../../plugins/midi/midi_io.py" line="81"/>
-      <source>Cannot connect to MIDI output port &apos;{}&apos;.</source>
-      <translation>無法連接到 MIDI 輸出端口 &apos;{}&apos;</translation>
+      <location filename="../../../plugins/midi/midi_io.py" line="84"/>
+      <source>Cannot connect to MIDI output port '{}'.</source>
+      <translation>無法連接到 MIDI 輸出端口 '{}'。</translation>
     </message>
     <message>
-      <location filename="../../../plugins/midi/midi_io.py" line="102"/>
-      <source>Cannot connect to MIDI input port &apos;{}&apos;.</source>
-      <translation>無法連接到 MIDI 輸入端口 &apos;{}&apos;</translation>
+      <location filename="../../../plugins/midi/midi_io.py" line="105"/>
+      <source>Cannot connect to MIDI input port '{}'.</source>
+      <translation>無法連接到 MIDI 輸入端口 '{}'。</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/midi/port_monitor.py" line="88"/>
+      <source>Cannot create ALSA-MIDI port monitor, MIDI connections/disconnections will not be detected.</source>
+      <translation>無法創建ALSA-MIDI端口監察器，MIDI連接／斷接將不會受到偵測。</translation>
     </message>
   </context>
   <context>
     <name>MIDIInfo</name>
     <message>
-      <location filename="../../../plugins/midi/midi.py" line="119"/>
-      <source>MIDI port disconnected: &apos;{}&apos;</source>
-      <translation>MIDI 端口已斷線：&apos;{}&apos;</translation>
+      <location filename="../../../plugins/midi/midi.py" line="137"/>
+      <source>Connecting to MIDI port: '{}'</source>
+      <translation>正在連接到 MIDI 端口：'{}'</translation>
     </message>
     <message>
-      <location filename="../../../plugins/midi/midi.py" line="137"/>
-      <source>Connecting to MIDI port: &apos;{}&apos;</source>
-      <translation>正在連接到 MIDI 端口：&apos;{}&apos;</translation>
+      <location filename="../../../plugins/midi/midi.py" line="119"/>
+      <source>MIDI port disconnected: '{}'</source>
+      <translation>MIDI 端口已斷線：'{}'</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi.py" line="146"/>
-      <source>Connecting to matching MIDI port: &apos;{}&apos;</source>
-      <translation>正在連接到匹配的 MIDI 端口：&apos;{}&apos;</translation>
+      <source>Connecting to matching MIDI port: '{}'</source>
+      <translation>正在連接到匹配的 MIDI 端口：'{}'</translation>
     </message>
   </context>
   <context>
@@ -175,6 +180,11 @@
   <context>
     <name>MIDISettings</name>
     <message>
+      <location filename="../../../plugins/midi/midi_settings.py" line="100"/>
+      <source>MIDI devices</source>
+      <translation>MIDI 装置</translation>
+    </message>
+    <message>
       <location filename="../../../plugins/midi/midi_settings.py" line="101"/>
       <source>Input</source>
       <translation>輸入</translation>
@@ -185,17 +195,12 @@
       <translation>輸出</translation>
     </message>
     <message>
-      <location filename="../../../plugins/midi/midi_settings.py" line="100"/>
-      <source>MIDI devices</source>
-      <translation>MIDI 装置</translation>
-    </message>
-    <message>
       <location filename="../../../plugins/midi/midi_settings.py" line="104"/>
       <source>Misc options</source>
       <translation>其他選項</translation>
     </message>
     <message>
-      <location filename="../../../plugins/midi/midi_settings.py" line="105"/>
+      <location filename="../../../plugins/midi/midi_settings.py" line="106"/>
       <source>Try to connect using only device/port name</source>
       <translation>只嘗試使用設備/端口名稱連接</translation>
     </message>

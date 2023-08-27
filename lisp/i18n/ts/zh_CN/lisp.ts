@@ -4,17 +4,17 @@
   <context>
     <name>About</name>
     <message>
-      <location filename="../../../ui/about.py" line="60"/>
+      <location filename="../../../ui/about.py" line="62"/>
       <source>Authors</source>
       <translation>作者</translation>
     </message>
     <message>
-      <location filename="../../../ui/about.py" line="60"/>
+      <location filename="../../../ui/about.py" line="65"/>
       <source>Contributors</source>
       <translation>贡献者</translation>
     </message>
     <message>
-      <location filename="../../../ui/about.py" line="60"/>
+      <location filename="../../../ui/about.py" line="70"/>
       <source>Translators</source>
       <translation>翻译者</translation>
     </message>
@@ -27,14 +27,9 @@
   <context>
     <name>AboutDialog</name>
     <message>
-      <location filename="../../../ui/about.py" line="117"/>
-      <source>Web site</source>
-      <translation>网站</translation>
-    </message>
-    <message>
-      <location filename="../../../ui/about.py" line="117"/>
-      <source>Source code</source>
-      <translation>源代码</translation>
+      <location filename="../../../ui/about.py" line="52"/>
+      <source>Linux Show Player is a cue player designed for stage productions.</source>
+      <translation>Linux Show Player是个为舞台表演而设的cue播放器。</translation>
     </message>
     <message>
       <location filename="../../../ui/about.py" line="132"/>
@@ -47,14 +42,24 @@
       <translation>使用条款</translation>
     </message>
     <message>
-      <location filename="../../../ui/about.py" line="143"/>
+      <location filename="../../../ui/about.py" line="144"/>
       <source>Contributors</source>
       <translation>贡献者</translation>
     </message>
     <message>
-      <location filename="../../../ui/about.py" line="117"/>
+      <location filename="../../../ui/about.py" line="125"/>
+      <source>Web site</source>
+      <translation>网站</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/about.py" line="127"/>
       <source>Discussion</source>
       <translation>讨论</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/about.py" line="129"/>
+      <source>Source code</source>
+      <translation>源代码</translation>
     </message>
   </context>
   <context>
@@ -66,14 +71,32 @@
     </message>
   </context>
   <context>
+    <name>AppConfigurationWarning</name>
+    <message>
+      <location filename="../../../ui/settings/app_configuration.py" line="109"/>
+      <source>Cannot load configuration page: "{}" ({})</source>
+      <translation>无法加载设定页："{}" ({})</translation>
+    </message>
+  </context>
+  <context>
     <name>AppGeneralSettings</name>
     <message>
-      <location filename="../../../ui/settings/app_pages/general.py" line="103"/>
+      <location filename="../../../ui/settings/app_pages/general.py" line="104"/>
       <source>Default layout</source>
       <translation>默认布局</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/app_pages/general.py" line="112"/>
+      <location filename="../../../ui/settings/app_pages/general.py" line="107"/>
+      <source>Show layout selection at startup</source>
+      <translation>启动时显示布局选择</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/settings/app_pages/general.py" line="110"/>
+      <source>Use layout at startup:</source>
+      <translation>启动时使用布局：</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/settings/app_pages/general.py" line="113"/>
       <source>Application themes</source>
       <translation>主题</translation>
     </message>
@@ -88,32 +111,40 @@
       <translation>图标主题：</translation>
     </message>
     <message>
+      <location filename="../../../ui/settings/app_pages/general.py" line="119"/>
+      <source>Application language (require a restart)</source>
+      <translation>语言 (需要重启程式)</translation>
+    </message>
+    <message>
       <location filename="../../../ui/settings/app_pages/general.py" line="123"/>
       <source>Language:</source>
       <translation>语言：</translation>
-    </message>
-    <message>
-      <location filename="../../../ui/settings/app_pages/general.py" line="106"/>
-      <source>Show layout selection at startup</source>
-      <translation>启动时显示布局选择</translation>
-    </message>
-    <message>
-      <location filename="../../../ui/settings/app_pages/general.py" line="109"/>
-      <source>Use layout at startup:</source>
-      <translation>启动时使用布局：</translation>
-    </message>
-    <message>
-      <location filename="../../../ui/settings/app_pages/general.py" line="118"/>
-      <source>Application language (require a restart)</source>
-      <translation>语言 (需要重启程式)</translation>
     </message>
   </context>
   <context>
     <name>ApplicationError</name>
     <message>
-      <location filename="../../../application.py" line="153"/>
+      <location filename="../../../application.py" line="155"/>
       <source>Startup error</source>
       <translation>启动错误</translation>
+    </message>
+    <message>
+      <location filename="../../../application.py" line="241"/>
+      <source>Error while reading the session file "{}"</source>
+      <translation>载入工作阶段档案时发生错误 "{}"</translation>
+    </message>
+    <message>
+      <location filename="../../../application.py" line="230"/>
+      <source>Unable to create the cue "{}"</source>
+      <translation>无法创建cue "{}"</translation>
+    </message>
+  </context>
+  <context>
+    <name>ClassLoaderWarning</name>
+    <message>
+      <location filename="../../../core/loading.py" line="135"/>
+      <source>Cannot load python class: "{0}"</source>
+      <translation>无法加载python class: "{0}"</translation>
     </message>
   </context>
   <context>
@@ -132,7 +163,12 @@
   <context>
     <name>ConfigurationDebug</name>
     <message>
-      <location filename="../../../core/configuration.py" line="220"/>
+      <location filename="../../../core/configuration.py" line="215"/>
+      <source>Configuration read from {}</source>
+      <translation>从 {} 读取的配置</translation>
+    </message>
+    <message>
+      <location filename="../../../core/configuration.py" line="225"/>
       <source>Configuration written at {}</source>
       <translation>设定值已储存于 {}</translation>
     </message>
@@ -140,9 +176,14 @@
   <context>
     <name>ConfigurationInfo</name>
     <message>
-      <location filename="../../../core/configuration.py" line="243"/>
+      <location filename="../../../core/configuration.py" line="248"/>
       <source>New configuration installed at {}</source>
       <translation>新设定值储存于 {}</translation>
+    </message>
+    <message>
+      <location filename="../../../core/configuration.py" line="70"/>
+      <source>Invalid path "{}", return default.</source>
+      <translation>路径不正确 "{}"，使用预设值。</translation>
     </message>
   </context>
   <context>
@@ -151,21 +192,6 @@
       <location filename="../../../ui/widgets/cue_actions.py" line="25"/>
       <source>Default</source>
       <translation>默认</translation>
-    </message>
-    <message>
-      <location filename="../../../ui/widgets/cue_actions.py" line="35"/>
-      <source>Pause</source>
-      <translation>暂停</translation>
-    </message>
-    <message>
-      <location filename="../../../ui/widgets/cue_actions.py" line="33"/>
-      <source>Start</source>
-      <translation>开始</translation>
-    </message>
-    <message>
-      <location filename="../../../ui/widgets/cue_actions.py" line="36"/>
-      <source>Stop</source>
-      <translation>停止</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="26"/>
@@ -193,55 +219,75 @@
       <translation>淡出中断</translation>
     </message>
     <message>
+      <location filename="../../../ui/widgets/cue_actions.py" line="33"/>
+      <source>Start</source>
+      <translation>开始</translation>
+    </message>
+    <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="34"/>
       <source>Resume</source>
       <translation>继续</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/widgets/cue_actions.py" line="35"/>
+      <source>Pause</source>
+      <translation>暂停</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/widgets/cue_actions.py" line="36"/>
+      <source>Stop</source>
+      <translation>停止</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="37"/>
       <source>Do Nothing</source>
       <translation>无动作</translation>
     </message>
+    <message>
+      <location filename="../../../ui/widgets/cue_actions.py" line="38"/>
+      <source>Release from Loop</source>
+      <translation type="unfinished">Release from Loop</translation>
+    </message>
   </context>
   <context>
     <name>CueAppearanceSettings</name>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="79"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="85"/>
       <source>The appearance depends on the layout</source>
       <translation>外观取决于布局</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="91"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="97"/>
       <source>Cue name</source>
       <translation>Cue 名称</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="94"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="99"/>
       <source>NoName</source>
       <translation>没有名称</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="95"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="101"/>
       <source>Description/Note</source>
       <translation>描述/注释</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="98"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="104"/>
       <source>Set Font Size</source>
       <translation>设置字体大小</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="101"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="106"/>
       <source>Color</source>
       <translation>颜色</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="102"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="108"/>
       <source>Select background color</source>
       <translation>选择背景颜色</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="105"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="111"/>
       <source>Select font color</source>
       <translation>选择字体颜色</translation>
     </message>
@@ -249,7 +295,7 @@
   <context>
     <name>CueCategory</name>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="267"/>
+      <location filename="../../../ui/mainwindow.py" line="270"/>
       <source>Misc cues</source>
       <translation>杂项 Cues</translation>
     </message>
@@ -257,20 +303,20 @@
   <context>
     <name>CueCommandLog</name>
     <message>
-      <location filename="../../../command/cue.py" line="46"/>
-      <source>Cue settings changed: &quot;{}&quot;</source>
-      <translation>Cue 设置已更改： &quot;{}&quot;</translation>
-    </message>
-    <message>
-      <location filename="../../../command/cue.py" line="75"/>
+      <location filename="../../../command/cue.py" line="73"/>
       <source>Cues settings changed.</source>
       <translation>多个 Cue 设置已更改</translation>
+    </message>
+    <message>
+      <location filename="../../../command/cue.py" line="45"/>
+      <source>Cue settings changed: "{}"</source>
+      <translation>Cue 设置已更改： "{}"</translation>
     </message>
   </context>
   <context>
     <name>CueName</name>
     <message>
-      <location filename="../../../cues/media_cue.py" line="31"/>
+      <location filename="../../../cues/media_cue.py" line="29"/>
       <source>Media Cue</source>
       <translation>媒体 Cue</translation>
     </message>
@@ -306,12 +352,52 @@
   <context>
     <name>CueSettings</name>
     <message>
+      <location filename="../../../ui/settings/app_pages/cue.py" line="64"/>
+      <source>Interrupt fade</source>
+      <translation>中断淡入淡出</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/settings/app_pages/cue.py" line="66"/>
+      <source>Used globally when interrupting cues</source>
+      <translation>在终止cues时全域地使用</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/settings/app_pages/cue.py" line="72"/>
+      <source>Fallback fade settings</source>
+      <translation>回退淡入淡出设置</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/settings/app_pages/cue.py" line="75"/>
+      <source>Used for fade-in and fade-out actions, for cues where fade duration is set to 0.</source>
+      <translation>用于淡入淡出动作，用于淡入淡出持续时间设置为 0 的提示。</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="113"/>
+      <source>Start action</source>
+      <translation>开始方式</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="115"/>
+      <source>Default action to start the cue</source>
+      <translation>预设开始 Cue 的方式</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="119"/>
+      <source>Stop action</source>
+      <translation>停止方式</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="121"/>
+      <source>Default action to stop the cue</source>
+      <translation>预设停止 Cue 的方式</translation>
+    </message>
+    <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="202"/>
       <source>Pre wait</source>
       <translation>开始前等候</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="203"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="204"/>
       <source>Wait before cue execution</source>
       <translation>执行 Cue 前等待</translation>
     </message>
@@ -321,7 +407,7 @@
       <translation>结束后等候</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="208"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="209"/>
       <source>Wait after cue execution</source>
       <translation>执行 Cue 后等待</translation>
     </message>
@@ -329,36 +415,6 @@
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="212"/>
       <source>Next action</source>
       <translation>下一个动作</translation>
-    </message>
-    <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="112"/>
-      <source>Start action</source>
-      <translation>开始方式</translation>
-    </message>
-    <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="113"/>
-      <source>Default action to start the cue</source>
-      <translation>预设开始 Cue 的方式</translation>
-    </message>
-    <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="118"/>
-      <source>Stop action</source>
-      <translation>停止方式</translation>
-    </message>
-    <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="119"/>
-      <source>Default action to stop the cue</source>
-      <translation>预设停止 Cue 的方式</translation>
-    </message>
-    <message>
-      <location filename="../../../ui/settings/app_pages/cue.py" line="69"/>
-      <source>Interrupt action fade</source>
-      <translation>中断动作淡出</translation>
-    </message>
-    <message>
-      <location filename="../../../ui/settings/app_pages/cue.py" line="75"/>
-      <source>Fade actions default value</source>
-      <translation>淡入/淡出预设值</translation>
     </message>
   </context>
   <context>
@@ -395,12 +451,12 @@
   <context>
     <name>FadeSettings</name>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="277"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="273"/>
       <source>Fade In</source>
       <translation>淡入</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="278"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="274"/>
       <source>Fade Out</source>
       <translation>淡出</translation>
     </message>
@@ -408,7 +464,7 @@
   <context>
     <name>HotKeyEdit</name>
     <message>
-      <location filename="../../../ui/widgets/hotkeyedit.py" line="124"/>
+      <location filename="../../../ui/widgets/hotkeyedit.py" line="125"/>
       <source>Press shortcut</source>
       <translation>按下快捷键</translation>
     </message>
@@ -439,22 +495,22 @@
       <translation>布局操作</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/app_pages/layouts.py" line="53"/>
+      <location filename="../../../ui/settings/app_pages/layouts.py" line="54"/>
       <source>Fade out when stopping all cues</source>
       <translation>以淡出方式停止所有 Cue</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/app_pages/layouts.py" line="56"/>
+      <location filename="../../../ui/settings/app_pages/layouts.py" line="57"/>
       <source>Fade out when interrupting all cues</source>
       <translation>以淡出方式中断所有 Cue</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/app_pages/layouts.py" line="59"/>
+      <location filename="../../../ui/settings/app_pages/layouts.py" line="60"/>
       <source>Fade out when pausing all cues</source>
       <translation>以淡出方式暂停所有 Cue</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/app_pages/layouts.py" line="62"/>
+      <location filename="../../../ui/settings/app_pages/layouts.py" line="63"/>
       <source>Fade in when resuming all cues</source>
       <translation>以淡入方式繼續所有 Cue</translation>
     </message>
@@ -470,21 +526,6 @@
   <context>
     <name>Logging</name>
     <message>
-      <location filename="../../../ui/logging/common.py" line="21"/>
-      <source>Debug</source>
-      <translation>除错</translation>
-    </message>
-    <message>
-      <location filename="../../../ui/logging/common.py" line="23"/>
-      <source>Warning</source>
-      <translation>警告</translation>
-    </message>
-    <message>
-      <location filename="../../../ui/logging/common.py" line="24"/>
-      <source>Error</source>
-      <translation>錯誤</translation>
-    </message>
-    <message>
       <location filename="../../../ui/logging/dialog.py" line="79"/>
       <source>Dismiss all</source>
       <translation>全部忽略</translation>
@@ -495,14 +536,24 @@
       <translation>显示详情</translation>
     </message>
     <message>
-      <location filename="../../../ui/logging/viewer.py" line="53"/>
-      <source>Linux Show Player - Log Viewer</source>
-      <translation>Linux Show Player - 查看日志</translation>
+      <location filename="../../../ui/logging/common.py" line="21"/>
+      <source>Debug</source>
+      <translation>除错</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="22"/>
       <source>Info</source>
       <translation>资讯</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/logging/common.py" line="23"/>
+      <source>Warning</source>
+      <translation>警告</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/logging/common.py" line="24"/>
+      <source>Error</source>
+      <translation>錯誤</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="25"/>
@@ -585,7 +636,12 @@
       <translation>异常讯息</translation>
     </message>
     <message>
-      <location filename="../../../ui/logging/viewer.py" line="125"/>
+      <location filename="../../../ui/logging/viewer.py" line="54"/>
+      <source>Linux Show Player - Log Viewer</source>
+      <translation>Linux Show Player - 查看日志</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/logging/viewer.py" line="126"/>
       <source>Showing {} of {} records</source>
       <translation>显示 {} 个记录</translation>
     </message>
@@ -653,7 +709,7 @@
       <translation>全选</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="213"/>
+      <location filename="../../../ui/mainwindow.py" line="214"/>
       <source>Select all media cues</source>
       <translation>选择所有媒体 Cue</translation>
     </message>
@@ -668,7 +724,7 @@
       <translation>CTRL+SHIFT+A</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="219"/>
+      <location filename="../../../ui/mainwindow.py" line="220"/>
       <source>Invert selection</source>
       <translation>反向选择</translation>
     </message>
@@ -718,12 +774,17 @@
       <translation>关于 Qt</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="399"/>
+      <location filename="../../../ui/mainwindow.py" line="402"/>
       <source>Close session</source>
       <translation>关闭工作阶段</translation>
     </message>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="409"/>
+      <location filename="../../../ui/mainwindow.py" line="403"/>
+      <source>The current session contains changes that have not been saved.</source>
+      <translation>这个工作阶段尚有未储存的更变。</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/mainwindow.py" line="411"/>
       <source>Do you want to save them now?</source>
       <translation>你想现在储存吗？</translation>
     </message>
@@ -731,15 +792,15 @@
   <context>
     <name>MainWindowDebug</name>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="260"/>
-      <source>Registered cue menu: &quot;{}&quot;</source>
-      <translation>已记录 Cue 选单： &quot;{}&quot;</translation>
+      <location filename="../../../ui/mainwindow.py" line="261"/>
+      <source>Registered cue menu: "{}"</source>
+      <translation>已登陆cue菜单："{}"</translation>
     </message>
   </context>
   <context>
     <name>MainWindowError</name>
     <message>
-      <location filename="../../../ui/mainwindow.py" line="344"/>
+      <location filename="../../../ui/mainwindow.py" line="346"/>
       <source>Cannot create cue {}</source>
       <translation>无法创建 Cue {}</translation>
     </message>
@@ -752,7 +813,7 @@
       <translation>开始时间</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="82"/>
+      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="83"/>
       <source>Stop position of the media</source>
       <translation>媒体停止位置</translation>
     </message>
@@ -762,7 +823,7 @@
       <translation>停止时间</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="86"/>
+      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="87"/>
       <source>Start position of the media</source>
       <translation>媒体开始位置</translation>
     </message>
@@ -770,6 +831,101 @@
       <location filename="../../../ui/settings/cue_pages/media_cue.py" line="89"/>
       <source>Loop</source>
       <translation>循环播放</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="91"/>
+      <source>Repetition after first play (-1 = infinite)</source>
+      <translation>第一次播放后重复 (-1 = 无限)</translation>
+    </message>
+  </context>
+  <context>
+    <name>ModulesLoaderWarning</name>
+    <message>
+      <location filename="../../../core/loading.py" line="68"/>
+      <source>Cannot load python module: "{0}"</source>
+      <translation>无法加载python module: "{0}"</translation>
+    </message>
+  </context>
+  <context>
+    <name>PluginsError</name>
+    <message>
+      <location filename="../../../core/plugins_manager.py" line="78"/>
+      <source>A plugin by the name of "{}" already exists.</source>
+      <translation>已有同名为"{}"的插件。</translation>
+    </message>
+    <message>
+      <location filename="../../../core/plugins_manager.py" line="131"/>
+      <source>The requested plugin is not loaded: "{}"</source>
+      <translation>请求的插件没有被加载："{}"</translation>
+    </message>
+    <message>
+      <location filename="../../../core/plugins_manager.py" line="109"/>
+      <source>Failed to register plugin: "{}"</source>
+      <translation>注册插件失败："{}"</translation>
+    </message>
+    <message>
+      <location filename="../../../core/plugins_manager.py" line="151"/>
+      <source>Failed to terminate plugin: "{}"</source>
+      <translation>停止插件失败："{}"</translation>
+    </message>
+    <message>
+      <location filename="../../../core/plugin_loader.py" line="68"/>
+      <source>Cannot satisfy dependencies for plugin: "{}"</source>
+      <translation>无法满足插件需求："{}"</translation>
+    </message>
+  </context>
+  <context>
+    <name>PluginsInfo</name>
+    <message>
+      <location filename="../../../core/plugins_manager.py" line="145"/>
+      <source>Plugin terminated: "{}"</source>
+      <translation>插件已终止："{}"</translation>
+    </message>
+    <message>
+      <location filename="../../../core/plugin_loader.py" line="108"/>
+      <source>Plugin loaded: "{}"</source>
+      <translation>插件已加载："{}"</translation>
+    </message>
+  </context>
+  <context>
+    <name>PluginsSettings</name>
+    <message>
+      <location filename="../../../ui/settings/app_pages/plugins.py" line="91"/>
+      <source>Plugin</source>
+      <translation>插件</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/settings/app_pages/plugins.py" line="92"/>
+      <source>Enabled</source>
+      <translation>已启用</translation>
+    </message>
+  </context>
+  <context>
+    <name>PluginsStatusText</name>
+    <message>
+      <location filename="../../../core/plugin.py" line="117"/>
+      <source>Plugin disabled. Enable to use.</source>
+      <translation>插件已禁用。启用以使用插件。</translation>
+    </message>
+    <message>
+      <location filename="../../../core/plugin.py" line="92"/>
+      <source>An error has occurred with this plugin. Please see logs for further information.</source>
+      <translation>插件发生错误。请阅读记录以获取更多资讯。</translation>
+    </message>
+    <message>
+      <location filename="../../../core/plugin.py" line="106"/>
+      <source>There is a non-critical issue with this disabled plugin. Please see logs for further information.</source>
+      <translation>已禁用插件发生非危急错误。请阅读记录以获取更多资讯。</translation>
+    </message>
+    <message>
+      <location filename="../../../core/plugin.py" line="113"/>
+      <source>Plugin loaded and ready for use.</source>
+      <translation>插件已加载并可使用。</translation>
+    </message>
+    <message>
+      <location filename="../../../core/plugin.py" line="100"/>
+      <source>A non-critical issue is affecting this plugin. Please see logs for further information.</source>
+      <translation>此插件受非危急错误影响。请阅读记录以获取更多资讯。</translation>
     </message>
   </context>
   <context>
@@ -783,9 +939,9 @@
   <context>
     <name>SettingsPageName</name>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="35"/>
-      <source>Appearance</source>
-      <translation>外观</translation>
+      <location filename="../../../ui/settings/app_pages/plugins.py" line="36"/>
+      <source>Plugins</source>
+      <translation>插件</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/general.py" line="38"/>
@@ -793,9 +949,9 @@
       <translation>基本</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="43"/>
-      <source>Cue</source>
-      <translation>Cue</translation>
+      <location filename="../../../ui/settings/app_pages/layouts.py" line="26"/>
+      <source>Layouts</source>
+      <translation>布局</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/cue.py" line="27"/>
@@ -803,9 +959,14 @@
       <translation>Cue 设定</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/app_pages/plugins.py" line="33"/>
-      <source>Plugins</source>
-      <translation>插件</translation>
+      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="33"/>
+      <source>Media Cue</source>
+      <translation type="unfinished">Media Cue</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="43"/>
+      <source>Cue</source>
+      <translation>Cue</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="53"/>
@@ -818,14 +979,14 @@
       <translation>开始前等候/结束后等候</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="242"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="238"/>
       <source>Fade In/Out</source>
       <translation>淡入/淡出</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/app_pages/layouts.py" line="26"/>
-      <source>Layouts</source>
-      <translation>布局</translation>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="36"/>
+      <source>Appearance</source>
+      <translation>外观</translation>
     </message>
   </context>
 </TS>
