@@ -246,7 +246,7 @@
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="38"/>
       <source>Release from Loop</source>
-      <translation type="unfinished">Release from Loop</translation>
+      <translation>Ferma il Loop</translation>
     </message>
   </context>
   <context>
@@ -961,7 +961,7 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/media_cue.py" line="33"/>
       <source>Media Cue</source>
-      <translation type="unfinished">Media Cue</translation>
+      <translation>Cue Multimediale</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="43"/>
