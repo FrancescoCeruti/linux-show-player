@@ -70,16 +70,16 @@ Example:
 Only the numbers are between parenthesis and will be usable with $0 in the first line.
 
 For more information about Regexes, consult python documentation at: https://docs.python.org/3/howto/regex.html#regex-howto</source>
-      <translation type="unfinished">You can use Regexes to rename your cues.
+      <translation>Puoi per rinominare le tue cue tramite espressioni regolari.
 
-Insert expressions captured with regexes in the line below with $0 for the first parenthesis, $1 forthe second, etc...
-In the second line, you can use standard Python Regexes to match expressions in the original cues names. Use parenthesis to capture parts of the matched expression.
+Inserisci i testi catturati tramite espressioni nella riga sottostante, utilizzando $0 per la prima parentesi, $1 per la seconda, ecc...
+Nella seconda riga, puoi utilizzare le espressioni regolari di Python per catturare del test nei nomi delle cue. Usa la parentesi per catturare parti dell'espressione corrispondente.
 
-Example: 
-^[a-z]([0-9]+) will find a lower case character([a-z]), followed by one or more number.
-Only the numbers are between parenthesis and will be usable with $0 in the first line.
+Esemplo:
+^[a-z]([0-9]+) troverà un carattere minuscolo ([a-z]), seguito da uno o più numeri.
+Solo i numeri sono tra parentesi e saranno utilizzabili con $0 nella prima riga.
 
-For more information about Regexes, consult python documentation at: https://docs.python.org/3/howto/regex.html#regex-howto</translation>
+Per maggiori informazioni sulle espressioni regolari consulta la documentazione di python all'indirizzo: https://docs.python.org/3/howto/regex.html#regex-howto</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="57"/>
