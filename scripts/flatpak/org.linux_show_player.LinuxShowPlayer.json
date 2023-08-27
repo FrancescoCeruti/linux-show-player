@@ -73,6 +73,20 @@
             ]
         },
         {
+            "name": "pyliblo3",
+            "buildsystem": "simple",
+            "build-commands": [
+                "pip3 install --no-index --no-build-isolation --find-links=\"file://${PWD}\" --prefix=\"${FLATPAK_DEST}\" pyliblo3"
+            ],
+            "sources": [
+                {
+                    "type": "file",
+                    "url": "https://files.pythonhosted.org/packages/5e/2e/524a6667fa851d0aae3eded349b4f1e56785036d65e186fb4bf2f741a505/pyliblo3-0.13.0.tar.gz",
+                    "sha256": "5700eac4a6db2c1c492a99c17bbf1871e888309ae7bcd1c68473650778d60f46"
+                }
+            ]
+        },
+        {
             "name": "protobuf",
             "config-opts": [
                 "--disable-static"

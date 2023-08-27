@@ -10,7 +10,7 @@ export FLATPAK_PY_LOCKFILE="../../poetry.lock"
 # Python packages included in the runtime sdk (some are not included in the runtime)
 export FLATPAK_PY_INCLUDED="cython mako markdown meson pip pygments setuptools six wheel"
 # Python packages to ignore
-export FLATPAK_PY_IGNORE="$FLATPAK_PY_INCLUDED packaging pyalsa python-rtmidi pygobject pycairo pyqt5 pyqt5-sip pyqt5-qt pyqt5-qt5"
+export FLATPAK_PY_IGNORE="$FLATPAK_PY_INCLUDED packaging pyalsa pyliblo3 python-rtmidi pygobject pycairo pyqt5 pyqt5-sip pyqt5-qt pyqt5-qt5"
 
 export FLATPAK_APP_ID="org.linux_show_player.LinuxShowPlayer"
 export FLATPAK_APP_MODULE="linux-show-player"

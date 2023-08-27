@@ -33,10 +33,10 @@ pyqt5 = "^5.6"
 python-rtmidi = "^1.1"
 requests = "^2.20"
 sortedcontainers = "^2.0"
-humanize = "^4.4.0"
+humanize = "^4.8.0"
 pyalsa = { git = "https://github.com/alsa-project/alsa-python.git", tag = "v1.2.7" }
 # Use a pyliblo fork that define dependecies correctly
-pyliblo3 = "0.13.0"
+pyliblo3 = { git = "https://github.com/FrancescoCeruti/pyliblo3", rev = "0d943a4695d797827584be4ac8f4cb2137172a96" }
 
 [tool.poetry.group.docs]
 optional = true
