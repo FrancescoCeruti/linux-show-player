@@ -59,6 +59,8 @@ class MIDISettings(SettingsPage):
 
         self.inputRemButton = QPushButton(parent=self.inputGroup)
         self.inputRemButton.setEnabled(False)
+        self.inputView.hasSelectionChange.connect(self.inputRemButton.setEnabled)
+        self.inputRemButton.pressed.connect(self.inputView.removeSelectedPatch)
         self.inputGroup.layout().addWidget(self.inputRemButton, 1, 1)
 
         # Output patches
@@ -76,6 +78,8 @@ class MIDISettings(SettingsPage):
 
         self.outputRemButton = QPushButton(parent=self.outputGroup)
         self.outputRemButton.setEnabled(False)
+        self.outputView.hasSelectionChange.connect(self.outputRemButton.setEnabled)
+        self.outputRemButton.pressed.connect(self.outputView.removeSelectedPatch)
         self.outputGroup.layout().addWidget(self.outputRemButton, 1, 1)
 
         # Match by name

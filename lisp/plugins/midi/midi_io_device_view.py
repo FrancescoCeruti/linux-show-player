@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtWidgets import QHeaderView, QTableView
 
 from lisp.plugins.midi.midi_utils import (
@@ -30,6 +31,10 @@ from lisp.ui.qdelegates import (
 
 
 class MidiIODeviceView(QTableView):
+
+    # Deliberately not using LiSP's Signal class, as that doesn't like being
+    # connected to the setEnabled method of an instance of Qt5's PushButton.
+    hasSelectionChange = pyqtSignal(bool)
 
     def __init__(self, model, **kwargs):
         super().__init__(**kwargs)
@@ -75,9 +80,16 @@ class MidiIODeviceView(QTableView):
         new_options = []
         model = self.model()
         for patch_id, device_name in options.items():
-            if device_name in new_options or model.portNameMatch(patch_id.split('#')[1], device_name) is PortNameMatch.ExactMatch:
+            if device_name is None or device_name in new_options or model.portNameMatch(patch_id.split('#')[1], device_name) is PortNameMatch.ExactMatch:
                 continue
             new_options.append(device_name)
         new_options.sort(reverse=True)
         for option in new_options:
             self.delegates[1].options.insert(1, option)
+
+    def removeSelectedPatch(self):
+        self.model().removePatchAtIndex(self.currentIndex())
+
+    def selectionChanged(self, selected, deselected):
+        super().selectionChanged(selected, deselected)
+        self.hasSelectionChange.emit(bool(selected.indexes()))

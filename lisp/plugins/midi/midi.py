@@ -68,12 +68,14 @@ class Midi(Plugin):
         self.received = Signal()
         self.__inputs = {}
         for patch_id, device_name in self.input_patches().items():
-            self._connect(patch_id, device_name, PortDirection.Input)
+            if device_name is not None:
+                self._connect(patch_id, device_name, PortDirection.Input)
 
         # Create output handlers and connect
         self.__outputs = {}
         for patch_id, device_name in self.output_patches().items():
-            self._connect(patch_id, device_name, PortDirection.Output)
+            if device_name is not None:
+                self._connect(patch_id, device_name, PortDirection.Output)
 
         # Monitor ports, for auto-reconnection.
         # Since current midi backends are not reliable on
@@ -212,6 +214,14 @@ class Midi(Plugin):
             self.__outputs[patch_id] = MIDIOutput(self.backend, patch_id, device_name)
             self._reconnect(self.__outputs[patch_id], device_name, available)
 
+    def _disconnect(self, patch_id, direction: PortDirection):
+        if direction is PortDirection.Input:
+            self.__inputs[patch_id].close()
+            del self.__inputs[patch_id]
+        elif direction is PortDirection.Output:
+            self.__outputs[patch_id].close()
+            del self.__outputs[patch_id]
+
     def _reconnect(self, midi: MIDIBase, current: str, available: list):
         if current in available:
             logger.info(
@@ -243,12 +253,16 @@ class Midi(Plugin):
             for patch_id, device_name in changeset.items():
                 if patch_id not in self.__inputs:
                     self._connect(patch_id, device_name, PortDirection.Input)
+                elif device_name is None:
+                    self._disconnect(patch_id, PortDirection.Input)
                 else:
                     self.__inputs[patch_id].change_port(device_name)
         elif key == "outputDevices":
             for patch_id, device_name in changeset.items():
                 if patch_id not in self.__outputs:
                     self._connect(patch_id, device_name, PortDirection.Output)
+                elif device_name is None:
+                    self._disconnect(patch_id, PortDirection.Output)
                 else:
                     self.__outputs[patch_id].change_port(device_name)
 

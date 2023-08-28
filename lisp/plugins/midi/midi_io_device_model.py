@@ -55,6 +55,7 @@ class MidiIODeviceModel(QAbstractTableModel):
             translate("MIDISettings", "Status"),
         ]
         self.used_numids = []
+        self.removed_numids = []
 
     def appendPatch(self, port_name=DEFAULT_DEVICE_NAME, numid=0):
         if len(self.used_numids) == MAX_MIDI_DEVICES:
@@ -69,6 +70,9 @@ class MidiIODeviceModel(QAbstractTableModel):
         elif numid in self.used_numids:
             logger.warning("Provided ID already used. Refusing to add.")
             return
+
+        if numid in self.removed_numids:
+            self.removed_numids.remove(numid)
 
         self.used_numids.append(numid)
         self.used_numids.sort()
@@ -119,7 +123,8 @@ class MidiIODeviceModel(QAbstractTableModel):
             self.appendPatch(settings)
         else:
             for patch_id, device in settings.items():
-                self.appendPatch(device, int(patch_id.split('#')[1]))
+                if device is not None:
+                    self.appendPatch(device, int(patch_id.split('#')[1]))
 
     def flags(self, index):
         column = index.column()
@@ -140,6 +145,16 @@ class MidiIODeviceModel(QAbstractTableModel):
     def portStatus(self, numid, port_name):
         pass
 
+    def removePatchAtIndex(self, index):
+        if not index.isValid():
+            return
+        row = index.row()
+        self.beginRemoveRows(QModelIndex(), row, row)
+        patch = self.patches.pop(row)
+        self.removed_numids.append(patch["id"])
+        self.used_numids.remove(patch["id"])
+        self.endRemoveRows()
+
     def rowCount(self, parent=QModelIndex()):
         return len(self.patches)
 
@@ -147,6 +162,8 @@ class MidiIODeviceModel(QAbstractTableModel):
         patches = {}
         for row in self.patches:
             patches[f'{self._direction.value}#{row["id"]}'] = row["device"]
+        for numid in self.removed_numids:
+            patches[f'{self._direction.value}#{numid}'] = None
         return patches
 
     def setData(self, index, value, role=Qt.EditRole):
