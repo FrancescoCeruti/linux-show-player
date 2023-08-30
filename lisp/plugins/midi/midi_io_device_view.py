@@ -73,14 +73,14 @@ class MidiIODeviceView(QTableView):
         self.delegates[1].options = [DEFAULT_DEVICE_NAME] + midi_devices
 
     def ensureOptionExists(self, entry):
-        if self.model().patches[0]["name_match"] is not PortNameMatch.ExactMatch:
+        if entry not in self.delegates[1].options:
             self.delegates[1].options.insert(1, entry)
 
     def ensureOptionsExist(self, options):
         new_options = []
         model = self.model()
         for patch_id, device_name in options.items():
-            if device_name is None or device_name in new_options or model.portNameMatch(patch_id.split('#')[1], device_name) is PortNameMatch.ExactMatch:
+            if device_name is None or device_name in new_options or device_name in self.delegates[1].options:
                 continue
             new_options.append(device_name)
         new_options.sort(reverse=True)
