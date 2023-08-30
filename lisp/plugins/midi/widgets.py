@@ -33,6 +33,7 @@ from PyQt5.QtWidgets import (
 
 from lisp.plugins import get_plugin
 from lisp.plugins.midi.midi_utils import (
+    format_patch_name,
     MIDI_MSGS_SPEC,
     MIDI_ATTRS_SPEC,
     MIDI_MSGS_NAME,
@@ -59,11 +60,7 @@ class MIDIPatchCombo(QComboBox):
         for patch_id, device_name in self._patches().items():
             self.setItemText(
                 self.findData(patch_id),
-                translate(
-                    "MIDICue", "#{} :: {}"
-                ).format(
-                    patch_id.split('#')[1], device_name
-                )
+                format_patch_name(patch_id, device_name)
             )
 
 
