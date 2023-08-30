@@ -68,14 +68,12 @@ class Midi(Plugin):
         self.received = Signal()
         self.__inputs = {}
         for patch_id, device_name in self.input_patches().items():
-            if device_name is not None:
-                self._connect(patch_id, device_name, PortDirection.Input)
+            self._connect(patch_id, device_name, PortDirection.Input)
 
         # Create output handlers and connect
         self.__outputs = {}
         for patch_id, device_name in self.output_patches().items():
-            if device_name is not None:
-                self._connect(patch_id, device_name, PortDirection.Output)
+            self._connect(patch_id, device_name, PortDirection.Output)
 
         # Monitor ports, for auto-reconnection.
         # Since current midi backends are not reliable on
@@ -132,7 +130,10 @@ class Midi(Plugin):
         return PortNameMatch.NoMatch
 
     def input_patches(self):
-        patches = Midi.Config.get("inputDevices", None)
+        patches = {}
+        for k, v in Midi.Config.get("inputDevices", {}).items():
+            if v:
+                patches[k] = v
         return patches if patches else { f"{PortDirection.Input.value}#1": Midi.Config.get("inputDevice", self.__default_input) }
 
     def input_status(self, patch_id):
@@ -154,7 +155,10 @@ class Midi(Plugin):
         return PortNameMatch.NoMatch
 
     def output_patches(self):
-        patches = Midi.Config.get("outputDevices", None)
+        patches = {}
+        for k, v in Midi.Config.get("outputDevices", {}).items():
+            if v:
+                patches[k] = v
         return patches if patches else { f"{PortDirection.Output.value}#1": Midi.Config.get("outputDevice", self.__default_output) }
 
     def output_status(self, patch_id):

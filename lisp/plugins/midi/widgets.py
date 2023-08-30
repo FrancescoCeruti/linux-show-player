@@ -47,9 +47,8 @@ class MIDIPatchCombo(QComboBox):
         super().__init__(*args, **kwargs)
         self.__direction = direction
         self.__midi = get_plugin("Midi")
-        for patch_id, device_name in self._patches().items():
-            if device_name is not None:
-                self.addItem("", patch_id)
+        for patch_id in self._patches():
+            self.addItem("", patch_id)
 
     def _patches(self):
         if self.__direction is PortDirection.Input:
