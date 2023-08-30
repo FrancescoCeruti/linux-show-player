@@ -90,14 +90,6 @@ class Midi(Plugin):
         Midi.Config.changed.connect(self.__config_change)
         Midi.Config.updated.connect(self.__config_update)
 
-    @property
-    def input(self):
-        return self.__inputs[f"{PortDirection.Input.value}#1"]
-
-    @property
-    def output(self):
-        return self.__outputs[f"{PortDirection.Output.value}#1"]
-
     def add_exclusive_callback(self, patch_id, callback):
         if patch_id not in self.__inputs:
             return False
@@ -116,7 +108,7 @@ class Midi(Plugin):
             handler.exclusive_mode = False
             handler.received_exclusive.disconnect(callback)
 
-    def input_name(self, patch_id=f"{PortDirection.Input.value}#1"):
+    def input_name(self, patch_id):
         return self.__inputs[patch_id].port_name()
 
     def input_name_formatted(self, patch_id):
@@ -144,7 +136,7 @@ class Midi(Plugin):
             return PortStatus.DoesNotExist
         return PortStatus.Open if self.__inputs[patch_id].is_open() else PortStatus.Closed
 
-    def output_name(self, patch_id=f"{PortDirection.Output.value}#1"):
+    def output_name(self, patch_id):
         return self.__outputs[patch_id].port_name()
 
     def output_name_formatted(self, patch_id):
