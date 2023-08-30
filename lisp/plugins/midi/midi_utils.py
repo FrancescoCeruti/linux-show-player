@@ -21,6 +21,8 @@ from typing import Iterable
 import mido
 from PyQt5.QtCore import QT_TRANSLATE_NOOP
 
+from lisp.ui.ui_utils import translate
+
 MIDI_MSGS_SPEC = {
     "note_on": ["channel", "note", "velocity"],
     "note_off": ["channel", "note", "velocity"],
@@ -97,6 +99,14 @@ class PortStatus(Enum):
     Open = "✓" # U+2713
     Closed = "×" # U+00D7
     DoesNotExist = "~"
+
+
+def format_patch_name(patch_id, device_name):
+    return translate(
+        "MIDICue", "#{} :: {}"
+    ).format(
+        patch_id.split('#')[1], device_name
+    )
 
 
 def midi_backend() -> mido.Backend:

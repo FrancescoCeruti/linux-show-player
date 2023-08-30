@@ -25,7 +25,7 @@ from lisp.core.signal import Connection, Signal
 from lisp.plugins.midi.midi_cue import MidiCue
 from lisp.plugins.midi.midi_io import MIDIOutput, MIDIInput, MIDIBase
 from lisp.plugins.midi.midi_settings import MIDISettings
-from lisp.plugins.midi.midi_utils import midi_output_names, midi_input_names, PortDirection, PortNameMatch, PortStatus
+from lisp.plugins.midi.midi_utils import format_patch_name, midi_output_names, midi_input_names, PortDirection, PortNameMatch, PortStatus
 from lisp.plugins.midi.port_monitor import ALSAPortMonitor
 from lisp.ui.settings.app_configuration import AppConfigurationDialog
 from lisp.ui.ui_utils import translate
@@ -119,6 +119,9 @@ class Midi(Plugin):
     def input_name(self, patch_id=f"{PortDirection.Input.value}#1"):
         return self.__inputs[patch_id].port_name()
 
+    def input_name_formatted(self, patch_id):
+        return format_patch_name(patch_id, self.__inputs[patch_id].port_name())
+
     def input_name_match(self, patch_id, candidate_name):
         if patch_id not in self.__inputs:
             return PortNameMatch.NoMatch
@@ -143,6 +146,9 @@ class Midi(Plugin):
 
     def output_name(self, patch_id=f"{PortDirection.Output.value}#1"):
         return self.__outputs[patch_id].port_name()
+
+    def output_name_formatted(self, patch_id):
+        return format_patch_name(patch_id, self.__outputs[patch_id].port_name())
 
     def output_name_match(self, patch_id, candidate_name):
         if patch_id not in self.__outputs:
