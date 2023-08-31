@@ -102,11 +102,12 @@ class PortStatus(Enum):
 
 
 def format_patch_name(patch_id, device_name):
-    return translate(
-        "MIDICue", "#{} :: {}"
-    ).format(
-        patch_id.split('#')[1], device_name
-    )
+    split_id = patch_id.split('#')
+    if split_id[0] == PortDirection.Input.value:
+        text = translate("MIDIInfo", "In {}: {}")
+    else:
+        text = translate("MIDIInfo", "Out {}: {}")
+    return text.format(split_id[1], device_name)
 
 
 def midi_backend() -> mido.Backend:
