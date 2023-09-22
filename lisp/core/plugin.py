@@ -19,6 +19,7 @@ import logging
 
 from lisp.core.configuration import DummyConfiguration
 from lisp.ui.ui_utils import translate
+from lisp import __version__ as lisp_version
 
 logger = logging.getLogger(__name__)
 
@@ -38,8 +39,6 @@ class PluginState:
     Warning = OptionalDependenciesNotSatisfied
 
 
-# TODO: add possible additional metadata (Icon, Version, ...)
-# TODO: implement some kind of plugin status
 class Plugin:
     """Base class for plugins."""
 
@@ -49,6 +48,7 @@ class Plugin:
     OptDepends = ()
     Authors = ("None",)
     Description = "No Description"
+    Version = lisp_version
 
     Config = DummyConfiguration()
     State = PluginState.Listed
