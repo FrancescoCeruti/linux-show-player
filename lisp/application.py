@@ -21,7 +21,7 @@ from os.path import exists, dirname, abspath
 
 from PyQt5.QtWidgets import QDialog, qApp
 
-from lisp import layout
+from lisp import layout, __version__ as lisp_version
 from lisp.command.stack import CommandsStack
 from lisp.core.configuration import Configuration, DummyConfiguration
 from lisp.core.session import Session
@@ -33,6 +33,7 @@ from lisp.cues.cue_factory import CueFactory
 from lisp.cues.cue_model import CueModel
 from lisp.cues.media_cue import MediaCue
 from lisp.layout.cue_layout import CueLayout
+from lisp.plugins import get_plugins
 from lisp.ui.layoutselect import LayoutSelect
 from lisp.ui.mainwindow import MainWindow
 from lisp.ui.settings.app_configuration import AppConfigurationDialog
@@ -184,7 +185,16 @@ class Application(metaclass=Singleton):
                 cue.properties(defaults=False, filter=filter_live_properties)
             )
 
-        session_dict = {"session": session_props, "cues": session_cues}
+        session_dict = {
+            "meta": {
+                "version": lisp_version,
+                "plugins": {
+                    name: plugin.Version for name, plugin in get_plugins()
+                },
+            },
+            "session": session_props,
+            "cues": session_cues,
+        }
 
         # Write to a file the json-encoded session
         with open(session_file, mode="w", encoding="utf-8") as file:
