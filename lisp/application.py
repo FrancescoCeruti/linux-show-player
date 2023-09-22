@@ -181,9 +181,7 @@ class Application(metaclass=Singleton):
         # Get session cues
         session_cues = []
         for cue in self.layout.cues():
-            session_cues.append(
-                cue.properties(defaults=False, filter=filter_live_properties)
-            )
+            session_cues.append(cue.properties(filter=filter_live_properties))
 
         session_dict = {
             "meta": {
