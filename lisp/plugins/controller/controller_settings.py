@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,47 +16,38 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import QT_TRANSLATE_NOOP
-from PyQt5.QtWidgets import QHBoxLayout, QTabWidget
 
 from lisp.plugins.controller import protocols
-from lisp.ui.settings.settings_page import CueSettingsPage
-from lisp.ui.ui_utils import translate
+from lisp.ui.settings.pages import SettingsPagesTabWidget, CuePageMixin
 
 
-class ControllerSettings(CueSettingsPage):
-    Name = QT_TRANSLATE_NOOP('SettingsPageName', 'Cue Control')
+class CueControllerSettingsPage(SettingsPagesTabWidget, CuePageMixin):
+    Name = QT_TRANSLATE_NOOP("SettingsPageName", "Cue Control")
 
-    def __init__(self, cue_class, **kwargs):
-        super().__init__(cue_class, **kwargs)
-        self.setLayout(QHBoxLayout())
+    def __init__(self, cueType, **kwargs):
+        super().__init__(cueType=cueType, **kwargs)
 
-        self._pages = []
+        for page in protocols.CueSettingsPages:
+            self.addPage(page(cueType, parent=self))
 
-        self.tabWidget = QTabWidget(self)
-        self.layout().addWidget(self.tabWidget)
+    def getSettings(self):
+        return {"controller": super().getSettings()}
 
-        for page in protocols.ProtocolsSettingsPages:
-            page_widget = page(cue_class, parent=self)
+    def loadSettings(self, settings):
+        super().loadSettings(settings.get("controller", {}))
 
-            self.tabWidget.addTab(page_widget,
-                                  translate('SettingsPageName', page.Name))
-            self._pages.append(page_widget)
 
-        self.tabWidget.setCurrentIndex(0)
+class ControllerLayoutConfiguration(SettingsPagesTabWidget):
+    Name = QT_TRANSLATE_NOOP("SettingsPageName", "Layout Controls")
 
-    def enable_check(self, enabled):
-        for page in self._pages:
-            page.enable_check(enabled)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
 
-    def get_settings(self):
-        settings = {}
-        for page in self._pages:
-            settings.update(page.get_settings())
+        for page in protocols.LayoutSettingsPages:
+            self.addPage(page(parent=self))
 
-        return {'controller': settings}
+    def loadSettings(self, settings):
+        super().loadSettings(settings["protocols"])
 
-    def load_settings(self, settings):
-        settings = settings.get('controller', {})
-
-        for page in self._pages:
-            page.load_settings(settings)
+    def getSettings(self):
+        return {"protocols": super().getSettings()}

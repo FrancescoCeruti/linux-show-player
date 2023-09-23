@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,9 +23,7 @@ from PyQt5.QtCore import QTimer
 class Clock(QTimer):
     """Clock based on Qt.QTimer class.
 
-    The class provide two functions to add and remove
-    callbacks, in this way the clock is running only when
-    there's one, or more, callbacks.
+    The clock is running only when there's one, or more, callbacks.
     """
 
     def __init__(self, timeout):
@@ -55,4 +51,5 @@ class Clock(QTimer):
 
 
 Clock_10 = Clock(10)
+Clock_33 = Clock(33)
 Clock_100 = Clock(100)

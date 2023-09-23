@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,24 +15,26 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-import os
+from PyQt5.QtWidgets import (
+    QDialog,
+    QComboBox,
+    QPushButton,
+    QFrame,
+    QTextBrowser,
+    QGridLayout,
+)
 
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QDialog, QComboBox, QPushButton, QFrame, QTextBrowser, QFileDialog, QGridLayout
-
-from lisp import layouts
+from lisp import layout
 from lisp.ui.ui_utils import translate
 
 
 class LayoutSelect(QDialog):
+    def __init__(self, application, **kwargs):
+        super().__init__(**kwargs)
+        self.application = application
+        self.sessionPath = ""
 
-    def __init__(self, parent=None):
-        super().__init__(parent)
-
-        self.filepath = ''
-
-        self.setWindowModality(Qt.ApplicationModal)
-        self.setWindowTitle(translate('LayoutSelect', 'Layout selection'))
+        self.setWindowTitle(translate("LayoutSelect", "Layout selection"))
         self.setMaximumSize(675, 300)
         self.setMinimumSize(675, 300)
         self.resize(675, 300)
@@ -43,15 +43,15 @@ class LayoutSelect(QDialog):
         self.layout().setContentsMargins(5, 5, 5, 5)
 
         self.layoutCombo = QComboBox(self)
-        self.layoutCombo.currentIndexChanged.connect(self.show_description)
+        self.layoutCombo.currentIndexChanged.connect(self.updateDescription)
         self.layout().addWidget(self.layoutCombo, 0, 0)
 
         self.confirmButton = QPushButton(self)
-        self.confirmButton.setText(translate('LayoutSelect', 'Select layout'))
+        self.confirmButton.setText(translate("LayoutSelect", "Select layout"))
         self.layout().addWidget(self.confirmButton, 0, 1)
 
         self.fileButton = QPushButton(self)
-        self.fileButton.setText(translate('LayoutSelect', 'Open file'))
+        self.fileButton.setText(translate("LayoutSelect", "Open file"))
         self.layout().addWidget(self.fileButton, 0, 2)
 
         self.layout().setColumnStretch(0, 3)
@@ -66,33 +66,38 @@ class LayoutSelect(QDialog):
         self.description = QTextBrowser(self)
         self.layout().addWidget(self.description, 2, 0, 1, 3)
 
-        for layout_class in layouts.get_layouts():
-            self.layoutCombo.addItem(layout_class.NAME, layout_class)
+        for layoutClass in layout.get_layouts():
+            self.layoutCombo.addItem(
+                translate("LayoutName", layoutClass.NAME), layoutClass
+            )
 
         if self.layoutCombo.count() == 0:
-            raise Exception('No layout installed!')
+            raise Exception("No layout installed!")
 
         self.confirmButton.clicked.connect(self.accept)
-        self.fileButton.clicked.connect(self.open_file)
+        self.fileButton.clicked.connect(self.openSessionFile)
 
     def selected(self):
         return self.layoutCombo.currentData()
 
-    def show_description(self, index):
-        layout = self.layoutCombo.currentData()
+    def updateDescription(self):
+        layoutClass = self.layoutCombo.currentData()
 
-        details = '<ul>'
-        for detail in layout.DETAILS:
-            details += '<li>' + translate('LayoutDetails', detail)
-        details += '</ul>'
+        details = "<ul>"
+        for detail in layoutClass.DETAILS:
+            details += "<li>{}<li>".format(translate("LayoutDetails", detail))
+        details += "</ul>"
 
         self.description.setHtml(
-            '<center><h2>' + layout.NAME + '</h2>'
-            '<i><h4>' + translate('LayoutDescription', layout.DESCRIPTION) +
-            '</h4></i></center>' + details)
+            "<center><h2>{}</h2><i><h4>{}</h4></i></center>{}".format(
+                translate("LayoutName", layoutClass.NAME),
+                translate("LayoutDescription", layoutClass.DESCRIPTION),
+                details,
+            )
+        )
 
-    def open_file(self):
-        path, _ = QFileDialog.getOpenFileName(self, filter='*.lsp',
-                                              directory=os.getenv('HOME'))
-        self.filepath = path
-        self.accept()
+    def openSessionFile(self):
+        path = self.application.window.getOpenSessionFile()
+        if path is not None:
+            self.sessionPath = path
+            self.accept()

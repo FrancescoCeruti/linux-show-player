@@ -1,0 +1,10 @@
+{
+    "_version_": "1.2",
+    "_enabled_": true,
+    "port": 9090,
+    "protocol": "http",
+    "discovery": {
+        "magic": "L1SP_R3m0te",
+        "port": 50000
+    }
+}

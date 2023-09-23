@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,72 +15,119 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+import functools
+import hashlib
 import re
 import socket
-from collections.abc import Mapping
+from collections.abc import Mapping, MutableMapping
 from enum import Enum
 from os import listdir
 from os.path import isdir, exists, join
 
-import functools
 
+def dict_merge(dct, merge_dct):
+    """Recursively merge the second dict into the first
 
-def deep_update(d1, d2):
-    """Recursively update d1 with d2"""
-    for key in d2:
-        if key not in d1:
-            d1[key] = d2[key]
-        elif isinstance(d2[key], Mapping) and isinstance(d1[key], Mapping):
-            d1[key] = deep_update(d1[key], d2[key])
+    :type dct: MutableMapping
+    :type merge_dct: Mapping
+    """
+    for key, value in merge_dct.items():
+        if (
+            key in dct
+            and isinstance(dct[key], MutableMapping)
+            and isinstance(value, Mapping)
+        ):
+            dict_merge(dct[key], value)
         else:
-            d1[key] = d2[key]
-
-    return d1
+            dct[key] = value
 
 
-def find_packages(path='.'):
+def dict_merge_diff(dct, cmp_dct):
+    """Return the (merge) difference between two dicts
+
+    Can be considered the "complement" version of dict_merge, the return will
+    be a dictionary that contains all the keys/values that will change if
+    using `dict_merge` on the given dictionaries (in the same order).
+
+    :type dct: Mapping
+    :type cmp_dct: Mapping
+    """
+    diff = {}
+
+    for key, cmp_value in cmp_dct.items():
+        if key in dct:
+            value = dct[key]
+            if isinstance(value, Mapping) and isinstance(cmp_value, Mapping):
+                sub_diff = dict_merge_diff(value, cmp_value)
+                if sub_diff:
+                    diff[key] = sub_diff
+            elif value != cmp_value:
+                diff[key] = cmp_value
+        else:
+            diff[key] = cmp_value
+
+    return diff
+
+
+def subdict(d, keys):
+    return dict(isubdict(d, keys))
+
+
+def isubdict(d, keys):
+    for k in keys:
+        v = d.get(k)
+        if v is not None:
+            yield k, v
+
+
+def find_packages(path="."):
     """List the python packages in the given directory."""
 
-    return [d for d in listdir(path) if isdir(join(path, d)) and
-            exists(join(path, d, '__init__.py'))]
+    return [
+        d
+        for d in listdir(path)
+        if isdir(join(path, d)) and exists(join(path, d, "__init__.py"))
+    ]
 
 
-def time_tuple(millis):
+def time_tuple(milliseconds):
     """Split the given time in a tuple.
 
-    :param millis: Number of milliseconds
-    :type millis: int
+    :param milliseconds: Number of milliseconds
+    :type milliseconds: int
 
-    :return (hours, minutes, seconds, milliseconds)
+    :returns: (hours, minutes, seconds, milliseconds)
     """
-    seconds, millis = divmod(millis, 1000)
+    seconds, milliseconds = divmod(milliseconds, 1000)
     minutes, seconds = divmod(seconds, 60)
     hours, minutes = divmod(minutes, 60)
 
-    return hours, minutes, seconds, millis
+    return hours, minutes, seconds, milliseconds
 
 
 def strtime(time, accurate=False):
     """Return a string from the given milliseconds time.
 
-    :returns:
-        hh:mm:ss when > 59min
-        mm:ss:00 when < 1h and accurate=False
-        mm:ss:z0 when < 1h and accurate=True
+    - when >= 1h                 -> hh:mm:ss
+    - when < 1h and accurate     -> mm:ss:00
+    - when < 1h and not accurate -> mm:ss:z0
     """
-    # Cast time to int to avoid formatting problems
-    time = time_tuple(int(time))
-    if time[0] > 0:
-        return '{:02}:{:02}:{:02}'.format(*time[:-1])
+
+    hours, minutes, seconds, milliseconds = time_tuple(int(time))
+    if hours > 0:
+        return f"{hours:02}:{minutes:02}:{seconds:02}"
     elif accurate:
-        return '{:02}:{:02}.{}0'.format(time[1], time[2], time[3] // 100)
+        return f"{minutes:02}:{seconds:02}.{milliseconds // 100}0"
     else:
-        return '{:02}:{:02}.00'.format(*time[1:3])
+        return f"{minutes:02}:{seconds:02}.00"
 
 
-def compose_http_url(url, port, directory='/'):
-    """Compose an http URL."""
-    return 'http://' + url + ':' + str(port) + directory
+def compose_url(scheme, host, port, path="/"):
+    """Compose a URL."""
+    if not path.startswith("/"):
+        path = "/" + path
+
+    return f"{scheme}://{host}:{port}{path}"
 
 
 def greatest_common_superclass(instances):
@@ -90,6 +135,10 @@ def greatest_common_superclass(instances):
     for x in classes[0]:
         if all(x in mro for mro in classes):
             return x
+
+
+def typename(obj):
+    return obj.__class__.__name__
 
 
 def get_lan_ip():
@@ -100,12 +149,13 @@ def get_lan_ip():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     try:
         # Doesn't have to be reachable
-        s.connect(('10.255.255.255', 0))
+        s.connect(("10.10.10.10", 0))
         ip = s.getsockname()[0]
-    except:
-        ip = '127.0.0.1'
+    except OSError:
+        ip = "127.0.0.1"
     finally:
         s.close()
+
     return ip
 
 
@@ -136,7 +186,7 @@ def natural_keys(text):
         l.sort(key=natural_keys) # sorts in human order
         ['something1', 'something4', 'something17']
     """
-    return [int(c) if c.isdigit() else c for c in re.split('(\d+)', text)]
+    return [int(c) if c.isdigit() else c for c in re.split("([0-9]+)", text)]
 
 
 def rhasattr(obj, attr):
@@ -150,7 +200,7 @@ def rhasattr(obj, attr):
         a.b.c = 42
         hasattr(a, 'b.c')  # True
     """
-    return functools.reduce(hasattr, attr.split('.'), obj)
+    return functools.reduce(hasattr, attr.split("."), obj)
 
 
 def rsetattr(obj, attr, value):
@@ -167,7 +217,7 @@ def rsetattr(obj, attr, value):
         rsetattr(a, 'b.c', 42)
         a.b.c  # 42
     """
-    pre, _, post = attr.rpartition('.')
+    pre, _, post = attr.rpartition(".")
     setattr(rgetattr(obj, pre) if pre else obj, post, value)
 
 
@@ -190,10 +240,38 @@ def rgetattr(obj, attr, default=rgetattr_sentinel):
     if default is rgetattr_sentinel:
         _getattr = getattr
     else:
+
         def _getattr(obj, name):
             return getattr(obj, name, default)
 
-    return functools.reduce(_getattr, attr.split('.'), obj)
+    return functools.reduce(_getattr, attr.split("."), obj)
+
+
+def filter_live_properties(properties):
+    """Can be used to exclude "standard" live properties.
+
+    :param properties: The properties set
+    :type properties: set
+    :return:
+    """
+    return set(p for p in properties if not p.startswith("live_"))
+
+
+def file_hash(path, block_size=65536, **hasher_kwargs):
+    """Hash a file using `hashlib.blake2b`, the file is read in chunks.
+
+    :param path: the path of the file to hash
+    :param block_size: the size in bytes of the chunk to read
+    :param **hasher_kwargs: will be passed to the hash function
+    """
+    h = hashlib.blake2b(**hasher_kwargs)
+    with open(path, "rb") as file_to_hash:
+        buffer = file_to_hash.read(block_size)
+        while buffer:
+            h.update(buffer)
+            buffer = file_to_hash.read(block_size)
+
+    return h.hexdigest()
 
 
 class EqEnum(Enum):
@@ -214,6 +292,7 @@ class EqEnum(Enum):
         E.A is 10  # False
 
         E.A == E.A2  # False
+        E.A == E.A2.value # True
     """
 
     def __eq__(self, other):
@@ -222,12 +301,15 @@ class EqEnum(Enum):
 
         return super().__eq__(other)
 
+    __hash__ = Enum.__hash__
+
 
 class FunctionProxy:
-    """Allow to mask a function as an Object.
+    """Encapsulate a function into an object.
 
     Can be useful in enum.Enum (Python enumeration) to have callable values.
     """
+
     def __init__(self, function):
         self.function = function
 

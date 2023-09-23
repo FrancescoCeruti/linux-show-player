@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,16 +17,16 @@
 
 
 class ClassBasedRegistry:
-    """Allow to register/un-register and filter items using a reference class.
+    """Register and filter items using a reference class.
 
     The filter "check" whenever the filter-class is a subclass of
-    the one used to register the item or exactly the the same.
+    the one used to register the item or exactly the same.
 
     .. highlight::
 
         reg = ClassBasedRegistry()
-        reg.add_item('Object-Item', object)
-        reg.add_item('List-Item', list)
+        reg.add('Object-Item', object)
+        reg.add('List-Item', list)
 
         list(reg.filter(object))  # ['Object-Item', 'List-Item']
         list(reg.filter(list))    # ['List-Item']
@@ -37,14 +35,14 @@ class ClassBasedRegistry:
     def __init__(self):
         self._registry = {}
 
-    def add_item(self, item, ref_class=object):
-        """Register a item for ref_class."""
+    def add(self, item, ref_class=object):
+        """Register an item for ref_class."""
         if ref_class not in self._registry:
             self._registry[ref_class] = [item]
         elif item not in self._registry[ref_class]:
             self._registry[ref_class].append(item)
 
-    def remove_item(self, item):
+    def remove(self, item):
         """Remove all the occurrences of the given item."""
         for ref_class in self._registry:
             try:
@@ -58,7 +56,7 @@ class ClassBasedRegistry:
 
         The items are sorted by ref_class name.
         """
-        for class_ in sorted(self._registry.keys(), key=str):
+        for class_ in self._registry.keys():
             if issubclass(ref_class, class_):
                 yield from self._registry[class_]
 

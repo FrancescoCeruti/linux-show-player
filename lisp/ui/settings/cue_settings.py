@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,29 +15,20 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from copy import deepcopy
-
 from PyQt5 import QtCore
-from PyQt5.QtWidgets import QDialog, QTabWidget, QDialogButtonBox
+from PyQt5.QtWidgets import QDialog, QDialogButtonBox, QVBoxLayout
 
 from lisp.core.class_based_registry import ClassBasedRegistry
 from lisp.core.singleton import Singleton
-from lisp.core.util import deep_update
+from lisp.core.util import typename
 from lisp.cues.cue import Cue
-from lisp.ui.settings.settings_page import SettingsPage, CueSettingsPage
+from lisp.ui.settings.pages import CuePageMixin, SettingsPagesTabWidget
 from lisp.ui.ui_utils import translate
 
 
 class CueSettingsRegistry(ClassBasedRegistry, metaclass=Singleton):
-    def add_item(self, item, ref_class=Cue):
-        if not issubclass(item, SettingsPage):
-            raise TypeError('item must be a SettingPage subclass, '
-                            'not {0}'.format(item.__name__))
-        if not issubclass(ref_class, Cue):
-            raise TypeError('ref_class must be Cue or a subclass, not {0}'
-                            .format(ref_class.__name__))
-
-        return super().add_item(item, ref_class)
+    def add(self, item, ref_class=Cue):
+        return super().add(item, ref_class)
 
     def filter(self, ref_class=Cue):
         return super().filter(ref_class)
@@ -48,76 +37,83 @@ class CueSettingsRegistry(ClassBasedRegistry, metaclass=Singleton):
         return super().filter(ref_class)
 
 
-class CueSettings(QDialog):
-    on_apply = QtCore.pyqtSignal(dict)
+class CueSettingsDialog(QDialog):
+    onApply = QtCore.pyqtSignal(dict)
 
-    def __init__(self, cue=None, cue_class=None, **kwargs):
+    def __init__(self, cue, **kwargs):
         """
-
-        :param cue: Target cue, or None for multi-editing
-        :param cue_class: when cue is None, used to specify the reference class
+        :param cue: Target cue, or a cue-type for multi-editing
         """
         super().__init__(**kwargs)
-
-        if cue is not None:
-            cue_class = cue.__class__
-            cue_properties = deepcopy(cue.properties())
-            self.setWindowTitle(cue_properties['name'])
-        else:
-            cue_properties = {}
-            if cue_class is None:
-                cue_class = Cue
-
         self.setWindowModality(QtCore.Qt.ApplicationModal)
-        self.setMaximumSize(635, 530)
-        self.setMinimumSize(635, 530)
-        self.resize(635, 530)
+        self.setMinimumSize(800, 510)
+        self.resize(800, 510)
+        self.setLayout(QVBoxLayout())
 
-        self.sections = QTabWidget(self)
-        self.sections.setGeometry(QtCore.QRect(5, 10, 625, 470))
+        if isinstance(cue, type):
+            if issubclass(cue, Cue):
+                cue_properties = cue.class_defaults()
+                cue_class = cue
+            else:
+                raise TypeError(
+                    "invalid cue type, must be a Cue subclass or a Cue object, "
+                    f"not {cue.__name__}"
+                )
+        elif isinstance(cue, Cue):
+            self.setWindowTitle(cue.name)
+            cue_properties = cue.properties()
+            cue_class = cue.__class__
+        else:
+            raise TypeError(
+                "invalid cue type, must be a Cue subclass or a Cue object, "
+                f"not {typename(cue)}"
+            )
+
+        self.mainPage = SettingsPagesTabWidget(parent=self)
+        self.mainPage.layout().setContentsMargins(0, 0, 0, 0)
+        self.layout().addWidget(self.mainPage)
 
         def sk(widget):
             # Sort-Key function
-            return translate('SettingsPageName', widget.Name)
+            return translate("SettingsPageName", widget.Name)
 
-        for widget in sorted(CueSettingsRegistry().filter(cue_class), key=sk):
-            if issubclass(widget, CueSettingsPage):
-                settings_widget = widget(cue_class)
+        for page in sorted(CueSettingsRegistry().filter(cue_class), key=sk):
+            if issubclass(page, CuePageMixin):
+                settings_widget = page(cue_class)
             else:
-                settings_widget = widget()
+                settings_widget = page()
 
-            settings_widget.load_settings(cue_properties)
-            settings_widget.enable_check(cue is None)
-            self.sections.addTab(settings_widget,
-                                 translate('SettingsPageName',
-                                           settings_widget.Name))
+            settings_widget.loadSettings(cue_properties)
+            settings_widget.enableCheck(cue is cue_class)
+            self.mainPage.addPage(settings_widget)
 
-            self.dialogButtons = QDialogButtonBox(self)
-            self.dialogButtons.setGeometry(10, 490, 615, 30)
-            self.dialogButtons.setStandardButtons(QDialogButtonBox.Cancel |
-                                                  QDialogButtonBox.Ok |
-                                                  QDialogButtonBox.Apply)
+        self.dialogButtons = QDialogButtonBox(self)
+        self.dialogButtons.setStandardButtons(
+            QDialogButtonBox.Cancel
+            | QDialogButtonBox.Apply
+            | QDialogButtonBox.Ok
+        )
+        self.layout().addWidget(self.dialogButtons)
 
-            self.dialogButtons.rejected.connect(self.reject)
-            self.dialogButtons.accepted.connect(self.accept)
-            apply = self.dialogButtons.button(QDialogButtonBox.Apply)
-            apply.clicked.connect(self.apply)
+        self.dialogButtons.button(QDialogButtonBox.Cancel).clicked.connect(
+            self.reject
+        )
+        self.dialogButtons.button(QDialogButtonBox.Apply).clicked.connect(
+            self.__onApply
+        )
+        self.dialogButtons.button(QDialogButtonBox.Ok).clicked.connect(
+            self.__onOk
+        )
 
-    def load_settings(self, settings):
-        for n in range(self.sections.count()):
-            self.sections.widget(n).load_settings(settings)
+    def loadSettings(self, settings):
+        self.mainPage.loadSettings(settings)
 
-    def get_settings(self):
-        settings = {}
+    def getSettings(self):
+        return self.mainPage.getSettings()
 
-        for n in range(self.sections.count()):
-            deep_update(settings, self.sections.widget(n).get_settings())
+    def __onApply(self):
+        self.onApply.emit(self.getSettings())
 
-        return settings
-
-    def apply(self):
-        self.on_apply.emit(self.get_settings())
-
-    def accept(self):
-        self.apply()
-        super().accept()
+    def __onOk(self):
+        self.__onApply()
+        self.accept()

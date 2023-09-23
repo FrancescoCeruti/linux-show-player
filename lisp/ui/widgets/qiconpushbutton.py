@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2017 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2022 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,7 +20,7 @@ from PyQt5.QtWidgets import QPushButton
 
 
 class QIconPushButton(QPushButton):
-    """QPushButton that resize dynamically it's icon."""
+    """QPushButton that dynamically resizes its icon."""
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

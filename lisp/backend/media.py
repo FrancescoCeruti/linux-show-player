@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,138 +17,102 @@
 
 from abc import abstractmethod
 from enum import Enum
+from typing import Union
 
-from lisp.core.has_properties import HasProperties, Property
+from lisp.backend.media_element import MediaElement
+from lisp.core.has_properties import HasProperties
+from lisp.core.properties import Property
+from lisp.core.session_uri import SessionURI
 from lisp.core.signal import Signal
 
 
 class MediaState(Enum):
     """Identify the current media state"""
-    Error = -1
+
     Null = 0
     Playing = 1
     Paused = 2
-    Stopped = 3
+    Ready = 3
 
 
 class Media(HasProperties):
     """Interface for Media objects.
 
     Media(s) provides control over multimedia contents.
-    To control various parameter of the media, MediaElement(s) should be used.
+    MediaElement(s) should be used to control the media parameter.
 
-    .. note::
-        The play/stop/pause functions must be non-blocking functions.
+    functions such as play/stop/pause must be non-blocking, communications
+    should be done via signals.
     """
 
     loop = Property(default=0)
     duration = Property(default=0)
     start_time = Property(default=0)
     stop_time = Property(default=0)
+    elements = Property(default={})
 
     def __init__(self):
         super().__init__()
 
         self.paused = Signal()
-        """Emitted when paused (self)"""
+        # Emitted when paused (self)
         self.played = Signal()
-        """Emitted when played (self)"""
+        # Emitted when played (self)
         self.stopped = Signal()
-        """Emitted when stopped (self)"""
-        self.interrupted = Signal()
-        """Emitted after interruption (self)"""
+        # Emitted when stopped (self)
         self.eos = Signal()
-        """End-of-Stream (self)"""
+        # End-of-Stream (self)
 
         self.on_play = Signal()
-        """Emitted before play (self)"""
+        # Emitted before play (self)
         self.on_stop = Signal()
-        """Emitted before stop (self)"""
+        # Emitted before stop (self)
         self.on_pause = Signal()
-        """Emitted before pause (self)"""
+        # Emitted before pause (self)
 
         self.sought = Signal()
-        """Emitted after a seek (self, position)"""
+        # Emitted after a seek (self, position)
         self.error = Signal()
-        """Emitted when an error occurs (self, error, details)"""
+        # Emitted when an error occurs (self)
 
         self.elements_changed = Signal()
-        """Emitted when one or more elements are added/removed (self)"""
+        # Emitted when one or more elements are added/removed (self)
 
     @property
     @abstractmethod
-    def state(self):
-        """
-        :return: the media current state
-        :rtype: MediaState
+    def state(self) -> MediaState:
+        """Return the media current state."""
+
+    @abstractmethod
+    def current_time(self) -> int:
+        """Return he current playback time in milliseconds or 0."""
+
+    @abstractmethod
+    def element(self, class_name: str) -> Union[MediaElement, type(None)]:
+        """Return the element with the specified class-name or None
+
+        :param class_name: The element class-name
         """
 
     @abstractmethod
-    def current_time(self):
-        """
-        :return: the current playback time in milliseconds or 0
-        :rtype: int
-        """
-
-    @abstractmethod
-    def element(self, class_name):
-        """
-        :param name: The element class-name
-        :type name: str
-
-        :return: The element with the specified class-name or None
-        :rtype: lisp.core.base.media_element.MediaElement
-        """
-
-    @abstractmethod
-    def elements(self):
-        """
-        :return: All the MediaElement(s) of the media
-        :rtype: list
-        """
-
-    @abstractmethod
-    def elements_properties(self):
-        """
-        :return: Media elements configurations
-        :rtype: dict
-        """
-
-    @abstractmethod
-    def input_uri(self):
-        """
-        :return: The media input uri (e.g. "file:///home/..."), or None
-        :rtype: str
-        """
-
-    @abstractmethod
-    def interrupt(self):
-        """Interrupt the playback (no fade) and go in STOPPED state."""
+    def input_uri(self) -> Union[SessionURI, type(None)]:
+        """Return the media SessionURI, or None."""
 
     @abstractmethod
     def pause(self):
-        """The media go in PAUSED state and pause the playback."""
+        """The media go in PAUSED state (pause the playback)."""
 
     @abstractmethod
     def play(self):
-        """The media go in PLAYING state and starts the playback."""
+        """The media go in PLAYING state (starts the playback)."""
 
     @abstractmethod
-    def seek(self, position):
+    def seek(self, position: int):
         """Seek to the specified point.
 
         :param position: The position to be reached in milliseconds
-        :type position: int
         """
 
     @abstractmethod
     def stop(self):
-        """The media go in STOPPED state and stop the playback."""
-
-    @abstractmethod
-    def update_elements(self, settings):
-        """Update the elements configuration.
-
-        :param settings: Media-elements settings
-        :type settings: dict
-        """
+        """The media go in READY state (stop the playback)."""

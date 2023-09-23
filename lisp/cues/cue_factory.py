@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,49 +17,45 @@
 
 from copy import deepcopy
 
+from lisp.core.util import typename
+
 
 class CueFactory:
-    """Provide a generic factory to build different cues types.
+    """Factory to build different cues types.
 
-    Cues can be register via `register_factory` function.
+    Cues can be registered via `register_factory` function.
     """
 
-    __REGISTRY = {}
+    def __init__(self, app):
+        self.app = app
+        self.__registry = {}
 
-    # Register methods
-
-    @classmethod
-    def register_factory(cls, cue_type, factory):
+    def register_factory(self, cue_type, factory):
         """Register a new cue-type in the factory.
 
         :param cue_type: The cue class name
         :type cue_type: str
-        :param factory: The cue class or a factory function
+        :param factory: The cue class, or a factory function
         """
-        cls.__REGISTRY[cue_type] = factory
+        self.__registry[cue_type] = factory
 
-    @classmethod
-    def has_factory(cls, cue_type):
+    def has_factory(self, cue_type):
         """Return True if there is a factory for `cue_type`
 
         :param cue_type: The cue type to check
         :rtype cue_type: str
         :rtype: bool
         """
-        return cue_type in cls.__REGISTRY
+        return cue_type in self.__registry
 
-    @classmethod
-    def remove_factory(cls, cue_type):
+    def remove_factory(self, cue_type):
         """Remove the registered cue from the factory
 
         :param cue_type: the cue class name (the same used for registration)
         """
-        cls.__REGISTRY.pop(cue_type)
+        self.__registry.pop(cue_type)
 
-    # Create methods
-
-    @classmethod
-    def create_cue(cls, cue_type, cue_id=None, **kwargs):
+    def create_cue(self, cue_type, cue_id=None, **kwargs):
         """Return a new cue of the specified type.
 
         ..note:
@@ -71,25 +65,25 @@ class CueFactory:
         :param cue_type: The cue type
         :rtype: lisp.cues.cue.Cue
         """
-        factory = cls.__REGISTRY.get(cue_type)
+        factory = self.__registry.get(cue_type)
 
         if not callable(factory):
             raise Exception(
-                'Cue not available or badly registered: {}'.format(cue_type))
+                f"Cue not available or badly registered: {cue_type}"
+            )
 
-        return factory(id=cue_id, **kwargs)
+        return factory(app=self.app, id=cue_id, **kwargs)
 
-    @classmethod
-    def clone_cue(cls, cue):
+    def clone_cue(self, cue):
         """Return a copy of the given cue. The id is not copied.
 
         :param cue: the cue to be copied
         :rtype: lisp.cues.cue.Cue
         """
         properties = deepcopy(cue.properties())
-        properties.pop('id')
+        properties.pop("id")
 
-        cue = cls.create_cue(cue.__class__.__name__)
+        cue = self.create_cue(typename(cue))
         cue.update_properties(properties)
 
         return cue

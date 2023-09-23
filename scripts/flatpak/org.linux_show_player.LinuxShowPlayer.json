@@ -1,0 +1,220 @@
+{
+    "app-id": "org.linux_show_player.LinuxShowPlayer",
+    "runtime": "org.kde.Platform",
+    "runtime-version": "5.15-22.08",
+    "sdk": "org.kde.Sdk",
+    "command": "linux-show-player",
+    "rename-icon": "linuxshowplayer",
+    "finish-args": [
+        "--share=network",
+        "--socket=x11",
+        "--socket=wayland",
+        "--socket=pulseaudio",
+        "--system-talk-name=org.freedesktop.RealtimeKit1",
+        "--filesystem=xdg-run/pipewire-0",
+        "--filesystem=home",
+        "--device=all"
+    ],
+    "cleanup": [
+        "*.la",
+        "*.a",
+        "/include",
+        "/lib/pkgconfig"
+    ],
+    "modules": [
+        {
+            "name": "Jack",
+            "buildsystem": "simple",
+            "build-commands": [
+                "./waf configure --prefix=$FLATPAK_DEST",
+                "./waf build -j $FLATPAK_BUILDER_N_JOBS",
+                "./waf install"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/jackaudio/jack2.git",
+                    "tag": "v1.9.22",
+                    "commit": "4f58969432339a250ce87fe855fb962c67d00ddb"
+                }
+            ],
+            "cleanup": [
+                "*"
+            ]
+        },
+        {
+            "name": "RtMidi",
+            "config-opts": [
+                "--with-jack",
+                "--with-alsa"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/thestk/rtmidi.git",
+                    "tag": "6.0.0",
+                    "commit": "1e5b49925aa60065db52de44c366d446a902547b"
+                }
+            ]
+        },
+        {
+            "name": "liblo",
+            "config-opts": [
+                "--disable-examples",
+                "--disable-tools"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/radarsat1/liblo.git",
+                    "tag": "0.31",
+                    "commit": "840ed69b1d669a1ce587eb592746e3dff6985d76"
+                }
+            ]
+        },
+        {
+            "name": "pyliblo3",
+            "buildsystem": "simple",
+            "build-commands": [
+                "pip3 install --no-index --no-build-isolation --find-links=\"file://${PWD}\" --prefix=\"${FLATPAK_DEST}\" pyliblo3"
+            ],
+            "sources": [
+                {
+                    "type": "file",
+                    "url": "https://files.pythonhosted.org/packages/5e/2e/524a6667fa851d0aae3eded349b4f1e56785036d65e186fb4bf2f741a505/pyliblo3-0.13.0.tar.gz",
+                    "sha256": "5700eac4a6db2c1c492a99c17bbf1871e888309ae7bcd1c68473650778d60f46"
+                }
+            ]
+        },
+        {
+            "name": "protobuf",
+            "config-opts": [
+                "--disable-static"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/google/protobuf",
+                    "tag": "v3.19.1",
+                    "commit": "7c40b2df1fdf6f414c1c18c789715a9c948a0725"
+                }
+            ]
+        },
+        {
+            "name": "python-google-protobuf",
+            "buildsystem": "simple",
+            "build-commands": [
+                "pip3 install --no-index --no-build-isolation --find-links=\"file://${PWD}\" --prefix=\"${FLATPAK_DEST}\" protobuf"
+            ],
+            "sources": [
+                {
+                    "type": "file",
+                    "url": "https://files.pythonhosted.org/packages/c1/12/7479ece04931984162698bfaa05cbb2fc23d7f6ee1ab5146cfc6ade56a31/protobuf-3.19.1-py2.py3-none-any.whl",
+                    "sha256": "e813b1c9006b6399308e917ac5d298f345d95bb31f46f02b60cd92970a9afa17"
+                }
+            ]
+        },
+        {
+            "name": "ola",
+            "build-options": {
+                "env": {
+                    "PYTHON": "python3"
+                }
+            },
+            "config-opts": [
+                "--disable-unittests",
+                "--disable-examples",
+                "--disable-osc",
+                "--disable-http",
+                "--enable-python-libs"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/OpenLightingProject/ola/releases/download/0.10.9/ola-0.10.9.tar.gz",
+                    "sha256": "44073698c147fe641507398253c2e52ff8dc7eac8606cbf286c29f37939a4ebf"
+                },
+                {
+                    "type": "script",
+                    "dest-filename": "autogen.sh",
+                    "commands": [
+                        "autoreconf -fi"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "python-alsa",
+            "buildsystem": "simple",
+            "build-commands": [
+                "pip3 install --no-index --no-build-isolation --prefix=\"${FLATPAK_DEST}\" ."
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "ftp://ftp.alsa-project.org/pub/pyalsa/pyalsa-1.2.7.tar.bz2",
+                    "sha256": "67d8f99f1ccf23e7ebdfa2c3be0b09f147949fd9511d1e6748b7f412ef046e1f"
+                }
+            ]
+        },
+        {
+            "name": "poetry-core",
+            "buildsystem": "simple",
+            "build-commands": [
+                "pip3 install --no-index --no-build-isolation --find-links=\"file://${PWD}\" --prefix=\"${FLATPAK_DEST}\" poetry-core"
+            ],
+            "cleanup": [
+                "*"
+            ],
+            "sources": [
+                {
+                    "type": "file",
+                    "url": "https://files.pythonhosted.org/packages/fc/7d/e1fb5889102e49e7ef7192f155e9409233255ed64594827b81d4e5950335/poetry_core-1.6.1-py3-none-any.whl",
+                    "sha256": "70707340447dee0e7f334f9495ae652481c67b32d8d218f296a376ac2ed73573"
+                }
+            ]
+        },
+        {
+            "name": "python-packaging",
+            "buildsystem": "simple",
+            "build-commands": [
+                "pip3 install --no-index --no-build-isolation --find-links=\"file://${PWD}\" --prefix=\"${FLATPAK_DEST}\" packaging"
+            ],
+            "sources": [
+                {
+                    "type": "file",
+                    "url": "https://files.pythonhosted.org/packages/ab/c3/57f0601a2d4fe15de7a553c00adbc901425661bf048f2a22dfc500caf121/packaging-23.1-py3-none-any.whl",
+                    "sha256": "994793af429502c4ea2ebf6bf664629d07c1a9fe974af92966e4b8d2df7edc61"
+                }
+            ]
+        },
+        "pyqt-modules.json",
+        "pygobject-modules.json",
+        "python-rtmidi-modules.json",
+        "python-modules.json",
+        {
+            "name": "linux-show-player",
+            "buildsystem": "simple",
+            "build-commands": [
+                "pip3 install --no-deps --no-build-isolation --prefix=\"${FLATPAK_DEST}\" .",
+                "mkdir -p /app/share/applications/",
+                "mkdir -p /app/share/mime/packages/",
+                "mkdir -p /app/share/metainfo/",
+                "mkdir -p /app/share/icons/hicolor/512x512/apps/",
+                "cp dist/linuxshowplayer.desktop /app/share/applications/org.linux_show_player.LinuxShowPlayer.desktop",
+                "cp dist/linuxshowplayer.xml /app/share/mime/packages/org.linux_show_player.LinuxShowPlayer.xml",
+                "cp dist/linuxshowplayer.appdata.xml /app/share/metainfo/org.linux_show_player.LinuxShowPlayer.appdata.xml",
+                "cp dist/linuxshowplayer.png /app/share/icons/hicolor/512x512/apps/linuxshowplayer.png"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/FrancescoCeruti/linux-show-player.git",
+                    "branch": "develop"
+                }
+            ]
+        }
+    ],
+    "branch": "develop",
+    "desktop-file-name-suffix": " (develop)"
+}

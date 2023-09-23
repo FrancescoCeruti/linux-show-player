@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2017 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2017 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,36 +15,33 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+from abc import abstractmethod, ABC
 from threading import Event
+from typing import Union
 
 from lisp.core.decorators import locked_method
 from lisp.core.fade_functions import ntime, FadeInType, FadeOutType
-from lisp.core.util import rsetattr, rgetattr
+from lisp.core.util import rsetattr, rgetattr, typename
 
 
-class Fader:
-    """Allow to perform fades on "generic" objects attributes.
+class BaseFader(ABC):
+    """Base class for "faders"
 
-     * Fades have a resolution of `1-hundredth-of-second`
-     * To be able to fade correctly the attribute must be numeric, if not, the
-       `fade` function will fail
-     * When fading, the `fade` function cannot be entered by other threads,
-       if this happens the function will simply return immediately
-     * To execute a fader, the `prepare` function must be called first,
-       this will also stop the fader
-     * After calling `prepare` the fader is considered as running
-     * The `stop` function wait until all "pending" target changes are applied
-     * Changing the target will also stop the fader
+    * Works only for numeric attributes
+    * When fading, the `fade` function cannot be entered by other threads,
+      if this happens the function will simply return immediately
+    * To execute a fader, the `prepare` function must be called first,
+      this will also stop the fader
+    * After calling `prepare` the fader is considered as running
+    * The `stop` function wait until all "pending" target changes are applied
+    * Changing the target will also stop the fader
     """
 
-    def __init__(self, target, attribute):
+    def __init__(self, target, attribute: str):
         """
         :param target: The target object
-        :type target: object
         :param attribute: The target attribute (name) to be faded
-        :type attribute: str
         """
-        self._time = 0  # current fade time in hundredths-of-seconds
         self._target = target
         self._attribute = attribute
 
@@ -54,8 +49,6 @@ class Fader:
         self._is_ready.set()
         self._running = Event()
         self._running.set()
-        self._pause = Event()
-        self._pause.set()
 
     @property
     def target(self):
@@ -71,9 +64,43 @@ class Fader:
         return self._attribute
 
     @attribute.setter
-    def attribute(self, target_property):
+    def attribute(self, attribute: str):
         self.stop()
-        self._attribute = target_property
+        self._attribute = attribute
+
+    @locked_method(blocking=False)
+    def fade(
+        self,
+        duration: float,
+        to_value: float,
+        fade_type: Union[FadeInType, FadeOutType],
+    ) -> bool:
+        """
+        :param duration: How much the fade should be long (in seconds)
+        :param to_value: The value to reach
+        :param fade_type: The fade type
+
+        :return: False if the fade as been interrupted, True otherwise
+        """
+        if duration <= 0:
+            return True
+
+        if not isinstance(fade_type, (FadeInType, FadeOutType)):
+            raise AttributeError(
+                "fade_type must be one of FadeInType or FadeOutType members,"
+                f"not {typename(fade_type)}"
+            )
+
+        try:
+            self._fade(duration, to_value, fade_type)
+        finally:
+            interrupted = self._running.is_set()
+            self._running.set()
+            self._is_ready.set()
+
+            self._after_fade(interrupted)
+
+        return not interrupted
 
     def prepare(self):
         self.stop()
@@ -81,76 +108,95 @@ class Fader:
         self._running.clear()
         self._is_ready.clear()
 
-    @locked_method(blocking=False)
-    def fade(self, duration, to_value, fade_type):
-        """
-        :param duration: How much the fade should be long (in seconds)
-        :type duration: float
-        :param to_value: The value to reach
-        :type to_value: float
-        :param fade_type: The fade type
-        :type fade_type: FadeInType | FadeOutType
-
-        :return: False if the fade as been interrupted, True otherwise
-        :rtype: bool
-        """
-        if duration <= 0:
-            return
-
-        if not isinstance(fade_type, (FadeInType, FadeOutType)):
-            raise AttributeError(
-                'fade_type must be one of FadeInType or FadeOutType member,'
-                'not {}'.format(fade_type.__class__.__name__))
-
-        try:
-            self._time = 0
-            begin = 0
-            functor = fade_type.value
-            duration = int(duration * 100)
-            base_value = rgetattr(self._target, self._attribute)
-            value_diff = to_value - base_value
-
-            if value_diff == 0:
-                return
-
-            while self._time <= duration and not self._running.is_set():
-                rsetattr(self._target,
-                         self._attribute,
-                         functor(ntime(self._time, begin, duration),
-                                 value_diff,
-                                 base_value))
-
-                self._time += 1
-                self._running.wait(0.01)
-                self._pause.wait()
-        finally:
-            interrupted = self._running.is_set()
-            self._running.set()
-            self._is_ready.set()
-            self._time = 0
-
-        return not interrupted
-
     def stop(self):
-        if not self._running.is_set() or not self._pause.is_set():
+        if not self._running.is_set():
             self._running.set()
-            self._pause.set()
             self._is_ready.wait()
 
-    def pause(self):
-        if self.is_running():
-            self._pause.clear()
+    def is_running(self) -> bool:
+        return not self._running.is_set()
 
-    def restart(self):
-        # TODO: change to resume
-        self._pause.set()
+    def _after_fade(self, interrupted):
+        pass
 
-    def is_paused(self):
-        return not self._pause.is_set()
+    @abstractmethod
+    def _fade(
+        self,
+        duration: float,
+        to_value: float,
+        fade_type: Union[FadeInType, FadeOutType],
+    ) -> bool:
+        pass
 
-    def is_running(self):
-        return not self._running.is_set() and not self.is_paused()
+    @abstractmethod
+    def current_time(self) -> int:
+        """Fader running time, in milliseconds"""
+        pass
 
-    def current_time(self):
-        # Return the time in millisecond
-        return self._time * 10
+
+class DummyFader(BaseFader):
+    def __init__(self):
+        super().__init__(None, "")
+
+    def _fade(
+        self,
+        duration: float,
+        to_value: float,
+        fade_type: Union[FadeInType, FadeOutType],
+    ) -> bool:
+        return True
+
+    def current_time(self) -> int:
+        return 0
+
+
+class Fader(BaseFader):
+    """Perform fades on "generic" objects attributes.
+
+    * Fades have a resolution of `1-hundredth-of-second`
+    """
+
+    def __init__(self, target, attribute):
+        super().__init__(target, attribute)
+        # current fade time in hundredths-of-seconds
+        self._time = 0
+
+    def _fade(
+        self,
+        duration: float,
+        to_value: float,
+        fade_type: Union[FadeInType, FadeOutType],
+    ) -> bool:
+        self._time = 0
+
+        begin = 0
+        functor = fade_type.value
+        duration = int(duration * 100)
+        base_value = rgetattr(self._target, self._attribute)
+        value_diff = to_value - base_value
+
+        if value_diff == 0:
+            return True
+
+        while self._time <= duration and not self._running.is_set():
+            rsetattr(
+                self._target,
+                self._attribute,
+                round(
+                    functor(
+                        ntime(self._time, begin, duration),
+                        value_diff,
+                        base_value,
+                    ),
+                    6,
+                ),
+            )
+
+            self._time += 1
+            self._running.wait(0.01)
+
+    def _after_fade(self, interrupted):
+        self._time = 0
+
+    def current_time(self) -> int:
+        return round(self._time * 10)

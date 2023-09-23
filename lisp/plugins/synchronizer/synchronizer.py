@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,60 +16,86 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 import logging
-import socket
-import traceback
 
+import requests
 from PyQt5.QtWidgets import QMenu, QAction, QMessageBox
 
-from lisp.application import Application
 from lisp.core.plugin import Plugin
 from lisp.core.signal import Connection
-from lisp.core.util import get_lan_ip
-from lisp.ui.mainwindow import MainWindow
+from lisp.core.util import get_lan_ip, compose_url
+from lisp.cues.cue import CueAction
+from lisp.plugins.network.discovery_dialogs import HostManagementDialog
 from lisp.ui.ui_utils import translate
-from .peers_dialog import PeersDialog
+
+logger = logging.getLogger(__name__)
 
 
 class Synchronizer(Plugin):
-    Name = 'Synchronizer'
+    Name = "Synchronizer"
+    Authors = ("Francesco Ceruti",)
+    OptDepends = ("Network",)
+    Description = "Keep multiple sessions, in a network, synchronized"
 
-    def __init__(self):
-        self.syncMenu = QMenu(translate('Synchronizer', 'Synchronization'))
-        self.menu_action = MainWindow().menuTools.addMenu(self.syncMenu)
+    def __init__(self, app):
+        super().__init__(app)
+        self.peers = []
+        self.app.session_created.connect(self.session_init)
+
+        self.syncMenu = QMenu(translate("Synchronizer", "Synchronization"))
+        self.menu_action = self.app.window.menuTools.addMenu(self.syncMenu)
 
         self.addPeerAction = QAction(
-            translate('Synchronizer', 'Manage connected peers'), MainWindow())
+            translate("Synchronizer", "Manage connected peers"), self.app.window
+        )
         self.addPeerAction.triggered.connect(self.manage_peers)
         self.syncMenu.addAction(self.addPeerAction)
 
         self.showIpAction = QAction(
-            translate('Synchronizer', 'Show your IP'), MainWindow())
+            translate("Synchronizer", "Show your IP"), self.app.window
+        )
         self.showIpAction.triggered.connect(self.show_ip)
         self.syncMenu.addAction(self.showIpAction)
 
-        self.peers = []
-        self.cue_media = {}
-
-    def init(self):
-        Application().layout.cue_executed.connect(self.remote_execute,
-                                                  mode=Connection.Async)
+    def session_init(self):
+        self.app.layout.cue_executed.connect(
+            self._cue_executes, mode=Connection.Async
+        )
+        self.app.layout.all_executed.connect(
+            self._all_executed, mode=Connection.Async
+        )
 
     def manage_peers(self):
-        manager = PeersDialog(self.peers, parent=MainWindow())
-        manager.exec_()
+        manager = HostManagementDialog(
+            self.peers,
+            Synchronizer.Config["discovery.port"],
+            Synchronizer.Config["discovery.magic"],
+            parent=self.app.window,
+        )
+        manager.exec()
+
+        self.peers = manager.hosts()
 
     def show_ip(self):
-        ip = translate('Synchronizer', 'Your IP is:') + ' ' + str(get_lan_ip())
-        QMessageBox.information(MainWindow(), ' ', ip)
+        ip = translate("Synchronizer", "Your IP is: {}").format(get_lan_ip())
+        QMessageBox.information(self.app.window, " ", ip)
 
-    def reset(self):
-        self.peers.clear()
-        self.cue_media.clear()
+    def _url(self, host, path):
+        return compose_url(
+            Synchronizer.Config["protocol"],
+            host,
+            Synchronizer.Config["port"],
+            path,
+        )
 
-    def remote_execute(self, cue):
-        for peer in self.peers:
-            try:
-                peer['proxy'].execute(cue.index)
-            except Exception:
-                logging.error('REMOTE: remote control failed')
-                logging.debug('REMOTE: ' + traceback.format_exc())
+    def _cue_executes(self, cue):
+        for peer, _ in self.peers:
+            requests.post(
+                self._url(peer, f"/cues/{cue.id}/action"),
+                json={"action": CueAction.Default.value},
+            )
+
+    def _all_executed(self, action):
+        for peer, _ in self.peers:
+            requests.post(
+                self._url(peer, "/layout/action"), json={"action": action.value}
+            )

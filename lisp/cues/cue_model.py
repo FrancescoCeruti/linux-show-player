@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,8 +14,9 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
+
 from lisp.core.model import Model
-from lisp.cues.cue import Cue
+from lisp.cues.cue import Cue, CueAction
 
 
 class CueModel(Model):
@@ -33,7 +32,7 @@ class CueModel(Model):
 
     def add(self, cue):
         if cue.id in self.__cues:
-            raise ValueError('the cue is already in the layout')
+            raise ValueError("the cue is already in the model")
 
         self.__cues[cue.id] = cue
         self.item_added.emit(cue)
@@ -42,12 +41,24 @@ class CueModel(Model):
         self.pop(cue.id)
 
     def pop(self, cue_id):
+        """:rtype: Cue"""
         cue = self.__cues.pop(cue_id)
+
+        # Try to interrupt/stop the cue
+        if CueAction.Interrupt in cue.CueActions:
+            cue.interrupt()
+        elif CueAction.Stop in cue.CueActions:
+            cue.stop()
+
         self.item_removed.emit(cue)
 
         return cue
 
     def get(self, cue_id, default=None):
+        """Return the cue with the given id, or the default value.
+
+        :rtype: Cue
+        """
         return self.__cues.get(cue_id, default)
 
     def items(self):

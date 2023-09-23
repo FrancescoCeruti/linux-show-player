@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,40 +23,60 @@ from lisp.core.qmeta import QABCMeta
 
 
 class Singleton(type):
-
     def __call__(cls, *args, **kwargs):
         try:
             return cls.__instance
         except AttributeError:
-            cls.__instance = super(Singleton, cls).__call__(*args, **kwargs)
-            return cls.__instance
+            pass
+
+        cls.__instance = super(Singleton, cls).__call__(*args, **kwargs)
+        return cls.__instance
+
+    @property
+    def instance(cls):
+        return cls.__instance
 
 
 class ABCSingleton(ABCMeta):
-
     def __call__(cls, *args, **kwargs):
         try:
             return cls.__instance
         except AttributeError:
-            cls.__instance = super(ABCSingleton, cls).__call__(*args, **kwargs)
-            return cls.__instance
+            pass
+
+        cls.__instance = super(ABCSingleton, cls).__call__(*args, **kwargs)
+        return cls.__instance
+
+    @property
+    def instance(cls):
+        return cls.__instance
 
 
 class QSingleton(type(QObject)):
-
     def __call__(cls, *args, **kwargs):
         try:
             return cls.__instance
         except AttributeError:
-            cls.__instance = super(QSingleton, cls).__call__(*args, **kwargs)
-            return cls.__instance
+            pass
+
+        cls.__instance = super(QSingleton, cls).__call__(*args, **kwargs)
+        return cls.__instance
+
+    @property
+    def instance(cls):
+        return cls.__instance
 
 
 class QABCSingleton(QABCMeta):
-
     def __call__(cls, *args, **kwargs):
         try:
             return cls.__instance
         except AttributeError:
-            cls.__instance = super(QABCSingleton, cls).__call__(*args, **kwargs)
-            return cls.__instance
+            pass
+
+        cls.__instance = super(QABCSingleton, cls).__call__(*args, **kwargs)
+        return cls.__instance
+
+    @property
+    def instance(cls):
+        return cls.__instance

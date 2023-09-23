@@ -1,10 +1,7 @@
-# -*- coding: utf-8 -*-
-#
 # Python porting of qtractor fade functions
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -39,7 +36,7 @@ def fade_linear(t, a, b):
 
 def fadein_quad(t, a, b):
     """Quadratic (t^2) fade in: accelerating from zero velocity."""
-    return a * (t ** 2) + b
+    return a * (t**2) + b
 
 
 def fadeout_quad(t, a, b):
@@ -53,7 +50,7 @@ def fade_inout_quad(t, a, b):
     """
     t *= 2
     if t < 1.0:
-        return 0.5 * a * (t ** 2) + b
+        return 0.5 * a * (t**2) + b
     else:
         t -= 1
         return 0.5 * a * (1 - (t * (t - 2))) + b

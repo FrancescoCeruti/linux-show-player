@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2020 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,77 +15,42 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-import os
+from typing import Optional
 
-from lisp.core.loading import load_classes
-from lisp.ui import elogging
+from lisp.core.plugins_manager import PluginsManager
 
-__PLUGINS = {}
-
-
-def load_plugins():
-    """Load available plugins."""
-    for name, plugin in load_classes(__package__, os.path.dirname(__file__)):
-        try:
-            __PLUGINS[name] = plugin()
-            elogging.debug('PLUGINS: Loaded "{0}"'.format(name))
-        except Exception as e:
-            elogging.exception('PLUGINS: Failed "{0}" load'.format(name), e)
+DefaultPluginsManager: Optional[PluginsManager] = None
 
 
-def translations():
-    base_path = os.path.dirname(os.path.realpath(__file__))
-    for module in next(os.walk(base_path))[1]:
-        i18n_dir = os.path.join(base_path, module, 'i18n')
-        if os.path.exists(i18n_dir):
-            yield os.path.join(i18n_dir, module)
+def load_plugins(application, enable_user_plugins=True):
+    global DefaultPluginsManager
+    if DefaultPluginsManager is None:
+        DefaultPluginsManager = PluginsManager(application, enable_user_plugins)
+
+    DefaultPluginsManager.load_plugins()
 
 
-def init_plugins():
-    """Initialize all the plugins."""
-    failed = []
-    for plugin in __PLUGINS:
-        try:
-            __PLUGINS[plugin].init()
-            elogging.debug('PLUGINS: Initialized "{0}"'.format(plugin))
-        except Exception as e:
-            failed.append(plugin)
-            elogging.exception('PLUGINS: Failed "{0}" init'.format(plugin), e)
-
-    for plugin in failed:
-        __PLUGINS.pop(plugin)
+def finalize_plugins():
+    if DefaultPluginsManager is not None:
+        DefaultPluginsManager.finalize_plugins()
 
 
-def reset_plugins():
-    """Resets all the plugins."""
-    for plugin in __PLUGINS:
-        try:
-            __PLUGINS[plugin].reset()
-            elogging.debug('PLUGINS: Reset "{0}"'.format(plugin))
-        except Exception as e:
-            elogging.exception('PLUGINS: Failed "{0}" reset'.format(plugin), e)
+def is_loaded(plugin_name):
+    return (
+        DefaultPluginsManager is not None
+        and DefaultPluginsManager.is_loaded(plugin_name)
+    )
 
 
-def set_plugins_settings(settings):
-    for plugin in __PLUGINS.values():
-        if plugin.Name in settings:
-            try:
-                plugin.load_settings(settings[plugin.Name])
-            except Exception as e:
-                elogging.exception('PLUGINS: Failed "{0}" settings load'
-                                   .format(plugin.Name), e)
+def get_plugins():
+    if DefaultPluginsManager is not None:
+        return DefaultPluginsManager.get_plugins()
+    else:
+        raise RuntimeError("Cannot get plugins before they have been loaded.")
 
 
-def get_plugin_settings():
-    plugins_settings = {}
-
-    for plugin in __PLUGINS.values():
-        try:
-            settings = plugin.settings()
-            if settings is not None and len(settings) > 0:
-                plugins_settings[plugin.Name] = settings
-        except Exception as e:
-            elogging.exception('PLUGINS: Failed "{0}" settings retrieve'
-                               .format(plugin.Name), e)
-
-    return plugins_settings
+def get_plugin(plugin_name):
+    if DefaultPluginsManager is not None:
+        return DefaultPluginsManager.get_plugin(plugin_name)
+    else:
+        raise RuntimeError("Cannot get plugins before they have been loaded.")

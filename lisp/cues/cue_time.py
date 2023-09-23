@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,7 +18,7 @@
 from enum import IntEnum
 from weakref import WeakValueDictionary
 
-from lisp.core.clock import Clock_100
+from lisp.core.clock import Clock_33
 from lisp.core.decorators import locked_method
 from lisp.core.signal import Connection, Signal
 from lisp.cues.cue import CueState
@@ -50,7 +48,8 @@ class CueTime(metaclass=MetaCueTime):
     .. note::
         The notify signal is emitted only when the cue is running.
     """
-    _Clock = Clock_100
+
+    _Clock = Clock_33
 
     def __init__(self, cue):
         self.notify = Signal()
@@ -58,7 +57,7 @@ class CueTime(metaclass=MetaCueTime):
         self._clock = self._Clock
         self._active = False
         self._cue = cue
-        self._cue.changed('duration').connect(self.__init)
+        self._cue.changed("duration").connect(self.__init)
 
         self.__init()
 
@@ -116,7 +115,7 @@ class CueWaitTime:
     def __init__(self, cue, mode=Mode.Pre):
         self.notify = Signal()
 
-        self._clock = Clock_100
+        self._clock = Clock_33
         self._start_time = 0
         self._last = 0
         self._cue = cue

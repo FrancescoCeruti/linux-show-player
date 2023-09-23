@@ -2,7 +2,7 @@
 Name=Linux Show Player
 Comment=Cue player for stage productions
 Comment[fr]=Lecteur de Cue pour production scénique
-Comment[it]=Cue player per produzioni sceniche
+Comment[it]=Cue player per produzioni teatrali
 Exec=linux-show-player -f %u
 Icon=linuxshowplayer
 Type=Application

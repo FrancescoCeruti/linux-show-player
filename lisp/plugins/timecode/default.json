@@ -1,0 +1,6 @@
+{
+    "_version_": "2",
+    "_enabled_": true,
+    "format": "SMPTE",
+    "protocol": "MIDI"
+}

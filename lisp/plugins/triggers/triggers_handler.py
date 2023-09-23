@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,20 +19,20 @@ from enum import Enum
 
 from PyQt5.QtCore import QT_TRANSLATE_NOOP
 
-from lisp.application import Application
 from lisp.core.signal import Connection
 from lisp.cues.cue import CueAction
 
 
 class CueTriggers(Enum):
-    Started = QT_TRANSLATE_NOOP('CueTriggers', 'Started')
-    Paused = QT_TRANSLATE_NOOP('CueTriggers', 'Paused')
-    Stopped = QT_TRANSLATE_NOOP('CueTriggers', 'Stopped')
-    Ended = QT_TRANSLATE_NOOP('CueTriggers','Ended')
+    Started = QT_TRANSLATE_NOOP("CueTriggers", "Started")
+    Paused = QT_TRANSLATE_NOOP("CueTriggers", "Paused")
+    Stopped = QT_TRANSLATE_NOOP("CueTriggers", "Stopped")
+    Ended = QT_TRANSLATE_NOOP("CueTriggers", "Ended")
 
 
 class CueHandler:
-    def __init__(self, cue, triggers):
+    def __init__(self, app, cue, triggers):
+        self.app = app
         self.triggers = triggers
         self.cue = cue
 
@@ -57,7 +55,7 @@ class CueHandler:
 
     def __execute(self, trigger):
         for target_id, action in self.triggers.get(trigger, []):
-            target = Application().cue_model.get(target_id)
+            target = self.app.cue_model.get(target_id)
 
             if target is not None:
                 target.execute(CueAction(action))

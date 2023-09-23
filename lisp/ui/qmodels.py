@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,13 +18,14 @@
 from PyQt5.QtCore import QAbstractTableModel, QModelIndex, Qt
 
 from lisp.cues.cue import Cue
+from lisp.ui.ui_utils import translate
 
-# Application defended data-roles
+# Application defined data-roles
 CueClassRole = Qt.UserRole + 1
 
 
 class SimpleTableModel(QAbstractTableModel):
-    """ Simple implementation of a QAbstractTableModel
+    """Simple implementation of a QAbstractTableModel
 
     .. warning::
         Currently this is a partial implementation of a complete R/W Qt model
@@ -45,6 +44,16 @@ class SimpleTableModel(QAbstractTableModel):
         self.beginInsertRows(QModelIndex(), row, row)
         self.rows.append(list(values))
         self.endInsertRows()
+
+    def updateRow(self, row, *values):
+        if -1 < row < len(self.rows):
+            self.rows[row] = list(values)
+
+        self.dataChanged.emit(
+            self.index(row, 0),
+            self.index(row, len(self.columns)),
+            [Qt.DisplayRole, Qt.EditRole],
+        )
 
     def removeRow(self, row, parent=QModelIndex()):
         if -1 < row < len(self.rows):
@@ -71,18 +80,30 @@ class SimpleTableModel(QAbstractTableModel):
 
     def data(self, index, role=Qt.DisplayRole):
         if index.isValid():
-            if role == Qt.DisplayRole or role == Qt.EditRole:
+            if role == Qt.DisplayRole:
+                value = self.rows[index.row()][index.column()]
+                if type(value) == bool:
+                    return translate("QComboBox", str(value).title())
+                else:
+                    return value
+            elif role == Qt.EditRole:
                 return self.rows[index.row()][index.column()]
             elif role == Qt.TextAlignmentRole:
                 return Qt.AlignCenter
 
     def setData(self, index, value, role=Qt.DisplayRole):
-        if index.isValid():
-            if role == Qt.DisplayRole or role == Qt.EditRole:
-                self.rows[index.row()][index.column()] = value
-                self.dataChanged.emit(self.index(index.row(), 0),
-                                      self.index(index.row(), index.column()),
-                                      [Qt.DisplayRole, Qt.EditRole])
+        if index.isValid() and (role == Qt.DisplayRole or role == Qt.EditRole):
+            row = index.row()
+            col = index.column()
+            # Update only if value is different
+            if self.rows[row][col] != value:
+                self.rows[row][col] = value
+                self.dataChanged.emit(
+                    self.index(row, 0),
+                    self.index(row, col),
+                    [Qt.DisplayRole, Qt.EditRole],
+                )
+
                 return True
 
         return False

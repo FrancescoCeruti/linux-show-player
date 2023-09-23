@@ -1,0 +1,52 @@
+{
+    "_version_": "0.6dev.17",
+    "cue": {
+        "fadeAction": 3,
+        "fadeActionType": "Linear",
+        "interruptFade": 3,
+        "interruptFadeType": "Linear"
+    },
+    "cache": {
+        "position": ""
+    },
+    "theme": {
+        "theme": "Dark",
+        "icons": "Numix"
+    },
+    "locale": "",
+    "session": {
+        "minSave": false,
+        "lastPath": ""
+    },
+    "logging": {
+        "limit": 10000,
+        "backgrounds": {
+            "DEBUG": [230, 230, 230, 200],
+            "INFO": [80, 255, 65, 200],
+            "WARNING": [255, 200, 0, 200],
+            "ERROR": [255, 65, 0, 200],
+            "CRITICAL": [255, 0, 0, 200]
+        },
+        "foregrounds": {
+            "DEBUG": [0, 0, 0],
+            "INFO": [0, 0, 0],
+            "WARNING": [0, 0, 0],
+            "ERROR": [255, 255, 255],
+            "CRITICAL": [255, 255, 255]
+        },
+        "viewer": {
+            "visibleLevels": ["WARNING", "ERROR", "CRITICAL"],
+            "visibleColumns": ["asctime", "name", "message"]
+        }
+    },
+    "layout": {
+        "default": "NoDefault",
+        "stopAllFade": false,
+        "pauseAllFade": false,
+        "resumeAllFade": false,
+        "interruptAllFade": true
+    },
+    "actions": {
+        "maxStackSize": 0
+    }
+}

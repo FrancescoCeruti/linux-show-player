@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,7 +21,6 @@ from PyQt5.QtWidgets import QLabel
 
 
 class QVerticalLabel(QLabel):
-
     def paintEvent(self, event):
         painter = QPainter(self)
         painter.rotate(-90)
@@ -35,7 +32,7 @@ class QVerticalLabel(QLabel):
 
         self.setMaximumWidth(hint.height())
         self.setMinimumWidth(0)
-        self.setMaximumHeight(16777215)
+        self.setMaximumHeight(16_777_215)
         self.setMinimumHeight(hint.width())
 
     def sizeHint(self):

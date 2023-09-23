@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Linux Show Player
 #
-# Copyright 2012-2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,44 +15,46 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from abc import abstractmethod
+from abc import abstractmethod, ABCMeta
 
-from lisp.core.singleton import ABCSingleton
+from lisp.core.session_uri import SessionURI
+from .media import Media
+from .waveform import Waveform
 
 
-class Backend(metaclass=ABCSingleton):
+class Backend(metaclass=ABCMeta):
     """Common interface that any backend must provide.
 
     An __init__() method can be defined if the backend require initialization.
     """
 
     @abstractmethod
-    def uri_duration(self, uri):
+    def uri_duration(self, uri: SessionURI) -> int:
         """Return the file duration in milliseconds.
 
         :param uri: The URI of the file
-        :type uri: str
-
-        :rtype: int
         """
 
     @abstractmethod
-    def uri_tags(self, uri):
+    def uri_tags(self, uri: SessionURI) -> dict:
         """Return a dictionary containing the file metadata/tags.
 
         :param uri: The URI of the file
-        :type uri: str
-
-        :rtype: dict
         """
 
     @abstractmethod
-    def supported_extensions(self):
+    def supported_extensions(self) -> dict:
         """Return file extensions supported by the backend.
 
         Extensions will be categorized in 'audio' and 'video', optionally the
         backend can create others categories.
         e.g. {'audio': ['wav', 'mp3', ...], 'video': ['mp4', 'mov', ...]}
-
-        :rtype: dict
         """
+
+    def media_waveform(self, media: Media) -> Waveform:
+        """Return a Waveform object capable of loading the waveform of the given media."""
+        return self.uri_waveform(media.input_uri(), media.duration)
+
+    @abstractmethod
+    def uri_waveform(self, uri: SessionURI, duration=None) -> Waveform:
+        """Return a Waveform object capable of loading the waveform of the given uri."""

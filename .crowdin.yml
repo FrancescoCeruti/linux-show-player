@@ -1,0 +1,3 @@
+files:
+  - source: /lisp/i18n/ts/en/*.ts
+    translation: /lisp/i18n/ts/%locale_with_underscore%/%original_file_name%
