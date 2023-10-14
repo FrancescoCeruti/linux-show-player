@@ -54,7 +54,7 @@
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="80"/>
       <source>Command cue ended with an error status. Exit code: {}</source>
-      <translation type="unfinished">Command cue ended with an error status. Exit code: {}</translation>
+      <translation>La commande de cue s'est terminée avec un état d'erreur. Code de sortie : {}</translation>
     </message>
   </context>
   <context>
