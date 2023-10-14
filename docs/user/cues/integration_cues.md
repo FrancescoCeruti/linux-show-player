@@ -11,7 +11,7 @@ This cue allows to send a MIDI message to the output device used by the applicat
 
 ```{image} ../_static/midi_cue_options.png
 :alt: MIDI cue options
-:aling: center
+:align: center
 ```
 
 * **MIDI Message:** Set what type of message to send
@@ -40,7 +40,7 @@ This cue allow to send OSC messages (the output port can be selected in the appl
 
 ```{image} ../_static/osc_cue_options.png
 :alt: OSC cue options
-:aling: center
+:align: center
 ```
 
 * **Path:** the path to send the message to

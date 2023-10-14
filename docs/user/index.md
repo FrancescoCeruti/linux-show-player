@@ -12,9 +12,6 @@ menus
 list_layout
 cart_layout
 cues/index
-gst_media_settings
-gst_custom_elements
-command_cue_examples
 plugins/index
 ```
 
