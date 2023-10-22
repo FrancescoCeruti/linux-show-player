@@ -1,7 +1,7 @@
 {
     "app-id": "org.linux_show_player.LinuxShowPlayer",
     "runtime": "org.kde.Platform",
-    "runtime-version": "5.15-22.08",
+    "runtime-version": "5.15-23.08",
     "sdk": "org.kde.Sdk",
     "command": "linux-show-player",
     "rename-icon": "linuxshowplayer",
@@ -58,6 +58,17 @@
             ]
         },
         {
+            "name": "python-rtmidi",
+            "buildsystem": "meson",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://files.pythonhosted.org/packages/6d/13/57481471e0535151686ce18bb7e74a4884519474408872ffaca7732f9946/python_rtmidi-1.5.6.tar.gz",
+                    "sha256": "b2a0a399bb4a5e1a56477798afd41d022a18b5e954f6d0ff92b45bb99bee3710"
+                }
+            ]
+        },
+        {
             "name": "liblo",
             "config-opts": [
                 "--disable-examples",
@@ -67,8 +78,7 @@
                 {
                     "type": "git",
                     "url": "https://github.com/radarsat1/liblo.git",
-                    "tag": "0.31",
-                    "commit": "840ed69b1d669a1ce587eb592746e3dff6985d76"
+                    "commit": "02989c6c69f54157b8d9651fb8d9ad6de8128d59"
                 }
             ]
         },
@@ -93,11 +103,13 @@
             ],
             "sources": [
                 {
-                    "type": "git",
-                    "url": "https://github.com/google/protobuf",
-                    "tag": "v3.19.1",
-                    "commit": "7c40b2df1fdf6f414c1c18c789715a9c948a0725"
+                    "type": "archive",
+                    "url": "https://github.com/protocolbuffers/protobuf/releases/download/v21.12/protobuf-cpp-3.21.12.tar.gz",
+                    "sha256": "4eab9b524aa5913c6fffb20b2a8abf5ef7f95a80bc0701f3a6dbb4c607f73460"
                 }
+            ],
+            "cleanup": [
+                "/bin"
             ]
         },
         {
@@ -109,8 +121,8 @@
             "sources": [
                 {
                     "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/c1/12/7479ece04931984162698bfaa05cbb2fc23d7f6ee1ab5146cfc6ade56a31/protobuf-3.19.1-py2.py3-none-any.whl",
-                    "sha256": "e813b1c9006b6399308e917ac5d298f345d95bb31f46f02b60cd92970a9afa17"
+                    "url": "https://files.pythonhosted.org/packages/ba/dd/f8a01b146bf45ac12a829bbc599e6590aa6a6849ace7d28c42d77041d6ab/protobuf-4.21.12.tar.gz",
+                    "sha256": "7cd532c4566d0e6feafecc1059d04c7915aec8e182d1cf7adee8b24ef1e2e6ab"
                 }
             ]
         },
@@ -169,8 +181,8 @@
             "sources": [
                 {
                     "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/fc/7d/e1fb5889102e49e7ef7192f155e9409233255ed64594827b81d4e5950335/poetry_core-1.6.1-py3-none-any.whl",
-                    "sha256": "70707340447dee0e7f334f9495ae652481c67b32d8d218f296a376ac2ed73573"
+                    "url": "https://files.pythonhosted.org/packages/bf/d4/ce72ac247f414d15ff046f0926b76eb42bd743e83c1df28e856f328e3db1/poetry_core-1.7.0-py3-none-any.whl",
+                    "sha256": "38e174cdb00a84ee4a1cab66a378b435747f72414f5573bc18cfc3850a94df38"
                 }
             ]
         },
@@ -183,14 +195,13 @@
             "sources": [
                 {
                     "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/ab/c3/57f0601a2d4fe15de7a553c00adbc901425661bf048f2a22dfc500caf121/packaging-23.1-py3-none-any.whl",
-                    "sha256": "994793af429502c4ea2ebf6bf664629d07c1a9fe974af92966e4b8d2df7edc61"
+                    "url": "https://files.pythonhosted.org/packages/ec/1a/610693ac4ee14fcdf2d9bf3c493370e4f2ef7ae2e19217d7a237ff42367d/packaging-23.2-py3-none-any.whl",
+                    "sha256": "8c491190033a9af7e1d931d0b5dacc2ef47509b34dd0de67ed209b5203fc88c7"
                 }
             ]
         },
         "pyqt-modules.json",
         "pygobject-modules.json",
-        "python-rtmidi-modules.json",
         "python-modules.json",
         {
             "name": "linux-show-player",
