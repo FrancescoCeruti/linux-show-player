@@ -174,12 +174,12 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_settings.py" line="54"/>
       <source>Default pipeline</source>
-      <translation type="unfinished">Default pipeline</translation>
+      <translation>Pipeline par défaut</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/gst_settings.py" line="56"/>
       <source>Applied only to new cues.</source>
-      <translation type="unfinished">Applied only to new cues.</translation>
+      <translation>Appliqué uniquement aux nouveaux cues.</translation>
     </message>
   </context>
   <context>
@@ -187,7 +187,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/elements/jack_sink.py" line="136"/>
       <source>An error occurred while disconnecting Jack ports</source>
-      <translation type="unfinished">An error occurred while disconnecting Jack ports</translation>
+      <translation>Une erreur est survenue lors de la déconnexion des ports Jack</translation>
     </message>
   </context>
   <context>
@@ -337,7 +337,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/config/alsa_sink.py" line="25"/>
       <source>ALSA Default Device</source>
-      <translation type="unfinished">ALSA Default Device</translation>
+      <translation>Appareil ALSA par défaut</translation>
     </message>
   </context>
   <context>
