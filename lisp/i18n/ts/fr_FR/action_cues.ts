@@ -169,7 +169,7 @@
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="108"/>
       <source>Edit Collection</source>
-      <translation>Editer la collection</translation>
+      <translation>Éditer la collection</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/stop_all.py" line="43"/>
