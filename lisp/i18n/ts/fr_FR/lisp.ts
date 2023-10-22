@@ -29,7 +29,7 @@
     <message>
       <location filename="../../../ui/about.py" line="52"/>
       <source>Linux Show Player is a cue player designed for stage productions.</source>
-      <translation type="unfinished">Linux Show Player is a cue player designed for stage productions.</translation>
+      <translation>Linux Show Player est un logiciel de lecture de cue pensé la scène.</translation>
     </message>
     <message>
       <location filename="../../../ui/about.py" line="132"/>
@@ -75,7 +75,7 @@
     <message>
       <location filename="../../../ui/settings/app_configuration.py" line="109"/>
       <source>Cannot load configuration page: "{}" ({})</source>
-      <translation type="unfinished">Cannot load configuration page: "{}" ({})</translation>
+      <translation>Impossible de charger la page de configuration : "{}" ({})</translation>
     </message>
   </context>
   <context>
@@ -88,12 +88,12 @@
     <message>
       <location filename="../../../ui/settings/app_pages/general.py" line="107"/>
       <source>Show layout selection at startup</source>
-      <translation type="unfinished">Show layout selection at startup</translation>
+      <translation>Afficher la sélection de mise en page au démarrage</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/general.py" line="110"/>
       <source>Use layout at startup:</source>
-      <translation type="unfinished">Use layout at startup:</translation>
+      <translation>Utiliser la mise en page au démarrage :</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/general.py" line="113"/>
@@ -113,7 +113,7 @@
     <message>
       <location filename="../../../ui/settings/app_pages/general.py" line="119"/>
       <source>Application language (require a restart)</source>
-      <translation type="unfinished">Application language (require a restart)</translation>
+      <translation>Langue de l'application (nécessite un redémarrage)</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/general.py" line="123"/>
@@ -131,12 +131,12 @@
     <message>
       <location filename="../../../application.py" line="241"/>
       <source>Error while reading the session file "{}"</source>
-      <translation type="unfinished">Error while reading the session file "{}"</translation>
+      <translation>Erreur lors de la lecture du fichier de session "{}"</translation>
     </message>
     <message>
       <location filename="../../../application.py" line="230"/>
       <source>Unable to create the cue "{}"</source>
-      <translation type="unfinished">Unable to create the cue "{}"</translation>
+      <translation>Impossible de créer le cue "{}"</translation>
     </message>
   </context>
   <context>
@@ -144,7 +144,7 @@
     <message>
       <location filename="../../../core/loading.py" line="135"/>
       <source>Cannot load python class: "{0}"</source>
-      <translation type="unfinished">Cannot load python class: "{0}"</translation>
+      <translation>Impossible de charger la classe python : "{0}"</translation>
     </message>
   </context>
   <context>
@@ -165,7 +165,7 @@
     <message>
       <location filename="../../../core/configuration.py" line="215"/>
       <source>Configuration read from {}</source>
-      <translation type="unfinished">Configuration read from {}</translation>
+      <translation>Configuration lue depuis {}</translation>
     </message>
     <message>
       <location filename="../../../core/configuration.py" line="225"/>
@@ -310,7 +310,7 @@
     <message>
       <location filename="../../../command/cue.py" line="45"/>
       <source>Cue settings changed: "{}"</source>
-      <translation type="unfinished">Cue settings changed: "{}"</translation>
+      <translation>Paramètres de cues modifiés: "{}"</translation>
     </message>
   </context>
   <context>
@@ -354,22 +354,22 @@
     <message>
       <location filename="../../../ui/settings/app_pages/cue.py" line="64"/>
       <source>Interrupt fade</source>
-      <translation type="unfinished">Interrupt fade</translation>
+      <translation>Interrompre le fondu</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/cue.py" line="66"/>
       <source>Used globally when interrupting cues</source>
-      <translation type="unfinished">Used globally when interrupting cues</translation>
+      <translation>Utilisé globalement lors de l'interruption de cues</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/cue.py" line="72"/>
       <source>Fallback fade settings</source>
-      <translation type="unfinished">Fallback fade settings</translation>
+      <translation>Réglages du fondu de secours</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/cue.py" line="75"/>
       <source>Used for fade-in and fade-out actions, for cues where fade duration is set to 0.</source>
-      <translation type="unfinished">Used for fade-in and fade-out actions, for cues where fade duration is set to 0.</translation>
+      <translation>Utilisé pour les actions de fondu entrant et sortant, pour les repères où la durée du fondu est à 0.</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="113"/>
@@ -643,7 +643,7 @@
     <message>
       <location filename="../../../ui/logging/viewer.py" line="126"/>
       <source>Showing {} of {} records</source>
-      <translation type="unfinished">Showing {} of {} records</translation>
+      <translation>Affichage de {} enregistrements sur {}</translation>
     </message>
   </context>
   <context>
@@ -781,7 +781,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="403"/>
       <source>The current session contains changes that have not been saved.</source>
-      <translation type="unfinished">The current session contains changes that have not been saved.</translation>
+      <translation>La session en cours contient des modifications qui n'ont pas été enregistrées.</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="411"/>
@@ -892,12 +892,12 @@
     <message>
       <location filename="../../../ui/settings/app_pages/plugins.py" line="91"/>
       <source>Plugin</source>
-      <translation type="unfinished">Plugin</translation>
+      <translation>Greffon</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/plugins.py" line="92"/>
       <source>Enabled</source>
-      <translation type="unfinished">Enabled</translation>
+      <translation>Activé</translation>
     </message>
   </context>
   <context>
@@ -905,7 +905,7 @@
     <message>
       <location filename="../../../core/plugin.py" line="117"/>
       <source>Plugin disabled. Enable to use.</source>
-      <translation type="unfinished">Plugin disabled. Enable to use.</translation>
+      <translation>Plugin désactivé. Activer pour l'utiliser.</translation>
     </message>
     <message>
       <location filename="../../../core/plugin.py" line="92"/>
@@ -961,7 +961,7 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/media_cue.py" line="33"/>
       <source>Media Cue</source>
-      <translation type="unfinished">Media Cue</translation>
+      <translation>Cue de média</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="43"/>
