@@ -91,7 +91,7 @@
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="82"/>
       <source>Default behaviors (applied to new sessions)</source>
-      <translation type="unfinished">Default behaviors (applied to new sessions)</translation>
+      <translation>Comportements par défaut (appliqués aux nouvelles sessions)</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="91"/>
