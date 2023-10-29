@@ -27,6 +27,7 @@ class Session(HasInstanceProperties):
     layout = Property(default={})
 
     session_file = Property(default="")
+    """The current session-file path, must be absolute."""
 
     def __init__(self, layout):
         super().__init__()

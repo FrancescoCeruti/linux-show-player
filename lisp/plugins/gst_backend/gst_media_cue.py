@@ -23,8 +23,8 @@ from lisp.plugins.gst_backend.gst_media import GstMedia
 class GstMediaCue(MediaCue):
     media = Property(default=GstMedia.class_defaults())
 
-    def __init__(self, media, id=None, pipeline=None):
-        super().__init__(media, id=id)
+    def __init__(self, app, media, id=None, pipeline=None):
+        super().__init__(app, media, id=id)
 
         if pipeline is not None:
             media.pipe = pipeline
@@ -35,8 +35,8 @@ class GstCueFactory:
         self.base_pipeline = base_pipeline
         self.input = ""
 
-    def __call__(self, id=None):
-        return GstMediaCue(GstMedia(), id=id, pipeline=self.pipeline())
+    def __call__(self, app, id=None):
+        return GstMediaCue(app, GstMedia(), id=id, pipeline=self.pipeline())
 
     def pipeline(self):
         if self.base_pipeline and self.input:
@@ -48,8 +48,8 @@ class UriAudioCueFactory(GstCueFactory):
         super().__init__(base_pipeline)
         self.input = "UriInput"
 
-    def __call__(self, id=None, uri=None):
-        cue = super().__call__(id=id)
+    def __call__(self, app, id=None, uri=None):
+        cue = super().__call__(app, id=id)
 
         if uri is not None:
             try:

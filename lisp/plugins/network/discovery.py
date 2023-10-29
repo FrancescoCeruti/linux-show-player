@@ -23,7 +23,7 @@ from lisp.core.signal import Signal
 
 
 class Announcer(Thread):
-    """Allow other hosts on a network to discover a specific "service" via UPD.
+    """Allow other hosts on a network to discover a specific "service" via UDP.
 
     While this class is called "Announcer" it acts passively, only responding
     to requests, it does not advertise itself on the network.

@@ -24,7 +24,6 @@ from lisp.ui.ui_utils import translate
 
 
 class AudioPanSettings(SettingsPage):
-
     ELEMENT = AudioPan
     Name = ELEMENT.Name
 
@@ -59,17 +58,16 @@ class AudioPanSettings(SettingsPage):
         self.panLabel.setText(translate("AudioPanSettings", "Center"))
 
     def enableCheck(self, enabled):
-        self.panBox.setCheckable(enabled)
-        self.panBox.setChecked(False)
+        self.setGroupEnabled(self.panBox, enabled)
 
     def getSettings(self):
-        if not (self.panBox.isCheckable() and not self.panBox.isChecked()):
+        if self.isGroupEnabled(self.panBox):
             return {"pan": self.panSlider.value() / 10}
 
         return {}
 
     def loadSettings(self, settings):
-        self.panSlider.setValue(settings.get("pan", 0.5) * 10)
+        self.panSlider.setValue(int(settings.get("pan", 0.5) * 10))
 
     def pan_changed(self, value):
         if value < 0:

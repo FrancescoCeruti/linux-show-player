@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2020 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
 
 import os.path
 
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtGui import QCursor
 from PyQt5.QtWidgets import QFileDialog, QApplication
 
@@ -26,9 +26,8 @@ from lisp.backend.backend import Backend as BaseBackend
 from lisp.command.layout import LayoutAutoInsertCuesCommand
 from lisp.core.decorators import memoize
 from lisp.core.plugin import Plugin
-from lisp.cues.cue_factory import CueFactory
 from lisp.cues.media_cue import MediaCue
-from lisp.plugins.gst_backend import elements, settings
+from lisp.plugins.gst_backend import config, elements, settings
 from lisp.plugins.gst_backend.gi_repository import Gst
 from lisp.plugins.gst_backend.gst_media_cue import (
     GstCueFactory,
@@ -49,7 +48,6 @@ from lisp.ui.ui_utils import translate, qfile_filters
 
 
 class GstBackend(Plugin, BaseBackend):
-
     Name = "GStreamer Backend"
     Authors = ("Francesco Ceruti",)
     Description = (
@@ -65,16 +63,21 @@ class GstBackend(Plugin, BaseBackend):
         AppConfigurationDialog.registerSettingsPage(
             "plugins.gst", GstSettings, GstBackend.Config
         )
+        # Register elements' application-level config
+        for name, page in config.load():
+            AppConfigurationDialog.registerSettingsPage(
+                f"plugins.gst.{name}", page, GstBackend.Config
+            )
         # Add MediaCue settings widget to the CueLayout
         CueSettingsRegistry().add(GstMediaSettings, MediaCue)
 
         # Register GstMediaCue factory
-        CueFactory.register_factory("GstMediaCue", GstCueFactory(tuple()))
+        app.cue_factory.register_factory("GstMediaCue", GstCueFactory(tuple()))
         # Add Menu entry
         self.app.window.registerCueMenu(
             translate("GstBackend", "Audio cue (from file)"),
             self._add_uri_audio_cue,
-            category="Media cues",
+            category=QT_TRANSLATE_NOOP("CueCategory", "Media cues"),
             shortcut="CTRL+M",
         )
 
@@ -105,10 +108,13 @@ class GstBackend(Plugin, BaseBackend):
 
         return extensions
 
-    def media_waveform(self, media):
+    def uri_waveform(self, uri, duration=None):
+        if duration is None or duration <= 0:
+            duration = self.uri_duration(uri)
+
         return GstWaveform(
-            media.input_uri(),
-            media.duration,
+            uri,
+            duration,
             cache_dir=self.app.conf.get("cache.position", ""),
         )
 
@@ -154,20 +160,11 @@ class GstBackend(Plugin, BaseBackend):
         # Create media cues, and add them to the Application cue_model
         factory = UriAudioCueFactory(GstBackend.Config["pipeline"])
 
-        # Get the (last) index of the current selection
-        start_index = -1
-        layout_selection = list(self.app.layout.selected_cues())
-        if layout_selection:
-            start_index = layout_selection[-1].index + 1
-
         cues = []
-        for index, file in enumerate(files, start_index):
-            cue = factory(uri=file)
+        for file in files:
+            cue = factory(self.app, uri=file)
             # Use the filename without extension as cue name
             cue.name = os.path.splitext(os.path.basename(file))[0]
-            # Set the index (if something is selected)
-            if start_index != -1:
-                cue.index = index
 
             cues.append(cue)
 

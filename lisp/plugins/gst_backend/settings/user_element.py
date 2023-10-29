@@ -57,14 +57,13 @@ class UserElementSettings(SettingsPage):
         )
 
     def enableCheck(self, enabled):
-        self.groupBox.setCheckable(enabled)
-        self.groupBox.setChecked(False)
+        self.setGroupEnabled(self.groupBox, enabled)
 
     def loadSettings(self, settings):
         self.textEdit.setPlainText(settings.get("bin", ""))
 
     def getSettings(self):
-        if not (self.groupBox.isCheckable() and not self.groupBox.isChecked()):
+        if self.isGroupEnabled(self.groupBox):
             return {"bin": self.textEdit.toPlainText().strip()}
 
         return {}

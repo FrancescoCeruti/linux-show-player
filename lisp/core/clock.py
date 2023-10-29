@@ -23,9 +23,7 @@ from PyQt5.QtCore import QTimer
 class Clock(QTimer):
     """Clock based on Qt.QTimer class.
 
-    The class provide two functions to add and remove
-    callbacks, in this way the clock is running only when
-    there's one, or more, callbacks.
+    The clock is running only when there's one, or more, callbacks.
     """
 
     def __init__(self, timeout):
@@ -53,4 +51,5 @@ class Clock(QTimer):
 
 
 Clock_10 = Clock(10)
+Clock_33 = Clock(33)
 Clock_100 = Clock(100)

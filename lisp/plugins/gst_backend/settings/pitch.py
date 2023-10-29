@@ -65,11 +65,10 @@ class PitchSettings(SettingsPage):
         self.pitch_changed(0)
 
     def enableCheck(self, enabled):
-        self.groupBox.setCheckable(enabled)
-        self.groupBox.setChecked(False)
+        self.setGroupEnabled(self.groupBox, enabled)
 
     def getSettings(self):
-        if not (self.groupBox.isCheckable() and not self.groupBox.isChecked()):
+        if self.isGroupEnabled(self.groupBox):
             return {"pitch": math.pow(2, self.pitchSlider.value() / 12)}
 
         return {}

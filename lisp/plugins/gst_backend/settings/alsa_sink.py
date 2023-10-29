@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2021 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,16 +15,16 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5 import QtCore
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (
     QGroupBox,
-    QHBoxLayout,
     QComboBox,
     QLabel,
     QVBoxLayout,
 )
+from pyalsa import alsacard
 
+from lisp.plugins.gst_backend import GstBackend
 from lisp.plugins.gst_backend.elements.alsa_sink import AlsaSink
 from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.ui_utils import translate
@@ -39,59 +39,62 @@ class AlsaSinkSettings(SettingsPage):
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
-        self.devices = self._discover_pcm_devices()
-        self.devices["default"] = "default"
+        self.devices = {}
+        self.discover_output_pcm_devices()
 
         self.deviceGroup = QGroupBox(self)
-        self.deviceGroup.setTitle(translate("AlsaSinkSettings", "ALSA device"))
         self.deviceGroup.setGeometry(0, 0, self.width(), 100)
-        self.deviceGroup.setLayout(QHBoxLayout())
+        self.deviceGroup.setLayout(QVBoxLayout())
         self.layout().addWidget(self.deviceGroup)
 
-        self.device = QComboBox(self.deviceGroup)
-        self.device.addItems(self.devices.keys())
-        self.device.setCurrentText("default")
-        self.device.setToolTip(
+        self.deviceComboBox = QComboBox(self.deviceGroup)
+        for name, description in self.devices.items():
+            self.deviceComboBox.addItem(description, name)
+
+        self.deviceGroup.layout().addWidget(self.deviceComboBox)
+
+        self.helpLabel = QLabel(self.deviceGroup)
+        self.helpLabel.setWordWrap(True)
+        self.deviceGroup.layout().addWidget(self.helpLabel)
+
+        self.retranslateUi()
+
+    def retranslateUi(self):
+        self.deviceGroup.setTitle(translate("AlsaSinkSettings", "ALSA device"))
+        self.helpLabel.setText(
             translate(
                 "AlsaSinkSettings",
-                "ALSA devices, as defined in an " "asound configuration file",
+                "To make your custom PCM objects appear correctly in this list "
+                "requires adding a 'hint.description' line to them.",
             )
         )
-        self.deviceGroup.layout().addWidget(self.device)
-
-        self.label = QLabel(
-            translate("AlsaSinkSettings", "ALSA device"), self.deviceGroup
-        )
-        self.label.setAlignment(QtCore.Qt.AlignCenter)
-        self.deviceGroup.layout().addWidget(self.label)
 
     def enableCheck(self, enabled):
-        self.deviceGroup.setCheckable(enabled)
-        self.deviceGroup.setChecked(False)
+        self.setGroupEnabled(self.deviceGroup, enabled)
 
     def loadSettings(self, settings):
-        device = settings.get("device", "default")
+        device = settings.get(
+            "device",
+            GstBackend.Config.get("alsa_device", AlsaSink.FALLBACK_DEVICE),
+        )
 
-        for name, dev_name in self.devices.items():
-            if device == dev_name:
-                self.device.setCurrentText(name)
-                break
+        self.deviceComboBox.setCurrentText(
+            self.devices.get(device, self.devices.get(AlsaSink.FALLBACK_DEVICE))
+        )
 
     def getSettings(self):
-        if not (
-            self.deviceGroup.isCheckable() and not self.deviceGroup.isChecked()
-        ):
-            return {"device": self.devices[self.device.currentText()]}
+        if self.isGroupEnabled(self.deviceGroup):
+            return {"device": self.deviceComboBox.currentData()}
 
         return {}
 
-    def _discover_pcm_devices(self):
-        devices = {}
+    def discover_output_pcm_devices(self):
+        self.devices = {}
 
-        with open("/proc/asound/pcm", mode="r") as f:
-            for dev in f.readlines():
-                dev_name = dev[7 : dev.find(":", 7)].strip()
-                dev_code = "hw:" + dev[:5].replace("-", ",")
-                devices[dev_name] = dev_code
-
-        return devices
+        # Get a list of the pcm devices "hints", the result is a combination of
+        # "snd_device_name_hint()" and "snd_device_name_get_hint()"
+        for pcm in alsacard.device_name_hint(-1, "pcm"):
+            ioid = pcm.get("IOID")
+            # Keep only bi-directional and output devices
+            if ioid is None or ioid == "Output":
+                self.devices[pcm["NAME"]] = pcm.get("DESC", pcm["NAME"])

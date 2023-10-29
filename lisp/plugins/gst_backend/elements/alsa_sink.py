@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2021 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,8 +18,10 @@
 from PyQt5.QtCore import QT_TRANSLATE_NOOP
 
 from lisp.backend.media_element import ElementType, MediaType
+from lisp.plugins.gst_backend import GstBackend
 from lisp.plugins.gst_backend.gi_repository import Gst
-from lisp.plugins.gst_backend.gst_element import GstMediaElement, GstProperty
+from lisp.plugins.gst_backend.gst_element import GstMediaElement
+from lisp.plugins.gst_backend.gst_properties import GstProperty
 
 
 class AlsaSink(GstMediaElement):
@@ -27,6 +29,7 @@ class AlsaSink(GstMediaElement):
     MediaType = MediaType.Audio
     Name = QT_TRANSLATE_NOOP("MediaElementName", "ALSA Out")
 
+    FALLBACK_DEVICE = "default"
     device = GstProperty("alsa_sink", "device", default="")
 
     def __init__(self, pipeline):
@@ -34,6 +37,7 @@ class AlsaSink(GstMediaElement):
 
         self.audio_resample = Gst.ElementFactory.make("audioresample", None)
         self.alsa_sink = Gst.ElementFactory.make("alsasink", "sink")
+        self.device = GstBackend.Config.get("alsa_device", self.FALLBACK_DEVICE)
 
         self.pipeline.add(self.audio_resample)
         self.pipeline.add(self.alsa_sink)

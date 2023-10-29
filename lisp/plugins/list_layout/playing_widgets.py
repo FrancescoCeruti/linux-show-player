@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import (
     QWidget,
@@ -74,28 +74,7 @@ class RunningCueWidget(QWidget):
         self.controlButtons = CueControlButtons(parent=self.gridLayoutWidget)
         self.gridLayout.addWidget(self.controlButtons, 1, 0)
 
-        if CueAction.Stop in cue.CueActions:
-            self.controlButtons.stopButton.clicked.connect(self._stop)
-        else:
-            self.controlButtons.stopButton.setEnabled(False)
-        if CueAction.Pause in cue.CueActions:
-            self.controlButtons.pauseButton.clicked.connect(self._pause)
-            self.controlButtons.startButton.clicked.connect(self._resume)
-        else:
-            self.controlButtons.pauseButton.setEnabled(False)
-            self.controlButtons.startButton.setEnabled(False)
-        if CueAction.FadeIn in cue.CueActions:
-            self.controlButtons.fadeInButton.clicked.connect(self._fadein)
-        else:
-            self.controlButtons.fadeInButton.setEnabled(False)
-        if CueAction.FadeOut in cue.CueActions:
-            self.controlButtons.fadeOutButton.clicked.connect(self._fadeout)
-        else:
-            self.controlButtons.fadeOutButton.setEnabled(False)
-        if CueAction.Interrupt in cue.CueActions:
-            self.controlButtons.interruptButton.clicked.connect(self._interrupt)
-        else:
-            self.controlButtons.interruptButton.setEnabled(False)
+        self.setup_control_buttons()
 
         self.timeDisplay = QLCDNumber(self.gridLayoutWidget)
         self.timeDisplay.setStyleSheet("background-color: transparent")
@@ -119,8 +98,41 @@ class RunningCueWidget(QWidget):
         cue.fadeout_start.connect(self.enter_fadeout, Connection.QtQueued)
         cue.fadeout_end.connect(self.exit_fade, Connection.QtQueued)
 
+        if cue.is_fading_in():
+            QTimer.singleShot(0, self.enter_fadein)
+        elif cue.is_fading_out():
+            QTimer.singleShot(0, self.enter_fadeout)
+
     def updateSize(self, width):
-        self.resize(width, width // 3.75)
+        self.resize(width, int(width / 3.75))
+
+    def setup_control_buttons(self):
+        if CueAction.Stop in self.cue.CueActions:
+            self.controlButtons.stopButton.clicked.connect(self._stop)
+        else:
+            self.controlButtons.stopButton.setEnabled(False)
+
+        if CueAction.Pause in self.cue.CueActions:
+            self.controlButtons.pauseButton.clicked.connect(self._pause)
+            self.controlButtons.startButton.clicked.connect(self._resume)
+        else:
+            self.controlButtons.pauseButton.setEnabled(False)
+            self.controlButtons.startButton.setEnabled(False)
+
+        if CueAction.FadeIn in self.cue.CueActions:
+            self.controlButtons.fadeInButton.clicked.connect(self._fadein)
+        else:
+            self.controlButtons.fadeInButton.setEnabled(False)
+
+        if CueAction.FadeOut in self.cue.CueActions:
+            self.controlButtons.fadeOutButton.clicked.connect(self._fadeout)
+        else:
+            self.controlButtons.fadeOutButton.setEnabled(False)
+
+        if CueAction.Interrupt in self.cue.CueActions:
+            self.controlButtons.interruptButton.clicked.connect(self._interrupt)
+        else:
+            self.controlButtons.interruptButton.setEnabled(False)
 
     def enter_fadein(self):
         p = self.timeDisplay.palette()
@@ -179,7 +191,10 @@ class RunningMediaCueWidget(RunningCueWidget):
         super().__init__(cue, config, **kwargs)
         self._dbmeter_element = None
 
-        if config.get("show.waveformSlider", False):
+        if (
+            config.get("show.waveformSlider", False)
+            and cue.media.input_uri() is not None
+        ):
             self.waveform = get_backend().media_waveform(cue.media)
             self.seekSlider = WaveformSlider(
                 self.waveform, parent=self.gridLayoutWidget
@@ -202,7 +217,7 @@ class RunningMediaCueWidget(RunningCueWidget):
         )
 
     def updateSize(self, width):
-        self.resize(width, width // 2.75)
+        self.resize(width, int(width / 2.75))
 
     def set_seek_visible(self, visible):
         if visible and not self.seekSlider.isVisible():

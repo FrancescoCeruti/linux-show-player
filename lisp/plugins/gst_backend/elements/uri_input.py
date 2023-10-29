@@ -25,11 +25,8 @@ from lisp.core.decorators import async_in_pool
 from lisp.core.properties import Property
 from lisp.core.session_uri import SessionURI
 from lisp.plugins.gst_backend.gi_repository import Gst
-from lisp.plugins.gst_backend.gst_element import (
-    GstProperty,
-    GstSrcElement,
-    GstURIProperty,
-)
+from lisp.plugins.gst_backend.gst_element import GstSrcElement
+from lisp.plugins.gst_backend.gst_properties import GstProperty, GstURIProperty
 from lisp.plugins.gst_backend.gst_utils import gst_uri_duration
 
 

@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2022 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -30,7 +30,6 @@ from lisp.application import Application
 from lisp.backend import get_backend
 from lisp.command.model import ModelMoveItemsCommand, ModelInsertItemsCommand
 from lisp.core.util import subdict
-from lisp.cues.cue_factory import CueFactory
 from lisp.plugins.list_layout.list_widgets import (
     CueStatusIcons,
     NameWidget,
@@ -127,7 +126,7 @@ class CueListView(QTreeWidget):
         self.setAlternatingRowColors(True)
         self.setVerticalScrollMode(self.ScrollPerItem)
 
-        # This allow to have some spared space at the end of the scroll-area
+        # This allows to have some spare space at the end of the scroll-area
         self.verticalScrollBar().rangeChanged.connect(self.__updateScrollRange)
         self.currentItemChanged.connect(
             self.__currentItemChanged, Qt.QueuedConnection
@@ -182,7 +181,11 @@ class CueListView(QTreeWidget):
             elif event.proposedAction() == Qt.CopyAction:
                 new_cues = []
                 for row in sorted(rows):
-                    new_cues.append(CueFactory.clone_cue(self._model.item(row)))
+                    new_cues.append(
+                        Application().cue_factory.clone_cue(
+                            self._model.item(row)
+                        )
+                    )
 
                 Application().commands_stack.do(
                     ModelInsertItemsCommand(self._model, to_index, *new_cues)
@@ -288,6 +291,7 @@ class CueListView(QTreeWidget):
 
         self.insertTopLevelItem(cue.index, item)
         self.__setupItemWidgets(item)
+        self.__updateItemStyle(item)
 
         if self.topLevelItemCount() == 1:
             # If it's the only item in the view, set it as current

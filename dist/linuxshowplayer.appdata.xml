@@ -9,27 +9,24 @@
     <update_contact>ceppofrancy@gmail.com</update_contact>
     <description>
         <p>
-            Linux Show Player (or LiSP for short) is a free cue player designed for sound-playback in stage production.
-            The goal of the project is to provide a complete playback software for musical plays,
-            theater shows and similar.
+            Linux Show Player, LiSP for short, is a free cue player, mainly intended for sound-playback in stage productions,
+            the goal is to provide a complete playback software for musical plays, theater shows and similar.
         </p>
-        <p>Some of the features include:</p>
+        <p>Some highlights:</p>
         <ul>
-            <li>Cart layout suited for touchscreens</li>
-            <li>List layout suited for keyboards</li>
+            <li>List layout</li>
+            <li>Cart layout (buttons) for touchscreens</li>
+            <li>Concurrent cues playback</li>
             <li>Pre/Post wait</li>
             <li>Undo/Redo changes</li>
-            <li>Multiple concurrent cue playback</li>
-            <li>Realtime sound effects: equalization, pitch shift, speed control, compression, ...</li>
+            <li>Realtime sound effects: equalization, pitch shift, speed control, compression</li>
             <li>Peak and ReplayGain normalization</li>
-            <li>Remote control over network, between two or more sessions</li>
-            <li>MIDI support</li>
-            <li>OSC support</li>
-            <li>Large media-format support thanks to GStreamer</li>
+            <li>Send/Receive MIDI and OSC messages</li>
+            <li>Large media-format support thanks to Gstreamer</li>
         </ul>
     </description>
-    <url type="homepage">http://linux-show-player.sourceforge.net</url>
+    <url type="homepage">https://www.linux-show-player.org/</url>
     <url type="bugtracker">https://github.com/FrancescoCeruti/linux-show-player/issues</url>
-    <url type="help">http://linux-show-player-users.readthedocs.io/en/latest/index.html</url>
-    <url type="translate">https://github.com/FrancescoCeruti/linux-show-player/wiki/Translations</url>
+    <url type="help">https://linux-show-player-users.readthedocs.io/en/latest/index.html</url>
+    <url type="translate">https://crowdin.com/project/linux-show-player</url>
 </component>

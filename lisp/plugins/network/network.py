@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-import falcon
+from falcon import App
 
 from lisp.core.plugin import Plugin
 from lisp.plugins.network.api import route_all
@@ -30,7 +30,7 @@ class Network(Plugin):
 
     def __init__(self, app):
         super().__init__(app)
-        self.api = falcon.API()
+        self.api = App()
         # We don't support HTTPS (yet?)
         self.api.resp_options.secure_cookies_by_default = False
         # Load all the api endpoints

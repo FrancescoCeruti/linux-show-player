@@ -240,7 +240,7 @@ class RenameUi(QDialog):
                 "In the second line, you can use standard Python Regexes "
                 "to match expressions in the original cues names. Use "
                 "parenthesis to capture parts of the matched expression.\n\n"
-                "Exemple: \n^[a-z]([0-9]+) will find a lower case character"
+                "Example: \n^[a-z]([0-9]+) will find a lower case character"
                 "([a-z]), followed by one or more number.\n"
                 "Only the numbers are between parenthesis and will be usable with "
                 "$0 in the first line.\n\n"

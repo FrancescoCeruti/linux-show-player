@@ -122,7 +122,7 @@ class MultiMessagesBox(QDialog):
 
             self.detailsText.setText(details)
 
-            width = (
+            width = int(
                 self.detailsText.document().idealWidth()
                 + self.detailsText.contentsMargins().left() * 2
             )

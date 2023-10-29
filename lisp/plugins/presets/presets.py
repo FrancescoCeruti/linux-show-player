@@ -45,7 +45,6 @@ from lisp.ui.ui_utils import translate
 
 
 class Presets(Plugin):
-
     Name = "Preset"
     Authors = ("Francesco Ceruti",)
     Description = "Allow to save, edit, import and export cue presets"
@@ -71,9 +70,9 @@ class Presets(Plugin):
         )
         self.cueActionsGroup.add(
             SimpleMenuAction(
-                translate("Presets", "Load on cue"),
+                translate("Presets", "Apply to cue"),
                 self.__load_on_cue,
-                translate("Presets", "Load on selected cues"),
+                translate("Presets", "Apply to selected cues"),
                 self.__load_on_cues,
             ),
             SimpleMenuAction(

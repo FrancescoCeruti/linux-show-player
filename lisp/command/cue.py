@@ -22,7 +22,6 @@ from lisp.ui.ui_utils import translate
 
 
 class UpdateCueCommand(Command):
-
     __slots__ = ("__cue", "__new", "__old")
 
     def __init__(self, properties, cue):
@@ -49,7 +48,6 @@ class UpdateCueCommand(Command):
 
 
 class UpdateCuesCommand(Command):
-
     __slots__ = ("__cues", "__new", "__old")
 
     def __init__(self, properties, cues):

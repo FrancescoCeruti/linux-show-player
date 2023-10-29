@@ -70,11 +70,15 @@ class Waveform(metaclass=ABCMeta):
         file_path = self._uri.absolute_path
         if not self._hash or refresh:
             self._hash = file_hash(
-                file_path, digest_size=16, person=self.CACHE_VERSION.encode(),
+                file_path,
+                digest_size=16,
+                person=self.CACHE_VERSION.encode(),
             )
 
         return path.join(
-            path.dirname(file_path), self._cache_dir, self._hash + ".waveform",
+            path.dirname(file_path),
+            self._cache_dir,
+            self._hash + ".waveform",
         )
 
     def load_waveform(self):
@@ -137,7 +141,11 @@ class Waveform(metaclass=ABCMeta):
 
                 with open(cache_path, "wb") as cache_file:
                     pickle.dump(
-                        (self.peak_samples, self.rms_samples,), cache_file,
+                        (
+                            self.peak_samples,
+                            self.rms_samples,
+                        ),
+                        cache_file,
                     )
 
                 logger.debug(f"Dumped waveform to the cache: {cache_path}")

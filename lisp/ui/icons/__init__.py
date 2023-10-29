@@ -17,6 +17,7 @@
 
 import glob
 import os
+from typing import Union
 
 from PyQt5.QtGui import QIcon
 
@@ -46,7 +47,7 @@ class IconTheme:
         yield from self._lookup_dirs
 
     @staticmethod
-    def get(icon_name):
+    def get(icon_name) -> Union[QIcon, None]:
         icon = IconTheme._GlobalCache.get(icon_name, None)
 
         if icon is None:

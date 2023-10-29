@@ -16,7 +16,9 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from enum import Enum
+from typing import Optional
 
+from lisp.core.fader import BaseFader
 from lisp.core.has_properties import HasProperties
 
 
@@ -45,3 +47,7 @@ class MediaElement(HasProperties):
     ElementType = None
     MediaType = None
     Name = "Undefined"
+
+    def get_fader(self, property_name: str) -> Optional[BaseFader]:
+        """Get the appropriate fader object for the given property."""
+        return None

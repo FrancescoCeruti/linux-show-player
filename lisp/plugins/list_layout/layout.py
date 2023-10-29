@@ -24,7 +24,6 @@ from lisp.core.configuration import DummyConfiguration
 from lisp.core.properties import ProxyProperty
 from lisp.core.signal import Connection
 from lisp.cues.cue import Cue, CueAction, CueNextAction
-from lisp.cues.cue_factory import CueFactory
 from lisp.layout.cue_layout import CueLayout
 from lisp.layout.cue_menu import (
     SimpleMenuAction,
@@ -407,7 +406,7 @@ class ListLayout(CueLayout):
 
     def _clone_cues(self, cues):
         for pos, cue in enumerate(cues, cues[-1].index + 1):
-            clone = CueFactory.clone_cue(cue)
+            clone = self.app.cue_factory.clone_cue(cue)
             clone.name = translate("ListLayout", "Copy of {}").format(
                 clone.name
             )

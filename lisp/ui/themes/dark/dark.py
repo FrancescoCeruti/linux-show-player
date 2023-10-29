@@ -29,11 +29,33 @@ class Dark:
     QssPath = os.path.join(os.path.dirname(__file__), "theme.qss")
 
     def apply(self, qt_app):
+        background = QColor(30, 30, 30)
+        foreground = QColor(52, 52, 52)
+        text = QColor(230, 230, 230)
+        highlight = QColor(65, 155, 230)
+
+        palette = qt_app.palette()
+        palette.setColor(QPalette.Window, foreground)
+        palette.setColor(QPalette.WindowText, text)
+        palette.setColor(QPalette.Base, background)
+        palette.setColor(QPalette.AlternateBase, foreground.darker(125))
+        palette.setColor(QPalette.ToolTipBase, foreground)
+        palette.setColor(QPalette.ToolTipText, text)
+        palette.setColor(QPalette.Text, text)
+        palette.setColor(QPalette.Button, foreground)
+        palette.setColor(QPalette.ButtonText, text)
+        palette.setColor(QPalette.BrightText, QColor(255, 0, 0))
+        palette.setColor(QPalette.Link, highlight)
+
+        palette.setColor(QPalette.Light, foreground.lighter(160))
+        palette.setColor(QPalette.Midlight, foreground.lighter(125))
+        palette.setColor(QPalette.Dark, foreground.darker(150))
+        palette.setColor(QPalette.Mid, foreground.darker(125))
+
+        palette.setColor(QPalette.Highlight, highlight)
+        palette.setColor(QPalette.HighlightedText, QColor(0, 0, 0))
+
+        qt_app.setPalette(palette)
+
         with open(Dark.QssPath, mode="r", encoding="utf-8") as f:
             qt_app.setStyleSheet(f.read())
-
-        # Change link color
-        palette = qt_app.palette()
-        palette.setColor(QPalette.Link, QColor(65, 155, 230))
-        palette.setColor(QPalette.LinkVisited, QColor(43, 103, 153))
-        qt_app.setPalette(palette)

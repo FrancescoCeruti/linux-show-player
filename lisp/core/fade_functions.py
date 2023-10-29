@@ -36,7 +36,7 @@ def fade_linear(t, a, b):
 
 def fadein_quad(t, a, b):
     """Quadratic (t^2) fade in: accelerating from zero velocity."""
-    return a * (t ** 2) + b
+    return a * (t**2) + b
 
 
 def fadeout_quad(t, a, b):
@@ -50,7 +50,7 @@ def fade_inout_quad(t, a, b):
     """
     t *= 2
     if t < 1.0:
-        return 0.5 * a * (t ** 2) + b
+        return 0.5 * a * (t**2) + b
     else:
         t -= 1
         return 0.5 * a * (1 - (t * (t - 2))) + b

@@ -80,8 +80,7 @@ class KeyboardSettings(SettingsPage):
         self.removeButton.setText(translate("ControllerSettings", "Remove"))
 
     def enableCheck(self, enabled):
-        self.keyGroup.setCheckable(enabled)
-        self.keyGroup.setChecked(False)
+        self.setGroupEnabled(self.keyGroup, enabled)
 
     def getSettings(self):
         return {"keyboard": self.keyboardModel.rows}

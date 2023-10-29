@@ -110,22 +110,18 @@ class AudioDynamicSettings(SettingsPage):
         )
 
     def enableCheck(self, enabled):
-        self.groupBox.setCheckable(enabled)
-        self.groupBox.setChecked(False)
+        self.setGroupEnabled(self.groupBox, enabled)
 
     def getSettings(self):
-        settings = {}
+        if self.isGroupEnabled(self.groupBox):
+            return {
+                "ratio": self.ratioSpin.value(),
+                "threshold": math.pow(10, self.thresholdSpin.value() / 20),
+                "mode": self.modeComboBox.currentData(),
+                "characteristics": self.chComboBox.currentData(),
+            }
 
-        if not (self.groupBox.isCheckable() and not self.groupBox.isChecked()):
-            settings["ratio"] = self.ratioSpin.value()
-            settings["threshold"] = math.pow(
-                10, self.thresholdSpin.value() / 20
-            )
-
-            settings["mode"] = self.modeComboBox.currentData()
-            settings["characteristics"] = self.chComboBox.currentData()
-
-        return settings
+        return {}
 
     def loadSettings(self, settings):
         self.modeComboBox.setCurrentText(

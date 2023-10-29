@@ -37,7 +37,6 @@ class CueAppSettings(SettingsPage):
         self.layout().addWidget(self.interruptGroup)
 
         self.interruptHelpText = QLabel(self.interruptGroup)
-        self.interruptHelpText.setWordWrap(True)
         self.interruptGroup.layout().addWidget(self.interruptHelpText)
 
         self.interruptFadeEdit = FadeEdit(self.interruptGroup)
@@ -52,10 +51,6 @@ class CueAppSettings(SettingsPage):
         self.layout().addWidget(self.fadeActionsDefaultsGroup)
 
         self.fadeActionDefaultsHelpText = QLabel(self.fadeActionsDefaultsGroup)
-        self.fadeActionDefaultsHelpText.setAlignment(Qt.AlignCenter)
-        font = self.fadeActionDefaultsHelpText.font()
-        font.setPointSizeF(font.pointSizeF() * 0.9)
-        self.fadeActionDefaultsHelpText.setFont(font)
         self.fadeActionsDefaultsGroup.layout().addWidget(
             self.fadeActionDefaultsHelpText
         )
@@ -66,20 +61,21 @@ class CueAppSettings(SettingsPage):
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.interruptGroup.setTitle(
-            translate("CueSettings", "Interrupt action fade")
-        )
+        self.interruptGroup.setTitle(translate("CueSettings", "Interrupt fade"))
         self.interruptHelpText.setText(
-            translate("CueSettings", "Used globally when interrupting cues",)
+            translate(
+                "CueSettings",
+                "Used globally when interrupting cues",
+            )
         )
         self.fadeActionsDefaultsGroup.setTitle(
-            translate("CueSettings", "Fade actions default value")
+            translate("CueSettings", "Fallback fade settings")
         )
         self.fadeActionDefaultsHelpText.setText(
             translate(
                 "CueSettings",
-                "Used for fade-in and fade-out actions, by cues where fade "
-                "duration is 0.",
+                "Used for fade-in and fade-out actions, for cues where fade "
+                "duration is set to 0.",
             )
         )
 

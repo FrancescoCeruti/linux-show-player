@@ -43,8 +43,8 @@ class IndexActionCue(Cue):
     relative = Property(default=True)
     action = Property(default=CueAction.Stop.value)
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.name = translate("CueName", self.Name)
 
     def __start__(self, fade=False):
@@ -54,7 +54,7 @@ class IndexActionCue(Cue):
             index = self.target_index
 
         try:
-            cue = Application().layout.cue_at(index)
+            cue = self.app.layout.cue_at(index)
             if cue is not self:
                 cue.execute(CueAction(self.action))
         except IndexError:
@@ -132,23 +132,19 @@ class IndexActionCueSettings(SettingsPage):
         )
 
     def enableCheck(self, enabled):
-        self.indexGroup.setChecked(enabled)
-        self.indexGroup.setChecked(False)
-
-        self.actionGroup.setCheckable(enabled)
-        self.actionGroup.setChecked(False)
+        self.setGroupEnabled(self.indexGroup, enabled)
+        self.setGroupEnabled(self.actionGroup, enabled)
 
     def getSettings(self):
-        conf = {}
-        checkable = self.actionGroup.isCheckable()
+        settings = {}
 
-        if not (checkable and not self.indexGroup.isChecked()):
-            conf["relative"] = self.relativeCheck.isChecked()
-            conf["target_index"] = self.targetIndexSpin.value()
-        if not (checkable and not self.actionGroup.isChecked()):
-            conf["action"] = self.actionCombo.currentData()
+        if self.isGroupEnabled(self.indexGroup):
+            settings["relative"] = self.relativeCheck.isChecked()
+            settings["target_index"] = self.targetIndexSpin.value()
+        if self.isGroupEnabled(self.actionGroup):
+            settings["action"] = self.actionCombo.currentData()
 
-        return conf
+        return settings
 
     def loadSettings(self, settings):
         self._cue_index = settings.get("index", -1)

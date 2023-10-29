@@ -72,7 +72,11 @@ class CueSelectDialog(QDialog):
         item.setTextAlignment(0, Qt.AlignCenter)
 
         for n, prop in enumerate(self._properties):
-            item.setData(n, Qt.DisplayRole, getattr(cue, prop, "Undefined"))
+            value = getattr(cue, prop, "Undefined")
+            if prop == "index" and isinstance(value, int):
+                value += 1
+
+            item.setData(n, Qt.DisplayRole, value)
 
         self._cues[cue] = item
         item.setData(0, Qt.UserRole, cue)

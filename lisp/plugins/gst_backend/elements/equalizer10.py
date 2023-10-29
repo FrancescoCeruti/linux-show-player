@@ -19,7 +19,8 @@ from PyQt5.QtCore import QT_TRANSLATE_NOOP
 
 from lisp.backend.media_element import ElementType, MediaType
 from lisp.plugins.gst_backend.gi_repository import Gst
-from lisp.plugins.gst_backend.gst_element import GstMediaElement, GstProperty
+from lisp.plugins.gst_backend.gst_element import GstMediaElement
+from lisp.plugins.gst_backend.gst_properties import GstProperty
 
 
 class Equalizer10(GstMediaElement):

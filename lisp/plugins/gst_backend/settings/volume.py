@@ -19,10 +19,10 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (
     QGroupBox,
     QHBoxLayout,
-    QSlider,
     QLabel,
     QCheckBox,
     QVBoxLayout,
+    QDoubleSpinBox,
 )
 
 from lisp.backend.audio_utils import db_to_linear, linear_to_db
@@ -41,82 +41,81 @@ class VolumeSettings(SettingsPage):
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
-        self.normal = 1
+        self.normalizedVolume = 1
 
-        self.volumeBox = QGroupBox(self)
-        self.volumeBox.setLayout(QHBoxLayout())
-        self.layout().addWidget(self.volumeBox)
+        self.volumeGroup = QGroupBox(self)
+        self.volumeGroup.setLayout(QHBoxLayout())
+        self.layout().addWidget(self.volumeGroup)
 
-        self.muteButton = QMuteButton(self.volumeBox)
-        self.volumeBox.layout().addWidget(self.muteButton)
+        self.muteButton = QMuteButton(self.volumeGroup)
+        self.volumeGroup.layout().addWidget(self.muteButton)
 
-        self.volume = QSlider(self.volumeBox)
-        self.volume.setRange(-1000, 100)
-        self.volume.setPageStep(1)
-        self.volume.setOrientation(Qt.Horizontal)
-        self.volume.valueChanged.connect(self.volume_changed)
-        self.volumeBox.layout().addWidget(self.volume)
+        self.volumeSpinBox = QDoubleSpinBox(self.volumeGroup)
+        self.volumeSpinBox.setRange(-100, 10)
+        self.volumeSpinBox.setSuffix(" dB")
+        self.volumeGroup.layout().addWidget(self.volumeSpinBox)
 
-        self.volumeLabel = QLabel(self.volumeBox)
+        # Resize the mute-button align with the adjacent input
+        self.muteButton.setFixedHeight(self.volumeSpinBox.height())
+
+        self.volumeLabel = QLabel(self.volumeGroup)
         self.volumeLabel.setAlignment(Qt.AlignCenter)
-        self.volumeBox.layout().addWidget(self.volumeLabel)
+        self.volumeGroup.layout().addWidget(self.volumeLabel)
 
-        self.volumeBox.layout().setStretch(0, 1)
-        self.volumeBox.layout().setStretch(1, 4)
-        self.volumeBox.layout().setStretch(2, 1)
+        self.volumeGroup.layout().setStretch(0, 1)
+        self.volumeGroup.layout().setStretch(1, 3)
+        self.volumeGroup.layout().setStretch(2, 4)
 
-        self.normalBox = QGroupBox(self)
-        self.normalBox.setLayout(QHBoxLayout())
-        self.layout().addWidget(self.normalBox)
+        self.normalizedGroup = QGroupBox(self)
+        self.normalizedGroup.setLayout(QHBoxLayout())
+        self.layout().addWidget(self.normalizedGroup)
 
-        self.normalLabel = QLabel(self.normalBox)
-        self.normalLabel.setAlignment(Qt.AlignCenter)
-        self.normalBox.layout().addWidget(self.normalLabel)
+        self.normalizedLabel = QLabel(self.normalizedGroup)
+        self.normalizedLabel.setAlignment(Qt.AlignCenter)
+        self.normalizedGroup.layout().addWidget(self.normalizedLabel)
 
-        self.normalReset = QCheckBox(self.normalBox)
-        self.normalBox.layout().addWidget(self.normalReset)
-        self.normalBox.layout().setAlignment(self.normalReset, Qt.AlignCenter)
+        self.normalizedReset = QCheckBox(self.normalizedGroup)
+        self.normalizedGroup.layout().addWidget(self.normalizedReset)
+        self.normalizedGroup.layout().setAlignment(
+            self.normalizedReset, Qt.AlignCenter
+        )
 
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.volumeBox.setTitle(translate("VolumeSettings", "Volume"))
-        self.volumeLabel.setText("0.0 dB")
-        self.normalBox.setTitle(
+        self.volumeGroup.setTitle(translate("VolumeSettings", "Volume"))
+        self.volumeLabel.setText(translate("VolumeSettings", "Volume"))
+        self.normalizedGroup.setTitle(
             translate("VolumeSettings", "Normalized volume")
         )
-        self.normalLabel.setText("0.0 dB")
-        self.normalReset.setText(translate("VolumeSettings", "Reset"))
+        self.normalizedLabel.setText("0.0 dB")
+        self.normalizedReset.setText(translate("VolumeSettings", "Reset"))
 
     def enableCheck(self, enabled):
-        for box in [self.normalBox, self.volumeBox]:
-            box.setCheckable(enabled)
-            box.setChecked(False)
+        self.setGroupEnabled(self.normalizedGroup, enabled)
+        self.setGroupEnabled(self.volumeGroup, enabled)
 
     def getSettings(self):
         settings = {}
-        checkable = self.volumeBox.isCheckable()
 
-        if not (checkable and not self.volumeBox.isChecked()):
-            settings["volume"] = db_to_linear(self.volume.value() / 10)
+        if self.isGroupEnabled(self.volumeGroup):
+            settings["volume"] = db_to_linear(self.volumeSpinBox.value())
             settings["mute"] = self.muteButton.isMute()
-        if not (checkable and not self.normalBox.isChecked()):
-            if self.normalReset.isChecked():
+        if self.isGroupEnabled(self.normalizedGroup):
+            if self.normalizedReset.isChecked():
                 settings["normal_volume"] = 1
                 # If the apply button is pressed, show the correct value
-                self.normalLabel.setText("0 dB")
+                self.normalizedLabel.setText("0 dB")
             else:
-                settings["normal_volume"] = self.normal
+                settings["normal_volume"] = self.normalizedVolume
 
         return settings
 
     def loadSettings(self, settings):
-        self.volume.setValue(linear_to_db(settings.get("volume", 1)) * 10)
+        self.volumeSpinBox.setValue(linear_to_db(settings.get("volume", 1)))
         self.muteButton.setMute(settings.get("mute", False))
-        self.normal = settings.get("normal_volume", 1)
-        self.normalLabel.setText(
-            str(round(linear_to_db(self.normal), 3)) + " dB"
-        )
 
-    def volume_changed(self, value):
-        self.volumeLabel.setText(str(value / 10.0) + " dB")
+        self.normalizedVolume = settings.get("normal_volume", 1)
+        self.normalizedLabel.setText(
+            f"{linear_to_db(self.normalizedVolume):.3f} dB"
+        )

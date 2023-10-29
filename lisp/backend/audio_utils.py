@@ -69,7 +69,7 @@ def slider_to_fader(value):
     elif value < 0.0:
         value = 0
 
-    return 3.162_277_66 * (value ** 3.7)
+    return 3.162_277_66 * (value**3.7)
 
 
 def python_duration(path, sound_module):

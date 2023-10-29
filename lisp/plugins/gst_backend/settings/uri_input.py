@@ -96,11 +96,9 @@ class UriInputSettings(SettingsPage):
     def getSettings(self):
         settings = {}
 
-        checkable = self.fileGroup.isCheckable()
-
-        if not (checkable and not self.fileGroup.isChecked()):
+        if self.isGroupEnabled(self.fileGroup):
             settings["uri"] = self.filePath.text()
-        if not (checkable and not self.bufferingGroup.isChecked()):
+        if self.isGroupEnabled(self.bufferingGroup):
             settings["use_buffering"] = self.useBuffering.isChecked()
             settings["download"] = self.download.isChecked()
             settings["buffer_size"] = self.bufferSize.value()
@@ -114,8 +112,7 @@ class UriInputSettings(SettingsPage):
         self.bufferSize.setValue(settings.get("buffer_size", -1))
 
     def enableCheck(self, enabled):
-        self.fileGroup.setCheckable(enabled)
-        self.fileGroup.setChecked(False)
+        self.setGroupEnabled(self.fileGroup, enabled)
 
     def select_file(self):
         directory = ""
@@ -126,7 +123,7 @@ class UriInputSettings(SettingsPage):
         if not os.path.exists(directory):
             directory = GstBackend.Config.get("mediaLookupDir", "")
         if not os.path.exists(directory):
-            directory = self.app.session.dir()
+            directory = Application().session.dir()
 
         path, _ = QFileDialog.getOpenFileName(
             self,

@@ -37,7 +37,8 @@ from PyQt5.QtWidgets import (
     QSpacerItem,
 )
 
-from lisp.plugins import get_plugin, PluginNotLoadedError
+from lisp.plugins import get_plugin
+from lisp.core.plugin import PluginNotLoadedError
 from lisp.plugins.controller.common import LayoutAction, tr_layout_action
 from lisp.plugins.controller.protocol import Protocol
 from lisp.plugins.osc.osc_delegate import OscArgumentDelegate
@@ -99,7 +100,12 @@ class OscMessageDialog(QDialog):
 
     def retranslateUi(self):
         self.setWindowTitle(translate("ControllerOscSettings", "OSC Message"))
-        self.pathLabel.setText(translate("ControllerOscSettings", "OSC Path:",))
+        self.pathLabel.setText(
+            translate(
+                "ControllerOscSettings",
+                "OSC Path:",
+            )
+        )
         self.pathEdit.setPlaceholderText(
             translate("ControllerOscSettings", "/path/to/method")
         )
@@ -289,8 +295,7 @@ class OscSettings(SettingsPage):
         self.oscCapture.setText(translate("ControllerOscSettings", "Capture"))
 
     def enableCheck(self, enabled):
-        self.oscGroup.setCheckable(enabled)
-        self.oscGroup.setChecked(False)
+        self.setGroupEnabled(self.oscGroup, enabled)
 
     def getSettings(self):
         entries = []

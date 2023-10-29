@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import QTime, Qt
+from PyQt5.QtCore import QTime, Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import (
     QGroupBox,
     QHBoxLayout,
@@ -30,7 +30,7 @@ from lisp.ui.ui_utils import translate
 
 
 class MediaCueSettings(SettingsPage):
-    Name = "Media-Cue"
+    Name = QT_TRANSLATE_NOOP("SettingsPageName", "Media Cue")
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -96,28 +96,22 @@ class MediaCueSettings(SettingsPage):
 
     def getSettings(self):
         settings = {}
-        checkable = self.startGroup.isCheckable()
 
-        if not (checkable and not self.startGroup.isChecked()):
+        if self.isGroupEnabled(self.startGroup):
             time = self.startEdit.time().msecsSinceStartOfDay()
             settings["start_time"] = time
-        if not (checkable and not self.stopGroup.isChecked()):
+        if self.isGroupEnabled(self.stopGroup):
             time = self.stopEdit.time().msecsSinceStartOfDay()
             settings["stop_time"] = time
-        if not (checkable and not self.loopGroup.isChecked()):
+        if self.isGroupEnabled(self.loopGroup):
             settings["loop"] = self.spinLoop.value()
 
         return {"media": settings}
 
     def enableCheck(self, enabled):
-        self.startGroup.setCheckable(enabled)
-        self.startGroup.setChecked(False)
-
-        self.stopGroup.setCheckable(enabled)
-        self.stopGroup.setChecked(False)
-
-        self.loopGroup.setCheckable(enabled)
-        self.loopGroup.setChecked(False)
+        self.setGroupEnabled(self.startGroup, enabled)
+        self.setGroupEnabled(self.stopGroup, enabled)
+        self.setGroupEnabled(self.loopGroup, enabled)
 
     def loadSettings(self, settings):
         settings = settings.get("media", {})

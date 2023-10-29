@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2019 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2022 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -40,7 +40,6 @@ from PyQt5.QtWidgets import (
 
 from lisp.command.layout import LayoutAutoInsertCuesCommand
 from lisp.core.singleton import QSingleton
-from lisp.cues.cue_factory import CueFactory
 from lisp.cues.media_cue import MediaCue
 from lisp.ui.about import About
 from lisp.ui.logging.dialog import LogDialogs
@@ -77,6 +76,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         # Session change
         self._app.session_created.connect(self.__sessionCreated)
         self._app.session_before_finalize.connect(self.__beforeSessionFinalize)
+        self._app.session_loaded.connect(self.updateWindowTitle)
 
         # Changes
         self._app.commands_stack.done.connect(self.updateWindowTitle)
@@ -329,15 +329,16 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         self._app.session.layout.view.setParent(None)
 
     def __sessionCreated(self):
-        self._app.session.layout.view.show()
         self.centralWidget().layout().addWidget(self._app.session.layout.view)
+        self._app.session.layout.view.show()
+        self.updateWindowTitle()
 
     def __simpleCueInsert(self, cueClass):
         try:
             self._app.commands_stack.do(
                 LayoutAutoInsertCuesCommand(
                     self._app.session.layout,
-                    CueFactory.create_cue(cueClass.__name__),
+                    self._app.cue_factory.create_cue(cueClass.__name__),
                 )
             )
         except Exception:

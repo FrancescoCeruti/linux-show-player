@@ -16,7 +16,7 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import QModelIndex, Qt
-from PyQt5.QtWidgets import QWidget, QTabWidget, QVBoxLayout
+from PyQt5.QtWidgets import QWidget, QTabWidget, QVBoxLayout, QGroupBox
 
 from lisp.core.util import dict_merge
 from lisp.ui.ui_utils import translate
@@ -53,6 +53,15 @@ class SettingsPage(QWidget):
         :param enabled: if True enable checks
         :type enabled: bool
         """
+
+    @staticmethod
+    def setGroupEnabled(group: QGroupBox, enabled: bool):
+        group.setCheckable(enabled)
+        group.setChecked(False)
+
+    @staticmethod
+    def isGroupEnabled(group: QGroupBox):
+        return not (group.isCheckable() and not group.isChecked())
 
 
 class CuePageMixin:

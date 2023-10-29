@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2017 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2022 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,7 +14,6 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
-import time
 
 from PyQt5.QtCore import QRect, Qt, QSize
 from PyQt5.QtGui import (
@@ -127,7 +126,7 @@ class CueStatusIcons(QWidget):
             path.lineTo(0, indicator_height - 1)
             path.lineTo(indicator_width // 3, indicator_height - 1)
             path.lineTo(indicator_width, indicator_width)
-            path.lineTo(indicator_width // 3, 0)
+            path.lineTo(indicator_width // 3, 1)
             path.lineTo(0, 1)
 
             qp.setPen(QPen(QBrush(QColor(0, 0, 0)), 2))
@@ -201,8 +200,8 @@ class TimeWidget(QProgressBar):
             self.setEnabled(duration > 0)
             self.setTextVisible(True)
             self.setFormat(strtime(duration, accurate=self.accurateTime))
-            # Avoid settings min and max to 0, or the the bar go in busy state
-            self.setRange(0 if duration > 0 else -1, duration)
+            # Avoid settings min and max to 0, or the bar go in busy state
+            self.setRange(0 if duration > 0 else -1, int(duration))
         else:
             self.setTextVisible(False)
 

@@ -16,6 +16,7 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
+from PyQt5.QtGui import QFontDatabase
 from PyQt5.QtWidgets import (
     QVBoxLayout,
     QGroupBox,
@@ -51,7 +52,11 @@ class Appearance(SettingsPage):
         self.cueDescriptionGroup.setLayout(QHBoxLayout())
         self.layout().addWidget(self.cueDescriptionGroup)
 
-        self.cueDescriptionEdit = QTextEdit(self.cueNameGroup)
+        self.cueDescriptionEdit = QTextEdit(self.cueDescriptionGroup)
+        self.cueDescriptionEdit.setAcceptRichText(False)
+        self.cueDescriptionEdit.setFont(
+            QFontDatabase.systemFont(QFontDatabase.FixedFont)
+        )
         self.cueDescriptionGroup.layout().addWidget(self.cueDescriptionEdit)
 
         # Font
@@ -107,33 +112,25 @@ class Appearance(SettingsPage):
         )
 
     def enableCheck(self, enabled):
-        self.cueNameGroup.setCheckable(enabled)
-        self.cueNameGroup.setChecked(False)
-
-        self.cueDescriptionGroup.setChecked(enabled)
-        self.cueDescriptionGroup.setChecked(False)
-
-        self.fontSizeGroup.setCheckable(enabled)
-        self.fontSizeGroup.setChecked(False)
-
-        self.colorGroup.setCheckable(enabled)
-        self.colorGroup.setChecked(False)
+        self.setGroupEnabled(self.cueNameGroup, enabled)
+        self.setGroupEnabled(self.cueDescriptionGroup, enabled)
+        self.setGroupEnabled(self.fontSizeGroup, enabled)
+        self.setGroupEnabled(self.colorGroup, enabled)
 
     def getSettings(self):
         settings = {}
         style = {}
-        checkable = self.cueNameGroup.isCheckable()
 
-        if not (checkable and not self.cueNameGroup.isChecked()):
+        if self.isGroupEnabled(self.cueNameGroup):
             settings["name"] = self.cueNameEdit.text()
-        if not (checkable and not self.cueDescriptionGroup.isChecked()):
+        if self.isGroupEnabled(self.cueDescriptionGroup):
             settings["description"] = self.cueDescriptionEdit.toPlainText()
-        if not (checkable and not self.colorGroup.isChecked()):
+        if self.isGroupEnabled(self.colorGroup):
             if self.colorBButton.color() is not None:
                 style["background"] = self.colorBButton.color()
             if self.colorFButton.color() is not None:
                 style["color"] = self.colorFButton.color()
-        if not (checkable and not self.fontSizeGroup.isChecked()):
+        if self.isGroupEnabled(self.fontSizeGroup):
             style["font-size"] = str(self.fontSizeSpin.value()) + "pt"
 
         if style:
@@ -145,7 +142,7 @@ class Appearance(SettingsPage):
         if "name" in settings:
             self.cueNameEdit.setText(settings["name"])
         if "description" in settings:
-            self.cueDescriptionEdit.setText(settings["description"])
+            self.cueDescriptionEdit.setPlainText(settings["description"])
         if "stylesheet" in settings:
             settings = css_to_dict(settings["stylesheet"])
             if "background" in settings:

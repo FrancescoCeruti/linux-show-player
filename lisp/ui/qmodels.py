@@ -25,7 +25,7 @@ CueClassRole = Qt.UserRole + 1
 
 
 class SimpleTableModel(QAbstractTableModel):
-    """ Simple implementation of a QAbstractTableModel
+    """Simple implementation of a QAbstractTableModel
 
     .. warning::
         Currently this is a partial implementation of a complete R/W Qt model

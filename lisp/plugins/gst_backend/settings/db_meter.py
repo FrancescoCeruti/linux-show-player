@@ -32,7 +32,6 @@ from lisp.ui.ui_utils import translate
 
 
 class DbMeterSettings(SettingsPage):
-
     ELEMENT = DbMeter
     Name = ELEMENT.Name
 
@@ -91,16 +90,16 @@ class DbMeterSettings(SettingsPage):
         )
 
     def loadSettings(self, settings):
-        self.intervalSpin.setValue(settings.get("interval", 33) / Gst.MSECOND)
-        self.ttlSpin.setValue(settings.get("peak_ttl", 1000) / Gst.MSECOND)
+        self.intervalSpin.setValue(settings.get("interval", 33) // Gst.MSECOND)
+        self.ttlSpin.setValue(settings.get("peak_ttl", 1000) // Gst.MSECOND)
         self.falloffSpin.setValue(settings.get("peak_falloff", 20))
 
     def getSettings(self):
-        settings = {}
+        if self.isGroupEnabled(self.groupBox):
+            return {
+                "interval": self.intervalSpin.value() * Gst.MSECOND,
+                "peak_ttl": self.ttlSpin.value() * Gst.MSECOND,
+                "peak_falloff": self.falloffSpin.value(),
+            }
 
-        if not (self.groupBox.isCheckable() and not self.groupBox.isChecked()):
-            settings["interval"] = self.intervalSpin.value() * Gst.MSECOND
-            settings["peak_ttl"] = self.ttlSpin.value() * Gst.MSECOND
-            settings["peak_falloff"] = self.falloffSpin.value()
-
-        return settings
+        return {}

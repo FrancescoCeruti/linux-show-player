@@ -51,7 +51,10 @@ class CacheManager(Plugin):
     def _show_threshold_warning(self, threshold, _):
         QMessageBox.warning(
             self.app.window,
-            translate("CacheManager", "Cache size",),
+            translate(
+                "CacheManager",
+                "Cache size",
+            ),
             translate(
                 "CacheManager",
                 "The cache has exceeded {}. Consider clean it.\n"

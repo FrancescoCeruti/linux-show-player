@@ -19,7 +19,6 @@ from os import path
 
 from lisp.core.loading import load_classes
 from lisp.core.plugin import Plugin
-from lisp.cues.cue_factory import CueFactory
 
 
 class ActionCues(Plugin):
@@ -32,5 +31,5 @@ class ActionCues(Plugin):
 
         # Register all the cue in the plugin
         for _, cue_class in load_classes(__package__, path.dirname(__file__)):
-            CueFactory.register_factory(cue_class.__name__, cue_class)
+            app.cue_factory.register_factory(cue_class.__name__, cue_class)
             app.window.registerSimpleCueMenu(cue_class, cue_class.Category)

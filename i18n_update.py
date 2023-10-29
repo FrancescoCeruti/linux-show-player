@@ -20,14 +20,17 @@ import os
 import re
 import subprocess
 import sys
+import shutil
 from argparse import ArgumentParser
 from pathlib import Path
 from typing import Iterable
 
+from scripts.pyts_update import TSTranslations, PyTrFinder, Obsolete
+
 TS_DIR = Path("lisp/i18n/ts")
 QM_DIR = Path("lisp/i18n/qm")
 PYLUPDATE = "pylupdate5"
-LRELEASE = "lrelease"
+LRELEASE = "lrelease" if shutil.which("lrelease") else "lrelease-qt5"
 
 
 def dirs_path(path: str):
@@ -52,13 +55,18 @@ def source_files(root: Path, extensions: Iterable[str], exclude: str = ""):
 
 
 def modules_sources(
-    modules_path: Iterable[Path], extensions: Iterable[str], exclude: str = "",
+    modules_path: Iterable[Path],
+    extensions: Iterable[str],
+    exclude: str = "",
 ):
     for module_path in modules_path:
-        yield module_path.stem, source_files(module_path, extensions, exclude),
+        if module_path.stem != "__pycache__":
+            yield module_path.stem, source_files(
+                module_path, extensions, exclude
+            ),
 
 
-def lupdate(
+def pylupdate(
     modules_path: Iterable[Path],
     locales: Iterable[str],
     options: Iterable[str] = (),
@@ -81,6 +89,35 @@ def lupdate(
                 stdout=sys.stdout,
                 stderr=sys.stderr,
             )
+
+
+def pyts_update(
+    modules_path: Iterable[Path],
+    locales: Iterable[str],
+    obsolete: Obsolete.Keep,
+    extensions: Iterable[str] = (".py",),
+    exclude: str = "",
+):
+    ts_files = modules_sources(modules_path, extensions, exclude)
+    for locale in locales:
+        locale_path = TS_DIR.joinpath(locale)
+        locale_path.mkdir(exist_ok=True)
+        for module_name, sources in ts_files:
+            destination = locale_path.joinpath(module_name + ".ts")
+
+            # Find the translations in python files
+            finder = PyTrFinder(destination.as_posix(), src_language=locale)
+            finder.find_in_files(sources)
+
+            # Merge existing translations
+            if destination.exists():
+                existing_translations = TSTranslations.from_file(destination)
+                finder.translations.update(
+                    existing_translations, obsolete=obsolete
+                )
+
+            # Write the "ts" file
+            finder.translations.write(destination)
 
 
 def lrelease(locales: Iterable[str], options: Iterable[str] = ()):
@@ -118,11 +155,12 @@ if __name__ == "__main__":
     parser.add_argument(
         "-t", "--ts", help="Update .ts files", action="store_true"
     )
+    parser.add_argument(
+        "--pylupdate",
+        help="Use pylupdate instead of the custom updater",
+        action="store_true",
+    )
     args = parser.parse_args()
-
-    # Decide what to do
-    do_release = args.qm
-    do_update = args.ts or not do_release
 
     # Decide locales to use
     if args.all:
@@ -131,19 +169,47 @@ if __name__ == "__main__":
     else:
         locales = args.locales or ("en",)
 
-    if do_update:
+    # Update ts files
+    if args.ts or not args.qm:
         print(">>> UPDATING ...")
 
-        options = []
-        if args.noobsolete:
-            options.append("-noobsolete")
+        if args.pylupdate:
+            # Use the pylupdate command
+            options = []
+            if args.noobsolete:
+                options.append("-noobsolete")
 
-        lupdate(
-            [Path("lisp")], locales, options=options, exclude="^lisp/plugins/"
-        )
-        lupdate(dirs_path("lisp/plugins"), locales, options=options)
+            pylupdate(
+                [Path("lisp")],
+                locales,
+                options=options,
+                exclude="^lisp/plugins/|__pycache__",
+            )
+            pylupdate(
+                dirs_path("lisp/plugins"),
+                locales,
+                options=options,
+                exclude="__pycache__",
+            )
+        else:
+            # Use our custom updater
+            obsolete = Obsolete.Discard if args.noobsolete else Obsolete.Keep
 
-    if do_release:
+            pyts_update(
+                [Path("lisp")],
+                locales,
+                obsolete=obsolete,
+                exclude="^lisp/plugins/|__pycache__",
+            )
+            pyts_update(
+                dirs_path("lisp/plugins"),
+                locales,
+                obsolete=obsolete,
+                exclude="__pycache__",
+            )
+
+    # Build the qm files
+    if args.qm:
         print(">>> RELEASING ...")
         lrelease(locales)
 

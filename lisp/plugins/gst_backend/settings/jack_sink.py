@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2022 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -72,9 +72,9 @@ class JackSinkSettings(SettingsPage):
         # if __jack_client is None this will return a default value
         self.connections = JackSink.default_connections(self.__jack_client)
 
-        self.retranlsateUi()
+        self.retranslateUi()
 
-    def retranlsateUi(self):
+    def retranslateUi(self):
         self.jackGroup.setTitle(translate("JackSinkSettings", "Connections"))
         self.connectionsEdit.setText(
             translate("JackSinkSettings", "Edit connections")
@@ -86,14 +86,10 @@ class JackSinkSettings(SettingsPage):
         super().closeEvent(event)
 
     def getSettings(self):
-        settings = {}
+        if self.isGroupEnabled(self.jackGroup):
+            return {"connections": self.connections}
 
-        if not (
-            self.jackGroup.isCheckable() and not self.jackGroup.isChecked()
-        ):
-            settings["connections"] = self.connections
-
-        return settings
+        return {}
 
     def loadSettings(self, settings):
         connections = settings.get("connections", [])
@@ -101,8 +97,7 @@ class JackSinkSettings(SettingsPage):
             self.connections = connections.copy()
 
     def enableCheck(self, enabled):
-        self.jackGroup.setCheckable(enabled)
-        self.jackGroup.setChecked(False)
+        self.setGroupEnabled(self.jackGroup, enabled)
 
     def __edit_connections(self):
         dialog = JackConnectionsDialog(self.__jack_client, parent=self)
@@ -120,18 +115,16 @@ class ClientItem(QTreeWidgetItem):
         self.name = client_name
         self.ports = {}
 
-    def add_port(self, port_name):
-        port = PortItem(port_name)
-
-        self.addChild(port)
-        self.ports[port_name] = port
+    def add_port(self, full_name, display_name):
+        self.ports[full_name] = PortItem(full_name, display_name)
+        self.addChild(self.ports[full_name])
 
 
 class PortItem(QTreeWidgetItem):
-    def __init__(self, port_name):
-        super().__init__([port_name[: port_name.index(":")]])
+    def __init__(self, full_name, display_name):
+        super().__init__([display_name])
 
-        self.name = port_name
+        self.name = full_name
 
 
 class ConnectionsWidget(QWidget):
@@ -297,13 +290,18 @@ class JackConnectionsDialog(QDialog):
         self.input_widget.clear()
         clients = {}
         for port in input_ports:
-            client_name = port.name[: port.name.index(":")]
+            try:
+                colon_index = port.name.index(":")
+                client_name = port.name[:colon_index]
+                port_display_name = port.name[colon_index + 1 :]
 
-            if client_name not in clients:
-                clients[client_name] = ClientItem(client_name)
-                self.input_widget.addTopLevelItem(clients[client_name])
+                if client_name not in clients:
+                    clients[client_name] = ClientItem(client_name)
+                    self.input_widget.addTopLevelItem(clients[client_name])
 
-            clients[client_name].add_port(port.name)
+                clients[client_name].add_port(port.name, port_display_name)
+            except ValueError:
+                pass
 
     def __input_selection_changed(self):
         if self.input_widget.selectedItems():

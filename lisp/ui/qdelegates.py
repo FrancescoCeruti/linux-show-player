@@ -158,12 +158,12 @@ class BoolCheckBoxDelegate(QStyledItemDelegate):
 
         # Center the checkbox (horizontally)
         cbRect.moveLeft(
-            option.rect.left() + (option.rect.width() - cbSize.width()) / 2
+            option.rect.left() + (option.rect.width() - cbSize.width()) // 2
         )
         return cbRect
 
     def editorEvent(self, event, model, option, index):
-        # If the "checkbox" is left clicked change the current state
+        # If the "checkbox" is left-clicked change the current state
         if event.type() == QEvent.MouseButtonRelease:
             cbRect = self._checkBoxRect(option)
             if event.button() == Qt.LeftButton and cbRect.contains(event.pos()):
@@ -332,7 +332,7 @@ class CueSelectionDelegate(LabelDelegate):
     def _text(self, option, index):
         cue = self.cue_model.get(index.data())
         if cue is not None:
-            return f"{cue.index} | {cue.name}"
+            return f"{cue.index+1} | {cue.name}"
 
         return "UNDEF"
 

@@ -31,7 +31,8 @@ from PyQt5.QtWidgets import (
     QHBoxLayout,
 )
 
-from lisp.plugins import get_plugin, PluginNotLoadedError
+from lisp.plugins import get_plugin
+from lisp.core.plugin import PluginNotLoadedError
 from lisp.plugins.controller.common import LayoutAction, tr_layout_action
 from lisp.plugins.controller.protocol import Protocol
 from lisp.plugins.midi.midi_utils import (
@@ -127,8 +128,7 @@ class MidiSettings(SettingsPage):
         )
 
     def enableCheck(self, enabled):
-        self.midiGroup.setCheckable(enabled)
-        self.midiGroup.setChecked(False)
+        self.setGroupEnabled(self.midiGroup, enabled)
 
     def getSettings(self):
         entries = []

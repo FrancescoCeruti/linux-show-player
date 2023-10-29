@@ -22,6 +22,8 @@ from PyQt5.QtWidgets import (
     QSizePolicy,
     QHeaderView,
     QTableView,
+    QGroupBox,
+    QPushButton,
 )
 
 from lisp.application import Application
@@ -44,53 +46,55 @@ class TriggersSettings(SettingsPage):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.setLayout(QVBoxLayout(self))
-        self.layout().setAlignment(Qt.AlignTop)
 
-        self.cue_select = CueSelectDialog(cues=Application().cue_model)
-
+        self.cueSelectDialog = CueSelectDialog(cues=Application().cue_model)
         self.triggersModel = TriggersModel()
 
+        self.triggerGroup = QGroupBox(self)
+        self.triggerGroup.setLayout(QVBoxLayout())
+        self.layout().addWidget(self.triggerGroup)
+
         self.triggersView = TriggersView(
-            Application().cue_model, self.cue_select, parent=self
+            Application().cue_model,
+            self.cueSelectDialog,
+            parent=self.triggerGroup,
         )
         self.triggersView.setModel(self.triggersModel)
-        self.layout().addWidget(self.triggersView)
+        self.triggerGroup.layout().addWidget(self.triggersView)
 
-        self.dialogButtons = QDialogButtonBox(self)
+        self.dialogButtons = QDialogButtonBox(self.triggerGroup)
         self.dialogButtons.setSizePolicy(
             QSizePolicy.Minimum, QSizePolicy.Minimum
         )
-        self.layout().addWidget(self.dialogButtons)
+        self.triggerGroup.layout().addWidget(self.dialogButtons)
 
-        self.addButton = self.dialogButtons.addButton(
-            translate("TriggersSettings", "Add"), QDialogButtonBox.ActionRole
+        self.addButton = QPushButton()
+        self.dialogButtons.addButton(
+            self.addButton, QDialogButtonBox.ActionRole
         )
-        self.addButton.clicked.connect(self._add_trigger)
+        self.addButton.clicked.connect(self._addTrigger)
 
-        self.delButton = self.dialogButtons.addButton(
-            translate("TriggersSettings", "Remove"), QDialogButtonBox.ActionRole
+        self.delButton = QPushButton()
+        self.dialogButtons.addButton(
+            self.delButton, QDialogButtonBox.ActionRole
         )
-        self.delButton.clicked.connect(self._remove_trigger)
+        self.delButton.clicked.connect(self._removeCurrentTrigger)
 
-    def _add_trigger(self):
-        if self.cue_select.exec():
-            cue = self.cue_select.selected_cue()
-            if cue is not None:
-                self.triggersModel.appendRow(
-                    cue.__class__,
-                    CueTriggers.Started.value,
-                    cue.id,
-                    cue.CueActions[0],
-                )
+        self.retranlsateUi()
 
-    def _remove_trigger(self):
-        self.triggersModel.removeRow(self.triggersView.currentIndex().row())
+    def retranlsateUi(self):
+        self.triggerGroup.setTitle(translate("SettingsPageName", "Triggers"))
+        self.addButton.setText(translate("TriggersSettings", "Add"))
+        self.delButton.setText(translate("TriggersSettings", "Remove"))
+
+    def enableCheck(self, enabled):
+        self.setGroupEnabled(self.triggerGroup, enabled)
 
     def loadSettings(self, settings):
         # Remove the edited cue from the list of possible targets
         edited_cue = Application().cue_model.get(settings.get("id"))
         if edited_cue:
-            self.cue_select.remove_cue(edited_cue)
+            self.cueSelectDialog.remove_cue(edited_cue)
 
         for trigger, targets in settings.get("triggers", {}).items():
             for target, action in targets:
@@ -101,22 +105,39 @@ class TriggersSettings(SettingsPage):
                     )
 
     def getSettings(self):
-        triggers = {}
-        for trigger, target, action in self.triggersModel.rows:
-            action = action.value
+        if self.isGroupEnabled(self.triggerGroup):
+            triggers = {}
+            for trigger, target, action in self.triggersModel.rows:
+                action = action.value
 
-            if trigger not in triggers:
-                triggers[trigger] = []
+                if trigger not in triggers:
+                    triggers[trigger] = []
 
-            # Avoid duplicate
-            if (target, action) not in triggers[trigger]:
-                triggers[trigger].append((target, action))
+                # Avoid duplicate
+                if (target, action) not in triggers[trigger]:
+                    triggers[trigger].append((target, action))
 
-        return {"triggers": triggers}
+            return {"triggers": triggers}
+
+        return {}
+
+    def _addTrigger(self):
+        if self.cueSelectDialog.exec():
+            cue = self.cueSelectDialog.selected_cue()
+            if cue is not None:
+                self.triggersModel.appendRow(
+                    cue.__class__,
+                    CueTriggers.Started.value,
+                    cue.id,
+                    cue.CueActions[0],
+                )
+
+    def _removeCurrentTrigger(self):
+        self.triggersModel.removeRow(self.triggersView.currentIndex().row())
 
 
 class TriggersView(QTableView):
-    def __init__(self, cue_model, cue_select, **kwargs):
+    def __init__(self, cueModel, cueSelect, **kwargs):
         super().__init__(**kwargs)
 
         self.setSelectionBehavior(QTableView.SelectRows)
@@ -136,7 +157,7 @@ class TriggersView(QTableView):
             ComboBoxDelegate(
                 options=[e.value for e in CueTriggers], tr_context="CueTriggers"
             ),
-            CueSelectionDelegate(cue_model, cue_select),
+            CueSelectionDelegate(cueModel, cueSelect),
             CueActionDelegate(),
         ]
 

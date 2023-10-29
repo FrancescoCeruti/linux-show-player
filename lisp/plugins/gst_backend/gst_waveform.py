@@ -20,7 +20,7 @@ import logging
 from array import array
 
 from lisp.backend.waveform import Waveform
-from .gi_repository import Gst
+from .gi_repository import Gst, GLib
 from .gst_utils import GstError
 
 logger = logging.getLogger(__name__)
@@ -51,12 +51,19 @@ class GstWaveform(Waveform):
 
         # Create the pipeline with an appropriate buffer-size to control
         # how many seconds of data we receive at each 'new-sample' event.
-        self._pipeline = Gst.parse_launch(
-            self.PIPELINE_TEMPLATE.format(
-                uri=self._uri.uri,
-                sample_length=f"{self.duration // 1000}/{self.max_samples}",
+        try:
+            self._pipeline = Gst.parse_launch(
+                self.PIPELINE_TEMPLATE.format(
+                    uri=self._uri.uri,
+                    sample_length=f"{self.duration // 1000}/{self.max_samples}",
+                )
             )
-        )
+        except GLib.GError:
+            logger.warning(
+                f'Cannot generate waveform for "{self._uri.unquoted_uri}"',
+                exc_info=True,
+            )
+            return True
 
         # Connect to the app-sink
         app_sink = self._pipeline.get_by_name("app_sink")
@@ -94,7 +101,7 @@ class GstWaveform(Waveform):
         self._temp_rms = array("i")
 
     def _on_new_sample(self, sink, _):
-        """ Called by GStreamer every time we have a new sample ready. """
+        """Called by GStreamer every time we have a new sample ready."""
         buffer = sink.emit("pull-sample").get_buffer()
         if buffer is not None:
             # Get the all data from the buffer, as bytes

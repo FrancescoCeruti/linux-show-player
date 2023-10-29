@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2022 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -131,7 +131,7 @@ class Controller(Plugin):
             elif action is LayoutAction.FadeOutAll:
                 self.app.layout.fadeout_all()
             elif action is LayoutAction.FadeInAll:
-                self.app.layout.fadeout_all()
+                self.app.layout.fadein_all()
             elif action is LayoutAction.StandbyForward:
                 self.app.layout.set_standby_index(
                     self.app.layout.standby_index() + 1
@@ -162,7 +162,7 @@ class Controller(Plugin):
 
                 self.__protocols[protocol_class.__name__.lower()] = protocol
             except Exception:
-                logger.exception(
+                logger.warning(
                     translate(
                         "Controller", 'Cannot load controller protocol: "{}"'
                     ).format(protocol_class.__name__)

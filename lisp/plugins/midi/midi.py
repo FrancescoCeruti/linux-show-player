@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2019 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2021 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,7 +22,6 @@ from PyQt5.QtCore import QT_TRANSLATE_NOOP
 
 from lisp.core.plugin import Plugin
 from lisp.core.signal import Connection
-from lisp.cues.cue_factory import CueFactory
 from lisp.plugins.midi.midi_cue import MidiCue
 from lisp.plugins.midi.midi_io import MIDIOutput, MIDIInput, MIDIBase
 from lisp.plugins.midi.midi_settings import MIDISettings
@@ -50,7 +49,7 @@ class Midi(Plugin):
         )
 
         # Register cue
-        CueFactory.register_factory(MidiCue.__name__, MidiCue)
+        app.cue_factory.register_factory(MidiCue.__name__, MidiCue)
         app.window.registerSimpleCueMenu(
             MidiCue, QT_TRANSLATE_NOOP("CueCategory", "Integration cues")
         )
@@ -62,8 +61,8 @@ class Midi(Plugin):
         # Define the default ports
         avail_inputs = self.backend.get_input_names()
         avail_outputs = self.backend.get_output_names()
-        self.__default_input = avail_inputs[0] if avail_inputs else None
-        self.__default_output = avail_outputs[0] if avail_outputs else None
+        self.__default_input = avail_inputs[0] if avail_inputs else ""
+        self.__default_output = avail_outputs[0] if avail_outputs else ""
 
         # Create input handler and connect
         current_input = self.input_name()

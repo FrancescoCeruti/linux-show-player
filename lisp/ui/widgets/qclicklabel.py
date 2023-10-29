@@ -20,7 +20,6 @@ from PyQt5.QtWidgets import QLabel
 
 
 class QClickLabel(QLabel):
-
     clicked = pyqtSignal(QEvent)
 
     def __init(self, parent):

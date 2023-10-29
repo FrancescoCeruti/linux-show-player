@@ -68,8 +68,15 @@ class ModelInsertItemsCommand(ModelItemsCommand):
         self._items = items
 
     def do(self):
-        for item in reversed(self._items):
-            self._model.insert(item, self._index)
+        if self._index >= 0:
+            # We know where we should insert the items
+            for index, item in enumerate(self._items, self._index):
+                self._model.insert(item, index)
+        else:
+            # We don't know where to insert the item, the model will choose the
+            # best position
+            for item in self._items:
+                self._model.insert(item, -1)
 
     def undo(self):
         for item in self._items:

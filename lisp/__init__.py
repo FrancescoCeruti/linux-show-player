@@ -38,6 +38,10 @@ I18N_DIR = path.join(APP_DIR, "i18n", "qm")
 DEFAULT_APP_CONFIG = path.join(APP_DIR, "default.json")
 USER_APP_CONFIG = path.join(app_dirs.user_config_dir, "lisp.json")
 
+PLUGINS_PACKAGE = "lisp.plugins"
+PLUGINS_PATH = path.join(APP_DIR, "plugins")
+USER_PLUGINS_PATH = path.join(app_dirs.user_data_dir, "plugins")
+
 DEFAULT_CACHE_DIR = path.join(app_dirs.user_data_dir, "cache")
 
 ICON_THEMES_DIR = path.join(APP_DIR, "ui", "icons")

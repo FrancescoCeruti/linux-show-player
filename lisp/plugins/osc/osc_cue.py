@@ -67,15 +67,14 @@ class OscCue(Cue):
         CueAction.Default,
         CueAction.Start,
         CueAction.Stop,
-        CueAction.Pause,
     )
 
     path = Property(default="")
     args = Property(default=[])
     fade_type = Property(default=FadeInType.Linear.name)
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.name = translate("CueName", self.Name)
 
         self.__osc = get_plugin("Osc")
@@ -129,10 +128,6 @@ class OscCue(Cue):
         return self.__has_fade and self.duration > 0
 
     def __start__(self, fade=False):
-        if self.__fader.is_paused():
-            self.__fader.resume()
-            return True
-
         if self.has_fade():
             if not self.__fadein:
                 self.__fade(FadeOutType[self.fade_type])
@@ -147,10 +142,6 @@ class OscCue(Cue):
 
     def __stop__(self, fade=False):
         self.__fader.stop()
-        return True
-
-    def __pause__(self, fade=False):
-        self.__fader.pause()
         return True
 
     __interrupt__ = __stop__
@@ -262,19 +253,15 @@ class OscCueSettings(SettingsPage):
         self.fadeCurveLabel.setText(translate("OscCue", "Curve"))
 
     def enableCheck(self, enabled):
-        self.oscGroup.setCheckable(enabled)
-        self.oscGroup.setChecked(False)
-
-        self.fadeGroup.setCheckable(enabled)
-        self.fadeGroup.setChecked(False)
+        self.setGroupEnabled(self.oscGroup, enabled)
+        self.setGroupEnabled(self.fadeGroup, enabled)
 
     def getSettings(self):
-        conf = {}
-        checkable = self.oscGroup.isCheckable()
+        settings = {}
 
-        if not (checkable and not self.oscGroup.isChecked()):
-            conf["path"] = self.pathEdit.text()
-            conf["args"] = [
+        if self.isGroupEnabled(self.oscGroup):
+            settings["path"] = self.pathEdit.text()
+            settings["args"] = [
                 {
                     "type": row[COL_TYPE],
                     "start": row[COL_START_VALUE],
@@ -284,11 +271,11 @@ class OscCueSettings(SettingsPage):
                 for row in self.oscModel.rows
             ]
 
-        if not (checkable and not self.fadeGroup.isCheckable()):
-            conf["duration"] = self.fadeSpin.value() * 1000
-            conf["fade_type"] = self.fadeCurveCombo.currentType()
+        if self.isGroupEnabled(self.fadeGroup):
+            settings["duration"] = self.fadeSpin.value() * 1000
+            settings["fade_type"] = self.fadeCurveCombo.currentType()
 
-        return conf
+        return settings
 
     def loadSettings(self, settings):
         self.pathEdit.setText(settings.get("path", ""))
