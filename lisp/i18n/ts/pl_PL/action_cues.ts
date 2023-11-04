@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="fr" sourcelanguage="en">
+<TS version="2.0" language="pl" sourcelanguage="en">
   <context>
     <name>CollectionCue</name>
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="110"/>
       <source>Add</source>
-      <translation>Ajouter</translation>
+      <translation>Dodaj</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="111"/>
       <source>Remove</source>
-      <translation>Retirer</translation>
+      <translation>Usuń</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="180"/>
       <source>Cue</source>
-      <translation>Go</translation>
+      <translation>Sygnał</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="181"/>
       <source>Action</source>
-      <translation>Action</translation>
+      <translation>Akcja</translation>
     </message>
   </context>
   <context>
@@ -29,32 +29,32 @@
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="130"/>
       <source>Command</source>
-      <translation>Commande</translation>
+      <translation>Komenda</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="132"/>
       <source>Command to execute, as in a shell</source>
-      <translation>Commande à exécuter, comme dans un terminal</translation>
+      <translation>Polecenie do wykonania, tak jak w powłoce systemowej</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="135"/>
       <source>Discard command output</source>
-      <translation>Abandonner la sortie de commande</translation>
+      <translation>Odrzuć wyjście polecenia</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="138"/>
       <source>Ignore command errors</source>
-      <translation>Ignorer les erreurs de commande</translation>
+      <translation>Ignoruj błędy polecenia</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="141"/>
       <source>Kill instead of terminate</source>
-      <translation>Killer au lieu de terminer</translation>
+      <translation type="unfinished">Kill instead of terminate</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="80"/>
       <source>Command cue ended with an error status. Exit code: {}</source>
-      <translation>La commande de cue s'est terminée avec un état d'erreur. Code de sortie : {}</translation>
+      <translation type="unfinished">Command cue ended with an error status. Exit code: {}</translation>
     </message>
   </context>
   <context>
@@ -62,7 +62,7 @@
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="40"/>
       <source>Action cues</source>
-      <translation>Go d'action</translation>
+      <translation type="unfinished">Action cues</translation>
     </message>
   </context>
   <context>
@@ -70,32 +70,32 @@
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="40"/>
       <source>Seek Cue</source>
-      <translation>Recherche de Cue</translation>
+      <translation type="unfinished">Seek Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="43"/>
       <source>Collection Cue</source>
-      <translation>Collection de cue</translation>
+      <translation type="unfinished">Collection Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/stop_all.py" line="29"/>
       <source>Stop-All</source>
-      <translation>Tout arrêter</translation>
+      <translation>Zatrzymaj wszystko</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="40"/>
       <source>Command Cue</source>
-      <translation>Cue de commande</translation>
+      <translation type="unfinished">Command Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="54"/>
       <source>Volume Control</source>
-      <translation>Contrôle du Volume</translation>
+      <translation>Kontrola głośności</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="39"/>
       <source>Index Action</source>
-      <translation>Index d&apos;action</translation>
+      <translation type="unfinished">Index Action</translation>
     </message>
   </context>
   <context>
@@ -103,32 +103,32 @@
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="67"/>
       <source>No suggestion</source>
-      <translation>Aucune suggestion</translation>
+      <translation>Brak sugestii</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="121"/>
       <source>Index</source>
-      <translation>Index</translation>
+      <translation>Indeks</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="123"/>
       <source>Use a relative index</source>
-      <translation>Utiliser un index relatif</translation>
+      <translation>Użyj indeksu względnego</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="126"/>
       <source>Target index</source>
-      <translation>Index cible</translation>
+      <translation type="unfinished">Target index</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="128"/>
       <source>Action</source>
-      <translation>Action</translation>
+      <translation>Akcja</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="131"/>
       <source>Suggested cue name</source>
-      <translation>Nom de cue suggéré</translation>
+      <translation>Sugerowana nazwa sygnału</translation>
     </message>
   </context>
   <context>
@@ -136,27 +136,27 @@
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="99"/>
       <source>Cue</source>
-      <translation>Cue</translation>
+      <translation>Sygnał</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="100"/>
       <source>Click to select</source>
-      <translation>Cliquer pour sélectionner</translation>
+      <translation>Kliknij, aby wybrać</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="101"/>
       <source>Not selected</source>
-      <translation>Non sélectionné</translation>
+      <translation>Nie wybrano</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="102"/>
       <source>Seek</source>
-      <translation>Recherche</translation>
+      <translation>Znajdź</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="103"/>
       <source>Time to reach</source>
-      <translation>Temps à atteindre</translation>
+      <translation type="unfinished">Time to reach</translation>
     </message>
   </context>
   <context>
@@ -164,32 +164,32 @@
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="59"/>
       <source>Seek Settings</source>
-      <translation>Préférences de recherche</translation>
+      <translation>Ustawienia wyszukiwania</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="108"/>
       <source>Edit Collection</source>
-      <translation>Éditer la collection</translation>
+      <translation>Edytuj kolekcję</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/stop_all.py" line="43"/>
       <source>Stop Settings</source>
-      <translation>Paramètres d&apos;arrêt</translation>
+      <translation type="unfinished">Stop Settings</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="104"/>
       <source>Command</source>
-      <translation>Commande</translation>
+      <translation>Komenda</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="129"/>
       <source>Volume Settings</source>
-      <translation>Préférences de volume</translation>
+      <translation>Ustawienia głośności</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="65"/>
       <source>Action Settings</source>
-      <translation>Paramètres d&apos;action</translation>
+      <translation>Ustawienia akcji</translation>
     </message>
   </context>
   <context>
@@ -197,7 +197,7 @@
     <message>
       <location filename="../../../plugins/action_cues/stop_all.py" line="73"/>
       <source>Stop Action</source>
-      <translation>Action d&apos;arrêt</translation>
+      <translation>Zatrzymaj działanie</translation>
     </message>
   </context>
   <context>
@@ -205,27 +205,27 @@
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="187"/>
       <source>Cue</source>
-      <translation>Cue</translation>
+      <translation>Sygnał</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="188"/>
       <source>Click to select</source>
-      <translation>Cliquer pour sélectionner</translation>
+      <translation>Kliknij, aby wybrać</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="189"/>
       <source>Not selected</source>
-      <translation>Non sélectionné</translation>
+      <translation>Nie wybrano</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="190"/>
       <source>Volume to reach</source>
-      <translation>Volume à atteindre</translation>
+      <translation>Głośność do osiągnięcia</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="191"/>
       <source>Fade</source>
-      <translation>Fondu</translation>
+      <translation>Zanikanie</translation>
     </message>
   </context>
   <context>
@@ -233,7 +233,7 @@
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="120"/>
       <source>Error during cue execution.</source>
-      <translation>Erreur lors de l'exécution de la cue.</translation>
+      <translation>Błąd podczas uruchamiania sygnału.</translation>
     </message>
   </context>
 </TS>
