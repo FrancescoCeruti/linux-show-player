@@ -7,6 +7,8 @@ hide-toc: true
 ```{toctree}
 :hidden:
 
+self
+installation
 getting_started
 menus
 list_layout
