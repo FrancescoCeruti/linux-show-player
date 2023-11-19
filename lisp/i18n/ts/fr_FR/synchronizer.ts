@@ -11,7 +11,7 @@
     <message>
       <location filename="../../../plugins/synchronizer/synchronizer.py" line="48"/>
       <source>Manage connected peers</source>
-      <translation>Gérer les paiers connectées</translation>
+      <translation>Gérer les paires connectées</translation>
     </message>
     <message>
       <location filename="../../../plugins/synchronizer/synchronizer.py" line="54"/>
