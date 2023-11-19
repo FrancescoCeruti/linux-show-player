@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/midi/midi.py" line="54"/>
       <source>Integration cues</source>
-      <translation>Go d'intégration</translation>
+      <translation>Cues d'intégration</translation>
     </message>
   </context>
   <context>
@@ -14,7 +14,7 @@
     <message>
       <location filename="../../../plugins/midi/midi_cue.py" line="40"/>
       <source>MIDI Cue</source>
-      <translation>Go MIDI</translation>
+      <translation>Cue MIDI</translation>
     </message>
   </context>
   <context>
