@@ -51,7 +51,7 @@ What follows are general guidelines, to run LiSP without a "proper" installation
 You should install these libraries/packages using your package manager:
 
 - python
-- python-poetry
+- python-poetry (>= 1.2, otherwise follow <a href="https://python-poetry.org/docs/#installation" target="_blank">these instructions</a>)
 - gstreamer
 - gstreamer-plugins-(good/ugly/bad)
 - gstreamer-libav (for larger format support)
@@ -70,7 +70,7 @@ However, using the method described below, it's not possile to use it.
 
 ### Download
 
-Download the source code for GitHub or clone the git repository.
+Download the source code from GitHub or clone the git repository.
 
 ### Run
 
