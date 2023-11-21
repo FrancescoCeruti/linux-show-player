@@ -14,7 +14,7 @@
     <message>
       <location filename="../../../plugins/osc/osc.py" line="45"/>
       <source>Integration cues</source>
-      <translation>Go d'intégration</translation>
+      <translation>Cues d'intégration</translation>
     </message>
   </context>
   <context>
@@ -22,7 +22,7 @@
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="64"/>
       <source>OSC Cue</source>
-      <translation>Go OSC</translation>
+      <translation>Cue OSC</translation>
     </message>
   </context>
   <context>

@@ -169,7 +169,11 @@ Output to the default pulseaudio output device, no option is provided.
 
 ### Jack
 
-Output to <a href="http://www.jackaudio.org/" target="_blank">Jack</a> server.
+Output to a <a href="http://www.jackaudio.org/" target="_blank">Jack</a> server.
+
+```{warning}
+Native JACK is not support in flatpaks, you can get JACK working via PipeWire (pipewire-jack)
+```
 
 The **Edit connections** button allow to view and change the connection for the cue:
 

@@ -297,7 +297,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="270"/>
       <source>Misc cues</source>
-      <translation>Go divers</translation>
+      <translation>Cue diverses</translation>
     </message>
   </context>
   <context>
@@ -305,7 +305,7 @@
     <message>
       <location filename="../../../command/cue.py" line="73"/>
       <source>Cues settings changed.</source>
-      <translation>Paramètres de go modifiés.</translation>
+      <translation>Paramètres de cues modifiés.</translation>
     </message>
     <message>
       <location filename="../../../command/cue.py" line="45"/>
@@ -497,22 +497,22 @@
     <message>
       <location filename="../../../ui/settings/app_pages/layouts.py" line="54"/>
       <source>Fade out when stopping all cues</source>
-      <translation type="unfinished">Fade out when stopping all cues</translation>
+      <translation>Fondu en cas d'arrêt de toutes les cues</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/layouts.py" line="57"/>
       <source>Fade out when interrupting all cues</source>
-      <translation type="unfinished">Fade out when interrupting all cues</translation>
+      <translation>Fondu en cas d'interruption de toutes les cues</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/layouts.py" line="60"/>
       <source>Fade out when pausing all cues</source>
-      <translation type="unfinished">Fade out when pausing all cues</translation>
+      <translation>Fondu en cas de mise en pause de toutes les cues</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/layouts.py" line="63"/>
       <source>Fade in when resuming all cues</source>
-      <translation type="unfinished">Fade in when resuming all cues</translation>
+      <translation>Fondu lors de la reprise de toutes les cues</translation>
     </message>
   </context>
   <context>
@@ -884,7 +884,7 @@
     <message>
       <location filename="../../../core/plugin_loader.py" line="108"/>
       <source>Plugin loaded: "{}"</source>
-      <translation type="unfinished">Plugin loaded: "{}"</translation>
+      <translation>Plugin chargé : "{}"</translation>
     </message>
   </context>
   <context>
@@ -910,17 +910,17 @@
     <message>
       <location filename="../../../core/plugin.py" line="92"/>
       <source>An error has occurred with this plugin. Please see logs for further information.</source>
-      <translation type="unfinished">An error has occurred with this plugin. Please see logs for further information.</translation>
+      <translation>Une erreur s'est produite avec ce plugin. Veuillez consulter les logs pour plus d'informations.</translation>
     </message>
     <message>
       <location filename="../../../core/plugin.py" line="106"/>
       <source>There is a non-critical issue with this disabled plugin. Please see logs for further information.</source>
-      <translation type="unfinished">There is a non-critical issue with this disabled plugin. Please see logs for further information.</translation>
+      <translation>Il y a un problème non critique avec ce plugin désactivé. Veuillez consulter les logs pour plus d'informations.</translation>
     </message>
     <message>
       <location filename="../../../core/plugin.py" line="113"/>
       <source>Plugin loaded and ready for use.</source>
-      <translation type="unfinished">Plugin loaded and ready for use.</translation>
+      <translation>Plugin chargé et prêt à l'emploi.</translation>
     </message>
     <message>
       <location filename="../../../core/plugin.py" line="100"/>
@@ -966,7 +966,7 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="43"/>
       <source>Cue</source>
-      <translation>Go</translation>
+      <translation>Cue</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="53"/>
