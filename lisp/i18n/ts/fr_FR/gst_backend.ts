@@ -129,7 +129,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_backend.py" line="78"/>
       <source>Audio cue (from file)</source>
-      <translation>Go audio (depuis un fichier)</translation>
+      <translation>Cue audio (depuis un fichier)</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/gst_backend.py" line="131"/>
