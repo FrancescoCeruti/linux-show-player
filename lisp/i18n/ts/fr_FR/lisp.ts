@@ -297,7 +297,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="270"/>
       <source>Misc cues</source>
-      <translation>Cue diverses</translation>
+      <translation>Cues diverses</translation>
     </message>
   </context>
   <context>
