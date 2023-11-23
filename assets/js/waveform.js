@@ -16,6 +16,7 @@
         easing: 'easeInOutQuad',
         duration: 400,
         height: [4, () => anime.random(8, 100)],
+        opacity: anime.stagger([2, 0.3], {from: 'center', easing: 'easeOutQuad' }),
         delay: anime.stagger(10, { from: 'center', easing: 'easeOutQuad' })
     });
 })()
