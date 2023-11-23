@@ -3,35 +3,22 @@ layout: default
 title: Download
 ---
 <div class="container py-4">
-    <!--<div class="card border-secondary mb-3">
+    <div class="card mb-3">
         <div class="card-header h3">
-            <i class="fas fa-pizza-slice h5 mr-1"></i> Latest release
-            <div class="float-right badge badge-success">0.5.2</div>
+            <img src="assets/images/flatpak-logo.png" class="me-1" height="38"> Flatpak
         </div>
         <div class="card-body">
-            <p class="card-text">
-                <a href="https://github.com/FrancescoCeruti/linux-show-player/releases/download/v0.5.2/LinuxShowPlayer-v0.5.2-x86_64.AppImage" class="btn btn-lg btn-primary">
-                    <img src="assets/images/appimage-logo.svg" class="ml-1" height="32"> Linux 64bit AppImage
-                </a>
-            </p>
-        </div>
-    </div>-->
+            <button target="_blank" class="btn btn-lg btn-primary mx-1" disabled>
+                 FlatHub <span class="fs-6 text-muted">coming soon</small>
+            </button>
 
-    <div class="card border-secondary mb-3">
-        <div class="card-header h3">
-            <i class="fas fa-flask h5 mr-1"></i> Experimental
-            <div class="float-right badge badge-warning">dev</div>
-        </div>
-        <div class="card-body">
-            <p class="card-text">
-                <a href="https://github.com/FrancescoCeruti/linux-show-player/releases/tag/ci-develop" target="_blank" class="btn btn-lg btn-primary">
-                    <img src="assets/images/flatpak-logo.png" class="ml-1" height="32"> Flatpak
-                </a>
-            </p>
+            <a href="https://github.com/FrancescoCeruti/linux-show-player/releases/tag/ci-master" target="_blank" class="btn btn-lg btn-primary mx-1">
+                <i class="fas fa-flask h5 me-1"></i> Latest
+            </a>
         </div>
         <div class="card-footer">
             <small>
-                Make sure to follow the <a href="https://flatpak.org/setup/" target="_blank">setup guide</a>
+                Make sure to follow the flatpak <a href="https://flatpak.org/setup/" target="_blank">setup guide</a>
                 before installing
             </small>
         </div>
@@ -42,7 +29,12 @@ title: Download
     </div>
 
     <hr>
-    <h2 class="mb-3">Directly from your distribution <span class="badge badge-warning">Check the version</span></h2>
+    <h2 class="mb-3">Directly from your distribution</h2>
+
+    <div class="alert alert-warning fw-bold" role="alert">
+        You might not get the latest version.
+    </div>
+
     <h4>&bull;&nbsp; ArchLinux</h4>
     <div class="px-3">
         <p>
@@ -54,10 +46,10 @@ title: Download
     <div class="px-3">
         <p>You can search Linux Show Player directly from your package-manager / software-manager.</p>
         <p>Or you can use the command line:</p>
-        <div class="alert alert-light" role="alert">
+        <div class="alert alert-dark" role="alert">
             <code>
-            sudo apt-get install linux-show-player
-        </code>
+                sudo apt-get install linux-show-player
+            </code>
         </div>
     </div>
    

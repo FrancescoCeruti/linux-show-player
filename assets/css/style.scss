@@ -1,14 +1,12 @@
 ---
 ---
 
-$enable-responsive-font-sizes: true;
-
 @import 'variables';
 @import 'bootstrap/bootstrap';
 @import 'bootswatch';
 
 body {
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
@@ -17,41 +15,23 @@ footer {
     margin-top: auto;
 }
 
-.home-backdrop::before {
-    content: " ";
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    z-index: 0;
-    background-image: url('/assets/images/home-splash.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: bottom;
-    opacity: 0.2;
-}
-
-.home-backdrop .container {
-    position: relative;
-    z-index: 1;
-}
-
-.home-backdrop .attribution {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-}
-
 .beer  {
     color: #ffe600;
     text-shadow: 1px 1px 2px black;
 }
 
-/* 
- * Fix for Safari (Mac & iOS) 
- * https://github.com/philipwalton/flexbugs/issues/271
- */
-.navbar {
-    flex-shrink: 0;
+.waveform {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-x: hidden;
+    min-height: 100px;
+}
+
+.waveform .waveform-bar {
+    min-width: 6px;
+    margin-left: 2px;
+    margin-right: 2px;
+    border-radius: 4px;
+    background: rgba(var(--bs-primary-rgb), 0.8);
 }

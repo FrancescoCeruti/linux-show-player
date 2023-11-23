@@ -1,5 +1,6 @@
 # VSCode
 /.vscode
+/.idea
 
 # Jekyll
 _site

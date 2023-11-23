@@ -1,55 +1,91 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="navbar-brand font-weight-bold py-0">
-        <img src="assets/images/logo_128.png" height="42" width="42">
-    </div>
-
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbar">
-        <ul class="navbar-nav mr-auto">
-            {% for item in site.data.navigation %}
-            <li class="nav-item {% if page.url == item.link %} active {% endif %}">
-                <a class="nav-link" href="{{ item.link }}" {% if item.target %} target="{{ item.target }}" {% endif %}>
-                    {{ item.name }}
-                    {% if item.target == "_blank" %}
-                    <sup><i class="fas fa-external-link-alt small"></i></sup>
-                    {% endif %}
-                </a>
-            </li>
-            {% endfor %}
-        </ul>
-        <div class="button-group">
-            <a class="btn btn-md btn-warning" data-toggle="modal" data-target="#beerModal">
-                <i class="fas fa-beer beer mr-2"></i>Donate
-            </a>
-            <a class="btn btn-md btn-light" href="https://github.com/FrancescoCeruti/linux-show-player" target="_blank">
-                <i class="fab fa-github mr-2"></i>GitHub
-            </a>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <div class="navbar-brand" href="/">
+            <img src="assets/images/logo_128.png" height="42" width="42">
         </div>
-    </div>
+    
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse" id="navbar">
+            <ul class="navbar-nav me-auto">
+                {% for item in site.data.navigation %}
+                <li class="nav-item {% if page.url == item.link %} active {% endif %}">
+                    <a class="nav-link" href="{{ item.link }}" {% if item.target %} target="{{ item.target }}" {% endif %}>
+                        {{ item.name }}
+                        {% if item.target == "_blank" %}
+                        <sup><i class="fas fa-external-link-alt small"></i></sup>
+                        {% endif %}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
 
-    <div class="modal fade" id="beerModal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header p-2">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body text-center">
-                    <h4 class="mb-4">
-                        Would you like to offer me a beer?<br>
-                        You've come to the right place <small>😜</small>
-                    </h4>
-                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
-                        <input type="hidden" name="cmd" value="_s-xclick">
-                        <input type="hidden" name="hosted_button_id" value="ZFF3ARFGL3JRJ">
-                        <button type="submit" class="btn btn-warning"><i class="fab fa-paypal mr-2"></i> Donate</button>
-                    </form>
-                </div>
+            <div class="button-group">
+                <a class="btn btn-md btn-warning mx-1" data-bs-toggle="modal" data-bs-target="#beerModal">
+                    <i class="fas fa-beer beer me-2"></i>Donate
+                </a>
+                <a class="btn btn-md btn-light mx-1" href="https://github.com/FrancescoCeruti/linux-show-player" target="_blank">
+                    <i class="fab fa-github me-2"></i>GitHub
+                </a>
             </div>
+
+            <ul class="navbar-nav ms-2">
+                <li class="nav-item dropdown">
+                    <button class="nav-link dropdown-toggle d-flex align-items-center" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static" aria-label="Toggle theme (dark)">
+                        <i class="fa-solid fa-moon me-2" id="bd-theme-icon"></i>
+                        <span class="d-lg-none ms-2" id="bd-theme-text">Toggle theme</span>
+                    </button>
+
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bd-theme-text">
+                        <li>
+                            <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
+                                <i class="fa-solid fa-sun me-2"></i>
+                                Light
+                                <i class="fa-solid fa-check ms-auto d-none"></i>
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="dark" aria-pressed="true">
+                                <i class="fa-solid fa-moon me-2"></i>
+                                Dark
+                                <i class="fa-solid fa-check ms-auto d-none"></i>
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto" aria-pressed="false">
+                                <i class="fa-solid fa-circle-half-stroke me-2"></i>
+                                Auto
+                                <i class="fa-solid fa-check ms-auto d-none"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
         </div>
     </div>
 </nav>
+
+<div class="modal fade" id="beerModal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border shadow">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body text-center">
+                <h4 class="mb-4">
+                    Would you like to offer me a beer?<br>
+                    You've come to the right place <small>😜</small>
+                </h4>
+
+                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+                    <input type="hidden" name="cmd" value="_s-xclick">
+                    <input type="hidden" name="hosted_button_id" value="ZFF3ARFGL3JRJ">
+                    <button type="submit" class="btn btn-warning"><i class="fab fa-paypal me-2"></i> Donate</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

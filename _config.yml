@@ -15,7 +15,6 @@ github_username:  FrancescoCeruti
 
 # Build settings
 sass:
-  sass_dir: _sass
   style: compressed
 
 # Exclude from processing.
