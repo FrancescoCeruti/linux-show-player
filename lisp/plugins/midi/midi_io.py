@@ -50,10 +50,11 @@ class MIDIBase(ABC):
         else:
             return self._port_name
 
-    def change_port(self, port_name):
+    def change_port(self, port_name, auto_open=True):
         self._port_name = port_name
         self.close()
-        self.open()
+        if auto_open:
+            self.open()
 
     @abstractmethod
     def open(self):

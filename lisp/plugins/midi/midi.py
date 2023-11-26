@@ -256,21 +256,42 @@ class Midi(Plugin):
 
     def __config_change(self, key, changeset):
         if key == "inputDevices":
+            available = self.backend.get_input_names()
             for patch_id, device_name in changeset.items():
                 if patch_id not in self.__inputs:
                     self._connect(patch_id, device_name, PortDirection.Input)
                 elif device_name is None:
                     self._disconnect(patch_id, PortDirection.Input)
+                elif device_name == "":
+                    self.__inputs[patch_id].change_port(self.__default_input)
+                elif device_name in available:
+                    self.__inputs[patch_id].change_port(device_name)
                 else:
-                    self.__inputs[patch_id].change_port(device_name or self.__default_input)
+                    if Midi.Config["connectByNameMatch"]:
+                        match = self._port_search_match(device_name, available)
+                        if match is not None:
+                            self.__inputs[patch_id].change_port(match)
+                            return
+                    self.__inputs[patch_id].change_port(device_name, False)
+
         elif key == "outputDevices":
+            available = self.backend.get_output_names()
             for patch_id, device_name in changeset.items():
                 if patch_id not in self.__outputs:
                     self._connect(patch_id, device_name, PortDirection.Output)
                 elif device_name is None:
                     self._disconnect(patch_id, PortDirection.Output)
+                elif device_name == "":
+                    self.__outputs[patch_id].change_port(self.__default_output)
+                elif device_name in available:
+                    self.__outputs[patch_id].change_port(device_name)
                 else:
-                    self.__outputs[patch_id].change_port(device_name or self.__default_output)
+                    if Midi.Config["connectByNameMatch"]:
+                        match = self._port_search_match(device_name, available)
+                        if match is not None:
+                            self.__outputs[patch_id].change_port(match)
+                            return
+                    self.__outputs[patch_id].change_port(device_name, False)
 
     def __config_update(self, diff):
         if "inputDevices" in diff:
