@@ -124,6 +124,8 @@ class MidiIODeviceModel(QAbstractTableModel):
         else:
             for patch_id, device in settings.items():
                 if device is not None:
+                    if device == "":
+                        device = DEFAULT_DEVICE_NAME
                     self.appendPatch(device, int(patch_id.split('#')[1]))
 
     def flags(self, index):
@@ -161,7 +163,8 @@ class MidiIODeviceModel(QAbstractTableModel):
     def serialise(self):
         patches = {}
         for row in self.patches:
-            patches[f'{self._direction.value}#{row["id"]}'] = row["device"]
+            patches[f'{self._direction.value}#{row["id"]}'] = \
+                '' if row["device"] == DEFAULT_DEVICE_NAME else row["device"]
         for numid in self.removed_numids:
             patches[f'{self._direction.value}#{numid}'] = None
         return patches

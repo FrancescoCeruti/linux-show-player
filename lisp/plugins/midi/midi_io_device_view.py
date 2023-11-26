@@ -80,7 +80,7 @@ class MidiIODeviceView(QTableView):
         new_options = []
         model = self.model()
         for patch_id, device_name in options.items():
-            if device_name is None or device_name in new_options or device_name in self.delegates[1].options:
+            if device_name is None or device_name == "" or device_name in new_options or device_name in self.delegates[1].options:
                 continue
             new_options.append(device_name)
         new_options.sort(reverse=True)
