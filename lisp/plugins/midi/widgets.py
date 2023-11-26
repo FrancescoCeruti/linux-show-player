@@ -33,7 +33,6 @@ from PyQt5.QtWidgets import (
 
 from lisp.plugins import get_plugin
 from lisp.plugins.midi.midi_utils import (
-    format_patch_name,
     MIDI_MSGS_SPEC,
     MIDI_ATTRS_SPEC,
     MIDI_MSGS_NAME,
@@ -56,11 +55,16 @@ class MIDIPatchCombo(QComboBox):
             return self.__midi.input_patches()
         return self.__midi.output_patches()
 
+    def _patch_name(self, patch_id):
+        if self.__direction is PortDirection.Input:
+            return self.__midi.input_name_formatted(patch_id)
+        return self.__midi.output_name_formatted(patch_id)
+
     def retranslateUi(self):
         for patch_id, device_name in self._patches().items():
             self.setItemText(
                 self.findData(patch_id),
-                format_patch_name(patch_id, device_name)
+                self._patch_name(patch_id)
             )
 
 
