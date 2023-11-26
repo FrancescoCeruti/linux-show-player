@@ -262,6 +262,7 @@ class MidiModel(SimpleTableModel):
                 translate("ControllerMidiSettings", "Action"),
             ]
         )
+        self.__midi = get_plugin("Midi")
 
     def appendMessage(self, patch_id, message, action):
         data = midi_data_from_msg(message)
@@ -289,6 +290,12 @@ class MidiModel(SimpleTableModel):
             return Qt.ItemIsEnabled | Qt.ItemIsSelectable
         else:
             return super().flags(index)
+
+    def data(self, index, role=Qt.DisplayRole):
+        if index.isValid() and index.column() == 0 and role == Qt.DisplayRole:
+            return f"{self.__midi.input_name_formatted(self.getPatchId(index.row()))[:16]}..."
+
+        return super().data(index, role)
 
 
 class MidiView(QTableView):
