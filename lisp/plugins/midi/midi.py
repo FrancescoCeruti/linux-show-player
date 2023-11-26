@@ -129,7 +129,9 @@ class Midi(Plugin):
         for k, v in Midi.Config.get("inputDevices", {}).items():
             if v is not None:
                 patches[k] = v
-        return patches if patches else { f"{PortDirection.Input.value}#1": Midi.Config.get("inputDevice", self.__default_input) }
+        if not patches and Midi.Config.get("inputDevice", None) is not None:
+            patches = { f"{PortDirection.Input.value}#1": Midi.Config.get("inputDevice", self.__default_input) }
+        return patches
 
     def input_status(self, patch_id):
         if patch_id not in self.__inputs:
@@ -157,7 +159,9 @@ class Midi(Plugin):
         for k, v in Midi.Config.get("outputDevices", {}).items():
             if v is not None:
                 patches[k] = v
-        return patches if patches else { f"{PortDirection.Output.value}#1": Midi.Config.get("outputDevice", self.__default_output) }
+        if not patches and Midi.Config.get("outputDevice", None) is not None:
+            patches = { f"{PortDirection.Output.value}#1": Midi.Config.get("outputDevice", self.__default_output) }
+        return patches
 
     def output_status(self, patch_id):
         if patch_id not in self.__outputs:
