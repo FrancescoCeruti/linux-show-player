@@ -107,7 +107,7 @@ def format_patch_name(patch_id, device_name):
         text = translate("MIDIInfo", "In {}: {}")
     else:
         text = translate("MIDIInfo", "Out {}: {}")
-    return text.format(split_id[1], device_name)
+    return text.format(split_id[1], device_name or DEFAULT_DEVICE_NAME)
 
 
 def midi_backend() -> mido.Backend:
