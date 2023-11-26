@@ -127,7 +127,7 @@ class Midi(Plugin):
     def input_patches(self):
         patches = {}
         for k, v in Midi.Config.get("inputDevices", {}).items():
-            if v:
+            if v is not None:
                 patches[k] = v
         return patches if patches else { f"{PortDirection.Input.value}#1": Midi.Config.get("inputDevice", self.__default_input) }
 
@@ -155,7 +155,7 @@ class Midi(Plugin):
     def output_patches(self):
         patches = {}
         for k, v in Midi.Config.get("outputDevices", {}).items():
-            if v:
+            if v is not None:
                 patches[k] = v
         return patches if patches else { f"{PortDirection.Output.value}#1": Midi.Config.get("outputDevice", self.__default_output) }
 
@@ -258,7 +258,7 @@ class Midi(Plugin):
                 elif device_name is None:
                     self._disconnect(patch_id, PortDirection.Input)
                 else:
-                    self.__inputs[patch_id].change_port(device_name)
+                    self.__inputs[patch_id].change_port(device_name or self.__default_input)
         elif key == "outputDevices":
             for patch_id, device_name in changeset.items():
                 if patch_id not in self.__outputs:
@@ -266,7 +266,7 @@ class Midi(Plugin):
                 elif device_name is None:
                     self._disconnect(patch_id, PortDirection.Output)
                 else:
-                    self.__outputs[patch_id].change_port(device_name)
+                    self.__outputs[patch_id].change_port(device_name or self.__default_output)
 
     def __config_update(self, diff):
         if "inputDevices" in diff:
