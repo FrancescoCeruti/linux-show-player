@@ -1048,6 +1048,24 @@ sphinx = ">=4.0"
 docs = ["furo", "ipython", "myst-parser", "sphinx-copybutton", "sphinx-inline-tabs"]
 
 [[package]]
+name = "sphinx-inline-tabs"
+version = "2023.4.21"
+description = "Add inline tabbed content to your Sphinx documentation."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "sphinx_inline_tabs-2023.4.21-py3-none-any.whl", hash = "sha256:06809ac613f7c48ddd6e2fa588413e3fe92cff2397b56e2ccf0b0218f9ef6a78"},
+    {file = "sphinx_inline_tabs-2023.4.21.tar.gz", hash = "sha256:5df2f13f602c158f3f5f6c509e008aeada199a8c76d97ba3aa2822206683bebc"},
+]
+
+[package.dependencies]
+sphinx = ">=3"
+
+[package.extras]
+doc = ["furo", "myst-parser"]
+test = ["pytest", "pytest-cov", "pytest-xdist"]
+
+[[package]]
 name = "sphinxcontrib-applehelp"
 version = "1.0.4"
 description = "sphinxcontrib-applehelp is a Sphinx extension which outputs Apple help books"
@@ -1201,4 +1219,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "ca619fb066c0cc1bf370bc8be4846f02462914d47f5f984105afc2b5cf50c125"
+content-hash = "9dfa0238875d5999400afe420482e819b12a9914b48e1e9b637b754f4dd348a4"
