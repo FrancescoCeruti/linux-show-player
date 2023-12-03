@@ -56,7 +56,7 @@
     <message>
         <location filename="../../../plugins/cart_layout/layout.py" line="258"/>
         <source>Page {number}</source>
-        <translation>Pàgina {número}</translation>
+        <translation>Pàgina {number}</translation>
     </message>
     <message>
         <location filename="../../../plugins/cart_layout/layout.py" line="484"/>
