@@ -6,107 +6,107 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="174"/>
       <source>Reset volume</source>
-      <translation type="unfinished">Reset volume</translation>
+      <translation>Restableix el volum</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="184"/>
       <source>Add page</source>
-      <translation type="unfinished">Add page</translation>
+      <translation>Afegeix una pàgina</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="239"/>
       <source>Add pages</source>
-      <translation type="unfinished">Add pages</translation>
+      <translation>Afegeix pàgines</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="187"/>
       <source>Remove current page</source>
-      <translation type="unfinished">Remove current page</translation>
+      <translation>Suprimeix la pàgina actual</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="86"/>
       <source>Countdown mode</source>
-      <translation type="unfinished">Countdown mode</translation>
+      <translation>Mode de compte enrere</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="87"/>
       <source>Show seek-bars</source>
-      <translation type="unfinished">Show seek-bars</translation>
+      <translation>Mostra les barres de cerca</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="88"/>
       <source>Show dB-meters</source>
-      <translation type="unfinished">Show dB-meters</translation>
+      <translation>Mostra els dB-meters</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="90"/>
       <source>Show volume</source>
-      <translation type="unfinished">Show volume</translation>
+      <translation>Mostra el volume</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="89"/>
       <source>Show accurate time</source>
-      <translation type="unfinished">Show accurate time</translation>
+      <translation>Mostra el temps exacte</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="240"/>
       <source>Number of Pages:</source>
-      <translation type="unfinished">Number of Pages:</translation>
+      <translation>Nombre de pàgines:</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="258"/>
       <source>Page {number}</source>
-      <translation type="unfinished">Page {number}</translation>
+      <translation>Pàgina {number}</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="484"/>
       <source>Warning</source>
-      <translation type="unfinished">Warning</translation>
+      <translation>Avís</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="486"/>
       <source>Every cue in the page will be lost.</source>
-      <translation type="unfinished">Every cue in the page will be lost.</translation>
+      <translation>Es perdran tots els cues de la pàgina.</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="489"/>
       <source>Are you sure to continue?</source>
-      <translation type="unfinished">Are you sure to continue?</translation>
+      <translation>Segur que vols continuar?</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="162"/>
       <source>Play</source>
-      <translation type="unfinished">Play</translation>
+      <translation>Reprodueix</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="165"/>
       <source>Pause</source>
-      <translation type="unfinished">Pause</translation>
+      <translation>Pausa</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="168"/>
       <source>Stop</source>
-      <translation type="unfinished">Stop</translation>
+      <translation>Atura</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="82"/>
       <source>Default behaviors (applied to new sessions)</source>
-      <translation type="unfinished">Default behaviors (applied to new sessions)</translation>
+      <translation>Comportaments per defecte (aplicats a sessions noves)</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="91"/>
       <source>Grid size</source>
-      <translation type="unfinished">Grid size</translation>
+      <translation>Mida de la graella</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="92"/>
       <source>Number of columns:</source>
-      <translation type="unfinished">Number of columns:</translation>
+      <translation>Número de columnes:</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="93"/>
       <source>Number of rows:</source>
-      <translation type="unfinished">Number of rows:</translation>
+      <translation>Número de files:</translation>
     </message>
   </context>
   <context>
@@ -114,7 +114,7 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="44"/>
       <source>Organize cues in grid like pages</source>
-      <translation type="unfinished">Organize cues in grid like pages</translation>
+      <translation>Organitza els cues a la graella com a pàgines</translation>
     </message>
   </context>
   <context>
@@ -122,27 +122,27 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="48"/>
       <source>Click a cue to run it</source>
-      <translation type="unfinished">Click a cue to run it</translation>
+      <translation>Feu clic en un cue per a executar-lo</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="49"/>
       <source>SHIFT + Click to edit a cue</source>
-      <translation type="unfinished">SHIFT + Click to edit a cue</translation>
+      <translation>MAJ + Clic per a editar un cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="50"/>
       <source>CTRL + Click to select a cue</source>
-      <translation type="unfinished">CTRL + Click to select a cue</translation>
+      <translation>CTRL + Clic per a seleccionar un cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="51"/>
       <source>To copy cues drag them while pressing CTRL</source>
-      <translation type="unfinished">To copy cues drag them while pressing CTRL</translation>
+      <translation>Per a copiar les cues, arrossegueu-les mentre premeu CTRL</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="54"/>
       <source>To move cues drag them while pressing SHIFT</source>
-      <translation type="unfinished">To move cues drag them while pressing SHIFT</translation>
+      <translation>Per a moure les pistes, arrossegueu-les mentre premeu MAJ</translation>
     </message>
   </context>
   <context>
@@ -150,7 +150,7 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="43"/>
       <source>Cart Layout</source>
-      <translation type="unfinished">Cart Layout</translation>
+      <translation>Disposició de Cistella</translation>
     </message>
   </context>
   <context>
@@ -158,22 +158,22 @@
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="143"/>
       <source>Edit cue</source>
-      <translation type="unfinished">Edit cue</translation>
+      <translation>Edita el cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="145"/>
       <source>Edit selected cues</source>
-      <translation type="unfinished">Edit selected cues</translation>
+      <translation>Edita els cues seleccionats</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="149"/>
       <source>Remove cue</source>
-      <translation type="unfinished">Remove cue</translation>
+      <translation>Elimina un cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="151"/>
       <source>Remove selected cues</source>
-      <translation type="unfinished">Remove selected cues</translation>
+      <translation>Elimina els cues seleccionats</translation>
     </message>
   </context>
   <context>
@@ -181,7 +181,7 @@
     <message>
       <location filename="../../../plugins/cart_layout/settings.py" line="33"/>
       <source>Cart Layout</source>
-      <translation type="unfinished">Cart Layout</translation>
+      <translation>Disposició de Cistella</translation>
     </message>
   </context>
 </TS>
