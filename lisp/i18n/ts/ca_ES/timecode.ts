@@ -28,13 +28,13 @@
       <location filename="../../../plugins/timecode/protocols/artnet.py" line="65"/>
       <source>Cannot send timecode. 
 OLA daemon has stopped.</source>
-      <translation type="unfinished">Cannot send timecode. 
-OLA daemon has stopped.</translation>
+      <translation>No es pot enviar el codi de temps. 
+El dimoni OLA s&apos;ha aturat.</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/protocols/artnet.py" line="73"/>
       <source>Cannot send timecode.</source>
-      <translation type="unfinished">Cannot send timecode.</translation>
+      <translation>No es pot enviar el codi de temps.</translation>
     </message>
   </context>
   <context>
@@ -47,7 +47,7 @@ OLA daemon has stopped.</translation>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="86"/>
       <source>Enable Timecode</source>
-      <translation type="unfinished">Enable Timecode</translation>
+      <translation>Activa el codi de temps</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="88"/>
@@ -57,7 +57,7 @@ OLA daemon has stopped.</translation>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="145"/>
       <source>Timecode Settings</source>
-      <translation type="unfinished">Timecode Settings</translation>
+      <translation>Ajustos del codi de temps</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="148"/>
@@ -67,7 +67,7 @@ OLA daemon has stopped.</translation>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="151"/>
       <source>Timecode Protocol:</source>
-      <translation type="unfinished">Timecode Protocol:</translation>
+      <translation>Protocol del codi de temps:</translation>
     </message>
   </context>
   <context>
@@ -75,7 +75,7 @@ OLA daemon has stopped.</translation>
     <message>
       <location filename="../../../plugins/timecode/cue_tracker.py" line="119"/>
       <source>Cannot send timecode, untracking cue</source>
-      <translation type="unfinished">Cannot send timecode, untracking cue</translation>
+      <translation>No s&apos;ha pogut enviar el codi de temps, s&apos;està desfent el seguiment del cue</translation>
     </message>
   </context>
 </TS>
