@@ -124,22 +124,22 @@
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="312"/>
       <source>Cannot create a cue from this preset: {}</source>
-      <translation>No es pot crear un Cue des de aquest Preset "{}"</translation>
+      <translation>No es pot crear un Cue des de aquest Preset &quot;{}&quot;</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets.py" line="73"/>
       <source>Apply to cue</source>
-      <translation type="unfinished">Apply to cue</translation>
+      <translation>Aplica al cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets.py" line="75"/>
       <source>Apply to selected cues</source>
-      <translation type="unfinished">Apply to selected cues</translation>
+      <translation>Aplica als cues seleccionats</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets.py" line="79"/>
       <source>Save as preset</source>
-      <translation>Desa preset</translation>
+      <translation>Desa com a preset</translation>
     </message>
   </context>
 </TS>
