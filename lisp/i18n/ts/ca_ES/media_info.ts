@@ -11,12 +11,12 @@
     <message>
       <location filename="../../../plugins/media_info/media_info.py" line="71"/>
       <source>Warning</source>
-      <translation type="unfinished">Warning</translation>
+      <translation>Avís</translation>
     </message>
     <message>
       <location filename="../../../plugins/media_info/media_info.py" line="72"/>
       <source>Cannot get any information.</source>
-      <translation type="unfinished">Cannot get any information.</translation>
+      <translation>No es pot obtenir cap informació.</translation>
     </message>
     <message>
       <location filename="../../../plugins/media_info/media_info.py" line="135"/>
