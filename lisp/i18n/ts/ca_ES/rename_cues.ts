@@ -6,57 +6,57 @@
     <message>
       <location filename="../../../plugins/rename_cues/rename_cues.py" line="37"/>
       <source>Rename Cues</source>
-      <translation type="unfinished">Rename Cues</translation>
+      <translation>Reanomena Cues</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="46"/>
       <source>Rename cues</source>
-      <translation type="unfinished">Rename cues</translation>
+      <translation>Reanomena Cues</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="72"/>
       <source>Capitalize</source>
-      <translation type="unfinished">Capitalize</translation>
+      <translation>Posa en majúscula</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="77"/>
       <source>Lowercase</source>
-      <translation type="unfinished">Lowercase</translation>
+      <translation>Minúscules</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="82"/>
       <source>Uppercase</source>
-      <translation type="unfinished">Uppercase</translation>
+      <translation>Majúscules</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="87"/>
       <source>Remove Numbers</source>
-      <translation type="unfinished">Remove Numbers</translation>
+      <translation>Elimina  els números</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="93"/>
       <source>Add numbering</source>
-      <translation type="unfinished">Add numbering</translation>
+      <translation>Afegeix numeració</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="101"/>
       <source>Reset</source>
-      <translation type="unfinished">Reset</translation>
+      <translation>Restableix</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="111"/>
       <source>Rename all cue. () in regex below usable with $0, $1 ...</source>
-      <translation type="unfinished">Rename all cue. () in regex below usable with $0, $1 ...</translation>
+      <translation>Canvia el nom de tots els cues. () en l&apos;expressió regular de sota usable amb $0, $1 ...</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="121"/>
       <source>Type your regex here: </source>
-      <translation type="unfinished">Type your regex here: </translation>
+      <translation>Escriviu aquí la vostra expressió regular: </translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="232"/>
       <source>Regex help</source>
-      <translation type="unfinished">Regex help</translation>
+      <translation>Ajuda de l&apos;expressió regular</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="234"/>
@@ -70,26 +70,26 @@ Example:
 Only the numbers are between parenthesis and will be usable with $0 in the first line.
 
 For more information about Regexes, consult python documentation at: https://docs.python.org/3/howto/regex.html#regex-howto</source>
-      <translation type="unfinished">You can use Regexes to rename your cues.
+      <translation>Podeu utilitzar Regexes per canviar el nom dels vostres senyals.
 
-Insert expressions captured with regexes in the line below with $0 for the first parenthesis, $1 forthe second, etc...
-In the second line, you can use standard Python Regexes to match expressions in the original cues names. Use parenthesis to capture parts of the matched expression.
+Insereix expressions capturades amb expressions regulars a la línia de sota amb $0 per al primer parèntesi, $1 per al segon, etc...
+A la segona línia, podeu utilitzar expressions estàndard de Python Regexes per a fer coincidir les expressions en els noms de pistes originals. Usa parèntesis per a capturar parts de l&apos;expressió coincident.
 
-Example: 
-^[a-z]([0-9]+) will find a lower case character([a-z]), followed by one or more number.
-Only the numbers are between parenthesis and will be usable with $0 in the first line.
+Exemple: 
+[[a-z]([0-9]+) trobarà un caràcter en minúscula([a-z]), seguit d&apos;un o més nombres.
+Només els números estan entre parèntesis i es podran utilitzar amb $0 a la primera línia.
 
-For more information about Regexes, consult python documentation at: https://docs.python.org/3/howto/regex.html#regex-howto</translation>
+Per a més informació sobre Regexes, consulteu la documentació de Python a: https://docs.python.org/3/howto/regex.html atregex-howto</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="57"/>
       <source>Current</source>
-      <translation type="unfinished">Current</translation>
+      <translation>Actual</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="58"/>
       <source>Preview</source>
-      <translation type="unfinished">Preview</translation>
+      <translation>Previsualització</translation>
     </message>
   </context>
   <context>
@@ -97,7 +97,7 @@ For more information about Regexes, consult python documentation at: https://doc
     <message>
       <location filename="../../../plugins/rename_cues/command.py" line="44"/>
       <source>Renamed {number} cues</source>
-      <translation type="unfinished">Renamed {number} cues</translation>
+      <translation>S&apos;ha canviat el nom de {number} pistes</translation>
     </message>
   </context>
   <context>
@@ -105,12 +105,12 @@ For more information about Regexes, consult python documentation at: https://doc
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="259"/>
       <source>Regex error: Invalid pattern</source>
-      <translation type="unfinished">Regex error: Invalid pattern</translation>
+      <translation>Error d&apos;expressió regular: patró no vàlid</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="288"/>
       <source>Regex error: catch with () before display with $n</source>
-      <translation type="unfinished">Regex error: catch with () before display with $n</translation>
+      <translation>Error d&apos;expressió regular: atrapa amb () abans de mostrar amb $n</translation>
     </message>
   </context>
 </TS>
