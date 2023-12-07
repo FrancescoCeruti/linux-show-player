@@ -54,12 +54,12 @@
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="237"/>
       <source>Applied gain for: {}</source>
-      <translation type="unfinished">Applied gain for: {}</translation>
+      <translation>Guany aplicat per: {}</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="243"/>
       <source>Discarded gain for: {}</source>
-      <translation type="unfinished">Discarded gain for: {}</translation>
+      <translation>Guany descartat per: {}</translation>
     </message>
   </context>
   <context>
@@ -67,12 +67,12 @@
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="331"/>
       <source>An error occurred during gain calculation.</source>
-      <translation type="unfinished">An error occurred during gain calculation.</translation>
+      <translation>S&apos;ha produït un error durant el càlcul del guany.</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="203"/>
       <source>An error occurred while processing gain results.</source>
-      <translation type="unfinished">An error occurred while processing gain results.</translation>
+      <translation>S&apos;ha produït un error en processar els resultats de guany.</translation>
     </message>
   </context>
   <context>
@@ -80,17 +80,17 @@
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="217"/>
       <source>Gain processing stopped by user.</source>
-      <translation type="unfinished">Gain processing stopped by user.</translation>
+      <translation>L&apos;usuari ha aturat el processament de guanys.</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="282"/>
       <source>Started gain calculation for: {}</source>
-      <translation type="unfinished">Started gain calculation for: {}</translation>
+      <translation>S&apos;ha iniciat el càlcul del guany per a: {}</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="317"/>
       <source>Gain calculated for: {}</source>
-      <translation type="unfinished">Gain calculated for: {}</translation>
+      <translation>Guany calculat per: {}</translation>
     </message>
   </context>
 </TS>
