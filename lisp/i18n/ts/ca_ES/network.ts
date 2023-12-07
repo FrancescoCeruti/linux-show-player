@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/network/server.py" line="48"/>
       <source>Stop serving network API</source>
-      <translation type="unfinished">Stop serving network API</translation>
+      <translation>Atura el servei de l&apos;API de xarxa</translation>
     </message>
   </context>
   <context>
@@ -14,7 +14,7 @@
     <message>
       <location filename="../../../plugins/network/server.py" line="51"/>
       <source>Network API server stopped working.</source>
-      <translation type="unfinished">Network API server stopped working.</translation>
+      <translation>El servidor API de xarxa ha deixat de funcionar.</translation>
     </message>
   </context>
   <context>
@@ -22,7 +22,7 @@
     <message>
       <location filename="../../../plugins/network/server.py" line="37"/>
       <source>Start serving network API at: http://{}:{}/</source>
-      <translation type="unfinished">Start serving network API at: http://{}:{}/</translation>
+      <translation>Inicia el servei de l&apos;API de xarxa a: http://{}:{}/</translation>
     </message>
   </context>
   <context>
@@ -30,7 +30,7 @@
     <message>
       <location filename="../../../plugins/network/api/__init__.py" line="15"/>
       <source>New end-point: {}</source>
-      <translation type="unfinished">New end-point: {}</translation>
+      <translation>Nou punt final: {}</translation>
     </message>
   </context>
   <context>
@@ -38,47 +38,47 @@
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="77"/>
       <source>Select the hosts you want to add</source>
-      <translation type="unfinished">Select the hosts you want to add</translation>
+      <translation>Seleccioneu els amfitrions que voleu afegir</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="79"/>
       <source>Host discovery</source>
-      <translation type="unfinished">Host discovery</translation>
+      <translation>Descobriment de l&apos;amfitrió</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="164"/>
       <source>Manage hosts</source>
-      <translation type="unfinished">Manage hosts</translation>
+      <translation>Gestiona els amfitrions</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="166"/>
       <source>Discover hosts</source>
-      <translation type="unfinished">Discover hosts</translation>
+      <translation>Descobreix els amfitrions</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="169"/>
       <source>Manually add a host</source>
-      <translation type="unfinished">Manually add a host</translation>
+      <translation>Afegeix manualment un amfitrió</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="172"/>
       <source>Remove selected host</source>
-      <translation type="unfinished">Remove selected host</translation>
+      <translation>Elimina l&apos;amfitrió seleccionat</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="175"/>
       <source>Remove all host</source>
-      <translation type="unfinished">Remove all host</translation>
+      <translation>Elimina tots els amfitrions</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="181"/>
       <source>Address</source>
-      <translation type="unfinished">Address</translation>
+      <translation>Adreça</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="182"/>
       <source>Host IP</source>
-      <translation type="unfinished">Host IP</translation>
+      <translation>IP de l&apos;amfitrió</translation>
     </message>
   </context>
 </TS>
