@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/midi/midi.py" line="54"/>
       <source>Integration cues</source>
-      <translation type="unfinished">Integration cues</translation>
+      <translation>Cues d&apos;integració</translation>
     </message>
   </context>
   <context>
@@ -14,7 +14,7 @@
     <message>
       <location filename="../../../plugins/midi/midi_cue.py" line="40"/>
       <source>MIDI Cue</source>
-      <translation type="unfinished">MIDI Cue</translation>
+      <translation>Cue MIDI</translation>
     </message>
   </context>
   <context>
@@ -22,12 +22,12 @@
     <message>
       <location filename="../../../plugins/midi/widgets.py" line="88"/>
       <source>MIDI Message</source>
-      <translation type="unfinished">MIDI Message</translation>
+      <translation>Missatge MIDI</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/widgets.py" line="89"/>
       <source>Message type</source>
-      <translation type="unfinished">Message type</translation>
+      <translation>Tipus de missatge</translation>
     </message>
   </context>
   <context>
@@ -45,7 +45,7 @@
     <message>
       <location filename="../../../plugins/midi/port_monitor.py" line="88"/>
       <source>Cannot create ALSA-MIDI port monitor, MIDI connections/disconnections will not be detected.</source>
-      <translation type="unfinished">Cannot create ALSA-MIDI port monitor, MIDI connections/disconnections will not be detected.</translation>
+      <translation>No s&apos;ha pogut crear el monitor de port ALSA-MIDI, no es detectaran connexions/desconnexions MIDI.</translation>
     </message>
   </context>
   <context>
@@ -71,17 +71,17 @@
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="68"/>
       <source>Channel</source>
-      <translation type="unfinished">Channel</translation>
+      <translation>Canal</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="69"/>
       <source>Note</source>
-      <translation type="unfinished">Note</translation>
+      <translation>Nota</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="70"/>
       <source>Velocity</source>
-      <translation type="unfinished">Velocity</translation>
+      <translation>Velocitat</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="71"/>
@@ -91,17 +91,17 @@
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="72"/>
       <source>Program</source>
-      <translation type="unfinished">Program</translation>
+      <translation>Programa</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="73"/>
       <source>Value</source>
-      <translation type="unfinished">Value</translation>
+      <translation>Valor</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="74"/>
       <source>Song</source>
-      <translation type="unfinished">Song</translation>
+      <translation>Cançò</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="75"/>
@@ -111,7 +111,7 @@
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="76"/>
       <source>Position</source>
-      <translation type="unfinished">Position</translation>
+      <translation>Posició</translation>
     </message>
   </context>
   <context>
@@ -119,12 +119,12 @@
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="51"/>
       <source>Note ON</source>
-      <translation type="unfinished">Note ON</translation>
+      <translation>Nota ON</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="52"/>
       <source>Note OFF</source>
-      <translation type="unfinished">Note OFF</translation>
+      <translation>Nota OFF</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="53"/>
@@ -134,7 +134,7 @@
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="54"/>
       <source>Control/Mode Change</source>
-      <translation type="unfinished">Control/Mode Change</translation>
+      <translation>Canvi Control/Mode</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="57"/>
@@ -144,37 +144,37 @@
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="58"/>
       <source>Channel After-touch</source>
-      <translation type="unfinished">Channel After-touch</translation>
+      <translation>Channel After Touch</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="59"/>
       <source>Pitch Bend Change</source>
-      <translation type="unfinished">Pitch Bend Change</translation>
+      <translation>Canvi Pitch Bend</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="60"/>
       <source>Song Select</source>
-      <translation type="unfinished">Song Select</translation>
+      <translation>Selecció de la cançò</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="61"/>
       <source>Song Position</source>
-      <translation type="unfinished">Song Position</translation>
+      <translation>Posició de la cançò</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="62"/>
       <source>Start</source>
-      <translation type="unfinished">Start</translation>
+      <translation>Inici</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="63"/>
       <source>Stop</source>
-      <translation type="unfinished">Stop</translation>
+      <translation>Atura</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_utils.py" line="64"/>
       <source>Continue</source>
-      <translation type="unfinished">Continue</translation>
+      <translation>Continua</translation>
     </message>
   </context>
   <context>
@@ -182,7 +182,7 @@
     <message>
       <location filename="../../../plugins/midi/midi_settings.py" line="100"/>
       <source>MIDI devices</source>
-      <translation type="unfinished">MIDI devices</translation>
+      <translation>Dispositius MIDI</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_settings.py" line="101"/>
@@ -197,12 +197,12 @@
     <message>
       <location filename="../../../plugins/midi/midi_settings.py" line="104"/>
       <source>Misc options</source>
-      <translation type="unfinished">Misc options</translation>
+      <translation>Opcions Misc</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_settings.py" line="106"/>
       <source>Try to connect using only device/port name</source>
-      <translation type="unfinished">Try to connect using only device/port name</translation>
+      <translation>Intenta connectar utilitzant només el nom del dispositiu/port</translation>
     </message>
   </context>
   <context>
@@ -215,7 +215,7 @@
     <message>
       <location filename="../../../plugins/midi/midi_cue.py" line="57"/>
       <source>MIDI Settings</source>
-      <translation type="unfinished">MIDI Settings</translation>
+      <translation>Ajustos MIDI</translation>
     </message>
   </context>
 </TS>
