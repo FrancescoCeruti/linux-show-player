@@ -31,6 +31,18 @@ can use the following command:
 flatpak install "path/to/file.flatpak"
 ```
 
+```{important}
+**If the installation produce an error similar the this:**
+ 
+`The application org.linux_show_player.LinuxShowPlayer/x86_64/master requires the runtime org.kde.Platform/x86_64/5.15-23.08 which was not found.`
+
+**Before installing LiSP you need to run the following:**
+
+`flatpak install <name-of-the-runtime>`
+
+In the above example the runtime name is `org.kde.Platform/x86_64/5.15-23.08`.
+```
+
 ---
 
 ## 🐧 From your distribution repository
