@@ -39,7 +39,7 @@
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="135"/>
       <source>Discard command output</source>
-      <translation>Descarta la sortida de l'ordre</translation>
+      <translation>Descarta la sortida de l&apos;ordre</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="138"/>
@@ -49,12 +49,12 @@
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="141"/>
       <source>Kill instead of terminate</source>
-      <translation>Matar en lloc d’acabar</translation>
+      <translation>Mata en lloc de finalitzar</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="80"/>
       <source>Command cue ended with an error status. Exit code: {}</source>
-      <translation type="unfinished">Command cue ended with an error status. Exit code: {}</translation>
+      <translation>El cue d&apos;ordre ha finalitzat amb un estat d&apos;error. Codi de sortida: {}</translation>
     </message>
   </context>
   <context>
@@ -62,7 +62,7 @@
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="40"/>
       <source>Action cues</source>
-      <translation type="unfinished">Action cues</translation>
+      <translation>Cues d&apos;acció</translation>
     </message>
   </context>
   <context>
@@ -85,7 +85,7 @@
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="40"/>
       <source>Command Cue</source>
-      <translation>Cue d'ordres</translation>
+      <translation>Cue d&apos;ordres</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="54"/>
@@ -95,7 +95,7 @@
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="39"/>
       <source>Index Action</source>
-      <translation>Acció d'Index</translation>
+      <translation>Acció d&apos;Index</translation>
     </message>
   </context>
   <context>
@@ -103,7 +103,7 @@
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="67"/>
       <source>No suggestion</source>
-      <translation type="unfinished">No suggestion</translation>
+      <translation>Cap suggeriment</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="121"/>
@@ -128,7 +128,7 @@
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="131"/>
       <source>Suggested cue name</source>
-      <translation type="unfinished">Suggested cue name</translation>
+      <translation>Nom del cue suggerit</translation>
     </message>
   </context>
   <context>
@@ -189,7 +189,7 @@
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="65"/>
       <source>Action Settings</source>
-      <translation>Ajustos d'Acció</translation>
+      <translation>Ajustos d&apos;Acció</translation>
     </message>
   </context>
   <context>
@@ -197,7 +197,7 @@
     <message>
       <location filename="../../../plugins/action_cues/stop_all.py" line="73"/>
       <source>Stop Action</source>
-      <translation>Acció d'Aturada</translation>
+      <translation>Acció d&apos;Aturada</translation>
     </message>
   </context>
   <context>
@@ -233,7 +233,7 @@
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="120"/>
       <source>Error during cue execution.</source>
-      <translation type="unfinished">Error during cue execution.</translation>
+      <translation>S&apos;ha produït un error durant l&apos;execució de cue.</translation>
     </message>
   </context>
 </TS>
