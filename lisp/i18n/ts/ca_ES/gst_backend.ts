@@ -67,7 +67,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_pan.py" line="57"/>
       <source>Audio Pan</source>
-      <translation>Panoràmica d'Áudio</translation>
+      <translation>Panoràmica d&apos;Áudio</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/audio_pan.py" line="78"/>
@@ -90,7 +90,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_backend.py" line="80"/>
       <source>Media cues</source>
-      <translation type="unfinished">Media cues</translation>
+      <translation>Cues Media</translation>
     </message>
   </context>
   <context>
@@ -129,12 +129,12 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_backend.py" line="78"/>
       <source>Audio cue (from file)</source>
-      <translation type="unfinished">Audio cue (from file)</translation>
+      <translation>Cue Audio (des de arxiu)</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/gst_backend.py" line="131"/>
       <source>Select media files</source>
-      <translation type="unfinished">Select media files</translation>
+      <translation>Selecciona els arxius multimèdia</translation>
     </message>
   </context>
   <context>
@@ -174,12 +174,12 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_settings.py" line="54"/>
       <source>Default pipeline</source>
-      <translation type="unfinished">Default pipeline</translation>
+      <translation>Canonada per defecte</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/gst_settings.py" line="56"/>
       <source>Applied only to new cues.</source>
-      <translation type="unfinished">Applied only to new cues.</translation>
+      <translation>Aplicat només a nous senyals.</translation>
     </message>
   </context>
   <context>
@@ -187,7 +187,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/elements/jack_sink.py" line="136"/>
       <source>An error occurred while disconnecting Jack ports</source>
-      <translation type="unfinished">An error occurred while disconnecting Jack ports</translation>
+      <translation>S&apos;ha produït un error en desconnectar els ports Jack</translation>
     </message>
   </context>
   <context>
@@ -215,7 +215,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/jack_sink.py" line="272"/>
       <source>Input ports</source>
-      <translation>Ports d'entrada</translation>
+      <translation>Ports d&apos;entrada</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/jack_sink.py" line="331"/>
@@ -238,7 +238,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/elements/audio_pan.py" line="29"/>
       <source>Audio Pan</source>
-      <translation>Panoràmica d'áudio</translation>
+      <translation>Panoràmica d&apos;áudio</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/elements/volume.py" line="35"/>
@@ -278,7 +278,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/elements/preset_src.py" line="30"/>
       <source>Preset Input</source>
-      <translation>Preset d'entrades</translation>
+      <translation>Preset d&apos;entrades</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/elements/pitch.py" line="29"/>
@@ -337,7 +337,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/config/alsa_sink.py" line="25"/>
       <source>ALSA Default Device</source>
-      <translation type="unfinished">ALSA Default Device</translation>
+      <translation>Dispositiu ALSA per defecte</translation>
     </message>
   </context>
   <context>
@@ -396,7 +396,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/user_element.py" line="53"/>
       <source>User defined elements</source>
-      <translation>Elements definits per l'usuari</translation>
+      <translation>Elements definits per l&apos;usuari</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/user_element.py" line="56"/>
