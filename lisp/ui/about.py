@@ -53,33 +53,9 @@ class About(QDialog):
         "AboutDialog",
         "Linux Show Player is a cue player designed for stage productions.",
     )
-    WEB_SITE = "https://linux-show-player.org"
-    DISCUSSION = "https://gitter.im/linux-show-player/linux-show-player"
-    SOURCE_CODE = "https://github.com/FrancescoCeruti/linux-show-player"
-
-    CONTRIBUTORS = OrderedDict(
-        {
-            QT_TRANSLATE_NOOP("About", "Authors"): [
-                ("Francesco Ceruti", "ceppofrancy@gmail.com")
-            ],
-            QT_TRANSLATE_NOOP("About", "Contributors"): [
-                ("Yinameah", "https://github.com/Yinameah"),
-                ("nodiscc", "https://github.com/nodiscc"),
-                ("Thomas Achtner", "https://github.com/offtools"),
-            ],
-            QT_TRANSLATE_NOOP("About", "Translators"): [
-                ("fri", "https://www.transifex.com/user/profile/fri", "Czech"),
-                ("Olivier Humbert", "https://github.com/trebmuh", "French"),
-                (
-                    "aroomthedoomed",
-                    "https://github.com/aroomthedoomed",
-                    "French",
-                ),
-                ("Luis García-Tornel", "tornel@gmail.com", "Spanish"),
-                ("miharix", "https://github.com/miharix", "Slovenian"),
-            ],
-        }
-    )
+    WEB = "https://linux-show-player.org"
+    DISCUSS = "https://github.com/FrancescoCeruti/linux-show-player/discussions"
+    SOURCE = "https://github.com/FrancescoCeruti/linux-show-player"
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -115,19 +91,14 @@ class About(QDialog):
         self.info = QTextBrowser(self)
         self.info.setOpenExternalLinks(True)
         self.info.setHtml(
+            f"""
+            <center>
+                <br />{translate("AboutDialog", self.DESCRIPTION)}<br /><br />
+                <a href="{self.WEB}">{translate("AboutDialog", "Web site")}</a> -
+                <a href="{self.DISCUSS}">{translate("AboutDialog", "Discussion")}</a> -
+                <a href="{self.SOURCE}">{translate("AboutDialog", "Source code")}</a>
+            <center>
             """
-            <center><br />{0}<br /><br />
-            <a href="{1}">{2}</a><br />
-            <a href="{3}">{4}</a><br />
-            <a href="{5}">{6}</a><br /><center>""".format(
-                translate("AboutDialog", self.DESCRIPTION),
-                self.WEB_SITE,
-                translate("AboutDialog", "Web site"),
-                self.DISCUSSION,
-                translate("AboutDialog", "Discussion"),
-                self.SOURCE_CODE,
-                translate("AboutDialog", "Source code"),
-            )
         )
         self.tabWidget.addTab(self.info, translate("AboutDialog", "Info"))
 
@@ -139,7 +110,22 @@ class About(QDialog):
         self.contributors = QTextBrowser(self)
         self.contributors.setOpenExternalLinks(True)
 
-        self.contributors.setHtml(self.__contributors())
+        self.contributors.setHtml(
+            f"""
+            <p>
+                <u><b>{translate("About", "Authors")}:</b></u><br />
+                Francesco Ceruti - <a href="mailto:ceppofrancy@gmail.com">ceppofrancy@gmail.com</a>
+            </p>
+            <p>
+                <u><b>{translate("About", "Contributors")}:</b></u>
+                <a href="https://github.com/FrancescoCeruti/linux-show-player/graphs/contributors">GitHub</a>
+            </p>
+            <p>
+                <u><b>{translate("About", "Translators")}:</b></u>
+                <a href="https://crowdin.com/project/linux-show-player">Crowdin</a>
+            </p>
+            """
+        )
         self.tabWidget.addTab(
             self.contributors, translate("AboutDialog", "Contributors")
         )
@@ -158,28 +144,3 @@ class About(QDialog):
         self.layout().setRowStretch(3, 3)
 
         self.buttons.setFocus()
-
-    def __contributors(self):
-        text = ""
-        for section, people in self.CONTRIBUTORS.items():
-            text += "<u><b>{0}:</b></u><br />".format(
-                translate("About", section)
-            )
-
-            for person in people:
-                text += person[0]
-                if "://" in person[1]:
-                    text += ' - <a href="{0}">{1}</a>'.format(
-                        person[1], person[1][person[1].index("://") + 3 :]
-                    )
-                elif person[1]:
-                    text += ' - <a href="mailto:{0}">{0}</a>'.format(person[1])
-
-                if len(person) >= 3:
-                    text += f" ({person[2]})"
-
-                text += "<br />"
-
-            text += "<br />"
-
-        return text
