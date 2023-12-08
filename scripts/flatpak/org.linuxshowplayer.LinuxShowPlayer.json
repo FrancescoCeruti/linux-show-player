@@ -1,5 +1,5 @@
 {
-    "app-id": "org.linux_show_player.LinuxShowPlayer",
+    "app-id": "org.linuxshowplayer.LinuxShowPlayer",
     "runtime": "org.kde.Platform",
     "runtime-version": "5.15-23.08",
     "sdk": "org.kde.Sdk",
@@ -7,8 +7,9 @@
     "rename-icon": "linuxshowplayer",
     "finish-args": [
         "--share=network",
-        "--socket=x11",
+        "--share=ipc",
         "--socket=wayland",
+        "--socket=fallback-x11",
         "--socket=pulseaudio",
         "--system-talk-name=org.freedesktop.RealtimeKit1",
         "--filesystem=xdg-run/pipewire-0",
@@ -212,20 +213,18 @@
                 "mkdir -p /app/share/mime/packages/",
                 "mkdir -p /app/share/metainfo/",
                 "mkdir -p /app/share/icons/hicolor/512x512/apps/",
-                "cp dist/linuxshowplayer.desktop /app/share/applications/org.linux_show_player.LinuxShowPlayer.desktop",
-                "cp dist/linuxshowplayer.xml /app/share/mime/packages/org.linux_show_player.LinuxShowPlayer.xml",
-                "cp dist/linuxshowplayer.appdata.xml /app/share/metainfo/org.linux_show_player.LinuxShowPlayer.appdata.xml",
+                "cp dist/linuxshowplayer.desktop /app/share/applications/org.linuxshowplayer.LinuxShowPlayer.desktop",
+                "cp dist/linuxshowplayer.xml /app/share/mime/packages/org.linuxshowplayer.LinuxShowPlayer.xml",
+                "cp dist/linuxshowplayer.metainfo.xml /app/share/metainfo/org.linuxshowplayer.LinuxShowPlayer.metainfo.xml",
                 "cp dist/linuxshowplayer.png /app/share/icons/hicolor/512x512/apps/linuxshowplayer.png"
             ],
             "sources": [
                 {
                     "type": "git",
                     "url": "https://github.com/FrancescoCeruti/linux-show-player.git",
-                    "branch": "develop"
+                    "branch": "master"
                 }
             ]
         }
-    ],
-    "branch": "develop",
-    "desktop-file-name-suffix": " (develop)"
+    ]
 }
