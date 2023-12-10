@@ -37,6 +37,7 @@
     <url type="help">https://linux-show-player-users.readthedocs.io/en/latest/index.html</url>
     <url type="translate">https://crowdin.com/project/linux-show-player</url>
     <releases>
+        <release version="0.6" date="2023-12-10" />
         <release version="v0.6-rc1" date="2023-10-29" />
     </releases>
 </component>
