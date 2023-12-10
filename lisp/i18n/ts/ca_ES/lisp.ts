@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="fr" sourcelanguage="en">
+<TS version="2.0" language="ca" sourcelanguage="en">
   <context>
     <name>About</name>
     <message>
       <location filename="../../../ui/about.py" line="62"/>
       <source>Authors</source>
-      <translation>Auteurs</translation>
+      <translation>Autors</translation>
     </message>
     <message>
       <location filename="../../../ui/about.py" line="65"/>
       <source>Contributors</source>
-      <translation>Contributeurs</translation>
+      <translation>Col·laboradors</translation>
     </message>
     <message>
       <location filename="../../../ui/about.py" line="70"/>
       <source>Translators</source>
-      <translation>Traducteurs</translation>
+      <translation>Traductors</translation>
     </message>
     <message>
       <location filename="../../../ui/about.py" line="88"/>
       <source>About Linux Show Player</source>
-      <translation>À propos de Linux Show Player</translation>
+      <translation>Sobre Linux Show Player</translation>
     </message>
   </context>
   <context>
@@ -29,37 +29,37 @@
     <message>
       <location filename="../../../ui/about.py" line="52"/>
       <source>Linux Show Player is a cue player designed for stage productions.</source>
-      <translation>Linux Show Player est un logiciel de lecture de cue pensé la scène.</translation>
+      <translation>Linux Show Player és un reproductor cue dissenyat per a produccions escèniques.</translation>
     </message>
     <message>
       <location filename="../../../ui/about.py" line="132"/>
       <source>Info</source>
-      <translation>Informations</translation>
+      <translation>Informació</translation>
     </message>
     <message>
       <location filename="../../../ui/about.py" line="137"/>
       <source>License</source>
-      <translation>Licence</translation>
+      <translation>Llicència</translation>
     </message>
     <message>
       <location filename="../../../ui/about.py" line="144"/>
       <source>Contributors</source>
-      <translation>Contributeurs</translation>
+      <translation>Contribuïdors</translation>
     </message>
     <message>
       <location filename="../../../ui/about.py" line="125"/>
       <source>Web site</source>
-      <translation>Site web</translation>
+      <translation>Lloc Web</translation>
     </message>
     <message>
       <location filename="../../../ui/about.py" line="127"/>
       <source>Discussion</source>
-      <translation>Discussion</translation>
+      <translation>Discussió</translation>
     </message>
     <message>
       <location filename="../../../ui/about.py" line="129"/>
       <source>Source code</source>
-      <translation>Code source</translation>
+      <translation>Codi font</translation>
     </message>
   </context>
   <context>
@@ -67,7 +67,7 @@
     <message>
       <location filename="../../../ui/settings/app_configuration.py" line="39"/>
       <source>LiSP preferences</source>
-      <translation>Préférences de LiSP</translation>
+      <translation>LiSP preferències</translation>
     </message>
   </context>
   <context>
@@ -75,7 +75,7 @@
     <message>
       <location filename="../../../ui/settings/app_configuration.py" line="109"/>
       <source>Cannot load configuration page: "{}" ({})</source>
-      <translation>Impossible de charger la page de configuration : "{}" ({})</translation>
+      <translation>no s'ha pogut carregar la pàgina de configuració: "{}" ({})</translation>
     </message>
   </context>
   <context>
@@ -83,42 +83,42 @@
     <message>
       <location filename="../../../ui/settings/app_pages/general.py" line="104"/>
       <source>Default layout</source>
-      <translation>Disposition par défaut</translation>
+      <translation>Disposició prederterminada</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/general.py" line="107"/>
       <source>Show layout selection at startup</source>
-      <translation>Afficher la sélection de mise en page au démarrage</translation>
+      <translation>Mostra la selecció de la disposició a l'inici</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/general.py" line="110"/>
       <source>Use layout at startup:</source>
-      <translation>Utiliser la mise en page au démarrage :</translation>
+      <translation>Usa la disposició a l'inici:</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/general.py" line="113"/>
       <source>Application themes</source>
-      <translation>Thèmes de l'application</translation>
+      <translation>Temes de l'aplicació</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/general.py" line="115"/>
       <source>UI theme:</source>
-      <translation>Thème UI :</translation>
+      <translation>Tema de la interfície:</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/general.py" line="116"/>
       <source>Icons theme:</source>
-      <translation>Thème des icônes :</translation>
+      <translation>Tema d'icones:</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/general.py" line="119"/>
       <source>Application language (require a restart)</source>
-      <translation>Langue de l'application (nécessite un redémarrage)</translation>
+      <translation>Idioma de l'aplicació (cal reiniciar)</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/general.py" line="123"/>
       <source>Language:</source>
-      <translation>Langue :</translation>
+      <translation>Llengua:</translation>
     </message>
   </context>
   <context>
@@ -126,17 +126,17 @@
     <message>
       <location filename="../../../application.py" line="155"/>
       <source>Startup error</source>
-      <translation>Erreur au démarrage</translation>
+      <translation>Error d'inici</translation>
     </message>
     <message>
       <location filename="../../../application.py" line="241"/>
       <source>Error while reading the session file "{}"</source>
-      <translation>Erreur lors de la lecture du fichier de session "{}"</translation>
+      <translation>S'ha produït un error en llegir el fitxer de sessió "{}"</translation>
     </message>
     <message>
       <location filename="../../../application.py" line="230"/>
       <source>Unable to create the cue "{}"</source>
-      <translation>Impossible de créer le cue "{}"</translation>
+      <translation>No s'ha pogut crear la marca "{}"</translation>
     </message>
   </context>
   <context>
@@ -144,7 +144,7 @@
     <message>
       <location filename="../../../core/loading.py" line="135"/>
       <source>Cannot load python class: "{0}"</source>
-      <translation>Impossible de charger la classe python : "{0}"</translation>
+      <translation>No s'ha pogut carregar la classe de Python: "{0}"</translation>
     </message>
   </context>
   <context>
@@ -152,12 +152,12 @@
     <message>
       <location filename="../../../command/stack.py" line="32"/>
       <source>Undo: {}</source>
-      <translation>Annuler : {}</translation>
+      <translation>Desfer: {}</translation>
     </message>
     <message>
       <location filename="../../../command/stack.py" line="33"/>
       <source>Redo: {}</source>
-      <translation>Refaire : {}</translation>
+      <translation>Refer: {}</translation>
     </message>
   </context>
   <context>
@@ -165,12 +165,12 @@
     <message>
       <location filename="../../../core/configuration.py" line="215"/>
       <source>Configuration read from {}</source>
-      <translation>Configuration lue depuis {}</translation>
+      <translation>Configuració llegida de {}</translation>
     </message>
     <message>
       <location filename="../../../core/configuration.py" line="225"/>
       <source>Configuration written at {}</source>
-      <translation>Configuration écrite à {}</translation>
+      <translation>Configuration written at {}</translation>
     </message>
   </context>
   <context>
@@ -178,12 +178,12 @@
     <message>
       <location filename="../../../core/configuration.py" line="248"/>
       <source>New configuration installed at {}</source>
-      <translation>Nouvelle configuration installée à {}</translation>
+      <translation>Nova configuració instal·lada a {}</translation>
     </message>
     <message>
       <location filename="../../../core/configuration.py" line="70"/>
       <source>Invalid path "{}", return default.</source>
-      <translation type="unfinished">Invalid path "{}", return default.</translation>
+      <translation>Camí no vàlid "{}", retorna el valor per defecte.</translation>
     </message>
   </context>
   <context>
@@ -191,62 +191,62 @@
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="25"/>
       <source>Default</source>
-      <translation>Défaut</translation>
+      <translation>Per defecte</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="26"/>
       <source>Faded Start</source>
-      <translation>Fondu de début</translation>
+      <translation>Inici esvaït</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="27"/>
       <source>Faded Resume</source>
-      <translation>Reprise en fondu</translation>
+      <translation>Represa esvaïda</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="28"/>
       <source>Faded Pause</source>
-      <translation>Pause en fondu</translation>
+      <translation>Pausa esvaïda</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="29"/>
       <source>Faded Stop</source>
-      <translation>Stoppé en fondu</translation>
+      <translation>Aturada esvaïda</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="30"/>
       <source>Faded Interrupt</source>
-      <translation>Interruption du fondu</translation>
+      <translation>Interrupció esvaïda</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="33"/>
       <source>Start</source>
-      <translation>Démarrer</translation>
+      <translation>Inicia</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="34"/>
       <source>Resume</source>
-      <translation>Reprendre</translation>
+      <translation>Reprèn</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="35"/>
       <source>Pause</source>
-      <translation>Suspendre</translation>
+      <translation>Pausa</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="36"/>
       <source>Stop</source>
-      <translation>Arrêter</translation>
+      <translation>Atura</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="37"/>
       <source>Do Nothing</source>
-      <translation>Ne rien faire</translation>
+      <translation>No facis res</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="38"/>
       <source>Release from Loop</source>
-      <translation type="unfinished">Release from Loop</translation>
+      <translation>Allibera del bucle</translation>
     </message>
   </context>
   <context>
@@ -254,42 +254,42 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="85"/>
       <source>The appearance depends on the layout</source>
-      <translation>L&apos;apparence dépend de l&apos;agencement</translation>
+      <translation>L'aparença depen de la disposició</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="97"/>
       <source>Cue name</source>
-      <translation>Nom de la cue</translation>
+      <translation>Nom del Cue</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="99"/>
       <source>NoName</source>
-      <translation>Pas de nom</translation>
+      <translation>Sense nom</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="101"/>
       <source>Description/Note</source>
-      <translation>Description / note</translation>
+      <translation>Descripció/Notes</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="104"/>
       <source>Set Font Size</source>
-      <translation>Définir la taille de la police</translation>
+      <translation>Estableix el tamany de la font</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="106"/>
       <source>Color</source>
-      <translation>Couleur</translation>
+      <translation>Color</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="108"/>
       <source>Select background color</source>
-      <translation>Sélectionner la couleur de fond</translation>
+      <translation>Selecciona el color de fons</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="111"/>
       <source>Select font color</source>
-      <translation>Sélectionner la couleur de la police</translation>
+      <translation>Selecciona el color de la font</translation>
     </message>
   </context>
   <context>
@@ -297,7 +297,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="270"/>
       <source>Misc cues</source>
-      <translation>Cues diverses</translation>
+      <translation>Diversos cues</translation>
     </message>
   </context>
   <context>
@@ -305,12 +305,12 @@
     <message>
       <location filename="../../../command/cue.py" line="73"/>
       <source>Cues settings changed.</source>
-      <translation>Paramètres de cues modifiés.</translation>
+      <translation>S'ha canviat la configuració dels cues.</translation>
     </message>
     <message>
       <location filename="../../../command/cue.py" line="45"/>
       <source>Cue settings changed: "{}"</source>
-      <translation>Paramètres de cues modifiés: "{}"</translation>
+      <translation>S'ha canviat la configuració del Cue: "{}"</translation>
     </message>
   </context>
   <context>
@@ -318,7 +318,7 @@
     <message>
       <location filename="../../../cues/media_cue.py" line="29"/>
       <source>Media Cue</source>
-      <translation>Cue de média</translation>
+      <translation>Cue de Mèdia</translation>
     </message>
   </context>
   <context>
@@ -326,27 +326,27 @@
     <message>
       <location filename="../../../ui/widgets/cue_next_actions.py" line="25"/>
       <source>Do Nothing</source>
-      <translation>Ne rien faire</translation>
+      <translation>No facis res</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_next_actions.py" line="26"/>
       <source>Trigger after the end</source>
-      <translation>Déclencher après la fin</translation>
+      <translation>Activa després del final</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_next_actions.py" line="29"/>
       <source>Trigger after post wait</source>
-      <translation>Déclencher après l'attente</translation>
+      <translation>Activa després de l'espera del post</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_next_actions.py" line="32"/>
       <source>Select after the end</source>
-      <translation>Sélectionner après la fin</translation>
+      <translation>Selecciona després del final</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/cue_next_actions.py" line="35"/>
       <source>Select after post wait</source>
-      <translation>Sélectionner après l'attente</translation>
+      <translation>Selecciona després de l'espera post</translation>
     </message>
   </context>
   <context>
@@ -354,67 +354,67 @@
     <message>
       <location filename="../../../ui/settings/app_pages/cue.py" line="64"/>
       <source>Interrupt fade</source>
-      <translation>Interrompre le fondu</translation>
+      <translation>Interromp esvaïment</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/cue.py" line="66"/>
       <source>Used globally when interrupting cues</source>
-      <translation>Utilisé globalement lors de l'interruption de cues</translation>
+      <translation>S'utilitza globalment en interrompre les cues</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/cue.py" line="72"/>
       <source>Fallback fade settings</source>
-      <translation>Réglages du fondu de secours</translation>
+      <translation>Configuració de l'esvaïment alternatiu</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/cue.py" line="75"/>
       <source>Used for fade-in and fade-out actions, for cues where fade duration is set to 0.</source>
-      <translation>Utilisé pour les actions de fondu entrant et sortant, pour les repères où la durée du fondu est à 0.</translation>
+      <translation>S'utilitza per a les accions d'esvaïment de sortida i entrada, per als senyals on la durada de l'esvaïment està establerta a 0.</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="113"/>
       <source>Start action</source>
-      <translation>Lancer l&apos;action</translation>
+      <translation>Acció d'inici</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="115"/>
       <source>Default action to start the cue</source>
-      <translation>Action par défaut pour démarrer le cue</translation>
+      <translation>Acció predeterminada per iniciar el Cue</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="119"/>
       <source>Stop action</source>
-      <translation>Arrêter l&apos;action</translation>
+      <translation>Acció d'aturada</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="121"/>
       <source>Default action to stop the cue</source>
-      <translation>Action par défaut pour arrêter le cue</translation>
+      <translation>Acció predeterminada per atura el Cue</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="202"/>
       <source>Pre wait</source>
-      <translation>Pré-attente</translation>
+      <translation>Pre espera</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="204"/>
       <source>Wait before cue execution</source>
-      <translation>Attente avant l&apos;exécution de la cue</translation>
+      <translation>Espera abans d'executar el cue</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="207"/>
       <source>Post wait</source>
-      <translation>Post-attente</translation>
+      <translation>Post espera</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="209"/>
       <source>Wait after cue execution</source>
-      <translation>Attente après l&apos;exécution de la cue</translation>
+      <translation>Espera desprès de l'execució del cue</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="212"/>
       <source>Next action</source>
-      <translation>Prochaine action</translation>
+      <translation>Següent acció</translation>
     </message>
   </context>
   <context>
@@ -422,17 +422,17 @@
     <message>
       <location filename="../../../ui/widgets/fades.py" line="33"/>
       <source>Linear</source>
-      <translation>Linéaire</translation>
+      <translation>Lineal</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/fades.py" line="34"/>
       <source>Quadratic</source>
-      <translation>Du second degré</translation>
+      <translation>Quadràtica</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/fades.py" line="35"/>
       <source>Quadratic2</source>
-      <translation>Du second degré 2</translation>
+      <translation>Quadràtica2</translation>
     </message>
   </context>
   <context>
@@ -440,12 +440,12 @@
     <message>
       <location filename="../../../ui/widgets/fades.py" line="97"/>
       <source>Duration (sec):</source>
-      <translation>Durée (sec):</translation>
+      <translation>Durada (seg):</translation>
     </message>
     <message>
       <location filename="../../../ui/widgets/fades.py" line="98"/>
       <source>Curve:</source>
-      <translation>Courbe :</translation>
+      <translation>Corba:</translation>
     </message>
   </context>
   <context>
@@ -453,12 +453,12 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="273"/>
       <source>Fade In</source>
-      <translation>Fondu à l&apos;ouverture</translation>
+      <translation>Esvaïment d'entrada</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="274"/>
       <source>Fade Out</source>
-      <translation>Fondu à la fermeture</translation>
+      <translation>Esvaïment de sortida</translation>
     </message>
   </context>
   <context>
@@ -466,7 +466,7 @@
     <message>
       <location filename="../../../ui/widgets/hotkeyedit.py" line="125"/>
       <source>Press shortcut</source>
-      <translation>Appuyez sur le raccourci</translation>
+      <translation>Premeu la drecera</translation>
     </message>
   </context>
   <context>
@@ -474,17 +474,17 @@
     <message>
       <location filename="../../../ui/layoutselect.py" line="37"/>
       <source>Layout selection</source>
-      <translation>Sélection de l&apos;agencement</translation>
+      <translation>Selecció de Disposició</translation>
     </message>
     <message>
       <location filename="../../../ui/layoutselect.py" line="50"/>
       <source>Select layout</source>
-      <translation>Sélectionner l&apos;agencement</translation>
+      <translation>Selecciona una Disposició</translation>
     </message>
     <message>
       <location filename="../../../ui/layoutselect.py" line="54"/>
       <source>Open file</source>
-      <translation>Ouvrir un fichier</translation>
+      <translation>Obre un fitxer</translation>
     </message>
   </context>
   <context>
@@ -492,27 +492,27 @@
     <message>
       <location filename="../../../ui/settings/app_pages/layouts.py" line="52"/>
       <source>Layout actions</source>
-      <translation type="unfinished">Layout actions</translation>
+      <translation>Accions de disposició</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/layouts.py" line="54"/>
       <source>Fade out when stopping all cues</source>
-      <translation>Fondu en cas d'arrêt de toutes les cues</translation>
+      <translation>Esvaiment de sortida quan s'aturen tots els cues</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/layouts.py" line="57"/>
       <source>Fade out when interrupting all cues</source>
-      <translation>Fondu en cas d'interruption de toutes les cues</translation>
+      <translation>Esvaiment de sortida quan s'interrompin tots els cues</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/layouts.py" line="60"/>
       <source>Fade out when pausing all cues</source>
-      <translation>Fondu en cas de mise en pause de toutes les cues</translation>
+      <translation>Esvaiment de sortida en fer una pausa a tots els cues</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/layouts.py" line="63"/>
       <source>Fade in when resuming all cues</source>
-      <translation>Fondu lors de la reprise de toutes les cues</translation>
+      <translation>Esvaiment d'entrada en reprendre tots els cues</translation>
     </message>
   </context>
   <context>
@@ -520,7 +520,7 @@
     <message>
       <location filename="../../../ui/logging/status.py" line="36"/>
       <source>Errors/Warnings</source>
-      <translation>Erreurs/avertissements</translation>
+      <translation>Errors/Avisos</translation>
     </message>
   </context>
   <context>
@@ -528,37 +528,37 @@
     <message>
       <location filename="../../../ui/logging/dialog.py" line="79"/>
       <source>Dismiss all</source>
-      <translation>Tout ignorer</translation>
+      <translation>Descarta-ho tot</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/dialog.py" line="86"/>
       <source>Show details</source>
-      <translation>Afficher les détails</translation>
+      <translation>Mostral els detalls</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="21"/>
       <source>Debug</source>
-      <translation>Déboguage</translation>
+      <translation>Depura</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="22"/>
       <source>Info</source>
-      <translation>Informations</translation>
+      <translation>Informació</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="23"/>
       <source>Warning</source>
-      <translation>Attention</translation>
+      <translation>Avís</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="24"/>
       <source>Error</source>
-      <translation>Erreur</translation>
+      <translation>Error</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="25"/>
       <source>Critical</source>
-      <translation>Critique</translation>
+      <translation>Crític</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="37"/>
@@ -568,82 +568,82 @@
     <message>
       <location filename="../../../ui/logging/common.py" line="38"/>
       <source>Milliseconds</source>
-      <translation>Millisecondes</translation>
+      <translation>Milisegons</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="39"/>
       <source>Logger name</source>
-      <translation>Nom de log</translation>
+      <translation>Nom del registre</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="40"/>
       <source>Level</source>
-      <translation>Niveau</translation>
+      <translation>NIvell</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="41"/>
       <source>Message</source>
-      <translation>Message</translation>
+      <translation>Missatge</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="42"/>
       <source>Function</source>
-      <translation>Fonction</translation>
+      <translation>Funció</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="43"/>
       <source>Path name</source>
-      <translation>Nom du chemin</translation>
+      <translation>Nom del camí</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="44"/>
       <source>File name</source>
-      <translation>Nom du fichier</translation>
+      <translation>Nom del fitxer</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="45"/>
       <source>Line no.</source>
-      <translation>Ligne n°</translation>
+      <translation>Línia núm.</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="46"/>
       <source>Module</source>
-      <translation>Module</translation>
+      <translation>Mòdul</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="47"/>
       <source>Process ID</source>
-      <translation>ID du processus</translation>
+      <translation>ID del procés</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="48"/>
       <source>Process name</source>
-      <translation>Nom du processus</translation>
+      <translation>Nom del Procés</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="49"/>
       <source>Thread ID</source>
-      <translation>ID du fil</translation>
+      <translation>ID del fil</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="50"/>
       <source>Thread name</source>
-      <translation>Nom du sujet</translation>
+      <translation>Nom del Fil</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/common.py" line="51"/>
       <source>Exception info</source>
-      <translation>Information d'exception</translation>
+      <translation>Informació de l'excepció</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/viewer.py" line="54"/>
       <source>Linux Show Player - Log Viewer</source>
-      <translation>Lecteur Linux Show - Visionneur de log</translation>
+      <translation>Linux Show Player - Visor del registre</translation>
     </message>
     <message>
       <location filename="../../../ui/logging/viewer.py" line="126"/>
       <source>Showing {} of {} records</source>
-      <translation>Affichage de {} enregistrements sur {}</translation>
+      <translation>S'estan mostrant {} de {} registres</translation>
     </message>
   </context>
   <context>
@@ -651,82 +651,82 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="191"/>
       <source>&amp;File</source>
-      <translation>&amp;Fichier</translation>
+      <translation>&amp;Fitxer</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="192"/>
       <source>New session</source>
-      <translation>Nouvelle session</translation>
+      <translation>Nova sessió</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="194"/>
       <source>Open</source>
-      <translation>Ouvrir</translation>
+      <translation>Obre</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="196"/>
       <source>Save session</source>
-      <translation>Sauvegarder la session</translation>
+      <translation>Desa sessió</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="198"/>
       <source>Preferences</source>
-      <translation>Préférences</translation>
+      <translation>Preferències</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="200"/>
       <source>Save as</source>
-      <translation>Sauvegarder sous</translation>
+      <translation>Desa com</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="202"/>
       <source>Full Screen</source>
-      <translation>Plein écran</translation>
+      <translation>Pantalla completa</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="204"/>
       <source>Exit</source>
-      <translation>Quitter</translation>
+      <translation>Surt</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="207"/>
       <source>&amp;Edit</source>
-      <translation>Édit&amp;er</translation>
+      <translation>&amp;Edita</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="208"/>
       <source>Undo</source>
-      <translation>Annuler</translation>
+      <translation>Desfés</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="210"/>
       <source>Redo</source>
-      <translation>Refaire</translation>
+      <translation>Refés</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="212"/>
       <source>Select all</source>
-      <translation>Tout sélectionner</translation>
+      <translation>Selecciona tot</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="214"/>
       <source>Select all media cues</source>
-      <translation>Sélectionner toutes les cues média</translation>
+      <translation>Selecciona tots els Media Cues</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="217"/>
       <source>Deselect all</source>
-      <translation>Tout désélectionner </translation>
+      <translation>Desselecciona tot</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="218"/>
       <source>CTRL+SHIFT+A</source>
-      <translation>CTRL+MAJ+A</translation>
+      <translation>CTRL+SHIFT+A</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="220"/>
       <source>Invert selection</source>
-      <translation>Inverser la sélection</translation>
+      <translation>Inverteix la selecció</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="222"/>
@@ -736,57 +736,57 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="223"/>
       <source>Edit selected</source>
-      <translation>Éditer la sélection</translation>
+      <translation>Edita els seleccionats</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="224"/>
       <source>CTRL+SHIFT+E</source>
-      <translation>CTRL+MAJ+E</translation>
+      <translation>CTRL+SHIFT+E</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="226"/>
       <source>&amp;Layout</source>
-      <translation>É&amp;tat</translation>
+      <translation>&amp;Disposició</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="228"/>
       <source>&amp;Tools</source>
-      <translation>Ou&amp;tils</translation>
+      <translation>&amp;Eines</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="229"/>
       <source>Edit selection</source>
-      <translation>Éditer la sélection</translation>
+      <translation>Edita selecció</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="231"/>
       <source>&amp;About</source>
-      <translation>À &amp;propos</translation>
+      <translation>&amp;Quant a</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="232"/>
       <source>About</source>
-      <translation>À propos</translation>
+      <translation>Quant a</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="233"/>
       <source>About Qt</source>
-      <translation>À propos de Qt</translation>
+      <translation>Quant a Qt</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="402"/>
       <source>Close session</source>
-      <translation>Fermer la session</translation>
+      <translation>Tanca la sessió</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="403"/>
       <source>The current session contains changes that have not been saved.</source>
-      <translation>La session en cours contient des modifications qui n'ont pas été enregistrées.</translation>
+      <translation>La sessió actual conté canvis que no s'han desat.</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="411"/>
       <source>Do you want to save them now?</source>
-      <translation>Voulez-vous les enregistrer maintenant ?</translation>
+      <translation>Voleu desar-los ara?</translation>
     </message>
   </context>
   <context>
@@ -794,7 +794,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="261"/>
       <source>Registered cue menu: "{}"</source>
-      <translation type="unfinished">Registered cue menu: "{}"</translation>
+      <translation>Menú cue registrat: "{}"</translation>
     </message>
   </context>
   <context>
@@ -802,7 +802,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="346"/>
       <source>Cannot create cue {}</source>
-      <translation>Impossible de créer le go {}</translation>
+      <translation>No s'ha pogut crear el cue {}</translation>
     </message>
   </context>
   <context>
@@ -810,32 +810,32 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/media_cue.py" line="81"/>
       <source>Start time</source>
-      <translation>Temps de départ</translation>
+      <translation>Temps d'inici</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/media_cue.py" line="83"/>
       <source>Stop position of the media</source>
-      <translation>Position de fin du média</translation>
+      <translation>Posició d'aturada del media</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/media_cue.py" line="85"/>
       <source>Stop time</source>
-      <translation>Temps de fin</translation>
+      <translation>Temps d'aturada</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/media_cue.py" line="87"/>
       <source>Start position of the media</source>
-      <translation>Position de démarrage du média</translation>
+      <translation>Posició d'inici del media</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/media_cue.py" line="89"/>
       <source>Loop</source>
-      <translation>Boucle</translation>
+      <translation>Bucle</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/media_cue.py" line="91"/>
       <source>Repetition after first play (-1 = infinite)</source>
-      <translation type="unfinished">Repetition after first play (-1 = infinite)</translation>
+      <translation>Repeticions després de la primerea exacució (-1 = infinit)</translation>
     </message>
   </context>
   <context>
@@ -843,7 +843,7 @@
     <message>
       <location filename="../../../core/loading.py" line="68"/>
       <source>Cannot load python module: "{0}"</source>
-      <translation type="unfinished">Cannot load python module: "{0}"</translation>
+      <translation>No s'ha pogut carregar el mòdul de Python: "{0}"</translation>
     </message>
   </context>
   <context>
@@ -851,27 +851,27 @@
     <message>
       <location filename="../../../core/plugins_manager.py" line="78"/>
       <source>A plugin by the name of "{}" already exists.</source>
-      <translation type="unfinished">A plugin by the name of "{}" already exists.</translation>
+      <translation>Ja existeix un connector amb el nom de "{}".</translation>
     </message>
     <message>
       <location filename="../../../core/plugins_manager.py" line="131"/>
       <source>The requested plugin is not loaded: "{}"</source>
-      <translation type="unfinished">The requested plugin is not loaded: "{}"</translation>
+      <translation>El connector sol·licitat no s'ha carregat: "{}"</translation>
     </message>
     <message>
       <location filename="../../../core/plugins_manager.py" line="109"/>
       <source>Failed to register plugin: "{}"</source>
-      <translation type="unfinished">Failed to register plugin: "{}"</translation>
+      <translation>No s'ha pogut registrar el connector: "{}"</translation>
     </message>
     <message>
       <location filename="../../../core/plugins_manager.py" line="151"/>
       <source>Failed to terminate plugin: "{}"</source>
-      <translation type="unfinished">Failed to terminate plugin: "{}"</translation>
+      <translation>No s'ha pogut finalitzar el connector: "{}"</translation>
     </message>
     <message>
       <location filename="../../../core/plugin_loader.py" line="68"/>
       <source>Cannot satisfy dependencies for plugin: "{}"</source>
-      <translation type="unfinished">Cannot satisfy dependencies for plugin: "{}"</translation>
+      <translation>No es poden satisfer les dependències del connector: "{}"</translation>
     </message>
   </context>
   <context>
@@ -879,12 +879,12 @@
     <message>
       <location filename="../../../core/plugins_manager.py" line="145"/>
       <source>Plugin terminated: "{}"</source>
-      <translation type="unfinished">Plugin terminated: "{}"</translation>
+      <translation>S'ha finalitzat el connector: "{}"</translation>
     </message>
     <message>
       <location filename="../../../core/plugin_loader.py" line="108"/>
       <source>Plugin loaded: "{}"</source>
-      <translation>Plugin chargé : "{}"</translation>
+      <translation>Connector carregat: "{}"</translation>
     </message>
   </context>
   <context>
@@ -892,12 +892,12 @@
     <message>
       <location filename="../../../ui/settings/app_pages/plugins.py" line="91"/>
       <source>Plugin</source>
-      <translation>Greffon</translation>
+      <translation>Connector</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/plugins.py" line="92"/>
       <source>Enabled</source>
-      <translation>Activé</translation>
+      <translation>Activat</translation>
     </message>
   </context>
   <context>
@@ -905,27 +905,27 @@
     <message>
       <location filename="../../../core/plugin.py" line="117"/>
       <source>Plugin disabled. Enable to use.</source>
-      <translation>Plugin désactivé. Activer pour l'utiliser.</translation>
+      <translation>Connector desactivat. Habilita per utilitzar.</translation>
     </message>
     <message>
       <location filename="../../../core/plugin.py" line="92"/>
       <source>An error has occurred with this plugin. Please see logs for further information.</source>
-      <translation>Une erreur s'est produite avec ce plugin. Veuillez consulter les logs pour plus d'informations.</translation>
+      <translation>S'ha produït un error amb aquest connector. Per a més informació, consulteu els registres.</translation>
     </message>
     <message>
       <location filename="../../../core/plugin.py" line="106"/>
       <source>There is a non-critical issue with this disabled plugin. Please see logs for further information.</source>
-      <translation>Il y a un problème non critique avec ce plugin désactivé. Veuillez consulter les logs pour plus d'informations.</translation>
+      <translation>Hi ha un problema no crític amb aquest connector desactivat. Per a més informació, consulteu els registres.</translation>
     </message>
     <message>
       <location filename="../../../core/plugin.py" line="113"/>
       <source>Plugin loaded and ready for use.</source>
-      <translation>Plugin chargé et prêt à l'emploi.</translation>
+      <translation>Connector carregat i preparat per al seu ús.</translation>
     </message>
     <message>
       <location filename="../../../core/plugin.py" line="100"/>
       <source>A non-critical issue is affecting this plugin. Please see logs for further information.</source>
-      <translation type="unfinished">A non-critical issue is affecting this plugin. Please see logs for further information.</translation>
+      <translation>Un problema no crític està afectant aquest connector. Per a més informació, consulteu els registres.</translation>
     </message>
   </context>
   <context>
@@ -933,7 +933,7 @@
     <message>
       <location filename="../../../ui/widgets/colorbutton.py" line="38"/>
       <source>Right click to reset</source>
-      <translation>Clic-droit pour réinitialiser</translation>
+      <translation>Clck dret per reiniciar</translation>
     </message>
   </context>
   <context>
@@ -941,27 +941,27 @@
     <message>
       <location filename="../../../ui/settings/app_pages/plugins.py" line="36"/>
       <source>Plugins</source>
-      <translation>Greffons</translation>
+      <translation>Connectors</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/general.py" line="38"/>
       <source>General</source>
-      <translation>Générale</translation>
+      <translation>General</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/layouts.py" line="26"/>
       <source>Layouts</source>
-      <translation>Dispositions</translation>
+      <translation>Disposicions</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/cue.py" line="27"/>
       <source>Cue Settings</source>
-      <translation>Paramètres de cue</translation>
+      <translation>Ajustos del Cua</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/media_cue.py" line="33"/>
       <source>Media Cue</source>
-      <translation>Cue de média</translation>
+      <translation>Media Cue</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="43"/>
@@ -971,22 +971,22 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="53"/>
       <source>Behaviours</source>
-      <translation>Comportements</translation>
+      <translation>Comprotaments</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="156"/>
       <source>Pre/Post Wait</source>
-      <translation>Attente pré/post</translation>
+      <translation>Pre/Post Espera</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="238"/>
       <source>Fade In/Out</source>
-      <translation>Fade de Début/Fin</translation>
+      <translation>Esvaiment d'Entrada/Sortida</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="36"/>
       <source>Appearance</source>
-      <translation>Apparence</translation>
+      <translation>Aparença</translation>
     </message>
   </context>
 </TS>

@@ -14,8 +14,7 @@ with open(manifest_path, mode="r") as f:
 
 # Patch top-level attributes
 manifest["branch"] = app_branch
-if app_branch != "master":
-    manifest["desktop-file-name-suffix"] = " ({})".format(app_branch)
+manifest["desktop-file-name-suffix"] = " ({})".format(app_branch)
 
 # Patch the app-module to use the correct branch
 for module in manifest["modules"]:

@@ -48,7 +48,7 @@ jobs:
       - restore_cache:
           name: FLATPAK BUILD ⟹ Restore cache
           keys:
-            - v2-flatpak-{{ checksum "scripts/flatpak/org.linux_show_player.LinuxShowPlayer.json" }}-{{ checksum "scripts/flatpak/python-modules.json" }}
+            - v2-flatpak-{{ checksum "scripts/flatpak/org.linuxshowplayer.LinuxShowPlayer.json" }}-{{ checksum "scripts/flatpak/python-modules.json" }}
             - v2-flatpak-
 
       - run:
@@ -58,7 +58,7 @@ jobs:
 
       - save_cache:
           name: FLATPAK BUILD ⟹ Save cache
-          key: v2-flatpak-{{ checksum "scripts/flatpak/org.linux_show_player.LinuxShowPlayer.json" }}-{{ checksum "scripts/flatpak/python-modules.json" }}
+          key: v2-flatpak-{{ checksum "scripts/flatpak/org.linuxshowplayer.LinuxShowPlayer.json" }}-{{ checksum "scripts/flatpak/python-modules.json" }}
           paths:
             - ~/repo/scripts/flatpak/.flatpak-builder
 

@@ -47,6 +47,7 @@ Sphinx = "^7.1"
 furo = "^2023.07.26"
 myst-parser = "^2.0.0"
 sphinx-autobuild = "^2021.3.14"
+sphinx-inline-tabs = "^2023.4.21"
 
 [tool.poetry.group.dev.dependencies]
 toml = "*"

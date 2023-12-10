@@ -106,7 +106,7 @@ def pyts_update(
             destination = locale_path.joinpath(module_name + ".ts")
 
             # Find the translations in python files
-            finder = PyTrFinder(destination.as_posix(), src_language=locale)
+            finder = PyTrFinder(destination.as_posix(), language=locale)
             finder.find_in_files(sources)
 
             # Merge existing translations

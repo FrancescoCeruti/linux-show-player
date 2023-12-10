@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<component type="desktop">
-    <id>org.linux_show_player.LinuxShowPlayer.desktop</id>
+<!-- Copyright 2023 Francesco Ceruti -->
+<component type="desktop-application">
+    <id>org.linuxshowplayer.LinuxShowPlayer</id>
+    <launchable type="desktop-id">org.linuxshowplayer.LinuxShowPlayer.desktop</launchable>
     <metadata_license>CC-BY-3.0</metadata_license>
     <project_license>GPL-3.0+</project_license>
     <name>Linux Show Player</name>
@@ -15,18 +17,26 @@
         <p>Some highlights:</p>
         <ul>
             <li>List layout</li>
-            <li>Cart layout (buttons) for touchscreens</li>
+            <li>Cart layout</li>
             <li>Concurrent cues playback</li>
             <li>Pre/Post wait</li>
             <li>Undo/Redo changes</li>
-            <li>Realtime sound effects: equalization, pitch shift, speed control, compression</li>
+            <li>Realtime sound effects</li>
             <li>Peak and ReplayGain normalization</li>
-            <li>Send/Receive MIDI and OSC messages</li>
-            <li>Large media-format support thanks to Gstreamer</li>
+            <li>MIDI and OSC support</li>
         </ul>
     </description>
+    <screenshots>
+        <screenshot type="default">
+            <image>https://www.linux-show-player.org/assets/images/home-screenshot.png</image>
+        </screenshot>
+    </screenshots>
+    <content_rating type="oars-1.0" />
     <url type="homepage">https://www.linux-show-player.org/</url>
     <url type="bugtracker">https://github.com/FrancescoCeruti/linux-show-player/issues</url>
     <url type="help">https://linux-show-player-users.readthedocs.io/en/latest/index.html</url>
     <url type="translate">https://crowdin.com/project/linux-show-player</url>
+    <releases>
+        <release version="v0.6-rc1" date="2023-10-29" />
+    </releases>
 </component>
