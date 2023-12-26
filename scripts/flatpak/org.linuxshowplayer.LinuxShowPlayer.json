@@ -3,6 +3,8 @@
     "runtime": "org.kde.Platform",
     "runtime-version": "5.15-23.08",
     "sdk": "org.kde.Sdk",
+    "base": "com.riverbankcomputing.PyQt.BaseApp",
+    "base-version": "5.15-23.08",
     "command": "linux-show-player",
     "rename-icon": "linuxshowplayer",
     "finish-args": [
@@ -11,38 +13,26 @@
         "--socket=wayland",
         "--socket=fallback-x11",
         "--socket=pulseaudio",
-        "--system-talk-name=org.freedesktop.RealtimeKit1",
         "--filesystem=xdg-run/pipewire-0",
         "--filesystem=home",
         "--device=all"
+    ],
+    "cleanup-commands": [
+        "/app/cleanup-BaseApp.sh"
     ],
     "cleanup": [
         "*.la",
         "*.a",
         "/include",
-        "/lib/pkgconfig"
+        "/lib/pkgconfig",
+        "/share/man"
     ],
+    "build-options": {
+        "env": [
+            "BASEAPP_REMOVE_WEBENGINE=1"
+        ]
+    },
     "modules": [
-        {
-            "name": "Jack",
-            "buildsystem": "simple",
-            "build-commands": [
-                "./waf configure --prefix=$FLATPAK_DEST",
-                "./waf build -j $FLATPAK_BUILDER_N_JOBS",
-                "./waf install"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://github.com/jackaudio/jack2.git",
-                    "tag": "v1.9.22",
-                    "commit": "4f58969432339a250ce87fe855fb962c67d00ddb"
-                }
-            ],
-            "cleanup": [
-                "*"
-            ]
-        },
         {
             "name": "RtMidi",
             "config-opts": [
@@ -69,20 +59,7 @@
                 }
             ]
         },
-        {
-            "name": "liblo",
-            "config-opts": [
-                "--disable-examples",
-                "--disable-tools"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://github.com/radarsat1/liblo.git",
-                    "commit": "02989c6c69f54157b8d9651fb8d9ad6de8128d59"
-                }
-            ]
-        },
+        "shared-modules/linux-audio/liblo.json",
         {
             "name": "pyliblo3",
             "buildsystem": "simple",
@@ -165,7 +142,7 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "ftp://ftp.alsa-project.org/pub/pyalsa/pyalsa-1.2.7.tar.bz2",
+                    "url": "https://www.alsa-project.org/files/pub/pyalsa/pyalsa-1.2.7.tar.bz2",
                     "sha256": "67d8f99f1ccf23e7ebdfa2c3be0b09f147949fd9511d1e6748b7f412ef046e1f"
                 }
             ]
@@ -201,7 +178,6 @@
                 }
             ]
         },
-        "pyqt-modules.json",
         "pygobject-modules.json",
         "python-modules.json",
         {
@@ -209,14 +185,10 @@
             "buildsystem": "simple",
             "build-commands": [
                 "pip3 install --no-deps --no-build-isolation --prefix=\"${FLATPAK_DEST}\" .",
-                "mkdir -p /app/share/applications/",
-                "mkdir -p /app/share/mime/packages/",
-                "mkdir -p /app/share/metainfo/",
-                "mkdir -p /app/share/icons/hicolor/512x512/apps/",
-                "cp dist/linuxshowplayer.desktop /app/share/applications/org.linuxshowplayer.LinuxShowPlayer.desktop",
-                "cp dist/linuxshowplayer.xml /app/share/mime/packages/org.linuxshowplayer.LinuxShowPlayer.xml",
-                "cp dist/linuxshowplayer.metainfo.xml /app/share/metainfo/org.linuxshowplayer.LinuxShowPlayer.metainfo.xml",
-                "cp dist/linuxshowplayer.png /app/share/icons/hicolor/512x512/apps/linuxshowplayer.png"
+                "install -Dm644 dist/linuxshowplayer.desktop ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop",
+                "install -Dm644 dist/linuxshowplayer.xml /app/share/mime/packages/${FLATPAK_ID}.xml",
+                "install -Dm644 dist/linuxshowplayer.metainfo.xml /app/share/metainfo/${FLATPAK_ID}.metainfo.xml",
+                "install -Dm644 dist/linuxshowplayer.png /app/share/icons/hicolor/512x512/apps/linuxshowplayer.png"
             ],
             "sources": [
                 {
