@@ -12,6 +12,8 @@ jobs:
 
     steps:
       - checkout
+      - run: git submodule sync
+      - run: git submodule update --init
 
       - run:
           name: SYSTEM ⟹ Install required packages
