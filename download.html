@@ -3,58 +3,59 @@ layout: default
 title: Download
 ---
 <div class="container py-4">
-    <div class="card mb-3">
+    <div class="card my-3">
         <div class="card-header h3">
-            <img src="assets/images/flatpak-logo.png" class="me-1" height="38"> Flatpak
+            <i class="fas fa-pizza-slice me-1"></i> Official
         </div>
         <div class="card-body">
-            <button target="_blank" class="btn btn-lg btn-primary mx-1" disabled>
-                 FlatHub <span class="fs-6 text-muted">coming soon</small>
-            </button>
+            <a href="https://flathub.org/it/apps/org.linuxshowplayer.LinuxShowPlayer" target="_blank">
+                <img width="240" alt="Download on Flathub" src="https://dl.flathub.org/assets/badges/flathub-badge-en.png">
+            </a>
+        </div>
+    </div>
 
+    <div class="card my-3">
+        <div class="card-header h3">
+            <i class="fas fa-flask me-1"></i> Testing
+        </div>
+        <div class="card-body">
             <a href="https://github.com/FrancescoCeruti/linux-show-player/releases/tag/ci-master" target="_blank" class="btn btn-lg btn-primary mx-1">
-                <i class="fas fa-flask h5 me-1"></i> Latest
+                Latest
+            </a>
+
+            <a href="https://github.com/FrancescoCeruti/linux-show-player/releases/tag/ci-develop" target="_blank" class="btn btn-lg btn-primary mx-1">
+                Experimental
             </a>
         </div>
         <div class="card-footer">
-            <small>
-                Make sure to follow the flatpak <a href="https://flatpak.org/setup/" target="_blank">setup guide</a>
-                before installing
-            </small>
+            Make sure to follow the flatpak <a href="https://flatpak.org/setup/" target="_blank">setup guide</a>.
+        </div>
+    </div>
+
+    <div class="card my-3">
+        <div class="card-header h3">
+            <i class="fas fa-box me-1"></i> Directly from your distribution
+        </div>
+        <div class="card-body">
+            For some GNU/Linux distributions you can install a native package, you can find a list on <a href="https://repology.org/metapackage/linux-show-player">repology.org</a>.
+        </div>
+        <div class="card-footer">
+            Keep in mind that it might not be the latest version!
+        </div>
+    </div>
+
+    <div class="card my-3">
+        <div class="card-header h3">
+            <i class="fa-brands fa-suse me-1"></i> OpenSuse <span class="fs-5 fst-italic">multimedia:proaudio (Geekos DAW) project</span>
+        </div>
+        <div class="card-body">
+            You can find all the info on the <a href="https://software.opensuse.org/download/package?package=linux-show-player&project=multimedia%3Aproaudio">package page</a>.
         </div>
     </div>
 
     <div class="text-center">
-        <a href="https://github.com/FrancescoCeruti/linux-show-player/releases/" target="_blank"><i class="fa fa-history"></i> Releases history</a>
-    </div>
-
-    <hr>
-    <h2 class="mb-3">Directly from your distribution</h2>
-
-    <div class="alert alert-warning fw-bold" role="alert">
-        You might not get the latest version.
-    </div>
-
-    <h4>&bull;&nbsp; ArchLinux</h4>
-    <div class="px-3">
-        <p>
-            There is an <a href="https://aur.archlinux.org/packages/linux-show-player">AUR package.</a>
-        </p>
-    </div>
-
-    <h4>&bull;&nbsp; Ubuntu and Debian</h4>
-    <div class="px-3">
-        <p>You can search Linux Show Player directly from your package-manager / software-manager.</p>
-        <p>Or you can use the command line:</p>
-        <div class="alert alert-dark" role="alert">
-            <code>
-                sudo apt-get install linux-show-player
-            </code>
-        </div>
-    </div>
-   
-    <h4>&bull;&nbsp; OpenSuse <span class="badge badge-info">multimedia:proaudio (Geekos DAW) project</span></h4>
-    <div class="px-3">
-        <p>You can find all the info in the <a href="https://software.opensuse.org/download/package?package=linux-show-player&project=multimedia%3Aproaudio">package page</a>.</p>
+        <a href="https://github.com/FrancescoCeruti/linux-show-player/releases/" target="_blank"><i class="fas fa-history"></i> Releases history</a>
+        <span class="mx-1">|</span>
+        <a href="https://linux-show-player-users.readthedocs.io/en/latest/installation.html" target="_blank"><i class="fas fa-book"></i> Documentation</a>
     </div>
 </div>
