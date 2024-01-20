@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../plugins/controller/controller.py" line="166"/>
       <source>Cannot load controller protocol: "{}"</source>
-      <translation type="unfinished">Cannot load controller protocol: "{}"</translation>
+      <translation>Kann das Controller-Protokoll nicht laden: "{}"</translation>
     </message>
   </context>
   <context>
@@ -85,7 +85,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="147"/>
       <source>Error while importing configuration entry, skipped.</source>
-      <translation type="unfinished">Error while importing configuration entry, skipped.</translation>
+      <translation>Fehler beim Importieren des Konfigurationseintrags, übersprungen.</translation>
     </message>
   </context>
   <context>
@@ -98,12 +98,12 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="104"/>
       <source>OSC Path:</source>
-      <translation type="unfinished">OSC Path:</translation>
+      <translation>OSC-Pfad:</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="110"/>
       <source>/path/to/method</source>
-      <translation>/pfad/zu/methode</translation>
+      <translation>/pfad/zur/methode</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="238"/>
@@ -167,13 +167,13 @@
       <location filename="../../../plugins/controller/protocols/osc.py" line="358"/>
       <source>Osc path seems invalid,
 do not forget to edit the path later.</source>
-      <translation type="unfinished">Osc path seems invalid,
-do not forget to edit the path later.</translation>
+      <translation>OSC-Pfad scheint ungültig,
+vergessen Sie nicht, den Pfad später zu überarbeiten.</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="317"/>
       <source>Error while importing configuration entry, skipped.</source>
-      <translation type="unfinished">Error while importing configuration entry, skipped.</translation>
+      <translation>Fehler beim Importieren des Konfigurationseintrags, übersprungen.</translation>
     </message>
   </context>
   <context>
