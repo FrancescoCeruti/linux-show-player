@@ -54,7 +54,7 @@
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="80"/>
       <source>Command cue ended with an error status. Exit code: {}</source>
-      <translation type="unfinished">Command cue ended with an error status. Exit code: {}</translation>
+      <translation>Befehls-Cue endete mit einem Fehlerstatus. Exit-Code: {}</translation>
     </message>
   </context>
   <context>
@@ -70,7 +70,7 @@
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="40"/>
       <source>Seek Cue</source>
-      <translation>Positions-Cue</translation>
+      <translation>Seek-Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="43"/>
@@ -156,7 +156,7 @@
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="103"/>
       <source>Time to reach</source>
-      <translation>Zeit zum Erreichen</translation>
+      <translation>Zu erreichende Zeit</translation>
     </message>
   </context>
   <context>
@@ -164,7 +164,7 @@
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="59"/>
       <source>Seek Settings</source>
-      <translation>Sucheinstellungen</translation>
+      <translation>Seek Einstellungen</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="108"/>
