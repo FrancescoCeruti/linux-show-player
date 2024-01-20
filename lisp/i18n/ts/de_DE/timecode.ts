@@ -6,12 +6,12 @@
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="38"/>
       <source>Timecode</source>
-      <translation>Timecode</translation>
+      <translation>Zeitcode</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="114"/>
       <source>Timecode Settings</source>
-      <translation>Timecode Einstellungen</translation>
+      <translation>Zeitcode-Einstellungen</translation>
     </message>
   </context>
   <context>
@@ -19,7 +19,7 @@
     <message>
       <location filename="../../../plugins/timecode/timecode.py" line="99"/>
       <source>Cannot load timecode protocol: "{}"</source>
-      <translation type="unfinished">Cannot load timecode protocol: "{}"</translation>
+      <translation>Zeitcode-Protokoll kann nicht geladen werden: "{}"</translation>
     </message>
   </context>
   <context>
@@ -28,8 +28,8 @@
       <location filename="../../../plugins/timecode/protocols/artnet.py" line="65"/>
       <source>Cannot send timecode. 
 OLA daemon has stopped.</source>
-      <translation type="unfinished">Cannot send timecode. 
-OLA daemon has stopped.</translation>
+      <translation>Zeitcode kann nicht gesendet werden, weil der 
+OLA-Daemon gestoppt wurde.</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/protocols/artnet.py" line="73"/>
@@ -52,22 +52,22 @@ OLA daemon has stopped.</translation>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="88"/>
       <source>Track number</source>
-      <translation>Spurnummer</translation>
+      <translation>Tracknummer</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="145"/>
       <source>Timecode Settings</source>
-      <translation>Timecode-Einstellungen</translation>
+      <translation>Zeitcode-Einstellungen</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="148"/>
       <source>Timecode Format:</source>
-      <translation>Timecode-Format:</translation>
+      <translation>Zeitcode-Format:</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="151"/>
       <source>Timecode Protocol:</source>
-      <translation>Timecode Protokoll:</translation>
+      <translation>Zeitcode-Protokoll:</translation>
     </message>
   </context>
   <context>
