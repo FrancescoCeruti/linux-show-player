@@ -178,6 +178,7 @@
                 }
             ]
         },
+        "gstreamer-modules.json",
         "pygobject-modules.json",
         "python-modules.json",
         {

@@ -1,0 +1,51 @@
+{
+    "name": "gst-modules",
+    "modules": [
+        {
+            "name": "soundtouch",
+            "buildsystem": "cmake-ninja",
+            "config-opts": [
+                "-DBUILD_SHARED_LIBS=ON"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://codeberg.org/soundtouch/soundtouch.git",
+                    "tag": "2.3.1",
+                    "commit": "e1f315f5358d9db5cee35a7a2886425489fcefe8"
+                }
+            ],
+            "cleanup": [
+                "/bin",
+                "/lib/cmake",
+                "/share/doc"
+            ]
+        },
+        {
+            "name": "gstreamer-plugins-bad",
+            "buildsystem": "meson",
+            "builddir": true,
+            "config-opts": [
+                "-Dauto_features=disabled",
+                "-Dgood=disabled",
+                "-Dugly=disabled",
+                "-Dbad=enabled",
+                "-Dgst-plugins-bad:soundtouch=enabled",
+                "-Dgst-full-plugins=soundtouch"
+            ],
+            "no-make-install": true,
+            "build-commands": [
+                "install -Dm644 subprojects/gst-plugins-bad/ext/soundtouch/libgstsoundtouch.so /app/lib/gstreamer-1.0/libgstsoundtouch.so"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://gitlab.freedesktop.org/gstreamer/gstreamer.git",
+                    "tag": "1.22.8",
+                    "commit": "4af14db10e8355f980bbf79733af004e59d255fc",
+                    "disable-submodules": true
+                }
+            ]
+        }
+    ]
+}
