@@ -11,7 +11,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/settings/alsa_sink.py" line="65"/>
       <source>To make your custom PCM objects appear correctly in this list requires adding a 'hint.description' line to them.</source>
-      <translation type="unfinished">To make your custom PCM objects appear correctly in this list requires adding a 'hint.description' line to them.</translation>
+      <translation>Um Ihre eigenen PCM-Objekte korrekt in dieser Liste erscheinen zu lassen, muss eine 'hint.description' Zeile hinzugefügt werden.</translation>
     </message>
   </context>
   <context>
@@ -142,7 +142,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_media.py" line="242"/>
       <source>Cannot create pipeline element: "{}"</source>
-      <translation type="unfinished">Cannot create pipeline element: "{}"</translation>
+      <translation>Pipeline-Element kann nicht erstellt werden: "{}"</translation>
     </message>
   </context>
   <context>
@@ -158,7 +158,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/gst_media.py" line="236"/>
       <source>Invalid pipeline element: "{}"</source>
-      <translation type="unfinished">Invalid pipeline element: "{}"</translation>
+      <translation>Ungültiges Pipeline-Element: "{}"</translation>
     </message>
   </context>
   <context>
@@ -187,7 +187,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/elements/jack_sink.py" line="136"/>
       <source>An error occurred while disconnecting Jack ports</source>
-      <translation type="unfinished">An error occurred while disconnecting Jack ports</translation>
+      <translation>Fehler beim Trennen der Jack-Ports</translation>
     </message>
   </context>
   <context>
@@ -337,7 +337,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/config/alsa_sink.py" line="25"/>
       <source>ALSA Default Device</source>
-      <translation type="unfinished">ALSA Default Device</translation>
+      <translation>ALSA Standardgerät</translation>
     </message>
   </context>
   <context>
