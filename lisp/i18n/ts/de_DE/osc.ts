@@ -22,7 +22,7 @@
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="64"/>
       <source>OSC Cue</source>
-      <translation>OSC Cue</translation>
+      <translation>OSC-Cue</translation>
     </message>
   </context>
   <context>
@@ -60,7 +60,7 @@
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="252"/>
       <source>Time (sec)</source>
-      <translation>Zeit (Sek)</translation>
+      <translation>Zeit (in Sek)</translation>
     </message>
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="253"/>
@@ -88,7 +88,7 @@
     <message>
       <location filename="../../../plugins/osc/osc_cue.py" line="112"/>
       <source>Cannot send OSC message, see error for details</source>
-      <translation type="unfinished">Cannot send OSC message, see error for details</translation>
+      <translation>OSC-Nachricht kann nicht gesendet werden, siehe Fehler für Details</translation>
     </message>
   </context>
   <context>
@@ -96,7 +96,7 @@
     <message>
       <location filename="../../../plugins/osc/osc_server.py" line="120"/>
       <source>Message from {} -&gt; path: "{}" args: {}</source>
-      <translation type="unfinished">Message from {} -&gt; path: "{}" args: {}</translation>
+      <translation>Nachricht von {} -&gt; Pfad: "{}" Args: {}</translation>
     </message>
   </context>
   <context>
@@ -104,7 +104,7 @@
     <message>
       <location filename="../../../plugins/osc/osc_server.py" line="100"/>
       <source>Cannot start OSC server</source>
-      <translation type="unfinished">Cannot start OSC server</translation>
+      <translation>OSC-Server kann nicht gestartet werden</translation>
     </message>
   </context>
   <context>
