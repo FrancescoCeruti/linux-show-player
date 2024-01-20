@@ -35,17 +35,17 @@
     <message>
       <location filename="../../../plugins/midi/midi_io.py" line="84"/>
       <source>Cannot connect to MIDI output port '{}'.</source>
-      <translation type="unfinished">Cannot connect to MIDI output port '{}'.</translation>
+      <translation>Verbindung zum MIDI-Ausgangsport '{}' nicht möglich.</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi_io.py" line="105"/>
       <source>Cannot connect to MIDI input port '{}'.</source>
-      <translation type="unfinished">Cannot connect to MIDI input port '{}'.</translation>
+      <translation>Verbindung zum MIDI-Eingangsport '{}' nicht möglich.</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/port_monitor.py" line="88"/>
       <source>Cannot create ALSA-MIDI port monitor, MIDI connections/disconnections will not be detected.</source>
-      <translation type="unfinished">Cannot create ALSA-MIDI port monitor, MIDI connections/disconnections will not be detected.</translation>
+      <translation>ALSA-MIDI-Port-Monitor kann nicht erstellt werden, MIDI-Verbindungen werden nicht erkannt.</translation>
     </message>
   </context>
   <context>
@@ -53,17 +53,17 @@
     <message>
       <location filename="../../../plugins/midi/midi.py" line="137"/>
       <source>Connecting to MIDI port: '{}'</source>
-      <translation type="unfinished">Connecting to MIDI port: '{}'</translation>
+      <translation>Verbinde mit MIDI-Port: '{}'</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi.py" line="119"/>
       <source>MIDI port disconnected: '{}'</source>
-      <translation type="unfinished">MIDI port disconnected: '{}'</translation>
+      <translation>MIDI-Port getrennt: '{}'</translation>
     </message>
     <message>
       <location filename="../../../plugins/midi/midi.py" line="146"/>
       <source>Connecting to matching MIDI port: '{}'</source>
-      <translation type="unfinished">Connecting to matching MIDI port: '{}'</translation>
+      <translation>Verbinde mit dem passenden MIDI-Port: '{}'</translation>
     </message>
   </context>
   <context>
