@@ -85,7 +85,7 @@ To start, you'll need to install these packages using your package manager:
  * `libasound2-dev`
  * `libgirepository1.0-dev`
  * `libcairo2-dev`
- * `liblo`
+ * `liblo7`
  * `liblo-dev`
  * `librtmidi6`
 ```
