@@ -47,8 +47,9 @@ class MIDIPatchCombo(QComboBox):
         super().__init__(*args, **kwargs)
         self.__direction = direction
         self.__midi = get_plugin("Midi")
-        for patch_id in self._patches():
-            self.addItem("", patch_id)
+        if self.__midi.is_loaded():
+            for patch_id in self._patches():
+                self.addItem("", patch_id)
 
     def _patches(self):
         if self.__direction is PortDirection.Input:
@@ -61,11 +62,12 @@ class MIDIPatchCombo(QComboBox):
         return self.__midi.output_name_formatted(patch_id)
 
     def retranslateUi(self):
-        for patch_id, device_name in self._patches().items():
-            self.setItemText(
-                self.findData(patch_id),
-                self._patch_name(patch_id)
-            )
+        if self.__midi.is_loaded():
+            for patch_id, device_name in self._patches().items():
+                self.setItemText(
+                    self.findData(patch_id),
+                    self._patch_name(patch_id)
+                )
 
 
 class MIDIMessageEdit(QWidget):

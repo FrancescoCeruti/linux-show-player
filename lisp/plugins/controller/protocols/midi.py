@@ -35,17 +35,6 @@ from lisp.plugins import get_plugin
 from lisp.core.plugin import PluginNotLoadedError
 from lisp.plugins.controller.common import LayoutAction, tr_layout_action
 from lisp.plugins.controller.protocol import Protocol
-from lisp.plugins.midi.midi_utils import (
-    MIDI_MSGS_NAME,
-    midi_data_from_msg,
-    midi_msg_from_data,
-    midi_from_dict,
-    midi_from_str,
-    MIDI_MSGS_SPEC,
-    MIDI_ATTRS_SPEC,
-    PortDirection,
-)
-from lisp.plugins.midi.widgets import MIDIPatchCombo, MIDIMessageEditDialog
 from lisp.ui.qdelegates import (
     CueActionDelegate,
     EnumComboBoxDelegate,
@@ -54,6 +43,21 @@ from lisp.ui.qdelegates import (
 from lisp.ui.qmodels import SimpleTableModel
 from lisp.ui.settings.pages import CuePageMixin, SettingsPage
 from lisp.ui.ui_utils import translate
+
+try:
+    from lisp.plugins.midi.midi_utils import (
+        MIDI_MSGS_NAME,
+        midi_data_from_msg,
+        midi_msg_from_data,
+        midi_from_dict,
+        midi_from_str,
+        MIDI_MSGS_SPEC,
+        MIDI_ATTRS_SPEC,
+        PortDirection,
+    )
+    from lisp.plugins.midi.widgets import MIDIPatchCombo, MIDIMessageEditDialog
+except ImportError:
+    midi_from_str = lambda *_: None
 
 
 logger = logging.getLogger(__name__)
@@ -75,6 +79,16 @@ class MidiSettings(SettingsPage):
         self.layout().addWidget(self.midiGroup)
 
         self.midiModel = MidiModel()
+
+        try:
+            self.__midi = get_plugin("Midi")
+        except PluginNotLoadedError:
+            self.setEnabled(False)
+            self.midiNotInstalledMessage = QLabel()
+            self.midiNotInstalledMessage.setAlignment(Qt.AlignCenter)
+            self.midiGroup.layout().addWidget(self.midiNotInstalledMessage)
+            self.retranslateUi()
+            return
 
         self.midiView = MidiView(actionDelegate, parent=self.midiGroup)
         self.midiView.setModel(self.midiModel)
@@ -117,12 +131,13 @@ class MidiSettings(SettingsPage):
         self.retranslateUi()
 
         self._defaultAction = None
-        try:
-            self.__midi = get_plugin("Midi")
-        except PluginNotLoadedError:
-            self.setEnabled(False)
 
     def retranslateUi(self):
+        if hasattr(self, "midiNotInstalledMessage"):
+            self.midiNotInstalledMessage.setText(
+                translate("ControllerSettings", "MIDI plugin not installed"))
+            return
+
         self.addButton.setText(translate("ControllerSettings", "Add"))
         self.removeButton.setText(translate("ControllerSettings", "Remove"))
 
@@ -262,9 +277,16 @@ class MidiModel(SimpleTableModel):
                 translate("ControllerMidiSettings", "Action"),
             ]
         )
-        self.__midi = get_plugin("Midi")
+        try:
+            self.__midi = get_plugin("Midi")
+            if not self.__midi.is_loaded():
+                self.__midi = None
+        except PluginNotLoadedError:
+            self.__midi = None
 
     def appendMessage(self, patch_id, message, action):
+        if not self.__midi:
+            return
         data = midi_data_from_msg(message)
         data.extend((None,) * (3 - len(data)))
         self.appendRow(patch_id, message.type, *data, action)
@@ -354,8 +376,13 @@ class Midi(Protocol):
 
     def __init__(self):
         super().__init__()
-        # Install callback for new MIDI messages
-        get_plugin("Midi").received.connect(self.__new_message)
+        try:
+            # Install callback for new MIDI messages
+            midi = get_plugin("Midi")
+            if midi.is_loaded():
+                midi.received.connect(self.__new_message)
+        except PluginNotLoadedError:
+            pass
 
     def __new_message(self, patch_id, message):
         if hasattr(message, "velocity"):
