@@ -15,7 +15,8 @@
         "--socket=pulseaudio",
         "--filesystem=xdg-run/pipewire-0",
         "--filesystem=home",
-        "--device=all"
+        "--device=all",
+        "--talk-name=org.freedesktop.Flatpak"
     ],
     "cleanup-commands": [
         "/app/cleanup-BaseApp.sh"

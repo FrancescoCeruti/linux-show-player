@@ -21,6 +21,7 @@ import subprocess
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QLineEdit, QCheckBox
 
+from lisp import RUNNING_IN_FLATPAK
 from lisp.core.decorators import async_function
 from lisp.core.properties import Property
 from lisp.cues.cue import Cue, CueAction
@@ -45,6 +46,7 @@ class CommandCue(Cue):
     no_output = Property(default=True)
     no_error = Property(default=True)
     kill = Property(default=False)
+    run_on_host = Property(default=True)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -59,14 +61,15 @@ class CommandCue(Cue):
 
     @async_function
     def __exec_command(self):
-        if not self.command.strip():
+        command = self.__command()
+        if not command:
             return
 
         # If no_output is True, discard all the outputs
         std = subprocess.DEVNULL if self.no_output else None
         # Execute the command
         self.__process = subprocess.Popen(
-            self.command, shell=True, stdout=std, stderr=std
+            command, shell=True, stdout=std, stderr=std
         )
         rcode = self.__process.wait()
 
@@ -86,6 +89,17 @@ class CommandCue(Cue):
 
         self.__process = None
         self.__stopped = False
+
+    def __command(self):
+        if (
+            self.command
+            and RUNNING_IN_FLATPAK
+            and self.run_on_host
+            and not self.command.startswith("flatpak-spawn")
+        ):
+            return f"flatpak-spawn --host {self.command}"
+
+        return self.command
 
     def __stop__(self, fade=False):
         if self.__process is not None:
@@ -124,6 +138,10 @@ class CommandCueSettings(SettingsPage):
         self.killCheckBox = QCheckBox(self)
         self.layout().addWidget(self.killCheckBox)
 
+        self.runOnHost = QCheckBox(self)
+        self.runOnHost.setVisible(RUNNING_IN_FLATPAK)
+        self.layout().addWidget(self.runOnHost)
+
         self.retranslateUi()
 
     def retranslateUi(self):
@@ -140,27 +158,30 @@ class CommandCueSettings(SettingsPage):
         self.killCheckBox.setText(
             translate("CommandCue", "Kill instead of terminate")
         )
+        self.runOnHost.setText(
+            translate("CommandCue", "Run the command on the host system")
+        )
 
     def enableCheck(self, enabled):
         self.setGroupEnabled(self.group, enabled)
 
         self.noOutputCheckBox.setTristate(enabled)
+        self.noErrorCheckBox.setTristate(enabled)
+        self.killCheckBox.setTristate(enabled)
+        self.runOnHost.setTristate(enabled)
+
         if enabled:
             self.noOutputCheckBox.setCheckState(Qt.PartiallyChecked)
-
-        self.noErrorCheckBox.setTristate(enabled)
-        if enabled:
             self.killCheckBox.setCheckState(Qt.PartiallyChecked)
-
-        self.killCheckBox.setTristate(enabled)
-        if enabled:
             self.killCheckBox.setCheckState(Qt.PartiallyChecked)
+            self.runOnHost.setChecked(Qt.PartiallyChecked)
 
     def loadSettings(self, settings):
         self.commandLineEdit.setText(settings.get("command", ""))
         self.noOutputCheckBox.setChecked(settings.get("no_output", True))
         self.noErrorCheckBox.setChecked(settings.get("no_error", True))
         self.killCheckBox.setChecked(settings.get("kill", False))
+        self.runOnHost.setChecked(settings.get("run_on_host", True))
 
     def getSettings(self):
         settings = {}
@@ -176,6 +197,8 @@ class CommandCueSettings(SettingsPage):
             settings["no_error"] = self.noErrorCheckBox.isChecked()
         if self.killCheckBox.checkState() != Qt.PartiallyChecked:
             settings["kill"] = self.killCheckBox.isChecked()
+        if self.runOnHost.checkState() != Qt.PartiallyChecked:
+            settings["run_on_host"] = self.runOnHost.isChecked()
 
         return settings
 

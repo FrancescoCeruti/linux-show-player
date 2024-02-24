@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+import os
 from os import path
 
 from appdirs import AppDirs
@@ -46,3 +47,5 @@ DEFAULT_CACHE_DIR = path.join(app_dirs.user_data_dir, "cache")
 
 ICON_THEMES_DIR = path.join(APP_DIR, "ui", "icons")
 ICON_THEME_COMMON = "lisp"
+
+RUNNING_IN_FLATPAK = "FLATPAK_ID" in os.environ
