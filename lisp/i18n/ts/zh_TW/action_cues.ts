@@ -27,32 +27,37 @@
   <context>
     <name>CommandCue</name>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="130"/>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="148"/>
       <source>Command</source>
       <translation>指令</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="132"/>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="150"/>
       <source>Command to execute, as in a shell</source>
       <translation>要執行的 Shell 指令</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="135"/>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="153"/>
       <source>Discard command output</source>
       <translation>捨棄指令輸出</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="138"/>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="156"/>
       <source>Ignore command errors</source>
       <translation>忽略指令錯誤</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="141"/>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="159"/>
       <source>Kill instead of terminate</source>
       <translation>傳送 kill 訊號而非 terminate 訊號</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="80"/>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="162"/>
+      <source>Run the command on the host system</source>
+      <translation type="unfinished">Run the command on the host system</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="83"/>
       <source>Command cue ended with an error status. Exit code: {}</source>
       <translation>指令 Cue 發生錯誤。退出代碼：{}</translation>
     </message>
@@ -83,7 +88,7 @@
       <translation>全部停止</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="40"/>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="41"/>
       <source>Command Cue</source>
       <translation>指令 Cue</translation>
     </message>
@@ -177,7 +182,7 @@
       <translation>停止設定</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="104"/>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="118"/>
       <source>Command</source>
       <translation>指令</translation>
     </message>
