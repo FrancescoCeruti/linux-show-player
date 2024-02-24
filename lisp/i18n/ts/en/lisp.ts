@@ -4,24 +4,24 @@
   <context>
     <name>About</name>
     <message>
-      <location filename="../../../ui/about.py" line="62" />
+      <location filename="../../../ui/about.py" line="64" />
+      <source>About Linux Show Player</source>
+      <translation>About Linux Show Player</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/about.py" line="116" />
       <source>Authors</source>
       <translation>Authors</translation>
     </message>
     <message>
-      <location filename="../../../ui/about.py" line="65" />
+      <location filename="../../../ui/about.py" line="120" />
       <source>Contributors</source>
       <translation>Contributors</translation>
     </message>
     <message>
-      <location filename="../../../ui/about.py" line="70" />
+      <location filename="../../../ui/about.py" line="124" />
       <source>Translators</source>
       <translation>Translators</translation>
-    </message>
-    <message>
-      <location filename="../../../ui/about.py" line="88" />
-      <source>About Linux Show Player</source>
-      <translation>About Linux Show Player</translation>
     </message>
   </context>
   <context>
@@ -32,32 +32,32 @@
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../ui/about.py" line="132" />
+      <location filename="../../../ui/about.py" line="103" />
       <source>Info</source>
       <translation>Info</translation>
     </message>
     <message>
-      <location filename="../../../ui/about.py" line="137" />
+      <location filename="../../../ui/about.py" line="108" />
       <source>License</source>
       <translation>License</translation>
     </message>
     <message>
-      <location filename="../../../ui/about.py" line="144" />
+      <location filename="../../../ui/about.py" line="130" />
       <source>Contributors</source>
       <translation>Contributors</translation>
     </message>
     <message>
-      <location filename="../../../ui/about.py" line="125" />
+      <location filename="../../../ui/about.py" line="97" />
       <source>Web site</source>
       <translation>Web site</translation>
     </message>
     <message>
-      <location filename="../../../ui/about.py" line="127" />
+      <location filename="../../../ui/about.py" line="98" />
       <source>Discussion</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../ui/about.py" line="129" />
+      <location filename="../../../ui/about.py" line="99" />
       <source>Source code</source>
       <translation>Source code</translation>
     </message>
@@ -124,17 +124,17 @@
   <context>
     <name>ApplicationError</name>
     <message>
-      <location filename="../../../application.py" line="155" />
+      <location filename="../../../application.py" line="156" />
       <source>Startup error</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../application.py" line="241" />
+      <location filename="../../../application.py" line="249" />
       <source>Error while reading the session file "{}"</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../application.py" line="230" />
+      <location filename="../../../application.py" line="238" />
       <source>Unable to create the cue "{}"</source>
       <translation type="unfinished" />
     </message>
