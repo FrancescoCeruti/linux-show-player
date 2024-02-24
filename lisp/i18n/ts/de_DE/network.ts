@@ -22,7 +22,7 @@
     <message>
       <location filename="../../../plugins/network/server.py" line="37"/>
       <source>Start serving network API at: http://{}:{}/</source>
-      <translation type="unfinished">Start serving network API at: http://{}:{}/</translation>
+      <translation>Starten der Netzwerk-API unter: http://{}:{}/</translation>
     </message>
   </context>
   <context>

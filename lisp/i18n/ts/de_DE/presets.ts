@@ -69,22 +69,22 @@
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="72"/>
       <source>Error while deleting preset "{}"</source>
-      <translation type="unfinished">Error while deleting preset "{}"</translation>
+      <translation>Fehler beim Löschen des Presets "{}"</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="78"/>
       <source>Cannot load preset "{}"</source>
-      <translation type="unfinished">Cannot load preset "{}"</translation>
+      <translation>Kann Preset "{}" nicht laden</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="84"/>
       <source>Cannot save preset "{}"</source>
-      <translation type="unfinished">Cannot save preset "{}"</translation>
+      <translation>Kann Preset "{}" nicht speichern</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="91"/>
       <source>Cannot rename preset "{}"</source>
-      <translation type="unfinished">Cannot rename preset "{}"</translation>
+      <translation>Kann Preset "{}" nicht umbenennen</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="101"/>
@@ -94,7 +94,7 @@
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="114"/>
       <source>Preset "{}" already exists, overwrite?</source>
-      <translation type="unfinished">Preset "{}" already exists, overwrite?</translation>
+      <translation>Ein Preset mit dem Namen "{}" existiert bereits, überschreiben?</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="269"/>
@@ -114,7 +114,7 @@
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="356"/>
       <source>Some presets already exists, overwrite?</source>
-      <translation type="unfinished">Some presets already exists, overwrite?</translation>
+      <translation>Einige Presets existieren bereits, überschreiben?</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="370"/>
@@ -129,12 +129,12 @@
     <message>
       <location filename="../../../plugins/presets/presets.py" line="73"/>
       <source>Apply to cue</source>
-      <translation type="unfinished">Apply to cue</translation>
+      <translation>Auf Cue anwenden</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets.py" line="75"/>
       <source>Apply to selected cues</source>
-      <translation type="unfinished">Apply to selected cues</translation>
+      <translation>Auf ausgewählte Cues anwenden</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets.py" line="79"/>

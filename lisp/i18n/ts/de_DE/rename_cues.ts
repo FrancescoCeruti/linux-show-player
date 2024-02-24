@@ -70,16 +70,16 @@ Example:
 Only the numbers are between parenthesis and will be usable with $0 in the first line.
 
 For more information about Regexes, consult python documentation at: https://docs.python.org/3/howto/regex.html#regex-howto</source>
-      <translation type="unfinished">You can use Regexes to rename your cues.
+      <translation>Sie können Regexes verwenden, um Ihre Cues umzubenennen.
 
-Insert expressions captured with regexes in the line below with $0 for the first parenthesis, $1 forthe second, etc...
-In the second line, you can use standard Python Regexes to match expressions in the original cues names. Use parenthesis to capture parts of the matched expression.
+Fügen Sie mit Regexes in die Zeile unten erfasste Ausdrücke mit $0 für die erste Klammer ein, $1 für die zweite, etc...
+In der zweiten Zeile können Sie standardmäßige Python-Regexes verwenden, um Ausdrücke in den ursprünglichen Namen zu finden. Verwenden Sie Klammern um Teile des passenden Ausdrucks zu erfassen.
 
-Example: 
-^[a-z]([0-9]+) will find a lower case character([a-z]), followed by one or more number.
-Only the numbers are between parenthesis and will be usable with $0 in the first line.
+Beispiel: 
+^[a-z]([0-9]+) findet ein Kleinbuchstaben ([a-z]), gefolgt von einer oder mehreren Zahlen.
+Nur die Zahlen liegen zwischen Klammern und können mit $0 in der ersten Zeile verwendet werden.
 
-For more information about Regexes, consult python documentation at: https://docs.python.org/3/howto/regex.html#regex-howto</translation>
+Weitere Informationen über Regexes sind in der Python-Dokumentation zu finden unter: https://docs.python.org/3/howto/regex.html#regex-howto</translation>
     </message>
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="57"/>
@@ -110,7 +110,7 @@ For more information about Regexes, consult python documentation at: https://doc
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="288"/>
       <source>Regex error: catch with () before display with $n</source>
-      <translation type="unfinished">Regex error: catch with () before display with $n</translation>
+      <translation>Regex-Fehler: Catch mit () vor Anzeige mit $n</translation>
     </message>
   </context>
 </TS>
