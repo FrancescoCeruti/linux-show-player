@@ -18,13 +18,12 @@ function flatpak_build_manifest() {
 
 function flatpak_install_runtime() {
     echo ""
-    echo "###################################################"
-    echo "#    Install flatpak (flathub) runtime and sdk    #"
-    echo "###################################################"
+    echo "######################################"
+    echo "#    Add flatpak remote (flathub)    #"
+    echo "######################################"
     echo ""
 
     flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-    flatpak install --user --noninteractive --assumeyes flathub $FLATPAK_INSTALL
 }
 
 function flatpak_build() {
@@ -37,7 +36,7 @@ function flatpak_build() {
     # Prepare the repository
     ostree init --mode=archive-z2 --repo=repo
     # Build the flatpak
-    flatpak-builder --verbose --force-clean --ccache --repo=repo build $FLATPAK_APP_ID.json
+    flatpak-builder --verbose --force-clean --ccache --repo=repo --user --install-deps-from=flathub build $FLATPAK_APP_ID.json
 }
 
 

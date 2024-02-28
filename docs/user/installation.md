@@ -19,10 +19,12 @@ follow their _simple_ instructions, <a href="https://flatpak.org/setup/" target=
 ### Download LiSP
 
 You can get the latest builds here:
+
+ * [Flathub](https://flathub.org/apps/org.linuxshowplayer.LinuxShowPlayer) - Official release
  * [Master](https://github.com/FrancescoCeruti/linux-show-player/releases/tag/ci-master) - Generally stable
  * [Development](https://github.com/FrancescoCeruti/linux-show-player/releases/tag/ci-develop) - Preview features, might be unstable and untested
 
-### Install
+### Install (master/development)
 
 If you have the right app installed it might be possible to simply double-click the downloaded file, otherwise, you
 can use the following command:
@@ -64,7 +66,7 @@ With the following instructions you will:
  3. Run LiSP in that venv via poetry
 
 ```{important}
-What follows are guidelines to run LiSP without a "proper" installation, **if something is missing or doens't work let us know!**
+What follows are guidelines to run LiSP without a "proper" installation, **if something is missing or doesn't work let us know!**
 ```
 
 ### Dependencies (1/2)

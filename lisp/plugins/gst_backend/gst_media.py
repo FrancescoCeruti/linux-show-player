@@ -140,7 +140,6 @@ class GstMedia(Media):
             self.sought.emit(self, position)
 
     def loop_release(self):
-        # if self.state == MediaState.Playing or self.state == MediaState.Paused:
         self.__loop = 0
 
     def element(self, class_name):
@@ -163,41 +162,54 @@ class GstMedia(Media):
     def __reset_media(self):
         self.__loop = self.loop
 
+    def __segment_stop_position(self):
+        if 0 < self.stop_time < self.duration:
+            return self.stop_time
+
+        return self.duration
+
     def __seek(self, position, flush=True):
-        if self.state == MediaState.Playing or self.state == MediaState.Paused:
-            max_position = self.duration
-            if 0 < self.stop_time < self.duration:
-                max_position = self.stop_time
+        if (
+            self.state not in (MediaState.Playing, MediaState.Paused)
+            or position > self.__segment_stop_position()
+        ):
+            return False
 
-            if position < max_position:
-                # Query segment info for the playback rate
-                query = Gst.Query.new_segment(Gst.Format.TIME)
-                self.__pipeline.query(query)
-                rate = Gst.Query.parse_segment(query)[0]
+        # Query segment info for the playback rate
+        query = Gst.Query.new_segment(Gst.Format.TIME)
+        self.__pipeline.query(query)
+        rate = Gst.Query.parse_segment(query)[0]
 
-                # Check stop_position value
-                stop_type = Gst.SeekType.NONE
-                if self.stop_time > 0:
-                    stop_type = Gst.SeekType.SET
+        # Check if we need to set an early stop position
+        if self.stop_time > 0:
+            stop_type = Gst.SeekType.SET
+        else:
+            stop_type = Gst.SeekType.NONE
 
-                # Seek the pipeline
-                flags = Gst.SeekFlags.SEGMENT | Gst.SeekFlags.TRICKMODE
-                if flush:
-                    flags |= Gst.SeekFlags.FLUSH
+        # Decide which SeekFlags we want to use
+        flags = Gst.SeekFlags.TRICKMODE
 
-                result = self.__pipeline.seek(
-                    rate if rate > 0 else 1,
-                    Gst.Format.TIME,
-                    flags,
-                    Gst.SeekType.SET,
-                    position * Gst.MSECOND,
-                    stop_type,
-                    self.stop_time * Gst.MSECOND,
-                )
+        # We want to receive SEGMENT_DONE messages, allowing seamless loops,
+        # except for the "last" loop, were we want to receive a normal EOS
+        # to ensure that all pipeline buffers have been processed.
+        if self.__loop != 0:
+            flags |= Gst.SeekFlags.SEGMENT
 
-                return result
+        # While seeking, we typically want to flush any buffered data. However,
+        # there are exceptions, such as during seamless looping, where flushing is undesirable.
+        if flush:
+            flags |= Gst.SeekFlags.FLUSH
 
-        return False
+        # Seek the pipeline
+        return self.__pipeline.seek(
+            rate if rate > 0 else 1,
+            Gst.Format.TIME,
+            flags,
+            Gst.SeekType.SET,
+            position * Gst.MSECOND,
+            stop_type,
+            self.stop_time * Gst.MSECOND,
+        )
 
     def __on_loops_changed(self, loops):
         self.__loop = loops
@@ -266,24 +278,27 @@ class GstMedia(Media):
 
     def __on_message(self, bus, message):
         if message.src == self.__pipeline:
-            if message.type in (
-                Gst.MessageType.SEGMENT_DONE,
-                Gst.MessageType.EOS,
-            ):
+            if message.type == Gst.MessageType.SEGMENT_DONE:
                 if self.__loop != 0:
                     # If we still have loops to do then seek to start
                     self.__loop -= 1
                     self.__seek(self.start_time, flush=False)
                 else:
-                    # Otherwise go in READY state
-                    self.__pipeline.set_state(Gst.State.READY)
-                    self.__pipeline.get_state(Gst.SECOND)
+                    # We reached loop 0 earlier (e.g. due to a loop-release).
+                    # We cannot stop the pipeline yet, likely there's still data in the buffers,
+                    # to "force" an EOS event we seek to the end of the stream, without flushing.
+                    self.__seek(self.__segment_stop_position(), flush=False)
 
-                    for element in self.elements:
-                        element.eos()
+            elif message.type == Gst.MessageType.EOS:
+                self.__pipeline.set_state(Gst.State.READY)
+                self.__pipeline.get_state(Gst.SECOND)
 
-                    self.__reset_media()
-                    self.eos.emit(self)
+                for element in self.elements:
+                    element.eos()
+
+                self.__reset_media()
+                self.eos.emit(self)
+
             elif message.type == Gst.MessageType.CLOCK_LOST:
                 self.__pipeline.set_state(Gst.State.PAUSED)
                 self.__pipeline.set_state(Gst.State.PLAYING)

@@ -2,7 +2,9 @@ version: 2.1
 jobs:
   build-flatpak:
     machine:
-      image: ubuntu-2204:2023.07.2
+      image: ubuntu-2204:2023.10.1
+
+    resource_class: large
 
     working_directory: ~/repo
 
@@ -12,6 +14,8 @@ jobs:
 
     steps:
       - checkout
+      - run: git submodule sync
+      - run: git submodule update --init
 
       - run:
           name: SYSTEM ⟹ Install required packages

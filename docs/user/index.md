@@ -40,7 +40,7 @@ Here some functionality offered by LiSP:
 
 Currently, only GNU/Linux systems are supported.
 
-The application is quite stable, is already been used for multiple performances
+The application is quite stable, it's already been used for multiple performances
 by different people, but, due to the heterogeneous nature of the GNU/Linux ecosystem,
 my suggestion is to test it in a "production" environment to detect possible problems
-with some configuration.
+with some configurations.

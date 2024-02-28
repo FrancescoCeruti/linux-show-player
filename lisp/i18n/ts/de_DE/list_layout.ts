@@ -24,7 +24,7 @@
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="52"/>
       <source>To move cues drag them</source>
-      <translation>Um Cues zu verschieben, ziehen Sie sie</translation>
+      <translation>Um Cues zu verschieben, ziehen Sie diese</translation>
     </message>
   </context>
   <context>
@@ -145,7 +145,7 @@
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="138"/>
       <source>GO Key:</source>
-      <translation>GO Taste:</translation>
+      <translation>GO-Taste:</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="139"/>
@@ -155,7 +155,7 @@
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="141"/>
       <source>GO minimum interval (ms):</source>
-      <translation>GO minimales Intervall (ms):</translation>
+      <translation>Minimales Intervall für GO (in ms):</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="145"/>

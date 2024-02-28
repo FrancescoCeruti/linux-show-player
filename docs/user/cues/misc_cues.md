@@ -26,6 +26,9 @@ Be sure to understand what you're doing, and avoid dangerous and untrested comma
 * **Discard command output:** when enabled the command output is discarded
 * **Ignore command errors:** when enabled errors are not reported
 * **Kill instead of terminate:** when enabled, on stop, the command is killed (abruptly interrupted by the OS)
+* **Run the command on the host system (_Available only for flatpak installations._):**
+    When disabled the command will be run inside the sandbox, this will prevent access to any application
+    installed on your "host" system
 
 ### Examples
 

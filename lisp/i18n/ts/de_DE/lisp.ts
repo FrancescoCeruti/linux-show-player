@@ -29,7 +29,7 @@
     <message>
       <location filename="../../../ui/about.py" line="52"/>
       <source>Linux Show Player is a cue player designed for stage productions.</source>
-      <translation type="unfinished">Linux Show Player is a cue player designed for stage productions.</translation>
+      <translation>Der Linux Show Player ist ein Cue-Player, entwickelt für Bühnenproduktionen.</translation>
     </message>
     <message>
       <location filename="../../../ui/about.py" line="132"/>
@@ -49,7 +49,7 @@
     <message>
       <location filename="../../../ui/about.py" line="125"/>
       <source>Web site</source>
-      <translation>Website</translation>
+      <translation>Webseite</translation>
     </message>
     <message>
       <location filename="../../../ui/about.py" line="127"/>
@@ -75,7 +75,7 @@
     <message>
       <location filename="../../../ui/settings/app_configuration.py" line="109"/>
       <source>Cannot load configuration page: "{}" ({})</source>
-      <translation type="unfinished">Cannot load configuration page: "{}" ({})</translation>
+      <translation>Konfigurationsseite kann nicht geladen werden: "{}" ({})</translation>
     </message>
   </context>
   <context>
@@ -113,7 +113,7 @@
     <message>
       <location filename="../../../ui/settings/app_pages/general.py" line="119"/>
       <source>Application language (require a restart)</source>
-      <translation>Anwendungssprache (Neustart erforderlich)</translation>
+      <translation>Anwendungssprache (benötigt Neustart)</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/general.py" line="123"/>
@@ -131,12 +131,12 @@
     <message>
       <location filename="../../../application.py" line="241"/>
       <source>Error while reading the session file "{}"</source>
-      <translation type="unfinished">Error while reading the session file "{}"</translation>
+      <translation>Fehler beim Lesen der Sitzungsdatei "{}"</translation>
     </message>
     <message>
       <location filename="../../../application.py" line="230"/>
       <source>Unable to create the cue "{}"</source>
-      <translation type="unfinished">Unable to create the cue "{}"</translation>
+      <translation>Konnte das Cue "{}" nicht erstellen</translation>
     </message>
   </context>
   <context>
@@ -144,7 +144,7 @@
     <message>
       <location filename="../../../core/loading.py" line="135"/>
       <source>Cannot load python class: "{0}"</source>
-      <translation type="unfinished">Cannot load python class: "{0}"</translation>
+      <translation>Kann Python-Klasse nicht laden: "{0}"</translation>
     </message>
   </context>
   <context>
@@ -165,7 +165,7 @@
     <message>
       <location filename="../../../core/configuration.py" line="215"/>
       <source>Configuration read from {}</source>
-      <translation type="unfinished">Configuration read from {}</translation>
+      <translation>Konfiguration eingelesen von {}</translation>
     </message>
     <message>
       <location filename="../../../core/configuration.py" line="225"/>
@@ -183,7 +183,7 @@
     <message>
       <location filename="../../../core/configuration.py" line="70"/>
       <source>Invalid path "{}", return default.</source>
-      <translation type="unfinished">Invalid path "{}", return default.</translation>
+      <translation>Ungültiger Pfad "{}", Rückfall auf den Standard.</translation>
     </message>
   </context>
   <context>
@@ -246,7 +246,7 @@
     <message>
       <location filename="../../../ui/widgets/cue_actions.py" line="38"/>
       <source>Release from Loop</source>
-      <translation type="unfinished">Release from Loop</translation>
+      <translation>Schleife beenden</translation>
     </message>
   </context>
   <context>
@@ -310,7 +310,7 @@
     <message>
       <location filename="../../../command/cue.py" line="45"/>
       <source>Cue settings changed: "{}"</source>
-      <translation type="unfinished">Cue settings changed: "{}"</translation>
+      <translation>Cue-Einstellungen wurden verändert: "{}"</translation>
     </message>
   </context>
   <context>
@@ -354,22 +354,22 @@
     <message>
       <location filename="../../../ui/settings/app_pages/cue.py" line="64"/>
       <source>Interrupt fade</source>
-      <translation type="unfinished">Interrupt fade</translation>
+      <translation>Überblenden unterbrechen</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/cue.py" line="66"/>
       <source>Used globally when interrupting cues</source>
-      <translation type="unfinished">Used globally when interrupting cues</translation>
+      <translation>Global beim Unterbrechen von Cues verwendet</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/cue.py" line="72"/>
       <source>Fallback fade settings</source>
-      <translation type="unfinished">Fallback fade settings</translation>
+      <translation>Fallback-Fade-Einstellungen</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/cue.py" line="75"/>
       <source>Used for fade-in and fade-out actions, for cues where fade duration is set to 0.</source>
-      <translation type="unfinished">Used for fade-in and fade-out actions, for cues where fade duration is set to 0.</translation>
+      <translation>Wird für Fade-In- und Fade-Out-Aktionen verwendet, bei denen die Fade-Dauer auf 0 gesetzt ist.</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="113"/>
@@ -781,7 +781,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="403"/>
       <source>The current session contains changes that have not been saved.</source>
-      <translation type="unfinished">The current session contains changes that have not been saved.</translation>
+      <translation>Die aktuelle Sitzung enthält Änderungen, die nicht gespeichert wurden.</translation>
     </message>
     <message>
       <location filename="../../../ui/mainwindow.py" line="411"/>
@@ -794,7 +794,7 @@
     <message>
       <location filename="../../../ui/mainwindow.py" line="261"/>
       <source>Registered cue menu: "{}"</source>
-      <translation type="unfinished">Registered cue menu: "{}"</translation>
+      <translation>Cue-Menü registriert: "{}"</translation>
     </message>
   </context>
   <context>
@@ -835,7 +835,7 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/media_cue.py" line="91"/>
       <source>Repetition after first play (-1 = infinite)</source>
-      <translation type="unfinished">Repetition after first play (-1 = infinite)</translation>
+      <translation>Wiederholung nach der ersten Wiedergabe (-1 = unendlich)</translation>
     </message>
   </context>
   <context>
@@ -843,7 +843,7 @@
     <message>
       <location filename="../../../core/loading.py" line="68"/>
       <source>Cannot load python module: "{0}"</source>
-      <translation type="unfinished">Cannot load python module: "{0}"</translation>
+      <translation>Python-Modul kann nicht geladen werden: "{0}"</translation>
     </message>
   </context>
   <context>
@@ -851,27 +851,27 @@
     <message>
       <location filename="../../../core/plugins_manager.py" line="78"/>
       <source>A plugin by the name of "{}" already exists.</source>
-      <translation type="unfinished">A plugin by the name of "{}" already exists.</translation>
+      <translation>Ein Plugin mit dem Namen "{}" existiert bereits.</translation>
     </message>
     <message>
       <location filename="../../../core/plugins_manager.py" line="131"/>
       <source>The requested plugin is not loaded: "{}"</source>
-      <translation type="unfinished">The requested plugin is not loaded: "{}"</translation>
+      <translation>Das angeforderte Plugin wurde nicht geladen: "{}"</translation>
     </message>
     <message>
       <location filename="../../../core/plugins_manager.py" line="109"/>
       <source>Failed to register plugin: "{}"</source>
-      <translation type="unfinished">Failed to register plugin: "{}"</translation>
+      <translation>Plugin konnte nicht registriert werden: "{}"</translation>
     </message>
     <message>
       <location filename="../../../core/plugins_manager.py" line="151"/>
       <source>Failed to terminate plugin: "{}"</source>
-      <translation type="unfinished">Failed to terminate plugin: "{}"</translation>
+      <translation>Plugin konnte nicht beendet werden: "{}"</translation>
     </message>
     <message>
       <location filename="../../../core/plugin_loader.py" line="68"/>
       <source>Cannot satisfy dependencies for plugin: "{}"</source>
-      <translation type="unfinished">Cannot satisfy dependencies for plugin: "{}"</translation>
+      <translation>Kann Abhängigkeiten für das Plugin "{}" nicht erfüllen</translation>
     </message>
   </context>
   <context>
@@ -879,12 +879,12 @@
     <message>
       <location filename="../../../core/plugins_manager.py" line="145"/>
       <source>Plugin terminated: "{}"</source>
-      <translation type="unfinished">Plugin terminated: "{}"</translation>
+      <translation>Plugin beendet: "{}"</translation>
     </message>
     <message>
       <location filename="../../../core/plugin_loader.py" line="108"/>
       <source>Plugin loaded: "{}"</source>
-      <translation type="unfinished">Plugin loaded: "{}"</translation>
+      <translation>Plugin geladen: "{}"</translation>
     </message>
   </context>
   <context>
@@ -892,12 +892,12 @@
     <message>
       <location filename="../../../ui/settings/app_pages/plugins.py" line="91"/>
       <source>Plugin</source>
-      <translation type="unfinished">Plugin</translation>
+      <translation>Plugin</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/plugins.py" line="92"/>
       <source>Enabled</source>
-      <translation type="unfinished">Enabled</translation>
+      <translation>Aktiviert</translation>
     </message>
   </context>
   <context>
@@ -905,27 +905,27 @@
     <message>
       <location filename="../../../core/plugin.py" line="117"/>
       <source>Plugin disabled. Enable to use.</source>
-      <translation type="unfinished">Plugin disabled. Enable to use.</translation>
+      <translation>Plugin deaktiviert. Zum Nutzen aktivieren.</translation>
     </message>
     <message>
       <location filename="../../../core/plugin.py" line="92"/>
       <source>An error has occurred with this plugin. Please see logs for further information.</source>
-      <translation type="unfinished">An error has occurred with this plugin. Please see logs for further information.</translation>
+      <translation>Ein Fehler betrifft dieses Plugin. Die Logs enthalten weitere Informationen.</translation>
     </message>
     <message>
       <location filename="../../../core/plugin.py" line="106"/>
       <source>There is a non-critical issue with this disabled plugin. Please see logs for further information.</source>
-      <translation type="unfinished">There is a non-critical issue with this disabled plugin. Please see logs for further information.</translation>
+      <translation>Ein unkritisches Problem betrifft dieses deaktivierte Plugin. Die Logs enthalten weitere Informationen.</translation>
     </message>
     <message>
       <location filename="../../../core/plugin.py" line="113"/>
       <source>Plugin loaded and ready for use.</source>
-      <translation type="unfinished">Plugin loaded and ready for use.</translation>
+      <translation>Plugin geladen und einsatzbereit.</translation>
     </message>
     <message>
       <location filename="../../../core/plugin.py" line="100"/>
       <source>A non-critical issue is affecting this plugin. Please see logs for further information.</source>
-      <translation type="unfinished">A non-critical issue is affecting this plugin. Please see logs for further information.</translation>
+      <translation>Ein unkritisches Problem betrifft dieses Plugin. Die Logs enthalten weitere Informationen.</translation>
     </message>
   </context>
   <context>
@@ -961,7 +961,7 @@
     <message>
       <location filename="../../../ui/settings/cue_pages/media_cue.py" line="33"/>
       <source>Media Cue</source>
-      <translation type="unfinished">Media Cue</translation>
+      <translation>Medien-Cue</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="43"/>
