@@ -27,32 +27,37 @@
   <context>
     <name>CommandCue</name>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="130"/>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="148"/>
       <source>Command</source>
       <translation>Comando</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="132"/>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="150"/>
       <source>Command to execute, as in a shell</source>
       <translation>Comando da eseguire, come in una shell</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="135"/>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="153"/>
       <source>Discard command output</source>
       <translation>Scarta l'output del comando</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="138"/>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="156"/>
       <source>Ignore command errors</source>
       <translation>Ignora errori</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="141"/>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="159"/>
       <source>Kill instead of terminate</source>
       <translation>Uccidi invece di terminare</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="80"/>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="162"/>
+      <source>Run the command on the host system</source>
+      <translation type="unfinished">Run the command on the host system</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="83"/>
       <source>Command cue ended with an error status. Exit code: {}</source>
       <translation>Cue comando terminata in stato di errore. Codice di uscita: {}</translation>
     </message>
@@ -83,7 +88,7 @@
       <translation>Ferma Tutto</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="40"/>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="41"/>
       <source>Command Cue</source>
       <translation>Cue Comando</translation>
     </message>
@@ -177,7 +182,7 @@
       <translation>Impostazioni di Arresto</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="104"/>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="118"/>
       <source>Command</source>
       <translation>Comando</translation>
     </message>
