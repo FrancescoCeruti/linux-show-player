@@ -17,7 +17,9 @@
 
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import (
+    QWidget,
     QVBoxLayout,
+    QHBoxLayout,
     QSizePolicy,
     QDialogButtonBox,
     QDialog,
@@ -26,6 +28,7 @@ from PyQt5.QtWidgets import (
     QTableView,
     QGroupBox,
     QPushButton,
+    QCheckBox,
 )
 
 from lisp.application import Application
@@ -42,24 +45,50 @@ from lisp.ui.ui_utils import translate
 class CollectionCue(Cue):
     Name = QT_TRANSLATE_NOOP("CueName", "Collection Cue")
     Category = QT_TRANSLATE_NOOP("CueCategory", "Action cues")
+    CueActions = (CueAction.Default, CueAction.Start, CueAction.Stop)
 
     targets = Property(default=[])
+    tracking = Property(default=False)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.name = translate("CueName", self.Name)
+        self.ended_cues_count = 0
 
     def __start__(self, fade=False):
         for target_id, action in self.targets:
             cue = self.app.cue_model.get(target_id)
             if cue is not self:
+                if self.tracking:
+                    cue.stopped.connect(self.mark_as_done)
+                    cue.error.connect(self.mark_as_done)
+                    cue.interrupted.connect(self.mark_as_done)
+                    cue.end.connect(self.mark_as_done)
                 cue.execute(action=CueAction[action])
 
-        return False
+        return self.tracking
 
+    def __stop__(self, fade=False):
+        for target_id, action in self.targets:
+            target_cue = self.app.cue_model.get(target_id)
+            target_cue.end.disconnect(self.mark_as_done)
+            target_cue.stopped.disconnect(self.mark_as_done)
+            target_cue.interrupted.disconnect(self.mark_as_done)
+            target_cue.error.disconnect(self.mark_as_done)
+            target_cue.stop()
+        self.ended_cues_count = 0
+
+        return True
+
+    def mark_as_done(self, cue):
+        self.ended_cues_count += 1
+        if self.ended_cues_count == len(self.targets):
+            self.ended_cues_count = 0
+            self._ended()
 
 class CollectionCueSettings(SettingsPage):
     Name = QT_TRANSLATE_NOOP("SettingsPageName", "Edit Collection")
+    Tracking = QT_TRANSLATE_NOOP("CollectionTracking", "Collection tracking")
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -82,12 +111,20 @@ class CollectionCueSettings(SettingsPage):
         self.collectionView.setAlternatingRowColors(True)
         self.collectionGroup.layout().addWidget(self.collectionView)
 
+        self.bottomBarGroup = QWidget(self)
+        self.bottomBarGroup.setLayout(QHBoxLayout())
+        self.collectionGroup.layout().addWidget(self.bottomBarGroup)
+
+        # Collection tracking option
+        self.trackingCheckBox = QCheckBox(self.Tracking)
+        self.bottomBarGroup.layout().addWidget(self.trackingCheckBox)
+
         # Buttons
         self.dialogButtons = QDialogButtonBox(self.collectionGroup)
         self.dialogButtons.setSizePolicy(
             QSizePolicy.Minimum, QSizePolicy.Minimum
         )
-        self.collectionGroup.layout().addWidget(self.dialogButtons)
+        self.bottomBarGroup.layout().addWidget(self.dialogButtons)
 
         self.addButton = QPushButton(self.dialogButtons)
         self.dialogButtons.addButton(
@@ -109,6 +146,7 @@ class CollectionCueSettings(SettingsPage):
         )
         self.addButton.setText(translate("CollectionCue", "Add"))
         self.delButton.setText(translate("CollectionCue", "Remove"))
+        self.trackingCheckBox.setText(translate("CollectionTracking", "Collection tracking"))
 
     def enableCheck(self, enabled):
         self.setGroupEnabled(self.collectionGroup, enabled)
@@ -119,13 +157,18 @@ class CollectionCueSettings(SettingsPage):
             if target is not None:
                 self._addCue(target, CueAction(action))
 
+        self.trackingCheckBox.setChecked(settings["tracking"])
+
     def getSettings(self):
         if self.isGroupEnabled(self.collectionGroup):
             targets = []
             for target_id, action in self.collectionModel.rows:
                 targets.append((target_id, action.value))
 
-            return {"targets": targets}
+            return {
+                "targets": targets,
+                "tracking": self.trackingCheckBox.isChecked()
+            }
 
         return {}
 
@@ -140,8 +183,10 @@ class CollectionCueSettings(SettingsPage):
 
     def _removeCurrentCue(self):
         row = self.collectionView.currentIndex().row()
-        cueId = self.collectionModel.rows[row][0]
+        if row == -1:
+            return
 
+        cueId = self.collectionModel.rows[row][0]
         self.collectionModel.removeRow(row)
         self.cueDialog.add_cue(Application().cue_model.get(cueId))
 
