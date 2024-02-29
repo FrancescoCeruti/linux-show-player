@@ -32,7 +32,7 @@ from lisp.cues.cue import CueAction
 from lisp.cues.cue_time import CueTime
 from lisp.cues.media_cue import MediaCue
 from lisp.plugins.list_layout.control_buttons import CueControlButtons
-from lisp.ui.widgets import QClickSlider, DBMeter
+from lisp.ui.widgets import QClickSlider, DigitalMeter
 from lisp.ui.widgets.elidedlabel import ElidedLabel
 from lisp.ui.widgets.waveform import WaveformSlider
 
@@ -209,7 +209,7 @@ class RunningMediaCueWidget(RunningCueWidget):
         self.seekSlider.sliderJumped.connect(self._seek)
         self.seekSlider.setVisible(False)
 
-        self.dbmeter = DBMeter(self.gridLayoutWidget)
+        self.dbmeter = DigitalMeter(self.gridLayoutWidget)
         self.dbmeter.setVisible(False)
 
         cue.changed("duration").connect(
