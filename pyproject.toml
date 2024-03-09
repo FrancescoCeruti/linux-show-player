@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "linux-show-player"
-version = "0.6.1"
+version = "0.6.2"
 description = "Cue player for stage productions"
 authors = ["Francesco Ceruti <ceppofrancy@gmail.com>"]
 license = "GPLv3"
