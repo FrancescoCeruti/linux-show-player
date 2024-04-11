@@ -20,20 +20,11 @@ from urllib.parse import urlsplit, urlunsplit, quote, unquote
 
 
 class SessionURI:
-    LOCAL_SCHEMES = ("", "file")
-
     def __init__(self, uri: str = ""):
         split = urlsplit(uri)
 
-        self._is_local = self.is_local_scheme(split.scheme)
-        if self._is_local:
-            # If the path doesn't start with "/" the first part is interpreted
-            # as "netloc", older session have this problem.
-            rel_path = split.netloc + split.path
-            # We need the absolute path
-            path = self.path_to_absolute(rel_path)
-            # For local schemes, we assume the URI path is unquoted.
-            self._uri = urlunsplit(("file", "", quote(path), "", ""))
+        if split.scheme == "":
+            self._uri = urlunsplit(("file", "", quote(self.path_to_absolute(uri)), "", ""))
         else:
             self._uri = uri
 
@@ -63,7 +54,7 @@ class SessionURI:
     @property
     def is_local(self):
         """True if the URI point to a local file."""
-        return self._is_local
+        return urlsplit(self._uri).scheme == "file"
 
     @classmethod
     def path_to_relative(cls, path):
@@ -77,6 +68,3 @@ class SessionURI:
 
         return Application().session.abs_path(path)
 
-    @classmethod
-    def is_local_scheme(cls, scheme):
-        return scheme in cls.LOCAL_SCHEMES

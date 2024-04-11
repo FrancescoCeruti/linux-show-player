@@ -14,6 +14,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
+
 import os
 
 from PyQt5.QtCore import Qt
@@ -31,6 +32,7 @@ from PyQt5.QtWidgets import (
 )
 
 from lisp.application import Application
+from lisp.core.session_uri import SessionURI
 from lisp.plugins.gst_backend import GstBackend
 from lisp.plugins.gst_backend.elements.uri_input import UriInput
 from lisp.ui.settings.pages import SettingsPage
@@ -116,10 +118,10 @@ class UriInputSettings(SettingsPage):
 
     def select_file(self):
         directory = ""
-        current = self.filePath.text()
+        current = SessionURI(self.filePath.text())
 
-        if current.startswith("file://"):
-            directory = Application().session.abs_path(current[7:])
+        if current.is_local:
+            directory = current.absolute_path
         if not os.path.exists(directory):
             directory = GstBackend.Config.get("mediaLookupDir", "")
         if not os.path.exists(directory):
@@ -133,4 +135,4 @@ class UriInputSettings(SettingsPage):
         )
 
         if os.path.exists(path):
-            self.filePath.setText("file://" + path)
+            self.filePath.setText(Application().session.rel_path(path))
