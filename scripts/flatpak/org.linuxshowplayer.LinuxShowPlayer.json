@@ -169,7 +169,7 @@
             "name": "python-packaging",
             "buildsystem": "simple",
             "build-commands": [
-                "pip3 install --no-index --no-build-isolation --find-links=\"file://${PWD}\" --prefix=\"${FLATPAK_DEST}\" packaging"
+                "pip3 install --no-index --no-build-isolation --ignore-installed --find-links=\"file://${PWD}\" --prefix=\"${FLATPAK_DEST}\" packaging"
             ],
             "sources": [
                 {
