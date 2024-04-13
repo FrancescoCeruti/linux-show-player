@@ -24,7 +24,7 @@ __author__ = "Francesco Ceruti"
 __email__ = "ceppofrancy@gmail.com"
 __url__ = "https://github.com/FrancescoCeruti/linux-show-player"
 __license__ = "GPLv3"
-__version_info__ = (0, 6, 1)
+__version_info__ = (0, 6, 3)
 __version__ = ".".join(map(str, __version_info__))
 
 # The version passed follows <major>.<minor>

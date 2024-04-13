@@ -55,8 +55,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://files.pythonhosted.org/packages/6d/13/57481471e0535151686ce18bb7e74a4884519474408872ffaca7732f9946/python_rtmidi-1.5.6.tar.gz",
-                    "sha256": "b2a0a399bb4a5e1a56477798afd41d022a18b5e954f6d0ff92b45bb99bee3710"
+                    "url": "https://files.pythonhosted.org/packages/dd/ee/0f91965dcc471714c69df21e5ca3d94dc81411b7dee2d31ff1184bea07c9/python_rtmidi-1.5.8.tar.gz",
+                    "sha256": "7f9ade68b068ae09000ecb562ae9521da3a234361ad5449e83fc734544d004fa"
                 }
             ]
         },
@@ -160,8 +160,8 @@
             "sources": [
                 {
                     "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/bf/d4/ce72ac247f414d15ff046f0926b76eb42bd743e83c1df28e856f328e3db1/poetry_core-1.7.0-py3-none-any.whl",
-                    "sha256": "38e174cdb00a84ee4a1cab66a378b435747f72414f5573bc18cfc3850a94df38"
+                    "url": "https://files.pythonhosted.org/packages/f2/db/20a9f9cae3f3c213a8c406deb4395698459fd96962cea8f2ccb230b1943c/poetry_core-1.9.0.tar.gz",
+                    "sha256": "fa7a4001eae8aa572ee84f35feb510b321bd652e5cf9293249d62853e1f935a2"
                 }
             ]
         },
@@ -169,7 +169,7 @@
             "name": "python-packaging",
             "buildsystem": "simple",
             "build-commands": [
-                "pip3 install --no-index --no-build-isolation --ignore-installed --find-links=\"file://${PWD}\" --prefix=\"${FLATPAK_DEST}\" packaging"
+                "pip3 install --no-index --no-build-isolation --force-reinstall --find-links=\"file://${PWD}\" --prefix=\"${FLATPAK_DEST}\" packaging"
             ],
             "sources": [
                 {
