@@ -96,6 +96,7 @@ class CollectionCueSettings(SettingsPage):
         self.addButton.clicked.connect(self._showAddCueDialog)
 
         self.delButton = QPushButton(self.dialogButtons)
+        self.delButton.setEnabled(False)
         self.dialogButtons.addButton(
             self.delButton, QDialogButtonBox.ActionRole
         )
@@ -132,6 +133,7 @@ class CollectionCueSettings(SettingsPage):
     def _addCue(self, cue, action):
         self.collectionModel.appendRow(cue.__class__, cue.id, action)
         self.cueDialog.remove_cue(cue)
+        self.delButton.setEnabled(True)
 
     def _showAddCueDialog(self):
         if self.cueDialog.exec() == QDialog.Accepted:
@@ -140,10 +142,14 @@ class CollectionCueSettings(SettingsPage):
 
     def _removeCurrentCue(self):
         row = self.collectionView.currentIndex().row()
-        cueId = self.collectionModel.rows[row][0]
 
-        self.collectionModel.removeRow(row)
-        self.cueDialog.add_cue(Application().cue_model.get(cueId))
+        if row >= 0:
+            cueId = self.collectionModel.rows[row][0]
+
+            self.collectionModel.removeRow(row)
+            self.cueDialog.add_cue(Application().cue_model.get(cueId))
+
+        self.delButton.setEnabled(self.collectionModel.rowCount() > 0)
 
 
 class CollectionView(QTableView):
