@@ -22,9 +22,8 @@ exclude = [
 ]
 
 [tool.poetry.dependencies]
-python = ">= 3.8, < 3.13"
+python = ">= 3.9, < 3.13"
 appdirs = "^1.4.1"
-cython = "^0.29"
 falcon = "^3.0"
 jack-client = "^0.5"
 mido = "^1.3"
@@ -35,10 +34,10 @@ python-rtmidi = "^1.1"
 requests = "^2.20"
 sortedcontainers = "^2.0"
 humanize = "^4.8.0"
-# pyalsa is currently broken for python >= 3.12
-pyalsa = { git = "https://github.com/alsa-project/alsa-python.git", tag = "v1.2.7", python = "<3.12" }
-# use a pyliblo fork that define dependecies correctly
-pyliblo3 = { git = "https://github.com/FrancescoCeruti/pyliblo3", rev = "0d943a4695d797827584be4ac8f4cb2137172a96" }
+numpy = "^1.26.4"
+pyalsa = { git = "https://github.com/alsa-project/alsa-python.git", rev="157d6604ad0854d2b2d068cf062a71583db169c3" }
+# Use a pyliblo fork that define dependecies correctly
+pyliblo3 = { git = "https://github.com/FrancescoCeruti/pyliblo3", rev = "9b66f93bc058807fdbe27f9255b18b0df8e60e32" }
 
 [tool.poetry.group.docs]
 optional = true

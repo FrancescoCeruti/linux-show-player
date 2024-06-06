@@ -15,9 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-import audioop
 import logging
-from array import array
+import numpy as np
 
 from lisp.backend.waveform import Waveform
 from .gi_repository import Gst, GLib
@@ -42,8 +41,8 @@ class GstWaveform(Waveform):
         self._pipeline = None
         self._bus_id = None
 
-        self._temp_peak = array("i")
-        self._temp_rms = array("i")
+        self._temp_peak = []
+        self._temp_rms = []
 
     def _load_waveform(self):
         # Make sure we start from zero
@@ -97,20 +96,22 @@ class GstWaveform(Waveform):
         self._bus_id = None
         self._pipeline = None
 
-        self._temp_peak = array("i")
-        self._temp_rms = array("i")
+        self._temp_peak = []
+        self._temp_rms = []
 
     def _on_new_sample(self, sink, _):
         """Called by GStreamer every time we have a new sample ready."""
         buffer = sink.emit("pull-sample").get_buffer()
         if buffer is not None:
-            # Get the all data from the buffer, as bytes
+            # Get the all data from the buffer.
             # We expect each audio sample to be 16bits signed integer
-            data_bytes = buffer.extract_dup(0, buffer.get_size())
-            # Get the max of the absolute values in the samples
-            self._temp_peak.append(audioop.max(data_bytes, 2))
+            buffer = buffer.extract_dup(0, buffer.get_size())
+            # Convert to suitable numpy array
+            data = np.absolute(np.frombuffer(buffer, dtype=np.int16)).astype(int)
+            # Get the max value of the samples
+            self._temp_peak.append(np.max(data))
             # Get rms of the samples
-            self._temp_rms.append(audioop.rms(data_bytes, 2))
+            self._temp_rms.append(np.sqrt(np.mean(data**2)))
 
         return Gst.FlowReturn.OK
 
@@ -129,17 +130,9 @@ class GstWaveform(Waveform):
 
     def _eos(self):
         """Called when the file has been processed."""
-        self.peak_samples = []
-        self.rms_samples = []
-
         # Normalize data
-        for peak, rms in zip(self._temp_peak, self._temp_rms):
-            self.peak_samples.append(
-                round(peak / self.MAX_S16_PCM_VALUE, self.MAX_DECIMALS)
-            )
-            self.rms_samples.append(
-                round(rms / self.MAX_S16_PCM_VALUE, self.MAX_DECIMALS)
-            )
+        self.peak_samples = np.round(np.divide(self._temp_peak, self.MAX_S16_PCM_VALUE), self.MAX_DECIMALS).tolist()
+        self.rms_samples = np.round(np.divide(self._temp_rms, self.MAX_S16_PCM_VALUE), self.MAX_DECIMALS).tolist()
 
         # Dump the data into a file (does nothing if caching is disabled)
         self._to_cache()
