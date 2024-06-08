@@ -2,14 +2,9 @@
     "name": "python-modules",
     "buildsystem": "simple",
     "build-commands": [
-        "pip3 install --no-index --no-build-isolation --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} appdirs falcon jack-client mido requests sortedcontainers humanize numpy"
+        "pip3 install --no-index --no-build-isolation --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} appdirs falcon jack-client mido requests sortedcontainers humanize"
     ],
     "sources": [
-        {
-            "type": "file",
-            "url": "https://files.pythonhosted.org/packages/32/34/d4e1c02d3bee589efb5dfa17f88ea08bdb3e3eac12bc475462aec52ed223/alabaster-0.7.16-py3-none-any.whl",
-            "sha256": "b46733c07dce03ae4e150330b975c75737fa60f0a7c591b6c8bf4928a28e2c92"
-        },
         {
             "type": "file",
             "url": "https://files.pythonhosted.org/packages/3b/00/2344469e2084fb287c2e0b57b72910309874c3245463acd6cf5e3db69324/appdirs-1.4.4-py2.py3-none-any.whl",
@@ -17,13 +12,18 @@
         },
         {
             "type": "file",
-            "url": "https://files.pythonhosted.org/packages/5b/11/1e78951465b4a225519b8c3ad29769c49e0d8d157a070f681d5b6d64737f/certifi-2024.6.2-py3-none-any.whl",
-            "sha256": "ddc6c8ce995e6987e7faf5e3f1b02b302836a0e5d98ece18392cb1a36c72ad56"
+            "url": "https://files.pythonhosted.org/packages/32/34/d4e1c02d3bee589efb5dfa17f88ea08bdb3e3eac12bc475462aec52ed223/alabaster-0.7.16-py3-none-any.whl",
+            "sha256": "b46733c07dce03ae4e150330b975c75737fa60f0a7c591b6c8bf4928a28e2c92"
         },
         {
             "type": "file",
             "url": "https://files.pythonhosted.org/packages/b1/fe/e8c672695b37eecc5cbf43e1d0638d88d66ba3a44c4d321c796f4e59167f/beautifulsoup4-4.12.3-py3-none-any.whl",
             "sha256": "b80878c9f40111313e55da8ba20bdba06d8fa3969fc68304167741bbf9e082ed"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/5b/11/1e78951465b4a225519b8c3ad29769c49e0d8d157a070f681d5b6d64737f/certifi-2024.6.2-py3-none-any.whl",
+            "sha256": "ddc6c8ce995e6987e7faf5e3f1b02b302836a0e5d98ece18392cb1a36c72ad56"
         },
         {
             "type": "file",
@@ -47,11 +47,6 @@
         },
         {
             "type": "file",
-            "url": "https://files.pythonhosted.org/packages/aa/2b/2ae0c789fd08d5b44e745726d08a17e6d3d7d09071d05473105edc7615f2/humanize-4.9.0-py3-none-any.whl",
-            "sha256": "ce284a76d5b1377fd8836733b983bfb0b76f1aa1c090de2566fcf008d7f6ab16"
-        },
-        {
-            "type": "file",
             "url": "https://files.pythonhosted.org/packages/ff/62/85c4c919272577931d407be5ba5d71c20f0b616d31a0befe0ae45bb79abd/imagesize-1.4.1-py2.py3-none-any.whl",
             "sha256": "0d8d18d08f840c19d0ee7ca1fd82490fdc3729b7ac93f49870406ddde8ef8d8b"
         },
@@ -62,18 +57,23 @@
         },
         {
             "type": "file",
+            "url": "https://files.pythonhosted.org/packages/aa/2b/2ae0c789fd08d5b44e745726d08a17e6d3d7d09071d05473105edc7615f2/humanize-4.9.0-py3-none-any.whl",
+            "sha256": "ce284a76d5b1377fd8836733b983bfb0b76f1aa1c090de2566fcf008d7f6ab16"
+        },
+        {
+            "type": "file",
             "url": "https://files.pythonhosted.org/packages/17/b7/fd357a7961875637930d138aa2667e6fd08bd888a5c173d4b7b2667f7cb9/furo-2023.9.10-py3-none-any.whl",
             "sha256": "513092538537dc5c596691da06e3c370714ec99bc438680edc1debffb73e5bfc"
         },
         {
             "type": "file",
-            "url": "https://files.pythonhosted.org/packages/17/41/de1269065ff0d1bda143cc91b245aef3165d9259e27904a4a59eab081e0b/JACK_Client-0.5.4-py3-none-any.whl",
-            "sha256": "52ca6164438d3b7f8cfdace5f6fab3c7224fe63022efc85c7029862d435bce73"
+            "url": "https://files.pythonhosted.org/packages/28/76/e6222113b83e3622caa4bb41032d0b1bf785250607392e1b778aca0b8a7d/charset_normalizer-3.3.2-py3-none-any.whl",
+            "sha256": "3e4d1f6587322d2788836a99c69062fbb091331ec940e02d12d179c1d53e25fc"
         },
         {
             "type": "file",
-            "url": "https://files.pythonhosted.org/packages/e3/05/ed67ccf462fff0b559e6ea7b3e3fcb20dec9d57bf90b5c5e72a6f316183e/livereload-2.6.3-py2.py3-none-any.whl",
-            "sha256": "ad4ac6f53b2d62bb6ce1a5e6e96f1f00976a32348afedcb4b6d68df2a1d346e4"
+            "url": "https://files.pythonhosted.org/packages/17/41/de1269065ff0d1bda143cc91b245aef3165d9259e27904a4a59eab081e0b/JACK_Client-0.5.4-py3-none-any.whl",
+            "sha256": "52ca6164438d3b7f8cfdace5f6fab3c7224fe63022efc85c7029862d435bce73"
         },
         {
             "type": "file",
@@ -87,6 +87,11 @@
         },
         {
             "type": "file",
+            "url": "https://files.pythonhosted.org/packages/e3/05/ed67ccf462fff0b559e6ea7b3e3fcb20dec9d57bf90b5c5e72a6f316183e/livereload-2.6.3-py2.py3-none-any.whl",
+            "sha256": "ad4ac6f53b2d62bb6ce1a5e6e96f1f00976a32348afedcb4b6d68df2a1d346e4"
+        },
+        {
+            "type": "file",
             "url": "https://files.pythonhosted.org/packages/31/80/3a54838c3fb461f6fec263ebf3a3a41771bd05190238de3486aae8540c36/jinja2-3.1.4-py3-none-any.whl",
             "sha256": "bc5dd2abb727a5319567b7a813e6a2e7318c39f4f487cfe6c89c6f9c7d25197d"
         },
@@ -97,13 +102,18 @@
         },
         {
             "type": "file",
-            "url": "https://files.pythonhosted.org/packages/ef/f7/8a4dcea720a581e69ac8c5a38524baf0e3e2bb5f3819a9ff661464fe7d10/mdit_py_plugins-0.4.1-py3-none-any.whl",
-            "sha256": "1020dfe4e6bfc2c79fb49ae4e3f5b297f5ccd20f010187acc52af2921e27dc6a"
+            "url": "https://files.pythonhosted.org/packages/b3/38/89ba8ad64ae25be8de66a6d463314cf1eb366222074cfda9ee839c56a4b4/mdurl-0.1.2-py3-none-any.whl",
+            "sha256": "84008a41e51615a49fc9966191ff91509e3c40b939176e643fd50a5c2196b8f8"
         },
         {
             "type": "file",
-            "url": "https://files.pythonhosted.org/packages/b3/38/89ba8ad64ae25be8de66a6d463314cf1eb366222074cfda9ee839c56a4b4/mdurl-0.1.2-py3-none-any.whl",
-            "sha256": "84008a41e51615a49fc9966191ff91509e3c40b939176e643fd50a5c2196b8f8"
+            "url": "https://files.pythonhosted.org/packages/3b/30/a7bc770025b6a7a36d0508e3d735dca239df7c27b862856e54d661f24632/falcon-3.1.3.tar.gz",
+            "sha256": "23335dbccd44f29e85ec55f2f35d5a0bc12bd7a509f641ab81f5c64b65626263"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/ef/f7/8a4dcea720a581e69ac8c5a38524baf0e3e2bb5f3819a9ff661464fe7d10/mdit_py_plugins-0.4.1-py3-none-any.whl",
+            "sha256": "1020dfe4e6bfc2c79fb49ae4e3f5b297f5ccd20f010187acc52af2921e27dc6a"
         },
         {
             "type": "file",
@@ -117,8 +127,8 @@
         },
         {
             "type": "file",
-            "url": "https://files.pythonhosted.org/packages/28/76/e6222113b83e3622caa4bb41032d0b1bf785250607392e1b778aca0b8a7d/charset_normalizer-3.3.2-py3-none-any.whl",
-            "sha256": "3e4d1f6587322d2788836a99c69062fbb091331ec940e02d12d179c1d53e25fc"
+            "url": "https://files.pythonhosted.org/packages/cc/20/ff623b09d963f88bfde16306a54e12ee5ea43e9b597108672ff3a408aad6/pathspec-0.12.1-py3-none-any.whl",
+            "sha256": "a0d503e138a4c123b27490a4f7beda6a01c6f288df0e4a8b79c7eb0dc7b4cc08"
         },
         {
             "type": "file",
@@ -127,23 +137,8 @@
         },
         {
             "type": "file",
-            "url": "https://files.pythonhosted.org/packages/3b/30/a7bc770025b6a7a36d0508e3d735dca239df7c27b862856e54d661f24632/falcon-3.1.3.tar.gz",
-            "sha256": "23335dbccd44f29e85ec55f2f35d5a0bc12bd7a509f641ab81f5c64b65626263"
-        },
-        {
-            "type": "file",
-            "url": "https://files.pythonhosted.org/packages/cc/20/ff623b09d963f88bfde16306a54e12ee5ea43e9b597108672ff3a408aad6/pathspec-0.12.1-py3-none-any.whl",
-            "sha256": "a0d503e138a4c123b27490a4f7beda6a01c6f288df0e4a8b79c7eb0dc7b4cc08"
-        },
-        {
-            "type": "file",
             "url": "https://files.pythonhosted.org/packages/13/a3/a812df4e2dd5696d1f351d58b8fe16a405b234ad2886a0dab9183fb78109/pycparser-2.22-py3-none-any.whl",
             "sha256": "c3702b6d3dd8c7abc1afa565d7e63d53a1d0bd86cdc24edd75470f4de499cfcc"
-        },
-        {
-            "type": "file",
-            "url": "https://files.pythonhosted.org/packages/68/ce/95b0bae7968c65473e1298efb042e10cafc7bafc14d9e4f154008241c91d/cffi-1.16.0.tar.gz",
-            "sha256": "bcb3ef43e58665bbda2fb198698fcae6776483e0c4a631aa5647806c25e02cc0"
         },
         {
             "type": "file",
@@ -152,18 +147,13 @@
         },
         {
             "type": "file",
+            "url": "https://files.pythonhosted.org/packages/68/ce/95b0bae7968c65473e1298efb042e10cafc7bafc14d9e4f154008241c91d/cffi-1.16.0.tar.gz",
+            "sha256": "bcb3ef43e58665bbda2fb198698fcae6776483e0c4a631aa5647806c25e02cc0"
+        },
+        {
+            "type": "file",
             "url": "https://files.pythonhosted.org/packages/ed/dc/c02e01294f7265e63a7315fe086dd1df7dacb9f840a804da846b96d01b96/snowballstemmer-2.2.0-py2.py3-none-any.whl",
             "sha256": "c8e1716e83cc398ae16824e5572ae04e0d9fc2c6b985fb0f900f5f0c96ecba1a"
-        },
-        {
-            "type": "file",
-            "url": "https://files.pythonhosted.org/packages/87/5b/aae44c6655f3801e81aa3eef09dbbf012431987ba564d7231722f68df02d/MarkupSafe-2.1.5.tar.gz",
-            "sha256": "d283d37a890ba4c1ae73ffadf8046435c76e7bc2247bbb63c00bd1a709c6544b"
-        },
-        {
-            "type": "file",
-            "url": "https://files.pythonhosted.org/packages/32/46/9cb0e58b2deb7f82b84065f37f3bffeb12413f947f9388e4cac22c4621ce/sortedcontainers-2.4.0-py2.py3-none-any.whl",
-            "sha256": "a163dcaede0f1c021485e957a39245190e74249897e2ae4b2aa38595db237ee0"
         },
         {
             "type": "file",
@@ -172,8 +162,23 @@
         },
         {
             "type": "file",
-            "url": "https://files.pythonhosted.org/packages/7e/7d/8fb7557b6c9298d2bcda57f4d070de443c6355dfb475582378e2aa16a02c/sphinx_autobuild-2021.3.14-py3-none-any.whl",
-            "sha256": "8fe8cbfdb75db04475232f05187c776f46f6e9e04cacf1e49ce81bdac649ccac"
+            "url": "https://files.pythonhosted.org/packages/87/5b/aae44c6655f3801e81aa3eef09dbbf012431987ba564d7231722f68df02d/MarkupSafe-2.1.5.tar.gz",
+            "sha256": "d283d37a890ba4c1ae73ffadf8046435c76e7bc2247bbb63c00bd1a709c6544b"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/cd/e5/af35f7ea75cf72f2cd079c95ee16797de7cd71f29ea7c68ae5ce7be1eda0/PyYAML-6.0.1.tar.gz",
+            "sha256": "bfdf460b1736c775f2ba9f6a92bca30bc2095067b8a9d77876d1fad6cc3b4a43"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/32/46/9cb0e58b2deb7f82b84065f37f3bffeb12413f947f9388e4cac22c4621ce/sortedcontainers-2.4.0-py2.py3-none-any.whl",
+            "sha256": "a163dcaede0f1c021485e957a39245190e74249897e2ae4b2aa38595db237ee0"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/3c/dd/018ce05c532a22007ac58d4f45232514cd9d6dd0ee1dc374e309db830983/sphinx_basic_ng-1.0.0b2-py3-none-any.whl",
+            "sha256": "eb09aedbabfb650607e9b4b68c9d240b90b1e1be221d6ad71d61c52e29f7932b"
         },
         {
             "type": "file",
@@ -182,8 +187,8 @@
         },
         {
             "type": "file",
-            "url": "https://files.pythonhosted.org/packages/3c/dd/018ce05c532a22007ac58d4f45232514cd9d6dd0ee1dc374e309db830983/sphinx_basic_ng-1.0.0b2-py3-none-any.whl",
-            "sha256": "eb09aedbabfb650607e9b4b68c9d240b90b1e1be221d6ad71d61c52e29f7932b"
+            "url": "https://files.pythonhosted.org/packages/7e/7d/8fb7557b6c9298d2bcda57f4d070de443c6355dfb475582378e2aa16a02c/sphinx_autobuild-2021.3.14-py3-none-any.whl",
+            "sha256": "8fe8cbfdb75db04475232f05187c776f46f6e9e04cacf1e49ce81bdac649ccac"
         },
         {
             "type": "file",
@@ -197,11 +202,6 @@
         },
         {
             "type": "file",
-            "url": "https://files.pythonhosted.org/packages/cd/e5/af35f7ea75cf72f2cd079c95ee16797de7cd71f29ea7c68ae5ce7be1eda0/PyYAML-6.0.1.tar.gz",
-            "sha256": "bfdf460b1736c775f2ba9f6a92bca30bc2095067b8a9d77876d1fad6cc3b4a43"
-        },
-        {
-            "type": "file",
             "url": "https://files.pythonhosted.org/packages/a0/52/1049d918d1d1c72857d285c3f0c64c1cbe0be394ce1c93a3d2aa4f39fe3b/sphinxcontrib_devhelp-1.0.6-py3-none-any.whl",
             "sha256": "6485d09629944511c893fa11355bda18b742b83a2b181f9a009f7e500595c90f"
         },
@@ -212,13 +212,18 @@
         },
         {
             "type": "file",
+            "url": "https://files.pythonhosted.org/packages/80/b3/1beac14a88654d2e5120d0143b49be5ad450b86eb1963523d8dbdcc51eb2/sphinxcontrib_qthelp-1.0.7-py3-none-any.whl",
+            "sha256": "e2ae3b5c492d58fcbd73281fbd27e34b8393ec34a073c792642cd8e529288182"
+        },
+        {
+            "type": "file",
             "url": "https://files.pythonhosted.org/packages/c2/42/4c8646762ee83602e3fb3fbe774c2fac12f317deb0b5dbeeedd2d3ba4b77/sphinxcontrib_jsmath-1.0.1-py2.py3-none-any.whl",
             "sha256": "2ec2eaebfb78f3f2078e73666b1415417a116cc848b72e5172e596c871103178"
         },
         {
             "type": "file",
-            "url": "https://files.pythonhosted.org/packages/80/b3/1beac14a88654d2e5120d0143b49be5ad450b86eb1963523d8dbdcc51eb2/sphinxcontrib_qthelp-1.0.7-py3-none-any.whl",
-            "sha256": "e2ae3b5c492d58fcbd73281fbd27e34b8393ec34a073c792642cd8e529288182"
+            "url": "https://files.pythonhosted.org/packages/b4/fa/130c32ed94cf270e3d0b9ded16fb7b2c8fea86fa7263c29a696a30c1dde7/sphinx-7.3.7-py3-none-any.whl",
+            "sha256": "413f75440be4cacf328f580b4274ada4565fb2187d696a84970c23f77b64d8c3"
         },
         {
             "type": "file",
@@ -232,28 +237,18 @@
         },
         {
             "type": "file",
-            "url": "https://files.pythonhosted.org/packages/b4/fa/130c32ed94cf270e3d0b9ded16fb7b2c8fea86fa7263c29a696a30c1dde7/sphinx-7.3.7-py3-none-any.whl",
-            "sha256": "413f75440be4cacf328f580b4274ada4565fb2187d696a84970c23f77b64d8c3"
-        },
-        {
-            "type": "file",
             "url": "https://files.pythonhosted.org/packages/97/75/10a9ebee3fd790d20926a90a2547f0bf78f371b2f13aa822c759680ca7b9/tomli-2.0.1-py3-none-any.whl",
             "sha256": "939de3e7a6161af0c887ef91b7d41a53e7c5a1ca976325f429cb46ea9bc30ecc"
         },
         {
             "type": "file",
-            "url": "https://files.pythonhosted.org/packages/65/6e/09db70a523a96d25e115e71cc56a6f9031e7b8cd166c1ac8438307c14058/numpy-1.26.4.tar.gz",
-            "sha256": "2a02aba9ed12e4ac4eb3ea9421c420301a0c6460d9830d74a9df87efa4912010"
+            "url": "https://files.pythonhosted.org/packages/20/38/f5c473fe9b90c8debdd29ea68d5add0289f1936d6f923b6b9cc0b931194c/zipp-3.19.2-py3-none-any.whl",
+            "sha256": "f091755f667055f2d02b32c53771a7a6c8b47e1fdbc4b72a8b9072b3eef8015c"
         },
         {
             "type": "file",
             "url": "https://files.pythonhosted.org/packages/b6/53/84a859aaddfe7378a6e5820e864a2d75763e82b6fcbda1a00e92ec620bb7/typing_extensions-4.12.1-py3-none-any.whl",
             "sha256": "6024b58b69089e5a89c347397254e35f1bf02a907728ec7fee9bf0fe837d203a"
-        },
-        {
-            "type": "file",
-            "url": "https://files.pythonhosted.org/packages/20/38/f5c473fe9b90c8debdd29ea68d5add0289f1936d6f923b6b9cc0b931194c/zipp-3.19.2-py3-none-any.whl",
-            "sha256": "f091755f667055f2d02b32c53771a7a6c8b47e1fdbc4b72a8b9072b3eef8015c"
         },
         {
             "type": "file",
