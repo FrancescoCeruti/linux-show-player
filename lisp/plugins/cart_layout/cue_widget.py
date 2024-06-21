@@ -26,6 +26,7 @@ from PyQt5.QtWidgets import (
     QSizePolicy,
     QVBoxLayout,
 )
+from qdigitalmeter import QDigitalMeter
 
 from lisp.backend.audio_utils import slider_to_fader, fader_to_slider
 from lisp.core.signal import Connection
@@ -35,7 +36,7 @@ from lisp.cues.cue_time import CueTime
 from lisp.cues.media_cue import MediaCue
 from lisp.plugins.cart_layout.page_widget import CartPageWidget
 from lisp.ui.icons import IconTheme
-from lisp.ui.widgets import QClickLabel, QClickSlider, DBMeter
+from lisp.ui.widgets import QClickLabel, QClickSlider
 
 
 class CueWidget(QWidget):
@@ -103,7 +104,7 @@ class CueWidget(QWidget):
         )
         self.volumeSlider.setVisible(False)
 
-        self.dbMeter = DBMeter(self)
+        self.dbMeter = QDigitalMeter(self)
         self.dbMeter.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
         self.dbMeter.setVisible(False)
 
