@@ -73,6 +73,5 @@ class DbMeter(GstMediaElement):
                 if structure is not None and structure.has_name("level"):
                     self.level_ready.emit(
                         structure.get_value("peak"),
-                        structure.get_value("rms"),
                         structure.get_value("decay"),
                     )
