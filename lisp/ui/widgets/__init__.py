@@ -1,7 +1,6 @@
 from .colorbutton import ColorButton
 from .cue_actions import CueActionComboBox
 from .cue_next_actions import CueNextActionComboBox
-from .dbmeter import DBMeter
 from .digitalclock import DigitalLabelClock
 from .fades import FadeComboBox, FadeEdit
 from .hotkeyedit import HotKeyEdit
