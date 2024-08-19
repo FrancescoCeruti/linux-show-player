@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2017 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2024 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -344,7 +344,7 @@ class ListLayout(CueLayout):
 
     @index_column_visible.get
     def _get_index_column_visible(self):
-        return not self.show_index_action.isChecked()
+        return self.show_index_action.isChecked()
 
     @index_column_visible.set
     def _set_index_visible(self, visible):
