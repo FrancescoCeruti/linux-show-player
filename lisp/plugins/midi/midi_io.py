@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2019 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2023 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,11 +27,12 @@ logger = logging.getLogger(__name__)
 
 
 class MIDIBase(ABC):
-    def __init__(self, backend, port_name=None):
+    def __init__(self, backend, patch_id, port_name=None):
         """
         :param port_name: the port name
         """
         self._backend = backend
+        self._patch_id = patch_id
         self._port_name = port_name
         self._port = None
 
@@ -49,10 +50,11 @@ class MIDIBase(ABC):
         else:
             return self._port_name
 
-    def change_port(self, port_name):
+    def change_port(self, port_name, auto_open=True):
         self._port_name = port_name
         self.close()
-        self.open()
+        if auto_open:
+            self.open()
 
     @abstractmethod
     def open(self):
@@ -91,9 +93,10 @@ class MIDIInput(MIDIBase):
     def __init__(self, *args):
         super().__init__(*args)
 
-        self.alternate_mode = False
+        self.exclusive_mode = False
+        self.received = Signal()
         self.new_message = Signal()
-        self.new_message_alt = Signal()
+        self.received_exclusive = Signal()
 
     def open(self):
         try:
@@ -118,7 +121,8 @@ class MIDIInput(MIDIBase):
                 }
             )
 
-        if self.alternate_mode:
-            self.new_message_alt.emit(message)
+        if self.exclusive_mode:
+            self.received_exclusive.emit(self._patch_id, message)
         else:
+            self.received.emit(self._patch_id, message)
             self.new_message.emit(message)
