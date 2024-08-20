@@ -24,7 +24,7 @@ from PyQt5.QtCore import (
     QTimer,
 )
 from PyQt5.QtGui import QKeyEvent, QContextMenuEvent, QBrush, QColor
-from PyQt5.QtWidgets import QTreeWidget, QHeaderView, QTreeWidgetItem
+from PyQt5.QtWidgets import QTreeWidget, QHeaderView, QTreeWidgetItem, QMenu
 
 from lisp.application import Application
 from lisp.backend import get_backend
@@ -43,12 +43,13 @@ from lisp.ui.ui_utils import translate, css_to_dict, dict_to_css
 
 
 class ListColumn:
-    def __init__(self, name, widget, resize=None, width=None, visible=True):
+    def __init__(self, name, widget, resize=None, width=None, displayName=True):
         self.baseName = name
         self.widget = widget
         self.resize = resize
         self.width = width
-        self.visible = visible
+        self.displayName = displayName
+        self.action = None
 
     @property
     def name(self):
@@ -71,7 +72,7 @@ class CueListView(QTreeWidget):
     # TODO: add ability to show/hide
     # TODO: implement columns (cue-type / target / etc..)
     COLUMNS = [
-        ListColumn("", CueStatusIcons, QHeaderView.Fixed, width=45),
+        ListColumn(QT_TRANSLATE_NOOP("ListLayoutHeader", "Cue Status"), CueStatusIcons, QHeaderView.Fixed, width=45, displayName=False),
         ListColumn("#", IndexWidget, QHeaderView.ResizeToContents),
         ListColumn(
             QT_TRANSLATE_NOOP("ListLayoutHeader", "Cue"),
@@ -87,7 +88,7 @@ class CueListView(QTreeWidget):
         ListColumn(
             QT_TRANSLATE_NOOP("ListLayoutHeader", "Post wait"), PostWaitWidget
         ),
-        ListColumn("", NextActionIcon, QHeaderView.Fixed, width=18),
+        ListColumn(QT_TRANSLATE_NOOP("ListLayoutHeader", "Next Action"), NextActionIcon, QHeaderView.Fixed, width=18, displayName=False),
     ]
 
     ITEM_DEFAULT_BG = QBrush(Qt.transparent)
@@ -108,16 +109,30 @@ class CueListView(QTreeWidget):
         self._model.item_removed.connect(self.__cueRemoved)
         self._model.model_reset.connect(self.__modelReset)
 
+        # Create context menu for column headers
+        self.__columnMenu = QMenu()
+        self.__hideMenu = self.__columnMenu.addAction(QT_TRANSLATE_NOOP("ListLayoutHeaderMenu", "Hide"))
+        self.__showMenu = self.__columnMenu.addMenu(QT_TRANSLATE_NOOP("ListLayoutHeaderMenu","Show"))
+
         # Setup the columns headers
-        self.setHeaderLabels((c.name for c in CueListView.COLUMNS))
+        self.setHeaderLabels((c.name if c.displayName else "" for c in CueListView.COLUMNS))
         for i, column in enumerate(CueListView.COLUMNS):
             if column.resize is not None:
                 self.header().setSectionResizeMode(i, column.resize)
             if column.width is not None:
                 self.setColumnWidth(i, column.width)
+            # Create context menu to show the column
+            column.action = self.__showMenu.addAction(column.name)
+            column.action.triggered.connect(
+                lambda chk, item=i: self.showColumn(item))
 
-        self.header().setDragEnabled(False)
+
+        self.header().setDragEnabled(True) 
         self.header().setStretchLastSection(False)
+        
+        # Connect local context menu for headers
+        self.header().setContextMenuPolicy(Qt.CustomContextMenu)
+        self.header().customContextMenuRequested.connect(self.__openHeaderMenu)
 
         self.setDragDropMode(self.InternalMove)
 
@@ -327,3 +342,19 @@ class CueListView(QTreeWidget):
             self.__scrollRangeGuard = True
             self.verticalScrollBar().setMaximum(max_ + 1)
             self.__scrollRangeGuard = False
+
+    def __openHeaderMenu(self, position):
+        # Prepare and open context menu 
+        index = self.indexAt(position)
+        showShowMenu = False
+        for i, column in enumerate(CueListView.COLUMNS):
+            # show column name in menu if column is hidden
+            column.action.setVisible(self.isColumnHidden(i))
+            showShowMenu |= self.isColumnHidden(i)
+        self.__showMenu.menuAction().setVisible(showShowMenu)
+        action = self.__columnMenu.exec_(self.mapToGlobal(position))
+        if action == self.__hideMenu:
+            self.hideColumn(index.column())
+
+
+            
