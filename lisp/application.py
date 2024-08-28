@@ -17,17 +17,19 @@
 
 import json
 import logging
+from importlib import import_module
 from os.path import exists, dirname, abspath, realpath
+from pathlib import Path
 
 from PyQt5.QtWidgets import QDialog, qApp
 
-from lisp import layout, __version__ as lisp_version
+from lisp import layout, __version__ as lisp_version, APP_DIR
 from lisp.command.stack import CommandsStack
 from lisp.core.configuration import Configuration, DummyConfiguration
 from lisp.core.session import Session
 from lisp.core.signal import Signal
 from lisp.core.singleton import Singleton
-from lisp.core.util import filter_live_properties
+from lisp.core.util import filter_live_properties, rgetattr, natural_keys
 from lisp.cues.cue import Cue
 from lisp.cues.cue_factory import CueFactory
 from lisp.cues.cue_model import CueModel
@@ -231,6 +233,8 @@ class Application(metaclass=Singleton):
             with open(session_file, mode="r", encoding="utf-8") as file:
                 session_dict = json.load(file)
 
+            session_dict = self.__migrate_session(session_file, session_dict)
+
             # New session
             self.__new_session(
                 layout.get_layout(session_dict["session"]["layout_type"])
@@ -266,3 +270,40 @@ class Application(metaclass=Singleton):
                 ).format(session_file)
             )
             self.__new_session_dialog()
+
+    def __migrate_session(self, session_file: str, session_dict: dict):
+        session_app_version = rgetattr(session_dict, "meta.version", None)
+
+        if session_app_version is None:
+            if "session" in session_dict:
+                session_app_version = "0.6.0"
+            else:
+                session_app_version = "0"
+
+        # session_plugins_versions = rgetattr(session_dict, "meta.version", {})
+
+        if session_app_version != lisp_version:
+            migration_files = [
+                p
+                for p in Path(APP_DIR).joinpath("migrations").glob("*.py")
+                if p.is_file() and p.stem != "__init__"
+            ]
+
+            if len(migration_files) > 0:
+                migration_names = [p.stem for p in migration_files]
+                migration_names.append(f"from_{session_app_version}")
+                migration_names.sort(key=natural_keys)
+
+                migration_modules = [
+                    f"lisp.migrations.{p.stem}"
+                    for p in migration_files[
+                        migration_names.index(f"from_{session_app_version}") :
+                    ]
+                ]
+
+                for mod_name in migration_modules:
+                    mod = import_module(mod_name)
+                    if hasattr(mod, "migrate"):
+                        session_dict = mod.migrate(session_file, session_dict)
+
+        return session_dict
