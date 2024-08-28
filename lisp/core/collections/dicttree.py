@@ -28,11 +28,10 @@ class DictTreeError(Exception):
 
 
 class DictNode:
-    Sep = "."
-
-    def __init__(self, value=None, parent=None):
+    def __init__(self, value=None, parent=None, separator="."):
         self.parent = parent
         self.value = value
+        self.separator = separator
         self.name = None
 
         self._children = {}
@@ -50,7 +49,7 @@ class DictNode:
             raise TypeError(
                 f"DictNode name must be a str, not {typename(node)}"
             )
-        if self.Sep in name:
+        if self.separator in name:
             raise DictTreeError(
                 "DictNode name cannot contain the path separator"
             )
@@ -116,13 +115,11 @@ class DictNode:
 
         return ""
 
-    @classmethod
-    def jp(cls, *paths):
-        return cls.Sep.join(paths)
+    def jp(self, *paths):
+        return self.separator.join(paths)
 
-    @classmethod
-    def sp(cls, path):
-        return path.split(cls.Sep)
+    def sp(self, path):
+        return path.split(self.separator)
 
     def __getitem__(self, path):
         return self.get(path)
