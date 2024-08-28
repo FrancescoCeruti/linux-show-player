@@ -18,6 +18,7 @@
 import logging
 import os
 import re
+from importlib import import_module
 
 from lisp.ui.ui_utils import translate
 
@@ -160,7 +161,3 @@ def module_to_class_name(mod_name, pre="", suf=""):
     base_name = "".join(word.title() for word in mod_name.split("_"))
     # Add prefix and suffix to the base name
     return pre + base_name + suf
-
-
-def import_module(module_path):
-    return __import__(module_path, globals(), locals(), ["*"])

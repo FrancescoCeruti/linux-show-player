@@ -22,7 +22,7 @@ from PyQt5 import QtCore
 from PyQt5.QtCore import QModelIndex
 from PyQt5.QtWidgets import QVBoxLayout, QDialogButtonBox, QDialog
 
-from lisp.core.dicttree import DictNode
+from lisp.core.collections.dicttree import DictNode
 from lisp.ui.ui_utils import translate
 from lisp.ui.widgets.pagestreewidget import PagesTreeModel, PagesTreeWidget
 
