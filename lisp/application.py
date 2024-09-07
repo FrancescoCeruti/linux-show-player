@@ -14,7 +14,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
-
+import inspect
 import json
 import logging
 from importlib import import_module
@@ -273,6 +273,7 @@ class Application(metaclass=Singleton):
 
     def __migrate_session(self, session_file: str, session_dict: dict):
         session_app_version = rgetattr(session_dict, "meta.version", None)
+        session_plugins_versions = rgetattr(session_dict, "meta.plugins", {})
 
         if session_app_version is None:
             if "session" in session_dict:
@@ -280,30 +281,55 @@ class Application(metaclass=Singleton):
             else:
                 session_app_version = "0"
 
-        # session_plugins_versions = rgetattr(session_dict, "meta.version", {})
+        self.__migration_group(
+            session_file,
+            session_dict,
+            "lisp.migrations",
+            Path(APP_DIR).joinpath("migrations"),
+            session_app_version,
+        )
 
-        if session_app_version != lisp_version:
-            migration_files = [
-                p
-                for p in Path(APP_DIR).joinpath("migrations").glob("*.py")
-                if p.is_file() and p.stem != "__init__"
+        for name, plugin in get_plugins():
+            plugin_dir = Path(inspect.getfile(plugin.__class__)).parent
+            session_dict = self.__migration_group(
+                session_file,
+                session_dict,
+                f"lisp.plugins.{plugin_dir.stem}.migrations",  # TODO: generic solution that works for "3-party" plugins
+                plugin_dir.joinpath("migrations"),
+                session_plugins_versions.get(
+                    name, "0"
+                ),  # TODO: detect early 0.6 versions
+            )
+
+        return session_dict
+
+    def __migration_group(
+        self,
+        session_file: str,
+        session_dict: dict,
+        module: str,
+        path: Path,
+        version: str,
+    ):
+        migration_files = [
+            p for p in path.glob("*.py") if p.is_file() and p.stem != "__init__"
+        ]
+
+        if len(migration_files) > 0:
+            migration_names = [p.stem for p in migration_files]
+            migration_names.append(f"from_{version}")
+            migration_names.sort(key=natural_keys)
+
+            migration_modules = [
+                f"{module}.{p.stem}"
+                for p in migration_files[
+                    migration_names.index(f"from_{version}") :
+                ]
             ]
 
-            if len(migration_files) > 0:
-                migration_names = [p.stem for p in migration_files]
-                migration_names.append(f"from_{session_app_version}")
-                migration_names.sort(key=natural_keys)
-
-                migration_modules = [
-                    f"lisp.migrations.{p.stem}"
-                    for p in migration_files[
-                        migration_names.index(f"from_{session_app_version}") :
-                    ]
-                ]
-
-                for mod_name in migration_modules:
-                    mod = import_module(mod_name)
-                    if hasattr(mod, "migrate"):
-                        session_dict = mod.migrate(session_file, session_dict)
+            for mod_name in migration_modules:
+                mod = import_module(mod_name)
+                if hasattr(mod, "migrate"):
+                    session_dict = mod.migrate(session_file, session_dict)
 
         return session_dict
