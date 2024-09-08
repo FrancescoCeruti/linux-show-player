@@ -278,36 +278,51 @@ class Application(metaclass=Singleton):
         if session_app_version is None:
             if "session" in session_dict:
                 session_app_version = "0.6.0"
+                session_plugins_versions = {
+                    name: "0.6.0" for name, _ in get_plugins()
+                }
             else:
                 session_app_version = "0"
+                session_plugins_versions = {
+                    name: "0" for name, _ in get_plugins()
+                }
 
-        self.__migration_group(
-            session_file,
-            session_dict,
-            "lisp.migrations",
-            Path(APP_DIR).joinpath("migrations"),
-            session_app_version,
-        )
-
-        for name, plugin in get_plugins():
-            plugin_dir = Path(inspect.getfile(plugin.__class__)).parent
-            session_dict = self.__migration_group(
+        if lisp_version > session_app_version:
+            self.__migration_package(
                 session_file,
                 session_dict,
-                f"lisp.plugins.{plugin_dir.stem}.migrations",  # TODO: generic solution that works for "3-party" plugins
+                "lisp.migrations",
+                Path(APP_DIR).joinpath("migrations"),
+                session_app_version,
+            )
+
+        for name, plugin in get_plugins():
+            session_plugin_version = session_plugins_versions.get(name, None)
+
+            if (
+                session_plugin_version is None
+                or plugin.Version <= session_plugin_version
+            ):
+                continue
+
+            module = inspect.getmodule(plugin)
+            plugin_dir = Path(inspect.getfile(module)).parent
+
+            session_dict = self.__migration_package(
+                session_file,
+                session_dict,
+                f"{module.__package__}.migrations",
                 plugin_dir.joinpath("migrations"),
-                session_plugins_versions.get(
-                    name, "0"
-                ),  # TODO: detect early 0.6 versions
+                session_plugin_version,
             )
 
         return session_dict
 
-    def __migration_group(
+    def __migration_package(
         self,
         session_file: str,
         session_dict: dict,
-        module: str,
+        package: str,
         path: Path,
         version: str,
     ):
@@ -320,16 +335,13 @@ class Application(metaclass=Singleton):
             migration_names.append(f"from_{version}")
             migration_names.sort(key=natural_keys)
 
-            migration_modules = [
-                f"{module}.{p.stem}"
-                for p in migration_files[
-                    migration_names.index(f"from_{version}") :
-                ]
+            migration_files = migration_files[
+                migration_names.index(f"from_{version}") :
             ]
 
-            for mod_name in migration_modules:
-                mod = import_module(mod_name)
-                if hasattr(mod, "migrate"):
-                    session_dict = mod.migrate(session_file, session_dict)
+            for path in migration_files:
+                module = import_module(f"{package}.{path.stem}")
+                if hasattr(module, "migrate"):
+                    session_dict = module.migrate(session_file, session_dict)
 
         return session_dict
