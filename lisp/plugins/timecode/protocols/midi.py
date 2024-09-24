@@ -48,9 +48,9 @@ class Midi(TimecodeProtocol):
         self.__midi = get_plugin("Midi")
 
     def __send_full(self, fmt, hours, minutes, seconds, frame):
-        """Sends fullframe timecode message.
+        """Sends full-frame timecode message.
 
-        Used in case timecode is non continuous (repositioning, rewind).
+        Used in case timecode is non-continuous (repositioning, rewind).
         """
         message = Message(
             "sysex",
@@ -70,15 +70,15 @@ class Midi(TimecodeProtocol):
             self.__midi.output.send(message)
 
     def __send_quarter(self, frame_type, fmt, hours, minutes, seconds, frame):
-        """Send quarterframe midi message."""
-        messsage = Message("quarter_frame")
-        messsage.frame_type = frame_type
-        messsage.frame_value = FRAME_VALUES[frame_type](
+        """Send quarter-frame midi message."""
+        message = Message("quarter_frame")
+        message.frame_type = frame_type
+        message.frame_value = FRAME_VALUES[frame_type](
             hours, minutes, seconds, frame, MIDI_FORMATS[fmt]
         )
 
         if self.__midi is not None:
-            self.__midi.send(messsage)
+            self.__midi.output.send(message)
 
     def send(self, format, time, track=-1):
         # Split the time in its components
