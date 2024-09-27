@@ -188,11 +188,12 @@ class BoolCheckBoxDelegate(QStyledItemDelegate):
 
 
 class LineEditDelegate(QStyledItemDelegate):
-    def __init__(self, max_length=-1, validator=None, **kwargs):
+    def __init__(self, max_length=-1, validator=None, read_only=False, **kwargs):
         super().__init__(**kwargs)
 
         self.max_length = max_length
         self.validator = validator
+        self.read_only = read_only
 
     def createEditor(self, parent, option, index):
         editor = QLineEdit(parent)
@@ -200,6 +201,8 @@ class LineEditDelegate(QStyledItemDelegate):
             editor.setMaxLength(self.max_length)
         if self.validator is not None:
             editor.setValidator(self.validator)
+        if self.read_only is True:
+            editor.setReadOnly(True)
         editor.setFrame(False)
 
         return editor
