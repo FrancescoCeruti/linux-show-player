@@ -17,7 +17,7 @@
 
 from threading import Lock
 
-from PyQt5.QtCore import QT_TRANSLATE_NOOP
+from PyQt6.QtCore import QT_TRANSLATE_NOOP
 
 from lisp.core.decorators import async_function
 from lisp.core.fade_functions import FadeInType, FadeOutType

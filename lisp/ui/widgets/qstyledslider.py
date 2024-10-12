@@ -15,9 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QColor
-from PyQt5.QtWidgets import QSlider, QStylePainter, QStyleOptionSlider, QStyle
+from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QColor
+from PyQt6.QtWidgets import QSlider, QStylePainter, QStyleOptionSlider, QStyle
 
 
 class QStyledSlider(QSlider):
@@ -34,7 +34,9 @@ class QStyledSlider(QSlider):
 
         tick = 5
         handle = self.style().subControlRect(
-            QStyle.CC_Slider, option, QStyle.SC_SliderHandle
+            QStyle.ComplexControl.CC_Slider,
+            option,
+            QStyle.SubControl.SC_SliderHandle,
         )
 
         # Draw tick marks
@@ -45,14 +47,14 @@ class QStyledSlider(QSlider):
 
         slide_range = self.maximum() - self.minimum()
 
-        if self.orientation() == Qt.Horizontal:
+        if self.orientation() == Qt.Orientation.Horizontal:
             no_handle_size = self.width() - handle.width()
             handle_half_size = handle.width() / 2
         else:
             no_handle_size = self.height() - handle.height()
             handle_half_size = handle.height() / 2
 
-        if self.tickPosition() != QSlider.NoTicks:
+        if self.tickPosition() != QSlider.TickPosition.NoTicks:
             for i in range(self.minimum(), self.maximum() + 1, interval):
                 y = 0
                 x = (
@@ -63,27 +65,27 @@ class QStyledSlider(QSlider):
                     - 1
                 )
 
-                if self.orientation() == Qt.Vertical:
+                if self.orientation() == Qt.Orientation.Vertical:
                     x, y = y, x
 
-                # QSlider.TicksAbove == QSlider.TicksLeft
+                # QSlider.TickPosition.TicksAbove == QSlider.TickPosition.TicksLeft
                 if (
-                    self.tickPosition() == QSlider.TicksBothSides
-                    or self.tickPosition() == QSlider.TicksAbove
+                    self.tickPosition() == QSlider.TickPosition.TicksBothSides
+                    or self.tickPosition() == QSlider.TickPosition.TicksAbove
                 ):
-                    if self.orientation() == Qt.Horizontal:
+                    if self.orientation() == Qt.Orientation.Horizontal:
                         y = self.rect().top()
                         painter.drawLine(x, y, x, y + tick)
                     else:
                         x = self.rect().left()
                         painter.drawLine(x, y, x + tick, y)
 
-                # QSlider.TicksBelow == QSlider.TicksRight
+                # QSlider.TickPosition.TicksBelow == QSlider.TickPosition.TicksRight
                 if (
-                    self.tickPosition() == QSlider.TicksBothSides
-                    or self.tickPosition() == QSlider.TicksBelow
+                    self.tickPosition() == QSlider.TickPosition.TicksBothSides
+                    or self.tickPosition() == QSlider.TickPosition.TicksBelow
                 ):
-                    if self.orientation() == Qt.Horizontal:
+                    if self.orientation() == Qt.Orientation.Horizontal:
                         y = self.rect().bottom()
                         painter.drawLine(x, y, x, y - tick)
                     else:

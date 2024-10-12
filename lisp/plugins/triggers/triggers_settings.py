@@ -15,8 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import QT_TRANSLATE_NOOP, Qt
-from PyQt5.QtWidgets import (
+from PyQt6.QtCore import QT_TRANSLATE_NOOP, Qt
+from PyQt6.QtWidgets import (
     QVBoxLayout,
     QDialogButtonBox,
     QSizePolicy,
@@ -64,19 +64,19 @@ class TriggersSettings(SettingsPage):
 
         self.dialogButtons = QDialogButtonBox(self.triggerGroup)
         self.dialogButtons.setSizePolicy(
-            QSizePolicy.Minimum, QSizePolicy.Minimum
+            QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Minimum
         )
         self.triggerGroup.layout().addWidget(self.dialogButtons)
 
         self.addButton = QPushButton()
         self.dialogButtons.addButton(
-            self.addButton, QDialogButtonBox.ActionRole
+            self.addButton, QDialogButtonBox.ButtonRole.ActionRole
         )
         self.addButton.clicked.connect(self._addTrigger)
 
         self.delButton = QPushButton()
         self.dialogButtons.addButton(
-            self.delButton, QDialogButtonBox.ActionRole
+            self.delButton, QDialogButtonBox.ButtonRole.ActionRole
         )
         self.delButton.clicked.connect(self._removeCurrentTrigger)
 
@@ -140,16 +140,18 @@ class TriggersView(QTableView):
     def __init__(self, cueModel, cueSelect, **kwargs):
         super().__init__(**kwargs)
 
-        self.setSelectionBehavior(QTableView.SelectRows)
-        self.setSelectionMode(QTableView.SingleSelection)
+        self.setSelectionBehavior(QTableView.SelectionBehavior.SelectRows)
+        self.setSelectionMode(QTableView.SelectionMode.SingleSelection)
 
         self.setShowGrid(False)
         self.setAlternatingRowColors(True)
 
-        self.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.horizontalHeader().setSectionResizeMode(
+            QHeaderView.ResizeMode.Stretch
+        )
         self.horizontalHeader().setHighlightSections(False)
 
-        self.verticalHeader().sectionResizeMode(QHeaderView.Fixed)
+        self.verticalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Fixed)
         self.verticalHeader().setDefaultSectionSize(26)
         self.verticalHeader().setHighlightSections(False)
 
@@ -178,7 +180,7 @@ class TriggersModel(SimpleCueListModel):
 
         self.rows_cc = []
 
-    def setData(self, index, value, role=Qt.DisplayRole):
+    def setData(self, index, value, role=Qt.ItemDataRole.DisplayRole):
         result = super().setData(index, value, role)
 
         if result and role == CueClassRole:
@@ -187,7 +189,7 @@ class TriggersModel(SimpleCueListModel):
                 self.dataChanged.emit(
                     self.index(index.row(), 2),
                     self.index(index.row(), 2),
-                    [Qt.DisplayRole, Qt.EditRole],
+                    [Qt.ItemDataRole.DisplayRole, Qt.ItemDataRole.EditRole],
                 )
 
         return result

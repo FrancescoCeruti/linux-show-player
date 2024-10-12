@@ -15,8 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt, QEvent, pyqtSignal
-from PyQt5.QtWidgets import QTabBar, QLineEdit
+from PyQt6.QtCore import Qt, QEvent, pyqtSignal
+from PyQt6.QtWidgets import QTabBar, QLineEdit
 
 
 class QEditableTabBar(QTabBar):
@@ -26,7 +26,7 @@ class QEditableTabBar(QTabBar):
         super().__init__(*args)
 
         self._editor = QLineEdit(self)
-        self._editor.setWindowFlags(Qt.Popup)
+        self._editor.setWindowFlags(Qt.WindowType.Popup)
         self._editor.setFocusProxy(self)
 
         self._editor.editingFinished.connect(self.handleEditingFinished)
@@ -34,11 +34,12 @@ class QEditableTabBar(QTabBar):
 
     def eventFilter(self, widget, event):
         clickOutside = (
-            event.type() == QEvent.MouseButtonPress
+            event.type() == QEvent.Type.MouseButtonPress
             and not self._editor.geometry().contains(event.globalPos())
         )
         escKey = (
-            event.type() == QEvent.KeyPress and event.key() == Qt.Key_Escape
+            event.type() == QEvent.Type.KeyPress
+            and event.key() == Qt.Key.Key_Escape
         )
 
         if clickOutside or escKey:
@@ -48,7 +49,7 @@ class QEditableTabBar(QTabBar):
         return super().eventFilter(widget, event)
 
     def keyPressEvent(self, event):
-        if event.key() == Qt.Key_F2:
+        if event.key() == Qt.Key.Key_F2:
             self.editTab(self.currentIndex())
         else:
             super().keyPressEvent(event)

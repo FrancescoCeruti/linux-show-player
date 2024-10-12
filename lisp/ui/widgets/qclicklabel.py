@@ -15,9 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import pyqtSignal, QEvent, QMargins
-from PyQt5.QtGui import QIcon, QPainter
-from PyQt5.QtWidgets import QLabel
+from PyQt6.QtCore import pyqtSignal, QEvent, QMargins
+from PyQt6.QtGui import QIcon, QPainter
+from PyQt6.QtWidgets import QLabel
 
 
 class QClickLabel(QLabel):

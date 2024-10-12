@@ -15,8 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt, QTime
-from PyQt5.QtWidgets import QGroupBox, QComboBox, QVBoxLayout, QTimeEdit
+from PyQt6.QtCore import Qt, QTime
+from PyQt6.QtWidgets import QGroupBox, QComboBox, QVBoxLayout, QTimeEdit
 
 from lisp.plugins.gst_backend.elements.preset_src import PresetSrc
 from lisp.ui.settings.pages import SettingsPage
@@ -30,7 +30,7 @@ class PresetSrcSettings(SettingsPage):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
-        self.layout().setAlignment(Qt.AlignTop)
+        self.layout().setAlignment(Qt.AlignmentFlag.AlignTop)
 
         self.functionGroup = QGroupBox(self)
         self.functionGroup.setTitle(translate("PresetSrcSettings", "Presets"))

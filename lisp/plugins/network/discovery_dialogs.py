@@ -15,8 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt, QSize
-from PyQt5.QtWidgets import (
+from PyQt6.QtCore import Qt, QSize
+from PyQt6.QtWidgets import (
     QVBoxLayout,
     QListWidget,
     QDialogButtonBox,
@@ -38,7 +38,7 @@ from lisp.ui.widgets.qwaitingspinner import QWaitingSpinner
 class HostDiscoveryDialog(QDialog):
     def __init__(self, port, magic, **kwargs):
         super().__init__(**kwargs)
-        self.setWindowModality(Qt.WindowModal)
+        self.setWindowModality(Qt.WindowModality.WindowModal)
         self.setLayout(QGridLayout())
         self.setMinimumSize(300, 200)
         self.resize(500, 200)
@@ -48,7 +48,9 @@ class HostDiscoveryDialog(QDialog):
 
         self.listWidget = QListWidget(self)
         self.listWidget.setAlternatingRowColors(True)
-        self.listWidget.setSelectionMode(self.listWidget.MultiSelection)
+        self.listWidget.setSelectionMode(
+            self.listWidget.SelectionMode.MultiSelection
+        )
         self.layout().addWidget(self.listWidget, 1, 0, 1, 2)
 
         self.progressSpinner = QWaitingSpinner(
@@ -60,7 +62,7 @@ class HostDiscoveryDialog(QDialog):
         self.layout().addWidget(self.progressSpinner, 2, 0)
 
         self.dialogButton = QDialogButtonBox(self)
-        self.dialogButton.setStandardButtons(self.dialogButton.Ok)
+        self.dialogButton.setStandardButtons(QDialogButtonBox.StandardButton.Ok)
         self.dialogButton.accepted.connect(self.accept)
         self.layout().addWidget(self.dialogButton, 2, 1)
 
@@ -94,7 +96,7 @@ class HostDiscoveryDialog(QDialog):
 
     def hosts(self):
         return [
-            (item.data(Qt.UserRole), item.text())
+            (item.data(Qt.ItemDataRole.UserRole), item.text())
             for item in self.listWidget.selectedItems()
         ]
 
@@ -105,7 +107,7 @@ class HostDiscoveryDialog(QDialog):
             item_text = host
 
         item = QListWidgetItem(item_text)
-        item.setData(Qt.UserRole, host)
+        item.setData(Qt.ItemDataRole.UserRole, host)
         item.setSizeHint(QSize(100, 30))
         self.listWidget.addItem(item)
 
@@ -119,7 +121,7 @@ class HostManagementDialog(QDialog):
         self.discovery_port = discovery_port
         self.discovery_magic = discovery_magic
 
-        self.setWindowModality(Qt.WindowModal)
+        self.setWindowModality(Qt.WindowModality.WindowModal)
         self.setLayout(QHBoxLayout())
         self.setMinimumSize(500, 200)
         self.resize(500, 200)
@@ -150,7 +152,7 @@ class HostManagementDialog(QDialog):
         self.buttonsLayout.addSpacing(70)
 
         self.dialogButton = QDialogButtonBox(self)
-        self.dialogButton.setStandardButtons(self.dialogButton.Ok)
+        self.dialogButton.setStandardButtons(QDialogButtonBox.StandardButton.Ok)
         self.dialogButton.accepted.connect(self.accept)
         self.buttonsLayout.addWidget(self.dialogButton)
 
@@ -193,9 +195,9 @@ class HostManagementDialog(QDialog):
                 self.addHost(*host)
 
     def addHost(self, hostname, display_name):
-        if not self.listWidget.findItems(hostname, Qt.MatchEndsWith):
+        if not self.listWidget.findItems(hostname, Qt.MatchFlag.MatchEndsWith):
             item = QListWidgetItem(display_name)
-            item.setData(Qt.UserRole, hostname)
+            item.setData(Qt.ItemDataRole.UserRole, hostname)
             item.setSizeHint(QSize(100, 30))
             self.listWidget.addItem(item)
 
@@ -204,7 +206,7 @@ class HostManagementDialog(QDialog):
             self.discovery_port, self.discovery_magic, parent=self
         )
 
-        if dialog.exec() == dialog.Accepted:
+        if dialog.exec() == dialog.DialogCode.Accepted:
             for hostname, display_name in dialog.hosts():
                 self.addHost(hostname, display_name)
 
@@ -219,6 +221,6 @@ class HostManagementDialog(QDialog):
         hosts = []
         for index in range(self.listWidget.count()):
             item = self.listWidget.item(index)
-            hosts.append((item.data(Qt.UserRole), item.text()))
+            hosts.append((item.data(Qt.ItemDataRole.UserRole), item.text()))
 
         return hosts

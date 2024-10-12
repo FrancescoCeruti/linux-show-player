@@ -15,9 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt, QTimer
-from PyQt5.QtGui import QColor
-from PyQt5.QtWidgets import (
+from PyQt6.QtCore import Qt, QTimer
+from PyQt6.QtGui import QColor
+from PyQt6.QtWidgets import (
     QWidget,
     QGridLayout,
     QSizePolicy,
@@ -48,7 +48,7 @@ def get_running_widget(cue, config, **kwargs):
 class RunningCueWidget(QWidget):
     def __init__(self, cue, config, **kwargs):
         super().__init__(**kwargs)
-        self.setFocusPolicy(Qt.NoFocus)
+        self.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         self.setLayout(QHBoxLayout(self))
         self.layout().setContentsMargins(0, 0, 0, 1)
 
@@ -67,7 +67,9 @@ class RunningCueWidget(QWidget):
         self.layout().addWidget(self.gridLayoutWidget)
 
         self.nameLabel = ElidedLabel(self.gridLayoutWidget)
-        self.nameLabel.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
+        self.nameLabel.setSizePolicy(
+            QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Ignored
+        )
         self.nameLabel.setText(cue.name)
         self.nameLabel.setToolTip(cue.name)
         self.gridLayout.addWidget(self.nameLabel, 0, 0, 1, 2)
@@ -79,7 +81,7 @@ class RunningCueWidget(QWidget):
 
         self.timeDisplay = QLCDNumber(self.gridLayoutWidget)
         self.timeDisplay.setStyleSheet("background-color: transparent")
-        self.timeDisplay.setSegmentStyle(QLCDNumber.Flat)
+        self.timeDisplay.setSegmentStyle(QLCDNumber.SegmentStyle.Flat)
         self.timeDisplay.setDigitCount(8)
         self.timeDisplay.display(strtime(cue.duration))
         self.gridLayout.addWidget(self.timeDisplay, 1, 1)
@@ -202,10 +204,10 @@ class RunningMediaCueWidget(RunningCueWidget):
             )
         else:
             self.seekSlider = QClickSlider(self.gridLayoutWidget)
-            self.seekSlider.setOrientation(Qt.Horizontal)
+            self.seekSlider.setOrientation(Qt.Orientation.Horizontal)
             self.seekSlider.setRange(0, cue.duration)
 
-        self.seekSlider.setFocusPolicy(Qt.NoFocus)
+        self.seekSlider.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         self.seekSlider.sliderMoved.connect(self._seek)
         self.seekSlider.sliderJumped.connect(self._seek)
         self.seekSlider.setVisible(False)

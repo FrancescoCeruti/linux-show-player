@@ -23,7 +23,8 @@ import gi
 
 gi.require_version("Gst", "1.0")
 from gi.repository import Gst
-from PyQt5.QtWidgets import QAction, QDialog, QMenu
+from PyQt6.QtWidgets import QDialog, QMenu
+from PyQt6.QtGui import QAction
 
 from lisp.command.command import Command
 from lisp.core.plugin import Plugin
@@ -72,7 +73,7 @@ class ReplayGain(Plugin):
         gainUi = GainUi(self.app.window)
         gainUi.exec()
 
-        if gainUi.result() == QDialog.Accepted:
+        if gainUi.result() == QDialog.DialogCode.Accepted:
             if gainUi.only_selected():
                 cues = self.app.layout.selected_cues(MediaCue)
             else:

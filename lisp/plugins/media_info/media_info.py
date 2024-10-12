@@ -17,8 +17,8 @@
 
 from urllib.parse import unquote
 
-from PyQt5 import QtCore
-from PyQt5.QtWidgets import (
+from PyQt6 import QtCore
+from PyQt6.QtWidgets import (
     QMessageBox,
     QDialog,
     QVBoxLayout,
@@ -124,7 +124,7 @@ class InfoDialog(QDialog):
         self.setWindowTitle(
             translate("MediaInfo", "Media Info") + " - " + title
         )
-        self.setWindowModality(QtCore.Qt.ApplicationModal)
+        self.setWindowModality(QtCore.Qt.WindowModality.ApplicationModal)
         self.setMinimumSize(600, 300)
         self.resize(600, 300)
         self.setLayout(QVBoxLayout(self))
@@ -135,16 +135,20 @@ class InfoDialog(QDialog):
             [translate("MediaInfo", "Info"), translate("MediaInfo", "Value")]
         )
         self.infoTree.setAlternatingRowColors(True)
-        self.infoTree.setSelectionMode(QAbstractItemView.NoSelection)
-        self.infoTree.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.infoTree.setSelectionMode(
+            QAbstractItemView.SelectionMode.NoSelection
+        )
+        self.infoTree.setEditTriggers(
+            QAbstractItemView.EditTrigger.NoEditTriggers
+        )
         self.infoTree.header().setStretchLastSection(False)
         self.infoTree.header().setSectionResizeMode(
-            QHeaderView.ResizeToContents
+            QHeaderView.ResizeMode.ResizeToContents
         )
         self.layout().addWidget(self.infoTree)
 
         self.buttonBox = QDialogButtonBox(self)
-        self.buttonBox.setStandardButtons(QDialogButtonBox.Close)
+        self.buttonBox.setStandardButtons(QDialogButtonBox.StandardButton.Close)
         self.buttonBox.rejected.connect(self.close)
         self.layout().addWidget(self.buttonBox)
 

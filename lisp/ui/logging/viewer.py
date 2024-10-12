@@ -15,9 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import (
-    QAction,
+from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QAction
+from PyQt6.QtWidgets import (
     QToolBar,
     QMainWindow,
     QStatusBar,
@@ -55,7 +55,7 @@ class LogViewer(QMainWindow):
         )
         self.resize(800, 600)
         self.setCentralWidget(QSplitter())
-        self.centralWidget().setOrientation(Qt.Vertical)
+        self.centralWidget().setOrientation(Qt.Orientation.Vertical)
         self.setStatusBar(QStatusBar(self))
 
         # Add a permanent label to the toolbar to display shown/filter records
@@ -64,7 +64,9 @@ class LogViewer(QMainWindow):
 
         # ToolBar
         self.optionsToolBar = QToolBar(self)
-        self.optionsToolBar.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
+        self.optionsToolBar.setToolButtonStyle(
+            Qt.ToolButtonStyle.ToolButtonTextBesideIcon
+        )
         self.addToolBar(self.optionsToolBar)
         # Create level-toggle actions
         self.levelsActions = self._createActions(
@@ -84,8 +86,10 @@ class LogViewer(QMainWindow):
         # View to display the messages stored in the model
         self.logView = QTableView(self)
         self.logView.setModel(self.filterModel)
-        self.logView.setSelectionMode(QTableView.SingleSelection)
-        self.logView.setSelectionBehavior(QTableView.SelectRows)
+        self.logView.setSelectionMode(QTableView.SelectionMode.SingleSelection)
+        self.logView.setSelectionBehavior(
+            QTableView.SelectionBehavior.SelectRows
+        )
         self.logView.horizontalHeader().setStretchLastSection(True)
         self.centralWidget().addWidget(self.logView)
 
@@ -99,7 +103,7 @@ class LogViewer(QMainWindow):
         # Setup visible columns
         for n in range(self.filterModel.columnCount()):
             column = self.filterModel.headerData(
-                n, Qt.Horizontal, LogAttributeRole
+                n, Qt.Orientation.Horizontal, LogAttributeRole
             )
 
             self.logView.setColumnHidden(n, column not in visible_columns)

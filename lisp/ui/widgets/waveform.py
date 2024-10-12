@@ -1,8 +1,8 @@
 from math import floor, ceil
 
-from PyQt5.QtCore import QLineF, pyqtSignal, Qt, QRectF
-from PyQt5.QtGui import QPainter, QPen, QColor, QBrush
-from PyQt5.QtWidgets import QWidget
+from PyQt6.QtCore import QLineF, pyqtSignal, Qt, QRectF
+from PyQt6.QtGui import QPainter, QPen, QColor, QBrush
+from PyQt6.QtWidgets import QWidget
 
 from lisp.backend.waveform import Waveform
 from lisp.core.signal import Connection
@@ -58,7 +58,7 @@ class WaveformWidget(QWidget):
                     (self._value - self._lastDrawnValue) / self._valueToPx
                 )
                 # Repaint only the changed area
-                self.update(x - 1, 0, width + 1, self.height())
+                self.update(x - 1, 0, width + 2, self.height())
             elif self._value <= ceil(self._lastDrawnValue - self._valueToPx):
                 x = int(self._value / self._valueToPx)
                 width = int(
@@ -79,9 +79,9 @@ class WaveformWidget(QWidget):
         pen = QPen(QColor(0, 0, 0, 0))
         painter.setPen(pen)
         painter.setBrush(QBrush(self.backgroundColor))
-        painter.setRenderHint(QPainter.Antialiasing)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
         painter.drawRoundedRect(self.rect(), 6, 6)
-        painter.setRenderHint(QPainter.Antialiasing, False)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing, False)
 
         # Draw the weveform
         pen.setWidth(1)
@@ -169,9 +169,9 @@ class WaveformSlider(DynamicFontSizeMixin, WaveformWidget):
         self._labelRight = True
         self._maxFontSize = self.font().pointSizeF()
 
-        self.seekIndicatorColor = QColor(Qt.red)
+        self.seekIndicatorColor = QColor(Qt.GlobalColor.red)
         self.seekTimestampBG = QColor(32, 32, 32)
-        self.seekTimestampFG = QColor(Qt.white)
+        self.seekTimestampFG = QColor(Qt.GlobalColor.white)
 
     def _xToValue(self, x):
         return round(x * self._valueToPx)
@@ -225,7 +225,7 @@ class WaveformSlider(DynamicFontSizeMixin, WaveformWidget):
 
             # Get the timestamp of the indicator position
             text = strtime(self._xToValue(self._lastPosition))[:-3]
-            textSize = self.fontMetrics().size(Qt.TextSingleLine, text)
+            textSize = self.fontMetrics().size(Qt.TextFlag.TextSingleLine, text)
             # Vertical offset to center the label
             vOffset = (self.height() - textSize.height()) / 2
 
@@ -253,6 +253,6 @@ class WaveformSlider(DynamicFontSizeMixin, WaveformWidget):
             # Draw the timestamp
             pen.setColor(self.seekTimestampFG)
             painter.setPen(pen)
-            painter.drawText(rect, Qt.AlignCenter, text)
+            painter.drawText(rect, Qt.AlignmentFlag.AlignCenter, text)
 
             painter.end()

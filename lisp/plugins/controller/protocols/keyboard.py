@@ -15,9 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
-from PyQt5.QtGui import QKeySequence
-from PyQt5.QtWidgets import (
+from PyQt6.QtCore import Qt, QT_TRANSLATE_NOOP
+from PyQt6.QtGui import QKeySequence
+from PyQt6.QtWidgets import (
     QGroupBox,
     QGridLayout,
     QTableView,
@@ -36,8 +36,7 @@ from lisp.ui.qdelegates import (
 )
 from lisp.ui.qmodels import SimpleTableModel
 from lisp.ui.settings.pages import SettingsPage, CuePageMixin
-from lisp.ui.ui_utils import translate
-from lisp.ui.widgets.hotkeyedit import keyEventKeySequence
+from lisp.ui.ui_utils import translate, key_sequence_from_event
 
 
 class KeyboardSettings(SettingsPage):
@@ -46,7 +45,7 @@ class KeyboardSettings(SettingsPage):
     def __init__(self, actionDelegate, **kwargs):
         super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
-        self.layout().setAlignment(Qt.AlignTop)
+        self.layout().setAlignment(Qt.AlignmentFlag.AlignTop)
 
         self.keyGroup = QGroupBox(self)
         self.keyGroup.setLayout(QGridLayout())
@@ -125,16 +124,19 @@ class KeyboardView(QTableView):
     def __init__(self, actionDelegate, **kwargs):
         super().__init__(**kwargs)
 
-        self.setSelectionBehavior(QTableView.SelectRows)
-        self.setSelectionMode(QTableView.SingleSelection)
+        self.setSelectionBehavior(QTableView.SelectionBehavior.SelectRows)
+        self.setSelectionMode(QTableView.SelectionMode.SingleSelection)
 
         self.setShowGrid(False)
         self.setAlternatingRowColors(True)
 
-        self.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.horizontalHeader().setSectionResizeMode(
+            QHeaderView.ResizeMode.Stretch
+        )
+        self.horizontalHeader().setStretchLastSection(True)
         self.horizontalHeader().setHighlightSections(False)
 
-        self.verticalHeader().sectionResizeMode(QHeaderView.Fixed)
+        self.verticalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Fixed)
         self.verticalHeader().setDefaultSectionSize(24)
         self.verticalHeader().setHighlightSections(False)
 
@@ -156,8 +158,8 @@ class Keyboard(Protocol):
 
     def __key_pressed(self, key_event):
         if not key_event.isAutoRepeat():
-            sequence = keyEventKeySequence(key_event)
+            sequence = key_sequence_from_event(key_event)
             if sequence:
                 self.protocol_event.emit(
-                    sequence.toString(QKeySequence.PortableText)
+                    sequence.toString(QKeySequence.SequenceFormat.PortableText)
                 )

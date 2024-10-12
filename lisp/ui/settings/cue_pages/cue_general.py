@@ -15,8 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import QT_TRANSLATE_NOOP, Qt, QTime
-from PyQt5.QtWidgets import (
+from PyQt6.QtCore import QT_TRANSLATE_NOOP, Qt, QTime
+from PyQt6.QtWidgets import (
     QDateTimeEdit,
     QGroupBox,
     QHBoxLayout,
@@ -73,7 +73,7 @@ class CueBehavioursPage(CueSettingsPage):
         self.startActionGroup.layout().addWidget(self.startActionCombo)
 
         self.startActionLabel = QLabel(self.startActionGroup)
-        self.startActionLabel.setAlignment(Qt.AlignCenter)
+        self.startActionLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.startActionGroup.layout().addWidget(self.startActionLabel)
 
         # Stop-Action
@@ -98,7 +98,7 @@ class CueBehavioursPage(CueSettingsPage):
         self.stopActionGroup.layout().addWidget(self.stopActionCombo)
 
         self.stopActionLabel = QLabel(self.stopActionGroup)
-        self.stopActionLabel.setAlignment(Qt.AlignCenter)
+        self.stopActionLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.stopActionGroup.layout().addWidget(self.stopActionLabel)
 
         self.layout().addSpacing(150)
@@ -167,11 +167,11 @@ class CueWaitsPage(CueSettingsPage):
 
         self.preWaitEdit = QTimeEdit(self.preWaitGroup)
         self.preWaitEdit.setDisplayFormat("HH:mm:ss.zzz")
-        self.preWaitEdit.setCurrentSection(QDateTimeEdit.SecondSection)
+        self.preWaitEdit.setCurrentSection(QDateTimeEdit.Section.SecondSection)
         self.preWaitGroup.layout().addWidget(self.preWaitEdit)
 
         self.preWaitLabel = QLabel(self.preWaitGroup)
-        self.preWaitLabel.setAlignment(Qt.AlignCenter)
+        self.preWaitLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.preWaitGroup.layout().addWidget(self.preWaitLabel)
 
         # Post wait
@@ -181,11 +181,11 @@ class CueWaitsPage(CueSettingsPage):
 
         self.postWaitEdit = QTimeEdit(self.postWaitGroup)
         self.postWaitEdit.setDisplayFormat("HH:mm:ss.zzz")
-        self.postWaitEdit.setCurrentSection(QDateTimeEdit.SecondSection)
+        self.postWaitEdit.setCurrentSection(QDateTimeEdit.Section.SecondSection)
         self.postWaitGroup.layout().addWidget(self.postWaitEdit)
 
         self.postWaitLabel = QLabel(self.postWaitGroup)
-        self.postWaitLabel.setAlignment(Qt.AlignCenter)
+        self.postWaitLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.postWaitGroup.layout().addWidget(self.postWaitLabel)
 
         # Next action

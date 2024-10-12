@@ -18,7 +18,8 @@
 import logging
 
 import requests
-from PyQt5.QtWidgets import QMenu, QAction, QMessageBox
+from PyQt6.QtGui import QAction
+from PyQt6.QtWidgets import QMenu, QMessageBox
 
 from lisp.core.plugin import Plugin
 from lisp.core.signal import Connection

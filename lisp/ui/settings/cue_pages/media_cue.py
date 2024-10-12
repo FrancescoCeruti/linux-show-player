@@ -15,8 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import QT_TRANSLATE_NOOP, Qt, QTime
-from PyQt5.QtWidgets import (
+from PyQt6.QtCore import QT_TRANSLATE_NOOP, Qt, QTime
+from PyQt6.QtWidgets import (
     QDateTimeEdit,
     QGroupBox,
     QHBoxLayout,
@@ -44,11 +44,11 @@ class MediaCueSettings(SettingsPage):
 
         self.startEdit = QTimeEdit(self.startGroup)
         self.startEdit.setDisplayFormat("HH:mm:ss.zzz")
-        self.startEdit.setCurrentSection(QDateTimeEdit.SecondSection)
+        self.startEdit.setCurrentSection(QDateTimeEdit.Section.SecondSection)
         self.startGroup.layout().addWidget(self.startEdit)
 
         self.startLabel = QLabel(self.startGroup)
-        self.startLabel.setAlignment(Qt.AlignCenter)
+        self.startLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.startGroup.layout().addWidget(self.startLabel)
 
         # Stop time
@@ -58,11 +58,11 @@ class MediaCueSettings(SettingsPage):
 
         self.stopEdit = QTimeEdit(self.stopGroup)
         self.stopEdit.setDisplayFormat("HH:mm:ss.zzz")
-        self.stopEdit.setCurrentSection(QDateTimeEdit.SecondSection)
+        self.stopEdit.setCurrentSection(QDateTimeEdit.Section.SecondSection)
         self.stopGroup.layout().addWidget(self.stopEdit)
 
         self.stopLabel = QLabel(self.stopGroup)
-        self.stopLabel.setAlignment(Qt.AlignCenter)
+        self.stopLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.stopGroup.layout().addWidget(self.stopLabel)
 
         # Loop
@@ -75,7 +75,7 @@ class MediaCueSettings(SettingsPage):
         self.loopGroup.layout().addWidget(self.spinLoop)
 
         self.loopLabel = QLabel(self.loopGroup)
-        self.loopLabel.setAlignment(Qt.AlignCenter)
+        self.loopLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.loopGroup.layout().addWidget(self.loopLabel)
 
         self.retranslateUi()
