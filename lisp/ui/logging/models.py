@@ -17,13 +17,13 @@
 
 from collections import deque
 
-from PyQt5.QtCore import (
+from PyQt6.QtCore import (
     QModelIndex,
     Qt,
     QSortFilterProxyModel,
     QAbstractTableModel,
 )
-from PyQt5.QtGui import QFont, QColor
+from PyQt6.QtGui import QFont, QColor
 
 from lisp.core.util import typename
 from lisp.ui.logging.common import (
@@ -35,7 +35,7 @@ from lisp.ui.logging.common import (
 
 class LogRecordModel(QAbstractTableModel):
     Font = QFont("Monospace")
-    Font.setStyleHint(QFont.Monospace)
+    Font.setStyleHint(QFont.StyleHint.Monospace)
 
     def __init__(self, columns, bg, fg, limit=0, **kwargs):
         """
@@ -68,29 +68,31 @@ class LogRecordModel(QAbstractTableModel):
 
         return len(self._records)
 
-    def data(self, index, role=Qt.DisplayRole):
+    def data(self, index, role=Qt.ItemDataRole.DisplayRole):
         if index.isValid():
             record = self._records[index.row()]
 
-            if role == Qt.DisplayRole:
+            if role == Qt.ItemDataRole.DisplayRole:
                 try:
                     return getattr(record, self._columns[index.column()])
                 except AttributeError:
                     pass
-            elif role == Qt.BackgroundColorRole:
+            elif role == Qt.ItemDataRole.BackgroundColorRole:
                 return self._backgrounds.get(record.levelname)
-            elif role == Qt.ForegroundRole:
+            elif role == Qt.ItemDataRole.ForegroundRole:
                 return self._foregrounds.get(record.levelname)
-            elif role == Qt.FontRole:
+            elif role == Qt.ItemDataRole.FontRole:
                 return LogRecordModel.Font
             elif role == LogRecordRole:
                 return record
 
-    def headerData(self, index, orientation, role=Qt.DisplayRole):
-        if orientation == Qt.Horizontal and index < len(self._columns_names):
+    def headerData(self, index, orientation, role=Qt.ItemDataRole.DisplayRole):
+        if orientation == Qt.Orientation.Horizontal and index < len(
+            self._columns_names
+        ):
             if role == LogAttributeRole:
                 return self._columns[index]
-            elif role == Qt.DisplayRole:
+            elif role == Qt.ItemDataRole.DisplayRole:
                 return self._columns_names[index]
 
     def append(self, record):

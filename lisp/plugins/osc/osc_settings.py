@@ -16,8 +16,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import QT_TRANSLATE_NOOP, Qt
-from PyQt5.QtWidgets import (
+from PyQt6.QtCore import QT_TRANSLATE_NOOP, Qt
+from PyQt6.QtWidgets import (
     QVBoxLayout,
     QGridLayout,
     QGroupBox,
@@ -37,7 +37,7 @@ class OscSettings(SettingsPage):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
-        self.layout().setAlignment(Qt.AlignTop)
+        self.layout().setAlignment(Qt.AlignmentFlag.AlignTop)
 
         self.inwardsGroupBox = QGroupBox(self)
         self.inwardsGroupBox.setLayout(QGridLayout())

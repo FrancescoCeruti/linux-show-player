@@ -15,8 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import QT_TRANSLATE_NOOP, Qt
-from PyQt5.QtWidgets import QComboBox, QGroupBox, QVBoxLayout
+from PyQt6.QtCore import QT_TRANSLATE_NOOP, Qt
+from PyQt6.QtWidgets import QComboBox, QGroupBox, QVBoxLayout
 
 from lisp.core.properties import Property
 from lisp.cues.cue import Cue, CueAction
@@ -63,7 +63,7 @@ class StopAllSettings(SettingsPage):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
-        self.layout().setAlignment(Qt.AlignTop)
+        self.layout().setAlignment(Qt.AlignmentFlag.AlignTop)
 
         self.group = QGroupBox(self)
         self.group.setLayout(QVBoxLayout(self.group))

@@ -15,9 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5 import QtCore
-from PyQt5.QtCore import QT_TRANSLATE_NOOP, QTime
-from PyQt5.QtWidgets import (
+from PyQt6.QtCore import QT_TRANSLATE_NOOP, QTime, Qt
+from PyQt6.QtWidgets import (
     QGroupBox,
     QHBoxLayout,
     QLabel,
@@ -71,7 +70,7 @@ class SeekCueSettings(SettingsPage):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
-        self.layout().setAlignment(QtCore.Qt.AlignTop)
+        self.layout().setAlignment(Qt.AlignmentFlag.AlignTop)
 
         self.targetCueId = -1
 
@@ -88,7 +87,7 @@ class SeekCueSettings(SettingsPage):
         self.cueGroup.layout().addWidget(self.cueButton)
 
         self.cueLabel = QLabel(self.cueGroup)
-        self.cueLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.cueLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.cueGroup.layout().addWidget(self.cueLabel)
 
         self.seekGroup = QGroupBox(self)
@@ -97,11 +96,11 @@ class SeekCueSettings(SettingsPage):
 
         self.seekEdit = QTimeEdit(self.seekGroup)
         self.seekEdit.setDisplayFormat("HH:mm:ss.zzz")
-        self.seekEdit.setCurrentSection(QDateTimeEdit.SecondSection)
+        self.seekEdit.setCurrentSection(QDateTimeEdit.Section.SecondSection)
         self.seekGroup.layout().addWidget(self.seekEdit)
 
         self.seekLabel = QLabel(self.seekGroup)
-        self.seekLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.seekLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.seekGroup.layout().addWidget(self.seekLabel)
 
         self.retranslateUi()

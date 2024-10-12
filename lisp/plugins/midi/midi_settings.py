@@ -15,8 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP, QTimer
-from PyQt5.QtWidgets import (
+from PyQt6.QtCore import Qt, QT_TRANSLATE_NOOP, QTimer
+from PyQt6.QtWidgets import (
     QGroupBox,
     QVBoxLayout,
     QComboBox,
@@ -40,7 +40,7 @@ class MIDISettings(SettingsPage):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
-        self.layout().setAlignment(Qt.AlignTop)
+        self.layout().setAlignment(Qt.AlignmentFlag.AlignTop)
 
         self.portsGroup = QGroupBox(self)
         self.portsGroup.setLayout(QGridLayout())

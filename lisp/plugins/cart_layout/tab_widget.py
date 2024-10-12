@@ -15,9 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt, pyqtSignal
-from PyQt5.QtGui import QKeyEvent
-from PyQt5.QtWidgets import QTabWidget
+from PyQt6.QtCore import Qt, pyqtSignal
+from PyQt6.QtGui import QKeyEvent
+from PyQt6.QtWidgets import QTabWidget
 
 from lisp.ui.widgets.qeditabletabbar import QEditableTabBar
 
@@ -33,7 +33,7 @@ class CartTabWidget(QTabWidget):
         self.tabBar().setDrawBase(False)
         self.tabBar().setObjectName("CartTabBar")
 
-        self.setFocusPolicy(Qt.StrongFocus)
+        self.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
         self.setAcceptDrops(True)
 
     def dragEnterEvent(self, event):

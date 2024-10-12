@@ -18,7 +18,7 @@
 from typing import Iterable
 
 import mido
-from PyQt5.QtCore import QT_TRANSLATE_NOOP
+from PyQt6.QtCore import QT_TRANSLATE_NOOP
 
 MIDI_MSGS_SPEC = {
     "note_on": ["channel", "note", "velocity"],

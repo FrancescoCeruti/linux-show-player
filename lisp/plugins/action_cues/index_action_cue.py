@@ -15,8 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
-from PyQt5.QtWidgets import (
+from PyQt6.QtCore import Qt, QT_TRANSLATE_NOOP
+from PyQt6.QtWidgets import (
     QCheckBox,
     QGroupBox,
     QLabel,
@@ -78,7 +78,7 @@ class IndexActionCueSettings(SettingsPage):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
-        self.layout().setAlignment(Qt.AlignTop)
+        self.layout().setAlignment(Qt.AlignmentFlag.AlignTop)
 
         self._cue_index = 0
         self._target_class = Cue
@@ -97,7 +97,7 @@ class IndexActionCueSettings(SettingsPage):
         self.indexGroup.layout().addWidget(self.targetIndexSpin, 1, 0)
 
         self.targetIndexLabel = QLabel(self)
-        self.targetIndexLabel.setAlignment(Qt.AlignCenter)
+        self.targetIndexLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.indexGroup.layout().addWidget(self.targetIndexLabel, 1, 1)
 
         self.actionGroup = QGroupBox(self)
@@ -116,7 +116,7 @@ class IndexActionCueSettings(SettingsPage):
         self.layout().addWidget(self.suggestionGroup)
 
         self.suggestionPreview = QLineEdit(self.suggestionGroup)
-        self.suggestionPreview.setAlignment(Qt.AlignCenter)
+        self.suggestionPreview.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.suggestionPreview.setText(
             IndexActionCueSettings.DEFAULT_SUGGESTION
         )

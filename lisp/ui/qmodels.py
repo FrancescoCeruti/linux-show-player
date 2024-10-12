@@ -15,13 +15,13 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import QAbstractTableModel, QModelIndex, Qt
+from PyQt6.QtCore import QAbstractTableModel, QModelIndex, Qt
 
 from lisp.cues.cue import Cue
 from lisp.ui.ui_utils import translate
 
 # Application defined data-roles
-CueClassRole = Qt.UserRole + 1
+CueClassRole = Qt.ItemDataRole.UserRole + 1
 
 
 class SimpleTableModel(QAbstractTableModel):
@@ -52,7 +52,7 @@ class SimpleTableModel(QAbstractTableModel):
         self.dataChanged.emit(
             self.index(row, 0),
             self.index(row, len(self.columns)),
-            [Qt.DisplayRole, Qt.EditRole],
+            [Qt.ItemDataRole.DisplayRole, Qt.ItemDataRole.EditRole],
         )
 
     def removeRow(self, row, parent=QModelIndex()):
@@ -69,30 +69,41 @@ class SimpleTableModel(QAbstractTableModel):
     def columnCount(self, parent=QModelIndex()):
         return len(self.columns)
 
-    def headerData(self, section, orientation, role=Qt.DisplayRole):
-        if role == Qt.DisplayRole and orientation == Qt.Horizontal:
+    def headerData(
+        self, section, orientation, role=Qt.ItemDataRole.DisplayRole
+    ):
+        if (
+            role == Qt.ItemDataRole.DisplayRole
+            and orientation == Qt.Orientation.Horizontal
+        ):
             if section < len(self.columns):
                 return self.columns[section]
             else:
                 return section + 1
-        if role == Qt.SizeHintRole and orientation == Qt.Vertical:
+        if (
+            role == Qt.ItemDataRole.SizeHintRole
+            and orientation == Qt.Orientation.Vertical
+        ):
             return 0
 
-    def data(self, index, role=Qt.DisplayRole):
+    def data(self, index, role=Qt.ItemDataRole.DisplayRole):
         if index.isValid():
-            if role == Qt.DisplayRole:
+            if role == Qt.ItemDataRole.DisplayRole:
                 value = self.rows[index.row()][index.column()]
                 if isinstance(value, bool):
                     return translate("QComboBox", str(value).title())
                 else:
                     return value
-            elif role == Qt.EditRole:
+            elif role == Qt.ItemDataRole.EditRole:
                 return self.rows[index.row()][index.column()]
-            elif role == Qt.TextAlignmentRole:
-                return Qt.AlignCenter
+            elif role == Qt.ItemDataRole.TextAlignmentRole:
+                return Qt.AlignmentFlag.AlignCenter
 
-    def setData(self, index, value, role=Qt.DisplayRole):
-        if index.isValid() and (role == Qt.DisplayRole or role == Qt.EditRole):
+    def setData(self, index, value, role=Qt.ItemDataRole.DisplayRole):
+        if index.isValid() and (
+            role == Qt.ItemDataRole.DisplayRole
+            or role == Qt.ItemDataRole.EditRole
+        ):
             row = index.row()
             col = index.column()
             # Update only if value is different
@@ -101,7 +112,7 @@ class SimpleTableModel(QAbstractTableModel):
                 self.dataChanged.emit(
                     self.index(row, 0),
                     self.index(row, col),
-                    [Qt.DisplayRole, Qt.EditRole],
+                    [Qt.ItemDataRole.DisplayRole, Qt.ItemDataRole.EditRole],
                 )
 
                 return True
@@ -109,7 +120,11 @@ class SimpleTableModel(QAbstractTableModel):
         return False
 
     def flags(self, index):
-        return Qt.ItemIsEditable | Qt.ItemIsEnabled | Qt.ItemIsSelectable
+        return (
+            Qt.ItemFlag.ItemIsEditable
+            | Qt.ItemFlag.ItemIsEnabled
+            | Qt.ItemFlag.ItemIsSelectable
+        )
 
 
 class SimpleCueListModel(SimpleTableModel):
@@ -128,13 +143,13 @@ class SimpleCueListModel(SimpleTableModel):
         if super().removeRow(row):
             self.rows_cc.pop(row)
 
-    def data(self, index, role=Qt.DisplayRole):
+    def data(self, index, role=Qt.ItemDataRole.DisplayRole):
         if role == CueClassRole and index.isValid:
             return self.rows_cc[index.row()]
 
         return super().data(index, role)
 
-    def setData(self, index, value, role=Qt.DisplayRole):
+    def setData(self, index, value, role=Qt.ItemDataRole.DisplayRole):
         if role == CueClassRole and index.isValid():
             if issubclass(value, Cue):
                 self.rows_cc[index.row()] = value

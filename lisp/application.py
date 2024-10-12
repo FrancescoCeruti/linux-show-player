@@ -19,7 +19,7 @@ import json
 import logging
 from os.path import exists, dirname, abspath, realpath
 
-from PyQt5.QtWidgets import QDialog, qApp
+from PyQt6.QtWidgets import QDialog, QApplication
 
 from lisp import layout, __version__ as lisp_version
 from lisp.command.stack import CommandsStack
@@ -140,7 +140,7 @@ class Application(metaclass=Singleton):
         try:
             # Prompt the user for a new layout
             dialog = LayoutSelect(self, parent=self.window)
-            if dialog.exec() == QDialog.Accepted:
+            if dialog.exec() == QDialog.DialogCode.Accepted:
                 # If a file is selected load it, otherwise load the layout
                 if dialog.sessionPath:
                     self.__load_from_file(dialog.sessionPath)
@@ -150,12 +150,12 @@ class Application(metaclass=Singleton):
                 if self.__session is None:
                     # If the user close the dialog, and no layout exists
                     # the application is closed
-                    qApp.quit()
+                    QApplication.instance().quit()
         except Exception:
             logger.critical(
                 translate("ApplicationError", "Startup error"), exc_info=True
             )
-            qApp.quit()
+            QApplication.instance().quit()
 
     def __new_session(self, layout):
         self.__delete_session()

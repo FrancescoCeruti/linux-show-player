@@ -15,8 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import (
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import (
     QDialog,
     QGridLayout,
     QComboBox,
@@ -38,7 +38,7 @@ class GstPipeEdit(QWidget):
     def __init__(self, pipe, app_mode=False, **kwargs):
         super().__init__(**kwargs)
         self.setLayout(QGridLayout())
-        self.layout().setAlignment(Qt.AlignTop)
+        self.layout().setAlignment(Qt.AlignmentFlag.AlignTop)
         self.layout().setContentsMargins(0, 0, 0, 0)
 
         self._app_mode = app_mode
@@ -51,7 +51,9 @@ class GstPipeEdit(QWidget):
         # Current plugins list
         self.currentList = QListWidget(self)
         self.currentList.setDragEnabled(True)
-        self.currentList.setDragDropMode(QAbstractItemView.InternalMove)
+        self.currentList.setDragDropMode(
+            QAbstractItemView.DragDropMode.InternalMove
+        )
         self.layout().addWidget(self.currentList, 1, 0)
 
         # Available plugins list
@@ -66,19 +68,25 @@ class GstPipeEdit(QWidget):
         # Add/Remove plugins buttons
         self.buttonsLayout = QVBoxLayout()
         self.layout().addLayout(self.buttonsLayout, 1, 1)
-        self.layout().setAlignment(self.buttonsLayout, Qt.AlignHCenter)
+        self.layout().setAlignment(
+            self.buttonsLayout, Qt.AlignmentFlag.AlignHCenter
+        )
 
         self.addButton = QPushButton(self)
         self.addButton.setIcon(IconTheme.get("go-previous-symbolic"))
         self.addButton.clicked.connect(self.__add_plugin)
         self.buttonsLayout.addWidget(self.addButton)
-        self.buttonsLayout.setAlignment(self.addButton, Qt.AlignHCenter)
+        self.buttonsLayout.setAlignment(
+            self.addButton, Qt.AlignmentFlag.AlignHCenter
+        )
 
         self.delButton = QPushButton(self)
         self.delButton.setIcon(IconTheme.get("go-next-symbolic"))
         self.delButton.clicked.connect(self.__remove_plugin)
         self.buttonsLayout.addWidget(self.delButton)
-        self.buttonsLayout.setAlignment(self.delButton, Qt.AlignHCenter)
+        self.buttonsLayout.setAlignment(
+            self.delButton, Qt.AlignmentFlag.AlignHCenter
+        )
 
         # Load the pipeline
         self.set_pipe(pipe)
@@ -100,7 +108,7 @@ class GstPipeEdit(QWidget):
     def get_pipe(self):
         pipe = [] if self._app_mode else [self.inputBox.currentData()]
         for n in range(self.currentList.count()):
-            pipe.append(self.currentList.item(n).data(Qt.UserRole))
+            pipe.append(self.currentList.item(n).data(Qt.ItemDataRole.UserRole))
         pipe.append(self.outputBox.currentData())
 
         return tuple(pipe)
@@ -138,7 +146,7 @@ class GstPipeEdit(QWidget):
             item = QListWidgetItem(
                 translate("MediaElementName", elements.plugin_name(plugin))
             )
-            item.setData(Qt.UserRole, plugin)
+            item.setData(Qt.ItemDataRole.UserRole, plugin)
             self.currentList.addItem(item)
 
     def __init_available_plugins(self, pipe):
@@ -149,7 +157,7 @@ class GstPipeEdit(QWidget):
                 item = QListWidgetItem(
                     translate("MediaElementName", elements.plugin_name(plugin))
                 )
-                item.setData(Qt.UserRole, plugin)
+                item.setData(Qt.ItemDataRole.UserRole, plugin)
                 self.availableList.addItem(item)
 
     def __add_plugin(self):
@@ -165,7 +173,7 @@ class GstPipeEditDialog(QDialog):
     def __init__(self, pipe, app_mode=False, **kwargs):
         super().__init__(**kwargs)
         self.setWindowTitle(translate("GstPipelineEdit", "Edit Pipeline"))
-        self.setWindowModality(Qt.ApplicationModal)
+        self.setWindowModality(Qt.WindowModality.ApplicationModal)
         self.setMaximumSize(500, 400)
         self.setMinimumSize(500, 400)
         self.resize(500, 400)
@@ -178,7 +186,8 @@ class GstPipeEditDialog(QDialog):
         # Confirm/Cancel buttons
         self.dialogButtons = QDialogButtonBox(self)
         self.dialogButtons.setStandardButtons(
-            QDialogButtonBox.Cancel | QDialogButtonBox.Ok
+            QDialogButtonBox.StandardButton.Cancel
+            | QDialogButtonBox.StandardButton.Ok
         )
         self.layout().addWidget(self.dialogButtons)
 

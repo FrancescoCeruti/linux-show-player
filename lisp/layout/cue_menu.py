@@ -17,7 +17,8 @@
 
 from functools import partial
 
-from PyQt5.QtWidgets import QAction, QMenu
+from PyQt6.QtGui import QAction
+from PyQt6.QtWidgets import QMenu
 
 from lisp.core.class_based_registry import ClassBasedRegistry
 from lisp.core.util import greatest_common_superclass

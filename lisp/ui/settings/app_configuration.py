@@ -18,9 +18,9 @@
 import logging
 from collections import namedtuple
 
-from PyQt5 import QtCore
-from PyQt5.QtCore import QModelIndex
-from PyQt5.QtWidgets import QVBoxLayout, QDialogButtonBox, QDialog
+from PyQt6 import QtCore
+from PyQt6.QtCore import QModelIndex
+from PyQt6.QtWidgets import QVBoxLayout, QDialogButtonBox, QDialog
 
 from lisp.core.dicttree import DictNode
 from lisp.ui.ui_utils import translate
@@ -37,7 +37,7 @@ class AppConfigurationDialog(QDialog):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.setWindowTitle(translate("AppConfiguration", "LiSP preferences"))
-        self.setWindowModality(QtCore.Qt.WindowModal)
+        self.setWindowModality(QtCore.Qt.WindowModality.WindowModal)
         self.setMinimumSize(800, 510)
         self.resize(800, 510)
         self.setLayout(QVBoxLayout())
@@ -54,21 +54,21 @@ class AppConfigurationDialog(QDialog):
 
         self.dialogButtons = QDialogButtonBox(self)
         self.dialogButtons.setStandardButtons(
-            QDialogButtonBox.Cancel
-            | QDialogButtonBox.Apply
-            | QDialogButtonBox.Ok
+            QDialogButtonBox.StandardButton.Cancel
+            | QDialogButtonBox.StandardButton.Apply
+            | QDialogButtonBox.StandardButton.Ok
         )
         self.layout().addWidget(self.dialogButtons)
 
-        self.dialogButtons.button(QDialogButtonBox.Cancel).clicked.connect(
-            self.reject
-        )
-        self.dialogButtons.button(QDialogButtonBox.Apply).clicked.connect(
-            self.applySettings
-        )
-        self.dialogButtons.button(QDialogButtonBox.Ok).clicked.connect(
-            self.__onOk
-        )
+        self.dialogButtons.button(
+            QDialogButtonBox.StandardButton.Cancel
+        ).clicked.connect(self.reject)
+        self.dialogButtons.button(
+            QDialogButtonBox.StandardButton.Apply
+        ).clicked.connect(self.applySettings)
+        self.dialogButtons.button(
+            QDialogButtonBox.StandardButton.Ok
+        ).clicked.connect(self.__onOk)
 
     def applySettings(self):
         for conf, pages in self.configurations.items():

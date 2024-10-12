@@ -17,8 +17,8 @@
 
 import logging
 
-from PyQt5.QtCore import QT_TRANSLATE_NOOP, Qt
-from PyQt5.QtWidgets import (
+from PyQt6.QtCore import QT_TRANSLATE_NOOP, Qt
+from PyQt6.QtWidgets import (
     QDoubleSpinBox,
     QGroupBox,
     QHBoxLayout,
@@ -134,7 +134,7 @@ class VolumeSettings(SettingsPage):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
-        self.layout().setAlignment(Qt.AlignTop)
+        self.layout().setAlignment(Qt.AlignmentFlag.AlignTop)
 
         self.__v_edit_flag = False
         self.cue_id = -1
@@ -147,7 +147,7 @@ class VolumeSettings(SettingsPage):
         self.layout().addWidget(self.cueGroup)
 
         self.cueLabel = QLabel(self.cueGroup)
-        self.cueLabel.setAlignment(Qt.AlignCenter)
+        self.cueLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.cueLabel.setStyleSheet("font-weight: bold;")
         self.cueGroup.layout().addWidget(self.cueLabel)
 

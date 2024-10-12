@@ -17,9 +17,9 @@
 
 from enum import Enum
 
-from PyQt5.QtCore import Qt, QEvent, QSize
-from PyQt5.QtGui import QKeySequence, QFontMetrics
-from PyQt5.QtWidgets import (
+from PyQt6.QtCore import Qt, QEvent, QSize
+from PyQt6.QtGui import QKeySequence, QFontMetrics
+from PyQt6.QtWidgets import (
     QStyledItemDelegate,
     QComboBox,
     QSpinBox,
@@ -28,7 +28,7 @@ from PyQt5.QtWidgets import (
     QDialog,
     QCheckBox,
     QStyleOptionButton,
-    qApp,
+    QApplication,
 )
 
 from lisp.cues.cue import CueAction
@@ -61,12 +61,12 @@ class LabelDelegate(QStyledItemDelegate):
 
         text = self._text(option, index)
         text = option.fontMetrics.elidedText(
-            text, Qt.ElideRight, option.rect.width()
+            text, Qt.TextElideMode.ElideRight, option.rect.width()
         )
 
         painter.save()
 
-        if option.state & QStyle.State_Selected:
+        if option.state & QStyle.StateFlag.State_Selected:
             painter.setBrush(option.palette.highlight())
 
             pen = painter.pen()
@@ -79,7 +79,7 @@ class LabelDelegate(QStyledItemDelegate):
 
     def sizeHint(self, option, index):
         return QFontMetrics(option.font).size(
-            Qt.TextSingleLine, self._text(option, index)
+            Qt.TextFlag.TextSingleLine, self._text(option, index)
         ) + QSize(8, 0)
 
 
@@ -93,7 +93,7 @@ class ComboBoxDelegate(LabelDelegate):
         return translate(self.tr_context, index.data())
 
     def paint(self, painter, option, index):
-        option.displayAlignment = Qt.AlignCenter
+        option.displayAlignment = Qt.AlignmentFlag.AlignCenter
         super().paint(painter, option, index)
 
     def createEditor(self, parent, option, index):
@@ -105,11 +105,11 @@ class ComboBoxDelegate(LabelDelegate):
         return editor
 
     def setEditorData(self, comboBox, index):
-        value = index.model().data(index, Qt.EditRole)
+        value = index.model().data(index, Qt.ItemDataRole.EditRole)
         comboBox.setCurrentText(translate(self.tr_context, value))
 
     def setModelData(self, comboBox, model, index):
-        model.setData(index, comboBox.currentData(), Qt.EditRole)
+        model.setData(index, comboBox.currentData(), Qt.ItemDataRole.EditRole)
 
     def updateEditorGeometry(self, editor, option, index):
         editor.setGeometry(option.rect)
@@ -131,13 +131,13 @@ class SpinBoxDelegate(QStyledItemDelegate):
         return editor
 
     def setEditorData(self, spinBox, index):
-        value = index.model().data(index, Qt.EditRole)
+        value = index.model().data(index, Qt.ItemDataRole.EditRole)
         if isinstance(value, int):
             spinBox.setValue(value)
 
     def setModelData(self, spinBox, model, index):
         spinBox.interpretText()
-        model.setData(index, spinBox.value(), Qt.EditRole)
+        model.setData(index, spinBox.value(), Qt.ItemDataRole.EditRole)
 
     def updateEditorGeometry(self, editor, option, index):
         editor.setGeometry(option.rect)
@@ -152,8 +152,14 @@ class BoolCheckBoxDelegate(QStyledItemDelegate):
 
     def _checkBoxRect(self, option):
         cbRect = option.rect
-        cbSize = qApp.style().subElementRect(
-            QStyle.SE_ViewItemCheckIndicator, QStyleOptionButton(), QCheckBox()
+        cbSize = (
+            QApplication.instance()
+            .style()
+            .subElementRect(
+                QStyle.SubElement.SE_ItemViewItemCheckIndicator,
+                QStyleOptionButton(),
+                QCheckBox(),
+            )
         )
 
         # Center the checkbox (horizontally)
@@ -164,26 +170,32 @@ class BoolCheckBoxDelegate(QStyledItemDelegate):
 
     def editorEvent(self, event, model, option, index):
         # If the "checkbox" is left-clicked change the current state
-        if event.type() == QEvent.MouseButtonRelease:
+        if event.type() == QEvent.Type.MouseButtonRelease:
             cbRect = self._checkBoxRect(option)
-            if event.button() == Qt.LeftButton and cbRect.contains(event.pos()):
-                value = bool(index.model().data(index, Qt.EditRole))
-                model.setData(index, not value, Qt.EditRole)
+            if event.button() == Qt.MouseButton.LeftButton and cbRect.contains(
+                event.pos()
+            ):
+                value = bool(
+                    index.model().data(index, Qt.ItemDataRole.EditRole)
+                )
+                model.setData(index, not value, Qt.ItemDataRole.EditRole)
 
                 return True
 
         return super().editorEvent(event, model, option, index)
 
     def paint(self, painter, option, index):
-        value = index.model().data(index, Qt.EditRole)
+        value = index.model().data(index, Qt.ItemDataRole.EditRole)
         cbOpt = QStyleOptionButton()
 
-        cbOpt.state = QStyle.State_Enabled
-        cbOpt.state |= QStyle.State_On if value else QStyle.State_Off
+        cbOpt.state = QStyle.StateFlag.State_Enabled
+        cbOpt.state |= (
+            QStyle.StateFlag.State_On if value else QStyle.StateFlag.State_Off
+        )
         cbOpt.rect = self._checkBoxRect(option)
 
-        qApp.style().drawControl(
-            QStyle.CE_CheckBox, cbOpt, painter, QCheckBox()
+        QApplication.instance().style().drawControl(
+            QStyle.ControlElement.CE_CheckBox, cbOpt, painter, QCheckBox()
         )
 
 
@@ -205,11 +217,11 @@ class LineEditDelegate(QStyledItemDelegate):
         return editor
 
     def setEditorData(self, lineEdit, index):
-        value = index.model().data(index, Qt.EditRole)
+        value = index.model().data(index, Qt.ItemDataRole.EditRole)
         lineEdit.setText(str(value))
 
     def setModelData(self, lineEdit, model, index):
-        model.setData(index, lineEdit.text(), Qt.EditRole)
+        model.setData(index, lineEdit.text(), Qt.ItemDataRole.EditRole)
 
     def updateEditorGeometry(self, editor, option, index):
         editor.setGeometry(option.rect)
@@ -226,7 +238,9 @@ class HotKeyEditDelegate(LabelDelegate):
         self.mode = mode
 
     def paint(self, painter, option, index):
-        option.displayAlignment = Qt.AlignHCenter | Qt.AlignVCenter
+        option.displayAlignment = (
+            Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignVCenter
+        )
         super().paint(painter, option, index)
 
     def createEditor(self, parent, option, index):
@@ -238,26 +252,28 @@ class HotKeyEditDelegate(LabelDelegate):
     def setModelData(self, editor: HotKeyEdit, model, index):
         sequence = editor.keySequence()
         if self.mode == HotKeyEditDelegate.Mode.NativeText:
-            data = sequence.toString(QKeySequence.NativeText)
+            data = sequence.toString(QKeySequence.SequenceFormat.NativeText)
         elif self.mode == HotKeyEditDelegate.Mode.PortableText:
-            data = sequence.toString(QKeySequence.PortableText)
+            data = sequence.toString(QKeySequence.SequenceFormat.PortableText)
         else:
             data = sequence
 
-        model.setData(index, data, Qt.EditRole)
+        model.setData(index, data, Qt.ItemDataRole.EditRole)
 
     def updateEditorGeometry(self, editor, option, index):
         editor.setGeometry(option.rect)
 
     def _text(self, option, index):
-        return self._sequence(index).toString(QKeySequence.NativeText)
+        return self._sequence(index).toString(
+            QKeySequence.SequenceFormat.NativeText
+        )
 
     def _sequence(self, index):
-        data = index.data(Qt.EditRole)
+        data = index.data(Qt.ItemDataRole.EditRole)
         if self.mode == HotKeyEditDelegate.Mode.NativeText:
-            return QKeySequence(data, QKeySequence.NativeText)
+            return QKeySequence(data, QKeySequence.SequenceFormat.NativeText)
         elif self.mode == HotKeyEditDelegate.Mode.PortableText:
-            return QKeySequence(data, QKeySequence.PortableText)
+            return QKeySequence(data, QKeySequence.SequenceFormat.PortableText)
 
         return data
 
@@ -272,10 +288,14 @@ class EnumComboBoxDelegate(LabelDelegate):
         self.trItem = trItem
 
     def _text(self, option, index):
-        return self.trItem(self.itemFromData(index.data(Qt.EditRole)))
+        return self.trItem(
+            self.itemFromData(index.data(Qt.ItemDataRole.EditRole))
+        )
 
     def paint(self, painter, option, index):
-        option.displayAlignment = Qt.AlignHCenter | Qt.AlignVCenter
+        option.displayAlignment = (
+            Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignVCenter
+        )
         super().paint(painter, option, index)
 
     def createEditor(self, parent, option, index):
@@ -287,10 +307,10 @@ class EnumComboBoxDelegate(LabelDelegate):
         return editor
 
     def setEditorData(self, editor, index):
-        editor.setCurrentItem(index.data(Qt.EditRole))
+        editor.setCurrentItem(index.data(Qt.ItemDataRole.EditRole))
 
     def setModelData(self, editor, model, index):
-        model.setData(index, editor.currentData(), Qt.EditRole)
+        model.setData(index, editor.currentData(), Qt.ItemDataRole.EditRole)
 
     def updateEditorGeometry(self, editor, option, index):
         editor.setGeometry(option.rect)
@@ -337,11 +357,11 @@ class CueSelectionDelegate(LabelDelegate):
         return "UNDEF"
 
     def editorEvent(self, event, model, option, index):
-        if event.type() == QEvent.MouseButtonDblClick:
-            if self.cue_select.exec() == QDialog.Accepted:
+        if event.type() == QEvent.Type.MouseButtonDblClick:
+            if self.cue_select.exec() == QDialog.DialogCode.Accepted:
                 cue = self.cue_select.selected_cue()
                 if cue is not None:
-                    model.setData(index, cue.id, Qt.EditRole)
+                    model.setData(index, cue.id, Qt.ItemDataRole.EditRole)
                     model.setData(index, cue.__class__, CueClassRole)
             return True
 

@@ -18,9 +18,9 @@
 
 import logging
 
-from PyQt5 import QtCore
-from PyQt5.QtCore import QT_TRANSLATE_NOOP, Qt
-from PyQt5.QtWidgets import (
+from PyQt6 import QtCore
+from PyQt6.QtCore import QT_TRANSLATE_NOOP, Qt
+from PyQt6.QtWidgets import (
     QDoubleSpinBox,
     QGridLayout,
     QGroupBox,
@@ -177,7 +177,7 @@ class OscCueSettings(SettingsPage):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
-        self.layout().setAlignment(Qt.AlignTop)
+        self.layout().setAlignment(Qt.AlignmentFlag.AlignTop)
 
         self.oscGroup = QGroupBox(self)
         self.oscGroup.setLayout(QGridLayout())
@@ -220,14 +220,14 @@ class OscCueSettings(SettingsPage):
         self.fadeGroup.layout().addWidget(self.fadeSpin, 0, 0)
 
         self.fadeLabel = QLabel(self.fadeGroup)
-        self.fadeLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.fadeLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.fadeGroup.layout().addWidget(self.fadeLabel, 0, 1)
 
         self.fadeCurveCombo = FadeComboBox(parent=self.fadeGroup)
         self.fadeGroup.layout().addWidget(self.fadeCurveCombo, 1, 0)
 
         self.fadeCurveLabel = QLabel(self.fadeGroup)
-        self.fadeCurveLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.fadeCurveLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.fadeGroup.layout().addWidget(self.fadeCurveLabel, 1, 1)
 
         self.pathEdit.textEdited.connect(self.__fixPath)
@@ -322,10 +322,12 @@ class OscView(QTableView):
         self.setShowGrid(False)
         self.setAlternatingRowColors(True)
 
-        self.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.horizontalHeader().setSectionResizeMode(
+            QHeaderView.ResizeMode.Stretch
+        )
         self.horizontalHeader().setHighlightSections(False)
 
-        self.verticalHeader().sectionResizeMode(QHeaderView.Fixed)
+        self.verticalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Fixed)
         self.verticalHeader().setDefaultSectionSize(24)
         self.verticalHeader().setHighlightSections(False)
 
@@ -379,7 +381,7 @@ class OscView(QTableView):
         modelRow[COL_START_VALUE] = "text"
 
     def _dataChanged(self, _, bottom_right, roles):
-        if Qt.EditRole not in roles:
+        if Qt.ItemDataRole.EditRole not in roles:
             return
 
         # NOTE: We assume one item will change at the time
