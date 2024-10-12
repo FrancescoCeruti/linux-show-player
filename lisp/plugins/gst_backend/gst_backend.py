@@ -17,9 +17,9 @@
 
 import os.path
 
-from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
-from PyQt5.QtGui import QCursor
-from PyQt5.QtWidgets import QFileDialog, QApplication
+from PyQt6.QtCore import Qt, QT_TRANSLATE_NOOP
+from PyQt6.QtGui import QCursor
+from PyQt6.QtWidgets import QFileDialog, QApplication
 
 from lisp import backend
 from lisp.backend.backend import Backend as BaseBackend
@@ -155,7 +155,7 @@ class GstBackend(Plugin, BaseBackend):
         self.add_cue_from_files(files)
 
     def add_cue_from_files(self, files):
-        QApplication.setOverrideCursor(QCursor(Qt.WaitCursor))
+        QApplication.setOverrideCursor(QCursor(Qt.CursorShape.WaitCursor))
 
         # Create media cues, and add them to the Application cue_model
         factory = UriAudioCueFactory(GstBackend.Config["pipeline"])

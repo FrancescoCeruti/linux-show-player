@@ -17,8 +17,8 @@
 
 import logging
 
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import (
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import (
     QDialog,
     QGridLayout,
     QLabel,
@@ -55,14 +55,16 @@ class MultiMessagesBox(QDialog):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.setLayout(QGridLayout())
-        self.setWindowModality(Qt.ApplicationModal)
-        self.layout().setSizeConstraint(QGridLayout.SetFixedSize)
+        self.setWindowModality(Qt.WindowModality.ApplicationModal)
+        self.layout().setSizeConstraint(QGridLayout.SizeConstraint.SetFixedSize)
 
         self._formatter = logging.Formatter()
         self._records = []
 
         self.iconLabel = QLabel(self)
-        self.iconLabel.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)
+        self.iconLabel.setSizePolicy(
+            QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Preferred
+        )
         self.layout().addWidget(self.iconLabel, 0, 0)
 
         self.messageLabel = QLabel(self)
@@ -72,25 +74,29 @@ class MultiMessagesBox(QDialog):
         self.buttonBox = QDialogButtonBox(self)
         self.layout().addWidget(self.buttonBox, 1, 0, 1, 2)
 
-        self.okButton = self.buttonBox.addButton(QDialogButtonBox.Ok)
+        self.okButton = self.buttonBox.addButton(
+            QDialogButtonBox.StandardButton.Ok
+        )
         self.okButton.clicked.connect(self.nextRecord)
 
         self.dismissButton = QPushButton(self)
         self.dismissButton.setText(translate("Logging", "Dismiss all"))
         self.dismissButton.clicked.connect(self.dismissAll)
         self.dismissButton.hide()
-        self.buttonBox.addButton(self.dismissButton, QDialogButtonBox.ResetRole)
+        self.buttonBox.addButton(
+            self.dismissButton, QDialogButtonBox.ButtonRole.ResetRole
+        )
 
         self.detailsButton = QPushButton(self)
         self.detailsButton.setCheckable(True)
         self.detailsButton.setText(translate("Logging", "Show details"))
         self.buttonBox.addButton(
-            self.detailsButton, QDialogButtonBox.ActionRole
+            self.detailsButton, QDialogButtonBox.ButtonRole.ActionRole
         )
 
         self.detailsText = QTextEdit(self)
         self.detailsText.setReadOnly(True)
-        self.detailsText.setLineWrapMode(QTextEdit.NoWrap)
+        self.detailsText.setLineWrapMode(QTextEdit.LineWrapMode.NoWrap)
         self.detailsText.hide()
         self.layout().addWidget(self.detailsText, 2, 0, 1, 2)
 

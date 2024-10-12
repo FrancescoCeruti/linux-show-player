@@ -19,16 +19,15 @@ import logging
 import os
 from functools import partial
 
-from PyQt5 import QtCore
-from PyQt5.QtCore import pyqtSignal, QT_TRANSLATE_NOOP
-from PyQt5.QtGui import QKeySequence
-from PyQt5.QtWidgets import (
+from PyQt6 import QtCore
+from PyQt6.QtCore import pyqtSignal, QT_TRANSLATE_NOOP
+from PyQt6.QtGui import QKeySequence, QAction
+from PyQt6.QtWidgets import (
     QMainWindow,
     QStatusBar,
     QMenuBar,
     QMenu,
-    QAction,
-    qApp,
+    QApplication,
     QFileDialog,
     QMessageBox,
     QVBoxLayout,
@@ -63,7 +62,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         """:type app: lisp.application.Application"""
         super().__init__(**kwargs)
         self.setMinimumSize(500, 400)
-        self.setGeometry(qApp.desktop().availableGeometry(self))
+        self.setGeometry(QApplication.primaryScreen().availableGeometry())
         self.setCentralWidget(QWidget())
         self.centralWidget().setLayout(QVBoxLayout())
         self.centralWidget().layout().setContentsMargins(5, 5, 5, 5)
@@ -87,7 +86,9 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         # Menubar
         self.menubar = QMenuBar(self)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 0, 25))
-        self.menubar.setContextMenuPolicy(QtCore.Qt.PreventContextMenu)
+        self.menubar.setContextMenuPolicy(
+            QtCore.Qt.ContextMenuPolicy.PreventContextMenu
+        )
 
         self.menuFile = QMenu(self.menubar)
         self.menuEdit = QMenu(self.menubar)
@@ -164,7 +165,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         self.actionAbout.triggered.connect(self.__about)
 
         self.actionAbout_Qt = QAction(self)
-        self.actionAbout_Qt.triggered.connect(qApp.aboutQt)
+        self.actionAbout_Qt.triggered.connect(QApplication.instance().aboutQt)
 
         self.menuAbout.addAction(self.actionAbout)
         self.menuAbout.addSeparator()
@@ -190,30 +191,30 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         # menuFile
         self.menuFile.setTitle(translate("MainWindow", "&File"))
         self.newSessionAction.setText(translate("MainWindow", "New session"))
-        self.newSessionAction.setShortcut(QKeySequence.New)
+        self.newSessionAction.setShortcut(QKeySequence.StandardKey.New)
         self.openSessionAction.setText(translate("MainWindow", "Open"))
-        self.openSessionAction.setShortcut(QKeySequence.Open)
+        self.openSessionAction.setShortcut(QKeySequence.StandardKey.Open)
         self.saveSessionAction.setText(translate("MainWindow", "Save session"))
-        self.saveSessionAction.setShortcut(QKeySequence.Save)
+        self.saveSessionAction.setShortcut(QKeySequence.StandardKey.Save)
         self.editPreferences.setText(translate("MainWindow", "Preferences"))
-        self.editPreferences.setShortcut(QKeySequence.Preferences)
+        self.editPreferences.setShortcut(QKeySequence.StandardKey.Preferences)
         self.saveSessionWithName.setText(translate("MainWindow", "Save as"))
-        self.saveSessionWithName.setShortcut(QKeySequence.SaveAs)
+        self.saveSessionWithName.setShortcut(QKeySequence.StandardKey.SaveAs)
         self.fullScreenAction.setText(translate("MainWindow", "Full Screen"))
-        self.fullScreenAction.setShortcut(QKeySequence.FullScreen)
+        self.fullScreenAction.setShortcut(QKeySequence.StandardKey.FullScreen)
         self.exitAction.setText(translate("MainWindow", "Exit"))
-        self.exitAction.setShortcut(QKeySequence.Quit)
+        self.exitAction.setShortcut(QKeySequence.StandardKey.Quit)
         # menuEdit
         self.menuEdit.setTitle(translate("MainWindow", "&Edit"))
         self.actionUndo.setText(translate("MainWindow", "Undo"))
-        self.actionUndo.setShortcut(QKeySequence.Undo)
+        self.actionUndo.setShortcut(QKeySequence.StandardKey.Undo)
         self.actionRedo.setText(translate("MainWindow", "Redo"))
-        self.actionRedo.setShortcut(QKeySequence.Redo)
+        self.actionRedo.setShortcut(QKeySequence.StandardKey.Redo)
         self.selectAll.setText(translate("MainWindow", "Select all"))
         self.selectAllMedia.setText(
             translate("MainWindow", "Select all media cues")
         )
-        self.selectAll.setShortcut(QKeySequence.SelectAll)
+        self.selectAll.setShortcut(QKeySequence.StandardKey.SelectAll)
         self.deselectAll.setText(translate("MainWindow", "Deselect all"))
         self.deselectAll.setShortcut(translate("MainWindow", "CTRL+SHIFT+A"))
         self.invertSelection.setText(
@@ -316,7 +317,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
 
     def closeEvent(self, event):
         if self.__checkSessionSaved():
-            qApp.quit()
+            QApplication.instance().quit()
             event.accept()
         else:
             event.ignore()
@@ -398,24 +399,26 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
     def __checkSessionSaved(self):
         if not self._app.commands_stack.is_saved():
             saveMessageBox = QMessageBox(
-                QMessageBox.Warning,
+                QMessageBox.Icon.Warning,
                 translate("MainWindow", "Close session"),
                 translate(
                     "MainWindow",
                     "The current session contains changes that have not been saved.",
                 ),
-                QMessageBox.Save | QMessageBox.Discard | QMessageBox.Cancel,
+                QMessageBox.StandardButton.Save
+                | QMessageBox.StandardButton.Discard
+                | QMessageBox.StandardButton.Cancel,
                 self,
             )
             saveMessageBox.setInformativeText(
                 translate("MainWindow", "Do you want to save them now?")
             )
-            saveMessageBox.setDefaultButton(QMessageBox.Save)
+            saveMessageBox.setDefaultButton(QMessageBox.StandardButton.Save)
 
             choice = saveMessageBox.exec()
-            if choice == QMessageBox.Save:
+            if choice == QMessageBox.StandardButton.Save:
                 return self.__saveSession()
-            elif choice == QMessageBox.Cancel:
+            elif choice == QMessageBox.StandardButton.Cancel:
                 return False
 
         return True
@@ -433,7 +436,9 @@ class MainStatusBar(QWidget):
 
         # Clock
         self.clock = DigitalLabelClock(parent=self)
-        self.clock.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        self.clock.setSizePolicy(
+            QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed
+        )
         self.addWidget(self.clock)
         # ---------
         self.addDivider()
@@ -444,7 +449,9 @@ class MainStatusBar(QWidget):
         self.addDivider()
         # Logging StatusIcon
         self.logStatus = LogStatusIcon(mainWindow.logModel, parent=self)
-        self.logStatus.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        self.logStatus.setSizePolicy(
+            QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed
+        )
         self.logStatus.double_clicked.connect(
             mainWindow.logViewer.showMaximized
         )
@@ -455,7 +462,9 @@ class MainStatusBar(QWidget):
 
     def addDivider(self):
         divider = QFrame(self)
-        divider.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Minimum)
-        divider.setFrameShape(QFrame.VLine)
-        divider.setFrameShadow(QFrame.Sunken)
+        divider.setSizePolicy(
+            QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Minimum
+        )
+        divider.setFrameShape(QFrame.Shape.VLine)
+        divider.setFrameShadow(QFrame.Shadow.Sunken)
         self.addWidget(divider)

@@ -15,8 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import QTime, Qt, QT_TRANSLATE_NOOP
-from PyQt5.QtWidgets import (
+from PyQt6.QtCore import QTime, Qt, QT_TRANSLATE_NOOP
+from PyQt6.QtWidgets import (
     QGroupBox,
     QHBoxLayout,
     QTimeEdit,
@@ -46,7 +46,7 @@ class MediaCueSettings(SettingsPage):
         self.startGroup.layout().addWidget(self.startEdit)
 
         self.startLabel = QLabel(self.startGroup)
-        self.startLabel.setAlignment(Qt.AlignCenter)
+        self.startLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.startGroup.layout().addWidget(self.startLabel)
 
         # Stop time
@@ -59,7 +59,7 @@ class MediaCueSettings(SettingsPage):
         self.stopGroup.layout().addWidget(self.stopEdit)
 
         self.stopLabel = QLabel(self.stopGroup)
-        self.stopLabel.setAlignment(Qt.AlignCenter)
+        self.stopLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.stopGroup.layout().addWidget(self.stopLabel)
 
         # Loop
@@ -72,7 +72,7 @@ class MediaCueSettings(SettingsPage):
         self.loopGroup.layout().addWidget(self.spinLoop)
 
         self.loopLabel = QLabel(self.loopGroup)
-        self.loopLabel.setAlignment(Qt.AlignCenter)
+        self.loopLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.loopGroup.layout().addWidget(self.loopLabel)
 
         self.retranslateUi()

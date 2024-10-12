@@ -18,7 +18,7 @@
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
-from PyQt5.QtCore import QT_TRANSLATE_NOOP
+from PyQt6.QtCore import QT_TRANSLATE_NOOP
 
 from lisp.backend.media_element import MediaType
 from lisp.core.decorators import async_in_pool

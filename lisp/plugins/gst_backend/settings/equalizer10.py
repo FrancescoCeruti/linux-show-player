@@ -15,10 +15,10 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5 import QtCore
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QFontMetrics
-from PyQt5.QtWidgets import QGroupBox, QGridLayout, QLabel, QSlider, QVBoxLayout
+from PyQt6 import QtCore
+from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QFontMetrics
+from PyQt6.QtWidgets import QGroupBox, QGridLayout, QLabel, QSlider, QVBoxLayout
 
 from lisp.plugins.gst_backend.elements.equalizer10 import Equalizer10
 from lisp.ui.settings.pages import SettingsPage
@@ -45,7 +45,7 @@ class Equalizer10Settings(SettingsPage):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
-        self.layout().setAlignment(Qt.AlignTop)
+        self.layout().setAlignment(Qt.AlignmentFlag.AlignTop)
 
         self.groupBox = QGroupBox(self)
         self.groupBox.resize(self.size())
@@ -61,7 +61,7 @@ class Equalizer10Settings(SettingsPage):
         for n in range(10):
             label = QLabel(self.groupBox)
             label.setMinimumWidth(QFontMetrics(label.font()).width("000"))
-            label.setAlignment(QtCore.Qt.AlignCenter)
+            label.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
             label.setNum(0)
             self.groupBox.layout().addWidget(label, 0, n)
 
@@ -69,15 +69,17 @@ class Equalizer10Settings(SettingsPage):
             slider.setRange(-24, 12)
             slider.setPageStep(1)
             slider.setValue(0)
-            slider.setOrientation(QtCore.Qt.Vertical)
+            slider.setOrientation(QtCore.Qt.Orientation.Vertical)
             slider.valueChanged.connect(label.setNum)
             self.groupBox.layout().addWidget(slider, 1, n)
-            self.groupBox.layout().setAlignment(slider, QtCore.Qt.AlignHCenter)
+            self.groupBox.layout().setAlignment(
+                slider, QtCore.Qt.AlignmentFlag.AlignHCenter
+            )
             self.sliders["band" + str(n)] = slider
 
             fLabel = QLabel(self.groupBox)
             fLabel.setStyleSheet("font-size: 8pt;")
-            fLabel.setAlignment(QtCore.Qt.AlignCenter)
+            fLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
             fLabel.setText(self.FREQ[n])
             self.groupBox.layout().addWidget(fLabel, 2, n)
 

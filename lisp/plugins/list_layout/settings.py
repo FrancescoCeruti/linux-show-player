@@ -15,9 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
-from PyQt5.QtGui import QKeySequence
-from PyQt5.QtWidgets import (
+from PyQt6.QtCore import Qt, QT_TRANSLATE_NOOP
+from PyQt6.QtGui import QKeySequence
+from PyQt6.QtWidgets import (
     QGroupBox,
     QVBoxLayout,
     QCheckBox,
@@ -43,7 +43,7 @@ class ListLayoutSettings(QScrollArea, SettingsPage):
         self.setWidgetResizable(True)
         self.contentWidget = QWidget(self)
         self.contentWidget.setLayout(QVBoxLayout())
-        self.contentWidget.layout().setAlignment(Qt.AlignTop)
+        self.contentWidget.layout().setAlignment(Qt.AlignmentFlag.AlignTop)
 
         self.defaultBehaviorsGroup = QGroupBox(self.contentWidget)
         self.defaultBehaviorsGroup.setLayout(QVBoxLayout())
@@ -161,7 +161,9 @@ class ListLayoutSettings(QScrollArea, SettingsPage):
             settings["goKeyDisabledWhilePlaying"]
         )
         self.goKeyEdit.setKeySequence(
-            QKeySequence(settings["goKey"], QKeySequence.NativeText)
+            QKeySequence(
+                settings["goKey"], QKeySequence.SequenceFormat.NativeText
+            )
         )
         self.goActionCombo.setCurrentItem(settings["goAction"])
         self.goDelaySpin.setValue(settings["goDelay"])
@@ -182,7 +184,7 @@ class ListLayoutSettings(QScrollArea, SettingsPage):
             "autoContinue": self.autoNext.isChecked(),
             "selectionMode": self.selectionMode.isChecked(),
             "goKey": self.goKeyEdit.keySequence().toString(
-                QKeySequence.NativeText
+                QKeySequence.SequenceFormat.NativeText
             ),
             "goAction": self.goActionCombo.currentItem(),
             "goDelay": self.goDelaySpin.value(),

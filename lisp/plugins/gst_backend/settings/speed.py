@@ -15,9 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5 import QtCore
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import (
+from PyQt6 import QtCore
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import (
     QGroupBox,
     QHBoxLayout,
     QDoubleSpinBox,
@@ -37,7 +37,7 @@ class SpeedSettings(SettingsPage):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
-        self.layout().setAlignment(Qt.AlignTop)
+        self.layout().setAlignment(Qt.AlignmentFlag.AlignTop)
 
         self.groupBox = QGroupBox(self)
         self.groupBox.setLayout(QHBoxLayout())
@@ -51,7 +51,7 @@ class SpeedSettings(SettingsPage):
         self.groupBox.layout().addWidget(self.speedSpinBox)
 
         self.speedLabel = QLabel(self.groupBox)
-        self.speedLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.speedLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.groupBox.layout().addWidget(self.speedLabel)
 
         self.retranslateUi()

@@ -15,9 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5 import QtCore
-from PyQt5.QtGui import QPainter
-from PyQt5.QtWidgets import QLabel
+from PyQt6 import QtCore
+from PyQt6.QtGui import QPainter
+from PyQt6.QtWidgets import QLabel
 
 
 class QVerticalLabel(QLabel):

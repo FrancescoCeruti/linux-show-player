@@ -15,9 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5 import QtCore
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import (
+from PyQt6 import QtCore
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import (
     QGroupBox,
     QGridLayout,
     QSpinBox,
@@ -38,7 +38,7 @@ class DbMeterSettings(SettingsPage):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
-        self.layout().setAlignment(Qt.AlignTop)
+        self.layout().setAlignment(Qt.AlignmentFlag.AlignTop)
 
         self.groupBox = QGroupBox(self)
         self.groupBox.setGeometry(0, 0, self.width(), 180)
@@ -53,7 +53,7 @@ class DbMeterSettings(SettingsPage):
         self.groupBox.layout().addWidget(self.intervalSpin, 0, 0)
 
         self.intervalLabel = QLabel(self.groupBox)
-        self.intervalLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.intervalLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.groupBox.layout().addWidget(self.intervalLabel, 0, 1)
 
         # Peak ttl (sec/100)
@@ -64,7 +64,7 @@ class DbMeterSettings(SettingsPage):
         self.groupBox.layout().addWidget(self.ttlSpin, 1, 0)
 
         self.ttlLabel = QLabel(self.groupBox)
-        self.ttlLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.ttlLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.groupBox.layout().addWidget(self.ttlLabel, 1, 1)
 
         # Peak falloff (unit per time)
@@ -74,7 +74,7 @@ class DbMeterSettings(SettingsPage):
         self.groupBox.layout().addWidget(self.falloffSpin, 2, 0)
 
         self.falloffLabel = QLabel(self.groupBox)
-        self.falloffLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.falloffLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.groupBox.layout().addWidget(self.falloffLabel, 2, 1)
 
         self.retranslateUi()

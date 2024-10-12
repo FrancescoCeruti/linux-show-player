@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import QT_TRANSLATE_NOOP
+from PyQt6.QtCore import QT_TRANSLATE_NOOP
 
 from lisp.plugins.gst_backend.elements.alsa_sink import AlsaSink
 from lisp.plugins.gst_backend.settings.alsa_sink import AlsaSinkSettings

@@ -17,7 +17,7 @@
 
 from enum import Enum
 
-from PyQt5.QtCore import QT_TRANSLATE_NOOP
+from PyQt6.QtCore import QT_TRANSLATE_NOOP
 
 from lisp.ui.ui_utils import translate
 

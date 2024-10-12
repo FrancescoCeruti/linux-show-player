@@ -15,8 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import QLocale
-from PyQt5.QtWidgets import QComboBox
+from PyQt6.QtCore import QLocale
+from PyQt6.QtWidgets import QComboBox
 
 from lisp.ui.ui_utils import search_translations
 
