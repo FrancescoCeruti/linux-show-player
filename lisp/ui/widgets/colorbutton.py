@@ -15,9 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import pyqtSignal, Qt
-from PyQt5.QtGui import QColor
-from PyQt5.QtWidgets import QPushButton, QColorDialog
+from PyQt6.QtCore import pyqtSignal, Qt
+from PyQt6.QtGui import QColor
+from PyQt6.QtWidgets import QPushButton, QColorDialog
 
 from lisp.ui.ui_utils import translate
 
@@ -58,11 +58,11 @@ class ColorButton(QPushButton):
 
         if self._color is not None:
             dlg.setCurrentColor(QColor(self._color))
-        if dlg.exec() == dlg.Accepted:
+        if dlg.exec() == dlg.DialogCode.Accepted:
             self.setColor(dlg.currentColor().name())
 
     def mousePressEvent(self, e):
-        if e.button() == Qt.RightButton:
+        if e.button() == Qt.MouseButton.RightButton:
             self.setColor(None)
 
         return super(ColorButton, self).mousePressEvent(e)

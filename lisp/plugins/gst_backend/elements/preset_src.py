@@ -17,7 +17,7 @@
 
 import math
 
-from PyQt5.QtCore import QT_TRANSLATE_NOOP
+from PyQt6.QtCore import QT_TRANSLATE_NOOP
 
 from lisp.backend.media_element import MediaType
 from lisp.core.properties import Property

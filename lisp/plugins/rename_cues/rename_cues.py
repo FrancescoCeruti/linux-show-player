@@ -16,7 +16,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtWidgets import QAction, QDialog
+from PyQt6.QtGui import QAction
+from PyQt6.QtWidgets import QDialog
 
 from lisp.core.plugin import Plugin
 from lisp.plugins.rename_cues.command import RenameCuesCommand
@@ -55,7 +56,7 @@ class RenameCues(Plugin):
 
         renameUi.exec()
 
-        if renameUi.result() == QDialog.Accepted:
+        if renameUi.result() == QDialog.DialogCode.Accepted:
             self.app.commands_stack.do(
                 RenameCuesCommand(self.app.cue_model, renameUi.cues_list)
             )

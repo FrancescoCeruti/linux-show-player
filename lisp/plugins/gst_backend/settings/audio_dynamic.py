@@ -17,9 +17,9 @@
 
 import math
 
-from PyQt5 import QtCore
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import (
+from PyQt6 import QtCore
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import (
     QGroupBox,
     QGridLayout,
     QComboBox,
@@ -42,7 +42,7 @@ class AudioDynamicSettings(SettingsPage):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
-        self.layout().setAlignment(Qt.AlignTop)
+        self.layout().setAlignment(Qt.AlignmentFlag.AlignTop)
 
         self.groupBox = QGroupBox(self)
         self.groupBox.setGeometry(0, 0, self.width(), 240)
@@ -60,7 +60,7 @@ class AudioDynamicSettings(SettingsPage):
         self.groupBox.layout().addWidget(self.modeComboBox, 0, 0, 1, 1)
 
         self.modeLabel = QLabel(self.groupBox)
-        self.modeLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.modeLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.groupBox.layout().addWidget(self.modeLabel, 0, 1, 1, 1)
 
         # AudioDynamic characteristic
@@ -74,7 +74,7 @@ class AudioDynamicSettings(SettingsPage):
         self.groupBox.layout().addWidget(self.chComboBox, 1, 0, 1, 1)
 
         self.chLabel = QLabel(self.groupBox)
-        self.chLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.chLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.groupBox.layout().addWidget(self.chLabel, 1, 1, 1, 1)
 
         # AudioDynamic ratio
@@ -82,7 +82,7 @@ class AudioDynamicSettings(SettingsPage):
         self.groupBox.layout().addWidget(self.ratioSpin, 2, 0, 1, 1)
 
         self.ratioLabel = QLabel(self.groupBox)
-        self.ratioLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.ratioLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.groupBox.layout().addWidget(self.ratioLabel, 2, 1, 1, 1)
 
         # AudioDynamic threshold
@@ -93,7 +93,7 @@ class AudioDynamicSettings(SettingsPage):
         self.groupBox.layout().addWidget(self.thresholdSpin, 3, 0, 1, 1)
 
         self.thresholdLabel = QLabel(self.groupBox)
-        self.thresholdLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.thresholdLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.groupBox.layout().addWidget(self.thresholdLabel, 3, 1, 1, 1)
 
         self.retranslateUi()

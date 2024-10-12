@@ -17,9 +17,9 @@
 
 import math
 
-from PyQt5 import QtCore
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QSlider, QLabel, QVBoxLayout
+from PyQt6 import QtCore
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QGroupBox, QHBoxLayout, QSlider, QLabel, QVBoxLayout
 
 from lisp.plugins.gst_backend.elements.pitch import Pitch
 from lisp.ui.settings.pages import SettingsPage
@@ -33,7 +33,7 @@ class PitchSettings(SettingsPage):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
-        self.layout().setAlignment(Qt.AlignTop)
+        self.layout().setAlignment(Qt.AlignmentFlag.AlignTop)
 
         self.groupBox = QGroupBox(self)
         self.groupBox.setLayout(QHBoxLayout())
@@ -44,13 +44,13 @@ class PitchSettings(SettingsPage):
         self.pitchSlider.setMaximum(12)
         self.pitchSlider.setPageStep(1)
         self.pitchSlider.setValue(0)
-        self.pitchSlider.setOrientation(QtCore.Qt.Horizontal)
-        self.pitchSlider.setTickPosition(QSlider.TicksAbove)
+        self.pitchSlider.setOrientation(QtCore.Qt.Orientation.Horizontal)
+        self.pitchSlider.setTickPosition(QSlider.TickPosition.TicksAbove)
         self.pitchSlider.setTickInterval(1)
         self.groupBox.layout().addWidget(self.pitchSlider)
 
         self.pitchLabel = QLabel(self.groupBox)
-        self.pitchLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.pitchLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.groupBox.layout().addWidget(self.pitchLabel)
 
         self.groupBox.layout().setStretch(0, 3)

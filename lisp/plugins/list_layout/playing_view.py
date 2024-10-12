@@ -15,8 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QListWidget, QListWidgetItem
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QListWidget, QListWidgetItem
 
 from lisp.core.signal import Connection
 from lisp.plugins.list_layout.playing_widgets import get_running_widget
@@ -25,10 +25,10 @@ from lisp.plugins.list_layout.playing_widgets import get_running_widget
 class RunningCuesListWidget(QListWidget):
     def __init__(self, running_model, config, **kwargs):
         super().__init__(**kwargs)
-        self.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        self.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        self.setFocusPolicy(Qt.NoFocus)
-        self.setSelectionMode(self.NoSelection)
+        self.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.setFocusPolicy(Qt.FocusPolicy.NoFocus)
+        self.setSelectionMode(self.SelectionMode.NoSelection)
 
         self._config = config
 

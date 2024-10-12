@@ -17,8 +17,8 @@
 
 import math
 
-from PyQt5.QtCore import pyqtSignal, Qt, QPoint
-from PyQt5.QtWidgets import QWidget, QGridLayout, QSizePolicy
+from PyQt6.QtCore import pyqtSignal, Qt, QPoint
+from PyQt6.QtWidgets import QWidget, QGridLayout, QSizePolicy
 from sortedcontainers import SortedDict
 
 from lisp.backend import get_backend
@@ -54,7 +54,9 @@ class CartPageWidget(QWidget):
     def addWidget(self, widget, row, column):
         self._checkIndex(row, column)
         if (row, column) not in self.__widgets:
-            widget.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
+            widget.setSizePolicy(
+                QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Ignored
+            )
             self.__widgets[(row, column)] = widget
             self.layout().addWidget(widget, row, column)
             widget.show()
@@ -114,9 +116,9 @@ class CartPageWidget(QWidget):
             row, column = self.indexAt(event.pos())
 
             if self.layout().itemAtPosition(row, column) is None:
-                if event.proposedAction() == Qt.MoveAction:
+                if event.proposedAction() == Qt.DropAction.MoveAction:
                     self.moveWidgetRequested.emit(event.source(), row, column)
-                elif event.proposedAction() == Qt.CopyAction:
+                elif event.proposedAction() == Qt.DropAction.CopyAction:
                     self.copyWidgetRequested.emit(event.source(), row, column)
 
     def indexAt(self, pos):

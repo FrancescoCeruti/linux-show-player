@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
+from PyQt6.QtCore import Qt, QT_TRANSLATE_NOOP
 
 LOG_LEVELS = {
     "DEBUG": QT_TRANSLATE_NOOP("Logging", "Debug"),
@@ -51,5 +51,5 @@ LOG_ATTRIBUTES = {
     "exc_info": QT_TRANSLATE_NOOP("Logging", "Exception info"),
 }
 
-LogRecordRole = Qt.UserRole
-LogAttributeRole = Qt.UserRole + 1
+LogRecordRole = Qt.ItemDataRole.UserRole
+LogAttributeRole = Qt.ItemDataRole.UserRole + 1

@@ -18,9 +18,9 @@
 import logging
 
 import jack
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QPainter, QPolygon, QPainterPath
-from PyQt5.QtWidgets import (
+from PyQt6.QtCore import Qt, QPointF
+from PyQt6.QtGui import QPainter, QPainterPath, QPolygonF
+from PyQt6.QtWidgets import (
     QGroupBox,
     QWidget,
     QHBoxLayout,
@@ -47,7 +47,7 @@ class JackSinkSettings(SettingsPage):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
-        self.layout().setAlignment(Qt.AlignTop)
+        self.layout().setAlignment(Qt.AlignmentFlag.AlignTop)
 
         self.jackGroup = QGroupBox(self)
         self.jackGroup.setLayout(QHBoxLayout())
@@ -104,7 +104,7 @@ class JackSinkSettings(SettingsPage):
         dialog.set_connections(self.connections.copy())
         dialog.exec()
 
-        if dialog.result() == dialog.Accepted:
+        if dialog.result() == dialog.DialogCode.Accepted:
             self.connections = dialog.connections
 
 
@@ -148,7 +148,7 @@ class ConnectionsWidget(QWidget):
         h2 = self._input_widget.header().sizeHint().height()
 
         painter = QPainter(self)
-        painter.setRenderHint(QPainter.Antialiasing)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
 
         for output, out_conn in enumerate(self.connections):
             y1 = int(
@@ -179,11 +179,16 @@ class ConnectionsWidget(QWidget):
             painter.drawLine(x1, y1, x1 + 4, y1)
 
         # Setup control points
-        spline = QPolygon(4)
         cp = int((x2 - x1 - 8) * 0.4)
-        spline.setPoints(
-            x1 + 4, y1, x1 + 4 + cp, y1, x2 - 4 - cp, y2, x2 - 4, y2
+        spline = QPolygonF(
+            [
+                QPointF(x1 + 4, y1),
+                QPointF(x1 + 4 + cp, y1),
+                QPointF(x2 - 4 - cp, y2),
+                QPointF(x2 - 4, y2),
+            ]
         )
+
         # The connection line
         path = QPainterPath()
         path.moveTo(spline.at(0))
@@ -249,7 +254,8 @@ class JackConnectionsDialog(QDialog):
         self.layout().addWidget(self.connectButton, 1, 1)
 
         self.dialogButtons = QDialogButtonBox(
-            QDialogButtonBox.Cancel | QDialogButtonBox.Ok
+            QDialogButtonBox.StandardButton.Cancel
+            | QDialogButtonBox.StandardButton.Ok
         )
         self.dialogButtons.accepted.connect(self.accept)
         self.dialogButtons.rejected.connect(self.reject)

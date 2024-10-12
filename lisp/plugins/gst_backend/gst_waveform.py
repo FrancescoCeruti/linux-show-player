@@ -107,7 +107,9 @@ class GstWaveform(Waveform):
             # We expect each audio sample to be 16bits signed integer
             buffer = buffer.extract_dup(0, buffer.get_size())
             # Convert to suitable numpy array
-            data = np.absolute(np.frombuffer(buffer, dtype=np.int16)).astype(int)
+            data = np.absolute(np.frombuffer(buffer, dtype=np.int16)).astype(
+                int
+            )
             # Get the max value of the samples
             self._temp_peak.append(np.max(data))
             # Get rms of the samples
@@ -131,8 +133,13 @@ class GstWaveform(Waveform):
     def _eos(self):
         """Called when the file has been processed."""
         # Normalize data
-        self.peak_samples = np.round(np.divide(self._temp_peak, self.MAX_S16_PCM_VALUE), self.MAX_DECIMALS).tolist()
-        self.rms_samples = np.round(np.divide(self._temp_rms, self.MAX_S16_PCM_VALUE), self.MAX_DECIMALS).tolist()
+        self.peak_samples = np.round(
+            np.divide(self._temp_peak, self.MAX_S16_PCM_VALUE),
+            self.MAX_DECIMALS,
+        ).tolist()
+        self.rms_samples = np.round(
+            np.divide(self._temp_rms, self.MAX_S16_PCM_VALUE), self.MAX_DECIMALS
+        ).tolist()
 
         # Dump the data into a file (does nothing if caching is disabled)
         self._to_cache()

@@ -17,8 +17,8 @@
 
 import os
 
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import (
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import (
     QGroupBox,
     QHBoxLayout,
     QPushButton,
@@ -46,7 +46,7 @@ class UriInputSettings(SettingsPage):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
-        self.layout().setAlignment(Qt.AlignTop)
+        self.layout().setAlignment(Qt.AlignmentFlag.AlignTop)
 
         self.fileGroup = QGroupBox(self)
         self.fileGroup.setLayout(QHBoxLayout())
@@ -74,7 +74,7 @@ class UriInputSettings(SettingsPage):
         self.bufferingGroup.layout().addWidget(self.bufferSize, 2, 0)
 
         self.bufferSizeLabel = QLabel(self.bufferingGroup)
-        self.bufferSizeLabel.setAlignment(Qt.AlignCenter)
+        self.bufferSizeLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.bufferingGroup.layout().addWidget(self.bufferSizeLabel, 2, 1)
 
         self.buttonFindFile.clicked.connect(self.select_file)

@@ -17,9 +17,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt, QRectF
-from PyQt5.QtGui import QFontMetricsF
-from PyQt5.QtWidgets import QLabel, QPushButton
+from PyQt6.QtCore import Qt, QRectF
+from PyQt6.QtGui import QFontMetricsF
+from PyQt6.QtWidgets import QLabel, QPushButton
 
 
 class DynamicFontSizeMixin:
@@ -50,7 +50,7 @@ class DynamicFontSizeMixin:
         flags = 0
         if isinstance(self, QLabel):
             flags |= self.alignment()
-            flags |= Qt.TextWordWrap if self.wordWrap() else 0
+            flags |= Qt.TextFlag.TextWordWrap if self.wordWrap() else 0
 
         # Only stop when step is small enough and new size is smaller than QWidget
         while (

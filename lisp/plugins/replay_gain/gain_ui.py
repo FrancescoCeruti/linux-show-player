@@ -17,8 +17,8 @@
 
 from os import cpu_count
 
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import (
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import (
     QDialog,
     QDialogButtonBox,
     QRadioButton,
@@ -38,7 +38,7 @@ class GainUi(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
 
-        self.setWindowModality(Qt.ApplicationModal)
+        self.setWindowModality(Qt.WindowModality.ApplicationModal)
         self.setMaximumSize(380, 210)
         self.setMinimumSize(380, 210)
         self.resize(380, 210)
@@ -72,8 +72,8 @@ class GainUi(QDialog):
         self.layout().addWidget(self.selectionMode, 2, 0, 1, 2)
 
         self.line = QFrame(self)
-        self.line.setFrameShape(QFrame.HLine)
-        self.line.setFrameShadow(QFrame.Sunken)
+        self.line.setFrameShape(QFrame.Shape.HLine)
+        self.line.setFrameShadow(QFrame.Shadow.Sunken)
         self.layout().addWidget(self.line, 3, 0, 1, 2)
 
         # Max threads (up to cpu count)
@@ -90,7 +90,8 @@ class GainUi(QDialog):
 
         self.dialogButtons = QDialogButtonBox(self)
         self.dialogButtons.setStandardButtons(
-            QDialogButtonBox.Ok | QDialogButtonBox.Cancel
+            QDialogButtonBox.StandardButton.Ok
+            | QDialogButtonBox.StandardButton.Cancel
         )
         self.layout().addWidget(self.dialogButtons, 5, 0, 1, 2)
 
@@ -141,7 +142,7 @@ class GainProgressDialog(QProgressDialog):
     def __init__(self, maximum, parent=None):
         super().__init__(parent)
 
-        self.setWindowModality(Qt.ApplicationModal)
+        self.setWindowModality(Qt.WindowModality.ApplicationModal)
         self.setWindowTitle(translate("ReplayGain", "Processing files ..."))
         self.setMaximumSize(320, 110)
         self.setMinimumSize(320, 110)

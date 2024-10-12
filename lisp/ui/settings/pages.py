@@ -15,8 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import QModelIndex, Qt
-from PyQt5.QtWidgets import QWidget, QTabWidget, QVBoxLayout, QGroupBox
+from PyQt6.QtCore import QModelIndex, Qt
+from PyQt6.QtWidgets import QWidget, QTabWidget, QVBoxLayout, QGroupBox
 
 from lisp.core.util import dict_merge
 from lisp.ui.ui_utils import translate
@@ -81,7 +81,7 @@ class SettingsPagesTabWidget(SettingsPage):
         self.setLayout(QVBoxLayout())
 
         self.tabWidget = QTabWidget(parent=self)
-        self.tabWidget.setFocusPolicy(Qt.StrongFocus)
+        self.tabWidget.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
         self.layout().addWidget(self.tabWidget)
 
         self._pages = []

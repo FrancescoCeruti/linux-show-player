@@ -3,8 +3,8 @@ from pathlib import Path
 from threading import Thread
 
 import humanize
-from PyQt5.QtCore import QT_TRANSLATE_NOOP, Qt
-from PyQt5.QtWidgets import (
+from PyQt6.QtCore import QT_TRANSLATE_NOOP, Qt
+from PyQt6.QtWidgets import (
     QVBoxLayout,
     QGroupBox,
     QPushButton,
@@ -101,7 +101,7 @@ class CacheManagerSettings(SettingsPage):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
-        self.layout().setAlignment(Qt.AlignTop)
+        self.layout().setAlignment(Qt.AlignmentFlag.AlignTop)
 
         self.warningGroup = QGroupBox(self)
         self.warningGroup.setLayout(QHBoxLayout())
@@ -122,7 +122,7 @@ class CacheManagerSettings(SettingsPage):
         self.layout().addWidget(self.cleanGroup)
 
         self.currentSizeLabel = QLabel(self.cleanGroup)
-        self.currentSizeLabel.setAlignment(Qt.AlignCenter)
+        self.currentSizeLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.cleanGroup.layout().addWidget(self.currentSizeLabel)
 
         self.cleanButton = QPushButton(self)

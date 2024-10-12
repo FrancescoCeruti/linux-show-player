@@ -15,9 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt, QMimeData, pyqtSignal, QPoint
-from PyQt5.QtGui import QColor, QDrag
-from PyQt5.QtWidgets import (
+from PyQt6.QtCore import Qt, QMimeData, pyqtSignal, QPoint
+from PyQt6.QtGui import QColor, QDrag
+from PyQt6.QtWidgets import (
     QProgressBar,
     QLCDNumber,
     QLabel,
@@ -60,7 +60,7 @@ class CueWidget(QWidget):
         self._volumeElement = None
         self._fadeElement = None
 
-        self.setAttribute(Qt.WA_TranslucentBackground)
+        self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
         self.setLayout(QVBoxLayout())
 
         self.layout().setContentsMargins(0, 0, 0, 0)
@@ -74,11 +74,11 @@ class CueWidget(QWidget):
         self.nameButton = QClickLabel(self)
         self.nameButton.setObjectName("ButtonCueWidget")
         self.nameButton.setWordWrap(True)
-        self.nameButton.setAlignment(Qt.AlignCenter)
-        self.nameButton.setFocusPolicy(Qt.NoFocus)
+        self.nameButton.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.nameButton.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         self.nameButton.clicked.connect(self._clicked)
         self.nameButton.setSizePolicy(
-            QSizePolicy.Ignored, QSizePolicy.Preferred
+            QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Preferred
         )
         self.hLayout.addWidget(self.nameButton, 5)
 
@@ -89,23 +89,25 @@ class CueWidget(QWidget):
         )
 
         self.seekSlider = QClickSlider(self.nameButton)
-        self.seekSlider.setOrientation(Qt.Horizontal)
-        self.seekSlider.setFocusPolicy(Qt.NoFocus)
+        self.seekSlider.setOrientation(Qt.Orientation.Horizontal)
+        self.seekSlider.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         self.seekSlider.setVisible(False)
 
         self.volumeSlider = QClickSlider(self.nameButton)
         self.volumeSlider.setObjectName("VolumeSlider")
-        self.volumeSlider.setOrientation(Qt.Vertical)
-        self.volumeSlider.setFocusPolicy(Qt.NoFocus)
+        self.volumeSlider.setOrientation(Qt.Orientation.Vertical)
+        self.volumeSlider.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         self.volumeSlider.setRange(0, CueWidget.SLIDER_RANGE)
         self.volumeSlider.setPageStep(10)
         self.volumeSlider.valueChanged.connect(
-            self._changeVolume, Qt.DirectConnection
+            self._changeVolume, Qt.ConnectionType.DirectConnection
         )
         self.volumeSlider.setVisible(False)
 
         self.dbMeter = QDigitalMeter(self)
-        self.dbMeter.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
+        self.dbMeter.setSizePolicy(
+            QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Ignored
+        )
         self.dbMeter.setVisible(False)
 
         self.timeBar = QProgressBar(self)
@@ -114,11 +116,13 @@ class CueWidget(QWidget):
         self.timeBar.layout().setContentsMargins(0, 0, 0, 0)
         self.timeDisplay = QLCDNumber(self.timeBar)
         self.timeDisplay.setStyleSheet("background-color: transparent")
-        self.timeDisplay.setSegmentStyle(QLCDNumber.Flat)
+        self.timeDisplay.setSegmentStyle(QLCDNumber.SegmentStyle.Flat)
         self.timeDisplay.setDigitCount(8)
         self.timeDisplay.display("00:00:00")
         self.timeBar.layout().addWidget(self.timeDisplay)
-        self.timeBar.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Fixed)
+        self.timeBar.setSizePolicy(
+            QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Fixed
+        )
         self.timeBar.setVisible(False)
 
         self._setCue(cue)
@@ -143,9 +147,9 @@ class CueWidget(QWidget):
         self.contextMenuRequested.emit(event.globalPos())
 
     def mouseMoveEvent(self, event):
-        if event.buttons() == Qt.LeftButton and (
-            event.modifiers() == Qt.ControlModifier
-            or event.modifiers() == Qt.ShiftModifier
+        if event.buttons() == Qt.MouseButton.LeftButton and (
+            event.modifiers() == Qt.KeyboardModifier.ControlModifier
+            or event.modifiers() == Qt.KeyboardModifier.ShiftModifier
         ):
             mime_data = QMimeData()
             mime_data.setText(CartPageWidget.DRAG_MAGIC)
@@ -154,10 +158,10 @@ class CueWidget(QWidget):
             drag.setMimeData(mime_data)
             drag.setPixmap(self.grab(self.rect()))
 
-            if event.modifiers() == Qt.ControlModifier:
-                drag.exec_(Qt.CopyAction)
+            if event.modifiers() == Qt.KeyboardModifier.ControlModifier:
+                drag.exec(Qt.DropAction.CopyAction)
             else:
-                drag.exec_(Qt.MoveAction)
+                drag.exec(Qt.DropAction.MoveAction)
 
     def setCountdownMode(self, mode):
         self._countdownMode = mode
@@ -306,10 +310,10 @@ class CueWidget(QWidget):
             self.seekSlider.geometry().contains(event.pos())
             and self.seekSlider.isVisible()
         ):
-            if event.button() != Qt.RightButton:
-                if event.modifiers() == Qt.ShiftModifier:
+            if event.button() != Qt.MouseButton.RightButton:
+                if event.modifiers() == Qt.KeyboardModifier.ShiftModifier:
                     self.editRequested.emit(self._cue)
-                elif event.modifiers() == Qt.ControlModifier:
+                elif event.modifiers() == Qt.KeyboardModifier.ControlModifier:
                     self.selected = not self.selected
                 else:
                     self._cue.execute()
