@@ -39,6 +39,7 @@ pyalsa = { git = "https://github.com/alsa-project/alsa-python.git", rev="157d660
 # Use a pyliblo fork that define dependecies correctly
 pyliblo3 = { git = "https://github.com/FrancescoCeruti/pyliblo3", rev = "9b66f93bc058807fdbe27f9255b18b0df8e60e32" }
 qdigitalmeter = "^0.1.0"
+packaging = "^24.1"
 
 [tool.poetry.group.docs]
 optional = true
@@ -52,7 +53,6 @@ sphinx-inline-tabs = "^2023.4.21"
 
 [tool.poetry.group.dev.dependencies]
 toml = "*"
-packaging = "*"
 pygobject-stubs = "^2.11.0"
 ruff = "^0.6.9"
 
