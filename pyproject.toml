@@ -38,6 +38,7 @@ humanize = "^4.8.0"
 numpy = ">= 1.26.4, < 3.0.0"
 pyalsa = { git = "https://github.com/alsa-project/alsa-python.git", rev="f8f9260282eb9c97f53e4689e04182dc87a4810e" }
 qdigitalmeter = "^0.1.0"
+packaging = "^24.1"
 
 [tool.poetry.group.docs]
 optional = true
@@ -51,7 +52,6 @@ sphinx-inline-tabs = "^2023.4.21"
 
 [tool.poetry.group.dev.dependencies]
 toml = "*"
-packaging = "*"
 pygobject-stubs = "^2.11.0"
 ruff = "*"
 
