@@ -61,9 +61,10 @@ def modules_sources(
 ):
     for module_path in modules_path:
         if module_path.stem != "__pycache__":
-            yield module_path.stem, source_files(
-                module_path, extensions, exclude
-            ),
+            yield (
+                module_path.stem,
+                source_files(module_path, extensions, exclude),
+            )
 
 
 def pylupdate(

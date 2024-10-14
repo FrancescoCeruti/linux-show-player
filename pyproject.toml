@@ -53,19 +53,12 @@ sphinx-inline-tabs = "^2023.4.21"
 [tool.poetry.group.dev.dependencies]
 toml = "*"
 packaging = "*"
-black = "*"
 pygobject-stubs = "^2.11.0"
+ruff = "^0.6.9"
 
 [tool.poetry.scripts]
 linux-show-player = "lisp.main:main"
 
-[tool.black]
+[tool.ruff]
 line-length = 80
-target-version = ['py37']
-exclude = '''
-/(
-    \.git
-    | dist
-    | docs
-)/
-'''
+target-version = 'py39'
