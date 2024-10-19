@@ -48,7 +48,7 @@ class Configuration(NestedDict, metaclass=ABCMeta):
     def write(self):
         pass
 
-    def get(self, key, default=_UNSET):
+    def get(self, key: str, default=_UNSET):
         value = super().get(key, default)
 
         if value is default:
@@ -61,14 +61,14 @@ class Configuration(NestedDict, metaclass=ABCMeta):
 
         return value
 
-    def set(self, key, value):
+    def set(self, key: str, value):
         changed = super().set(key, value)
         if changed:
             self.changed.emit(key, value)
 
         return changed
 
-    def update(self, other):
+    def update(self, other: dict = None, **kwargs):
         diff = dict_merge_diff(self._root, other)
         if diff:
             super().update(diff)

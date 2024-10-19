@@ -15,23 +15,23 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-import inspect
+import hashlib
 import json
 import logging
+import shutil
 from importlib import import_module
-from os.path import exists, dirname, abspath, realpath
+from os.path import exists, dirname, abspath, basename, splitext, realpath
 from pathlib import Path
 
-from PyQt5.QtWidgets import QDialog, qApp
-from packaging.version import parse as version_parse
+from PyQt5.QtWidgets import QDialog, qApp, QMessageBox
 
 from lisp import layout, __version__ as lisp_version, APP_DIR
 from lisp.command.stack import CommandsStack
 from lisp.core.configuration import Configuration, DummyConfiguration
-from lisp.core.session import Session
+from lisp.core.session import Session, SessionMigrator
 from lisp.core.signal import Signal
 from lisp.core.singleton import Singleton
-from lisp.core.util import filter_live_properties, rgetattr
+from lisp.core.util import filter_live_properties
 from lisp.cues.cue import Cue
 from lisp.cues.cue_factory import CueFactory
 from lisp.cues.cue_model import CueModel
@@ -229,22 +229,26 @@ class Application(metaclass=Singleton):
             self.commands_stack.set_saved()
             self.window.updateWindowTitle()
 
-    def __load_from_file(self, session_file):
+    def __load_from_file(self, session_path):
         """Load a saved session from file"""
         try:
-            with open(session_file, mode="r", encoding="utf-8") as file:
+            with open(session_path, mode="r", encoding="utf-8") as file:
                 session_dict = json.load(file)
 
-            self.__migrate_session(session_file, session_dict)
+            # Migrate the session data
+            migrator = SessionMigrator(
+                lisp_version, APP_DIR, tuple(get_plugins())
+            )
+            migrated = migrator.migrate(session_path, session_dict)
 
-            # New session
+            # Create a new session
             self.__new_session(
                 layout.get_layout(session_dict["session"]["layout_type"])
             )
             self.session.update_properties(session_dict["session"])
-            self.session.session_file = realpath(abspath(session_file))
+            self.session.session_file = realpath(abspath(session_path))
 
-            # Load cues
+            # Load the cues
             for cues_dict in session_dict.get("cues", {}):
                 cue_type = cues_dict.pop("_type_", "Undefined")
                 cue_id = cues_dict.pop("id")
@@ -261,94 +265,37 @@ class Application(metaclass=Singleton):
                         ).format(name)
                     )
 
+            # Set savepoint for undo/redo stack
             self.commands_stack.set_saved()
 
+            # Inform plugins that a new session has been loaded
             self.session_loaded.emit(self.session)
+
+            # If we migrated the session, inform the user
+            if migrated:
+                with open(session_path, mode="rb") as f:
+                    digest = hashlib.file_digest(f, "sha256")
+
+                backup_path = (
+                    splitext(session_path)[0] + f".{digest.hexdigest()[:7]}.lsp"
+                )
+                shutil.move(session_path, backup_path)
+
+                self.__save_to_file(session_path)
+
+                QMessageBox.warning(
+                    self.window,
+                    translate("ApplicationWarning", "Session Upgraded"),
+                    translate(
+                        "ApplicationWarning",
+                        "The opened session has been upgraded to a newer version. A backup named '{}' has been created at same location.",
+                    ).format(basename(backup_path)),
+                )
         except Exception:
             logger.exception(
                 translate(
                     "ApplicationError",
                     'Error while reading the session file "{}"',
-                ).format(session_file)
+                ).format(session_path)
             )
             self.__new_session_dialog()
-
-    def __migrate_session(self, session_file: str, session_dict: dict):
-        session_app_version = rgetattr(session_dict, "meta.version", None)
-        session_plugins_versions = rgetattr(session_dict, "meta.plugins", {})
-
-        if session_app_version is None:
-            if "session" in session_dict:
-                # Handle 0.6 dev version
-                session_app_version = "0.6.0"
-                session_plugins_versions = {
-                    name: "0.6.0" for name, _ in get_plugins()
-                }
-            else:
-                # Handle 0.5 version
-                session_app_version = "0.5.0"
-                session_plugins_versions = {
-                    name: "0.5.0" for name, _ in get_plugins()
-                }
-
-        if version_parse(lisp_version) > version_parse(session_app_version):
-            self.__migrate_package(
-                session_file,
-                session_dict,
-                "lisp.migrations",
-                Path(APP_DIR).joinpath("migrations"),
-                session_app_version,
-            )
-
-        for name, plugin in get_plugins():
-            session_plugin_version = session_plugins_versions.get(name, None)
-
-            if session_plugin_version is None:
-                continue
-
-            if version_parse(plugin.Version) <= version_parse(
-                session_plugin_version
-            ):
-                continue
-
-            module = inspect.getmodule(plugin)
-            plugin_dir = Path(inspect.getfile(module)).parent
-
-            self.__migrate_package(
-                session_file,
-                session_dict,
-                f"{module.__package__}.migrations",
-                plugin_dir.joinpath("migrations"),
-                session_plugin_version,
-            )
-
-    def __migrate_package(
-        self,
-        session_file: str,
-        session_dict: dict,
-        package: str,
-        path: Path,
-        version: str,
-    ):
-        version = version.replace(".", "_")
-        migration_files = [
-            p for p in path.glob("*.py") if p.is_file() and p.stem != "__init__"
-        ]
-
-        if len(migration_files) > 0:
-            migration_names = [p.stem for p in migration_files]
-            migration_names.append(f"from_{version}")
-            migration_names.sort(
-                key=lambda n: version_parse(
-                    n.replace("from_", "").replace("_", ".")
-                )
-            )
-
-            migration_files = migration_files[
-                migration_names.index(f"from_{version}") :
-            ]
-
-            for path in migration_files:
-                module = import_module(f"{package}.{path.stem}")
-                if hasattr(module, "migrate"):
-                    module.migrate(session_file, session_dict)

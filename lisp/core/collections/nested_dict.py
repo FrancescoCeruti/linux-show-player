@@ -1,4 +1,24 @@
+# This file is part of Linux Show Player
+#
+# Copyright 2024 Francesco Ceruti <ceppofrancy@gmail.com>
+#
+# Linux Show Player is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Linux Show Player is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
+
+from collections.abc import MutableMapping
 from copy import deepcopy
+
+from falcon.util.structures import Mapping
 
 from lisp.core.util import typename, dict_merge
 
@@ -11,7 +31,7 @@ class NestedDictError(Exception):
     pass
 
 
-class NestedDict:
+class NestedDict(MutableMapping):
     """Allow to access nested values using dot notation."""
 
     def __init__(self, root: dict | None = None, separator: str = "."):
@@ -66,13 +86,12 @@ class NestedDict:
     def move(self, current_key: str, new_key: str):
         self.set(new_key, self.pop(current_key))
 
-    def update(self, other):
-        """Deep update using the given dictionary.
-
-        :param other: a dict containing the new values
-        :type other: dict
-        """
-        dict_merge(self._root, deepcopy(other))
+    def update(self, other: dict = None, **kwargs):
+        """Deep update using the given dictionary."""
+        if isinstance(other, Mapping):
+            dict_merge(self._root, deepcopy(other))
+        if len(kwargs):
+            self._root.update(kwargs)
 
     def deep_copy(self) -> dict:
         """Return a deep-copy of the internal dictionary."""
@@ -95,16 +114,22 @@ class NestedDict:
 
         return root, next_step
 
-    def __getitem__(self, key):
+    def __iter__(self):
+        return self._root.__iter__()
+
+    def __len__(self):
+        return self._root.__len__()
+
+    def __getitem__(self, key: str):
         return self.get(key)
 
-    def __setitem__(self, key, value):
+    def __setitem__(self, key: str, value):
         self.set(key, value)
 
-    def __delitem__(self, key):
+    def __delitem__(self, key: str):
         self.pop(key)
 
-    def __contains__(self, key):
+    def __contains__(self, key: str):
         try:
             node, key = self.__traverse(self.sp(key), self._root)
             return key in node

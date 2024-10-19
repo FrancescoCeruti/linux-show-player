@@ -19,7 +19,7 @@ import functools
 import hashlib
 import re
 import socket
-from collections.abc import Mapping, MutableMapping
+from collections.abc import Mapping, MutableMapping, Sequence
 from enum import Enum
 from os import listdir
 from os.path import exists, isdir, join
@@ -88,6 +88,19 @@ def find_packages(path="."):
         for d in listdir(path)
         if isdir(join(path, d)) and exists(join(path, d, "__init__.py"))
     ]
+
+
+def last_index(lst: Sequence, value):
+    """Return last index of value.
+
+    Raises ValueError if the value is not present.
+    """
+
+    for index, item in enumerate(reversed(lst)):
+        if item == value:
+            return (len(lst) - 1) - index
+
+    raise ValueError(f"'{value}' is not in list")
 
 
 def time_tuple(milliseconds):
