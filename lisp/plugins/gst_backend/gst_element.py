@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2024 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -121,8 +121,6 @@ class GstMediaElements(Collection, HasInstanceProperties):
         """
         :type element: lisp.backend.media_element.MediaElement
         """
-        if self.elements:
-            self.elements[-1].link(element)
         self.elements.append(element)
 
         # Add a property for the new added element
