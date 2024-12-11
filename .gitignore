@@ -18,5 +18,8 @@ eggs/
 # Pycharm IDE
 .idea/*
 
+# Vscode IDE
+.vscode/
+
 # QT project files, generated only for pylupdate (qt i18n)
 *.pro
