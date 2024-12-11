@@ -178,12 +178,12 @@ do not forget to edit the path later.</source>
   <context>
     <name>ControllerSettings</name>
     <message>
-      <location filename="../../../plugins/controller/protocols/midi.py" line="122" />
+      <location filename="../../../plugins/controller/protocols/keyboard.py" line="79" />
       <source>Add</source>
       <translation>Add</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/midi.py" line="123" />
+      <location filename="../../../plugins/controller/protocols/keyboard.py" line="80" />
       <source>Remove</source>
       <translation>Remove</translation>
     </message>
@@ -280,9 +280,9 @@ do not forget to edit the path later.</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/keyboard.py" line="44" />
-      <source>Keyboard Shortcuts</source>
-      <translation>Keyboard Shortcuts</translation>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="230" />
+      <source>OSC Controls</source>
+      <translation type="unfinished" />
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="64" />
@@ -290,9 +290,9 @@ do not forget to edit the path later.</source>
       <translation>MIDI Controls</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="230" />
-      <source>OSC Controls</source>
-      <translation type="unfinished" />
+      <location filename="../../../plugins/controller/protocols/keyboard.py" line="44" />
+      <source>Keyboard Shortcuts</source>
+      <translation>Keyboard Shortcuts</translation>
     </message>
   </context>
 </TS>
