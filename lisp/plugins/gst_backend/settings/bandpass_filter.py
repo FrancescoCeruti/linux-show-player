@@ -76,15 +76,15 @@ class BandpassFilterSettings(SettingsPage):
         hLabel.setNum(0)
         self.groupBox.layout().addWidget(hLabel, 4, 0)
 
-        slider = QSlider(self.groupBox)
-        slider.setRange(0, 20000)
-        slider.setPageStep(1)
-        slider.setValue(20000)
-        slider.setOrientation(QtCore.Qt.Horizontal)
-        slider.valueChanged.connect(hLabel.setNum)
-        self.groupBox.layout().addWidget(slider, 5, 0)
-        self.groupBox.layout().setAlignment(slider, QtCore.Qt.AlignVCenter)
-        self.sliders["hifreq"] = slider
+        slider2 = QSlider(self.groupBox)
+        slider2.setRange(0, 20000)
+        slider2.setPageStep(1)
+        slider2.setValue(20000)
+        slider2.setOrientation(QtCore.Qt.Horizontal)
+        slider2.valueChanged.connect(hLabel.setNum)
+        self.groupBox.layout().addWidget(slider2, 5, 0)
+        self.groupBox.layout().setAlignment(slider2, QtCore.Qt.AlignVCenter)
+        self.sliders["hifreq"] = slider2
 
         fLabel = QLabel(self.groupBox)
         fLabel.setStyleSheet("font-size: 8pt;")
@@ -152,4 +152,10 @@ class BandpassFilterSettings(SettingsPage):
     def loadSettings(self, settings):
         self.sliders['hifreq'].setValue(settings.get('hiFreq', 200000))
         self.sliders['lofreq'].setValue(settings.get('loFreq', 1))
+        self.modeComboBox.setCurrentText(
+            translate("BandpassFilterSettings", str(settings.get('mode', 'band-pass')).title())
+        )
+        self.windowComboBox.setCurrentText(
+            translate("BandpassFilterSettings", str(settings.get('window', 'hamming')).title())
+        )
 
