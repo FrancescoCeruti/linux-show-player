@@ -352,26 +352,6 @@
   <context>
     <name>CueSettings</name>
     <message>
-      <location filename="../../../ui/settings/app_pages/cue.py" line="64" />
-      <source>Interrupt fade</source>
-      <translation type="unfinished" />
-    </message>
-    <message>
-      <location filename="../../../ui/settings/app_pages/cue.py" line="66" />
-      <source>Used globally when interrupting cues</source>
-      <translation type="unfinished" />
-    </message>
-    <message>
-      <location filename="../../../ui/settings/app_pages/cue.py" line="72" />
-      <source>Fallback fade settings</source>
-      <translation type="unfinished" />
-    </message>
-    <message>
-      <location filename="../../../ui/settings/app_pages/cue.py" line="75" />
-      <source>Used for fade-in and fade-out actions, for cues where fade duration is set to 0.</source>
-      <translation type="unfinished" />
-    </message>
-    <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="113" />
       <source>Start action</source>
       <translation>Start action</translation>
@@ -415,6 +395,26 @@
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="212" />
       <source>Next action</source>
       <translation>Next action</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/settings/app_pages/cue.py" line="64" />
+      <source>Interrupt fade</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <location filename="../../../ui/settings/app_pages/cue.py" line="66" />
+      <source>Used globally when interrupting cues</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <location filename="../../../ui/settings/app_pages/cue.py" line="72" />
+      <source>Fallback fade settings</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <location filename="../../../ui/settings/app_pages/cue.py" line="75" />
+      <source>Used for fade-in and fade-out actions, for cues where fade duration is set to 0.</source>
+      <translation type="unfinished" />
     </message>
   </context>
   <context>
@@ -526,16 +526,6 @@
   <context>
     <name>Logging</name>
     <message>
-      <location filename="../../../ui/logging/dialog.py" line="79" />
-      <source>Dismiss all</source>
-      <translation type="unfinished" />
-    </message>
-    <message>
-      <location filename="../../../ui/logging/dialog.py" line="86" />
-      <source>Show details</source>
-      <translation type="unfinished" />
-    </message>
-    <message>
       <location filename="../../../ui/logging/common.py" line="21" />
       <source>Debug</source>
       <translation>Debug</translation>
@@ -643,6 +633,16 @@
     <message>
       <location filename="../../../ui/logging/viewer.py" line="126" />
       <source>Showing {} of {} records</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <location filename="../../../ui/logging/dialog.py" line="79" />
+      <source>Dismiss all</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <location filename="../../../ui/logging/dialog.py" line="86" />
+      <source>Show details</source>
       <translation type="unfinished" />
     </message>
   </context>
@@ -939,31 +939,6 @@
   <context>
     <name>SettingsPageName</name>
     <message>
-      <location filename="../../../ui/settings/app_pages/plugins.py" line="36" />
-      <source>Plugins</source>
-      <translation type="unfinished" />
-    </message>
-    <message>
-      <location filename="../../../ui/settings/app_pages/general.py" line="38" />
-      <source>General</source>
-      <translation>General</translation>
-    </message>
-    <message>
-      <location filename="../../../ui/settings/app_pages/layouts.py" line="26" />
-      <source>Layouts</source>
-      <translation type="unfinished" />
-    </message>
-    <message>
-      <location filename="../../../ui/settings/app_pages/cue.py" line="27" />
-      <source>Cue Settings</source>
-      <translation>Cue Settings</translation>
-    </message>
-    <message>
-      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="33" />
-      <source>Media Cue</source>
-      <translation type="unfinished" />
-    </message>
-    <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="43" />
       <source>Cue</source>
       <translation>Cue</translation>
@@ -987,6 +962,31 @@
       <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="36" />
       <source>Appearance</source>
       <translation>Appearance</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="33" />
+      <source>Media Cue</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <location filename="../../../ui/settings/app_pages/general.py" line="38" />
+      <source>General</source>
+      <translation>General</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/settings/app_pages/layouts.py" line="26" />
+      <source>Layouts</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <location filename="../../../ui/settings/app_pages/plugins.py" line="36" />
+      <source>Plugins</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <location filename="../../../ui/settings/app_pages/cue.py" line="27" />
+      <source>Cue Settings</source>
+      <translation>Cue Settings</translation>
     </message>
   </context>
 </TS>
