@@ -136,7 +136,7 @@ class GstPipeEdit(QWidget):
         start = 0 if self._app_mode else 1
         for plugin in pipe[start:-1]:
             item = QListWidgetItem(
-                translate("MediaElementName", elements.plugin_name(plugin))
+                translate("MediaElementName", elements.element_name(plugin))
             )
             item.setData(Qt.UserRole, plugin)
             self.currentList.addItem(item)

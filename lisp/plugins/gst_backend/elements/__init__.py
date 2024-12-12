@@ -59,6 +59,9 @@ def plugins():
 def plugin_name(class_name):
     return __PLUGINS[class_name].Name
 
+def element_name(class_name):
+    return all_elements()[class_name].Name
+
 
 def all_elements():
     elements = inputs()
