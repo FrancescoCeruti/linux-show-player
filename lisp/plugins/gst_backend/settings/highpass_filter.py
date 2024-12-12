@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2024 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -43,11 +43,12 @@ class HighpassFilterSettings(SettingsPage):
 
         self.groupBox = QGroupBox(self)
         self.groupBox.resize(self.size())
+        #self.groupBox.setContentsMargins(0, 5, 0, 50)
         self.groupBox.setTitle(
-            translate("HighpassFilterSettings", "Highpass Settings")
+            translate("HighpassFilterSettings", "Highpass Filter Settings")
         )
         self.groupBox.setLayout(QGridLayout())
-        self.groupBox.layout().setVerticalSpacing(0)
+        self.groupBox.layout().setVerticalSpacing(10)
         self.layout().addWidget(self.groupBox)
 
         # High-pass
@@ -55,14 +56,34 @@ class HighpassFilterSettings(SettingsPage):
         self.freqSpin.setRange(0, 20000)
         self.freqSpin.setMaximum(20000)
         self.freqSpin.setValue(110)
+        self.freqSpin.setFixedWidth(140)
+        self.freqSpin.setSuffix(" Hz")
         self.groupBox.layout().addWidget(self.freqSpin, 0, 0)
 
+        fLabel = QLabel(self.groupBox)
+        fLabel.setStyleSheet("font-size: 9pt;")
+        fLabel.setAlignment(QtCore.Qt.AlignVCenter)
+        fLabel.setText(translate("HighpassFilterSettings", "Cutoff Frequency"))
+        self.groupBox.layout().addWidget(fLabel, 0, 1)
 
         slider = QSlider(self.groupBox)
         slider.setRange(0, 20000)
         slider.setPageStep(1)
         slider.setValue(110)
         slider.setOrientation(QtCore.Qt.Horizontal)
+        slider.setStyleSheet('''
+                        QSlider {
+                             height: 24px;
+                        }
+                        QSlider::groove:horizontal {
+                            height: 6px;
+                            margin: 0px 3px;
+                        }
+                        QSlider::handle {
+                            width: 24px;
+                            height: 36px;
+                        }
+        ''')
         slider.valueChanged.connect(self.freqSpin.setValue)
         self.groupBox.layout().addWidget(slider, 1, 0)
         self.groupBox.layout().setAlignment(slider, QtCore.Qt.AlignVCenter)
@@ -70,12 +91,7 @@ class HighpassFilterSettings(SettingsPage):
         self.freqSpin.valueChanged.connect(self.slider.setValue)
 
 
-        fLabel = QLabel(self.groupBox)
-        fLabel.setStyleSheet("font-size: 8pt;")
-        fLabel.setAlignment(QtCore.Qt.AlignCenter)
-        fLabel.setText(translate("HighpassFilterSettings", "High-pass Frequency"))
-        self.groupBox.layout().addWidget(fLabel, 2, 0)
-
+        # Window mode
         self.modeComboBox = QComboBox(self.groupBox)
         self.modeComboBox.addItem(
             translate("HighpassFilterSettings", "Hamming"), 'hamming'
@@ -92,14 +108,14 @@ class HighpassFilterSettings(SettingsPage):
         self.modeComboBox.addItem(
             translate("HighpassFilterSettings", "Hann"), 'hann'
         )
-
-        self.groupBox.layout().addWidget(self.modeComboBox, 3, 0, 1, 1)
+        self.modeComboBox.setFixedWidth(140)
+        self.groupBox.layout().addWidget(self.modeComboBox, 2, 0, 1, 1)
         
         wLabel = QLabel(self.groupBox)
-        wLabel.setStyleSheet("font-size: 8pt;")
-        wLabel.setAlignment(QtCore.Qt.AlignCenter)
+        wLabel.setStyleSheet("font-size: 9pt;")
+        wLabel.setAlignment(QtCore.Qt.AlignVCenter)
         wLabel.setText(translate("HighpassFilterSettings", "Windowing Mode"))
-        self.groupBox.layout().addWidget(wLabel, 6, 0)
+        self.groupBox.layout().addWidget(wLabel, 2, 1, 1, 4)
 
     def enableCheck(self, enabled):
         self.setGroupEnabled(self.groupBox, enabled)
