@@ -17,12 +17,10 @@
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QFontMetrics
 from PyQt5.QtWidgets import (
     QGroupBox,
     QGridLayout,
     QLabel,
-    QSlider,
     QVBoxLayout,
     QSpinBox,
     QComboBox
@@ -43,7 +41,6 @@ class HighpassFilterSettings(SettingsPage):
 
         self.groupBox = QGroupBox(self)
         self.groupBox.resize(self.size())
-        #self.groupBox.setContentsMargins(0, 5, 0, 50)
         self.groupBox.setTitle(
             translate("HighpassFilterSettings", "Highpass Filter Settings")
         )
@@ -55,40 +52,14 @@ class HighpassFilterSettings(SettingsPage):
         self.freqSpin = QSpinBox(self.groupBox)
         self.freqSpin.setRange(0, 20000)
         self.freqSpin.setMaximum(20000)
-        self.freqSpin.setValue(110)
-        self.freqSpin.setFixedWidth(140)
+        self.freqSpin.setValue(30)
         self.freqSpin.setSuffix(" Hz")
-        self.groupBox.layout().addWidget(self.freqSpin, 0, 0)
+        self.groupBox.layout().addWidget(self.freqSpin, 0, 0, 1, 1)
 
         fLabel = QLabel(self.groupBox)
-        fLabel.setStyleSheet("font-size: 9pt;")
-        fLabel.setAlignment(QtCore.Qt.AlignVCenter)
+        fLabel.setAlignment(QtCore.Qt.AlignCenter)
         fLabel.setText(translate("HighpassFilterSettings", "Cutoff Frequency"))
-        self.groupBox.layout().addWidget(fLabel, 0, 1)
-
-        slider = QSlider(self.groupBox)
-        slider.setRange(0, 20000)
-        slider.setPageStep(1)
-        slider.setValue(110)
-        slider.setOrientation(QtCore.Qt.Horizontal)
-        slider.setStyleSheet('''
-                        QSlider {
-                             height: 24px;
-                        }
-                        QSlider::groove:horizontal {
-                            height: 6px;
-                            margin: 0px 3px;
-                        }
-                        QSlider::handle {
-                            width: 24px;
-                            height: 36px;
-                        }
-        ''')
-        slider.valueChanged.connect(self.freqSpin.setValue)
-        self.groupBox.layout().addWidget(slider, 1, 0)
-        self.groupBox.layout().setAlignment(slider, QtCore.Qt.AlignVCenter)
-        self.slider = slider
-        self.freqSpin.valueChanged.connect(self.slider.setValue)
+        self.groupBox.layout().addWidget(fLabel, 0, 1, 1, 1)
 
 
         # Window mode
@@ -108,14 +79,47 @@ class HighpassFilterSettings(SettingsPage):
         self.modeComboBox.addItem(
             translate("HighpassFilterSettings", "Hann"), 'hann'
         )
-        self.modeComboBox.setFixedWidth(140)
         self.groupBox.layout().addWidget(self.modeComboBox, 2, 0, 1, 1)
         
         wLabel = QLabel(self.groupBox)
-        wLabel.setStyleSheet("font-size: 9pt;")
-        wLabel.setAlignment(QtCore.Qt.AlignVCenter)
-        wLabel.setText(translate("HighpassFilterSettings", "Windowing Mode"))
-        self.groupBox.layout().addWidget(wLabel, 2, 1, 1, 4)
+        wLabel.setAlignment(QtCore.Qt.AlignCenter)
+        wLabel.setText(translate("HighpassFilterSettings", "Window Mode"))
+        self.groupBox.layout().addWidget(wLabel, 2, 1, 1, 1)
+
+
+        # Presets
+        self.presetsBox = QComboBox(self.groupBox)
+        self.presetsBox.addItem(
+            translate("HighpassFilterSettings", "Default"), 30
+        )
+        self.presetsBox.addItem(
+            translate("HighpassFilterSettings", "Low vocal"), 126
+        )
+        self.presetsBox.addItem(
+            translate("HighpassFilterSettings", "High vocal"), 113
+        )
+        self.presetsBox.addItem(
+            translate("HighpassFilterSettings", "Telephone"), 300
+        )
+        self.presetsBox.addItem(
+            translate("HighpassFilterSettings", "50 Hz line hum"), 50
+        )
+        self.presetsBox.addItem(
+            translate("HighpassFilterSettings", "60 Hz line hum"), 60
+        )
+        self.presetsBox.addItem(
+            translate("HighpassFilterSettings", "No Subwoofer"), 100
+        )
+        self.presetsBox.currentIndexChanged.connect(self.__preset)
+        self.groupBox.layout().addWidget(self.presetsBox, 3, 0, 1, 1)
+        
+        pLabel = QLabel(self.groupBox)
+        pLabel.setAlignment(QtCore.Qt.AlignCenter)
+        pLabel.setText(translate("HighpassFilterSettings", "Presets"))
+        self.groupBox.layout().addWidget(pLabel, 3, 1, 1, 1)
+        
+    def __preset(self, index):
+        self.freqSpin.setValue(self.presetsBox.itemData(index))
 
     def enableCheck(self, enabled):
         self.setGroupEnabled(self.groupBox, enabled)
@@ -123,7 +127,7 @@ class HighpassFilterSettings(SettingsPage):
     def getSettings(self):
         if self.isGroupEnabled(self.groupBox):
             return {
-                'cutoff': self.slider.value(),
+                'cutoff': self.freqSpin.value(),
                 'window': self.modeComboBox.currentData(),
                 'mode': 1
             }
@@ -131,7 +135,7 @@ class HighpassFilterSettings(SettingsPage):
         return {}
 
     def loadSettings(self, settings):
-        self.slider.setValue(settings.get('cutoff', 0))
+        self.freqSpin.setValue(settings.get('cutoff', 0))
         self.modeComboBox.setCurrentText(
             translate("HighpassFilterSettings", str(settings.get('window', 'hamming')).title())
         )
