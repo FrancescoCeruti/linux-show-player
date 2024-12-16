@@ -28,18 +28,11 @@ class HighpassFilter(GstMediaElement):
     ElementType = ElementType.Plugin
     MediaType = MediaType.Audio
     Name = QT_TRANSLATE_NOOP("MediaElementName", "Highpass Filter")
-    
-    class Window(Enum):
-        Hamming = 0
-        Blackman = 1
-        Gaussian = 2
-        Cosine = 3
-        Hann = 4
 
-    cutoff = GstProperty("audiowsinclimit", "cutoff", default=110)
+    cutoff = GstProperty("audiowsinclimit", "cutoff", default=30)
     length = GstProperty("audiowsinclimit", "length", default=101)
     mode   = GstProperty("audiowsinclimit", "mode", default=1)
-    window = GstProperty("audiowsinclimit", "window", default=Window.Hamming.value)
+    window = GstProperty("audiowsinclimit", "window", default=0)
 
     def __init__(self, pipeline):
         super().__init__(pipeline)

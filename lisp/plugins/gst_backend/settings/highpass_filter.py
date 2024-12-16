@@ -65,19 +65,19 @@ class HighpassFilterSettings(SettingsPage):
         # Window mode
         self.modeComboBox = QComboBox(self.groupBox)
         self.modeComboBox.addItem(
-            translate("HighpassFilterSettings", "Hamming"), 'hamming'
+            translate("HighpassFilterSettings", "Hamming"), 0
         )
         self.modeComboBox.addItem(
-            translate("HighpassFilterSettings", "Blackman"), 'blackman'
+            translate("HighpassFilterSettings", "Blackman"), 1
         )
         self.modeComboBox.addItem(
-            translate("HighpassFilterSettings", "Gaussian"), 'gaussian'
+            translate("HighpassFilterSettings", "Gaussian"), 2
         )
         self.modeComboBox.addItem(
-            translate("HighpassFilterSettings", "Cosine"), 'cosine'
+            translate("HighpassFilterSettings", "Cosine"), 3
         )
         self.modeComboBox.addItem(
-            translate("HighpassFilterSettings", "Hann"), 'hann'
+            translate("HighpassFilterSettings", "Hann"), 4
         )
         self.groupBox.layout().addWidget(self.modeComboBox, 2, 0, 1, 1)
         
@@ -136,7 +136,5 @@ class HighpassFilterSettings(SettingsPage):
 
     def loadSettings(self, settings):
         self.freqSpin.setValue(settings.get('cutoff', 0))
-        self.modeComboBox.setCurrentText(
-            translate("HighpassFilterSettings", str(settings.get('window', 'hamming')).title())
-        )
+        self.modeComboBox.setCurrentIndex(int(settings.get('window', 0)))
 
