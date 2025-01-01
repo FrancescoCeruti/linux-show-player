@@ -17,14 +17,29 @@
   <context>
     <name>Presets</name>
     <message>
+      <location filename="../../../plugins/presets/presets_ui.py" line="355" />
+      <source>Presets</source>
+      <translation>Presets</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/presets/presets.py" line="73" />
+      <source>Apply to cue</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <location filename="../../../plugins/presets/presets.py" line="75" />
+      <source>Apply to selected cues</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <location filename="../../../plugins/presets/presets.py" line="79" />
+      <source>Save as preset</source>
+      <translation>Save as preset</translation>
+    </message>
+    <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="66" />
       <source>Cannot scan presets</source>
       <translation>Cannot scan presets</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/presets/presets.py" line="68" />
-      <source>Presets</source>
-      <translation>Presets</translation>
     </message>
     <message>
       <location filename="../../../plugins/presets/presets_ui.py" line="423" />
@@ -125,21 +140,6 @@
       <location filename="../../../plugins/presets/presets_ui.py" line="312" />
       <source>Cannot create a cue from this preset: {}</source>
       <translation type="unfinished" />
-    </message>
-    <message>
-      <location filename="../../../plugins/presets/presets.py" line="73" />
-      <source>Apply to cue</source>
-      <translation type="unfinished" />
-    </message>
-    <message>
-      <location filename="../../../plugins/presets/presets.py" line="75" />
-      <source>Apply to selected cues</source>
-      <translation type="unfinished" />
-    </message>
-    <message>
-      <location filename="../../../plugins/presets/presets.py" line="79" />
-      <source>Save as preset</source>
-      <translation>Save as preset</translation>
     </message>
   </context>
 </TS>
