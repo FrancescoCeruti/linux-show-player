@@ -35,7 +35,7 @@ class HighpassFilter(GstMediaElement):
     def __init__(self, pipeline):
         super().__init__(pipeline)
 
-        self.audiowsinclimit = Gst.ElementFactory.make("audiowsinclimit", None)
+        self.audiowsinclimit = Gst.ElementFactory.make("audiowsinclimit", "audiowsinclimit")
         self.audio_convert = Gst.ElementFactory.make("audioconvert", None)
 
         self.pipeline.add(self.audiowsinclimit)
