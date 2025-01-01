@@ -42,6 +42,29 @@ class GstProperty(Property):
             element = getattr(instance, self.element_name)
             element.set_property(self.property_name, value)
 
+class GstChildProperty(Property):
+    def __init__(
+        self, parent_element_name, property_name, default=None, **meta
+    ):
+        super().__init__(default=default, **meta)
+        self.element_name = parent_element_name
+        self.property_name = property_name
+
+    def __set__(self, instance, value):
+        super().__set__(instance, value)
+
+        if instance is not None:
+            element = getattr(instance, self.element_name)
+            child = element.get_child_by_name(self.property_name)
+            child.set_property(self.property_name, value)
+            
+    def __get__(self, instance, owner=None):
+        if instance is None:
+            return self
+        element = getattr(instance, self.element_name)
+        value = element.get_child_by_name(self.property_name)
+
+        return value
 
 class GstURIProperty(GstProperty):
     def __init__(self, element_name, property_name, **meta):
