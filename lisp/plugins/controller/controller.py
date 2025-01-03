@@ -140,6 +140,12 @@ class Controller(Plugin):
                 self.app.layout.set_standby_index(
                     self.app.layout.standby_index() - 1
                 )
+            elif action is LayoutAction.PreviousPage:
+                if hasattr(self.app.layout, 'decrement_page'):
+                    self.app.layout.decrement_page()
+            elif action is LayoutAction.NextPage:
+                if hasattr(self.app.layout, 'increment_page'):
+                    self.app.layout.increment_page()
             else:
                 self.app.finalize()
 
