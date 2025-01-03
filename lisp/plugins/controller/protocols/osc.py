@@ -340,7 +340,9 @@ class OscSettings(SettingsPage):
             translate("ControllerOscSettings", "Waiting for messages:")
         )
 
-    def __show_message(self, path, args, types, *_, **__):
+    def __show_message(self, src, path, *args):
+        types = Osc.derive_types(args)
+        args = list(args)
         self.capturedMessage["path"] = path
         self.capturedMessage["types"] = types
         self.capturedMessage["args"] = args
@@ -464,9 +466,28 @@ class Osc(Protocol):
         osc = get_plugin("Osc")
         osc.server.new_message.connect(self.__new_message)
 
-    def __new_message(self, path, args, types, *_, **__):
+    def __new_message(self, src, path, *args):
+        types = self.derive_types(args)
         key = self.key_from_message(path, types, args)
         self.protocol_event.emit(key)
+
+    @staticmethod
+    def derive_types(args):
+        types = ""
+        type_ref = {
+            str: "s",
+            int: "i",
+            float: "f",
+        }
+        for arg in args:
+            arg_type = type(arg)
+            if arg_type == bool:
+                types += "T" if arg else "F"
+            elif arg_type in type_ref:
+                types += type_ref[type(arg)]
+            else:
+                raise TypeError("Unsupported Osc Type")
+        return types
 
     @staticmethod
     def key_from_message(path, types, args):
