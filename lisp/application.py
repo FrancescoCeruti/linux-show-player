@@ -193,23 +193,37 @@ class Application(metaclass=Singleton):
             "session": session_props,
             "cues": session_cues,
         }
+        
+        if self.conf.get("session.minSave", False):
+            dump_options = {"separators": (",", ":")}
+        else:
+            dump_options = {"sort_keys": True, "indent": 4}
 
-        # Write to a file the json-encoded session
-        with open(session_file, mode="w", encoding="utf-8") as file:
-            if self.conf.get("session.minSave", False):
-                dump_options = {"separators": (",", ":")}
-            else:
-                dump_options = {"sort_keys": True, "indent": 4}
+        # Serialize the session in a JSON string, and overwrite the active session file
+        try:
+            session_json = json.dumps(session_dict, **dump_options)
+        except TypeError:
+            logger.exception(
+                translate(
+                    "ApplicationError",
+                    """
+                    Error while writing the session file "{}"\n
+                    Due to bad data, the session cannot be saved.
+                    Please check any recent changes to cue pipelines.
+                    """,
+                ).format(session_file)
+            )
+        else:
+            with open(session_file, mode="w", encoding="utf-8") as file:
+                file.write(session_json)
 
-            file.write(json.dumps(session_dict, **dump_options))
+            # Save last session path
+            self.conf.set("session.lastPath", dirname(session_file))
+            self.conf.write()
 
-        # Save last session path
-        self.conf.set("session.lastPath", dirname(session_file))
-        self.conf.write()
-
-        # Set the session as saved
-        self.commands_stack.set_saved()
-        self.window.updateWindowTitle()
+            # Set the session as saved
+            self.commands_stack.set_saved()
+            self.window.updateWindowTitle()
 
     def __load_from_file(self, session_file):
         """Load a saved session from file"""
