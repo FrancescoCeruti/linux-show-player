@@ -193,7 +193,7 @@ class Application(metaclass=Singleton):
             "session": session_props,
             "cues": session_cues,
         }
-        
+
         if self.conf.get("session.minSave", False):
             dump_options = {"separators": (",", ":")}
         else:
