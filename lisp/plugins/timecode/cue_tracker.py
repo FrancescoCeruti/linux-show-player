@@ -41,7 +41,7 @@ class HRCueTime(CueTime):
 class TimecodeCueTracker:
     def __init__(self, protocol, tc_format):
         """
-        :param protocol: The protocol to be use to send timecode
+        :param protocol: The protocol to be uses to send timecode
         :type protocol: lisp.plugins.timecode.protocol.TimecodeProtocol
         :param tc_format: The format in which to send timecode
         :type tc_format: TcFormat
@@ -122,7 +122,7 @@ class TimecodeCueTracker:
                         )
                     )
                     self.untrack()
-            except Exception:
+            finally:
                 self.__lock.release()
 
     def finalize(self):
