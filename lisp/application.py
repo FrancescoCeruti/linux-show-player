@@ -225,19 +225,6 @@ class Application(metaclass=Singleton):
             self.commands_stack.set_saved()
             self.window.updateWindowTitle()
 
-        # Write to a file the json-encoded session
-        if session_json:
-            with open(session_file, mode="w", encoding="utf-8") as file:                
-                file.write(session_json)
-            
-            # Save last session path
-            self.conf.set("session.lastPath", dirname(session_file))
-            self.conf.write()
-
-            # Set the session as saved
-            self.commands_stack.set_saved()
-            self.window.updateWindowTitle()
-
     def __load_from_file(self, session_file):
         """Load a saved session from file"""
         try:
