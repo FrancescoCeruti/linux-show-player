@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2020 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2024 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@ from PyQt5.QtWidgets import QFileDialog, QApplication
 
 from lisp import backend
 from lisp.backend.backend import Backend as BaseBackend
+from lisp.backend.media_element import MediaType
 from lisp.command.layout import LayoutAutoInsertCuesCommand
 from lisp.core.decorators import memoize
 from lisp.core.plugin import Plugin
@@ -31,7 +32,7 @@ from lisp.plugins.gst_backend import config, elements, settings
 from lisp.plugins.gst_backend.gi_repository import Gst
 from lisp.plugins.gst_backend.gst_media_cue import (
     GstCueFactory,
-    UriAudioCueFactory,
+    UriMediaCueFactory,
 )
 from lisp.plugins.gst_backend.gst_media_settings import GstMediaSettings
 from lisp.plugins.gst_backend.gst_settings import GstSettings
@@ -73,12 +74,18 @@ class GstBackend(Plugin, BaseBackend):
 
         # Register GstMediaCue factory
         app.cue_factory.register_factory("GstMediaCue", GstCueFactory(tuple()))
-        # Add Menu entry
+        # Add Menu entries
         self.app.window.registerCueMenu(
             translate("GstBackend", "Audio cue (from file)"),
             self._add_uri_audio_cue,
             category=QT_TRANSLATE_NOOP("CueCategory", "Media cues"),
             shortcut="CTRL+M",
+        )
+        self.app.window.registerCueMenu(
+            translate("GstBackend", "Video cue (from file)"),
+            self._add_uri_video_cue,
+            category=QT_TRANSLATE_NOOP("CueCategory", "Media cues"),
+            shortcut="CTRL+SHIFT+M",
         )
 
         # Load elements and their settings-widgets
@@ -118,7 +125,17 @@ class GstBackend(Plugin, BaseBackend):
             cache_dir=self.app.conf.get("cache.position", ""),
         )
 
+    def _add_uri_video_cue(self):
+        # Create media cues, and add them to the Application cue_model
+        extensions = self.supported_extensions()
+        self._add_uri_cue({"video": extensions["video"]})
+        
     def _add_uri_audio_cue(self):
+        # Create media cues, and add them to the Application cue_model
+        extensions = self.supported_extensions()
+        self._add_uri_cue({"audio": extensions["audio"]})
+
+    def _add_uri_cue(self, extensions):
         """Add audio MediaCue(s) form user-selected files"""
         # Get the last visited directory, or use the session-file location
         directory = GstBackend.Config.get("mediaLookupDir", "")
@@ -130,7 +147,7 @@ class GstBackend(Plugin, BaseBackend):
             self.app.window,
             translate("GstBackend", "Select media files"),
             directory,
-            qfile_filters(self.supported_extensions(), anyfile=True),
+            qfile_filters(extensions, anyfile=True),
         )
 
         if files:
@@ -156,12 +173,15 @@ class GstBackend(Plugin, BaseBackend):
 
     def add_cue_from_files(self, files):
         QApplication.setOverrideCursor(QCursor(Qt.WaitCursor))
-
-        # Create media cues, and add them to the Application cue_model
-        factory = UriAudioCueFactory(GstBackend.Config["pipeline"])
-
+        extensions = self.supported_extensions()
         cues = []
         for file in files:
+            # Get the file extension without the leading dot
+            extension = os.path.splitext(file)[-1][1:]
+            if extension in extensions['audio']:
+                factory = UriMediaCueFactory(GstBackend.Config["audio-pipeline"], MediaType.Audio)
+            elif extension in extensions['video']:
+                factory = UriMediaCueFactory(GstBackend.Config["video-pipeline"], MediaType.Video)
             cue = factory(self.app, uri=file)
             # Use the filename without extension as cue name
             cue.name = os.path.splitext(os.path.basename(file))[0]
