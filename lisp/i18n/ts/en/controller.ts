@@ -4,8 +4,13 @@
   <context>
     <name>Controller</name>
     <message>
-      <location filename="../../../plugins/controller/controller.py" line="166" />
+      <location filename="../../../plugins/controller/controller.py" line="178" />
       <source>Cannot load controller protocol: "{}"</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <location filename="../../../plugins/controller/controller.py" line="153" />
+      <source>Unrecognized layout action: "{}"</source>
       <translation type="unfinished" />
     </message>
   </context>
@@ -178,12 +183,12 @@ do not forget to edit the path later.</source>
   <context>
     <name>ControllerSettings</name>
     <message>
-      <location filename="../../../plugins/controller/protocols/midi.py" line="122" />
+      <location filename="../../../plugins/controller/protocols/keyboard.py" line="79" />
       <source>Add</source>
       <translation>Add</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/midi.py" line="123" />
+      <location filename="../../../plugins/controller/protocols/keyboard.py" line="80" />
       <source>Remove</source>
       <translation>Remove</translation>
     </message>
@@ -191,53 +196,63 @@ do not forget to edit the path later.</source>
   <context>
     <name>GlobalAction</name>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="41" />
+      <location filename="../../../plugins/controller/common.py" line="44" />
       <source>Go</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="42" />
+      <location filename="../../../plugins/controller/common.py" line="45" />
       <source>Reset</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="43" />
+      <location filename="../../../plugins/controller/common.py" line="46" />
       <source>Stop all cues</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="44" />
+      <location filename="../../../plugins/controller/common.py" line="47" />
       <source>Pause all cues</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="45" />
+      <location filename="../../../plugins/controller/common.py" line="48" />
       <source>Resume all cues</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="48" />
+      <location filename="../../../plugins/controller/common.py" line="51" />
       <source>Interrupt all cues</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="51" />
+      <location filename="../../../plugins/controller/common.py" line="54" />
       <source>Fade-out all cues</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="54" />
+      <location filename="../../../plugins/controller/common.py" line="57" />
       <source>Fade-in all cues</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="57" />
+      <location filename="../../../plugins/controller/common.py" line="60" />
       <source>Move standby forward</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="60" />
+      <location filename="../../../plugins/controller/common.py" line="63" />
       <source>Move standby back</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <location filename="../../../plugins/controller/common.py" line="66" />
+      <source>Switch to previous page</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <location filename="../../../plugins/controller/common.py" line="69" />
+      <source>Switch to next page</source>
       <translation type="unfinished" />
     </message>
   </context>
@@ -280,9 +295,9 @@ do not forget to edit the path later.</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/keyboard.py" line="44" />
-      <source>Keyboard Shortcuts</source>
-      <translation>Keyboard Shortcuts</translation>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="230" />
+      <source>OSC Controls</source>
+      <translation type="unfinished" />
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="64" />
@@ -290,9 +305,9 @@ do not forget to edit the path later.</source>
       <translation>MIDI Controls</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="230" />
-      <source>OSC Controls</source>
-      <translation type="unfinished" />
+      <location filename="../../../plugins/controller/protocols/keyboard.py" line="44" />
+      <source>Keyboard Shortcuts</source>
+      <translation>Keyboard Shortcuts</translation>
     </message>
   </context>
 </TS>
