@@ -4,22 +4,22 @@
   <context>
     <name>CollectionCue</name>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="110"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="111"/>
       <source>Add</source>
       <translation>Hinzufügen</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="111"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="112"/>
       <source>Remove</source>
       <translation>Entfernen</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="180"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="186"/>
       <source>Cue</source>
       <translation>Cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="181"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="187"/>
       <source>Action</source>
       <translation>Aktion</translation>
     </message>
@@ -54,7 +54,7 @@
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="162"/>
       <source>Run the command on the host system</source>
-      <translation type="unfinished">Run the command on the host system</translation>
+      <translation>Den Befehl auf dem Host-System ausführen</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="83"/>
@@ -65,7 +65,7 @@
   <context>
     <name>CueCategory</name>
     <message>
-      <location filename="../../../plugins/action_cues/index_action_cue.py" line="40"/>
+      <location filename="../../../plugins/action_cues/volume_control.py" line="55"/>
       <source>Action cues</source>
       <translation>Aktions-Cues</translation>
     </message>
@@ -83,24 +83,24 @@
       <translation>Sammlungs-Cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/stop_all.py" line="29"/>
-      <source>Stop-All</source>
-      <translation>Alle stoppen</translation>
-    </message>
-    <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="41"/>
       <source>Command Cue</source>
       <translation>Befehls-Cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/volume_control.py" line="54"/>
-      <source>Volume Control</source>
-      <translation>Lautstärkeregelung</translation>
+      <location filename="../../../plugins/action_cues/stop_all.py" line="29"/>
+      <source>Stop-All</source>
+      <translation>Alle stoppen</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="39"/>
       <source>Index Action</source>
       <translation>Index-Aktion</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/action_cues/volume_control.py" line="54"/>
+      <source>Volume Control</source>
+      <translation>Lautstärkeregelung</translation>
     </message>
   </context>
   <context>
@@ -172,14 +172,9 @@
       <translation>Seek-Einstellungen</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="108"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="109"/>
       <source>Edit Collection</source>
       <translation>Sammlung bearbeiten</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/action_cues/stop_all.py" line="43"/>
-      <source>Stop Settings</source>
-      <translation>Stoppeinstellungen</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="118"/>
@@ -187,14 +182,19 @@
       <translation>Befehl</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/volume_control.py" line="129"/>
-      <source>Volume Settings</source>
-      <translation>Lautstärkeeinstellungen</translation>
+      <location filename="../../../plugins/action_cues/stop_all.py" line="43"/>
+      <source>Stop Settings</source>
+      <translation>Stoppeinstellungen</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="65"/>
       <source>Action Settings</source>
       <translation>Aktionseinstellungen</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/action_cues/volume_control.py" line="129"/>
+      <source>Volume Settings</source>
+      <translation>Lautstärkeeinstellungen</translation>
     </message>
   </context>
   <context>
