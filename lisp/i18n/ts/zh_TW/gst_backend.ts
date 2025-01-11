@@ -140,7 +140,7 @@
   <context>
     <name>GstMediaError</name>
     <message>
-      <location filename="../../../plugins/gst_backend/gst_media.py" line="242"/>
+      <location filename="../../../plugins/gst_backend/gst_media.py" line="254"/>
       <source>Cannot create pipeline element: "{}"</source>
       <translation>無法創建管道元素： "{}"</translation>
     </message>
@@ -156,7 +156,7 @@
   <context>
     <name>GstMediaWarning</name>
     <message>
-      <location filename="../../../plugins/gst_backend/gst_media.py" line="236"/>
+      <location filename="../../../plugins/gst_backend/gst_media.py" line="248"/>
       <source>Invalid pipeline element: "{}"</source>
       <translation>管道元素無效： "{}"</translation>
     </message>
@@ -231,24 +231,34 @@
       <translation>速度</translation>
     </message>
     <message>
+      <location filename="../../../plugins/gst_backend/elements/user_element.py" line="29"/>
+      <source>Custom Element</source>
+      <translation>自定義元素</translation>
+    </message>
+    <message>
       <location filename="../../../plugins/gst_backend/elements/db_meter.py" line="30"/>
       <source>dB Meter</source>
       <translation>分貝計</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/elements/audio_pan.py" line="29"/>
-      <source>Audio Pan</source>
-      <translation>音頻平移</translation>
+      <location filename="../../../plugins/gst_backend/elements/preset_src.py" line="30"/>
+      <source>Preset Input</source>
+      <translation>預設輸入</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/elements/volume.py" line="35"/>
-      <source>Volume</source>
-      <translation>音量</translation>
+      <location filename="../../../plugins/gst_backend/elements/auto_sink.py" line="28"/>
+      <source>System Out</source>
+      <translation>系统輸出</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/elements/uri_input.py" line="35"/>
-      <source>URI Input</source>
-      <translation>URI 輸入</translation>
+      <location filename="../../../plugins/gst_backend/elements/auto_src.py" line="27"/>
+      <source>System Input</source>
+      <translation>系统輸入</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/gst_backend/elements/alsa_sink.py" line="30"/>
+      <source>ALSA Out</source>
+      <translation>ALSA 輸出</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/elements/jack_sink.py" line="35"/>
@@ -261,24 +271,19 @@
       <translation>PulseAudio 輸出</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/elements/auto_sink.py" line="28"/>
-      <source>System Out</source>
-      <translation>系统輸出</translation>
+      <location filename="../../../plugins/gst_backend/elements/equalizer10.py" line="29"/>
+      <source>10 Bands Equalizer</source>
+      <translation>10頻段均衡器</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/elements/audio_dynamic.py" line="31"/>
-      <source>Compressor/Expander</source>
-      <translation>壓縮器/擴展器</translation>
+      <location filename="../../../plugins/gst_backend/elements/audio_pan.py" line="29"/>
+      <source>Audio Pan</source>
+      <translation>音頻平移</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/elements/user_element.py" line="29"/>
-      <source>Custom Element</source>
-      <translation>自定義元素</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/gst_backend/elements/preset_src.py" line="30"/>
-      <source>Preset Input</source>
-      <translation>預設輸入</translation>
+      <location filename="../../../plugins/gst_backend/elements/uri_input.py" line="35"/>
+      <source>URI Input</source>
+      <translation>URI 輸入</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/elements/pitch.py" line="29"/>
@@ -286,19 +291,14 @@
       <translation>音調</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/elements/equalizer10.py" line="29"/>
-      <source>10 Bands Equalizer</source>
-      <translation>10頻段均衡器</translation>
+      <location filename="../../../plugins/gst_backend/elements/audio_dynamic.py" line="31"/>
+      <source>Compressor/Expander</source>
+      <translation>壓縮器/擴展器</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/elements/auto_src.py" line="27"/>
-      <source>System Input</source>
-      <translation>系统輸入</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/gst_backend/elements/alsa_sink.py" line="30"/>
-      <source>ALSA Out</source>
-      <translation>ALSA 輸出</translation>
+      <location filename="../../../plugins/gst_backend/elements/volume.py" line="35"/>
+      <source>Volume</source>
+      <translation>音量</translation>
     </message>
   </context>
   <context>
@@ -325,14 +325,14 @@
   <context>
     <name>SettingsPageName</name>
     <message>
-      <location filename="../../../plugins/gst_backend/gst_media_settings.py" line="36"/>
-      <source>Media Settings</source>
-      <translation>媒體設定</translation>
-    </message>
-    <message>
       <location filename="../../../plugins/gst_backend/gst_settings.py" line="27"/>
       <source>GStreamer</source>
       <translation>GStreamer</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/gst_backend/gst_media_settings.py" line="36"/>
+      <source>Media Settings</source>
+      <translation>媒體設定</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/config/alsa_sink.py" line="25"/>
@@ -351,42 +351,42 @@
   <context>
     <name>UriInputSettings</name>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="83"/>
+      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="85"/>
       <source>Source</source>
       <translation>來源</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="84"/>
+      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="86"/>
       <source>Find File</source>
       <translation>查找檔案</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="85"/>
+      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="87"/>
       <source>Buffering</source>
       <translation>緩衝</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="87"/>
+      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="89"/>
       <source>Use Buffering</source>
       <translation>使用緩衝</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="90"/>
+      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="92"/>
       <source>Attempt download on network streams</source>
       <translation>嘗試從互聯網下載</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="93"/>
+      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="95"/>
       <source>Buffer size (-1 default value)</source>
       <translation>緩衝大小 (-1 為默認值)</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="130"/>
+      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="132"/>
       <source>Choose file</source>
       <translation>選擇檔案</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="132"/>
+      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="134"/>
       <source>All files</source>
       <translation>所有檔案</translation>
     </message>

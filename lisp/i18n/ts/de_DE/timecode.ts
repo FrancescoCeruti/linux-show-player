@@ -75,7 +75,7 @@ OLA-Daemon gestoppt wurde.</translation>
     <message>
       <location filename="../../../plugins/timecode/cue_tracker.py" line="119"/>
       <source>Cannot send timecode, untracking cue</source>
-      <translation type="unfinished">Cannot send timecode, untracking cue</translation>
+      <translation>Timecode kann nicht gesendet werden, ignoriere die Cue</translation>
     </message>
   </context>
 </TS>

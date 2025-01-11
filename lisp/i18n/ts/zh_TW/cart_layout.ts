@@ -4,6 +4,51 @@
   <context>
     <name>CartLayout</name>
     <message>
+      <location filename="../../../plugins/cart_layout/settings.py" line="82"/>
+      <source>Default behaviors (applied to new sessions)</source>
+      <translation>默認行為 (套用於新工作階段)</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/layout.py" line="190"/>
+      <source>Countdown mode</source>
+      <translation>倒計時模式</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/layout.py" line="192"/>
+      <source>Show seek-bars</source>
+      <translation>顯示進度條</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/layout.py" line="194"/>
+      <source>Show dB-meters</source>
+      <translation>顯示分貝計</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/layout.py" line="198"/>
+      <source>Show accurate time</source>
+      <translation>顯示準確時間</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/layout.py" line="196"/>
+      <source>Show volume</source>
+      <translation>顯示音量</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/settings.py" line="91"/>
+      <source>Grid size</source>
+      <translation>網格大小</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/settings.py" line="92"/>
+      <source>Number of columns:</source>
+      <translation>列數：</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/settings.py" line="93"/>
+      <source>Number of rows:</source>
+      <translation>行數：</translation>
+    </message>
+    <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="174"/>
       <source>Reset volume</source>
       <translation>重置音量</translation>
@@ -24,31 +69,6 @@
       <translation>移除當前頁面</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="86"/>
-      <source>Countdown mode</source>
-      <translation>倒計時模式</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="87"/>
-      <source>Show seek-bars</source>
-      <translation>顯示進度條</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="88"/>
-      <source>Show dB-meters</source>
-      <translation>顯示分貝計</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="90"/>
-      <source>Show volume</source>
-      <translation>顯示音量</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="89"/>
-      <source>Show accurate time</source>
-      <translation>顯示準確時間</translation>
-    </message>
-    <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="240"/>
       <source>Number of Pages:</source>
       <translation>頁數：</translation>
@@ -59,17 +79,17 @@
       <translation>第 {number} 頁</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="484"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="491"/>
       <source>Warning</source>
       <translation>警告</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="486"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="493"/>
       <source>Every cue in the page will be lost.</source>
       <translation>頁面中的所有 Cue 都会被刪除。</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="489"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="496"/>
       <source>Are you sure to continue?</source>
       <translation>是否確認繼續？</translation>
     </message>
@@ -87,26 +107,6 @@
       <location filename="../../../plugins/cart_layout/layout.py" line="168"/>
       <source>Stop</source>
       <translation>停止</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="82"/>
-      <source>Default behaviors (applied to new sessions)</source>
-      <translation>默認行為 (套用於新工作階段)</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="91"/>
-      <source>Grid size</source>
-      <translation>網格大小</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="92"/>
-      <source>Number of columns:</source>
-      <translation>列數：</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="93"/>
-      <source>Number of rows:</source>
-      <translation>行數：</translation>
     </message>
   </context>
   <context>

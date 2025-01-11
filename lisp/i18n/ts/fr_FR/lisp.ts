@@ -4,24 +4,24 @@
   <context>
     <name>About</name>
     <message>
-      <location filename="../../../ui/about.py" line="62"/>
+      <location filename="../../../ui/about.py" line="64"/>
+      <source>About Linux Show Player</source>
+      <translation>À propos de Linux Show Player</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/about.py" line="116"/>
       <source>Authors</source>
       <translation>Auteurs</translation>
     </message>
     <message>
-      <location filename="../../../ui/about.py" line="65"/>
+      <location filename="../../../ui/about.py" line="120"/>
       <source>Contributors</source>
       <translation>Contributeurs</translation>
     </message>
     <message>
-      <location filename="../../../ui/about.py" line="70"/>
+      <location filename="../../../ui/about.py" line="124"/>
       <source>Translators</source>
       <translation>Traducteurs</translation>
-    </message>
-    <message>
-      <location filename="../../../ui/about.py" line="88"/>
-      <source>About Linux Show Player</source>
-      <translation>À propos de Linux Show Player</translation>
     </message>
   </context>
   <context>
@@ -32,32 +32,32 @@
       <translation>Linux Show Player est un logiciel de lecture de cue pensé la scène.</translation>
     </message>
     <message>
-      <location filename="../../../ui/about.py" line="132"/>
+      <location filename="../../../ui/about.py" line="103"/>
       <source>Info</source>
       <translation>Informations</translation>
     </message>
     <message>
-      <location filename="../../../ui/about.py" line="137"/>
+      <location filename="../../../ui/about.py" line="108"/>
       <source>License</source>
       <translation>Licence</translation>
     </message>
     <message>
-      <location filename="../../../ui/about.py" line="144"/>
+      <location filename="../../../ui/about.py" line="130"/>
       <source>Contributors</source>
       <translation>Contributeurs</translation>
     </message>
     <message>
-      <location filename="../../../ui/about.py" line="125"/>
+      <location filename="../../../ui/about.py" line="97"/>
       <source>Web site</source>
       <translation>Site web</translation>
     </message>
     <message>
-      <location filename="../../../ui/about.py" line="127"/>
+      <location filename="../../../ui/about.py" line="98"/>
       <source>Discussion</source>
       <translation>Discussion</translation>
     </message>
     <message>
-      <location filename="../../../ui/about.py" line="129"/>
+      <location filename="../../../ui/about.py" line="99"/>
       <source>Source code</source>
       <translation>Code source</translation>
     </message>
@@ -124,17 +124,28 @@
   <context>
     <name>ApplicationError</name>
     <message>
-      <location filename="../../../application.py" line="155"/>
+      <location filename="../../../application.py" line="156"/>
       <source>Startup error</source>
       <translation>Erreur au démarrage</translation>
     </message>
     <message>
-      <location filename="../../../application.py" line="241"/>
+      <location filename="../../../application.py" line="208"/>
+      <source>Saving your session failed due to bad data.
+The file still contains your last successful save and has not been overwritten.
+
+This is likely because of corrupted data from a plugin. Try to revert recent changes to cues or settings, and save the file again.</source>
+      <translation type="unfinished">Saving your session failed due to bad data.
+The file still contains your last successful save and has not been overwritten.
+
+This is likely because of corrupted data from a plugin. Try to revert recent changes to cues or settings, and save the file again.</translation>
+    </message>
+    <message>
+      <location filename="../../../application.py" line="264"/>
       <source>Error while reading the session file "{}"</source>
       <translation>Erreur lors de la lecture du fichier de session "{}"</translation>
     </message>
     <message>
-      <location filename="../../../application.py" line="230"/>
+      <location filename="../../../application.py" line="253"/>
       <source>Unable to create the cue "{}"</source>
       <translation>Impossible de créer le cue "{}"</translation>
     </message>
@@ -526,6 +537,16 @@
   <context>
     <name>Logging</name>
     <message>
+      <location filename="../../../ui/logging/viewer.py" line="54"/>
+      <source>Linux Show Player - Log Viewer</source>
+      <translation>Lecteur Linux Show - Visionneur de log</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/logging/viewer.py" line="126"/>
+      <source>Showing {} of {} records</source>
+      <translation>Affichage de {} enregistrements sur {}</translation>
+    </message>
+    <message>
       <location filename="../../../ui/logging/dialog.py" line="79"/>
       <source>Dismiss all</source>
       <translation>Tout ignorer</translation>
@@ -634,16 +655,6 @@
       <location filename="../../../ui/logging/common.py" line="51"/>
       <source>Exception info</source>
       <translation>Information d'exception</translation>
-    </message>
-    <message>
-      <location filename="../../../ui/logging/viewer.py" line="54"/>
-      <source>Linux Show Player - Log Viewer</source>
-      <translation>Lecteur Linux Show - Visionneur de log</translation>
-    </message>
-    <message>
-      <location filename="../../../ui/logging/viewer.py" line="126"/>
-      <source>Showing {} of {} records</source>
-      <translation>Affichage de {} enregistrements sur {}</translation>
     </message>
   </context>
   <context>
@@ -849,6 +860,11 @@
   <context>
     <name>PluginsError</name>
     <message>
+      <location filename="../../../core/plugin_loader.py" line="68"/>
+      <source>Cannot satisfy dependencies for plugin: "{}"</source>
+      <translation type="unfinished">Cannot satisfy dependencies for plugin: "{}"</translation>
+    </message>
+    <message>
       <location filename="../../../core/plugins_manager.py" line="78"/>
       <source>A plugin by the name of "{}" already exists.</source>
       <translation type="unfinished">A plugin by the name of "{}" already exists.</translation>
@@ -868,23 +884,18 @@
       <source>Failed to terminate plugin: "{}"</source>
       <translation type="unfinished">Failed to terminate plugin: "{}"</translation>
     </message>
-    <message>
-      <location filename="../../../core/plugin_loader.py" line="68"/>
-      <source>Cannot satisfy dependencies for plugin: "{}"</source>
-      <translation type="unfinished">Cannot satisfy dependencies for plugin: "{}"</translation>
-    </message>
   </context>
   <context>
     <name>PluginsInfo</name>
     <message>
-      <location filename="../../../core/plugins_manager.py" line="145"/>
-      <source>Plugin terminated: "{}"</source>
-      <translation type="unfinished">Plugin terminated: "{}"</translation>
-    </message>
-    <message>
       <location filename="../../../core/plugin_loader.py" line="108"/>
       <source>Plugin loaded: "{}"</source>
       <translation>Plugin chargé : "{}"</translation>
+    </message>
+    <message>
+      <location filename="../../../core/plugins_manager.py" line="145"/>
+      <source>Plugin terminated: "{}"</source>
+      <translation type="unfinished">Plugin terminated: "{}"</translation>
     </message>
   </context>
   <context>
@@ -939,14 +950,9 @@
   <context>
     <name>SettingsPageName</name>
     <message>
-      <location filename="../../../ui/settings/app_pages/plugins.py" line="36"/>
-      <source>Plugins</source>
-      <translation>Greffons</translation>
-    </message>
-    <message>
-      <location filename="../../../ui/settings/app_pages/general.py" line="38"/>
-      <source>General</source>
-      <translation>Générale</translation>
+      <location filename="../../../ui/settings/app_pages/cue.py" line="27"/>
+      <source>Cue Settings</source>
+      <translation>Paramètres de cue</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/app_pages/layouts.py" line="26"/>
@@ -954,14 +960,14 @@
       <translation>Dispositions</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/app_pages/cue.py" line="27"/>
-      <source>Cue Settings</source>
-      <translation>Paramètres de cue</translation>
+      <location filename="../../../ui/settings/app_pages/general.py" line="38"/>
+      <source>General</source>
+      <translation>Générale</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="33"/>
-      <source>Media Cue</source>
-      <translation>Cue de média</translation>
+      <location filename="../../../ui/settings/app_pages/plugins.py" line="36"/>
+      <source>Plugins</source>
+      <translation>Greffons</translation>
     </message>
     <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="43"/>
@@ -987,6 +993,11 @@
       <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="36"/>
       <source>Appearance</source>
       <translation>Apparence</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="33"/>
+      <source>Media Cue</source>
+      <translation>Cue de média</translation>
     </message>
   </context>
 </TS>
