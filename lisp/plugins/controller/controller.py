@@ -140,8 +140,20 @@ class Controller(Plugin):
                 self.app.layout.set_standby_index(
                     self.app.layout.standby_index() - 1
                 )
+            elif action is LayoutAction.NextPage:
+                self.app.layout.set_current_page(
+                    self.app.layout.current_page() + 1
+                )
+            elif action is LayoutAction.PreviousPage:
+                self.app.layout.set_current_page(
+                    self.app.layout.current_page() - 1
+                )
             else:
-                self.app.finalize()
+                logger.warning(
+                    translate(
+                        "Controller", 'Unrecognized layout action: "{}"'
+                    ).format(action)
+                )
 
     def __cue_added(self, cue):
         cue.property_changed.connect(self.cue_changed)

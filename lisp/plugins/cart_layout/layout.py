@@ -286,6 +286,13 @@ class CartLayout(CueLayout):
                 if pattern.fullmatch(self._cart_view.tabText(n)):
                     self._cart_view.setTabText(n, text.format(number=n + 1))
 
+    def set_current_page(self, page_number):
+        page_number = max(0, min(page_number, self._cart_view.count()))
+        self._cart_view.setCurrentIndex(page_number)
+
+    def current_page(self):
+        return self._cart_view.currentIndex()
+
     @tabs.get
     def _get_tabs(self):
         return self._cart_view.tabTexts()

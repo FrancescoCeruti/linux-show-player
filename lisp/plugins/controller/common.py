@@ -36,6 +36,9 @@ class LayoutAction(Enum):
     StandbyForward = "StandbyForward"
     StandbyBack = "StandbyBack"
 
+    PreviousPage = "PreviousPage"
+    NextPage = "NextPage"
+
 
 LayoutActionsStrings = {
     LayoutAction.Go: QT_TRANSLATE_NOOP("GlobalAction", "Go"),
@@ -59,6 +62,12 @@ LayoutActionsStrings = {
     ),
     LayoutAction.StandbyBack: QT_TRANSLATE_NOOP(
         "GlobalAction", "Move standby back"
+    ),
+    LayoutAction.PreviousPage: QT_TRANSLATE_NOOP(
+        "GlobalAction", "Switch to previous page"
+    ),
+    LayoutAction.NextPage: QT_TRANSLATE_NOOP(
+        "GlobalAction", "Switch to next page"
     ),
 }
 
