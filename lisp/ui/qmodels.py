@@ -82,7 +82,7 @@ class SimpleTableModel(QAbstractTableModel):
         if index.isValid():
             if role == Qt.DisplayRole:
                 value = self.rows[index.row()][index.column()]
-                if type(value) == bool:
+                if isinstance(value, bool):
                     return translate("QComboBox", str(value).title())
                 else:
                     return value

@@ -62,3 +62,6 @@ linux-show-player = "lisp.main:main"
 [tool.ruff]
 line-length = 80
 target-version = 'py39'
+
+[tool.ruff.lint]
+ignore = ["F401", "E402"]
