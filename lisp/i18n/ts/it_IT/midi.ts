@@ -33,6 +33,11 @@
   <context>
     <name>MIDIError</name>
     <message>
+      <location filename="../../../plugins/midi/port_monitor.py" line="88"/>
+      <source>Cannot create ALSA-MIDI port monitor, MIDI connections/disconnections will not be detected.</source>
+      <translation>Impossibile monitorare la porta ALSA-MIDI, le connessioni/disconnessioni MIDI non saranno rilevate.</translation>
+    </message>
+    <message>
       <location filename="../../../plugins/midi/midi_io.py" line="84"/>
       <source>Cannot connect to MIDI output port '{}'.</source>
       <translation>Impossibile connettersi alla porta MIDI in uscita '{}'.</translation>
@@ -41,11 +46,6 @@
       <location filename="../../../plugins/midi/midi_io.py" line="105"/>
       <source>Cannot connect to MIDI input port '{}'.</source>
       <translation>Impossibile connettersi alla porta MIDI in ingresso '{}'.</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/midi/port_monitor.py" line="88"/>
-      <source>Cannot create ALSA-MIDI port monitor, MIDI connections/disconnections will not be detected.</source>
-      <translation>Impossibile monitorare la porta ALSA-MIDI, le connessioni/disconnessioni MIDI non saranno rilevate.</translation>
     </message>
   </context>
   <context>
@@ -208,13 +208,13 @@
   <context>
     <name>SettingsPageName</name>
     <message>
-      <location filename="../../../plugins/midi/midi_settings.py" line="37"/>
-      <source>MIDI settings</source>
+      <location filename="../../../plugins/midi/midi_cue.py" line="57"/>
+      <source>MIDI Settings</source>
       <translation>Impostazioni MIDI</translation>
     </message>
     <message>
-      <location filename="../../../plugins/midi/midi_cue.py" line="57"/>
-      <source>MIDI Settings</source>
+      <location filename="../../../plugins/midi/midi_settings.py" line="37"/>
+      <source>MIDI settings</source>
       <translation>Impostazioni MIDI</translation>
     </message>
   </context>
