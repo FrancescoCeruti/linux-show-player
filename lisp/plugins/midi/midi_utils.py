@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2019 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2023 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,10 +15,13 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+from enum import Enum
 from typing import Iterable
 
 import mido
 from PyQt5.QtCore import QT_TRANSLATE_NOOP
+
+from lisp.ui.ui_utils import translate
 
 MIDI_MSGS_SPEC = {
     "note_on": ["channel", "note", "velocity"],
@@ -75,6 +78,36 @@ MIDI_ATTRS_NAME = {
     "pitch": QT_TRANSLATE_NOOP("MIDIMessageAttr", "Pitch"),
     "pos": QT_TRANSLATE_NOOP("MIDIMessageAttr", "Position"),
 }
+
+
+DEFAULT_DEVICE_NAME = "Default"
+MAX_MIDI_DEVICES = 16 # 16 ins, 16 outs.
+
+
+class PortDirection(Enum):
+    Input = "in"
+    Output = "out"
+
+
+class PortNameMatch(Enum):
+    NoMatch = 0
+    ExactMatch = 1
+    FuzzyMatch = -1
+
+
+class PortStatus(Enum):
+    Open = "✓" # U+2713
+    Closed = "×" # U+00D7
+    DoesNotExist = "~"
+
+
+def format_patch_name(patch_id, device_name):
+    split_id = patch_id.split('#')
+    if split_id[0] == PortDirection.Input.value:
+        text = translate("MIDIInfo", "In {}: {}")
+    else:
+        text = translate("MIDIInfo", "Out {}: {}")
+    return text.format(split_id[1], device_name or DEFAULT_DEVICE_NAME)
 
 
 def midi_backend() -> mido.Backend:
