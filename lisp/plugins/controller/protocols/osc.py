@@ -37,8 +37,8 @@ from PyQt5.QtWidgets import (
     QSpacerItem,
 )
 
-from lisp.plugins import get_plugin
 from lisp.core.plugin import PluginNotLoadedError
+from lisp.plugins import get_plugin
 from lisp.plugins.controller.common import LayoutAction, tr_layout_action
 from lisp.plugins.controller.protocol import Protocol
 from lisp.plugins.osc.osc_delegate import OscArgumentDelegate
@@ -474,19 +474,18 @@ class Osc(Protocol):
     @staticmethod
     def derive_types(args):
         types = ""
-        type_ref = {
-            str: "s",
-            int: "i",
-            float: "f",
-        }
         for arg in args:
-            arg_type = type(arg)
-            if arg_type == bool:
+            if isinstance(arg, bool):
                 types += "T" if arg else "F"
-            elif arg_type in type_ref:
-                types += type_ref[type(arg)]
+            elif isinstance(arg, str):
+                types += "s"
+            elif isinstance(arg, int):
+                types += "i"
+            elif isinstance(arg, float):
+                types += "f"
             else:
                 raise TypeError("Unsupported Osc Type")
+
         return types
 
     @staticmethod

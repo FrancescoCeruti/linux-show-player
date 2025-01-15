@@ -19,8 +19,8 @@
 import logging
 from threading import Lock, Thread
 
-from pythonosc import osc_server
 from pythonosc.dispatcher import Dispatcher
+from pythonosc.osc_server import ThreadingOSCUDPServer
 from pythonosc.udp_client import SimpleUDPClient
 
 from lisp.core.signal import Signal
@@ -56,7 +56,9 @@ class OscServer:
         self.new_message.connect(self.__log_message)
 
         self.__dispatcher = Dispatcher()
-        self.__dispatcher.set_default_handler(self.new_message.emit, needs_reply_address=True)
+        self.__dispatcher.set_default_handler(
+            self.new_message.emit, needs_reply_address=True
+        )
 
     @property
     def out_port(self):
@@ -98,8 +100,9 @@ class OscServer:
             return
 
         try:
-            self.__srv = osc_server.ThreadingOSCUDPServer(
-                (get_lan_ip(), self.__in_port), self.__dispatcher)
+            self.__srv = ThreadingOSCUDPServer(
+                (get_lan_ip(), self.__in_port), self.__dispatcher
+            )
 
             self.__thread = Thread(target=self.__srv.serve_forever)
             self.__thread.start()
@@ -111,7 +114,7 @@ class OscServer:
                     self.__srv.server_address
                 )
             )
-        except:
+        except Exception:
             logger.exception(
                 translate("OscServerError", "Cannot start OSC server")
             )

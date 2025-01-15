@@ -29,7 +29,10 @@ class Osc(Plugin):
     """Provide OSC I/O functionality"""
 
     Name = "OSC"
-    Authors = ("Thomas Achtner", "s0600204",)
+    Authors = (
+        "Thomas Achtner",
+        "s0600204",
+    )
     Description = "Provide OSC I/O functionality"
 
     def __init__(self, app):

@@ -60,7 +60,7 @@ class OscSettings(SettingsPage):
         self.inportBox.setMinimum(1000)
         self.inportBox.setMaximum(99999)
         self.inwardsGroupBox.layout().addWidget(self.inportLabel, 2, 0)
-        self.inwardsGroupBox.layout().addWidget(self.inportBox,   2, 1)
+        self.inwardsGroupBox.layout().addWidget(self.inportBox, 2, 1)
 
         self.outwardsGroupBox = QGroupBox(self)
         self.outwardsGroupBox.setLayout(QGridLayout())
@@ -76,25 +76,36 @@ class OscSettings(SettingsPage):
         self.hostnameEdit.setText("localhost")
         self.hostnameEdit.setMaximumWidth(200)
         self.outwardsGroupBox.layout().addWidget(self.hostnameLabel, 1, 0)
-        self.outwardsGroupBox.layout().addWidget(self.hostnameEdit,  1, 1)
+        self.outwardsGroupBox.layout().addWidget(self.hostnameEdit, 1, 1)
 
         self.outportLabel = QLabel()
         self.outportBox = QSpinBox()
         self.outportBox.setMinimum(1000)
         self.outportBox.setMaximum(99999)
         self.outwardsGroupBox.layout().addWidget(self.outportLabel, 2, 0)
-        self.outwardsGroupBox.layout().addWidget(self.outportBox,   2, 1)
+        self.outwardsGroupBox.layout().addWidget(self.outportBox, 2, 1)
 
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.inwardsGroupBox.setTitle(translate("OscSettings", "OSC Input Settings"))
-        self.inwardsLabel.setText(translate("OscSettings", "Linux Show Player will pick up OSC messages sent to:"))
+        self.inwardsGroupBox.setTitle(
+            translate("OscSettings", "OSC Input Settings")
+        )
+        self.inwardsLabel.setText(
+            translate(
+                "OscSettings",
+                "Linux Show Player will pick up OSC messages sent to:",
+            )
+        )
         self.localaddrLabel.setText(translate("OscSettings", "Address:"))
         self.inportLabel.setText(translate("OscSettings", "Port:"))
 
-        self.outwardsGroupBox.setTitle(translate("OscSettings", "OSC Output Settings"))
-        self.outwardsLabel.setText(translate("OscSettings", "Messages from OSC Cues will be sent to:"))
+        self.outwardsGroupBox.setTitle(
+            translate("OscSettings", "OSC Output Settings")
+        )
+        self.outwardsLabel.setText(
+            translate("OscSettings", "Messages from OSC Cues will be sent to:")
+        )
         self.hostnameLabel.setText(translate("OscSettings", "Address:"))
         self.outportLabel.setText(translate("OscSettings", "Port:"))
 
