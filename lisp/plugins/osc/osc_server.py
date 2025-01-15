@@ -123,6 +123,7 @@ class OscServer:
         if self.__srv is not None:
             if self.__running:
                 self.__srv.shutdown()
+                self.__srv.server_close()
                 self.__running = False
 
             logger.info(translate("OscServerInfo", "OSC server stopped"))
