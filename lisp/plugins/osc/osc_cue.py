@@ -67,6 +67,8 @@ class OscCue(Cue):
         CueAction.Default,
         CueAction.Start,
         CueAction.Stop,
+        CueAction.Pause,
+        CueAction.Resume
     )
 
     path = Property(default="")

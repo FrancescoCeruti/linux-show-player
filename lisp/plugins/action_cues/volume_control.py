@@ -62,7 +62,9 @@ class VolumeControl(Cue):
         CueAction.Default,
         CueAction.Start,
         CueAction.Stop,
-        CueAction.Interrupt,
+        CueAction.Pause,
+        CueAction.Resume,
+        CueAction.Interrupt
     )
 
     def __init__(self, *args, **kwargs):
