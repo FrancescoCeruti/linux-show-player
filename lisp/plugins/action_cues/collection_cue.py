@@ -43,6 +43,14 @@ class CollectionCue(Cue):
     Name = QT_TRANSLATE_NOOP("CueName", "Collection Cue")
     Category = QT_TRANSLATE_NOOP("CueCategory", "Action cues")
 
+    CueActions = (
+        CueAction.Default,
+        CueAction.Start,
+        CueAction.Stop,
+        CueAction.Pause,
+        CueAction.Resume
+    )
+
     targets = Property(default=[])
 
     def __init__(self, *args, **kwargs):
