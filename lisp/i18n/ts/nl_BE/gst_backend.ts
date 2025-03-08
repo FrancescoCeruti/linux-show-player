@@ -140,7 +140,7 @@
   <context>
     <name>GstMediaError</name>
     <message>
-      <location filename="../../../plugins/gst_backend/gst_media.py" line="242"/>
+      <location filename="../../../plugins/gst_backend/gst_media.py" line="254"/>
       <source>Cannot create pipeline element: "{}"</source>
       <translation type="unfinished">Cannot create pipeline element: "{}"</translation>
     </message>
@@ -156,7 +156,7 @@
   <context>
     <name>GstMediaWarning</name>
     <message>
-      <location filename="../../../plugins/gst_backend/gst_media.py" line="236"/>
+      <location filename="../../../plugins/gst_backend/gst_media.py" line="248"/>
       <source>Invalid pipeline element: "{}"</source>
       <translation type="unfinished">Invalid pipeline element: "{}"</translation>
     </message>
@@ -231,24 +231,34 @@
       <translation>Snelheid</translation>
     </message>
     <message>
+      <location filename="../../../plugins/gst_backend/elements/user_element.py" line="29"/>
+      <source>Custom Element</source>
+      <translation>Vrij Element </translation>
+    </message>
+    <message>
       <location filename="../../../plugins/gst_backend/elements/db_meter.py" line="30"/>
       <source>dB Meter</source>
       <translation type="unfinished">dB Meter</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/elements/audio_pan.py" line="29"/>
-      <source>Audio Pan</source>
-      <translation type="unfinished">Audio Pan</translation>
+      <location filename="../../../plugins/gst_backend/elements/preset_src.py" line="30"/>
+      <source>Preset Input</source>
+      <translation>Preset Ingang </translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/elements/volume.py" line="35"/>
-      <source>Volume</source>
-      <translation type="unfinished">Volume</translation>
+      <location filename="../../../plugins/gst_backend/elements/auto_sink.py" line="28"/>
+      <source>System Out</source>
+      <translation>Systeem uitgang</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/elements/uri_input.py" line="35"/>
-      <source>URI Input</source>
-      <translation>URI Ingang</translation>
+      <location filename="../../../plugins/gst_backend/elements/auto_src.py" line="27"/>
+      <source>System Input</source>
+      <translation>Systeem Ingang </translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/gst_backend/elements/alsa_sink.py" line="30"/>
+      <source>ALSA Out</source>
+      <translation>ALSA uitgang </translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/elements/jack_sink.py" line="35"/>
@@ -261,24 +271,19 @@
       <translation>PulseAudio uit</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/elements/auto_sink.py" line="28"/>
-      <source>System Out</source>
-      <translation>Systeem uitgang</translation>
+      <location filename="../../../plugins/gst_backend/elements/equalizer10.py" line="29"/>
+      <source>10 Bands Equalizer</source>
+      <translation>10 Bands Equalizer </translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/elements/audio_dynamic.py" line="31"/>
-      <source>Compressor/Expander</source>
-      <translation>Compressor/Expander </translation>
+      <location filename="../../../plugins/gst_backend/elements/audio_pan.py" line="29"/>
+      <source>Audio Pan</source>
+      <translation type="unfinished">Audio Pan</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/elements/user_element.py" line="29"/>
-      <source>Custom Element</source>
-      <translation>Vrij Element </translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/gst_backend/elements/preset_src.py" line="30"/>
-      <source>Preset Input</source>
-      <translation>Preset Ingang </translation>
+      <location filename="../../../plugins/gst_backend/elements/uri_input.py" line="35"/>
+      <source>URI Input</source>
+      <translation>URI Ingang</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/elements/pitch.py" line="29"/>
@@ -286,19 +291,14 @@
       <translation>Toonhoogte</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/elements/equalizer10.py" line="29"/>
-      <source>10 Bands Equalizer</source>
-      <translation>10 Bands Equalizer </translation>
+      <location filename="../../../plugins/gst_backend/elements/audio_dynamic.py" line="31"/>
+      <source>Compressor/Expander</source>
+      <translation>Compressor/Expander </translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/elements/auto_src.py" line="27"/>
-      <source>System Input</source>
-      <translation>Systeem Ingang </translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/gst_backend/elements/alsa_sink.py" line="30"/>
-      <source>ALSA Out</source>
-      <translation>ALSA uitgang </translation>
+      <location filename="../../../plugins/gst_backend/elements/volume.py" line="35"/>
+      <source>Volume</source>
+      <translation type="unfinished">Volume</translation>
     </message>
   </context>
   <context>
@@ -325,14 +325,14 @@
   <context>
     <name>SettingsPageName</name>
     <message>
-      <location filename="../../../plugins/gst_backend/gst_media_settings.py" line="36"/>
-      <source>Media Settings</source>
-      <translation>Media Instellingen </translation>
-    </message>
-    <message>
       <location filename="../../../plugins/gst_backend/gst_settings.py" line="27"/>
       <source>GStreamer</source>
       <translation type="unfinished">GStreamer</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/gst_backend/gst_media_settings.py" line="36"/>
+      <source>Media Settings</source>
+      <translation>Media Instellingen </translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/config/alsa_sink.py" line="25"/>
@@ -351,42 +351,42 @@
   <context>
     <name>UriInputSettings</name>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="83"/>
+      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="85"/>
       <source>Source</source>
       <translation>Bron</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="84"/>
+      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="86"/>
       <source>Find File</source>
       <translation>Zoek bestand</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="85"/>
+      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="87"/>
       <source>Buffering</source>
       <translation type="unfinished">Buffering</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="87"/>
+      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="89"/>
       <source>Use Buffering</source>
       <translation>Gebruik Buffering</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="90"/>
+      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="92"/>
       <source>Attempt download on network streams</source>
       <translation>Poging tot download op netwerk streams</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="93"/>
+      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="95"/>
       <source>Buffer size (-1 default value)</source>
       <translation>Buffer grootte (-1 standaard waarde)</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="130"/>
+      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="132"/>
       <source>Choose file</source>
       <translation>Kies bestand</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="132"/>
+      <location filename="../../../plugins/gst_backend/settings/uri_input.py" line="134"/>
       <source>All files</source>
       <translation>Alle Bestanden</translation>
     </message>

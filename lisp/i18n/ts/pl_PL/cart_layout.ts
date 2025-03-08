@@ -4,6 +4,51 @@
   <context>
     <name>CartLayout</name>
     <message>
+      <location filename="../../../plugins/cart_layout/settings.py" line="82"/>
+      <source>Default behaviors (applied to new sessions)</source>
+      <translation>Domyślne zachowania (stosowane do nowych sesji)</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/layout.py" line="190"/>
+      <source>Countdown mode</source>
+      <translation>Tryb odliczania</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/layout.py" line="192"/>
+      <source>Show seek-bars</source>
+      <translation>Pokaż paski wyszukiwania</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/layout.py" line="194"/>
+      <source>Show dB-meters</source>
+      <translation>Pokaż wskaźniki dB</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/layout.py" line="198"/>
+      <source>Show accurate time</source>
+      <translation>Pokaż dokładny czas</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/layout.py" line="196"/>
+      <source>Show volume</source>
+      <translation>Pokaż głośność</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/settings.py" line="91"/>
+      <source>Grid size</source>
+      <translation>Rozmiar siatki</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/settings.py" line="92"/>
+      <source>Number of columns:</source>
+      <translation>Liczba kolumn:</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/settings.py" line="93"/>
+      <source>Number of rows:</source>
+      <translation>Liczba wierszy:</translation>
+    </message>
+    <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="174"/>
       <source>Reset volume</source>
       <translation>Resetuj głośność</translation>
@@ -24,31 +69,6 @@
       <translation>Usuń bieżącą stronę</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="86"/>
-      <source>Countdown mode</source>
-      <translation>Tryb odliczania</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="87"/>
-      <source>Show seek-bars</source>
-      <translation>Pokaż paski wyszukiwania</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="88"/>
-      <source>Show dB-meters</source>
-      <translation>Pokaż wskaźniki dB</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="90"/>
-      <source>Show volume</source>
-      <translation>Pokaż głośność</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="89"/>
-      <source>Show accurate time</source>
-      <translation>Pokaż dokładny czas</translation>
-    </message>
-    <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="240"/>
       <source>Number of Pages:</source>
       <translation>Liczba stron:</translation>
@@ -59,17 +79,17 @@
       <translation>Strona {number}</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="484"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="491"/>
       <source>Warning</source>
       <translation>Ostrzeżenie</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="486"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="493"/>
       <source>Every cue in the page will be lost.</source>
       <translation>Każdy sygnał na stronie zostanie utracony.</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="489"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="496"/>
       <source>Are you sure to continue?</source>
       <translation>Czy na pewno chcesz kontynuować?</translation>
     </message>
@@ -87,26 +107,6 @@
       <location filename="../../../plugins/cart_layout/layout.py" line="168"/>
       <source>Stop</source>
       <translation>Zatrzymaj</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="82"/>
-      <source>Default behaviors (applied to new sessions)</source>
-      <translation>Domyślne zachowania (stosowane do nowych sesji)</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="91"/>
-      <source>Grid size</source>
-      <translation>Rozmiar siatki</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="92"/>
-      <source>Number of columns:</source>
-      <translation>Liczba kolumn:</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="93"/>
-      <source>Number of rows:</source>
-      <translation>Liczba wierszy:</translation>
     </message>
   </context>
   <context>

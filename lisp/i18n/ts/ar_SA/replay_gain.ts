@@ -4,24 +4,9 @@
   <context>
     <name>ReplayGain</name>
     <message>
-      <location filename="../../../plugins/replay_gain/gain_ui.py" line="111"/>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="50"/>
       <source>ReplayGain / Normalization</source>
       <translation type="unfinished">ReplayGain / Normalization</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="55"/>
-      <source>Calculate</source>
-      <translation>إحسب</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="60"/>
-      <source>Reset all</source>
-      <translation>إعادة كل شيء إلى الوضع العادى</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="66"/>
-      <source>Reset selected</source>
-      <translation>إعادة المحدد إلى الوضع العادى</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/gain_ui.py" line="113"/>
@@ -47,6 +32,21 @@
       <location filename="../../../plugins/replay_gain/gain_ui.py" line="145"/>
       <source>Processing files ...</source>
       <translation>معالجة الملفات...</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="55"/>
+      <source>Calculate</source>
+      <translation>إحسب</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="60"/>
+      <source>Reset all</source>
+      <translation>إعادة كل شيء إلى الوضع العادى</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="66"/>
+      <source>Reset selected</source>
+      <translation>إعادة المحدد إلى الوضع العادى</translation>
     </message>
   </context>
   <context>

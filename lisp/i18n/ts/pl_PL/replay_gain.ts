@@ -4,24 +4,9 @@
   <context>
     <name>ReplayGain</name>
     <message>
-      <location filename="../../../plugins/replay_gain/gain_ui.py" line="111"/>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="50"/>
       <source>ReplayGain / Normalization</source>
       <translation type="unfinished">ReplayGain / Normalization</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="55"/>
-      <source>Calculate</source>
-      <translation type="unfinished">Calculate</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="60"/>
-      <source>Reset all</source>
-      <translation type="unfinished">Reset all</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="66"/>
-      <source>Reset selected</source>
-      <translation type="unfinished">Reset selected</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/gain_ui.py" line="113"/>
@@ -47,6 +32,21 @@
       <location filename="../../../plugins/replay_gain/gain_ui.py" line="145"/>
       <source>Processing files ...</source>
       <translation type="unfinished">Processing files ...</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="55"/>
+      <source>Calculate</source>
+      <translation type="unfinished">Calculate</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="60"/>
+      <source>Reset all</source>
+      <translation type="unfinished">Reset all</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="66"/>
+      <source>Reset selected</source>
+      <translation type="unfinished">Reset selected</translation>
     </message>
   </context>
   <context>

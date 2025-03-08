@@ -4,6 +4,51 @@
   <context>
     <name>CartLayout</name>
     <message>
+      <location filename="../../../plugins/cart_layout/settings.py" line="82"/>
+      <source>Default behaviors (applied to new sessions)</source>
+      <translation type="unfinished">Default behaviors (applied to new sessions)</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/layout.py" line="190"/>
+      <source>Countdown mode</source>
+      <translation>وضع العد التنازلي</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/layout.py" line="192"/>
+      <source>Show seek-bars</source>
+      <translation>اعرض أشرطة البحث</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/layout.py" line="194"/>
+      <source>Show dB-meters</source>
+      <translation>إظهار dB-متر</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/layout.py" line="198"/>
+      <source>Show accurate time</source>
+      <translation type="unfinished">Show accurate time</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/layout.py" line="196"/>
+      <source>Show volume</source>
+      <translation>إظهار حجم الصوت</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/settings.py" line="91"/>
+      <source>Grid size</source>
+      <translation>حجم الشبكة</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/settings.py" line="92"/>
+      <source>Number of columns:</source>
+      <translation>عدد الأعمدة:</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/cart_layout/settings.py" line="93"/>
+      <source>Number of rows:</source>
+      <translation>عدد الصفوف:</translation>
+    </message>
+    <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="174"/>
       <source>Reset volume</source>
       <translation>إعادة تعيين حجم الصوت</translation>
@@ -24,31 +69,6 @@
       <translation>إزالة الصفحة الحالية</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="86"/>
-      <source>Countdown mode</source>
-      <translation>وضع العد التنازلي</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="87"/>
-      <source>Show seek-bars</source>
-      <translation>اعرض أشرطة البحث</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="88"/>
-      <source>Show dB-meters</source>
-      <translation>إظهار dB-متر</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="90"/>
-      <source>Show volume</source>
-      <translation>إظهار حجم الصوت</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="89"/>
-      <source>Show accurate time</source>
-      <translation type="unfinished">Show accurate time</translation>
-    </message>
-    <message>
       <location filename="../../../plugins/cart_layout/layout.py" line="240"/>
       <source>Number of Pages:</source>
       <translation>عدد الصفحات:</translation>
@@ -59,17 +79,17 @@
       <translation>الصفحة{number}</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="484"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="491"/>
       <source>Warning</source>
       <translation>تحذير</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="486"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="493"/>
       <source>Every cue in the page will be lost.</source>
       <translation>ستفقد كل أغنية في الصفحة.</translation>
     </message>
     <message>
-      <location filename="../../../plugins/cart_layout/layout.py" line="489"/>
+      <location filename="../../../plugins/cart_layout/layout.py" line="496"/>
       <source>Are you sure to continue?</source>
       <translation>هل أنت متأكد من أن تواصل؟</translation>
     </message>
@@ -87,26 +107,6 @@
       <location filename="../../../plugins/cart_layout/layout.py" line="168"/>
       <source>Stop</source>
       <translation>إيقاف</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="82"/>
-      <source>Default behaviors (applied to new sessions)</source>
-      <translation type="unfinished">Default behaviors (applied to new sessions)</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="91"/>
-      <source>Grid size</source>
-      <translation>حجم الشبكة</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="92"/>
-      <source>Number of columns:</source>
-      <translation>عدد الأعمدة:</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/cart_layout/settings.py" line="93"/>
-      <source>Number of rows:</source>
-      <translation>عدد الصفوف:</translation>
     </message>
   </context>
   <context>

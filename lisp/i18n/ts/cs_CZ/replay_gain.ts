@@ -4,24 +4,9 @@
   <context>
     <name>ReplayGain</name>
     <message>
-      <location filename="../../../plugins/replay_gain/gain_ui.py" line="111"/>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="50"/>
       <source>ReplayGain / Normalization</source>
       <translation>Vyrovnání hlasitosti/Normalizace</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="55"/>
-      <source>Calculate</source>
-      <translation>Spočítat</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="60"/>
-      <source>Reset all</source>
-      <translation>Nastavit vše znovu</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="66"/>
-      <source>Reset selected</source>
-      <translation>Nastavit vybrané znovu</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/gain_ui.py" line="113"/>
@@ -47,6 +32,21 @@
       <location filename="../../../plugins/replay_gain/gain_ui.py" line="145"/>
       <source>Processing files ...</source>
       <translation>Zpracovávají se soubory...</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="55"/>
+      <source>Calculate</source>
+      <translation>Spočítat</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="60"/>
+      <source>Reset all</source>
+      <translation>Nastavit vše znovu</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="66"/>
+      <source>Reset selected</source>
+      <translation>Nastavit vybrané znovu</translation>
     </message>
   </context>
   <context>
