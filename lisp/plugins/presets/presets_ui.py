@@ -305,7 +305,7 @@ class PresetsDialog(QDialog):
             insert_cue_from_preset(self.app, preset_name)
         except OSError as e:
             load_preset_error(e, preset_name)
-        except Exception as e:
+        except Exception:
             QMessageBox.warning(
                 self,
                 translate("Presets", "Warning"),

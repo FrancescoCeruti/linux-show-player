@@ -39,6 +39,14 @@ class IndexActionCue(Cue):
     Name = QT_TRANSLATE_NOOP("CueName", "Index Action")
     Category = QT_TRANSLATE_NOOP("CueCategory", "Action cues")
 
+    CueActions = (
+        CueAction.Default,
+        CueAction.Start,
+        CueAction.Stop,
+        CueAction.Pause,
+        CueAction.Resume
+    )
+
     target_index = Property(default=0)
     relative = Property(default=True)
     action = Property(default=CueAction.Stop.value)

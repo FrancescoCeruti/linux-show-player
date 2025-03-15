@@ -102,6 +102,13 @@ class CueLayout(HasProperties):
     def set_standby_index(self, index):
         """Set the current index"""
 
+    def current_page(self):
+        """Return the current page"""
+        return 0
+
+    def set_current_page(self, page_number):
+        """Set the current page"""
+
     @abstractmethod
     def selected_cues(self, cue_type=Cue):
         """Iterate the selected cues, filtered by type.

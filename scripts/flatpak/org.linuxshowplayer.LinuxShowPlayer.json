@@ -182,6 +182,7 @@
         "gstreamer-modules.json",
         "pygobject-modules.json",
         "python-modules.json",
+        "numpy-modules.json",
         {
             "name": "linux-show-player",
             "buildsystem": "simple",

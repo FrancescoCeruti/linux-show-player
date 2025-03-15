@@ -102,7 +102,7 @@ class LogViewer(QMainWindow):
                 n, Qt.Horizontal, LogAttributeRole
             )
 
-            self.logView.setColumnHidden(n, not column in visible_columns)
+            self.logView.setColumnHidden(n, column not in visible_columns)
 
         # When the filter model change, update the status-label
         self.filterModel.rowsInserted.connect(self._rowsChanged)

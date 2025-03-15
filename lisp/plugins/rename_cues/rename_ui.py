@@ -212,9 +212,9 @@ class RenameUi(QDialog):
 
         for i, cue in enumerate(cues_to_modify):
             if cue["selected"]:
-                cue[
-                    "cue_preview"
-                ] = f"{i+1:0{digit_nbr}.0f} - {cue['cue_preview']}"
+                cue["cue_preview"] = (
+                    f"{i+1:0{digit_nbr}.0f} - {cue['cue_preview']}"
+                )
 
         self.update_preview_list()
 

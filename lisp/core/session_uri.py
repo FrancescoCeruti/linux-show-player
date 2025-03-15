@@ -24,7 +24,9 @@ class SessionURI:
         split = urlsplit(uri)
 
         if split.scheme == "":
-            self._uri = urlunsplit(("file", "", quote(self.path_to_absolute(uri)), "", ""))
+            self._uri = urlunsplit(
+                ("file", "", quote(self.path_to_absolute(uri)), "", "")
+            )
         else:
             self._uri = uri
 
@@ -67,4 +69,3 @@ class SessionURI:
         from lisp.application import Application
 
         return Application().session.abs_path(path)
-

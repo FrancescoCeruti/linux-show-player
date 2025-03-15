@@ -62,9 +62,9 @@ class CueBehavioursPage(CueSettingsPage):
         self.layout().addWidget(self.startActionGroup)
 
         self.startActionCombo = CueActionComboBox(
-            {CueAction.Start, CueAction.FadeInStart}
-            .intersection(self.cueType.CueActions)
-            .union({CueAction.DoNothing}),
+            {CueAction.Start, CueAction.FadeInStart}.intersection(
+                self.cueType.CueActions
+            ).union({CueAction.DoNothing}),
             mode=CueActionComboBox.Mode.Value,
             parent=self.startActionGroup,
         )
@@ -87,9 +87,9 @@ class CueBehavioursPage(CueSettingsPage):
                 CueAction.FadeOutStop,
                 CueAction.FadeOutPause,
                 CueAction.LoopRelease,
-            }
-            .intersection(self.cueType.CueActions)
-            .union({CueAction.DoNothing}),
+            }.intersection(self.cueType.CueActions).union(
+                {CueAction.DoNothing}
+            ),
             mode=CueActionComboBox.Mode.Value,
             parent=self.stopActionGroup,
         )
@@ -132,9 +132,9 @@ class CueBehavioursPage(CueSettingsPage):
             self.isGroupEnabled(self.startActionGroup)
             and self.startActionCombo.isEnabled()
         ):
-            settings[
-                "default_start_action"
-            ] = self.startActionCombo.currentItem()
+            settings["default_start_action"] = (
+                self.startActionCombo.currentItem()
+            )
         if (
             self.isGroupEnabled(self.stopActionGroup)
             and self.stopActionCombo.isEnabled()

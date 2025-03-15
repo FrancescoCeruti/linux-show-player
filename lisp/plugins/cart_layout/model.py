@@ -105,7 +105,7 @@ class CueCartModel(ModelAdapter):
 
     def remove_page(self, page, lshift=True):
         start, end = self.page_edges(page)
-        for index in self.__cues.irange(start, end):
+        for index in tuple(self.__cues.irange(start, end)):
             self.remove(self.__cues[index])
 
         if lshift:

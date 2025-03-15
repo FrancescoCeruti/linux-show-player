@@ -129,12 +129,20 @@
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../application.py" line="249" />
+      <location filename="../../../application.py" line="208" />
+      <source>Saving your session failed due to bad data.
+The file still contains your last successful save and has not been overwritten.
+
+This is likely because of corrupted data from a plugin. Try to revert recent changes to cues or settings, and save the file again.</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <location filename="../../../application.py" line="264" />
       <source>Error while reading the session file "{}"</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../application.py" line="238" />
+      <location filename="../../../application.py" line="253" />
       <source>Unable to create the cue "{}"</source>
       <translation type="unfinished" />
     </message>
@@ -526,6 +534,16 @@
   <context>
     <name>Logging</name>
     <message>
+      <location filename="../../../ui/logging/viewer.py" line="54" />
+      <source>Linux Show Player - Log Viewer</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <location filename="../../../ui/logging/viewer.py" line="126" />
+      <source>Showing {} of {} records</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
       <location filename="../../../ui/logging/dialog.py" line="79" />
       <source>Dismiss all</source>
       <translation type="unfinished" />
@@ -633,16 +651,6 @@
     <message>
       <location filename="../../../ui/logging/common.py" line="51" />
       <source>Exception info</source>
-      <translation type="unfinished" />
-    </message>
-    <message>
-      <location filename="../../../ui/logging/viewer.py" line="54" />
-      <source>Linux Show Player - Log Viewer</source>
-      <translation type="unfinished" />
-    </message>
-    <message>
-      <location filename="../../../ui/logging/viewer.py" line="126" />
-      <source>Showing {} of {} records</source>
       <translation type="unfinished" />
     </message>
   </context>
@@ -849,6 +857,11 @@
   <context>
     <name>PluginsError</name>
     <message>
+      <location filename="../../../core/plugin_loader.py" line="68" />
+      <source>Cannot satisfy dependencies for plugin: "{}"</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
       <location filename="../../../core/plugins_manager.py" line="78" />
       <source>A plugin by the name of "{}" already exists.</source>
       <translation type="unfinished" />
@@ -868,22 +881,17 @@
       <source>Failed to terminate plugin: "{}"</source>
       <translation type="unfinished" />
     </message>
-    <message>
-      <location filename="../../../core/plugin_loader.py" line="68" />
-      <source>Cannot satisfy dependencies for plugin: "{}"</source>
-      <translation type="unfinished" />
-    </message>
   </context>
   <context>
     <name>PluginsInfo</name>
     <message>
-      <location filename="../../../core/plugins_manager.py" line="145" />
-      <source>Plugin terminated: "{}"</source>
+      <location filename="../../../core/plugin_loader.py" line="108" />
+      <source>Plugin loaded: "{}"</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../core/plugin_loader.py" line="108" />
-      <source>Plugin loaded: "{}"</source>
+      <location filename="../../../core/plugins_manager.py" line="145" />
+      <source>Plugin terminated: "{}"</source>
       <translation type="unfinished" />
     </message>
   </context>
@@ -939,8 +947,13 @@
   <context>
     <name>SettingsPageName</name>
     <message>
-      <location filename="../../../ui/settings/app_pages/plugins.py" line="36" />
-      <source>Plugins</source>
+      <location filename="../../../ui/settings/app_pages/cue.py" line="27" />
+      <source>Cue Settings</source>
+      <translation>Cue Settings</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/settings/app_pages/layouts.py" line="26" />
+      <source>Layouts</source>
       <translation type="unfinished" />
     </message>
     <message>
@@ -949,18 +962,8 @@
       <translation>General</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/app_pages/layouts.py" line="26" />
-      <source>Layouts</source>
-      <translation type="unfinished" />
-    </message>
-    <message>
-      <location filename="../../../ui/settings/app_pages/cue.py" line="27" />
-      <source>Cue Settings</source>
-      <translation>Cue Settings</translation>
-    </message>
-    <message>
-      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="33" />
-      <source>Media Cue</source>
+      <location filename="../../../ui/settings/app_pages/plugins.py" line="36" />
+      <source>Plugins</source>
       <translation type="unfinished" />
     </message>
     <message>
@@ -987,6 +990,11 @@
       <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="36" />
       <source>Appearance</source>
       <translation>Appearance</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="33" />
+      <source>Media Cue</source>
+      <translation type="unfinished" />
     </message>
   </context>
 </TS>

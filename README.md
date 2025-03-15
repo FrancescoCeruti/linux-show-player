@@ -7,10 +7,10 @@
 <p align="center">
     <a href="https://github.com/FrancescoCeruti/linux-show-player/blob/master/LICENSE"><img alt="License: GPL" src="https://img.shields.io/badge/license-GPL-blue.svg"></a>
     <a href="https://github.com/FrancescoCeruti/linux-show-player/releases/latest"><img src="https://img.shields.io/github/release/FrancescoCeruti/linux-show-player.svg?maxAge=2592000" alt="GitHub release" /></a>
-    <a href="https://github.com/FrancescoCeruti/linux-show-player/releases"><img src="https://img.shields.io/github/downloads/FrancescoCeruti/linux-show-player/total.svg?maxAge=2592000" alt="Github All Releases" /></a>
-    <a href="https://sonarcloud.io/summary/new_code?id=FrancescoCeruti_linux-show-player"><img src="https://sonarcloud.io/api/project_badges/measure?project=FrancescoCeruti_linux-show-player&metric=alert_status" alt="Quality Gate Status"></a>
+    <a href="https://flathub.org/apps/org.linuxshowplayer.LinuxShowPlayer"><img alt="Flathub Downloads" src="https://img.shields.io/flathub/downloads/org.linuxshowplayer.LinuxShowPlayer?label=flathub"></a>
     <a href="https://gitter.im/linux-show-player/linux-show-player"><img src="https://img.shields.io/gitter/room/nwjs/nw.js.svg?maxAge=2592000" alt="Gitter" /></a>
-    <a href="https://github.com/ambv/black"><img src="https://img.shields.io/badge/code%20style-black-000000.svg" alt="Code style: black"></a>
+    <a href="https://sonarcloud.io/summary/new_code?id=FrancescoCeruti_linux-show-player"><img src="https://sonarcloud.io/api/project_badges/measure?project=FrancescoCeruti_linux-show-player&metric=alert_status" alt="Quality Gate Status"></a>
+    <a href="https://github.com/astral-sh/ruff"><img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json&label=code%20style" alt="Code style: ruff"></a>
 </p>
 
 ---
@@ -33,7 +33,11 @@ You can find the full instructions in the <a href="https://linux-show-player-use
 
 ### 📦 Flatpak
 
-You can get the latest **development** builds here:
+<a href='https://flathub.org/apps/org.linuxshowplayer.LinuxShowPlayer'>
+    <img width='180' alt='Get it on Flathub' src='https://flathub.org/api/badge?locale=en'/>
+</a>
+
+Or you can get the latest **development** builds here:
  * [Master](https://github.com/FrancescoCeruti/linux-show-player/releases/tag/ci-master) - Generally stable
  * [Development](https://github.com/FrancescoCeruti/linux-show-player/releases/tag/ci-develop) - Preview features, might be unstable and untested
 

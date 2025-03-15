@@ -15,7 +15,6 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-import aifc
 import math
 import wave
 
@@ -86,12 +85,7 @@ def python_duration(path, sound_module):
 
 def audio_file_duration(path: str):
     """Return the audio-file duration, using the given file path"""
-    for mod in [wave, aifc]:
-        duration = python_duration(path, mod)
-        if duration > 0:
-            return duration
-
-    return 0
+    return python_duration(path, wave)
 
 
 def iec_scale(dB):

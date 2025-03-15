@@ -20,7 +20,6 @@ import os
 from PyQt5.QtGui import QColor, QPalette
 
 # Import resources
-# pylint: disable=unused-import
 # noinspection PyUnresolvedReferences
 from . import assets
 
