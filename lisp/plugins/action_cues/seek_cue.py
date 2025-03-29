@@ -16,14 +16,14 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5 import QtCore
-from PyQt5.QtCore import QTime, QT_TRANSLATE_NOOP
+from PyQt5.QtCore import QT_TRANSLATE_NOOP, QTime
 from PyQt5.QtWidgets import (
-    QVBoxLayout,
     QGroupBox,
-    QPushButton,
-    QLabel,
     QHBoxLayout,
+    QLabel,
+    QPushButton,
     QTimeEdit,
+    QVBoxLayout,
 )
 
 from lisp.application import Application
@@ -45,7 +45,8 @@ class SeekCue(Cue):
         CueAction.Start,
         CueAction.Stop,
         CueAction.Pause,
-        CueAction.Resume
+        CueAction.Resume,
+        CueAction.Interrupt,
     )
 
     target_id = Property()

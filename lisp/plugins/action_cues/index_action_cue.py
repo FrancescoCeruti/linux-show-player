@@ -44,7 +44,8 @@ class IndexActionCue(Cue):
         CueAction.Start,
         CueAction.Stop,
         CueAction.Pause,
-        CueAction.Resume
+        CueAction.Resume,
+        CueAction.Interrupt,
     )
 
     target_index = Property(default=0)
