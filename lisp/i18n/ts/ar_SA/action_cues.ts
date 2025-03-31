@@ -4,22 +4,22 @@
   <context>
     <name>CollectionCue</name>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="110"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="111"/>
       <source>Add</source>
       <translation>أضف</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="111"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="112"/>
       <source>Remove</source>
       <translation>احذف</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="180"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="186"/>
       <source>Cue</source>
       <translation>الأغنية</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="181"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="187"/>
       <source>Action</source>
       <translation>الإجراءات</translation>
     </message>
@@ -65,7 +65,7 @@
   <context>
     <name>CueCategory</name>
     <message>
-      <location filename="../../../plugins/action_cues/index_action_cue.py" line="40"/>
+      <location filename="../../../plugins/action_cues/volume_control.py" line="55"/>
       <source>Action cues</source>
       <translation type="unfinished">Action cues</translation>
     </message>
@@ -83,24 +83,24 @@
       <translation>مختارات الأغنية</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/stop_all.py" line="29"/>
-      <source>Stop-All</source>
-      <translation>إيقاف الجميع</translation>
-    </message>
-    <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="41"/>
       <source>Command Cue</source>
       <translation>أمر الأغنية</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/volume_control.py" line="54"/>
-      <source>Volume Control</source>
-      <translation>التحكم بمستوى الصوت</translation>
+      <location filename="../../../plugins/action_cues/stop_all.py" line="29"/>
+      <source>Stop-All</source>
+      <translation>إيقاف الجميع</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="39"/>
       <source>Index Action</source>
       <translation>فهرس الأعمال</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/action_cues/volume_control.py" line="54"/>
+      <source>Volume Control</source>
+      <translation>التحكم بمستوى الصوت</translation>
     </message>
   </context>
   <context>
@@ -172,14 +172,9 @@
       <translation>البحث عن إعدادات</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="108"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="109"/>
       <source>Edit Collection</source>
       <translation>تعديل المجموعة</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/action_cues/stop_all.py" line="43"/>
-      <source>Stop Settings</source>
-      <translation>إيقاف إعدادات</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="118"/>
@@ -187,14 +182,19 @@
       <translation>الأوامر</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/volume_control.py" line="129"/>
-      <source>Volume Settings</source>
-      <translation>إعدادات مستوى الصوت</translation>
+      <location filename="../../../plugins/action_cues/stop_all.py" line="43"/>
+      <source>Stop Settings</source>
+      <translation>إيقاف إعدادات</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="65"/>
       <source>Action Settings</source>
       <translation>إعدادات الإجراء</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/action_cues/volume_control.py" line="129"/>
+      <source>Volume Settings</source>
+      <translation>إعدادات مستوى الصوت</translation>
     </message>
   </context>
   <context>
