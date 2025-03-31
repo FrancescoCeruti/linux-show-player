@@ -134,10 +134,10 @@
 The file still contains your last successful save and has not been overwritten.
 
 This is likely because of corrupted data from a plugin. Try to revert recent changes to cues or settings, and save the file again.</source>
-      <translation type="unfinished">Saving your session failed due to bad data.
-The file still contains your last successful save and has not been overwritten.
+      <translation>Salvataggio della sessione non riuscito a causa di dati errati.
+Il file contiene ancora l'ultimo salvataggio riuscito e non è stato sovrascritto.
 
-This is likely because of corrupted data from a plugin. Try to revert recent changes to cues or settings, and save the file again.</translation>
+L'errore è probabilmente causato dai dati danneggiati di un plugin. Prova ad annullare le ultime modifiche a cue o impostazioni, e salva nuovamente il file.</translation>
     </message>
     <message>
       <location filename="../../../application.py" line="264"/>
