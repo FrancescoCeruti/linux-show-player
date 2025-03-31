@@ -11,7 +11,7 @@
     <message>
       <location filename="../../../plugins/controller/controller.py" line="153"/>
       <source>Unrecognized layout action: "{}"</source>
-      <translation type="unfinished">Unrecognized layout action: "{}"</translation>
+      <translation>Azione del layout non riconosciuta: "{}"</translation>
     </message>
   </context>
   <context>
@@ -249,12 +249,12 @@ non dimenticare di modificarlo.</translation>
     <message>
       <location filename="../../../plugins/controller/common.py" line="66"/>
       <source>Switch to previous page</source>
-      <translation type="unfinished">Switch to previous page</translation>
+      <translation>Passa alla pagina precedente</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="69"/>
       <source>Switch to next page</source>
-      <translation type="unfinished">Switch to next page</translation>
+      <translation>Passa alla pagina successiva</translation>
     </message>
   </context>
   <context>
