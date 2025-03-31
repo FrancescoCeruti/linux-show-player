@@ -4,22 +4,22 @@
   <context>
     <name>CollectionCue</name>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="110"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="111"/>
       <source>Add</source>
       <translation>添加</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="111"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="112"/>
       <source>Remove</source>
       <translation>移除</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="180"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="186"/>
       <source>Cue</source>
       <translation>提示</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="181"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="187"/>
       <source>Action</source>
       <translation>动作</translation>
     </message>
@@ -27,32 +27,37 @@
   <context>
     <name>CommandCue</name>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="130"/>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="148"/>
       <source>Command</source>
       <translation>命令</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="132"/>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="150"/>
       <source>Command to execute, as in a shell</source>
       <translation>要执行的 Shell 命令</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="135"/>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="153"/>
       <source>Discard command output</source>
       <translation>舍弃命令输出</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="138"/>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="156"/>
       <source>Ignore command errors</source>
       <translation>忽略命令错误</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="141"/>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="159"/>
       <source>Kill instead of terminate</source>
       <translation>杀死而不是终止</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="80"/>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="162"/>
+      <source>Run the command on the host system</source>
+      <translation type="unfinished">Run the command on the host system</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="83"/>
       <source>Command cue ended with an error status. Exit code: {}</source>
       <translation>命令提示以错误状态结束。 退出代码：{}</translation>
     </message>
@@ -60,7 +65,7 @@
   <context>
     <name>CueCategory</name>
     <message>
-      <location filename="../../../plugins/action_cues/index_action_cue.py" line="40"/>
+      <location filename="../../../plugins/action_cues/volume_control.py" line="55"/>
       <source>Action cues</source>
       <translation>动作提示</translation>
     </message>
@@ -78,24 +83,24 @@
       <translation>动作集合提示</translation>
     </message>
     <message>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="41"/>
+      <source>Command Cue</source>
+      <translation>命令提示</translation>
+    </message>
+    <message>
       <location filename="../../../plugins/action_cues/stop_all.py" line="29"/>
       <source>Stop-All</source>
       <translation>全部停止</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="40"/>
-      <source>Command Cue</source>
-      <translation>命令提示</translation>
+      <location filename="../../../plugins/action_cues/index_action_cue.py" line="39"/>
+      <source>Index Action</source>
+      <translation>索引动作</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="54"/>
       <source>Volume Control</source>
       <translation>音量控制</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/action_cues/index_action_cue.py" line="39"/>
-      <source>Index Action</source>
-      <translation>索引动作</translation>
     </message>
   </context>
   <context>
@@ -167,9 +172,14 @@
       <translation>查询设置</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="108"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="109"/>
       <source>Edit Collection</source>
       <translation>编辑动作集合</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="118"/>
+      <source>Command</source>
+      <translation>命令</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/stop_all.py" line="43"/>
@@ -177,19 +187,14 @@
       <translation>停止设定</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="104"/>
-      <source>Command</source>
-      <translation>命令</translation>
+      <location filename="../../../plugins/action_cues/index_action_cue.py" line="65"/>
+      <source>Action Settings</source>
+      <translation>动作设定</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="129"/>
       <source>Volume Settings</source>
       <translation>音量设定</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/action_cues/index_action_cue.py" line="65"/>
-      <source>Action Settings</source>
-      <translation>动作设定</translation>
     </message>
   </context>
   <context>
