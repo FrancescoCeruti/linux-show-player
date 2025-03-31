@@ -4,22 +4,22 @@
   <context>
     <name>CollectionCue</name>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="110"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="111"/>
       <source>Add</source>
       <translation>添加</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="111"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="112"/>
       <source>Remove</source>
       <translation>移除</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="180"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="186"/>
       <source>Cue</source>
       <translation>Cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="181"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="187"/>
       <source>Action</source>
       <translation>動作</translation>
     </message>
@@ -65,7 +65,7 @@
   <context>
     <name>CueCategory</name>
     <message>
-      <location filename="../../../plugins/action_cues/index_action_cue.py" line="40"/>
+      <location filename="../../../plugins/action_cues/volume_control.py" line="55"/>
       <source>Action cues</source>
       <translation>動作 Cues</translation>
     </message>
@@ -83,24 +83,24 @@
       <translation>動作集合 Cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/stop_all.py" line="29"/>
-      <source>Stop-All</source>
-      <translation>全部停止</translation>
-    </message>
-    <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="41"/>
       <source>Command Cue</source>
       <translation>指令 Cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/volume_control.py" line="54"/>
-      <source>Volume Control</source>
-      <translation>音量控制</translation>
+      <location filename="../../../plugins/action_cues/stop_all.py" line="29"/>
+      <source>Stop-All</source>
+      <translation>全部停止</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="39"/>
       <source>Index Action</source>
       <translation>索引動作</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/action_cues/volume_control.py" line="54"/>
+      <source>Volume Control</source>
+      <translation>音量控制</translation>
     </message>
   </context>
   <context>
@@ -172,14 +172,9 @@
       <translation>跳轉設定</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="108"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="109"/>
       <source>Edit Collection</source>
       <translation>編輯動作集合</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/action_cues/stop_all.py" line="43"/>
-      <source>Stop Settings</source>
-      <translation>停止設定</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="118"/>
@@ -187,14 +182,19 @@
       <translation>指令</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/volume_control.py" line="129"/>
-      <source>Volume Settings</source>
-      <translation>音量設定</translation>
+      <location filename="../../../plugins/action_cues/stop_all.py" line="43"/>
+      <source>Stop Settings</source>
+      <translation>停止設定</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/index_action_cue.py" line="65"/>
       <source>Action Settings</source>
       <translation>動作設定</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/action_cues/volume_control.py" line="129"/>
+      <source>Volume Settings</source>
+      <translation>音量設定</translation>
     </message>
   </context>
   <context>
