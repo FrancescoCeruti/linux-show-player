@@ -42,7 +42,7 @@ class MediaCueSettings(SettingsPage):
         self.layout().addWidget(self.startGroup)
 
         self.startEdit = QTimeEdit(self.startGroup)
-        self.startEdit.setDisplayFormat("HH.mm.ss.zzz")
+        self.startEdit.setDisplayFormat("HH:mm:ss.zzz")
         self.startGroup.layout().addWidget(self.startEdit)
 
         self.startLabel = QLabel(self.startGroup)
@@ -55,7 +55,7 @@ class MediaCueSettings(SettingsPage):
         self.layout().addWidget(self.stopGroup)
 
         self.stopEdit = QTimeEdit(self.stopGroup)
-        self.stopEdit.setDisplayFormat("HH.mm.ss.zzz")
+        self.stopEdit.setDisplayFormat("HH:mm:ss.zzz")
         self.stopGroup.layout().addWidget(self.stopEdit)
 
         self.stopLabel = QLabel(self.stopGroup)
