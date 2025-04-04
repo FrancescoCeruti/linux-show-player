@@ -27,7 +27,7 @@ from lisp.plugins.gst_backend.gst_properties import (
     GstLiveProperty,
     GstPropertyController,
 )
-from lisp.plugins.gst_backend.gst_utils import gst_uri_duration
+from lisp.plugins.gst_backend.gst_utils import gst_uri_frames
 from lisp.core.session_uri import SessionURI
 
 
@@ -70,7 +70,7 @@ class Alpha(GstMediaElement):
         self.pipeline.add(self.video_convert)
 
     def __source_setup(self, source, udata):
-        duration = gst_uri_duration(SessionURI(udata.get_uri()), True)
+        duration = gst_uri_frames(SessionURI(udata.get_uri()))
         self.gst_black.set_property("num-buffers", duration)
 
         # Add elements to pipeline
