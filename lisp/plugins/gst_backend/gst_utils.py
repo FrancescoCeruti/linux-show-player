@@ -20,8 +20,17 @@ from lisp.core.session_uri import SessionURI
 from lisp.plugins.gst_backend.gi_repository import GObject, Gst, GstPbutils
 
 
-def gst_uri_duration(uri: SessionURI):
+def gst_uri_duration(uri: SessionURI, want_frames=False):
     duration = 0
+
+    if want_frames:
+        meta = gst_uri_metadata(uri)
+        vids = meta.get_video_streams()
+        if vids:
+            dur = meta.get_duration() / Gst.SECOND
+            framerate = vids[0].get_framerate_num() / vids[0].get_framerate_denom()
+            duration = int(dur * framerate)
+            return duration if duration > 0 else 0
 
     # First we try to use the base implementation, because it's faster
     if uri.is_local:
