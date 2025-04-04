@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2023 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2024 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@ import logging
 import weakref
 
 from lisp.backend.media import Media, MediaState
+from lisp.backend.media_element import MediaType, ElementType
 from lisp.core.properties import Property
 from lisp.core.util import weak_call_proxy
 from lisp.plugins.gst_backend import elements as gst_elements
@@ -257,12 +258,34 @@ class GstMedia(Media):
                     exc_info=True,
                 )
 
+        # Collect audio/video elements
+        audio_elements = self.find_audio_elements()
+        video_elements = self.find_video_elements()
+
+        # Input source
+        self.source_element = self.elements[0]
+
+        # Link audio/video paths
+        if audio_elements:
+            for index, ele in enumerate(audio_elements):
+                if index == 0:
+                    self.source_element.audio_convert.link(ele.sink())
+                else: 
+                    self.elements[index].link(ele)
+
+        if video_elements:
+            for index, ele in enumerate(video_elements):
+                if index == 0:
+                    self.source_element.video_convert.link(ele.sink())
+                else: 
+                    self.elements[-1].link(ele.sink())
+
         # Reload the elements properties
         self.elements.update_properties(elements_properties)
 
         # The source element should provide the duration
-        self.elements[0].changed("duration").connect(self.__duration_changed)
-        self.duration = self.elements[0].duration
+        self.source_element.changed("duration").connect(self.__duration_changed)
+        self.duration = self.source_element.duration
 
         # Create a new finalizer object to free the pipeline when the media
         # is dereferenced
@@ -318,3 +341,17 @@ class GstMedia(Media):
 
     def __duration_changed(self, duration):
         self.duration = duration
+
+    def find_audio_elements(self):
+        eles = []
+        for ele in self.elements:
+            if ele.MediaType is MediaType.Audio:
+                eles.append(ele)
+        return eles
+    
+    def find_video_elements(self):
+        eles = []
+        for ele in self.elements:
+            if ele.MediaType is MediaType.Video:
+                eles.append(ele)
+        return eles

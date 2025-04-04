@@ -73,14 +73,19 @@
   <context>
     <name>CueName</name>
     <message>
-      <location filename="../../../plugins/action_cues/seek_cue.py" line="40" />
-      <source>Seek Cue</source>
-      <translation>Seek Cue</translation>
+      <location filename="../../../plugins/action_cues/stop_all.py" line="29" />
+      <source>Stop-All</source>
+      <translation>Stop-All</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="43" />
       <source>Collection Cue</source>
       <translation>Collection Cue</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/action_cues/seek_cue.py" line="40" />
+      <source>Seek Cue</source>
+      <translation>Seek Cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="41" />
@@ -167,14 +172,19 @@
   <context>
     <name>SettingsPageName</name>
     <message>
-      <location filename="../../../plugins/action_cues/seek_cue.py" line="59" />
-      <source>Seek Settings</source>
-      <translation>Seek Settings</translation>
+      <location filename="../../../plugins/action_cues/stop_all.py" line="43" />
+      <source>Stop Settings</source>
+      <translation>Stop Settings</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="109" />
       <source>Edit Collection</source>
       <translation>Edit Collection</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/action_cues/seek_cue.py" line="59" />
+      <source>Seek Settings</source>
+      <translation>Seek Settings</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="118" />

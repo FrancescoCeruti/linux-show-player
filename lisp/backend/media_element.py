@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2024 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -36,6 +36,7 @@ class MediaType(Enum):
     Audio = 0
     Video = 1
     AudioAndVideo = 2
+    Unknown = 4
 
 
 class MediaElement(HasProperties):

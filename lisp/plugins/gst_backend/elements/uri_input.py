@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2024 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ from pathlib import Path
 
 from PyQt5.QtCore import QT_TRANSLATE_NOOP
 
-from lisp.backend.media_element import MediaType
+from lisp.backend.media_element import MediaType, ElementType
 from lisp.core.decorators import async_in_pool
 from lisp.core.properties import Property
 from lisp.core.session_uri import SessionURI
@@ -29,9 +29,9 @@ from lisp.plugins.gst_backend.gst_element import GstSrcElement
 from lisp.plugins.gst_backend.gst_properties import GstProperty, GstURIProperty
 from lisp.plugins.gst_backend.gst_utils import gst_uri_duration
 
-
 class UriInput(GstSrcElement):
-    MediaType = MediaType.Audio
+    ElementType = ElementType.Input
+    MediaType = MediaType.Unknown
     Name = QT_TRANSLATE_NOOP("MediaElementName", "URI Input")
 
     _mtime = Property(default=-1)
@@ -44,11 +44,21 @@ class UriInput(GstSrcElement):
         super().__init__(pipeline)
 
         self.decoder = Gst.ElementFactory.make("uridecodebin", None)
+        self.audio_queue = Gst.ElementFactory.make("queue", "audio_queue")
+        self.video_queue = Gst.ElementFactory.make("queue", "video_queue")
         self.audio_convert = Gst.ElementFactory.make("audioconvert", None)
+        self.video_convert = Gst.ElementFactory.make("videoconvert", None)
+
         self._handler = self.decoder.connect("pad-added", self.__on_pad_added)
 
         self.pipeline.add(self.decoder)
+        self.pipeline.add(self.audio_queue)
+        self.pipeline.add(self.video_queue)
         self.pipeline.add(self.audio_convert)
+        self.pipeline.add(self.video_convert)
+        
+        self.audio_queue.link(self.audio_convert)
+        self.video_queue.link(self.video_convert)
 
         self.changed("uri").connect(self.__uri_changed)
 
@@ -60,9 +70,10 @@ class UriInput(GstSrcElement):
 
     def src(self):
         return self.audio_convert
-
+    
     def __on_pad_added(self, *args):
-        self.decoder.link(self.audio_convert)
+        self.decoder.link(self.audio_queue)
+        self.decoder.link(self.video_queue)
 
     def __uri_changed(self, uri):
         uri = SessionURI(uri)

@@ -1,5 +1,7 @@
 {
-  "_version_": "2",
+  "_version_": "3",
   "_enabled_": true,
+  "audio-pipeline": ["Volume", "Equalizer10", "DbMeter", "AutoSink"],
+  "video-pipeline": ["Volume", "DbMeter", "Equalizer10", "WaylandSink", "AutoSink"],
   "pipeline": ["Volume", "Equalizer10", "DbMeter", "AutoSink"]
 }
