@@ -56,7 +56,7 @@ class UriInput(GstSrcElement):
         self.pipeline.add(self.video_queue)
         self.pipeline.add(self.audio_convert)
         self.pipeline.add(self.video_convert)
-        
+
         self.audio_queue.link(self.audio_convert)
         self.video_queue.link(self.video_convert)
 
@@ -70,10 +70,38 @@ class UriInput(GstSrcElement):
 
     def src(self):
         return self.audio_convert
-    
+
+    def has_audio(self):
+        if not self.decoder.pads:
+            return False
+        for pad in self.decoder.pads:
+            if pad.get_current_caps():
+                if pad.get_current_caps().to_string().startswith("audio"):
+                    return True
+        return False
+
+    def has_video(self):
+        if not self.decoder.pads:
+            return False
+        for pad in self.decoder.pads:
+            if pad.get_current_caps():
+                if pad.get_current_caps().to_string().startswith("video"):
+                    return True
+        return False
+
+    def remove_audio(self):
+        self.pipeline.remove(self.audio_convert)
+        self.pipeline.remove(self.audio_queue)
+
+    def remove_video(self):
+        self.pipeline.remove(self.video_convert)
+        self.pipeline.remove(self.video_queue)
+
     def __on_pad_added(self, *args):
-        self.decoder.link(self.audio_queue)
-        self.decoder.link(self.video_queue)
+        if self.has_audio():
+            self.decoder.link(self.audio_queue)
+        if self.has_video():
+            self.decoder.link(self.video_queue)
 
     def __uri_changed(self, uri):
         uri = SessionURI(uri)

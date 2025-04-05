@@ -53,6 +53,18 @@ class AVSinkBin(Gst.Bin):
         self.add_pad(Gst.GhostPad.new("audio_src", self.audio_convert.get_static_pad("src")))
         self.add_pad(Gst.GhostPad.new("video_src", self.video_convert.get_static_pad("src")))
 
+    def remove_audio(self):
+        if self.get_static_pad("audio_sink"):
+            self.remove_pad(self.get_static_pad("audio_sink"))
+        if self.get_static_pad("audio_src"):
+            self.remove_pad(self.get_static_pad("audio_src"))
+
+    def remove_video(self):
+        if self.get_static_pad("video_sink"):
+            self.remove_pad(self.get_static_pad("video_sink"))
+        if self.get_static_pad("video_src"):
+            self.remove_pad(self.get_static_pad("video_src"))
+
 
 class AutoSink(GstMediaElement):
     ElementType = ElementType.Output
@@ -75,6 +87,16 @@ class AutoSink(GstMediaElement):
 
     def sink(self):
         return self.avbin
+
+    def remove_audio(self):
+        self.avbin.unlink(self.audio_sink)
+        self.pipeline.remove(self.audio_sink)
+        self.avbin.remove_audio()
+
+    def remove_video(self):
+        self.avbin.unlink(self.video_sink)
+        self.pipeline.remove(self.video_sink)
+        self.avbin.remove_video()
 
     def stop(self):
         self.video_sink.set_state(Gst.State.NULL)

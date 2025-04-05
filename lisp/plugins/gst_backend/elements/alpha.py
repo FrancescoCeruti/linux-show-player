@@ -154,3 +154,14 @@ class Alpha(GstMediaElement):
     def stop(self):
         self.alpha_controller.reset()
         self.live_alpha = self.alpha
+
+    def dispose(self):
+        self.pipeline.remove(self.sync_element)
+        self.pipeline.remove(self.gst_alpha)
+        self.pipeline.remove(self.gst_mixer)
+        self.pipeline.remove(self.video_convert)
+
+        self.pipeline.remove(self.gst_background)
+        self.pipeline.remove(self.background_scale)
+        self.pipeline.remove(self.background_format)
+        self.pipeline.remove(self.background_convert)

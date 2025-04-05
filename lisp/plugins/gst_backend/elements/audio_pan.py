@@ -46,3 +46,7 @@ class AudioPan(GstMediaElement):
 
     def src(self):
         return self.audio_convert
+
+    def dispose(self):
+        self.pipeline.remove(self.panorama)
+        self.pipeline.remove(self.audio_convert)
