@@ -46,14 +46,14 @@ class Alpha(GstMediaElement):
         super().__init__(pipeline)
 
         # Create elements
-        self.sync_element = Gst.ElementFactory.make("identity", None)
-        self.gst_alpha = Gst.ElementFactory.make("alpha", None)
-        self.gst_background = Gst.ElementFactory.make("videotestsrc", None)
-        self.background_scale = Gst.ElementFactory.make("videoscale", None)
-        self.background_format = Gst.ElementFactory.make("capsfilter", None)
-        self.background_convert = Gst.ElementFactory.make("videoconvert", None)
-        self.gst_mixer = Gst.ElementFactory.make("videomixer", "alphamixer")
-        self.video_convert = Gst.ElementFactory.make("videoconvert", None)
+        self.sync_element = Gst.ElementFactory.make("identity", "alpha-sync")
+        self.gst_alpha = Gst.ElementFactory.make("alpha", "alpha")
+        self.gst_background = Gst.ElementFactory.make("videotestsrc", "alpha-background")
+        self.background_scale = Gst.ElementFactory.make("videoscale", "alpha-bck-scale")
+        self.background_format = Gst.ElementFactory.make("capsfilter", "alpha-bck-caps")
+        self.background_convert = Gst.ElementFactory.make("videoconvert", "alpha-bck-convert")
+        self.gst_mixer = Gst.ElementFactory.make("videomixer", "alpha-mixer")
+        self.video_convert = Gst.ElementFactory.make("videoconvert", "alpha-convert")
 
         # Set properties
         self.gst_background.set_property("pattern", 2)  # Black pattern
