@@ -22,16 +22,59 @@ from lisp.plugins.gst_backend.gi_repository import Gst
 from lisp.plugins.gst_backend.gst_element import GstMediaElement
 
 
+class AVSinkBin(Gst.Bin):
+    def __init__(self):
+        super().__init__()
+
+        # Audio path
+        self.audio_queue = Gst.ElementFactory.make("queue", None)
+        self.audio_convert = Gst.ElementFactory.make("audioconvert", None)
+        # Video path
+        self.video_queue = Gst.ElementFactory.make("queue", None)
+        self.video_convert = Gst.ElementFactory.make("videoconvert", None)
+
+        for el in [
+            self.audio_queue,
+            self.audio_convert,
+            self.video_queue,
+            self.video_convert,
+        ]:
+            self.add(el)
+
+        # Link both paths
+        self.audio_queue.link(self.audio_convert)
+        self.video_queue.link(self.video_convert)
+
+        # Input pads (ghost pads)
+        self.add_pad(Gst.GhostPad.new("audio_sink", self.audio_queue.get_static_pad("sink")))
+        self.add_pad(Gst.GhostPad.new("video_sink", self.video_queue.get_static_pad("sink")))
+
+        # Output pads (ghost pads)
+        self.add_pad(Gst.GhostPad.new("audio_src", self.audio_convert.get_static_pad("src")))
+        self.add_pad(Gst.GhostPad.new("video_src", self.video_convert.get_static_pad("src")))
+
+
 class AutoSink(GstMediaElement):
     ElementType = ElementType.Output
-    MediaType = MediaType.Audio
+    MediaType = MediaType.AudioAndVideo
     Name = QT_TRANSLATE_NOOP("MediaElementName", "System Out")
 
     def __init__(self, pipeline):
         super().__init__(pipeline)
 
-        self.auto_sink = Gst.ElementFactory.make("autoaudiosink", "sink")
-        self.pipeline.add(self.auto_sink)
+        self.avbin = AVSinkBin()
+        self.audio_sink = Gst.ElementFactory.make("autoaudiosink", None)
+        self.video_sink = Gst.ElementFactory.make("autovideosink", None)
+
+        self.pipeline.add(self.avbin)
+        self.pipeline.add(self.audio_sink)
+        self.pipeline.add(self.video_sink)
+
+        self.avbin.link(self.audio_sink)
+        self.avbin.link(self.video_sink)
 
     def sink(self):
-        return self.auto_sink
+        return self.avbin
+
+    def stop(self):
+        self.video_sink.set_state(Gst.State.NULL)
