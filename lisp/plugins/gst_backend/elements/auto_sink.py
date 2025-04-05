@@ -33,13 +33,10 @@ class AVSinkBin(Gst.Bin):
         self.video_queue = Gst.ElementFactory.make("queue", None)
         self.video_convert = Gst.ElementFactory.make("videoconvert", None)
 
-        for el in [
-            self.audio_queue,
-            self.audio_convert,
-            self.video_queue,
-            self.video_convert,
-        ]:
-            self.add(el)
+        self.add(self.audio_queue)
+        self.add(self.audio_convert)
+        self.add(self.video_queue)
+        self.add(self.video_convert)
 
         # Link both paths
         self.audio_queue.link(self.audio_convert)
@@ -75,28 +72,31 @@ class AutoSink(GstMediaElement):
         super().__init__(pipeline)
 
         self.avbin = AVSinkBin()
-        self.audio_sink = Gst.ElementFactory.make("autoaudiosink", None)
-        self.video_sink = Gst.ElementFactory.make("autovideosink", None)
+        self.audio_sink = Gst.ElementFactory.make("autoaudiosink", "auto_audio_sink")
+        self.audio_sink.set_property("sync", False)
+        self.video_sink = Gst.ElementFactory.make("autovideosink", "auto_video_sink")
+        self.video_sink.set_property("sync", False)
 
         self.pipeline.add(self.avbin)
         self.pipeline.add(self.audio_sink)
         self.pipeline.add(self.video_sink)
 
-        self.avbin.link(self.audio_sink)
-        self.avbin.link(self.video_sink)
+        self.avbin.get_static_pad("audio_src").link(self.audio_sink.get_static_pad("sink"))
+        self.avbin.get_static_pad("video_src").link(self.video_sink.get_static_pad("sink"))
 
     def sink(self):
         return self.avbin
 
     def remove_audio(self):
-        self.avbin.unlink(self.audio_sink)
+        self.avbin.get_static_pad("audio_src").unlink(self.audio_sink.get_static_pad("sink"))
         self.pipeline.remove(self.audio_sink)
         self.avbin.remove_audio()
 
     def remove_video(self):
-        self.avbin.unlink(self.video_sink)
+        self.avbin.get_static_pad("video_src").unlink(self.video_sink.get_static_pad("sink"))
         self.pipeline.remove(self.video_sink)
         self.avbin.remove_video()
 
     def stop(self):
+        self.audio_sink.set_state(Gst.State.NULL)
         self.video_sink.set_state(Gst.State.NULL)

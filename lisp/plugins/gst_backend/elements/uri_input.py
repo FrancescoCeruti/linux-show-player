@@ -44,10 +44,10 @@ class UriInput(GstSrcElement):
         super().__init__(pipeline)
 
         self.decoder = Gst.ElementFactory.make("uridecodebin", None)
-        self.audio_queue = Gst.ElementFactory.make("queue", "audio_queue")
-        self.video_queue = Gst.ElementFactory.make("queue", "video_queue")
-        self.audio_convert = Gst.ElementFactory.make("audioconvert", None)
-        self.video_convert = Gst.ElementFactory.make("videoconvert", None)
+        self.audio_queue = Gst.ElementFactory.make("queue", "uri_audio_queue")
+        self.video_queue = Gst.ElementFactory.make("queue", "uri_video_queue")
+        self.audio_convert = Gst.ElementFactory.make("audioconvert", "uri_audio_convert")
+        self.video_convert = Gst.ElementFactory.make("videoconvert", "uri_video_convert")
 
         self._handler = self.decoder.connect("pad-added", self.__on_pad_added)
 
@@ -97,11 +97,11 @@ class UriInput(GstSrcElement):
         self.pipeline.remove(self.video_convert)
         self.pipeline.remove(self.video_queue)
 
-    def __on_pad_added(self, *args):
-        if self.has_audio():
-            self.decoder.link(self.audio_queue)
-        if self.has_video():
-            self.decoder.link(self.video_queue)
+    def __on_pad_added(self, source, pad):
+        if pad.get_current_caps().to_string().startswith("audio"):
+            pad.link(self.audio_queue.get_static_pad("sink"))
+        if pad.get_current_caps().to_string().startswith("video"):
+            pad.link(self.video_queue.get_static_pad("sink"))
 
     def __uri_changed(self, uri):
         uri = SessionURI(uri)
