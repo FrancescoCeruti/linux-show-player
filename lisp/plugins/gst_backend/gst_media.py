@@ -349,13 +349,13 @@ class GstMedia(Media):
     def find_audio_elements(self):
         eles = []
         for ele in self.elements:
-            if ele.MediaType is MediaType.Audio:
+            if ele.MediaType is MediaType.Audio or ele.MediaType is MediaType.AudioAndVideo:
                 eles.append(ele)
         return eles
 
     def find_video_elements(self):
         eles = []
         for ele in self.elements:
-            if ele.MediaType is MediaType.Video:
+            if ele.MediaType is MediaType.Video or ele.MediaType is MediaType.AudioAndVideo:
                 eles.append(ele)
         return eles
