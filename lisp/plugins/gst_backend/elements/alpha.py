@@ -45,21 +45,20 @@ class Alpha(GstMediaElement):
     def __init__(self, pipeline):
         super().__init__(pipeline)
 
-        pipeline.children[-1].connect("pad-added", self._on_pad_added)
-        pipeline.children[-1].connect("source-setup", self.__source_setup)
-
         # Create elements
         self.sync_element = Gst.ElementFactory.make("identity", None)
-        self.gst_black = Gst.ElementFactory.make("videotestsrc", None)
-        self.black_scale = Gst.ElementFactory.make("videoscale", None)
-        self.black_format = Gst.ElementFactory.make("capsfilter", None)
         self.gst_alpha = Gst.ElementFactory.make("alpha", None)
+        self.gst_background = Gst.ElementFactory.make("videotestsrc", None)
+        self.background_scale = Gst.ElementFactory.make("videoscale", None)
+        self.background_format = Gst.ElementFactory.make("capsfilter", None)
+        self.background_convert = Gst.ElementFactory.make("videoconvert", None)
         self.gst_mixer = Gst.ElementFactory.make("videomixer", "alphamixer")
         self.video_convert = Gst.ElementFactory.make("videoconvert", None)
 
         # Set properties
-        self.gst_black.set_property("pattern", 2)  # Black pattern
+        self.gst_background.set_property("pattern", 2)  # Black pattern
         self.gst_alpha.set_property("alpha", 1.0)
+        self.gst_alpha.set_property("method", "set")
 
         self.alpha_controller = GstPropertyController(self.pipeline, self.gst_alpha, self.sync_element, "alpha")
 
@@ -69,27 +68,77 @@ class Alpha(GstMediaElement):
         self.pipeline.add(self.gst_mixer)
         self.pipeline.add(self.video_convert)
 
-    def __source_setup(self, source, udata):
-        duration = gst_uri_frames(SessionURI(udata.get_uri()))
-        self.gst_black.set_property("num-buffers", duration)
-
-        # Add elements to pipeline
-        self.pipeline.add(self.gst_black)
-        self.pipeline.add(self.black_scale)
-        self.pipeline.add(self.black_format)
+        self.pipeline.add(self.gst_background)
+        self.pipeline.add(self.background_scale)
+        self.pipeline.add(self.background_format)
+        self.pipeline.add(self.background_convert)
 
         # Link elements
-        self.gst_black.link(self.black_scale)
-        self.black_scale.link(self.black_format)
-        self.black_format.link(self.gst_mixer)
         self.sync_element.link(self.gst_alpha)
-        self.gst_alpha.link(self.gst_mixer)
+        mixer_pad = self.gst_mixer.get_request_pad("sink_0")
+        mixer_pad.set_property("zorder", 1)
+        self.gst_alpha.get_static_pad("src").link(mixer_pad)
         self.gst_mixer.link(self.video_convert)
 
+        self.gst_background.link(self.background_scale)
+        self.background_scale.link(self.background_format)
+        self.background_format.link(self.background_convert)
+
+        self.__block_id = self.background_convert.get_static_pad("src").add_probe(
+            Gst.PadProbeType.BLOCK_DOWNSTREAM, lambda *_: Gst.PadProbeReturn.OK
+        )
+
+        self.__set_caps = False
+        self.__set_probe = False
+
+        pipeline.children[-1].connect("pad-added", self._on_pad_added)
+        pipeline.children[-1].connect("source-setup", self.__source_setup)
+
+    def __source_setup(self, source, udata):
+        duration = gst_uri_frames(SessionURI(udata.get_uri()))
+        self.gst_background.set_property("num-buffers", duration)
+
+    def _on_caps_probe(self, pad, info, *args):
+        if self.__set_probe:
+            return Gst.PadProbeReturn.OK
+        event = info.get_event()
+        if not event or event.type != Gst.EventType.CAPS:
+            return Gst.PadProbeReturn.OK
+
+        self.__set_probe = True
+
+        caps = event.parse_caps()
+
+        # Apply caps to background_format
+        self.background_format.set_property("caps", caps)
+
+        # Now that caps are set, link gst_alpha → mixer
+        mixer_pad = self.gst_mixer.get_request_pad("sink_1")
+        mixer_pad.set_property("zorder", 0)
+        self.background_convert.get_static_pad("src").link(mixer_pad)
+
+        # Remove the blocking probe so background can flow
+        if self.__block_id is not None:
+            self.background_convert.get_static_pad("src").remove_probe(self.__block_id)
+            self.__block_id = None
+
+        # Remove this caps probe and allow normal flow
+        pad.remove_probe(self.__probe_handler)
+        return Gst.PadProbeReturn.DROP
+
     def _on_pad_added(self, decodebin, pad):
+        if self.__set_caps:
+            return
         caps = pad.get_current_caps()
-        if caps:
-            self.black_format.set_property("caps", caps)
+        if not caps:
+            return
+        struct = caps.get_structure(0)
+        if not struct:
+            return
+        if not struct.has_field("width") or not struct.has_field("height"):
+            return
+        self.__set_caps = True
+        self.__probe_handler = pad.add_probe(Gst.PadProbeType.EVENT_DOWNSTREAM, self._on_caps_probe)
 
     def get_controller(self, property_name: str) -> Optional[GstPropertyController]:
         if property_name == "live_alpha":
@@ -104,4 +153,4 @@ class Alpha(GstMediaElement):
 
     def stop(self):
         self.alpha_controller.reset()
-        self.live_volume = self.alpha
+        self.live_alpha = self.alpha
