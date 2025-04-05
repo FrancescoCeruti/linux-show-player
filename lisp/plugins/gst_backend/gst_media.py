@@ -266,19 +266,23 @@ class GstMedia(Media):
         self.source_element = self.elements[0]
 
         # Link audio/video paths
+        last_audio_element = self.source_element
         if audio_elements:
             for index, ele in enumerate(audio_elements):
                 if index == 0:
                     self.source_element.audio_convert.link(ele.sink())
-                else: 
-                    self.elements[index].link(ele)
+                else:
+                    last_audio_element.link(ele)
+                last_audio_element = ele
 
+        last_video_element = self.source_element
         if video_elements:
             for index, ele in enumerate(video_elements):
                 if index == 0:
                     self.source_element.video_convert.link(ele.sink())
-                else: 
-                    self.elements[-1].link(ele.sink())
+                else:
+                    last_video_element.link(ele)
+                last_video_element = ele
 
         # Reload the elements properties
         self.elements.update_properties(elements_properties)
@@ -348,7 +352,7 @@ class GstMedia(Media):
             if ele.MediaType is MediaType.Audio:
                 eles.append(ele)
         return eles
-    
+
     def find_video_elements(self):
         eles = []
         for ele in self.elements:
