@@ -22,6 +22,7 @@ from PyQt5.QtWidgets import (
     QLabel,
     QVBoxLayout,
     QDoubleSpinBox,
+    QDateTimeEdit,
     QTimeEdit,
 )
 
@@ -167,6 +168,8 @@ class CueWaitsPage(CueSettingsPage):
 
         self.preWaitEdit = QTimeEdit(self.preWaitGroup)
         self.preWaitEdit.setDisplayFormat("HH:mm:ss.zzz")
+        self.preWaitEdit.setSelectedSection(QDateTimeEdit.SecondSection)
+        self.preWaitEdit.setSelectedSection(QDateTimeEdit.NoSection)
         self.preWaitGroup.layout().addWidget(self.preWaitEdit)
 
         self.preWaitLabel = QLabel(self.preWaitGroup)
@@ -180,6 +183,8 @@ class CueWaitsPage(CueSettingsPage):
 
         self.postWaitEdit = QTimeEdit(self.postWaitGroup)
         self.postWaitEdit.setDisplayFormat("HH:mm:ss.zzz")
+        self.postWaitEdit.setSelectedSection(QDateTimeEdit.SecondSection)
+        self.postWaitEdit.setSelectedSection(QDateTimeEdit.NoSection)
         self.postWaitGroup.layout().addWidget(self.postWaitEdit)
 
         self.postWaitLabel = QLabel(self.postWaitGroup)

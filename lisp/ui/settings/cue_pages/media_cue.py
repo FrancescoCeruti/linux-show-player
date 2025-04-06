@@ -19,6 +19,7 @@ from PyQt5.QtCore import QTime, Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtWidgets import (
     QGroupBox,
     QHBoxLayout,
+    QDateTimeEdit,
     QTimeEdit,
     QLabel,
     QSpinBox,
@@ -43,6 +44,8 @@ class MediaCueSettings(SettingsPage):
 
         self.startEdit = QTimeEdit(self.startGroup)
         self.startEdit.setDisplayFormat("HH:mm:ss.zzz")
+        self.startEdit.setSelectedSection(QDateTimeEdit.SecondSection)
+        self.startEdit.setSelectedSection(QDateTimeEdit.NoSection)
         self.startGroup.layout().addWidget(self.startEdit)
 
         self.startLabel = QLabel(self.startGroup)
@@ -56,6 +59,8 @@ class MediaCueSettings(SettingsPage):
 
         self.stopEdit = QTimeEdit(self.stopGroup)
         self.stopEdit.setDisplayFormat("HH:mm:ss.zzz")
+        self.stopEdit.setSelectedSection(QDateTimeEdit.SecondSection)
+        self.stopEdit.setSelectedSection(QDateTimeEdit.NoSection)
         self.stopGroup.layout().addWidget(self.stopEdit)
 
         self.stopLabel = QLabel(self.stopGroup)
