@@ -105,19 +105,19 @@ def time_tuple(milliseconds):
     return hours, minutes, seconds, milliseconds
 
 
-def strtime(time, accurate=False, duration=False):
+def strtime(time, accurate=False, showHundredths=False):
     """Return a string from the given milliseconds time.
 
-    - when >= 1h                 -> hh:mm:ss
-    - when < 1h and duration     -> mm:ss:zz
-    - when < 1h and accurate     -> mm:ss:z0
-    - when < 1h and not accurate -> mm:ss:00
+    - when >= 1h                   -> hh:mm:ss
+    - when < 1h and showHundredths -> mm:ss:zz
+    - when < 1h and accurate       -> mm:ss:z0
+    - when < 1h and not accurate   -> mm:ss:00
     """
 
     hours, minutes, seconds, milliseconds = time_tuple(int(time))
     if hours > 0:
         return f"{hours:02}:{minutes:02}:{seconds:02}"
-    elif duration:
+    elif showHundredths:
         return f"{minutes:02}:{seconds:02}.{round(milliseconds / 10):02}"
     elif accurate:
         return f"{minutes:02}:{seconds:02}.{milliseconds // 100}0"
