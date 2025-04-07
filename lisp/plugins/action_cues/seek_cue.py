@@ -22,6 +22,7 @@ from PyQt5.QtWidgets import (
     QHBoxLayout,
     QLabel,
     QPushButton,
+    QDateTimeEdit,
     QTimeEdit,
     QVBoxLayout,
 )
@@ -95,7 +96,8 @@ class SeekCueSettings(SettingsPage):
         self.layout().addWidget(self.seekGroup)
 
         self.seekEdit = QTimeEdit(self.seekGroup)
-        self.seekEdit.setDisplayFormat("HH.mm.ss.zzz")
+        self.seekEdit.setDisplayFormat("HH:mm:ss.zzz")
+        self.seekEdit.setCurrentSection(QDateTimeEdit.SecondSection)
         self.seekGroup.layout().addWidget(self.seekEdit)
 
         self.seekLabel = QLabel(self.seekGroup)
