@@ -15,28 +15,27 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt, QTime, QT_TRANSLATE_NOOP
+from PyQt5.QtCore import QT_TRANSLATE_NOOP, Qt, QTime
 from PyQt5.QtWidgets import (
+    QDateTimeEdit,
     QGroupBox,
     QHBoxLayout,
     QLabel,
-    QVBoxLayout,
-    QDoubleSpinBox,
-    QDateTimeEdit,
     QTimeEdit,
+    QVBoxLayout,
 )
 
 from lisp.cues.cue import CueAction
 from lisp.ui.settings.pages import (
+    CuePageMixin,
     CueSettingsPage,
     SettingsPagesTabWidget,
-    CuePageMixin,
 )
 from lisp.ui.ui_utils import translate
 from lisp.ui.widgets import (
-    FadeComboBox,
     CueActionComboBox,
     CueNextActionComboBox,
+    FadeComboBox,
     FadeEdit,
 )
 
@@ -168,8 +167,7 @@ class CueWaitsPage(CueSettingsPage):
 
         self.preWaitEdit = QTimeEdit(self.preWaitGroup)
         self.preWaitEdit.setDisplayFormat("HH:mm:ss.zzz")
-        self.preWaitEdit.setSelectedSection(QDateTimeEdit.SecondSection)
-        self.preWaitEdit.setSelectedSection(QDateTimeEdit.NoSection)
+        self.preWaitEdit.setCurrentSection(QDateTimeEdit.SecondSection)
         self.preWaitGroup.layout().addWidget(self.preWaitEdit)
 
         self.preWaitLabel = QLabel(self.preWaitGroup)
@@ -183,8 +181,7 @@ class CueWaitsPage(CueSettingsPage):
 
         self.postWaitEdit = QTimeEdit(self.postWaitGroup)
         self.postWaitEdit.setDisplayFormat("HH:mm:ss.zzz")
-        self.postWaitEdit.setSelectedSection(QDateTimeEdit.SecondSection)
-        self.postWaitEdit.setSelectedSection(QDateTimeEdit.NoSection)
+        self.postWaitEdit.setCurrentSection(QDateTimeEdit.SecondSection)
         self.postWaitGroup.layout().addWidget(self.postWaitEdit)
 
         self.postWaitLabel = QLabel(self.postWaitGroup)
