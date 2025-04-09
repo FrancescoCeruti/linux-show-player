@@ -11,8 +11,8 @@ from pathlib import Path
 from typing import Mapping
 
 import toml
-from packaging.utils import parse_wheel_filename
 from packaging.tags import Tag
+from packaging.utils import parse_wheel_filename
 
 
 def get_best_source(name: str, sources: list, hashes: list):
@@ -94,7 +94,7 @@ def get_packages_sources(packages: list, parsed_lockfile: Mapping) -> list:
     return sources
 
 
-def get_locked_packages(parsed_lockfile: Mapping, exclude=tuple()) -> list:
+def get_locked_packages(parsed_lockfile: Mapping, groups: set, exclude=tuple()) -> list:
     """Gets the list of dependency names."""
     dependencies = []
     packages = parsed_lockfile.get("package", [])
@@ -104,6 +104,7 @@ def get_locked_packages(parsed_lockfile: Mapping, exclude=tuple()) -> list:
             not package.get("optional")
             and package.get("source") is None
             and package.get("name").lower() not in exclude
+            and not groups.isdisjoint(package.get("groups"))
         ):
             dependencies.append(package)
 
@@ -139,7 +140,7 @@ def main():
 
     # Get packages sources from the poetry.lock file
     parsed_lockfile = toml.load(args.lockfile)
-    locked_packages = get_locked_packages(parsed_lockfile, exclude=args.exclude)
+    locked_packages = get_locked_packages(parsed_lockfile, {'main'}, exclude=args.exclude)
     print(f"Found {len(locked_packages)} packages in {args.lockfile}")
 
     # Compose the "pip install" command
