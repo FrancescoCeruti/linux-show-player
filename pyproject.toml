@@ -35,7 +35,7 @@ requests = "^2.20"
 sortedcontainers = "^2.0"
 humanize = "^4.8.0"
 numpy = ">= 1.26.4, < 3.0.0"
-pyalsa = { git = "https://github.com/alsa-project/alsa-python.git", rev="157d6604ad0854d2b2d068cf062a71583db169c3" }
+pyalsa = { git = "https://github.com/alsa-project/alsa-python.git", rev="f8f9260282eb9c97f53e4689e04182dc87a4810e" }
 # Use a pyliblo fork that define dependecies correctly
 pyliblo3 = { git = "https://github.com/FrancescoCeruti/pyliblo3", rev = "9b66f93bc058807fdbe27f9255b18b0df8e60e32" }
 qdigitalmeter = "^0.1.0"
