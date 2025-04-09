@@ -143,8 +143,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://www.alsa-project.org/files/pub/pyalsa/pyalsa-1.2.7.tar.bz2",
-                    "sha256": "67d8f99f1ccf23e7ebdfa2c3be0b09f147949fd9511d1e6748b7f412ef046e1f"
+                    "url": "https://www.alsa-project.org/files/pub/pyalsa/pyalsa-1.2.12.tar.bz2",
+                    "sha256": "8abeaf41e5f48f617a52d1078932da89ab303d4a1d8f9919f947bdb1b7d03f50"
                 }
             ]
         },
@@ -160,8 +160,8 @@
             "sources": [
                 {
                     "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/f2/db/20a9f9cae3f3c213a8c406deb4395698459fd96962cea8f2ccb230b1943c/poetry_core-1.9.0.tar.gz",
-                    "sha256": "fa7a4001eae8aa572ee84f35feb510b321bd652e5cf9293249d62853e1f935a2"
+                    "url": "https://files.pythonhosted.org/packages/ce/a3/f1fd35e3863b50713642d8745ba28e12e7cb8a6a28beab064ff1e8455db4/poetry_core-2.1.2-py3-none-any.whl",
+                    "sha256": "ecb1e8f7d4f071a21cd0feb8c19bd1aec80de6fb0e82aa9d809a591e544431b4"
                 }
             ]
         },

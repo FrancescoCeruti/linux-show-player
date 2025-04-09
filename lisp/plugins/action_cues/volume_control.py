@@ -17,27 +17,27 @@
 
 import logging
 
-from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
+from PyQt5.QtCore import QT_TRANSLATE_NOOP, Qt
 from PyQt5.QtWidgets import (
-    QVBoxLayout,
-    QLabel,
-    QHBoxLayout,
-    QGroupBox,
-    QPushButton,
     QDoubleSpinBox,
+    QGroupBox,
+    QHBoxLayout,
+    QLabel,
+    QPushButton,
+    QVBoxLayout,
 )
 
 from lisp.application import Application
 from lisp.backend.audio_utils import (
     MAX_VOLUME,
-    MIN_VOLUME_DB,
     MAX_VOLUME_DB,
-    linear_to_db,
+    MIN_VOLUME_DB,
     db_to_linear,
+    linear_to_db,
 )
 from lisp.core.decorators import async_function
 from lisp.core.fade_functions import FadeInType, FadeOutType
-from lisp.core.fader import Fader, DummyFader
+from lisp.core.fader import DummyFader
 from lisp.core.properties import Property
 from lisp.cues.cue import Cue, CueAction
 from lisp.cues.media_cue import MediaCue
@@ -64,7 +64,8 @@ class VolumeControl(Cue):
         CueAction.Stop,
         CueAction.Pause,
         CueAction.Resume,
-        CueAction.Interrupt
+        CueAction.Resume,
+        CueAction.Interrupt,
     )
 
     def __init__(self, *args, **kwargs):

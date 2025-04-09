@@ -15,14 +15,14 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import QRect, Qt, QSize
+from PyQt5.QtCore import QRect, QSize, Qt
 from PyQt5.QtGui import (
-    QPainter,
     QBrush,
     QColor,
-    QPen,
-    QPainterPath,
     QFontDatabase,
+    QPainter,
+    QPainterPath,
+    QPen,
 )
 from PyQt5.QtWidgets import QLabel, QProgressBar, QWidget
 
@@ -187,19 +187,18 @@ class TimeWidget(QProgressBar):
         self.setFont(QFontDatabase.systemFont(QFontDatabase.FixedFont))
 
         self.cue = item.cue
-        self.accurateTime = True
         self.showZeroDuration = False
 
     def _updateTime(self, time):
         self.setValue(time)
-        self.setFormat(strtime(time, accurate=self.accurateTime))
+        self.setFormat(strtime(time, accurate=1))
 
     def _updateDuration(self, duration):
         if duration > 0 or self.showZeroDuration:
             # Display as disabled if duration < 0
             self.setEnabled(duration > 0)
             self.setTextVisible(True)
-            self.setFormat(strtime(duration, accurate=self.accurateTime))
+            self.setFormat(strtime(duration, accurate=2))
             # Avoid settings min and max to 0, or the bar go in busy state
             self.setRange(0 if duration > 0 else -1, int(duration))
         else:

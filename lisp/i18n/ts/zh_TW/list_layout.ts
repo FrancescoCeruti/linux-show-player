@@ -38,89 +38,29 @@
   <context>
     <name>ListLayout</name>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="123"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="119"/>
+      <source>Default behaviors (applied to new sessions)</source>
+      <translation>默認行為 (套用於新工作階段)</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/layout.py" line="189"/>
       <source>Show dB-meters</source>
       <translation>顯示分貝計</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="125"/>
-      <source>Show seek-bars</source>
-      <translation>顯示進度條</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="124"/>
+      <location filename="../../../plugins/list_layout/layout.py" line="193"/>
       <source>Show accurate time</source>
       <translation>顯示準確時間</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="196"/>
-      <source>Show index column</source>
-      <translation>顯示索引列</translation>
+      <location filename="../../../plugins/list_layout/layout.py" line="191"/>
+      <source>Show seek-bars</source>
+      <translation>顯示進度條</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="126"/>
+      <location filename="../../../plugins/list_layout/layout.py" line="199"/>
       <source>Auto-select next cue</source>
       <translation>自動選擇下一個 Cue</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="202"/>
-      <source>Selection mode</source>
-      <translation>選取 Cue 模式</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="205"/>
-      <source>Show resize handles</source>
-      <translation>顯示調整大小手柄</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="208"/>
-      <source>Restore default size</source>
-      <translation>重設至默認大小</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="211"/>
-      <source>Disable GO Key While Playing</source>
-      <translation>在播放時禁用 GO 鍵</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="164"/>
-      <source>Edit cue</source>
-      <translation>編輯 Cue</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="166"/>
-      <source>Edit selected</source>
-      <translation>編輯所選</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="170"/>
-      <source>Clone cue</source>
-      <translation>複製 Cue</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="172"/>
-      <source>Clone selected</source>
-      <translation>複製所選</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="176"/>
-      <source>Remove cue</source>
-      <translation>移除 Cue</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="178"/>
-      <source>Remove selected</source>
-      <translation>刪除所選</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="410"/>
-      <source>Copy of {}</source>
-      <translation>{} 的副本</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="119"/>
-      <source>Default behaviors (applied to new sessions)</source>
-      <translation>默認行為 (套用於新工作階段)</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="128"/>
@@ -211,6 +151,66 @@
       <location filename="../../../plugins/list_layout/control_buttons.py" line="65"/>
       <source>Fade-In all</source>
       <translation>全部淡入</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/layout.py" line="196"/>
+      <source>Show index column</source>
+      <translation>顯示索引列</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/layout.py" line="202"/>
+      <source>Selection mode</source>
+      <translation>選取 Cue 模式</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/layout.py" line="205"/>
+      <source>Show resize handles</source>
+      <translation>顯示調整大小手柄</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/layout.py" line="208"/>
+      <source>Restore default size</source>
+      <translation>重設至默認大小</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/layout.py" line="211"/>
+      <source>Disable GO Key While Playing</source>
+      <translation>在播放時禁用 GO 鍵</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/layout.py" line="164"/>
+      <source>Edit cue</source>
+      <translation>編輯 Cue</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/layout.py" line="166"/>
+      <source>Edit selected</source>
+      <translation>編輯所選</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/layout.py" line="170"/>
+      <source>Clone cue</source>
+      <translation>複製 Cue</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/layout.py" line="172"/>
+      <source>Clone selected</source>
+      <translation>複製所選</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/layout.py" line="176"/>
+      <source>Remove cue</source>
+      <translation>移除 Cue</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/layout.py" line="178"/>
+      <source>Remove selected</source>
+      <translation>刪除所選</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/layout.py" line="410"/>
+      <source>Copy of {}</source>
+      <translation>{} 的副本</translation>
     </message>
   </context>
   <context>

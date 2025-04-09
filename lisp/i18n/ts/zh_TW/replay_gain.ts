@@ -4,24 +4,9 @@
   <context>
     <name>ReplayGain</name>
     <message>
-      <location filename="../../../plugins/replay_gain/gain_ui.py" line="111"/>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="50"/>
       <source>ReplayGain / Normalization</source>
       <translation>回放增益/標準化</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="55"/>
-      <source>Calculate</source>
-      <translation>計算</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="60"/>
-      <source>Reset all</source>
-      <translation>全部重設</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/replay_gain/replay_gain.py" line="66"/>
-      <source>Reset selected</source>
-      <translation>重設所選</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/gain_ui.py" line="113"/>
@@ -47,6 +32,21 @@
       <location filename="../../../plugins/replay_gain/gain_ui.py" line="145"/>
       <source>Processing files ...</source>
       <translation>正在處理檔案...</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="55"/>
+      <source>Calculate</source>
+      <translation>計算</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="60"/>
+      <source>Reset all</source>
+      <translation>全部重設</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/replay_gain/replay_gain.py" line="66"/>
+      <source>Reset selected</source>
+      <translation>重設所選</translation>
     </message>
   </context>
   <context>

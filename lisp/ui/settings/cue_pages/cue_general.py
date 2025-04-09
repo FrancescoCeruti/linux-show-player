@@ -15,26 +15,27 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
+from PyQt5.QtCore import QT_TRANSLATE_NOOP, Qt, QTime
 from PyQt5.QtWidgets import (
+    QDateTimeEdit,
     QGroupBox,
     QHBoxLayout,
     QLabel,
+    QTimeEdit,
     QVBoxLayout,
-    QDoubleSpinBox,
 )
 
 from lisp.cues.cue import CueAction
 from lisp.ui.settings.pages import (
+    CuePageMixin,
     CueSettingsPage,
     SettingsPagesTabWidget,
-    CuePageMixin,
 )
 from lisp.ui.ui_utils import translate
 from lisp.ui.widgets import (
-    FadeComboBox,
     CueActionComboBox,
     CueNextActionComboBox,
+    FadeComboBox,
     FadeEdit,
 )
 
@@ -164,9 +165,10 @@ class CueWaitsPage(CueSettingsPage):
         self.preWaitGroup.setLayout(QHBoxLayout())
         self.layout().addWidget(self.preWaitGroup)
 
-        self.preWaitSpin = QDoubleSpinBox(self.preWaitGroup)
-        self.preWaitSpin.setMaximum(3600 * 24)
-        self.preWaitGroup.layout().addWidget(self.preWaitSpin)
+        self.preWaitEdit = QTimeEdit(self.preWaitGroup)
+        self.preWaitEdit.setDisplayFormat("HH:mm:ss.zzz")
+        self.preWaitEdit.setCurrentSection(QDateTimeEdit.SecondSection)
+        self.preWaitGroup.layout().addWidget(self.preWaitEdit)
 
         self.preWaitLabel = QLabel(self.preWaitGroup)
         self.preWaitLabel.setAlignment(Qt.AlignCenter)
@@ -177,9 +179,10 @@ class CueWaitsPage(CueSettingsPage):
         self.postWaitGroup.setLayout(QHBoxLayout())
         self.layout().addWidget(self.postWaitGroup)
 
-        self.postWaitSpin = QDoubleSpinBox(self.postWaitGroup)
-        self.postWaitSpin.setMaximum(3600 * 24)
-        self.postWaitGroup.layout().addWidget(self.postWaitSpin)
+        self.postWaitEdit = QTimeEdit(self.postWaitGroup)
+        self.postWaitEdit.setDisplayFormat("HH:mm:ss.zzz")
+        self.postWaitEdit.setCurrentSection(QDateTimeEdit.SecondSection)
+        self.postWaitGroup.layout().addWidget(self.postWaitEdit)
 
         self.postWaitLabel = QLabel(self.postWaitGroup)
         self.postWaitLabel.setAlignment(Qt.AlignCenter)
@@ -217,17 +220,21 @@ class CueWaitsPage(CueSettingsPage):
         self.setGroupEnabled(self.nextActionGroup, enabled)
 
     def loadSettings(self, settings):
-        self.preWaitSpin.setValue(settings.get("pre_wait", 0))
-        self.postWaitSpin.setValue(settings.get("post_wait", 0))
+        preWaitMilliseconds = int(round(settings.get("pre_wait", 0) * 1000))
+        self.preWaitEdit.setTime(QTime(0, 0).addMSecs(preWaitMilliseconds))
+        postWaitMilliseconds = int(round(settings.get("post_wait", 0) * 1000))
+        self.postWaitEdit.setTime(QTime(0, 0).addMSecs(postWaitMilliseconds))
         self.nextActionCombo.setCurrentAction(settings.get("next_action", ""))
 
     def getSettings(self):
         settings = {}
 
         if self.isGroupEnabled(self.preWaitGroup):
-            settings["pre_wait"] = self.preWaitSpin.value()
+            preWaitMs = self.preWaitEdit.time().msecsSinceStartOfDay()
+            settings["pre_wait"] = round(preWaitMs / 1000, 3)
         if self.isGroupEnabled(self.postWaitGroup):
-            settings["post_wait"] = self.postWaitSpin.value()
+            postWaitMs = self.postWaitEdit.time().msecsSinceStartOfDay()
+            settings["post_wait"] = round(postWaitMs / 1000, 3)
         if self.isGroupEnabled(self.nextActionGroup):
             settings["next_action"] = self.nextActionCombo.currentData()
 

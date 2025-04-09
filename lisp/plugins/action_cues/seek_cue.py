@@ -16,14 +16,15 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5 import QtCore
-from PyQt5.QtCore import QTime, QT_TRANSLATE_NOOP
+from PyQt5.QtCore import QT_TRANSLATE_NOOP, QTime
 from PyQt5.QtWidgets import (
-    QVBoxLayout,
     QGroupBox,
-    QPushButton,
-    QLabel,
     QHBoxLayout,
+    QLabel,
+    QPushButton,
+    QDateTimeEdit,
     QTimeEdit,
+    QVBoxLayout,
 )
 
 from lisp.application import Application
@@ -45,7 +46,8 @@ class SeekCue(Cue):
         CueAction.Start,
         CueAction.Stop,
         CueAction.Pause,
-        CueAction.Resume
+        CueAction.Resume,
+        CueAction.Interrupt,
     )
 
     target_id = Property()
@@ -94,7 +96,8 @@ class SeekCueSettings(SettingsPage):
         self.layout().addWidget(self.seekGroup)
 
         self.seekEdit = QTimeEdit(self.seekGroup)
-        self.seekEdit.setDisplayFormat("HH.mm.ss.zzz")
+        self.seekEdit.setDisplayFormat("HH:mm:ss.zzz")
+        self.seekEdit.setCurrentSection(QDateTimeEdit.SecondSection)
         self.seekGroup.layout().addWidget(self.seekEdit)
 
         self.seekLabel = QLabel(self.seekGroup)
