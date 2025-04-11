@@ -129,7 +129,7 @@ class GstBackend(Plugin, BaseBackend):
         # Create media cues, and add them to the Application cue_model
         extensions = self.supported_extensions()
         self._add_uri_cue({"video": extensions["video"]})
-        
+
     def _add_uri_audio_cue(self):
         # Create media cues, and add them to the Application cue_model
         extensions = self.supported_extensions()
@@ -173,15 +173,13 @@ class GstBackend(Plugin, BaseBackend):
 
     def add_cue_from_files(self, files):
         QApplication.setOverrideCursor(QCursor(Qt.WaitCursor))
-        extensions = self.supported_extensions()
+
+        # Create media cues, and add them to the Application cue_model
+        factory = UriMediaCueFactory(GstBackend.Config["pipeline"])
+
         cues = []
         for file in files:
             # Get the file extension without the leading dot
-            extension = os.path.splitext(file)[-1][1:]
-            if extension in extensions['audio']:
-                factory = UriMediaCueFactory(GstBackend.Config["audio-pipeline"], MediaType.Audio)
-            elif extension in extensions['video']:
-                factory = UriMediaCueFactory(GstBackend.Config["video-pipeline"], MediaType.Video)
             cue = factory(self.app, uri=file)
             # Use the filename without extension as cue name
             cue.name = os.path.splitext(os.path.basename(file))[0]
