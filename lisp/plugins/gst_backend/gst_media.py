@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2023 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2024 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@ import logging
 import weakref
 
 from lisp.backend.media import Media, MediaState
+from lisp.backend.media_element import MediaType, ElementType
 from lisp.core.properties import Property
 from lisp.core.util import weak_call_proxy
 from lisp.plugins.gst_backend import elements as gst_elements
@@ -65,6 +66,7 @@ class GstMedia(Media):
         self.__finalizer = None
         self.__loop = 0  # current number of loops left to do
         self.__current_pipe = None  # A copy of the pipe property
+        self.__did_delete = False
 
         self.changed("loop").connect(self.__on_loops_changed)
         self.changed("pipe").connect(self.__on_pipe_changed)
@@ -101,6 +103,8 @@ class GstMedia(Media):
                 self.__seek(self.start_time)
             else:
                 self.__seek(self.current_time())
+
+            self.__cleanupAV()
 
             self.__pipeline.set_state(Gst.State.PLAYING)
             self.__pipeline.get_state(Gst.SECOND)
@@ -220,7 +224,21 @@ class GstMedia(Media):
             self.__current_pipe = new_pipe
             self.__init_pipeline()
 
+    def __cleanupAV(self, *_):
+        if self.__did_delete:
+            return
+        self.__did_delete = True
+        if not self.source_element.has_audio():
+            audio_elements = self.find_audio_elements()
+            for element in audio_elements:
+                element.remove_audio()
+        if not self.source_element.has_video():
+            video_elements = self.find_video_elements()
+            for element in video_elements:
+                element.remove_video()
+
     def __init_pipeline(self):
+        self.__did_delete = False
         # Make a copy of the current elements properties
         elements_properties = self.elements.properties()
 
@@ -257,12 +275,43 @@ class GstMedia(Media):
                     exc_info=True,
                 )
 
+        # Collect audio/video elements
+        audio_elements = self.find_audio_elements()
+        video_elements = self.find_video_elements()
+
+        # Input source
+        self.source_element = self.elements[0]
+        self._handler = self.source_element.decoder.connect("no-more-pads", self.__cleanupAV)
+
+        # Link audio/video paths
+        last_audio_element = None
+        if audio_elements:
+            for index, ele in enumerate(audio_elements):
+                if ele is self.source_element:
+                    continue
+                if not last_audio_element:
+                    self.source_element.audio_convert.link(ele.sink())
+                else:
+                    last_audio_element.link(ele)
+                last_audio_element = ele
+
+        last_video_element = None
+        if video_elements:
+            for index, ele in enumerate(video_elements):
+                if ele is self.source_element:
+                    continue
+                if not last_video_element:
+                    self.source_element.video_convert.link(ele.sink())
+                else:
+                    last_video_element.link(ele)
+                last_video_element = ele
+
         # Reload the elements properties
         self.elements.update_properties(elements_properties)
 
         # The source element should provide the duration
-        self.elements[0].changed("duration").connect(self.__duration_changed)
-        self.duration = self.elements[0].duration
+        self.source_element.changed("duration").connect(self.__duration_changed)
+        self.duration = self.source_element.duration
 
         # Create a new finalizer object to free the pipeline when the media
         # is dereferenced
@@ -318,3 +367,17 @@ class GstMedia(Media):
 
     def __duration_changed(self, duration):
         self.duration = duration
+
+    def find_audio_elements(self):
+        eles = []
+        for ele in self.elements:
+            if ele.MediaType in [MediaType.Audio, MediaType.AudioAndVideo, MediaType.Unknown]:
+                eles.append(ele)
+        return eles
+
+    def find_video_elements(self):
+        eles = []
+        for ele in self.elements:
+            if ele.MediaType in [MediaType.Video, MediaType.AudioAndVideo, MediaType.Unknown]:
+                eles.append(ele)
+        return eles

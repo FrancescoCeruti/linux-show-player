@@ -61,3 +61,7 @@ class AlsaSink(GstMediaElement):
 
         self.pipeline.add(self.alsa_sink)
         self.audio_resample.link(self.alsa_sink)
+
+    def dispose(self):
+        self.pipeline.remove(self.audio_resample)
+        self.pipeline.remove(self.alsa_sink)

@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2024 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+from lisp.backend.media_element import MediaType
 from lisp.core.properties import Property
 from lisp.cues.media_cue import MediaCue
 from lisp.plugins.gst_backend.gst_media import GstMedia
@@ -43,10 +44,11 @@ class GstCueFactory:
             return [self.input] + self.base_pipeline
 
 
-class UriAudioCueFactory(GstCueFactory):
-    def __init__(self, base_pipeline):
+class UriMediaCueFactory(GstCueFactory):
+    def __init__(self, base_pipeline, media_type):
         super().__init__(base_pipeline)
         self.input = "UriInput"
+        self.media_type = media_type
 
     def __call__(self, app, id=None, uri=None):
         cue = super().__call__(app, id=id)

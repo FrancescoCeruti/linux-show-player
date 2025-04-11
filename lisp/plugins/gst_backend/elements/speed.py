@@ -66,6 +66,8 @@ class Speed(GstMediaElement):
         bus = self.pipeline.get_bus()
         bus.remove_signal_watch()
         bus.disconnect(self._handler)
+        self.pipeline.remove(self.scale_tempo)
+        self.pipeline.remove(self.audio_convert)
 
     def __on_message(self, bus, message):
         if (

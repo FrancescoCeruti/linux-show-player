@@ -83,6 +83,8 @@ class JackSink(GstMediaElement):
                 JackSink._ControlClient.deactivate()
                 JackSink._ControlClient.close()
                 JackSink._ControlClient = None
+        self.pipeline.remove(self.audio_resample)
+        self.pipeline.remove(self.jack_sink)
 
     @classmethod
     def default_connections(cls, client):
