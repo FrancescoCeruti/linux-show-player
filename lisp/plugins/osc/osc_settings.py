@@ -94,7 +94,7 @@ class OscSettings(SettingsPage):
         self.inwardsLabel.setText(
             translate(
                 "OscSettings",
-                "Linux Show Player will pick up OSC messages sent to:",
+                "Linux Show Player will pick up OSC messages sent via UDP to:",
             )
         )
         self.localaddrLabel.setText(translate("OscSettings", "Address:"))
@@ -104,7 +104,7 @@ class OscSettings(SettingsPage):
             translate("OscSettings", "OSC Output Settings")
         )
         self.outwardsLabel.setText(
-            translate("OscSettings", "Messages from OSC Cues will be sent to:")
+            translate("OscSettings", "Messages from OSC Cues will be sent via UDP to:")
         )
         self.hostnameLabel.setText(translate("OscSettings", "Address:"))
         self.outportLabel.setText(translate("OscSettings", "Port:"))
