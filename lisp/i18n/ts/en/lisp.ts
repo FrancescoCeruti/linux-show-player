@@ -129,7 +129,7 @@
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../application.py" line="208" />
+      <location filename="../../../application.py" line="207" />
       <source>Saving your session failed due to bad data.
 The file still contains your last successful save and has not been overwritten.
 
@@ -137,12 +137,12 @@ This is likely because of corrupted data from a plugin. Try to revert recent cha
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../application.py" line="264" />
+      <location filename="../../../application.py" line="263" />
       <source>Error while reading the session file "{}"</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../application.py" line="253" />
+      <location filename="../../../application.py" line="252" />
       <source>Unable to create the cue "{}"</source>
       <translation type="unfinished" />
     </message>
@@ -360,6 +360,26 @@ This is likely because of corrupted data from a plugin. Try to revert recent cha
   <context>
     <name>CueSettings</name>
     <message>
+      <location filename="../../../ui/settings/app_pages/cue.py" line="64" />
+      <source>Interrupt fade</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <location filename="../../../ui/settings/app_pages/cue.py" line="66" />
+      <source>Used globally when interrupting cues</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <location filename="../../../ui/settings/app_pages/cue.py" line="72" />
+      <source>Fallback fade settings</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <location filename="../../../ui/settings/app_pages/cue.py" line="75" />
+      <source>Used for fade-in and fade-out actions, for cues where fade duration is set to 0.</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="113" />
       <source>Start action</source>
       <translation>Start action</translation>
@@ -403,26 +423,6 @@ This is likely because of corrupted data from a plugin. Try to revert recent cha
       <location filename="../../../ui/settings/cue_pages/cue_general.py" line="212" />
       <source>Next action</source>
       <translation>Next action</translation>
-    </message>
-    <message>
-      <location filename="../../../ui/settings/app_pages/cue.py" line="64" />
-      <source>Interrupt fade</source>
-      <translation type="unfinished" />
-    </message>
-    <message>
-      <location filename="../../../ui/settings/app_pages/cue.py" line="66" />
-      <source>Used globally when interrupting cues</source>
-      <translation type="unfinished" />
-    </message>
-    <message>
-      <location filename="../../../ui/settings/app_pages/cue.py" line="72" />
-      <source>Fallback fade settings</source>
-      <translation type="unfinished" />
-    </message>
-    <message>
-      <location filename="../../../ui/settings/app_pages/cue.py" line="75" />
-      <source>Used for fade-in and fade-out actions, for cues where fade duration is set to 0.</source>
-      <translation type="unfinished" />
     </message>
   </context>
   <context>
@@ -653,26 +653,6 @@ This is likely because of corrupted data from a plugin. Try to revert recent cha
       <source>Exception info</source>
       <translation type="unfinished" />
     </message>
-    <message>
-      <location filename="../../../ui/logging/viewer.py" line="54" />
-      <source>Linux Show Player - Log Viewer</source>
-      <translation type="unfinished" />
-    </message>
-    <message>
-      <location filename="../../../ui/logging/viewer.py" line="126" />
-      <source>Showing {} of {} records</source>
-      <translation type="unfinished" />
-    </message>
-    <message>
-      <location filename="../../../ui/logging/dialog.py" line="79" />
-      <source>Dismiss all</source>
-      <translation type="unfinished" />
-    </message>
-    <message>
-      <location filename="../../../ui/logging/dialog.py" line="86" />
-      <source>Show details</source>
-      <translation type="unfinished" />
-    </message>
   </context>
   <context>
     <name>MainWindow</name>
@@ -877,11 +857,6 @@ This is likely because of corrupted data from a plugin. Try to revert recent cha
   <context>
     <name>PluginsError</name>
     <message>
-      <location filename="../../../core/plugin_loader.py" line="68" />
-      <source>Cannot satisfy dependencies for plugin: "{}"</source>
-      <translation type="unfinished" />
-    </message>
-    <message>
       <location filename="../../../core/plugins_manager.py" line="78" />
       <source>A plugin by the name of "{}" already exists.</source>
       <translation type="unfinished" />
@@ -901,17 +876,22 @@ This is likely because of corrupted data from a plugin. Try to revert recent cha
       <source>Failed to terminate plugin: "{}"</source>
       <translation type="unfinished" />
     </message>
+    <message>
+      <location filename="../../../core/plugin_loader.py" line="68" />
+      <source>Cannot satisfy dependencies for plugin: "{}"</source>
+      <translation type="unfinished" />
+    </message>
   </context>
   <context>
     <name>PluginsInfo</name>
     <message>
-      <location filename="../../../core/plugin_loader.py" line="108" />
-      <source>Plugin loaded: "{}"</source>
+      <location filename="../../../core/plugins_manager.py" line="145" />
+      <source>Plugin terminated: "{}"</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../core/plugins_manager.py" line="145" />
-      <source>Plugin terminated: "{}"</source>
+      <location filename="../../../core/plugin_loader.py" line="108" />
+      <source>Plugin loaded: "{}"</source>
       <translation type="unfinished" />
     </message>
   </context>
@@ -967,13 +947,8 @@ This is likely because of corrupted data from a plugin. Try to revert recent cha
   <context>
     <name>SettingsPageName</name>
     <message>
-      <location filename="../../../ui/settings/app_pages/cue.py" line="27" />
-      <source>Cue Settings</source>
-      <translation>Cue Settings</translation>
-    </message>
-    <message>
-      <location filename="../../../ui/settings/app_pages/layouts.py" line="26" />
-      <source>Layouts</source>
+      <location filename="../../../ui/settings/app_pages/plugins.py" line="36" />
+      <source>Plugins</source>
       <translation type="unfinished" />
     </message>
     <message>
@@ -982,8 +957,18 @@ This is likely because of corrupted data from a plugin. Try to revert recent cha
       <translation>General</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/app_pages/plugins.py" line="36" />
-      <source>Plugins</source>
+      <location filename="../../../ui/settings/app_pages/layouts.py" line="26" />
+      <source>Layouts</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <location filename="../../../ui/settings/app_pages/cue.py" line="27" />
+      <source>Cue Settings</source>
+      <translation>Cue Settings</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="33" />
+      <source>Media Cue</source>
       <translation type="unfinished" />
     </message>
     <message>
@@ -1010,31 +995,6 @@ This is likely because of corrupted data from a plugin. Try to revert recent cha
       <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="36" />
       <source>Appearance</source>
       <translation>Appearance</translation>
-    </message>
-    <message>
-      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="33" />
-      <source>Media Cue</source>
-      <translation type="unfinished" />
-    </message>
-    <message>
-      <location filename="../../../ui/settings/app_pages/general.py" line="38" />
-      <source>General</source>
-      <translation>General</translation>
-    </message>
-    <message>
-      <location filename="../../../ui/settings/app_pages/layouts.py" line="26" />
-      <source>Layouts</source>
-      <translation type="unfinished" />
-    </message>
-    <message>
-      <location filename="../../../ui/settings/app_pages/plugins.py" line="36" />
-      <source>Plugins</source>
-      <translation type="unfinished" />
-    </message>
-    <message>
-      <location filename="../../../ui/settings/app_pages/cue.py" line="27" />
-      <source>Cue Settings</source>
-      <translation>Cue Settings</translation>
     </message>
   </context>
 </TS>

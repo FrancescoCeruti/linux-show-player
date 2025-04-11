@@ -38,6 +38,36 @@
   <context>
     <name>ListLayout</name>
     <message>
+      <location filename="../../../plugins/list_layout/control_buttons.py" line="57" />
+      <source>Pause all</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/control_buttons.py" line="58" />
+      <source>Stop all</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/control_buttons.py" line="60" />
+      <source>Interrupt all</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/control_buttons.py" line="63" />
+      <source>Resume all</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/control_buttons.py" line="64" />
+      <source>Fade-Out all</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/control_buttons.py" line="65" />
+      <source>Fade-In all</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
       <location filename="../../../plugins/list_layout/settings.py" line="119" />
       <source>Default behaviors (applied to new sessions)</source>
       <translation type="unfinished" />
@@ -120,36 +150,6 @@
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="150" />
       <source>Interrupt Cue</source>
-      <translation type="unfinished" />
-    </message>
-    <message>
-      <location filename="../../../plugins/list_layout/control_buttons.py" line="57" />
-      <source>Pause all</source>
-      <translation type="unfinished" />
-    </message>
-    <message>
-      <location filename="../../../plugins/list_layout/control_buttons.py" line="58" />
-      <source>Stop all</source>
-      <translation type="unfinished" />
-    </message>
-    <message>
-      <location filename="../../../plugins/list_layout/control_buttons.py" line="60" />
-      <source>Interrupt all</source>
-      <translation type="unfinished" />
-    </message>
-    <message>
-      <location filename="../../../plugins/list_layout/control_buttons.py" line="63" />
-      <source>Resume all</source>
-      <translation type="unfinished" />
-    </message>
-    <message>
-      <location filename="../../../plugins/list_layout/control_buttons.py" line="64" />
-      <source>Fade-Out all</source>
-      <translation type="unfinished" />
-    </message>
-    <message>
-      <location filename="../../../plugins/list_layout/control_buttons.py" line="65" />
-      <source>Fade-In all</source>
       <translation type="unfinished" />
     </message>
     <message>
