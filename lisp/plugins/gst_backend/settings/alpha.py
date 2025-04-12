@@ -18,18 +18,16 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (
     QGroupBox,
-    QHBoxLayout,
     QLabel,
-    QCheckBox,
+    QSlider,
+    QComboBox,
     QVBoxLayout,
-    QDoubleSpinBox,
+    QHBoxLayout,
 )
 
-from lisp.backend.audio_utils import db_to_linear, linear_to_db
 from lisp.plugins.gst_backend.elements.alpha import Alpha
 from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.ui_utils import translate
-from lisp.ui.widgets import QMuteButton
 
 
 class AlphaSettings(SettingsPage):
@@ -41,27 +39,48 @@ class AlphaSettings(SettingsPage):
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
+        self.backgroundGroup = QGroupBox(self)
+        self.backgroundGroup.setLayout(QVBoxLayout())
+        self.layout().addWidget(self.backgroundGroup)
+
+        self.backgroundComboBox = QComboBox(self.backgroundGroup)
+        self.backgroundComboBox.addItem(
+            translate("AlphaSettings", "Checkered Squares"), 0
+        )
+        self.backgroundComboBox.addItem(
+            translate("AlphaSettings", "Black"), 1
+        )
+        self.backgroundComboBox.addItem(
+            translate("AlphaSettings", "White"), 2
+        )
+        self.backgroundComboBox.addItem(
+            translate("AlphaSettings", "Transparent"), 3
+        )
+        self.backgroundGroup.layout().addWidget(self.backgroundComboBox)
+
         self.alphaGroup = QGroupBox(self)
         self.alphaGroup.setLayout(QHBoxLayout())
         self.layout().addWidget(self.alphaGroup)
 
-        self.alphaSpinBox = QDoubleSpinBox(self.alphaGroup)
-        self.alphaSpinBox.setRange(0, 1)
-        self.alphaGroup.layout().addWidget(self.alphaSpinBox)
+        self.alphaSlider = QSlider(self.alphaGroup)
+        self.alphaSlider.setRange(0, 100)
+        self.alphaSlider.setPageStep(1)
+        self.alphaSlider.setOrientation(Qt.Horizontal)
+        self.alphaSlider.valueChanged.connect(self.alpha_changed)
+        self.alphaGroup.layout().addWidget(self.alphaSlider)
 
         self.alphaLabel = QLabel(self.alphaGroup)
         self.alphaLabel.setAlignment(Qt.AlignCenter)
         self.alphaGroup.layout().addWidget(self.alphaLabel)
 
-        self.alphaGroup.layout().setStretch(0, 1)
-        self.alphaGroup.layout().setStretch(1, 3)
-        self.alphaGroup.layout().setStretch(2, 4)
+        self.alphaGroup.layout().setStretch(0, 5)
+        self.alphaGroup.layout().setStretch(1, 1)
 
         self.retranslateUi()
 
     def retranslateUi(self):
+        self.backgroundGroup.setTitle(translate("AlphaSettings", "Background"))
         self.alphaGroup.setTitle(translate("AlphaSettings", "Alpha"))
-        self.alphaLabel.setText(translate("AlphaSettings", "AlphaSettings"))
 
     def enableCheck(self, enabled):
         self.setGroupEnabled(self.alphaGroup, enabled)
@@ -70,9 +89,15 @@ class AlphaSettings(SettingsPage):
         settings = {}
 
         if self.isGroupEnabled(self.alphaGroup):
-            settings["alpha"] = self.alphaSpinBox.value()
+            settings["alpha"] = self.alphaSlider.value() / 100
+        if self.isGroupEnabled(self.backgroundGroup):
+            settings["background"] = self.backgroundComboBox.currentData()
 
         return settings
 
     def loadSettings(self, settings):
-        self.alphaSpinBox.setValue(settings.get("alpha", 1))
+        self.backgroundComboBox.setCurrentIndex(settings.get("background", 1))
+        self.alphaSlider.setValue(int(settings.get("alpha", 1) * 100))
+
+    def alpha_changed(self, value):
+        self.alphaLabel.setText(f"{value / 100}")

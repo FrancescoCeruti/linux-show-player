@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+from enum import Enum
 from typing import Optional
 
 from PyQt5.QtCore import QT_TRANSLATE_NOOP
@@ -34,10 +35,16 @@ class Alpha(GstMediaElement):
     MediaType = MediaType.Video
     Name = QT_TRANSLATE_NOOP("MediaElementName", "Alpha")
 
+    class Background(Enum):
+        CHECKER = 0
+        BLACK = 1
+        WHITE = 2
+        TRANSPARENT = 3
+
     FadeInterpolationMode = GstController.InterpolationMode.CUBIC_MONOTONIC
 
+    background = GstProperty("gst_compositor", "background", default=Background.BLACK.value)
     alpha = GstProperty("compositor_pad", "alpha", default=1.0)
-
     live_alpha = GstLiveProperty("compositor_pad", "alpha", type=float, range=(0, 1))
 
     def __init__(self, pipeline):
@@ -48,11 +55,7 @@ class Alpha(GstMediaElement):
         self.gst_compositor = Gst.ElementFactory.make("compositor", "alpha-compositor")
         self.video_convert = Gst.ElementFactory.make("videoconvert", "alpha-convert")
 
-        # Set properties
-        self.gst_compositor.set_property("background", 1)  # Black pattern
-
         self.compositor_pad = self.gst_compositor.get_request_pad("sink_0")
-        self.compositor_pad.set_property("alpha", 1.0)
 
         self.alpha_controller = GstPropertyController(self.pipeline, self.compositor_pad, self.sync_element, "alpha")
 

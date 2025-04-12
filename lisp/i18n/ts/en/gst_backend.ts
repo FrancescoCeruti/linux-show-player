@@ -4,14 +4,39 @@
   <context>
     <name>AlphaSettings</name>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/alpha.py" line="63" />
+      <location filename="../../../plugins/gst_backend/settings/alpha.py" line="48" />
+      <source>Checkered Squares</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <location filename="../../../plugins/gst_backend/settings/alpha.py" line="51" />
+      <source>Black</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <location filename="../../../plugins/gst_backend/settings/alpha.py" line="54" />
+      <source>White</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <location filename="../../../plugins/gst_backend/settings/alpha.py" line="57" />
+      <source>Transparent</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <location filename="../../../plugins/gst_backend/settings/alpha.py" line="82" />
+      <source>Background</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <location filename="../../../plugins/gst_backend/settings/alpha.py" line="83" />
       <source>Alpha</source>
       <translation>Alpha</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/alpha.py" line="64" />
       <source>AlphaSettings</source>
-      <translation>AlphaSettings</translation>
+      <translation type="obsolete">AlphaSettings</translation>
     </message>
   </context>
   <context>
@@ -309,7 +334,7 @@
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/elements/alpha.py" line="35" />
+      <location filename="../../../plugins/gst_backend/elements/alpha.py" line="36" />
       <source>Alpha</source>
       <translation type="unfinished" />
     </message>
