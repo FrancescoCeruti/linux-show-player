@@ -45,10 +45,9 @@ class GstCueFactory:
 
 
 class UriMediaCueFactory(GstCueFactory):
-    def __init__(self, base_pipeline, media_type):
+    def __init__(self, base_pipeline):
         super().__init__(base_pipeline)
         self.input = "UriInput"
-        self.media_type = media_type
 
     def __call__(self, app, id=None, uri=None):
         cue = super().__call__(app, id=id)
