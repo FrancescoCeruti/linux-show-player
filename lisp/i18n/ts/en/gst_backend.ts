@@ -330,6 +330,11 @@
       <translation>Audio Pan</translation>
     </message>
     <message>
+      <location filename="../../../plugins/gst_backend/elements/rotate.py" line="29" />
+      <source>Rotate</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
       <location filename="../../../plugins/gst_backend/elements/blur.py" line="29" />
       <source>Blur</source>
       <translation type="unfinished" />
@@ -444,6 +449,24 @@
       <location filename="../../../plugins/gst_backend/settings/preset_src.py" line="36" />
       <source>Presets</source>
       <translation>Presets</translation>
+    </message>
+  </context>
+  <context>
+    <name>RotateSettings</name>
+    <message>
+      <location filename="../../../plugins/gst_backend/settings/rotate.py" line="64" />
+      <source>Angle</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <location filename="../../../plugins/gst_backend/settings/rotate.py" line="85" />
+      <source>clockwise</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <location filename="../../../plugins/gst_backend/settings/rotate.py" line="85" />
+      <source>counter-clockwise</source>
+      <translation type="unfinished" />
     </message>
   </context>
   <context>
