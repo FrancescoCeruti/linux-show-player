@@ -163,6 +163,54 @@
     </message>
   </context>
   <context>
+    <name>FlipSettings</name>
+    <message>
+      <location filename="../../../plugins/gst_backend/settings/flip.py" line="47" />
+      <source>None</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <location filename="../../../plugins/gst_backend/settings/flip.py" line="48" />
+      <source>Clockwise 90°</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <location filename="../../../plugins/gst_backend/settings/flip.py" line="49" />
+      <source>Rotate 180°</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <location filename="../../../plugins/gst_backend/settings/flip.py" line="50" />
+      <source>Counterclockwise 90°</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <location filename="../../../plugins/gst_backend/settings/flip.py" line="51" />
+      <source>Horizontal Flip</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <location filename="../../../plugins/gst_backend/settings/flip.py" line="52" />
+      <source>Vertial Flip</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <location filename="../../../plugins/gst_backend/settings/flip.py" line="53" />
+      <source>Diagonal Flip (upper-left / lower-right)</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <location filename="../../../plugins/gst_backend/settings/flip.py" line="54" />
+      <source>Diagonal Flip (upper-right / lower-left)</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <location filename="../../../plugins/gst_backend/settings/flip.py" line="60" />
+      <source>Method</source>
+      <translation type="unfinished" />
+    </message>
+  </context>
+  <context>
     <name>GstBackend</name>
     <message>
       <location filename="../../../plugins/gst_backend/gst_backend.py" line="79" />
@@ -317,6 +365,11 @@
       <location filename="../../../plugins/gst_backend/elements/equalizer10.py" line="29" />
       <source>10 Bands Equalizer</source>
       <translation>10 Bands Equalizer</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/gst_backend/elements/flip.py" line="31" />
+      <source>Flip</source>
+      <translation type="unfinished" />
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/elements/jack_sink.py" line="35" />
