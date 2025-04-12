@@ -18,11 +18,8 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (
     QGroupBox,
-    QLabel,
-    QSlider,
     QComboBox,
     QVBoxLayout,
-    QHBoxLayout,
 )
 
 from lisp.plugins.gst_backend.elements.flip import Flip
