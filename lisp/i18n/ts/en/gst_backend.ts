@@ -299,6 +299,11 @@
       <translation>URI Input</translation>
     </message>
     <message>
+      <location filename="../../../plugins/gst_backend/elements/video_balance.py" line="29" />
+      <source>VideoBalance</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
       <location filename="../../../plugins/gst_backend/elements/alsa_sink.py" line="30" />
       <source>ALSA Out</source>
       <translation>ALSA Out</translation>
@@ -455,6 +460,29 @@
       <location filename="../../../plugins/gst_backend/settings/user_element.py" line="56" />
       <source>Only for advanced user!</source>
       <translation>Only for advanced user!</translation>
+    </message>
+  </context>
+  <context>
+    <name>VideoBalanceSettings</name>
+    <message>
+      <location filename="../../../plugins/gst_backend/settings/video_balance.py" line="126" />
+      <source>Brightness</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <location filename="../../../plugins/gst_backend/settings/video_balance.py" line="127" />
+      <source>Contrast</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <location filename="../../../plugins/gst_backend/settings/video_balance.py" line="128" />
+      <source>Hue</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <location filename="../../../plugins/gst_backend/settings/video_balance.py" line="129" />
+      <source>Saturation</source>
+      <translation type="unfinished" />
     </message>
   </context>
   <context>
