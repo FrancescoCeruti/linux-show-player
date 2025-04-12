@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2024 Francesco Ceruti <ceppofrancy@gmail.com>
 # Copyright 2016 Thomas Achtner <info@offtools.de>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
@@ -19,13 +19,14 @@
 from PyQt5.QtCore import QT_TRANSLATE_NOOP, Qt
 from PyQt5.QtWidgets import (
     QVBoxLayout,
+    QGridLayout,
     QGroupBox,
     QLabel,
-    QHBoxLayout,
     QSpinBox,
     QLineEdit,
 )
 
+from lisp.core.util import get_lan_ip
 from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.ui_utils import translate
 
@@ -38,37 +39,75 @@ class OscSettings(SettingsPage):
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
-        self.groupBox = QGroupBox(self)
-        self.groupBox.setLayout(QVBoxLayout())
-        self.groupBox.setTitle(translate("OscSettings", "OSC Settings"))
-        self.layout().addWidget(self.groupBox)
+        self.inwardsGroupBox = QGroupBox(self)
+        self.inwardsGroupBox.setLayout(QGridLayout())
+        self.layout().addWidget(self.inwardsGroupBox)
 
-        hbox = QHBoxLayout()
-        self.inportBox = QSpinBox(self)
+        self.inwardsLabel = QLabel()
+        self.inwardsLabel.setAlignment(Qt.AlignCenter)
+        font = self.inwardsLabel.font()
+        font.setPointSizeF(font.pointSizeF() * 0.9)
+        self.inwardsLabel.setFont(font)
+        self.inwardsGroupBox.layout().addWidget(self.inwardsLabel, 0, 0, 1, 2)
+
+        self.localaddrLabel = QLabel()
+        self.localaddrValue = QLabel(get_lan_ip())
+        self.inwardsGroupBox.layout().addWidget(self.localaddrLabel, 1, 0)
+        self.inwardsGroupBox.layout().addWidget(self.localaddrValue, 1, 1)
+
+        self.inportLabel = QLabel()
+        self.inportBox = QSpinBox()
         self.inportBox.setMinimum(1000)
         self.inportBox.setMaximum(99999)
-        label = QLabel(translate("OscSettings", "Input Port:"))
-        hbox.layout().addWidget(label)
-        hbox.layout().addWidget(self.inportBox)
-        self.groupBox.layout().addLayout(hbox)
+        self.inwardsGroupBox.layout().addWidget(self.inportLabel, 2, 0)
+        self.inwardsGroupBox.layout().addWidget(self.inportBox, 2, 1)
 
-        hbox = QHBoxLayout()
-        self.outportBox = QSpinBox(self)
-        self.outportBox.setMinimum(1000)
-        self.outportBox.setMaximum(99999)
-        label = QLabel(translate("OscSettings", "Output Port:"))
-        hbox.layout().addWidget(label)
-        hbox.layout().addWidget(self.outportBox)
-        self.groupBox.layout().addLayout(hbox)
+        self.outwardsGroupBox = QGroupBox(self)
+        self.outwardsGroupBox.setLayout(QGridLayout())
+        self.layout().addWidget(self.outwardsGroupBox)
 
-        hbox = QHBoxLayout()
+        self.outwardsLabel = QLabel()
+        self.outwardsLabel.setAlignment(Qt.AlignCenter)
+        self.outwardsLabel.setFont(font)
+        self.outwardsGroupBox.layout().addWidget(self.outwardsLabel, 0, 0, 1, 2)
+
+        self.hostnameLabel = QLabel()
         self.hostnameEdit = QLineEdit()
         self.hostnameEdit.setText("localhost")
         self.hostnameEdit.setMaximumWidth(200)
-        label = QLabel(translate("OscSettings", "Hostname:"))
-        hbox.layout().addWidget(label)
-        hbox.layout().addWidget(self.hostnameEdit)
-        self.groupBox.layout().addLayout(hbox)
+        self.outwardsGroupBox.layout().addWidget(self.hostnameLabel, 1, 0)
+        self.outwardsGroupBox.layout().addWidget(self.hostnameEdit, 1, 1)
+
+        self.outportLabel = QLabel()
+        self.outportBox = QSpinBox()
+        self.outportBox.setMinimum(1000)
+        self.outportBox.setMaximum(99999)
+        self.outwardsGroupBox.layout().addWidget(self.outportLabel, 2, 0)
+        self.outwardsGroupBox.layout().addWidget(self.outportBox, 2, 1)
+
+        self.retranslateUi()
+
+    def retranslateUi(self):
+        self.inwardsGroupBox.setTitle(
+            translate("OscSettings", "OSC Input Settings")
+        )
+        self.inwardsLabel.setText(
+            translate(
+                "OscSettings",
+                "Linux Show Player will pick up OSC messages sent via UDP to:",
+            )
+        )
+        self.localaddrLabel.setText(translate("OscSettings", "Address:"))
+        self.inportLabel.setText(translate("OscSettings", "Port:"))
+
+        self.outwardsGroupBox.setTitle(
+            translate("OscSettings", "OSC Output Settings")
+        )
+        self.outwardsLabel.setText(
+            translate("OscSettings", "Messages from OSC Cues will be sent via UDP to:")
+        )
+        self.hostnameLabel.setText(translate("OscSettings", "Address:"))
+        self.outportLabel.setText(translate("OscSettings", "Port:"))
 
     def getSettings(self):
         return {

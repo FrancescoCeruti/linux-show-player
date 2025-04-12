@@ -37,8 +37,8 @@ from PyQt5.QtWidgets import (
     QSpacerItem,
 )
 
-from lisp.plugins import get_plugin
 from lisp.core.plugin import PluginNotLoadedError
+from lisp.plugins import get_plugin
 from lisp.plugins.controller.common import LayoutAction, tr_layout_action
 from lisp.plugins.controller.protocol import Protocol
 from lisp.plugins.osc.osc_delegate import OscArgumentDelegate
@@ -340,7 +340,9 @@ class OscSettings(SettingsPage):
             translate("ControllerOscSettings", "Waiting for messages:")
         )
 
-    def __show_message(self, path, args, types, *_, **__):
+    def __show_message(self, src, path, *args):
+        types = Osc.derive_types(args)
+        args = list(args)
         self.capturedMessage["path"] = path
         self.capturedMessage["types"] = types
         self.capturedMessage["args"] = args
@@ -464,9 +466,27 @@ class Osc(Protocol):
         osc = get_plugin("Osc")
         osc.server.new_message.connect(self.__new_message)
 
-    def __new_message(self, path, args, types, *_, **__):
+    def __new_message(self, src, path, *args):
+        types = self.derive_types(args)
         key = self.key_from_message(path, types, args)
         self.protocol_event.emit(key)
+
+    @staticmethod
+    def derive_types(args):
+        types = ""
+        for arg in args:
+            if isinstance(arg, bool):
+                types += "T" if arg else "F"
+            elif isinstance(arg, str):
+                types += "s"
+            elif isinstance(arg, int):
+                types += "i"
+            elif isinstance(arg, float):
+                types += "f"
+            else:
+                raise TypeError("Unsupported Osc Type")
+
+        return types
 
     @staticmethod
     def key_from_message(path, types, args):

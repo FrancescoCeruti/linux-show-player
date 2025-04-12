@@ -85,8 +85,6 @@ To start, you'll need to install these packages using your package manager:
  * `libasound2-dev`
  * `libgirepository1.0-dev`
  * `libcairo2-dev`
- * `liblo7`
- * `liblo-dev`
  * `librtmidi6`
 ```
 
@@ -102,8 +100,6 @@ To start, you'll need to install these packages using your package manager:
  * `alsa-lib-devel`
  * `gobject-introspection-devel`
  * `cairo-gobject-devel`
- * `liblo`
- * `liblo-devel`
  * `rtmidi`
 ```
 
@@ -117,7 +113,6 @@ To start, you'll need to install these packages using your package manager:
  * `alsa-lib`
  * `cairo`
  * `gobject-introspection`
- * `liblo`
  * `rtmidi`
 ```
 
@@ -131,7 +126,6 @@ To start, you'll need to install these packages using your package manager:
  * `alsa-lib`
  * `cairo`
  * `gobject-introspection`
- * `liblo`
  * `rtmidi`
 ```
 

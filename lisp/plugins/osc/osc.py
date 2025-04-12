@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2019 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2024 Francesco Ceruti <ceppofrancy@gmail.com>
 # Copyright 2016 Thomas Achtner <info@offtools.de>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
@@ -29,7 +29,10 @@ class Osc(Plugin):
     """Provide OSC I/O functionality"""
 
     Name = "OSC"
-    Authors = ("Thomas Achtner",)
+    Authors = (
+        "Thomas Achtner",
+        "s0600204",
+    )
     Description = "Provide OSC I/O functionality"
 
     def __init__(self, app):
@@ -58,7 +61,7 @@ class Osc(Plugin):
     def server(self):
         return self.__server
 
-    def terminate(self):
+    def finalize(self):
         self.__server.stop()
 
     def __config_change(self, key, value):
