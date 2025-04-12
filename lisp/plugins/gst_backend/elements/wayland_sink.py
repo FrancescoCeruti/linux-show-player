@@ -28,11 +28,11 @@ class WaylandSink(GstMediaElement):
     MediaType = MediaType.Video
     Name = QT_TRANSLATE_NOOP("MediaElementName", "Wayland Video")
 
+    device = GstProperty("wayland_sink", "display", default="wayland-0")
+    fullscreen = GstProperty("wayland_sink", "fullscreen", default=True)
+
     def __init__(self, pipeline):
         super().__init__(pipeline)
-        
-        device = GstProperty("wayland_sink", "display", default="wayland-0")
-        fullscreen = GstProperty("wayland_sink", "fullscreen", default=True)
 
         self.wayland_sink = Gst.ElementFactory.make("waylandsink", "wayland_sink")
         # Need to set this explicitly for some reason

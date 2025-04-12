@@ -14,7 +14,6 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
-import os
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (
@@ -40,10 +39,7 @@ class WaylandSinkSettings(SettingsPage):
         self.setLayout(QVBoxLayout())
         self.layout().setAlignment(Qt.AlignTop)
 
-        self.devices = {
-            'wayland-0': 'wayland-0',
-            'wayland-1': 'wayland-1'
-        }
+        self.devices = {"wayland-0": "wayland-0", "wayland-1": "wayland-1"}
         # self.discover_output_wayland_devices()
 
         self.deviceGroup = QGroupBox(self)
@@ -75,36 +71,25 @@ class WaylandSinkSettings(SettingsPage):
                 "requires adding a 'hint.description' line to them.",
             )
         )
-        self.fullScreen.setText(
-            translate("VideoPlayerSettings", "Fullscreen")
-        )
+        self.fullScreen.setText(translate("VideoPlayerSettings", "Fullscreen"))
 
     def enableCheck(self, enabled):
         self.setGroupEnabled(self.deviceGroup, enabled)
 
     def loadSettings(self, settings):
-        device = settings.get(
-            "device",
-            GstBackend.Config.get("wayland_device", "wayland-0"),
-        )
-
         self.deviceComboBox.setCurrentText(
-            self.devices.get(device, self.devices.get('wayland-0'))
+            self.devices.get(
+                settings.get("device", list(self.devices.keys())[0]),
+            )
         )
-
-        self.fullScreen.setChecked(
-            GstBackend.Config.get("fullscreen", True)
-        )
+        self.fullScreen.setChecked(settings.get("fullscreen", True))
 
     def getSettings(self):
         if self.isGroupEnabled(self.deviceGroup):
-            return {
-                "device": self.deviceComboBox.currentData(),
-                "fullscreen": self.fullScreen.isChecked()
-                }
+            return {"device": self.deviceComboBox.currentData(), "fullscreen": self.fullScreen.isChecked()}
 
         return {}
 
     def discover_output_wayland_devices(self):
         self.devices = {}
-
+        # FIXME:
