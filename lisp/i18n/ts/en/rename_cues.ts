@@ -4,11 +4,6 @@
   <context>
     <name>RenameCues</name>
     <message>
-      <location filename="../../../plugins/rename_cues/rename_cues.py" line="37" />
-      <source>Rename Cues</source>
-      <translation type="unfinished" />
-    </message>
-    <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="46" />
       <source>Rename cues</source>
       <translation type="unfinished" />
@@ -80,6 +75,11 @@ For more information about Regexes, consult python documentation at: https://doc
     <message>
       <location filename="../../../plugins/rename_cues/rename_ui.py" line="58" />
       <source>Preview</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <location filename="../../../plugins/rename_cues/rename_cues.py" line="37" />
+      <source>Rename Cues</source>
       <translation type="unfinished" />
     </message>
   </context>

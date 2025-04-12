@@ -129,7 +129,7 @@
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../application.py" line="208" />
+      <location filename="../../../application.py" line="207" />
       <source>Saving your session failed due to bad data.
 The file still contains your last successful save and has not been overwritten.
 
@@ -137,12 +137,12 @@ This is likely because of corrupted data from a plugin. Try to revert recent cha
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../application.py" line="264" />
+      <location filename="../../../application.py" line="263" />
       <source>Error while reading the session file "{}"</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../application.py" line="253" />
+      <location filename="../../../application.py" line="252" />
       <source>Unable to create the cue "{}"</source>
       <translation type="unfinished" />
     </message>
@@ -324,7 +324,7 @@ This is likely because of corrupted data from a plugin. Try to revert recent cha
   <context>
     <name>CueName</name>
     <message>
-      <location filename="../../../cues/media_cue.py" line="29" />
+      <location filename="../../../cues/media_cue.py" line="30" />
       <source>Media Cue</source>
       <translation>Media Cue</translation>
     </message>
@@ -857,11 +857,6 @@ This is likely because of corrupted data from a plugin. Try to revert recent cha
   <context>
     <name>PluginsError</name>
     <message>
-      <location filename="../../../core/plugin_loader.py" line="68" />
-      <source>Cannot satisfy dependencies for plugin: "{}"</source>
-      <translation type="unfinished" />
-    </message>
-    <message>
       <location filename="../../../core/plugins_manager.py" line="78" />
       <source>A plugin by the name of "{}" already exists.</source>
       <translation type="unfinished" />
@@ -881,17 +876,22 @@ This is likely because of corrupted data from a plugin. Try to revert recent cha
       <source>Failed to terminate plugin: "{}"</source>
       <translation type="unfinished" />
     </message>
+    <message>
+      <location filename="../../../core/plugin_loader.py" line="68" />
+      <source>Cannot satisfy dependencies for plugin: "{}"</source>
+      <translation type="unfinished" />
+    </message>
   </context>
   <context>
     <name>PluginsInfo</name>
     <message>
-      <location filename="../../../core/plugin_loader.py" line="108" />
-      <source>Plugin loaded: "{}"</source>
+      <location filename="../../../core/plugins_manager.py" line="145" />
+      <source>Plugin terminated: "{}"</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../core/plugins_manager.py" line="145" />
-      <source>Plugin terminated: "{}"</source>
+      <location filename="../../../core/plugin_loader.py" line="108" />
+      <source>Plugin loaded: "{}"</source>
       <translation type="unfinished" />
     </message>
   </context>
@@ -947,13 +947,8 @@ This is likely because of corrupted data from a plugin. Try to revert recent cha
   <context>
     <name>SettingsPageName</name>
     <message>
-      <location filename="../../../ui/settings/app_pages/cue.py" line="27" />
-      <source>Cue Settings</source>
-      <translation>Cue Settings</translation>
-    </message>
-    <message>
-      <location filename="../../../ui/settings/app_pages/layouts.py" line="26" />
-      <source>Layouts</source>
+      <location filename="../../../ui/settings/app_pages/plugins.py" line="36" />
+      <source>Plugins</source>
       <translation type="unfinished" />
     </message>
     <message>
@@ -962,8 +957,18 @@ This is likely because of corrupted data from a plugin. Try to revert recent cha
       <translation>General</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/app_pages/plugins.py" line="36" />
-      <source>Plugins</source>
+      <location filename="../../../ui/settings/app_pages/layouts.py" line="26" />
+      <source>Layouts</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <location filename="../../../ui/settings/app_pages/cue.py" line="27" />
+      <source>Cue Settings</source>
+      <translation>Cue Settings</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="33" />
+      <source>Media Cue</source>
       <translation type="unfinished" />
     </message>
     <message>
@@ -990,11 +995,6 @@ This is likely because of corrupted data from a plugin. Try to revert recent cha
       <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="36" />
       <source>Appearance</source>
       <translation>Appearance</translation>
-    </message>
-    <message>
-      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="33" />
-      <source>Media Cue</source>
-      <translation type="unfinished" />
     </message>
   </context>
 </TS>

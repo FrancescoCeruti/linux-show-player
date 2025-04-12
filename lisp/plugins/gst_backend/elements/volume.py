@@ -80,3 +80,9 @@ class Volume(GstMediaElement):
     def stop(self):
         self.volume_controller.reset()
         self.live_volume = self.volume
+
+    def dispose(self):
+        self.pipeline.remove(self.sync_element)
+        self.pipeline.remove(self.gst_volume)
+        self.pipeline.remove(self.gst_normal_volume)
+        self.pipeline.remove(self.audio_convert)

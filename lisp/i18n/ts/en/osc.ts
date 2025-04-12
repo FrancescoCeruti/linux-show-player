@@ -4,7 +4,7 @@
   <context>
     <name>Cue Name</name>
     <message>
-      <location filename="../../../plugins/osc/osc_cue.py" line="172" />
+      <location filename="../../../plugins/osc/osc_cue.py" line="174" />
       <source>OSC Settings</source>
       <translation type="unfinished" />
     </message>
@@ -28,57 +28,57 @@
   <context>
     <name>OscCue</name>
     <message>
-      <location filename="../../../plugins/osc/osc_cue.py" line="244" />
+      <location filename="../../../plugins/osc/osc_cue.py" line="246" />
       <source>OSC Message</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../plugins/osc/osc_cue.py" line="245" />
+      <location filename="../../../plugins/osc/osc_cue.py" line="247" />
       <source>Add</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../plugins/osc/osc_cue.py" line="246" />
+      <location filename="../../../plugins/osc/osc_cue.py" line="248" />
       <source>Remove</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../plugins/osc/osc_cue.py" line="247" />
+      <location filename="../../../plugins/osc/osc_cue.py" line="249" />
       <source>OSC Path:</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../plugins/osc/osc_cue.py" line="249" />
+      <location filename="../../../plugins/osc/osc_cue.py" line="251" />
       <source>/path/to/something</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../plugins/osc/osc_cue.py" line="194" />
+      <location filename="../../../plugins/osc/osc_cue.py" line="196" />
       <source>Fade</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../plugins/osc/osc_cue.py" line="252" />
+      <location filename="../../../plugins/osc/osc_cue.py" line="254" />
       <source>Time (sec)</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../plugins/osc/osc_cue.py" line="253" />
+      <location filename="../../../plugins/osc/osc_cue.py" line="255" />
       <source>Curve</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../plugins/osc/osc_cue.py" line="191" />
+      <location filename="../../../plugins/osc/osc_cue.py" line="193" />
       <source>Type</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../plugins/osc/osc_cue.py" line="192" />
+      <location filename="../../../plugins/osc/osc_cue.py" line="194" />
       <source>Value</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../plugins/osc/osc_cue.py" line="193" />
+      <location filename="../../../plugins/osc/osc_cue.py" line="195" />
       <source>FadeTo</source>
       <translation type="unfinished" />
     </message>
@@ -86,7 +86,7 @@
   <context>
     <name>OscCueError</name>
     <message>
-      <location filename="../../../plugins/osc/osc_cue.py" line="112" />
+      <location filename="../../../plugins/osc/osc_cue.py" line="114" />
       <source>Cannot send OSC message, see error for details</source>
       <translation type="unfinished" />
     </message>

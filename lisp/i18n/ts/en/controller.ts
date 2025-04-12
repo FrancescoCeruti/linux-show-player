@@ -183,12 +183,12 @@ do not forget to edit the path later.</source>
   <context>
     <name>ControllerSettings</name>
     <message>
-      <location filename="../../../plugins/controller/protocols/keyboard.py" line="79" />
+      <location filename="../../../plugins/controller/protocols/midi.py" line="122" />
       <source>Add</source>
       <translation>Add</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/keyboard.py" line="80" />
+      <location filename="../../../plugins/controller/protocols/midi.py" line="123" />
       <source>Remove</source>
       <translation>Remove</translation>
     </message>
@@ -300,14 +300,14 @@ do not forget to edit the path later.</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/midi.py" line="64" />
-      <source>MIDI Controls</source>
-      <translation>MIDI Controls</translation>
-    </message>
-    <message>
       <location filename="../../../plugins/controller/protocols/keyboard.py" line="44" />
       <source>Keyboard Shortcuts</source>
       <translation>Keyboard Shortcuts</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/controller/protocols/midi.py" line="64" />
+      <source>MIDI Controls</source>
+      <translation>MIDI Controls</translation>
     </message>
   </context>
 </TS>

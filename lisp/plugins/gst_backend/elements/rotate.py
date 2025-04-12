@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,30 +23,37 @@ from lisp.plugins.gst_backend.gst_element import GstMediaElement
 from lisp.plugins.gst_backend.gst_properties import GstProperty
 
 
-class AudioPan(GstMediaElement):
+class Rotate(GstMediaElement):
     ElementType = ElementType.Plugin
-    MediaType = MediaType.Audio
-    Name = QT_TRANSLATE_NOOP("MediaElementName", "Audio Pan")
+    MediaType = MediaType.Video
+    Name = QT_TRANSLATE_NOOP("MediaElementName", "Rotate")
 
-    pan = GstProperty("panorama", "panorama", default=0.0)
+    angle = GstProperty("gst_rotate", "angle", default=0)
 
     def __init__(self, pipeline):
         super().__init__(pipeline)
 
-        self.panorama = Gst.ElementFactory.make("audiopanorama", None)
-        self.audio_convert = Gst.ElementFactory.make("audioconvert", None)
+        # Create elements
+        self.sync_element = Gst.ElementFactory.make("identity", "rotate-sync")
+        self.gst_rotate = Gst.ElementFactory.make("rotate", "rotate")
+        self.video_convert = Gst.ElementFactory.make("videoconvert", "rotate-convert")
 
-        self.pipeline.add(self.panorama)
-        self.pipeline.add(self.audio_convert)
+        # Add elements to pipeline
+        self.pipeline.add(self.sync_element)
+        self.pipeline.add(self.gst_rotate)
+        self.pipeline.add(self.video_convert)
 
-        self.panorama.link(self.audio_convert)
+        # Link elements
+        self.sync_element.link(self.gst_rotate)
+        self.gst_rotate.link(self.video_convert)
 
     def sink(self):
-        return self.panorama
+        return self.sync_element
 
     def src(self):
-        return self.audio_convert
+        return self.video_convert
 
     def dispose(self):
-        self.pipeline.remove(self.panorama)
-        self.pipeline.remove(self.audio_convert)
+        self.pipeline.remove(self.sync_element)
+        self.pipeline.remove(self.gst_rotate)
+        self.pipeline.remove(self.video_convert)

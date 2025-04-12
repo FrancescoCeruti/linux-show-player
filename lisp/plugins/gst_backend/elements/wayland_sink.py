@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2024 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,30 +23,21 @@ from lisp.plugins.gst_backend.gst_element import GstMediaElement
 from lisp.plugins.gst_backend.gst_properties import GstProperty
 
 
-class AudioPan(GstMediaElement):
-    ElementType = ElementType.Plugin
-    MediaType = MediaType.Audio
-    Name = QT_TRANSLATE_NOOP("MediaElementName", "Audio Pan")
+class WaylandSink(GstMediaElement):
+    ElementType = ElementType.Output
+    MediaType = MediaType.Video
+    Name = QT_TRANSLATE_NOOP("MediaElementName", "Wayland Video")
 
-    pan = GstProperty("panorama", "panorama", default=0.0)
+    device = GstProperty("wayland_sink", "display", default="wayland-0")
+    fullscreen = GstProperty("wayland_sink", "fullscreen", default=True)
 
     def __init__(self, pipeline):
         super().__init__(pipeline)
 
-        self.panorama = Gst.ElementFactory.make("audiopanorama", None)
-        self.audio_convert = Gst.ElementFactory.make("audioconvert", None)
-
-        self.pipeline.add(self.panorama)
-        self.pipeline.add(self.audio_convert)
-
-        self.panorama.link(self.audio_convert)
+        self.wayland_sink = Gst.ElementFactory.make("waylandsink", "wayland_sink")
+        # Need to set this explicitly for some reason
+        # self.wayland_sink.set_property("fullscreen", fullscreen)
+        self.pipeline.add(self.wayland_sink)
 
     def sink(self):
-        return self.panorama
-
-    def src(self):
-        return self.audio_convert
-
-    def dispose(self):
-        self.pipeline.remove(self.panorama)
-        self.pipeline.remove(self.audio_convert)
+        return self.wayland_sink
