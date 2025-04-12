@@ -124,6 +124,14 @@
     </message>
   </context>
   <context>
+    <name>BlurSettings</name>
+    <message>
+      <location filename="../../../plugins/gst_backend/settings/blur.py" line="62" />
+      <source>Sigma</source>
+      <translation type="unfinished" />
+    </message>
+  </context>
+  <context>
     <name>CueCategory</name>
     <message>
       <location filename="../../../plugins/gst_backend/gst_backend.py" line="87" />
@@ -165,47 +173,47 @@
   <context>
     <name>FlipSettings</name>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/flip.py" line="47" />
+      <location filename="../../../plugins/gst_backend/settings/flip.py" line="44" />
       <source>None</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/flip.py" line="48" />
+      <location filename="../../../plugins/gst_backend/settings/flip.py" line="45" />
       <source>Clockwise 90°</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/flip.py" line="49" />
+      <location filename="../../../plugins/gst_backend/settings/flip.py" line="46" />
       <source>Rotate 180°</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/flip.py" line="50" />
+      <location filename="../../../plugins/gst_backend/settings/flip.py" line="47" />
       <source>Counterclockwise 90°</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/flip.py" line="51" />
+      <location filename="../../../plugins/gst_backend/settings/flip.py" line="48" />
       <source>Horizontal Flip</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/flip.py" line="52" />
+      <location filename="../../../plugins/gst_backend/settings/flip.py" line="49" />
       <source>Vertial Flip</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/flip.py" line="53" />
+      <location filename="../../../plugins/gst_backend/settings/flip.py" line="50" />
       <source>Diagonal Flip (upper-left / lower-right)</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/flip.py" line="54" />
+      <location filename="../../../plugins/gst_backend/settings/flip.py" line="51" />
       <source>Diagonal Flip (upper-right / lower-left)</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/flip.py" line="60" />
+      <location filename="../../../plugins/gst_backend/settings/flip.py" line="57" />
       <source>Method</source>
       <translation type="unfinished" />
     </message>
@@ -320,6 +328,11 @@
       <location filename="../../../plugins/gst_backend/elements/audio_pan.py" line="29" />
       <source>Audio Pan</source>
       <translation>Audio Pan</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/gst_backend/elements/blur.py" line="29" />
+      <source>Blur</source>
+      <translation type="unfinished" />
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/elements/auto_src.py" line="27" />
