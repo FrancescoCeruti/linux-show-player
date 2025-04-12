@@ -83,6 +83,7 @@ class AlphaSettings(SettingsPage):
         self.alphaGroup.setTitle(translate("AlphaSettings", "Alpha"))
 
     def enableCheck(self, enabled):
+        self.setGroupEnabled(self.backgroundGroup, enabled)
         self.setGroupEnabled(self.alphaGroup, enabled)
 
     def getSettings(self):
