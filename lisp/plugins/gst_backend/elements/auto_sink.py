@@ -73,9 +73,7 @@ class AutoSink(GstMediaElement):
 
         self.avbin = AVSinkBin()
         self.audio_sink = Gst.ElementFactory.make("autoaudiosink", "auto_audio_sink")
-        self.audio_sink.set_property("sync", False)
         self.video_sink = Gst.ElementFactory.make("autovideosink", "auto_video_sink")
-        self.video_sink.set_property("sync", False)
 
         self.pipeline.add(self.avbin)
         self.pipeline.add(self.audio_sink)
