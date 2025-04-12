@@ -324,7 +324,7 @@ This is likely because of corrupted data from a plugin. Try to revert recent cha
   <context>
     <name>CueName</name>
     <message>
-      <location filename="../../../cues/media_cue.py" line="29" />
+      <location filename="../../../cues/media_cue.py" line="30" />
       <source>Media Cue</source>
       <translation>Media Cue</translation>
     </message>

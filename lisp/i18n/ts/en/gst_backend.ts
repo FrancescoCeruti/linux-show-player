@@ -309,7 +309,7 @@
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/elements/alpha.py" line="37" />
+      <location filename="../../../plugins/gst_backend/elements/alpha.py" line="35" />
       <source>Alpha</source>
       <translation type="unfinished" />
     </message>
