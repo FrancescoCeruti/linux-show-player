@@ -274,6 +274,11 @@ class PreWaitWidget(TimeWidget):
         self.waitTime = CueWaitTime(self.cue, mode=CueWaitTime.Mode.Pre)
         self.waitTime.notify.connect(self._updateTime, Connection.QtQueued)
 
+    def _updateTime(self, time):
+        self.setValue(time)
+        timeRemaining = self.cue.pre_wait * 1000 - time
+        self.setFormat(strtime(timeRemaining, accurate=1))
+
     def _updateDuration(self, duration):
         # The wait time is in seconds, we need milliseconds
         super()._updateDuration(duration * 1000)
@@ -296,6 +301,17 @@ class PostWaitWidget(TimeWidget):
         self.cueTime = CueTime(self.cue)
 
         self._nextActionChanged(self.cue.next_action)
+
+    def _updateTime(self, time):
+        self.setValue(time)
+        if (
+            self.cue.next_action == CueNextAction.TriggerAfterWait
+            or self.cue.next_action == CueNextAction.SelectAfterWait
+        ):
+        	timeRemaining = self.cue.post_wait * 1000 - time
+        else:
+            timeRemaining = self.cue.duration - time
+        self.setFormat(strtime(timeRemaining, accurate=1))
 
     def _updateDuration(self, duration):
         if (
