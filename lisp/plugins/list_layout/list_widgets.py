@@ -308,7 +308,7 @@ class PostWaitWidget(TimeWidget):
             self.cue.next_action == CueNextAction.TriggerAfterWait
             or self.cue.next_action == CueNextAction.SelectAfterWait
         ):
-        	timeRemaining = self.cue.post_wait * 1000 - time
+            timeRemaining = self.cue.post_wait * 1000 - time
         else:
             timeRemaining = self.cue.duration - time
         self.setFormat(strtime(timeRemaining, accurate=1))
