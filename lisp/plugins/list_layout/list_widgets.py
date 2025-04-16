@@ -191,6 +191,7 @@ class TimeWidget(QProgressBar):
         self.showZeroDuration = False
 
     def _updateTime(self, time):
+        time = 0 if time < 0 else time
         self.setValue(time)
         self.setFormat(strtime(time, accurate=1))
 
