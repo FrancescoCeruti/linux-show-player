@@ -119,8 +119,12 @@ class SeekCueSettings(SettingsPage):
 
             if cue is not None:
                 self.targetCueId = cue.id
+                if cue.media.stop_time > 0:
+                    maximumTime = cue.media.stop_time
+                else:
+                    maximumTime = cue.media.duration
                 self.seekEdit.setMaximumTime(
-                    QTime.fromMSecsSinceStartOfDay(cue.media.duration)
+                    QTime.fromMSecsSinceStartOfDay(maximumTime)
                 )
                 self.cueLabel.setText(cue.name)
 
@@ -143,8 +147,12 @@ class SeekCueSettings(SettingsPage):
             cue = Application().cue_model.get(settings.get("target_id"))
             if cue is not None:
                 self.targetCueId = settings["target_id"]
+                if cue.media.stop_time > 0:
+                    maximumTime = cue.media.stop_time
+                else:
+                    maximumTime = cue.media.duration
                 self.seekEdit.setMaximumTime(
-                    QTime.fromMSecsSinceStartOfDay(cue.media.duration)
+                    QTime.fromMSecsSinceStartOfDay(maximumTime)
                 )
                 self.cueLabel.setText(cue.name)
 
