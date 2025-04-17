@@ -187,7 +187,7 @@ class TimeWidget(QProgressBar):
         self.setFont(QFontDatabase.systemFont(QFontDatabase.FixedFont))
 
         self.cue = item.cue
-        self.widgetDuration = 0
+        self.duration = 0
         self.showZeroDuration = False
 
     def _updateTime(self, time):
@@ -195,7 +195,8 @@ class TimeWidget(QProgressBar):
         self.setFormat(strtime(time, accurate=1))
 
     def _updateDuration(self, duration):
-        self.widgetDuration = duration
+        self.duration = duration
+
         if duration > 0 or self.showZeroDuration:
             # Display as disabled if duration < 0
             self.setEnabled(duration > 0)
@@ -278,8 +279,7 @@ class PreWaitWidget(TimeWidget):
 
     def _updateTime(self, time):
         self.setValue(time)
-        timeRemaining = self.widgetDuration - time
-        self.setFormat(strtime(timeRemaining, accurate=1))
+        self.setFormat(strtime(self.duration - time, accurate=1))
 
     def _updateDuration(self, duration):
         # The wait time is in seconds, we need milliseconds
@@ -306,8 +306,7 @@ class PostWaitWidget(TimeWidget):
 
     def _updateTime(self, time):
         self.setValue(time)
-        timeRemaining = self.widgetDuration - time
-        self.setFormat(strtime(timeRemaining, accurate=1))
+        self.setFormat(strtime(self.duration - time, accurate=1))
 
     def _updateDuration(self, duration):
         if (
