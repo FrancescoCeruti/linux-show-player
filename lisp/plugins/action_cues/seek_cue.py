@@ -113,15 +113,20 @@ class SeekCueSettings(SettingsPage):
         self.seekGroup.setTitle(translate("SeekCue", "Seek"))
         self.seekLabel.setText(translate("SeekCue", "Time to reach"))
 
+    def getMaximumSeekTime(self, cue):
+        if cue.media.stop_time > 0:
+            maximumTime = cue.media.stop_time
+        else:
+            maximumTime = cue.media.duration
+        return QTime.fromMSecsSinceStartOfDay(maximumTime)
+
     def select_cue(self):
         if self.cueDialog.exec() == self.cueDialog.Accepted:
             cue = self.cueDialog.selected_cue()
 
             if cue is not None:
                 self.targetCueId = cue.id
-                self.seekEdit.setMaximumTime(
-                    QTime.fromMSecsSinceStartOfDay(cue.media.duration)
-                )
+                self.seekEdit.setMaximumTime(self.getMaximumSeekTime(cue))
                 self.cueLabel.setText(cue.name)
 
     def enableCheck(self, enabled):
@@ -143,9 +148,7 @@ class SeekCueSettings(SettingsPage):
             cue = Application().cue_model.get(settings.get("target_id"))
             if cue is not None:
                 self.targetCueId = settings["target_id"]
-                self.seekEdit.setMaximumTime(
-                    QTime.fromMSecsSinceStartOfDay(cue.media.duration)
-                )
+                self.seekEdit.setMaximumTime(self.getMaximumSeekTime(cue))
                 self.cueLabel.setText(cue.name)
 
             self.seekEdit.setTime(

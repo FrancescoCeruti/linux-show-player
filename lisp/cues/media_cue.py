@@ -53,6 +53,8 @@ class MediaCue(Cue):
         super().__init__(app, id=id)
         self.media = media
         self.media.changed("duration").connect(self._duration_change)
+        self.media.changed("start_time").connect(self._duration_change)
+        self.media.changed("stop_time").connect(self._duration_change)
         self.media.elements_changed.connect(self.__elements_changed)
         self.media.error.connect(self._on_error)
         self.media.eos.connect(self._on_eos)
@@ -212,7 +214,7 @@ class MediaCue(Cue):
         return ended
 
     def current_time(self):
-        return self.media.current_time()
+        return self.media.current_time() - self.media.start_time
 
     def is_fading_in(self):
         return self.__in_fadein
@@ -221,7 +223,10 @@ class MediaCue(Cue):
         return self.__in_fadeout
 
     def _duration_change(self, value):
-        self.duration = value
+        if self.media.stop_time > 0:
+            self.duration = self.media.stop_time - self.media.start_time
+        else:
+            self.duration = self.media.duration - self.media.start_time
 
     def _on_eos(self):
         with self._st_lock:

@@ -37,8 +37,7 @@ provides fine-grained control on the multimedia source, output and applied effec
 * **Stop time:** End position of the media
 * **Loop:** Number of repetitions after first play (-1 is infinite)
 
-Start/End time allow you to trim the media file without modifications, keep in mind that the UI will keep showing the
-original file duration independently of these options.
+Start/End time allow you to trim the media file without modifications. The displayed duration will be adjusted accordingly.
 
 Loops allow to replay the same media multiple times, they _should_ be seamless if the media content is seamless 
 and depending on the media format, `.wav` are usually a safe option.<br>
