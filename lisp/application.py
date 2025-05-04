@@ -17,7 +17,7 @@
 
 import json
 import logging
-from os.path import exists, dirname, abspath
+from os.path import exists, dirname, abspath, realpath
 
 from PyQt5.QtWidgets import QDialog, qApp
 
@@ -236,7 +236,7 @@ class Application(metaclass=Singleton):
                 layout.get_layout(session_dict["session"]["layout_type"])
             )
             self.session.update_properties(session_dict["session"])
-            self.session.session_file = abspath(session_file)
+            self.session.session_file = realpath(abspath(session_file))
 
             # Load cues
             for cues_dict in session_dict.get("cues", {}):
