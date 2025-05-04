@@ -29,6 +29,8 @@ class Session(HasInstanceProperties):
     session_file = Property(default="")
     """The current session-file path, must be absolute."""
 
+    plugins = Property(default={})
+
     def __init__(self, layout):
         super().__init__()
         self.finalized = Signal()
@@ -58,6 +60,9 @@ class Session(HasInstanceProperties):
             return os.path.normpath(os.path.join(self.dir(), rel_path))
 
         return rel_path
+
+    def set_plugin_session_config(self, plugin_name, plugin_session_config):
+        self.plugins[plugin_name] = plugin_session_config
 
     def rel_path(self, abs_path):
         """Return a relative (to the session-file) version of the given path."""
