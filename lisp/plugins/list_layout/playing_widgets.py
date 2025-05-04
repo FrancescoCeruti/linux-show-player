@@ -203,7 +203,7 @@ class RunningMediaCueWidget(RunningCueWidget):
         else:
             self.seekSlider = QClickSlider(self.gridLayoutWidget)
             self.seekSlider.setOrientation(Qt.Horizontal)
-            self.seekSlider.setRange(0, cue.duration)
+            self.seekSlider.setRange(0, cue.media.duration)
 
         self.seekSlider.setFocusPolicy(Qt.NoFocus)
         self.seekSlider.sliderMoved.connect(self._seek)
@@ -258,4 +258,4 @@ class RunningMediaCueWidget(RunningCueWidget):
 
     def _update_timers(self, time):
         super()._update_timers(time)
-        self.seekSlider.setValue(time)
+        self.seekSlider.setValue(time + self.cue.media.start_time)
