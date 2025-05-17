@@ -104,7 +104,9 @@ class OscSettings(SettingsPage):
             translate("OscSettings", "OSC Output Settings")
         )
         self.outwardsLabel.setText(
-            translate("OscSettings", "Messages from OSC Cues will be sent via UDP to:")
+            translate(
+                "OscSettings", "Messages from OSC Cues will be sent via UDP to:"
+            )
         )
         self.hostnameLabel.setText(translate("OscSettings", "Address:"))
         self.outportLabel.setText(translate("OscSettings", "Port:"))

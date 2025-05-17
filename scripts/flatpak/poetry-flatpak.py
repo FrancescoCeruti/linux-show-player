@@ -94,7 +94,9 @@ def get_packages_sources(packages: list, parsed_lockfile: Mapping) -> list:
     return sources
 
 
-def get_locked_packages(parsed_lockfile: Mapping, groups: set, exclude=tuple()) -> list:
+def get_locked_packages(
+    parsed_lockfile: Mapping, groups: set, exclude=tuple()
+) -> list:
     """Gets the list of dependency names."""
     dependencies = []
     packages = parsed_lockfile.get("package", [])
@@ -140,7 +142,9 @@ def main():
 
     # Get packages sources from the poetry.lock file
     parsed_lockfile = toml.load(args.lockfile)
-    locked_packages = get_locked_packages(parsed_lockfile, {'main'}, exclude=args.exclude)
+    locked_packages = get_locked_packages(
+        parsed_lockfile, {"main"}, exclude=args.exclude
+    )
     print(f"Found {len(locked_packages)} packages in {args.lockfile}")
 
     # Compose the "pip install" command
