@@ -20,6 +20,7 @@ from falcon import App
 from lisp.core.plugin import Plugin
 from lisp.plugins.network.api import route_all
 from lisp.plugins.network.discovery import Announcer
+from lisp.plugins.network.middlewares.require_json import RequireJSONMiddleware
 from lisp.plugins.network.server import APIServerThread
 
 
@@ -30,7 +31,7 @@ class Network(Plugin):
 
     def __init__(self, app):
         super().__init__(app)
-        self.api = App()
+        self.api = App(middleware=RequireJSONMiddleware())
         # We don't support HTTPS (yet?)
         self.api.resp_options.secure_cookies_by_default = False
         # Load all the api endpoints

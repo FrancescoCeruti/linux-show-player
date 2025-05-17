@@ -58,12 +58,12 @@ class CueActionEndPoint(EndPoint):
         cue = resolve_cue(self.app, cue_id)
 
         try:
-            data = json.load(request.stream)
-            action = CueAction(data["action"])
+            data = request.get_media()
+            action = CueAction(data.get("action"))
 
             cue.execute(action=action)
             response.status = falcon.HTTP_CREATED
-        except (KeyError, json.JSONDecodeError):
+        except ValueError:
             response.status = falcon.HTTP_BAD_REQUEST
 
 
