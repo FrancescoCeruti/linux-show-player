@@ -38,7 +38,7 @@ class Controller(Plugin):
     Authors = ("Francesco Ceruti", "Thomas Achtner")
     OptDepends = ("Midi", "Osc")
     Description = (
-        "Allow to control cues via external commands with multiple " "protocols"
+        "Allow to control cues via external commands with multiple protocols"
     )
 
     def __init__(self, app):

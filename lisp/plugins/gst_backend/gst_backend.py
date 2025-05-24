@@ -51,7 +51,7 @@ class GstBackend(Plugin, BaseBackend):
     Name = "GStreamer Backend"
     Authors = ("Francesco Ceruti",)
     Description = (
-        "Provide audio playback capabilities via the GStreamer " "framework"
+        "Provide audio playback capabilities via the GStreamer framework"
     )
 
     def __init__(self, app):

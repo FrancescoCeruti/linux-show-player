@@ -355,7 +355,7 @@ class PresetsDialog(QDialog):
                         translate("Presets", "Presets"),
                         translate(
                             "Presets",
-                            "Some presets already exists, " "overwrite?",
+                            "Some presets already exists, overwrite?",
                         ),
                         buttons=QMessageBox.Yes | QMessageBox.Cancel,
                     )

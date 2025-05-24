@@ -93,7 +93,7 @@ class MediaCueSettings(SettingsPage):
         self.loopLabel.setText(
             translate(
                 "MediaCueSettings",
-                "Repetition after first play " "(-1 = infinite)",
+                "Repetition after first play (-1 = infinite)",
             )
         )
 
