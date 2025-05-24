@@ -22,7 +22,7 @@ exclude = [
 ]
 
 [tool.poetry.dependencies]
-python = ">= 3.9, < 4.0"
+python = ">= 3.10, < 4.0"
 appdirs = "^1.4.1"
 falcon = "^4.0.1"
 jack-client = "^0.5"
@@ -53,7 +53,7 @@ sphinx-inline-tabs = "^2023.4.21"
 toml = "*"
 packaging = "*"
 pygobject-stubs = "^2.11.0"
-ruff = "^0.6.9"
+ruff = "*"
 
 [tool.poetry.scripts]
 linux-show-player = "lisp.main:main"

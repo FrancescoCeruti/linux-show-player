@@ -74,7 +74,7 @@ What follows are guidelines to run LiSP without a "proper" installation, **if so
 To start, you'll need to install these packages using your package manager:
 
 ```{tab} Debian/Ubuntu/Mint
- * `python3` (>= 3.8)
+ * `python3` (>= 3.10)
  * `python3-dev`
  * `python3-poetry` (>= 1.2, otherwise follow <a href="https://python-poetry.org/docs/#installation" target="_blank">these instructions</a>)
  * `gstreamer1.0-plugins-good`
@@ -89,7 +89,7 @@ To start, you'll need to install these packages using your package manager:
 ```
 
 ```{tab} Fedora/CentOS
- * `python3` (>= 3.8)
+ * `python3` (>= 3.10)
  * `python3-devel`
  * `poetry` (>= 1.2, otherwise follow <a href="https://python-poetry.org/docs/#installation" target="_blank">these instructions</a>)
  * `gstreamer1-plugins-good`
