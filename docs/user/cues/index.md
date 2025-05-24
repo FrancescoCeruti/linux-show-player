@@ -64,7 +64,21 @@ Options are organized within tabs:
 Visual options *(some of them can be ignored by the layout)*
 
 * **Cue name:** The name that identify the cue
-* **Description/Note:** A text for writing notes about the cue
+* **Description/Note:** A text for writing notes about the cue, interpreted as [Markdown](https://github.github.com/gfm/).
+
+```{note}
+To insert a new line in **Description/Note**, you need to insert a blank line, or add a "\\\\" at the end of the line.
+
+line1
+
+line2
+
+--or--
+
+line1\\\\\
+line2
+```
+
 * **Font size:** The font used to display the name
 * **Font color:** The color of the font used to display the name
 * **Background color:** The background color of the cue
