@@ -1,10 +1,10 @@
 {
     "app-id": "org.linuxshowplayer.LinuxShowPlayer",
     "runtime": "org.kde.Platform",
-    "runtime-version": "5.15-23.08",
+    "runtime-version": "5.15-24.08",
     "sdk": "org.kde.Sdk",
     "base": "com.riverbankcomputing.PyQt.BaseApp",
-    "base-version": "5.15-23.08",
+    "base-version": "5.15-24.08",
     "command": "linux-show-player",
     "rename-icon": "linuxshowplayer",
     "finish-args": [
@@ -60,80 +60,6 @@
                 }
             ]
         },
-        "shared-modules/linux-audio/liblo.json",
-        {
-            "name": "pyliblo3",
-            "buildsystem": "simple",
-            "build-commands": [
-                "pip3 install --no-index --no-build-isolation --find-links=\"file://${PWD}\" --prefix=\"${FLATPAK_DEST}\" pyliblo3"
-            ],
-            "sources": [
-                {
-                    "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/5e/2e/524a6667fa851d0aae3eded349b4f1e56785036d65e186fb4bf2f741a505/pyliblo3-0.13.0.tar.gz",
-                    "sha256": "5700eac4a6db2c1c492a99c17bbf1871e888309ae7bcd1c68473650778d60f46"
-                }
-            ]
-        },
-        {
-            "name": "protobuf",
-            "config-opts": [
-                "--disable-static"
-            ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://github.com/protocolbuffers/protobuf/releases/download/v21.12/protobuf-cpp-3.21.12.tar.gz",
-                    "sha256": "4eab9b524aa5913c6fffb20b2a8abf5ef7f95a80bc0701f3a6dbb4c607f73460"
-                }
-            ],
-            "cleanup": [
-                "/bin"
-            ]
-        },
-        {
-            "name": "python-google-protobuf",
-            "buildsystem": "simple",
-            "build-commands": [
-                "pip3 install --no-index --no-build-isolation --find-links=\"file://${PWD}\" --prefix=\"${FLATPAK_DEST}\" protobuf"
-            ],
-            "sources": [
-                {
-                    "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/ba/dd/f8a01b146bf45ac12a829bbc599e6590aa6a6849ace7d28c42d77041d6ab/protobuf-4.21.12.tar.gz",
-                    "sha256": "7cd532c4566d0e6feafecc1059d04c7915aec8e182d1cf7adee8b24ef1e2e6ab"
-                }
-            ]
-        },
-        {
-            "name": "ola",
-            "build-options": {
-                "env": {
-                    "PYTHON": "python3"
-                }
-            },
-            "config-opts": [
-                "--disable-unittests",
-                "--disable-examples",
-                "--disable-osc",
-                "--disable-http",
-                "--enable-python-libs"
-            ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://github.com/OpenLightingProject/ola/releases/download/0.10.9/ola-0.10.9.tar.gz",
-                    "sha256": "44073698c147fe641507398253c2e52ff8dc7eac8606cbf286c29f37939a4ebf"
-                },
-                {
-                    "type": "script",
-                    "dest-filename": "autogen.sh",
-                    "commands": [
-                        "autoreconf -fi"
-                    ]
-                }
-            ]
-        },
         {
             "name": "python-alsa",
             "buildsystem": "simple",
@@ -165,22 +91,7 @@
                 }
             ]
         },
-        {
-            "name": "python-packaging",
-            "buildsystem": "simple",
-            "build-commands": [
-                "pip3 install --no-index --no-build-isolation --force-reinstall --find-links=\"file://${PWD}\" --prefix=\"${FLATPAK_DEST}\" packaging"
-            ],
-            "sources": [
-                {
-                    "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/ec/1a/610693ac4ee14fcdf2d9bf3c493370e4f2ef7ae2e19217d7a237ff42367d/packaging-23.2-py3-none-any.whl",
-                    "sha256": "8c491190033a9af7e1d931d0b5dacc2ef47509b34dd0de67ed209b5203fc88c7"
-                }
-            ]
-        },
         "gstreamer-modules.json",
-        "pygobject-modules.json",
         "python-modules.json",
         "numpy-modules.json",
         {
@@ -197,9 +108,11 @@
                 {
                     "type": "git",
                     "url": "https://github.com/FrancescoCeruti/linux-show-player.git",
-                    "branch": "master"
+                    "branch": "develop"
                 }
             ]
         }
-    ]
+    ],
+    "branch": "develop",
+    "desktop-file-name-suffix": " (develop)"
 }

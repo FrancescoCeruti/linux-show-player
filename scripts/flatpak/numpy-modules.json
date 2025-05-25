@@ -10,13 +10,13 @@
       "sources": [
         {
           "type": "file",
-          "url": "https://files.pythonhosted.org/packages/91/c0/104cb6244c83fe6bc3886f144cc433db0c0c78efac5dc00e409a5a08c87d/meson_python-0.16.0-py3-none-any.whl",
-          "sha256": "842dc9f5dc29e55fc769ff1b6fe328412fe6c870220fc321060a1d2d395e69e8"
+          "url": "https://files.pythonhosted.org/packages/28/58/66db620a8a7ccb32633de9f403fe49f1b63c68ca94e5c340ec5cceeb9821/meson_python-0.18.0-py3-none-any.whl",
+          "sha256": "3b0fe051551cc238f5febb873247c0949cd60ded556efa130aa57021804868e2"
         },
         {
           "type": "file",
-          "url": "https://files.pythonhosted.org/packages/aa/5f/bb5970d3d04173b46c9037109f7f05fc8904ff5be073ee49bb6ff00301bc/pyproject_metadata-0.8.0-py3-none-any.whl",
-          "sha256": "ad858d448e1d3a1fb408ac5bac9ea7743e7a8bbb472f2693aaa334d2db42f526"
+          "url": "https://files.pythonhosted.org/packages/7e/b1/8e63033b259e0a4e40dd1ec4a9fee17718016845048b43a36ec67d62e6fe/pyproject_metadata-0.9.1-py3-none-any.whl",
+          "sha256": "ee5efde548c3ed9b75a354fc319d5afd25e9585fa918a34f62f904cc731973ad"
         }
       ]
     },
@@ -29,13 +29,13 @@
       "sources": [
         {
           "type": "file",
-          "url": "https://files.pythonhosted.org/packages/d5/f7/2fdd9205a2eedee7d9b0abbf15944a1151eb943001dbdc5233b1d1cfc34e/Cython-3.0.10.tar.gz",
-          "sha256": "dcc96739331fb854dcf503f94607576cfe8488066c61ca50dfd55836f132de99"
+          "url": "https://files.pythonhosted.org/packages/5b/d3/bb000603e46144db2e5055219bbddcf7ab3b10012fcb342695694fb88141/cython-3.1.1.tar.gz",
+          "sha256": "505ccd413669d5132a53834d792c707974248088c4f60c497deb1b416e366397"
         },
         {
           "type": "file",
-          "url": "https://files.pythonhosted.org/packages/65/6e/09db70a523a96d25e115e71cc56a6f9031e7b8cd166c1ac8438307c14058/numpy-1.26.4.tar.gz",
-          "sha256": "2a02aba9ed12e4ac4eb3ea9421c420301a0c6460d9830d74a9df87efa4912010"
+          "url": "https://files.pythonhosted.org/packages/76/21/7d2a95e4bba9dc13d043ee156a356c0a8f0c6309dff6b21b4d71a073b8a8/numpy-2.2.6.tar.gz",
+          "sha256": "e29554e2bef54a90aa5cc07da6ce955accb83f21ab5de01a62c8478897b264fd"
         }
       ]
     }

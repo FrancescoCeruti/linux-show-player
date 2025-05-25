@@ -2,6 +2,17 @@
 
 source config.sh
 
+function flatpak_build_simple() {
+    BUILD_BRANCH=$(git branch --show-current)
+    export BUILD_BRANCH
+
+    if [ -n "$ZSH_VERSION" ]; then
+      setopt sh_word_split
+    fi
+
+    flatpak_build_manifest && flatpak_build && flatpak_bundle
+}
+
 function flatpak_build_manifest() {
     # Create virtual-environment
     python3 -m venv ./venv
