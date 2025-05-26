@@ -127,4 +127,5 @@ class TimecodeCueTracker:
 
     def finalize(self):
         self.untrack()
+        self.protocol.finalize()
         self.protocol = None

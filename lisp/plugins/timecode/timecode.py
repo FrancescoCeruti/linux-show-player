@@ -85,7 +85,7 @@ class Timecode(Plugin):
         if key == "protocol":
             self.__cue_tracker.protocol = self.__get_protocol(value)
         elif key == "format":
-            self.__cue_tracker.format = value
+            self.__cue_tracker.format = TcFormat[value]
 
     def __config_update(self, diff):
         for key, value in diff.items():

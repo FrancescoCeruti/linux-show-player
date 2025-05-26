@@ -7,15 +7,6 @@ or lighting desk such as "Chamsys MagicQ".<br>
 This plugin works is meant as an alternative to the Chamsys Winamp plugin, which doesn't work under Linux.
 To get a general idea what is this all about, have a look <a href="https://www.youtube.com/watch?v=Wu1iPkdzMJk">this video</a>.
 
-```{note}
-
-In order to use _ArtNet_, you need <a href="https://www.openlighting.org/ola/" target="_blank">OLA</a> installed, 
-and a running OLA session on your computer.
-
-To make sure that OLA is up and running, <a href="http://localhost:9090" tagret="_blank">http://localhost:9090</a>
-should display the OLA interface.
-```
-
 ## Preferences
 
 You can configure the plugin in `File > Preferences > Plugins > Timecode Settings`

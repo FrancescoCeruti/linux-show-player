@@ -129,10 +129,6 @@ To start, you'll need to install these packages using your package manager:
  * `rtmidi`
 ```
 
-```{hint}
-You might also want to install `ola`, for ArtNet timecode, however, using the method described here, it's not possile to use it. 
-```
-
 ### Download
 
 Download the source code from <a href="https://github.com/FrancescoCeruti/linux-show-player" target="_blank">GitHub</a> or clone the git repository.
