@@ -112,7 +112,5 @@
                 }
             ]
         }
-    ],
-    "branch": "develop",
-    "desktop-file-name-suffix": " (develop)"
+    ]
 }
