@@ -167,7 +167,7 @@ class CueWaitsPage(CueSettingsPage):
 
         self.preWaitEdit = QTimeEdit(self.preWaitGroup)
         self.preWaitEdit.setDisplayFormat("HH:mm:ss.zzz")
-        self.preWaitEdit.setCurrentSection(QDateTimeEdit.SecondSection)
+        self.preWaitEdit.setCurrentSection(QDateTimeEdit.Section.SecondSection)
         self.preWaitGroup.layout().addWidget(self.preWaitEdit)
 
         self.preWaitLabel = QLabel(self.preWaitGroup)
@@ -181,7 +181,7 @@ class CueWaitsPage(CueSettingsPage):
 
         self.postWaitEdit = QTimeEdit(self.postWaitGroup)
         self.postWaitEdit.setDisplayFormat("HH:mm:ss.zzz")
-        self.postWaitEdit.setCurrentSection(QDateTimeEdit.SecondSection)
+        self.postWaitEdit.setCurrentSection(QDateTimeEdit.Section.SecondSection)
         self.postWaitGroup.layout().addWidget(self.postWaitEdit)
 
         self.postWaitLabel = QLabel(self.postWaitGroup)

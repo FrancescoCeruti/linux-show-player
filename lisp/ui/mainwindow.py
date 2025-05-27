@@ -165,7 +165,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         self.actionAbout.triggered.connect(self.__about)
 
         self.actionAbout_Qt = QAction(self)
-        self.actionAbout_Qt.triggered.connect(QApplication.instance().aboutQt)
+        self.actionAbout_Qt.triggered.connect(QApplication.aboutQt)
 
         self.menuAbout.addAction(self.actionAbout)
         self.menuAbout.addSeparator()

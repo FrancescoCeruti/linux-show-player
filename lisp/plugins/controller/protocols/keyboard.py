@@ -133,6 +133,7 @@ class KeyboardView(QTableView):
         self.horizontalHeader().setSectionResizeMode(
             QHeaderView.ResizeMode.Stretch
         )
+        self.horizontalHeader().setStretchLastSection(True)
         self.horizontalHeader().setHighlightSections(False)
 
         self.verticalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Fixed)

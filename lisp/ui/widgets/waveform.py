@@ -58,7 +58,7 @@ class WaveformWidget(QWidget):
                     (self._value - self._lastDrawnValue) / self._valueToPx
                 )
                 # Repaint only the changed area
-                self.update(x - 1, 0, width + 1, self.height())
+                self.update(x - 1, 0, width + 2, self.height())
             elif self._value <= ceil(self._lastDrawnValue - self._valueToPx):
                 x = int(self._value / self._valueToPx)
                 width = int(

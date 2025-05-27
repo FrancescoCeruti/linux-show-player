@@ -165,8 +165,8 @@ class CollectionView(QTableView):
     def __init__(self, cueModel, cueSelect, **kwargs):
         super().__init__(**kwargs)
 
-        self.setSelectionBehavior(QTableView.SelectRows)
-        self.setSelectionMode(QTableView.SingleSelection)
+        self.setSelectionBehavior(QTableView.SelectionBehavior.SelectRows)
+        self.setSelectionMode(QTableView.SelectionMode.SingleSelection)
 
         self.setShowGrid(False)
         self.setAlternatingRowColors(True)

@@ -44,7 +44,7 @@ class OscSettings(SettingsPage):
         self.layout().addWidget(self.inwardsGroupBox)
 
         self.inwardsLabel = QLabel()
-        self.inwardsLabel.setAlignment(Qt.AlignCenter)
+        self.inwardsLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         font = self.inwardsLabel.font()
         font.setPointSizeF(font.pointSizeF() * 0.9)
         self.inwardsLabel.setFont(font)
@@ -67,7 +67,7 @@ class OscSettings(SettingsPage):
         self.layout().addWidget(self.outwardsGroupBox)
 
         self.outwardsLabel = QLabel()
-        self.outwardsLabel.setAlignment(Qt.AlignCenter)
+        self.outwardsLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.outwardsLabel.setFont(font)
         self.outwardsGroupBox.layout().addWidget(self.outwardsLabel, 0, 0, 1, 2)
 

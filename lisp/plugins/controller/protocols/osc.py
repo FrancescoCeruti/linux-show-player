@@ -209,8 +209,8 @@ class OscArgumentView(QTableView):
             OscArgumentDelegate(),
         ]
 
-        self.setSelectionBehavior(QTableWidget.SelectRows)
-        self.setSelectionMode(QTableView.SingleSelection)
+        self.setSelectionBehavior(QTableWidget.SelectionBehavior.SelectRows)
+        self.setSelectionMode(QTableView.SelectionMode.SingleSelection)
 
         self.setShowGrid(False)
         self.setAlternatingRowColors(True)
@@ -218,6 +218,7 @@ class OscArgumentView(QTableView):
         self.horizontalHeader().setSectionResizeMode(
             QHeaderView.ResizeMode.Stretch
         )
+        self.horizontalHeader().setStretchLastSection(True)
         self.horizontalHeader().setHighlightSections(False)
 
         self.verticalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Fixed)
@@ -413,8 +414,8 @@ class OscView(QTableView):
             actionDelegate,
         ]
 
-        self.setSelectionBehavior(QTableWidget.SelectRows)
-        self.setSelectionMode(QTableView.SingleSelection)
+        self.setSelectionBehavior(QTableWidget.SelectionBehavior.SelectRows)
+        self.setSelectionMode(QTableView.SelectionMode.SingleSelection)
 
         self.setShowGrid(False)
         self.setAlternatingRowColors(True)
@@ -422,6 +423,7 @@ class OscView(QTableView):
         self.horizontalHeader().setSectionResizeMode(
             QHeaderView.ResizeMode.Stretch
         )
+        self.horizontalHeader().setStretchLastSection(True)
         self.horizontalHeader().setHighlightSections(False)
 
         self.verticalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Fixed)
@@ -439,7 +441,7 @@ class OscView(QTableView):
             dialog = OscMessageDialog()
             dialog.setMessage(row[0], row[1], row[2])
 
-            if dialog.exec() == dialog.Accepted:
+            if dialog.exec() == OscMessageDialog.DialogCode.Accepted:
                 path, types, arguments = dialog.getMessage()
                 self.model().updateRow(
                     index.row(), path, types, arguments, row[3]

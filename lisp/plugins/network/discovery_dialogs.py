@@ -62,7 +62,7 @@ class HostDiscoveryDialog(QDialog):
         self.layout().addWidget(self.progressSpinner, 2, 0)
 
         self.dialogButton = QDialogButtonBox(self)
-        self.dialogButton.setStandardButtons(self.dialogButton.Ok)
+        self.dialogButton.setStandardButtons(QDialogButtonBox.StandardButton.Ok)
         self.dialogButton.accepted.connect(self.accept)
         self.layout().addWidget(self.dialogButton, 2, 1)
 
@@ -152,7 +152,7 @@ class HostManagementDialog(QDialog):
         self.buttonsLayout.addSpacing(70)
 
         self.dialogButton = QDialogButtonBox(self)
-        self.dialogButton.setStandardButtons(self.dialogButton.Ok)
+        self.dialogButton.setStandardButtons(QDialogButtonBox.StandardButton.Ok)
         self.dialogButton.accepted.connect(self.accept)
         self.buttonsLayout.addWidget(self.dialogButton)
 

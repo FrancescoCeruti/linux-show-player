@@ -316,8 +316,8 @@ class OscView(QTableView):
             BoolCheckBoxDelegate(),
         ]
 
-        self.setSelectionBehavior(QTableWidget.SelectRows)
-        self.setSelectionMode(QTableView.SingleSelection)
+        self.setSelectionBehavior(QTableWidget.SelectionBehavior.SelectRows)
+        self.setSelectionMode(QTableView.SelectionMode.SingleSelection)
 
         self.setShowGrid(False)
         self.setAlternatingRowColors(True)

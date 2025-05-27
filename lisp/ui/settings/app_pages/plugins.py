@@ -182,8 +182,8 @@ class PluginsView(QTableView):
             BoolCheckBoxDelegate(),
         ]
 
-        self.setSelectionBehavior(QTableView.SelectRows)
-        self.setSelectionMode(QTableView.SingleSelection)
+        self.setSelectionBehavior(QTableView.SelectionBehavior.SelectRows)
+        self.setSelectionMode(QTableView.SelectionMode.SingleSelection)
 
         self.setShowGrid(False)
         self.setAlternatingRowColors(True)

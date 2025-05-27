@@ -194,7 +194,7 @@ class VolumeSettings(SettingsPage):
         self.fadeGroup.setTitle(translate("VolumeControl", "Fade"))
 
     def select_cue(self):
-        if self.cueDialog.exec() == self.cueDialog.Accepted:
+        if self.cueDialog.exec() == CueSelectDialog.DialogCode.Accepted:
             cue = self.cueDialog.selected_cue()
 
             if cue is not None:

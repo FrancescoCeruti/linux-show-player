@@ -15,8 +15,6 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>
 
-from collections import OrderedDict
-
 from PyQt6 import QtCore
 from PyQt6.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt6.QtWidgets import (
