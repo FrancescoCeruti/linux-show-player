@@ -17,8 +17,8 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from PyQt5.QtCore import QT_TRANSLATE_NOOP, Qt
-from PyQt5.QtWidgets import (
+from PyQt6.QtCore import QT_TRANSLATE_NOOP, Qt
+from PyQt6.QtWidgets import (
     QGridLayout,
     QVBoxLayout,
     QGroupBox,
@@ -40,7 +40,7 @@ class TimecodeSettings(CueSettingsPage):
     def __init__(self, cueType, **kwargs):
         super().__init__(cueType, **kwargs)
         self.setLayout(QVBoxLayout())
-        self.layout().setAlignment(Qt.AlignTop)
+        self.layout().setAlignment(Qt.AlignmentFlag.AlignTop)
 
         self.groupBox = QGroupBox(self)
         self.groupBox.setLayout(QGridLayout())
@@ -63,13 +63,13 @@ class TimecodeSettings(CueSettingsPage):
         self.groupBox.layout().addWidget(self.trackSpin, 2, 0)
 
         self.trackLabel = QLabel(self.groupBox)
-        self.trackLabel.setAlignment(Qt.AlignCenter)
+        self.trackLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.groupBox.layout().addWidget(self.trackLabel, 2, 1)
 
         self.layout().addSpacing(50)
 
         self.warnLabel = QLabel(self)
-        self.warnLabel.setAlignment(Qt.AlignCenter)
+        self.warnLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.warnLabel.setStyleSheet("color: #FFA500; font-weight: bold")
         self.layout().addWidget(self.warnLabel)
 
@@ -116,7 +116,7 @@ class TimecodeAppSettings(SettingsPage):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
-        self.layout().setAlignment(Qt.AlignTop)
+        self.layout().setAlignment(Qt.AlignmentFlag.AlignTop)
 
         self.groupBox = QGroupBox(self)
         self.groupBox.setLayout(QGridLayout())

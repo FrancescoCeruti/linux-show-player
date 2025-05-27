@@ -20,8 +20,8 @@
 import ast
 import logging
 
-from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
-from PyQt5.QtWidgets import (
+from PyQt6.QtCore import Qt, QT_TRANSLATE_NOOP
+from PyQt6.QtWidgets import (
     QGroupBox,
     QPushButton,
     QVBoxLayout,
@@ -89,8 +89,8 @@ class OscMessageDialog(QDialog):
         self.layout().addItem(QSpacerItem(0, 20), 4, 0, 1, 2)
 
         self.buttons = QDialogButtonBox(self)
-        self.buttons.addButton(QDialogButtonBox.Cancel)
-        self.buttons.addButton(QDialogButtonBox.Ok)
+        self.buttons.addButton(QDialogButtonBox.StandardButton.Cancel)
+        self.buttons.addButton(QDialogButtonBox.StandardButton.Ok)
         self.layout().addWidget(self.buttons, 5, 0, 1, 2)
 
         self.buttons.accepted.connect(self.accept)
@@ -175,7 +175,7 @@ class OscMessageDialog(QDialog):
 
     def __argumentChanged(self, topLeft, bottomRight, roles):
         # If the "Type" column has changed
-        if Qt.EditRole in roles and bottomRight.column() == 0:
+        if Qt.ItemDataRole.EditRole in roles and bottomRight.column() == 0:
             # Get the edited row
             row = self.model.rows[topLeft.row()]
             oscType = row[0]
@@ -209,16 +209,19 @@ class OscArgumentView(QTableView):
             OscArgumentDelegate(),
         ]
 
-        self.setSelectionBehavior(QTableWidget.SelectRows)
-        self.setSelectionMode(QTableView.SingleSelection)
+        self.setSelectionBehavior(QTableWidget.SelectionBehavior.SelectRows)
+        self.setSelectionMode(QTableView.SelectionMode.SingleSelection)
 
         self.setShowGrid(False)
         self.setAlternatingRowColors(True)
 
-        self.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.horizontalHeader().setSectionResizeMode(
+            QHeaderView.ResizeMode.Stretch
+        )
+        self.horizontalHeader().setStretchLastSection(True)
         self.horizontalHeader().setHighlightSections(False)
 
-        self.verticalHeader().sectionResizeMode(QHeaderView.Fixed)
+        self.verticalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Fixed)
         self.verticalHeader().setDefaultSectionSize(24)
         self.verticalHeader().setHighlightSections(False)
 
@@ -232,7 +235,7 @@ class OscSettings(SettingsPage):
     def __init__(self, actionDelegate, **kwargs):
         super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
-        self.layout().setAlignment(Qt.AlignTop)
+        self.layout().setAlignment(Qt.AlignmentFlag.AlignTop)
 
         self.oscGroup = QGroupBox(self)
         self.oscGroup.setTitle(translate("ControllerOscSettings", "OSC"))
@@ -257,7 +260,7 @@ class OscSettings(SettingsPage):
         self.oscCapture.clicked.connect(self.capture_message)
         self.oscGroup.layout().addWidget(self.oscCapture, 2, 0)
 
-        self.captureDialog = QDialog(self, flags=Qt.Dialog)
+        self.captureDialog = QDialog(self, flags=Qt.WindowType.Dialog)
         self.captureDialog.resize(300, 150)
         self.captureDialog.setMaximumSize(self.captureDialog.size())
         self.captureDialog.setMinimumSize(self.captureDialog.size())
@@ -266,13 +269,14 @@ class OscSettings(SettingsPage):
         )
         self.captureDialog.setModal(True)
         self.captureLabel = QLabel("Waiting for message:")
-        self.captureLabel.setAlignment(Qt.AlignCenter)
+        self.captureLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.captureDialog.setLayout(QVBoxLayout())
         self.captureDialog.layout().addWidget(self.captureLabel)
 
         self.buttonBox = QDialogButtonBox(
-            QDialogButtonBox.Ok | QDialogButtonBox.Cancel,
-            Qt.Horizontal,
+            QDialogButtonBox.StandardButton.Ok
+            | QDialogButtonBox.StandardButton.Cancel,
+            Qt.Orientation.Horizontal,
             self.captureDialog,
         )
         self.buttonBox.accepted.connect(self.captureDialog.accept)
@@ -325,7 +329,10 @@ class OscSettings(SettingsPage):
         self.__osc.server.new_message.connect(self.__show_message)
 
         result = self.captureDialog.exec()
-        if result == QDialog.Accepted and self.capturedMessage["path"]:
+        if (
+            result == QDialog.DialogCode.Accepted
+            and self.capturedMessage["path"]
+        ):
             args = str(self.capturedMessage["args"])[1:-1]
             self.oscModel.appendRow(
                 self.capturedMessage["path"],
@@ -407,16 +414,19 @@ class OscView(QTableView):
             actionDelegate,
         ]
 
-        self.setSelectionBehavior(QTableWidget.SelectRows)
-        self.setSelectionMode(QTableView.SingleSelection)
+        self.setSelectionBehavior(QTableWidget.SelectionBehavior.SelectRows)
+        self.setSelectionMode(QTableView.SelectionMode.SingleSelection)
 
         self.setShowGrid(False)
         self.setAlternatingRowColors(True)
 
-        self.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.horizontalHeader().setSectionResizeMode(
+            QHeaderView.ResizeMode.Stretch
+        )
+        self.horizontalHeader().setStretchLastSection(True)
         self.horizontalHeader().setHighlightSections(False)
 
-        self.verticalHeader().sectionResizeMode(QHeaderView.Fixed)
+        self.verticalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Fixed)
         self.verticalHeader().setDefaultSectionSize(24)
         self.verticalHeader().setHighlightSections(False)
 
@@ -431,7 +441,7 @@ class OscView(QTableView):
             dialog = OscMessageDialog()
             dialog.setMessage(row[0], row[1], row[2])
 
-            if dialog.exec() == dialog.Accepted:
+            if dialog.exec() == OscMessageDialog.DialogCode.Accepted:
                 path, types, arguments = dialog.getMessage()
                 self.model().updateRow(
                     index.row(), path, types, arguments, row[3]
@@ -451,7 +461,7 @@ class OscModel(SimpleTableModel):
 
     def flags(self, index):
         if index.column() <= 2:
-            return Qt.ItemIsEnabled | Qt.ItemIsSelectable
+            return Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable
 
         return super().flags(index)
 

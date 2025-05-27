@@ -15,11 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>
 
-from collections import OrderedDict
-
-from PyQt5 import QtCore
-from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
-from PyQt5.QtWidgets import (
+from PyQt6 import QtCore
+from PyQt6.QtCore import Qt, QT_TRANSLATE_NOOP
+from PyQt6.QtWidgets import (
     QDialog,
     QGridLayout,
     QLabel,
@@ -60,7 +58,7 @@ class About(QDialog):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.setWindowModality(QtCore.Qt.ApplicationModal)
+        self.setWindowModality(QtCore.Qt.WindowModality.ApplicationModal)
         self.setWindowTitle(translate("About", "About Linux Show Player"))
         self.setMaximumSize(550, 420)
         self.setMinimumSize(550, 420)
@@ -75,7 +73,7 @@ class About(QDialog):
         self.layout().addWidget(self.iconLabel, 0, 0)
 
         self.shortInfo = QLabel(self)
-        self.shortInfo.setAlignment(Qt.AlignCenter)
+        self.shortInfo.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.shortInfo.setText(
             f"<h2>Linux Show Player   {lisp.__version__}</h2>"
             "Copyright © Francesco Ceruti"
@@ -131,7 +129,7 @@ class About(QDialog):
         )
 
         # Ok button
-        self.buttons = QDialogButtonBox(QDialogButtonBox.Ok)
+        self.buttons = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok)
         self.buttons.accepted.connect(self.accept)
         self.layout().addWidget(self.buttons, 3, 1)
 

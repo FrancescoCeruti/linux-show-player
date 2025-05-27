@@ -15,8 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QWidget, QSizePolicy, QSplitter, QVBoxLayout
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QWidget, QSizePolicy, QSplitter, QVBoxLayout
 
 from lisp.plugins.list_layout.list_view import CueListView
 from lisp.plugins.list_layout.playing_view import RunningCuesListWidget
@@ -33,7 +33,7 @@ class ListLayoutView(QWidget):
 
         self.listModel = listModel
 
-        self.mainSplitter = QSplitter(Qt.Vertical, self)
+        self.mainSplitter = QSplitter(Qt.Orientation.Vertical, self)
         self.layout().addWidget(self.mainSplitter)
 
         self.topSplitter = QSplitter(self.mainSplitter)
@@ -46,14 +46,18 @@ class ListLayoutView(QWidget):
         self.goButton = DynamicFontSizePushButton(parent=self)
         self.goButton.setText("GO")
         self.goButton.setMinimumWidth(60)
-        self.goButton.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
-        self.goButton.setFocusPolicy(Qt.NoFocus)
+        self.goButton.setSizePolicy(
+            QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Minimum
+        )
+        self.goButton.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         self.topSplitter.addWidget(self.goButton)
 
         # INFO PANEL (top-center)
         self.infoPanel = InfoPanel(self)
         self.infoPanel.setMinimumWidth(300)
-        self.infoPanel.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Ignored)
+        self.infoPanel.setSizePolicy(
+            QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Ignored
+        )
         self.infoPanel.cueDescription.setFontPointSize(
             config.get(
                 "infoPanelFontSize",
@@ -66,7 +70,7 @@ class ListLayoutView(QWidget):
         self.controlButtons = ShowControlButtons(self)
         self.controlButtons.setMinimumWidth(100)
         self.controlButtons.setSizePolicy(
-            QSizePolicy.Minimum, QSizePolicy.Minimum
+            QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Minimum
         )
         self.topSplitter.addWidget(self.controlButtons)
 
@@ -80,7 +84,9 @@ class ListLayoutView(QWidget):
         # PLAYING VIEW (center-right)
         self.runView = RunningCuesListWidget(runModel, config, parent=self)
         self.runView.setMinimumWidth(200)
-        self.runView.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
+        self.runView.setSizePolicy(
+            QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Minimum
+        )
         self.centralSplitter.addWidget(self.runView)
 
         self.__userResized = False

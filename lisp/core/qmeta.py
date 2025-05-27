@@ -17,7 +17,7 @@
 
 from abc import ABCMeta
 
-from PyQt5.QtCore import QObject
+from PyQt6.QtCore import QObject
 
 
 class QMeta(type(QObject), type):

@@ -19,8 +19,8 @@
 import logging
 import re
 
-from PyQt5.QtCore import Qt, QSize
-from PyQt5.QtWidgets import (
+from PyQt6.QtCore import Qt, QSize
+from PyQt6.QtWidgets import (
     QDialog,
     QDialogButtonBox,
     QGridLayout,
@@ -44,7 +44,7 @@ class RenameUi(QDialog):
         super().__init__(parent)
 
         self.setWindowTitle(translate("RenameCues", "Rename cues"))
-        self.setWindowModality(Qt.ApplicationModal)
+        self.setWindowModality(Qt.WindowModality.ApplicationModal)
         self.resize(650, 350)
 
         self.setLayout(QGridLayout())
@@ -61,7 +61,9 @@ class RenameUi(QDialog):
         self.previewList.resizeColumnToContents(0)
         self.previewList.resizeColumnToContents(1)
         self.previewList.setColumnWidth(0, 300)
-        self.previewList.setSelectionMode(QAbstractItemView.ExtendedSelection)
+        self.previewList.setSelectionMode(
+            QAbstractItemView.SelectionMode.ExtendedSelection
+        )
         self.previewList.itemSelectionChanged.connect(
             self.onPreviewListItemSelectionChanged
         )
@@ -133,7 +135,8 @@ class RenameUi(QDialog):
         # OK / Cancel buttons
         self.dialogButtons = QDialogButtonBox()
         self.dialogButtons.setStandardButtons(
-            QDialogButtonBox.Ok | QDialogButtonBox.Cancel
+            QDialogButtonBox.StandardButton.Ok
+            | QDialogButtonBox.StandardButton.Cancel
         )
         self.layout().addWidget(self.dialogButtons, 6, 3)
 
@@ -228,7 +231,7 @@ class RenameUi(QDialog):
 
     def onHelpButtonClicked(self):
         msg = QMessageBox()
-        msg.setIcon(QMessageBox.Information)
+        msg.setIcon(QMessageBox.Icon.Information)
         msg.setWindowTitle(translate("RenameCues", "Regex help"))
         msg.setText(
             translate(

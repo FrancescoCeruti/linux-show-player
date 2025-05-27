@@ -15,8 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import QRect, QSize, Qt
-from PyQt5.QtGui import (
+from PyQt6.QtCore import QRect, QSize, Qt
+from PyQt6.QtGui import (
     QBrush,
     QColor,
     QFontDatabase,
@@ -24,7 +24,13 @@ from PyQt5.QtGui import (
     QPainterPath,
     QPen,
 )
-from PyQt5.QtWidgets import QLabel, QProgressBar, QWidget
+from PyQt6.QtWidgets import (
+    QLabel,
+    QProgressBar,
+    QWidget,
+    QStyledItemDelegate,
+    QStyle,
+)
 
 from lisp.core.signal import Connection
 from lisp.core.util import strtime
@@ -34,16 +40,24 @@ from lisp.ui.icons import IconTheme
 from lisp.ui.widgets.cue_next_actions import tr_next_action
 
 
+class NoFocusDelegate(QStyledItemDelegate):
+    def paint(self, painter, option, index):
+        if option.state & QStyle.StateFlag.State_HasFocus:
+            option.state ^= QStyle.StateFlag.State_HasFocus
+
+        super().paint(painter, option, index)
+
+
 class IndexWidget(QLabel):
     def __init__(self, item, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.setAttribute(Qt.WA_TranslucentBackground)
-        self.setAlignment(Qt.AlignCenter)
+        self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
+        self.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         # This value will be used to provide some spacing for the widget
         # the value depends on the current font.
         self.sizeIncrement = QSize(
-            self.fontMetrics().size(Qt.TextSingleLine, "00").width(), 0
+            self.fontMetrics().size(Qt.TextFlag.TextSingleLine, "00").width(), 0
         )
 
         item.cue.changed("index").connect(self.__update, Connection.QtQueued)
@@ -59,7 +73,7 @@ class IndexWidget(QLabel):
 class NameWidget(QLabel):
     def __init__(self, item, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.setAttribute(Qt.WA_TranslucentBackground)
+        self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
 
         self._item = item
         self._item.cue.changed("name").connect(
@@ -77,7 +91,7 @@ class CueStatusIcons(QWidget):
 
     def __init__(self, item, *args):
         super().__init__(*args)
-        self.setAttribute(Qt.WA_TranslucentBackground)
+        self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
 
         self._icon = None
         self._item = item
@@ -109,7 +123,7 @@ class CueStatusIcons(QWidget):
     def paintEvent(self, event):
         qp = QPainter()
         qp.begin(self)
-        qp.setRenderHint(QPainter.HighQualityAntialiasing, True)
+        qp.setRenderHint(QPainter.RenderHint.Antialiasing, True)
 
         status_size = self._size()
         indicator_height = self.height()
@@ -151,8 +165,8 @@ class NextActionIcon(QLabel):
 
     def __init__(self, item, *args):
         super().__init__(*args)
-        self.setAttribute(Qt.WA_TranslucentBackground)
-        self.setAlignment(Qt.AlignCenter)
+        self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
+        self.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         item.cue.changed("next_action").connect(
             self._updateIcon, Connection.QtQueued
@@ -184,7 +198,9 @@ class TimeWidget(QProgressBar):
         self.setObjectName("ListTimeWidget")
         self.setValue(0)
         self.setTextVisible(True)
-        self.setFont(QFontDatabase.systemFont(QFontDatabase.FixedFont))
+        self.setFont(
+            QFontDatabase.systemFont(QFontDatabase.SystemFont.FixedFont)
+        )
 
         self.cue = item.cue
         self.duration = 0

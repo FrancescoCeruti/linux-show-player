@@ -17,8 +17,8 @@
 
 import logging
 
-from PyQt5.QtCore import QT_TRANSLATE_NOOP
-from PyQt5.QtWidgets import QVBoxLayout
+from PyQt6.QtCore import QT_TRANSLATE_NOOP
+from PyQt6.QtWidgets import QVBoxLayout
 
 from lisp.core.properties import Property
 from lisp.cues.cue import Cue, CueAction

@@ -15,8 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import QModelIndex, QAbstractItemModel, Qt
-from PyQt5.QtWidgets import QWidget, QGridLayout, QTreeView, QSizePolicy
+from PyQt6.QtCore import QModelIndex, QAbstractItemModel, Qt
+from PyQt6.QtWidgets import QWidget, QGridLayout, QTreeView, QSizePolicy
 
 from lisp.ui.qdelegates import PaddedDelegate
 from lisp.ui.ui_utils import translate
@@ -68,7 +68,7 @@ class PagesTreeWidget(QWidget):
             self._currentWidget.hide()
             self._currentWidget = selected.indexes()[0].internalPointer().page
             self._currentWidget.setSizePolicy(
-                QSizePolicy.Ignored, QSizePolicy.Ignored
+                QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Ignored
             )
             self.layout().addWidget(self._currentWidget, 0, 1)
             self._currentWidget.show()
@@ -119,7 +119,7 @@ class PageNode:
 
 
 class PagesTreeModel(QAbstractItemModel):
-    PageRole = Qt.UserRole + 1
+    PageRole = Qt.ItemDataRole.UserRole + 1
 
     def __init__(self, tr_context="", **kwargs):
         super().__init__(**kwargs)
@@ -135,10 +135,10 @@ class PagesTreeModel(QAbstractItemModel):
     def columnCount(self, parent=QModelIndex()):
         return 1
 
-    def data(self, index, role=Qt.DisplayRole):
+    def data(self, index, role=Qt.ItemDataRole.DisplayRole):
         if index.isValid():
             node = index.internalPointer()
-            if role == Qt.DisplayRole:
+            if role == Qt.ItemDataRole.DisplayRole:
                 if self._tr_context:
                     return translate(self._tr_context, node.page.Name)
 
@@ -146,11 +146,13 @@ class PagesTreeModel(QAbstractItemModel):
             elif role == PagesTreeModel.PageRole:
                 return node.page
 
-    def headerData(self, section, orientation, role=Qt.DisplayRole):
+    def headerData(
+        self, section, orientation, role=Qt.ItemDataRole.DisplayRole
+    ):
         return None
 
     def flags(self, index):
-        return Qt.ItemIsEnabled | Qt.ItemIsSelectable
+        return Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable
 
     def node(self, index):
         if index.isValid():

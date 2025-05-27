@@ -15,8 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
-from PyQt5.QtWidgets import QVBoxLayout, QGroupBox, QLabel
+from PyQt6.QtCore import Qt, QT_TRANSLATE_NOOP
+from PyQt6.QtWidgets import QVBoxLayout, QGroupBox, QLabel
 
 from lisp.plugins.gst_backend.gst_pipe_edit import GstPipeEdit
 from lisp.ui.settings.pages import SettingsPage
@@ -29,7 +29,7 @@ class GstSettings(SettingsPage):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
-        self.layout().setAlignment(Qt.AlignTop)
+        self.layout().setAlignment(Qt.AlignmentFlag.AlignTop)
 
         self.pipeGroup = QGroupBox(self)
         self.pipeGroup.setLayout(QVBoxLayout())
@@ -39,7 +39,7 @@ class GstSettings(SettingsPage):
         self.layout().addWidget(self.pipeGroup)
 
         self.noticeLabel = QLabel(self.pipeGroup)
-        self.noticeLabel.setAlignment(Qt.AlignCenter)
+        self.noticeLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         font = self.noticeLabel.font()
         font.setPointSizeF(font.pointSizeF() * 0.9)
         self.noticeLabel.setFont(font)

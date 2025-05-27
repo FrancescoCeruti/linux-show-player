@@ -17,8 +17,8 @@
 
 import logging
 
-from PyQt5.QtCore import pyqtSignal
-from PyQt5.QtWidgets import QLabel, QWidget, QHBoxLayout, QSizePolicy
+from PyQt6.QtCore import pyqtSignal
+from PyQt6.QtWidgets import QLabel, QWidget, QHBoxLayout, QSizePolicy
 
 from lisp.ui.icons import IconTheme
 from lisp.ui.ui_utils import translate
@@ -44,11 +44,15 @@ class LogStatusIcon(QWidget):
         self._errors = 0
 
         self.errorsCount = QLabel("0", self)
-        self.errorsCount.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        self.errorsCount.setSizePolicy(
+            QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed
+        )
         self.layout().addWidget(self.errorsCount)
 
         self.errorIcon = QLabel(self)
-        self.errorIcon.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        self.errorIcon.setSizePolicy(
+            QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed
+        )
         self.errorIcon.setPixmap(
             IconTheme.get("dialog-error").pixmap(icons_size)
         )

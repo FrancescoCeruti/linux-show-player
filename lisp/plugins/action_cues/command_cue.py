@@ -18,8 +18,8 @@
 import logging
 import subprocess
 
-from PyQt5.QtCore import QT_TRANSLATE_NOOP, Qt
-from PyQt5.QtWidgets import QCheckBox, QGroupBox, QLineEdit, QVBoxLayout
+from PyQt6.QtCore import QT_TRANSLATE_NOOP, Qt
+from PyQt6.QtWidgets import QCheckBox, QGroupBox, QLineEdit, QVBoxLayout
 
 from lisp import RUNNING_IN_FLATPAK
 from lisp.core.decorators import async_function
@@ -128,7 +128,7 @@ class CommandCueSettings(SettingsPage):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.setLayout(QVBoxLayout())
-        self.layout().setAlignment(Qt.AlignTop)
+        self.layout().setAlignment(Qt.AlignmentFlag.AlignTop)
 
         self.group = QGroupBox(self)
         self.group.setLayout(QVBoxLayout(self.group))
@@ -179,10 +179,10 @@ class CommandCueSettings(SettingsPage):
         self.runOnHost.setTristate(enabled)
 
         if enabled:
-            self.noOutputCheckBox.setCheckState(Qt.PartiallyChecked)
-            self.killCheckBox.setCheckState(Qt.PartiallyChecked)
-            self.killCheckBox.setCheckState(Qt.PartiallyChecked)
-            self.runOnHost.setChecked(Qt.PartiallyChecked)
+            self.noOutputCheckBox.setCheckState(Qt.CheckState.PartiallyChecked)
+            self.killCheckBox.setCheckState(Qt.CheckState.PartiallyChecked)
+            self.killCheckBox.setCheckState(Qt.CheckState.PartiallyChecked)
+            self.runOnHost.setChecked(Qt.CheckState.PartiallyChecked)
 
     def loadSettings(self, settings):
         self.commandLineEdit.setText(settings.get("command", ""))
@@ -199,13 +199,13 @@ class CommandCueSettings(SettingsPage):
             and self.commandLineEdit.text().strip()
         ):
             settings["command"] = self.commandLineEdit.text()
-        if self.noOutputCheckBox.checkState() != Qt.PartiallyChecked:
+        if self.noOutputCheckBox.checkState() != Qt.CheckState.PartiallyChecked:
             settings["no_output"] = self.noOutputCheckBox.isChecked()
-        if self.noErrorCheckBox.checkState() != Qt.PartiallyChecked:
+        if self.noErrorCheckBox.checkState() != Qt.CheckState.PartiallyChecked:
             settings["no_error"] = self.noErrorCheckBox.isChecked()
-        if self.killCheckBox.checkState() != Qt.PartiallyChecked:
+        if self.killCheckBox.checkState() != Qt.CheckState.PartiallyChecked:
             settings["kill"] = self.killCheckBox.isChecked()
-        if self.runOnHost.checkState() != Qt.PartiallyChecked:
+        if self.runOnHost.checkState() != Qt.CheckState.PartiallyChecked:
             settings["run_on_host"] = self.runOnHost.isChecked()
 
         return settings

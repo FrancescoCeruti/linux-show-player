@@ -17,7 +17,7 @@
 
 import os
 
-from PyQt5.QtGui import QColor, QPalette
+from PyQt6.QtGui import QColor, QPalette
 
 # Import resources
 # noinspection PyUnresolvedReferences
@@ -34,25 +34,27 @@ class Dark:
         highlight = QColor(65, 155, 230)
 
         palette = qt_app.palette()
-        palette.setColor(QPalette.Window, foreground)
-        palette.setColor(QPalette.WindowText, text)
-        palette.setColor(QPalette.Base, background)
-        palette.setColor(QPalette.AlternateBase, foreground.darker(125))
-        palette.setColor(QPalette.ToolTipBase, foreground)
-        palette.setColor(QPalette.ToolTipText, text)
-        palette.setColor(QPalette.Text, text)
-        palette.setColor(QPalette.Button, foreground)
-        palette.setColor(QPalette.ButtonText, text)
-        palette.setColor(QPalette.BrightText, QColor(255, 0, 0))
-        palette.setColor(QPalette.Link, highlight)
+        palette.setColor(QPalette.ColorRole.Window, foreground)
+        palette.setColor(QPalette.ColorRole.WindowText, text)
+        palette.setColor(QPalette.ColorRole.Base, background)
+        palette.setColor(
+            QPalette.ColorRole.AlternateBase, foreground.darker(125)
+        )
+        palette.setColor(QPalette.ColorRole.ToolTipBase, foreground)
+        palette.setColor(QPalette.ColorRole.ToolTipText, text)
+        palette.setColor(QPalette.ColorRole.Text, text)
+        palette.setColor(QPalette.ColorRole.Button, foreground)
+        palette.setColor(QPalette.ColorRole.ButtonText, text)
+        palette.setColor(QPalette.ColorRole.BrightText, QColor(255, 0, 0))
+        palette.setColor(QPalette.ColorRole.Link, highlight)
 
-        palette.setColor(QPalette.Light, foreground.lighter(160))
-        palette.setColor(QPalette.Midlight, foreground.lighter(125))
-        palette.setColor(QPalette.Dark, foreground.darker(150))
-        palette.setColor(QPalette.Mid, foreground.darker(125))
+        palette.setColor(QPalette.ColorRole.Light, foreground.lighter(160))
+        palette.setColor(QPalette.ColorRole.Midlight, foreground.lighter(125))
+        palette.setColor(QPalette.ColorRole.Dark, foreground.darker(150))
+        palette.setColor(QPalette.ColorRole.Mid, foreground.darker(125))
 
-        palette.setColor(QPalette.Highlight, highlight)
-        palette.setColor(QPalette.HighlightedText, QColor(0, 0, 0))
+        palette.setColor(QPalette.ColorRole.Highlight, highlight)
+        palette.setColor(QPalette.ColorRole.HighlightedText, QColor(0, 0, 0))
 
         qt_app.setPalette(palette)
 

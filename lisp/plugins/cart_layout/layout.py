@@ -17,8 +17,9 @@
 
 import re
 
-from PyQt5.QtCore import QT_TRANSLATE_NOOP
-from PyQt5.QtWidgets import QAction, QInputDialog, QMessageBox
+from PyQt6.QtCore import QT_TRANSLATE_NOOP
+from PyQt6.QtGui import QAction
+from PyQt6.QtWidgets import QInputDialog, QMessageBox
 
 from lisp.command.model import ModelInsertItemsCommand, ModelMoveItemCommand
 from lisp.core.configuration import DummyConfiguration
@@ -264,7 +265,7 @@ class CartLayout(CueLayout):
         if self._cart_view.count():
             confirm = RemovePageConfirmBox(self._cart_view)
 
-            if confirm.exec() == QMessageBox.Yes:
+            if confirm.exec() == QMessageBox.StandardButton.Yes:
                 self.remove_page(self._cart_view.currentIndex())
 
     def remove_page(self, index):
@@ -487,7 +488,7 @@ class RemovePageConfirmBox(QMessageBox):
     def __init__(self, *args):
         super().__init__(*args)
 
-        self.setIcon(self.Question)
+        self.setIcon(self.Icon.Question)
         self.setWindowTitle(translate("CartLayout", "Warning"))
         self.setText(
             translate("CartLayout", "Every cue in the page will be lost.")
@@ -496,5 +497,7 @@ class RemovePageConfirmBox(QMessageBox):
             translate("CartLayout", "Are you sure to continue?")
         )
 
-        self.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
-        self.setDefaultButton(QMessageBox.No)
+        self.setStandardButtons(
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No
+        )
+        self.setDefaultButton(QMessageBox.StandardButton.No)

@@ -19,7 +19,7 @@ import glob
 import os
 from typing import Union
 
-from PyQt5.QtGui import QIcon
+from PyQt6.QtGui import QIcon
 
 from lisp import ICON_THEMES_DIR, ICON_THEME_COMMON
 

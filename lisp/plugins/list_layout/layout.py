@@ -15,9 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP, QTimer
-from PyQt5.QtGui import QKeySequence
-from PyQt5.QtWidgets import QAction
+from PyQt6.QtCore import Qt, QT_TRANSLATE_NOOP, QTimer
+from PyQt6.QtGui import QKeySequence, QAction
 
 from lisp.command.model import ModelInsertItemsCommand
 from lisp.core.configuration import DummyConfiguration
@@ -34,7 +33,6 @@ from lisp.plugins.list_layout.list_view import CueListView
 from lisp.plugins.list_layout.models import CueListModel, RunningCueModel
 from lisp.plugins.list_layout.view import ListLayoutView
 from lisp.ui.ui_utils import translate
-from lisp.ui.widgets.hotkeyedit import keyEventKeySequence
 
 
 class ListLayout(CueLayout):
@@ -274,23 +272,25 @@ class ListLayout(CueLayout):
     def _key_pressed(self, event):
         event.ignore()
         if not event.isAutoRepeat():
-            sequence = keyEventKeySequence(event)
+            sequence = QKeySequence(event.keyCombination())
             goSequence = QKeySequence(
-                ListLayout.Config["goKey"], QKeySequence.NativeText
+                ListLayout.Config["goKey"],
+                QKeySequence.SequenceFormat.NativeText,
             )
-            if sequence in goSequence:
+
+            if sequence == goSequence:
                 event.accept()
                 if not (
                     self.go_key_disabled_while_playing
                     and len(self._running_model)
                 ):
                     self.__go_slot()
-            elif sequence == QKeySequence.Delete:
+            elif sequence == QKeySequence.StandardKey.Delete:
                 event.accept()
                 self._remove_cues(self.selected_cues())
             elif (
-                event.key() == Qt.Key_Space
-                and event.modifiers() == Qt.ShiftModifier
+                event.key() == Qt.Key.Key_Space
+                and event.modifiers() == Qt.KeyboardModifier.ShiftModifier
             ):
                 event.accept()
                 cue = self.standby_cue()
@@ -356,14 +356,18 @@ class ListLayout(CueLayout):
     def _set_selection_mode(self, enable):
         self.selection_mode_action.setChecked(enable)
         if enable:
-            self._view.listView.setSelectionMode(CueListView.ExtendedSelection)
+            self._view.listView.setSelectionMode(
+                CueListView.SelectionMode.ExtendedSelection
+            )
 
             standby = self.standby_index()
             if standby >= 0:
                 self._view.listView.topLevelItem(standby).setSelected(True)
         else:
             self.deselect_all()
-            self._view.listView.setSelectionMode(CueListView.NoSelection)
+            self._view.listView.setSelectionMode(
+                CueListView.SelectionMode.NoSelection
+            )
 
     @selection_mode.get
     def _get_selection_mode(self):

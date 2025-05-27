@@ -15,8 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt, pyqtSignal
-from PyQt5.QtWidgets import QSlider, QStyle, QStyleOptionSlider
+from PyQt6.QtCore import Qt, pyqtSignal
+from PyQt6.QtWidgets import QSlider, QStyle, QStyleOptionSlider
 
 
 class QClickSlider(QSlider):
@@ -25,13 +25,13 @@ class QClickSlider(QSlider):
     def mousePressEvent(self, e):
         cr = self._control_rect()
 
-        if e.button() == Qt.LeftButton and not cr.contains(e.pos()):
+        if e.button() == Qt.MouseButton.LeftButton and not cr.contains(e.pos()):
             # Set the value to the minimum
             value = self.minimum()
             # zmax is the maximum value starting from zero
             zmax = self.maximum() - self.minimum()
 
-            if self.orientation() == Qt.Vertical:
+            if self.orientation() == Qt.Orientation.Vertical:
                 # Add the current position multiplied for value/size ratio
                 value += (self.height() - e.y()) * (zmax / self.height())
             else:
@@ -51,5 +51,7 @@ class QClickSlider(QSlider):
         self.initStyleOption(opt)
 
         return self.style().subControlRect(
-            QStyle.CC_Slider, opt, QStyle.SC_SliderHandle
+            QStyle.ComplexControl.CC_Slider,
+            opt,
+            QStyle.SubControl.SC_SliderHandle,
         )

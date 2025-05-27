@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import (
+from PyQt6.QtCore import (
     pyqtSignal,
     Qt,
     QDataStream,
@@ -23,8 +23,8 @@ from PyQt5.QtCore import (
     QT_TRANSLATE_NOOP,
     QTimer,
 )
-from PyQt5.QtGui import QKeyEvent, QContextMenuEvent, QBrush, QColor
-from PyQt5.QtWidgets import QTreeWidget, QHeaderView, QTreeWidgetItem
+from PyQt6.QtGui import QKeyEvent, QContextMenuEvent, QBrush, QColor
+from PyQt6.QtWidgets import QTreeWidget, QHeaderView, QTreeWidgetItem
 
 from lisp.application import Application
 from lisp.backend import get_backend
@@ -38,6 +38,7 @@ from lisp.plugins.list_layout.list_widgets import (
     NextActionIcon,
     PostWaitWidget,
     IndexWidget,
+    NoFocusDelegate,
 )
 from lisp.ui.ui_utils import translate, css_to_dict, dict_to_css
 
@@ -71,12 +72,12 @@ class CueListView(QTreeWidget):
     # TODO: add ability to show/hide
     # TODO: implement columns (cue-type / target / etc..)
     COLUMNS = [
-        ListColumn("", CueStatusIcons, QHeaderView.Fixed, width=45),
-        ListColumn("#", IndexWidget, QHeaderView.ResizeToContents),
+        ListColumn("", CueStatusIcons, QHeaderView.ResizeMode.Fixed, width=45),
+        ListColumn("#", IndexWidget, QHeaderView.ResizeMode.ResizeToContents),
         ListColumn(
             QT_TRANSLATE_NOOP("ListLayoutHeader", "Cue"),
             NameWidget,
-            QHeaderView.Stretch,
+            QHeaderView.ResizeMode.Stretch,
         ),
         ListColumn(
             QT_TRANSLATE_NOOP("ListLayoutHeader", "Pre wait"), PreWaitWidget
@@ -87,10 +88,10 @@ class CueListView(QTreeWidget):
         ListColumn(
             QT_TRANSLATE_NOOP("ListLayoutHeader", "Post wait"), PostWaitWidget
         ),
-        ListColumn("", NextActionIcon, QHeaderView.Fixed, width=18),
+        ListColumn("", NextActionIcon, QHeaderView.ResizeMode.Fixed, width=18),
     ]
 
-    ITEM_DEFAULT_BG = QBrush(Qt.transparent)
+    ITEM_DEFAULT_BG = QBrush(Qt.GlobalColor.transparent)
     ITEM_CURRENT_BG = QBrush(QColor(250, 220, 0, 100))
 
     def __init__(self, listModel, parent=None):
@@ -119,17 +120,18 @@ class CueListView(QTreeWidget):
         self.header().setDragEnabled(False)
         self.header().setStretchLastSection(False)
 
-        self.setDragDropMode(self.InternalMove)
+        self.setDragDropMode(QTreeWidget.DragDropMode.InternalMove)
 
         # Set some visual options
         self.setIndentation(0)
         self.setAlternatingRowColors(True)
-        self.setVerticalScrollMode(self.ScrollPerItem)
+        self.setVerticalScrollMode(QTreeWidget.ScrollMode.ScrollPerItem)
+        self.setItemDelegate(NoFocusDelegate())
 
         # This allows to have some spare space at the end of the scroll-area
         self.verticalScrollBar().rangeChanged.connect(self.__updateScrollRange)
         self.currentItemChanged.connect(
-            self.__currentItemChanged, Qt.QueuedConnection
+            self.__currentItemChanged, Qt.ConnectionType.QueuedConnection
         )
 
     def dragEnterEvent(self, event):
@@ -174,11 +176,11 @@ class CueListView(QTreeWidget):
 
                 rows.append(row)
 
-            if event.proposedAction() == Qt.MoveAction:
+            if event.proposedAction() == Qt.DropAction.MoveAction:
                 Application().commands_stack.do(
                     ModelMoveItemsCommand(self._model, rows, to_index)
                 )
-            elif event.proposedAction() == Qt.CopyAction:
+            elif event.proposedAction() == Qt.DropAction.CopyAction:
                 new_cues = []
                 for row in sorted(rows):
                     new_cues.append(
@@ -203,8 +205,8 @@ class CueListView(QTreeWidget):
 
     def mousePressEvent(self, event):
         if (
-            not event.buttons() & Qt.RightButton
-            or not self.selectionMode() == QTreeWidget.NoSelection
+            not event.buttons() & Qt.MouseButton.RightButton
+            or not self.selectionMode() == QTreeWidget.SelectionMode.NoSelection
         ):
             super().mousePressEvent(event)
 
@@ -226,17 +228,19 @@ class CueListView(QTreeWidget):
         """
         header = self.header()
         for i, column in enumerate(CueListView.COLUMNS):
-            if column.resize == QHeaderView.Stretch:
+            if column.resize == QHeaderView.ResizeMode.Stretch:
                 # Make the header calculate the content size
-                header.setSectionResizeMode(i, QHeaderView.ResizeToContents)
+                header.setSectionResizeMode(
+                    i, QHeaderView.ResizeMode.ResizeToContents
+                )
                 contentWidth = header.sectionSize(i)
 
                 # Make the header calculate the stretched size
-                header.setSectionResizeMode(i, QHeaderView.Stretch)
+                header.setSectionResizeMode(i, QHeaderView.ResizeMode.Stretch)
                 stretchWidth = header.sectionSize(i)
 
                 # Set the maximum size as fixed size for the section
-                header.setSectionResizeMode(i, QHeaderView.Fixed)
+                header.setSectionResizeMode(i, QHeaderView.ResizeMode.Fixed)
                 header.resizeSection(i, max(contentWidth, stretchWidth))
 
     def __currentItemChanged(self, current, previous):
@@ -248,11 +252,13 @@ class CueListView(QTreeWidget):
             current.current = True
             self.__updateItemStyle(current)
 
-            if self.selectionMode() == QTreeWidget.NoSelection:
+            if self.selectionMode() == QTreeWidget.SelectionMode.NoSelection:
                 # Ensure the current item is in the middle of the viewport.
                 # This is skipped in "selection-mode" otherwise it creates
-                # confusion during drang&drop operations
-                self.scrollToItem(current, QTreeWidget.PositionAtCenter)
+                # confusion during drag&drop operations
+                self.scrollToItem(
+                    current, QTreeWidget.ScrollHint.PositionAtCenter
+                )
             elif not self.selectedIndexes():
                 current.setSelected(True)
 
@@ -286,7 +292,7 @@ class CueListView(QTreeWidget):
 
     def __cueAdded(self, cue):
         item = CueTreeWidgetItem(cue)
-        item.setFlags(item.flags() & ~Qt.ItemIsDropEnabled)
+        item.setFlags(item.flags() & ~Qt.ItemFlag.ItemIsDropEnabled)
         cue.property_changed.connect(self.__cuePropChanged)
 
         self.insertTopLevelItem(cue.index, item)

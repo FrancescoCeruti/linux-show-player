@@ -15,8 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import (
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import (
     QGroupBox,
     QVBoxLayout,
     QGridLayout,
@@ -48,7 +48,7 @@ class MIDIMessageEdit(QWidget):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
-        self.layout().setAlignment(Qt.AlignTop)
+        self.layout().setAlignment(Qt.AlignmentFlag.AlignTop)
 
         self.msgGroup = QGroupBox(self)
         self.msgGroup.setLayout(QGridLayout())
@@ -66,8 +66,8 @@ class MIDIMessageEdit(QWidget):
         self.msgGroup.layout().addWidget(self.msgTypeCombo, 0, 1)
 
         line = QFrame(self.msgGroup)
-        line.setFrameShape(QFrame.HLine)
-        line.setFrameShadow(QFrame.Sunken)
+        line.setFrameShape(QFrame.Shape.HLine)
+        line.setFrameShadow(QFrame.Shadow.Sunken)
         self.msgGroup.layout().addWidget(line, 1, 0, 1, 2)
 
         # Data widgets
@@ -140,7 +140,8 @@ class MIDIMessageEditDialog(QDialog):
         self.layout().addWidget(self.editor)
 
         self.buttons = QDialogButtonBox(
-            QDialogButtonBox.Ok | QDialogButtonBox.Cancel
+            QDialogButtonBox.StandardButton.Ok
+            | QDialogButtonBox.StandardButton.Cancel
         )
         self.buttons.accepted.connect(self.accept)
         self.buttons.rejected.connect(self.reject)

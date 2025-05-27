@@ -23,9 +23,9 @@ from os import path
 from typing import Dict, Type, Union
 
 from lisp import USER_PLUGINS_PATH, app_dirs, PLUGINS_PACKAGE, PLUGINS_PATH
-from lisp.core.configuration import JSONFileConfiguration, DummyConfiguration
+from lisp.core.configuration import JSONFileConfiguration
 from lisp.core.loading import load_classes
-from lisp.core.plugin import Plugin, PluginNotLoadedError, PluginState
+from lisp.core.plugin import Plugin, PluginNotLoadedError
 from lisp.core.plugin_loader import PluginsLoader
 from lisp.ui.ui_utils import translate, install_translation
 

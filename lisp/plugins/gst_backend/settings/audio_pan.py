@@ -15,8 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QSlider, QLabel, QVBoxLayout
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QGroupBox, QHBoxLayout, QSlider, QLabel, QVBoxLayout
 
 from lisp.plugins.gst_backend.elements.audio_pan import AudioPan
 from lisp.ui.settings.pages import SettingsPage
@@ -30,7 +30,7 @@ class AudioPanSettings(SettingsPage):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
-        self.layout().setAlignment(Qt.AlignTop)
+        self.layout().setAlignment(Qt.AlignmentFlag.AlignTop)
 
         self.panBox = QGroupBox(self)
         self.panBox.setGeometry(0, 0, self.width(), 80)
@@ -40,12 +40,12 @@ class AudioPanSettings(SettingsPage):
         self.panSlider = QSlider(self.panBox)
         self.panSlider.setRange(-10, 10)
         self.panSlider.setPageStep(1)
-        self.panSlider.setOrientation(Qt.Horizontal)
+        self.panSlider.setOrientation(Qt.Orientation.Horizontal)
         self.panSlider.valueChanged.connect(self.pan_changed)
         self.panBox.layout().addWidget(self.panSlider)
 
         self.panLabel = QLabel(self.panBox)
-        self.panLabel.setAlignment(Qt.AlignCenter)
+        self.panLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.panBox.layout().addWidget(self.panLabel)
 
         self.panBox.layout().setStretch(0, 5)

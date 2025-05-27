@@ -15,8 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import QT_TRANSLATE_NOOP, Qt
-from PyQt5.QtWidgets import (
+from PyQt6.QtCore import QT_TRANSLATE_NOOP, Qt
+from PyQt6.QtWidgets import (
     QAbstractItemView,
     QDialog,
     QDialogButtonBox,
@@ -76,7 +76,7 @@ class CollectionCueSettings(SettingsPage):
 
         self.cueDialog = CueSelectDialog(
             cues=Application().cue_model,
-            selection_mode=QAbstractItemView.ExtendedSelection,
+            selection_mode=QAbstractItemView.SelectionMode.ExtendedSelection,
         )
         self.collectionModel = CollectionModel()
 
@@ -94,20 +94,20 @@ class CollectionCueSettings(SettingsPage):
         # Buttons
         self.dialogButtons = QDialogButtonBox(self.collectionGroup)
         self.dialogButtons.setSizePolicy(
-            QSizePolicy.Minimum, QSizePolicy.Minimum
+            QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Minimum
         )
         self.collectionGroup.layout().addWidget(self.dialogButtons)
 
         self.addButton = QPushButton(self.dialogButtons)
         self.dialogButtons.addButton(
-            self.addButton, QDialogButtonBox.ActionRole
+            self.addButton, QDialogButtonBox.ButtonRole.ActionRole
         )
         self.addButton.clicked.connect(self._showAddCueDialog)
 
         self.delButton = QPushButton(self.dialogButtons)
         self.delButton.setEnabled(False)
         self.dialogButtons.addButton(
-            self.delButton, QDialogButtonBox.ActionRole
+            self.delButton, QDialogButtonBox.ButtonRole.ActionRole
         )
         self.delButton.clicked.connect(self._removeCurrentCue)
 
@@ -145,7 +145,7 @@ class CollectionCueSettings(SettingsPage):
         self.delButton.setEnabled(True)
 
     def _showAddCueDialog(self):
-        if self.cueDialog.exec() == QDialog.Accepted:
+        if self.cueDialog.exec() == QDialog.DialogCode.Accepted:
             for target in self.cueDialog.selected_cues():
                 self._addCue(target, target.CueActions[0])
 
@@ -165,16 +165,18 @@ class CollectionView(QTableView):
     def __init__(self, cueModel, cueSelect, **kwargs):
         super().__init__(**kwargs)
 
-        self.setSelectionBehavior(QTableView.SelectRows)
-        self.setSelectionMode(QTableView.SingleSelection)
+        self.setSelectionBehavior(QTableView.SelectionBehavior.SelectRows)
+        self.setSelectionMode(QTableView.SelectionMode.SingleSelection)
 
         self.setShowGrid(False)
         self.setAlternatingRowColors(True)
 
-        self.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.horizontalHeader().setSectionResizeMode(
+            QHeaderView.ResizeMode.Stretch
+        )
         self.horizontalHeader().setHighlightSections(False)
 
-        self.verticalHeader().sectionResizeMode(QHeaderView.Fixed)
+        self.verticalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Fixed)
         self.verticalHeader().setDefaultSectionSize(26)
         self.verticalHeader().setHighlightSections(False)
 
@@ -197,7 +199,7 @@ class CollectionModel(SimpleCueListModel):
             ]
         )
 
-    def setData(self, index, value, role=Qt.DisplayRole):
+    def setData(self, index, value, role=Qt.ItemDataRole.DisplayRole):
         result = super().setData(index, value, role)
 
         if result and role == CueClassRole:
@@ -206,7 +208,7 @@ class CollectionModel(SimpleCueListModel):
                 self.dataChanged.emit(
                     self.index(index.row(), 1),
                     self.index(index.row(), 1),
-                    [Qt.DisplayRole, Qt.EditRole],
+                    [Qt.ItemDataRole.DisplayRole, Qt.ItemDataRole.EditRole],
                 )
 
         return result

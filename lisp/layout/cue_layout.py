@@ -17,7 +17,7 @@
 
 from abc import abstractmethod
 
-from PyQt5.QtCore import Qt
+from PyQt6.QtCore import Qt
 
 from lisp.command.cue import UpdateCueCommand, UpdateCuesCommand
 from lisp.command.model import ModelRemoveItemsCommand
@@ -224,7 +224,7 @@ class CueLayout(HasProperties):
         if cues:
             menu = self.CuesMenu.create_qmenu(cues, self.view)
             # Avoid "leaking" references kept in the menu
-            menu.setAttribute(Qt.WA_DeleteOnClose)
+            menu.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
             menu.move(position)
             menu.show()
 

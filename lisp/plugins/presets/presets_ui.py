@@ -18,8 +18,8 @@
 import logging
 from zipfile import BadZipFile
 
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import (
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import (
     QComboBox,
     QDialog,
     QInputDialog,
@@ -115,10 +115,11 @@ def check_override_dialog(preset_name):
             "Presets",
             'Preset "{}" already exists, overwrite?',
         ).format(preset_name),
-        buttons=QMessageBox.Yes | QMessageBox.Cancel,
+        buttons=QMessageBox.StandardButton.Yes
+        | QMessageBox.StandardButton.Cancel,
     )
 
-    return answer == QMessageBox.Yes
+    return answer == QMessageBox.StandardButton.Yes
 
 
 def save_preset_dialog(base_name=""):
@@ -147,9 +148,11 @@ class PresetsDialog(QDialog):
         # TODO: natural sorting (QStringListModel + QListView + ProxyModel)
         self.presetsList = QListWidget(self)
         self.presetsList.setAlternatingRowColors(True)
-        self.presetsList.setFocusPolicy(Qt.NoFocus)
+        self.presetsList.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         self.presetsList.setSortingEnabled(True)
-        self.presetsList.setSelectionMode(QListWidget.ExtendedSelection)
+        self.presetsList.setSelectionMode(
+            QListWidget.SelectionMode.ExtendedSelection
+        )
         self.presetsList.itemSelectionChanged.connect(self.__selection_changed)
         self.presetsList.itemDoubleClicked.connect(self.__edit_preset)
         self.layout().addWidget(self.presetsList, 0, 0)
@@ -159,7 +162,9 @@ class PresetsDialog(QDialog):
         self.presetsButtons.setLayout(QVBoxLayout())
         self.presetsButtons.layout().setContentsMargins(0, 0, 0, 0)
         self.layout().addWidget(self.presetsButtons, 0, 1)
-        self.layout().setAlignment(self.presetsButtons, Qt.AlignTop)
+        self.layout().setAlignment(
+            self.presetsButtons, Qt.AlignmentFlag.AlignTop
+        )
 
         self.addPresetButton = QPushButton(self.presetsButtons)
         self.addPresetButton.clicked.connect(self.__add_preset)
@@ -190,7 +195,7 @@ class PresetsDialog(QDialog):
         self.ieButtons.setLayout(QHBoxLayout())
         self.ieButtons.layout().setContentsMargins(0, 0, 0, 0)
         self.layout().addWidget(self.ieButtons, 1, 0)
-        self.layout().setAlignment(self.ieButtons, Qt.AlignLeft)
+        self.layout().setAlignment(self.ieButtons, Qt.AlignmentFlag.AlignLeft)
 
         self.exportSelectedButton = QPushButton(self.ieButtons)
         self.exportSelectedButton.clicked.connect(self.__export_presets)
@@ -202,7 +207,9 @@ class PresetsDialog(QDialog):
 
         # Dialog buttons
         self.dialogButtons = QDialogButtonBox(self)
-        self.dialogButtons.setStandardButtons(QDialogButtonBox.Ok)
+        self.dialogButtons.setStandardButtons(
+            QDialogButtonBox.StandardButton.Ok
+        )
         self.dialogButtons.accepted.connect(self.accept)
         self.layout().addWidget(self.dialogButtons, 1, 1)
 
@@ -245,7 +252,7 @@ class PresetsDialog(QDialog):
 
     def __add_preset(self):
         dialog = NewPresetDialog(parent=self)
-        if dialog.exec() == QDialog.Accepted:
+        if dialog.exec() == QDialog.DialogCode.Accepted:
             preset_name = dialog.get_name()
             cue_type = dialog.get_type()
 
@@ -291,7 +298,7 @@ class PresetsDialog(QDialog):
 
                     edit_dialog = CueSettingsDialog(cue_class)
                     edit_dialog.loadSettings(preset)
-                    if edit_dialog.exec() == edit_dialog.Accepted:
+                    if edit_dialog.exec() == edit_dialog.DialogCode.Accepted:
                         preset.update(edit_dialog.getSettings())
                         try:
                             write_preset(item.text(), preset)
@@ -357,10 +364,11 @@ class PresetsDialog(QDialog):
                             "Presets",
                             "Some presets already exists, overwrite?",
                         ),
-                        buttons=QMessageBox.Yes | QMessageBox.Cancel,
+                        buttons=QMessageBox.StandardButton.Yes
+                        | QMessageBox.StandardButton.Cancel,
                     )
 
-                    if answer != QMessageBox.Yes:
+                    if answer != QMessageBox.StandardButton.Yes:
                         return
 
                 import_presets(archive)
@@ -408,7 +416,8 @@ class NewPresetDialog(QDialog):
 
         self.dialogButtons = QDialogButtonBox(self)
         self.dialogButtons.setStandardButtons(
-            QDialogButtonBox.Ok | QDialogButtonBox.Cancel
+            QDialogButtonBox.StandardButton.Ok
+            | QDialogButtonBox.StandardButton.Cancel
         )
         self.dialogButtons.accepted.connect(self.accept)
         self.dialogButtons.rejected.connect(self.reject)

@@ -18,9 +18,9 @@
 
 import os
 import re
+import shutil
 import subprocess
 import sys
-import shutil
 from argparse import ArgumentParser
 from pathlib import Path
 from typing import Iterable
@@ -29,8 +29,8 @@ from scripts.pyts_update import TSTranslations, PyTrFinder, Obsolete
 
 TS_DIR = Path("lisp/i18n/ts")
 QM_DIR = Path("lisp/i18n/qm")
-PYLUPDATE = "pylupdate5"
-LRELEASE = "lrelease" if shutil.which("lrelease") else "lrelease-qt5"
+PYLUPDATE = "pylupdate6"
+LRELEASE = "lrelease" if shutil.which("lrelease") else "lrelease-qt6"
 
 
 def dirs_path(path: str):

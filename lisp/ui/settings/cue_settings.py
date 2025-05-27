@@ -15,8 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5 import QtCore
-from PyQt5.QtWidgets import QDialog, QDialogButtonBox, QVBoxLayout
+from PyQt6 import QtCore
+from PyQt6.QtWidgets import QDialog, QDialogButtonBox, QVBoxLayout
 
 from lisp.core.class_based_registry import ClassBasedRegistry
 from lisp.core.singleton import Singleton
@@ -45,7 +45,7 @@ class CueSettingsDialog(QDialog):
         :param cue: Target cue, or a cue-type for multi-editing
         """
         super().__init__(**kwargs)
-        self.setWindowModality(QtCore.Qt.ApplicationModal)
+        self.setWindowModality(QtCore.Qt.WindowModality.ApplicationModal)
         self.setMinimumSize(800, 510)
         self.resize(800, 510)
         self.setLayout(QVBoxLayout())
@@ -89,21 +89,21 @@ class CueSettingsDialog(QDialog):
 
         self.dialogButtons = QDialogButtonBox(self)
         self.dialogButtons.setStandardButtons(
-            QDialogButtonBox.Cancel
-            | QDialogButtonBox.Apply
-            | QDialogButtonBox.Ok
+            QDialogButtonBox.StandardButton.Cancel
+            | QDialogButtonBox.StandardButton.Apply
+            | QDialogButtonBox.StandardButton.Ok
         )
         self.layout().addWidget(self.dialogButtons)
 
-        self.dialogButtons.button(QDialogButtonBox.Cancel).clicked.connect(
-            self.reject
-        )
-        self.dialogButtons.button(QDialogButtonBox.Apply).clicked.connect(
-            self.__onApply
-        )
-        self.dialogButtons.button(QDialogButtonBox.Ok).clicked.connect(
-            self.__onOk
-        )
+        self.dialogButtons.button(
+            QDialogButtonBox.StandardButton.Cancel
+        ).clicked.connect(self.reject)
+        self.dialogButtons.button(
+            QDialogButtonBox.StandardButton.Apply
+        ).clicked.connect(self.__onApply)
+        self.dialogButtons.button(
+            QDialogButtonBox.StandardButton.Ok
+        ).clicked.connect(self.__onOk)
 
     def loadSettings(self, settings):
         self.mainPage.loadSettings(settings)
