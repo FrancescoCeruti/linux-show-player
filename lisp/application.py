@@ -15,13 +15,10 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-import hashlib
 import json
 import logging
 import shutil
-from importlib import import_module
 from os.path import exists, dirname, abspath, basename, splitext, realpath
-from pathlib import Path
 
 from PyQt5.QtWidgets import QDialog, qApp, QMessageBox
 
@@ -241,7 +238,7 @@ class Application(metaclass=Singleton):
             )
             migrated = migrator.migrate(session_path, session_dict)
 
-            # Create a new session
+            # Create a new session (deleting the current, if any)
             self.__new_session(
                 layout.get_layout(session_dict["session"]["layout_type"])
             )
@@ -265,22 +262,21 @@ class Application(metaclass=Singleton):
                         ).format(name)
                     )
 
-            # Set savepoint for undo/redo stack
-            self.commands_stack.set_saved()
-
-            # Inform plugins that a new session has been loaded
-            self.session_loaded.emit(self.session)
-
-            # If we migrated the session, inform the user
             if migrated:
-                with open(session_path, mode="rb") as f:
-                    digest = hashlib.file_digest(f, "sha256")
+                session_base_name, ext = splitext(session_path)
+                backup_path = f"{session_base_name}.old{ext}"
 
-                backup_path = (
-                    splitext(session_path)[0] + f".{digest.hexdigest()[:7]}.lsp"
-                )
+                # If the backup exists, find a new name
+                backup_path_num = 1
+                while exists(backup_path):
+                    backup_path = (
+                        f"{session_base_name}.old{backup_path_num}{ext}"
+                    )
+
+                # Move the old session file to the new path
                 shutil.move(session_path, backup_path)
 
+                # Save the migrated session in place of the old one
                 self.__save_to_file(session_path)
 
                 QMessageBox.warning(
@@ -291,11 +287,14 @@ class Application(metaclass=Singleton):
                         "The opened session has been upgraded to a newer version. A backup named '{}' has been created at same location.",
                     ).format(basename(backup_path)),
                 )
+
+            # Inform plugins that a new session has been loaded
+            self.session_loaded.emit(self.session)
         except Exception:
             logger.exception(
                 translate(
                     "ApplicationError",
-                    'Error while reading the session file "{}"',
+                    'Error while loading the session file "{}"',
                 ).format(session_path)
             )
             self.__new_session_dialog()
