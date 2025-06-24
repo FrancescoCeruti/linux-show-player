@@ -109,7 +109,7 @@ class SessionMigrator:
                 }
 
         if version_parse(self.app_version) > version_parse(session_app_version):
-            logger.info(
+            logger.debug(
                 f"Version mismatch for application: found {session_app_version} - current {self.app_version}"
             )
             has_run_migrations |= self.migrate_package(
@@ -134,7 +134,7 @@ class SessionMigrator:
             module = inspect.getmodule(plugin)
             plugin_dir = Path(inspect.getfile(module)).parent
 
-            logger.info(
+            logger.debug(
                 f"Version mismatch for plugin {name}: found {session_plugin_version} - current {plugin.Version}"
             )
             has_run_migrations |= self.migrate_package(
@@ -156,23 +156,19 @@ class SessionMigrator:
         package_version: str,
     ) -> bool:
         migrations = [
-            p.stem
-            for p in package_path.glob("*.py")
-            if p.is_file() and p.stem != "__init__"
+            path.stem
+            for path in package_path.glob("*.py")
+            if path.is_file() and path.stem != "__init__"
         ]
 
         if len(migrations) <= 0:
             return False
 
+        # Add a "start" migration, and sort the list,
+        # then we slice the list to find the migrations we need to apply
         start_migration = package_version.replace(".", "_")
-
-        # Add the "start" migration, so we can easily slice the list
         migrations.append(f"from_{start_migration}")
-        migrations.sort(
-            key=lambda n: version_parse(
-                n.replace("from_", "").replace("_", ".")
-            )
-        )
+        migrations.sort(key=self.__migrations_sort_key)
         migrations = migrations[
             : last_index(migrations, f"from_{start_migration}")
         ]
@@ -185,6 +181,10 @@ class SessionMigrator:
                 logger.debug(f"Running session migration: {module_path}")
                 module.migrate(session_path, session_dict)
             else:
-                logger.debug(f"Invalid session migration: {module_path}")
+                logger.warning(f"Invalid session migration: {module_path}")
 
         return len(migrations) > 0
+
+    @staticmethod
+    def __migrations_sort_key(version: str):
+        return version_parse(version.replace("from_", "").replace("_", "."))
