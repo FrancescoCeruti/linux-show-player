@@ -43,6 +43,7 @@ class AppConfigurationDialog(QDialog):
         self.setLayout(QVBoxLayout())
 
         self.configurations = {}
+        self.pages = {}
 
         self.model = PagesTreeModel(tr_context="SettingsPageName")
         for page_node in AppConfigurationDialog.PagesRegistry.children:
@@ -71,13 +72,13 @@ class AppConfigurationDialog(QDialog):
         )
 
     def applySettings(self):
-        for conf, pages in self.configurations.items():
-            for page in pages:
+        for key, conf in self.configurations.items():
+            for page in self.pages.get(key, []):
                 conf.update(page.getSettings())
 
             conf.write()
 
-    def _populateModel(self, model_parent, page_parent):
+    def _populateModel(self, model_parent: QModelIndex, page_parent: DictNode):
         if page_parent.value is not None:
             page_class = page_parent.value.page
             config = page_parent.value.config
@@ -98,7 +99,8 @@ class AppConfigurationDialog(QDialog):
                 )
 
                 # Keep track of configurations and corresponding pages
-                self.configurations.setdefault(config, []).append(page_instance)
+                self.configurations[id(config)] = config
+                self.pages.setdefault(id(config), []).append(page_instance)
         except Exception:
             if not isinstance(page_class, type):
                 page_name = "InvalidPage"
