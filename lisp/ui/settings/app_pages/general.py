@@ -29,7 +29,7 @@ from PyQt5.QtWidgets import (
 from lisp.layout import get_layouts
 from lisp.ui.icons import icon_themes_names
 from lisp.ui.settings.pages import SettingsPage
-from lisp.ui.themes import themes_names
+from lisp.ui.themes import themes_names, get_theme_text
 from lisp.ui.ui_utils import translate
 from lisp.ui.widgets import LocaleComboBox
 
@@ -75,7 +75,8 @@ class AppGeneral(SettingsPage):
         self.themeLabel = QLabel(self.themeGroup)
         self.themeGroup.layout().addWidget(self.themeLabel, 0, 0)
         self.themeCombo = QComboBox(self.themeGroup)
-        self.themeCombo.addItems(themes_names())
+        for value, text in themes_names().items():
+            self.themeCombo.addItem(text, value)
         self.themeGroup.layout().addWidget(self.themeCombo, 0, 1)
 
         self.iconsLabel = QLabel(self.themeGroup)
@@ -125,7 +126,7 @@ class AppGeneral(SettingsPage):
     def getSettings(self):
         settings = {
             "theme": {
-                "theme": self.themeCombo.currentText(),
+                "theme": self.themeCombo.currentData(),
                 "icons": self.iconsCombo.currentText(),
             },
             "locale": self.localeCombo.currentLocale(),
@@ -148,6 +149,6 @@ class AppGeneral(SettingsPage):
                 self.layoutCombo.findData(layout_name)
             )
 
-        self.themeCombo.setCurrentText(settings["theme"]["theme"])
+        self.themeCombo.setCurrentText(get_theme_text(settings["theme"]["theme"]))
         self.iconsCombo.setCurrentText(settings["theme"]["icons"])
         self.localeCombo.setCurrentLocale(settings["locale"])
