@@ -57,6 +57,7 @@ class VolumeControl(Cue):
     target_id = Property()
     fade_type = Property(default=FadeInType.Linear.name)
     volume = Property(default=0.0)
+    icon = Property("faders")
 
     CueActions = (
         CueAction.Default,

@@ -51,6 +51,7 @@ class IndexActionCue(Cue):
     target_index = Property(default=0)
     relative = Property(default=True)
     action = Property(default=CueAction.Stop.value)
+    icon = Property("bullseye")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
