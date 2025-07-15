@@ -22,16 +22,79 @@ from lisp.plugins.gst_backend.gi_repository import Gst
 from lisp.plugins.gst_backend.gst_element import GstMediaElement
 
 
+class AVSinkBin(Gst.Bin):
+    def __init__(self):
+        super().__init__()
+
+        # Audio path
+        self.audio_queue = Gst.ElementFactory.make("queue", None)
+        self.audio_convert = Gst.ElementFactory.make("audioconvert", None)
+        # Video path
+        self.video_queue = Gst.ElementFactory.make("queue", None)
+        self.video_convert = Gst.ElementFactory.make("videoconvert", None)
+
+        self.add(self.audio_queue)
+        self.add(self.audio_convert)
+        self.add(self.video_queue)
+        self.add(self.video_convert)
+
+        # Link both paths
+        self.audio_queue.link(self.audio_convert)
+        self.video_queue.link(self.video_convert)
+
+        # Input pads (ghost pads)
+        self.add_pad(Gst.GhostPad.new("audio_sink", self.audio_queue.get_static_pad("sink")))
+        self.add_pad(Gst.GhostPad.new("video_sink", self.video_queue.get_static_pad("sink")))
+
+        # Output pads (ghost pads)
+        self.add_pad(Gst.GhostPad.new("audio_src", self.audio_convert.get_static_pad("src")))
+        self.add_pad(Gst.GhostPad.new("video_src", self.video_convert.get_static_pad("src")))
+
+    def remove_audio(self):
+        if self.get_static_pad("audio_sink"):
+            self.remove_pad(self.get_static_pad("audio_sink"))
+        if self.get_static_pad("audio_src"):
+            self.remove_pad(self.get_static_pad("audio_src"))
+
+    def remove_video(self):
+        if self.get_static_pad("video_sink"):
+            self.remove_pad(self.get_static_pad("video_sink"))
+        if self.get_static_pad("video_src"):
+            self.remove_pad(self.get_static_pad("video_src"))
+
+
 class AutoSink(GstMediaElement):
     ElementType = ElementType.Output
-    MediaType = MediaType.Audio
+    MediaType = MediaType.AudioAndVideo
     Name = QT_TRANSLATE_NOOP("MediaElementName", "System Out")
 
     def __init__(self, pipeline):
         super().__init__(pipeline)
 
-        self.auto_sink = Gst.ElementFactory.make("autoaudiosink", "sink")
-        self.pipeline.add(self.auto_sink)
+        self.avbin = AVSinkBin()
+        self.audio_sink = Gst.ElementFactory.make("autoaudiosink", "auto_audio_sink")
+        self.video_sink = Gst.ElementFactory.make("autovideosink", "auto_video_sink")
+
+        self.pipeline.add(self.avbin)
+        self.pipeline.add(self.audio_sink)
+        self.pipeline.add(self.video_sink)
+
+        self.avbin.get_static_pad("audio_src").link(self.audio_sink.get_static_pad("sink"))
+        self.avbin.get_static_pad("video_src").link(self.video_sink.get_static_pad("sink"))
 
     def sink(self):
-        return self.auto_sink
+        return self.avbin
+
+    def remove_audio(self):
+        self.avbin.get_static_pad("audio_src").unlink(self.audio_sink.get_static_pad("sink"))
+        self.pipeline.remove(self.audio_sink)
+        self.avbin.remove_audio()
+
+    def remove_video(self):
+        self.avbin.get_static_pad("video_src").unlink(self.video_sink.get_static_pad("sink"))
+        self.pipeline.remove(self.video_sink)
+        self.avbin.remove_video()
+
+    def stop(self):
+        self.audio_sink.set_state(Gst.State.NULL)
+        self.video_sink.set_state(Gst.State.NULL)

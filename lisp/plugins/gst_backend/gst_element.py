@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2024 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 from collections.abc import Collection
 from typing import Union, Optional
 
-from lisp.backend.media_element import MediaElement, ElementType
+from lisp.backend.media_element import MediaElement, ElementType, MediaType
 from lisp.core.has_properties import HasInstanceProperties
 from lisp.core.properties import Property, InstanceProperty
 from lisp.core.session_uri import SessionURI
@@ -89,6 +89,12 @@ class GstMediaElement(MediaElement):
                 return self.src().unlink(sink)
         return False
 
+    def remove_audio(self):
+        self.dispose()
+
+    def remove_video(self):
+        self.dispose()
+
 
 class GstSrcElement(GstMediaElement):
     ElementType = ElementType.Input
@@ -98,6 +104,12 @@ class GstSrcElement(GstMediaElement):
     def input_uri(self) -> Union[SessionURI, type(None)]:
         """Return the input uri or None"""
         return None
+
+    def has_audio(self):
+        return self.MediaType == MediaType.Audio or self.MediaType == MediaType.AudioAndVideo
+
+    def has_video(self):
+        return self.MediaType == MediaType.Video or self.MediaType == MediaType.AudioAndVideo
 
 
 class GstMediaElements(Collection, HasInstanceProperties):
@@ -121,8 +133,6 @@ class GstMediaElements(Collection, HasInstanceProperties):
         """
         :type element: lisp.backend.media_element.MediaElement
         """
-        if self.elements:
-            self.elements[-1].link(element)
         self.elements.append(element)
 
         # Add a property for the new added element

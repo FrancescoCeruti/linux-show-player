@@ -46,3 +46,7 @@ class Pitch(GstMediaElement):
 
     def src(self):
         return self.audio_converter
+
+    def dispose(self):
+        self.pipeline.remove(self.gst_pitch)
+        self.pipeline.remove(self.audio_converter)
