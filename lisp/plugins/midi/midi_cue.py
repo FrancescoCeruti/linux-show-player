@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2018 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2023 Francesco Ceruti <ceppofrancy@gmail.com>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@ from lisp.plugins.midi.midi_utils import (
     midi_dict_to_str,
     midi_from_str,
     midi_str_to_dict,
+    PortDirection,
 )
 from lisp.plugins.midi.widgets import MIDIMessageEdit
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
@@ -48,6 +49,7 @@ class MidiCue(Cue):
         CueAction.Interrupt,
     )
 
+    patch_id = Property(default="")
     message = Property(default="")
 
     def __init__(self, *args, **kwargs):
@@ -56,10 +58,15 @@ class MidiCue(Cue):
         self.__midi = get_plugin("Midi")
 
     def __start__(self, fade=False):
-        if self.message:
-            self.__midi.output.send(midi_from_str(self.message))
+        if self.message and self.patch_id:
+            self.__midi.send(self.patch_id, midi_from_str(self.message))
 
         return False
+
+    def update_properties(self, properties):
+        super().update_properties(properties)
+        if not self.__midi.output_patch_exists(properties.get("patch_id", "out#1")):
+            self._error()
 
 
 class MidiCueSettings(SettingsPage):
@@ -70,7 +77,7 @@ class MidiCueSettings(SettingsPage):
         self.setLayout(QVBoxLayout())
         self.layout().setContentsMargins(0, 0, 0, 0)
 
-        self.midiEdit = MIDIMessageEdit(parent=self)
+        self.midiEdit = MIDIMessageEdit(PortDirection.Output, parent=self)
         self.layout().addWidget(self.midiEdit)
 
     def enableCheck(self, enabled):
@@ -78,7 +85,10 @@ class MidiCueSettings(SettingsPage):
 
     def getSettings(self):
         if self.isGroupEnabled(self.midiEdit.msgGroup):
-            return {"message": midi_dict_to_str(self.midiEdit.getMessageDict())}
+            return {
+                "patch_id": self.midiEdit.getPatchId(),
+                "message": midi_dict_to_str(self.midiEdit.getMessageDict()),
+            }
 
         return {}
 
@@ -86,6 +96,9 @@ class MidiCueSettings(SettingsPage):
         message = settings.get("message", "")
         if message:
             self.midiEdit.setMessageDict(midi_str_to_dict(message))
+        patch_id = settings.get("patch_id", "")
+        if patch_id:
+            self.midiEdit.setPatchId(patch_id)
 
 
 CueSettingsRegistry().add(MidiCueSettings, MidiCue)
