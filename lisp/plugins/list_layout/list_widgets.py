@@ -73,7 +73,7 @@ class NameWidget(QLabel):
 
 
 class CueStatusIcons(QWidget):
-    MARGIN = 6
+    MARGIN = 5
 
     def __init__(self, item, *args):
         super().__init__(*args)
@@ -82,6 +82,7 @@ class CueStatusIcons(QWidget):
         self._icon = None
         self._item = item
 
+        self._item.cue.changed("icon").connect(self.updateIcon, Connection.QtQueued)
         self._item.cue.interrupted.connect(self.updateIcon, Connection.QtQueued)
         self._item.cue.started.connect(self.updateIcon, Connection.QtQueued)
         self._item.cue.stopped.connect(self.updateIcon, Connection.QtQueued)
@@ -93,13 +94,13 @@ class CueStatusIcons(QWidget):
 
     def updateIcon(self):
         if self._item.cue.state & CueState.Running:
-            self._icon = IconTheme.get("led-running")
+            self._icon = IconTheme.get(self._item.cue.icon + "-running")
         elif self._item.cue.state & CueState.Pause:
-            self._icon = IconTheme.get("led-pause")
+            self._icon = IconTheme.get(self._item.cue.icon + "-pause")
         elif self._item.cue.state & CueState.Error:
-            self._icon = IconTheme.get("led-error")
+            self._icon = IconTheme.get(self._item.cue.icon + "-error")
         else:
-            self._icon = None
+            self._icon = IconTheme.get(self._item.cue.icon)
 
         self.update()
 

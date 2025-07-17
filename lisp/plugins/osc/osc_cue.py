@@ -75,6 +75,7 @@ class OscCue(Cue):
     path = Property(default="")
     args = Property(default=[])
     fade_type = Property(default=FadeInType.Linear.name)
+    icon = Property("network")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

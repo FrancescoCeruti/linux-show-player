@@ -55,6 +55,7 @@ class CommandCue(Cue):
     no_error = Property(default=True)
     kill = Property(default=False)
     run_on_host = Property(default=True)
+    icon = Property("prompt")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

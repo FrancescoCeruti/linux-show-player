@@ -86,6 +86,7 @@ class Cue(HasProperties):
     :ivar id: Identify the cue uniquely. Should NEVER change after init.
     :ivar index: Cue position in the view.
     :ivar name: Cue visualized name.
+    :ivar icon: Cue icon file name.
     :ivar description: Cue text description.
     :ivar stylesheet: Cue style, used by the view.
     :ivar duration: The cue duration in milliseconds. (0 means no duration)
@@ -116,6 +117,7 @@ class Cue(HasProperties):
     _type_ = WriteOnceProperty()
     id = WriteOnceProperty()
     name = Property(default="Untitled")
+    icon = Property(default="led")
     index = Property(default=-1)
     description = Property(default="")
     stylesheet = Property(default="")

@@ -29,6 +29,7 @@ class MediaCue(Cue):
     Name = QT_TRANSLATE_NOOP("CueName", "Media Cue")
 
     media = Property()
+    icon = Property("speaker")
     default_start_action = Property(default=CueAction.FadeInStart.value)
     default_stop_action = Property(default=CueAction.FadeOutStop.value)
 

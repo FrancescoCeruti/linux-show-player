@@ -52,6 +52,7 @@ class SeekCue(Cue):
 
     target_id = Property()
     time = Property(default=-1)
+    icon = Property("action-forward")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

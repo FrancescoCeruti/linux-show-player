@@ -316,7 +316,12 @@ class CueWidget(QWidget):
                     self.cueExecuted.emit(self._cue)
 
     def _updateStyle(self, stylesheet):
-        self.nameButton.setStyleSheet(stylesheet)
+        self.nameButton.setStyleSheet(
+            stylesheet
+            + " background-image: url('lisp/ui/icons/lisp/cues/variations/"
+            + self._cue.icon + "-cart.svg');"
+            + " background-position: center;"
+            + " background-repeat: no-repeat;")
 
     def _enterFadein(self):
         p = self.timeDisplay.palette()

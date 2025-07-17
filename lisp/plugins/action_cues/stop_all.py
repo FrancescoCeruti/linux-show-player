@@ -39,6 +39,7 @@ class StopAll(Cue):
     )
 
     action = Property(default=CueAction.Stop.value)
+    icon = Property("action-stop")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

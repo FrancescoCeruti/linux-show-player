@@ -15,7 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
+import glob
+import os
+from PyQt5.QtCore import Qt, QSize, QT_TRANSLATE_NOOP
 from PyQt5.QtGui import QFontDatabase
 from PyQt5.QtWidgets import (
     QVBoxLayout,
@@ -25,15 +27,23 @@ from PyQt5.QtWidgets import (
     QSpinBox,
     QLabel,
     QLineEdit,
+    QPushButton,
+    QDialog,
+    QGridLayout,
+    QDialogButtonBox,
+    QToolButton,
 )
 
 from lisp.ui.settings.pages import SettingsPage
 from lisp.ui.ui_utils import translate, css_to_dict, dict_to_css
 from lisp.ui.widgets import ColorButton
+from lisp.ui.icons import IconTheme
+from lisp import ICON_THEMES_DIR
 
 
 class Appearance(SettingsPage):
     Name = QT_TRANSLATE_NOOP("SettingsPageName", "Appearance")
+    iconName = "music"
 
     def __init__(self, **kwargs):
         super().__init__()
@@ -46,6 +56,12 @@ class Appearance(SettingsPage):
 
         self.cueNameEdit = QLineEdit(self.cueNameGroup)
         self.cueNameGroup.layout().addWidget(self.cueNameEdit)
+
+        # Icon
+        self.iconSelectorDialog = None
+        self.cueIcon = QPushButton("")
+        self.cueIcon.clicked.connect(self.showIconSelector)
+        self.cueNameGroup.layout().addWidget(self.cueIcon)
 
         # Description
         self.cueDescriptionGroup = QGroupBox(self)
@@ -117,12 +133,64 @@ class Appearance(SettingsPage):
         self.setGroupEnabled(self.fontSizeGroup, enabled)
         self.setGroupEnabled(self.colorGroup, enabled)
 
+    def buildIconSelector(self):
+        COLUMNS = 5
+        dialog = QDialog(self)
+        dialog.setWindowTitle(translate("CueAppearanceSettings", "Select an Icon"))
+        layout = QVBoxLayout(dialog)
+        grid = QGridLayout()
+        layout.addLayout(grid)
+
+        icon_names = set()
+        path = os.path.join(ICON_THEMES_DIR + "/lisp/cues", "**")
+        for path in glob.iglob(path, recursive=False):
+            if os.path.isfile(path):
+                name, ext = os.path.splitext(os.path.basename(path))
+                icon_names.add(name)
+
+        for index, name in enumerate(sorted(icon_names)):
+            btn = QToolButton()
+            btn.setIcon(IconTheme.get(name))
+            btn.setIconSize(QSize(48, 48))
+            btn.setStyleSheet(
+            """
+            QToolButton {
+                border: 0px;
+                padding: 10px;
+                margin: 0px;
+                background: transparent;
+            }
+            QToolButton:hover {
+            	background: #4499EE;
+            }
+            """
+            )
+            btn.clicked.connect(lambda _, n=name: self.selectIcon(n, dialog))
+            grid.addWidget(btn, index // COLUMNS, index % COLUMNS)
+
+        buttons = QDialogButtonBox(QDialogButtonBox.Cancel)
+        buttons.rejected.connect(dialog.reject)
+        layout.addWidget(buttons)
+        return dialog
+
+    def showIconSelector(self):
+        if self.iconSelectorDialog is None:
+        	self.iconSelectorDialog = self.buildIconSelector()
+        self.iconSelectorDialog.exec_()
+
+    def selectIcon(self, name, dialog):
+        self.iconName = name
+        self.cueIcon.setIcon(IconTheme.get(name))
+        self.cueIcon.setIconSize(QSize(17, 17))
+        dialog.accept()
+
     def getSettings(self):
         settings = {}
         style = {}
 
         if self.isGroupEnabled(self.cueNameGroup):
             settings["name"] = self.cueNameEdit.text()
+            settings["icon"] = self.iconName
         if self.isGroupEnabled(self.cueDescriptionGroup):
             settings["description"] = self.cueDescriptionEdit.toPlainText()
         if self.isGroupEnabled(self.colorGroup):
@@ -141,6 +209,10 @@ class Appearance(SettingsPage):
     def loadSettings(self, settings):
         if "name" in settings:
             self.cueNameEdit.setText(settings["name"])
+        if "icon" in settings:
+            self.iconName = settings["icon"]
+            self.cueIcon.setIcon(IconTheme.get(self.iconName))
+            self.cueIcon.setIconSize(QSize(17, 17))
         if "description" in settings:
             self.cueDescriptionEdit.setPlainText(settings["description"])
         if "stylesheet" in settings:
