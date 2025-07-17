@@ -147,9 +147,8 @@ class Appearance(SettingsPage):
             if os.path.isfile(path):
                 name, ext = os.path.splitext(os.path.basename(path))
                 icon_names.add(name)
-        icon_names = sorted(icon_names)
 
-        for index, name in enumerate(icon_names):
+        for index, name in enumerate(sorted(icon_names)):
             btn = QToolButton()
             btn.setIcon(IconTheme.get(name))
             btn.setIconSize(QSize(48, 48))
