@@ -94,11 +94,11 @@ class CueStatusIcons(QWidget):
 
     def updateIcon(self):
         if self._item.cue.state & CueState.Running:
-            self._icon = IconTheme.get(self._item.cue.icon + "-running")
+            self._icon = IconTheme.get(f"{self._item.cue.icon}-running")
         elif self._item.cue.state & CueState.Pause:
-            self._icon = IconTheme.get(self._item.cue.icon + "-pause")
+            self._icon = IconTheme.get(f"{self._item.cue.icon}-pause")
         elif self._item.cue.state & CueState.Error:
-            self._icon = IconTheme.get(self._item.cue.icon + "-error")
+            self._icon = IconTheme.get(f"{self._item.cue.icon}-error")
         else:
             self._icon = IconTheme.get(self._item.cue.icon)
 

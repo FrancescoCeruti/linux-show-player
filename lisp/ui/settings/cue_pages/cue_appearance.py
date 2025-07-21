@@ -17,7 +17,7 @@
 
 import glob
 import os
-from PyQt5.QtCore import Qt, QSize, QT_TRANSLATE_NOOP
+from PyQt5.QtCore import Qt, QCoreApplication, QEvent, QSize, QT_TRANSLATE_NOOP
 from PyQt5.QtGui import QFontDatabase
 from PyQt5.QtWidgets import (
     QVBoxLayout,
@@ -32,6 +32,7 @@ from PyQt5.QtWidgets import (
     QGridLayout,
     QDialogButtonBox,
     QToolButton,
+    QApplication,
 )
 
 from lisp.ui.settings.pages import SettingsPage
@@ -58,10 +59,21 @@ class Appearance(SettingsPage):
         self.cueNameGroup.layout().addWidget(self.cueNameEdit)
 
         # Icon
-        self.iconSelectorDialog = None
-        self.cueIcon = QPushButton("")
-        self.cueIcon.clicked.connect(self.showIconSelector)
+        self.iconSelectorDialog = IconSelectorDialog(self, self.selectIcon)
+        self.cueIcon = QPushButton()
+        self.cueIcon.setStyleSheet("""
+            QPushButton, QPushButton:pressed {
+                padding: 0;
+                border: none;
+                background-color: transparent;
+            }""")
+        self.cueIcon.setFocusPolicy(Qt.NoFocus)
         self.cueNameGroup.layout().addWidget(self.cueIcon)
+        self.cueIconButton = QPushButton(
+            translate("CueAppearanceSettings", "Change icon")
+        )
+        self.cueIconButton.clicked.connect(self.showIconSelector)
+        self.cueNameGroup.layout().addWidget(self.cueIconButton)
 
         # Description
         self.cueDescriptionGroup = QGroupBox(self)
@@ -110,7 +122,7 @@ class Appearance(SettingsPage):
 
     def retranslateUi(self):
         self.cueNameGroup.setTitle(
-            translate("CueAppearanceSettings", "Cue name")
+            translate("CueAppearanceSettings", "Cue Name and Icon")
         )
         self.cueNameEdit.setText(translate("CueAppearanceSettings", "NoName"))
         self.cueDescriptionGroup.setTitle(
@@ -133,56 +145,15 @@ class Appearance(SettingsPage):
         self.setGroupEnabled(self.fontSizeGroup, enabled)
         self.setGroupEnabled(self.colorGroup, enabled)
 
-    def buildIconSelector(self):
-        COLUMNS = 5
-        dialog = QDialog(self)
-        dialog.setWindowTitle(translate("CueAppearanceSettings", "Select an Icon"))
-        layout = QVBoxLayout(dialog)
-        grid = QGridLayout()
-        layout.addLayout(grid)
-
-        icon_names = set()
-        path = os.path.join(ICON_THEMES_DIR + "/lisp/cues", "**")
-        for path in glob.iglob(path, recursive=False):
-            if os.path.isfile(path):
-                name, ext = os.path.splitext(os.path.basename(path))
-                icon_names.add(name)
-
-        for index, name in enumerate(sorted(icon_names)):
-            btn = QToolButton()
-            btn.setIcon(IconTheme.get(name))
-            btn.setIconSize(QSize(48, 48))
-            btn.setStyleSheet(
-            """
-            QToolButton {
-                border: 0px;
-                padding: 10px;
-                margin: 0px;
-                background: transparent;
-            }
-            QToolButton:hover {
-            	background: #4499EE;
-            }
-            """
-            )
-            btn.clicked.connect(lambda _, n=name: self.selectIcon(n, dialog))
-            grid.addWidget(btn, index // COLUMNS, index % COLUMNS)
-
-        buttons = QDialogButtonBox(QDialogButtonBox.Cancel)
-        buttons.rejected.connect(dialog.reject)
-        layout.addWidget(buttons)
-        return dialog
-
-    def showIconSelector(self):
-        if self.iconSelectorDialog is None:
-        	self.iconSelectorDialog = self.buildIconSelector()
-        self.iconSelectorDialog.exec_()
-
-    def selectIcon(self, name, dialog):
+    def selectIcon(self, name):
         self.iconName = name
         self.cueIcon.setIcon(IconTheme.get(name))
-        self.cueIcon.setIconSize(QSize(17, 17))
-        dialog.accept()
+        self.cueIcon.setIconSize(QSize(34, 34))
+
+    def showIconSelector(self):
+        for button in self.iconSelectorDialog.iconButtons:
+            QCoreApplication.sendEvent(button, QEvent(QEvent.Leave))
+        self.iconSelectorDialog.exec_()
 
     def getSettings(self):
         settings = {}
@@ -212,7 +183,7 @@ class Appearance(SettingsPage):
         if "icon" in settings:
             self.iconName = settings["icon"]
             self.cueIcon.setIcon(IconTheme.get(self.iconName))
-            self.cueIcon.setIconSize(QSize(17, 17))
+            self.cueIcon.setIconSize(QSize(34, 34))
         if "description" in settings:
             self.cueDescriptionEdit.setPlainText(settings["description"])
         if "stylesheet" in settings:
@@ -224,3 +195,58 @@ class Appearance(SettingsPage):
             if "font-size" in settings:
                 # [:-2] for removing "pt"
                 self.fontSizeSpin.setValue(int(settings["font-size"][:-2]))
+
+
+class IconSelectorDialog(QDialog):
+    def __init__(self, parent=None, onIconSelected=None):
+        super().__init__(parent)
+        self.setWindowTitle(
+            translate("CueAppearanceSettings", "Select an Icon")
+        )
+        self.onIconSelected = onIconSelected
+        self.iconButtons = []
+        
+        COLUMNS = 5
+        layout = QVBoxLayout(self)
+        grid = QGridLayout()
+        layout.addLayout(grid)
+
+        icon_names = set()
+        path = os.path.join(ICON_THEMES_DIR, "lisp/cues")
+        for item in os.scandir(path):
+            if item.is_file():
+                name, _ = os.path.splitext(item.name)
+                icon_names.add(name)
+
+        for index, name in enumerate(sorted(icon_names)):
+            btn = QToolButton()
+            btn.iconName = name
+            btn.setIcon(IconTheme.get(name))
+            btn.setIconSize(QSize(48, 48))
+            btn.setStyleSheet("""
+                QToolButton {
+                    border: 0px;
+                    padding: 10px;
+                    margin: 0px;
+                    background: transparent;
+                }
+                QToolButton:hover, QToolButton:focus {
+                    background: #4499EE;
+                }""")
+            btn.clicked.connect(lambda _, n=name: self.clickIcon(n))
+            grid.addWidget(btn, index // COLUMNS, index % COLUMNS)
+            self.iconButtons.append(btn)
+
+        buttons = QDialogButtonBox(QDialogButtonBox.Cancel)
+        buttons.rejected.connect(self.reject)
+        layout.addWidget(buttons)
+
+    def clickIcon(self, name):
+        if self.onIconSelected:
+            self.onIconSelected(name)
+        self.accept()
+        
+    def keyPressEvent(self, event):
+        if event.key() in (Qt.Key_Return, Qt.Key_Enter):
+            if QApplication.focusWidget().iconName:
+                self.clickIcon(QApplication.focusWidget().iconName)

@@ -37,6 +37,7 @@ from lisp.cues.media_cue import MediaCue
 from lisp.plugins.cart_layout.page_widget import CartPageWidget
 from lisp.ui.icons import IconTheme
 from lisp.ui.widgets import QClickLabel, QClickSlider
+from lisp import ICON_THEMES_DIR
 
 
 class CueWidget(QWidget):
@@ -316,12 +317,13 @@ class CueWidget(QWidget):
                     self.cueExecuted.emit(self._cue)
 
     def _updateStyle(self, stylesheet):
+        iconName = f"{self._cue.icon}-cart.svg"
         self.nameButton.setStyleSheet(
-            stylesheet
-            + " background-image: url('lisp/ui/icons/lisp/cues/variations/"
-            + self._cue.icon + "-cart.svg');"
-            + " background-position: center;"
-            + " background-repeat: no-repeat;")
+            f"""{stylesheet}
+            background-image:
+                url('{ICON_THEMES_DIR}/lisp/cues/variations/{iconName}');
+            background-position: center;
+            background-repeat: no-repeat;""")
 
     def _enterFadein(self):
         p = self.timeDisplay.palette()
