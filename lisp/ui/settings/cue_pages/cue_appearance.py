@@ -240,6 +240,7 @@ class IconSelectorDialog(QDialog):
         buttons = QDialogButtonBox(QDialogButtonBox.Cancel)
         buttons.rejected.connect(self.reject)
         layout.addWidget(buttons)
+        buttons.button(QDialogButtonBox.Cancel).setFocus()
 
     def clickIcon(self, name):
         if self.onIconSelected:
