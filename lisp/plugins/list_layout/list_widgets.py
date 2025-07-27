@@ -82,7 +82,9 @@ class CueStatusIcons(QWidget):
         self._icon = None
         self._item = item
 
-        self._item.cue.changed("icon").connect(self.updateIcon, Connection.QtQueued)
+        self._item.cue.changed("icon").connect(
+            self.updateIcon, Connection.QtQueued
+        )
         self._item.cue.interrupted.connect(self.updateIcon, Connection.QtQueued)
         self._item.cue.started.connect(self.updateIcon, Connection.QtQueued)
         self._item.cue.stopped.connect(self.updateIcon, Connection.QtQueued)
