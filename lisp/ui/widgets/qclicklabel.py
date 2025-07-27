@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import pyqtSignal, QEvent
+from PyQt5.QtCore import pyqtSignal, QEvent, QMargins
 from PyQt5.QtGui import QIcon, QPainter
 from PyQt5.QtWidgets import QLabel
 
@@ -23,10 +23,10 @@ from PyQt5.QtWidgets import QLabel
 class QClickLabel(QLabel):
     clicked = pyqtSignal(QEvent)
 
-    def __init(self, parent):
+    def __init__(self, parent):
         super().__init__(parent)
         self._icon = None
-    
+
     def setIcon(self, icon: QIcon):
         self._icon = icon
 
@@ -35,18 +35,16 @@ class QClickLabel(QLabel):
             self.clicked.emit(e)
 
     def paintEvent(self, event):
-        if self._icon:
-            labelSize = self.size()
-            labelWidth = labelSize.width()
-            labelHeight = labelSize.height()
-            iconSize = int(min(labelWidth, labelHeight) * 0.7)
-            iconX = int((labelWidth - iconSize) / 2)
-            iconY = int((labelHeight - iconSize) / 2)
+        if self._icon is not None:
+            dx = int(round(self.width() * 0.15))
+            dy = int(round(self.height() * 0.15))
+            rect = self.rect().marginsRemoved(QMargins(dx, dy, dx, dy))
 
-            pixmap = self._icon.pixmap(labelSize)
             painter = QPainter()
             painter.begin(self)
-            painter.drawPixmap(iconX, iconY, iconSize, iconSize, pixmap)
+
+            self._icon.paint(painter, rect)
+
             painter.end()
 
         super().paintEvent(event)
