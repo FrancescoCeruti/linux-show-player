@@ -133,7 +133,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="295"/>
       <source>Capture</source>
-      <translation>Capture</translation>
+      <translation>Capturer</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="340"/>
@@ -172,13 +172,12 @@
       <location filename="../../../plugins/controller/protocols/osc.py" line="360"/>
       <source>Osc path seems invalid,
 do not forget to edit the path later.</source>
-      <translation>Le chemin Osc semble invalide,
-n'oubliez pas d'éditer le chemin plus tard.</translation>
+      <translation>Le chemin OSC semble invalide, n'oubliez pas de modifier le chemin plus tard.</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="317"/>
       <source>Error while importing configuration entry, skipped.</source>
-      <translation>Erreur lors de l'importation de l'entrée de configuration, ignorée.</translation>
+      <translation>Erreur lors de l'importation de l'entrée de configuration. Importation ignorée.</translation>
     </message>
   </context>
   <context>
@@ -209,7 +208,7 @@ n'oubliez pas d'éditer le chemin plus tard.</translation>
     <message>
       <location filename="../../../plugins/controller/common.py" line="46"/>
       <source>Stop all cues</source>
-      <translation>Arrêter toutes les go</translation>
+      <translation>Arrêter toutes les cues</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="47"/>
@@ -229,12 +228,12 @@ n'oubliez pas d'éditer le chemin plus tard.</translation>
     <message>
       <location filename="../../../plugins/controller/common.py" line="54"/>
       <source>Fade-out all cues</source>
-      <translation>Arrêter en fondu tous les go</translation>
+      <translation>Arrêter tous les cues en fondu</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="57"/>
       <source>Fade-in all cues</source>
-      <translation>Démarrer en fondu tous les go</translation>
+      <translation>Démarrer tous les cues en fondu</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="60"/>
