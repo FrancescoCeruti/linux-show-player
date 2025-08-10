@@ -11,7 +11,7 @@
     <message>
       <location filename="../../../plugins/controller/controller.py" line="153"/>
       <source>Unrecognized layout action: "{}"</source>
-      <translation type="unfinished">Unrecognized layout action: "{}"</translation>
+      <translation>Action d’agencement non reconnue : "{}"</translation>
     </message>
   </context>
   <context>
@@ -47,7 +47,7 @@
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="125"/>
       <source>Capture</source>
-      <translation>Capture</translation>
+      <translation>Capturer</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="127"/>
@@ -141,22 +141,22 @@
       <translation>En attente de messages :</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="443"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="445"/>
       <source>Path</source>
       <translation>Chemin d'accès</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="444"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="446"/>
       <source>Types</source>
       <translation>Types</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="445"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="447"/>
       <source>Arguments</source>
       <translation>Arguments</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="446"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="448"/>
       <source>Action</source>
       <translation>Action</translation>
     </message>
@@ -164,12 +164,12 @@
   <context>
     <name>ControllerOscSettingsWarning</name>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="357"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="359"/>
       <source>Warning</source>
       <translation>Avertissement</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="358"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="360"/>
       <source>Osc path seems invalid,
 do not forget to edit the path later.</source>
       <translation>Le chemin Osc semble invalide,
@@ -191,7 +191,7 @@ n'oubliez pas d'éditer le chemin plus tard.</translation>
     <message>
       <location filename="../../../plugins/controller/protocols/keyboard.py" line="80"/>
       <source>Remove</source>
-      <translation>Retirer</translation>
+      <translation>Supprimer</translation>
     </message>
   </context>
   <context>
@@ -249,12 +249,12 @@ n'oubliez pas d'éditer le chemin plus tard.</translation>
     <message>
       <location filename="../../../plugins/controller/common.py" line="66"/>
       <source>Switch to previous page</source>
-      <translation type="unfinished">Switch to previous page</translation>
+      <translation>Aller à la page précédente</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/common.py" line="69"/>
       <source>Switch to next page</source>
-      <translation type="unfinished">Switch to next page</translation>
+      <translation>Aller à la page suivante</translation>
     </message>
   </context>
   <context>
@@ -280,7 +280,7 @@ n'oubliez pas d'éditer le chemin plus tard.</translation>
     <message>
       <location filename="../../../plugins/controller/protocols/osc.py" line="113"/>
       <source>Remove</source>
-      <translation>Retirer</translation>
+      <translation>Supprimer</translation>
     </message>
   </context>
   <context>
