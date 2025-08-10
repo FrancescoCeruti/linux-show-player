@@ -39,7 +39,7 @@
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="161"/>
       <source>Discard command output</source>
-      <translation>Abandonner la sortie de commande</translation>
+      <translation>Ignorer la sortie de commande</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="164"/>
@@ -75,7 +75,7 @@
     <message>
       <location filename="../../../plugins/action_cues/seek_cue.py" line="41"/>
       <source>Seek Cue</source>
-      <translation>Recherche de Cue</translation>
+      <translation>Recherche de cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="43"/>
@@ -100,7 +100,7 @@
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="54"/>
       <source>Volume Control</source>
-      <translation>Contrôle du Volume</translation>
+      <translation>Contrôle du volume</translation>
     </message>
   </context>
   <context>
@@ -174,7 +174,7 @@
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="118"/>
       <source>Edit Collection</source>
-      <translation>Éditer la collection</translation>
+      <translation>Gérer la collection</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/command_cue.py" line="126"/>
