@@ -28,6 +28,7 @@ from lisp.core.session import Session
 from lisp.core.signal import Signal
 from lisp.core.singleton import Singleton
 from lisp.core.util import filter_live_properties
+from lisp.core.version_manager import VersionManager
 from lisp.cues.cue import Cue
 from lisp.cues.cue_factory import CueFactory
 from lisp.cues.cue_model import CueModel
@@ -230,6 +231,10 @@ class Application(metaclass=Singleton):
         try:
             with open(session_file, mode="r", encoding="utf-8") as file:
                 session_dict = json.load(file)
+            
+            # Update session to current version if needed
+            manager = VersionManager(session_dict)
+            session_dict = manager.update_to_latest()
 
             # New session
             self.__new_session(
