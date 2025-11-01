@@ -10,3 +10,9 @@ def migrate(filename: str, session: NestedDict):
 
     for cue in session["cues"]:
         cue["_type_"] = cue.pop("type")
+
+        match cue.get("next_action", ""):
+            case "AutoNext":
+                cue["next-action"] = "TriggerAfterWait"
+            case "AutoFollow":
+                cue["next-action"] = "TriggerAfterEnd"
