@@ -18,7 +18,7 @@
 import os
 from os import path
 
-from appdirs import AppDirs
+from platformdirs import PlatformDirs
 
 __author__ = "Francesco Ceruti"
 __email__ = "ceppofrancy@gmail.com"
@@ -28,7 +28,7 @@ __version_info__ = (0, 6, 5)
 __version__ = ".".join(map(str, __version_info__))
 
 # The version passed follows <major>.<minor>
-app_dirs = AppDirs(
+app_dirs = PlatformDirs(
     "LinuxShowPlayer", version="{}.{}".format(*__version_info__[0:2])
 )
 
