@@ -129,7 +129,7 @@
       <translation>Error d'inici</translation>
     </message>
     <message>
-      <location filename="../../../application.py" line="208"/>
+      <location filename="../../../application.py" line="207"/>
       <source>Saving your session failed due to bad data.
 The file still contains your last successful save and has not been overwritten.
 
@@ -140,12 +140,12 @@ The file still contains your last successful save and has not been overwritten.
 This is likely because of corrupted data from a plugin. Try to revert recent changes to cues or settings, and save the file again.</translation>
     </message>
     <message>
-      <location filename="../../../application.py" line="264"/>
+      <location filename="../../../application.py" line="263"/>
       <source>Error while reading the session file "{}"</source>
       <translation>S'ha produït un error en llegir el fitxer de sessió "{}"</translation>
     </message>
     <message>
-      <location filename="../../../application.py" line="253"/>
+      <location filename="../../../application.py" line="252"/>
       <source>Unable to create the cue "{}"</source>
       <translation>No s'ha pogut crear la marca "{}"</translation>
     </message>
@@ -383,47 +383,47 @@ This is likely because of corrupted data from a plugin. Try to revert recent cha
       <translation>S'utilitza per a les accions d'esvaïment de sortida i entrada, per als senyals on la durada de l'esvaïment està establerta a 0.</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="113"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="114"/>
       <source>Start action</source>
       <translation>Acció d'inici</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="115"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="116"/>
       <source>Default action to start the cue</source>
       <translation>Acció predeterminada per iniciar el Cue</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="119"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="120"/>
       <source>Stop action</source>
       <translation>Acció d'aturada</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="121"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="122"/>
       <source>Default action to stop the cue</source>
       <translation>Acció predeterminada per atura el Cue</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="202"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="205"/>
       <source>Pre wait</source>
       <translation>Pre espera</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="204"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="207"/>
       <source>Wait before cue execution</source>
       <translation>Espera abans d'executar el cue</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="207"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="210"/>
       <source>Post wait</source>
       <translation>Post espera</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="209"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="212"/>
       <source>Wait after cue execution</source>
       <translation>Espera desprès de l'execució del cue</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="212"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="215"/>
       <source>Next action</source>
       <translation>Següent acció</translation>
     </message>
@@ -462,12 +462,12 @@ This is likely because of corrupted data from a plugin. Try to revert recent cha
   <context>
     <name>FadeSettings</name>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="273"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="280"/>
       <source>Fade In</source>
       <translation>Esvaïment d'entrada</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="274"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="281"/>
       <source>Fade Out</source>
       <translation>Esvaïment de sortida</translation>
     </message>
@@ -819,32 +819,32 @@ This is likely because of corrupted data from a plugin. Try to revert recent cha
   <context>
     <name>MediaCueSettings</name>
     <message>
-      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="81"/>
+      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="84"/>
       <source>Start time</source>
       <translation>Temps d'inici</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="83"/>
+      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="86"/>
       <source>Stop position of the media</source>
       <translation>Posició d'aturada del media</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="85"/>
+      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="88"/>
       <source>Stop time</source>
       <translation>Temps d'aturada</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="87"/>
+      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="90"/>
       <source>Start position of the media</source>
       <translation>Posició d'inici del media</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="89"/>
+      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="92"/>
       <source>Loop</source>
       <translation>Bucle</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="91"/>
+      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="94"/>
       <source>Repetition after first play (-1 = infinite)</source>
       <translation>Repeticions després de la primerea exacució (-1 = infinit)</translation>
     </message>
@@ -970,22 +970,22 @@ This is likely because of corrupted data from a plugin. Try to revert recent cha
       <translation>Connectors</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="43"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="44"/>
       <source>Cue</source>
       <translation>Cue</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="53"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="54"/>
       <source>Behaviours</source>
       <translation>Comprotaments</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="156"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="157"/>
       <source>Pre/Post Wait</source>
       <translation>Pre/Post Espera</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="238"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="245"/>
       <source>Fade In/Out</source>
       <translation>Esvaiment d'Entrada/Sortida</translation>
     </message>
@@ -995,7 +995,7 @@ This is likely because of corrupted data from a plugin. Try to revert recent cha
       <translation>Aparença</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="33"/>
+      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="34"/>
       <source>Media Cue</source>
       <translation>Media Cue</translation>
     </message>
