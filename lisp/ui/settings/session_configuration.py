@@ -21,28 +21,28 @@ from lisp.core.dicttree import DictNode
 from lisp.ui.settings.configuration_dialog import ConfigurationDialog
 from lisp.ui.ui_utils import translate
 
-PageEntry = namedtuple("PageEntry", ("page", "config"))
+PageEntry = namedtuple("PageEntry", ("page", "plugin"))
 
 
-class AppConfigurationDialog(ConfigurationDialog):
+class SessionConfigurationDialog(ConfigurationDialog):
     PagesRegistry = DictNode()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.setWindowTitle(translate("AppConfiguration", "LiSP preferences"))
+        self.setWindowTitle(translate('SessionConfiguration', 'Session preferences'))
 
     @staticmethod
     def _getConfigFromPageEntry(page_parent):
-        return page_parent.value.config
+        return page_parent.value.plugin.SessionConfig
 
     @classmethod
-    def registerSettingsPage(cls, path, page, config):
+    def registerSettingsPage(cls, path, page, plugin):
         """
         :param path: indicate the page "position": 'category.sub.key'
         :type path: str
         :type page: type
-        :type config: lisp.core.configuration.Configuration
+        :type plugin: lisp.core.plugin.Plugin
         """
         cls.PagesRegistry.set(
-            path, PageEntry(page=page, config=config)
+            path, PageEntry(page=page, plugin=plugin)
         )
