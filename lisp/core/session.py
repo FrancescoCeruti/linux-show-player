@@ -95,18 +95,10 @@ class SessionMigrator:
         session_plugins_versions = session_dict.get("meta.plugins", {})
 
         if session_app_version is None:
-            if "session" in session_dict:
-                # Handle 0.6 dev version
-                session_app_version = "0.6.0"
-                session_plugins_versions = {
-                    name: "0.6.0" for name, _ in self.plugins
-                }
-            else:
-                # Handle 0.5 version
-                session_app_version = "0.5.0"
-                session_plugins_versions = {
-                    name: "0.5.0" for name, _ in self.plugins
-                }
+            session_app_version = self.guess_missing_version(session_dict)
+            session_plugins_versions = {
+                name: session_app_version for name, _ in self.plugins
+            }
 
         if version_parse(self.app_version) > version_parse(session_app_version):
             logger.debug(
@@ -168,7 +160,7 @@ class SessionMigrator:
         # then we slice the list to find the migrations we need to apply
         start_migration = package_version.replace(".", "_")
         migrations.append(f"from_{start_migration}")
-        migrations.sort(key=self.__migrations_sort_key)
+        migrations.sort(key=self.migrations_sort_key)
         migrations = migrations[
             : last_index(migrations, f"from_{start_migration}")
         ]
@@ -186,5 +178,12 @@ class SessionMigrator:
         return len(migrations) > 0
 
     @staticmethod
-    def __migrations_sort_key(version: str):
+    def guess_missing_version(session_dict: DotDict) -> str:
+        if "session" in session_dict:
+            return "0.6.0"
+
+        return "0.5.0"
+
+    @staticmethod
+    def migrations_sort_key(version: str):
         return version_parse(version.replace("from_", "").replace("_", "."))
