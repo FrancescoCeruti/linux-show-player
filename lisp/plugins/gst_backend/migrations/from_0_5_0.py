@@ -1,16 +1,16 @@
 import os.path
 from urllib.parse import urlsplit
 
-from lisp.core.collections.nested_dict import NestedDict
+from lisp.core.collections.dotdict import DotDict
 
 
-def migrate(filename: str, session: NestedDict):
+def migrate(filename: str, session: DotDict):
     for cue in session["cues"]:
         if cue["_type_"] == "GstMediaCue":
-            migrate_gst_media_cue(filename, NestedDict(cue))
+            migrate_gst_media_cue(filename, DotDict(cue))
 
 
-def migrate_gst_media_cue(filename: str, cue: NestedDict):
+def migrate_gst_media_cue(filename: str, cue: DotDict):
     cue.set(
         "media.pipe",
         (

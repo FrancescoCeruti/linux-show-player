@@ -1,7 +1,7 @@
-from lisp.core.collections.nested_dict import NestedDict
+from lisp.core.collections.dotdict import DotDict
 
 
-def migrate(filename: str, session: NestedDict):
+def migrate(filename: str, session: DotDict):
     session.move("application", "session")
     session.set(
         "session.layout_type",

@@ -21,7 +21,7 @@ from abc import ABCMeta, abstractmethod
 from os import path
 from shutil import copyfile
 
-from lisp.core.collections.nested_dict import _UNSET, NestedDict
+from lisp.core.collections.dotdict import _UNSET, DotDict
 from lisp.core.signal import Signal
 from lisp.core.util import dict_merge_diff
 from lisp.ui.ui_utils import translate
@@ -29,7 +29,7 @@ from lisp.ui.ui_utils import translate
 logger = logging.getLogger(__name__)
 
 
-class Configuration(NestedDict, metaclass=ABCMeta):
+class Configuration(DotDict, metaclass=ABCMeta):
     """ABC for configuration objects.
 
     Subclasses need to implement `read` and `write` methods.

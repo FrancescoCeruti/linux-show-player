@@ -20,19 +20,18 @@ from copy import deepcopy
 
 from falcon.util.structures import Mapping
 
-from lisp.core.util import typename, dict_merge
+from lisp.core.util import dict_merge, typename
 
 _UNSET = object()
-"""Used to indicate the default behaviour when a specific option is not found to
-raise an exception. Created to enable `None` as a valid fallback value."""
+"""A sentinel object indicating no default, allows the use of `None` as a default value."""
 
 
-class NestedDictError(Exception):
+class DotDictError(Exception):
     pass
 
 
-class NestedDict(MutableMapping):
-    """Allow to access nested values using dot notation."""
+class DotDict(MutableMapping):
+    """Wrapper that allows using dot notation to access nested values."""
 
     def __init__(self, root: dict | None = None, separator: str = "."):
         if not isinstance(separator, str):
@@ -61,7 +60,7 @@ class NestedDict(MutableMapping):
             if default is not _UNSET:
                 return default
 
-            raise NestedDictError("invalid path")
+            raise DotDictError("invalid path")
 
     def set(self, key: str, value):
         try:
@@ -74,14 +73,14 @@ class NestedDict(MutableMapping):
 
             return False
         except (KeyError, TypeError):
-            raise NestedDictError("invalid path")
+            raise DotDictError("invalid path")
 
     def pop(self, key: str):
         try:
             node, key = self.__traverse(self.sp(key), self._root)
             return node.pop(key)
         except (KeyError, TypeError):
-            raise NestedDictError("invalid path")
+            raise DotDictError("invalid path")
 
     def move(self, current_key: str, new_key: str):
         self.set(new_key, self.pop(current_key))
@@ -106,13 +105,13 @@ class NestedDict(MutableMapping):
     def __traverse(self, keys: list, root: dict, create_missing: bool = False):
         next_step = keys.pop(0)
 
-        if keys:
-            if create_missing and next_step not in root:
-                root[next_step] = {}
+        if len(keys) == 0:
+            return root, next_step
 
-            return self.__traverse(keys, root[next_step])
+        if create_missing and next_step not in root:
+            root[next_step] = {}
 
-        return root, next_step
+        return self.__traverse(keys, root[next_step])
 
     def __iter__(self):
         return self._root.__iter__()

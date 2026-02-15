@@ -24,10 +24,10 @@ from pathlib import Path
 
 from packaging.version import parse as version_parse
 
-from lisp.core.collections.nested_dict import NestedDict
-from lisp.core.has_properties import Property, HasInstanceProperties
+from lisp.core.collections.dotdict import DotDict
+from lisp.core.has_properties import HasInstanceProperties, Property
 from lisp.core.signal import Signal
-from lisp.core.util import typename, last_index
+from lisp.core.util import last_index, typename
 
 logger = logging.getLogger(__name__)
 
@@ -90,7 +90,7 @@ class SessionMigrator:
 
     def migrate(self, session_path: str, session_dict: dict) -> bool:
         has_run_migrations = False
-        session_dict = NestedDict(session_dict)
+        session_dict = DotDict(session_dict)
         session_app_version = session_dict.get("meta.version", None)
         session_plugins_versions = session_dict.get("meta.plugins", {})
 
@@ -150,7 +150,7 @@ class SessionMigrator:
     def migrate_package(
         self,
         session_path: str,
-        session_dict: NestedDict,
+        session_dict: DotDict,
         package: str,
         package_path: Path,
         package_version: str,
