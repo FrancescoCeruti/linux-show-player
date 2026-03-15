@@ -6,32 +6,18 @@ from lisp.core.collections.dotdict import DotDict
 
 def migrate(filename: str, session: DotDict):
     for cue in session["cues"]:
-        if cue["_type_"] == "GstMediaCue":
+        if cue["_type_"] == "MediaCue":
             migrate_gst_media_cue(filename, DotDict(cue))
 
 
 def migrate_gst_media_cue(filename: str, cue: DotDict):
-    cue.set(
-        "media.pipe",
-        (
-            cue.get("media.pipe")
-            .replace("URIInput!", "UriInput!")
-            .replace("Fade!", "")
-            .split("!")
-        ),
-    )
+    cue.set("_type_", "GstMediaCue")
+    cue.move("_media_", "media")
 
-    cue.move("media.elements.URIInput", "media.elements.UriInput")
     cue.set(
         "media.elements.UriInput.uri",
         to_relative_uri(filename, cue.get("media.elements.UriInput.uri")),
     )
-
-    cue.move("media.start_at", "media.start_time")
-
-    cue.update(cue.pop("media.elements.Fade"))
-    cue.move("fadein", "fadein_duration")
-    cue.move("fadeout", "fadeout_duration")
 
 
 def to_relative_uri(filename: str, uri: str):
