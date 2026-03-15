@@ -14,10 +14,11 @@ def migrate_gst_media_cue(filename: str, cue: DotDict):
     cue.set("_type_", "GstMediaCue")
     cue.move("_media_", "media")
 
-    cue.set(
-        "media.elements.UriInput.uri",
-        to_relative_uri(filename, cue.get("media.elements.UriInput.uri")),
-    )
+    if "media.elements.UriInput" in cue:
+        cue.set(
+            "media.elements.UriInput.uri",
+            to_relative_uri(filename, cue.get("media.elements.UriInput.uri")),
+        )
 
 
 def to_relative_uri(filename: str, uri: str):
