@@ -26,7 +26,7 @@ _UNSET = object()
 """A sentinel object indicating no default, allows the use of `None` as a default value."""
 
 
-class DotDictError(Exception):
+class PathError(KeyError):
     pass
 
 
@@ -41,7 +41,7 @@ class DotDict(MutableMapping):
         if not separator:
             raise ValueError(f"{typename(self)} separator cannot be empty")
 
-        self._seperator = separator
+        self._separator = separator
 
         if root is None:
             self._root = {}
@@ -49,58 +49,55 @@ class DotDict(MutableMapping):
             self._root = root
         else:
             raise TypeError(
-                f"{typename(self)}  root must be a dict, not {typename(root)}"
+                f"{typename(self)} root must be a dict, not {typename(root)}"
             )
 
     def get(self, key: str, default=_UNSET):
         try:
-            node, key = self.__traverse(self.sp(key), self._root)
-            return node[key]
+            node, last_key = self.__traverse(self.sp(key), self._root)
+            return node[last_key]
         except (KeyError, TypeError):
             if default is not _UNSET:
                 return default
 
-            raise DotDictError("invalid path")
+            raise PathError(key) from None
 
     def set(self, key: str, value):
         try:
-            node, key = self.__traverse(
+            node, last_key = self.__traverse(
                 self.sp(key), self._root, create_missing=True
             )
-            if node.get(key, _UNSET) != value:
-                node[key] = value
+            if node.get(last_key, _UNSET) != value:
+                node[last_key] = value
                 return True
 
             return False
         except (KeyError, TypeError):
-            raise DotDictError("invalid path")
+            raise PathError(key) from None
 
     def pop(self, key: str):
         try:
-            node, key = self.__traverse(self.sp(key), self._root)
-            return node.pop(key)
+            node, last_key = self.__traverse(self.sp(key), self._root)
+            return node.pop(last_key)
         except (KeyError, TypeError):
-            raise DotDictError("invalid path")
+            raise PathError(key) from None
 
     def move(self, current_key: str, new_key: str):
         self.set(new_key, self.pop(current_key))
 
-    def update(self, other: dict = None, **kwargs):
+    def update(self, other: dict):
         """Deep update using the given dictionary."""
-        if isinstance(other, Mapping):
-            dict_merge(self._root, deepcopy(other))
-        if len(kwargs):
-            self._root.update(kwargs)
+        dict_merge(self._root, deepcopy(other))
 
     def deep_copy(self) -> dict:
         """Return a deep-copy of the internal dictionary."""
         return deepcopy(self._root)
 
     def jp(self, *paths: str) -> str:
-        return self._seperator.join(paths)
+        return self._separator.join(paths)
 
     def sp(self, key: str) -> list[str]:
-        return key.split(self._seperator)
+        return key.split(self._separator)
 
     def __traverse(self, keys: list, root: dict, create_missing: bool = False):
         next_step = keys.pop(0)

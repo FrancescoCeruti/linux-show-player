@@ -20,8 +20,9 @@ import logging
 from abc import ABCMeta, abstractmethod
 from os import path
 from shutil import copyfile
+from typing import Mapping
 
-from lisp.core.collections.dotdict import _UNSET, DotDict
+from lisp.core.collections.dotdict import _UNSET, DotDict, PathError
 from lisp.core.signal import Signal
 from lisp.core.util import dict_merge_diff
 from lisp.ui.ui_utils import translate
@@ -49,9 +50,12 @@ class Configuration(DotDict, metaclass=ABCMeta):
         pass
 
     def get(self, key: str, default=_UNSET):
-        value = super().get(key, default)
+        try:
+            return super().get(key)
+        except PathError as e:
+            if default is _UNSET:
+                raise e
 
-        if value is default:
             logger.info(
                 translate(
                     "ConfigurationInfo",
@@ -59,7 +63,7 @@ class Configuration(DotDict, metaclass=ABCMeta):
                 ).format(key)
             )
 
-        return value
+            return default
 
     def set(self, key: str, value):
         changed = super().set(key, value)
@@ -68,7 +72,7 @@ class Configuration(DotDict, metaclass=ABCMeta):
 
         return changed
 
-    def update(self, other: dict = None, **kwargs):
+    def update(self, other: dict):
         diff = dict_merge_diff(self._root, other)
         if diff:
             super().update(diff)
@@ -153,6 +157,6 @@ class JSONFileConfiguration(Configuration):
         )
 
     @staticmethod
-    def _read_json(key):
-        with open(key, "r") as f:
+    def _read_json(file_path):
+        with open(file_path, "r") as f:
             return json.load(f)
