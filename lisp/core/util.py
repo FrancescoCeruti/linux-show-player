@@ -19,7 +19,7 @@ import functools
 import hashlib
 import re
 import socket
-from collections.abc import Mapping, MutableMapping, Sequence
+from collections.abc import Mapping, MutableMapping
 from enum import Enum
 from os import listdir
 from os.path import exists, isdir, join
