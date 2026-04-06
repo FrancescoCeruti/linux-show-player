@@ -9,8 +9,8 @@ def migrate(filename: str, session: DotDict):
     )
 
     for cue in session["cues"]:
-       match cue.get("next_action", ""):
-        case "AutoNext":
-            cue["next-action"] = "TriggerAfterWait"
-        case "AutoFollow":
-            cue["next-action"] = "TriggerAfterEnd"
+        match cue.get("next_action", ""):
+            case "AutoNext":
+                cue["next-action"] = "TriggerAfterWait"
+            case "AutoFollow":
+                cue["next-action"] = "TriggerAfterEnd"
