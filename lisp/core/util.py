@@ -90,19 +90,6 @@ def find_packages(path="."):
     ]
 
 
-def last_index(lst: Sequence, value):
-    """Return last index of value.
-
-    Raises ValueError if the value is not present.
-    """
-
-    for index, item in enumerate(reversed(lst)):
-        if item == value:
-            return (len(lst) - 1) - index
-
-    raise ValueError(f"'{value}' is not in list")
-
-
 def time_tuple(milliseconds):
     """Split the given time in a tuple.
 

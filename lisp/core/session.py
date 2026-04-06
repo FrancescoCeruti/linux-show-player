@@ -27,7 +27,7 @@ from packaging.version import parse as version_parse
 from lisp.core.collections.dotdict import DotDict
 from lisp.core.has_properties import HasInstanceProperties, Property
 from lisp.core.signal import Signal
-from lisp.core.util import last_index, typename
+from lisp.core.util import typename
 
 logger = logging.getLogger(__name__)
 
@@ -162,7 +162,7 @@ class SessionMigrator:
         migrations.append(f"from_{start_migration}")
         migrations.sort(key=self.migrations_sort_key)
         migrations = migrations[
-            : last_index(migrations, f"from_{start_migration}")
+            migrations.index(f"from_{start_migration}") + 1 :
         ]
 
         for name in migrations:
