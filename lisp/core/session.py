@@ -88,14 +88,14 @@ class SessionMigrator:
         self.app_dir = Path(app_dir)
         self.plugins = plugins
 
-    def migrate(self, session_path: str, session_dict: dict) -> bool:
+    def migrate(self, session_path: str, session: dict) -> bool:
         has_run_migrations = False
-        session_dict = DotDict(session_dict)
-        session_app_version = session_dict.get("meta.version", None)
-        session_plugins_versions = session_dict.get("meta.plugins", {})
+        session = DotDict(session)
+        session_app_version = session.get("meta.version", None)
+        session_plugins_versions = session.get("meta.plugins", {})
 
         if session_app_version is None:
-            session_app_version = self.guess_missing_version(session_dict)
+            session_app_version = self.guess_missing_version(session)
             session_plugins_versions = {
                 name: session_app_version for name, _ in self.plugins
             }
@@ -106,7 +106,7 @@ class SessionMigrator:
             )
             has_run_migrations |= self.migrate_package(
                 session_path,
-                session_dict,
+                session,
                 "lisp.migrations",
                 self.app_dir.joinpath("migrations"),
                 session_app_version,
@@ -131,7 +131,7 @@ class SessionMigrator:
             )
             has_run_migrations |= self.migrate_package(
                 session_path,
-                session_dict,
+                session,
                 f"{module.__package__}.migrations",
                 plugin_dir.joinpath("migrations"),
                 session_plugin_version,
@@ -142,7 +142,7 @@ class SessionMigrator:
     def migrate_package(
         self,
         session_path: str,
-        session_dict: DotDict,
+        session: DotDict,
         package: str,
         package_path: Path,
         package_version: str,
@@ -171,7 +171,7 @@ class SessionMigrator:
 
             if hasattr(module, "migrate"):
                 logger.debug(f"Running session migration: {module_path}")
-                module.migrate(session_path, session_dict)
+                module.migrate(session_path, session)
             else:
                 logger.warning(f"Invalid session migration: {module_path}")
 
