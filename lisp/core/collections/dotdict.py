@@ -18,8 +18,6 @@
 from collections.abc import MutableMapping
 from copy import deepcopy
 
-from falcon.util.structures import Mapping
-
 from lisp.core.util import dict_merge, typename
 
 _UNSET = object()
