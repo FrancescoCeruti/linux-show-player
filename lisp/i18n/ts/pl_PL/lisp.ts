@@ -263,44 +263,54 @@ This is likely because of corrupted data from a plugin. Try to revert recent cha
   <context>
     <name>CueAppearanceSettings</name>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="85"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="110"/>
       <source>The appearance depends on the layout</source>
       <translation type="unfinished">The appearance depends on the layout</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="97"/>
-      <source>Cue name</source>
-      <translation type="unfinished">Cue name</translation>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="122"/>
+      <source>Cue Name and Icon</source>
+      <translation type="unfinished">Cue Name and Icon</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="99"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="124"/>
       <source>NoName</source>
       <translation>Brak nazwy</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="101"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="126"/>
+      <source>Change icon</source>
+      <translation type="unfinished">Change icon</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="129"/>
       <source>Description/Note</source>
       <translation type="unfinished">Description/Note</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="104"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="132"/>
       <source>Set Font Size</source>
       <translation type="unfinished">Set Font Size</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="106"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="134"/>
       <source>Color</source>
       <translation>Kolor</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="108"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="136"/>
       <source>Select background color</source>
       <translation type="unfinished">Select background color</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="111"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="139"/>
       <source>Select font color</source>
       <translation type="unfinished">Select font color</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="243"/>
+      <source>Select an Icon</source>
+      <translation type="unfinished">Select an Icon</translation>
     </message>
   </context>
   <context>
@@ -990,7 +1000,7 @@ This is likely because of corrupted data from a plugin. Try to revert recent cha
       <translation type="unfinished">Fade In/Out</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="36"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="51"/>
       <source>Appearance</source>
       <translation type="unfinished">Appearance</translation>
     </message>
