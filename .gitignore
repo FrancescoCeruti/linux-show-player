@@ -8,8 +8,10 @@ __pycache__/
 # Distribution / packaging
 build/
 eggs/
+.venv/
 *.egg-info/
 *.egg
+poetry.toml
 
 # Eclipse project
 /.project
