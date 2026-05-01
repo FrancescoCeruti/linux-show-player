@@ -263,44 +263,54 @@ L'errore è probabilmente causato dai dati danneggiati di un plugin. Prova ad an
   <context>
     <name>CueAppearanceSettings</name>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="85"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="110"/>
       <source>The appearance depends on the layout</source>
       <translation>L'aspetto dipende dal layout</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="97"/>
-      <source>Cue name</source>
-      <translation>Nome della cue</translation>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="122"/>
+      <source>Cue Name and Icon</source>
+      <translation type="unfinished">Cue Name and Icon</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="99"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="124"/>
       <source>NoName</source>
       <translation>NoName</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="101"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="126"/>
+      <source>Change icon</source>
+      <translation type="unfinished">Change icon</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="129"/>
       <source>Description/Note</source>
       <translation>Descrizione/Note</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="104"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="132"/>
       <source>Set Font Size</source>
       <translation>Dimensione carattere</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="106"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="134"/>
       <source>Color</source>
       <translation>Colore</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="108"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="136"/>
       <source>Select background color</source>
       <translation>Selezione colore di sfondo</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="111"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="139"/>
       <source>Select font color</source>
       <translation>Seleziona colore del carattere</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="243"/>
+      <source>Select an Icon</source>
+      <translation type="unfinished">Select an Icon</translation>
     </message>
   </context>
   <context>
@@ -990,7 +1000,7 @@ L'errore è probabilmente causato dai dati danneggiati di un plugin. Prova ad an
       <translation>Dissolvenza Ingresso/Uscita</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="36"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="51"/>
       <source>Appearance</source>
       <translation>Aspetto</translation>
     </message>
