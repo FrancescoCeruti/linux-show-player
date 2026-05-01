@@ -17,14 +17,15 @@
 
 import json
 import logging
-from os.path import exists, dirname, abspath, realpath
+import shutil
+from os.path import exists, dirname, abspath, basename, splitext, realpath
 
-from PyQt5.QtWidgets import QDialog, qApp
+from PyQt5.QtWidgets import QDialog, qApp, QMessageBox
 
-from lisp import layout, __version__ as lisp_version
+from lisp import layout, __version__ as lisp_version, APP_DIR
 from lisp.command.stack import CommandsStack
 from lisp.core.configuration import Configuration, DummyConfiguration
-from lisp.core.session import Session
+from lisp.core.session import Session, SessionMigrator
 from lisp.core.signal import Signal
 from lisp.core.singleton import Singleton
 from lisp.core.util import filter_live_properties
@@ -225,20 +226,26 @@ class Application(metaclass=Singleton):
             self.commands_stack.set_saved()
             self.window.updateWindowTitle()
 
-    def __load_from_file(self, session_file):
+    def __load_from_file(self, session_path):
         """Load a saved session from file"""
         try:
-            with open(session_file, mode="r", encoding="utf-8") as file:
+            with open(session_path, mode="r", encoding="utf-8") as file:
                 session_dict = json.load(file)
 
-            # New session
+            # Migrate the session data
+            migrator = SessionMigrator(
+                lisp_version, APP_DIR, tuple(get_plugins())
+            )
+            migrated = migrator.migrate(session_path, session_dict)
+
+            # Create a new session (deleting the current, if any)
             self.__new_session(
                 layout.get_layout(session_dict["session"]["layout_type"])
             )
             self.session.update_properties(session_dict["session"])
-            self.session.session_file = realpath(abspath(session_file))
+            self.session.session_file = realpath(abspath(session_path))
 
-            # Load cues
+            # Load the cues
             for cues_dict in session_dict.get("cues", {}):
                 cue_type = cues_dict.pop("_type_", "Undefined")
                 cue_id = cues_dict.pop("id")
@@ -255,14 +262,39 @@ class Application(metaclass=Singleton):
                         ).format(name)
                     )
 
-            self.commands_stack.set_saved()
+            if migrated:
+                session_base_name, ext = splitext(session_path)
+                backup_path = f"{session_base_name}.old{ext}"
 
+                # If the backup exists, find a new name
+                backup_path_num = 1
+                while exists(backup_path):
+                    backup_path = (
+                        f"{session_base_name}.old{backup_path_num}{ext}"
+                    )
+
+                # Move the old session file to the new path
+                shutil.move(session_path, backup_path)
+
+                # Save the migrated session in place of the old one
+                self.__save_to_file(session_path)
+
+                QMessageBox.warning(
+                    self.window,
+                    translate("ApplicationWarning", "Session Upgraded"),
+                    translate(
+                        "ApplicationWarning",
+                        "The opened session has been upgraded to a newer version. A backup named '{}' has been created at same location.",
+                    ).format(basename(backup_path)),
+                )
+
+            # Inform plugins that a new session has been loaded
             self.session_loaded.emit(self.session)
         except Exception:
             logger.exception(
                 translate(
                     "ApplicationError",
-                    'Error while reading the session file "{}"',
-                ).format(session_file)
+                    'Error while loading the session file "{}"',
+                ).format(session_path)
             )
             self.__new_session_dialog()

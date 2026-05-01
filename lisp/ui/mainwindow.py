@@ -325,7 +325,7 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         self.centralWidget().layout().removeWidget(
             self._app.session.layout.view
         )
-        # Remove ownership, this allow the widget to be deleted
+        # Remove ownership, this allows the widget to be deleted
         self._app.session.layout.view.setParent(None)
 
     def __sessionCreated(self):
