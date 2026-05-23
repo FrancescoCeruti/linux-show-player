@@ -103,6 +103,7 @@ class CueSearchDialog(QDialog):
         self._app = app
         self._cue_volume_restorers = {}
         self._observed_cues = []
+        self._last_query = None
 
         self.setModal(True)
         self.setMinimumWidth(720)
@@ -233,27 +234,32 @@ class CueSearchDialog(QDialog):
         return super().eventFilter(watched, event)
 
     def _update_results(self, text):
+        query = text.casefold().strip()
+
         current_item = self.resultsView.currentItem()
         current_cue_id = None
-        if current_item is not None:
+        if current_item is not None and query == self._last_query:
             current_cue = current_item.data(0, Qt.UserRole)
             if current_cue is not None:
                 current_cue_id = current_cue.id
 
+        self._last_query = query
+
         self._disconnect_observed_cues()
         self.resultsView.clear()
 
-        query = text.casefold().strip()
         matches = []
         for cue in self._app.session.layout.cues():
-            name = (cue.name or "")
-            description = (cue.description or "")
+            name = self._normalize_display_text(cue.name or "")
+            description = self._normalize_display_text(
+                cue.description or ""
+            )
 
             if not query:
                 if self._cue_state_color(cue) is None:
                     continue
 
-                matches.append((0, cue, None, None))
+                matches.append((0, cue, name, description, None, None))
                 continue
 
             name_match = self._match_text(name, query)
@@ -268,18 +274,27 @@ class CueSearchDialog(QDialog):
             if description_match is not None:
                 score += description_match["score"]
 
-            matches.append((score, cue, name_match, description_match))
+            matches.append(
+                (score, cue, name, description, name_match, description_match)
+            )
 
         matches.sort(key=lambda item: (-item[0], item[1].index))
 
         selected_item = None
-        for _, cue, name_match, description_match in matches:
+        for (
+            _,
+            cue,
+            name,
+            description,
+            name_match,
+            description_match,
+        ) in matches:
             self._observe_cue(cue)
             item = QTreeWidgetItem(
                 (
                     str(cue.index + 1),
-                    cue.name or "",
-                    cue.description or "",
+                    name,
+                    description,
                 )
             )
             item.setIcon(1, IconTheme.get(cue.icon))
@@ -293,14 +308,14 @@ class CueSearchDialog(QDialog):
                 1,
                 SEARCH_HIGHLIGHT_ROLE,
                 self._format_highlighted_text(
-                    cue.name or "", name_match, state_color
+                    name, name_match, state_color
                 ),
             )
             item.setData(
                 2,
                 SEARCH_HIGHLIGHT_ROLE,
                 self._format_highlighted_text(
-                    cue.description or "", description_match, state_color
+                    description, description_match, state_color
                 ),
             )
             self.resultsView.addTopLevelItem(item)
@@ -551,6 +566,11 @@ class CueSearchDialog(QDialog):
             return match.group(1).strip()
 
         return fallback
+
+    @staticmethod
+    def _normalize_display_text(text):
+        text = re.sub(r"<br\s*/?>", " ", text, flags=re.IGNORECASE)
+        return re.sub(r"\s+", " ", text).strip()
 
     def _match_text(self, text, query):
         if not text:
