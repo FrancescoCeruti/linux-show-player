@@ -37,6 +37,8 @@ from PyQt5.QtWidgets import (
 )
 
 from lisp.ui.icons import IconTheme
+from lisp.backend.audio_utils import MAX_VOLUME, db_to_linear
+from lisp.cues.cue import CueState
 from lisp.ui.ui_utils import translate
 
 
@@ -46,6 +48,8 @@ SEARCH_ACTION_PLAY = "play"
 SEARCH_ACTION_PLAY_STAY = "play_stay"
 SEARCH_ACTION_PLAY_FOCUS = "play_focus"
 SEARCH_HIGHLIGHT_ROLE = Qt.UserRole + 1
+SEARCH_GAIN_BOOST = db_to_linear(6, min_db_zero=False)
+SEARCH_GAIN_CUT = db_to_linear(-12, min_db_zero=False)
 
 
 class CueSearchHighlightDelegate(QStyledItemDelegate):
@@ -95,6 +99,7 @@ class CueSearchDialog(QDialog):
     def __init__(self, app, parent=None):
         super().__init__(parent=parent)
         self._app = app
+        self._cue_volume_restorers = {}
 
         self.setModal(True)
         self.setMinimumWidth(720)
@@ -297,7 +302,7 @@ class CueSearchDialog(QDialog):
             self.accept()
             return
 
-        cue.execute()
+        self._execute_cue(cue)
 
         if action_mode == SEARCH_ACTION_PLAY:
             self.accept()
@@ -366,6 +371,80 @@ class CueSearchDialog(QDialog):
         self.raise_()
         self.activateWindow()
         self.searchEdit.setFocus()
+
+    def _execute_cue(self, cue):
+        multiplier = 1
+        if not cue.state & CueState.IsRunning:
+            multiplier = self._activation_volume_multiplier()
+
+        if multiplier != 1:
+            self._prepare_temporary_volume_override(cue, multiplier)
+
+        cue.execute()
+
+    def _activation_volume_multiplier(self):
+        modifiers = QApplication.keyboardModifiers()
+        if modifiers & Qt.ControlModifier and not (
+            modifiers & Qt.ShiftModifier
+        ):
+            return SEARCH_GAIN_BOOST
+
+        if modifiers & Qt.ShiftModifier and not (
+            modifiers & Qt.ControlModifier
+        ):
+            return SEARCH_GAIN_CUT
+
+        return 1
+
+    def _prepare_temporary_volume_override(self, cue, multiplier):
+        volume = self._cue_volume_element(cue)
+        if volume is None:
+            return
+
+        current_volume = getattr(volume, "volume", None)
+        if current_volume is None:
+            return
+
+        target_volume = max(0, min(MAX_VOLUME, current_volume * multiplier))
+        if target_volume == current_volume:
+            return
+
+        self._restore_cue_volume(cue)
+
+        volume.volume = target_volume
+        volume.live_volume = target_volume
+
+        def restore(*_):
+            self._restore_cue_volume(cue)
+
+        self._cue_volume_restorers[cue.id] = (restore, current_volume)
+        cue.stopped.connect(restore)
+        cue.interrupted.connect(restore)
+        cue.end.connect(restore)
+        cue.error.connect(restore)
+
+    def _restore_cue_volume(self, cue):
+        restore_data = self._cue_volume_restorers.pop(cue.id, None)
+        if restore_data is None:
+            return
+
+        restore, original_volume = restore_data
+        cue.stopped.disconnect(restore)
+        cue.interrupted.disconnect(restore)
+        cue.end.disconnect(restore)
+        cue.error.disconnect(restore)
+
+        volume = self._cue_volume_element(cue)
+        if volume is not None:
+            volume.volume = original_volume
+
+    @staticmethod
+    def _cue_volume_element(cue):
+        media = getattr(cue, "media", None)
+        if media is None:
+            return None
+
+        return media.element("Volume")
 
     def _match_text(self, text, query):
         if not text:
