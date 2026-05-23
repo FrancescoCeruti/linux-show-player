@@ -117,10 +117,6 @@ class CueSearchDialog(QDialog):
         self.actionLabel = QLabel(self)
         self.actionLayout.addWidget(self.actionLabel)
 
-        self.actionCombo = QComboBox(self)
-        self.actionCombo.currentIndexChanged.connect(self._save_action_mode)
-        self.actionLayout.addWidget(self.actionCombo, 1)
-        self.layout().addLayout(self.actionLayout)
 
         self.resultsInfo = QLabel(self)
         self.layout().addWidget(self.resultsInfo)
@@ -138,9 +134,18 @@ class CueSearchDialog(QDialog):
         self.resultsView.setItemDelegateForColumn(
             2, CueSearchHighlightDelegate(self.resultsView)
         )
+        self.resultsView.itemClicked.connect(self._activate_item)
         self.resultsView.itemActivated.connect(self._activate_item)
-        self.resultsView.itemDoubleClicked.connect(self._activate_item)
         self.layout().addWidget(self.resultsView)
+
+        self.actionCombo = QComboBox(self)
+        self.actionCombo.currentIndexChanged.connect(self._save_action_mode)
+        self.actionLayout.addWidget(self.actionCombo, 1)
+        self.layout().addLayout(self.actionLayout)
+
+        self.modifiersInfo = QLabel(self)
+        self.modifiersInfo.setWordWrap(True)
+        self.layout().addWidget(self.modifiersInfo)
 
         self.buttonBox = QDialogButtonBox(QDialogButtonBox.Close, parent=self)
         self.buttonBox.rejected.connect(self.reject)
@@ -156,6 +161,12 @@ class CueSearchDialog(QDialog):
             )
         )
         self.actionLabel.setText(translate("CueSearch", "When activating:"))
+        self.modifiersInfo.setText(
+            translate(
+                "CueSearch",
+                "Hold Ctrl to play louder or Shift to play quieter. "
+            )
+        )
 
         current_action = self._current_action_mode()
         self.actionCombo.blockSignals(True)
