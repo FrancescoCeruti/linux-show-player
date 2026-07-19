@@ -54,6 +54,7 @@ sphinx-inline-tabs = "^2023.4.21"
 toml = "*"
 pygobject-stubs = "^2.11.0"
 ruff = "*"
+pyqt5-stubs = "^5.15.6.0"
 
 [tool.poetry.scripts]
 linux-show-player = "lisp.main:main"
