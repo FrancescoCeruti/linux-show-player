@@ -13,12 +13,10 @@ eggs/
 *.egg
 poetry.toml
 
-# Eclipse project
-/.project
-/.pydevproject
-
-# Pycharm IDE
-.idea/*
+# Editors / tools
+.idea/
+.vscode/
+.ruff_cache
 
 # QT project files, generated only for pylupdate (qt i18n)
 *.pro
