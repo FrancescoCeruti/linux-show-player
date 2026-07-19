@@ -33,34 +33,45 @@ class PresetSrc(GstSrcElement):
     SILENCE = lambda t: 0
     PRESETS = {
         "The 42 melody": lambda t: t * (42 & t >> 10),
-        "Mission": lambda t: (~t >> 2)
-        * ((127 & t * (7 & t >> 10)) < (245 & t * (2 + (5 & t >> 14)))),
-        "80's": lambda t: (t << 3)
-        * [8 / 9, 1, 9 / 8, 6 / 5, 4 / 3, 3 / 2, 0][
-            [0xD2D2C8, 0xCE4088, 0xCA32C8, 0x8E4009][t >> 14 & 3]
-            >> (
-                0x3DBE4688 >> (18 if (t >> 10 & 15) > 9 else t >> 10 & 15) * 3
+        "Mission": lambda t: (
+            (~t >> 2)
+            * ((127 & t * (7 & t >> 10)) < (245 & t * (2 + (5 & t >> 14))))
+        ),
+        "80's": lambda t: (
+            (t << 3)
+            * [8 / 9, 1, 9 / 8, 6 / 5, 4 / 3, 3 / 2, 0][
+                [0xD2D2C8, 0xCE4088, 0xCA32C8, 0x8E4009][t >> 14 & 3]
+                >> (
+                    0x3DBE4688
+                    >> (18 if (t >> 10 & 15) > 9 else t >> 10 & 15) * 3
+                    & 7
+                )
+                * 3
                 & 7
-            )
-            * 3
-            & 7
-        ],
-        "Game 1": lambda t: (t * (0xCA98 >> (t >> 9 & 14) & 15) | t >> 8),
-        "Game 2": lambda t: t * 5 & (t >> 7)
-        | t * 3 & (t * 4 >> 10) - int(math.cos(t >> 3)) * 10
-        | t >> 5 & int(math.sin(t >> 4))
-        | t >> 4,
+            ]
+        ),
+        "Game 1": lambda t: t * (0xCA98 >> (t >> 9 & 14) & 15) | t >> 8,
+        "Game 2": lambda t: (
+            t * 5 & (t >> 7)
+            | t * 3 & (t * 4 >> 10) - int(math.cos(t >> 3)) * 10
+            | t >> 5 & int(math.sin(t >> 4))
+            | t >> 4
+        ),
         "Club": lambda t: (
-            ((t * (t ^ t % 255) | (t >> 4)) >> 1)
-            if (t & 4096)
-            else (t >> 3) | (t << 2 if (t & 8192) else t)
-        )
-        + t * (((t >> 9) ^ ((t >> 9) - 1) ^ 1) % 13),
+            (
+                ((t * (t ^ t % 255) | (t >> 4)) >> 1)
+                if (t & 4096)
+                else (t >> 3) | (t << 2 if (t & 8192) else t)
+            )
+            + t * (((t >> 9) ^ ((t >> 9) - 1) ^ 1) % 13)
+        ),
         "Laser 1": lambda t: t * (t >> 5 | t >> 15) & 80 & t * 4 >> 9,
-        "Laser 2": lambda t: (t * (t >> 5 | t >> 23) & 43 & t >> 9)
-        ^ (t & t >> 20 | t >> 9),
-        "Generator": lambda t: (t * (t >> 22 | t >> 3) & 43 & t >> 8)
-        ^ (t & t >> 12 | t >> 4),
+        "Laser 2": lambda t: (
+            (t * (t >> 5 | t >> 23) & 43 & t >> 9) ^ (t & t >> 20 | t >> 9)
+        ),
+        "Generator": lambda t: (
+            (t * (t >> 22 | t >> 3) & 43 & t >> 8) ^ (t & t >> 12 | t >> 4)
+        )
     }
 
     preset = Property(default="The 42 melody")
