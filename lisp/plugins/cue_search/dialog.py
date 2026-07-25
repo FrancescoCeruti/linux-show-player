@@ -26,7 +26,6 @@ from PyQt5.QtWidgets import (
     QComboBox,
     QDialog,
     QDialogButtonBox,
-    QGridLayout,
     QHBoxLayout,
     QLabel,
     QLineEdit,
@@ -98,9 +97,10 @@ class CueSearchDialog(QDialog):
     ACTION_PLAY_STAY = "play_stay"
     ACTION_PLAY_FOCUS = "play_focus"
 
-    def __init__(self, app, parent=None):
+    def __init__(self, app, config, parent=None):
         super().__init__(parent=parent)
         self._app = app
+        self._config = config
         self._cue_volume_restorers = {}
         self._observed_cues = []
         self._last_query = None
@@ -369,14 +369,14 @@ class CueSearchDialog(QDialog):
             self._activate_item(item)
 
     def _read_action_mode(self):
-        return self._app.conf.get("cueSearch.action", self.ACTION_FOCUS)
+        return self._config.get("cueSearch.action", self.ACTION_FOCUS)
 
     def _save_action_mode(self):
         action_mode = self.actionCombo.currentData()
 
         if action_mode is not None:
-            self._app.conf.set("cueSearch.action", action_mode)
-            self._app.conf.write()
+            self._config.set("cueSearch.action", action_mode)
+            self._config.write()
 
     def _refresh_results(self, *_):
         self._update_results(self.searchEdit.text())

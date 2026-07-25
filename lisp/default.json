@@ -1,5 +1,5 @@
 {
-    "_version_": "0.6dev.18",
+    "_version_": "0.6dev.17",
     "cue": {
         "fadeAction": 3,
         "fadeActionType": "Linear",
@@ -17,9 +17,6 @@
     "session": {
         "minSave": false,
         "lastPath": ""
-    },
-    "cueSearch": {
-        "action": "focus"
     },
     "logging": {
         "limit": 10000,

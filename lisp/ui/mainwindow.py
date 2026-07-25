@@ -42,7 +42,6 @@ from lisp.command.layout import LayoutAutoInsertCuesCommand
 from lisp.core.singleton import QSingleton
 from lisp.cues.media_cue import MediaCue
 from lisp.ui.about import About
-from lisp.ui.cue_search import CueSearchDialog
 from lisp.ui.logging.dialog import LogDialogs
 from lisp.ui.logging.handler import LogModelHandler
 from lisp.ui.logging.models import create_log_model
@@ -140,8 +139,6 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         self.actionRedo.triggered.connect(self._app.commands_stack.redo_last)
         self.multiEdit = QAction(self)
         self.multiEdit.triggered.connect(self.__editSelectedCues)
-        self.findCueAction = QAction(self)
-        self.findCueAction.triggered.connect(self.__searchCues)
         self.selectAll = QAction(self)
         self.selectAll.triggered.connect(self.__layoutSelectAll)
         self.selectAllMedia = QAction(self)
@@ -154,8 +151,6 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         self.cueSeparator = self.menuEdit.addSeparator()
         self.menuEdit.addAction(self.actionUndo)
         self.menuEdit.addAction(self.actionRedo)
-        self.menuEdit.addSeparator()
-        self.menuEdit.addAction(self.findCueAction)
         self.menuEdit.addSeparator()
         self.menuEdit.addAction(self.selectAll)
         self.menuEdit.addAction(self.selectAllMedia)
@@ -214,8 +209,6 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         self.actionUndo.setShortcut(QKeySequence.Undo)
         self.actionRedo.setText(translate("MainWindow", "Redo"))
         self.actionRedo.setShortcut(QKeySequence.Redo)
-        self.findCueAction.setText(translate("MainWindow", "Find cues"))
-        self.findCueAction.setShortcut(QKeySequence.Find)
         self.selectAll.setText(translate("MainWindow", "Select all"))
         self.selectAllMedia.setText(
             translate("MainWindow", "Select all media cues")
@@ -363,9 +356,6 @@ class MainWindow(QMainWindow, metaclass=QSingleton):
         self._app.session.layout.edit_cues(
             list(self._app.session.layout.selected_cues())
         )
-
-    def __searchCues(self):
-        CueSearchDialog(self._app, parent=self).exec()
 
     def __layoutSelectAll(self):
         self._app.session.layout.select_all()
