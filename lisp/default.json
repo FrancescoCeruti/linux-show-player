@@ -18,6 +18,11 @@
         "minSave": false,
         "lastPath": ""
     },
+    "search": {
+        "cueSearch": {
+            "action": "focus"
+        }
+    },
     "logging": {
         "limit": 10000,
         "backgrounds": {

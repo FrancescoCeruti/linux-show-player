@@ -18,8 +18,10 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (
     QAbstractItemView,
+    QComboBox,
     QDialog,
     QDialogButtonBox,
+    QHBoxLayout,
     QLabel,
     QLineEdit,
     QTreeWidget,
@@ -28,6 +30,13 @@ from PyQt5.QtWidgets import (
 )
 
 from lisp.ui.ui_utils import translate
+
+
+SEARCH_ACTION_KEY = "search.cueSearch.action"
+SEARCH_ACTION_FOCUS = "focus"
+SEARCH_ACTION_PLAY = "play"
+SEARCH_ACTION_PLAY_STAY = "play_stay"
+SEARCH_ACTION_PLAY_FOCUS = "play_focus"
 
 
 class CueSearchDialog(QDialog):
@@ -45,8 +54,16 @@ class CueSearchDialog(QDialog):
         self.searchEdit.setClearButtonEnabled(True)
         self.searchEdit.installEventFilter(self)
         self.searchEdit.textChanged.connect(self._update_results)
-        self.searchEdit.returnPressed.connect(self._activate_current_result)
         self.layout().addWidget(self.searchEdit)
+
+        self.actionLayout = QHBoxLayout()
+        self.actionLabel = QLabel(self)
+        self.actionLayout.addWidget(self.actionLabel)
+
+        self.actionCombo = QComboBox(self)
+        self.actionCombo.currentIndexChanged.connect(self._save_action_mode)
+        self.actionLayout.addWidget(self.actionCombo, 1)
+        self.layout().addLayout(self.actionLayout)
 
         self.resultsInfo = QLabel(self)
         self.layout().addWidget(self.resultsInfo)
@@ -57,6 +74,7 @@ class CueSearchDialog(QDialog):
         self.resultsView.setAlternatingRowColors(True)
         self.resultsView.setSelectionMode(QAbstractItemView.SingleSelection)
         self.resultsView.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.resultsView.installEventFilter(self)
         self.resultsView.itemActivated.connect(self._activate_item)
         self.resultsView.itemDoubleClicked.connect(self._activate_item)
         self.layout().addWidget(self.resultsView)
@@ -74,6 +92,33 @@ class CueSearchDialog(QDialog):
                 "CueSearch", "Type to search in cue title or description"
             )
         )
+        self.actionLabel.setText(translate("CueSearch", "When activating:"))
+
+        current_action = self._current_action_mode()
+        self.actionCombo.blockSignals(True)
+        self.actionCombo.clear()
+        self.actionCombo.addItem(
+            translate("CueSearch", "Focus cue"), SEARCH_ACTION_FOCUS
+        )
+        self.actionCombo.addItem(
+            translate("CueSearch", "Play cue and close"),
+            SEARCH_ACTION_PLAY,
+        )
+        self.actionCombo.addItem(
+            translate("CueSearch", "Play cue and keep panel open"),
+            SEARCH_ACTION_PLAY_STAY,
+        )
+        self.actionCombo.addItem(
+            translate("CueSearch", "Play and focus cue"),
+            SEARCH_ACTION_PLAY_FOCUS,
+        )
+
+        index = self.actionCombo.findData(current_action)
+        if index < 0:
+            index = 0
+        self.actionCombo.setCurrentIndex(index)
+        self.actionCombo.blockSignals(False)
+
         self.resultsView.setHeaderLabels(
             (
                 translate("CueSearch", "#"),
@@ -90,12 +135,23 @@ class CueSearchDialog(QDialog):
         self._update_results(self.searchEdit.text())
 
     def eventFilter(self, watched, event):
-        if watched is self.searchEdit and event.type() == event.KeyPress:
-            if event.key() == Qt.Key_Down:
-                self._move_current_result(1)
-                return True
-            if event.key() == Qt.Key_Up:
-                self._move_current_result(-1)
+        if event.type() == event.KeyPress:
+            if watched is self.searchEdit:
+                if event.key() == Qt.Key_Down:
+                    self._move_current_result(1)
+                    return True
+                if event.key() == Qt.Key_Up:
+                    self._move_current_result(-1)
+                    return True
+                if event.key() in (Qt.Key_Return, Qt.Key_Enter):
+                    self._activate_current_result()
+                    return True
+
+            if watched is self.resultsView and event.key() in (
+                Qt.Key_Return,
+                Qt.Key_Enter,
+            ):
+                self._activate_current_result()
                 return True
 
         return super().eventFilter(watched, event)
@@ -150,8 +206,23 @@ class CueSearchDialog(QDialog):
         if cue is None:
             return
 
-        self._app.session.layout.reveal_cue(cue)
-        self.accept()
+        action_mode = self._current_action_mode()
+
+        if action_mode == SEARCH_ACTION_FOCUS:
+            self._app.session.layout.reveal_cue(cue)
+            self.accept()
+            return
+
+        cue.execute()
+
+        if action_mode == SEARCH_ACTION_PLAY:
+            self.accept()
+            return
+
+        if action_mode == SEARCH_ACTION_PLAY_FOCUS:
+            self._app.session.layout.reveal_cue(cue)
+
+        self._refocus_dialog()
 
     def _activate_current_result(self):
         item = self.resultsView.currentItem()
@@ -176,3 +247,38 @@ class CueSearchDialog(QDialog):
         item = self.resultsView.topLevelItem(index)
         self.resultsView.setCurrentItem(item)
         self.resultsView.scrollToItem(item)
+
+    def _current_action_mode(self):
+        if SEARCH_ACTION_KEY in self._app.conf:
+            action_mode = self._app.conf[SEARCH_ACTION_KEY]
+        else:
+            action_mode = SEARCH_ACTION_FOCUS
+
+        if action_mode not in (
+            SEARCH_ACTION_FOCUS,
+            SEARCH_ACTION_PLAY,
+            SEARCH_ACTION_PLAY_STAY,
+            SEARCH_ACTION_PLAY_FOCUS,
+        ):
+            return SEARCH_ACTION_FOCUS
+
+        return action_mode
+
+    def _save_action_mode(self):
+        action_mode = self.actionCombo.currentData()
+        if action_mode is None:
+            return
+
+        if SEARCH_ACTION_KEY in self._app.conf:
+            self._app.conf.set(SEARCH_ACTION_KEY, action_mode)
+        else:
+            self._app.conf.update(
+                {"search": {"cueSearch": {"action": action_mode}}}
+            )
+        self._app.conf.write()
+
+    def _refocus_dialog(self):
+        self.show()
+        self.raise_()
+        self.activateWindow()
+        self.searchEdit.setFocus()
