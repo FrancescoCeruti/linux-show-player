@@ -43,7 +43,6 @@ from lisp.core.signal import Connection
 from lisp.cues.cue import CueState
 from lisp.ui.ui_utils import translate
 
-
 SEARCH_ACTION_KEY = "search.cueSearch.action"
 SEARCH_ACTION_FOCUS = "focus"
 SEARCH_ACTION_PLAY = "play"
@@ -159,15 +158,12 @@ class CueSearchDialog(QDialog):
 
     def retranslateUi(self):
         self.searchEdit.setPlaceholderText(
-            translate(
-                "CueSearch", "Type to search in cue title or description"
-            )
+            translate("CueSearch", "Type to search in cue title or description")
         )
         self.actionLabel.setText(translate("CueSearch", "When activating:"))
         self.modifiersInfo.setText(
             translate(
-                "CueSearch",
-                "Hold Ctrl to play louder or Shift to play quieter. "
+                "CueSearch", "Hold Ctrl to play louder or Shift to play quieter. "
             )
         )
 
@@ -251,9 +247,7 @@ class CueSearchDialog(QDialog):
         matches = []
         for cue in self._app.session.layout.cues():
             name = self._normalize_display_text(cue.name or "")
-            description = self._normalize_display_text(
-                cue.description or ""
-            )
+            description = self._normalize_display_text(cue.description or "")
 
             if not query:
                 if self._cue_state_color(cue) is None:
@@ -301,15 +295,13 @@ class CueSearchDialog(QDialog):
             item.setData(0, Qt.UserRole, cue)
             state_color = self._cue_state_color(cue)
             if state_color:
-                item.setForeground(0, QApplication.palette().brush(
-                    QApplication.palette().Text
-                ))
+                item.setForeground(
+                    0, QApplication.palette().brush(QApplication.palette().Text)
+                )
             item.setData(
                 1,
                 SEARCH_HIGHLIGHT_ROLE,
-                self._format_highlighted_text(
-                    name, name_match, state_color
-                ),
+                self._format_highlighted_text(name, name_match, state_color),
             )
             item.setData(
                 2,
@@ -329,9 +321,9 @@ class CueSearchDialog(QDialog):
 
             self.resultsView.setCurrentItem(selected_item)
             if query:
-                info_text = translate(
-                    "CueSearch", "{count} cue(s) found."
-                ).format(count=len(matches))
+                info_text = translate("CueSearch", "{count} cue(s) found.").format(
+                    count=len(matches)
+                )
             else:
                 info_text = translate(
                     "CueSearch",
@@ -342,9 +334,7 @@ class CueSearchDialog(QDialog):
         else:
             if query:
                 self.resultsInfo.setText(
-                    translate(
-                        "CueSearch", "No cue matches the current search."
-                    )
+                    translate("CueSearch", "No cue matches the current search.")
                 )
             else:
                 self.resultsInfo.setText(
@@ -428,9 +418,7 @@ class CueSearchDialog(QDialog):
         if SEARCH_ACTION_KEY in self._app.conf:
             self._app.conf.set(SEARCH_ACTION_KEY, action_mode)
         else:
-            self._app.conf.update(
-                {"search": {"cueSearch": {"action": action_mode}}}
-            )
+            self._app.conf.update({"search": {"cueSearch": {"action": action_mode}}})
         self._app.conf.write()
 
     def _refocus_dialog(self):
@@ -454,14 +442,10 @@ class CueSearchDialog(QDialog):
 
     def _activation_volume_multiplier(self):
         modifiers = QApplication.keyboardModifiers()
-        if modifiers & Qt.ControlModifier and not (
-            modifiers & Qt.ShiftModifier
-        ):
+        if modifiers & Qt.ControlModifier and not (modifiers & Qt.ShiftModifier):
             return SEARCH_GAIN_BOOST
 
-        if modifiers & Qt.ShiftModifier and not (
-            modifiers & Qt.ControlModifier
-        ):
+        if modifiers & Qt.ShiftModifier and not (modifiers & Qt.ControlModifier):
             return SEARCH_GAIN_CUT
 
         return 1
@@ -559,7 +543,7 @@ class CueSearchDialog(QDialog):
         stylesheet = QApplication.instance().styleSheet()
         pattern = (
             r'#ListTimeWidget\[state="{}"\]::chunk:horizontal\s*{{'
-            r'[^}}]*background-color:\s*([^;]+);'
+            r"[^}}]*background-color:\s*([^;]+);"
         ).format(re.escape(state))
         match = re.search(pattern, stylesheet, re.MULTILINE | re.DOTALL)
         if match is not None:
@@ -581,9 +565,7 @@ class CueSearchDialog(QDialog):
 
         exact_index = folded_text.find(folded_query)
         if exact_index >= 0:
-            indices = tuple(
-                range(exact_index, exact_index + len(folded_query))
-            )
+            indices = tuple(range(exact_index, exact_index + len(folded_query)))
             return {
                 "indices": indices,
                 "score": 10000 + len(folded_query) * 100 - exact_index,
