@@ -29,6 +29,7 @@ from PyQt5.QtWidgets import (
     QVBoxLayout,
 )
 
+from lisp.ui.icons import IconTheme
 from lisp.ui.ui_utils import translate
 
 
@@ -183,6 +184,7 @@ class CueSearchDialog(QDialog):
                     cue.description or "",
                 )
             )
+            item.setIcon(1, IconTheme.get(cue.icon))
             item.setData(0, Qt.UserRole, cue)
             self.resultsView.addTopLevelItem(item)
 
