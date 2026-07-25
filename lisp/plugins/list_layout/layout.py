@@ -247,14 +247,12 @@ class ListLayout(CueLayout):
             )
 
     def reveal_cue(self, cue):
-        if cue is None:
-            return
-
         self._view.listView.setStandbyIndex(cue.index)
+
         if self.selection_mode:
-            self.deselect_all()
             item = self._view.listView.topLevelItem(cue.index)
             if item is not None:
+                self.deselect_all()
                 item.setSelected(True)
 
         self._view.listView.setFocus()
