@@ -15,8 +15,12 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+from html import escape
+
 from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QAbstractTextDocumentLayout, QTextDocument
 from PyQt5.QtWidgets import (
+    QApplication,
     QAbstractItemView,
     QComboBox,
     QDialog,
@@ -24,6 +28,9 @@ from PyQt5.QtWidgets import (
     QHBoxLayout,
     QLabel,
     QLineEdit,
+    QStyle,
+    QStyleOptionViewItem,
+    QStyledItemDelegate,
     QTreeWidget,
     QTreeWidgetItem,
     QVBoxLayout,
@@ -38,6 +45,50 @@ SEARCH_ACTION_FOCUS = "focus"
 SEARCH_ACTION_PLAY = "play"
 SEARCH_ACTION_PLAY_STAY = "play_stay"
 SEARCH_ACTION_PLAY_FOCUS = "play_focus"
+SEARCH_HIGHLIGHT_ROLE = Qt.UserRole + 1
+
+
+class CueSearchHighlightDelegate(QStyledItemDelegate):
+    def paint(self, painter, option, index):
+        html = index.data(SEARCH_HIGHLIGHT_ROLE)
+        if not html:
+            super().paint(painter, option, index)
+            return
+
+        options = QStyleOptionViewItem(option)
+        self.initStyleOption(options, index)
+
+        style = (
+            options.widget.style()
+            if options.widget is not None
+            else QApplication.style()
+        )
+
+        document = QTextDocument()
+        document.setHtml(html)
+
+        options.text = ""
+
+        painter.save()
+        style.drawControl(QStyle.CE_ItemViewItem, options, painter)
+
+        text_rect = style.subElementRect(
+            QStyle.SE_ItemViewItemText, options, options.widget
+        )
+
+        if options.state & QStyle.State_Selected:
+            palette = options.palette
+            color = palette.color(palette.Active, palette.HighlightedText)
+            document.setDefaultStyleSheet(
+                f"b {{ color: {color.name()}; font-weight: 700; }} "
+                f"span {{ color: {color.name()}; }}"
+            )
+
+        context = QAbstractTextDocumentLayout.PaintContext()
+        painter.translate(text_rect.topLeft())
+        painter.setClipRect(text_rect.translated(-text_rect.topLeft()))
+        document.documentLayout().draw(painter, context)
+        painter.restore()
 
 
 class CueSearchDialog(QDialog):
@@ -76,6 +127,12 @@ class CueSearchDialog(QDialog):
         self.resultsView.setSelectionMode(QAbstractItemView.SingleSelection)
         self.resultsView.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.resultsView.installEventFilter(self)
+        self.resultsView.setItemDelegateForColumn(
+            1, CueSearchHighlightDelegate(self.resultsView)
+        )
+        self.resultsView.setItemDelegateForColumn(
+            2, CueSearchHighlightDelegate(self.resultsView)
+        )
         self.resultsView.itemActivated.connect(self._activate_item)
         self.resultsView.itemDoubleClicked.connect(self._activate_item)
         self.layout().addWidget(self.resultsView)
@@ -173,10 +230,23 @@ class CueSearchDialog(QDialog):
         for cue in self._app.session.layout.cues():
             name = (cue.name or "")
             description = (cue.description or "")
-            if query in name.casefold() or query in description.casefold():
-                matches.append(cue)
+            name_match = self._match_text(name, query)
+            description_match = self._match_text(description, query)
 
-        for cue in matches:
+            if name_match is None and description_match is None:
+                continue
+
+            score = 0
+            if name_match is not None:
+                score += name_match["score"] + 1000
+            if description_match is not None:
+                score += description_match["score"]
+
+            matches.append((score, cue, name_match, description_match))
+
+        matches.sort(key=lambda item: (-item[0], item[1].index))
+
+        for _, cue, name_match, description_match in matches:
             item = QTreeWidgetItem(
                 (
                     str(cue.index + 1),
@@ -186,6 +256,18 @@ class CueSearchDialog(QDialog):
             )
             item.setIcon(1, IconTheme.get(cue.icon))
             item.setData(0, Qt.UserRole, cue)
+            item.setData(
+                1,
+                SEARCH_HIGHLIGHT_ROLE,
+                self._format_highlighted_text(cue.name or "", name_match),
+            )
+            item.setData(
+                2,
+                SEARCH_HIGHLIGHT_ROLE,
+                self._format_highlighted_text(
+                    cue.description or "", description_match
+                ),
+            )
             self.resultsView.addTopLevelItem(item)
 
         if matches:
@@ -284,3 +366,84 @@ class CueSearchDialog(QDialog):
         self.raise_()
         self.activateWindow()
         self.searchEdit.setFocus()
+
+    def _match_text(self, text, query):
+        if not text:
+            return None
+
+        folded_text = text.casefold()
+        folded_query = query.casefold()
+
+        exact_index = folded_text.find(folded_query)
+        if exact_index >= 0:
+            indices = tuple(
+                range(exact_index, exact_index + len(folded_query))
+            )
+            return {
+                "indices": indices,
+                "score": 10000 + len(folded_query) * 100 - exact_index,
+            }
+
+        indices = []
+        start = 0
+        for character in folded_query:
+            index = folded_text.find(character, start)
+            if index < 0:
+                return None
+
+            indices.append(index)
+            start = index + 1
+
+        score = len(indices) * 20
+        span = indices[-1] - indices[0]
+        score += max(0, 60 - span)
+
+        previous = None
+        for index in indices:
+            if index == 0 or not folded_text[index - 1].isalnum():
+                score += 15
+
+            if previous is not None:
+                if index == previous + 1:
+                    score += 25
+                else:
+                    score -= min(index - previous - 1, 10)
+
+            previous = index
+
+        return {"indices": tuple(indices), "score": score}
+
+    def _format_highlighted_text(self, text, match):
+        if not text:
+            return ""
+
+        if match is None:
+            return f"<span>{escape(text)}</span>"
+
+        highlighted = []
+        indices = set(match["indices"])
+        current = []
+        bold = False
+
+        for index, character in enumerate(text):
+            is_match = index in indices
+            if is_match != bold:
+                if current:
+                    chunk = escape("".join(current))
+                    if bold:
+                        highlighted.append(f"<b>{chunk}</b>")
+                    else:
+                        highlighted.append(chunk)
+                current = [character]
+                bold = is_match
+            else:
+                current.append(character)
+
+        if current:
+            chunk = escape("".join(current))
+            if bold:
+                highlighted.append(f"<b>{chunk}</b>")
+            else:
+                highlighted.append(chunk)
+
+        return f"<span>{''.join(highlighted)}</span>"
