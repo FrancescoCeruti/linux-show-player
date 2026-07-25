@@ -26,6 +26,7 @@ from PyQt5.QtWidgets import (
     QComboBox,
     QDialog,
     QDialogButtonBox,
+    QGridLayout,
     QHBoxLayout,
     QLabel,
     QLineEdit,
@@ -43,11 +44,6 @@ from lisp.core.signal import Connection
 from lisp.cues.cue import CueState
 from lisp.ui.ui_utils import translate
 
-SEARCH_ACTION_KEY = "search.cueSearch.action"
-SEARCH_ACTION_FOCUS = "focus"
-SEARCH_ACTION_PLAY = "play"
-SEARCH_ACTION_PLAY_STAY = "play_stay"
-SEARCH_ACTION_PLAY_FOCUS = "play_focus"
 SEARCH_HIGHLIGHT_ROLE = Qt.UserRole + 1
 SEARCH_GAIN_BOOST = db_to_linear(8, min_db_zero=False)
 SEARCH_GAIN_CUT = db_to_linear(-12, min_db_zero=False)
@@ -97,6 +93,11 @@ class CueSearchHighlightDelegate(QStyledItemDelegate):
 
 
 class CueSearchDialog(QDialog):
+    ACTION_FOCUS = "focus"
+    ACTION_PLAY = "play"
+    ACTION_PLAY_STAY = "play_stay"
+    ACTION_PLAY_FOCUS = "play_focus"
+
     def __init__(self, app, parent=None):
         super().__init__(parent=parent)
         self._app = app
@@ -115,10 +116,6 @@ class CueSearchDialog(QDialog):
         self.searchEdit.installEventFilter(self)
         self.searchEdit.textChanged.connect(self._update_results)
         self.layout().addWidget(self.searchEdit)
-
-        self.actionLayout = QHBoxLayout()
-        self.actionLabel = QLabel(self)
-        self.actionLayout.addWidget(self.actionLabel)
 
         self.resultsInfo = QLabel(self)
         self.layout().addWidget(self.resultsInfo)
@@ -140,56 +137,51 @@ class CueSearchDialog(QDialog):
         self.resultsView.itemActivated.connect(self._activate_item)
         self.layout().addWidget(self.resultsView)
 
+        self.actionLayout = QHBoxLayout()
+        self.actionLabel = QLabel(self)
+        self.actionLayout.addWidget(self.actionLabel)
+
         self.actionCombo = QComboBox(self)
         self.actionCombo.currentIndexChanged.connect(self._save_action_mode)
         self.actionLayout.addWidget(self.actionCombo, 1)
         self.layout().addLayout(self.actionLayout)
 
-        self.modifiersInfo = QLabel(self)
-        self.modifiersInfo.setWordWrap(True)
-        self.layout().addWidget(self.modifiersInfo)
+        self.helpLabel = QLabel(self)
+        self.helpLabel.setWordWrap(True)
+        self.layout().addWidget(self.helpLabel)
 
         self.buttonBox = QDialogButtonBox(QDialogButtonBox.Close, parent=self)
         self.buttonBox.rejected.connect(self.reject)
         self.layout().addWidget(self.buttonBox)
 
         self.retranslateUi()
-        self._update_results("")
 
     def retranslateUi(self):
         self.searchEdit.setPlaceholderText(
             translate("CueSearch", "Type to search in cue title or description")
         )
         self.actionLabel.setText(translate("CueSearch", "When activating:"))
-        self.modifiersInfo.setText(
-            translate(
-                "CueSearch", "Hold Ctrl to play louder or Shift to play quieter. "
-            )
-        )
 
-        current_action = self._current_action_mode()
+        self.actionLabel.setText(translate("CueSearch", "Action:"))
         self.actionCombo.blockSignals(True)
         self.actionCombo.clear()
         self.actionCombo.addItem(
-            translate("CueSearch", "Focus cue"), SEARCH_ACTION_FOCUS
+            translate("CueSearch", "Focus cue"), self.ACTION_FOCUS
         )
         self.actionCombo.addItem(
-            translate("CueSearch", "Play cue and close"),
-            SEARCH_ACTION_PLAY,
+            translate("CueSearch", "Trigger cue"), self.ACTION_PLAY
         )
         self.actionCombo.addItem(
-            translate("CueSearch", "Play cue and keep panel open"),
-            SEARCH_ACTION_PLAY_STAY,
+            translate("CueSearch", "Trigger and focus cue"),
+            self.ACTION_PLAY_FOCUS,
         )
         self.actionCombo.addItem(
-            translate("CueSearch", "Play and focus cue"),
-            SEARCH_ACTION_PLAY_FOCUS,
+            translate("CueSearch", "Trigger cue and keep panel open"),
+            self.ACTION_PLAY_STAY,
         )
-
-        index = self.actionCombo.findData(current_action)
-        if index < 0:
-            index = 0
-        self.actionCombo.setCurrentIndex(index)
+        self.actionCombo.setCurrentIndex(
+            max(0, self.actionCombo.findData(self._read_action_mode()))
+        )
         self.actionCombo.blockSignals(False)
 
         self.resultsView.setHeaderLabels(
@@ -201,6 +193,13 @@ class CueSearchDialog(QDialog):
         )
         self.resultsView.header().setStretchLastSection(True)
 
+        self.helpLabel.setText(
+            translate(
+                "CueSearch",
+                "Hold Ctrl to play louder or Shift to play quieter. ",
+            )
+        )
+
     def showEvent(self, event):
         super().showEvent(event)
         self.searchEdit.setFocus()
@@ -210,11 +209,8 @@ class CueSearchDialog(QDialog):
     def eventFilter(self, watched, event):
         if event.type() == event.KeyPress:
             if watched is self.searchEdit:
-                if event.key() == Qt.Key_Down:
-                    self._move_current_result(1)
-                    return True
-                if event.key() == Qt.Key_Up:
-                    self._move_current_result(-1)
+                if event.key() in (Qt.Key_Down, Qt.Key_Up):
+                    self.resultsView.keyPressEvent(event)
                     return True
                 if event.key() in (Qt.Key_Return, Qt.Key_Enter):
                     self._activate_current_result()
@@ -321,9 +317,9 @@ class CueSearchDialog(QDialog):
 
             self.resultsView.setCurrentItem(selected_item)
             if query:
-                info_text = translate("CueSearch", "{count} cue(s) found.").format(
-                    count=len(matches)
-                )
+                info_text = translate(
+                    "CueSearch", "{count} cue(s) found."
+                ).format(count=len(matches))
             else:
                 info_text = translate(
                     "CueSearch",
@@ -352,80 +348,35 @@ class CueSearchDialog(QDialog):
         if cue is None:
             return
 
-        action_mode = self._current_action_mode()
-
-        if action_mode == SEARCH_ACTION_FOCUS:
-            self._app.session.layout.reveal_cue(cue)
-            self.accept()
-            return
-
-        self._execute_cue(cue)
-
-        if action_mode == SEARCH_ACTION_PLAY:
-            self.accept()
-            return
-
-        if action_mode == SEARCH_ACTION_PLAY_FOCUS:
-            self._app.session.layout.reveal_cue(cue)
-
-        self._refocus_dialog()
+        match self.actionCombo.currentData():
+            case self.ACTION_FOCUS:
+                self._app.session.layout.reveal_cue(cue)
+                self.accept()
+            case self.ACTION_PLAY:
+                cue.execute()
+                self.accept()
+            case self.ACTION_PLAY_FOCUS:
+                cue.execute()
+                self._app.session.layout.reveal_cue(cue)
+                self.accept()
+            case self.ACTION_PLAY_STAY:
+                cue.execute()
+                self.searchEdit.setFocus()
 
     def _activate_current_result(self):
         item = self.resultsView.currentItem()
-        if item is None and self.resultsView.topLevelItemCount() > 0:
-            item = self.resultsView.topLevelItem(0)
-
         if item is not None:
             self._activate_item(item)
 
-    def _move_current_result(self, step):
-        count = self.resultsView.topLevelItemCount()
-        if count <= 0:
-            return
-
-        item = self.resultsView.currentItem()
-        if item is None:
-            index = 0 if step > 0 else count - 1
-        else:
-            index = self.resultsView.indexOfTopLevelItem(item) + step
-            index = max(0, min(index, count - 1))
-
-        item = self.resultsView.topLevelItem(index)
-        self.resultsView.setCurrentItem(item)
-        self.resultsView.scrollToItem(item)
-
-    def _current_action_mode(self):
-        if SEARCH_ACTION_KEY in self._app.conf:
-            action_mode = self._app.conf[SEARCH_ACTION_KEY]
-        else:
-            action_mode = SEARCH_ACTION_FOCUS
-
-        if action_mode not in (
-            SEARCH_ACTION_FOCUS,
-            SEARCH_ACTION_PLAY,
-            SEARCH_ACTION_PLAY_STAY,
-            SEARCH_ACTION_PLAY_FOCUS,
-        ):
-            return SEARCH_ACTION_FOCUS
-
-        return action_mode
+    def _read_action_mode(self):
+        return self._app.conf.get("cueSearch.action", self.ACTION_FOCUS)
 
     def _save_action_mode(self):
         action_mode = self.actionCombo.currentData()
-        if action_mode is None:
-            return
 
-        if SEARCH_ACTION_KEY in self._app.conf:
-            self._app.conf.set(SEARCH_ACTION_KEY, action_mode)
-        else:
-            self._app.conf.update({"search": {"cueSearch": {"action": action_mode}}})
-        self._app.conf.write()
-
-    def _refocus_dialog(self):
-        self.show()
-        self.raise_()
-        self.activateWindow()
-        self.searchEdit.setFocus()
+        if action_mode is not None:
+            self._app.conf.set("cueSearch.action", action_mode)
+            self._app.conf.write()
 
     def _refresh_results(self, *_):
         self._update_results(self.searchEdit.text())
@@ -442,10 +393,14 @@ class CueSearchDialog(QDialog):
 
     def _activation_volume_multiplier(self):
         modifiers = QApplication.keyboardModifiers()
-        if modifiers & Qt.ControlModifier and not (modifiers & Qt.ShiftModifier):
+        if modifiers & Qt.ControlModifier and not (
+            modifiers & Qt.ShiftModifier
+        ):
             return SEARCH_GAIN_BOOST
 
-        if modifiers & Qt.ShiftModifier and not (modifiers & Qt.ControlModifier):
+        if modifiers & Qt.ShiftModifier and not (
+            modifiers & Qt.ControlModifier
+        ):
             return SEARCH_GAIN_CUT
 
         return 1
