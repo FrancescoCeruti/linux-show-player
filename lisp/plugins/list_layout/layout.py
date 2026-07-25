@@ -246,6 +246,19 @@ class ListLayout(CueLayout):
                 self._view.listView.indexOfTopLevelItem(item)
             )
 
+    def reveal_cue(self, cue):
+        if cue is None:
+            return
+
+        self._view.listView.setStandbyIndex(cue.index)
+        if self.selection_mode:
+            self.deselect_all()
+            item = self._view.listView.topLevelItem(cue.index)
+            if item is not None:
+                item.setSelected(True)
+
+        self._view.listView.setFocus()
+
     def finalize(self):
         # Clean layout menu
         self.app.window.menuLayout.clear()

@@ -230,6 +230,9 @@ class CueLayout(HasProperties):
 
             adjust_widget_position(menu)
 
+    def reveal_cue(self, cue):
+        """Bring the given cue into view, when supported by the layout."""
+
     def finalize(self):
         """Destroy all the layout elements"""
 
