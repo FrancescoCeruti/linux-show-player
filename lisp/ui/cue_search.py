@@ -16,6 +16,7 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from html import escape
+import re
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QAbstractTextDocumentLayout, QTextDocument
@@ -38,6 +39,7 @@ from PyQt5.QtWidgets import (
 
 from lisp.ui.icons import IconTheme
 from lisp.backend.audio_utils import MAX_VOLUME, db_to_linear
+from lisp.core.signal import Connection
 from lisp.cues.cue import CueState
 from lisp.ui.ui_utils import translate
 
@@ -48,7 +50,7 @@ SEARCH_ACTION_PLAY = "play"
 SEARCH_ACTION_PLAY_STAY = "play_stay"
 SEARCH_ACTION_PLAY_FOCUS = "play_focus"
 SEARCH_HIGHLIGHT_ROLE = Qt.UserRole + 1
-SEARCH_GAIN_BOOST = db_to_linear(6, min_db_zero=False)
+SEARCH_GAIN_BOOST = db_to_linear(8, min_db_zero=False)
 SEARCH_GAIN_CUT = db_to_linear(-12, min_db_zero=False)
 
 
@@ -100,6 +102,7 @@ class CueSearchDialog(QDialog):
         super().__init__(parent=parent)
         self._app = app
         self._cue_volume_restorers = {}
+        self._observed_cues = []
 
         self.setModal(True)
         self.setMinimumWidth(720)
@@ -116,7 +119,6 @@ class CueSearchDialog(QDialog):
         self.actionLayout = QHBoxLayout()
         self.actionLabel = QLabel(self)
         self.actionLayout.addWidget(self.actionLabel)
-
 
         self.resultsInfo = QLabel(self)
         self.layout().addWidget(self.resultsInfo)
@@ -231,21 +233,29 @@ class CueSearchDialog(QDialog):
         return super().eventFilter(watched, event)
 
     def _update_results(self, text):
+        current_item = self.resultsView.currentItem()
+        current_cue_id = None
+        if current_item is not None:
+            current_cue = current_item.data(0, Qt.UserRole)
+            if current_cue is not None:
+                current_cue_id = current_cue.id
+
+        self._disconnect_observed_cues()
         self.resultsView.clear()
 
         query = text.casefold().strip()
-        if not query:
-            self.resultsInfo.setText(
-                translate(
-                    "CueSearch", "Type in the field above to search cues."
-                )
-            )
-            return
-
         matches = []
         for cue in self._app.session.layout.cues():
             name = (cue.name or "")
             description = (cue.description or "")
+
+            if not query:
+                if self._cue_state_color(cue) is None:
+                    continue
+
+                matches.append((0, cue, None, None))
+                continue
+
             name_match = self._match_text(name, query)
             description_match = self._match_text(description, query)
 
@@ -262,7 +272,9 @@ class CueSearchDialog(QDialog):
 
         matches.sort(key=lambda item: (-item[0], item[1].index))
 
+        selected_item = None
         for _, cue, name_match, description_match in matches:
+            self._observe_cue(cue)
             item = QTreeWidgetItem(
                 (
                     str(cue.index + 1),
@@ -272,31 +284,60 @@ class CueSearchDialog(QDialog):
             )
             item.setIcon(1, IconTheme.get(cue.icon))
             item.setData(0, Qt.UserRole, cue)
+            state_color = self._cue_state_color(cue)
+            if state_color:
+                item.setForeground(0, QApplication.palette().brush(
+                    QApplication.palette().Text
+                ))
             item.setData(
                 1,
                 SEARCH_HIGHLIGHT_ROLE,
-                self._format_highlighted_text(cue.name or "", name_match),
+                self._format_highlighted_text(
+                    cue.name or "", name_match, state_color
+                ),
             )
             item.setData(
                 2,
                 SEARCH_HIGHLIGHT_ROLE,
                 self._format_highlighted_text(
-                    cue.description or "", description_match
+                    cue.description or "", description_match, state_color
                 ),
             )
             self.resultsView.addTopLevelItem(item)
 
+            if cue.id == current_cue_id:
+                selected_item = item
+
         if matches:
-            self.resultsView.setCurrentItem(self.resultsView.topLevelItem(0))
-            self.resultsInfo.setText(
-                translate("CueSearch", "{count} cue(s) found.").format(
-                    count=len(matches)
-                )
-            )
+            if selected_item is None:
+                selected_item = self.resultsView.topLevelItem(0)
+
+            self.resultsView.setCurrentItem(selected_item)
+            if query:
+                info_text = translate(
+                    "CueSearch", "{count} cue(s) found."
+                ).format(count=len(matches))
+            else:
+                info_text = translate(
+                    "CueSearch",
+                    "{count} playing or terminating cue(s).",
+                ).format(count=len(matches))
+
+            self.resultsInfo.setText(info_text)
         else:
-            self.resultsInfo.setText(
-                translate("CueSearch", "No cue matches the current search.")
-            )
+            if query:
+                self.resultsInfo.setText(
+                    translate(
+                        "CueSearch", "No cue matches the current search."
+                    )
+                )
+            else:
+                self.resultsInfo.setText(
+                    translate(
+                        "CueSearch",
+                        "Type in the field above to search cues.",
+                    )
+                )
 
         for column in range(self.resultsView.columnCount() - 1):
             self.resultsView.resizeColumnToContents(column)
@@ -383,6 +424,9 @@ class CueSearchDialog(QDialog):
         self.activateWindow()
         self.searchEdit.setFocus()
 
+    def _refresh_results(self, *_):
+        self._update_results(self.searchEdit.text())
+
     def _execute_cue(self, cue):
         multiplier = 1
         if not cue.state & CueState.IsRunning:
@@ -457,6 +501,57 @@ class CueSearchDialog(QDialog):
 
         return media.element("Volume")
 
+    def _observe_cue(self, cue):
+        self._observed_cues.append(cue)
+        cue.started.connect(self._refresh_results, Connection.QtQueued)
+        cue.stopped.connect(self._refresh_results, Connection.QtQueued)
+        cue.interrupted.connect(self._refresh_results, Connection.QtQueued)
+        cue.paused.connect(self._refresh_results, Connection.QtQueued)
+        cue.error.connect(self._refresh_results, Connection.QtQueued)
+        cue.end.connect(self._refresh_results, Connection.QtQueued)
+        cue.fadeout_start.connect(self._refresh_results, Connection.QtQueued)
+        cue.fadeout_end.connect(self._refresh_results, Connection.QtQueued)
+
+    def _disconnect_observed_cues(self):
+        for cue in self._observed_cues:
+            cue.started.disconnect(self._refresh_results)
+            cue.stopped.disconnect(self._refresh_results)
+            cue.interrupted.disconnect(self._refresh_results)
+            cue.paused.disconnect(self._refresh_results)
+            cue.error.disconnect(self._refresh_results)
+            cue.end.disconnect(self._refresh_results)
+            cue.fadeout_start.disconnect(self._refresh_results)
+            cue.fadeout_end.disconnect(self._refresh_results)
+
+        self._observed_cues.clear()
+
+    @staticmethod
+    def _cue_state_color(cue):
+        if cue.is_fading_out():
+            return CueSearchDialog._theme_state_color(
+                "error", QApplication.palette().brightText().color().name()
+            )
+
+        if cue.state & CueState.Running:
+            return CueSearchDialog._theme_state_color(
+                "running", QApplication.palette().link().color().name()
+            )
+
+        return None
+
+    @staticmethod
+    def _theme_state_color(state, fallback):
+        stylesheet = QApplication.instance().styleSheet()
+        pattern = (
+            r'#ListTimeWidget\[state="{}"\]::chunk:horizontal\s*{{'
+            r'[^}}]*background-color:\s*([^;]+);'
+        ).format(re.escape(state))
+        match = re.search(pattern, stylesheet, re.MULTILINE | re.DOTALL)
+        if match is not None:
+            return match.group(1).strip()
+
+        return fallback
+
     def _match_text(self, text, query):
         if not text:
             return None
@@ -503,12 +598,16 @@ class CueSearchDialog(QDialog):
 
         return {"indices": tuple(indices), "score": score}
 
-    def _format_highlighted_text(self, text, match):
+    def _format_highlighted_text(self, text, match, color=None):
         if not text:
             return ""
 
+        style = ""
+        if color:
+            style = f' style="color: {color};"'
+
         if match is None:
-            return f"<span>{escape(text)}</span>"
+            return f"<span{style}>{escape(text)}</span>"
 
         highlighted = []
         indices = set(match["indices"])
@@ -536,4 +635,4 @@ class CueSearchDialog(QDialog):
             else:
                 highlighted.append(chunk)
 
-        return f"<span>{''.join(highlighted)}</span>"
+        return f"<span{style}>{''.join(highlighted)}</span>"
