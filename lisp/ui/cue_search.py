@@ -43,6 +43,7 @@ class CueSearchDialog(QDialog):
 
         self.searchEdit = QLineEdit(self)
         self.searchEdit.setClearButtonEnabled(True)
+        self.searchEdit.installEventFilter(self)
         self.searchEdit.textChanged.connect(self._update_results)
         self.searchEdit.returnPressed.connect(self._activate_current_result)
         self.layout().addWidget(self.searchEdit)
@@ -87,6 +88,17 @@ class CueSearchDialog(QDialog):
         self.searchEdit.setFocus()
         self.searchEdit.selectAll()
         self._update_results(self.searchEdit.text())
+
+    def eventFilter(self, watched, event):
+        if watched is self.searchEdit and event.type() == event.KeyPress:
+            if event.key() == Qt.Key_Down:
+                self._move_current_result(1)
+                return True
+            if event.key() == Qt.Key_Up:
+                self._move_current_result(-1)
+                return True
+
+        return super().eventFilter(watched, event)
 
     def _update_results(self, text):
         self.resultsView.clear()
@@ -148,3 +160,19 @@ class CueSearchDialog(QDialog):
 
         if item is not None:
             self._activate_item(item)
+
+    def _move_current_result(self, step):
+        count = self.resultsView.topLevelItemCount()
+        if count <= 0:
+            return
+
+        item = self.resultsView.currentItem()
+        if item is None:
+            index = 0 if step > 0 else count - 1
+        else:
+            index = self.resultsView.indexOfTopLevelItem(item) + step
+            index = max(0, min(index, count - 1))
+
+        item = self.resultsView.topLevelItem(index)
+        self.resultsView.setCurrentItem(item)
+        self.resultsView.scrollToItem(item)
