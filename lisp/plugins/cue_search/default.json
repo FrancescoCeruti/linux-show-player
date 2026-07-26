@@ -1,5 +1,9 @@
 {
     "_version_": "0.1",
     "_enabled_": true,
-    "action": "focus"
+    "action": "focus",
+    "volume": {
+        "up": 2.5,
+        "down": 0.25
+    }
 }
