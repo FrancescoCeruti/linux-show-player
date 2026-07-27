@@ -15,48 +15,27 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from dataclasses import dataclass
-from difflib import Match, SequenceMatcher
-import re
-
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QTextDocumentFragment
+from PyQt5.QtGui import QKeyEvent
 from PyQt5.QtWidgets import (
     QApplication,
-    QAbstractItemView,
     QComboBox,
     QDialog,
     QDialogButtonBox,
     QHBoxLayout,
     QLabel,
     QLineEdit,
-    QTreeWidget,
     QTreeWidgetItem,
     QVBoxLayout,
 )
 
 from lisp.cues.media_cue import MediaCue
-from lisp.plugins.cue_search.delegates import CueSearchHighlightDelegate
+from lisp.plugins.cue_search.widgets import ResultList
+from lisp.plugins.cue_search.search import running_cues, search_cues
 from lisp.ui.icons import IconTheme
 from lisp.core.signal import Connection
 from lisp.cues.cue import Cue, CueState
 from lisp.ui.ui_utils import translate
-
-
-@dataclass
-class TextMatchResult:
-    matches: list[Match]
-    score: float
-
-
-@dataclass
-class CueMatchResult:
-    cue: Cue
-    score: int
-    name: str
-    description: str
-    formatted_name: str
-    formatted_description: str
 
 
 class CueSearchDialog(QDialog):
@@ -64,6 +43,8 @@ class CueSearchDialog(QDialog):
     ACTION_PLAY = "play"
     ACTION_PLAY_STAY = "play_stay"
     ACTION_PLAY_FOCUS = "play_focus"
+
+    TRIGGER_KEYS = (Qt.Key_Enter, Qt.Key_Return)
 
     def __init__(self, app, config, parent=None):
         super().__init__(parent=parent)
@@ -73,7 +54,6 @@ class CueSearchDialog(QDialog):
 
         self.setModal(True)
         self.setMinimumWidth(720)
-        self.setWindowTitle(translate("CueSearch", "Find cues"))
 
         self.setLayout(QVBoxLayout())
 
@@ -86,28 +66,10 @@ class CueSearchDialog(QDialog):
         self.resultsInfo = QLabel(self)
         self.layout().addWidget(self.resultsInfo)
 
-        self.resultsView = QTreeWidget(self)
-        self.resultsView.setRootIsDecorated(False)
-        self.resultsView.setUniformRowHeights(True)
-        self.resultsView.setAlternatingRowColors(True)
-        self.resultsView.setSelectionMode(QAbstractItemView.SingleSelection)
-        self.resultsView.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.resultsView = ResultList(self)
         self.resultsView.installEventFilter(self)
-        self.resultsView.setItemDelegateForColumn(
-            1, CueSearchHighlightDelegate(self.resultsView)
-        )
-        self.resultsView.setItemDelegateForColumn(
-            2, CueSearchHighlightDelegate(self.resultsView)
-        )
         self.resultsView.itemClicked.connect(self.triggerItem)
         self.resultsView.itemActivated.connect(self.triggerItem)
-        self.resultsView.setStyleSheet("""
-            QWidget::item:selected,
-            QWidget::item:selected:hover {
-                color: palette(text);
-                background-color: rgba(250, 220, 0, 100);
-            }
-        """)
         self.layout().addWidget(self.resultsView)
 
         self.actionLayout = QHBoxLayout()
@@ -115,6 +77,13 @@ class CueSearchDialog(QDialog):
         self.actionLayout.addWidget(self.actionLabel)
 
         self.actionCombo = QComboBox(self)
+        self.actionCombo.addItem("", self.ACTION_FOCUS)
+        self.actionCombo.addItem("", self.ACTION_PLAY)
+        self.actionCombo.addItem("", self.ACTION_PLAY_FOCUS)
+        self.actionCombo.addItem("", self.ACTION_PLAY_STAY)
+        self.actionCombo.setCurrentIndex(
+            max(0, self.actionCombo.findData(self.readActionMode()))
+        )
         self.actionCombo.currentIndexChanged.connect(self.saveActionMode)
         self.actionLayout.addWidget(self.actionCombo, 1)
         self.layout().addLayout(self.actionLayout)
@@ -130,52 +99,32 @@ class CueSearchDialog(QDialog):
         self.retranslateUi()
 
     def retranslateUi(self):
+        self.setWindowTitle(translate("CueSearch", "Find cues"))
+
         self.searchEdit.setPlaceholderText(
             translate("CueSearch", "Type to search in cue title or description")
         )
         self.actionLabel.setText(translate("CueSearch", "Action:"))
 
-        self.actionCombo.blockSignals(True)
-        self.actionCombo.clear()
-        self.actionCombo.addItem(
-            translate("CueSearch", "Focus cue"), self.ACTION_FOCUS
+        self.actionCombo.setItemText(0, translate("CueSearch", "Focus cue"))
+        self.actionCombo.setItemText(1, translate("CueSearch", "Trigger cue"))
+        self.actionCombo.setItemText(
+            2, translate("CueSearch", "Trigger and focus cue")
         )
-        self.actionCombo.addItem(
-            translate("CueSearch", "Trigger cue"), self.ACTION_PLAY
+        self.actionCombo.setItemText(
+            3, translate("CueSearch", "Trigger cue and keep panel open")
         )
-        self.actionCombo.addItem(
-            translate("CueSearch", "Trigger and focus cue"),
-            self.ACTION_PLAY_FOCUS,
-        )
-        self.actionCombo.addItem(
-            translate("CueSearch", "Trigger cue and keep panel open"),
-            self.ACTION_PLAY_STAY,
-        )
-        self.actionCombo.setCurrentIndex(
-            max(0, self.actionCombo.findData(self.readActionMode()))
-        )
-        self.actionCombo.blockSignals(False)
-
-        self.resultsView.setHeaderLabels(
-            (
-                translate("CueSearch", "#"),
-                translate("CueSearch", "Cue"),
-                translate("CueSearch", "Description"),
-            )
-        )
-        self.resultsView.header().setStretchLastSection(True)
 
         self.helpLabel.setText(
             translate(
                 "CueSearch",
-                "Hold Ctrl to play louder or Shift to play quieter. ",
+                "Press Enter or click to run the action. Hold Ctrl to play louder or Shift to play quieter.",
             )
         )
 
     def showEvent(self, event):
         super().showEvent(event)
         self.searchEdit.setFocus()
-        self.searchEdit.selectAll()
         self.updateResults(self.searchEdit.text())
 
     def eventFilter(self, watched, event):
@@ -184,78 +133,15 @@ class CueSearchDialog(QDialog):
                 if event.key() in (Qt.Key_Down, Qt.Key_Up):
                     self.resultsView.keyPressEvent(event)
                     return True
-                if event.key() in (Qt.Key_Return, Qt.Key_Enter):
+                if event.key() in self.TRIGGER_KEYS:
                     self.triggerCurrentItem()
                     return True
 
-            if watched is self.resultsView and event.key() in (
-                Qt.Key_Return,
-                Qt.Key_Enter,
-            ):
+            if watched is self.resultsView and event.key() in self.TRIGGER_KEYS:
                 self.triggerCurrentItem()
                 return True
 
         return super().eventFilter(watched, event)
-
-    def matchText(self, text: str, query: str) -> TextMatchResult:
-        matcher = SequenceMatcher(
-            a=query.casefold(), b=text.casefold(), autojunk=False
-        )
-
-        matches = matcher.get_matching_blocks()
-        # Keep only blocks that matched from the start of the query
-        matches = list(filter(lambda match: match.a == 0, matches))
-        # Check if we found an exact match
-        exactMatch = len(matches) > 0 and matches[0].size == len(query)
-
-        return TextMatchResult(matches, matcher.ratio() + int(exactMatch))
-
-    def searchCues(self, query: str) -> list[CueMatchResult]:
-        matches = []
-
-        for cue in self._app.session.layout.cues():
-            name = self.toPlainText(cue.name)
-            description = self.toPlainText(cue.description)
-
-            name_match = self.matchText(name, query)
-            description_match = self.matchText(description, query)
-
-            if not name_match.matches and not description_match.matches:
-                continue
-
-            match = CueMatchResult(cue, 0, name, description, "", "")
-
-            if name_match.matches:
-                match.score += name_match.score
-                match.formatted_name = self.highlightedMatchedText(
-                    name, name_match
-                )
-
-            if description_match.matches:
-                match.score += description_match.score / 2
-                match.formatted_description = self.highlightedMatchedText(
-                    description, description_match
-                )
-
-            matches.append(match)
-
-        matches.sort(key=lambda item: (-item.score, item.cue.index))
-
-        return matches
-
-    def runningCues(self):
-        matches = []
-
-        for cue in self._app.session.layout.cues():
-            if cue.state & CueState.IsRunning:
-                name = self.toPlainText(cue.name)
-                description = self.toPlainText(cue.description)
-
-                matches.append(
-                    CueMatchResult(cue, 0, name, description, "", "")
-                )
-
-        return matches
 
     def updateResults(self, text: str):
         query = text.strip()
@@ -264,9 +150,9 @@ class CueSearchDialog(QDialog):
         self.resultsView.clear()
 
         if not query:
-            matches = self.runningCues()
+            matches = running_cues(self._app)
         else:
-            matches = self.searchCues(query)
+            matches = search_cues(self._app, query)
 
         for match in matches:
             self.observeCue(match.cue)
@@ -290,15 +176,17 @@ class CueSearchDialog(QDialog):
             self.resultsView.setCurrentItem(self.resultsView.topLevelItem(0))
 
             if query:
-                info_text = translate(
-                    "CueSearch", "{count} cue(s) found."
-                ).format(count=len(matches))
+                self.resultsInfo.setText(
+                    translate("CueSearch", "{count} cue(s) found.").format(
+                        count=len(matches)
+                    )
+                )
             else:
-                info_text = translate(
-                    "CueSearch", "{count} running cue(s)."
-                ).format(count=len(matches))
-
-            self.resultsInfo.setText(info_text)
+                self.resultsInfo.setText(
+                    translate("CueSearch", "{count} running cue(s).").format(
+                        count=len(matches)
+                    )
+                )
         else:
             if query:
                 self.resultsInfo.setText(
@@ -327,14 +215,14 @@ class CueSearchDialog(QDialog):
 
         match self.actionCombo.currentData():
             case self.ACTION_FOCUS:
-                self._app.session.layout.reveal_cue(cue)
+                self._app.layout.reveal_cue(cue)
                 self.accept()
             case self.ACTION_PLAY:
                 self.executeCue(cue)
                 self.accept()
             case self.ACTION_PLAY_FOCUS:
                 self.executeCue(cue)
-                self._app.session.layout.reveal_cue(cue)
+                self._app.layout.reveal_cue(cue)
                 self.accept()
             case self.ACTION_PLAY_STAY:
                 self.executeCue(cue)
@@ -374,8 +262,7 @@ class CueSearchDialog(QDialog):
             if cue is item.data(0, Qt.UserRole):
                 if query:
                     item.setIcon(0, self.cueIcon(cue))
-                    pass
-                elif not (cue.state & CueState.IsRunning):
+                elif not cue.state & CueState.IsRunning:
                     self.resultsView.takeTopLevelItem(row)
                     self.stopObservingCue(cue)
 
@@ -394,17 +281,17 @@ class CueSearchDialog(QDialog):
     def observeCue(self, cue: Cue):
         self._observedCues.append(cue)
 
+        cue.interrupted.connect(self.updateCueState, Connection.QtQueued)
         cue.started.connect(self.updateCueState, Connection.QtQueued)
         cue.stopped.connect(self.updateCueState, Connection.QtQueued)
-        cue.interrupted.connect(self.updateCueState, Connection.QtQueued)
         cue.paused.connect(self.updateCueState, Connection.QtQueued)
         cue.error.connect(self.updateCueState, Connection.QtQueued)
         cue.end.connect(self.updateCueState, Connection.QtQueued)
 
     def stopObservingCue(self, cue: Cue):
+        cue.interrupted.disconnect(self.updateCueState)
         cue.started.disconnect(self.updateCueState)
         cue.stopped.disconnect(self.updateCueState)
-        cue.interrupted.disconnect(self.updateCueState)
         cue.paused.disconnect(self.updateCueState)
         cue.error.disconnect(self.updateCueState)
         cue.end.disconnect(self.updateCueState)
@@ -413,52 +300,21 @@ class CueSearchDialog(QDialog):
 
     def clearObservedCues(self):
         for cue in self._observedCues:
+            cue.interrupted.disconnect(self.updateCueState)
             cue.started.disconnect(self.updateCueState)
             cue.stopped.disconnect(self.updateCueState)
-            cue.interrupted.disconnect(self.updateCueState)
             cue.paused.disconnect(self.updateCueState)
             cue.error.disconnect(self.updateCueState)
             cue.end.disconnect(self.updateCueState)
 
         self._observedCues.clear()
 
-    def toPlainText(self, text: str):
-        text = QTextDocumentFragment.fromHtml(text).toPlainText()
-
-        return re.sub(r"\s+", " ", text).strip()
-
-    def highlightedMatchedText(self, text: str, match_result: TextMatchResult):
-        if not text:
-            return ""
-
-        if not match_result.matches:
-            return text
-
-        result = ""
-
-        for n, current in enumerate(match_result.matches):
-            if n == 0:
-                # Append text before first match
-                result += text[: current.b]
-            else:
-                # Append between previous and current match
-                previous = match_result.matches[n - 1]
-                result += text[previous.b + previous.size : current.b]
-
-            # Append matched text in "bold"
-            result += (
-                "<b>" + text[current.b : current.b + current.size] + "</b>"
-            )
-
-        # Append text after last match
-        return result + text[current.b + current.size :]
-
     def readActionMode(self):
         return self._config.get("action", self.ACTION_FOCUS)
 
     def saveActionMode(self):
-        action_mode = self.actionCombo.currentData()
+        action = self.actionCombo.currentData()
 
-        if action_mode is not None:
-            self._config.set("action", action_mode)
+        if action is not None:
+            self._config.set("action", action)
             self._config.write()
