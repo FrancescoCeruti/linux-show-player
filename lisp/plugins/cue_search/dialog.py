@@ -16,7 +16,6 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QKeyEvent
 from PyQt5.QtWidgets import (
     QApplication,
     QComboBox,
