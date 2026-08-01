@@ -16,7 +16,12 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtGui import QAbstractTextDocumentLayout, QColor, QTextDocument
-from PyQt5.QtWidgets import QStyle, QStyleOptionViewItem, QStyledItemDelegate, QTreeWidget
+from PyQt5.QtWidgets import (
+    QStyle,
+    QStyleOptionViewItem,
+    QStyledItemDelegate,
+    QTreeWidget,
+)
 from PyQt5.QtCore import Qt
 
 from lisp.ui.ui_utils import translate
@@ -44,16 +49,17 @@ class ResultList(QTreeWidget):
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.setHeaderLabels((
-            translate("CueSearch", "#"),
-            translate("CueSearch", "Cue"),
-            translate("CueSearch", "Description"),
-        ))
+        self.setHeaderLabels(
+            (
+                translate("CueSearch", "#"),
+                translate("CueSearch", "Cue"),
+                translate("CueSearch", "Description"),
+            )
+        )
         self.header().setStretchLastSection(True)
 
 
 class HtmlDelagate(QStyledItemDelegate):
-
     def sizeHint(self, option, index):
         size = super().sizeHint(option, index)
         size.setWidth(size.width() + 10)
@@ -74,7 +80,9 @@ class HtmlDelagate(QStyledItemDelegate):
         options.displayAlignment = Qt.AlignVCenter
         if options.state & QStyle.State_Selected:
             palette = options.palette
-            palette.setColor(palette.All, palette.Highlight, QColor(250, 220, 0, 100))
+            palette.setColor(
+                palette.All, palette.Highlight, QColor(250, 220, 0, 100)
+            )
 
         # We use QTextDocument to render the text
         document = QTextDocument()
@@ -95,8 +103,7 @@ class HtmlDelagate(QStyledItemDelegate):
         painter.translate(textRect.topLeft())
 
         document.documentLayout().draw(
-            painter,
-            QAbstractTextDocumentLayout.PaintContext()
+            painter, QAbstractTextDocumentLayout.PaintContext()
         )
 
         painter.restore()

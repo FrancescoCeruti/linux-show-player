@@ -23,4 +23,6 @@ class CueSearch(Plugin):
         self.app.window.menuTools.addAction(self.menuAction)
 
     def __open_dialog(self):
-        CueSearchDialog(self.app, CueSearch.Config, parent=self.app.window).show()
+        CueSearchDialog(
+            self.app, CueSearch.Config, parent=self.app.window
+        ).show()

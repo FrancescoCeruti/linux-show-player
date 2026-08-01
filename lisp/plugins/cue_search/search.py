@@ -73,9 +73,7 @@ def highlighted_matched_text(text: str, match_result: TextMatchResult):
             previous = match_result.matches[n - 1]
             result += text[previous.b + previous.size : current.b]
 
-        result += (
-            "<b>" + text[current.b : current.b + current.size] + "</b>"
-        )
+        result += "<b>" + text[current.b : current.b + current.size] + "</b>"
 
     return result + text[current.b + current.size :]
 
@@ -120,8 +118,6 @@ def running_cues(app) -> list[CueMatchResult]:
             name = flatten_text(cue.name)
             description = flatten_text(cue.description)
 
-            matches.append(
-                CueMatchResult(cue, 0, name, description, "", "")
-            )
+            matches.append(CueMatchResult(cue, 0, name, description, "", ""))
 
     return matches
