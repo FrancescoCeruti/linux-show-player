@@ -1,4 +1,4 @@
-<svg width="150" height="150" viewBox="0 0 17 17">
+<svg width="150" height="150" viewBox="0 0 17 17" fill="white" stroke="white" opacity="0.8">
 <path d="M2.5,0
          H14.5
          A2.5,2.5 0 0 1 17,2.5
@@ -12,6 +12,5 @@
          M3,5H14V3H3Z
          M3,9H14V7H3Z
          M3,13H14V11H3Z
-         "
-      fill="white" stroke="none" opacity="0.8"/>
+         " stroke="none"/>
 </svg>
