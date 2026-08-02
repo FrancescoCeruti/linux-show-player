@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP, QTimer
+from PyQt5.QtCore import QT_TRANSLATE_NOOP, Qt, QTimer
 from PyQt5.QtGui import QKeySequence
 from PyQt5.QtWidgets import QAction
 
@@ -26,9 +26,9 @@ from lisp.core.signal import Connection
 from lisp.cues.cue import Cue, CueAction, CueNextAction
 from lisp.layout.cue_layout import CueLayout
 from lisp.layout.cue_menu import (
-    SimpleMenuAction,
     MENU_PRIORITY_CUE,
     MenuActionsGroup,
+    SimpleMenuAction,
 )
 from lisp.plugins.list_layout.list_view import CueListView
 from lisp.plugins.list_layout.models import CueListModel, RunningCueModel
@@ -56,7 +56,7 @@ class ListLayout(CueLayout):
     auto_continue = ProxyProperty()
     dbmeters_visible = ProxyProperty()
     seek_sliders_visible = ProxyProperty()
-    index_column_visible = ProxyProperty()
+    hidden_columns = ProxyProperty()
     accurate_time = ProxyProperty()
     selection_mode = ProxyProperty()
     view_sizes = ProxyProperty()
@@ -110,11 +110,6 @@ class ListLayout(CueLayout):
         self.show_accurate_action.triggered.connect(self._set_accurate_time)
         layout_menu.addAction(self.show_accurate_action)
 
-        self.show_index_action = QAction(layout_menu)
-        self.show_index_action.setCheckable(True)
-        self.show_index_action.triggered.connect(self._set_index_visible)
-        layout_menu.addAction(self.show_index_action)
-
         self.auto_continue_action = QAction(layout_menu)
         self.auto_continue_action.setCheckable(True)
         self.auto_continue_action.triggered.connect(self._set_auto_continue)
@@ -150,7 +145,6 @@ class ListLayout(CueLayout):
         self._set_seeksliders_visible(ListLayout.Config["show.seekSliders"])
         self._set_accurate_time(ListLayout.Config["show.accurateTime"])
         self._set_dbmeters_visible(ListLayout.Config["show.dBMeters"])
-        self._set_index_visible(ListLayout.Config["show.indexColumn"])
         self._set_selection_mode(ListLayout.Config["selectionMode"])
         self._set_auto_continue(ListLayout.Config["autoContinue"])
         self._set_go_key_disabled_while_playing(
@@ -191,9 +185,6 @@ class ListLayout(CueLayout):
         self.show_seek_action.setText(translate("ListLayout", "Show seek-bars"))
         self.show_accurate_action.setText(
             translate("ListLayout", "Show accurate time")
-        )
-        self.show_index_action.setText(
-            translate("ListLayout", "Show index column")
         )
         self.auto_continue_action.setText(
             translate("ListLayout", "Auto-select next cue")
@@ -342,15 +333,22 @@ class ListLayout(CueLayout):
     def _get_dbmeters_visible(self):
         return self.show_dbmeter_action.isChecked()
 
-    @index_column_visible.get
-    def _get_index_column_visible(self):
-        return self.show_index_action.isChecked()
+    @hidden_columns.get
+    def _get_hidden_columns(self):
+        columns = []
+        for column in range(self._view.listView.columnCount()):
+            if self._view.listView.isColumnHidden(column):
+                columns.append(column)
 
-    @index_column_visible.set
-    def _set_index_visible(self, visible):
-        self.show_index_action.setChecked(visible)
-        self._view.listView.setColumnHidden(1, not visible)
-        self._view.listView.updateHeadersSizes()
+        return columns
+
+    @hidden_columns.set
+    def _set_hidden_columns(self, hidden_columns: list):
+        for column in range(self._view.listView.columnCount()):
+            if column in hidden_columns:
+                self._view.listView.hideColumn(column)
+            else:
+                self._view.listView.showColumn(column)
 
     @selection_mode.set
     def _set_selection_mode(self, enable):
