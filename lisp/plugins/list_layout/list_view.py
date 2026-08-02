@@ -17,6 +17,7 @@
 
 from dataclasses import dataclass
 from functools import partial
+from typing import Type
 
 from PyQt5.QtCore import (
     QT_TRANSLATE_NOOP,
@@ -52,12 +53,13 @@ from lisp.ui.ui_utils import css_to_dict, dict_to_css, translate
 
 @dataclass
 class ListColumn:
+    id: str
     baseName: str
-    widget: QWidget
+    widget: Type[QWidget]
     resize: QHeaderView.ResizeMode | None = None
     width: int | None = None
+    canHide: bool = True
     hideName: bool = False
-    alwaysVisible: bool = False
 
     def headerText(self):
         if self.hideName:
@@ -85,34 +87,45 @@ class CueListView(QTreeWidget):
 
     COLUMNS = [
         ListColumn(
+            "status",
             QT_TRANSLATE_NOOP("ListLayoutHeader", "Cue Status"),
             CueStatusIcons,
             resize=QHeaderView.Fixed,
             width=45,
             hideName=True,
-            alwaysVisible=True,
+            canHide=False,
         ),
-        ListColumn("#", IndexWidget, resize=QHeaderView.ResizeToContents),
         ListColumn(
+            "cue_index",
+            "#",
+            IndexWidget,
+            resize=QHeaderView.ResizeToContents,
+        ),
+        ListColumn(
+            "name",
             QT_TRANSLATE_NOOP("ListLayoutHeader", "Cue"),
             NameWidget,
             resize=QHeaderView.Stretch,
-            alwaysVisible=True,
+            canHide=False,
         ),
         ListColumn(
+            "pre_wait_time",
             QT_TRANSLATE_NOOP("ListLayoutHeader", "Pre wait"),
             PreWaitWidget,
         ),
         ListColumn(
+            "action_time",
             QT_TRANSLATE_NOOP("ListLayoutHeader", "Action"),
             CueTimeWidget,
-            alwaysVisible=True,
+            canHide=False,
         ),
         ListColumn(
+            "post_wait_time",
             QT_TRANSLATE_NOOP("ListLayoutHeader", "Post wait"),
             PostWaitWidget,
         ),
         ListColumn(
+            "next_action",
             QT_TRANSLATE_NOOP("ListLayoutHeader", "Next Action"),
             NextActionIcon,
             resize=QHeaderView.Fixed,
@@ -349,7 +362,7 @@ class CueListView(QTreeWidget):
 
     def __openHeaderMenu(self, position):
         for index, column in enumerate(CueListView.COLUMNS):
-            if not column.alwaysVisible:
+            if column.canHide:
                 toggleAction = self.columnMenu.addAction(column.name)
                 toggleAction.setCheckable(True)
                 toggleAction.setChecked(not self.isColumnHidden(index))

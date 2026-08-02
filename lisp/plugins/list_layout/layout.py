@@ -336,19 +336,19 @@ class ListLayout(CueLayout):
     @hidden_columns.get
     def _get_hidden_columns(self):
         columns = []
-        for column in range(self._view.listView.columnCount()):
-            if self._view.listView.isColumnHidden(column):
-                columns.append(column)
+        for i, column in enumerate(CueListView.COLUMNS):
+            if column.canHide and self._view.listView.isColumnHidden(i):
+                columns.append(column.id)
 
         return columns
 
     @hidden_columns.set
     def _set_hidden_columns(self, hidden_columns: list):
-        for column in range(self._view.listView.columnCount()):
-            if column in hidden_columns:
-                self._view.listView.hideColumn(column)
+        for i, column in enumerate(CueListView.COLUMNS):
+            if column.canHide and column.id in hidden_columns:
+                self._view.listView.hideColumn(i)
             else:
-                self._view.listView.showColumn(column)
+                self._view.listView.showColumn(i)
 
     @selection_mode.set
     def _set_selection_mode(self, enable):
