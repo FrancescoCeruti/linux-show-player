@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+from dataclasses import dataclass
 from functools import partial
 
 from PyQt5.QtCore import (
@@ -22,11 +23,16 @@ from PyQt5.QtCore import (
     QDataStream,
     QIODevice,
     Qt,
-    QTimer,
     pyqtSignal,
 )
 from PyQt5.QtGui import QBrush, QColor, QContextMenuEvent, QKeyEvent
-from PyQt5.QtWidgets import QHeaderView, QMenu, QTreeWidget, QTreeWidgetItem
+from PyQt5.QtWidgets import (
+    QHeaderView,
+    QMenu,
+    QTreeWidget,
+    QTreeWidgetItem,
+    QWidget,
+)
 
 from lisp.application import Application
 from lisp.backend import get_backend
@@ -44,22 +50,14 @@ from lisp.plugins.list_layout.list_widgets import (
 from lisp.ui.ui_utils import css_to_dict, dict_to_css, translate
 
 
+@dataclass
 class ListColumn:
-    def __init__(
-        self,
-        name,
-        widget,
-        resize=None,
-        width=None,
-        hideName=False,
-        alwaysVisibile=False,
-    ):
-        self.baseName = name
-        self.widget = widget
-        self.resize = resize
-        self.width = width
-        self.hideName = hideName
-        self.alwaysVisible = alwaysVisibile
+    baseName: str
+    widget: QWidget
+    resize: QHeaderView.ResizeMode | None = None
+    width: int | None = None
+    hideName: bool = False
+    alwaysVisible: bool = False
 
     def headerText(self):
         if self.hideName:
@@ -89,33 +87,35 @@ class CueListView(QTreeWidget):
         ListColumn(
             QT_TRANSLATE_NOOP("ListLayoutHeader", "Cue Status"),
             CueStatusIcons,
-            QHeaderView.Fixed,
+            resize=QHeaderView.Fixed,
             width=45,
-            alwaysVisibile=True,
             hideName=True,
+            alwaysVisible=True,
         ),
-        ListColumn("#", IndexWidget, QHeaderView.ResizeToContents),
+        ListColumn("#", IndexWidget, resize=QHeaderView.ResizeToContents),
         ListColumn(
             QT_TRANSLATE_NOOP("ListLayoutHeader", "Cue"),
             NameWidget,
-            QHeaderView.Stretch,
-            alwaysVisibile=True,
+            resize=QHeaderView.Stretch,
+            alwaysVisible=True,
         ),
         ListColumn(
-            QT_TRANSLATE_NOOP("ListLayoutHeader", "Pre wait"), PreWaitWidget
+            QT_TRANSLATE_NOOP("ListLayoutHeader", "Pre wait"),
+            PreWaitWidget,
         ),
         ListColumn(
             QT_TRANSLATE_NOOP("ListLayoutHeader", "Action"),
             CueTimeWidget,
-            alwaysVisibile=True,
+            alwaysVisible=True,
         ),
         ListColumn(
-            QT_TRANSLATE_NOOP("ListLayoutHeader", "Post wait"), PostWaitWidget
+            QT_TRANSLATE_NOOP("ListLayoutHeader", "Post wait"),
+            PostWaitWidget,
         ),
         ListColumn(
             QT_TRANSLATE_NOOP("ListLayoutHeader", "Next Action"),
             NextActionIcon,
-            QHeaderView.Fixed,
+            resize=QHeaderView.Fixed,
             width=18,
             hideName=True,
         ),
