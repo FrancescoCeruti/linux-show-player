@@ -57,6 +57,7 @@ class ListLayout(CueLayout):
     dbmeters_visible = ProxyProperty()
     seek_sliders_visible = ProxyProperty()
     hidden_columns = ProxyProperty()
+    columns_order = ProxyProperty()
     accurate_time = ProxyProperty()
     selection_mode = ProxyProperty()
     view_sizes = ProxyProperty()
@@ -341,6 +342,14 @@ class ListLayout(CueLayout):
                 columns.append(column.id)
 
         return columns
+
+    @columns_order.get
+    def _get_column_order(self):
+        return self._view.listView.columnOrder()
+
+    @columns_order.set
+    def _set_column_order(self, column_order):
+        self._view.listView.setColumnOrder(column_order)
 
     @hidden_columns.set
     def _set_hidden_columns(self, hidden_columns: list):

@@ -167,6 +167,7 @@ class CueListView(QTreeWidget):
                 self.setColumnWidth(i, column.width)
 
         self.header().setDragEnabled(True)
+        self.header().setSectionsMovable(True)
         self.header().setStretchLastSection(False)
         self.header().setContextMenuPolicy(Qt.CustomContextMenu)
         self.header().customContextMenuRequested.connect(self.__openHeaderMenu)
@@ -266,6 +267,31 @@ class CueListView(QTreeWidget):
     def setStandbyIndex(self, newIndex):
         if 0 <= newIndex < self.topLevelItemCount():
             self.setCurrentItem(self.topLevelItem(newIndex))
+
+    def columnOrder(self):
+        """Return the column ids in the current visual order."""
+        header = self.header()
+
+        return [
+            CueListView.COLUMNS[header.logicalIndex(visual)].id
+            for visual in range(self.columnCount())
+        ]
+
+    def setColumnOrder(self, order):
+        """Reorder the columns using a list of column ids."""
+        header = self.header()
+        idToLogical = {
+            column.id: i for i, column in enumerate(CueListView.COLUMNS)
+        }
+
+        for index, id in enumerate(order):
+            logical = idToLogical.get(id)
+            if logical is None:
+                continue
+
+            current = header.logicalIndex(index)
+            if current != logical:
+                header.moveSection(header.visualIndex(logical), index)
 
     def __currentItemChanged(self, current, previous):
         if previous is not None:
