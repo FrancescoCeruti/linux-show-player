@@ -71,7 +71,7 @@ class PresetSrc(GstSrcElement):
         ),
         "Generator": lambda t: (
             (t * (t >> 22 | t >> 3) & 43 & t >> 8) ^ (t & t >> 12 | t >> 4)
-        )
+        ),
     }
 
     preset = Property(default="The 42 melody")
