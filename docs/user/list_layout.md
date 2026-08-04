@@ -59,7 +59,8 @@ Cues can be selected/deselected with `Right-Click > Select`, `CTRL+Space` or
 
 All the cues are shown here in a list-like view, the following column are shown:
 
-* The first column show the current state of the cue<br>
+* The cue icon, color coded to indicate the current state<br>
+    ![stopped](_static/icons/led-off.svg){.align-middle} Stopped<br>
     ![running](_static/icons/led-running.svg){.align-middle} Running<br>
     ![paused](_static/icons/led-pause.svg){.align-middle} Paused<br>
     ![error](_static/icons/led-error.svg){.align-middle} Error<br>
@@ -71,6 +72,8 @@ All the cues are shown here in a list-like view, the following column are shown:
 * The last column show an icon for the "next-action" (what should be done after "post wait")<br>
     ![running](_static/icons/cue-select-next.svg){.align-middle} Select next<br>
     ![paused](_static/icons/cue-trigger-next.svg){.align-middle} Trigger next<br>
+
+Columns can be reorder via `Drag&Drop`, or toggled via `Right-Click` on the header, some columns cannot be hidden. You must save the show to persist this changes.
 
 ### Right Panel
 
