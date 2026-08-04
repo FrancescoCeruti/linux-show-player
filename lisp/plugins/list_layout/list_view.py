@@ -15,40 +15,57 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+from dataclasses import dataclass
+from functools import partial
+from typing import Type
+
 from PyQt5.QtCore import (
-    pyqtSignal,
-    Qt,
+    QT_TRANSLATE_NOOP,
     QDataStream,
     QIODevice,
-    QT_TRANSLATE_NOOP,
-    QTimer,
+    Qt,
+    pyqtSignal,
 )
-from PyQt5.QtGui import QKeyEvent, QContextMenuEvent, QBrush, QColor
-from PyQt5.QtWidgets import QTreeWidget, QHeaderView, QTreeWidgetItem
+from PyQt5.QtGui import QBrush, QColor, QContextMenuEvent, QKeyEvent
+from PyQt5.QtWidgets import (
+    QHeaderView,
+    QMenu,
+    QTreeWidget,
+    QTreeWidgetItem,
+    QWidget,
+)
 
 from lisp.application import Application
 from lisp.backend import get_backend
-from lisp.command.model import ModelMoveItemsCommand, ModelInsertItemsCommand
+from lisp.command.model import ModelInsertItemsCommand, ModelMoveItemsCommand
 from lisp.core.util import subdict
 from lisp.plugins.list_layout.list_widgets import (
     CueStatusIcons,
-    NameWidget,
-    PreWaitWidget,
     CueTimeWidget,
+    IndexWidget,
+    NameWidget,
     NextActionIcon,
     PostWaitWidget,
-    IndexWidget,
+    PreWaitWidget,
 )
-from lisp.ui.ui_utils import translate, css_to_dict, dict_to_css
+from lisp.ui.ui_utils import css_to_dict, dict_to_css, translate
 
 
+@dataclass
 class ListColumn:
-    def __init__(self, name, widget, resize=None, width=None, visible=True):
-        self.baseName = name
-        self.widget = widget
-        self.resize = resize
-        self.width = width
-        self.visible = visible
+    id: str
+    baseName: str
+    widget: Type[QWidget]
+    resize: QHeaderView.ResizeMode | None = None
+    width: int | None = None
+    canHide: bool = True
+    hideName: bool = False
+
+    def headerText(self):
+        if self.hideName:
+            return ""
+
+        return self.name
 
     @property
     def name(self):
@@ -68,26 +85,53 @@ class CueListView(QTreeWidget):
     keyPressed = pyqtSignal(QKeyEvent)
     contextMenuInvoked = pyqtSignal(QContextMenuEvent)
 
-    # TODO: add ability to show/hide
-    # TODO: implement columns (cue-type / target / etc..)
     COLUMNS = [
-        ListColumn("", CueStatusIcons, QHeaderView.Fixed, width=45),
-        ListColumn("#", IndexWidget, QHeaderView.ResizeToContents),
         ListColumn(
+            "status",
+            QT_TRANSLATE_NOOP("ListLayoutHeader", "Cue Status"),
+            CueStatusIcons,
+            resize=QHeaderView.Fixed,
+            width=45,
+            hideName=True,
+            canHide=False,
+        ),
+        ListColumn(
+            "cue_index",
+            "#",
+            IndexWidget,
+            resize=QHeaderView.ResizeToContents,
+        ),
+        ListColumn(
+            "name",
             QT_TRANSLATE_NOOP("ListLayoutHeader", "Cue"),
             NameWidget,
-            QHeaderView.Stretch,
+            resize=QHeaderView.Stretch,
+            canHide=False,
         ),
         ListColumn(
-            QT_TRANSLATE_NOOP("ListLayoutHeader", "Pre wait"), PreWaitWidget
+            "pre_wait_time",
+            QT_TRANSLATE_NOOP("ListLayoutHeader", "Pre wait"),
+            PreWaitWidget,
         ),
         ListColumn(
-            QT_TRANSLATE_NOOP("ListLayoutHeader", "Action"), CueTimeWidget
+            "action_time",
+            QT_TRANSLATE_NOOP("ListLayoutHeader", "Action"),
+            CueTimeWidget,
+            canHide=False,
         ),
         ListColumn(
-            QT_TRANSLATE_NOOP("ListLayoutHeader", "Post wait"), PostWaitWidget
+            "post_wait_time",
+            QT_TRANSLATE_NOOP("ListLayoutHeader", "Post wait"),
+            PostWaitWidget,
         ),
-        ListColumn("", NextActionIcon, QHeaderView.Fixed, width=18),
+        ListColumn(
+            "next_action",
+            QT_TRANSLATE_NOOP("ListLayoutHeader", "Next Action"),
+            NextActionIcon,
+            resize=QHeaderView.Fixed,
+            width=18,
+            hideName=True,
+        ),
     ]
 
     ITEM_DEFAULT_BG = QBrush(Qt.transparent)
@@ -108,16 +152,25 @@ class CueListView(QTreeWidget):
         self._model.item_removed.connect(self.__cueRemoved)
         self._model.model_reset.connect(self.__modelReset)
 
-        # Setup the columns headers
-        self.setHeaderLabels((c.name for c in CueListView.COLUMNS))
+        # Create context menu for column headers
+        self.columnMenu = QMenu()
+
+        # Columns headers setup
+        self.setColumnCount(len(CueListView.COLUMNS))
+
         for i, column in enumerate(CueListView.COLUMNS):
+            self.headerItem().setText(i, column.headerText())
+
             if column.resize is not None:
                 self.header().setSectionResizeMode(i, column.resize)
             if column.width is not None:
                 self.setColumnWidth(i, column.width)
 
-        self.header().setDragEnabled(False)
+        self.header().setDragEnabled(True)
+        self.header().setSectionsMovable(True)
         self.header().setStretchLastSection(False)
+        self.header().setContextMenuPolicy(Qt.CustomContextMenu)
+        self.header().customContextMenuRequested.connect(self.__openHeaderMenu)
 
         self.setDragDropMode(self.InternalMove)
 
@@ -208,10 +261,6 @@ class CueListView(QTreeWidget):
         ):
             super().mousePressEvent(event)
 
-    def resizeEvent(self, event):
-        super().resizeEvent(event)
-        self.updateHeadersSizes()
-
     def standbyIndex(self):
         return self.indexOfTopLevelItem(self.currentItem())
 
@@ -219,25 +268,30 @@ class CueListView(QTreeWidget):
         if 0 <= newIndex < self.topLevelItemCount():
             self.setCurrentItem(self.topLevelItem(newIndex))
 
-    def updateHeadersSizes(self):
-        """Some hack to have "stretchable" columns with a minimum size
-
-        NOTE: this currently works properly with only one "stretchable" column
-        """
+    def columnOrder(self):
+        """Return the column ids in the current visual order."""
         header = self.header()
-        for i, column in enumerate(CueListView.COLUMNS):
-            if column.resize == QHeaderView.Stretch:
-                # Make the header calculate the content size
-                header.setSectionResizeMode(i, QHeaderView.ResizeToContents)
-                contentWidth = header.sectionSize(i)
 
-                # Make the header calculate the stretched size
-                header.setSectionResizeMode(i, QHeaderView.Stretch)
-                stretchWidth = header.sectionSize(i)
+        return [
+            CueListView.COLUMNS[header.logicalIndex(visual)].id
+            for visual in range(self.columnCount())
+        ]
 
-                # Set the maximum size as fixed size for the section
-                header.setSectionResizeMode(i, QHeaderView.Fixed)
-                header.resizeSection(i, max(contentWidth, stretchWidth))
+    def setColumnOrder(self, order):
+        """Reorder the columns using a list of column ids."""
+        header = self.header()
+        idToLogical = {
+            column.id: i for i, column in enumerate(CueListView.COLUMNS)
+        }
+
+        for index, id in enumerate(order):
+            logical = idToLogical.get(id)
+            if logical is None:
+                continue
+
+            current = header.logicalIndex(index)
+            if current != logical:
+                header.moveSection(header.visualIndex(logical), index)
 
     def __currentItemChanged(self, current, previous):
         if previous is not None:
@@ -251,7 +305,7 @@ class CueListView(QTreeWidget):
             if self.selectionMode() == QTreeWidget.NoSelection:
                 # Ensure the current item is in the middle of the viewport.
                 # This is skipped in "selection-mode" otherwise it creates
-                # confusion during drang&drop operations
+                # confusion during drag&drop operations
                 self.scrollToItem(current, QTreeWidget.PositionAtCenter)
             elif not self.selectedIndexes():
                 current.setSelected(True)
@@ -281,8 +335,6 @@ class CueListView(QTreeWidget):
     def __cuePropChanged(self, cue, property_name, _):
         if property_name == "stylesheet":
             self.__updateItemStyle(self.topLevelItem(cue.index))
-        if property_name == "name":
-            QTimer.singleShot(1, self.updateHeadersSizes)
 
     def __cueAdded(self, cue):
         item = CueTreeWidgetItem(cue)
@@ -327,3 +379,22 @@ class CueListView(QTreeWidget):
             self.__scrollRangeGuard = True
             self.verticalScrollBar().setMaximum(max_ + 1)
             self.__scrollRangeGuard = False
+
+    def __toggleColumn(self, checked, index):
+        if checked:
+            self.showColumn(index)
+        else:
+            self.hideColumn(index)
+
+    def __openHeaderMenu(self, position):
+        for index, column in enumerate(CueListView.COLUMNS):
+            if column.canHide:
+                toggleAction = self.columnMenu.addAction(column.name)
+                toggleAction.setCheckable(True)
+                toggleAction.setChecked(not self.isColumnHidden(index))
+                toggleAction.triggered.connect(
+                    partial(self.__toggleColumn, index=index)
+                )
+
+        self.columnMenu.exec(self.mapToGlobal(position))
+        self.columnMenu.clear()

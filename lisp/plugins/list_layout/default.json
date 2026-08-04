@@ -5,8 +5,7 @@
         "dBMeters": true,
         "seekSliders": true,
         "waveformSlider": true,
-        "accurateTime": false,
-        "indexColumn": true
+        "accurateTime": false
     },
     "selectionMode": false,
     "autoContinue": true,
