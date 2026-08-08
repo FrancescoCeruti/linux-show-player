@@ -11,7 +11,7 @@
     <message>
       <location filename="../../../plugins/synchronizer/synchronizer.py" line="48"/>
       <source>Manage connected peers</source>
-      <translation>Gérer les paires connectées</translation>
+      <translation>Gérer les pairs connectés</translation>
     </message>
     <message>
       <location filename="../../../plugins/synchronizer/synchronizer.py" line="54"/>
@@ -21,7 +21,7 @@
     <message>
       <location filename="../../../plugins/synchronizer/synchronizer.py" line="79"/>
       <source>Your IP is: {}</source>
-      <translation type="unfinished">Your IP is: {}</translation>
+      <translation>Votre IP est : {}</translation>
     </message>
   </context>
 </TS>

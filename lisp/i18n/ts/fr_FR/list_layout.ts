@@ -40,7 +40,7 @@
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="119"/>
       <source>Default behaviors (applied to new sessions)</source>
-      <translation type="unfinished">Default behaviors (applied to new sessions)</translation>
+      <translation>Comportements par défaut (appliqués aux nouvelles sessions)</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="189"/>
@@ -70,32 +70,32 @@
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="131"/>
       <source>Behaviors</source>
-      <translation type="unfinished">Behaviors</translation>
+      <translation>Personnalisation</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="133"/>
       <source>Use waveform seek-bars</source>
-      <translation type="unfinished">Use waveform seek-bars</translation>
+      <translation>Générer des formes d’ondes</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="136"/>
       <source>GO Key Disabled While Playing</source>
-      <translation type="unfinished">GO Key Disabled While Playing</translation>
+      <translation>Touche GO désactivée pendant la lecture</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="138"/>
       <source>GO Key:</source>
-      <translation>Touche GO:</translation>
+      <translation>Touche GO :</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="139"/>
       <source>GO Action:</source>
-      <translation>Action de GO:</translation>
+      <translation>Action de GO :</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="141"/>
       <source>GO minimum interval (ms):</source>
-      <translation>Intervalle minimum de GO (ms):</translation>
+      <translation>Intervalle minimum de GO (ms) :</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="145"/>
@@ -155,7 +155,7 @@
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="196"/>
       <source>Show index column</source>
-      <translation type="unfinished">Show index column</translation>
+      <translation>Afficher la colonne d’index</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/layout.py" line="202"/>

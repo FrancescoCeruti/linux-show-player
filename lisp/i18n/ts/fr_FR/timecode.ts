@@ -19,20 +19,13 @@
     <message>
       <location filename="../../../plugins/timecode/timecode.py" line="99"/>
       <source>Cannot load timecode protocol: "{}"</source>
-      <translation type="unfinished">Cannot load timecode protocol: "{}"</translation>
+      <translation>Impossible de charger le protocole de code temporel : {}</translation>
     </message>
   </context>
   <context>
     <name>TimecodeError</name>
     <message>
-      <location filename="../../../plugins/timecode/protocols/artnet.py" line="65"/>
-      <source>Cannot send timecode. 
-OLA daemon has stopped.</source>
-      <translation type="unfinished">Cannot send timecode. 
-OLA daemon has stopped.</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/timecode/protocols/artnet.py" line="73"/>
+      <location filename="../../../plugins/timecode/protocols/artnet.py" line="49"/>
       <source>Cannot send timecode.</source>
       <translation>Impossible d'envoyer un code temporel.</translation>
     </message>
@@ -62,7 +55,7 @@ OLA daemon has stopped.</translation>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="148"/>
       <source>Timecode Format:</source>
-      <translation>Format de code temporel</translation>
+      <translation>Format de code temporel :</translation>
     </message>
     <message>
       <location filename="../../../plugins/timecode/settings.py" line="151"/>
@@ -75,7 +68,7 @@ OLA daemon has stopped.</translation>
     <message>
       <location filename="../../../plugins/timecode/cue_tracker.py" line="119"/>
       <source>Cannot send timecode, untracking cue</source>
-      <translation type="unfinished">Cannot send timecode, untracking cue</translation>
+      <translation>Impossible d’envoyer le code temporel, arrêt du suivi de la cue</translation>
     </message>
   </context>
 </TS>

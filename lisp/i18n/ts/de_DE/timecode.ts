@@ -25,14 +25,7 @@
   <context>
     <name>TimecodeError</name>
     <message>
-      <location filename="../../../plugins/timecode/protocols/artnet.py" line="65"/>
-      <source>Cannot send timecode. 
-OLA daemon has stopped.</source>
-      <translation>Zeitcode kann nicht gesendet werden, weil der 
-OLA-Daemon gestoppt wurde.</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/timecode/protocols/artnet.py" line="73"/>
+      <location filename="../../../plugins/timecode/protocols/artnet.py" line="49"/>
       <source>Cannot send timecode.</source>
       <translation>Zeitcode kann nicht gesendet werden.</translation>
     </message>
