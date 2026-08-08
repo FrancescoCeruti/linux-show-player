@@ -28,27 +28,27 @@ SOFTWARE.
 
 import math
 
-from PyQt5.QtCore import Qt, QTimer, QRectF
-from PyQt5.QtGui import QPainter, QColor
-from PyQt5.QtWidgets import QWidget
+from PyQt6.QtCore import Qt, QTimer, QRectF
+from PyQt6.QtGui import QPainter, QColor
+from PyQt6.QtWidgets import QWidget
 
 
 class QWaitingSpinner(QWidget):
     def __init__(
         self,
         parent=None,
-        centerOnParent=Qt.AlignCenter,
+        centerOnParent=Qt.AlignmentFlag.AlignCenter,
         disableParentWhenSpinning=False,
-        modality=Qt.NonModal,
+        modality=Qt.WindowModality.NonModal,
     ):
         super().__init__(parent)
         self.setWindowModality(modality)
-        self.setAttribute(Qt.WA_TranslucentBackground)
+        self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
 
         self._centerOnParent = centerOnParent
         self._disableParentWhenSpinning = disableParentWhenSpinning
 
-        self._color = Qt.gray
+        self._color = Qt.GlobalColor.gray
         self._roundness = 100.0
         self._minimumTrailOpacity = math.pi
         self._trailFadePercentage = 80.0
@@ -73,9 +73,9 @@ class QWaitingSpinner(QWidget):
         )
 
         painter = QPainter(self)
-        painter.fillRect(self.rect(), Qt.transparent)
-        painter.setRenderHint(QPainter.Antialiasing, True)
-        painter.setPen(Qt.NoPen)
+        painter.fillRect(self.rect(), Qt.GlobalColor.transparent)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing, True)
+        painter.setPen(Qt.PenStyle.NoPen)
         painter.translate(
             self._innerRadius + self._lineLength,
             self._innerRadius + self._lineLength,
@@ -102,7 +102,7 @@ class QWaitingSpinner(QWidget):
                 linesRect,
                 self._roundness,
                 self._roundness,
-                Qt.RelativeSize,
+                Qt.SizeMode.RelativeSize,
             )
             painter.restore()
 
@@ -177,7 +177,7 @@ class QWaitingSpinner(QWidget):
     def setRoundness(self, roundness):
         self._roundness = max(0.0, min(100.0, roundness))
 
-    def setColor(self, color=Qt.gray):
+    def setColor(self, color=Qt.GlobalColor.gray):
         self._color = QColor(color)
 
     def setRevolutionsPerSecond(self, revolutionsPerSecond):
@@ -211,9 +211,9 @@ class QWaitingSpinner(QWidget):
             x = self.x()
             y = self.y()
 
-            if self._centerOnParent & Qt.AlignHCenter:
+            if self._centerOnParent & Qt.AlignmentFlag.AlignHCenter:
                 x = int(self.parentWidget().width() / 2 - self.width() / 2)
-            if self._centerOnParent & Qt.AlignVCenter:
+            if self._centerOnParent & Qt.AlignmentFlag.AlignVCenter:
                 y = int(self.parentWidget().height() / 2 - self.height() / 2)
 
             self.move(x, y)

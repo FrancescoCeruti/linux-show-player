@@ -17,13 +17,13 @@
 
 import os
 
-from PyQt5.QtCore import (
+from PyQt6.QtCore import (
     Qt,
     QSize,
     QT_TRANSLATE_NOOP,
 )
-from PyQt5.QtGui import QFontDatabase, QStandardItemModel, QStandardItem
-from PyQt5.QtWidgets import (
+from PyQt6.QtGui import QFontDatabase, QStandardItemModel, QStandardItem
+from PyQt6.QtWidgets import (
     QVBoxLayout,
     QGroupBox,
     QHBoxLayout,
@@ -80,7 +80,7 @@ class Appearance(SettingsPage):
         self.cueDescriptionEdit = QTextEdit(self.cueDescriptionGroup)
         self.cueDescriptionEdit.setAcceptRichText(False)
         self.cueDescriptionEdit.setFont(
-            QFontDatabase.systemFont(QFontDatabase.FixedFont)
+            QFontDatabase.systemFont(QFontDatabase.SystemFont.FixedFont)
         )
         self.cueDescriptionGroup.layout().addWidget(self.cueDescriptionEdit)
 
@@ -111,7 +111,7 @@ class Appearance(SettingsPage):
                 "CueAppearanceSettings", "The appearance depends on the layout"
             )
         )
-        self.warning.setAlignment(Qt.AlignCenter)
+        self.warning.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.warning.setStyleSheet("color: #FFA500; font-weight: bold")
         self.layout().addWidget(self.warning)
 

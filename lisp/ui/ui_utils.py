@@ -21,12 +21,25 @@ import os
 import signal
 from itertools import chain
 
-from PyQt5.QtCore import QTranslator, QLocale, QSocketNotifier
-from PyQt5.QtWidgets import QApplication, qApp
+from PyQt6.QtCore import QTranslator, QLocale, QSocketNotifier, Qt
+from PyQt6.QtGui import QKeyEvent, QKeySequence
+from PyQt6.QtWidgets import QApplication
 
 from lisp import I18N_DIR
 
 logger = logging.getLogger(__name__)
+
+
+MODIFIERS_KEYS = frozenset(
+    {
+        Qt.Key.Key_Control,
+        Qt.Key.Key_Shift,
+        Qt.Key.Key_Meta,
+        Qt.Key.Key_Alt,
+        Qt.Key.Key_AltGr,
+        Qt.Key.Key_unknown,
+    }
+)
 
 
 def adjust_widget_position(widget):
@@ -43,7 +56,7 @@ def adjust_position(rect):
     :type rect: PyQt5.QtCore.QRect.QRect
     :return: PyQt5.QtCore.QRect.QRect
     """
-    desktop = qApp.desktop().availableGeometry()
+    desktop = QApplication.primaryScreen().availableGeometry()
 
     if rect.bottom() > desktop.bottom():
         rect.moveTo(rect.x(), rect.y() - rect.height())
@@ -51,6 +64,15 @@ def adjust_position(rect):
         rect.moveTo(rect.x() - rect.width(), rect.y())
 
     return rect
+
+
+def key_sequence_from_event(
+    key_event: QKeyEvent, ignore_keys=MODIFIERS_KEYS
+) -> QKeySequence:
+    if key_event.key() not in ignore_keys:
+        return QKeySequence(key_event.keyCombination())
+
+    return QKeySequence()
 
 
 def css_to_dict(css):
@@ -139,7 +161,6 @@ def translate(context, text, disambiguation=None, n=-1):
 
 
 def translate_many(context, texts):
-    """Return a translate iterator."""
     for item in texts:
         yield translate(context, item)
 
@@ -181,7 +202,7 @@ class PyQtUnixSignalHandler:
 
         # QSocketNotifier will look if something is written in the pipe
         # and call the `_handle` method
-        self._notifier = QSocketNotifier(self._rfd, QSocketNotifier.Read)
+        self._notifier = QSocketNotifier(self._rfd, QSocketNotifier.Type.Read)
         self._notifier.activated.connect(self._handle)
         # Tell Python to write to the pipe when there is a signal to handle
         self._orig_wfd = signal.set_wakeup_fd(self._wfd)

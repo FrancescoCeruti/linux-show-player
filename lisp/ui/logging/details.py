@@ -17,8 +17,8 @@
 
 import traceback
 
-from PyQt5.QtGui import QFontDatabase
-from PyQt5.QtWidgets import QTextEdit
+from PyQt6.QtGui import QFontDatabase
+from PyQt6.QtWidgets import QTextEdit
 
 from lisp.ui.logging.common import LOG_ATTRIBUTES
 
@@ -28,10 +28,12 @@ class LogDetails(QTextEdit):
         super().__init__(*args)
         self._record = None
 
-        self.setLineWrapMode(self.NoWrap)
+        self.setLineWrapMode(self.LineWrapMode.NoWrap)
         self.setReadOnly(True)
 
-        self.setFont(QFontDatabase.systemFont(QFontDatabase.FixedFont))
+        self.setFont(
+            QFontDatabase.systemFont(QFontDatabase.SystemFont.FixedFont)
+        )
 
     def setLogRecord(self, record):
         self._record = record

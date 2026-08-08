@@ -15,9 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QTextDocument
-from PyQt5.QtWidgets import QWidget, QTextEdit, QLineEdit, QVBoxLayout
+from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QTextDocument
+from PyQt6.QtWidgets import QWidget, QTextEdit, QLineEdit, QVBoxLayout
 
 from lisp.ui.ui_utils import translate
 
@@ -32,14 +32,14 @@ class InfoPanel(QWidget):
 
         # cue name
         self.cueName = QLineEdit(self)
-        self.cueName.setFocusPolicy(Qt.NoFocus)
+        self.cueName.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         self.cueName.setReadOnly(True)
         self.layout().addWidget(self.cueName)
 
         # cue description
         self.cueDescription = QTextEdit(self)
         self.cueDescription.setObjectName("InfoPanelDescription")
-        self.cueDescription.setFocusPolicy(Qt.NoFocus)
+        self.cueDescription.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         self.cueDescription.setReadOnly(True)
         self.layout().addWidget(self.cueDescription)
 

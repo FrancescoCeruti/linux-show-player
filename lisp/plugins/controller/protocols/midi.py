@@ -16,8 +16,8 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 import logging
 
-from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
-from PyQt5.QtWidgets import (
+from PyQt6.QtCore import Qt, QT_TRANSLATE_NOOP
+from PyQt6.QtWidgets import (
     QGroupBox,
     QPushButton,
     QComboBox,
@@ -31,8 +31,8 @@ from PyQt5.QtWidgets import (
     QHBoxLayout,
 )
 
-from lisp.plugins import get_plugin
 from lisp.core.plugin import PluginNotLoadedError
+from lisp.plugins import get_plugin
 from lisp.plugins.controller.common import LayoutAction, tr_layout_action
 from lisp.plugins.controller.protocol import Protocol
 from lisp.plugins.midi.midi_utils import (
@@ -54,7 +54,6 @@ from lisp.ui.qmodels import SimpleTableModel
 from lisp.ui.settings.pages import CuePageMixin, SettingsPage
 from lisp.ui.ui_utils import translate
 
-
 logger = logging.getLogger(__name__)
 
 
@@ -66,7 +65,7 @@ class MidiSettings(SettingsPage):
     def __init__(self, actionDelegate, **kwargs):
         super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
-        self.layout().setAlignment(Qt.AlignTop)
+        self.layout().setAlignment(Qt.AlignmentFlag.AlignTop)
 
         self.midiGroup = QGroupBox(self)
         self.midiGroup.setTitle(translate("ControllerMidiSettings", "MIDI"))
@@ -95,7 +94,7 @@ class MidiSettings(SettingsPage):
         self.midiGroup.layout().addLayout(self.filterLayout, 2, 1)
 
         self.filterLabel = QLabel(self.midiGroup)
-        self.filterLabel.setAlignment(Qt.AlignCenter)
+        self.filterLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.filterLayout.addWidget(self.filterLabel)
 
         self.filterTypeCombo = QComboBox(self.midiGroup)
@@ -166,7 +165,7 @@ class MidiSettings(SettingsPage):
         handler.alternate_mode = False
 
     def __add_message(self, message):
-        mgs_filter = self.filterTypeCombo.currentData(Qt.UserRole)
+        mgs_filter = self.filterTypeCombo.currentData(Qt.ItemDataRole.UserRole)
         if mgs_filter == self.FILTER_ALL or message.type == mgs_filter:
             if hasattr(message, "velocity"):
                 message = message.copy(velocity=0)
@@ -175,7 +174,7 @@ class MidiSettings(SettingsPage):
 
     def __new_message(self):
         dialog = MIDIMessageEditDialog()
-        if dialog.exec() == MIDIMessageEditDialog.Accepted:
+        if dialog.exec() == MIDIMessageEditDialog.DialogCode.Accepted:
             message = midi_from_dict(dialog.getMessageDict())
             if hasattr(message, "velocity"):
                 message.velocity = 0
@@ -221,7 +220,7 @@ class MidiMessageTypeDelegate(LabelDelegate):
 
 class MidiValueDelegate(LabelDelegate):
     def _text(self, option, index):
-        option.displayAlignment = Qt.AlignCenter
+        option.displayAlignment = Qt.AlignmentFlag.AlignCenter
 
         value = index.data()
         if value is not None:
@@ -270,7 +269,7 @@ class MidiModel(SimpleTableModel):
 
     def flags(self, index):
         if index.column() <= 3:
-            return Qt.ItemIsEnabled | Qt.ItemIsSelectable
+            return Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable
         else:
             return super().flags(index)
 
@@ -287,20 +286,20 @@ class MidiView(QTableView):
             actionDelegate,
         ]
 
-        self.setSelectionBehavior(QTableWidget.SelectRows)
-        self.setSelectionMode(QTableView.SingleSelection)
+        self.setSelectionBehavior(QTableWidget.SelectionBehavior.SelectRows)
+        self.setSelectionMode(QTableView.SelectionMode.SingleSelection)
 
         self.setShowGrid(False)
         self.setAlternatingRowColors(True)
 
         self.horizontalHeader().setSectionResizeMode(
-            QHeaderView.ResizeToContents
+            QHeaderView.ResizeMode.ResizeToContents
         )
         self.horizontalHeader().setMinimumSectionSize(80)
         self.horizontalHeader().setStretchLastSection(True)
         self.horizontalHeader().setHighlightSections(False)
 
-        self.verticalHeader().sectionResizeMode(QHeaderView.Fixed)
+        self.verticalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Fixed)
         self.verticalHeader().setDefaultSectionSize(24)
         self.verticalHeader().setHighlightSections(False)
 
@@ -316,7 +315,7 @@ class MidiView(QTableView):
             dialog = MIDIMessageEditDialog()
             dialog.setMessageDict(message.dict())
 
-            if dialog.exec() == MIDIMessageEditDialog.Accepted:
+            if dialog.exec() == MIDIMessageEditDialog.DialogCode.Accepted:
                 self.model().updateMessage(
                     index.row(), midi_from_dict(dialog.getMessageDict()), action
                 )

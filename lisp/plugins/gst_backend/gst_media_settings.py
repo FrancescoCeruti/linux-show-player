@@ -17,8 +17,8 @@
 
 from copy import deepcopy
 
-from PyQt5.QtCore import QT_TRANSLATE_NOOP
-from PyQt5.QtWidgets import (
+from PyQt6.QtCore import QT_TRANSLATE_NOOP
+from PyQt6.QtWidgets import (
     QGridLayout,
     QListWidget,
     QPushButton,
@@ -70,7 +70,9 @@ class GstMediaSettings(SettingsPage):
 
             if page is not None and issubclass(page, SettingsPage):
                 page = page(parent=self)
-                page.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
+                page.setSizePolicy(
+                    QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Ignored
+                )
                 page.loadSettings(
                     settings.get("elements", {}).get(
                         element, page.ELEMENT.class_defaults()
@@ -123,7 +125,7 @@ class GstMediaSettings(SettingsPage):
         # Show the dialog
         dialog = GstPipeEditDialog(self._settings.get("pipe", ()), parent=self)
 
-        if dialog.exec() == dialog.Accepted:
+        if dialog.exec() == dialog.DialogCode.Accepted:
             # Reset the view
             self.listWidget.clear()
             if self._current_page is not None:

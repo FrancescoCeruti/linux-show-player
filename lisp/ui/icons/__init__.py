@@ -19,9 +19,9 @@ import glob
 import os
 from xml.etree import ElementTree as ET
 
-from PyQt5.QtGui import QIcon, QPixmap, QPainter
-from PyQt5.QtSvg import QSvgRenderer
-from PyQt5.QtCore import Qt, QByteArray
+from PyQt6.QtGui import QIcon, QPixmap, QPainter
+from PyQt6.QtSvg import QSvgRenderer
+from PyQt6.QtCore import Qt, QByteArray
 
 from lisp import ICON_THEMES_DIR, ICON_THEME_COMMON
 

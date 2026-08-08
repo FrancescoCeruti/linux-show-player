@@ -17,56 +17,38 @@
 
 from functools import partial
 
-from PyQt5.QtCore import Qt, QEvent
-from PyQt5.QtGui import QKeySequence
-from PyQt5.QtWidgets import (
+from PyQt6.QtCore import Qt, QEvent, QKeyCombination
+from PyQt6.QtGui import QKeySequence, QAction
+from PyQt6.QtWidgets import (
     QWidget,
     QLineEdit,
     QSizePolicy,
     QHBoxLayout,
     QMenu,
-    QAction,
 )
 
 from lisp.ui.icons import IconTheme
-from lisp.ui.ui_utils import translate
-
-KEYS_FILTER = {
-    Qt.Key_Control,
-    Qt.Key_Shift,
-    Qt.Key_Meta,
-    Qt.Key_Alt,
-    Qt.Key_AltGr,
-    Qt.Key_unknown,
-}
-
-
-def keyEventKeySequence(keyEvent) -> QKeySequence:
-    key = keyEvent.key()
-    if key not in KEYS_FILTER:
-        modifiers = keyEvent.modifiers()
-        if modifiers & Qt.ShiftModifier:
-            key += Qt.SHIFT
-        if modifiers & Qt.ControlModifier:
-            key += Qt.CTRL
-        if modifiers & Qt.AltModifier:
-            key += Qt.ALT
-        if modifiers & Qt.MetaModifier:
-            key += Qt.META
-
-        return QKeySequence(key)
-
-    return QKeySequence()
+from lisp.ui.ui_utils import translate, key_sequence_from_event
 
 
 class HotKeyEdit(QWidget):
     SPECIAL_KEYS = [
-        QKeySequence(Qt.Key_Escape),
-        QKeySequence(Qt.Key_Return),
-        QKeySequence(Qt.Key_Tab),
-        QKeySequence(Qt.Key_Tab + Qt.SHIFT),
-        QKeySequence(Qt.Key_Tab + Qt.CTRL),
-        QKeySequence(Qt.Key_Tab + Qt.SHIFT + Qt.CTRL),
+        QKeySequence(Qt.Key.Key_Escape),
+        QKeySequence(Qt.Key.Key_Return),
+        QKeySequence(Qt.Key.Key_Tab),
+        QKeySequence(
+            QKeyCombination(Qt.KeyboardModifier.ShiftModifier, Qt.Key.Key_Tab)
+        ),
+        QKeySequence(
+            QKeyCombination(Qt.KeyboardModifier.ControlModifier, Qt.Key.Key_Tab)
+        ),
+        QKeySequence(
+            QKeyCombination(
+                Qt.KeyboardModifier.ShiftModifier
+                | Qt.KeyboardModifier.ControlModifier,
+                Qt.Key.Key_Tab,
+            )
+        ),
     ]
 
     def __init__(
@@ -78,10 +60,12 @@ class HotKeyEdit(QWidget):
         **kwargs,
     ):
         super().__init__(parent, **kwargs)
-        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
-        self.setFocusPolicy(Qt.StrongFocus)
-        self.setAttribute(Qt.WA_MacShowFocusRect, True)
-        self.setAttribute(Qt.WA_InputMethodEnabled, False)
+        self.setSizePolicy(
+            QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed
+        )
+        self.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
+        self.setAttribute(Qt.WidgetAttribute.WA_MacShowFocusRect, True)
+        self.setAttribute(Qt.WidgetAttribute.WA_InputMethodEnabled, False)
         self.setLayout(QHBoxLayout())
         self.layout().setContentsMargins(0, 0, 0, 0)
 
@@ -91,7 +75,9 @@ class HotKeyEdit(QWidget):
         self.previewEdit.setReadOnly(True)
         self.previewEdit.setFocusProxy(self)
         self.previewEdit.installEventFilter(self)
-        self.previewEdit.setContextMenuPolicy(Qt.NoContextMenu)
+        self.previewEdit.setContextMenuPolicy(
+            Qt.ContextMenuPolicy.NoContextMenu
+        )
         self.previewEdit.selectionChanged.connect(self.previewEdit.deselect)
         self.layout().addWidget(self.previewEdit)
 
@@ -99,7 +85,7 @@ class HotKeyEdit(QWidget):
         for special in HotKeyEdit.SPECIAL_KEYS:
             action = QAction(
                 IconTheme.get("list-add-symbolic"),
-                special.toString(QKeySequence.NativeText),
+                special.toString(QKeySequence.SequenceFormat.NativeText),
                 self.specialMenu,
             )
             action.triggered.connect(partial(self.setKeySequence, special))
@@ -108,13 +94,14 @@ class HotKeyEdit(QWidget):
         if keysButton:
             action = self.previewEdit.addAction(
                 IconTheme.get("input-keyboard-symbolic"),
-                QLineEdit.TrailingPosition,
+                QLineEdit.ActionPosition.TrailingPosition,
             )
             action.triggered.connect(self.onToolsAction)
 
         if clearButton:
             action = self.previewEdit.addAction(
-                IconTheme.get("edit-clear-symbolic"), QLineEdit.TrailingPosition
+                IconTheme.get("edit-clear-symbolic"),
+                QLineEdit.ActionPosition.TrailingPosition,
             )
             action.triggered.connect(self.clear)
 
@@ -130,7 +117,9 @@ class HotKeyEdit(QWidget):
 
     def setKeySequence(self, keySequence: QKeySequence):
         self._keySequence = keySequence
-        self.previewEdit.setText(keySequence.toString(QKeySequence.NativeText))
+        self.previewEdit.setText(
+            keySequence.toString(QKeySequence.SequenceFormat.NativeText)
+        )
 
     def clear(self):
         self.setKeySequence(QKeySequence())
@@ -138,9 +127,9 @@ class HotKeyEdit(QWidget):
     def event(self, event: QEvent):
         event_type = event.type()
 
-        if event_type == QEvent.Shortcut:
+        if event_type == QEvent.Type.Shortcut:
             return True
-        elif event_type == QEvent.ShortcutOverride:
+        elif event_type == QEvent.Type.ShortcutOverride:
             event.accept()
             return True
 
@@ -151,7 +140,7 @@ class HotKeyEdit(QWidget):
         self.specialMenu.popup(event.globalPos())
 
     def keyPressEvent(self, event):
-        sequence = keyEventKeySequence(event)
+        sequence = key_sequence_from_event(event)
         if sequence:
             self.setKeySequence(sequence)
 

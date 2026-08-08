@@ -15,8 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import QT_TRANSLATE_NOOP, Qt, QAbstractTableModel, QModelIndex
-from PyQt5.QtWidgets import (
+from PyQt6.QtCore import QT_TRANSLATE_NOOP, Qt, QAbstractTableModel, QModelIndex
+from PyQt6.QtWidgets import (
     QTextBrowser,
     QVBoxLayout,
     QTableView,
@@ -38,14 +38,14 @@ class PluginsSettings(SettingsPage):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
-        self.layout().setAlignment(Qt.AlignTop)
+        self.layout().setAlignment(Qt.AlignmentFlag.AlignTop)
 
         self.pluginsModel = PluginModel()
 
         self.pluginsList = PluginsView(parent=self)  # QListWidget(self)
         self.pluginsList.setModel(self.pluginsModel)
         self.pluginsList.horizontalHeader().setSectionResizeMode(
-            0, QHeaderView.Stretch
+            0, QHeaderView.ResizeMode.Stretch
         )
         self.pluginsList.setAlternatingRowColors(True)
         self.pluginsList.selectionModel().selectionChanged.connect(
@@ -67,7 +67,7 @@ class PluginsSettings(SettingsPage):
             self.pluginsList.setCurrentIndex(self.pluginsModel.index(0, 0))
 
     def __selection_changed(self):
-        plugin = self.pluginsList.currentIndex().data(Qt.UserRole)
+        plugin = self.pluginsList.currentIndex().data(Qt.ItemDataRole.UserRole)
 
         if plugin is not None:
             html = (
@@ -105,39 +105,49 @@ class PluginModel(QAbstractTableModel):
     def columnCount(self, parent=QModelIndex()):
         return len(self.columns)
 
-    def headerData(self, section, orientation, role=Qt.DisplayRole):
-        if orientation == Qt.Horizontal and role == Qt.DisplayRole:
+    def headerData(
+        self, section, orientation, role=Qt.ItemDataRole.DisplayRole
+    ):
+        if (
+            orientation == Qt.Orientation.Horizontal
+            and role == Qt.ItemDataRole.DisplayRole
+        ):
             if section < len(self.columns):
                 return self.columns[section]
             else:
                 return section + 1
 
-    def data(self, index, role=Qt.DisplayRole):
+    def data(self, index, role=Qt.ItemDataRole.DisplayRole):
         if index.isValid():
             column = index.column()
             plugin = self.plugins[index.row()]
 
             # Column-independent values
-            if role == Qt.TextAlignmentRole:
-                return Qt.AlignLeft | Qt.AlignVCenter
-            elif role == Qt.ToolTipRole:
+            if role == Qt.ItemDataRole.TextAlignmentRole:
+                return (
+                    Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter
+                )
+            elif role == Qt.ItemDataRole.ToolTipRole:
                 return plugin.status_text()
-            elif role == Qt.UserRole:
+            elif role == Qt.ItemDataRole.UserRole:
                 return plugin
 
             # Column-dependent values
             if column == 0:
-                if role == Qt.DisplayRole:
+                if role == Qt.ItemDataRole.DisplayRole:
                     return plugin.Name
-                elif role == Qt.DecorationRole:
+                elif role == Qt.ItemDataRole.DecorationRole:
                     return IconTheme.get(plugin_status_icon(plugin))
             elif column == 1:
                 enabled = plugin.is_enabled()
-                if role in (Qt.DisplayRole, Qt.EditRole):
+                if role in (
+                    Qt.ItemDataRole.DisplayRole,
+                    Qt.ItemDataRole.EditRole,
+                ):
                     return enabled
 
-    def setData(self, index, value, role=Qt.EditRole):
-        if index.isValid() and role == Qt.EditRole:
+    def setData(self, index, value, role=Qt.ItemDataRole.EditRole):
+        if index.isValid() and role == Qt.ItemDataRole.EditRole:
             row = index.row()
             column = index.column()
             plugin = self.plugins[row]
@@ -147,7 +157,7 @@ class PluginModel(QAbstractTableModel):
                     self.dataChanged.emit(
                         self.index(row, 0),
                         self.index(row, column),
-                        [Qt.DisplayRole, Qt.EditRole],
+                        [Qt.ItemDataRole.DisplayRole, Qt.ItemDataRole.EditRole],
                     )
 
                     return True
@@ -156,9 +166,9 @@ class PluginModel(QAbstractTableModel):
 
     def flags(self, index):
         column = index.column()
-        flags = Qt.ItemIsEnabled | Qt.ItemIsSelectable
+        flags = Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable
         if column == 1 and not self.plugins[column].CorePlugin:
-            flags |= Qt.ItemIsEditable
+            flags |= Qt.ItemFlag.ItemIsEditable
 
         return flags
 
@@ -172,18 +182,18 @@ class PluginsView(QTableView):
             BoolCheckBoxDelegate(),
         ]
 
-        self.setSelectionBehavior(QTableView.SelectRows)
-        self.setSelectionMode(QTableView.SingleSelection)
+        self.setSelectionBehavior(QTableView.SelectionBehavior.SelectRows)
+        self.setSelectionMode(QTableView.SelectionMode.SingleSelection)
 
         self.setShowGrid(False)
         self.setAlternatingRowColors(True)
 
         self.horizontalHeader().setSectionResizeMode(
-            QHeaderView.ResizeToContents
+            QHeaderView.ResizeMode.ResizeToContents
         )
 
         self.verticalHeader().setVisible(False)
-        self.verticalHeader().sectionResizeMode(QHeaderView.Fixed)
+        self.verticalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Fixed)
         self.verticalHeader().setDefaultSectionSize(24)
         self.verticalHeader().setHighlightSections(False)
 

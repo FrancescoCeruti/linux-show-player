@@ -15,9 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5 import QtCore
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QGroupBox, QVBoxLayout, QPlainTextEdit, QLabel
+from PyQt6 import QtCore
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QGroupBox, QVBoxLayout, QPlainTextEdit, QLabel
 
 from lisp.plugins.gst_backend.elements.user_element import UserElement
 from lisp.ui.settings.pages import SettingsPage
@@ -31,7 +31,7 @@ class UserElementSettings(SettingsPage):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.setLayout(QVBoxLayout())
-        self.layout().setAlignment(Qt.AlignTop)
+        self.layout().setAlignment(Qt.AlignmentFlag.AlignTop)
 
         self.groupBox = QGroupBox(self)
         self.groupBox.setGeometry(self.geometry())
@@ -42,7 +42,7 @@ class UserElementSettings(SettingsPage):
         self.groupBox.layout().addWidget(self.textEdit)
 
         self.warning = QLabel(self.groupBox)
-        self.warning.setAlignment(QtCore.Qt.AlignCenter)
+        self.warning.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.warning.setStyleSheet("color: #FF2222; font-weight: bold")
         self.groupBox.layout().addWidget(self.warning)
 

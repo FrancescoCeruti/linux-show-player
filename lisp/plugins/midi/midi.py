@@ -18,7 +18,7 @@
 import logging
 
 import mido
-from PyQt5.QtCore import QT_TRANSLATE_NOOP
+from PyQt6.QtCore import QT_TRANSLATE_NOOP
 
 from lisp.core.plugin import Plugin
 from lisp.core.signal import Connection

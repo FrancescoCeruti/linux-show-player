@@ -23,8 +23,8 @@ from enum import Enum
 from threading import RLock
 from types import MethodType, BuiltinMethodType
 
-from PyQt5.QtCore import QEvent, QObject
-from PyQt5.QtWidgets import QApplication
+from PyQt6.QtCore import QEvent, QObject
+from PyQt6.QtWidgets import QApplication
 
 from lisp.core.decorators import async_function
 from lisp.core.util import weak_call_proxy

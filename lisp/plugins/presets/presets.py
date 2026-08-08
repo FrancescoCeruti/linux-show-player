@@ -17,7 +17,7 @@
 
 import os
 
-from PyQt5.QtWidgets import QAction
+from PyQt6.QtGui import QAction
 
 from lisp.core.plugin import Plugin
 from lisp.layout.cue_layout import CueLayout

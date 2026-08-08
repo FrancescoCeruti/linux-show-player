@@ -23,9 +23,9 @@ import sys
 from functools import partial
 from logging.handlers import RotatingFileHandler
 
-from PyQt5.QtCore import QLocale, QLibraryInfo, QTimer
-from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QApplication
+from PyQt6.QtCore import QLocale, QLibraryInfo, QTimer
+from PyQt6.QtGui import QIcon
+from PyQt6.QtWidgets import QApplication
 
 from lisp import app_dirs, DEFAULT_APP_CONFIG, USER_APP_CONFIG, plugins
 from lisp.application import Application
@@ -124,7 +124,7 @@ def main():
     )
 
     # Qt platform translation
-    qt_tr_path = QLibraryInfo.location(QLibraryInfo.TranslationsPath)
+    qt_tr_path = QLibraryInfo.path(QLibraryInfo.LibraryPath.TranslationsPath)
     # install_translation("qt", tr_path=qt_tr_path)
     install_translation("qtbase", tr_path=qt_tr_path)
     # Main app translations

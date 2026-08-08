@@ -15,8 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import Qt, QSize
-from PyQt5.QtWidgets import QWidget, QGridLayout, QSizePolicy
+from PyQt6.QtCore import Qt, QSize
+from PyQt6.QtWidgets import QWidget, QGridLayout, QSizePolicy
 
 from lisp.ui.icons import IconTheme
 from lisp.ui.ui_utils import translate
@@ -66,8 +66,10 @@ class ShowControlButtons(QWidget):
 
     def newButton(self, icon):
         button = QIconPushButton(self)
-        button.setFocusPolicy(Qt.NoFocus)
-        button.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
+        button.setFocusPolicy(Qt.FocusPolicy.NoFocus)
+        button.setSizePolicy(
+            QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Ignored
+        )
         button.setIcon(icon)
         button.setIconSize(QSize(32, 32))
         return button
@@ -117,8 +119,10 @@ class CueControlButtons(QWidget):
 
     def newButton(self, icon):
         button = QIconPushButton(self)
-        button.setFocusPolicy(Qt.NoFocus)
-        button.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
+        button.setFocusPolicy(Qt.FocusPolicy.NoFocus)
+        button.setSizePolicy(
+            QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Ignored
+        )
         button.setIcon(icon)
         button.setIconSize(QSize(32, 32))
         return button

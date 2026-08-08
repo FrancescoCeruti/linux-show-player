@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtWidgets import (
+from PyQt6.QtWidgets import (
     QDialog,
     QComboBox,
     QPushButton,
@@ -59,8 +59,8 @@ class LayoutSelect(QDialog):
         self.layout().setColumnStretch(2, 1)
 
         line = QFrame(self)
-        line.setFrameShape(QFrame.HLine)
-        line.setFrameShadow(QFrame.Sunken)
+        line.setFrameShape(QFrame.Shape.HLine)
+        line.setFrameShadow(QFrame.Shadow.Sunken)
         self.layout().addWidget(line, 1, 0, 1, 3)
 
         self.description = QTextBrowser(self)
