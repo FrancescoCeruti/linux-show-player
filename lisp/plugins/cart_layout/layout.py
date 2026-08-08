@@ -233,6 +233,19 @@ class CartLayout(CueLayout):
         for widget in self._widgets():
             widget.selected = not widget.selected
 
+    def reveal_cue(self, cue):
+        if cue is None:
+            return
+
+        page, row, column = self.to_3d_index(cue.index)
+        self.set_current_page(page)
+        self.deselect_all()
+
+        widget = self._page(page).widget(row, column)
+        if widget is not None:
+            widget.selected = True
+            widget.setFocus()
+
     def add_pages(self):
         pages, accepted = QInputDialog.getInt(
             self._cart_view,
