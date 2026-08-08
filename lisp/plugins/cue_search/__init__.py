@@ -9,7 +9,7 @@ from .dialog import CueSearchDialog
 class CueSearch(Plugin):
     Name = "Cue Search"
     Description = "Advanced dialog to search and trigger cues"
-    Authors = ("Francesco Ceruti",)
+    Authors = ("Francesco Ceruti", "Tom Mansion")
 
     def __init__(self, app):
         super().__init__(app)
