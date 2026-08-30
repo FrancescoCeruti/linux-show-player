@@ -4,22 +4,22 @@
   <context>
     <name>CollectionCue</name>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="110"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="111"/>
       <source>Add</source>
       <translation>Dodaj</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="111"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="112"/>
       <source>Remove</source>
       <translation>Odstrani</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="180"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="186"/>
       <source>Cue</source>
       <translation>Vrsta</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="181"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="187"/>
       <source>Action</source>
       <translation>Akcija</translation>
     </message>
@@ -27,32 +27,37 @@
   <context>
     <name>CommandCue</name>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="130"/>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="148"/>
       <source>Command</source>
       <translation>Ukaz</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="132"/>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="150"/>
       <source>Command to execute, as in a shell</source>
       <translation>Ukaz za izvršitev, kot v ukazni lupini</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="135"/>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="153"/>
       <source>Discard command output</source>
       <translation>Zavrži izhod ukaza</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="138"/>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="156"/>
       <source>Ignore command errors</source>
       <translation>Ignoriraj napake ukaza</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="141"/>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="159"/>
       <source>Kill instead of terminate</source>
       <translation>Kill namesto terminate</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="80"/>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="162"/>
+      <source>Run the command on the host system</source>
+      <translation type="unfinished">Run the command on the host system</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="83"/>
       <source>Command cue ended with an error status. Exit code: {}</source>
       <translation type="unfinished">Command cue ended with an error status. Exit code: {}</translation>
     </message>
@@ -60,7 +65,7 @@
   <context>
     <name>CueCategory</name>
     <message>
-      <location filename="../../../plugins/action_cues/index_action_cue.py" line="40"/>
+      <location filename="../../../plugins/action_cues/volume_control.py" line="55"/>
       <source>Action cues</source>
       <translation type="unfinished">Action cues</translation>
     </message>
@@ -78,24 +83,24 @@
       <translation>Zbirke v vrsti</translation>
     </message>
     <message>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="41"/>
+      <source>Command Cue</source>
+      <translation>Ukazna vrsta</translation>
+    </message>
+    <message>
       <location filename="../../../plugins/action_cues/stop_all.py" line="29"/>
       <source>Stop-All</source>
       <translation>Ustavi vse</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="40"/>
-      <source>Command Cue</source>
-      <translation>Ukazna vrsta</translation>
+      <location filename="../../../plugins/action_cues/index_action_cue.py" line="39"/>
+      <source>Index Action</source>
+      <translation>Akcija indeksa</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="54"/>
       <source>Volume Control</source>
       <translation>Krmiljenje glasnosti</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/action_cues/index_action_cue.py" line="39"/>
-      <source>Index Action</source>
-      <translation>Akcija indeksa</translation>
     </message>
   </context>
   <context>
@@ -167,9 +172,14 @@
       <translation>Nastavitve iskanja</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="108"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="109"/>
       <source>Edit Collection</source>
       <translation>Uredi zbirko</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="118"/>
+      <source>Command</source>
+      <translation>Ukaz</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/stop_all.py" line="43"/>
@@ -177,19 +187,14 @@
       <translation>Nastavitve ustavitve</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="104"/>
-      <source>Command</source>
-      <translation>Ukaz</translation>
+      <location filename="../../../plugins/action_cues/index_action_cue.py" line="65"/>
+      <source>Action Settings</source>
+      <translation>Nastavitve akcije</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="129"/>
       <source>Volume Settings</source>
       <translation>Nastavitve glasnosti</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/action_cues/index_action_cue.py" line="65"/>
-      <source>Action Settings</source>
-      <translation>Nastavitve akcije</translation>
     </message>
   </context>
   <context>

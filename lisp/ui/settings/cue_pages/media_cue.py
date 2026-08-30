@@ -15,13 +15,14 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import QTime, Qt, QT_TRANSLATE_NOOP
+from PyQt5.QtCore import QT_TRANSLATE_NOOP, Qt, QTime
 from PyQt5.QtWidgets import (
+    QDateTimeEdit,
     QGroupBox,
     QHBoxLayout,
-    QTimeEdit,
     QLabel,
     QSpinBox,
+    QTimeEdit,
     QVBoxLayout,
 )
 
@@ -42,7 +43,8 @@ class MediaCueSettings(SettingsPage):
         self.layout().addWidget(self.startGroup)
 
         self.startEdit = QTimeEdit(self.startGroup)
-        self.startEdit.setDisplayFormat("HH.mm.ss.zzz")
+        self.startEdit.setDisplayFormat("HH:mm:ss.zzz")
+        self.startEdit.setCurrentSection(QDateTimeEdit.SecondSection)
         self.startGroup.layout().addWidget(self.startEdit)
 
         self.startLabel = QLabel(self.startGroup)
@@ -55,7 +57,8 @@ class MediaCueSettings(SettingsPage):
         self.layout().addWidget(self.stopGroup)
 
         self.stopEdit = QTimeEdit(self.stopGroup)
-        self.stopEdit.setDisplayFormat("HH.mm.ss.zzz")
+        self.stopEdit.setDisplayFormat("HH:mm:ss.zzz")
+        self.stopEdit.setCurrentSection(QDateTimeEdit.SecondSection)
         self.stopGroup.layout().addWidget(self.stopEdit)
 
         self.stopLabel = QLabel(self.stopGroup)

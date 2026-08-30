@@ -19,19 +19,19 @@
 import logging
 
 from PyQt5 import QtCore
-from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
+from PyQt5.QtCore import QT_TRANSLATE_NOOP, Qt
 from PyQt5.QtWidgets import (
-    QGroupBox,
-    QVBoxLayout,
+    QDoubleSpinBox,
     QGridLayout,
+    QGroupBox,
+    QHeaderView,
+    QLabel,
     QLineEdit,
+    QPushButton,
+    QStyledItemDelegate,
     QTableView,
     QTableWidget,
-    QHeaderView,
-    QPushButton,
-    QLabel,
-    QDoubleSpinBox,
-    QStyledItemDelegate,
+    QVBoxLayout,
 )
 
 from lisp.core.decorators import async_function
@@ -41,7 +41,7 @@ from lisp.core.has_properties import Property
 from lisp.cues.cue import Cue, CueAction
 from lisp.plugins import get_plugin
 from lisp.plugins.osc.osc_server import OscMessageType
-from lisp.ui.qdelegates import ComboBoxDelegate, BoolCheckBoxDelegate
+from lisp.ui.qdelegates import BoolCheckBoxDelegate, ComboBoxDelegate
 from lisp.ui.qmodels import SimpleTableModel
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
 from lisp.ui.settings.pages import SettingsPage
@@ -68,7 +68,8 @@ class OscCue(Cue):
         CueAction.Start,
         CueAction.Stop,
         CueAction.Pause,
-        CueAction.Resume
+        CueAction.Resume,
+        CueAction.Interrupt,
     )
 
     path = Property(default="")

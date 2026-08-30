@@ -38,89 +38,29 @@
   <context>
     <name>ListLayout</name>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="123"/>
+      <location filename="../../../plugins/list_layout/settings.py" line="119"/>
+      <source>Default behaviors (applied to new sessions)</source>
+      <translation>Standardverhalten (auf neue Sitzungen angewendet)</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/layout.py" line="189"/>
       <source>Show dB-meters</source>
       <translation>dB-Meter anzeigen</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="125"/>
-      <source>Show seek-bars</source>
-      <translation>Suchleiste anzeigen</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="124"/>
+      <location filename="../../../plugins/list_layout/layout.py" line="193"/>
       <source>Show accurate time</source>
       <translation>Genaue Zeit anzeigen</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="196"/>
-      <source>Show index column</source>
-      <translation>Indexspalte anzeigen</translation>
+      <location filename="../../../plugins/list_layout/layout.py" line="191"/>
+      <source>Show seek-bars</source>
+      <translation>Suchleiste anzeigen</translation>
     </message>
     <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="126"/>
+      <location filename="../../../plugins/list_layout/layout.py" line="199"/>
       <source>Auto-select next cue</source>
       <translation>Nächsten Cue automatisch auswählen</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="202"/>
-      <source>Selection mode</source>
-      <translation>Auswahlmodus</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="205"/>
-      <source>Show resize handles</source>
-      <translation>Größen-Griffe anzeigen</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="208"/>
-      <source>Restore default size</source>
-      <translation>Standard-Größe wiederherstellen</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="211"/>
-      <source>Disable GO Key While Playing</source>
-      <translation>GO-Taste während der Wiedergabe deaktivieren</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="164"/>
-      <source>Edit cue</source>
-      <translation>Cue bearbeiten</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="166"/>
-      <source>Edit selected</source>
-      <translation>Ausgewählte bearbeiten</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="170"/>
-      <source>Clone cue</source>
-      <translation>Cue klonen</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="172"/>
-      <source>Clone selected</source>
-      <translation>Ausgewählte klonen</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="176"/>
-      <source>Remove cue</source>
-      <translation>Cue entfernen</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="178"/>
-      <source>Remove selected</source>
-      <translation>Ausgewählte entfernen</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/list_layout/layout.py" line="410"/>
-      <source>Copy of {}</source>
-      <translation>Kopie von {}</translation>
-    </message>
-    <message>
-      <location filename="../../../plugins/list_layout/settings.py" line="119"/>
-      <source>Default behaviors (applied to new sessions)</source>
-      <translation>Standardverhalten (auf neue Sitzungen angewendet)</translation>
     </message>
     <message>
       <location filename="../../../plugins/list_layout/settings.py" line="128"/>
@@ -211,6 +151,66 @@
       <location filename="../../../plugins/list_layout/control_buttons.py" line="65"/>
       <source>Fade-In all</source>
       <translation>Alle einblenden</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/layout.py" line="196"/>
+      <source>Show index column</source>
+      <translation>Indexspalte anzeigen</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/layout.py" line="202"/>
+      <source>Selection mode</source>
+      <translation>Auswahlmodus</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/layout.py" line="205"/>
+      <source>Show resize handles</source>
+      <translation>Größen-Griffe anzeigen</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/layout.py" line="208"/>
+      <source>Restore default size</source>
+      <translation>Standard-Größe wiederherstellen</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/layout.py" line="211"/>
+      <source>Disable GO Key While Playing</source>
+      <translation>GO-Taste während der Wiedergabe deaktivieren</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/layout.py" line="164"/>
+      <source>Edit cue</source>
+      <translation>Cue bearbeiten</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/layout.py" line="166"/>
+      <source>Edit selected</source>
+      <translation>Ausgewählte bearbeiten</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/layout.py" line="170"/>
+      <source>Clone cue</source>
+      <translation>Cue klonen</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/layout.py" line="172"/>
+      <source>Clone selected</source>
+      <translation>Ausgewählte klonen</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/layout.py" line="176"/>
+      <source>Remove cue</source>
+      <translation>Cue entfernen</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/layout.py" line="178"/>
+      <source>Remove selected</source>
+      <translation>Ausgewählte entfernen</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/list_layout/layout.py" line="410"/>
+      <source>Copy of {}</source>
+      <translation>Kopie von {}</translation>
     </message>
   </context>
   <context>

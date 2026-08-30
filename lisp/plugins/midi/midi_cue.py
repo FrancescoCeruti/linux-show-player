@@ -24,9 +24,9 @@ from lisp.core.properties import Property
 from lisp.cues.cue import Cue, CueAction
 from lisp.plugins import get_plugin
 from lisp.plugins.midi.midi_utils import (
-    midi_str_to_dict,
     midi_dict_to_str,
     midi_from_str,
+    midi_str_to_dict,
 )
 from lisp.plugins.midi.widgets import MIDIMessageEdit
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
@@ -44,7 +44,8 @@ class MidiCue(Cue):
         CueAction.Start,
         CueAction.Stop,
         CueAction.Pause,
-        CueAction.Resume
+        CueAction.Resume,
+        CueAction.Interrupt,
     )
 
     message = Property(default="")

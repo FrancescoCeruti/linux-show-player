@@ -2,7 +2,7 @@ version: 2.1
 jobs:
   build-flatpak:
     machine:
-      image: ubuntu-2204:2023.10.1
+      image: ubuntu-2404:2024.11.1
 
     resource_class: large
 
@@ -20,9 +20,6 @@ jobs:
       - run:
           name: SYSTEM ⟹ Install required packages
           command: |
-            sudo apt-get -qq update
-            sudo apt-get install -y software-properties-common python3-software-properties
-            sudo add-apt-repository -y ppa:flatpak/stable
             sudo apt-get -qq update
             sudo apt-get install -y ostree flatpak flatpak-builder
 
@@ -89,8 +86,8 @@ jobs:
             mv out/linux-show-player.flatpak "out/$ARTIFACT_NAME"
 
             # Download helper for github releases
-            curl -O -L https://github.com/tcnksm/ghr/releases/download/v0.16.0/ghr_v0.16.0_linux_amd64.tar.gz
-            tar xvzf ghr_v0.16.0_linux_amd64.tar.gz --wildcards */ghr --strip-components=1
+            curl -O -L https://github.com/tcnksm/ghr/releases/download/v0.17.0/ghr_v0.17.0_linux_amd64.tar.gz
+            tar xvzf ghr_v0.17.0_linux_amd64.tar.gz --wildcards */ghr --strip-components=1
 
             # Upload the artifacts
             ./ghr \

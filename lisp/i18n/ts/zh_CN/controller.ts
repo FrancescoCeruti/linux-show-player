@@ -4,9 +4,14 @@
   <context>
     <name>Controller</name>
     <message>
-      <location filename="../../../plugins/controller/controller.py" line="166"/>
+      <location filename="../../../plugins/controller/controller.py" line="178"/>
       <source>Cannot load controller protocol: "{}"</source>
       <translation>无法加载控制器协议： "{}"</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/controller/controller.py" line="153"/>
+      <source>Unrecognized layout action: "{}"</source>
+      <translation type="unfinished">Unrecognized layout action: "{}"</translation>
     </message>
   </context>
   <context>
@@ -179,12 +184,12 @@ do not forget to edit the path later.</source>
   <context>
     <name>ControllerSettings</name>
     <message>
-      <location filename="../../../plugins/controller/protocols/midi.py" line="122"/>
+      <location filename="../../../plugins/controller/protocols/keyboard.py" line="79"/>
       <source>Add</source>
       <translation>添加</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/midi.py" line="123"/>
+      <location filename="../../../plugins/controller/protocols/keyboard.py" line="80"/>
       <source>Remove</source>
       <translation>移除</translation>
     </message>
@@ -192,54 +197,64 @@ do not forget to edit the path later.</source>
   <context>
     <name>GlobalAction</name>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="41"/>
+      <location filename="../../../plugins/controller/common.py" line="44"/>
       <source>Go</source>
       <translation>开始</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="42"/>
+      <location filename="../../../plugins/controller/common.py" line="45"/>
       <source>Reset</source>
       <translation>重置</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="43"/>
+      <location filename="../../../plugins/controller/common.py" line="46"/>
       <source>Stop all cues</source>
       <translation>停止所有提示</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="44"/>
+      <location filename="../../../plugins/controller/common.py" line="47"/>
       <source>Pause all cues</source>
       <translation>暂停所有提示</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="45"/>
+      <location filename="../../../plugins/controller/common.py" line="48"/>
       <source>Resume all cues</source>
       <translation>恢复所有提示</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="48"/>
+      <location filename="../../../plugins/controller/common.py" line="51"/>
       <source>Interrupt all cues</source>
       <translation>中断所有提示</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="51"/>
+      <location filename="../../../plugins/controller/common.py" line="54"/>
       <source>Fade-out all cues</source>
       <translation>淡出所有提示</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="54"/>
+      <location filename="../../../plugins/controller/common.py" line="57"/>
       <source>Fade-in all cues</source>
       <translation>淡入所有提示</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="57"/>
+      <location filename="../../../plugins/controller/common.py" line="60"/>
       <source>Move standby forward</source>
       <translation>移前待命</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/common.py" line="60"/>
+      <location filename="../../../plugins/controller/common.py" line="63"/>
       <source>Move standby back</source>
       <translation>移后待命</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/controller/common.py" line="66"/>
+      <source>Switch to previous page</source>
+      <translation type="unfinished">Switch to previous page</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/controller/common.py" line="69"/>
+      <source>Switch to next page</source>
+      <translation type="unfinished">Switch to next page</translation>
     </message>
   </context>
   <context>
@@ -281,9 +296,9 @@ do not forget to edit the path later.</source>
       <translation>布局控制</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/keyboard.py" line="44"/>
-      <source>Keyboard Shortcuts</source>
-      <translation>键盘快捷键</translation>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="230"/>
+      <source>OSC Controls</source>
+      <translation>OSC 控制</translation>
     </message>
     <message>
       <location filename="../../../plugins/controller/protocols/midi.py" line="64"/>
@@ -291,9 +306,9 @@ do not forget to edit the path later.</source>
       <translation>MIDI 控制</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="230"/>
-      <source>OSC Controls</source>
-      <translation>OSC 控制</translation>
+      <location filename="../../../plugins/controller/protocols/keyboard.py" line="44"/>
+      <source>Keyboard Shortcuts</source>
+      <translation>键盘快捷键</translation>
     </message>
   </context>
 </TS>
