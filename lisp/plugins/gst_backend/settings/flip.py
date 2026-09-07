@@ -46,7 +46,7 @@ class FlipSettings(SettingsPage):
         self.methodComboBox.addItem(translate("FlipSettings", "Rotate 180°"), 2)
         self.methodComboBox.addItem(translate("FlipSettings", "Counterclockwise 90°"), 3)
         self.methodComboBox.addItem(translate("FlipSettings", "Horizontal Flip"), 4)
-        self.methodComboBox.addItem(translate("FlipSettings", "Vertial Flip"), 5)
+        self.methodComboBox.addItem(translate("FlipSettings", "Vertical Flip"), 5)
         self.methodComboBox.addItem(translate("FlipSettings", "Diagonal Flip (upper-left / lower-right)"), 6)
         self.methodComboBox.addItem(translate("FlipSettings", "Diagonal Flip (upper-right / lower-left)"), 7)
         self.methodGroup.layout().addWidget(self.methodComboBox)

@@ -199,8 +199,8 @@
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/flip.py" line="49" />
-      <source>Vertial Flip</source>
-      <translation type="unfinished" />
+      <source>Vertical Flip</source>
+      <translation>Vertical Flip</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/settings/flip.py" line="50" />
@@ -387,7 +387,7 @@
     <message>
       <location filename="../../../plugins/gst_backend/elements/flip.py" line="31" />
       <source>Flip</source>
-      <translation type="unfinished" />
+      <translation>Flip</translation>
     </message>
     <message>
       <location filename="../../../plugins/gst_backend/elements/jack_sink.py" line="35" />
