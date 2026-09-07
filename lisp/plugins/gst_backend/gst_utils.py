@@ -84,5 +84,12 @@ def gtype(g_object: GObject.GObject) -> GObject.GType:
     return g_object.__gtype__
 
 
+def gst_request_pad(element: Gst.Element, template: str = "sink_%u") -> Gst.Pad:
+    """Request a pad, using whichever API name the installed GStreamer has."""
+    if hasattr(element, "request_pad_simple"):
+        return element.request_pad_simple(template)
+    return element.get_request_pad(template)
+
+
 class GstError(Exception):
     """Used to wrap GStreamer debug messages for the logging system."""
