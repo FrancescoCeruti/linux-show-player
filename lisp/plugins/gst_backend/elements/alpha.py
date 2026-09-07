@@ -28,6 +28,7 @@ from lisp.plugins.gst_backend.gst_properties import (
     GstLiveProperty,
     GstPropertyController,
 )
+from lisp.plugins.gst_backend.gst_utils import gst_request_pad
 
 
 class Alpha(GstMediaElement):
@@ -43,7 +44,7 @@ class Alpha(GstMediaElement):
 
     FadeInterpolationMode = GstController.InterpolationMode.CUBIC_MONOTONIC
 
-    background = GstProperty("gst_compositor", "background", default=Background.BLACK.value)
+    background = GstProperty("gst_compositor", "background", default=Background.TRANSPARENT.value)
     alpha = GstProperty("compositor_pad", "alpha", default=1.0)
     live_alpha = GstLiveProperty("compositor_pad", "alpha", type=float, range=(0, 1))
 
@@ -53,20 +54,24 @@ class Alpha(GstMediaElement):
         # Create elements
         self.sync_element = Gst.ElementFactory.make("identity", "alpha-sync")
         self.gst_compositor = Gst.ElementFactory.make("compositor", "alpha-compositor")
+        self.alpha_caps = Gst.ElementFactory.make("capsfilter", "alpha-caps")
+        self.alpha_caps.set_property("caps", Gst.Caps.from_string("video/x-raw,format=AYUV"))
         self.video_convert = Gst.ElementFactory.make("videoconvert", "alpha-convert")
 
-        self.compositor_pad = self.gst_compositor.get_request_pad("sink_0")
+        self.compositor_pad = gst_request_pad(self.gst_compositor, "sink_0")
 
         self.alpha_controller = GstPropertyController(self.pipeline, self.compositor_pad, self.sync_element, "alpha")
-
+    
         # Add elements to pipeline
         self.pipeline.add(self.sync_element)
         self.pipeline.add(self.gst_compositor)
+        self.pipeline.add(self.alpha_caps)
         self.pipeline.add(self.video_convert)
 
         # Link elements
         self.sync_element.get_static_pad("src").link(self.compositor_pad)
-        self.gst_compositor.link(self.video_convert)
+        self.gst_compositor.link(self.alpha_caps)
+        self.alpha_caps.link(self.video_convert)
 
     def get_controller(self, property_name: str) -> Optional[GstPropertyController]:
         if property_name == "live_alpha":
@@ -86,4 +91,5 @@ class Alpha(GstMediaElement):
     def dispose(self):
         self.pipeline.remove(self.sync_element)
         self.pipeline.remove(self.gst_compositor)
+        self.pipeline.remove(self.alpha_caps)
         self.pipeline.remove(self.video_convert)
