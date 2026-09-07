@@ -19,7 +19,7 @@ import os.path
 
 from PyQt5.QtCore import Qt, QT_TRANSLATE_NOOP
 from PyQt5.QtGui import QCursor
-from PyQt5.QtWidgets import QFileDialog, QApplication
+from PyQt5.QtWidgets import QFileDialog, QApplication, QMenu, QAction
 
 from lisp import backend
 from lisp.backend.backend import Backend as BaseBackend
@@ -43,6 +43,7 @@ from lisp.plugins.gst_backend.gst_utils import (
     gst_uri_duration,
 )
 from lisp.plugins.gst_backend.gst_waveform import GstWaveform
+from lisp.plugins.gst_backend.video_output import VideoOutputWindowManager
 from lisp.ui.settings.app_configuration import AppConfigurationDialog
 from lisp.ui.settings.cue_settings import CueSettingsRegistry
 from lisp.ui.ui_utils import translate, qfile_filters
@@ -59,7 +60,11 @@ class GstBackend(Plugin, BaseBackend):
         super().__init__(app)
 
         # Initialize GStreamer
-        Gst.init(None)
+        Gst.init([])
+
+        # Manages the video output windows
+        self.video_outputs = VideoOutputWindowManager(GstBackend.Config)
+
         # Register GStreamer settings widgets
         AppConfigurationDialog.registerSettingsPage(
             "plugins.gst", GstSettings, GstBackend.Config
@@ -93,6 +98,46 @@ class GstBackend(Plugin, BaseBackend):
         settings.load()
 
         backend.set_backend(self)
+
+        # "Video Outputs" runtime open/close menu
+        self._videoOutputsMenu = QMenu(self.app.window.menuTools)
+        self._videoOutputsMenu.setTitle(
+            translate("GstBackend", "Video Outputs")
+        )
+        self._videoOutputsMenu.aboutToShow.connect(
+            self._update_video_outputs_menu
+        )
+        self.app.window.menuTools.addMenu(self._videoOutputsMenu)
+
+    def finalize(self):
+        self.video_outputs.close_all()
+        super().finalize()
+
+    def _update_video_outputs_menu(self):
+        self._videoOutputsMenu.clear()
+
+        for window_id, name in self.video_outputs.list_windows():
+            action = QAction(name, self._videoOutputsMenu)
+            action.setCheckable(True)
+            action.setChecked(self.video_outputs.is_open(window_id))
+            action.toggled.connect(
+                lambda checked, wid=window_id: self._toggle_video_output(
+                    wid, checked
+                )
+            )
+            self._videoOutputsMenu.addAction(action)
+
+        if not self.video_outputs.list_windows():
+            emptyAction = self._videoOutputsMenu.addAction(
+                translate("GstBackend", "No output window configured")
+            )
+            emptyAction.setEnabled(False)
+
+    def _toggle_video_output(self, window_id, checked):
+        if checked:
+            self.video_outputs.open(window_id)
+        else:
+            self.video_outputs.close(window_id)
 
     def uri_duration(self, uri):
         return gst_uri_duration(uri)
@@ -128,14 +173,28 @@ class GstBackend(Plugin, BaseBackend):
     def _add_uri_video_cue(self):
         # Create media cues, and add them to the Application cue_model
         extensions = self.supported_extensions()
-        self._add_uri_cue({"video": extensions["video"]})
+
+        windows = self.video_outputs.list_windows()
+        pipe = list(GstBackend.Config["video_pipeline"])
+        if not windows:
+            pipe[-1] = "AutoVideoSink"
+
+        cues = self._add_uri_cue({"video": extensions["video"]}, pipe=pipe)
+
+        if windows and cues:
+            window_id, _name = windows[0]
+            for cue in cues:
+                try:
+                    cue.media.elements.VideoOutput.window = window_id
+                except AttributeError:
+                    pass
 
     def _add_uri_audio_cue(self):
         # Create media cues, and add them to the Application cue_model
         extensions = self.supported_extensions()
         self._add_uri_cue({"audio": extensions["audio"]})
 
-    def _add_uri_cue(self, extensions):
+    def _add_uri_cue(self, extensions, pipe=None):
         """Add audio MediaCue(s) form user-selected files"""
         # Get the last visited directory, or use the session-file location
         directory = GstBackend.Config.get("mediaLookupDir", "")
@@ -155,7 +214,9 @@ class GstBackend(Plugin, BaseBackend):
             GstBackend.Config["mediaLookupDir"] = os.path.dirname(files[0])
             GstBackend.Config.write()
 
-            self.add_cue_from_files(files)
+            return self.add_cue_from_files(files, pipe=pipe)
+
+        return []
 
     def add_cue_from_urls(self, urls):
         extensions = self.supported_extensions()
@@ -171,11 +232,13 @@ class GstBackend(Plugin, BaseBackend):
 
         self.add_cue_from_files(files)
 
-    def add_cue_from_files(self, files):
+    def add_cue_from_files(self, files, pipe=None):
         QApplication.setOverrideCursor(QCursor(Qt.WaitCursor))
 
         # Create media cues, and add them to the Application cue_model
-        factory = UriMediaCueFactory(GstBackend.Config["pipeline"])
+        factory = UriMediaCueFactory(
+            pipe if pipe is not None else GstBackend.Config["pipeline"]
+        )
 
         cues = []
         for file in files:
@@ -192,3 +255,5 @@ class GstBackend(Plugin, BaseBackend):
         )
 
         QApplication.restoreOverrideCursor()
+
+        return cues

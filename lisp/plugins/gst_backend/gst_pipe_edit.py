@@ -20,6 +20,7 @@ from PyQt5.QtWidgets import (
     QDialog,
     QGridLayout,
     QComboBox,
+    QLabel,
     QListWidget,
     QAbstractItemView,
     QVBoxLayout,
@@ -29,6 +30,7 @@ from PyQt5.QtWidgets import (
     QListWidgetItem,
 )
 
+from lisp.backend.media_element import ElementType, MediaType
 from lisp.plugins.gst_backend import elements
 from lisp.ui.icons import IconTheme
 from lisp.ui.ui_utils import translate
@@ -44,28 +46,39 @@ class GstPipeEdit(QWidget):
         self._app_mode = app_mode
 
         # Input selection
+        self.inputLabel = QLabel(self)
+        self.layout().addWidget(self.inputLabel, 0, 0, 1, 3)
         self.inputBox = QComboBox(self)
-        self.layout().addWidget(self.inputBox, 0, 0, 1, 3)
+        self.layout().addWidget(self.inputBox, 1, 0, 1, 3)
         self.__init_inputs()
 
         # Current plugins list
         self.currentList = QListWidget(self)
         self.currentList.setDragEnabled(True)
         self.currentList.setDragDropMode(QAbstractItemView.InternalMove)
-        self.layout().addWidget(self.currentList, 1, 0)
+        self.layout().addWidget(self.currentList, 2, 0)
 
         # Available plugins list
         self.availableList = QListWidget(self)
-        self.layout().addWidget(self.availableList, 1, 2)
+        self.layout().addWidget(self.availableList, 2, 2)
 
         # Output selection
-        self.outputBox = QComboBox(self)
-        self.layout().addWidget(self.outputBox, 4, 0, 1, 3)
+        self.audioOutputLabel = QLabel(self)
+        self.layout().addWidget(self.audioOutputLabel, 3, 0, 1, 3)
+        self.audioOutputBox = QComboBox(self)
+        self.layout().addWidget(self.audioOutputBox, 4, 0, 1, 3)
+
+        self.videoOutputLabel = QLabel(self)
+        self.layout().addWidget(self.videoOutputLabel, 5, 0, 1, 3)
+        self.videoOutputBox = QComboBox(self)
+        self.layout().addWidget(self.videoOutputBox, 6, 0, 1, 3)
+
         self.__init_outputs()
+        self.retranslateUi()
 
         # Add/Remove plugins buttons
         self.buttonsLayout = QVBoxLayout()
-        self.layout().addLayout(self.buttonsLayout, 1, 1)
+        self.layout().addLayout(self.buttonsLayout, 2, 1)
         self.layout().setAlignment(self.buttonsLayout, Qt.AlignHCenter)
 
         self.addButton = QPushButton(self)
@@ -83,6 +96,11 @@ class GstPipeEdit(QWidget):
         # Load the pipeline
         self.set_pipe(pipe)
 
+    def retranslateUi(self):
+        self.inputLabel.setText(translate("GstPipelineEdit", "Input"))
+        self.audioOutputLabel.setText(translate("GstPipelineEdit", "Audio Output"))
+        self.videoOutputLabel.setText(translate("GstPipelineEdit", "Video Output"))
+
     def set_pipe(self, pipe):
         if pipe:
             if not self._app_mode:
@@ -90,9 +108,16 @@ class GstPipeEdit(QWidget):
                     translate("MediaElementName", elements.input_name(pipe[0]))
                 )
 
-            self.outputBox.setCurrentText(
-                translate("MediaElementName", elements.output_name(pipe[-1]))
-            )
+            for output in self._pipe_outputs(pipe):
+                output_class = elements.all_elements()[output]
+                if output_class.MediaType == MediaType.Video:
+                    self.videoOutputBox.setCurrentText(
+                        translate("MediaElementName", elements.output_name(output))
+                    )
+                else:
+                    self.audioOutputBox.setCurrentText(
+                        translate("MediaElementName", elements.output_name(output))
+                    )
 
         self.__init_current_plugins(pipe)
         self.__init_available_plugins(pipe)
@@ -101,9 +126,25 @@ class GstPipeEdit(QWidget):
         pipe = [] if self._app_mode else [self.inputBox.currentData()]
         for n in range(self.currentList.count()):
             pipe.append(self.currentList.item(n).data(Qt.UserRole))
-        pipe.append(self.outputBox.currentData())
+
+        for output in (self.audioOutputBox.currentData(), self.videoOutputBox.currentData()):
+            if output is not None:
+                pipe.append(output)
 
         return tuple(pipe)
+
+    @staticmethod
+    def _pipe_outputs(pipe):
+        """Return the trailing run of Output-type entries in `pipe` (0-2)."""
+        all_elements = elements.all_elements()
+        outputs = []
+        for name in reversed(pipe):
+            element_class = all_elements.get(name)
+            if element_class is None or element_class.ElementType != ElementType.Output:
+                break
+            outputs.append(name)
+
+        return outputs
 
     def __init_inputs(self):
         if self._app_mode:
@@ -119,22 +160,30 @@ class GstPipeEdit(QWidget):
             self.inputBox.setEnabled(self.inputBox.count() > 1)
 
     def __init_outputs(self):
+        self._populate_output_box(self.audioOutputBox, elements.audio_outputs())
+        self._populate_output_box(self.videoOutputBox, elements.video_outputs())
+
+    @staticmethod
+    def _populate_output_box(box, outputs):
+        box.addItem(translate("GstPipelineEdit", "None"), None)
+
         outputs_by_name = {}
-        for key, output in elements.outputs().items():
+        for key, output in outputs.items():
             outputs_by_name[translate("MediaElementName", output.Name)] = key
 
         for name in sorted(outputs_by_name):
-            self.outputBox.addItem(name, outputs_by_name[name])
+            box.addItem(name, outputs_by_name[name])
 
-        self.outputBox.setEnabled(self.outputBox.count() > 1)
+        box.setEnabled(box.count() > 1)
 
     def __init_current_plugins(self, pipe):
         self.currentList.clear()
 
         # If not in app_mode, the first pipe element is the input
-        # the last the output
+        # the last 0-2 are the output
         start = 0 if self._app_mode else 1
-        for plugin in pipe[start:-1]:
+        end = len(pipe) - len(self._pipe_outputs(pipe))
+        for plugin in pipe[start:end]:
             item = QListWidgetItem(
                 translate("MediaElementName", elements.element_name(plugin))
             )

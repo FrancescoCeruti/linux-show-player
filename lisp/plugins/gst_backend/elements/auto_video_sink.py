@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2026 Tobias Teichmann <tobias.teichmann@gmx.at>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,22 +22,22 @@ from lisp.plugins.gst_backend.gi_repository import Gst
 from lisp.plugins.gst_backend.gst_element import GstMediaElement
 
 
-class AutoSink(GstMediaElement):
+class AutoVideoSink(GstMediaElement):
     ElementType = ElementType.Output
-    MediaType = MediaType.Audio
+    MediaType = MediaType.Video
     Name = QT_TRANSLATE_NOOP("MediaElementName", "System Out")
 
     def __init__(self, pipeline):
         super().__init__(pipeline)
 
-        self.audio_sink = Gst.ElementFactory.make("autoaudiosink", "auto_audio_sink")
-        self.pipeline.add(self.audio_sink)
+        self.video_sink = Gst.ElementFactory.make("autovideosink", "auto_video_sink")
+        self.pipeline.add(self.video_sink)
 
-    def sink(self):
-        return self.audio_sink
+    def sink(self) -> Gst.Element:
+        return self.video_sink
 
-    def stop(self):
-        self.audio_sink.set_state(Gst.State.NULL)
+    def stop(self) -> None:
+        self.video_sink.set_state(Gst.State.NULL)
 
-    def dispose(self):
-        self.pipeline.remove(self.audio_sink)
+    def dispose(self) -> None:
+        self.pipeline.remove(self.video_sink)
