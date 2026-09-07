@@ -30,8 +30,14 @@ class AutoSink(GstMediaElement):
     def __init__(self, pipeline):
         super().__init__(pipeline)
 
-        self.auto_sink = Gst.ElementFactory.make("autoaudiosink", "sink")
-        self.pipeline.add(self.auto_sink)
+        self.audio_sink = Gst.ElementFactory.make("autoaudiosink", "auto_audio_sink")
+        self.pipeline.add(self.audio_sink)
 
     def sink(self):
-        return self.auto_sink
+        return self.audio_sink
+
+    def stop(self):
+        self.audio_sink.set_state(Gst.State.NULL)
+
+    def dispose(self):
+        self.pipeline.remove(self.audio_sink)

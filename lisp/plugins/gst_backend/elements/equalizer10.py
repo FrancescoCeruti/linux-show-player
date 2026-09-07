@@ -55,3 +55,7 @@ class Equalizer10(GstMediaElement):
 
     def src(self):
         return self.audio_converter
+
+    def dispose(self):
+        self.pipeline.remove(self.equalizer)
+        self.pipeline.remove(self.audio_converter)

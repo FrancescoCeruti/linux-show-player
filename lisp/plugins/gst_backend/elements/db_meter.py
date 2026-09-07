@@ -75,3 +75,7 @@ class DbMeter(GstMediaElement):
                         structure.get_value("peak"),
                         structure.get_value("decay"),
                     )
+
+    def dispose(self):
+        self.pipeline.remove(self.level)
+        self.pipeline.remove(self.audio_convert)

@@ -15,6 +15,9 @@ eggs/
 /.project
 /.pydevproject
 
+# VSCode IDE
+.vscode/*
+
 # Pycharm IDE
 .idea/*
 

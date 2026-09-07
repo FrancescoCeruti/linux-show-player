@@ -65,3 +65,7 @@ class AudioDynamic(GstMediaElement):
 
     def src(self):
         return self.audio_converter
+
+    def dispose(self):
+        self.pipeline.remove(self.audio_dynamic)
+        self.pipeline.remove(self.audio_converter)

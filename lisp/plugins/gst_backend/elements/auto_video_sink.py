@@ -1,6 +1,6 @@
 # This file is part of Linux Show Player
 #
-# Copyright 2016 Francesco Ceruti <ceppofrancy@gmail.com>
+# Copyright 2026 Tobias Teichmann <tobias.teichmann@gmx.at>
 #
 # Linux Show Player is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,33 +20,24 @@ from PyQt5.QtCore import QT_TRANSLATE_NOOP
 from lisp.backend.media_element import ElementType, MediaType
 from lisp.plugins.gst_backend.gi_repository import Gst
 from lisp.plugins.gst_backend.gst_element import GstMediaElement
-from lisp.plugins.gst_backend.gst_properties import GstProperty
 
 
-class AudioPan(GstMediaElement):
-    ElementType = ElementType.Plugin
-    MediaType = MediaType.Audio
-    Name = QT_TRANSLATE_NOOP("MediaElementName", "Audio Pan")
-
-    pan = GstProperty("panorama", "panorama", default=0.0)
+class AutoVideoSink(GstMediaElement):
+    ElementType = ElementType.Output
+    MediaType = MediaType.Video
+    Name = QT_TRANSLATE_NOOP("MediaElementName", "System Out")
 
     def __init__(self, pipeline):
         super().__init__(pipeline)
 
-        self.panorama = Gst.ElementFactory.make("audiopanorama", None)
-        self.audio_convert = Gst.ElementFactory.make("audioconvert", None)
+        self.video_sink = Gst.ElementFactory.make("autovideosink", "auto_video_sink")
+        self.pipeline.add(self.video_sink)
 
-        self.pipeline.add(self.panorama)
-        self.pipeline.add(self.audio_convert)
+    def sink(self) -> Gst.Element:
+        return self.video_sink
 
-        self.panorama.link(self.audio_convert)
+    def stop(self) -> None:
+        self.video_sink.set_state(Gst.State.NULL)
 
-    def sink(self):
-        return self.panorama
-
-    def src(self):
-        return self.audio_convert
-
-    def dispose(self):
-        self.pipeline.remove(self.panorama)
-        self.pipeline.remove(self.audio_convert)
+    def dispose(self) -> None:
+        self.pipeline.remove(self.video_sink)
