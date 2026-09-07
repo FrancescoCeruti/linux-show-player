@@ -17,7 +17,7 @@
 
 from os.path import dirname
 
-from lisp.backend.media_element import ElementType
+from lisp.backend.media_element import ElementType, MediaType
 from lisp.core.loading import load_classes
 
 __INPUTS = {}
@@ -50,6 +50,22 @@ def outputs():
 
 def output_name(class_name):
     return __OUTPUTS[class_name].Name
+
+
+def audio_outputs():
+    return {
+        n: c
+        for n, c in __OUTPUTS.items()
+        if c.MediaType in (MediaType.Audio, MediaType.Unknown)
+    }
+
+
+def video_outputs():
+    return {
+        n: c
+        for n, c in __OUTPUTS.items()
+        if c.MediaType in (MediaType.Video, MediaType.Unknown)
+    }
 
 
 def plugins():

@@ -248,6 +248,7 @@ class GstMedia(Media):
             self.__finalizer()
 
         self.__pipeline = Gst.Pipeline()
+        self.__pipeline.lsp_media = weakref.ref(self)
         # Add a callback to watch for pipeline bus-messages
         bus = self.__pipeline.get_bus()
         bus.add_signal_watch()

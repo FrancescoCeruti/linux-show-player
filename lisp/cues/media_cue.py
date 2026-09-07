@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
+import weakref
 from threading import Lock
 
 from PyQt5.QtCore import QT_TRANSLATE_NOOP
@@ -53,6 +54,7 @@ class MediaCue(Cue):
     def __init__(self, app, media, id=None):
         super().__init__(app, id=id)
         self.media = media
+        self.media.lsp_cue = weakref.ref(self)
         self.media.changed("duration").connect(self._duration_change)
         self.media.elements_changed.connect(self.__elements_changed)
         self.media.error.connect(self._on_error)
