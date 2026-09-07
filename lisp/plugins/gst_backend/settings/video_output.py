@@ -18,7 +18,13 @@
 from typing import Optional, TYPE_CHECKING
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QGroupBox, QComboBox, QVBoxLayout
+from PyQt5.QtWidgets import (
+    QComboBox,
+    QDoubleSpinBox,
+    QFormLayout,
+    QGroupBox,
+    QVBoxLayout,
+)
 
 from lisp import backend
 from lisp.plugins.gst_backend.elements.video_output import VideoOutput
@@ -47,6 +53,28 @@ class VideoOutputSettings(SettingsPage):
         self.windowComboBox = QComboBox(self.windowGroup)
         self.windowGroup.layout().addWidget(self.windowComboBox)
 
+        self.positionGroup = QGroupBox(self)
+        self.positionGroup.setLayout(QFormLayout())
+        self.layout().addWidget(self.positionGroup)
+
+        self.xSpinBox = QDoubleSpinBox(self.positionGroup)
+        self.xSpinBox.setRange(0, 100)
+        self.xSpinBox.setSuffix(" %")
+        self.ySpinBox = QDoubleSpinBox(self.positionGroup)
+        self.ySpinBox.setRange(0, 100)
+        self.ySpinBox.setSuffix(" %")
+        self.widthSpinBox = QDoubleSpinBox(self.positionGroup)
+        self.widthSpinBox.setRange(1, 100)
+        self.widthSpinBox.setSuffix(" %")
+        self.heightSpinBox = QDoubleSpinBox(self.positionGroup)
+        self.heightSpinBox.setRange(1, 100)
+        self.heightSpinBox.setSuffix(" %")
+
+        self.positionGroup.layout().addRow("X", self.xSpinBox)
+        self.positionGroup.layout().addRow("Y", self.ySpinBox)
+        self.positionGroup.layout().addRow("Width", self.widthSpinBox)
+        self.positionGroup.layout().addRow("Height", self.heightSpinBox)
+
         self._populate()
         self.retranslateUi()
 
@@ -66,12 +94,33 @@ class VideoOutputSettings(SettingsPage):
         self.windowGroup.setTitle(
             translate("VideoOutputSettings", "Output window")
         )
+        self.positionGroup.setTitle(
+            translate("VideoOutputSettings", "Position & Size")
+        )
+        self.positionGroup.layout().labelForField(self.xSpinBox).setText(
+            translate("VideoOutputSettings", "X")
+        )
+        self.positionGroup.layout().labelForField(self.ySpinBox).setText(
+            translate("VideoOutputSettings", "Y")
+        )
+        self.positionGroup.layout().labelForField(self.widthSpinBox).setText(
+            translate("VideoOutputSettings", "Width")
+        )
+        self.positionGroup.layout().labelForField(self.heightSpinBox).setText(
+            translate("VideoOutputSettings", "Height")
+        )
 
     def enableCheck(self, enabled: bool) -> None:
         self.setGroupEnabled(self.windowGroup, enabled)
+        self.setGroupEnabled(self.positionGroup, enabled)
 
     def loadSettings(self, settings: dict) -> None:
         self._populate()
+
+        self.xSpinBox.setValue(settings.get("pos_x", 0.0) * 100)
+        self.ySpinBox.setValue(settings.get("pos_y", 0.0) * 100)
+        self.widthSpinBox.setValue(settings.get("scale_width", 1.0) * 100)
+        self.heightSpinBox.setValue(settings.get("scale_height", 1.0) * 100)
 
         window_id = settings.get("window_id", "")
         window_name = settings.get("window_name", "")
@@ -102,15 +151,22 @@ class VideoOutputSettings(SettingsPage):
             self.windowComboBox.setCurrentIndex(index)
 
     def getSettings(self) -> dict:
+        settings = {}
+
         if self.isGroupEnabled(self.windowGroup):
             data = self.windowComboBox.currentData()
             if data is None:
-                return {"window_id": "", "window_name": ""}
+                settings["window_id"] = ""
+                settings["window_name"] = ""
+            else:
+                window_id, window_name, _ = data
+                settings["window_id"] = window_id
+                settings["window_name"] = window_name
 
-            window_id, window_name, _ = data
-            return {
-                "window_id": window_id,
-                "window_name": window_name,
-            }
+        if self.isGroupEnabled(self.positionGroup):
+            settings["pos_x"] = self.xSpinBox.value() / 100
+            settings["pos_y"] = self.ySpinBox.value() / 100
+            settings["scale_width"] = self.widthSpinBox.value() / 100
+            settings["scale_height"] = self.heightSpinBox.value() / 100
 
-        return {}
+        return settings

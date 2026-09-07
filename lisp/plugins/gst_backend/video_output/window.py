@@ -224,7 +224,9 @@ class VideoOutputWindow:
             exc_info=GstError(debug),
         )
 
-    def request_channel(self, channel: str) -> None:
+    def request_channel(
+        self, channel: str, geometry: Tuple[float, float, float, float] = (0.0, 0.0, 1.0, 1.0)
+    ) -> None:
         if not self.is_open() or channel in self._channels:
             return
 
@@ -248,10 +250,11 @@ class VideoOutputWindow:
         alpha_caps.get_static_pad("src").link(pad)
 
         width, height = self._output_size()
-        pad.set_property("xpos", 0)
-        pad.set_property("ypos", 0)
-        pad.set_property("width", width)
-        pad.set_property("height", height)
+        pos_x, pos_y, scale_width, scale_height = geometry
+        pad.set_property("xpos", round(pos_x * width))
+        pad.set_property("ypos", round(pos_y * height))
+        pad.set_property("width", round(scale_width * width))
+        pad.set_property("height", round(scale_height * height))
         pad.set_property("sizing-policy", "keep-aspect-ratio")
 
         for element in chain:
@@ -263,6 +266,20 @@ class VideoOutputWindow:
         logger.debug(
             f'Video output window "{self.name}": channel "{channel}" attached'
         )
+
+    def update_channel_geometry(
+        self, channel: str, geometry: Tuple[float, float, float, float]
+    ) -> None:
+        entry = self._channels.get(channel)
+        if entry is None:
+            return
+
+        width, height = self._output_size()
+        pos_x, pos_y, scale_width, scale_height = geometry
+        entry.pad.set_property("xpos", round(pos_x * width))
+        entry.pad.set_property("ypos", round(pos_y * height))
+        entry.pad.set_property("width", round(scale_width * width))
+        entry.pad.set_property("height", round(scale_height * height))
 
     def release_channel(self, channel: str) -> None:
         entry = self._channels.pop(channel, None)

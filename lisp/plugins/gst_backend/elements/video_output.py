@@ -32,6 +32,22 @@ if TYPE_CHECKING:
     )
 
 
+class PipGeometryProperty(Property):
+    """A Property that also pushes live updates to the compositor pad.
+
+    Mirrors `GstProperty`'s "always push through immediately" behaviour
+    (see `gst_properties.py`), but the actual `Gst.Pad` this maps to is
+    owned by the target `VideoOutputWindow`'s own pipeline and only exists
+    while the channel is attached, so the push goes through the window
+    manager instead of a directly-held element reference.
+    """
+
+    def __set__(self, instance, value):
+        super().__set__(instance, value)
+        if instance is not None:
+            instance._push_geometry()
+
+
 class VideoOutput(GstMediaElement):
     """Sends video into a named, persistent output window.
 
@@ -50,6 +66,12 @@ class VideoOutput(GstMediaElement):
     window_id = Property(default="")
     window_name = Property(default="")
 
+    # Normalized (0.0-1.0) position/size
+    pos_x = PipGeometryProperty(default=0.0)
+    pos_y = PipGeometryProperty(default=0.0)
+    scale_width = PipGeometryProperty(default=1.0)
+    scale_height = PipGeometryProperty(default=1.0)
+
     def __init__(self, pipeline):
         super().__init__(pipeline)
 
@@ -66,7 +88,11 @@ class VideoOutput(GstMediaElement):
         manager = self._manager()
         if manager is not None:
             manager.add_channel(
-                self.window_id, self.window_name, self.channel, self._on_window_closed
+                self.window_id,
+                self.window_name,
+                self.channel,
+                (self.pos_x, self.pos_y, self.scale_width, self.scale_height),
+                self._on_window_closed,
             )
 
     def stop(self) -> None:
@@ -80,6 +106,14 @@ class VideoOutput(GstMediaElement):
         manager = self._manager()
         if manager is not None:
             manager.remove_channel(self.channel)
+
+    def _push_geometry(self) -> None:
+        manager = self._manager()
+        if manager is not None:
+            manager.update_channel_geometry(
+                self.channel,
+                (self.pos_x, self.pos_y, self.scale_width, self.scale_height),
+            )
 
     def _on_window_closed(self) -> None:
         cue = self._owning_cue()

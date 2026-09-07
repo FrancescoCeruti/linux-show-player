@@ -106,6 +106,7 @@ class VideoOutputWindowManager:
         window_id: str,
         window_name: str,
         channel: str,
+        geometry: tuple = (0.0, 0.0, 1.0, 1.0),
         on_orphaned: Optional[Callable] = None,
     ):
         resolved_id = self._resolve_window_id(window_id, window_name)
@@ -129,7 +130,7 @@ class VideoOutputWindowManager:
         if not window.is_open():
             window.open()
 
-        window.request_channel(channel)
+        window.request_channel(channel, geometry)
         callback = None
         if on_orphaned is not None:
             if isinstance(on_orphaned, MethodType):
@@ -137,6 +138,15 @@ class VideoOutputWindowManager:
             else:
                 callback = weak_call_proxy(weakref.ref(on_orphaned))
         self._channels[channel] = _Attachment(resolved_id, callback)
+
+    def update_channel_geometry(self, channel: str, geometry: tuple):
+        attachment = self._channels.get(channel)
+        if attachment is None:
+            return
+
+        window = self._windows.get(attachment.window_id)
+        if window is not None:
+            window.update_channel_geometry(channel, geometry)
 
     def remove_channel(self, channel: str):
         attachment = self._channels.pop(channel, None)

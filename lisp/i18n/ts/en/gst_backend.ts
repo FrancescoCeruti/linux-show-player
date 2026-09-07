@@ -440,7 +440,7 @@
       <translation>Wayland Video</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/elements/video_output.py" line="48" />
+      <location filename="../../../plugins/gst_backend/elements/video_output.py" line="64" />
       <source>Video Output Window</source>
       <translation>Video Output Window</translation>
     </message>
@@ -617,12 +617,37 @@
   <context>
     <name>VideoOutputSettings</name>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/video_output.py" line="67" />
+      <location filename="../../../plugins/gst_backend/settings/video_output.py" line="95" />
       <source>Output window</source>
       <translation>Output window</translation>
     </message>
     <message>
-      <location filename="../../../plugins/gst_backend/settings/video_output.py" line="93" />
+      <location filename="../../../plugins/gst_backend/settings/video_output.py" line="98" />
+      <source>Position &amp; Size</source>
+      <translation>Position &amp; Size</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/gst_backend/settings/video_output.py" line="101" />
+      <source>X</source>
+      <translation>X</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/gst_backend/settings/video_output.py" line="104" />
+      <source>Y</source>
+      <translation>Y</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/gst_backend/settings/video_output.py" line="107" />
+      <source>Width</source>
+      <translation>Width</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/gst_backend/settings/video_output.py" line="110" />
+      <source>Height</source>
+      <translation>Height</translation>
+    </message>
+    <message>
+      <location filename="../../../plugins/gst_backend/settings/video_output.py" line="142" />
       <source>{} (unavailable)</source>
       <translation>{} (unavailable)</translation>
     </message>
