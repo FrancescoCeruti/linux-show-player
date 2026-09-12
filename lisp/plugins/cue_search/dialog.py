@@ -126,6 +126,10 @@ class CueSearchDialog(QDialog):
         self.searchEdit.setFocus()
         self.updateResults(self.searchEdit.text())
 
+    def closeEvent(self, event):
+        self.resultsView.setPulsing(False)
+        super().closeEvent(event)
+
     def eventFilter(self, watched, event):
         if event.type() == event.KeyPress:
             if watched is self.searchEdit:
@@ -153,23 +157,30 @@ class CueSearchDialog(QDialog):
         else:
             matches = search_cues(self._app, query)
 
+        fading = False
         for match in matches:
             self.observeCue(match.cue)
 
             item = QTreeWidgetItem()
-            # Index
+            # Icon
             item.setIcon(0, self.cueIcon(match.cue))
-            item.setText(0, str(match.cue.index + 1))
             item.setData(0, Qt.UserRole, match.cue)
-            item.setTextAlignment(0, Qt.AlignRight | Qt.AlignVCenter)
-            # Icon+Name
-            item.setText(1, match.name)
-            item.setData(1, Qt.UserRole, match.formatted_name)
+            # Index
+            item.setText(1, str(match.cue.index + 1))
+            item.setTextAlignment(1, Qt.AlignCenter)
+            # Name
+            item.setText(2, match.name)
+            item.setData(2, Qt.UserRole, match.formatted_name)
             # Description
-            item.setText(2, match.description)
-            item.setData(2, Qt.UserRole, match.formatted_description)
+            item.setText(3, match.description)
+            item.setData(3, Qt.UserRole, match.formatted_description)
+
+            if match.cue.is_fading_out():
+                fading = True
 
             self.resultsView.addTopLevelItem(item)
+
+        self.resultsView.setPulsing(fading)
 
         if matches:
             self.resultsView.setCurrentItem(self.resultsView.topLevelItem(0))
@@ -267,6 +278,20 @@ class CueSearchDialog(QDialog):
 
                 return
 
+    def onFadeOutStart(self):
+        self.resultsView.setPulsing(True)
+
+    def onFadeOutEnd(self):
+        # Stop pulsing only if no cue is fading
+        for row in range(self.resultsView.topLevelItemCount()):
+            item = self.resultsView.topLevelItem(row)
+            cue = item.data(0, Qt.UserRole)
+
+            if cue.is_fading_out():
+                return
+
+        self.resultsView.setPulsing(False)
+
     def cueIcon(self, cue: Cue):
         if cue.state & CueState.Running:
             return IconTheme.get(f"{cue.icon}-running")
@@ -286,6 +311,8 @@ class CueSearchDialog(QDialog):
         cue.paused.connect(self.updateCueState, Connection.QtQueued)
         cue.error.connect(self.updateCueState, Connection.QtQueued)
         cue.end.connect(self.updateCueState, Connection.QtQueued)
+        cue.fadeout_start.connect(self.onFadeOutStart, Connection.QtQueued)
+        cue.fadeout_end.connect(self.onFadeOutEnd, Connection.QtQueued)
 
     def stopObservingCue(self, cue: Cue):
         cue.interrupted.disconnect(self.updateCueState)
@@ -294,6 +321,8 @@ class CueSearchDialog(QDialog):
         cue.paused.disconnect(self.updateCueState)
         cue.error.disconnect(self.updateCueState)
         cue.end.disconnect(self.updateCueState)
+        cue.fadeout_start.disconnect(self.onFadeOutStart)
+        cue.fadeout_end.disconnect(self.onFadeOutEnd)
 
         self._observedCues.remove(cue)
 
@@ -305,6 +334,8 @@ class CueSearchDialog(QDialog):
             cue.paused.disconnect(self.updateCueState)
             cue.error.disconnect(self.updateCueState)
             cue.end.disconnect(self.updateCueState)
+            cue.fadeout_start.disconnect(self.onFadeOutStart)
+            cue.fadeout_end.disconnect(self.onFadeOutEnd)
 
         self._observedCues.clear()
 

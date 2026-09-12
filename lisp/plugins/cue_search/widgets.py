@@ -15,14 +15,18 @@
 # You should have received a copy of the GNU General Public License
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtGui import QAbstractTextDocumentLayout, QColor, QTextDocument
+from PyQt5.QtCore import QEasingCurve, Qt, QVariantAnimation
+from PyQt5.QtGui import (
+    QAbstractTextDocumentLayout,
+    QColor,
+    QTextDocument,
+)
 from PyQt5.QtWidgets import (
     QStyle,
     QStyleOptionViewItem,
     QStyledItemDelegate,
     QTreeWidget,
 )
-from PyQt5.QtCore import Qt
 
 from lisp.ui.ui_utils import translate
 
@@ -36,27 +40,99 @@ class ResultList(QTreeWidget):
         self.setAlternatingRowColors(True)
         self.setSelectionMode(QTreeWidget.SingleSelection)
         self.setEditTriggers(QTreeWidget.NoEditTriggers)
-        self.setItemDelegateForColumn(1, HtmlDelagate(self))
+        self.setItemDelegateForColumn(0, IconDelegate(self))
         self.setItemDelegateForColumn(2, HtmlDelagate(self))
-        self.setStyleSheet("""
+        self.setItemDelegateForColumn(3, HtmlDelagate(self))
+        self.header().setMinimumSectionSize(28)
+        self.setStyleSheet(
+            """
             QWidget::item:selected,
             QWidget::item:selected:hover {
                 color: palette(text);
                 background-color: rgba(250, 220, 0, 100);
             }
-        """)
+            """
+        )
+
+        self._fadePulse = QVariantAnimation(
+            self,
+            startValue=1.0,
+            endValue=0.25,
+            duration=1000,
+            loopCount=-1,
+            easingCurve=QEasingCurve.SineCurve,
+        )
+        self._fadePulse.valueChanged.connect(self._onFadePulse)
 
         self.retranslateUi()
+
+    def setPulsing(self, pulsing):
+        isRunning = self._fadePulse.state() == QVariantAnimation.Running
+
+        if pulsing and not isRunning:
+            self._fadePulse.start()
+        elif not pulsing and isRunning:
+            self._fadePulse.stop()
+
+    def _onFadePulse(self, value):
+        for row in range(self.topLevelItemCount()):
+            item = self.topLevelItem(row)
+            cue = item.data(0, Qt.UserRole)
+
+            if cue.is_fading_out():
+                self.update(self.indexFromItem(item, 0))
 
     def retranslateUi(self):
         self.setHeaderLabels(
             (
+                "",
                 translate("CueSearch", "#"),
                 translate("CueSearch", "Cue"),
                 translate("CueSearch", "Description"),
             )
         )
         self.header().setStretchLastSection(True)
+
+
+class IconDelegate(QStyledItemDelegate):
+    def __init__(self, view):
+        super().__init__(view)
+        self._view = view
+
+    def sizeHint(self, option, index):
+        options = QStyleOptionViewItem(option)
+        self.initStyleOption(options, index)
+
+        if options.decorationSize.isValid():
+            return options.decorationSize
+
+        return super().sizeHint(option, index)
+
+    def paint(self, painter, option, index):
+        options = QStyleOptionViewItem(option)
+        self.initStyleOption(options, index)
+
+        style = options.widget.style()
+        iconRect = style.subElementRect(
+            QStyle.SE_ItemViewItemDecoration, options, options.widget
+        )
+
+        # Draw the item without icon
+        options.features &= ~QStyleOptionViewItem.HasDecoration
+        style.drawControl(
+            QStyle.CE_ItemViewItem, options, painter, options.widget
+        )
+
+        painter.save()
+
+        # Use the pulse value for opacity, if fading
+        cue = index.data(Qt.UserRole)
+        if cue.is_fading_out():
+            painter.setOpacity(self._view._fadePulse.currentValue())
+
+        options.icon.paint(painter, iconRect)
+
+        painter.restore()
 
 
 class HtmlDelagate(QStyledItemDelegate):
