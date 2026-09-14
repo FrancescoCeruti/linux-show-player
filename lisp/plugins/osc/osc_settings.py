@@ -17,13 +17,15 @@
 # along with Linux Show Player.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import QT_TRANSLATE_NOOP, Qt
+from PyQt5.QtNetwork import QAbstractSocket, QNetworkInterface
 from PyQt5.QtWidgets import (
-    QVBoxLayout,
+    QComboBox,
     QGridLayout,
     QGroupBox,
     QLabel,
-    QSpinBox,
     QLineEdit,
+    QSpinBox,
+    QVBoxLayout,
 )
 
 from lisp.core.util import get_lan_ip
@@ -51,9 +53,20 @@ class OscSettings(SettingsPage):
         self.inwardsGroupBox.layout().addWidget(self.inwardsLabel, 0, 0, 1, 2)
 
         self.localaddrLabel = QLabel()
-        self.localaddrValue = QLabel(get_lan_ip())
+        self.localaddrCombo = QComboBox()
+        self.localaddrCombo.addItem(
+            translate("OscSettings", "All interfaces"), "0.0.0.0"
+        )
+        for interface in QNetworkInterface.allInterfaces():
+            for entry in interface.addressEntries():
+                address = entry.ip()
+                if address.protocol() == QAbstractSocket.IPv4Protocol:
+                    self.localaddrCombo.addItem(
+                        f"{interface.humanReadableName()} ({address.toString()})",
+                        address.toString(),
+                    )
         self.inwardsGroupBox.layout().addWidget(self.localaddrLabel, 1, 0)
-        self.inwardsGroupBox.layout().addWidget(self.localaddrValue, 1, 1)
+        self.inwardsGroupBox.layout().addWidget(self.localaddrCombo, 1, 1)
 
         self.inportLabel = QLabel()
         self.inportBox = QSpinBox()
@@ -113,12 +126,19 @@ class OscSettings(SettingsPage):
 
     def getSettings(self):
         return {
+            "bindAddress": self.localaddrCombo.currentData(),
             "inPort": self.inportBox.value(),
             "outPort": self.outportBox.value(),
             "hostname": self.hostnameEdit.text(),
         }
 
     def loadSettings(self, settings):
+        bind_address = settings.get("bindAddress", get_lan_ip())
+        index = self.localaddrCombo.findData(bind_address)
+        if index < 0 and bind_address:
+            self.localaddrCombo.addItem(bind_address, bind_address)
+            index = self.localaddrCombo.count() - 1
+        self.localaddrCombo.setCurrentIndex(max(index, 0))
         self.inportBox.setValue(settings["inPort"])
         self.outportBox.setValue(settings["outPort"])
         self.hostnameEdit.setText(settings["hostname"])
