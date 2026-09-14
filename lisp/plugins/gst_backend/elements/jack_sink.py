@@ -24,9 +24,54 @@ from lisp.backend.media_element import ElementType, MediaType
 from lisp.core.properties import Property
 from lisp.plugins.gst_backend.gi_repository import Gst
 from lisp.plugins.gst_backend.gst_element import GstMediaElement
-from lisp.ui.ui_utils import translate
 
 logger = logging.getLogger(__name__)
+
+
+def _connect_configured_ports(client, out_ports, connections):
+    """Apply complete JACK routes without discarding an unavailable route."""
+    available_inputs = {
+        port.name for port in client.get_ports(is_audio=True, is_input=True)
+    }
+
+    for output, input_names in enumerate(connections):
+        if output >= len(out_ports):
+            break
+
+        missing_inputs = [
+            name for name in input_names if name not in available_inputs
+        ]
+        if missing_inputs:
+            logger.warning(
+                "Keeping the current JACK route for output %s because the "
+                "configured ports are unavailable: %s",
+                output,
+                ", ".join(missing_inputs),
+            )
+            continue
+
+        output_port = out_ports[output]
+        for connected_port in client.get_all_connections(output_port):
+            try:
+                client.disconnect(output_port, connected_port)
+            except jack.JackError as error:
+                logger.warning(
+                    "Cannot disconnect JACK ports %s and %s: %s",
+                    output_port,
+                    connected_port,
+                    error,
+                )
+
+        for input_name in input_names:
+            try:
+                client.connect(output_port, input_name)
+            except jack.JackError as error:
+                logger.warning(
+                    "Cannot connect JACK ports %s and %s: %s",
+                    output_port,
+                    input_name,
+                    error,
+                )
 
 
 class JackSink(GstMediaElement):
@@ -126,32 +171,9 @@ class JackSink(GstMediaElement):
         out_ports = JackSink._ControlClient.get_ports(
             name_pattern="^" + self._client_name + ":.+", is_audio=True
         )
-
-        for port in out_ports:
-            for conn_port in JackSink._ControlClient.get_all_connections(port):
-                try:
-                    JackSink._ControlClient.disconnect(port, conn_port)
-                except jack.JackError:
-                    logger.exception(
-                        translate(
-                            "JackSinkError",
-                            "An error occurred while disconnecting Jack ports",
-                        )
-                    )
-
-        for output, in_ports in enumerate(self.connections):
-            for input_name in in_ports:
-                if output < len(out_ports):
-                    try:
-                        JackSink._ControlClient.connect(
-                            out_ports[output], input_name
-                        )
-                    except jack.JackError:
-                        logger.exception(
-                            "An error occurred while connecting Jack ports"
-                        )
-                else:
-                    break
+        _connect_configured_ports(
+            JackSink._ControlClient, out_ports, self.connections
+        )
 
     def __on_message(self, bus, message):
         if message.src == self.jack_sink:
