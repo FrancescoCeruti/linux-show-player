@@ -38,8 +38,9 @@ class OscMessageType(EqEnum):
 
 
 class OscServer:
-    def __init__(self, hostname, in_port, out_port):
+    def __init__(self, hostname, in_port, out_port, bind_address=None):
         self.__in_port = in_port
+        self.__bind_address = bind_address or get_lan_ip()
         self.__hostname = hostname
         self.__out_port = out_port
 
@@ -79,6 +80,16 @@ class OscServer:
         self.__renew_client()
 
     @property
+    def bind_address(self):
+        return self.__bind_address
+
+    @bind_address.setter
+    def bind_address(self, address):
+        self.__bind_address = address
+        self.stop()
+        self.start()
+
+    @property
     def in_port(self):
         return self.__in_port
 
@@ -101,7 +112,7 @@ class OscServer:
 
         try:
             self.__srv = ThreadingOSCUDPServer(
-                (get_lan_ip(), self.__in_port), self.__dispatcher
+                (self.__bind_address, self.__in_port), self.__dispatcher
             )
 
             self.__thread = Thread(target=self.__srv.serve_forever)

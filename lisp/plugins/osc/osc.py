@@ -19,6 +19,7 @@
 from PyQt5.QtCore import QT_TRANSLATE_NOOP
 
 from lisp.core.plugin import Plugin
+from lisp.core.util import get_lan_ip
 from lisp.plugins.osc.osc_cue import OscCue
 from lisp.plugins.osc.osc_server import OscServer
 from lisp.plugins.osc.osc_settings import OscSettings
@@ -50,7 +51,10 @@ class Osc(Plugin):
 
         # Create a server instance
         self.__server = OscServer(
-            Osc.Config["hostname"], Osc.Config["inPort"], Osc.Config["outPort"]
+            Osc.Config["hostname"],
+            Osc.Config["inPort"],
+            Osc.Config["outPort"],
+            Osc.Config.get("bindAddress", get_lan_ip()),
         )
         self.__server.start()
 
@@ -65,7 +69,9 @@ class Osc(Plugin):
         self.__server.stop()
 
     def __config_change(self, key, value):
-        if key == "hostname":
+        if key == "bindAddress":
+            self.__server.bind_address = value
+        elif key == "hostname":
             self.__server.hostname = value
         elif key == "inPort":
             self.__server.in_port = value
