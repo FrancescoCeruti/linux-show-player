@@ -2,8 +2,10 @@ from PyQt5.QtWidgets import QAction
 from PyQt5.QtGui import QKeySequence
 
 from lisp.core.plugin import Plugin
+from lisp.ui.settings.app_configuration import AppConfigurationDialog
 from lisp.ui.ui_utils import translate
 from .dialog import CueSearchDialog
+from .settings import CueSearchSettings
 
 
 class CueSearch(Plugin):
@@ -13,6 +15,10 @@ class CueSearch(Plugin):
 
     def __init__(self, app):
         super().__init__(app)
+
+        AppConfigurationDialog.registerSettingsPage(
+            "plugins.cue_search", CueSearchSettings, CueSearch.Config
+        )
 
         # Entry in mainWindow menu
         self.menuAction = QAction(self.app.window)
