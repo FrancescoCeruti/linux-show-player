@@ -4,22 +4,22 @@
   <context>
     <name>CollectionCue</name>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="111"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="121"/>
       <source>Add</source>
       <translation>Ajouter</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="112"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="122"/>
       <source>Remove</source>
-      <translation>Retirer</translation>
+      <translation>Supprimer</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="186"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="196"/>
       <source>Cue</source>
       <translation>Cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="187"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="197"/>
       <source>Action</source>
       <translation>Action</translation>
     </message>
@@ -27,37 +27,37 @@
   <context>
     <name>CommandCue</name>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="148"/>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="157"/>
       <source>Command</source>
       <translation>Commande</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="150"/>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="159"/>
       <source>Command to execute, as in a shell</source>
       <translation>Commande à exécuter, comme dans un terminal</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="153"/>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="162"/>
       <source>Discard command output</source>
-      <translation>Abandonner la sortie de commande</translation>
+      <translation>Ignorer la sortie de commande</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="156"/>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="165"/>
       <source>Ignore command errors</source>
       <translation>Ignorer les erreurs de commande</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="159"/>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="168"/>
       <source>Kill instead of terminate</source>
       <translation>Killer au lieu de terminer</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="162"/>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="171"/>
       <source>Run the command on the host system</source>
-      <translation type="unfinished">Run the command on the host system</translation>
+      <translation>Exécuter la commande sur le système hôte</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="83"/>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="92"/>
       <source>Command cue ended with an error status. Exit code: {}</source>
       <translation>La commande de cue s'est terminée avec un état d'erreur. Code de sortie : {}</translation>
     </message>
@@ -73,9 +73,9 @@
   <context>
     <name>CueName</name>
     <message>
-      <location filename="../../../plugins/action_cues/seek_cue.py" line="40"/>
+      <location filename="../../../plugins/action_cues/seek_cue.py" line="41"/>
       <source>Seek Cue</source>
-      <translation>Recherche de Cue</translation>
+      <translation>Recherche de cue</translation>
     </message>
     <message>
       <location filename="../../../plugins/action_cues/collection_cue.py" line="43"/>
@@ -100,38 +100,38 @@
     <message>
       <location filename="../../../plugins/action_cues/volume_control.py" line="54"/>
       <source>Volume Control</source>
-      <translation>Contrôle du Volume</translation>
+      <translation>Contrôle du volume</translation>
     </message>
   </context>
   <context>
     <name>IndexActionCue</name>
     <message>
-      <location filename="../../../plugins/action_cues/index_action_cue.py" line="67"/>
+      <location filename="../../../plugins/action_cues/index_action_cue.py" line="77"/>
       <source>No suggestion</source>
       <translation>Aucune suggestion</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/index_action_cue.py" line="121"/>
+      <location filename="../../../plugins/action_cues/index_action_cue.py" line="131"/>
       <source>Index</source>
       <translation>Index</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/index_action_cue.py" line="123"/>
+      <location filename="../../../plugins/action_cues/index_action_cue.py" line="133"/>
       <source>Use a relative index</source>
       <translation>Utiliser un index relatif</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/index_action_cue.py" line="126"/>
+      <location filename="../../../plugins/action_cues/index_action_cue.py" line="136"/>
       <source>Target index</source>
       <translation>Index cible</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/index_action_cue.py" line="128"/>
+      <location filename="../../../plugins/action_cues/index_action_cue.py" line="138"/>
       <source>Action</source>
       <translation>Action</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/index_action_cue.py" line="131"/>
+      <location filename="../../../plugins/action_cues/index_action_cue.py" line="141"/>
       <source>Suggested cue name</source>
       <translation>Nom de cue suggéré</translation>
     </message>
@@ -139,27 +139,27 @@
   <context>
     <name>SeekCue</name>
     <message>
-      <location filename="../../../plugins/action_cues/seek_cue.py" line="99"/>
+      <location filename="../../../plugins/action_cues/seek_cue.py" line="111"/>
       <source>Cue</source>
       <translation>Cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/seek_cue.py" line="100"/>
+      <location filename="../../../plugins/action_cues/seek_cue.py" line="112"/>
       <source>Click to select</source>
       <translation>Cliquer pour sélectionner</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/seek_cue.py" line="101"/>
+      <location filename="../../../plugins/action_cues/seek_cue.py" line="113"/>
       <source>Not selected</source>
       <translation>Non sélectionné</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/seek_cue.py" line="102"/>
+      <location filename="../../../plugins/action_cues/seek_cue.py" line="114"/>
       <source>Seek</source>
       <translation>Recherche</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/seek_cue.py" line="103"/>
+      <location filename="../../../plugins/action_cues/seek_cue.py" line="115"/>
       <source>Time to reach</source>
       <translation>Temps à atteindre</translation>
     </message>
@@ -167,32 +167,32 @@
   <context>
     <name>SettingsPageName</name>
     <message>
-      <location filename="../../../plugins/action_cues/seek_cue.py" line="59"/>
+      <location filename="../../../plugins/action_cues/seek_cue.py" line="70"/>
       <source>Seek Settings</source>
       <translation>Préférences de recherche</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/collection_cue.py" line="109"/>
+      <location filename="../../../plugins/action_cues/collection_cue.py" line="119"/>
       <source>Edit Collection</source>
-      <translation>Éditer la collection</translation>
+      <translation>Gérer la collection</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/command_cue.py" line="118"/>
+      <location filename="../../../plugins/action_cues/command_cue.py" line="127"/>
       <source>Command</source>
       <translation>Commande</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/stop_all.py" line="43"/>
+      <location filename="../../../plugins/action_cues/stop_all.py" line="53"/>
       <source>Stop Settings</source>
       <translation>Paramètres d&apos;arrêt</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/index_action_cue.py" line="65"/>
+      <location filename="../../../plugins/action_cues/index_action_cue.py" line="75"/>
       <source>Action Settings</source>
       <translation>Paramètres d&apos;action</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/volume_control.py" line="129"/>
+      <location filename="../../../plugins/action_cues/volume_control.py" line="133"/>
       <source>Volume Settings</source>
       <translation>Préférences de volume</translation>
     </message>
@@ -200,7 +200,7 @@
   <context>
     <name>StopAll</name>
     <message>
-      <location filename="../../../plugins/action_cues/stop_all.py" line="73"/>
+      <location filename="../../../plugins/action_cues/stop_all.py" line="83"/>
       <source>Stop Action</source>
       <translation>Action d&apos;arrêt</translation>
     </message>
@@ -208,27 +208,27 @@
   <context>
     <name>VolumeControl</name>
     <message>
-      <location filename="../../../plugins/action_cues/volume_control.py" line="187"/>
+      <location filename="../../../plugins/action_cues/volume_control.py" line="191"/>
       <source>Cue</source>
       <translation>Cue</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/volume_control.py" line="188"/>
+      <location filename="../../../plugins/action_cues/volume_control.py" line="192"/>
       <source>Click to select</source>
       <translation>Cliquer pour sélectionner</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/volume_control.py" line="189"/>
+      <location filename="../../../plugins/action_cues/volume_control.py" line="193"/>
       <source>Not selected</source>
       <translation>Non sélectionné</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/volume_control.py" line="190"/>
+      <location filename="../../../plugins/action_cues/volume_control.py" line="194"/>
       <source>Volume to reach</source>
       <translation>Volume à atteindre</translation>
     </message>
     <message>
-      <location filename="../../../plugins/action_cues/volume_control.py" line="191"/>
+      <location filename="../../../plugins/action_cues/volume_control.py" line="195"/>
       <source>Fade</source>
       <translation>Fondu</translation>
     </message>
@@ -236,7 +236,7 @@
   <context>
     <name>VolumeControlError</name>
     <message>
-      <location filename="../../../plugins/action_cues/volume_control.py" line="120"/>
+      <location filename="../../../plugins/action_cues/volume_control.py" line="124"/>
       <source>Error during cue execution.</source>
       <translation>Erreur lors de l'exécution de la cue.</translation>
     </message>

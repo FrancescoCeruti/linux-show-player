@@ -16,12 +16,12 @@
     <message>
       <location filename="../../../plugins/triggers/triggers_handler.py" line="29"/>
       <source>Stopped</source>
-      <translation>Arrêté</translation>
+      <translation>Stoppé</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_handler.py" line="30"/>
       <source>Ended</source>
-      <translation>Fini</translation>
+      <translation>Terminé</translation>
     </message>
   </context>
   <context>
@@ -42,7 +42,7 @@
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="88"/>
       <source>Remove</source>
-      <translation>Retirer</translation>
+      <translation>Supprimer</translation>
     </message>
     <message>
       <location filename="../../../plugins/triggers/triggers_settings.py" line="173"/>

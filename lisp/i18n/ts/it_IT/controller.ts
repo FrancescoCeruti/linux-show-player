@@ -141,22 +141,22 @@
       <translation>In attesa di messaggi:</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="443"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="445"/>
       <source>Path</source>
       <translation>Percorso</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="444"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="446"/>
       <source>Types</source>
       <translation>Tipi</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="445"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="447"/>
       <source>Arguments</source>
       <translation>Argomenti</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="446"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="448"/>
       <source>Action</source>
       <translation>Azione</translation>
     </message>
@@ -164,12 +164,12 @@
   <context>
     <name>ControllerOscSettingsWarning</name>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="357"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="359"/>
       <source>Warning</source>
       <translation>Attenzione</translation>
     </message>
     <message>
-      <location filename="../../../plugins/controller/protocols/osc.py" line="358"/>
+      <location filename="../../../plugins/controller/protocols/osc.py" line="360"/>
       <source>Osc path seems invalid,
 do not forget to edit the path later.</source>
       <translation>Il percorso Osc sembra invalido,

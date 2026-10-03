@@ -22,7 +22,7 @@
     <message>
       <location filename="../../../plugins/network/server.py" line="37"/>
       <source>Start serving network API at: http://{}:{}/</source>
-      <translation type="unfinished">Start serving network API at: http://{}:{}/</translation>
+      <translation>Démarrage de l’API réseau à : http://{}:{}/</translation>
     </message>
   </context>
   <context>
@@ -38,7 +38,7 @@
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="77"/>
       <source>Select the hosts you want to add</source>
-      <translation type="unfinished">Select the hosts you want to add</translation>
+      <translation>Sélectionnez les hôtes que vous souhaitez ajouter</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="79"/>
@@ -63,12 +63,12 @@
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="172"/>
       <source>Remove selected host</source>
-      <translation>Retirer l'hôte sélectionné</translation>
+      <translation>Supprimer l'hôte sélectionné</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="175"/>
       <source>Remove all host</source>
-      <translation>Retirer tous les hôtes</translation>
+      <translation>Supprimer tous les hôtes</translation>
     </message>
     <message>
       <location filename="../../../plugins/network/discovery_dialogs.py" line="181"/>

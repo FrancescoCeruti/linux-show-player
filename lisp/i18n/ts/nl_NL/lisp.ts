@@ -129,7 +129,7 @@
       <translation type="unfinished">Startup error</translation>
     </message>
     <message>
-      <location filename="../../../application.py" line="208"/>
+      <location filename="../../../application.py" line="207"/>
       <source>Saving your session failed due to bad data.
 The file still contains your last successful save and has not been overwritten.
 
@@ -140,12 +140,12 @@ The file still contains your last successful save and has not been overwritten.
 This is likely because of corrupted data from a plugin. Try to revert recent changes to cues or settings, and save the file again.</translation>
     </message>
     <message>
-      <location filename="../../../application.py" line="264"/>
+      <location filename="../../../application.py" line="263"/>
       <source>Error while reading the session file "{}"</source>
       <translation type="unfinished">Error while reading the session file "{}"</translation>
     </message>
     <message>
-      <location filename="../../../application.py" line="253"/>
+      <location filename="../../../application.py" line="252"/>
       <source>Unable to create the cue "{}"</source>
       <translation type="unfinished">Unable to create the cue "{}"</translation>
     </message>
@@ -263,44 +263,54 @@ This is likely because of corrupted data from a plugin. Try to revert recent cha
   <context>
     <name>CueAppearanceSettings</name>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="85"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="110"/>
       <source>The appearance depends on the layout</source>
       <translation>Het uiterlijk hangt af van de indeling</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="97"/>
-      <source>Cue name</source>
-      <translation>Cuenaam</translation>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="122"/>
+      <source>Cue Name and Icon</source>
+      <translation type="unfinished">Cue Name and Icon</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="99"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="124"/>
       <source>NoName</source>
       <translation>Geen naam</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="101"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="126"/>
+      <source>Change icon</source>
+      <translation type="unfinished">Change icon</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="129"/>
       <source>Description/Note</source>
       <translation>Omschrijving/Aantekening</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="104"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="132"/>
       <source>Set Font Size</source>
       <translation>Lettertypegrootte instellen</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="106"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="134"/>
       <source>Color</source>
       <translation>Kleur</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="108"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="136"/>
       <source>Select background color</source>
       <translation>Achtergrondkleur instellen</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="111"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="139"/>
       <source>Select font color</source>
       <translation>Lettertypekleur instellen</translation>
+    </message>
+    <message>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="243"/>
+      <source>Select an Icon</source>
+      <translation type="unfinished">Select an Icon</translation>
     </message>
   </context>
   <context>
@@ -383,47 +393,47 @@ This is likely because of corrupted data from a plugin. Try to revert recent cha
       <translation type="unfinished">Used for fade-in and fade-out actions, for cues where fade duration is set to 0.</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="113"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="114"/>
       <source>Start action</source>
       <translation>Startactie</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="115"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="116"/>
       <source>Default action to start the cue</source>
       <translation>Standaard actie om de cue te starten</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="119"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="120"/>
       <source>Stop action</source>
       <translation>Stopactie</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="121"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="122"/>
       <source>Default action to stop the cue</source>
       <translation>Standaard actie om de cue te stoppen</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="202"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="205"/>
       <source>Pre wait</source>
       <translation>Vooraf wachten</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="204"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="207"/>
       <source>Wait before cue execution</source>
       <translation>Wachten voor dat de cue wordt uitgevoerd</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="207"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="210"/>
       <source>Post wait</source>
       <translation>Achteraf wachten</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="209"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="212"/>
       <source>Wait after cue execution</source>
       <translation>Wachten nadat de cue is uitgevoerd</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="212"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="215"/>
       <source>Next action</source>
       <translation>Volgende actie</translation>
     </message>
@@ -462,12 +472,12 @@ This is likely because of corrupted data from a plugin. Try to revert recent cha
   <context>
     <name>FadeSettings</name>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="273"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="280"/>
       <source>Fade In</source>
       <translation>Inregelen</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="274"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="281"/>
       <source>Fade Out</source>
       <translation>Uitregelen</translation>
     </message>
@@ -819,32 +829,32 @@ This is likely because of corrupted data from a plugin. Try to revert recent cha
   <context>
     <name>MediaCueSettings</name>
     <message>
-      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="81"/>
+      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="84"/>
       <source>Start time</source>
       <translation>Starttijd</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="83"/>
+      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="86"/>
       <source>Stop position of the media</source>
       <translation>Stoppositie van de media</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="85"/>
+      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="88"/>
       <source>Stop time</source>
       <translation>Stoptijd</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="87"/>
+      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="90"/>
       <source>Start position of the media</source>
       <translation>Startpositie van de media</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="89"/>
+      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="92"/>
       <source>Loop</source>
       <translation>Herhalen</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="91"/>
+      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="94"/>
       <source>Repetition after first play (-1 = infinite)</source>
       <translation type="unfinished">Repetition after first play (-1 = infinite)</translation>
     </message>
@@ -970,32 +980,32 @@ This is likely because of corrupted data from a plugin. Try to revert recent cha
       <translation type="unfinished">Plugins</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="43"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="44"/>
       <source>Cue</source>
       <translation type="unfinished">Cue</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="53"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="54"/>
       <source>Behaviours</source>
       <translation type="unfinished">Behaviours</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="156"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="157"/>
       <source>Pre/Post Wait</source>
       <translation type="unfinished">Pre/Post Wait</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="238"/>
+      <location filename="../../../ui/settings/cue_pages/cue_general.py" line="245"/>
       <source>Fade In/Out</source>
       <translation type="unfinished">Fade In/Out</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="36"/>
+      <location filename="../../../ui/settings/cue_pages/cue_appearance.py" line="51"/>
       <source>Appearance</source>
       <translation>Uiterlijk</translation>
     </message>
     <message>
-      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="33"/>
+      <location filename="../../../ui/settings/cue_pages/media_cue.py" line="34"/>
       <source>Media Cue</source>
       <translation type="unfinished">Media Cue</translation>
     </message>

@@ -16,7 +16,7 @@
     <message>
       <location filename="../../../plugins/media_info/media_info.py" line="72"/>
       <source>Cannot get any information.</source>
-      <translation type="unfinished">Cannot get any information.</translation>
+      <translation>Impossible d’obtenir des informations.</translation>
     </message>
     <message>
       <location filename="../../../plugins/media_info/media_info.py" line="135"/>

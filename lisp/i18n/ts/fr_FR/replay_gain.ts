@@ -67,7 +67,7 @@
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="331"/>
       <source>An error occurred during gain calculation.</source>
-      <translation type="unfinished">An error occurred during gain calculation.</translation>
+      <translation>Une erreur s'est produite lors du calcul du gain.</translation>
     </message>
     <message>
       <location filename="../../../plugins/replay_gain/replay_gain.py" line="203"/>
