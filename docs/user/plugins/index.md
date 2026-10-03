@@ -11,6 +11,7 @@ triggers
 presets
 replaygain
 cue_rename
+cue_search
 timecode
 synchronization
 ```
