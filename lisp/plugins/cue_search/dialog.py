@@ -212,6 +212,7 @@ class CueSearchDialog(QDialog):
 
         self.resultsView.resizeColumnToContents(0)
         self.resultsView.resizeColumnToContents(1)
+        self.resultsView.resizeColumnToContents(2)
 
     def triggerCurrentItem(self):
         item = self.resultsView.currentItem()
